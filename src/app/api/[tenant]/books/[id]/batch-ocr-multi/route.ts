@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { nanoid } from 'nanoid';
 import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { images } from '@/lib/api-client';
 import { getPageImageUrl } from '@/lib/utils';
 import { createBatchJobInline, type BatchRequest } from '@/lib/gemini-batch';
@@ -37,6 +38,7 @@ const BATCH_SIZE = 10; // Pages per Gemini batch (Gemini Batch API: 20MB per fil
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { tenant, id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json();
     const { pageIds, action, overwriteMode = false } = body;
 
@@ -133,6 +135,7 @@ export const POST = withAuth(async (request, session, context) => {
     // Get OCR prompt
     const promptResult = await getOcrPrompt();
     const prompt = promptResult.text;
+    const promptRef = promptResult.reference;
 
     // Phase 1: Submit ALL chunks to Gemini first (no DB writes yet).
     // This prevents orphan parent records if Gemini submission fails (e.g. quota exhaustion).
@@ -229,7 +232,10 @@ export const POST = withAuth(async (request, session, context) => {
         status: pendingStatus,
         model: DEFAULT_BATCH_MODEL,
         language,
-        prompt_version: PROMPT_VERSION,
+        prompt_id: promptRef.id,
+        prompt_name: promptRef.name,
+        prompt_version: String(promptRef.version),
+        prompt_hash: promptRef.content_hash,
         force: overwriteMode,
         created_at: now,
         updated_at: now,
@@ -251,7 +257,9 @@ export const POST = withAuth(async (request, session, context) => {
         input_tokens: 0,
         output_tokens: 0,
         status: 'submitted',
-        endpoint: '/api/books/[id]/batch-ocr-multi',
+        prompt_version: PROMPT_VERSION,
+        endpoint: '/api/[tenant]/books/[id]/batch-ocr-multi',
+        triggered_by: triggeredBy,
       });
     }
 

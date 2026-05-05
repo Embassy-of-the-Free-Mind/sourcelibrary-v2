@@ -6,6 +6,7 @@ import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookup
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { contentHash } from '@/lib/steganographia';
@@ -37,6 +38,7 @@ async function recordProcessingMetric(
 
 export const POST = withAuth(async (request: NextRequest) => {
   try {
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json();
     const {
       pageId,
@@ -343,13 +345,17 @@ export const POST = withAuth(async (request: NextRequest) => {
       const updateData: Record<string, unknown> = { updated_at: new Date() };
 
       if (results.ocr && promptRefs.ocr) {
+        const ocrPromptRef = promptRefs.ocr.reference;
         updateData['ocr'] = {
           data: results.ocr,
           content_hash: contentHash(results.ocr),
           language: language || 'Latin',
           model,
-          prompt: promptRefs.ocr.reference,
-          prompt_version: PROMPT_VERSION,
+          prompt: ocrPromptRef,
+          prompt_version: String(ocrPromptRef.version) || PROMPT_VERSION,
+          prompt_id: ocrPromptRef.id,
+          prompt_name: ocrPromptRef.name,
+          ...(ocrPromptRef.content_hash && { prompt_hash: ocrPromptRef.content_hash }),
           updated_at: new Date(),
           source: 'ai',
           input_tokens: metadata.ocr?.inputTokens,
@@ -369,12 +375,17 @@ export const POST = withAuth(async (request: NextRequest) => {
       }
 
       if (results.translation && promptRefs.translation) {
+        const translationPromptRef = promptRefs.translation.reference;
         updateData['translation'] = {
           data: results.translation,
           content_hash: contentHash(results.translation),
           language: targetLanguage,
           model,
-          prompt: promptRefs.translation.reference,
+          prompt: translationPromptRef,
+          prompt_version: String(translationPromptRef.version) || PROMPT_VERSION,
+          prompt_id: translationPromptRef.id,
+          prompt_name: translationPromptRef.name,
+          ...(translationPromptRef.content_hash && { prompt_hash: translationPromptRef.content_hash }),
           updated_at: new Date(),
           source: 'ai',  // Mark as AI-generated
           // Processing metadata
@@ -435,8 +446,16 @@ export const POST = withAuth(async (request: NextRequest) => {
       const typeMap: Record<string, 'ocr' | 'translation' | 'summary'> = {
         ocr: 'ocr', translation: 'translation', summary: 'summary', all: 'ocr',
       };
+      const loggedType = typeMap[action] || 'ocr';
+      const promptRef =
+        loggedType === 'ocr' ? promptRefs.ocr :
+        loggedType === 'translation' ? promptRefs.translation :
+        promptRefs.summary;
+      const promptVersion = promptRef?.reference?.version
+        ? String(promptRef.reference.version)
+        : PROMPT_VERSION;
       logGeminiCall({
-        type: typeMap[action] || 'ocr',
+        type: loggedType,
         mode: 'realtime',
         model,
         book_id: page?.book_id,
@@ -444,7 +463,9 @@ export const POST = withAuth(async (request: NextRequest) => {
         input_tokens: totalUsage.inputTokens,
         output_tokens: totalUsage.outputTokens,
         status: 'success',
+        prompt_version: promptVersion,
         endpoint: '/api/process',
+        triggered_by: triggeredBy,
       });
     }
 

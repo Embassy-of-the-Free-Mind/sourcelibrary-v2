@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { performModernization } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 
 // Simple hash function to detect translation changes
 function hashString(str: string): string {
@@ -23,6 +24,7 @@ export async function POST(
 
   try {
     const { id } = await params;
+    const triggeredBy = getTriggerSource(request);
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
 
@@ -106,7 +108,9 @@ export async function POST(
       output_tokens: result.usage.outputTokens,
       status: 'success',
       duration_ms: duration,
+      prompt_version: 'modernize-inline-v1',
       endpoint: '/api/pages/modernize',
+      triggered_by: triggeredBy,
     });
 
     return NextResponse.json({

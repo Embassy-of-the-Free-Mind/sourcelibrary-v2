@@ -481,6 +481,8 @@ async function processBook(db, book, job, globalCounter, deadline) {
   });
   if (blankFromOcr.length > 0) {
     const blankIds = blankFromOcr.map(p => p.id);
+    // Snapshot prior translation content before overwriting with the blank marker.
+    await Promise.all(blankIds.map(id => saveRevisionBeforeOverwrite(db, id, 'translation')));
     await db.collection('pages').updateMany(
       { id: { $in: blankIds } },
       { $set: { page_type: 'blank', updated_at: new Date(), 'translation.data': '[Blank page]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } },
@@ -622,6 +624,8 @@ async function processBook(db, book, job, globalCounter, deadline) {
           // Mark blocked pages so they're skipped on future runs
           if (msg.includes('PROHIBITED') || msg.includes('SAFETY') || msg.includes('safety') || msg.includes('RECITATION')) {
             try {
+              // Snapshot prior translation before overwriting with the block marker.
+              await saveRevisionBeforeOverwrite(db, page.id, 'translation');
               // Replace null translation with {} so sub-fields can be set
               await db.collection('pages').updateOne(
                 { _id: page._id },
@@ -697,6 +701,8 @@ async function processBook(db, book, job, globalCounter, deadline) {
               const errMsg = fallbackErr.message || '';
               console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
               try {
+                // Snapshot prior translation before overwriting with the block marker.
+                await saveRevisionBeforeOverwrite(db, page.id, 'translation');
                 // Replace null translation with {} so sub-fields can be set
                 await db.collection('pages').updateOne(
                   { _id: page._id },
@@ -770,6 +776,8 @@ async function processBook(db, book, job, globalCounter, deadline) {
               const errMsg = fallbackErr.message || '';
               console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
               try {
+                // Snapshot prior translation before overwriting with the block marker.
+                await saveRevisionBeforeOverwrite(db, page.id, 'translation');
                 // Replace null translation with {} so sub-fields can be set
                 await db.collection('pages').updateOne(
                   { _id: page._id },

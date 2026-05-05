@@ -73,7 +73,7 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
     // Save revision before overwriting OCR (no-op on first write)
     try { await createRevision(pageId, 'ocr', jobId); } catch {}
     // Save OCR result to page
-    const { text, language, model, promptVersion, promptId, promptHash, pageType, columns, scriptType, detectedImages } = message.data;
+    const { text, language, model, promptVersion, promptId, promptHash, promptName, pageType, columns, scriptType, detectedImages } = message.data;
     const ocrSetPayload = {
       ocr: {
         data: text,
@@ -84,6 +84,7 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
         prompt_version: promptVersion,
         ...(promptId && { prompt_id: promptId }),
         ...(promptHash && { prompt_hash: promptHash }),
+        ...(promptName && { prompt_name: promptName }),
       },
       ...(pageType && { page_type: pageType }),
       ...(columns && { columns }),

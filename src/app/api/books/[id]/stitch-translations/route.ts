@@ -4,6 +4,7 @@ import { getGeminiClient } from '@/lib/gemini-client';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
 import { withAuth } from '@/lib/auth-helpers';
@@ -50,6 +51,7 @@ interface StitchResult {
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const {
       model: modelId = DEFAULT_MODEL,
       dryRun = false,
@@ -221,7 +223,9 @@ export const POST = withAuth(async (request, session, context) => {
         input_tokens: totalInputTokens,
         output_tokens: totalOutputTokens,
         status: 'success',
+        prompt_version: 'stitch-inline-2026-05',
         endpoint: '/api/books/stitch-translations',
+        triggered_by: triggeredBy,
       });
     }
 

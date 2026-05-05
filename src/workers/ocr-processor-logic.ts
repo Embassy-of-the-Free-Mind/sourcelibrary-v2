@@ -168,11 +168,13 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
   let promptText: string;
   let promptId: string | undefined;
   let promptHash: string | undefined;
+  let promptName: string | undefined;
   try {
     const promptResult = await getOcrPrompt(customPrompt ? { customText: customPrompt } : undefined);
     promptText = promptResult.text;
     promptId = promptResult.reference.id;
     promptHash = promptResult.reference.content_hash;
+    promptName = promptResult.reference.name;
   } catch (promptErr) {
     console.error(`[OCR] Failed to fetch prompt from DB (non-fatal), using custom or will fail:`, promptErr);
     if (customPrompt) {
@@ -227,6 +229,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         promptVersion: PROMPT_VERSION,
         promptId,
         promptHash,
+        promptName,
         ...(pageType && { pageType }),
         ...(columns && { columns }),
         ...(scriptType && { scriptType }),
@@ -286,6 +289,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
               promptVersion: PROMPT_VERSION,
               promptId,
               promptHash,
+              promptName,
               ...(retryPageType && { pageType: retryPageType }),
               ...(retryColumns && { columns: retryColumns }),
               ...(retryImages.length > 0 && { detectedImages: retryImages }),

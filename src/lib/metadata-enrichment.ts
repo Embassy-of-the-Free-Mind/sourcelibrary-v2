@@ -11,7 +11,7 @@
 
 import { Db } from 'mongodb';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
-import { logGeminiCall } from './gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 import { logAuditEvent } from './audit-logger';
 import { logMetadataChange } from './book-changelog';
 import { generateUniqueBookSlug } from './slugify';
@@ -180,6 +180,7 @@ Rules:
 export async function enrichBookMetadata(
   db: Db,
   bookId: string,
+  options?: { triggered_by?: GeminiTrigger },
 ): Promise<EnrichmentOutcome> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -267,7 +268,9 @@ export async function enrichBookMetadata(
       status: 'failed',
       error_message: err instanceof Error ? err.message : 'unknown',
       duration_ms: durationMs,
+      prompt_version: 'metadata-enrichment-v1',
       endpoint: 'metadata-enrichment',
+      triggered_by: options?.triggered_by,
     });
     return {
       success: false,
@@ -294,7 +297,9 @@ export async function enrichBookMetadata(
       output_tokens: usage.output_tokens,
       status: 'success',
       duration_ms: durationMs,
+      prompt_version: 'metadata-enrichment-v1',
       endpoint: 'metadata-enrichment',
+      triggered_by: options?.triggered_by,
     });
 
     await db.collection('books').updateOne(
@@ -502,7 +507,9 @@ export async function enrichBookMetadata(
     output_tokens: usage.output_tokens,
     status: 'success',
     duration_ms: durationMs,
+    prompt_version: 'metadata-enrichment-v1',
     endpoint: 'metadata-enrichment',
+    triggered_by: options?.triggered_by,
   });
 
   // Log to audit_log if changes were made

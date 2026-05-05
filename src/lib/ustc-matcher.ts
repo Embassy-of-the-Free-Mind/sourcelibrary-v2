@@ -18,7 +18,7 @@
 
 import { Db } from 'mongodb';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
-import { logGeminiCall } from './gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 
 const MODEL = 'gemini-3.1-flash-lite-preview';
 const MAX_ROUNDS = 5;
@@ -705,7 +705,7 @@ export async function matchToUstc(
     language?: string;
     id?: string; // Source Library book ID or external catalog ID
   },
-  options?: { force?: boolean; skipFastPath?: boolean },
+  options?: { force?: boolean; skipFastPath?: boolean; triggered_by?: GeminiTrigger },
 ): Promise<MatchResult> {
   // Step 1: Try fast word-overlap match (free, instant) — now with entity_aliases
   const fast = !options?.skipFastPath ? await fastMatch(db, book) : null;
@@ -881,6 +881,9 @@ export async function matchToUstc(
         input_tokens: totalInputTokens,
         output_tokens: totalOutputTokens,
         status: 'success',
+        prompt_version: 'ustc-matcher-tool-calling-v1',
+        endpoint: 'lib/ustc-matcher',
+        triggered_by: options?.triggered_by,
       });
     } catch {
       // Non-critical — don't fail the match

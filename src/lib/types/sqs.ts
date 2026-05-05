@@ -82,6 +82,7 @@ export interface OcrWriteResult extends WriteResultBase {
     promptVersion: string;
     promptId?: string;           // MongoDB ObjectId of the prompt used
     promptHash?: string;         // md5 of prompt content for immutable provenance
+    promptName?: string;         // Display name of prompt (e.g. "Standard OCR")
     pageType?: string;
     columns?: number;
     scriptType?: 'printed' | 'handwritten' | 'mixed';

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
+import { createBookRevisions } from '@/lib/book-revisions';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
@@ -77,11 +79,19 @@ interface BatchExtraction {
 
 const TARGET_BATCH_CHARS = 50000; // ~12k tokens, leaves room for prompt
 
+// Inline prompt version — bump when the prompt strings in this file change.
+// Tracks index/summary generation prompts. Logged with each Gemini call so
+// regeneration history can be reconstructed even though these prompts are
+// not stored in the `prompts` collection.
+const INDEX_PROMPT_VERSION = 'inline-2026-05';
+
 // Process a batch of pages to extract structured information
 async function processBatch(
   pages: PageData[],
   bookTitle: string,
   bookAuthor: string,
+  bookId: string,
+  triggeredBy: import('@/lib/gemini-logger').GeminiTrigger,
   bookLanguage?: string
 ): Promise<BatchExtraction> {
   const model = genAI.getGenerativeModel({
@@ -162,11 +172,14 @@ CRITICAL for quotes:
       type: 'index',
       mode: 'realtime',
       model: 'gemini-3.1-flash-lite-preview',
+      book_id: bookId,
       page_count: pages.length,
       input_tokens: usageMetadata?.promptTokenCount || 0,
       output_tokens: usageMetadata?.candidatesTokenCount || 0,
       status: 'success',
-      endpoint: '/api/books/[id]/index (processBatch)',
+      prompt_version: INDEX_PROMPT_VERSION,
+      endpoint: '/api/[tenant]/books/[id]/index (processBatch)',
+      triggered_by: triggeredBy,
     }).catch(console.error); // Non-blocking
 
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
@@ -272,6 +285,8 @@ async function processAllBatches(
   pages: PageData[],
   bookTitle: string,
   bookAuthor: string,
+  bookId: string,
+  triggeredBy: import('@/lib/gemini-logger').GeminiTrigger,
   bookLanguage?: string,
   chapterTexts?: ChapterText[]
 ): Promise<BatchExtraction[]> {
@@ -290,7 +305,7 @@ async function processAllBatches(
     const end = batchPages[batchPages.length - 1].page_number;
     console.log(`  Batch ${i + 1}: pages ${start}-${end} (${batchPages.length} pages)`);
 
-    return processBatch(batchPages, bookTitle, bookAuthor, bookLanguage);
+    return processBatch(batchPages, bookTitle, bookAuthor, bookId, triggeredBy, bookLanguage);
   });
 
   const results = await Promise.all(batchPromises);
@@ -619,6 +634,8 @@ async function generateBookSummary(
   batchExtractions: BatchExtraction[],
   bookTitle: string,
   bookAuthor: string,
+  bookId: string,
+  triggeredBy: import('@/lib/gemini-logger').GeminiTrigger,
   bookLanguage?: string,
   researchContext?: string,
   chapters?: ChapterInfo[]
@@ -746,11 +763,14 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
     type: 'summary',
     mode: 'realtime',
     model: 'gemini-3.1-flash-lite-preview',
+    book_id: bookId,
     page_count: batchExtractions.length, // Number of batch sections processed
     input_tokens: usageMetadata?.promptTokenCount || 0,
     output_tokens: usageMetadata?.candidatesTokenCount || 0,
     status: 'success',
-    endpoint: '/api/books/[id]/index (generateBookSummary)',
+    prompt_version: INDEX_PROMPT_VERSION,
+    endpoint: '/api/[tenant]/books/[id]/index (generateBookSummary)',
+    triggered_by: triggeredBy,
   }).catch(console.error); // Non-blocking
 
   // Parse JSON from response
@@ -1115,6 +1135,7 @@ export async function GET(
     const { tenant, id } = await params;
     const db = await getDb();
     const tenantId = await resolveTenantId(tenant);
+    const triggeredBy = getTriggerSource(request);
 
     if (!tenantId) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -1180,6 +1201,8 @@ export async function GET(
       pages,
       bookTitle,
       bookAuthor,
+      id,
+      triggeredBy,
       book.language || undefined,
       useChapters ? chapterTexts : undefined
     );
@@ -1209,6 +1232,8 @@ export async function GET(
           batchExtractions,
           bookTitle,
           bookAuthor,
+          id,
+          triggeredBy,
           book.language || undefined,
           researchContext || undefined,
           chapters.length > 0 ? chapters : undefined
@@ -1269,7 +1294,9 @@ export async function GET(
         data: bookSummary.brief,
         generated_at: new Date(),
         page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
-        model: 'gemini-3.1-flash-lite-preview'
+        model: 'gemini-3.1-flash-lite-preview',
+        prompt_version: INDEX_PROMPT_VERSION,
+        source: 'ai',
       };
       // Also save as reading_summary (expected by pipeline, docs, and downstream checks)
       updateData.reading_summary = {
@@ -1278,9 +1305,15 @@ export async function GET(
         themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
         quotes: groundedBatchQuotes.slice(0, 15),
         generated_at: new Date(),
-        model: 'gemini-3.1-flash-lite-preview'
+        model: 'gemini-3.1-flash-lite-preview',
+        prompt_version: INDEX_PROMPT_VERSION,
+        source: 'ai',
       };
     }
+
+    // Snapshot prior index/summary/reading_summary before overwriting so we
+    // never silently lose a regeneration.
+    await createBookRevisions(id, ['index', 'summary', 'reading_summary']);
 
     await db.collection('books').updateOne(
       { id, tenantId },
@@ -1313,10 +1346,14 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
+    // Snapshot prior index/summary/reading_summary so the user can recover
+    // them via /admin/book-revisions even after the cache is cleared.
+    await createBookRevisions(id, ['index', 'summary', 'reading_summary']);
+
     // Clear cached index and summary
     await db.collection('books').updateOne(
       { id, tenantId },
-      { $unset: { index: '', summary: '' } }
+      { $unset: { index: '', summary: '', reading_summary: '' } }
     );
 
     // Return success - client will call GET to generate fresh

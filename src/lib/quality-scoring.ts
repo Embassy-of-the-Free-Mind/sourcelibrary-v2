@@ -13,7 +13,7 @@
 
 import { Db } from 'mongodb';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
-import { logGeminiCall } from './gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 
 const MODEL = 'gemini-3-flash-preview';
 
@@ -155,6 +155,7 @@ function computeMechanicalAdjustments(book: Record<string, unknown>, galleryImag
 export async function scoreBookQuality(
   db: Db,
   bookId: string,
+  options?: { triggered_by?: GeminiTrigger },
 ): Promise<QualityScoreResult> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -241,7 +242,9 @@ export async function scoreBookQuality(
       status: 'failed',
       error_message: err instanceof Error ? err.message : 'unknown',
       duration_ms: durationMs,
+      prompt_version: 'quality-scoring-v1',
       endpoint: 'quality-scoring',
+      triggered_by: options?.triggered_by,
     });
     return {
       success: false,
@@ -297,7 +300,9 @@ export async function scoreBookQuality(
     output_tokens: usage.output_tokens,
     status: 'success',
     duration_ms: durationMs,
+    prompt_version: 'quality-scoring-v1',
     endpoint: 'quality-scoring',
+    triggered_by: options?.triggered_by,
   });
 
   return {

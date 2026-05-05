@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
@@ -39,6 +40,7 @@ function getAiClient(keyIndex: number): GoogleGenAI {
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
@@ -111,6 +113,13 @@ export const POST = withAuth(async (request, session, context) => {
     const isEnglish = sourceLanguage.toLowerCase() === 'english';
     const promptResult = await getTranslationPrompt(sourceLanguage, targetLanguage);
     const basePrompt = promptResult.text;
+    const promptRef = promptResult.reference;
+    const promptProvenance = {
+      prompt_id: promptRef.id,
+      prompt_name: promptRef.name,
+      prompt_version: String(promptRef.version),
+      prompt_hash: promptRef.content_hash,
+    };
 
     for (const page of pagesToProcess) {
       const ocrText = page.ocr?.data;
@@ -188,7 +197,7 @@ export const POST = withAuth(async (request, session, context) => {
       target_language: targetLanguage,
       force,
       stale_only: staleOnly,
-      prompt_version: PROMPT_VERSION,
+      ...promptProvenance,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,
       status: batchJob.state,
@@ -210,7 +219,9 @@ export const POST = withAuth(async (request, session, context) => {
       input_tokens: 0, // Not available until job completes
       output_tokens: 0,
       status: 'submitted',
+      prompt_version: PROMPT_VERSION,
       endpoint: '/api/books/[id]/batch-translate-async',
+      triggered_by: triggeredBy,
     });
 
     return NextResponse.json({
@@ -239,6 +250,7 @@ export const POST = withAuth(async (request, session, context) => {
 export const GET = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const { searchParams } = new URL(request.url);
     const jobName = searchParams.get('jobName');
 
@@ -322,6 +334,9 @@ export const GET = withAuth(async (request, session, context) => {
                     target_language: jobDoc.target_language,
                     source: 'batch_api',
                     prompt_version: jobDoc.prompt_version || PROMPT_VERSION,
+                    ...(jobDoc.prompt_id && { prompt_id: jobDoc.prompt_id }),
+                    ...(jobDoc.prompt_hash && { prompt_hash: jobDoc.prompt_hash }),
+                    ...(jobDoc.prompt_name && { prompt_name: jobDoc.prompt_name }),
                   },
                   updated_at: new Date()
                 }
@@ -388,7 +403,9 @@ export const GET = withAuth(async (request, session, context) => {
           input_tokens: totalInputTokens,
           output_tokens: totalOutputTokens,
           status: successCount > 0 ? 'success' : 'failed',
+          prompt_version: jobDoc.prompt_version || PROMPT_VERSION,
           endpoint: '/api/books/[id]/batch-translate-async',
+          triggered_by: triggeredBy,
         });
 
         return NextResponse.json({

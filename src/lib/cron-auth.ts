@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { GeminiTrigger } from './gemini-logger';
 
 /**
  * Verify that a cron request carries the correct CRON_SECRET bearer token.
@@ -27,4 +28,30 @@ export function verifyCronAuth(request: NextRequest): NextResponse | null {
     { error: 'Unauthorized' },
     { status: 401 }
   );
+}
+
+/**
+ * Infer the provenance trigger source from an incoming request.
+ *
+ * - `cron`: Vercel-managed cron (User-Agent: vercel-cron/*) OR external cron
+ *   that authenticated with CRON_SECRET bearer token (Hetzner, GitHub Actions).
+ * - `manual`: anything else — assumed to be a human-initiated HTTP request
+ *   (admin UI, public site, contributor flow). Pair with audit_log if you
+ *   need user identity; gemini_usage stores only the trigger class.
+ *
+ * Lambda workers and stand-alone scripts should NOT use this helper. They set
+ * `TRIGGER_SOURCE=worker` (or `auto_recovery`) in their environment instead,
+ * which gemini-logger picks up as the default when `triggered_by` is unset.
+ */
+export function getTriggerSource(request: NextRequest): GeminiTrigger {
+  const ua = request.headers.get('user-agent') || '';
+  if (ua.toLowerCase().includes('vercel-cron')) return 'cron';
+
+  const secret = process.env.CRON_SECRET;
+  if (secret) {
+    const auth = request.headers.get('authorization');
+    if (auth === `Bearer ${secret}`) return 'cron';
+  }
+
+  return 'manual';
 }

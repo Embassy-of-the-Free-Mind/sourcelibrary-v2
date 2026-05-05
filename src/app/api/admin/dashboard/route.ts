@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export const maxDuration = 60;
 
@@ -48,10 +49,33 @@ async function computeSnapshot(db: any) {
       ...notHidden, is_first_translation: true, pages_ocr: { $gte: 10 },
       $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
     }),
-    db.collection('gemini_usage').aggregate([
-      { $match: { type: { $in: ['translate', 'translation'] }, status: 'success', timestamp: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } } },
-      { $group: { _id: null, total_cost: { $sum: { $ifNull: ['$cost_usd', 0] } }, pages: { $sum: 1 } } },
-    ], { maxTimeMS: 10000 }).toArray().catch(() => []),
+    // 30-day translate/translation cost from Supabase (primary store since
+    // 2026-04-10, issue #567 Phase 3). MongoDB gemini_usage is a near-empty
+    // stub; only used as a build-time fallback.
+    (async (): Promise<Array<{ total_cost: number; pages: number }>> => {
+      const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      if (supabaseAdmin) {
+        const { data, error } = await supabaseAdmin
+          .from('gemini_usage')
+          .select('cost_usd')
+          .in('type', ['translate', 'translation'])
+          .eq('status', 'success')
+          .gte('timestamp', cutoff.toISOString())
+          .limit(50000);
+        if (error) {
+          console.warn('[admin/dashboard] Supabase cost query failed:', error.message);
+          return [];
+        }
+        let total_cost = 0;
+        const pages = (data || []).length;
+        for (const r of data || []) total_cost += r.cost_usd ?? 0;
+        return pages > 0 ? [{ total_cost, pages }] : [];
+      }
+      return db.collection('gemini_usage').aggregate([
+        { $match: { type: { $in: ['translate', 'translation'] }, status: 'success', timestamp: { $gte: cutoff } } },
+        { $group: { _id: null, total_cost: { $sum: { $ifNull: ['$cost_usd', 0] } }, pages: { $sum: 1 } } },
+      ], { maxTimeMS: 10000 }).toArray().catch(() => []) as Promise<Array<{ total_cost: number; pages: number }>>;
+    })(),
   ]);
 
   const t = totals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };

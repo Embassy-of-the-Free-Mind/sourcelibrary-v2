@@ -1,6 +1,30 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { supabaseAdmin } from '@/lib/supabase';
+
+// Shapes returned by the gemini_usage queries below. Both Supabase + MongoDB
+// branches normalize to these shapes so downstream code stays unchanged.
+type UsageByTypeRow = {
+  _id: { type: string | null; status: string | null };
+  count: number;
+  cost: number;
+  tokens: number;
+};
+
+type UsageByMinuteRow = {
+  _id: { minute: string; type: string };
+  count: number;
+};
+
+type RecentActivityRow = {
+  type?: string | null;
+  status?: string | null;
+  book_id?: string | null;
+  model?: string | null;
+  cost_usd?: number | null;
+  timestamp: string | Date;
+};
 
 export const maxDuration = 15;
 
@@ -57,33 +81,98 @@ export const GET = withAdminAuth(async (request, session) => {
         .toArray(),
 
       // 3. Gemini usage last hour by type+status
-      db.collection('gemini_usage').aggregate([
-        { $match: { timestamp: { $gte: oneHourAgo } } },
-        {
-          $group: {
-            _id: { type: '$type', status: '$status' },
-            count: { $sum: 1 },
-            cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
-            tokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
+      // Supabase is the primary store since 2026-04-10 (issue #567 Phase 3).
+      // Aggregate in JS — PostgREST has no GROUP BY equivalent.
+      (async (): Promise<UsageByTypeRow[]> => {
+        if (supabaseAdmin) {
+          const { data, error } = await supabaseAdmin
+            .from('gemini_usage')
+            .select('type, status, cost_usd, input_tokens, output_tokens')
+            .gte('timestamp', oneHourAgo.toISOString())
+            .limit(50000);
+          if (error) {
+            console.warn('[admin/realtime] Supabase usageByType failed:', error.message);
+            return [];
+          }
+          const groups = new Map<string, UsageByTypeRow>();
+          for (const r of data || []) {
+            const key = `${r.type ?? 'null'}|${r.status ?? 'null'}`;
+            const existing = groups.get(key);
+            const tokens = (r.input_tokens ?? 0) + (r.output_tokens ?? 0);
+            if (existing) {
+              existing.count++;
+              existing.cost += r.cost_usd ?? 0;
+              existing.tokens += tokens;
+            } else {
+              groups.set(key, {
+                _id: { type: r.type ?? null, status: r.status ?? null },
+                count: 1,
+                cost: r.cost_usd ?? 0,
+                tokens,
+              });
+            }
+          }
+          return Array.from(groups.values()).sort((a, b) => b.count - a.count);
+        }
+        return db.collection('gemini_usage').aggregate([
+          { $match: { timestamp: { $gte: oneHourAgo } } },
+          {
+            $group: {
+              _id: { type: '$type', status: '$status' },
+              count: { $sum: 1 },
+              cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+              tokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
+            },
           },
-        },
-        { $sort: { count: -1 } },
-      ]).toArray(),
+          { $sort: { count: -1 } },
+        ]).toArray() as Promise<UsageByTypeRow[]>;
+      })(),
 
       // 4. Throughput: pages processed per minute (last 30 min)
-      db.collection('gemini_usage').aggregate([
-        { $match: { timestamp: { $gte: new Date(Date.now() - 30 * 60 * 1000) }, status: 'success' } },
-        {
-          $group: {
-            _id: {
-              minute: { $dateToString: { format: '%H:%M', date: '$timestamp' } },
-              type: '$type',
+      (async (): Promise<UsageByMinuteRow[]> => {
+        const cutoff = new Date(Date.now() - 30 * 60 * 1000);
+        if (supabaseAdmin) {
+          const { data, error } = await supabaseAdmin
+            .from('gemini_usage')
+            .select('type, timestamp')
+            .gte('timestamp', cutoff.toISOString())
+            .eq('status', 'success')
+            .limit(50000);
+          if (error) {
+            console.warn('[admin/realtime] Supabase usageByMinute failed:', error.message);
+            return [];
+          }
+          const groups = new Map<string, UsageByMinuteRow>();
+          for (const r of data || []) {
+            // timestamp comes back as ISO; format as HH:MM in UTC to match the
+            // MongoDB $dateToString default (which is UTC).
+            const ts = new Date(r.timestamp);
+            const minute = `${String(ts.getUTCHours()).padStart(2, '0')}:${String(ts.getUTCMinutes()).padStart(2, '0')}`;
+            const type = r.type ?? 'unknown';
+            const key = `${minute}|${type}`;
+            const existing = groups.get(key);
+            if (existing) {
+              existing.count++;
+            } else {
+              groups.set(key, { _id: { minute, type }, count: 1 });
+            }
+          }
+          return Array.from(groups.values()).sort((a, b) => a._id.minute.localeCompare(b._id.minute));
+        }
+        return db.collection('gemini_usage').aggregate([
+          { $match: { timestamp: { $gte: cutoff }, status: 'success' } },
+          {
+            $group: {
+              _id: {
+                minute: { $dateToString: { format: '%H:%M', date: '$timestamp' } },
+                type: '$type',
+              },
+              count: { $sum: 1 },
             },
-            count: { $sum: 1 },
           },
-        },
-        { $sort: { '_id.minute': 1 } },
-      ]).toArray(),
+          { $sort: { '_id.minute': 1 } },
+        ]).toArray() as Promise<UsageByMinuteRow[]>;
+      })(),
 
       // 5. Pipeline funnel
       db.collection('books').aggregate([
@@ -93,19 +182,35 @@ export const GET = withAdminAuth(async (request, session) => {
       ]).toArray(),
 
       // 6. Most recent AI calls (activity feed)
-      db.collection('gemini_usage')
-        .find(
-          { timestamp: { $gte: fiveMinAgo } },
-          {
-            projection: {
-              type: 1, status: 1, book_id: 1, model: 1,
-              cost_usd: 1, timestamp: 1,
-            },
+      (async (): Promise<RecentActivityRow[]> => {
+        if (supabaseAdmin) {
+          const { data, error } = await supabaseAdmin
+            .from('gemini_usage')
+            .select('type, status, book_id, model, cost_usd, timestamp')
+            .gte('timestamp', fiveMinAgo.toISOString())
+            .order('timestamp', { ascending: false })
+            .limit(30);
+          if (error) {
+            console.warn('[admin/realtime] Supabase recentActivity failed:', error.message);
+            return [];
           }
-        )
-        .sort({ timestamp: -1 })
-        .limit(30)
-        .toArray(),
+          return (data || []) as RecentActivityRow[];
+        }
+        const docs = await db.collection('gemini_usage')
+          .find(
+            { timestamp: { $gte: fiveMinAgo } },
+            {
+              projection: {
+                type: 1, status: 1, book_id: 1, model: 1,
+                cost_usd: 1, timestamp: 1,
+              },
+            }
+          )
+          .sort({ timestamp: -1 })
+          .limit(30)
+          .toArray();
+        return docs as unknown as RecentActivityRow[];
+      })(),
 
       // 7. Recently completed books (pipeline reached 'complete' in last 2 hours)
       db.collection('books')

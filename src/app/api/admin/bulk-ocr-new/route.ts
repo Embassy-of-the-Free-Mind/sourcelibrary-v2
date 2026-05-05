@@ -242,7 +242,9 @@ export async function GET(request: NextRequest) {
             input_tokens: 0,
             output_tokens: 0,
             status: 'submitted',
+            prompt_version: PROMPT_VERSION,
             endpoint: '/api/admin/bulk-ocr-new',
+            triggered_by: 'cron',
           });
         } catch (error) {
           console.error(`[bulk-ocr-new] Batch submit error for ${label}:`, error);
