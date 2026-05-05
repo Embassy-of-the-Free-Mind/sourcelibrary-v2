@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
@@ -77,11 +78,19 @@ interface BatchExtraction {
 
 const TARGET_BATCH_CHARS = 50000; // ~12k tokens, leaves room for prompt
 
+// Inline prompt version — bump when the prompt strings in this file change.
+// Tracks index/summary generation prompts. Logged with each Gemini call so
+// regeneration history can be reconstructed even though these prompts are
+// not stored in the `prompts` collection.
+const INDEX_PROMPT_VERSION = 'inline-2026-05';
+
 // Process a batch of pages to extract structured information
 async function processBatch(
   pages: PageData[],
   bookTitle: string,
   bookAuthor: string,
+  bookId: string,
+  triggeredBy: import('@/lib/gemini-logger').GeminiTrigger,
   bookLanguage?: string
 ): Promise<BatchExtraction> {
   const model = genAI.getGenerativeModel({
@@ -162,11 +171,14 @@ CRITICAL for quotes:
       type: 'index',
       mode: 'realtime',
       model: 'gemini-3.1-flash-lite-preview',
+      book_id: bookId,
       page_count: pages.length,
       input_tokens: usageMetadata?.promptTokenCount || 0,
       output_tokens: usageMetadata?.candidatesTokenCount || 0,
       status: 'success',
-      endpoint: '/api/books/[id]/index (processBatch)',
+      prompt_version: INDEX_PROMPT_VERSION,
+      endpoint: '/api/[tenant]/books/[id]/index (processBatch)',
+      triggered_by: triggeredBy,
     }).catch(console.error); // Non-blocking
 
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
@@ -272,6 +284,8 @@ async function processAllBatches(
   pages: PageData[],
   bookTitle: string,
   bookAuthor: string,
+  bookId: string,
+  triggeredBy: import('@/lib/gemini-logger').GeminiTrigger,
   bookLanguage?: string,
   chapterTexts?: ChapterText[]
 ): Promise<BatchExtraction[]> {
@@ -290,7 +304,7 @@ async function processAllBatches(
     const end = batchPages[batchPages.length - 1].page_number;
     console.log(`  Batch ${i + 1}: pages ${start}-${end} (${batchPages.length} pages)`);
 
-    return processBatch(batchPages, bookTitle, bookAuthor, bookLanguage);
+    return processBatch(batchPages, bookTitle, bookAuthor, bookId, triggeredBy, bookLanguage);
   });
 
   const results = await Promise.all(batchPromises);
@@ -619,6 +633,8 @@ async function generateBookSummary(
   batchExtractions: BatchExtraction[],
   bookTitle: string,
   bookAuthor: string,
+  bookId: string,
+  triggeredBy: import('@/lib/gemini-logger').GeminiTrigger,
   bookLanguage?: string,
   researchContext?: string,
   chapters?: ChapterInfo[]
@@ -746,11 +762,14 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
     type: 'summary',
     mode: 'realtime',
     model: 'gemini-3.1-flash-lite-preview',
+    book_id: bookId,
     page_count: batchExtractions.length, // Number of batch sections processed
     input_tokens: usageMetadata?.promptTokenCount || 0,
     output_tokens: usageMetadata?.candidatesTokenCount || 0,
     status: 'success',
-    endpoint: '/api/books/[id]/index (generateBookSummary)',
+    prompt_version: INDEX_PROMPT_VERSION,
+    endpoint: '/api/[tenant]/books/[id]/index (generateBookSummary)',
+    triggered_by: triggeredBy,
   }).catch(console.error); // Non-blocking
 
   // Parse JSON from response
@@ -1115,6 +1134,7 @@ export async function GET(
     const { tenant, id } = await params;
     const db = await getDb();
     const tenantId = await resolveTenantId(tenant);
+    const triggeredBy = getTriggerSource(request);
 
     if (!tenantId) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -1180,6 +1200,8 @@ export async function GET(
       pages,
       bookTitle,
       bookAuthor,
+      id,
+      triggeredBy,
       book.language || undefined,
       useChapters ? chapterTexts : undefined
     );
@@ -1209,6 +1231,8 @@ export async function GET(
           batchExtractions,
           bookTitle,
           bookAuthor,
+          id,
+          triggeredBy,
           book.language || undefined,
           researchContext || undefined,
           chapters.length > 0 ? chapters : undefined

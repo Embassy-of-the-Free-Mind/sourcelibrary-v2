@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
@@ -40,6 +41,7 @@ function getAiClient(keyIndex: number): GoogleGenAI {
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { tenant, id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
@@ -220,7 +222,9 @@ export const POST = withAuth(async (request, session, context) => {
       input_tokens: 0, // Not available until job completes
       output_tokens: 0,
       status: 'submitted',
-      endpoint: '/api/books/[id]/batch-translate-async',
+      prompt_version: PROMPT_VERSION,
+      endpoint: '/api/[tenant]/books/[id]/batch-translate-async',
+      triggered_by: triggeredBy,
     });
 
     return NextResponse.json({
@@ -249,6 +253,7 @@ export const POST = withAuth(async (request, session, context) => {
 export const GET = withAuth(async (request, session, context) => {
   try {
     const { tenant, id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const { searchParams } = new URL(request.url);
     const jobName = searchParams.get('jobName');
 
@@ -404,7 +409,9 @@ export const GET = withAuth(async (request, session, context) => {
           input_tokens: totalInputTokens,
           output_tokens: totalOutputTokens,
           status: successCount > 0 ? 'success' : 'failed',
-          endpoint: '/api/books/[id]/batch-translate-async',
+          prompt_version: jobDoc.prompt_version || PROMPT_VERSION,
+          endpoint: '/api/[tenant]/books/[id]/batch-translate-async',
+          triggered_by: triggeredBy,
         });
 
         return NextResponse.json({

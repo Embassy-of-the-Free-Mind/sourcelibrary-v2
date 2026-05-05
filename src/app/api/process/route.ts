@@ -6,6 +6,7 @@ import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookup
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { contentHash } from '@/lib/steganographia';
@@ -37,6 +38,7 @@ async function recordProcessingMetric(
 
 export const POST = withAuth(async (request: NextRequest) => {
   try {
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json();
     const {
       pageId,
@@ -435,8 +437,16 @@ export const POST = withAuth(async (request: NextRequest) => {
       const typeMap: Record<string, 'ocr' | 'translation' | 'summary'> = {
         ocr: 'ocr', translation: 'translation', summary: 'summary', all: 'ocr',
       };
+      const loggedType = typeMap[action] || 'ocr';
+      const promptRef =
+        loggedType === 'ocr' ? promptRefs.ocr :
+        loggedType === 'translation' ? promptRefs.translation :
+        promptRefs.summary;
+      const promptVersion = promptRef?.reference?.version
+        ? String(promptRef.reference.version)
+        : PROMPT_VERSION;
       logGeminiCall({
-        type: typeMap[action] || 'ocr',
+        type: loggedType,
         mode: 'realtime',
         model,
         book_id: page?.book_id,
@@ -444,7 +454,9 @@ export const POST = withAuth(async (request: NextRequest) => {
         input_tokens: totalUsage.inputTokens,
         output_tokens: totalUsage.outputTokens,
         status: 'success',
+        prompt_version: promptVersion,
         endpoint: '/api/process',
+        triggered_by: triggeredBy,
       });
     }
 

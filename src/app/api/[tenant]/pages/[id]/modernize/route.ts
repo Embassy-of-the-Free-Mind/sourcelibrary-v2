@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { performModernization } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { resolveTenantId } from '@/lib/tenant-context';
 
 // Simple hash function to detect translation changes
@@ -24,6 +25,7 @@ export async function POST(
 
   try {
     const { tenant, id } = await params;
+    const triggeredBy = getTriggerSource(request);
     const db = await getDb();
     
     // Resolve tenant slug to UUID
@@ -115,7 +117,9 @@ export async function POST(
       output_tokens: result.usage.outputTokens,
       status: 'success',
       duration_ms: duration,
+      prompt_version: 'modernize-inline-v1',
       endpoint: '/api/[tenant]/pages/[id]/modernize',
+      triggered_by: triggeredBy,
     });
 
     return NextResponse.json({

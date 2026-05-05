@@ -15,7 +15,7 @@
 
 import { Db } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { logGeminiCall } from './gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 
 const EMBEDDING_MODEL = 'gemini-embedding-001';
 const BATCH_SIZE = 5;
@@ -177,6 +177,7 @@ function extractOcrWarnings(ocrData: string): string[] {
 export async function scoreBookAlignment(
   db: Db,
   bookId: string,
+  options?: { triggered_by?: GeminiTrigger },
 ): Promise<ScoreResult> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -288,7 +289,9 @@ export async function scoreBookAlignment(
     output_tokens: 0,
     status: 'success',
     duration_ms: durationMs,
+    prompt_version: 'semantic-alignment-v1',
     endpoint: 'semantic-alignment',
+    triggered_by: options?.triggered_by,
   });
 
   return {

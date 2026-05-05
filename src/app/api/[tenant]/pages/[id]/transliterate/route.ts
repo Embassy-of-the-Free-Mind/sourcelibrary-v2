@@ -5,6 +5,7 @@ import { resolveTenantId } from '@/lib/tenant-context';
 
 const TRANSLITERATION_MODEL = 'gemini-3-flash-preview';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 
 // Simple hash function to detect OCR changes
 function hashString(str: string): string {
@@ -50,14 +51,15 @@ export async function POST(
 
   try {
     const { tenant, id } = await params;
+    const triggeredBy = getTriggerSource(request);
     const db = await getDb();
-    
+
     // Resolve tenant slug to UUID
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    
+
     const body = await request.json().catch(() => ({}));
 
     const { regenerate = false, model = TRANSLITERATION_MODEL } = body;
@@ -128,7 +130,9 @@ export async function POST(
       output_tokens: result.usage.outputTokens,
       status: 'success',
       duration_ms: duration,
+      prompt_version: 'transliterate-inline-v1',
       endpoint: '/api/[tenant]/pages/[id]/transliterate',
+      triggered_by: triggeredBy,
     });
 
     return NextResponse.json({

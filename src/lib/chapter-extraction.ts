@@ -12,7 +12,7 @@
  */
 
 import { getGeminiClient } from '@/lib/gemini-client';
-import { logGeminiCall } from '@/lib/gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { computeEndPages } from '@/lib/chapter-text';
@@ -232,6 +232,7 @@ export interface ChapterExtractionResult {
 export async function extractChaptersForBook(
   db: Awaited<ReturnType<typeof import('@/lib/mongodb').getDb>>,
   bookId: string,
+  options?: { triggered_by?: GeminiTrigger },
 ): Promise<ChapterExtractionResult> {
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) {
@@ -393,7 +394,9 @@ export async function extractChaptersForBook(
     input_tokens: inputTokens,
     output_tokens: outputTokens,
     status: 'success',
+    prompt_version: 'chapter-extraction-v1',
     endpoint: 'chapter-extraction',
+    triggered_by: options?.triggered_by,
   }).catch(() => {}); // non-blocking
 
   return {

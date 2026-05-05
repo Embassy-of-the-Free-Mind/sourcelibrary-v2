@@ -3,6 +3,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
@@ -149,6 +150,7 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
@@ -386,7 +388,9 @@ export const POST = withAuth(async (request, session, context) => {
         input_tokens: 0,
         output_tokens: 0,
         status: 'submitted',
+        prompt_version: PROMPT_VERSION,
         endpoint: '/api/books/[id]/batch-ocr-async',
+        triggered_by: triggeredBy,
         pages_per_request: effectivePPR,
       });
 
@@ -502,7 +506,9 @@ export const POST = withAuth(async (request, session, context) => {
       input_tokens: 0,
       output_tokens: 0,
       status: 'submitted',
+      prompt_version: PROMPT_VERSION,
       endpoint: '/api/books/[id]/batch-ocr-async',
+      triggered_by: triggeredBy,
       pages_per_request: effectivePPR,
     });
 
@@ -538,6 +544,7 @@ export const POST = withAuth(async (request, session, context) => {
 export const GET = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const { searchParams } = new URL(request.url);
     const jobName = searchParams.get('jobName');
 
@@ -734,7 +741,9 @@ export const GET = withAuth(async (request, session, context) => {
           input_tokens: totalInputTokens,
           output_tokens: totalOutputTokens,
           status: successCount > 0 ? 'success' : 'failed',
+          prompt_version: jobDoc.prompt_version || PROMPT_VERSION,
           endpoint: '/api/books/[id]/batch-ocr-async',
+          triggered_by: triggeredBy,
           pages_per_request: jobDoc.pages_per_request,
         });
 

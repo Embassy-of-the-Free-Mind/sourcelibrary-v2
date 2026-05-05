@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import {
   extractWithGemini,
   extractWithMistral,
@@ -19,6 +20,7 @@ import { withAuth } from '@/lib/auth-helpers';
 
 export const POST = withAuth(async (request, session) => {
   try {
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json();
     const limit = Math.min(body.limit || 5, 20); // Max 20 pages
     const bookId = body.bookId;
@@ -175,7 +177,9 @@ export const POST = withAuth(async (request, session) => {
         input_tokens: totalInputTokens,
         output_tokens: totalOutputTokens,
         status: errors > 0 ? 'failed' : 'success',
+        prompt_version: 'extract-images-v1',
         endpoint: '/api/extract-images',
+        triggered_by: triggeredBy,
       });
     }
 

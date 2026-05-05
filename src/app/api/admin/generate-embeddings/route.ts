@@ -7,6 +7,7 @@ import {
   type GalleryEmbedding,
 } from '@/lib/embeddings';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
@@ -26,6 +27,7 @@ export const preferredRegion = 'fra1';
  */
 export const POST = withAdminAuth(async (request, session) => {
   try {
+    const triggeredBy = getTriggerSource(request);
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '200'), 1000);
     const bookId = searchParams.get('bookId');
@@ -179,11 +181,14 @@ export const POST = withAdminAuth(async (request, session) => {
         type: 'other',
         mode: 'realtime',
         model: EMBEDDING_MODEL,
+        book_id: bookId || undefined,
         page_count: processed,
         input_tokens: totalTokens,
         output_tokens: 0,
         status: 'success',
+        prompt_version: 'gallery-embedding-v1',
         endpoint: '/api/admin/generate-embeddings',
+        triggered_by: triggeredBy,
       }).catch(() => {}); // Non-blocking
     }
 

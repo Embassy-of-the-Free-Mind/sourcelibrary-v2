@@ -21,7 +21,7 @@
 
 import { Db } from 'mongodb';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
-import { logGeminiCall } from './gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 import { logMetadataChange } from './book-changelog';
 
 const MODEL = 'gemini-3.1-flash-lite-preview';
@@ -832,7 +832,7 @@ export async function verifyFirstTranslationFromMetadata(
 export async function verifyFirstTranslation(
   db: Db,
   bookId: string,
-  options?: { dryRun?: boolean; force?: boolean; collection?: 'books' | 'books_warehouse' },
+  options?: { dryRun?: boolean; force?: boolean; collection?: 'books' | 'books_warehouse'; triggered_by?: GeminiTrigger },
 ): Promise<VerificationResult> {
   const startTime = Date.now();
   const booksCol = options?.collection || 'books';
@@ -920,7 +920,9 @@ export async function verifyFirstTranslation(
       output_tokens: result.tokens?.output || 0,
       status: 'success',
       duration_ms: durationMs,
+      prompt_version: 'ft-verify-tool-calling-v1',
       endpoint: 'lib/verify-first-translation',
+      triggered_by: options?.triggered_by,
     });
 
     // Log metadata change

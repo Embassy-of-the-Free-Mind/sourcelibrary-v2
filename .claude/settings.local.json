@@ -10,7 +10,11 @@
       "mcp__claude_ai_Source_Library__search_translations",
       "mcp__claude_ai_Source_Library__search_within_book",
       "mcp__claude_ai_Source_Library__search_library",
-      "mcp__claude_ai_Source_Library__get_book_text"
+      "mcp__claude_ai_Source_Library__get_book_text",
+      "Bash(cp /Users/dereklomas/sourcelibrary/.claude/docs/papers/magic-in-the-machine/paper.pdf \"/Users/dereklomas/Downloads/the-magic-in-the-machine.pdf\")",
+      "Bash(open \"/Users/dereklomas/Downloads/the-magic-in-the-machine.pdf\")",
+      "mcp__claude_ai_Gmail__search_threads",
+      "mcp__claude_ai_Gmail__get_thread"
     ]
   }
 }
