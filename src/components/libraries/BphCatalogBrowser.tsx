@@ -263,6 +263,17 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
     return null;
   };
 
+  // Detail-page URL for a catalog entry. On the BPH subdomain this resolves to
+  // /catalog/{ubn} (rewritten to /embed/bph/catalog/{ubn}); on the main site it
+  // resolves to the same path nested under the library page basePath.
+  const detailUrl = (ubn: string) => {
+    // basePath examples: "/embed/bph", "/libraries/bibliotheca-philosophica-hermetica"
+    if (basePath === '/embed/bph' || basePath === '/embed/bph/') {
+      return `/catalog/${encodeURIComponent(ubn)}`;
+    }
+    return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(ubn)}`;
+  };
+
   return (
     <div>
       {/* Simple search row */}
@@ -418,17 +429,22 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
                   >
                     <td className="px-3 py-2 align-top">
                       <div className="font-medium text-primary leading-snug">
-                        {digitized ? (
-                          <a
-                            href={tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)}
-                            className="hover:text-accent-rust transition-colors"
-                          >
-                            {displayTitle}
-                          </a>
-                        ) : (
-                          displayTitle
-                        )}
+                        <a
+                          href={digitized ? tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug) : detailUrl(w.ubn)}
+                          className="hover:text-accent-rust transition-colors"
+                        >
+                          {displayTitle}
+                        </a>
                       </div>
+                      {digitized && (
+                        <a
+                          href={tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)}
+                          className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
+                        >
+                          <BookMarked className="w-3 h-3" />
+                          Read on Source Library
+                        </a>
+                      )}
                       {/* Mobile: show author + place inline */}
                       <div className="text-xs text-muted sm:hidden mt-0.5">
                         {displayAuthor}{w.place ? ` · ${w.place}` : ''}

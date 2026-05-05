@@ -129,8 +129,12 @@ export default function SharedLibraryView({
   const hasExternalPartnerUrl = /^https?:\/\//i.test(externalPartnerUrl);
   const embedPolicy = getEmbedUiPolicy(embed);
 
-  // BPH shows: Selected Books + Catalog by default, full grid on ?view=books
+  // BPH layout modes:
+  //   view === 'books'   → full books grid only (digitized SL books)
+  //   view === 'catalog' → catalog browser only (full 27,706-work catalog, no Selected Books)
+  //   default            → Selected Books + Catalog combo (the main-site landing experience)
   const showBooksGrid = !isBph || view === 'books';
+  const showSelectedBooksRow = isBph && view !== 'books' && view !== 'catalog';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -373,10 +377,10 @@ export default function SharedLibraryView({
             )}
           </>
         ) : (
-          /* BPH default: Selected Books + Catalog */
+          /* BPH: Catalog (with optional Selected Books on the default landing) */
           <div>
-            {/* Selected Books row */}
-            {topBooks.length > 0 && (
+            {/* Selected Books row — hidden on the dedicated /catalog view */}
+            {showSelectedBooksRow && topBooks.length > 0 && (
               <div className="mb-10">
                 <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">
                   Selected Books
