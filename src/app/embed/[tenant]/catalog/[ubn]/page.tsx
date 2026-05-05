@@ -196,7 +196,7 @@ export default async function CatalogEntryPage({ params }: Props) {
           <section className="mb-8 p-5 rounded-lg border border-accent-rust/30 bg-white">
             <div className="flex items-center gap-2 mb-3">
               <BookMarked className="w-4 h-4 text-accent-rust" />
-              <h2 className="text-sm font-medium text-accent-rust uppercase tracking-wide">Digital edition on Source Library</h2>
+              <h2 className="text-sm font-medium text-accent-rust uppercase tracking-wide">Digitized copy</h2>
             </div>
 
             {slBook.display_title && slBook.display_title !== work.title && (
@@ -259,7 +259,7 @@ export default async function CatalogEntryPage({ params }: Props) {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
             >
               <BookOpen className="w-4 h-4" />
-              Read full text on Source Library
+              Read the digitized copy
             </a>
           </section>
         )}
