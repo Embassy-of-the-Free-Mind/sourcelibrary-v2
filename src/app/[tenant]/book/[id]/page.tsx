@@ -1036,7 +1036,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
           }
           return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
-        <AuthCheck role="admin">
+        <AuthCheck role="inner_circle">
           <BookHistory bookId={book.id} />
         </AuthCheck>
       </main>
