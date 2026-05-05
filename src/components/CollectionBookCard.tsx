@@ -126,38 +126,37 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           <p className="text-sm text-secondary mb-3 line-clamp-1"><AuthorName author={book.author} /></p>
 
           <div className="flex flex-wrap gap-2 text-xs text-muted">
-            {book.year > 0 && (
-              <span className="flex items-center gap-1">
-                <Calendar className="w-3 h-3" />
-                {book.year}
-              </span>
-            )}
-            {isArtwork ? (
-              <>{book.resource_type && (
-                <>
-                  <span>•</span>
-                  <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span>
-                </>
-              )}</>
-            ) : (
-              <>
-                {pageCount > 0 && (
-                  <>
-                    <span>•</span>
-                    <span className="flex items-center gap-1">
+            {(() => {
+              const chips: React.ReactNode[] = [];
+              if (book.year > 0) {
+                chips.push(
+                  <span key="year" className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {book.year}
+                  </span>
+                );
+              }
+              if (isArtwork) {
+                if (book.resource_type) {
+                  chips.push(
+                    <span key="type" className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span>
+                  );
+                }
+              } else {
+                if (pageCount > 0) {
+                  chips.push(
+                    <span key="pages" className="flex items-center gap-1">
                       <FileText className="w-3 h-3" />
                       {pageCount} pages
                     </span>
-                  </>
-                )}
-                {book.language && (
-                  <>
-                    <span>•</span>
-                    <span>{book.language}</span>
-                  </>
-                )}
-              </>
-            )}
+                  );
+                }
+                if (book.language) {
+                  chips.push(<span key="lang">{book.language}</span>);
+                }
+              }
+              return chips.flatMap((chip, i) => i === 0 ? [chip] : [<span key={`sep-${i}`}>•</span>, chip]);
+            })()}
           </div>
         </div>
       </div>
