@@ -251,7 +251,9 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
     // Allowed fields to update
     const allowedFields = [
       'title', 'display_title', 'author', 'language', 'published',
-      'thumbnail', 'thumbnail_blob', 'thumbnail_source', 'categories', 'status', 'summary', 'dublin_core',
+      'thumbnail', 'thumbnail_blob', 'thumbnail_source',
+      'image_display', 'image_thumb', 'image_full', 'image_source_url',
+      'categories', 'status', 'summary', 'dublin_core',
       // USTC catalog fields
       'ustc_id', 'place_published', 'publisher', 'format',
       // Image source and licensing
