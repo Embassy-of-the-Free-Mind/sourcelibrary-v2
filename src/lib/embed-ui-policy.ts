@@ -7,6 +7,12 @@ export interface EmbedUiPolicy {
   showTranslationMethodologyLink: boolean;
   showExternalLinks: boolean;
   showGalleryImages: boolean;
+  // BPH lockdown: these widgets render data from across the global library
+  // (RelatedEditions queries every book with the same work_id; AuthorCrossReference
+  // renders pre-computed artwork/book lists that are not tenant-filtered). Hiding
+  // them in embed mode is the simplest way to guarantee no non-tenant content leaks.
+  showRelatedEditions: boolean;
+  showAuthorCrossReference: boolean;
 }
 
 export function getEmbedUiPolicy(isEmbedded: boolean): EmbedUiPolicy {
@@ -20,6 +26,8 @@ export function getEmbedUiPolicy(isEmbedded: boolean): EmbedUiPolicy {
       showTranslationMethodologyLink: true,
       showExternalLinks: true,
       showGalleryImages: true,
+      showRelatedEditions: true,
+      showAuthorCrossReference: true,
     };
   }
 
@@ -32,5 +40,7 @@ export function getEmbedUiPolicy(isEmbedded: boolean): EmbedUiPolicy {
     showTranslationMethodologyLink: false,
     showExternalLinks: false,
     showGalleryImages: false,
+    showRelatedEditions: false,
+    showAuthorCrossReference: false,
   };
 }

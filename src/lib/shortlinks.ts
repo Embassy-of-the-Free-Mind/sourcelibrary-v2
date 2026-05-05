@@ -118,17 +118,34 @@ export function decodeShortlink(code: string): { bookId: string; pageNumber: num
  * @param bookId - Book ID (24-char ObjectId or UUID)
  * @param pageNumber - Page number for shortlink encoding
  * @param pageId - Optional page ID for fallback URL (required for UUID book IDs)
+ * @param baseUrl - Optional base URL (e.g. "https://bph.sourcelibrary.org") used for tenant subdomains.
+ *                  Defaults to https://sourcelibrary.org so existing API consumers are unchanged.
  */
-export function getShortUrl(bookId: string, pageNumber: number, pageId?: string): string {
+export function getShortUrl(bookId: string, pageNumber: number, pageId?: string, baseUrl?: string): string {
+  const base = (baseUrl || 'https://sourcelibrary.org').replace(/\/+$/, '');
   // Only encode shortlinks for 24-char hex ObjectIds
   if (/^[a-f0-9]{24}$/i.test(bookId)) {
     const code = encodeShortlink(bookId, pageNumber);
-    return `https://sourcelibrary.org/q/${code}`;
+    return `${base}/q/${code}`;
   }
   // Fallback to regular URL for UUIDs or other ID formats
   if (pageId) {
-    return `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;
+    return `${base}/book/${bookId}/page/${pageId}`;
   }
   // Last resort: link to book page (user can navigate to specific page)
-  return `https://sourcelibrary.org/book/${bookId}#page-${pageNumber}`;
+  return `${base}/book/${bookId}#page-${pageNumber}`;
+}
+
+/**
+ * Build a tenant-safe base URL from a NextRequest's host header.
+ * Used by the quote API so citations rendered on bph.sourcelibrary.org link
+ * back to bph.sourcelibrary.org rather than the main site.
+ */
+export function getRequestBaseUrl(headers: Headers): string {
+  const host = headers.get('x-forwarded-host') || headers.get('host') || '';
+  if (!host || /[^a-z0-9.\-:]/i.test(host)) {
+    return 'https://sourcelibrary.org';
+  }
+  const proto = headers.get('x-forwarded-proto') || 'https';
+  return `${proto}://${host}`;
 }
