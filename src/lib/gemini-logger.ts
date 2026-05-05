@@ -74,6 +74,8 @@ const BATCH_DISCOUNT = 0.5;
 export type GeminiCallType = 'ocr' | 'translation' | 'transliterate' | 'summary' | 'extract_images' | 'extract_chapters' | 'index' | 'ft_verification' | 'other';
 export type GeminiMode = 'realtime' | 'batch';
 export type GeminiStatus = 'success' | 'failed' | 'pending' | 'submitted';
+/** Provenance: who/what kicked off the call. `cron` = scheduled job, `manual` = HTTP-triggered admin action, `auto_recovery` = Lambda re-runner, `worker` = unattended worker loop. */
+export type GeminiTrigger = 'cron' | 'manual' | 'auto_recovery' | 'worker' | 'unknown';
 
 export interface GeminiUsageLog {
   id?: string;
@@ -109,6 +111,7 @@ export interface GeminiUsageLog {
   // Metadata
   prompt_version?: string;
   endpoint?: string;  // Which API route triggered this
+  triggered_by?: GeminiTrigger;  // Provenance source attribution (defaults to 'unknown' if unset)
 
   // Multi-page OCR params
   pages_per_request?: number;  // >1 means multi-page mode (N images per Gemini request)
@@ -155,6 +158,7 @@ export async function logGeminiCall(params: {
   error_category?: string;
   prompt_version?: string;
   endpoint?: string;
+  triggered_by?: GeminiTrigger;
   pages_per_request?: number;
 }): Promise<void> {
   try {
@@ -199,6 +203,7 @@ export async function logGeminiCall(params: {
       error_category: params.error_category,
       prompt_version: params.prompt_version,
       endpoint: params.endpoint,
+      triggered_by: params.triggered_by || (process.env.TRIGGER_SOURCE as GeminiTrigger | undefined) || 'unknown',
       ...(params.pages_per_request && params.pages_per_request > 1 && { pages_per_request: params.pages_per_request }),
     };
 
@@ -224,6 +229,7 @@ export async function logGeminiCall(params: {
         job_id: log.job_id || null,
         batch_job_id: log.batch_job_id || null,
         endpoint: log.endpoint || null,
+        triggered_by: log.triggered_by || null,
         completed_at: null,
       });
       if (error) console.warn('[gemini-logger] Supabase write failed:', error.message);

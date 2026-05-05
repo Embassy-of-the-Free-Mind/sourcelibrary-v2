@@ -23,6 +23,7 @@ interface HistoryEvent {
   version?: string;
   doi?: string;
   action?: string;
+  triggered_by?: string;
 }
 
 interface HistoryResponse {
@@ -213,6 +214,14 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
                                   <>
                                     <span className="text-stone-300">·</span>
                                     <span>{formatCost(event.cost_usd)}</span>
+                                  </>
+                                )}
+                                {event.triggered_by && event.triggered_by !== 'unknown' && (
+                                  <>
+                                    <span className="text-stone-300">·</span>
+                                    <span title="Provenance: who/what triggered this event">
+                                      {event.triggered_by}
+                                    </span>
                                   </>
                                 )}
                                 {event.doi && (
