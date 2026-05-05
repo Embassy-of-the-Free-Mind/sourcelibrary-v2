@@ -5,8 +5,8 @@ export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 50;
 
-// Fields exposed to the public catalog UI.
-const PUBLIC_FIELDS = [
+// New (expanded) field set — requires expand-bph-works-schema.sql to have been run.
+const FIELDS_NEW = [
   'ubn',
   'title', 'parallel_title', 'uniform_title',
   'author', 'variant_author', 'pseudonym',
@@ -24,10 +24,28 @@ const PUBLIC_FIELDS = [
   'ia_identifier', 'ustc_sn',
 ].join(', ');
 
+// Legacy field set — works against the original 11-column bph_works schema.
+const FIELDS_LEGACY = 'ubn, title, author, year, shelf_mark, keywords, ia_identifier, ustc_sn, place, publisher, printer';
+
+// Cache the schema mode for the lifetime of the runtime.
+let schemaMode: 'new' | 'legacy' | null = null;
+
+function isMissingColumnError(err: { message?: string; code?: string }): boolean {
+  if (!err) return false;
+  // PostgREST surfaces "column foo does not exist" / "could not find the column"
+  const msg = (err.message || '').toLowerCase();
+  return (
+    msg.includes('does not exist') ||
+    msg.includes('could not find the') ||
+    msg.includes('column') && msg.includes('not found') ||
+    err.code === '42703'
+  );
+}
+
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
 
-  // Simple search — searches all fields via tsvector.
+  // Simple search.
   const q = sp.get('q')?.trim() || '';
 
   // Per-field advanced search.
@@ -42,108 +60,129 @@ export async function GET(req: NextRequest) {
   const shelfMark = sp.get('shelf_mark')?.trim() || '';
   const provenance = sp.get('provenance')?.trim() || '';
 
-  // Year range (USTC-style).
   const yearFrom = sp.get('yearFrom') ? parseInt(sp.get('yearFrom')!, 10) : null;
   const yearTo = sp.get('yearTo') ? parseInt(sp.get('yearTo')!, 10) : null;
 
-  // Filters.
   const digitized = sp.get('digitized'); // 'true' | 'false' | 'sl' | null
 
   const sort = sp.get('sort') || 'title';
   const offset = Math.max(0, parseInt(sp.get('offset') || '0', 10) || 0);
   const limit = Math.min(200, Math.max(1, parseInt(sp.get('limit') || String(PER_PAGE), 10) || PER_PAGE));
 
-  let query = supabase
-    .from('bph_works')
-    .select(PUBLIC_FIELDS, { count: 'exact' });
+  // Run the query in the requested mode. Returns the supabase result object.
+  async function runQuery(mode: 'new' | 'legacy') {
+    const fields = mode === 'new' ? FIELDS_NEW : FIELDS_LEGACY;
+    let query = supabase.from('bph_works').select(fields, { count: 'exact' });
 
-  // Simple search — full-text across all fields.
-  if (q.length >= 2) {
-    const safe = sanitizeFilterValue(q);
-    // Quote each token, join with & for AND-match in plainto_tsquery semantics.
-    // websearch_to_tsquery handles user input safely (quotes, OR, -word).
-    query = query.textSearch('search_tsv', safe, { type: 'websearch', config: 'simple' });
-  }
-
-  // Per-field ilike filters (advanced search).
-  // Each filter is treated as a substring match for resilience to spelling/spacing variants.
-  const ilikeFilter = (col: string, val: string) => {
-    if (!val) return;
-    // Match either the standard column or its variant counterpart.
-    const safe = sanitizeFilterValue(val);
-    if (col === 'author') {
-      query = query.or(`author.ilike.%${safe}%,variant_author.ilike.%${safe}%,pseudonym.ilike.%${safe}%`);
-    } else if (col === 'title') {
-      query = query.or(`title.ilike.%${safe}%,parallel_title.ilike.%${safe}%,uniform_title.ilike.%${safe}%`);
-    } else if (col === 'editor') {
-      query = query.or(`editor.ilike.%${safe}%,variant_editor.ilike.%${safe}%`);
-    } else if (col === 'printer') {
-      query = query.or(`printer.ilike.%${safe}%,variant_printer.ilike.%${safe}%`);
-    } else if (col === 'publisher') {
-      query = query.or(`publisher.ilike.%${safe}%,variant_publisher.ilike.%${safe}%`);
-    } else if (col === 'shelf_mark') {
-      query = query.or(`shelf_mark.ilike.%${safe}%,state_shelf_mark.ilike.%${safe}%`);
-    } else {
-      query = query.ilike(col, `%${safe}%`);
+    // Simple search.
+    if (q.length >= 2) {
+      const safe = sanitizeFilterValue(q);
+      if (mode === 'new') {
+        // Full-text across all fields.
+        query = query.textSearch('search_tsv', safe, { type: 'websearch', config: 'simple' });
+      } else {
+        query = query.or(`title.ilike.%${safe}%,author.ilike.%${safe}%,shelf_mark.ilike.%${safe}%`);
+      }
     }
-  };
-  ilikeFilter('author', author);
-  ilikeFilter('title', title);
-  ilikeFilter('editor', editor);
-  ilikeFilter('place', place);
-  ilikeFilter('printer', printer);
-  ilikeFilter('publisher', publisher);
-  ilikeFilter('shelf_mark', shelfMark);
 
-  if (keyword) query = query.eq('keywords', keyword);
-  if (language) query = query.eq('language', language);
-  if (provenance) query = query.eq('provenance', provenance);
+    const ilikeFilter = (col: string, val: string) => {
+      if (!val) return;
+      const safe = sanitizeFilterValue(val);
+      if (mode === 'new') {
+        if (col === 'author') {
+          query = query.or(`author.ilike.%${safe}%,variant_author.ilike.%${safe}%,pseudonym.ilike.%${safe}%`);
+        } else if (col === 'title') {
+          query = query.or(`title.ilike.%${safe}%,parallel_title.ilike.%${safe}%,uniform_title.ilike.%${safe}%`);
+        } else if (col === 'editor') {
+          query = query.or(`editor.ilike.%${safe}%,variant_editor.ilike.%${safe}%`);
+        } else if (col === 'printer') {
+          query = query.or(`printer.ilike.%${safe}%,variant_printer.ilike.%${safe}%`);
+        } else if (col === 'publisher') {
+          query = query.or(`publisher.ilike.%${safe}%,variant_publisher.ilike.%${safe}%`);
+        } else if (col === 'shelf_mark') {
+          query = query.or(`shelf_mark.ilike.%${safe}%,state_shelf_mark.ilike.%${safe}%`);
+        } else {
+          query = query.ilike(col, `%${safe}%`);
+        }
+      } else {
+        // Legacy schema only has author, title, place, printer, publisher, shelf_mark.
+        if (['author', 'title', 'place', 'printer', 'publisher', 'shelf_mark'].includes(col)) {
+          query = query.ilike(col, `%${safe}%`);
+        }
+        // editor / language / provenance not available in legacy; silently dropped.
+      }
+    };
+    ilikeFilter('author', author);
+    ilikeFilter('title', title);
+    ilikeFilter('editor', editor);
+    ilikeFilter('place', place);
+    ilikeFilter('printer', printer);
+    ilikeFilter('publisher', publisher);
+    ilikeFilter('shelf_mark', shelfMark);
 
-  // Year range.
-  if (yearFrom !== null && !Number.isNaN(yearFrom)) query = query.gte('year', yearFrom);
-  if (yearTo !== null && !Number.isNaN(yearTo)) query = query.lte('year', yearTo);
+    if (keyword) query = query.eq('keywords', keyword);
+    if (mode === 'new') {
+      if (language) query = query.eq('language', language);
+      if (provenance) query = query.eq('provenance', provenance);
+    }
 
-  // Digitization filters.
-  //   true → has any digitized link (Source Library OR Internet Archive)
-  //   sl   → digitized on Source Library specifically
-  //   false → not digitized anywhere
-  if (digitized === 'true') {
-    query = query.or('sl_book_id.not.is.null,ia_identifier.not.is.null');
-  } else if (digitized === 'sl') {
-    query = query.not('sl_book_id', 'is', null);
-  } else if (digitized === 'false') {
-    query = query.is('sl_book_id', null).is('ia_identifier', null);
+    if (yearFrom !== null && !Number.isNaN(yearFrom)) query = query.gte('year', yearFrom);
+    if (yearTo !== null && !Number.isNaN(yearTo)) query = query.lte('year', yearTo);
+
+    if (digitized === 'true') {
+      if (mode === 'new') {
+        query = query.or('sl_book_id.not.is.null,ia_identifier.not.is.null');
+      } else {
+        query = query.not('ia_identifier', 'is', null);
+      }
+    } else if (digitized === 'sl' && mode === 'new') {
+      query = query.not('sl_book_id', 'is', null);
+    } else if (digitized === 'false') {
+      if (mode === 'new') {
+        query = query.is('sl_book_id', null).is('ia_identifier', null);
+      } else {
+        query = query.is('ia_identifier', null);
+      }
+    }
+
+    switch (sort) {
+      case 'year_asc':
+        query = query.order('year', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+        break;
+      case 'year_desc':
+        query = query.order('year', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+        break;
+      case 'author':
+        query = query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+        break;
+      case 'shelfmark':
+        query = query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+        break;
+      default:
+        query = query.order('title', { ascending: true });
+    }
+
+    return await query.range(offset, offset + limit - 1);
   }
 
-  // Sort.
-  switch (sort) {
-    case 'year_asc':
-      query = query.order('year', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
-      break;
-    case 'year_desc':
-      query = query.order('year', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
-      break;
-    case 'author':
-      query = query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
-      break;
-    case 'shelfmark':
-      query = query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
-      break;
-    default:
-      query = query.order('title', { ascending: true });
+  // Try the cached mode; on missing-column error, retry in legacy and remember.
+  let result = await runQuery(schemaMode || 'new');
+  if (result.error && isMissingColumnError(result.error) && (schemaMode || 'new') === 'new') {
+    schemaMode = 'legacy';
+    result = await runQuery('legacy');
+  } else if (!result.error && schemaMode === null) {
+    schemaMode = 'new';
   }
 
-  query = query.range(offset, offset + limit - 1);
-
-  const { data, count, error } = await query;
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  if (result.error) {
+    return NextResponse.json({ error: result.error.message }, { status: 500 });
   }
 
   return NextResponse.json({
-    works: data || [],
-    total: count || 0,
+    works: result.data || [],
+    total: result.count || 0,
     offset,
     limit,
+    schemaMode: schemaMode || 'unknown',
   });
 }
