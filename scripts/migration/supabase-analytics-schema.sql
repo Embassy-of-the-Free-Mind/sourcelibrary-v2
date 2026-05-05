@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS gemini_usage (
   job_id TEXT,
   batch_job_id TEXT,
   endpoint TEXT,
+  triggered_by TEXT,            -- Provenance: cron, manual, auto_recovery, worker, unknown
   completed_at TIMESTAMPTZ
 );
 

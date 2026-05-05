@@ -36,12 +36,17 @@ export type AuditAction =
   | 'reset_book_ocr'
   | 'images_brightness_adjusted';
 
+export type AuditTrigger = 'cron' | 'manual' | 'auto_recovery' | 'worker' | 'unknown';
+
 export interface AuditEvent {
   timestamp: Date;
   action: AuditAction;
   book_id: string;
   book_title?: string;
   pages_affected?: number;
+  triggered_by?: AuditTrigger;
+  /** Optional actor identity, when known (admin email, script name). */
+  actor?: string;
   metadata?: Record<string, unknown>;
 }
 
@@ -53,6 +58,8 @@ export async function logAuditEvent(params: {
   book_id: string;
   book_title?: string;
   pages_affected?: number;
+  triggered_by?: AuditTrigger;
+  actor?: string;
   metadata?: Record<string, unknown>;
 }): Promise<void> {
   try {
@@ -64,6 +71,8 @@ export async function logAuditEvent(params: {
       book_id: params.book_id,
       book_title: params.book_title,
       pages_affected: params.pages_affected,
+      triggered_by: params.triggered_by || (process.env.TRIGGER_SOURCE as AuditTrigger | undefined) || 'unknown',
+      actor: params.actor,
       ...params.metadata,
     });
   } catch (error) {

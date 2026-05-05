@@ -113,7 +113,8 @@ export const PROCESSING_ACTION_CSS_COLORS: Record<ProcessingAction, string> = {
 
 export type HistoryEventType =
   | 'imported' | 'archived' | 'ocr' | 'translation'
-  | 'summary' | 'index' | 'image_extraction' | 'metadata_enriched'
+  | 'summary' | 'index' | 'image_extraction' | 'extract_chapters'
+  | 'metadata_enriched' | 'metadata_change'
   | 'edition_published' | 'admin_action';
 
 export const HISTORY_EVENT_LABELS: Record<HistoryEventType, string> = {
@@ -124,7 +125,9 @@ export const HISTORY_EVENT_LABELS: Record<HistoryEventType, string> = {
   summary: 'Summary',
   index: 'Index',
   image_extraction: 'Image Extraction',
+  extract_chapters: 'Chapters',
   metadata_enriched: 'Metadata',
+  metadata_change: 'Metadata',
   edition_published: 'Edition',
   admin_action: 'Admin',
 };
@@ -138,7 +141,9 @@ export const HISTORY_EVENT_CSS_COLORS: Record<HistoryEventType, string> = {
   summary: 'var(--accent-violet)',
   index: 'var(--accent-gold)',
   image_extraction: 'var(--status-warning)',
+  extract_chapters: 'var(--accent-violet)',
   metadata_enriched: 'var(--accent-gold)',
+  metadata_change: 'var(--accent-gold)',
   edition_published: 'var(--accent-sage)',
   admin_action: 'var(--status-error)',
 };
