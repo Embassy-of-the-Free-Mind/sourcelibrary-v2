@@ -978,32 +978,32 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
             )}
 
             {/* Collections */}
-            {bookCollections.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>Collections</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {bookCollections.map(col =>
-                      embedPolicy.enableBookCollectionNavigation ? (
-                        <Link
-                          key={col.slug}
-                          href={`/collections/${col.slug}`}
-                          className="text-xs px-2.5 py-1 rounded-full transition-colors"
-                          style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-tertiary)' }}
-                        >
-                          {col.name}
-                        </Link>
-                      ) : (
-                        <span
-                          key={col.slug}
-                          className="text-xs px-2.5 py-1 rounded-full"
-                          style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-tertiary)' }}
-                        >
-                          {col.name}
-                        </span>
-                      )
-                    )}
-                  </div>
+            {embedPolicy.enableBookCollectionNavigation && bookCollections.length > 0 && (
+              <div>
+                <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>Collections</h3>
+                <div className="flex flex-wrap gap-2">
+                  {bookCollections.map(col =>
+                    embedPolicy.enableBookCollectionNavigation ? (
+                      <Link
+                        key={col.slug}
+                        href={`/collections/${col.slug}`}
+                        className="text-xs px-2.5 py-1 rounded-full transition-colors"
+                        style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-tertiary)' }}
+                      >
+                        {col.name}
+                      </Link>
+                    ) : (
+                      <span
+                        key={col.slug}
+                        className="text-xs px-2.5 py-1 rounded-full"
+                        style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-tertiary)' }}
+                      >
+                        {col.name}
+                      </span>
+                    )
+                  )}
                 </div>
+              </div>
             )}
 
             {/* Related Books — pre-computed, zero extra queries */}

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { TenantLayoutWrapper } from '@/components/tenant/TenantLayoutWrapper';
+import EmbedResizeReporter from '@/components/embed/EmbedResizeReporter';
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -15,6 +16,7 @@ export default function EmbedLayout({ children }: { children: React.ReactNode })
     <TenantLayoutWrapper>
       <div data-embed="" className="embed-mode">
         {children}
+        <EmbedResizeReporter />
       </div>
     </TenantLayoutWrapper>
   );
