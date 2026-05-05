@@ -18,6 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { buildCoverUpdate } from '../lib/cover-write.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const SKIP_MANUAL = process.argv.includes('--skip-manual');
@@ -111,7 +112,7 @@ async function fetchImageBase64(url, retries = 2) {
 
 async function selectCover(genModel, book, pages) {
   const imageParts = [];
-  const pageMap = new Map();
+  const pageMap = new Map(); // 1-based index → full page object
 
   for (const page of pages) {
     const url = getPageImageUrl(page);
@@ -121,7 +122,7 @@ async function selectCover(genModel, book, pages) {
     if (!img) continue;
 
     imageParts.push({ inlineData: { mimeType: img.mimeType, data: img.base64 } });
-    pageMap.set(imageParts.length, { pageNumber: page.page_number, url });
+    pageMap.set(imageParts.length, page);
   }
 
   if (imageParts.length === 0) return null;
@@ -129,24 +130,34 @@ async function selectCover(genModel, book, pages) {
   const result = await genModel.generateContent({
     contents: [{ role: 'user', parts: [{ text: PROMPT }, ...imageParts] }],
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { temperature: 0.1, maxOutputTokens: 500, responseMimeType: 'application/json' },
+    generationConfig: { temperature: 0.1, maxOutputTokens: 1500, responseMimeType: 'application/json' },
   });
 
   const text = result.response.text().trim();
-  const parsed = JSON.parse(text);
+  const parsed = parseJsonLenient(text);
+  if (!parsed) return null;
   const usage = result.response.usageMetadata;
 
-  const selected = pageMap.get(parsed.selected_page_number);
-  if (!selected) return null;
+  const selectedPage = pageMap.get(parsed.selected_page_number);
+  if (!selectedPage) return null;
 
   return {
-    url: selected.url,
-    pageNumber: selected.pageNumber,
+    page: selectedPage,
     rationale: parsed.rationale,
     confidence: parsed.confidence,
     inputTokens: usage?.promptTokenCount || 0,
     outputTokens: usage?.candidatesTokenCount || 0,
   };
+}
+
+function parseJsonLenient(text) {
+  if (!text) return null;
+  let t = text.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '').trim();
+  try { return JSON.parse(t); } catch {}
+  const m = t.match(/\{[\s\S]*\}/);
+  if (m) { try { return JSON.parse(m[0]); } catch {} }
+  try { return JSON.parse(t.replace(/,(\s*[}\]])/g, '$1')); } catch {}
+  return null;
 }
 
 // --- Main ---
@@ -191,7 +202,11 @@ async function processBook(book) {
   try {
     const pages = await db.collection('pages')
       .find({ book_id: book.id }, {
-        projection: { page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, _id: 0 }
+        projection: {
+          page_number: 1, photo: 1, photo_original: 1, archived_photo: 1,
+          cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1, crop: 1,
+          image_thumb: 1, thumbnail_blob: 1, _id: 0,
+        }
       })
       .sort({ page_number: 1 })
       .limit(MAX_PAGES)
@@ -205,11 +220,17 @@ async function processBook(book) {
     totalInputTokens += result.inputTokens;
     totalOutputTokens += result.outputTokens;
 
-    // Check if it picked a different page than current cover
-    const currentThumb = book.thumbnail || '';
-    const isSame = currentThumb === result.url;
+    const update = buildCoverUpdate(result.page, {
+      source: 'vision',
+      actor: 'script',
+      method: 'batch-cover-selection',
+      confidence: result.confidence === 'high' ? 0.95 : result.confidence === 'medium' ? 0.7 : 0.4,
+      detail: `${result.confidence}: ${result.rationale}`,
+    });
+    if (!update) { skipped++; return; }
 
-    if (isSame) {
+    // Skip if it picked the same URL as the current cover
+    if ((book.thumbnail || '') === update.image_display) {
       skipped++;
       return;
     }
@@ -217,18 +238,16 @@ async function processBook(book) {
     upgraded++;
     const shortTitle = (book.title || '').substring(0, 55);
     console.log(`  ${shortTitle}`);
-    console.log(`    → page ${result.pageNumber} (${result.confidence}) | ${result.rationale}`);
+    console.log(`    → page ${update.cover_page} (${result.confidence}) | ${result.rationale}`);
 
     if (!DRY_RUN) {
       await db.collection('books').updateOne(
         { id: book.id },
         { $set: {
-          thumbnail: result.url,
-          thumbnail_source: 'ai_vision',
+          ...update,
           cover_updated_at: new Date(),
           cover_rationale: result.rationale,
           cover_confidence: result.confidence,
-          cover_page_number: result.pageNumber,
         }}
       );
     }
