@@ -31,7 +31,6 @@ import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
-import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -802,17 +801,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                         className="text-stone-300"
                       />
                     </div>
-                    <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
-                    <BookShare
-                      title={book.display_title || book.title}
-                      author={book.author}
-                      year={book.published}
-                      bookId={book.slug || book.id}
-                      doi={book.doi}
-                      label="Share"
-                      tenantSlug={tenantSlug || undefined}
-                      className="text-stone-300 hover:text-white hover:bg-white/10"
-                    />
                   </div>
                 </div>
 

@@ -724,7 +724,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
   const hasActiveFilters = language || category || collection || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || (library && library !== defaultLibrary) || sortBy !== 'relevance';
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="bg-cream">
       <SiteHeader variant="dark" />
 
       {/* Search Bar */}
