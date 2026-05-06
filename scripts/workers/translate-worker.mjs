@@ -80,6 +80,9 @@ function rotateKey() {
 }
 
 // ── Translation prompt — loaded from DB prompts collection (single source of truth) ──
+// Returns the full prompt reference so each page write can stamp prompt_id /
+// prompt_hash / prompt_name alongside prompt_version. The cached object is
+// shared across all page writes from this worker invocation.
 let _cachedTranslationPrompt = null;
 async function getTranslationPromptFromDb(db) {
   if (_cachedTranslationPrompt) return _cachedTranslationPrompt;
@@ -89,7 +92,13 @@ async function getTranslationPromptFromDb(db) {
   );
   if (!prompt?.content) throw new Error('No default translation prompt found in DB');
   console.log(`[TRANSLATE] Loaded translation prompt v${prompt.version} from DB`);
-  _cachedTranslationPrompt = prompt.content;
+  _cachedTranslationPrompt = {
+    text: prompt.content,
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
   return _cachedTranslationPrompt;
 }
 
@@ -103,7 +112,13 @@ async function getEnglishModernizationPromptFromDb(db) {
   );
   if (!prompt?.content) throw new Error('No default english_modernization prompt found in DB');
   console.log(`[TRANSLATE] Loaded english modernization prompt v${prompt.version} from DB`);
-  _cachedEnglishPrompt = prompt.content;
+  _cachedEnglishPrompt = {
+    text: prompt.content,
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
   return _cachedEnglishPrompt;
 }
 
@@ -195,12 +210,15 @@ const SAFETY_SETTINGS = [
 ];
 
 // ── Build prompt header (shared between single and batch) ──
+// Returns the assembled prompt text plus the prompt reference of the BASE
+// prompt that produced it, so callers can stamp prompt_id/hash/name/version
+// on each page write.
 async function buildPromptHeader(db, book) {
   const isEnglish = (book.language || '').toLowerCase() === 'english';
   const translationPrompt = await getTranslationPromptFromDb(db);
   const englishPrompt = await getEnglishModernizationPromptFromDb(db);
-  const basePrompt = isEnglish ? englishPrompt : translationPrompt;
-  let prompt = basePrompt.replace('{source_language}', book.language || 'Latin');
+  const baseRef = isEnglish ? englishPrompt : translationPrompt;
+  let prompt = baseRef.text.replace('{source_language}', book.language || 'Latin');
 
   const parts = [];
   if (book.display_title || book.title) parts.push(`Title: ${book.display_title || book.title}`);
@@ -214,12 +232,12 @@ async function buildPromptHeader(db, book) {
     prompt += `\n\n**Note:** This is a public domain work published in ${year}. It is not under copyright.`;
   }
 
-  return { prompt, isEnglish };
+  return { prompt, isEnglish, promptRef: baseRef };
 }
 
 // ── Translate a single page ──
 async function translatePage(db, page, book, prevTranslation) {
-  const { prompt: headerPrompt, isEnglish } = await buildPromptHeader(db, book);
+  const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
   let prompt = headerPrompt;
 
   prompt += isEnglish
@@ -247,12 +265,13 @@ async function translatePage(db, page, book, prevTranslation) {
     inputTokens: usage.promptTokenCount || 0,
     outputTokens: usage.candidatesTokenCount || 0,
     durationMs,
+    promptRef,
   };
 }
 
 // ── Translate a batch of pages in one API call ──
 async function translateBatch(db, pages, book, prevTranslation) {
-  const { prompt: headerPrompt, isEnglish } = await buildPromptHeader(db, book);
+  const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
   let prompt = headerPrompt;
 
   if (prevTranslation) {
@@ -323,6 +342,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
     inputTokens: usage.promptTokenCount || 0,
     outputTokens: usage.candidatesTokenCount || 0,
     durationMs,
+    promptRef,
   };
 }
 
@@ -380,7 +400,10 @@ async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
 }
 
 // ── Write a single page translation to DB ──
-async function writePageTranslation(db, page, text, book) {
+// `promptRef` is the prompt reference returned by translatePage / translateBatch.
+// Falls back to PROMPT_VERSION constant for callers that pre-date the
+// prompt-reference threading (none in this file after the audit, but safe).
+async function writePageTranslation(db, page, text, book, promptRef) {
   await saveRevisionBeforeOverwrite(db, page.id, 'translation');
   const setPayload = {
     translation: {
@@ -390,7 +413,10 @@ async function writePageTranslation(db, page, text, book) {
       model: getModelForBook(book),
       updated_at: new Date(),
       source: 'ai',
-      prompt_version: PROMPT_VERSION,
+      prompt_version: promptRef?.version || PROMPT_VERSION,
+      prompt_id: promptRef?.id,
+      prompt_hash: promptRef?.content_hash,
+      prompt_name: promptRef?.name,
     },
     updated_at: new Date(),
   };
@@ -401,10 +427,10 @@ async function writePageTranslation(db, page, text, book) {
 
 // ── Bulk-write multiple page translations in one round trip ──
 // Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
-async function bulkWritePageTranslations(db, entries, book) {
+async function bulkWritePageTranslations(db, entries, book, promptRef) {
   if (entries.length === 0) return;
   if (entries.length === 1) {
-    return writePageTranslation(db, entries[0].page, entries[0].text, book);
+    return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef);
   }
   // Save revisions before overwriting (parallel, non-blocking)
   await Promise.all(entries.map(({ page }) =>
@@ -424,7 +450,10 @@ async function bulkWritePageTranslations(db, entries, book) {
             model,
             updated_at: now,
             source: 'ai',
-            prompt_version: PROMPT_VERSION,
+            prompt_version: promptRef?.version || PROMPT_VERSION,
+            prompt_id: promptRef?.id,
+            prompt_hash: promptRef?.content_hash,
+            prompt_name: promptRef?.name,
           },
           updated_at: now,
         },
@@ -443,7 +472,17 @@ async function bulkWritePageTranslations(db, entries, book) {
   syncPageBatch(entries.map(({ page, text }) => ({
     pageId: page.id,
     mongoSet: {
-      translation: { data: text, language: 'English', model, updated_at: now, source: 'ai', prompt_version: PROMPT_VERSION },
+      translation: {
+        data: text,
+        language: 'English',
+        model,
+        updated_at: now,
+        source: 'ai',
+        prompt_version: promptRef?.version || PROMPT_VERSION,
+        prompt_id: promptRef?.id,
+        prompt_hash: promptRef?.content_hash,
+        prompt_name: promptRef?.name,
+      },
       updated_at: now,
     },
   })));
@@ -590,7 +629,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       try {
         const result = await translatePage(db, page, book, prevTranslation);
         prevTranslation = result.text;
-        await writePageTranslation(db, page, result.text, book);
+        await writePageTranslation(db, page, result.text, book, result.promptRef);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
         await logUsage({
@@ -691,7 +730,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePage(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book);
+              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
               batchTranslated++;
               translated++;
               globalCounter.count++;
@@ -731,7 +770,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
         // Bulk-write all successfully parsed translations in one round trip
         if (bulkEntries.length > 0) {
-          await bulkWritePageTranslations(db, bulkEntries, book);
+          await bulkWritePageTranslations(db, bulkEntries, book, result.promptRef);
         }
 
         // Log batch usage
@@ -767,7 +806,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePage(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book);
+              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
               translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;
