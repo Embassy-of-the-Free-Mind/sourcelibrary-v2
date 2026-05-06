@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
@@ -138,6 +138,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
   const [offset, setOffset] = useState(initialOffset);
   const [adv, setAdv] = useState<AdvancedFilters>(initialAdv);
   const [showAdvanced, setShowAdvanced] = useState(defaultAdvanced || hasAnyAdv);
+  const abortRef = useRef<AbortController | null>(null);
 
   const buildParams = useCallback((q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     const params = new URLSearchParams();
@@ -160,18 +161,25 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
   }, []);
 
   const fetchWorks = useCallback(async (q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
+    // Cancel any in-flight request so fast typing doesn't show stale results
+    // when an earlier query resolves after a later one.
+    if (abortRef.current) abortRef.current.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     setLoading(true);
     try {
       const params = buildParams(q, s, kw, off, a);
-      const res = await fetch(`/api/catalog/bph?${params}`);
+      const res = await fetch(`/api/catalog/bph?${params}`, { signal: controller.signal });
       const data = await res.json();
       setWorks(data.works || []);
       setTotal(data.total || 0);
-    } catch {
+    } catch (err) {
+      if ((err as Error).name === 'AbortError') return; // superseded by a newer query
       setWorks([]);
       setTotal(0);
     } finally {
-      setLoading(false);
+      if (!controller.signal.aborted) setLoading(false);
     }
   }, [buildParams]);
 
