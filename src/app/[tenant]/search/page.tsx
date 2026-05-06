@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useSearchParams, useRouter, useParams } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { useEmbed } from '@/lib/EmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -54,10 +55,12 @@ interface CategoryOption { value: string; label: string; icon?: string; }
 
 type ViewMode = 'unified' | 'books' | 'index' | 'images';
 
-export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string } = {}) {
+export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { defaultLibrary?: string; forceEmbedded?: boolean } = {}) {
   const router = useRouter();
   const { tenant } = useParams<{ tenant: string }>();
   const searchParams = useSearchParams();
+  const embedFromContext = useEmbed();
+  const embed = forceEmbedded || embedFromContext;
 
   const initialMode = (searchParams.get('mode') as ViewMode) || 'unified';
   const [query, setQuery] = useState(searchParams.get('q') || '');
@@ -725,7 +728,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
 
   return (
     <div className="bg-cream">
-      <SiteHeader variant="dark" />
+      {!embed && <SiteHeader variant="dark" />}
 
       {/* Search Bar */}
       <div className="bg-white border-b border-border-light sticky top-0 z-10">
@@ -896,7 +899,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                       ))}
                     </select>
                   </div>
-                  {!defaultLibrary && (
+                  {!defaultLibrary && !embed && (
                     <div>
                       <label className="block text-sm text-secondary mb-1">Library</label>
                       <select value={library} onChange={(e) => setLibrary(e.target.value)}
@@ -969,7 +972,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                       ))}
                     </select>
                   </div>
-                  {!defaultLibrary && (
+                  {!defaultLibrary && !embed && (
                     <div>
                       <label className="block text-sm text-secondary mb-1">Library</label>
                       <select value={library} onChange={(e) => setLibrary(e.target.value)}

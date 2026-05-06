@@ -8,7 +8,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, ExternalLink, Images, Library } from 'lucide-react';
+import { BookOpen, ExternalLink, Images, Library, Search } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
@@ -17,6 +17,7 @@ import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { getEmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
+import UnifiedSearch from '@/components/search/UnifiedSearch';
 
 export const PER_PAGE = 60;
 
@@ -153,6 +154,22 @@ export default function SharedLibraryView({
           <p className="text-lg text-white/70 max-w-3xl leading-relaxed mb-4">
             {partner.description}
           </p>
+
+          {/* On a tenant subdomain, `/search` is rewritten by proxy.ts to keep the
+              URL clean. On a tenant URL prefix, link with the prefix so navigation
+              stays scoped (the global /search route is not tenant-aware here). */}
+          {tenantSlug && (
+            <div className="max-w-2xl mb-5">
+              <UnifiedSearch />
+              <Link
+                href={forceEmbedded ? '/search' : `${basePath}/search`}
+                className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
+              >
+                <Search className="w-3.5 h-3.5" />
+                Open the full search page
+              </Link>
+            </div>
+          )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
             <span>{total.toLocaleString()} translated books</span>
