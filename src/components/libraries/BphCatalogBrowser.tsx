@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
 import { tenantBookUrl } from '@/lib/slugify';
@@ -108,6 +108,7 @@ interface Props {
 }
 
 export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug, defaultAdvanced = false }: Props) {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const initialQ = searchParams.get('cq') || '';
@@ -138,6 +139,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
   const [offset, setOffset] = useState(initialOffset);
   const [adv, setAdv] = useState<AdvancedFilters>(initialAdv);
   const [showAdvanced, setShowAdvanced] = useState(defaultAdvanced || hasAnyAdv);
+  const abortRef = useRef<AbortController | null>(null);
 
   const buildParams = useCallback((q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     const params = new URLSearchParams();
@@ -160,30 +162,31 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
   }, []);
 
   const fetchWorks = useCallback(async (q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
+    // Cancel any in-flight request so fast typing doesn't show stale results
+    // when an earlier query resolves after a later one.
+    if (abortRef.current) abortRef.current.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     setLoading(true);
     try {
       const params = buildParams(q, s, kw, off, a);
-      const res = await fetch(`/api/catalog/bph?${params}`);
+      const res = await fetch(`/api/catalog/bph?${params}`, { signal: controller.signal });
       const data = await res.json();
       setWorks(data.works || []);
       setTotal(data.total || 0);
-    } catch {
+    } catch (err) {
+      if ((err as Error).name === 'AbortError') return; // superseded by a newer query
       setWorks([]);
       setTotal(0);
     } finally {
-      setLoading(false);
+      if (!controller.signal.aborted) setLoading(false);
     }
   }, [buildParams]);
 
-  // Sync URL params (using c-prefixed keys so they don't collide with parent page params).
-  // Uses window.history.replaceState rather than router.replace + basePath so the
-  // visible URL bar is preserved. On the BPH subdomain the user-visible path is
-  // /catalog, which the proxy rewrites internally to /embed/bph?view=catalog —
-  // calling router.replace(`${basePath}?…`) would shove the URL bar over to
-  // /embed/bph?… and look like a full-page navigation.
+  // Sync URL params (using c-prefixed keys so they don't collide with parent page params)
   const updateUrl = useCallback((q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
-    if (typeof window === 'undefined') return;
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(searchParams.toString());
     const setOrDel = (key: string, val: string) => {
       if (val) params.set(key, val);
       else params.delete(key);
@@ -203,10 +206,8 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
     setOrDel('cyfrom', a.yearFrom);
     setOrDel('cyto', a.yearTo);
     setOrDel('cdig', a.digitized);
-    const qs = params.toString();
-    const path = window.location.pathname;
-    window.history.replaceState(null, '', qs ? `${path}?${qs}` : path);
-  }, []);
+    router.replace(`${basePath}?${params}`, { scroll: false });
+  }, [searchParams, router, basePath]);
 
   useEffect(() => {
     fetchWorks(initialQ, initialSort, initialKeyword, initialOffset, initialAdv);
@@ -243,20 +244,10 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
     updateUrl(searchQuery, sort, keyword, newOffset, adv);
   };
 
-  const applyAdvanced = (nextAdv: AdvancedFilters = adv) => {
+  const applyAdvanced = () => {
     setOffset(0);
-    fetchWorks(searchQuery, sort, keyword, 0, nextAdv);
-    updateUrl(searchQuery, sort, keyword, 0, nextAdv);
-  };
-
-  const debouncedApplyAdvanced = useDebouncedCallback((nextAdv: AdvancedFilters) => {
-    applyAdvanced(nextAdv);
-  }, 300);
-
-  const handleAdvChange = (key: keyof AdvancedFilters, value: string) => {
-    const next = { ...adv, [key]: value } as AdvancedFilters;
-    setAdv(next);
-    debouncedApplyAdvanced(next);
+    fetchWorks(searchQuery, sort, keyword, 0, adv);
+    updateUrl(searchQuery, sort, keyword, 0, adv);
   };
 
   const clearAll = () => {
@@ -356,14 +347,14 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
       {showAdvanced && (
         <div className="mb-4 p-4 bg-warm border border-border-light rounded-lg">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            <AdvField label="Author" value={adv.author} onChange={v => handleAdvChange('author', v)} placeholder="Behme, Böhme, …" />
-            <AdvField label="Title" value={adv.title} onChange={v => handleAdvChange('title', v)} />
-            <AdvField label="Editor / translator" value={adv.editor} onChange={v => handleAdvChange('editor', v)} />
-            <AdvField label="Place of publication" value={adv.place} onChange={v => handleAdvChange('place', v)} placeholder="London, Lyon, Amsterdam…" />
-            <AdvField label="Printer" value={adv.printer} onChange={v => handleAdvChange('printer', v)} />
-            <AdvField label="Publisher" value={adv.publisher} onChange={v => handleAdvChange('publisher', v)} />
-            <AdvField label="Shelfmark" value={adv.shelf_mark} onChange={v => handleAdvChange('shelf_mark', v)} />
-            <AdvField label="Language" value={adv.language} onChange={v => handleAdvChange('language', v)} placeholder="Latin, German, English…" />
+            <AdvField label="Author" value={adv.author} onChange={v => setAdv({ ...adv, author: v })} placeholder="Behme, Böhme, …" />
+            <AdvField label="Title" value={adv.title} onChange={v => setAdv({ ...adv, title: v })} />
+            <AdvField label="Editor / translator" value={adv.editor} onChange={v => setAdv({ ...adv, editor: v })} />
+            <AdvField label="Place of publication" value={adv.place} onChange={v => setAdv({ ...adv, place: v })} placeholder="London, Lyon, Amsterdam…" />
+            <AdvField label="Printer" value={adv.printer} onChange={v => setAdv({ ...adv, printer: v })} />
+            <AdvField label="Publisher" value={adv.publisher} onChange={v => setAdv({ ...adv, publisher: v })} />
+            <AdvField label="Shelfmark" value={adv.shelf_mark} onChange={v => setAdv({ ...adv, shelf_mark: v })} />
+            <AdvField label="Language" value={adv.language} onChange={v => setAdv({ ...adv, language: v })} placeholder="Latin, German, English…" />
             <div>
               <label className="block text-xs text-muted mb-1">Year range</label>
               <div className="flex gap-2">
@@ -371,7 +362,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
                   type="number"
                   inputMode="numeric"
                   value={adv.yearFrom}
-                  onChange={(e) => handleAdvChange('yearFrom', e.target.value)}
+                  onChange={(e) => setAdv({ ...adv, yearFrom: e.target.value })}
                   placeholder="from"
                   className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
                 />
@@ -379,7 +370,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
                   type="number"
                   inputMode="numeric"
                   value={adv.yearTo}
-                  onChange={(e) => handleAdvChange('yearTo', e.target.value)}
+                  onChange={(e) => setAdv({ ...adv, yearTo: e.target.value })}
                   placeholder="to"
                   className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
                 />
@@ -389,7 +380,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
               <label className="block text-xs text-muted mb-1">Digitization</label>
               <select
                 value={adv.digitized}
-                onChange={(e) => handleAdvChange('digitized', e.target.value)}
+                onChange={(e) => setAdv({ ...adv, digitized: e.target.value as AdvancedFilters['digitized'] })}
                 className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary"
               >
                 <option value="">All</option>
@@ -401,13 +392,19 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
           </div>
           <div className="flex items-center gap-2 mt-4">
             <button
+              onClick={applyAdvanced}
+              className="px-4 py-1.5 text-sm rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
+            >
+              Apply
+            </button>
+            <button
               onClick={clearAll}
               className="px-3 py-1.5 text-sm text-muted hover:text-primary transition-colors"
             >
               Clear all
             </button>
             <span className="text-xs text-muted ml-auto">
-              Filters apply as you type. The simple search above queries every field at once.
+              Tip: simple search above queries every field at once.
             </span>
           </div>
         </div>
