@@ -525,7 +525,9 @@ async function transliteratePage(db, page, sourceScript) {
 
 // ── Direct translation (Gemini realtime, FIFO per book) ──
 
-// Translation prompt loaded from DB prompts collection (single source of truth)
+// Translation prompt loaded from DB prompts collection (single source of truth).
+// Returns { text, id, name, version, content_hash } so callers can stamp
+// prompt_id / prompt_hash / prompt_name on each page write.
 let _cachedTranslationPrompt = null;
 async function getTranslationPromptFromDb(db) {
   if (_cachedTranslationPrompt) return _cachedTranslationPrompt;
@@ -535,7 +537,13 @@ async function getTranslationPromptFromDb(db) {
   );
   if (!prompt?.content) throw new Error('No default translation prompt found in DB');
   console.log(`[pipeline] Loaded translation prompt v${prompt.version} from DB`);
-  _cachedTranslationPrompt = prompt.content;
+  _cachedTranslationPrompt = {
+    text: prompt.content,
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
   return _cachedTranslationPrompt;
 }
 
@@ -549,7 +557,13 @@ async function getEnglishModernizationPromptFromDb(db) {
   );
   if (!prompt?.content) throw new Error('No default english_modernization prompt found in DB');
   console.log(`[pipeline] Loaded english modernization prompt v${prompt.version} from DB`);
-  _cachedEnglishPrompt = prompt.content;
+  _cachedEnglishPrompt = {
+    text: prompt.content,
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
   return _cachedEnglishPrompt;
 }
 
@@ -582,8 +596,8 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
   const isEnglish = sourceLanguage.toLowerCase() === 'english';
   const translationPrompt = await getTranslationPromptFromDb(db);
   const englishPrompt = await getEnglishModernizationPromptFromDb(db);
-  const basePrompt = isEnglish ? englishPrompt : translationPrompt;
-  let prompt = basePrompt
+  const basePromptRef = isEnglish ? englishPrompt : translationPrompt;
+  let prompt = basePromptRef.text
     .replace('{source_language}', sourceLanguage)
     .replace('{target_language}', 'English');
 
@@ -638,7 +652,10 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
         'translation.model': TRANSLATE_MODEL,
         'translation.updated_at': new Date(),
         'translation.source': 'ai',
-        'translation.prompt_version': TRANSLATE_PROMPT_VERSION,
+        'translation.prompt_version': basePromptRef.version || TRANSLATE_PROMPT_VERSION,
+        'translation.prompt_id': basePromptRef.id,
+        'translation.prompt_hash': basePromptRef.content_hash,
+        'translation.prompt_name': basePromptRef.name,
         ...meta,
         updated_at: new Date(),
       },
@@ -1196,9 +1213,15 @@ async function getOcrPromptFromDb(db) {
 
   const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
 
-  return prompt.content
-    .replace('{language_instruction}', languageInstruction)
-    .replace('{language}', '');
+  return {
+    text: prompt.content
+      .replace('{language_instruction}', languageInstruction)
+      .replace('{language}', ''),
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
 }
 
 /**
@@ -1297,7 +1320,8 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
   }
   console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
 
-  let prompt = await getOcrPromptFromDb(db);
+  const ocrPromptRef = await getOcrPromptFromDb(db);
+  let prompt = ocrPromptRef.text;
 
   // Spread OCR: for BPH two-page spread books, prepend instructions to process
   // both pages separately with <split-position> and <page-break/> markers.
@@ -1465,7 +1489,10 @@ Output structure:
       page_count: chunk.length,
       status: 'pending',
       model: ocrModel,
-      prompt_version: OCR_PROMPT_VERSION,
+      prompt_version: ocrPromptRef.version || OCR_PROMPT_VERSION,
+      prompt_id: ocrPromptRef.id,
+      prompt_name: ocrPromptRef.name,
+      prompt_hash: ocrPromptRef.content_hash,
       submission_method: useFileBased ? 'file' : 'inline',
       key_index: batchJob.keyIndex,
       force: false,
@@ -1497,7 +1524,10 @@ Output structure:
       total_pages: totalSubmitted,
       status: 'pending',
       model: ocrModel,
-      prompt_version: OCR_PROMPT_VERSION,
+      prompt_version: ocrPromptRef.version || OCR_PROMPT_VERSION,
+      prompt_id: ocrPromptRef.id,
+      prompt_name: ocrPromptRef.name,
+      prompt_hash: ocrPromptRef.content_hash,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -1516,7 +1546,8 @@ const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-bo
 
 async function submitCrossBookOcrBatches(db, books) {
   const ocrModel = OCR_MODEL_LITE;
-  const basePrompt = await getOcrPromptFromDb(db);
+  const basePromptRef = await getOcrPromptFromDb(db);
+  const basePrompt = basePromptRef.text;
 
   // Guard: skip books with active batch_jobs or needs_splitting
   const eligible = [];
@@ -1668,7 +1699,10 @@ async function submitCrossBookOcrBatches(db, books) {
     page_count: allDownloaded.length,
     status: 'pending',
     model: ocrModel,
-    prompt_version: OCR_PROMPT_VERSION,
+    prompt_version: basePromptRef.version || OCR_PROMPT_VERSION,
+    prompt_id: basePromptRef.id,
+    prompt_name: basePromptRef.name,
+    prompt_hash: basePromptRef.content_hash,
     submission_method: 'file',
     key_index: batchJob.keyIndex,
     cross_book: true,
@@ -2728,7 +2762,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
       console.log(`  Books ready for preview OCR: ${readyForPreview.length}`);
 
-      const previewOcrPrompt = await getOcrPromptFromDb(db);
+      const previewOcrPromptRef = await getOcrPromptFromDb(db);
+      const previewOcrPrompt = previewOcrPromptRef.text;
       const previewApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
       const previewModel = OCR_MODEL_LITE;
       let previewDone = 0;
@@ -2824,7 +2859,10 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                   { $set: {
                     'ocr.data': text,
                     'ocr.model': previewModel,
-                    'ocr.prompt_version': OCR_PROMPT_VERSION,
+                    'ocr.prompt_version': previewOcrPromptRef.version || OCR_PROMPT_VERSION,
+                    'ocr.prompt_id': previewOcrPromptRef.id,
+                    'ocr.prompt_hash': previewOcrPromptRef.content_hash,
+                    'ocr.prompt_name': previewOcrPromptRef.name,
                     'ocr.updated_at': new Date(),
                     'ocr.source': 'pipeline_preview',
                     updated_at: new Date(),
