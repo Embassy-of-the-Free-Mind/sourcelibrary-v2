@@ -335,8 +335,11 @@ export async function proxy(request: NextRequest) {
   if (tenant && !pathname.startsWith('/embed/') && !pathname.startsWith('/_next/') && !pathname.startsWith('/api/')) {
     const url = request.nextUrl.clone();
     // Map common paths to embed equivalents
-    if (pathname === '/' || pathname === '/search') {
+    if (pathname === '/') {
       url.pathname = `/embed/${tenant}`;
+    } else if (pathname === '/search' || pathname.startsWith('/search/')) {
+      // Dedicated search results page — keep traffic in embed namespace.
+      url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/book/') && (pathname.includes('/page/') || pathname.includes('/page-number/'))) {
       // Page reader + page-number: keep traffic in embed namespace
       url.pathname = `/embed/${tenant}${pathname}`;
@@ -563,16 +566,30 @@ export async function proxy(request: NextRequest) {
   }
 
   // Root /api/* calls from tenant pages do not include the tenant segment in the pathname.
-  // Infer tenant from referer so legacy root APIs remain tenant-safe during migration.
+  // Infer tenant from host (subdomain), then path, then referer so legacy root
+  // APIs remain tenant-safe.
   if (!tenantId && pathname.startsWith('/api/')) {
-    const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+    // Tenant subdomain (e.g. bph.sourcelibrary.org/api/search) — map host to
+    // tenant. Without this, client-side fetches from tenant subdomains would
+    // hit global APIs unfiltered and leak cross-tenant content.
+    if (tenant) {
+      const subdomainTenant = await resolveTenantByExactSlug(tenant);
+      if (subdomainTenant?.id) {
+        tenantId = subdomainTenant.id;
+        tenantSlug = tenant;
+      }
+    }
 
-    // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
-    if (apiPrefix === 'api' && apiTenantSegment) {
-      const pathTenant = await resolveActiveTenant(apiTenantSegment);
-      if (pathTenant) {
-        tenantId = pathTenant.id;
-        tenantSlug = pathTenant.slug;
+    if (!tenantId) {
+      const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+
+      // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
+      if (apiPrefix === 'api' && apiTenantSegment) {
+        const pathTenant = await resolveActiveTenant(apiTenantSegment);
+        if (pathTenant) {
+          tenantId = pathTenant.id;
+          tenantSlug = pathTenant.slug;
+        }
       }
     }
 

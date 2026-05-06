@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const maxDuration = 15;
 
@@ -25,6 +27,13 @@ export async function GET(request: NextRequest) {
 
   if (!query || query.length < 2) {
     return NextResponse.json({ results: [], query: '', total: 0 });
+  }
+
+  // Tenant context — when present, only return images whose book is in this
+  // tenant. Required for tenant subdomain lockdown (e.g. bph.sourcelibrary.org).
+  const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
+  if (tenantSlug && !tenantId) {
+    return NextResponse.json({ results: [], query, total: 0 });
   }
 
   try {
@@ -78,9 +87,25 @@ export async function GET(request: NextRequest) {
       similarity: number;
     }>;
 
+    // Tenant filter: keep only matches whose book is in this tenant.
+    let scoped = matches;
+    if (tenantId) {
+      const bookIds = Array.from(new Set(matches.map(m => m.book_id).filter(Boolean)));
+      if (bookIds.length === 0) {
+        scoped = [];
+      } else {
+        const db = await getReadDb();
+        const allowedDocs = await db.collection('books')
+          .find({ id: { $in: bookIds }, tenantId }, { projection: { id: 1 } })
+          .toArray();
+        const allowed = new Set(allowedDocs.map(d => d.id as string));
+        scoped = matches.filter(m => allowed.has(m.book_id));
+      }
+    }
+
     // Deduplicate by book — max 3 per book for diversity
     const byBook = new Map<string, number>();
-    const deduped = matches.filter(m => {
+    const deduped = scoped.filter(m => {
       const count = byBook.get(m.book_id) || 0;
       if (count >= 3) return false;
       byBook.set(m.book_id, count + 1);
