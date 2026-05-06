@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import {
     fetchTenantLibraryData,
@@ -20,6 +20,19 @@ function getOptionalStringField(value: unknown): string {
     return typeof value === 'string' ? value : '';
 }
 
+// Catalog browser owns these (`c`-prefixed) param keys. They're meaningless on
+// any other view and only serve to confuse users when they leak through
+// navigation, so strip them server-side before render.
+const CATALOG_PARAM_KEYS = [
+    'cq', 'csort', 'ckeyword', 'coffset',
+    'cauthor', 'ctitle', 'ceditor', 'cplace', 'cprinter', 'cpublisher',
+    'cshelf', 'clang', 'cyfrom', 'cyto', 'cdig',
+];
+
+// Books-grid owns these. Catalog view ignores them; strip on /catalog so the
+// URL bar doesn't look filtered when it isn't.
+const BOOKS_PARAM_KEYS = ['q', 'sort', 'language', 'offset'];
+
 export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     const { tenant } = await params;
     const tenantId = await resolveTenantId(tenant);
@@ -31,6 +44,21 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     const q = typeof sp.q === 'string' ? sp.q : '';
     const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0', 10) || 0;
     const view = typeof sp.view === 'string' ? sp.view : 'books';
+
+    // Strip the inactive view's params so a user landing here from a previous
+    // `/catalog` filter (or vice-versa) doesn't see a URL that looks filtered
+    // when nothing is being applied.
+    const stripKeys = view === 'catalog' ? BOOKS_PARAM_KEYS : CATALOG_PARAM_KEYS;
+    const orphans = stripKeys.filter(k => typeof sp[k] === 'string' && sp[k] !== '');
+    if (orphans.length > 0) {
+        const next = new URLSearchParams();
+        for (const [k, v] of Object.entries(sp)) {
+            if (orphans.includes(k)) continue;
+            if (typeof v === 'string' && v !== '') next.set(k, v);
+        }
+        const qs = next.toString();
+        redirect(`/embed/${tenant}${qs ? `?${qs}` : ''}`);
+    }
 
     const db = await getDb();
     const tenantDoc = await db.collection('tenants').findOne({ id: tenantId });
