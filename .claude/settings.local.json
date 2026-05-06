@@ -15,7 +15,10 @@
       "Bash(open \"/Users/dereklomas/Downloads/the-magic-in-the-machine.pdf\")",
       "mcp__claude_ai_Gmail__search_threads",
       "mcp__claude_ai_Gmail__get_thread",
-      "mcp__claude_ai_Source_Library__get_book"
+      "mcp__claude_ai_Source_Library__get_book",
+      "Bash(cp /Users/dereklomas/sourcelibrary/.claude/handoffs/2026-05-06-bph-language-pair-eval.md .claude/handoffs/)",
+      "Bash(git add *)",
+      "Bash(git -c user.email=j.d.lomas@tudelft.nl -c user.name=JDerekLomas commit -s -m ' *)"
     ]
   }
 }
