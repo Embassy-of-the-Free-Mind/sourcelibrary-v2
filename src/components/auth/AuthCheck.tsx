@@ -1,6 +1,7 @@
 'use client';
 
 import { useStableSession } from '@/hooks/useStableSession';
+import { useEffect, useState } from 'react';
 
 interface AuthCheckProps {
   children: React.ReactNode;
@@ -19,6 +20,17 @@ interface AuthCheckProps {
  */
 export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
   const { data: session, status } = useStableSession();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Ensure server render and first client render match.
+  // Auth-gated UI is resolved only after hydration.
+  if (!isMounted) {
+    return <>{fallback}</>;
+  }
 
   if (status === 'loading') {
     // During loading, show fallback (the safe, non-interactive default).
