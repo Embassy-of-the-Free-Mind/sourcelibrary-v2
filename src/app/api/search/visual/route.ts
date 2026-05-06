@@ -60,11 +60,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Search Supabase for visually matching images
+    // Search Supabase for visually matching images. The CLIP RPC has no
+    // tenant column, so when a tenant filter is active we post-filter the
+    // matches in MongoDB below — oversample here so enough survive the
+    // filter (top-N globally would otherwise leave only a handful for niche
+    // tenant queries). Until the RPC gains a tenant column, this is the
+    // pragmatic fix.
+    const baseCount = offset + limit + 10;
     const { data, error } = await supabase.rpc('match_clip_text', {
       query_embedding: embedding,
       match_threshold: threshold,
-      match_count: offset + limit + 10,
+      match_count: tenantId ? Math.min(baseCount * 10, 1000) : baseCount,
     });
 
     if (error) {
