@@ -1,4 +1,4 @@
-import { apiClient, streamRequest } from './client';
+import { apiClient, getTenantSlug, streamRequest } from './client';
 import { upload } from './upload';
 
 import type { Book } from '@/lib/types';
@@ -25,24 +25,6 @@ import type {
   BookDownloadFormats,
   RoadmapResponse,
 } from './types/books';
-
-/**
- * Get the tenant slug from the current page URL
- */
-function getTenantSlug(): string {
-  if (typeof window === 'undefined') return '';
-  const parts = window.location.pathname.split('/').filter(Boolean);
-  
-  // Handle embed routes: /embed/[tenant]/... -> extract [tenant]
-  if (parts[0] === 'embed' && parts.length > 1) {
-    const tenant = parts[1];
-    return tenant && /^[a-z0-9-]+$/.test(tenant) ? tenant : '';
-  }
-  
-  // Handle regular routes: /[tenant]/... -> extract [tenant]
-  const tenant = parts[0] || '';
-  return tenant && /^[a-z0-9-]+$/.test(tenant) ? tenant : '';
-}
 
 /**
  * Construct a book API URL, tenant-scoped when available
