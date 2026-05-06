@@ -75,7 +75,14 @@ function findCompletion(input: string, vocab: string[]): string | null {
   return null;
 }
 
-export default function UnifiedSearch() {
+interface UnifiedSearchProps {
+  /** Where the results dropdown opens. 'top' (default) opens upward — matches
+   *  the global hero where the search sits at the bottom of the viewport.
+   *  'bottom' opens downward — use when the input has content beneath it. */
+  dropdownPosition?: 'top' | 'bottom';
+}
+
+export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearchProps = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const [query, setQuery] = useState('');
@@ -321,7 +328,7 @@ export default function UnifiedSearch() {
 
       {/* Results Dropdown */}
       {isOpen && (hasResults || noResults) && (
-        <div id="search-results" role="listbox" className="absolute bottom-full mb-2 left-0 right-0 bg-white rounded-xl shadow-xl border border-stone-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto">
+        <div id="search-results" role="listbox" className={`absolute ${dropdownPosition === 'bottom' ? 'top-full mt-2' : 'bottom-full mb-2'} left-0 right-0 bg-white rounded-xl shadow-xl border border-stone-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto`}>
           {noResults ? (
             <div className="p-6 text-center">
               <Search className="w-8 h-8 text-stone-300 mx-auto mb-2" />

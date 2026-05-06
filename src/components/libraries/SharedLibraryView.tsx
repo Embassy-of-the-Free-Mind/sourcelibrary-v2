@@ -160,7 +160,7 @@ export default function SharedLibraryView({
               stays scoped (the global /search route is not tenant-aware here). */}
           {tenantSlug && (
             <div className="max-w-2xl mb-5">
-              <UnifiedSearch />
+              <UnifiedSearch dropdownPosition="bottom" />
               <Link
                 href={forceEmbedded ? '/search' : `${basePath}/search`}
                 className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
