@@ -5,12 +5,13 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
 
-const R2_HOST_REGEX = /^https:\/\/images\.sourcelibrary\.org/;
-const ARCHIVE_FAILED_REGEX = /^failed:/;
-
 export const GET = withAdminAuth(async () => {
   const db = await getDb();
 
+  // Library-wide snapshot, computed by scripts/workers/r2-coverage-snapshot.mjs
+  const snapshot = await db.collection('system_config').findOne({ _id: 'r2_coverage_snapshot' as unknown as never });
+
+  // Live: stuck books explicitly errored on image downloads (always fresh — narrow query)
   const stuckBooks = await db.collection('books').find({
     'pipeline_auto.status': 'needs_attention',
     status: { $ne: 'deleted' },
@@ -21,7 +22,6 @@ export const GET = withAdminAuth(async () => {
     author: 1,
     language: 1,
     pages_count: 1,
-    pages_ocr: 1,
     quality_score: 1,
     'image_source.provider': 1,
     'pipeline_auto.error': 1,
@@ -33,8 +33,8 @@ export const GET = withAdminAuth(async () => {
     { $group: {
       _id: '$book_id',
       total: { $sum: 1 },
-      r2: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: R2_HOST_REGEX } }, 1, 0] } },
-      failed: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: ARCHIVE_FAILED_REGEX } }, 1, 0] } },
+      r2: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: /^https:\/\/images\.sourcelibrary\.org/ } }, 1, 0] } },
+      failed: { $sum: { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: /^failed:/ } }, 1, 0] } },
     }},
   ]).toArray();
 
@@ -75,23 +75,23 @@ export const GET = withAdminAuth(async () => {
     return acc;
   }, { books: 0, pages_total: 0, pages_r2: 0, pages_unarchived: 0, pages_failed: 0 });
 
-  const bookCoverage = await db.collection('books').aggregate([
-    { $match: { status: { $ne: 'deleted' }, pages_count: { $gt: 0 } } },
-    { $group: {
-      _id: { $ifNull: ['$image_source.provider', 'unknown'] },
-      books: { $sum: 1 },
-      pages: { $sum: '$pages_count' },
-    }},
-    { $sort: { books: -1 } },
-  ]).toArray();
-
   return NextResponse.json({
     generated_at: new Date().toISOString(),
+    snapshot: snapshot ? {
+      computed_at: snapshot.computed_at,
+      computation_ms: snapshot.computation_ms,
+      library: snapshot.library,
+      coverage_buckets: snapshot.coverage_buckets,
+      by_provider: snapshot.by_provider,
+      partial_books_count: snapshot.partial_books_count,
+      no_r2_books_count: snapshot.no_r2_books_count,
+      partial_books_top200: snapshot.partial_books_top200,
+      no_r2_books_top200: snapshot.no_r2_books_top200,
+    } : null,
     stuck: {
       summary: stuckTotals,
       by_provider: stuckByProvider,
       books: stuckRows,
     },
-    library_by_provider: bookCoverage.map(p => ({ provider: p._id, books: p.books, pages: p.pages })),
   });
 });
