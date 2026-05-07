@@ -9,7 +9,7 @@ import {
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
   ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
 } from 'lucide-react';
-import { useSearchParams, useRouter, useParams } from 'next/navigation';
+import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
@@ -78,6 +78,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   const router = useRouter();
   const { tenant } = useParams<{ tenant: string }>();
   const searchParams = useSearchParams();
+  const currentPathname = usePathname();
   const embedFromContext = useEmbed();
   const embed = forceEmbedded || embedFromContext;
 
@@ -606,9 +607,15 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
     if (!q && browseSortBy !== 'recent-translation') params.set('sort', browseSortBy);
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     if (resultsPerPage !== DEFAULT_RESULTS_PER_PAGE) params.set('per_page', resultsPerPage.toString());
-    const basePath = tenant ? `/${tenant}/search` : '/search';
+    // Preserve the current route's prefix. On the embed route the pathname is
+    // /embed/{tenant}/search; on a tenant subdomain the proxy makes it /search;
+    // on the URL-prefix variant it's /{tenant}/search. Stripping the prefix
+    // would silently navigate users off the embed (and off the subdomain).
+    const basePath = (currentPathname && currentPathname.endsWith('/search'))
+      ? currentPathname
+      : (tenant ? `/${tenant}/search` : '/search');
     router.replace(`${basePath}?${params.toString()}`, { scroll: false });
-  }, [router, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
+  }, [router, currentPathname, tenant, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype
   const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number }>());
