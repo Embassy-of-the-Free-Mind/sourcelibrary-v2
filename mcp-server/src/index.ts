@@ -252,17 +252,22 @@ const TOOLS: Tool[] = [
   {
     name: "search_images",
     description:
-      "Search 50,000+ historical illustrations, emblems, engravings, and diagrams. Filter by type, subject, figure, symbol, year range, book, or text query. Returns image metadata with gallery and book citation URLs.",
+      "Search the visual collection: 50,000+ illustrations extracted from book pages PLUS 23,000+ standalone artworks (paintings, frescoes, prints, sculptures from Met, Rijksmuseum, Wikimedia, NGA). Filter by type, subject, figure, symbol, year, book, or text query. Each result has a `source` field — `gallery` (illustration in a book) or `artwork` (standalone museum work). Use `type=painting` or `type=fresco` to find standalone works; `type=woodcut`, `type=engraving`, `type=emblem` etc. surface mostly book illustrations. The `source` parameter narrows the search: 'all' (default), 'gallery' (illustrations only), or 'artworks' (standalone works only).",
     inputSchema: {
       type: "object" as const,
       properties: {
         query: {
           type: "string",
-          description: "Text search for image descriptions (e.g., 'ouroboros', 'tree of life', 'alchemical laboratory')",
+          description: "Text search across descriptions, subjects, figures, titles, and artists (e.g., 'ouroboros', 'Raphael fresco', 'Botticelli')",
+        },
+        source: {
+          type: "string",
+          enum: ["all", "gallery", "artworks"],
+          description: "Which collection to search. 'all' (default) returns both illustrations and standalone artworks, interleaved. 'gallery' = book illustrations only. 'artworks' = standalone paintings/prints/sculptures only.",
         },
         type: {
           type: "string",
-          description: "Image type (woodcut, engraving, emblem, diagram, frontispiece, etc.)",
+          description: "Image type. For book illustrations: woodcut, engraving, emblem, diagram, frontispiece, portrait, illustration, map, chart, decorative, musical_score, symbol. For standalone artworks: painting, drawing, print, fresco, engraving, woodcut, emblem, map, tablet, object.",
         },
         subject: {
           type: "string",
@@ -278,19 +283,19 @@ const TOOLS: Tool[] = [
         },
         year_from: {
           type: "number",
-          description: "Filter by source book publication year (start)",
+          description: "Filter by publication year (start)",
         },
         year_to: {
           type: "number",
-          description: "Filter by source book publication year (end)",
+          description: "Filter by publication year (end)",
         },
         book_id: {
           type: "string",
-          description: "Only images from a specific book",
+          description: "Only return images from a specific book or artwork id",
         },
         min_quality: {
           type: "number",
-          description: "Minimum gallery quality score 0-1 (default 0.5)",
+          description: "Minimum gallery quality score 0-1 (default 0.5). Applies to gallery illustrations only.",
         },
         limit: {
           type: "number",
