@@ -725,7 +725,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
-  const noResults = query.length >= 2 && !loading && !semanticLoading && !passageLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0;
+  const noResults = query.length >= 2 && !loading && !semanticLoading && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
   useEffect(() => {
     if (!noResults || query.length < 3) { setSuggestion(null); return; }
     let cancelled = false;
