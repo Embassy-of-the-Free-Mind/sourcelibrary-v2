@@ -241,13 +241,13 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           {hasImages && !imageRestricted && (
             <>
               <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
-                Images
+                Page Scans
               </div>
-              <FormatOption format="epub-images" label="EPUB (Images)" desc="Page images as e-book"
-                icon={<BookOpen className="w-4 h-4 text-stone-600" />}
-                onDownload={handleDownload} downloading={downloading} />
-              <FormatOption format="images-zip" label="ZIP (Images)" desc="All page images as ZIP"
+              <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
                 icon={<Image className="w-4 h-4 text-stone-600" />}
+                onDownload={handleDownload} downloading={downloading} />
+              <FormatOption format="epub-images" label="Scans as EPUB" desc="Page images packaged as an e-book"
+                icon={<BookOpen className="w-4 h-4 text-stone-600" />}
                 onDownload={handleDownload} downloading={downloading} />
             </>
           )}
