@@ -68,8 +68,8 @@ const PER_PAGE = 50;
 const SORT_OPTIONS = [
   { value: 'title', label: 'Title A-Z' },
   { value: 'author', label: 'Author A-Z' },
-  { value: 'year_asc', label: 'Oldest first' },
-  { value: 'year_desc', label: 'Newest first' },
+  { value: 'year_asc', label: 'Year (oldest first)' },
+  { value: 'year_desc', label: 'Year (newest first)' },
   { value: 'shelfmark', label: 'Shelfmark' },
 ];
 
@@ -402,8 +402,8 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
               >
                 <option value="">All</option>
                 <option value="sl">On Source Library</option>
-                <option value="true">Digitized anywhere</option>
-                <option value="false">Not digitized</option>
+                <option value="true">Digitised anywhere</option>
+                <option value="false">Not digitised</option>
               </select>
             </div>
           </div>
@@ -461,7 +461,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
                           className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
                         >
                           <BookMarked className="w-3 h-3" />
-                          Digitized copy
+                          Digitised copy
                         </a>
                       )}
                       {/* Mobile: show author + place inline */}

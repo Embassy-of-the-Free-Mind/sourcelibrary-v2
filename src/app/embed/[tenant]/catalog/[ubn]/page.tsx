@@ -140,11 +140,11 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { ubn } = await params;
   const work = await fetchWork(ubn);
-  if (!work) return { title: 'Catalog entry not found - BPH', robots: { index: false, follow: false } };
-  const title = work.title || work.parallel_title || work.uniform_title || `BPH catalog entry ${ubn}`;
+  if (!work) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
+  const title = work.title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
   const author = work.author || work.variant_author || '';
-  const description = `BPH catalog entry. ${author ? author + '. ' : ''}${work.year ? `(${work.year}). ` : ''}Shelf mark: ${work.shelf_mark || '—'}.`;
-  return { title: `${title} - BPH catalog`, description };
+  const description = `BPH catalogue entry. ${author ? author + '. ' : ''}${work.year ? `(${work.year}). ` : ''}Shelf mark: ${work.shelf_mark || '—'}.`;
+  return { title: `${title} - BPH catalogue`, description };
 }
 
 export default async function CatalogEntryPage({ params }: Props) {
@@ -174,7 +174,7 @@ export default async function CatalogEntryPage({ params }: Props) {
           className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to catalog
+          Back to catalogue
         </Link>
 
         {/* Identity */}
@@ -206,7 +206,7 @@ export default async function CatalogEntryPage({ params }: Props) {
           <section className="mb-8 p-5 rounded-lg border border-accent-rust/30 bg-white">
             <div className="flex items-center gap-2 mb-3">
               <BookMarked className="w-4 h-4 text-accent-rust" />
-              <h2 className="text-sm font-medium text-accent-rust uppercase tracking-wide">Digitized copy</h2>
+              <h2 className="text-sm font-medium text-accent-rust uppercase tracking-wide">Digitised copy</h2>
             </div>
 
             {slBook.display_title && slBook.display_title !== work.title && (
@@ -269,12 +269,12 @@ export default async function CatalogEntryPage({ params }: Props) {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
             >
               <BookOpen className="w-4 h-4" />
-              Read the digitized copy
+              Read the digitised copy
             </a>
           </section>
         )}
 
-        {/* Catalog metadata — every public field, single column */}
+        {/* Catalogue metadata — every public field, single column */}
         <Section title="Title">
           <Field label="Short title" value={work.title} />
           <Field label="Full title (transcription)" value={work.parallel_title} />
@@ -307,21 +307,15 @@ export default async function CatalogEntryPage({ params }: Props) {
 
         <Section title="Physical">
           <Field label="Object size" value={work.object_size_cm} />
-          {work.bibliographic_format && (
+          {/* Only show the bibliographic format when it has a real source — the
+              size-derived bucket ("smaller" etc.) is unreliable without signature
+              collation, and BPH librarians have asked us to leave the field blank
+              rather than show an estimate that masquerades as a determination. */}
+          {work.bibliographic_format
+            && work.field_provenance?.bibliographic_format?.source
+            && work.field_provenance.bibliographic_format.source !== 'derived_from_size' && (
             <FieldRaw label="Format">
               <span className="text-primary capitalize">{work.bibliographic_format}</span>
-              {work.field_provenance?.bibliographic_format?.source === 'derived_from_size' && (
-                <span
-                  className="ml-2 text-xs text-muted italic"
-                  title={
-                    work.field_provenance.bibliographic_format.evidence
-                      ? `Estimated — ${work.field_provenance.bibliographic_format.evidence}. Signature collation needed for an authoritative determination.`
-                      : 'Estimated from object size — signature collation needed for an authoritative determination.'
-                  }
-                >
-                  estimated from size
-                </span>
-              )}
             </FieldRaw>
           )}
           <Field label="Number of copies held" value={work.number_of_copies != null ? String(work.number_of_copies) : null} />
@@ -360,7 +354,7 @@ export default async function CatalogEntryPage({ params }: Props) {
         </Section>
 
         <p className="text-xs text-muted border-t border-border-light pt-4 mt-2">
-          Catalog data sourced from the Bibliotheca Philosophica Hermetica (UBN {work.ubn}). Corrections should be made in the BPH catalog and re-imported.
+          Catalogue data sourced from the Bibliotheca Philosophica Hermetica (UBN {work.ubn}). Corrections should be made in the BPH catalogue and re-imported.
         </p>
       </div>
     </div>
