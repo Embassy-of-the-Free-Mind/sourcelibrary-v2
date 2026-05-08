@@ -454,7 +454,9 @@ async function fetchCollectionData(id: string, provider?: string) {
     items.map(b => ({ ...b, thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string) }));
 
   // Ensure objects crossing server->client boundary are plain JSON-safe data.
-  const toPlain = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+  function toPlain<T>(value: T): T {
+    return JSON.parse(JSON.stringify(value)) as T;
+  }
 
     // Merge curated highlights with live book data (thumbnails, slugs, first-translation status)
     const curatedBookMap = new Map(
