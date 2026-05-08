@@ -102,6 +102,7 @@ export default function BphUnifiedCatalogue({
           hideInlineCount
           searchRowSlot={toggleNode}
           resultsHeaderSlot={viewIconsNode}
+          catalogTotal={catalogTotal}
         />
       ) : (
         // mode='digitized': no catalogue browser — the books grid lives

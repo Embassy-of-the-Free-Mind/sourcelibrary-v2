@@ -26,7 +26,9 @@ test.describe('BPH iframe — digital collection (/embed/bph)', () => {
   test('page renders the unified catalogue with cards', async ({ page }) => {
     await page.goto('/embed/bph');
 
-    await expect(page.locator('h1')).toContainText('Bibliotheca Philosophica Hermetica');
+    // Hero is suppressed on the unified catalogue views (#1653) so partners
+    // can wrap the iframe with their own page chrome. The "Library Catalogue"
+    // h2 is the top-of-page anchor for both modes.
     await expect(page.locator('h2', { hasText: BPH_HEADING }).first()).toBeVisible({ timeout: 15_000 });
 
     // Default mode renders the digitised+translated grid → book cards

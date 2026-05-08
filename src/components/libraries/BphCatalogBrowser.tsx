@@ -121,6 +121,10 @@ interface Props {
       list/grid view icons. When provided, the sort dropdown moves out of
       the search row and into this header row to match the partner mockup. */
   resultsHeaderSlot?: React.ReactNode;
+  /** When set, the results-header row count reads "{total} of {catalogTotal}
+      works" instead of just "{total} works" — matches the partner mockup
+      framing where the catalogue size is the denominator. */
+  catalogTotal?: number;
 }
 
 export default function BphCatalogBrowser({
@@ -132,6 +136,7 @@ export default function BphCatalogBrowser({
   hideInlineCount = false,
   searchRowSlot,
   resultsHeaderSlot,
+  catalogTotal,
 }: Props) {
   const searchParams = useSearchParams();
 
@@ -403,15 +408,15 @@ export default function BphCatalogBrowser({
 
       {/* Results-header row — counter on the left, sort + parent-supplied
           view icons on the right. Only rendered when the parent passes a
-          slot (the unified shell does so for the BPH iframe). */}
+          slot (the unified shell does so for the BPH iframe). The count
+          renders here regardless of hideInlineCount — that prop only gates
+          the inline count in the search row above. */}
       {sortLivesInHeader && (
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          {!hideInlineCount && (
-            <span className="text-sm text-muted">
-              <span className="font-medium text-primary">{total.toLocaleString()}</span>{' '}
-              works
-            </span>
-          )}
+          <span className="text-sm text-muted">
+            <span className="font-medium text-primary">{total.toLocaleString()}</span>
+            {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString()} works` : ' works'}
+          </span>
           <div className="flex items-center gap-3 ml-auto">
             <label className="inline-flex items-center gap-2 text-sm text-muted">
               <span>Sort by</span>
