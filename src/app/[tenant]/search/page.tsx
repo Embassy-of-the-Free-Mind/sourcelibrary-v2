@@ -9,7 +9,7 @@ import {
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
   ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
 } from 'lucide-react';
-import { useSearchParams, useRouter, useParams } from 'next/navigation';
+import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
@@ -53,12 +53,32 @@ const INDEX_TYPES = [
 interface LanguageOption { value: string; label: string; }
 interface CategoryOption { value: string; label: string; icon?: string; }
 
+interface BphCatalogMatch {
+  ubn: string;
+  title: string | null;
+  parallel_title?: string | null;
+  uniform_title?: string | null;
+  author: string | null;
+  variant_author?: string | null;
+  year: number | null;
+  place: string | null;
+  publisher?: string | null;
+  printer?: string | null;
+  shelf_mark?: string | null;
+  keywords?: string | null;
+  thumbnail?: string | null;
+  sl_book_id: string | null;
+  sl_book_slug?: string | null;
+  ia_identifier?: string | null;
+}
+
 type ViewMode = 'unified' | 'books' | 'index' | 'images';
 
 export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { defaultLibrary?: string; forceEmbedded?: boolean } = {}) {
   const router = useRouter();
   const { tenant } = useParams<{ tenant: string }>();
   const searchParams = useSearchParams();
+  const currentPathname = usePathname();
   const embedFromContext = useEmbed();
   const embed = forceEmbedded || embedFromContext;
 
@@ -83,6 +103,13 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   // Page-content passage results (for quoted phrase searches)
   const [passageResults, setPassageResults] = useState<SearchResult[]>([]);
   const [passageLoading, setPassageLoading] = useState(false);
+
+  // BPH catalog metadata matches (only on a BPH tenant). Catches works that
+  // exist in the bibliographic catalog but haven't been digitized — full-text
+  // book search would never find them.
+  const [catalogResults, setCatalogResults] = useState<BphCatalogMatch[]>([]);
+  const [catalogTotal, setCatalogTotal] = useState(0);
+  const [catalogLoading, setCatalogLoading] = useState(false);
 
   // Track when the base search has set image results, so AI imgTerms callback
   // doesn't add images that get immediately overwritten by the base search completing.
@@ -314,6 +341,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
       setIndexResults([]); setIndexTotal(0);
       setCollectionResults([]);
       setImageResults([]); setImageTotal(0);
+      setCatalogResults([]); setCatalogTotal(0);
       return;
     }
     setLoading(true);
@@ -459,6 +487,21 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
           .catch(() => setSemanticResults([]))
           .finally(() => setSemanticLoading(false));
 
+        // Fire BPH catalog metadata search in parallel — only on a BPH tenant.
+        // The /api/catalog/bph endpoint runs Postgres full-text on bph_works,
+        // which catches non-digitized works that the book-content search can't see.
+        if (tenant === 'bph') {
+          setCatalogLoading(true);
+          fetch(`/api/catalog/bph?q=${encodeURIComponent(q)}&limit=8`)
+            .then(r => r.json())
+            .then(data => {
+              setCatalogResults(data.works || []);
+              setCatalogTotal(data.total || 0);
+            })
+            .catch(() => { setCatalogResults([]); setCatalogTotal(0); })
+            .finally(() => setCatalogLoading(false));
+        }
+
         // For quoted phrases, also search page content to find exact passages.
         // Use unquoted query for full-text search (finds pages with both words),
         // then try phrase search for exact contiguous matches and promote those.
@@ -564,9 +607,15 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
     if (!q && browseSortBy !== 'recent-translation') params.set('sort', browseSortBy);
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     if (resultsPerPage !== DEFAULT_RESULTS_PER_PAGE) params.set('per_page', resultsPerPage.toString());
-    const basePath = tenant ? `/${tenant}/search` : '/search';
+    // Preserve the current route's prefix. On the embed route the pathname is
+    // /embed/{tenant}/search; on a tenant subdomain the proxy makes it /search;
+    // on the URL-prefix variant it's /{tenant}/search. Stripping the prefix
+    // would silently navigate users off the embed (and off the subdomain).
+    const basePath = (currentPathname && currentPathname.endsWith('/search'))
+      ? currentPathname
+      : (tenant ? `/${tenant}/search` : '/search');
     router.replace(`${basePath}?${params.toString()}`, { scroll: false });
-  }, [router, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
+  }, [router, currentPathname, tenant, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype
   const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number }>());
@@ -676,7 +725,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
-  const noResults = query.length >= 2 && !loading && !semanticLoading && !passageLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0;
+  const noResults = query.length >= 2 && !loading && !semanticLoading && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
   useEffect(() => {
     if (!noResults || query.length < 3) { setSuggestion(null); return; }
     let cancelled = false;
@@ -1277,7 +1326,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         )}
 
         {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
-        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading) && (() => {
+        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
           const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
@@ -1397,6 +1446,50 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             </div>
           );
 
+          // Catalog matches: bibliographic-only entries from the BPH catalog
+          // (works that exist on the shelf but aren't yet digitized). Shown as
+          // a compact list — the catalog page is the destination for power use.
+          const bookResultIds = new Set(bookResults.map(b => b.id || b.book_id).filter(Boolean));
+          const catalogSection = (catalogResults.length > 0 || catalogLoading) && (
+            <>
+              <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+                Catalog matches
+                {catalogTotal > 0 && (
+                  <span className="ml-1 text-muted/70 normal-case">
+                    · {catalogTotal.toLocaleString()} {catalogTotal === 1 ? 'work' : 'works'}
+                  </span>
+                )}
+              </h2>
+              {catalogLoading ? (
+                <div className="flex items-center gap-2 text-sm text-muted py-3">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Searching catalog...
+                </div>
+              ) : (
+                <>
+                  {catalogResults.slice(0, 5).map(work => (
+                    <BphCatalogResultCard
+                      key={work.ubn}
+                      work={work}
+                      query={query}
+                      tenant={tenant}
+                      digitizedAlsoInBooks={!!work.sl_book_id && bookResultIds.has(work.sl_book_id)}
+                    />
+                  ))}
+                  {catalogTotal > 5 && (
+                    <Link
+                      href={`/catalog?cq=${encodeURIComponent(query)}`}
+                      className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1"
+                    >
+                      Open all {catalogTotal} catalog matches <ChevronRight className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
+                </>
+              )}
+            </>
+          );
+
           return (
             <div className="space-y-3">
               {passageSection}
@@ -1406,15 +1499,18 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                 <>
                   {imageStrip}
                   {bookSection}
+                  {catalogSection}
                 </>
               ) : displayHint === 'not_in_collection' ? (
                 <>
                   {bookSection}
+                  {catalogSection}
                   {imageStrip}
                 </>
               ) : (
                 <>
                   {bookSection}
+                  {catalogSection}
                   {imageStrip}
                 </>
               )}
@@ -1904,6 +2000,81 @@ function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & {
           {query ? <HighlightedText text={item.description} query={query} /> : item.description}
         </p>
         <p className="text-xs text-muted line-clamp-1">{item.bookTitle}</p>
+      </div>
+    </Link>
+  );
+}
+
+// ==================== BPH CATALOG ROW ====================
+
+function BphCatalogResultCard({ work, query, tenant, digitizedAlsoInBooks }: {
+  work: BphCatalogMatch;
+  query: string;
+  tenant?: string;
+  digitizedAlsoInBooks: boolean;
+}) {
+  const title = work.title || work.parallel_title || work.uniform_title || '(untitled)';
+  const author = work.author || work.variant_author;
+  const meta = [
+    author,
+    work.year,
+    work.place,
+  ].filter(Boolean).join(' · ');
+  const isDigitized = !!work.sl_book_id;
+  const href = isDigitized && work.sl_book_id
+    ? tenantBookUrl({ id: work.sl_book_id, slug: work.sl_book_slug || work.sl_book_id }, tenant)
+    : `/catalog/${encodeURIComponent(work.ubn)}`;
+  const [imgError, setImgError] = useState(false);
+
+  // Don't double-show digitized works that already appear in book results — render
+  // a slimmer version that just notes the catalog match without competing visually.
+  const compact = digitizedAlsoInBooks;
+
+  return (
+    <Link
+      href={href}
+      className={`block bg-white rounded-lg border border-border-light hover:border-accent-gold/40 hover:shadow-sm transition-all ${compact ? 'p-2.5' : 'p-3 sm:p-4'}`}
+    >
+      <div className="flex items-start gap-3">
+        {work.thumbnail && !imgError ? (
+          <Image
+            src={work.thumbnail}
+            alt=""
+            width={48}
+            height={68}
+            className={`rounded shadow-sm flex-shrink-0 object-cover ${compact ? 'w-[36px] h-[50px]' : 'w-[48px] h-[68px]'}`}
+            onError={() => setImgError(true)}
+            unoptimized
+          />
+        ) : (
+          <div className={`rounded bg-warm flex items-center justify-center flex-shrink-0 ${compact ? 'w-[36px] h-[50px]' : 'w-[48px] h-[68px]'}`}>
+            <Book className="w-5 h-5 text-border-medium" />
+          </div>
+        )}
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className={`font-medium text-primary leading-snug ${compact ? 'text-sm' : 'text-base'}`}>
+              {query ? <HighlightedText text={title} query={query} /> : title}
+            </h3>
+            <span className={`flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide ${
+              isDigitized
+                ? 'bg-accent-rust/10 text-accent-rust'
+                : 'bg-cream border border-border-light text-muted'
+            }`}>
+              {isDigitized ? 'Digitized' : 'Catalog only'}
+            </span>
+          </div>
+          {meta && (
+            <p className={`text-muted mt-0.5 ${compact ? 'text-xs' : 'text-sm'}`}>
+              {meta}
+            </p>
+          )}
+          {work.shelf_mark && !compact && (
+            <p className="text-xs text-muted/80 mt-0.5 font-mono">
+              {work.shelf_mark}
+            </p>
+          )}
+        </div>
       </div>
     </Link>
   );
