@@ -320,16 +320,59 @@ export async function GET(request: NextRequest) {
         }
       } catch { /* non-fatal */ }
     }
-    const filteredArtworks = {
+    let filteredArtworks = {
       results: artworksAboveFloor,
       total: artworksAboveFloor.length,
     };
+
+    // Defense-in-depth tenant filter. When a tenant header is present,
+    // every book-keyed lane is filtered against the tenant's books in
+    // MongoDB. The books lane in particular cannot filter at the source
+    // (Supabase books_catalog has no tenant column — see tenant-browse.ts),
+    // and other lanes have had subtle filter bugs in the past. One MongoDB
+    // round-trip here is a robust safety net.
+    let scopedBooks = booksResult;
+    let scopedIndex = indexResult;
+    let scopedGallery = galleryResult;
+    let scopedSemantic = filteredSemantic;
+    if (tenantContext.id) {
+      const collectIds = [
+        ...booksResult.results.map((r: any) => r.id),
+        ...indexResult.results.map((r: any) => r.book_id),
+        ...galleryResult.results.map((r: any) => r.bookId),
+        ...filteredSemantic.results.map(r => r.book_id),
+        ...filteredArtworks.results.map(r => r.book_id),
+      ].filter(Boolean);
+      const uniqueIds = [...new Set(collectIds)];
+      let allowed: Set<string> = new Set();
+      if (uniqueIds.length > 0) {
+        const docs = await db.collection('books')
+          .find(
+            { id: { $in: uniqueIds }, tenantId: tenantContext.id },
+            { projection: { _id: 0, id: 1 }, maxTimeMS: 3000 },
+          )
+          .toArray();
+        allowed = new Set(docs.map((d: any) => d.id));
+      }
+      const keepById = <T extends Record<string, any>>(arr: T[], idField: string) =>
+        arr.filter(r => allowed.has(r[idField]));
+      scopedBooks = { ...booksResult, results: keepById(booksResult.results, 'id'), total: 0, hasMore: false };
+      scopedBooks.total = scopedBooks.results.length;
+      scopedIndex = { ...indexResult, results: keepById(indexResult.results, 'book_id'), total: 0, hasMore: false };
+      scopedIndex.total = scopedIndex.results.length;
+      scopedGallery = { ...galleryResult, results: keepById(galleryResult.results, 'bookId'), total: 0 };
+      scopedGallery.total = scopedGallery.results.length;
+      scopedSemantic = { ...filteredSemantic, results: keepById(filteredSemantic.results, 'book_id'), total: 0 };
+      scopedSemantic.total = scopedSemantic.results.length;
+      filteredArtworks = { results: keepById(filteredArtworks.results, 'book_id'), total: 0 };
+      filteredArtworks.total = filteredArtworks.results.length;
+    }
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total + filteredVisual.total + filteredSemantic.total + filteredArtworks.total,
+      results_count: scopedBooks.total + scopedIndex.total + scopedGallery.total + filteredVisual.total + scopedSemantic.total + filteredArtworks.total,
       filters: { language, category, library, source: 'unified', tenantId: tenantContext.id || null },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -338,11 +381,11 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       query,
-      books: booksResult,
-      index: indexResult,
-      gallery: galleryResult,
+      books: scopedBooks,
+      index: scopedIndex,
+      gallery: scopedGallery,
       visual: filteredVisual,
-      semantic: filteredSemantic,
+      semantic: scopedSemantic,
       artworks: filteredArtworks,
       collections: collectionsWithTenantSlug,
     }, {

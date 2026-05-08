@@ -162,7 +162,7 @@ export default function SharedLibraryView({
               the unified search above only covers the digitised+translated subset. */}
           {tenantSlug && (
             <div className="max-w-2xl mb-5">
-              <UnifiedSearch />
+              <UnifiedSearch dropdownPosition="bottom" />
               {isBph && catalogTotal > 0 ? (
                 <Link
                   href={forceEmbedded ? '/catalog' : `${basePath}/catalog`}
