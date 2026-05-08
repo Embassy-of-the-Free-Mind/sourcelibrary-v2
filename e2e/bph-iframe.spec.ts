@@ -155,6 +155,24 @@ test.describe('BPH iframe — search (/embed/bph/search)', () => {
     );
     expect(leaks, `Found ${leaks.length} hardcoded sourcelibrary.org links: ${leaks.slice(0, 3).join(', ')}`).toHaveLength(0);
   });
+
+  test('no Collection cards leak through search (cross-tenant guard)', async ({ page }) => {
+    // Collections are SL-global content (Depth Psychology, Hermetica, etc.).
+    // Showing them on bph.sourcelibrary.org/search is a cross-tenant leak.
+    // The Hartmann query specifically surfaces "Depth Psychology" — easy
+    // regression marker. Guard added in feedback round 2 (image #8).
+    await page.goto('/embed/bph/search?q=Hartmann');
+    await expect(page.locator('text=/CATALOG MATCHES/i').first()).toBeVisible({ timeout: SEARCH_TIMEOUT });
+
+    // Search-result collection cards are <a href="/collections/{slug}"> with
+    // a "{N} books" label. Anchors with that pattern indicate the lane is on.
+    const collectionAnchors = page.locator('a[href^="/collections/"]');
+    expect(await collectionAnchors.count()).toBe(0);
+
+    // Also no "Depth Psychology" label anywhere (it's an SL-only collection).
+    const dp = page.locator('text=/Depth Psychology/i');
+    expect(await dp.count()).toBe(0);
+  });
 });
 
 test.describe('BPH iframe — orphan param strip', () => {
