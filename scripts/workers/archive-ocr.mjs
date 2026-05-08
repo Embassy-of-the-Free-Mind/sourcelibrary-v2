@@ -14,6 +14,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
+import { upgradeToFullRes } from '../lib/iiif-utils.mjs';
 
 const MAX_PAGES = 10_000;
 const MAX_PAGES_PER_DOMAIN = 5000;  // Prevent one domain from crowding out others
@@ -138,36 +139,7 @@ async function uploadToR2(key, buffer, contentType) {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
-/**
- * Upgrade a IIIF image URL to full resolution.
- * Most sources store photo URLs at reduced resolution (pct:50, 1000px, etc.).
- * For archival, we want the highest resolution available.
- */
-function upgradeToFullRes(url) {
-  try {
-    // Internet Archive IIIF: .../full/pct:50/0/default.jpg -> .../full/full/0/default.jpg
-    if (url.includes('archive.org') && url.includes('/full/pct:')) {
-      return url.replace(/\/full\/pct:\d+\//, '/full/full/');
-    }
-    // MDZ (digitale-sammlungen): .../full/1000,/0/default.jpg -> .../full/full/0/default.jpg
-    if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) {
-      return url.replace(/\/full\/\d+,\//, '/full/full/');
-    }
-    // Gallica IIIF: same pattern
-    if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\//)) {
-      return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
-    }
-    // Vatican IIIF
-    if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\//)) {
-      return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
-    }
-    // e-rara, Bodleian, Cambridge, HAB, Wellcome — all IIIF
-    if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
-      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
-    }
-  } catch {}
-  return url; // Return original if no upgrade pattern matches
-}
+// upgradeToFullRes is imported from ../lib/iiif-utils.mjs
 
 async function archivePage(page, db) {
   const originalUrl = page.photo;

@@ -23,6 +23,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
+import { upgradeToFullRes } from '../lib/iiif-utils.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = (() => { const i = process.argv.indexOf('--limit'); return i !== -1 ? parseInt(process.argv[i+1]) : 0; })();
@@ -64,19 +65,6 @@ async function waitForToken(domain) {
     b.last = Date.now(); b.count = 0;
   }
   b.count++;
-}
-
-function upgradeToFullRes(url) {
-  try {
-    if (url.includes('archive.org') && url.includes('/full/pct:')) return url.replace(/\/full\/pct:\d+\//, '/full/full/');
-    if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) return url.replace(/\/full\/\d+,\//, '/full/full/');
-    if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\//)) return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
-    if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\//)) return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
-    if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
-      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
-    }
-  } catch {}
-  return url;
 }
 
 async function downloadImage(url, retries = 2) {
