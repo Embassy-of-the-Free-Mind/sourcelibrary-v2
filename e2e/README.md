@@ -12,6 +12,7 @@ Lightweight safety-net tests that verify critical paths on production after depl
 | `gallery` | Heading, image cards, search inputs |
 | `page-reader` | Page loads without 404, page image renders |
 | `navigation-flow` | Full click-through: homepage -> book -> page reader |
+| `bph-iframe` | BPH tenant iframe — three-page model (collection / catalog / search), orphan param strip, /embed/ prefix preservation, no anchor escapes to sourcelibrary.org, catalog matches section in /search |
 
 ## Running locally
 
