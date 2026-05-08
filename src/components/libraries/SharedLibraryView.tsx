@@ -143,6 +143,13 @@ export default function SharedLibraryView({
   return (
     <div className="min-h-screen bg-cream">
       {!embed && <ConditionalSiteHeader variant="dark" />}
+      {/* Hero, Illustrations, and Contributing Libraries are suppressed on
+          the dedicated BPH catalogue/books views so the iframe renders just
+          the catalogue. Webflow partners build their own page chrome around
+          the iframe, so the hero is duplicative there. The default landing
+          (no view param) and other tenants still show the full hero. */}
+      {!showUnifiedCatalogue && (
+      <>
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
@@ -308,6 +315,8 @@ export default function SharedLibraryView({
             </div>
           </div>
         </div>
+      )}
+      </>
       )}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
