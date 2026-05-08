@@ -363,15 +363,26 @@ async function processBook(r2, db, book) {
     'translation.data': { $exists: true, $ne: '' },
   });
 
-  // Set thumbnail to first page
+  // Set thumbnail to first page. Prefer R2-hosted URLs over the page's
+  // original `photo` field, which for IIIF imports points at the source
+  // library's image server (e.g. images.uba.uva.nl) — that violates the
+  // R2-only policy. archived_photo is set during the archive phase to a
+  // canonical /archived/{id}/{n}.jpg URL on R2.
   const firstPage = allPages[0];
+  const isR2 = (u) => u && u.includes('images.sourcelibrary.org');
+  const thumbnailUrl =
+    (isR2(firstPage?.archived_photo) ? firstPage.archived_photo : null)
+    || (isR2(firstPage?.photo) ? firstPage.photo : null)
+    || firstPage?.archived_photo
+    || firstPage?.photo
+    || firstPage?.cropped_photo;
 
   const setDoc = {
     pages_count: allPages.length,
     pages_ocr: ocrCount,
     pages_translated: translateCount,
     needs_splitting: false,
-    thumbnail: firstPage?.photo || firstPage?.cropped_photo,
+    thumbnail: thumbnailUrl,
     'pipeline_auto.split_checked': true,
     'pipeline_auto.last_updated': new Date(),
     updated_at: new Date(),
