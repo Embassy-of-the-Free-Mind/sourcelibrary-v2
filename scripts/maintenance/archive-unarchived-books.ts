@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
+import { upgradeToFullRes, rateLimitedFetch } from '../lib/iiif-utils.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = (() => {
@@ -36,70 +37,7 @@ const CONCURRENCY = (() => {
   return idx !== -1 ? parseInt(process.argv[idx + 1]) : 10;
 })();
 
-const DOWNLOAD_TIMEOUT = 30000;
 const MAX_RETRIES = 3;
-
-// Rate limiter per domain
-const domainBuckets = new Map();
-const DOMAIN_LIMITS = {
-  'archive.org': 10, 'gallica.bnf.fr': 3, 'api.digitale-sammlungen.de': 5,
-  'iiif.wellcomecollection.org': 5, 'www.e-rara.ch': 2, 'digi.vatlib.it': 3,
-  'iiif.bodleian.ox.ac.uk': 3, 'images.lib.cam.ac.uk': 3, 'image.digitalcollections.manchester.ac.uk': 3,
-  'images.uba.uva.nl': 3, 'cdm21059.contentdm.oclc.org': 3, 'dl.ndl.go.jp': 3,
-};
-
-function getDomainLimit(url) {
-  try { const host = new URL(url).hostname; return DOMAIN_LIMITS[host] || 5; }
-  catch { return 5; }
-}
-
-async function rateLimitedFetch(url) {
-  let host;
-  try { host = new URL(url).hostname; } catch { host = 'unknown'; }
-  const limit = getDomainLimit(url);
-
-  if (!domainBuckets.has(host)) domainBuckets.set(host, { last: 0, count: 0 });
-  const bucket = domainBuckets.get(host);
-
-  const now = Date.now();
-  if (now - bucket.last > 1000) { bucket.count = 0; bucket.last = now; }
-  if (bucket.count >= limit) {
-    const wait = 1000 - (now - bucket.last);
-    if (wait > 0) await new Promise(r => setTimeout(r, wait));
-    bucket.count = 0;
-    bucket.last = Date.now();
-  }
-  bucket.count++;
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), DOWNLOAD_TIMEOUT);
-  try {
-    const res = await fetch(url, {
-      signal: controller.signal,
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)' }
-    });
-    clearTimeout(timeout);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return Buffer.from(await res.arrayBuffer());
-  } catch (e) {
-    clearTimeout(timeout);
-    throw e;
-  }
-}
-
-// Upgrade IIIF URL to full native resolution. Mirrors archive-ocr.mjs:upgradeToFullRes.
-function upgradeToFullRes(url: string): string {
-  try {
-    if (url.includes('archive.org') && url.includes('/full/pct:')) return url.replace(/\/full\/pct:\d+\//, '/full/full/');
-    if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) return url.replace(/\/full\/\d+,\//, '/full/full/');
-    if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\//)) return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
-    if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\//)) return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
-    if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
-      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
-    }
-  } catch {}
-  return url;
-}
 
 async function archivePage(db, page) {
   const originalUrl = page.photo_original || page.photo;
