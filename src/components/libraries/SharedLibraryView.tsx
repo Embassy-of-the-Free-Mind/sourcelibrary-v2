@@ -157,27 +157,41 @@ export default function SharedLibraryView({
 
           {/* On a tenant subdomain, `/search` is rewritten by proxy.ts to keep the
               URL clean. On a tenant URL prefix, link with the prefix so navigation
-              stays scoped (the global /search route is not tenant-aware here). */}
+              stays scoped (the global /search route is not tenant-aware here).
+              For BPH, the hero CTA points at the full catalogue (27,706 works);
+              the unified search above only covers the digitised+translated subset. */}
           {tenantSlug && (
             <div className="max-w-2xl mb-5">
               <UnifiedSearch dropdownPosition="bottom" />
-              <Link
-                href={forceEmbedded ? '/search' : `${basePath}/search`}
-                className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
-              >
-                <Search className="w-3.5 h-3.5" />
-                Open the full search page
-              </Link>
+              {isBph && catalogTotal > 0 ? (
+                <Link
+                  href={forceEmbedded ? '/catalog' : `${basePath}/catalog`}
+                  className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
+                >
+                  <Search className="w-3.5 h-3.5" />
+                  Browse the full catalogue ({catalogTotal.toLocaleString()} works)
+                </Link>
+              ) : (
+                <Link
+                  href={forceEmbedded ? '/search' : `${basePath}/search`}
+                  className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
+                >
+                  <Search className="w-3.5 h-3.5" />
+                  Open the full search page
+                </Link>
+              )}
             </div>
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString()} translated books</span>
-            {isBph && catalogTotal > 0 && (
+            {isBph && catalogTotal > 0 ? (
               <>
+                <span>{catalogTotal.toLocaleString()} works in catalogue</span>
                 <span className="w-px h-4 bg-white/20" />
-                <span>{catalogTotal.toLocaleString()} works in catalog</span>
+                <span>{total.toLocaleString()} digitised on Source Library</span>
               </>
+            ) : (
+              <span>{total.toLocaleString()} translated books</span>
             )}
             {languages.length > 0 && (
               <>
@@ -444,13 +458,13 @@ export default function SharedLibraryView({
               </div>
             )}
 
-            {/* Library Catalog */}
+            {/* Library Catalogue */}
             <div className="mb-6">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">
-                Library Catalog
+                Library Catalogue
               </h2>
               <p className="text-sm text-muted mt-1">
-                Complete catalog of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString()} works in the collection.
+                Complete catalogue of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString()} works in the collection.
                 Works available on Source Library are marked with a book icon.
               </p>
             </div>
