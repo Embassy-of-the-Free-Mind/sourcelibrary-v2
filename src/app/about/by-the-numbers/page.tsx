@@ -1,0 +1,386 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { BookOpen, FileText, Languages, Image as ImageIcon, Database, HardDrive, Sparkles, Globe, Building2, Cloud, Cpu } from 'lucide-react';
+import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+
+export const metadata: Metadata = {
+  title: 'By the Numbers — Source Library',
+  description: 'How big is Source Library? A visual tour of the corpus: books, pages, languages, time periods, and the storage that holds it all.',
+  alternates: { canonical: '/about/by-the-numbers' },
+};
+
+const fmt = (n: number) => n.toLocaleString();
+
+// ---------- Data (snapshot 2026-05-07) ----------
+
+const HERO = {
+  books: 26_643,
+  warehouse: 22_543,
+  pages: 4_377_830,
+  pagesOcr: 3_840_900,
+  pagesTranslated: 3_670_143,
+  readable: 11_032,
+  firstTranslations: 6_033,
+  galleryImages: 100_981,
+  entities: 811_127,
+  collections: 337,
+  bookEmbeddings: 30_564,
+};
+
+const LANGUAGES: { name: string; count: number }[] = [
+  { name: 'Visual / image-only', count: 8_584 },
+  { name: 'Latin', count: 4_200 },
+  { name: 'German', count: 1_747 },
+  { name: 'English', count: 1_422 },
+  { name: 'Greek', count: 812 },
+  { name: 'French', count: 659 },
+  { name: 'Chinese', count: 582 },
+  { name: 'Dutch', count: 443 },
+  { name: 'Sumerian', count: 377 },
+  { name: 'Sanskrit', count: 343 },
+  { name: 'Russian', count: 242 },
+  { name: 'Italian', count: 223 },
+  { name: 'Hebrew', count: 210 },
+  { name: 'Egyptian hieroglyphs', count: 129 },
+];
+
+const PERIODS: { label: string; count: number }[] = [
+  { label: 'Pre-1000', count: 143 },
+  { label: '1000s', count: 133 },
+  { label: '1100s', count: 96 },
+  { label: '1200s', count: 120 },
+  { label: '1300s', count: 176 },
+  { label: '1400s', count: 914 },
+  { label: '1500s', count: 2_415 },
+  { label: '1600s', count: 3_845 },
+  { label: '1700s', count: 2_403 },
+  { label: '1800s', count: 3_350 },
+  { label: '1900s', count: 1_713 },
+  { label: '2000s', count: 2_654 },
+];
+
+const SOURCES: { name: string; count: number; note?: string }[] = [
+  { name: 'Wikimedia Commons', count: 11_287, note: 'Open scans & artworks' },
+  { name: 'Internet Archive', count: 5_216, note: 'Public-domain books' },
+  { name: 'Embassy of the Free Mind (BPH)', count: 2_273, note: 'Hermetica, alchemy, Rosicrucian' },
+  { name: 'Rijksmuseum', count: 1_697, note: 'Prints & illustrated works' },
+  { name: 'Munich Digital Library (MDZ)', count: 1_338 },
+  { name: 'e-rara (Swiss libraries)', count: 537 },
+  { name: 'National Gallery of Art', count: 452 },
+  { name: 'Allard Pierson (Amsterdam)', count: 421 },
+  { name: 'ETCSL (Sumerian Literature)', count: 373 },
+  { name: 'The Met', count: 362 },
+];
+
+// ---------- Helpers ----------
+
+function StatCard({
+  label,
+  value,
+  sub,
+  icon: Icon,
+  accent = 'gold',
+}: {
+  label: string;
+  value: string | number;
+  sub?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  accent?: 'gold' | 'rust' | 'sage' | 'violet' | 'stone';
+}) {
+  const accentMap: Record<string, string> = {
+    gold: 'text-accent-gold-dark bg-accent-gold/10',
+    rust: 'text-accent-rust bg-accent-rust/10',
+    sage: 'text-accent-sage-dark bg-accent-sage/15',
+    violet: 'text-accent-violet bg-accent-violet/10',
+    stone: 'text-stone-700 bg-stone-100',
+  };
+  return (
+    <div className="bg-white rounded-xl p-6 border border-border-light shadow-sm">
+      <div className="flex items-start justify-between mb-3">
+        <div className="text-sm uppercase tracking-wider text-secondary font-medium">{label}</div>
+        {Icon && (
+          <div className={`p-2 rounded-lg ${accentMap[accent]}`}>
+            <Icon className="w-5 h-5" />
+          </div>
+        )}
+      </div>
+      <div className="font-serif text-4xl md:text-5xl text-primary tabular-nums leading-none">
+        {typeof value === 'number' ? fmt(value) : value}
+      </div>
+      {sub && <div className="text-sm text-muted mt-2">{sub}</div>}
+    </div>
+  );
+}
+
+function HBar({ name, count, max, color }: { name: string; count: number; max: number; color: string }) {
+  const pct = (count / max) * 100;
+  return (
+    <div className="grid grid-cols-[10rem_1fr_4rem] md:grid-cols-[12rem_1fr_5rem] items-center gap-3 py-1.5">
+      <div className="text-sm text-secondary truncate">{name}</div>
+      <div className="h-5 bg-stone-100 rounded-sm overflow-hidden">
+        <div className={`h-full ${color}`} style={{ width: `${pct}%` }} />
+      </div>
+      <div className="text-sm tabular-nums text-primary text-right">{fmt(count)}</div>
+    </div>
+  );
+}
+
+function VBar({ label, count, max, highlight }: { label: string; count: number; max: number; highlight?: boolean }) {
+  const pct = (count / max) * 100;
+  return (
+    <div className="flex flex-col items-center gap-1.5 flex-1 min-w-0">
+      <div className="text-xs tabular-nums text-secondary">{count >= 1000 ? `${(count / 1000).toFixed(1)}k` : count}</div>
+      <div className="w-full bg-stone-100 rounded-t-sm relative" style={{ height: '180px' }}>
+        <div
+          className={`absolute bottom-0 left-0 right-0 ${highlight ? 'bg-accent-rust' : 'bg-accent-gold'} rounded-t-sm transition-all`}
+          style={{ height: `${pct}%` }}
+        />
+      </div>
+      <div className="text-xs text-muted whitespace-nowrap">{label}</div>
+    </div>
+  );
+}
+
+// ---------- Page ----------
+
+export default function ByTheNumbersPage() {
+  const langMax = Math.max(...LANGUAGES.map(l => l.count));
+  const periodMax = Math.max(...PERIODS.map(p => p.count));
+  const sourceMax = Math.max(...SOURCES.map(s => s.count));
+
+  const ocrPct = (HERO.pagesOcr / HERO.pages) * 100;
+  const trPct = (HERO.pagesTranslated / HERO.pages) * 100;
+
+  return (
+    <ContentPageLayout
+      header={
+        <ContentHeader
+          title="Source Library, by the Numbers"
+          subtitle="A snapshot of the corpus — what's in it, where it came from, and what it takes to hold it together."
+          image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"
+          imageAlt="Historical manuscript page"
+        />
+      }
+      maxWidth="wide"
+      bg="bg-cream"
+    >
+      <div className="space-y-20">
+
+        {/* ───── Hero numbers ───── */}
+        <section>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatCard label="Books in the library" value={HERO.books} sub={`+${fmt(HERO.warehouse)} in the warehouse queue`} icon={BookOpen} accent="rust" />
+            <StatCard label="Pages digitized" value={HERO.pages} sub="Across every book, every leaf" icon={FileText} accent="gold" />
+            <StatCard label="Pages translated" value={HERO.pagesTranslated} sub={`${trPct.toFixed(1)}% of all pages`} icon={Languages} accent="violet" />
+            <StatCard label="First translations" value={HERO.firstTranslations} sub="First English translation by Source Library" icon={Sparkles} accent="sage" />
+          </div>
+        </section>
+
+        {/* ───── Reading-readiness ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">From scan to readable text</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Every page travels a pipeline: photographed, OCR'd, translated, indexed.
+            Here's how far the corpus has come.
+          </p>
+
+          <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-baseline mb-2">
+                  <div className="text-sm font-medium text-primary">Pages digitized</div>
+                  <div className="text-sm tabular-nums text-secondary">{fmt(HERO.pages)} <span className="text-muted">/ {fmt(HERO.pages)}</span></div>
+                </div>
+                <div className="h-3 bg-stone-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-stone-400" style={{ width: '100%' }} />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-baseline mb-2">
+                  <div className="text-sm font-medium text-primary">OCR transcribed</div>
+                  <div className="text-sm tabular-nums text-secondary">{fmt(HERO.pagesOcr)} <span className="text-muted">({ocrPct.toFixed(1)}%)</span></div>
+                </div>
+                <div className="h-3 bg-stone-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-accent-gold" style={{ width: `${ocrPct}%` }} />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-baseline mb-2">
+                  <div className="text-sm font-medium text-primary">Translated to English</div>
+                  <div className="text-sm tabular-nums text-secondary">{fmt(HERO.pagesTranslated)} <span className="text-muted">({trPct.toFixed(1)}%)</span></div>
+                </div>
+                <div className="h-3 bg-stone-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-accent-violet" style={{ width: `${trPct}%` }} />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-border-light grid grid-cols-2 md:grid-cols-3 gap-6">
+              <div>
+                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.readable)}</div>
+                <div className="text-sm text-secondary">Books fully readable <span className="text-muted">(&ge;90% translated)</span></div>
+              </div>
+              <div>
+                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.galleryImages)}</div>
+                <div className="text-sm text-secondary">Illustrations extracted from page scans</div>
+              </div>
+              <div>
+                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.entities)}</div>
+                <div className="text-sm text-secondary">People, places & works mentioned in the corpus</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ───── Languages ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">Languages we read</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Books in their original languages, before AI translation. Latin and German anchor the European
+            corpus; ETCSL contributes Sumerian; Wikimedia visual material has no language at all.
+          </p>
+          <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
+            {LANGUAGES.map((l, i) => (
+              <HBar key={l.name} name={l.name} count={l.count} max={langMax} color={i === 0 ? 'bg-stone-400' : 'bg-accent-gold'} />
+            ))}
+          </div>
+        </section>
+
+        {/* ───── Time periods ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">Across two and a half millennia</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Distribution of books by century of original composition.
+            The corpus peaks in the 1600s — the heyday of Hermetic and alchemical printing — with strong shoulders in the 1500s and 1800s.
+          </p>
+          <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
+            <div className="flex items-end gap-2 md:gap-3">
+              {PERIODS.map(p => (
+                <VBar key={p.label} label={p.label} count={p.count} max={periodMax} highlight={p.count === periodMax} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ───── Sources ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">Where the books come from</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Source Library mirrors and unifies digitized holdings from libraries and museums around the world.
+            The provenance of every page is preserved.
+          </p>
+          <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
+            {SOURCES.map(s => (
+              <div key={s.name} className="grid grid-cols-[1fr_auto] gap-4 py-3 border-b border-border-light last:border-0">
+                <div>
+                  <div className="text-primary font-medium flex items-center gap-2">
+                    <Building2 className="w-4 h-4 text-stone-400" /> {s.name}
+                  </div>
+                  {s.note && <div className="text-sm text-muted ml-6">{s.note}</div>}
+                </div>
+                <div className="text-right">
+                  <div className="font-serif text-2xl text-primary tabular-nums">{fmt(s.count)}</div>
+                  <div className="text-xs text-muted">books</div>
+                </div>
+              </div>
+            ))}
+            <div className="mt-4 pt-4 border-t border-border-light text-sm text-secondary">
+              …plus dozens of smaller archives. Every book records its source library and original IIIF or IA identifier.
+            </div>
+          </div>
+        </section>
+
+        {/* ───── Storage ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">What it takes to hold it</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Three primary stores keep the corpus alive: a metadata database, a search-and-text mirror, and an image archive.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-4">
+            {/* MongoDB */}
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-accent-rust/10 text-accent-rust"><Database className="w-5 h-5" /></div>
+                <div>
+                  <div className="font-medium text-primary">MongoDB Atlas</div>
+                  <div className="text-xs text-muted">Primary metadata store</div>
+                </div>
+              </div>
+              <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-1">65 GB</div>
+              <div className="text-sm text-secondary mb-4">data, +3 GB indexes</div>
+              <ul className="text-sm text-secondary space-y-1">
+                <li><span className="tabular-nums text-primary font-medium">5.7M</span> page records · 41 GB</li>
+                <li><span className="tabular-nums text-primary font-medium">82K</span> chapter texts · 6.5 GB</li>
+                <li><span className="tabular-nums text-primary font-medium">811K</span> entities · 1.4 GB</li>
+                <li><span className="tabular-nums text-primary font-medium">92</span> collections, <span className="tabular-nums text-primary font-medium">25.5M</span> documents total</li>
+              </ul>
+            </div>
+
+            {/* Supabase */}
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-accent-sage/15 text-accent-sage-dark"><Cpu className="w-5 h-5" /></div>
+                <div>
+                  <div className="font-medium text-primary">Supabase Postgres</div>
+                  <div className="text-xs text-muted">Search & embeddings</div>
+                </div>
+              </div>
+              <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-1">3.4M</div>
+              <div className="text-sm text-secondary mb-4">page records (text mirror)</div>
+              <ul className="text-sm text-secondary space-y-1">
+                <li>Full-text search across every translated page</li>
+                <li><span className="tabular-nums text-primary font-medium">30,564</span> book-level vector embeddings</li>
+                <li>Per-page CLIP image embeddings for visual search</li>
+                <li>7-lane semantic search powers <Link href="/search" className="underline decoration-accent-rust">/search</Link></li>
+              </ul>
+            </div>
+
+            {/* R2 */}
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-accent-violet/10 text-accent-violet"><Cloud className="w-5 h-5" /></div>
+                <div>
+                  <div className="font-medium text-primary">Cloudflare R2</div>
+                  <div className="text-xs text-muted">Image archive</div>
+                </div>
+              </div>
+              <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-1">~2 TB</div>
+              <div className="text-sm text-secondary mb-4">across ~12M image objects</div>
+              <ul className="text-sm text-secondary space-y-1">
+                <li><span className="tabular-nums text-primary font-medium">3.9M</span> archived full-res JPEGs (~286 KB each)</li>
+                <li><span className="tabular-nums text-primary font-medium">3.9M</span> 1200px display images + thumbnails</li>
+                <li><span className="tabular-nums text-primary font-medium">100K</span> extracted illustrations & artworks</li>
+                <li>BPH JP2 originals from Embassy of the Free Mind</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ───── Generated content ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">Generated by AI</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Every translation, summary, and chapter index in Source Library is produced by Google Gemini models.
+            The original text is always preserved — one click away on every page.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatCard label="OCR transcriptions" value={HERO.pagesOcr} sub="From scan to original-language text" icon={FileText} accent="gold" />
+            <StatCard label="Page translations" value={HERO.pagesTranslated} sub="Original languages → English" icon={Languages} accent="violet" />
+            <StatCard label="Book embeddings" value={HERO.bookEmbeddings} sub="For semantic similarity & search" icon={Sparkles} accent="sage" />
+            <StatCard label="Illustrations cataloged" value={HERO.galleryImages} sub="Subjects, figures, symbols, technique" icon={ImageIcon} accent="rust" />
+          </div>
+        </section>
+
+        {/* ───── Footer note ───── */}
+        <section className="text-center text-sm text-muted pt-8 border-t border-border-light">
+          Snapshot taken 2026-05-07. Counts grow daily as the pipeline runs.
+          See live status at <Link href="/status" className="underline">/status</Link>.
+        </section>
+
+      </div>
+    </ContentPageLayout>
+  );
+}
