@@ -26,9 +26,9 @@ test.describe('BPH iframe — digital collection (/embed/bph)', () => {
   test('page renders the unified catalogue with cards', async ({ page }) => {
     await page.goto('/embed/bph');
 
-    // Hero is suppressed on the unified catalogue views (#1653) so partners
-    // can wrap the iframe with their own page chrome. The "Library Catalogue"
-    // h2 is the top-of-page anchor for both modes.
+    // Hero (and its h1) is suppressed on the unified catalogue views (#1653)
+    // so partners can wrap the iframe with their own page chrome. The
+    // "Library Catalogue" h2 is the top-of-page anchor for both modes.
     await expect(page.locator('h2', { hasText: BPH_HEADING }).first()).toBeVisible({ timeout: 15_000 });
 
     // Default mode renders the digitised+translated grid → book cards
@@ -96,9 +96,12 @@ test.describe('BPH iframe — search (/embed/bph/search)', () => {
     const searchInput = page.getByPlaceholder(/search/i).first();
     await expect(searchInput).toBeVisible({ timeout: SEARCH_TIMEOUT });
 
-    // SiteHeader's "Sign in" link should NOT be present in embed mode
-    const signInLink = page.getByRole('link', { name: 'Sign in' });
-    await expect(signInLink).toHaveCount(0);
+    // SiteHeader's global nav items (Collections, Gallery, Browse, etc.) must
+    // NOT be present in embed mode. "Sign in" is gated by auth state and isn't
+    // reliable; the nav anchors are. Verified via negative test: visiting
+    // /bph/search renders SiteHeader with these links; /embed/bph/search hides them.
+    const collectionsNav = page.getByRole('navigation').getByRole('link', { name: 'Collections' });
+    await expect(collectionsNav).toHaveCount(0);
 
     await measurePerf(page, 'bph search: embed mode renders');
   });
