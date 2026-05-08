@@ -65,6 +65,19 @@ export default function BphUnifiedCatalogue({
   const visibleTotal =
     mode === 'all' ? (filteredTotal ?? catalogTotal) : digitizedTotal;
 
+  const toggleNode = (
+    <SegmentedToggle mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
+  );
+  const viewIconsNode = (
+    <ViewIcons mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
+  );
+  const counterNode = (
+    <span className="text-sm text-muted">
+      <span className="font-medium text-primary">{visibleTotal.toLocaleString()}</span>{' '}
+      of {catalogTotal.toLocaleString()} works
+    </span>
+  );
+
   return (
     <>
       <div className="mb-6">
@@ -76,28 +89,36 @@ export default function BphUnifiedCatalogue({
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 mb-4">
-        <SegmentedToggle mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
-
-        <div className="flex items-center ml-auto gap-3">
-          <span className="text-sm text-muted">
-            <span className="font-medium text-primary">{visibleTotal.toLocaleString()}</span>{' '}
-            of {catalogTotal.toLocaleString()} works
-          </span>
-          <ViewIcons mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
-        </div>
-      </div>
-
-      {mode === 'all' && (
+      {mode === 'all' ? (
+        // BphCatalogBrowser owns the search row and now hosts both the
+        // toggle (inline with filters) and the view icons (in the
+        // results-header row alongside count + sort) — matching the
+        // partner mockup row grouping.
         <BphCatalogBrowser
           basePath={basePath}
           digitizedUbns={digitizedUbns}
           tenantSlug={tenantSlug}
           onTotalChange={setFilteredTotal}
           hideInlineCount
+          searchRowSlot={toggleNode}
+          resultsHeaderSlot={viewIconsNode}
         />
+      ) : (
+        // mode='digitized': no catalogue browser — the books grid lives
+        // in SharedLibraryView. Render the same row chrome ourselves so
+        // the layout matches the mockup. Counter on left, sort + view
+        // icons on right (sort is owned by the books-grid CollectionFilters
+        // component, so we only render the toggle row + counter row here).
+        <>
+          <div className="flex flex-wrap items-center gap-3 mb-3">
+            {toggleNode}
+          </div>
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            {counterNode}
+            <div className="ml-auto">{viewIconsNode}</div>
+          </div>
+        </>
       )}
-      {/* mode='digitized': SharedLibraryView renders the books grid below us. */}
     </>
   );
 }

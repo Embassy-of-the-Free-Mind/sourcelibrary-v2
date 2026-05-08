@@ -111,6 +111,16 @@ interface Props {
   /** When true, hide the inline "{total} works" label on the simple-search
       row — the parent shell shows the count instead. */
   hideInlineCount?: boolean;
+  /** Optional content rendered inline in the search row (between the
+      Subjects dropdown and the Advanced button). The unified catalogue
+      uses this to drop in the "Show all / Show digitised & translated"
+      segmented toggle so it sits alongside the other filter chips. */
+  searchRowSlot?: React.ReactNode;
+  /** Optional content rendered in a results-header row above the table,
+      next to the sort dropdown. The unified catalogue uses this for the
+      list/grid view icons. When provided, the sort dropdown moves out of
+      the search row and into this header row to match the partner mockup. */
+  resultsHeaderSlot?: React.ReactNode;
 }
 
 export default function BphCatalogBrowser({
@@ -120,6 +130,8 @@ export default function BphCatalogBrowser({
   defaultAdvanced = false,
   onTotalChange,
   hideInlineCount = false,
+  searchRowSlot,
+  resultsHeaderSlot,
 }: Props) {
   const searchParams = useSearchParams();
 
@@ -314,9 +326,17 @@ export default function BphCatalogBrowser({
     return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(ubn)}`;
   };
 
+  // When the parent supplies a results-header slot (the unified shell does
+  // this to host the list/grid view icons), the sort dropdown moves into
+  // that row so it sits next to the icons — matching the partner mockup
+  // (search row stays light filters; sort lives with the count + icons).
+  const sortLivesInHeader = resultsHeaderSlot !== undefined;
+
   return (
     <div>
-      {/* Simple search row */}
+      {/* Search / filter row — search input, subjects dropdown, optional
+          parent-supplied toggle (e.g. Show all / Show digitised & translated),
+          Advanced. Sort moves to the results-header row when sortLivesInHeader. */}
       <div className="flex flex-wrap items-center gap-3 mb-3">
         <div className="relative flex-1 min-w-[14rem] max-w-xl">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
@@ -347,15 +367,19 @@ export default function BphCatalogBrowser({
           ))}
         </select>
 
-        <select
-          value={sort}
-          onChange={(e) => handleSortChange(e.target.value)}
-          className="text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary"
-        >
-          {SORT_OPTIONS.map(o => (
-            <option key={o.value} value={o.value}>{o.label}</option>
-          ))}
-        </select>
+        {searchRowSlot}
+
+        {!sortLivesInHeader && (
+          <select
+            value={sort}
+            onChange={(e) => handleSortChange(e.target.value)}
+            className="text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary"
+          >
+            {SORT_OPTIONS.map(o => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        )}
 
         <button
           onClick={() => setShowAdvanced(s => !s)}
@@ -370,12 +394,41 @@ export default function BphCatalogBrowser({
           )}
         </button>
 
-        {!hideInlineCount && (
+        {!hideInlineCount && !sortLivesInHeader && (
           <span className="text-sm text-muted ml-auto">
             {total.toLocaleString()} works
           </span>
         )}
       </div>
+
+      {/* Results-header row — counter on the left, sort + parent-supplied
+          view icons on the right. Only rendered when the parent passes a
+          slot (the unified shell does so for the BPH iframe). */}
+      {sortLivesInHeader && (
+        <div className="flex flex-wrap items-center gap-3 mb-4">
+          {!hideInlineCount && (
+            <span className="text-sm text-muted">
+              <span className="font-medium text-primary">{total.toLocaleString()}</span>{' '}
+              works
+            </span>
+          )}
+          <div className="flex items-center gap-3 ml-auto">
+            <label className="inline-flex items-center gap-2 text-sm text-muted">
+              <span>Sort by</span>
+              <select
+                value={sort}
+                onChange={(e) => handleSortChange(e.target.value)}
+                className="text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary"
+              >
+                {SORT_OPTIONS.map(o => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </label>
+            {resultsHeaderSlot}
+          </div>
+        </div>
+      )}
 
       {/* Advanced search panel */}
       {showAdvanced && (
