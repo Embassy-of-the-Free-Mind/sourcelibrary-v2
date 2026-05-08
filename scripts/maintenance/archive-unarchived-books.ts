@@ -87,23 +87,47 @@ async function rateLimitedFetch(url) {
   }
 }
 
+// Upgrade IIIF URL to full native resolution. Mirrors archive-ocr.mjs:upgradeToFullRes.
+function upgradeToFullRes(url: string): string {
+  try {
+    if (url.includes('archive.org') && url.includes('/full/pct:')) return url.replace(/\/full\/pct:\d+\//, '/full/full/');
+    if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) return url.replace(/\/full\/\d+,\//, '/full/full/');
+    if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\//)) return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
+    if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\//)) return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
+    if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
+      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
+    }
+  } catch {}
+  return url;
+}
+
 async function archivePage(db, page) {
-  const sourceUrl = page.photo_original || page.photo;
-  if (!sourceUrl || sourceUrl.startsWith('failed:')) return 'skip';
-  if (!sourceUrl.startsWith('http')) return 'skip';
+  const originalUrl = page.photo_original || page.photo;
+  if (!originalUrl || originalUrl.startsWith('failed:')) return 'skip';
+  if (!originalUrl.startsWith('http')) return 'skip';
 
   // Already archived
   if (page.archived_photo?.startsWith('http')) return 'skip';
 
+  // Try IIIF full-res first; fall back to original URL if rejected.
+  const fullResUrl = upgradeToFullRes(originalUrl);
+
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
-      const imageBuffer = await rateLimitedFetch(sourceUrl);
+      let imageBuffer: Buffer;
+      try {
+        imageBuffer = await rateLimitedFetch(fullResUrl);
+      } catch (err) {
+        if (fullResUrl !== originalUrl) imageBuffer = await rateLimitedFetch(originalUrl);
+        else throw err;
+      }
 
-      // Process with sharp — resize to max 2000px wide, JPEG 85%
+      // Preserve native resolution. Only cap at 6000px to avoid pathological tiles.
+      // Drops the previous 2000px down-resize that was discarding source detail.
       const processed = await sharp(imageBuffer)
         .rotate() // auto-rotate EXIF
-        .resize(2000, null, { withoutEnlargement: true })
-        .jpeg({ quality: 85, mozjpeg: true })
+        .resize(6000, null, { withoutEnlargement: true })
+        .jpeg({ quality: 90, mozjpeg: true })
         .toBuffer();
 
       // Upload to storage
