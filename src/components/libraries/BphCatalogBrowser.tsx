@@ -105,9 +105,22 @@ interface Props {
   tenantSlug?: string;
   /** When true, defaults to advanced search expanded */
   defaultAdvanced?: boolean;
+  /** Fires whenever the filtered result count updates so a parent shell
+      (the unified catalogue header) can show "X of 27,706 works". */
+  onTotalChange?: (total: number) => void;
+  /** When true, hide the inline "{total} works" label on the simple-search
+      row — the parent shell shows the count instead. */
+  hideInlineCount?: boolean;
 }
 
-export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug, defaultAdvanced = false }: Props) {
+export default function BphCatalogBrowser({
+  basePath,
+  digitizedUbns,
+  tenantSlug,
+  defaultAdvanced = false,
+  onTotalChange,
+  hideInlineCount = false,
+}: Props) {
   const searchParams = useSearchParams();
 
   const initialQ = searchParams.get('cq') || '';
@@ -174,14 +187,16 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
       const data = await res.json();
       setWorks(data.works || []);
       setTotal(data.total || 0);
+      onTotalChange?.(data.total || 0);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return; // superseded by a newer query
       setWorks([]);
       setTotal(0);
+      onTotalChange?.(0);
     } finally {
       if (!controller.signal.aborted) setLoading(false);
     }
-  }, [buildParams]);
+  }, [buildParams, onTotalChange]);
 
   // Sync URL params (using c-prefixed keys so they don't collide with parent page params).
   // Uses window.history.replaceState rather than router.replace + basePath so the
@@ -355,9 +370,11 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
           )}
         </button>
 
-        <span className="text-sm text-muted ml-auto">
-          {total.toLocaleString()} works
-        </span>
+        {!hideInlineCount && (
+          <span className="text-sm text-muted ml-auto">
+            {total.toLocaleString()} works
+          </span>
+        )}
       </div>
 
       {/* Advanced search panel */}
