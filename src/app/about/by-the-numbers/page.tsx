@@ -14,11 +14,13 @@ const fmt = (n: number) => n.toLocaleString();
 // ---------- Data (snapshot 2026-05-07) ----------
 
 const HERO = {
-  books: 26_643,
+  books: 11_965,
+  artworks: 14_412,
+  totalWorks: 26_643,
   warehouse: 22_543,
-  pages: 4_377_830,
-  pagesOcr: 3_840_900,
-  pagesTranslated: 3_670_143,
+  pages: 4_294_562, // pages of the book corpus (excludes single-image artworks)
+  pagesOcr: 3_770_546,
+  pagesTranslated: 3_602_478,
   readable: 11_032,
   firstTranslations: 6_033,
   galleryImages: 100_981,
@@ -28,7 +30,6 @@ const HERO = {
 };
 
 const LANGUAGES: { name: string; count: number }[] = [
-  { name: 'Visual / image-only', count: 8_584 },
   { name: 'Latin', count: 4_200 },
   { name: 'German', count: 1_747 },
   { name: 'English', count: 1_422 },
@@ -60,16 +61,16 @@ const PERIODS: { label: string; count: number }[] = [
 ];
 
 const SOURCES: { name: string; count: number; note?: string }[] = [
-  { name: 'Wikimedia Commons', count: 11_287, note: 'Open scans & artworks' },
+  { name: 'Wikimedia Commons', count: 11_287, note: 'Mostly artworks — open-licensed scans & paintings' },
   { name: 'Internet Archive', count: 5_216, note: 'Public-domain books' },
-  { name: 'Embassy of the Free Mind (BPH)', count: 2_273, note: 'Hermetica, alchemy, Rosicrucian' },
-  { name: 'Rijksmuseum', count: 1_697, note: 'Prints & illustrated works' },
-  { name: 'Munich Digital Library (MDZ)', count: 1_338 },
-  { name: 'e-rara (Swiss libraries)', count: 537 },
-  { name: 'National Gallery of Art', count: 452 },
-  { name: 'Allard Pierson (Amsterdam)', count: 421 },
-  { name: 'ETCSL (Sumerian Literature)', count: 373 },
-  { name: 'The Met', count: 362 },
+  { name: 'Embassy of the Free Mind (BPH)', count: 2_273, note: 'Hermetica, alchemy, Rosicrucian — books' },
+  { name: 'Rijksmuseum', count: 1_697, note: 'Prints & illustrated artworks' },
+  { name: 'Munich Digital Library (MDZ)', count: 1_338, note: 'German & Latin books' },
+  { name: 'e-rara (Swiss libraries)', count: 537, note: 'Books from Swiss research libraries' },
+  { name: 'National Gallery of Art', count: 452, note: 'Artworks' },
+  { name: 'Allard Pierson (Amsterdam)', count: 421, note: 'Books' },
+  { name: 'ETCSL (Sumerian Literature)', count: 373, note: 'Cuneiform & Sumerian texts' },
+  { name: 'The Met', count: 362, note: 'Artworks' },
 ];
 
 // ---------- Helpers ----------
@@ -169,19 +170,23 @@ export default function ByTheNumbersPage() {
         {/* ───── Hero numbers ───── */}
         <section>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard label="Books in the library" value={HERO.books} sub={`+${fmt(HERO.warehouse)} in the warehouse queue`} icon={BookOpen} accent="rust" />
-            <StatCard label="Pages digitized" value={HERO.pages} sub="Across every book, every leaf" icon={FileText} accent="gold" />
-            <StatCard label="Pages translated" value={HERO.pagesTranslated} sub={`${trPct.toFixed(1)}% of all pages`} icon={Languages} accent="violet" />
+            <StatCard label="Books" value={HERO.books} sub={`+${fmt(HERO.warehouse)} in the warehouse queue`} icon={BookOpen} accent="rust" />
+            <StatCard label="Artworks" value={HERO.artworks} sub="Prints, paintings, illustrated single sheets" icon={ImageIcon} accent="gold" />
+            <StatCard label="Pages translated" value={HERO.pagesTranslated} sub={`${trPct.toFixed(1)}% of all book pages`} icon={Languages} accent="violet" />
             <StatCard label="First translations" value={HERO.firstTranslations} sub="First English translation by Source Library" icon={Sparkles} accent="sage" />
           </div>
+          <p className="text-sm text-muted mt-4 text-center">
+            Source Library holds {fmt(HERO.totalWorks)} works in total — {fmt(HERO.books)} books and {fmt(HERO.artworks)} artworks.
+            The numbers below describe the book corpus unless noted.
+          </p>
         </section>
 
         {/* ───── Reading-readiness ───── */}
         <section>
           <h2 className="font-serif text-3xl text-primary mb-2">From scan to readable text</h2>
           <p className="text-secondary mb-8 max-w-2xl">
-            Every page travels a pipeline: photographed, OCR'd, translated, indexed.
-            Here's how far the corpus has come.
+            Every book page travels a pipeline: photographed, OCR'd, translated, indexed.
+            Here's how far the {fmt(HERO.pages)} pages of the book corpus have come.
           </p>
 
           <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
@@ -239,11 +244,11 @@ export default function ByTheNumbersPage() {
           <h2 className="font-serif text-3xl text-primary mb-2">Languages we read</h2>
           <p className="text-secondary mb-8 max-w-2xl">
             Books in their original languages, before AI translation. Latin and German anchor the European
-            corpus; ETCSL contributes Sumerian; Wikimedia visual material has no language at all.
+            corpus; ETCSL contributes Sumerian; Eastern languages arrive through dedicated import streams.
           </p>
           <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
-            {LANGUAGES.map((l, i) => (
-              <HBar key={l.name} name={l.name} count={l.count} max={langMax} color={i === 0 ? 'bg-stone-400' : 'bg-accent-gold'} />
+            {LANGUAGES.map(l => (
+              <HBar key={l.name} name={l.name} count={l.count} max={langMax} color="bg-accent-gold" />
             ))}
           </div>
         </section>
