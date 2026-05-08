@@ -429,7 +429,7 @@ async function main() {
 
   const books = await db.collection('books')
     .find(query)
-    .project({ id: 1, title: 1, pages_count: 1 })
+    .project({ id: 1, title: 1, pages_count: 1, needs_resplit: 1 })
     .limit(LIMIT)
     .toArray();
 
