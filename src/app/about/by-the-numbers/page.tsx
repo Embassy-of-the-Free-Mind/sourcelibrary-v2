@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { BookOpen, FileText, Languages, Image as ImageIcon, Database, HardDrive, Sparkles, Globe, Building2, Cloud, Cpu } from 'lucide-react';
+import { BookOpen, FileText, Languages, Image as ImageIcon, Database, HardDrive, Sparkles, Globe, Building2, Cloud, Cpu, Coins, Hash } from 'lucide-react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
@@ -376,6 +376,52 @@ export default function ByTheNumbersPage() {
             <StatCard label="Page translations" value={HERO.pagesTranslated} sub="Original languages → English" icon={Languages} accent="violet" />
             <StatCard label="Book embeddings" value={HERO.bookEmbeddings} sub="For semantic similarity & search" icon={Sparkles} accent="sage" />
             <StatCard label="Illustrations cataloged" value={HERO.galleryImages} sub="Subjects, figures, symbols, technique" icon={ImageIcon} accent="rust" />
+          </div>
+        </section>
+
+        {/* ───── Tokens & cost ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">Tokens, end to end</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Reading the corpus and translating it has cost about <span className="text-primary font-medium">27 billion Gemini tokens</span> across
+            every phase of the pipeline. The corpus itself — the original-language OCR plus the English translation —
+            is a body of about 4.8 billion tokens.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <StatCard label="Pipeline tokens" value="27.1B" sub="Total Gemini input + output, all phases" icon={Hash} accent="violet" />
+            <StatCard label="Corpus tokens" value="4.8B" sub="OCR text + English translation, on disk" icon={FileText} accent="gold" />
+            <StatCard label="Total AI cost" value="$17,674" sub="Cumulative spend, all Gemini calls" icon={Coins} accent="rust" />
+            <StatCard label="API calls" value="5.7M" sub="Across OCR, translation, indexing, vision" icon={Cpu} accent="sage" />
+          </div>
+
+          <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
+            <h3 className="text-sm uppercase tracking-wider text-secondary font-medium mb-4">Tokens by pipeline phase</h3>
+            {[
+              { name: 'OCR (vision → original-language text)', tokens: 11_036_426_909, cost: 5611.7, color: 'bg-accent-gold' },
+              { name: 'Translation (original → English)', tokens: 7_207_306_377, cost: 7366.3, color: 'bg-accent-violet' },
+              { name: 'Indexing & summary', tokens: 4_212_550_809, cost: 2228.5, color: 'bg-accent-sage' },
+              { name: 'Image extraction (vision)', tokens: 3_392_229_660, cost: 2009.0, color: 'bg-accent-rust' },
+              { name: 'Transliteration', tokens: 565_507_539, cost: 156.7, color: 'bg-stone-400' },
+              { name: 'FT verification & misc', tokens: 734_529_984, cost: 301.4, color: 'bg-stone-300' },
+            ].map(p => {
+              const max = 11_036_426_909;
+              const pct = (p.tokens / max) * 100;
+              return (
+                <div key={p.name} className="grid grid-cols-[1fr_auto] gap-4 items-center py-2">
+                  <div>
+                    <div className="text-sm text-primary mb-1">{p.name}</div>
+                    <div className="h-3 bg-stone-100 rounded-sm overflow-hidden">
+                      <div className={`h-full ${p.color}`} style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                  <div className="text-right tabular-nums">
+                    <div className="text-sm text-primary font-medium">{(p.tokens / 1e9).toFixed(2)}B</div>
+                    <div className="text-xs text-muted">${fmt(Math.round(p.cost))}</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
