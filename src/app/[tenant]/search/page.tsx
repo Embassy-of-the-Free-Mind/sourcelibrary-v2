@@ -1125,8 +1125,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         {/* Browse mode — shown when no query + books tab */}
         {isBrowseMode && viewMode !== 'images' && (
           <div>
-            {/* Collection pills — truncated on mobile */}
-            {collectionsList.length > 0 && (() => {
+            {/* Collection pills — truncated on mobile.
+                Collections are SL-global content; hidden in embed mode to
+                avoid cross-tenant leak on bph.sourcelibrary.org etc. */}
+            {!embed && collectionsList.length > 0 && (() => {
               const visibleCollections = showAllCollections
                 ? collectionsList
                 : collectionsList.slice(0, MOBILE_COLLECTION_LIMIT);
@@ -1438,7 +1440,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             </>
           );
 
-          const collectionCards = collectionResults.length > 0 && (
+          // Collections are SL-global (cross-tenant) content. In embed mode
+          // (BPH iframe etc.) they would be a cross-tenant leak — hide.
+          const collectionCards = !embed && collectionResults.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {collectionResults.map(col => (
                 <SearchCollectionCard key={col.slug} col={col} />
