@@ -3,13 +3,26 @@
     "frontend-design@claude-plugins-official": true
   },
   "hooks": {
-    "PreToolUse": [
+    "PostToolUse": [
       {
-        "matcher": "Bash",
+        "matcher": "Edit|Write|Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "BRANCH=$(git -C /Users/dereklomas/sourcelibrary rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$BRANCH\" != \"main\" ] && [ -n \"$BRANCH\" ] && [ \"$PWD\" = \"/Users/dereklomas/sourcelibrary\" ]; then echo \"WARNING: Main directory is on branch '$BRANCH', not 'main'. Another session may have switched it. Use a worktree for feature branch work.\" >&2; fi; exit 0"
+            "command": "code-review-graph update --skip-flows",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "code-review-graph status",
+            "timeout": 10
           }
         ]
       }

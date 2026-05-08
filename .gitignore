@@ -87,3 +87,5 @@ split-review.html
 input.json
 supabase/.temp/
 .wrangler/
+# Added by code-review-graph
+.code-review-graph/
