@@ -123,13 +123,18 @@ async function processBook(r2, db, book) {
     return { skipped: true };
   }
 
-  // Check first non-cover page for aspect ratio
+  // Check first non-cover page for aspect ratio.
+  // For books in the 2026-05-06 spread-translation crisis cohort
+  // (`needs_resplit: true`) we KNOW some pages are spreads but the early
+  // sample can be misleading — these books often have a non-spread
+  // bookplate or flyleaf in the first 3 pages with content spreads
+  // appearing later. Force per-page evaluation in that case.
   const samplePage = pages.length > 2 ? pages[2] : pages[0];
   const sampleBuf = await fetchImage(samplePage.photo);
   const meta = await sharp(sampleBuf).metadata();
   const ratio = (meta.width || 1) / (meta.height || 1);
 
-  if (ratio <= ASPECT_RATIO_THRESHOLD) {
+  if (ratio <= ASPECT_RATIO_THRESHOLD && !book.needs_resplit) {
     console.log(`  Portrait (ratio ${ratio.toFixed(2)}) — not a spread, marking split_checked`);
     if (!DRY_RUN) {
       await booksCol.updateOne({ id: book.id }, {
@@ -141,6 +146,9 @@ async function processBook(r2, db, book) {
       });
     }
     return { portrait: true };
+  }
+  if (book.needs_resplit && ratio <= ASPECT_RATIO_THRESHOLD) {
+    console.log(`  Sample ratio ${ratio.toFixed(2)} ≤ threshold but needs_resplit=true → forcing per-page evaluation`);
   }
 
   console.log(`  Spread detected (ratio ${ratio.toFixed(2)}), processing ${pages.length} pages...`);
@@ -358,18 +366,30 @@ async function processBook(r2, db, book) {
   // Set thumbnail to first page
   const firstPage = allPages[0];
 
-  await booksCol.updateOne({ id: book.id }, {
-    $set: {
-      pages_count: allPages.length,
-      pages_ocr: ocrCount,
-      pages_translated: translateCount,
-      needs_splitting: false,
-      thumbnail: firstPage?.photo || firstPage?.cropped_photo,
-      'pipeline_auto.split_checked': true,
-      'pipeline_auto.last_updated': new Date(),
-      updated_at: new Date(),
-    },
-  });
+  const setDoc = {
+    pages_count: allPages.length,
+    pages_ocr: ocrCount,
+    pages_translated: translateCount,
+    needs_splitting: false,
+    thumbnail: firstPage?.photo || firstPage?.cropped_photo,
+    'pipeline_auto.split_checked': true,
+    'pipeline_auto.last_updated': new Date(),
+    updated_at: new Date(),
+  };
+  // For the 2026-05-06 resplit cohort: roll the book back to archive_complete
+  // so the orchestrator's Phase 2 (OCR-submit) and Phase 5 (translate) re-run
+  // against the new half-pages. Clear the crisis flags so the book is
+  // reabsorbed into normal pipeline flow.
+  const updateDoc = { $set: setDoc };
+  if (book.needs_resplit) {
+    setDoc['pipeline_auto.status'] = 'archive_complete';
+    updateDoc.$unset = {
+      needs_resplit: '',
+      spread_translation_crisis: '',
+      translation_stale_reason: '',
+    };
+  }
+  await booksCol.updateOne({ id: book.id }, updateDoc);
 
   console.log(`  Done: ${splitCount} spreads split, ${singleCount} single pages, ${errors} errors → ${allPages.length} total pages`);
   return { splitCount, singleCount, errors, totalPages: allPages.length };
@@ -385,16 +405,26 @@ async function main() {
   await mongo.connect();
   const db = mongo.db('bookstore');
 
-  // Find books to process
+  // Find books to process.
+  // Two cohorts:
+  //   1. Fresh imports at archive_complete with needs_splitting=true
+  //   2. The 2026-05-06 resplit cohort: books that finished the pipeline
+  //      with OCR/translation done on combined spreads. They're at
+  //      pipeline_auto.status='complete' or 'images_complete' so the
+  //      first cohort filter would miss them. The needs_resplit flag
+  //      identifies them precisely.
   let query;
   if (BOOK_ID) {
     query = { id: BOOK_ID };
   } else {
-    query = {
-      needs_splitting: true,
-      'pipeline_auto.status': 'archive_complete',
-      'pipeline_auto.split_checked': { $ne: true },
-    };
+    query = { $or: [
+      {
+        needs_splitting: true,
+        'pipeline_auto.status': 'archive_complete',
+        'pipeline_auto.split_checked': { $ne: true },
+      },
+      { needs_resplit: true },
+    ] };
   }
 
   const books = await db.collection('books')
