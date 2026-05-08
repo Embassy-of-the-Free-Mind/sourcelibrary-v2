@@ -25,8 +25,20 @@ const HERO = {
   firstTranslations: 6_033,
   galleryImages: 100_981,
   entities: 811_127,
+  entityConcepts: 438_516,
+  entityPeople: 264_049,
+  entityPlaces: 111_677,
   collections: 337,
   bookEmbeddings: 30_564,
+  totalLanguages: 199,
+  authors: 7_421,
+  chapters: 81_858,
+  yearMin: -2880,
+  yearMax: 2026,
+  longestBookPages: 4_369,
+  longestBookTitle: 'Greek Old Testament (Tischendorf)',
+  oldestWorkTitle: 'Stela of King Raneb',
+  oldestWorkYear: -2880,
 };
 
 const LANGUAGES: { name: string; count: number }[] = [
@@ -222,18 +234,22 @@ export default function ByTheNumbersPage() {
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-border-light grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="mt-8 pt-6 border-t border-border-light grid grid-cols-2 md:grid-cols-4 gap-6">
               <div>
                 <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.readable)}</div>
                 <div className="text-sm text-secondary">Books fully readable <span className="text-muted">(&ge;90% translated)</span></div>
               </div>
               <div>
-                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.galleryImages)}</div>
-                <div className="text-sm text-secondary">Illustrations extracted from page scans</div>
+                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.chapters)}</div>
+                <div className="text-sm text-secondary">Chapters auto-extracted with AI</div>
               </div>
               <div>
-                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.entities)}</div>
-                <div className="text-sm text-secondary">People, places & works mentioned in the corpus</div>
+                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.authors)}</div>
+                <div className="text-sm text-secondary">Distinct authors</div>
+              </div>
+              <div>
+                <div className="font-serif text-3xl text-primary tabular-nums">{fmt(HERO.galleryImages)}</div>
+                <div className="text-sm text-secondary">Illustrations extracted from page scans</div>
               </div>
             </div>
           </div>
@@ -241,30 +257,48 @@ export default function ByTheNumbersPage() {
 
         {/* ───── Languages ───── */}
         <section>
-          <h2 className="font-serif text-3xl text-primary mb-2">Languages we read</h2>
+          <h2 className="font-serif text-3xl text-primary mb-2">{HERO.totalLanguages} languages, from Sumerian to Russian</h2>
           <p className="text-secondary mb-8 max-w-2xl">
-            Books in their original languages, before AI translation. Latin and German anchor the European
-            corpus; ETCSL contributes Sumerian; Eastern languages arrive through dedicated import streams.
+            Books in their original languages, before AI translation. The corpus spans {HERO.totalLanguages} distinct
+            languages and language combinations — the top fourteen are below. Latin and German anchor the European
+            corpus; ETCSL contributes Sumerian; dedicated import streams bring in Chinese, Sanskrit, and Hebrew.
           </p>
           <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
             {LANGUAGES.map(l => (
               <HBar key={l.name} name={l.name} count={l.count} max={langMax} color="bg-accent-gold" />
             ))}
+            <div className="mt-4 pt-4 border-t border-border-light text-sm text-muted">
+              …plus {HERO.totalLanguages - LANGUAGES.length}+ more, including Akkadian, Avestan, Old Norse, Coptic, Aramaic, Classical Armenian, and dozens of bilingual editions.
+            </div>
           </div>
         </section>
 
         {/* ───── Time periods ───── */}
         <section>
-          <h2 className="font-serif text-3xl text-primary mb-2">Across two and a half millennia</h2>
+          <h2 className="font-serif text-3xl text-primary mb-2">Across nearly five thousand years</h2>
           <p className="text-secondary mb-8 max-w-2xl">
-            Distribution of books by century of original composition.
-            The corpus peaks in the 1600s — the heyday of Hermetic and alchemical printing — with strong shoulders in the 1500s and 1800s.
+            Distribution of works by century of original composition. The earliest item dates to{' '}
+            <span className="text-primary font-medium">2880 BCE</span> — a stela of King Raneb of Egypt's Second Dynasty —
+            and the corpus runs unbroken through to the present. The book corpus peaks in the 1600s (the heyday of
+            Hermetic and alchemical printing), with strong shoulders in the 1500s and 1800s.
           </p>
           <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
             <div className="flex items-end gap-2 md:gap-3">
               {PERIODS.map(p => (
                 <VBar key={p.label} label={p.label} count={p.count} max={periodMax} highlight={p.count === periodMax} />
               ))}
+            </div>
+            <div className="mt-6 pt-6 border-t border-border-light grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <div className="text-xs uppercase tracking-wider text-muted mb-1">Earliest work</div>
+                <div className="text-primary font-medium">{HERO.oldestWorkTitle}</div>
+                <div className="text-secondary">{Math.abs(HERO.oldestWorkYear)} BCE — Egyptian Second Dynasty</div>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-wider text-muted mb-1">Longest book</div>
+                <div className="text-primary font-medium">{HERO.longestBookTitle}</div>
+                <div className="text-secondary">{fmt(HERO.longestBookPages)} pages</div>
+              </div>
             </div>
           </div>
         </section>
@@ -376,6 +410,48 @@ export default function ByTheNumbersPage() {
             <StatCard label="Page translations" value={HERO.pagesTranslated} sub="Original languages → English" icon={Languages} accent="violet" />
             <StatCard label="Book embeddings" value={HERO.bookEmbeddings} sub="For semantic similarity & search" icon={Sparkles} accent="sage" />
             <StatCard label="Illustrations cataloged" value={HERO.galleryImages} sub="Subjects, figures, symbols, technique" icon={ImageIcon} accent="rust" />
+          </div>
+        </section>
+
+        {/* ───── Entities ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">A knowledge graph of {fmt(HERO.entities)} entities</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Every translated page is scanned for the people it names, the places it mentions, and the concepts it
+            invokes. The result is a connected graph that links Hermes Trismegistus to Marsilio Ficino to a print on
+            the Rijksmuseum's wall.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="flex items-center gap-2 text-secondary mb-3">
+                <Globe className="w-4 h-4" />
+                <span className="text-sm uppercase tracking-wider font-medium">Concepts</span>
+              </div>
+              <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-2">{fmt(HERO.entityConcepts)}</div>
+              <div className="text-sm text-secondary">
+                Ideas, doctrines, symbols, schools of thought — the abstract anchors of the Hermetic and Renaissance corpus.
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="flex items-center gap-2 text-secondary mb-3">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-sm uppercase tracking-wider font-medium">People</span>
+              </div>
+              <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-2">{fmt(HERO.entityPeople)}</div>
+              <div className="text-sm text-secondary">
+                Authors, philosophers, alchemists, kings, mystics — every named person across the translated corpus.
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="flex items-center gap-2 text-secondary mb-3">
+                <Building2 className="w-4 h-4" />
+                <span className="text-sm uppercase tracking-wider font-medium">Places</span>
+              </div>
+              <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-2">{fmt(HERO.entityPlaces)}</div>
+              <div className="text-sm text-secondary">
+                Cities, monasteries, libraries, regions — geocoded where possible and linked to the books that mention them.
+              </div>
+            </div>
           </div>
         </section>
 
