@@ -348,6 +348,126 @@ export async function getQuote(args: {
   };
 }
 
+type ImageSource = "gallery" | "artworks" | "all";
+
+interface NormalizedImage {
+  source: "gallery" | "artwork";
+  type?: string | null;
+  description?: string | null;
+  title?: string | null;
+  author?: string | null;
+  year?: number | string | null;
+  page?: number | null;
+  quality?: number | null;
+  similarity?: number | null;
+  subjects?: string[];
+  figures?: string[];
+  symbols?: string[];
+  period?: string | null;
+  culture?: string | null;
+  genre?: string | null;
+  technique?: string | null;
+  medium?: string | null;
+  current_location?: string | null;
+  image_url: string | null;
+  url: string;
+  book_url?: string | null;
+}
+
+async function fetchGallery(args: {
+  query?: string; type?: string; subject?: string; figure?: string; symbol?: string;
+  year_from?: number; year_to?: number; book_id?: string; min_quality?: number; limit: number;
+}): Promise<NormalizedImage[]> {
+  const params = new URLSearchParams();
+  if (args.query) params.set("q", args.query);
+  if (args.type) params.set("type", args.type);
+  if (args.subject) params.set("subject", args.subject);
+  if (args.figure) params.set("figure", args.figure);
+  if (args.symbol) params.set("symbol", args.symbol);
+  if (args.year_from) params.set("yearStart", String(args.year_from));
+  if (args.year_to) params.set("yearEnd", String(args.year_to));
+  if (args.book_id) params.set("bookId", args.book_id);
+  if (args.min_quality !== undefined) params.set("minQuality", String(args.min_quality));
+  params.set("limit", String(args.limit));
+
+  const result = await apiGet("/gallery", params) as Record<string, unknown>;
+  const items = (result.items as Array<{
+    pageId: string; detectionIndex: number; description: string; type?: string;
+    galleryQuality?: number; bookTitle: string; bookId?: string; author?: string;
+    year?: number; pageNumber: number;
+    metadata?: { subjects?: string[]; figures?: string[]; symbols?: string[] };
+    imageUrl: string; visualSimilarity?: number;
+  }>) ?? [];
+
+  return items.map(item => ({
+    source: "gallery" as const,
+    type: item.type ?? null,
+    description: item.description,
+    title: item.bookTitle,
+    author: item.author ?? null,
+    year: item.year ?? null,
+    page: item.pageNumber,
+    quality: item.galleryQuality ?? null,
+    similarity: item.visualSimilarity ?? null,
+    subjects: item.metadata?.subjects,
+    figures: item.metadata?.figures,
+    symbols: item.metadata?.symbols,
+    image_url: item.imageUrl,
+    url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+    book_url: item.bookId ? `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}` : null,
+  }));
+}
+
+async function fetchArtworks(args: {
+  query?: string; type?: string; subject?: string; figure?: string; symbol?: string;
+  year_from?: number; year_to?: number; book_id?: string; limit: number;
+}): Promise<NormalizedImage[]> {
+  const params = new URLSearchParams();
+  if (args.query) params.set("q", args.query);
+  if (args.type) params.set("type", args.type);
+  if (args.subject) params.set("subject", args.subject);
+  if (args.figure) params.set("figure", args.figure);
+  if (args.symbol) params.set("symbol", args.symbol);
+  if (args.year_from) params.set("year_from", String(args.year_from));
+  if (args.year_to) params.set("year_to", String(args.year_to));
+  if (args.book_id) params.set("book_id", args.book_id);
+  params.set("limit", String(args.limit));
+
+  const result = await apiGet("/artwork/search", params) as Record<string, unknown>;
+  const items = (result.items as Array<{
+    id: string; title: string; author: string | null; year: number | null;
+    published: string | null; type: string | null; medium: string | null;
+    description: string | null; image_url: string | null; thumbnail_url: string | null;
+    url: string; period?: string | null; culture?: string | null; genre?: string | null;
+    technique?: string | null; subjects?: string[]; figures?: string[]; symbols?: string[];
+    similarity?: number; current_location?: string | null;
+  }>) ?? [];
+
+  return items.map(item => ({
+    source: "artwork" as const,
+    type: item.type ?? null,
+    description: item.description,
+    title: item.title,
+    author: item.author,
+    year: item.year ?? item.published ?? null,
+    page: null,
+    quality: null,
+    similarity: item.similarity ?? null,
+    subjects: item.subjects,
+    figures: item.figures,
+    symbols: item.symbols,
+    period: item.period ?? null,
+    culture: item.culture ?? null,
+    genre: item.genre ?? null,
+    technique: item.technique ?? null,
+    medium: item.medium ?? null,
+    current_location: item.current_location ?? null,
+    image_url: item.image_url ?? item.thumbnail_url ?? null,
+    url: item.url,
+    book_url: null,
+  }));
+}
+
 export async function searchImages(args: {
   query?: string;
   type?: string;
@@ -359,52 +479,52 @@ export async function searchImages(args: {
   book_id?: string;
   min_quality?: number;
   limit?: number;
+  source?: ImageSource;
 }) {
-  const params = new URLSearchParams();
-  if (args.query) params.set("q", args.query);
-  if (args.type) params.set("type", args.type);
-  if (args.subject) params.set("subject", args.subject);
-  if (args.figure) params.set("figure", args.figure);
-  if (args.symbol) params.set("symbol", args.symbol);
-  if (args.year_from) params.set("yearStart", String(args.year_from));
-  if (args.year_to) params.set("yearEnd", String(args.year_to));
-  if (args.book_id) params.set("bookId", args.book_id);
-  if (args.min_quality !== undefined) params.set("minQuality", String(args.min_quality));
-  params.set("limit", String(Math.min(args.limit || 20, 50)));
+  const limit = Math.min(args.limit || 20, 50);
+  const source: ImageSource = args.source || "all";
+  const baseArgs = {
+    query: args.query, type: args.type, subject: args.subject,
+    figure: args.figure, symbol: args.symbol,
+    year_from: args.year_from, year_to: args.year_to,
+    book_id: args.book_id,
+  };
 
-  const result = await apiGet("/gallery", params) as Record<string, unknown>;
+  // For 'all', request both halves at full limit, then interleave so the
+  // caller never sees a single source dominate just because it returns first.
+  const wantGallery = source === "all" || source === "gallery";
+  const wantArtworks = source === "all" || source === "artworks";
+
+  const [galleryItems, artworkItems] = await Promise.all([
+    wantGallery
+      ? fetchGallery({ ...baseArgs, min_quality: args.min_quality, limit }).catch(() => [] as NormalizedImage[])
+      : Promise.resolve([] as NormalizedImage[]),
+    wantArtworks
+      ? fetchArtworks({ ...baseArgs, limit }).catch(() => [] as NormalizedImage[])
+      : Promise.resolve([] as NormalizedImage[]),
+  ]);
+
+  let images: NormalizedImage[];
+  if (source === "gallery") {
+    images = galleryItems;
+  } else if (source === "artworks") {
+    images = artworkItems;
+  } else {
+    // Interleave: artwork, gallery, artwork, gallery, ... so both surface in top results
+    images = [];
+    const max = Math.max(galleryItems.length, artworkItems.length);
+    for (let i = 0; i < max; i++) {
+      if (i < artworkItems.length) images.push(artworkItems[i]);
+      if (i < galleryItems.length) images.push(galleryItems[i]);
+    }
+    images = images.slice(0, limit);
+  }
 
   return {
-    total: result.total,
-    showing: (result.items as unknown[])?.length || 0,
-    images: (
-      result.items as Array<{
-        pageId: string;
-        detectionIndex: number;
-        description: string;
-        type?: string;
-        galleryQuality?: number;
-        bookTitle: string;
-        bookId?: string;
-        author?: string;
-        year?: number;
-        pageNumber: number;
-        metadata?: { subjects?: string[]; figures?: string[]; symbols?: string[] };
-        imageUrl: string;
-      }>
-    )?.map((item) => ({
-      description: item.description,
-      type: item.type,
-      quality: item.galleryQuality,
-      book: { title: item.bookTitle, author: item.author, year: item.year },
-      page: item.pageNumber,
-      subjects: item.metadata?.subjects,
-      figures: item.metadata?.figures,
-      symbols: item.metadata?.symbols,
-      image_url: item.imageUrl,
-      url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
-      book_url: item.bookId ? `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}` : undefined,
-    })),
-    available_filters: result.filters,
+    total: images.length,
+    showing: images.length,
+    source,
+    counts: { gallery: galleryItems.length, artworks: artworkItems.length },
+    images,
   };
 }
