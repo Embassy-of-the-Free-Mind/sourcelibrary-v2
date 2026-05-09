@@ -88,12 +88,20 @@ async function downloadImage(url, retries = 2) {
   }
 }
 
+// Domains that hard-throttle from Hetzner/cloud IPs. archive-ocr.mjs already
+// excludes Gallica for the same reason — they use archive-gallica.mjs from a
+// residential IP. Run that separately for Gallica books.
+const SKIP_DOMAINS = new Set(['gallica.bnf.fr']);
+
 async function archivePageHires(page, db) {
   const original = page.photo;
   if (!original || !/^https?:\/\//.test(original)) return { skip: 'no source url' };
   // Skip non-IIIF sources — already at native res or different provider entirely
   if (!original.match(/\/full\/(?:pct:\d+|\d+,?\d*|full|max)\/\d+\/default\./i)) {
     return { skip: 'not IIIF' };
+  }
+  if (SKIP_DOMAINS.has(getDomain(original))) {
+    return { skip: 'rate-throttled domain (use archive-gallica.mjs)' };
   }
   const fullRes = upgradeToFullRes(original);
   if (fullRes === original) return { skip: 'no upgrade pattern' };
