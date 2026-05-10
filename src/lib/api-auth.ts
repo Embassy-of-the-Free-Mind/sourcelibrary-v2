@@ -144,14 +144,34 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
   return { allowed: true, status: 200, identity: { kind: 'anon' } };
 }
 
+// URLs are baked into the `error` string itself so clients that render only
+// the top-level error field still surface a callable next step. The structured
+// fields stay alongside for clients that pick them out programmatically.
+const SIGNIN_URL = 'https://sourcelibrary.org/auth/signin';
+const KEYS_URL = 'https://sourcelibrary.org/developers';
+
 /** Body returned to anonymous callers who blew the rate limit. */
-function buildSignupCta(retryAfter?: number) {
+function buildAnonRateLimitBody(retryAfter?: number) {
   return {
-    error: 'Anonymous rate limit exceeded.',
-    message:
-      'Sign in (free) for 5,000 calls/hour, or generate an API key for unlimited use.',
-    signin_url: 'https://sourcelibrary.org/auth/signin',
-    get_key_url: 'https://sourcelibrary.org/developers',
+    error:
+      `Anonymous rate limit exceeded. Sign in (free, generous limit) at ${SIGNIN_URL} ` +
+      `or get an API key at ${KEYS_URL}.`,
+    next_steps: {
+      sign_in: SIGNIN_URL,
+      get_api_key: KEYS_URL,
+      docs: 'https://sourcelibrary.org/developers',
+    },
+    retry_after_seconds: retryAfter,
+  };
+}
+
+/** Body returned to a signed-in user who blew their (high) rate limit. */
+function buildSessionRateLimitBody(retryAfter?: number) {
+  return {
+    error:
+      `Rate limit exceeded for your session. Wait ${retryAfter ?? '?'}s, or use ` +
+      `an API key (no per-session cap) — generate one at ${KEYS_URL}.`,
+    next_steps: { get_api_key: KEYS_URL },
     retry_after_seconds: retryAfter,
   };
 }
@@ -165,6 +185,28 @@ type RouteHandler<C = unknown> = (
 export interface WithApiAuthOptions {
   /** Logical name of the route, recorded in api_usage for grouping. */
   route: string;
+  /**
+   * Error response format when blocked.
+   *  - 'http' (default): plain JSON body with `error`, `next_steps`, `retry_after_seconds`
+   *  - 'jsonrpc': JSON-RPC 2.0 error envelope, for MCP / RPC endpoints whose clients
+   *    expect that shape and will swallow plain HTTP error bodies.
+   */
+  errorFormat?: 'http' | 'jsonrpc';
+}
+
+type RateLimitBody = ReturnType<typeof buildAnonRateLimitBody>
+  | ReturnType<typeof buildSessionRateLimitBody>;
+
+/** JSON-RPC error envelope for MCP-style clients. */
+function buildJsonRpcError(httpStatus: number, body: RateLimitBody) {
+  // -32001 is in the JSON-RPC reserved server-error range (-32099..-32000)
+  // and is the convention for "auth required / quota" application errors.
+  const code = httpStatus === 401 ? -32001 : -32002;
+  return {
+    jsonrpc: '2.0' as const,
+    error: { code, message: body.error, data: body },
+    id: null,
+  };
 }
 
 /**
@@ -183,12 +225,18 @@ export function withApiAuth<C = unknown>(
     const decision = await requireApiAccess(request);
 
     if (!decision.allowed && enforce) {
-      const body =
-        decision.status === 401 ? buildSignupCta(decision.retryAfter)
-        : { error: 'Rate limit exceeded', retry_after_seconds: decision.retryAfter };
+      const httpBody =
+        decision.status === 401 ? buildAnonRateLimitBody(decision.retryAfter)
+        : buildSessionRateLimitBody(decision.retryAfter);
 
       const headers: Record<string, string> = {};
       if (decision.retryAfter) headers['Retry-After'] = String(decision.retryAfter);
+      // RFC 7235: 401 responses must carry a WWW-Authenticate challenge so HTTP-aware
+      // clients (curl --user, fetch wrappers, MCP transports) discover the auth scheme.
+      if (decision.status === 401) {
+        headers['WWW-Authenticate'] =
+          `Bearer realm="sourcelibrary.org", get_key="${KEYS_URL}", sign_in="${SIGNIN_URL}"`;
+      }
 
       logApiUsage({
         request, identity: decision.identity, route: opts.route,
@@ -196,7 +244,10 @@ export function withApiAuth<C = unknown>(
         wouldBlock: true, blocked: true, reason: decision.reason,
       });
 
-      return NextResponse.json(body, { status: decision.status, headers });
+      const responseBody = opts.errorFormat === 'jsonrpc'
+        ? buildJsonRpcError(decision.status, httpBody)
+        : httpBody;
+      return NextResponse.json(responseBody, { status: decision.status, headers });
     }
 
     const response = await handler(request, ctx, decision.identity);
