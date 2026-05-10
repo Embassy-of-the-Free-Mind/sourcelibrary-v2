@@ -30,6 +30,7 @@ async function ensureIndexes() {
       col.createIndex({ ts: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 90 }),
       col.createIndex({ user_id: 1, ts: -1 }),
       col.createIndex({ api_key_id: 1, ts: -1 }),
+      col.createIndex({ ip_hash: 1, ts: -1 }),
       col.createIndex({ route: 1, ts: -1 }),
     ]);
   } catch {
@@ -50,6 +51,8 @@ export interface LogApiUsageInput {
   wouldBlock: boolean;     // would the gate have blocked this call?
   blocked: boolean;        // did the gate actually block it (enforce mode)?
   reason?: string;
+  /** Number of "billable" pages this call returned. Used by the bulk-page budget. */
+  pagesServed?: number;
 }
 
 export function logApiUsage(input: LogApiUsageInput): void {
@@ -79,5 +82,38 @@ async function writeLogEntry(input: LogApiUsageInput) {
     would_block: input.wouldBlock,
     blocked: input.blocked,
     reason: input.reason || null,
+    pages_served: input.pagesServed || 0,
   });
+}
+
+/**
+ * Read pages-served-today for the budget gate. Sums `pages_served` over the
+ * last 24h, scoped by the strongest identifier we have for the caller:
+ *   apikey  → api_key_id
+ *   session → user_id
+ *   anon    → ip_hash (best-effort, hashed)
+ *
+ * Same-origin browser callers are scoped by ip_hash too. That's intentional —
+ * a determined scraper can spoof Origin in server-to-server requests, but the
+ * IP-scoped budget still bites.
+ */
+export async function getPagesServedLast24h(input: {
+  identity: ApiIdentity;
+  request: NextRequest;
+}): Promise<number> {
+  await ensureIndexes();
+  const db = await getDb();
+  const since = new Date(Date.now() - 24 * 3600 * 1000);
+
+  const filter: Record<string, unknown> = { ts: { $gte: since }, pages_served: { $gt: 0 } };
+  if (input.identity.apiKeyId) filter.api_key_id = input.identity.apiKeyId;
+  else if (input.identity.userId) filter.user_id = input.identity.userId;
+  else filter.ip_hash = hashIp(getClientIp(input.request));
+
+  const result = await db.collection(COLLECTION).aggregate([
+    { $match: filter },
+    { $group: { _id: null, total: { $sum: '$pages_served' } } },
+  ]).toArray();
+
+  return result[0]?.total || 0;
 }
