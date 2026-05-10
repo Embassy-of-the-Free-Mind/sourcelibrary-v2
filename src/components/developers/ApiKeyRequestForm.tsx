@@ -136,8 +136,14 @@ export default function ApiKeyRequestForm() {
                 {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4 text-green-700" />}
               </button>
             </div>
+            <div className="mt-4">
+              <p className="text-xs text-green-700 mb-1.5 font-medium">Install MCP with this key</p>
+              <code className="block px-3 py-2 bg-stone-900 text-stone-100 rounded-lg text-xs font-mono break-all">
+                claude mcp add source-library https://sourcelibrary.org/api/mcp -H &quot;Authorization: Bearer {newKey}&quot;
+              </code>
+            </div>
             <p className="text-xs text-green-600 mt-3">
-              Explorer tier: 10 requests/min, 100 pages/day. Use header <code className="text-green-700">Authorization: Bearer YOUR_KEY</code>
+              Or use it directly: <code className="text-green-700">Authorization: Bearer YOUR_KEY</code>
             </p>
           </div>
         )}
@@ -215,11 +221,23 @@ export default function ApiKeyRequestForm() {
   }
 
   return (
-    <div>
-      <p className="text-sm text-secondary mb-4">
-        <Link href="/auth/signin" className="text-accent-rust font-medium hover:underline">Sign in</Link> to generate an API key instantly, or fill out the form below for review.
-      </p>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="space-y-6">
+      <div className="bg-stone-50 border border-stone-200 rounded-xl p-5 text-center">
+        <p className="text-sm text-stone-700 mb-4">
+          Sign in (free) to generate an API key instantly. We use it to track per-user usage and offer higher limits to signed-in callers.
+        </p>
+        <Link
+          href="/auth/signin?callbackUrl=/developers"
+          className="inline-block px-5 py-2.5 bg-stone-800 text-white rounded-lg hover:bg-stone-700 transition-colors text-sm font-medium"
+        >
+          Sign in to get a key
+        </Link>
+      </div>
+      <details className="group">
+        <summary className="cursor-pointer text-xs text-muted hover:text-stone-700 select-none">
+          Or request a partner key by email →
+        </summary>
+        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-stone-700 mb-1">Name *</label>
@@ -281,7 +299,8 @@ export default function ApiKeyRequestForm() {
         >
           {formStatus === 'submitting' ? 'Submitting...' : 'Request API Key'}
         </button>
-      </form>
+        </form>
+      </details>
     </div>
   );
 }
