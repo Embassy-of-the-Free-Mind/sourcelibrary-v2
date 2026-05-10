@@ -497,7 +497,7 @@ export const POST = withApiAuth(async (req: NextRequest) => {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     });
   }
-}, { route: 'mcp' });
+}, { route: 'mcp', errorFormat: 'jsonrpc' });
 
 export async function DELETE() {
   // Stateless — no sessions to delete
