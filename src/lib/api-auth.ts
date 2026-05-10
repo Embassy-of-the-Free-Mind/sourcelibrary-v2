@@ -252,9 +252,14 @@ export function withApiAuth<C = unknown>(
 
     const response = await handler(request, ctx, decision.identity);
 
+    // Bulk endpoints (e.g. /api/books/[id]/text) set X-Pages-Served so the
+    // budget check on the next call sees the running total.
+    const pagesServed = parseInt(response.headers.get('x-pages-served') || '0') || undefined;
+
     logApiUsage({
       request, identity: decision.identity, route: opts.route,
       status: response.status, ms: Date.now() - start,
+      pagesServed,
       wouldBlock: !decision.allowed,
       blocked: false,
       reason: decision.reason,
