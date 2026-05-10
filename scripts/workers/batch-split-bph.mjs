@@ -95,19 +95,28 @@ async function fetchImage(url) {
 }
 
 // --- Gutter detection ---
-// Find the darkest vertical column in the middle 30-70% of width, looking at the
-// central horizontal band (20-80% of height) to avoid headers/footers. The
-// shadow cast by the binding crease is reliably the darkest stripe in that
-// region for typical book scans. Returns geometric center if detection is
-// inconclusive (no clear minimum) or out of plausible range.
+// Find the binding crease by locating the BRIGHTEST vertical column in the
+// central horizontal band (y∈[25%, 75%]), searched only within x∈[45%, 58%].
+//
+// Why brightest, not darkest:
+//   - On BPH/cmc_kloss scans the binding shadow is faint and similar in
+//     darkness to the text body. Searching for a dark stripe latches onto
+//     dense letter columns instead and produces wildly wrong cuts
+//     (observed: spread 44 cut at 30.6%, left half = book spine).
+//   - The page MARGIN immediately adjacent to the binding (the whitespace
+//     between text and gutter) is whiter than anywhere else in the central
+//     region, because both pages reserve a clean inner margin.
+//
+// Why narrow band 45-58%:
+//   - Spread photography tends to center the book in frame but the actual
+//     gutter typically sits slightly right of geometric center; this band
+//     covers the realistic range without admitting page-edge artifacts.
+//
+// Confidence check: the brightest column must exceed the image-wide median
+// brightness by at least 4 units. If not, fall back to geometric center.
+// This prevents arbitrary picks on uniformly-dark spreads or detection errors.
 async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
-  const CENTER_MIN = 0.30;
-  const CENTER_MAX = 0.70;
-  const BAND_TOP = 0.20;
-  const BAND_BOTTOM = 0.80;
   try {
-    // Downsample for speed — gutter shifts by hundreds of original pixels,
-    // doesn't need full resolution to detect.
     const W = 800;
     const ratio = W / imgWidth;
     const H = Math.round(imgHeight * ratio);
@@ -116,26 +125,40 @@ async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
       .grayscale()
       .raw()
       .toBuffer();
-    const bandStart = Math.round(H * BAND_TOP);
-    const bandEnd = Math.round(H * BAND_BOTTOM);
-    const colStart = Math.round(W * CENTER_MIN);
-    const colEnd = Math.round(W * CENTER_MAX);
-    let minBrightness = Infinity;
-    let minCol = -1;
-    for (let x = colStart; x < colEnd; x++) {
+    const bandStart = Math.round(H * 0.25);
+    const bandEnd = Math.round(H * 0.75);
+    const colB = new Float32Array(W);
+    for (let x = 0; x < W; x++) {
       let sum = 0;
-      for (let y = bandStart; y < bandEnd; y++) {
-        sum += raw[y * W + x];
-      }
-      const avg = sum / (bandEnd - bandStart);
-      if (avg < minBrightness) {
-        minBrightness = avg;
-        minCol = x;
-      }
+      for (let y = bandStart; y < bandEnd; y++) sum += raw[y * W + x];
+      colB[x] = sum / (bandEnd - bandStart);
     }
-    if (minCol < 0) return Math.round(imgWidth / 2);
-    // Map back to original-image coordinates
-    return Math.round(minCol / ratio);
+    // Box-blur (80px window ~10% of width) suppresses text-letter noise so
+    // the broader peak from the binding margin dominates.
+    const WIN = 80;
+    const half = Math.floor(WIN / 2);
+    const smoothed = new Float32Array(W);
+    for (let x = 0; x < W; x++) {
+      const lo = Math.max(0, x - half);
+      const hi = Math.min(W - 1, x + half);
+      let s = 0;
+      for (let i = lo; i <= hi; i++) s += colB[i];
+      smoothed[x] = s / (hi - lo + 1);
+    }
+    // Median across the whole smoothed curve as a confidence baseline
+    const sorted = Array.from(smoothed).sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    const colStart = Math.round(W * 0.45);
+    const colEnd = Math.round(W * 0.58);
+    let maxB = -Infinity;
+    let maxCol = -1;
+    for (let x = colStart; x < colEnd; x++) {
+      if (smoothed[x] > maxB) { maxB = smoothed[x]; maxCol = x; }
+    }
+    if (maxCol < 0 || (maxB - median) < 4) {
+      return Math.round(imgWidth / 2);
+    }
+    return Math.round(maxCol / ratio);
   } catch {
     return Math.round(imgWidth / 2);
   }
