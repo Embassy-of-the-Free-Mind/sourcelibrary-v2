@@ -164,12 +164,16 @@ async function main() {
     'image_source.provider': 'wikimedia_commons',
   };
 
+  // noCursorTimeout: each artwork takes 1.5–30s (Commons API + image download
+  // + R2 upload), and a full sweep is ~12h. The default 10-minute idle timeout
+  // would expire the cursor mid-run; this keeps it open until we close it.
   const cursor = books.find(query, {
     projection: {
       _id: 1, slug: 1, title: 1, author: 1,
       commons_title: 1, commons_full_url: 1,
       commons_width: 1, commons_height: 1,
-    }
+    },
+    noCursorTimeout: true,
   }).limit(LIMIT);
 
   let upgraded = 0, flagged = 0, noUpgrade = 0, errors = 0, processed = 0;
