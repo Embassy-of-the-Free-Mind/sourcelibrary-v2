@@ -455,18 +455,52 @@ export default function ByTheNumbersPage() {
           </div>
         </section>
 
+        {/* ───── Words & corpus scale ───── */}
+        <section>
+          <h2 className="font-serif text-3xl text-primary mb-2">3.8 billion words</h2>
+          <p className="text-secondary mb-8 max-w-2xl">
+            Counted directly from the OCR and translation text on disk: the corpus contains about{' '}
+            <span className="text-primary font-medium">1.69 billion words</span> in original languages and{' '}
+            <span className="text-primary font-medium">2.14 billion words</span> of English translation.
+            For comparison, the entire English Wikipedia is roughly 4.4 billion words —
+            the English translation alone is about half its size.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="text-sm uppercase tracking-wider text-secondary font-medium mb-3">Source Library, full bilingual corpus</div>
+              <div className="font-serif text-5xl text-primary tabular-nums leading-none mb-2">3.83B</div>
+              <div className="text-sm text-secondary mb-4">words on disk (OCR + English translation)</div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span className="text-secondary">Original-language OCR</span><span className="tabular-nums text-primary">1.69B words</span></div>
+                <div className="flex justify-between"><span className="text-secondary">English translation</span><span className="tabular-nums text-primary">2.14B words</span></div>
+                <div className="flex justify-between border-t border-border-light pt-2"><span className="text-secondary">Avg words per page</span><span className="tabular-nums text-primary">448 (OCR) · 594 (English)</span></div>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-border-light p-6">
+              <div className="text-sm uppercase tracking-wider text-secondary font-medium mb-3">English Wikipedia, for scale</div>
+              <div className="font-serif text-5xl text-primary tabular-nums leading-none mb-2">~4.4B</div>
+              <div className="text-sm text-secondary mb-4">words across ~6.9M articles</div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span className="text-secondary">Source Library / Wikipedia</span><span className="tabular-nums text-primary">87%</span></div>
+                <div className="flex justify-between"><span className="text-secondary">English translation alone / Wikipedia</span><span className="tabular-nums text-primary">49%</span></div>
+                <div className="flex justify-between border-t border-border-light pt-2"><span className="text-secondary">Continuous reading at 250 wpm, 8h/day</span><span className="tabular-nums text-primary">~9 years</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ───── Tokens & cost ───── */}
         <section>
           <h2 className="font-serif text-3xl text-primary mb-2">Tokens, end to end</h2>
           <p className="text-secondary mb-8 max-w-2xl">
             Reading the corpus and translating it has cost about <span className="text-primary font-medium">27 billion Gemini tokens</span> across
-            every phase of the pipeline. The corpus itself — the original-language OCR plus the English translation —
-            is a body of about 4.8 billion tokens.
+            every phase of the pipeline.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <StatCard label="Pipeline tokens" value="27.1B" sub="Total Gemini input + output, all phases" icon={Hash} accent="violet" />
-            <StatCard label="Corpus tokens" value="4.8B" sub="OCR text + English translation, on disk" icon={FileText} accent="gold" />
+            <StatCard label="Corpus words" value="3.83B" sub="OCR + translation, tags stripped" icon={FileText} accent="gold" />
             <StatCard label="Total AI cost" value="$17,674" sub="Cumulative spend, all Gemini calls" icon={Coins} accent="rust" />
             <StatCard label="API calls" value="5.7M" sub="Across OCR, translation, indexing, vision" icon={Cpu} accent="sage" />
           </div>
