@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
 import { getChapterTexts } from '@/lib/chapter-text';
+import { withApiAuth } from '@/lib/api-auth';
 
 export const maxDuration = 30;
 
@@ -20,10 +21,10 @@ export const maxDuration = 30;
  *   format=json|plain (default: json)
  *   include_metadata=true — include page-level OCR/translation metadata
  */
-export async function GET(
+export const GET = withApiAuth(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const { id: bookId } = await params;
     const { searchParams } = new URL(request.url);
@@ -313,4 +314,4 @@ export async function GET(
     console.error('Bulk text error:', error);
     return NextResponse.json({ error: 'Failed to fetch text' }, { status: 500 });
   }
-}
+}, { route: 'books.text' });

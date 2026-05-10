@@ -5,6 +5,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
+import { withApiAuth } from '@/lib/api-auth';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
@@ -12,10 +13,10 @@ import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 
 export const preferredRegion = 'fra1';
 
-export async function GET(
+export const GET = withApiAuth(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
@@ -104,7 +105,7 @@ export async function GET(
     console.error('Error fetching book:', error);
     return NextResponse.json({ error: 'Failed to fetch book' }, { status: 500 });
   }
-}
+}, { route: 'books.get' });
 
 export const DELETE = withAdminAuth(async (request, session, context) => {
   try {

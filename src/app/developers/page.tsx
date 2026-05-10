@@ -17,16 +17,16 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Search, read, and cite rare historical texts via MCP, CLI, or REST. No API key needed."
+          subtitle="Search, read, and cite rare historical texts via MCP, CLI, or REST. Sign in for a free API key — generous limits and attributed usage."
         />
       }
     >
-      {/* Request API Key */}
+      {/* Get an API Key */}
       <section className="mb-16">
         <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
-          <h2 className="text-lg font-semibold text-primary mb-2">Request an API Key</h2>
+          <h2 className="text-lg font-semibold text-primary mb-2">Get an API Key</h2>
           <p className="text-secondary mb-6">
-            For bulk access to OCR text, translations, and page-level data. Keys are reviewed within 24 hours.
+            Free for individual use. Higher limits for signed-in callers and partner-tier access available on request.
           </p>
           <ApiKeyRequestForm />
         </div>

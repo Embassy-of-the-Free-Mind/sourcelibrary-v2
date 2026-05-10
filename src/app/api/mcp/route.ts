@@ -1,4 +1,6 @@
+import type { NextRequest } from 'next/server';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { withApiAuth } from '@/lib/api-auth';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -463,7 +465,7 @@ export async function GET() {
   });
 }
 
-export async function POST(req: Request) {
+export const POST = withApiAuth(async (req: NextRequest) => {
   try {
     const body = await req.json();
 
@@ -495,7 +497,7 @@ export async function POST(req: Request) {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     });
   }
-}
+}, { route: 'mcp' });
 
 export async function DELETE() {
   // Stateless — no sessions to delete
