@@ -94,6 +94,82 @@ async function fetchImage(url) {
   return Buffer.from(await res.arrayBuffer());
 }
 
+// --- Gutter detection ---
+// Find the binding by locating the widest horizontal RUN of ink-free columns
+// in the central x∈[30%, 70%] region, measured over a central y∈[25%, 75%]
+// band so headers/footers don't interfere. Brightness-based methods all
+// failed in earlier attempts (binding shadow is too faint to discriminate
+// from text on BPH scans; the bright peak in the middle is the LEFT page's
+// right margin, not the gutter). This approach measures content directly:
+// the gutter is the widest column-run where no row has ink. For each column
+// we count the fraction of rows in the central band where the pixel is
+// "dark" (grayscale < 120), threshold at 2% ink, then find the longest run.
+//
+// Narrow vs wide gap dispatch:
+//   - Narrow gap (< 15% of width): the gap IS the binding region. The left
+//     page text ends just before the gap and the right page text starts
+//     just after. Cut at gap END so the left half captures all left-page
+//     text plus the binding crease.
+//   - Wide gap (≥ 15%): the spread has lots of blank space (title page,
+//     blank verso, ornamental dividers). The binding sits somewhere inside
+//     the wide gap; cut at gap CENTER as a safe middle ground.
+//
+// If no usable gap (< 10px wide), fall back to geometric center.
+async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
+  try {
+    const W = 800;
+    const ratio = W / imgWidth;
+    const H = Math.round(imgHeight * ratio);
+    const raw = await sharp(spreadBuf)
+      .resize(W, H, { fit: 'fill' })
+      .grayscale()
+      .raw()
+      .toBuffer();
+    const bandStart = Math.round(H * 0.25);
+    const bandEnd = Math.round(H * 0.75);
+    const DARK = 120;
+    const inkPerCol = new Float32Array(W);
+    for (let x = 0; x < W; x++) {
+      let d = 0;
+      for (let y = bandStart; y < bandEnd; y++) if (raw[y * W + x] < DARK) d++;
+      inkPerCol[x] = d / (bandEnd - bandStart);
+    }
+    // Light smoothing (±5px) so the inter-character white slivers in text
+    // don't fragment what we want to detect as a single gap.
+    const half = 5;
+    const smoothed = new Float32Array(W);
+    for (let x = 0; x < W; x++) {
+      const lo = Math.max(0, x - half);
+      const hi = Math.min(W - 1, x + half);
+      let s = 0;
+      for (let i = lo; i <= hi; i++) s += inkPerCol[i];
+      smoothed[x] = s / (hi - lo + 1);
+    }
+    const cs = Math.round(W * 0.30);
+    const ce = Math.round(W * 0.70);
+    const NO_INK = 0.02;
+    let bestStart = -1, bestLen = 0;
+    let curStart = -1, curLen = 0;
+    for (let x = cs; x < ce; x++) {
+      if (smoothed[x] < NO_INK) {
+        if (curStart < 0) curStart = x;
+        curLen = x - curStart + 1;
+        if (curLen > bestLen) { bestLen = curLen; bestStart = curStart; }
+      } else {
+        curStart = -1; curLen = 0;
+      }
+    }
+    if (bestStart < 0 || bestLen < 10) return Math.round(imgWidth / 2);
+    const WIDE = Math.round(W * 0.15);
+    const chosen = bestLen < WIDE
+      ? bestStart + bestLen                       // narrow gap → cut at gap end
+      : bestStart + Math.floor(bestLen / 2);      // wide gap → cut at gap center
+    return Math.round(chosen / ratio);
+  } catch {
+    return Math.round(imgWidth / 2);
+  }
+}
+
 // --- Concurrency limiter ---
 async function parallelMap(items, fn, concurrency) {
   const results = [];
@@ -208,10 +284,14 @@ async function processBook(r2, db, book) {
       const spreadKey = `archived/${book.id}/${page.page_number}-spread.jpg`;
       const spreadR2Url = await uploadToR2(r2, spreadKey, buf);
 
-      // Split at center
+      // Split at the detected gutter (darkest vertical band near the middle).
+      // Centered cuts fail on books photographed with off-center bindings —
+      // observed up to 19% off in the BPH cohort, chopping ~12 chars from
+      // every line on the left page. Fall back to geometric center if
+      // detection finds nothing convincing.
       const imgWidth = pageMeta.width || 1000;
       const imgHeight = pageMeta.height || 1000;
-      const splitX = Math.round(imgWidth / 2);
+      const splitX = await detectGutterColumn(buf, imgWidth, imgHeight);
 
       // Crop left half
       const leftBuf = await sharp(buf)
