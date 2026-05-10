@@ -545,7 +545,13 @@ export default function TranslationEditor({
     if (tier === 'display') return getPageDisplayUrl(p) || '';
 
     // Full tier: for magnifier/fullscreen — want the highest resolution
-    // Split pages with crop use proxy for server-side crop
+    // split_from_spread pages have a pre-cropped half at archived_photo. The legacy
+    // `crop` coordinates on these pages are relative to the original spread — applying
+    // them to archived_photo would double-crop (quarter-width tall-and-narrow image).
+    if (p.split_from_spread && isUsableImageUrl(p.archived_photo)) {
+      return p.archived_photo!;
+    }
+    // Legacy split pages without pre-cropped variants: server-side crop of the original
     if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
       const baseUrl = p.archived_photo || p.photo_original || p.photo;
       if (!baseUrl) return '';
