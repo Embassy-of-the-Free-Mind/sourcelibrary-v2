@@ -295,10 +295,15 @@ async function processBook(r2, db, book) {
       });
 
       // Create right-half page
+      // Both tenant fields: tenant_id (snake_case slug) is legacy; tenantId (camelCase
+      // UUID) is what /api/[tenant]/pages/[id] filters by. Missing tenantId causes
+      // the client API to 404 on the new right-half page, which silently breaks
+      // reader navigation (image stays on the previous page).
       newPages.push({
         _id: new ObjectId(rightPageId),
         id: rightPageId,
         tenant_id: 'default',
+        ...(book.tenantId ? { tenantId: book.tenantId } : {}),
         book_id: book.id,
         page_number: rightPageNum, // 0.5 — renumbered later
         photo: rightFullUrl,
@@ -440,7 +445,7 @@ async function main() {
 
   const books = await db.collection('books')
     .find(query)
-    .project({ id: 1, title: 1, pages_count: 1, needs_resplit: 1 })
+    .project({ id: 1, title: 1, pages_count: 1, needs_resplit: 1, tenantId: 1, tenant_id: 1 })
     .limit(LIMIT)
     .toArray();
 
