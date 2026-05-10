@@ -95,26 +95,26 @@ async function fetchImage(url) {
 }
 
 // --- Gutter detection ---
-// Find the binding crease by locating the BRIGHTEST vertical column in the
-// central horizontal band (y∈[25%, 75%]), searched only within x∈[45%, 58%].
+// Find the binding by locating the widest horizontal RUN of ink-free columns
+// in the central x∈[30%, 70%] region, measured over a central y∈[25%, 75%]
+// band so headers/footers don't interfere. Brightness-based methods all
+// failed in earlier attempts (binding shadow is too faint to discriminate
+// from text on BPH scans; the bright peak in the middle is the LEFT page's
+// right margin, not the gutter). This approach measures content directly:
+// the gutter is the widest column-run where no row has ink. For each column
+// we count the fraction of rows in the central band where the pixel is
+// "dark" (grayscale < 120), threshold at 2% ink, then find the longest run.
 //
-// Why brightest, not darkest:
-//   - On BPH/cmc_kloss scans the binding shadow is faint and similar in
-//     darkness to the text body. Searching for a dark stripe latches onto
-//     dense letter columns instead and produces wildly wrong cuts
-//     (observed: spread 44 cut at 30.6%, left half = book spine).
-//   - The page MARGIN immediately adjacent to the binding (the whitespace
-//     between text and gutter) is whiter than anywhere else in the central
-//     region, because both pages reserve a clean inner margin.
+// Narrow vs wide gap dispatch:
+//   - Narrow gap (< 15% of width): the gap IS the binding region. The left
+//     page text ends just before the gap and the right page text starts
+//     just after. Cut at gap END so the left half captures all left-page
+//     text plus the binding crease.
+//   - Wide gap (≥ 15%): the spread has lots of blank space (title page,
+//     blank verso, ornamental dividers). The binding sits somewhere inside
+//     the wide gap; cut at gap CENTER as a safe middle ground.
 //
-// Why narrow band 45-58%:
-//   - Spread photography tends to center the book in frame but the actual
-//     gutter typically sits slightly right of geometric center; this band
-//     covers the realistic range without admitting page-edge artifacts.
-//
-// Confidence check: the brightest column must exceed the image-wide median
-// brightness by at least 4 units. If not, fall back to geometric center.
-// This prevents arbitrary picks on uniformly-dark spreads or detection errors.
+// If no usable gap (< 10px wide), fall back to geometric center.
 async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
   try {
     const W = 800;
@@ -127,38 +127,44 @@ async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
       .toBuffer();
     const bandStart = Math.round(H * 0.25);
     const bandEnd = Math.round(H * 0.75);
-    const colB = new Float32Array(W);
+    const DARK = 120;
+    const inkPerCol = new Float32Array(W);
     for (let x = 0; x < W; x++) {
-      let sum = 0;
-      for (let y = bandStart; y < bandEnd; y++) sum += raw[y * W + x];
-      colB[x] = sum / (bandEnd - bandStart);
+      let d = 0;
+      for (let y = bandStart; y < bandEnd; y++) if (raw[y * W + x] < DARK) d++;
+      inkPerCol[x] = d / (bandEnd - bandStart);
     }
-    // Box-blur (80px window ~10% of width) suppresses text-letter noise so
-    // the broader peak from the binding margin dominates.
-    const WIN = 80;
-    const half = Math.floor(WIN / 2);
+    // Light smoothing (±5px) so the inter-character white slivers in text
+    // don't fragment what we want to detect as a single gap.
+    const half = 5;
     const smoothed = new Float32Array(W);
     for (let x = 0; x < W; x++) {
       const lo = Math.max(0, x - half);
       const hi = Math.min(W - 1, x + half);
       let s = 0;
-      for (let i = lo; i <= hi; i++) s += colB[i];
+      for (let i = lo; i <= hi; i++) s += inkPerCol[i];
       smoothed[x] = s / (hi - lo + 1);
     }
-    // Median across the whole smoothed curve as a confidence baseline
-    const sorted = Array.from(smoothed).sort((a, b) => a - b);
-    const median = sorted[Math.floor(sorted.length / 2)];
-    const colStart = Math.round(W * 0.45);
-    const colEnd = Math.round(W * 0.58);
-    let maxB = -Infinity;
-    let maxCol = -1;
-    for (let x = colStart; x < colEnd; x++) {
-      if (smoothed[x] > maxB) { maxB = smoothed[x]; maxCol = x; }
+    const cs = Math.round(W * 0.30);
+    const ce = Math.round(W * 0.70);
+    const NO_INK = 0.02;
+    let bestStart = -1, bestLen = 0;
+    let curStart = -1, curLen = 0;
+    for (let x = cs; x < ce; x++) {
+      if (smoothed[x] < NO_INK) {
+        if (curStart < 0) curStart = x;
+        curLen = x - curStart + 1;
+        if (curLen > bestLen) { bestLen = curLen; bestStart = curStart; }
+      } else {
+        curStart = -1; curLen = 0;
+      }
     }
-    if (maxCol < 0 || (maxB - median) < 4) {
-      return Math.round(imgWidth / 2);
-    }
-    return Math.round(maxCol / ratio);
+    if (bestStart < 0 || bestLen < 10) return Math.round(imgWidth / 2);
+    const WIDE = Math.round(W * 0.15);
+    const chosen = bestLen < WIDE
+      ? bestStart + bestLen                       // narrow gap → cut at gap end
+      : bestStart + Math.floor(bestLen / 2);      // wide gap → cut at gap center
+    return Math.round(chosen / ratio);
   } catch {
     return Math.round(imgWidth / 2);
   }
