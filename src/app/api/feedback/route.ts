@@ -39,19 +39,30 @@ export async function POST(request: NextRequest) {
 }
 
 // GET /api/feedback — list feedback (admin only — contains PII: IPs, emails)
+// Query params:
+//   ?status=unread|read|addressed   filter by lifecycle state
+//   ?unread=true                    legacy, equivalent to ?status=unread
 export const GET = withAdminAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
     const unreadOnly = searchParams.get('unread') === 'true';
+    const status = searchParams.get('status'); // 'unread' | 'read' | 'addressed'
 
     const db = await getDb();
 
     const query: Record<string, unknown> = {};
-    if (unreadOnly) query.read = false;
+    if (unreadOnly || status === 'unread') {
+      query.read = { $ne: true };
+    } else if (status === 'read') {
+      query.read = true;
+      query.addressed = { $ne: true };
+    } else if (status === 'addressed') {
+      query.addressed = true;
+    }
 
-    const [items, total] = await Promise.all([
+    const [items, total, counts] = await Promise.all([
       db.collection('feedback')
         .find(query)
         .sort({ created_at: -1 })
@@ -59,9 +70,14 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
         .limit(limit)
         .toArray(),
       db.collection('feedback').countDocuments(query),
+      Promise.all([
+        db.collection('feedback').countDocuments({ read: { $ne: true } }),
+        db.collection('feedback').countDocuments({ read: true, addressed: { $ne: true } }),
+        db.collection('feedback').countDocuments({ addressed: true }),
+      ]).then(([unread, read, addressed]) => ({ unread, read, addressed })),
     ]);
 
-    return NextResponse.json({ feedback: items, total });
+    return NextResponse.json({ feedback: items, total, counts });
   } catch (error) {
     console.error('Feedback list error:', error);
     return NextResponse.json({ error: 'Failed to load feedback' }, { status: 500 });
