@@ -6,6 +6,7 @@ import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { withApiAuth } from '@/lib/api-auth';
 
 export const preferredRegion = 'fra1';
 
@@ -42,7 +43,7 @@ function extractSnippet(text: string, query: string, contextChars = 150): string
 }
 
 // GET /api/search - Search across books and translations
-export async function GET(request: NextRequest) {
+export const GET = withApiAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
@@ -677,4 +678,4 @@ export async function GET(request: NextRequest) {
       },
     });
   }
-}
+}, { route: 'search' });

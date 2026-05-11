@@ -156,9 +156,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Book Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
-  // Wrong tenant — suppress metadata entirely so the 404 isn't indexed
-  const bookTenantId = (book as any).tenantId || (book as any).tenant_id;
-  if (bookTenantId && tenantId && bookTenantId !== tenantId) {
+  // Wrong tenant — suppress metadata entirely so the 404 isn't indexed.
+  // Match either UUID (tenantId) or slug (tenant_id) — legacy docs may have only one set.
+  const bookTenantUuid = (book as any).tenantId as string | undefined;
+  const bookTenantSlug = (book as any).tenant_id as string | undefined;
+  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
+  const matchesTenant =
+    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
+    (bookTenantSlug && tenant && bookTenantSlug === tenant);
+  if (hasTenantField && !matchesTenant) {
     return { title: 'Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
@@ -474,9 +480,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
-  // book.tenant_id is set by the data pipeline for all tenant-scoped books.
-  const bookTenantId = (book as any).tenantId || (book as any).tenant_id;
-  if (tenantId && bookTenantId && bookTenantId !== tenantId) {
+  // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
+  // Match against whichever form is present so legacy artwork docs (slug-only) don't 404.
+  const bookTenantUuid = (book as any).tenantId as string | undefined;
+  const bookTenantSlug = (book as any).tenant_id as string | undefined;
+  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
+  const matchesTenant =
+    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
+    (bookTenantSlug && tenantSlug && bookTenantSlug === tenantSlug);
+  if (hasTenantField && !matchesTenant) {
     notFound();
   }
 

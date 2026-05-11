@@ -1094,9 +1094,6 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                   </select>
                   <span>per page</span>
                 </div>
-                <Link href="/gallery/wall" className="text-sm text-accent-rust hover:underline">
-                  Gallery Wall
-                </Link>
               </div>
             </div>
 
@@ -1590,9 +1587,6 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                     </span>
                   )}
                 </div>
-                <Link href="/gallery/wall" className="text-sm text-accent-rust hover:underline">
-                  Gallery Wall
-                </Link>
               </div>
             )}
             {loading && <div className="py-4"><BookLoader size="xs" /></div>}

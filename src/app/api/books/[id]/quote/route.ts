@@ -4,6 +4,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { withApiAuth } from '@/lib/api-auth';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -130,7 +131,7 @@ function generateCitations(
 }
 
 // GET /api/books/[id]/quote?page=N - Get a quote from a specific page
-export async function GET(request: NextRequest, context: RouteContext) {
+export const GET = withApiAuth(async (request: NextRequest, context: RouteContext) => {
   try {
     const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
@@ -242,4 +243,4 @@ export async function GET(request: NextRequest, context: RouteContext) {
     console.error('Error getting quote:', error);
     return NextResponse.json({ error: 'Failed to get quote' }, { status: 500 });
   }
-}
+}, { route: 'books.quote' });

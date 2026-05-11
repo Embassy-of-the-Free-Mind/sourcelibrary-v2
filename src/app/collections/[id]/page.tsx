@@ -420,6 +420,7 @@ async function fetchCollectionData(id: string, provider?: string) {
               book_id: { $in: bookIds.slice(0, 200) },
               gallery_quality: { $gte: 0.8 },
               type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+              archive_status: { $ne: 'source_blocked' },
             }, { maxTimeMS: 3000 })
             .sort({ gallery_quality: -1 })
             .limit(60)
@@ -611,11 +612,15 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   const tier3 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 3).slice(0, 8);
   const hasCuratedHighlights = curatedHighlightsData.length > 0;
 
-  // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display
+  // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display.
+  // Only accept records that actually have an extracted/uploaded image — the legacy `image_url`
+  // field can point to an unarchived AIC asset (archive_status: 'source_blocked') whose target
+  // /pages/{book_id}/0000.jpg never got uploaded, producing broken thumbnails on the page.
   const imagePool: typeof galleryImages = [];
   const bookImageCounts = new Map<string, number>();
   for (const img of galleryImages) {
-    const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+    if (img.archive_status === 'source_blocked') continue;
+    const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl;
     if (!thumb) continue;
     const bid = img.book_id || img.bookId;
     const count = bookImageCounts.get(bid) || 0;
@@ -704,8 +709,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
                 'grid-cols-3 sm:grid-cols-6'
             }`}>
-            {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
-              const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
+            {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string }) => {
+              const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
               if (!src) return null;
               return (
@@ -849,8 +854,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               </Link>
             </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 mt-5">
-              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
-                const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
+                const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl;
                 const pageId = img.pageId || img.page_id;
                 const bookId = img.bookId || img.book_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;
