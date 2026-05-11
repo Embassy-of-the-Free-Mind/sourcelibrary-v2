@@ -10,6 +10,7 @@ import { search as searchApi } from '@/lib/api-client';
 import { bookUrl } from '@/lib/slugify';
 import type { UnifiedSearchResponse } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { getEffectiveByline } from '@/lib/byline';
 import HighlightedText from './HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 
@@ -413,7 +414,13 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                               <HighlightedText text={book.display_title || book.title} query={query} />
                             </p>
                             <p className="text-xs text-stone-500 truncate">
-                              <HighlightedText text={book.author} query={query} />
+                              {(() => {
+                                const byline = getEffectiveByline(book);
+                                if (byline.role === 'editor') {
+                                  return <>ed. <HighlightedText text={byline.editor} query={query} /></>;
+                                }
+                                return <HighlightedText text={book.author} query={query} />;
+                              })()}
                             </p>
                           </div>
                           {book.translation_percent !== undefined && book.translation_percent > 0 && (
@@ -514,7 +521,11 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                               {sem.title}
                             </p>
                             <p className="text-xs text-stone-500 truncate">
-                              {sem.author}{sem.year ? ` · ${sem.year}` : ''}
+                              {(() => {
+                                const byline = getEffectiveByline({ author: sem.author, editor: sem.editor });
+                                if (byline.role === 'editor') return `ed. ${byline.editor}`;
+                                return sem.author || '';
+                              })()}{sem.year ? ` · ${sem.year}` : ''}
                               {sem.relevance_hint ? ` · ${sem.relevance_hint}` : ''}
                             </p>
                             {sem.summary_snippet && (

@@ -32,6 +32,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import BookCard from '@/components/book/BookCard';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { getEffectiveByline } from '@/lib/byline';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -1745,7 +1746,13 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
                   {result.type === 'page' && <span className="text-muted font-normal text-sm ml-2">p. {result.page_number}</span>}
                 </h3>
                 <p className="text-sm text-secondary mt-0.5">
-                  <HighlightedText text={result.author} query={query} /> · {result.published}
+                  {(() => {
+                    const byline = getEffectiveByline(result);
+                    if (byline.role === 'editor') {
+                      return <>ed. <HighlightedText text={byline.editor} query={query} /></>;
+                    }
+                    return <HighlightedText text={result.author} query={query} />;
+                  })()} · {result.published}
                 </p>
               </div>
               {result.has_doi && result.doi && (
@@ -1866,7 +1873,11 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
           <div className="min-w-0 flex-1">
             <h3 className="font-serif text-primary font-medium leading-snug">{result.title}</h3>
             <p className="text-sm text-muted mt-0.5">
-              {result.author}{result.year ? ` · ${result.year}` : ''}
+              {(() => {
+                const byline = getEffectiveByline({ author: result.author, editor: (result as { editor?: string }).editor });
+                if (byline.role === 'editor') return `ed. ${byline.editor}`;
+                return result.author || '';
+              })()}{result.year ? ` · ${result.year}` : ''}
               {result.language ? ` · ${result.language}` : ''}
             </p>
             {result.summary_snippet && (
@@ -1903,7 +1914,11 @@ function RelatedResultCard({ result, tenant }: { result: SearchResult; tenant?: 
           {result.display_title || result.title}
         </h3>
         <p className="text-xs text-muted mt-0.5">
-          {result.author}{result.published ? `, ${result.published}` : ''}
+          {(() => {
+            const byline = getEffectiveByline(result);
+            if (byline.role === 'editor') return `ed. ${byline.editor}`;
+            return result.author || '';
+          })()}{result.published ? `, ${result.published}` : ''}
           {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
         </p>
         {text && (

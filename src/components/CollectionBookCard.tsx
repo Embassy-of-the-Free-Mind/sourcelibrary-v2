@@ -7,6 +7,7 @@ import { BookOpen, Calendar, FileText } from 'lucide-react';
 import { cn, getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
+import { getEffectiveByline } from '@/lib/byline';
 import { useEmbedHref } from '@/lib/EmbedContext';
 
 interface CollectionBook {
@@ -16,6 +17,9 @@ interface CollectionBook {
   title: string;
   display_title?: string | null;
   author: string;
+  /** Editor for edited volumes/anthologies — shown as "edited by X" when
+   *  author is missing/"Unknown". See src/lib/byline.ts. */
+  editor?: string | null;
   year: number;
   pages?: number;
   pages_count?: number;
@@ -123,7 +127,15 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           >
             {book.display_title || book.title}
           </h3>
-          <p className="text-sm text-secondary mb-3 line-clamp-1"><AuthorName author={book.author} /></p>
+          <p className="text-sm text-secondary mb-3 line-clamp-1">
+            {(() => {
+              const byline = getEffectiveByline(book);
+              if (byline.role === 'editor') {
+                return <span>edited by <AuthorName author={byline.editor} /></span>;
+              }
+              return <AuthorName author={book.author} />;
+            })()}
+          </p>
 
           <div className="flex flex-wrap gap-2 text-xs text-muted">
             {(() => {

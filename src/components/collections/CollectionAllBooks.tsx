@@ -17,6 +17,7 @@ interface BookItem {
   title: string;
   display_title?: string;
   author?: string;
+  editor?: string;
   year?: number;
   language?: string;
   pages_count?: number;
@@ -433,6 +434,7 @@ export default function CollectionAllBooks({
                 slug: book.slug,
                 title: bookTitle(book),
                 author: book.author || '',
+                editor: book.editor,
                 year: book.year || parseInt(book.published || '', 10) || 0,
                 pages_count: book.pages_count,
                 pages_ocr: book.pages_ocr,
