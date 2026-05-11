@@ -125,6 +125,10 @@ interface Props {
       works" instead of just "{total} works" — matches the partner mockup
       framing where the catalogue size is the denominator. */
   catalogTotal?: number;
+  /** When true, lock the digitised filter to "On Source Library" — the user
+      asked for the digitised+translated filter, so all rows must be SL-backed.
+      Hides the digitisation control in Advanced so the user can't override it. */
+  lockDigitized?: boolean;
 }
 
 export default function BphCatalogBrowser({
@@ -137,6 +141,7 @@ export default function BphCatalogBrowser({
   searchRowSlot,
   resultsHeaderSlot,
   catalogTotal,
+  lockDigitized = false,
 }: Props) {
   const searchParams = useSearchParams();
 
@@ -155,7 +160,7 @@ export default function BphCatalogBrowser({
     language: searchParams.get('clang') || '',
     yearFrom: searchParams.get('cyfrom') || '',
     yearTo: searchParams.get('cyto') || '',
-    digitized: (searchParams.get('cdig') || '') as AdvancedFilters['digitized'],
+    digitized: lockDigitized ? 'sl' : ((searchParams.get('cdig') || '') as AdvancedFilters['digitized']),
   };
   const hasAnyAdv = Object.values(initialAdv).some(v => v !== '');
 
@@ -300,15 +305,21 @@ export default function BphCatalogBrowser({
   };
 
   const clearAll = () => {
+    const cleared: AdvancedFilters = lockDigitized ? { ...EMPTY_ADV, digitized: 'sl' } : EMPTY_ADV;
     setSearchQuery('');
     setKeyword('');
-    setAdv(EMPTY_ADV);
+    setAdv(cleared);
     setOffset(0);
-    fetchWorks('', sort, '', 0, EMPTY_ADV);
-    updateUrl('', sort, '', 0, EMPTY_ADV);
+    fetchWorks('', sort, '', 0, cleared);
+    updateUrl('', sort, '', 0, cleared);
   };
 
-  const advCount = useMemo(() => Object.values(adv).filter(v => v !== '').length, [adv]);
+  // When the digitised filter is locked by the parent (Show digitised list view),
+  // don't count it as a user-applied filter — it's part of the view, not a chip.
+  const advCount = useMemo(
+    () => Object.entries(adv).filter(([k, v]) => v !== '' && !(lockDigitized && k === 'digitized')).length,
+    [adv, lockDigitized]
+  );
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const totalPages = Math.ceil(total / PER_PAGE);
 
@@ -320,14 +331,14 @@ export default function BphCatalogBrowser({
     return null;
   };
 
-  // Detail-page URL for a catalog entry. On the BPH subdomain this resolves to
-  // /catalog/{ubn} (rewritten to /embed/bph/catalog/{ubn}); on the main site it
-  // resolves to the same path nested under the library page basePath.
+  // Detail-page URL for a catalog entry. Always nest under basePath so the
+  // link works in every host context: bph.sourcelibrary.org (where the proxy
+  // serves /embed/bph/catalog/{ubn} directly), sourcelibrary.org/embed/bph
+  // (the iframe target — must stay inside /embed/bph or it 404s), and
+  // /libraries/{slug}. The bph subdomain proxy doesn't rewrite /embed/...
+  // paths, so the URL bar will read /embed/bph/catalog/{ubn} there — uglier
+  // than the legacy /catalog/{ubn} but functional in every context.
   const detailUrl = (ubn: string) => {
-    // basePath examples: "/embed/bph", "/libraries/bibliotheca-philosophica-hermetica"
-    if (basePath === '/embed/bph' || basePath === '/embed/bph/') {
-      return `/catalog/${encodeURIComponent(ubn)}`;
-    }
     return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(ubn)}`;
   };
 
@@ -468,19 +479,21 @@ export default function BphCatalogBrowser({
                 />
               </div>
             </div>
-            <div>
-              <label className="block text-xs text-muted mb-1">Digitization</label>
-              <select
-                value={adv.digitized}
-                onChange={(e) => handleAdvChange('digitized', e.target.value)}
-                className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary"
-              >
-                <option value="">All</option>
-                <option value="sl">On Source Library</option>
-                <option value="true">Digitised anywhere</option>
-                <option value="false">Not digitised</option>
-              </select>
-            </div>
+            {!lockDigitized && (
+              <div>
+                <label className="block text-xs text-muted mb-1">Digitization</label>
+                <select
+                  value={adv.digitized}
+                  onChange={(e) => handleAdvChange('digitized', e.target.value)}
+                  className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary"
+                >
+                  <option value="">All</option>
+                  <option value="sl">On Source Library</option>
+                  <option value="true">Digitised anywhere</option>
+                  <option value="false">Not digitised</option>
+                </select>
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-2 mt-4">
             <button
