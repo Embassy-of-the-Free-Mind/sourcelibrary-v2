@@ -108,7 +108,7 @@ function extractPages(manifest) {
     let imageUrl = imageResource?.['@id'] || '';
     const imageService = imageResource?.service?.['@id'];
     if (imageService) {
-      imageUrl = `${imageService}/full/2000,/0/default.jpg`;
+      imageUrl = `${imageService}/full/full/0/default.jpg`;
     }
     let thumbnail = imageUrl;
     if (imageService) {

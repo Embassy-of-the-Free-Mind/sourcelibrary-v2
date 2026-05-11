@@ -236,7 +236,7 @@ async function main() {
       const imageService = imageResource?.service?.['@id'];
 
       if (imageService) {
-        imageUrl = `${imageService}/full/1000,/0/default.jpg`;
+        imageUrl = `${imageService}/full/full/0/default.jpg`;
       }
 
       let thumbnailUrl = imageUrl;
