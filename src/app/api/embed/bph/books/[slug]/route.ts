@@ -38,6 +38,7 @@ export async function GET(
         title: 1,
         display_title: 1,
         author: 1,
+        editor: 1,
         language: 1,
         published: 1,
         year: 1,
@@ -72,6 +73,10 @@ export async function GET(
       title: book.title,
       display_title: book.display_title,
       author: book.author,
+      // Editor — present on edited volumes/magazines/anthologies where the
+      // BPH catalogue has no single author. Webflow consumers should render
+      // "edited by {editor}" when author is missing or "Unknown".
+      editor: book.editor || null,
       language: book.language,
       published: book.published,
       year: book.year,

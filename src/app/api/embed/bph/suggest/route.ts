@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       })
       .project({
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
-        author: 1, language: 1, published: 1,
+        author: 1, editor: 1, language: 1, published: 1,
         thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1,
       })
       .limit(8)
@@ -62,6 +62,7 @@ export async function GET(request: NextRequest) {
       slug: b.slug || b.id,
       title: b.display_title || b.title,
       author: b.author,
+      editor: b.editor || null,
       language: b.language,
       published: b.published,
       thumbnail: b.image_thumb || b.image_display || b.thumbnail_blob || b.thumbnail,
