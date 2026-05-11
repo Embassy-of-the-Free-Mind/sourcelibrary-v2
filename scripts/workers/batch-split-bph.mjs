@@ -120,9 +120,15 @@ async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
     const W = 800;
     const ratio = W / imgWidth;
     const H = Math.round(imgHeight * ratio);
+    // Keep RGB so colored ink (red rubrications, blue annotations) registers
+    // as "dark" — grayscale weights red at only 21% and lets red title text
+    // appear as light gray, which made the detector treat rubricated title
+    // pages as if there was no ink near the binding (e.g. Hieroglyphica's
+    // red title chopped the leading letter off every line).
     const raw = await sharp(spreadBuf)
       .resize(W, H, { fit: 'fill' })
-      .grayscale()
+      .removeAlpha()
+      .toColourspace('srgb')
       .raw()
       .toBuffer();
     const bandStart = Math.round(H * 0.25);
@@ -131,7 +137,11 @@ async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
     const inkPerCol = new Float32Array(W);
     for (let x = 0; x < W; x++) {
       let d = 0;
-      for (let y = bandStart; y < bandEnd; y++) if (raw[y * W + x] < DARK) d++;
+      for (let y = bandStart; y < bandEnd; y++) {
+        const i = (y * W + x) * 3;
+        const m = Math.min(raw[i], raw[i + 1], raw[i + 2]);
+        if (m < DARK) d++;
+      }
       inkPerCol[x] = d / (bandEnd - bandStart);
     }
     // Light smoothing (±5px) so the inter-character white slivers in text
