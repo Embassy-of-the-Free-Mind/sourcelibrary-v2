@@ -6,14 +6,17 @@
  *   FILTER (view)        Show all (catalog)  vs  Show digitised & translated (books)
  *   DISPLAY (display)    List  vs  Grid
  *
- * The segmented toggle changes FILTER only — preserving the user's display
- * choice. The list/grid icons change DISPLAY only — preserving the filter.
+ * The segmented toggle changes FILTER. "Show digitised" preserves the
+ * user's display choice; "Show all" forces list because grid can't actually
+ * represent the full catalogue (thumbnails only exist for the digitised
+ * subset). The list/grid icons change DISPLAY only — preserving the filter.
  *
  * Render matrix:
  *   filter=all     + display=list  → BphCatalogBrowser (full 27,706 works)
  *   filter=all     + display=grid  → covers grid (renders below; only the
  *                                    digitised subset has thumbnails, so
- *                                    a small note explains the gap)
+ *                                    a small note explains the gap — reached
+ *                                    via the grid icon, not the filter toggle)
  *   filter=digitised + display=grid  → covers grid (digitised subset)
  *   filter=digitised + display=list  → BphCatalogBrowser locked to digitised='sl'
  *
@@ -65,8 +68,13 @@ export default function BphUnifiedCatalogue({
 }: Props) {
   const embedHref = useEmbedHref();
 
-  // Filter toggle preserves the current display; view toggle preserves the current filter.
-  const allHref = embedHref(makeHref(basePath, 'catalog', display));
+  // "Show all" forces list display: grid only renders books with thumbnails
+  // (the digitised subset), so preserving grid here would make the toggle a
+  // visual no-op — the very bug a user reported as "Show all doesn't show
+  // all". List is the only display that can faithfully show the full 27,706
+  // works. "Show digitised" preserves display since both modes work for that
+  // subset. View-icons toggle still preserves the current filter.
+  const allHref = embedHref(makeHref(basePath, 'catalog', 'list'));
   const digitizedHref = embedHref(makeHref(basePath, 'books', display));
   const listHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list'));
   const gridHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'grid'));
@@ -109,6 +117,12 @@ export default function BphUnifiedCatalogue({
         // mockup row grouping. When mode='digitized', lock the underlying
         // browser to digitized='sl' so the table reflects the chosen filter.
         <BphCatalogBrowser
+          // Remount when the filter toggles. BphCatalogBrowser seeds its
+          // `adv.digitized` state from `lockDigitized` once in `useState`,
+          // and has no effect to reset it when the prop flips — so without a
+          // key the table keeps the previous filter and "Show all" appears
+          // not to work.
+          key={`bph-cat-${mode}`}
           basePath={basePath}
           digitizedUbns={digitizedUbns}
           tenantSlug={tenantSlug}
