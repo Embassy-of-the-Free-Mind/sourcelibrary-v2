@@ -162,7 +162,14 @@ export default function BphCatalogBrowser({
     yearTo: searchParams.get('cyto') || '',
     digitized: lockDigitized ? 'sl' : ((searchParams.get('cdig') || '') as AdvancedFilters['digitized']),
   };
-  const hasAnyAdv = Object.values(initialAdv).some(v => v !== '');
+  // "Has a user-applied advanced filter?" — drives whether the Advanced
+  // panel is open on mount. Exclude the digitised filter when it's forced
+  // by `lockDigitized` (the parent's "Show digitised & translated" toggle)
+  // so the panel doesn't auto-open just because the user picked a top-level
+  // view. Same exclusion rule as `advCount` below.
+  const hasAnyAdv = Object.entries(initialAdv).some(
+    ([k, v]) => v !== '' && !(lockDigitized && k === 'digitized')
+  );
 
   const [works, setWorks] = useState<BphWork[]>([]);
   const [total, setTotal] = useState(0);
