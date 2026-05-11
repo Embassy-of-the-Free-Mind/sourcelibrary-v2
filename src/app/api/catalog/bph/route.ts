@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase, sanitizeFilterValue } from '@/lib/supabase';
+import { normalizeBphSearchText } from '@/lib/text-normalize';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,6 +30,11 @@ const FIELDS_LEGACY = 'ubn, title, author, year, shelf_mark, keywords, ia_identi
 
 // Cache the schema mode for the lifetime of the runtime.
 let schemaMode: 'new' | 'legacy' | null = null;
+// Tracks whether the `*_norm` diacritic-insensitive columns from
+// add-bph-diacritic-normalization.sql have been applied. Auto-detected on
+// the first query that uses them; falls back to plain ilike on the original
+// columns if they don't exist yet.
+let hasNormalizedColumns: boolean | null = null;
 
 function isMissingColumnError(err: { message?: string; code?: string }): boolean {
   if (!err) return false;
@@ -74,13 +80,21 @@ export async function GET(req: NextRequest) {
     const fields = mode === 'new' ? FIELDS_NEW : FIELDS_LEGACY;
     let query = supabase.from('bph_works').select(fields, { count: 'exact' });
 
-    // Simple search.
+    // Simple search. When the diacritic-normalised `search_norm` column
+    // exists (after applying add-bph-diacritic-normalization.sql), query
+    // against it with the normalised user input so "Boehme" finds "Böhme".
+    // Falls back to the original tsvector / per-field ilike on first miss.
     if (q.length >= 2) {
-      const safe = sanitizeFilterValue(q);
-      if (mode === 'new') {
-        // Full-text across all fields.
+      if (mode === 'new' && hasNormalizedColumns !== false) {
+        const normQ = sanitizeFilterValue(normalizeBphSearchText(q));
+        if (normQ.length > 0) {
+          query = query.ilike('search_norm', `%${normQ}%`);
+        }
+      } else if (mode === 'new') {
+        const safe = sanitizeFilterValue(q);
         query = query.textSearch('search_tsv', safe, { type: 'websearch', config: 'simple' });
       } else {
+        const safe = sanitizeFilterValue(q);
         query = query.or(`title.ilike.%${safe}%,author.ilike.%${safe}%,shelf_mark.ilike.%${safe}%`);
       }
     }
@@ -88,7 +102,18 @@ export async function GET(req: NextRequest) {
     const ilikeFilter = (col: string, val: string) => {
       if (!val) return;
       const safe = sanitizeFilterValue(val);
+      const normVal = sanitizeFilterValue(normalizeBphSearchText(val));
+      const useNorm = mode === 'new' && hasNormalizedColumns !== false && normVal.length > 0;
+
       if (mode === 'new') {
+        // Per-field `*_norm` columns roll up the standard field with its
+        // variants (e.g. author_norm covers author + variant_author +
+        // pseudonym), so one ilike replaces the previous .or() chain.
+        if (useNorm) {
+          const normCol = col === 'shelf_mark' ? 'shelf_mark_norm' : `${col}_norm`;
+          query = query.ilike(normCol, `%${normVal}%`);
+          return;
+        }
         if (col === 'author') {
           query = query.or(`author.ilike.%${safe}%,variant_author.ilike.%${safe}%,pseudonym.ilike.%${safe}%`);
         } else if (col === 'title') {
@@ -165,13 +190,27 @@ export async function GET(req: NextRequest) {
     return await query.range(offset, offset + limit - 1);
   }
 
-  // Try the cached mode; on missing-column error, retry in legacy and remember.
+  // Try the cached mode; on missing-column error, retry — first by
+  // disabling the diacritic-norm columns (the most recent addition), then
+  // by falling back to the legacy schema.
   let result = await runQuery(schemaMode || 'new');
+  if (
+    result.error &&
+    isMissingColumnError(result.error) &&
+    (schemaMode || 'new') === 'new' &&
+    hasNormalizedColumns !== false
+  ) {
+    // Missing column with new schema — likely the *_norm columns aren't
+    // applied yet. Retry without them.
+    hasNormalizedColumns = false;
+    result = await runQuery('new');
+  }
   if (result.error && isMissingColumnError(result.error) && (schemaMode || 'new') === 'new') {
     schemaMode = 'legacy';
     result = await runQuery('legacy');
   } else if (!result.error && schemaMode === null) {
     schemaMode = 'new';
+    if (hasNormalizedColumns === null) hasNormalizedColumns = true;
   }
 
   if (result.error) {
