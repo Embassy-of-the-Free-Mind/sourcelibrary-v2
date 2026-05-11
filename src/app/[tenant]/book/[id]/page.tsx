@@ -20,6 +20,7 @@ import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
+import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
 import RelatedEditions from '@/components/book/RelatedEditions';
 import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
@@ -865,6 +866,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   </Suspense>
                 )}
               </BibliographicInfo>
+
+              {/* BPH catalogue record — side-loaded from Supabase bph_works when
+                  this book has a numeric UBN. Surfaces variant titles, printer,
+                  shelf marks, provenance, etc. inline rather than via the
+                  separate /catalog/{ubn} page (issue #1688). */}
+              {(() => {
+                const dc = (book as { dublin_core?: { dc_identifier?: unknown } }).dublin_core?.dc_identifier;
+                const ubn = typeof dc === 'string' && /^\d+$/.test(dc)
+                  ? dc
+                  : Array.isArray(dc) ? dc.find((v): v is string => typeof v === 'string' && /^\d+$/.test(v)) : null;
+                if (!ubn) return null;
+                return (
+                  <Suspense fallback={null}>
+                    <BphCatalogueRecord ubn={ubn} />
+                  </Suspense>
+                );
+              })()}
 
               {/* Cross-reference: artworks by this author (pre-computed).
                   Hidden in embed mode — the pre-computed data is not tenant-filtered,
