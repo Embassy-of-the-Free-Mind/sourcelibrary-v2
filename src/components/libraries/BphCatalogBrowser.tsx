@@ -174,6 +174,11 @@ export default function BphCatalogBrowser({
   const hasAnyAdv = Object.entries(initialAdv).some(
     ([k, v]) => v !== '' && !(lockDigitized && k === 'digitized')
   );
+  // The unified catalogue's grid view links here with `?cadv=1` so the
+  // Advanced panel auto-opens on arrival — partner-requested affordance so
+  // covers-grid users can reach the rich filter UI without first finding
+  // the list/grid icon (issue #1687).
+  const cadvParam = searchParams.get('cadv') === '1';
 
   const [works, setWorks] = useState<BphWork[]>([]);
   const [total, setTotal] = useState(0);
@@ -183,7 +188,7 @@ export default function BphCatalogBrowser({
   const [keyword, setKeyword] = useState(initialKeyword);
   const [offset, setOffset] = useState(initialOffset);
   const [adv, setAdv] = useState<AdvancedFilters>(initialAdv);
-  const [showAdvanced, setShowAdvanced] = useState(defaultAdvanced || hasAnyAdv);
+  const [showAdvanced, setShowAdvanced] = useState(defaultAdvanced || hasAnyAdv || cadvParam);
   const abortRef = useRef<AbortController | null>(null);
 
   const buildParams = useCallback((q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
