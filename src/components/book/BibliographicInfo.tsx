@@ -8,11 +8,13 @@ import BookEditModal from './BookEditModal';
 import { useRouter } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
+import { getEffectiveByline } from '@/lib/byline';
 
 const FIELD_LABELS: Record<string, string> = {
   display_title: 'Display Title',
   language: 'Language',
   author: 'Author',
+  editor: 'Editor',
   year: 'Year',
   published: 'Published',
   categories: 'Categories',
@@ -219,11 +221,30 @@ export default function BibliographicInfo({
               </div>
             )}
 
-            {/* Author */}
-            <div className="flex gap-2">
-              <span className="text-stone-500 w-24 flex-shrink-0">Author:</span>
-              <span className="text-stone-200">{book.author}</span>
-            </div>
+            {/* Author / Editor — for edited volumes, magazines and anthologies the
+                catalogue often credits an editor with no author. Show whichever
+                fields are present. See src/lib/byline.ts for the "Unknown"
+                placeholder rules shared with the hero and cards. */}
+            {(() => {
+              const bib = getEffectiveByline(book);
+              const showAuthorRow = bib.role === 'author' || !bib.editor;
+              return (
+                <>
+                  {showAuthorRow && (
+                    <div className="flex gap-2">
+                      <span className="text-stone-500 w-24 flex-shrink-0">Author:</span>
+                      <span className="text-stone-200">{bib.role === 'author' ? bib.author : book.author}</span>
+                    </div>
+                  )}
+                  {bib.editor && (
+                    <div className="flex gap-2">
+                      <span className="text-stone-500 w-24 flex-shrink-0">Editor:</span>
+                      <span className="text-stone-200">{bib.editor}</span>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
 
             {/* Language */}
             {book.language && (
