@@ -82,9 +82,27 @@ export default function BphUnifiedCatalogue({
   // For display='list' the catalogue table owns its own filtered count
   // (the count drops as the user types in search). Hoist it up via a
   // callback so the unified header can show "X of 27,706 works".
+  // `isFiltered` distinguishes "user has searched/filtered" from "baseline,
+  // showing everything". When mode='digitized' and the user hasn't filtered,
+  // we prefer the MongoDB-derived digitizedTotal (2,280) over the Supabase
+  // count (1,989) — the gap is books whose UBN isn't in bph_works. Showing
+  // the MongoDB total makes the digitised count consistent with the grid
+  // view's count (#1689).
   const [filteredTotal, setFilteredTotal] = useState<number | null>(null);
-  const visibleTotal =
-    display === 'list' ? (filteredTotal ?? catalogTotal) : digitizedTotal;
+  const [isFiltered, setIsFiltered] = useState(false);
+  const handleTotalChange = (total: number, filtered: boolean) => {
+    setFilteredTotal(total);
+    setIsFiltered(filtered);
+  };
+
+  let visibleTotal: number;
+  if (display !== 'list') {
+    visibleTotal = digitizedTotal;
+  } else if (mode === 'digitized' && !isFiltered) {
+    visibleTotal = digitizedTotal;
+  } else {
+    visibleTotal = filteredTotal ?? catalogTotal;
+  }
 
   const toggleNode = (
     <SegmentedToggle mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
@@ -126,7 +144,7 @@ export default function BphUnifiedCatalogue({
           basePath={basePath}
           digitizedUbns={digitizedUbns}
           tenantSlug={tenantSlug}
-          onTotalChange={setFilteredTotal}
+          onTotalChange={handleTotalChange}
           hideInlineCount
           searchRowSlot={toggleNode}
           resultsHeaderSlot={viewIconsNode}
