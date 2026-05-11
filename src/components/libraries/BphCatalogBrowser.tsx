@@ -106,8 +106,12 @@ interface Props {
   /** When true, defaults to advanced search expanded */
   defaultAdvanced?: boolean;
   /** Fires whenever the filtered result count updates so a parent shell
-      (the unified catalogue header) can show "X of 27,706 works". */
-  onTotalChange?: (total: number) => void;
+      (the unified catalogue header) can show "X of 27,706 works".
+      `isFiltered` is true when the user has typed a search or applied an
+      advanced filter (not counting parent-locked filters like `lockDigitized`),
+      letting the parent decide whether to show the baseline count or the
+      live filtered count. */
+  onTotalChange?: (total: number, isFiltered: boolean) => void;
   /** When true, hide the inline "{total} works" label on the simple-search
       row — the parent shell shows the count instead. */
   hideInlineCount?: boolean;
@@ -209,6 +213,16 @@ export default function BphCatalogBrowser({
     const controller = new AbortController();
     abortRef.current = controller;
 
+    // A filter is "user-applied" if it's a real search, the keyword chip, or
+    // any advanced field set — but NOT the digitised filter when it was
+    // forced by the parent's lockDigitized toggle. Used by the parent shell
+    // to decide whether to show the baseline count or the filtered count
+    // (e.g. the BPH digitised baseline lives upstream in MongoDB, not in the
+    // Supabase query result this component sees).
+    const isFiltered = !!q || !!kw || Object.entries(a).some(
+      ([k, v]) => v !== '' && !(lockDigitized && k === 'digitized')
+    );
+
     setLoading(true);
     try {
       const params = buildParams(q, s, kw, off, a);
@@ -216,16 +230,16 @@ export default function BphCatalogBrowser({
       const data = await res.json();
       setWorks(data.works || []);
       setTotal(data.total || 0);
-      onTotalChange?.(data.total || 0);
+      onTotalChange?.(data.total || 0, isFiltered);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return; // superseded by a newer query
       setWorks([]);
       setTotal(0);
-      onTotalChange?.(0);
+      onTotalChange?.(0, isFiltered);
     } finally {
       if (!controller.signal.aborted) setLoading(false);
     }
-  }, [buildParams, onTotalChange]);
+  }, [buildParams, onTotalChange, lockDigitized]);
 
   // Sync URL params (using c-prefixed keys so they don't collide with parent page params).
   // Uses window.history.replaceState rather than router.replace + basePath so the
