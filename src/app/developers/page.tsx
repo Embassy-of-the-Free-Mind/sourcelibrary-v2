@@ -72,8 +72,11 @@ export default function DevelopersPage() {
 
         <div className="space-y-4 mb-8">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
               <span className="text-sm font-medium text-stone-700">Claude Code (remote &mdash; no install)</span>
+              <span className="text-xs text-muted">
+                Add <code className="text-stone-700">-H &quot;Authorization: Bearer YOUR_KEY&quot;</code> for higher limits
+              </span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`claude mcp add source-library https://sourcelibrary.org/api/mcp`}
@@ -81,8 +84,9 @@ export default function DevelopersPage() {
           </div>
 
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
               <span className="text-sm font-medium text-stone-700">Claude Code (local via npm)</span>
+              <span className="text-xs text-muted">Legacy &mdash; prefer remote above</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`claude mcp add source-library -- npx -y @source-library/mcp-server`}

@@ -38,10 +38,12 @@ export interface ApiAuthDecision {
 }
 
 // Tier limits applied per IP / user / key per window.
-// Tuned to be generous for signed-in users and just-tight-enough for anon
-// to make signing in worth it for anyone reading more than a couple of books.
+// Anon 60/hr — calibrated to flag bursty scrapers without bothering casual
+// browsing. Session 1,000/hr — generous for any human research session;
+// dropped from 5,000 after 16h of data showed the heaviest signed-in user
+// did 13 hits in 16h. Anyone hitting 1,000/hr is using a key anyway.
 const ANON_LIMIT_PER_HOUR = Number(process.env.API_ANON_LIMIT_PER_HOUR || 60);
-const SESSION_LIMIT_PER_HOUR = Number(process.env.API_SESSION_LIMIT_PER_HOUR || 5000);
+const SESSION_LIMIT_PER_HOUR = Number(process.env.API_SESSION_LIMIT_PER_HOUR || 1000);
 
 // User-Agent substrings that get the verified-bot bypass. Reverse-DNS verification
 // would be the gold standard; for now we rely on UA strings since the only cost
