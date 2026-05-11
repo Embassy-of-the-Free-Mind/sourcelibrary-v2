@@ -92,6 +92,8 @@ export interface SharedLibraryViewProps {
   q?: string;
   offset: number;
   view: string;
+  /** Display dimension on the BPH unified catalogue. Independent of `view`. */
+  display?: 'list' | 'grid';
   isBph: boolean;
   digitizedUbns?: Record<string, { id: string; slug: string }>;
   catalogTotal?: number;
@@ -115,6 +117,7 @@ export default function SharedLibraryView({
   q,
   offset,
   view,
+  display,
   isBph,
   digitizedUbns = {},
   catalogTotal = 0,
@@ -131,14 +134,20 @@ export default function SharedLibraryView({
   const hasExternalPartnerUrl = /^https?:\/\//i.test(externalPartnerUrl);
   const embedPolicy = getEmbedUiPolicy(embed);
 
-  // BPH layout modes:
-  //   view === 'books'   → unified catalogue, "Show digitised & translated" mode (grid)
-  //   view === 'catalog' → unified catalogue, "Show all" mode (catalogue table)
-  //   default            → Selected Books + Catalog combo (the main-site landing experience)
-  const showBooksGrid = !isBph || view === 'books';
+  // BPH layout: `view` selects the FILTER (catalog = all 27,706, books =
+  // digitised+translated subset). `display` selects the VIEW MODE (list =
+  // BphCatalogBrowser table, grid = book covers grid). The two are independent —
+  // clicking the list/grid icons changes display only; the Show all / Show
+  // digitised toggle changes view only. Default landing (no view) keeps the
+  // legacy Selected Books + Catalog combo.
   const showSelectedBooksRow = isBph && view !== 'books' && view !== 'catalog';
   const showUnifiedCatalogue = isBph && (view === 'books' || view === 'catalog');
   const catalogueMode = view === 'books' ? 'digitized' : 'all';
+  const effectiveDisplay: 'list' | 'grid' =
+    display ?? (catalogueMode === 'digitized' ? 'grid' : 'list');
+  // Render the books grid for non-BPH tenants always; for BPH only when the
+  // unified shell is active AND the user picked grid display.
+  const showBooksGrid = !isBph || (showUnifiedCatalogue && effectiveDisplay === 'grid');
 
   return (
     <div className="min-h-screen bg-cream">
@@ -323,6 +332,7 @@ export default function SharedLibraryView({
         {showUnifiedCatalogue && (
           <BphUnifiedCatalogue
             mode={catalogueMode}
+            display={effectiveDisplay}
             catalogTotal={catalogTotal}
             digitizedTotal={total}
             basePath={basePath}

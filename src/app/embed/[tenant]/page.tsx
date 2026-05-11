@@ -44,11 +44,21 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     const q = typeof sp.q === 'string' ? sp.q : '';
     const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0', 10) || 0;
     const view = typeof sp.view === 'string' ? sp.view : 'books';
+    // Display dimension is independent of the view filter. When unset, default
+    // matches what the partner mockup leads with: catalog→list, books→grid.
+    // Once the user picks an icon, their choice persists across filter switches.
+    const displayParam = typeof sp.display === 'string' ? sp.display : '';
+    const display: 'list' | 'grid' = displayParam === 'list' || displayParam === 'grid'
+        ? displayParam
+        : (view === 'catalog' ? 'list' : 'grid');
 
-    // Strip the inactive view's params so a user landing here from a previous
-    // `/catalog` filter (or vice-versa) doesn't see a URL that looks filtered
-    // when nothing is being applied.
-    const stripKeys = view === 'catalog' ? BOOKS_PARAM_KEYS : CATALOG_PARAM_KEYS;
+    // Strip the inactive display's params so a user landing here from a
+    // previous list/grid choice doesn't see a URL that looks filtered when
+    // nothing is being applied. The list view (BphCatalogBrowser) owns the
+    // c-prefixed keys; the grid view (CollectionFilters/books grid) owns
+    // q/sort/language/offset. Stripping is keyed off the active display, not
+    // the view filter, since either filter can be paired with either display.
+    const stripKeys = display === 'list' ? BOOKS_PARAM_KEYS : CATALOG_PARAM_KEYS;
     const orphans = stripKeys.filter(k => typeof sp[k] === 'string' && sp[k] !== '');
     if (orphans.length > 0) {
         const next = new URLSearchParams();
@@ -109,6 +119,7 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         q,
         offset,
         view,
+        display,
         isBph,
         digitizedUbns,
         catalogTotal,

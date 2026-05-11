@@ -1,36 +1,41 @@
 'use client';
 
 /**
- * Unified BPH catalogue. The partner mockup folds the previous
- * /catalog (table of all 27,706 works) and /catalog?view=books (grid of
- * 2,280 digitised+translated covers) into a single page with a
- * segmented toggle:
+ * Unified BPH catalogue. Two independent dimensions:
  *
- *   Show all                       → list view, full bph_works table
- *   Show digitised & translated    → grid view, MongoDB books with covers
+ *   FILTER (view)        Show all (catalog)  vs  Show digitised & translated (books)
+ *   DISPLAY (display)    List  vs  Grid
  *
- * The toggle and the list/grid icons drive the same state — they are
- * two ways to express the same mode. Switching modes navigates so each
- * mode keeps its own URL params (so the URL bar reflects what's actually
- * filtered, matching the rule established in #1640).
+ * The segmented toggle changes FILTER only — preserving the user's display
+ * choice. The list/grid icons change DISPLAY only — preserving the filter.
  *
- * The component renders the shell (heading, toggle, counter, view icons)
- * and the catalogue table when mode='all'. When mode='digitized' it
- * only renders the shell; SharedLibraryView renders the books grid
- * underneath because that grid is fed by server-side data.
+ * Render matrix:
+ *   filter=all     + display=list  → BphCatalogBrowser (full 27,706 works)
+ *   filter=all     + display=grid  → covers grid (renders below; only the
+ *                                    digitised subset has thumbnails, so
+ *                                    a small note explains the gap)
+ *   filter=digitised + display=grid  → covers grid (digitised subset)
+ *   filter=digitised + display=list  → BphCatalogBrowser locked to digitised='sl'
+ *
+ * The covers grid (display=grid) is rendered by SharedLibraryView's books
+ * branch — we only render the unified header here. The BphCatalogBrowser
+ * for display=list is rendered inside this component.
  */
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { LayoutGrid, List } from 'lucide-react';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import { useEmbedHref } from '@/lib/EmbedContext';
+import { useState } from 'react';
 
 export type CatalogueMode = 'all' | 'digitized';
+export type CatalogueDisplay = 'list' | 'grid';
 
 interface Props {
-  /** "all" → list view, catalogue table. "digitized" → grid view, books with covers. */
+  /** "all" → no filter, full catalogue. "digitized" → SL-digitised subset only. */
   mode: CatalogueMode;
+  /** "list" → catalogue table. "grid" → covers grid. Independent of mode. */
+  display: CatalogueDisplay;
   /** Total works in bph_works (denominator for the counter, regardless of mode). */
   catalogTotal: number;
   /** When mode='digitized', the count of digitised+translated SL books (server-fetched).
@@ -44,8 +49,14 @@ interface Props {
   tenantSlug?: string;
 }
 
+/** Build a `?view=…&display=…` URL preserving the other dimension's value. */
+function makeHref(basePath: string, view: 'catalog' | 'books', display: CatalogueDisplay) {
+  return `${basePath}?view=${view}&display=${display}`;
+}
+
 export default function BphUnifiedCatalogue({
   mode,
+  display,
   catalogTotal,
   digitizedTotal,
   basePath,
@@ -54,22 +65,24 @@ export default function BphUnifiedCatalogue({
 }: Props) {
   const embedHref = useEmbedHref();
 
-  // Each mode keeps its own URL params; switching modes drops the other set.
-  const allHref = embedHref(`${basePath}?view=catalog`);
-  const digitizedHref = embedHref(`${basePath}?view=books`);
+  // Filter toggle preserves the current display; view toggle preserves the current filter.
+  const allHref = embedHref(makeHref(basePath, 'catalog', display));
+  const digitizedHref = embedHref(makeHref(basePath, 'books', display));
+  const listHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list'));
+  const gridHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'grid'));
 
-  // For mode='all' the catalogue table owns its own filtered count
+  // For display='list' the catalogue table owns its own filtered count
   // (the count drops as the user types in search). Hoist it up via a
   // callback so the unified header can show "X of 27,706 works".
   const [filteredTotal, setFilteredTotal] = useState<number | null>(null);
   const visibleTotal =
-    mode === 'all' ? (filteredTotal ?? catalogTotal) : digitizedTotal;
+    display === 'list' ? (filteredTotal ?? catalogTotal) : digitizedTotal;
 
   const toggleNode = (
     <SegmentedToggle mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
   );
   const viewIconsNode = (
-    <ViewIcons mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
+    <ViewIcons display={display} listHref={listHref} gridHref={gridHref} />
   );
   const counterNode = (
     <span className="text-sm text-muted">
@@ -89,11 +102,12 @@ export default function BphUnifiedCatalogue({
         </p>
       </div>
 
-      {mode === 'all' ? (
-        // BphCatalogBrowser owns the search row and now hosts both the
-        // toggle (inline with filters) and the view icons (in the
-        // results-header row alongside count + sort) — matching the
-        // partner mockup row grouping.
+      {display === 'list' ? (
+        // List view: BphCatalogBrowser owns the search row and now hosts both
+        // the toggle (inline with filters) and the view icons (in the
+        // results-header row alongside count + sort) — matching the partner
+        // mockup row grouping. When mode='digitized', lock the underlying
+        // browser to digitized='sl' so the table reflects the chosen filter.
         <BphCatalogBrowser
           basePath={basePath}
           digitizedUbns={digitizedUbns}
@@ -103,21 +117,30 @@ export default function BphUnifiedCatalogue({
           searchRowSlot={toggleNode}
           resultsHeaderSlot={viewIconsNode}
           catalogTotal={catalogTotal}
+          lockDigitized={mode === 'digitized'}
         />
       ) : (
-        // mode='digitized': no catalogue browser — the books grid lives
-        // in SharedLibraryView. Render the same row chrome ourselves so
-        // the layout matches the mockup. Counter on left, sort + view
-        // icons on right (sort is owned by the books-grid CollectionFilters
-        // component, so we only render the toggle row + counter row here).
+        // Grid view: the covers grid lives in SharedLibraryView (fed by
+        // server-side data). Render the same row chrome ourselves so the
+        // layout matches the mockup. Counter on the left, view icons on the
+        // right (sort lives in CollectionFilters above the grid). When
+        // mode='all' the grid still only shows the digitised subset (it's
+        // the only data with thumbnails) — surface that explicitly so the
+        // user understands why the count differs from "27,706 works".
         <>
           <div className="flex flex-wrap items-center gap-3 mb-3">
             {toggleNode}
           </div>
-          <div className="flex flex-wrap items-center gap-3 mb-4">
+          <div className="flex flex-wrap items-center gap-3 mb-2">
             {counterNode}
             <div className="ml-auto">{viewIconsNode}</div>
           </div>
+          {mode === 'all' && (
+            <p className="text-xs text-muted mb-4">
+              Grid view shows the {digitizedTotal.toLocaleString()} books with digitised scans.
+              Switch to list view to browse the full catalogue.
+            </p>
+          )}
         </>
       )}
     </>
@@ -153,13 +176,13 @@ function SegmentedToggle({
 }
 
 function ViewIcons({
-  mode,
-  allHref,
-  digitizedHref,
+  display,
+  listHref,
+  gridHref,
 }: {
-  mode: CatalogueMode;
-  allHref: string;
-  digitizedHref: string;
+  display: CatalogueDisplay;
+  listHref: string;
+  gridHref: string;
 }) {
   const base =
     'inline-flex items-center justify-center w-9 h-9 transition-colors border border-border-light';
@@ -168,18 +191,18 @@ function ViewIcons({
   return (
     <div className="inline-flex">
       <Link
-        href={allHref}
-        title="List view (all 27,706 works)"
+        href={listHref}
+        title="List view"
         aria-label="List view"
-        className={`${base} rounded-l-md ${mode === 'all' ? active : inactive}`}
+        className={`${base} rounded-l-md ${display === 'list' ? active : inactive}`}
       >
         <List className="w-4 h-4" />
       </Link>
       <Link
-        href={digitizedHref}
-        title="Grid view (digitised & translated)"
+        href={gridHref}
+        title="Grid view"
         aria-label="Grid view"
-        className={`${base} rounded-r-md -ml-px ${mode === 'digitized' ? active : inactive}`}
+        className={`${base} rounded-r-md -ml-px ${display === 'grid' ? active : inactive}`}
       >
         <LayoutGrid className="w-4 h-4" />
       </Link>

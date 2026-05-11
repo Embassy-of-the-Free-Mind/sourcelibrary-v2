@@ -33,6 +33,9 @@ export default async function TenantRoot({ params, searchParams }: Props) {
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
   const view = typeof sp.view === 'string' ? sp.view : '';
+  const displayParam = typeof sp.display === 'string' ? sp.display : '';
+  const display: 'list' | 'grid' | undefined =
+    displayParam === 'list' || displayParam === 'grid' ? displayParam : undefined;
 
   // Fetch tenant data
   const db = await getDb();
@@ -92,6 +95,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
     q,
     offset,
     view,
+    display,
     isBph,
     digitizedUbns,
     catalogTotal,
