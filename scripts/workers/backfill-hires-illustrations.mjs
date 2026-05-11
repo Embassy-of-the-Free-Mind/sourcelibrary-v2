@@ -14,6 +14,9 @@
  *   --limit N           Process at most N illustration pages (default: all)
  *   --book-id ID        Only process this specific book (for testing)
  *   --concurrency N     Per-domain concurrency (default 3)
+ *   --rate-per-sec N    Override per-domain rate cap for ALL domains
+ *   --include-domain X  Override SKIP_DOMAINS for X (e.g. gallica.bnf.fr — only safe
+ *                       from a residential IP, since cloud IPs get hard-throttled)
  *   --dry-run           Just show what would be re-archived
  *
  * Source URL upgrade: applies the same /full/<size>/ → /full/full/ transform as
@@ -29,6 +32,14 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = (() => { const i = process.argv.indexOf('--limit'); return i !== -1 ? parseInt(process.argv[i+1]) : 0; })();
 const BOOK_ID = (() => { const i = process.argv.indexOf('--book-id'); return i !== -1 ? process.argv[i+1] : null; })();
 const CONCURRENCY = (() => { const i = process.argv.indexOf('--concurrency'); return i !== -1 ? parseInt(process.argv[i+1]) : 3; })();
+const RATE_OVERRIDE = (() => { const i = process.argv.indexOf('--rate-per-sec'); return i !== -1 ? parseFloat(process.argv[i+1]) : null; })();
+const INCLUDE_DOMAINS = (() => {
+  const out = new Set();
+  for (let i = 0; i < process.argv.length - 1; i++) {
+    if (process.argv[i] === '--include-domain') out.add(process.argv[i + 1]);
+  }
+  return out;
+})();
 
 const r2 = new S3Client({
   region: 'auto',
@@ -55,7 +66,7 @@ const RATE = {
 const buckets = new Map();
 function getDomain(url) { try { return new URL(url).hostname; } catch { return 'unknown'; } }
 async function waitForToken(domain) {
-  const limit = RATE[domain] || RATE._default;
+  const limit = RATE_OVERRIDE ?? RATE[domain] ?? RATE._default;
   if (!buckets.has(domain)) buckets.set(domain, { last: 0, count: 0 });
   const b = buckets.get(domain);
   const now = Date.now();
@@ -100,8 +111,9 @@ async function archivePageHires(page, db) {
   if (!original.match(/\/full\/(?:pct:\d+|\d+,?\d*|full|max)\/\d+\/default\./i)) {
     return { skip: 'not IIIF' };
   }
-  if (SKIP_DOMAINS.has(getDomain(original))) {
-    return { skip: 'rate-throttled domain (use archive-gallica.mjs)' };
+  const d = getDomain(original);
+  if (SKIP_DOMAINS.has(d) && !INCLUDE_DOMAINS.has(d)) {
+    return { skip: 'rate-throttled domain (use archive-gallica.mjs or pass --include-domain)' };
   }
   const fullRes = upgradeToFullRes(original);
   if (fullRes === original) return { skip: 'no upgrade pattern' };
