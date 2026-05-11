@@ -26,7 +26,7 @@
  */
 
 import Link from 'next/link';
-import { LayoutGrid, List } from 'lucide-react';
+import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { useState } from 'react';
@@ -78,6 +78,14 @@ export default function BphUnifiedCatalogue({
   const digitizedHref = embedHref(makeHref(basePath, 'books', display));
   const listHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list'));
   const gridHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'grid'));
+  // Grid view doesn't host the Advanced filter panel (those fields query
+  // bph_works in Supabase, which only the list view consumes). When the
+  // user clicks Advanced from the grid we route them to the list view with
+  // `cadv=1` so BphCatalogBrowser auto-opens the panel on arrival. Full
+  // cross-referenced filtering across grid covers is a follow-up (issue
+  // #1687) — this is the minimum-viable affordance.
+  const advancedFromGridHref =
+    embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list')) + '&cadv=1';
 
   // For display='list' the catalogue table owns its own filtered count
   // (the count drops as the user types in search). Hoist it up via a
@@ -109,6 +117,16 @@ export default function BphUnifiedCatalogue({
   );
   const viewIconsNode = (
     <ViewIcons display={display} listHref={listHref} gridHref={gridHref} />
+  );
+  const advancedButtonNode = (
+    <Link
+      href={advancedFromGridHref}
+      className="inline-flex items-center gap-1.5 text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary hover:bg-warm transition-colors"
+      title="Open advanced filters (switches to list view)"
+    >
+      <SlidersHorizontal className="w-3.5 h-3.5" />
+      Advanced
+    </Link>
   );
   const counterNode = (
     <span className="text-sm text-muted">
@@ -162,6 +180,7 @@ export default function BphUnifiedCatalogue({
         <>
           <div className="flex flex-wrap items-center gap-3 mb-3">
             {toggleNode}
+            {advancedButtonNode}
           </div>
           <div className="flex flex-wrap items-center gap-3 mb-2">
             {counterNode}
