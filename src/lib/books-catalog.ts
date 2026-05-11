@@ -307,6 +307,19 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
 const SEARCH_SELECT = `${BOOK_SELECT}, summary_text, doi, work_id`;
 
 /**
+ * Author alias groups. Each group lists name variants that should be treated as
+ * equivalent at search time — querying any member surfaces records whose author
+ * field matches any other member.
+ *
+ * Why: the books_catalog `author` column stores a single display form (e.g.
+ * "C.G. Jung" on one record, "Carl Gustav Jung" on another). Without aliasing,
+ * a search for "carl jung" misses the "C.G. Jung" record entirely.
+ */
+const AUTHOR_ALIAS_GROUPS: string[][] = [
+  ['carl jung', 'carl gustav jung', 'c.g. jung'],
+];
+
+/**
  * Search books by title/author text — returns full metadata for search display.
  *
  * Single Supabase query replaces the old two-hop pattern:
@@ -344,7 +357,22 @@ export async function searchBooksCatalog(
   } else if (words.length >= 2) {
     const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
-    orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+    const authorAnds = words.map(w => `author.ilike.%${w}%`).join(',');
+    orFilter += `,and(${titleAnds}),and(${displayAnds}),and(${authorAnds})`;
+
+    // Author alias expansion: if the query matches a known alias group, also
+    // search authors using each alternate variant in the group.
+    const lowerSafe = safe.toLowerCase();
+    const aliasGroup = AUTHOR_ALIAS_GROUPS.find(group => group.some(a => lowerSafe.includes(a)));
+    if (aliasGroup) {
+      for (const variant of aliasGroup) {
+        if (lowerSafe.includes(variant)) continue;
+        const variantWords = variant.split(/\s+/).filter(w => w.length >= 2);
+        if (variantWords.length < 2) continue;
+        const variantAnds = variantWords.map(w => `author.ilike.%${w}%`).join(',');
+        orFilter += `,and(${variantAnds})`;
+      }
+    }
 
     // Cross-field AND: author + title words (catches "newton principia")
     if (contentWords.length >= 2 && contentWords.length <= 3) {
