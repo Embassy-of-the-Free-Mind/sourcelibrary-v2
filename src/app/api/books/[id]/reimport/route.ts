@@ -149,7 +149,7 @@ export const POST = withAuth(async (request, session, context) => {
 
       // Create fresh pages
       const getPageImageUrl = (pageNum: number) =>
-        `https://archive.org/download/${identifier}/page/n${pageNum}/full/pct:50/0/default.jpg`;
+        `https://archive.org/download/${identifier}/page/n${pageNum}/full/full/0/default.jpg`;
 
       const getThumbnailUrl = (pageNum: number) =>
         `https://archive.org/download/${identifier}/page/n${pageNum}/full/pct:15/0/default.jpg`;
