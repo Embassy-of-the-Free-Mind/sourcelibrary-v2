@@ -2,16 +2,24 @@
 /**
  * Batch split detection + cropping for BPH imported books.
  *
- * For each book with needs_splitting=true at archive_complete:
- * 1. Check each page's aspect ratio
- * 2. If spread (w/h > 1.2): crop left/right halves, upload to R2, create right-half page
+ * For each book with needs_splitting=true at archive_complete (or needs_resplit=true):
+ * 1. Check each page's aspect ratio (w/h > 1.2 = spread)
+ * 2. For spreads: detect the binding crease, crop left+right halves with a
+ *    small overlap, upload both halves to R2, create a new right-half page doc
  * 3. Renumber all pages sequentially
  * 4. Update book counts + advance pipeline
  *
- * Uses simple center-split heuristic (good enough for BPH scans which are
- * consistently centered spreads). No Gemini API calls needed.
+ * Gutter detection:
+ *   Earlier versions cut at width/2. BPH scans have gutters offset by up to
+ *   19% from geometric center, which chopped ~12 characters off the right
+ *   margin of every line on the left page. Current detector finds the widest
+ *   run of ink-free columns inside x∈[30%, 70%] of the spread (measured over
+ *   y∈[25%, 75%] to skip headers/footers, ink defined as min(R,G,B) < 120 so
+ *   red rubrications register). Narrow runs (< 15% of W) → cut at run end;
+ *   wide runs (blank-page scenarios) → cut at run center. Falls back to
+ *   geometric center when no usable run is found. See detectGutterColumn().
  *
- * Run on Hetzner:
+ * Run on Hetzner (or any machine with R2 + Mongo creds):
  *   set -a; source .env.production.local; set +a
  *   node scripts/workers/batch-split-bph.mjs --limit 10
  *   node scripts/workers/batch-split-bph.mjs --dry-run
@@ -102,8 +110,9 @@ async function fetchImage(url) {
 // from text on BPH scans; the bright peak in the middle is the LEFT page's
 // right margin, not the gutter). This approach measures content directly:
 // the gutter is the widest column-run where no row has ink. For each column
-// we count the fraction of rows in the central band where the pixel is
-// "dark" (grayscale < 120), threshold at 2% ink, then find the longest run.
+// we count the fraction of rows in the central band where any RGB channel
+// is below 120 (so red rubrications and blue notes count as ink, not just
+// black). Threshold at 2% ink, then find the longest run.
 //
 // Narrow vs wide gap dispatch:
 //   - Narrow gap (< 15% of width): the gap IS the binding region. The left
