@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft, BookMarked, ExternalLink, BookOpen } from 'lucide-react';
@@ -159,6 +159,15 @@ export default async function CatalogEntryPage({ params }: Props) {
 
   const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
   const slBookHref = slBook ? tenantBookUrl({ id: slBook.id, slug: slBook.slug }, tenant) : null;
+
+  // When a digitised SL copy exists, the reading view is the canonical place
+  // for this work — it now side-loads the BPH catalogue record inline via
+  // <BphCatalogueRecord />. Redirect so the partner stops seeing two pages
+  // for the same book (issue #1688). Catalogue-only entries (no SL book)
+  // continue to render below.
+  if (slBook && slBookHref) {
+    redirect(slBookHref);
+  }
   const canonicalAuthor = slBook?.author ? formatAuthor(slBook.author).name : null;
   const translationPct = slBook && slBook.pages_translated && slBook.pages_ocr
     ? Math.round((slBook.pages_translated / Math.max(slBook.pages_ocr, 1)) * 100)
