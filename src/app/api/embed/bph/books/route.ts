@@ -93,6 +93,7 @@ export async function GET(request: NextRequest) {
       title: 1,
       display_title: 1,
       author: 1,
+      editor: 1,
       language: 1,
       published: 1,
       year: 1,
@@ -123,6 +124,8 @@ export async function GET(request: NextRequest) {
       title: book.title,
       display_title: book.display_title,
       author: book.author,
+      // Editor field for edited volumes/anthologies — see [slug]/route.ts
+      editor: book.editor || null,
       language: book.language,
       published: book.published,
       year: book.year,

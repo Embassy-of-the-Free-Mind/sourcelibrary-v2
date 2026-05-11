@@ -32,6 +32,13 @@ export interface Book {
 
   // Author and publication
   author: string;
+  /**
+   * Editor / compiler — populated for edited volumes, magazines, anthologies,
+   * festschrifts where the BPH catalogue (or other sources) credits an editor
+   * rather than a single author. When `author` is "Unknown"/missing, the
+   * editor is used as the byline (see `getEffectiveByline` in `src/lib/byline.ts`).
+   */
+  editor?: string;
   attribution_note?: string;  // "after" for prints after a designer, "circle of", "workshop of", etc.
   author_entity_id?: string;  // FK to entities collection — canonical author identity (VIAF/Wikidata linked)
   language: string;           // Original language of the text

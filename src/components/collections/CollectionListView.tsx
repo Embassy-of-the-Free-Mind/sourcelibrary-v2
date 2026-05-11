@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
+import { getEffectiveByline } from '@/lib/byline';
 
 interface BookItem {
   id: string;
@@ -11,6 +12,7 @@ interface BookItem {
   title: string;
   display_title?: string;
   author?: string;
+  editor?: string;
   year?: number;
   language?: string;
   pages_count?: number;
@@ -114,6 +116,10 @@ export default function CollectionListView({
             const href = book.resource_type
               ? `/artwork/${book.slug || book.id}`
               : `/book/${book.slug || book.id}`;
+            const byline = getEffectiveByline(book);
+            const bylineNode = byline.role === 'editor'
+              ? <span>ed. <AuthorName author={byline.editor} /></span>
+              : <AuthorName author={book.author} fallback="Unknown" />;
             return (
               <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
                 <td className="py-3 pr-4">
@@ -131,13 +137,13 @@ export default function CollectionListView({
                     )}
                     {/* Author on mobile (hidden on sm+) */}
                     <span className="block sm:hidden text-xs text-muted mt-0.5 line-clamp-1">
-                      <AuthorName author={book.author} fallback="Unknown" />
+                      {bylineNode}
                     </span>
                   </Link>
                 </td>
                 <td className="py-3 pr-4 hidden sm:table-cell">
                   <Link href={href} className="text-sm text-secondary line-clamp-1 block">
-                    <AuthorName author={book.author} fallback="Unknown" />
+                    {bylineNode}
                   </Link>
                 </td>
                 <td className="py-3 pr-4 text-sm text-muted tabular-nums">

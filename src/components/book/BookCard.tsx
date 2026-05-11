@@ -10,6 +10,7 @@ import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
+import { getEffectiveByline } from '@/lib/byline';
 
 interface BookCardProps {
   book: Book;
@@ -43,6 +44,12 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
   const primaryUrl = getBookThumbnailUrl(book, 'display');
   const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
+
+  // Editor fallback for edited volumes/magazines where author is "Unknown".
+  const byline = getEffectiveByline(book);
+  const bylineNode = byline.role === 'editor'
+    ? <span>ed. <AuthorName author={byline.editor} /></span>
+    : <AuthorName author={book.author} />;
 
   // Determine image source type for analytics
   const getImageSource = (): 'r2' | 'ia' | 'local' | 'other' => {
@@ -111,7 +118,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
             }}
           >
             <div className="font-serif font-semibold">{book.display_title || book.title}</div>
-            <div className="text-stone-300 text-xs mt-1"><AuthorName author={book.author} /></div>
+            <div className="text-stone-300 text-xs mt-1">{bylineNode}</div>
           </div>
         )}
 
@@ -163,7 +170,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
           <h3 className="font-serif font-semibold text-stone-900 line-clamp-2 group-hover:text-accent-rust transition-colors">
             {book.display_title || book.title}
           </h3>
-          <p className="text-sm text-stone-600 mt-1 line-clamp-1"><AuthorName author={book.author} /></p>
+          <p className="text-sm text-stone-600 mt-1 line-clamp-1">{bylineNode}</p>
           <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-2 text-xs text-stone-500">
             <span className="px-2 py-0.5 bg-stone-100 rounded">
               {book.language?.startsWith('Multiple') ? 'Multiple' : book.language}
