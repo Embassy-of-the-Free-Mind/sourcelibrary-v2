@@ -33,6 +33,10 @@
     {
       "path": "/api/cron/collection-health",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-bph-sl-book-ids",
+      "schedule": "0 */6 * * *"
     }
   ]
 }
