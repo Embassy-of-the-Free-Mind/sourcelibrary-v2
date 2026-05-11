@@ -178,8 +178,38 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: result.error.message }, { status: 500 });
   }
 
+  let works = result.data || [];
+
+  // Title-prefix relevance bump (issue #1690).
+  //
+  // When the user has a simple search query (`q`), rows whose title *starts*
+  // with the query should appear before rows where the query merely appears
+  // somewhere else in the record. The underlying ordering (default: title A-Z)
+  // is preserved within each group.
+  //
+  // Implementation: we re-sort the current page in JS using a stable sort that
+  // keeps title-prefix matches first and falls back to the order Postgres
+  // already returned. This avoids any Supabase schema changes (no view, no RPC).
+  //
+  // Limitation: this only re-orders the page that was fetched. If a perfect
+  // prefix match sits on page 2 alphabetically, it will not be promoted to
+  // page 1 — that would require a server-side computed-column sort or an RPC.
+  // For BPH (a few thousand rows) the first page is what users see, so this
+  // fix satisfies the partner complaint without infra changes.
+  if (q.length >= 2 && works.length > 1) {
+    const needle = q.toLocaleLowerCase();
+    // Decorate-sort-undecorate to keep the comparator stable.
+    const decorated = works.map((row, idx) => {
+      const title = (row as { title?: string | null }).title || '';
+      const prefixMatch = title.toLocaleLowerCase().startsWith(needle) ? 0 : 1;
+      return { row, idx, prefixMatch };
+    });
+    decorated.sort((a, b) => a.prefixMatch - b.prefixMatch || a.idx - b.idx);
+    works = decorated.map((d) => d.row);
+  }
+
   return NextResponse.json({
-    works: result.data || [],
+    works,
     total: result.count || 0,
     offset,
     limit,
