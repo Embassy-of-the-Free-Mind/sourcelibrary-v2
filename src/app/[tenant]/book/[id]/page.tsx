@@ -607,13 +607,32 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               {book.display_title && book.title !== book.display_title && (
                 <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
               )}
-              <p className="text-lg sm:text-xl text-stone-300 mt-2">
-                {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
-                  <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
-                    <AuthorName author={book.author} />
-                  </Link>
-                ) : <AuthorName author={book.author} />}
-              </p>
+              {/* Byline: prefer author; fall back to "edited by {editor}" for
+                  magazines / edited volumes / anthologies where the catalogue
+                  has no single author. When both fields are present, show
+                  author with the editor as a secondary credit. The literal
+                  string "Unknown" is the BPH import's placeholder, not a real
+                  attribution — treat it as missing. */}
+              {(() => {
+                const editor = ((book as { editor?: string }).editor || '').trim();
+                const hasRealAuthor = !!book.author && !/^unknown$/i.test(book.author.trim());
+                return (
+                  <p className="text-lg sm:text-xl text-stone-300 mt-2">
+                    {hasRealAuthor ? (
+                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
+                        <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
+                          <AuthorName author={book.author} />
+                        </Link>
+                      ) : <AuthorName author={book.author} />
+                    ) : editor ? (
+                      <span>edited by <AuthorName author={editor} /></span>
+                    ) : <AuthorName author={book.author} />}
+                    {hasRealAuthor && editor && (
+                      <span className="text-stone-400 text-base"> · edited by <AuthorName author={editor} /></span>
+                    )}
+                  </p>
+                );
+              })()}
 
               {/* DOI badge */}
               {book.doi && (
