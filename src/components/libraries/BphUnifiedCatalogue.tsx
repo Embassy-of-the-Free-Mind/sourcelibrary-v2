@@ -26,7 +26,7 @@
  */
 
 import Link from 'next/link';
-import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react';
+import { LayoutGrid, List, SlidersHorizontal, ArrowRight } from 'lucide-react';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { useState } from 'react';
@@ -118,14 +118,33 @@ export default function BphUnifiedCatalogue({
   const viewIconsNode = (
     <ViewIcons display={display} listHref={listHref} gridHref={gridHref} />
   );
+  // Grid view advertises that Advanced moves you to list view — partner
+  // feedback was that the implicit switch felt like the back button was
+  // broken. Inline arrow + caption replaces the aria-only warning.
   const advancedButtonNode = (
     <Link
       href={advancedFromGridHref}
       className="inline-flex items-center gap-1.5 text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary hover:bg-warm transition-colors"
-      title="Open advanced filters (switches to list view)"
+      aria-label="Advanced filters (opens in list view)"
+      title="Advanced filters open in list view"
     >
       <SlidersHorizontal className="w-3.5 h-3.5" />
       Advanced
+      <ArrowRight className="w-3 h-3 text-muted" aria-hidden="true" />
+    </Link>
+  );
+  // In grid mode, the filter toggle is asymmetric: "Show digitised" stays in
+  // grid, but "Show all" *has to* flip to list because the grid only has
+  // thumbnails for the digitised subset. Hiding the toggle and offering an
+  // explicit "browse full catalogue" link removes the silent-flip surprise
+  // (B2/#1700-followup) without losing the affordance.
+  const gridSwitchToListNode = (
+    <Link
+      href={allHref}
+      className="inline-flex items-center gap-1.5 text-sm text-accent-rust hover:underline"
+    >
+      Browse all {catalogTotal.toLocaleString()} works in list view
+      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
     </Link>
   );
   const counterNode = (
@@ -171,27 +190,24 @@ export default function BphUnifiedCatalogue({
         />
       ) : (
         // Grid view: the covers grid lives in SharedLibraryView (fed by
-        // server-side data). Render the same row chrome ourselves so the
-        // layout matches the mockup. Counter on the left, view icons on the
-        // right (sort lives in CollectionFilters above the grid). When
-        // mode='all' the grid still only shows the digitised subset (it's
-        // the only data with thumbnails) — surface that explicitly so the
-        // user understands why the count differs from "27,706 works".
+        // server-side data). Render row chrome with an explicit "Browse all
+        // in list view" link instead of the segmented toggle — grid can
+        // only show the digitised subset (thumbnails are the gating data),
+        // so the toggle was a UX trap when it auto-flipped views (B2).
         <>
           <div className="flex flex-wrap items-center gap-3 mb-3">
-            {toggleNode}
+            <span className="inline-flex items-center px-3 py-2 text-sm font-medium border border-border-light rounded-md bg-warm text-primary">
+              Digitised &amp; translated
+            </span>
             {advancedButtonNode}
           </div>
           <div className="flex flex-wrap items-center gap-3 mb-2">
             {counterNode}
             <div className="ml-auto">{viewIconsNode}</div>
           </div>
-          {mode === 'all' && (
-            <p className="text-xs text-muted mb-4">
-              Grid view shows the {digitizedTotal.toLocaleString()} books with digitised scans.
-              Switch to list view to browse the full catalogue.
-            </p>
-          )}
+          <div className="mb-4">
+            {gridSwitchToListNode}
+          </div>
         </>
       )}
     </>

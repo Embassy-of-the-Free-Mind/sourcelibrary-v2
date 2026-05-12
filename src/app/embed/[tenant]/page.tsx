@@ -39,7 +39,10 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     if (!tenantId) notFound();
 
     const sp = await searchParams;
-    const sort = (typeof sp.sort === 'string' ? sp.sort : '') || 'popular';
+    // BPH partner prefers Title A-Z so the grid lines up with the list view's
+    // default. Other tenants keep the legacy 'popular' default.
+    const sortDefault = tenant === 'bph' ? 'title' : 'popular';
+    const sort = (typeof sp.sort === 'string' ? sp.sort : '') || sortDefault;
     const language = typeof sp.language === 'string' ? sp.language : '';
     const q = typeof sp.q === 'string' ? sp.q : '';
     const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0', 10) || 0;

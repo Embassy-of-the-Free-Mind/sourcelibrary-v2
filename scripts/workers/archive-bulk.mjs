@@ -41,6 +41,8 @@ const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10);
 const DRY_RUN = hasFlag('dry-run');
 const JPEG_QUALITY = 85;
 const MAX_DIMENSION = 3000;
+const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;  // 6h — older sl-bulk-* dirs are leaked, sweep them
+const MAX_BULK_FAILURES = 5;  // Circuit-break a book after N consecutive bulk-archive failures
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -70,6 +72,63 @@ const stats = {
   bytesDownloaded: 0, bytesUploaded: 0,
   startTime: Date.now(),
 };
+
+// Sweep leftover sl-bulk-* tmpdirs older than STALE_TMP_AGE_MS. A SIGKILL
+// (OOM, scheduler kill, wrapper teardown) skips the per-book finally block and
+// strands the 700MB-2GB JP2 extraction dir on disk.
+function cleanupStaleTmpDirs() {
+  const tmpRoot = os.tmpdir();
+  const cutoff = Date.now() - STALE_TMP_AGE_MS;
+  let removed = 0;
+  let bytesFreed = 0;
+  let entries;
+  try { entries = fs.readdirSync(tmpRoot); } catch { return; }
+  for (const name of entries) {
+    if (!name.startsWith('sl-bulk-')) continue;
+    const full = path.join(tmpRoot, name);
+    try {
+      const st = fs.statSync(full);
+      if (!st.isDirectory() || st.mtimeMs >= cutoff) continue;
+      let size = 0;
+      try { size = parseInt(execSync(`du -sb "${full}" 2>/dev/null | cut -f1`).toString().trim()) || 0; } catch {}
+      fs.rmSync(full, { recursive: true, force: true });
+      removed++;
+      bytesFreed += size;
+    } catch {}
+  }
+  if (removed > 0) {
+    console.log(`[archive-bulk] Swept ${removed} stale tmpdirs (${(bytesFreed / (1024 ** 3)).toFixed(2)} GB freed)`);
+  }
+}
+
+// After repeated failures, mark a book as blocked so it stops being selected.
+// Resets to 0 on the next successful archive run.
+async function recordBulkFailure(db, book, errorMsg) {
+  const booksCol = book._booksCol || 'books';
+  const prevFailures = book.archive_metadata?.bulk_failures || 0;
+  const failures = prevFailures + 1;
+  const update = {
+    'archive_metadata.bulk_failures': failures,
+    'archive_metadata.bulk_last_failed_at': new Date(),
+    'archive_metadata.bulk_last_error': (errorMsg || 'unknown').slice(0, 200),
+  };
+  if (failures >= MAX_BULK_FAILURES) {
+    update['archive_metadata.blocked'] = true;
+    update['archive_metadata.blocked_at'] = new Date();
+    update['archive_metadata.blocked_reason'] = `bulk-archive failed ${failures}x: ${(errorMsg || 'unknown').slice(0, 150)}`;
+    console.log(`    [BLOCK] ${book.title?.slice(0, 50)} — ${failures} consecutive failures, marking blocked`);
+  }
+  await db.collection(booksCol).updateOne({ id: book.id }, { $set: update });
+}
+
+async function clearBulkFailures(db, book) {
+  if (!book.archive_metadata?.bulk_failures) return;
+  const booksCol = book._booksCol || 'books';
+  await db.collection(booksCol).updateOne(
+    { id: book.id },
+    { $unset: { 'archive_metadata.bulk_failures': '', 'archive_metadata.bulk_last_failed_at': '', 'archive_metadata.bulk_last_error': '' } }
+  );
+}
 
 async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   await s3.send(new PutObjectCommand({
@@ -203,6 +262,7 @@ async function processBook(book, db) {
     if (pageFiles.length === 0) {
       console.log(`    [WARN] No page files extracted`);
       stats.booksFailed++;
+      await recordBulkFailure(db, book, 'no page files extracted');
       return;
     }
 
@@ -278,6 +338,8 @@ async function processBook(book, db) {
     stats.booksProcessed++;
     console.log(`    ${archived} archived, ${failed} failed`);
 
+    if (archived > 0) await clearBulkFailures(db, book);
+
     // Smoke test: verify page 1's display_photo actually resolves
     if (archived > 0) {
       const check = await db.collection(pagesCol).findOne(
@@ -321,6 +383,8 @@ async function processBook(book, db) {
           'archive_metadata.blocked_reason': err.message.slice(0, 200),
         }}
       );
+    } else {
+      await recordBulkFailure(db, book, err.message);
     }
   } finally {
     try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}
@@ -330,6 +394,8 @@ async function processBook(book, db) {
 async function main() {
   const start = Date.now();
   console.log(`[archive-bulk] Bulk JP2 archiver — ${BOOK_LIMIT} books, ${BOOK_CONCURRENCY} concurrent`);
+
+  cleanupStaleTmpDirs();
 
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
   await client.connect();
@@ -369,7 +435,7 @@ async function main() {
         },
       }},
       { $sort: { _priority: 1, hidden: 1 } },
-      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1 } },
+      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])
     .toArray();
@@ -398,7 +464,7 @@ async function main() {
         },
       }},
       { $sort: { _priority: 1 } },
-      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1 } },
+      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])
     .toArray()

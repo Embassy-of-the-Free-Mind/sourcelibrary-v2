@@ -1,0 +1,78 @@
+{
+  "audit_date": "2026-05-12",
+  "tenant": {
+    "slug": "bph",
+    "id": "bce03f71-c18d-4460-b8ad-224c817f9aa0"
+  },
+  "counts": {
+    "ok": 2275,
+    "MISSING": 0,
+    "BLANK": 4,
+    "PLACEHOLDER": 1,
+    "TINY": 0,
+    "total_flagged": 5,
+    "total_books": 2280
+  },
+  "results": [
+    {
+      "id": "6974b64619126e775cf6d7e1",
+      "slug": "argonautica-rhodius",
+      "title": "[Greek] Argonauticon libri IIII",
+      "author": "Apollonius Rhodius",
+      "read_count": 5,
+      "state": "BLANK",
+      "reason": "page 2 classified as blank",
+      "cover_url": "https://images.sourcelibrary.org/uploads/6974b64619126e775cf6d7e3/6975cf074d40d43aed55fb9e.jpg",
+      "cover_page_number": 2,
+      "book_url": "https://sourcelibrary.org/book/argonautica-rhodius"
+    },
+    {
+      "id": "6970e3729b09d309d780a29e",
+      "slug": "three-dialogues-on-love-abrabanel",
+      "title": "De amore dialogi tres",
+      "author": "Abrabanel, Jehuda",
+      "read_count": 5,
+      "state": "BLANK",
+      "reason": "page 1 classified as blank",
+      "cover_url": "https://images.sourcelibrary.org/uploads/6970e3729b09d309d780a2a0/6974c9c561bd780d0f4bc7f3.jpg",
+      "cover_page_number": 1,
+      "book_url": "https://sourcelibrary.org/book/three-dialogues-on-love-abrabanel"
+    },
+    {
+      "id": "69b41863f1200e2ab53cf76f",
+      "slug": "definition-of-chemistry-18th-century-latin-ms",
+      "title": "Chemiae definitio, objectum, origo, usus, et divisio (PH164 bis)",
+      "author": "Unknown",
+      "read_count": 0,
+      "state": "BLANK",
+      "reason": "page 3 classified as blank",
+      "cover_url": "https://images.sourcelibrary.org/pages/69b41863f1200e2ab53cf76f/sp69f678d32f484c063061bb61.jpg",
+      "cover_page_number": 3,
+      "book_url": "https://sourcelibrary.org/book/definition-of-chemistry-18th-century-latin-ms"
+    },
+    {
+      "id": "69b418932b0edf3eaa2dd59a",
+      "slug": "hermes-trismegistus-on-the-revolutions-of-nativities-trismegistus",
+      "title": "Hermetis philosophi de revolutionibus nativitatum (PH216)",
+      "author": "Hermes Trismegistus",
+      "read_count": 0,
+      "state": "BLANK",
+      "reason": "page 3 classified as blank",
+      "cover_url": "https://images.sourcelibrary.org/pages/69b418932b0edf3eaa2dd59a/sp69f69f4fce732b30b522a9e8.jpg",
+      "cover_page_number": 3,
+      "book_url": "https://sourcelibrary.org/book/hermes-trismegistus-on-the-revolutions-of-nativities-trismegistus"
+    },
+    {
+      "id": "698420e0acbeea3119317589",
+      "slug": "revelation-of-jesus-christ-lautensack",
+      "title": "Offenbahrung Jesu Christi: das ist: ein Beweisz durch den Titul uber das Creutz Jesu Christi",
+      "author": "Lautensack, Paulus",
+      "read_count": 0,
+      "state": "PLACEHOLDER",
+      "reason": "OCR matches digitizer-insert/library-stamp pattern",
+      "cover_url": "https://images.sourcelibrary.org/uploads/698420e0acbeea3119317589/698420e968d949f750af3e57.jpg",
+      "cover_page_number": 2,
+      "book_url": "https://sourcelibrary.org/book/revelation-of-jesus-christ-lautensack"
+    }
+  ]
+}

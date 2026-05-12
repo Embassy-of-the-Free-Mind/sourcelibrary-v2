@@ -72,9 +72,9 @@ LIBRARY SCOPE — what's actually here:
 MODERN-FIGURE RULE — if the query names a scholar/author working primarily after ~1900 whose subject IS in the library:
 - C.G. Jung / Carl Jung → alchemy sources he interpreted: Dorn, Khunrath, Ripley, Mylius, Rosarium Philosophorum, Splendor Solis, Aurora Consurgens, Mutus Liber, Atalanta Fugiens
 - Mircea Eliade → primary religious/alchemical texts, gnostic sources, Mithraic and shamanic materials in the library
-- Frances Yates → Bruno, Ficino, Dee, Fludd, Renaissance memory and Hermeticism
-- Gershom Scholem → Zohar, Lurianic kabbalah, Sabbatean texts, Reuchlin
-- Henry Corbin → Suhrawardi, Ibn 'Arabi, Persian Sufi and Ishraqi sources
+- Frances Yates → Bruno (De Umbris Idearum), Ficino, Dee, Fludd, Ramon Llull (Ars Magna)
+- Gershom Scholem → Zohar, Lurianic Kabbalah, Sefer Yetzirah, Knorr von Rosenroth (Kabbala Denudata), Reuchlin
+- Henry Corbin → Suhrawardi (Hikmat al-Ishraq), Ibn 'Arabi (Futuhat al-Makkiyya, Fusus al-Hikam), Avicenna
 - Antoine Faivre / Wouter Hanegraaff → the esoteric primary-source canon broadly
 For these queries: set HINT to not_in_collection, narration acknowledges the figure is out of scope but their sources are here, terms and image_terms point to those primary sources.
 
