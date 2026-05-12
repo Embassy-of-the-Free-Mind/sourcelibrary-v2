@@ -155,13 +155,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   events: {
     async createUser({ user }) {
-      // Timestamp new users (MongoDBAdapter doesn't set createdAt)
+      // Timestamp new users (MongoDBAdapter doesn't set createdAt).
+      // welcomedAt is set to null so the welcome interstitial can detect first-time users.
+      // Existing users (pre-feature) won't have the field at all and are skipped.
       try {
         const client = await clientPromise;
         const db = client.db(dbName);
         await db.collection('users').updateOne(
           { email: user.email },
-          { $set: { createdAt: new Date() } }
+          { $set: { createdAt: new Date(), welcomedAt: null } }
         );
       } catch (error) {
         console.error('[auth] Failed to set createdAt:', error);
@@ -311,7 +313,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const db = client.db(dbName);
           const dbUser = await db.collection('users').findOne(
             { _id: token.id as any },
-            { projection: { 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1 } }
+            { projection: { 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
           );
           if (dbUser?.membership?.active) {
             token.membership = dbUser.membership.plan || 'ficino';
@@ -320,6 +322,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           } else {
             token.membership = null;
           }
+
+          // needsWelcome is true only when welcomedAt is explicitly null (set on createUser).
+          // Pre-feature users have no welcomedAt field at all — treat as already welcomed.
+          (token as any).needsWelcome = dbUser && 'welcomedAt' in dbUser && dbUser.welcomedAt === null;
         } catch {
           // Don't block auth if membership check fails
         }
@@ -364,6 +370,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         (session.user as any).tenantId = (token as any).tenantId || null;
         (session.user as any).tenantSlug = (token as any).tenantSlug || null;
         (session.user as any).tenantRole = (token as any).tenantRole || null;
+        (session.user as any).needsWelcome = (token as any).needsWelcome === true;
       }
       return session;
     },
