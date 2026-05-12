@@ -133,6 +133,13 @@ interface Props {
       asked for the digitised+translated filter, so all rows must be SL-backed.
       Hides the digitisation control in Advanced so the user can't override it. */
   lockDigitized?: boolean;
+  /** Optional baseline count to display when no user filter is applied.
+      The unified catalogue passes the MongoDB-derived digitised total (2,280)
+      so the list view counter matches the grid view's counter — the Supabase
+      bph_works count is 291 lower (books without numeric UBN). When the user
+      types a search or applies an advanced filter, we fall back to the live
+      filtered count from Supabase. */
+  displayTotal?: number;
 }
 
 export default function BphCatalogBrowser({
@@ -146,6 +153,7 @@ export default function BphCatalogBrowser({
   resultsHeaderSlot,
   catalogTotal,
   lockDigitized = false,
+  displayTotal,
 }: Props) {
   const searchParams = useSearchParams();
 
@@ -447,11 +455,22 @@ export default function BphCatalogBrowser({
           view icons on the right. Only rendered when the parent passes a
           slot (the unified shell does so for the BPH iframe). The count
           renders here regardless of hideInlineCount — that prop only gates
-          the inline count in the search row above. */}
-      {sortLivesInHeader && (
+          the inline count in the search row above.
+
+          When the parent passes a displayTotal (the MongoDB-derived
+          digitised total, 2,280) and the user hasn't applied a search or
+          advanced filter, show that number instead of Supabase's `total`
+          (1,989). Keeps the list-view count in sync with the grid-view
+          count (#1700 follow-up B5). Once the user types/filters, the live
+          Supabase total takes over so the displayed count reflects what's
+          actually in the table. */}
+      {sortLivesInHeader && (() => {
+        const userFiltered = !!searchQuery || !!keyword || advCount > 0;
+        const headerCount = displayTotal != null && !userFiltered ? displayTotal : total;
+        return (
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-sm text-muted">
-            <span className="font-medium text-primary">{total.toLocaleString()}</span>
+            <span className="font-medium text-primary">{headerCount.toLocaleString()}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString()} works` : ' works'}
           </span>
           <div className="flex items-center gap-3 ml-auto">
@@ -470,7 +489,8 @@ export default function BphCatalogBrowser({
             {resultsHeaderSlot}
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* Advanced search panel */}
       {showAdvanced && (

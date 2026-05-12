@@ -3,23 +3,25 @@ import { describe, it, expect } from 'vitest';
 /**
  * Regression tests for the BPH sort dropdown default.
  *
- * Partner reported (#1701 testing report B4): grid view defaulted to "Most
- * relevant" while list view defaulted to "Title A-Z". The fix aligns both
- * to Title A-Z for BPH (other tenants keep 'popular'/'relevance').
+ * Partner reported (#1701 testing report B4): grid defaulted to "Most
+ * relevant" while list defaulted to "Title A-Z". After partner review the
+ * preferred default is "Oldest first" — an early-modern catalogue has no
+ * meaningful "relevance" metric, so leading with the earliest-printed
+ * works is the most honest entry point.
  *
  * Server-side (src/app/embed/[tenant]/page.tsx):
- *   sortDefault = tenant === 'bph' ? 'title' : 'popular';
+ *   sortDefault = tenant === 'bph' ? 'year_asc' : 'popular';
  *   sort = (sp.sort as string) || sortDefault;
  *
  * Client-side (src/components/collections/CollectionFilters.tsx):
- *   sort = searchParams.get('sort') || defaultSort;   // defaultSort='title' for BPH grid
+ *   sort = searchParams.get('sort') || defaultSort;   // defaultSort='year_asc' for BPH grid
  *
- * Both fall back to 'title' when no `?sort=` is in the URL, so the SSR
+ * Both fall back to 'year_asc' when no `?sort=` is in the URL, so the SSR
  * order matches what the dropdown advertises as selected.
  */
 
 function pickServerSort(tenant: string, urlSort: string | undefined): string {
-  const sortDefault = tenant === 'bph' ? 'title' : 'popular';
+  const sortDefault = tenant === 'bph' ? 'year_asc' : 'popular';
   return (typeof urlSort === 'string' ? urlSort : '') || sortDefault;
 }
 
@@ -28,8 +30,8 @@ function pickDropdownSort(urlSort: string | null, defaultSort: string): string {
 }
 
 describe('BPH sort default', () => {
-  it('SSR defaults to title for BPH when no sort param is in URL', () => {
-    expect(pickServerSort('bph', undefined)).toBe('title');
+  it('SSR defaults to year_asc for BPH when no sort param is in URL', () => {
+    expect(pickServerSort('bph', undefined)).toBe('year_asc');
   });
 
   it('SSR honours an explicit sort param for BPH', () => {
@@ -41,17 +43,17 @@ describe('BPH sort default', () => {
   });
 
   it('Dropdown picks the BPH defaultSort when URL has no sort', () => {
-    expect(pickDropdownSort(null, 'title')).toBe('title');
+    expect(pickDropdownSort(null, 'year_asc')).toBe('year_asc');
   });
 
   it('Dropdown falls back to relevance when no defaultSort is passed', () => {
     expect(pickDropdownSort(null, 'relevance')).toBe('relevance');
   });
 
-  it('SSR + dropdown agree on Title A-Z for /embed/bph with no sort param', () => {
+  it('SSR + dropdown agree on Oldest first for /embed/bph with no sort param', () => {
     const ssr = pickServerSort('bph', undefined);
-    const dropdown = pickDropdownSort(null, 'title');
+    const dropdown = pickDropdownSort(null, 'year_asc');
     expect(ssr).toBe(dropdown);
-    expect(ssr).toBe('title');
+    expect(ssr).toBe('year_asc');
   });
 });

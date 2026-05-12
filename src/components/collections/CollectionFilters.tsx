@@ -6,11 +6,12 @@ import { useDebouncedCallback } from 'use-debounce';
 import { Search, X } from 'lucide-react';
 
 const SORT_OPTIONS = [
-  { value: 'relevance', label: 'Most relevant' },
-  { value: 'popular', label: 'Most popular' },
+  { value: 'title', label: 'Title A-Z' },
+  { value: 'author', label: 'Author A-Z' },
   { value: 'year_asc', label: 'Oldest first' },
   { value: 'year_desc', label: 'Newest first' },
-  { value: 'title', label: 'Title A-Z' },
+  { value: 'shelfmark', label: 'Shelf mark' },
+  { value: 'popular', label: 'Most read' },
   { value: 'recent', label: 'Recently added' },
 ];
 

@@ -13,7 +13,7 @@ const PER_PAGE = 60;
 
 interface BrowseOptions {
   tenantId: string;
-  sort: 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent';
+  sort: 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'shelfmark' | 'recent';
   language?: string;
   search?: string;
   offset: number;
@@ -101,9 +101,13 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
     { $match: { $and: matchConditions } },
   ];
 
-  const sortStage: Record<string, 1 | -1> = {
-    title: 1,
-  };
+  // MongoDB applies sort keys in declaration order — the first key is the
+  // primary sort, the rest are tiebreakers. Previously this object seeded
+  // `{ title: 1 }` *before* the switch, so every sort silently behaved like
+  // Title A-Z because `title` always came first in the key order. Each case
+  // now declares its own primary key, with `title` appended as a stable
+  // tiebreaker (so equal years still come out alphabetically).
+  const sortStage: Record<string, 1 | -1> = {};
   switch (opts.sort) {
     case 'popular':
       sortStage['quality_score'] = -1;
@@ -113,16 +117,23 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
     case 'title':
       sortStage['title'] = 1;
       break;
+    case 'author':
+      sortStage['author'] = 1;
+      break;
     case 'year_asc':
       sortStage['year'] = 1;
       break;
     case 'year_desc':
       sortStage['year'] = -1;
       break;
+    case 'shelfmark':
+      sortStage['dublin_core.dc_source'] = 1;
+      break;
     case 'recent':
       sortStage['last_processed'] = -1;
       break;
   }
+  if (!('title' in sortStage)) sortStage['title'] = 1;
 
   const projection = {
     _id: 0,
@@ -265,7 +276,7 @@ export async function fetchTenantLibraryData(
   const [booksResult, languages, topBooksResult] = await Promise.all([
     browseTenantBooks({
       tenantId,
-      sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
+      sort: (sort as BrowseOptions['sort']) || 'popular',
       language: language || undefined,
       search: q && q.length >= 2 ? q : undefined,
       offset,

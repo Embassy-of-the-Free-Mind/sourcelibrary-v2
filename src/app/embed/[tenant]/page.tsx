@@ -39,9 +39,10 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     if (!tenantId) notFound();
 
     const sp = await searchParams;
-    // BPH partner prefers Title A-Z so the grid lines up with the list view's
-    // default. Other tenants keep the legacy 'popular' default.
-    const sortDefault = tenant === 'bph' ? 'title' : 'popular';
+    // BPH partner prefers Oldest first so a fresh visit lands on the
+    // earliest-printed works — relevance/popularity isn't meaningful for an
+    // early-modern catalogue. Other tenants keep the legacy 'popular' default.
+    const sortDefault = tenant === 'bph' ? 'year_asc' : 'popular';
     const sort = (typeof sp.sort === 'string' ? sp.sort : '') || sortDefault;
     const language = typeof sp.language === 'string' ? sp.language : '';
     const q = typeof sp.q === 'string' ? sp.q : '';
