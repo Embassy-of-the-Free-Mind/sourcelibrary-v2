@@ -562,6 +562,34 @@ export default function BphCatalogBrowser({
               </tr>
             </thead>
             <tbody className={loading ? 'opacity-50' : ''}>
+              {/* Skeleton rows while the initial fetch is in flight. Without
+                  these the table renders as column-headers-only, which read
+                  as broken-empty (B15). One row per expected result up to a
+                  reasonable cap. */}
+              {loading && works.length === 0 && (
+                Array.from({ length: 8 }, (_, i) => (
+                  <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
+                    <td className="px-3 py-3 align-top">
+                      <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
+                    </td>
+                    <td className="px-3 py-3 align-top hidden sm:table-cell">
+                      <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
+                    </td>
+                    <td className="px-3 py-3 align-top tabular-nums">
+                      <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
+                    </td>
+                    <td className="px-3 py-3 align-top hidden md:table-cell">
+                      <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
+                    </td>
+                    <td className="px-3 py-3 align-top hidden md:table-cell">
+                      <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
+                    </td>
+                    <td className="px-3 py-3 align-top hidden lg:table-cell">
+                      <div className="h-5 w-20 bg-border-light/40 rounded-full animate-pulse" />
+                    </td>
+                  </tr>
+                ))
+              )}
               {works.map((w) => {
                 const digitized = resolveDigitized(w);
                 const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
@@ -640,7 +668,19 @@ export default function BphCatalogBrowser({
         // links to the SL book — the catalogue detail page is reserved for
         // list rows where the user is browsing the catalogue itself.
         <div className={loading ? 'opacity-50' : ''}>
-          {works.length > 0 ? (
+          {loading && works.length === 0 ? (
+            // Skeleton tiles for the initial fetch so the grid doesn't read
+            // as empty before hydration completes (B15).
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {Array.from({ length: 12 }, (_, i) => (
+                <div key={`skel-${i}`} className="flex flex-col">
+                  <div className="aspect-[2/3] bg-border-light/40 rounded-md animate-pulse" />
+                  <div className="h-4 w-3/4 bg-border-light/40 rounded mt-2 animate-pulse" />
+                  <div className="h-3 w-1/2 bg-border-light/40 rounded mt-1 animate-pulse" />
+                </div>
+              ))}
+            </div>
+          ) : works.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {works.map((w) => {
                 const digitized = resolveDigitized(w);
