@@ -7,7 +7,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, ArrowLeft } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
@@ -1109,29 +1109,9 @@ export default async function BookDetailPage({ params, isEmbedded = false }: Pag
   const tenantId = await getCachedTenantId(tenant);
   const tenantSlug = tenant;
 
-  // In tenant-embed mode, surface a "Back to catalogue" link above the dark
-  // hero. The partner reported "back arrow disabled" — what they wanted is a
-  // visible in-page affordance that mirrors the white catalog page's header
-  // link (#1688/B6). Only BPH has a public catalogue today, so gate on slug.
-  const showBackToCatalogue = isEmbedded && tenant === 'bph';
-
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
       {!isEmbedded && <ConditionalSiteHeader variant="light" />}
-
-      {showBackToCatalogue && (
-        <div className="bg-stone-900 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-            <Link
-              href="/?view=catalog&display=list"
-              className="inline-flex items-center gap-1 text-sm text-stone-300 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to catalogue
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* Book content streams in */}
       <Suspense fallback={
