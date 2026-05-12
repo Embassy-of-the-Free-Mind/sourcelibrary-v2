@@ -1,17 +1,11 @@
 /**
  * Suspense fallback for /embed/[tenant] cold loads and intra-iframe navigation.
  *
- * Mirrors the catalogue portion of {@link SharedLibraryView} so the visible
- * frame doesn't jump when real content arrives:
- *   - "Selected Books" placeholder row (6 covers)
- *   - Catalogue chrome (heading, search row with segmented toggle and
- *     list/grid icons, then table rows)
- *
- * The hero band is intentionally omitted — it only shows on the default
- * landing, and on list/grid views (no hero) a placeholder hero would cause
- * a visible band to flash during transitions. Cold load shows the catalogue
- * skeleton aligned at the page width; the real hero renders above when SSR
- * completes.
+ * Renders only the catalogue chrome that is common to all three view variants
+ * (default landing, ?view=catalog, ?view=books). The hero band and Selected
+ * Books row are intentionally omitted — they only render on the default
+ * landing, and including them would cause a visible flash on intra-iframe
+ * nav to ?view=catalog or ?view=books, where the real page has neither.
  */
 export default function EmbedTenantLoading() {
     return (
@@ -19,20 +13,6 @@ export default function EmbedTenantLoading() {
             <span className="sr-only">Loading library…</span>
 
             <div className="max-w-7xl mx-auto px-6 py-10">
-                {/* Selected Books row */}
-                <div className="mb-10">
-                    <div className="h-8 sm:h-9 w-48 bg-warm rounded animate-pulse" />
-                    <div className="h-4 w-80 max-w-full bg-warm rounded mt-2 animate-pulse" />
-                    <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 mt-4">
-                        {Array.from({ length: 6 }).map((_, i) => (
-                            <div
-                                key={i}
-                                className="aspect-[2/3] min-h-[180px] bg-warm border border-border-light rounded-lg animate-pulse"
-                            />
-                        ))}
-                    </div>
-                </div>
-
                 {/* Library Catalogue */}
                 <div className="mb-6">
                     <div className="h-8 sm:h-9 w-56 bg-warm rounded animate-pulse" />
