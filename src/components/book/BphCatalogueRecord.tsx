@@ -36,6 +36,7 @@ interface BphWorkRow {
   state_shelf_mark: string | null;
   present_location: string | null;
   keywords: string | null;
+  language: string | null;
   series_title: string | null;
   volume_title: string | null;
   bibliography: string | null;
@@ -59,7 +60,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       variant_author, pseudonym, editor, variant_editor,
       place, printer, publisher, variant_printer, variant_publisher,
       shelf_mark, state_shelf_mark, present_location,
-      keywords, series_title, volume_title,
+      keywords, language, series_title, volume_title,
       bibliography, remarks, number_of_copies, object_size_cm,
       bibliographic_format, binding, bound_with,
       provenance, ia_identifier, ustc_sn, field_provenance
@@ -76,7 +77,7 @@ function hasRenderableContent(w: BphWorkRow): boolean {
     w.variant_author || w.pseudonym || w.editor || w.variant_editor ||
     w.place || w.printer || w.publisher || w.variant_printer || w.variant_publisher ||
     w.shelf_mark || w.state_shelf_mark || w.present_location ||
-    w.keywords || w.series_title || w.volume_title ||
+    w.keywords || w.language || w.series_title || w.volume_title ||
     w.bibliography || w.remarks ||
     w.number_of_copies != null || w.object_size_cm || w.bibliographic_format ||
     w.binding || w.bound_with ||
@@ -136,9 +137,10 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
           </Section>
         )}
 
-        {work.keywords && (
-          <Section title="Subject">
+        {(work.keywords || work.language) && (
+          <Section title="Subject & Language">
             <Field label="Keywords" value={work.keywords} />
+            <Field label="Language" value={work.language} />
           </Section>
         )}
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { randomUUID } from 'crypto';
+import { resolveTenantId } from '@/lib/tenant-context';
 
 export const preferredRegion = 'fra1';
 
@@ -16,10 +17,22 @@ export async function GET(request: NextRequest) {
     const featured = searchParams.get('featured') === 'true';
     const type = searchParams.get('type'); // 'visual' | 'thematic'
 
+    // Tenant scoping. Proxy.ts sets x-tenant-id for tenant-subdomain SSR;
+    // the browser apiClient sets X-Tenant-Slug for client-side calls under
+    // /[tenant]/... pages. Accept both so client-side fallbacks (e.g.
+    // FeaturedCollections.tsx fetching when SSR returns empty) don't leak
+    // global collections onto the BPH subdomain. Lockdown invariant #2.
+    let tenantId: string | null = request.headers.get('x-tenant-id');
+    if (!tenantId) {
+      const slug = request.headers.get('x-tenant-slug');
+      if (slug) tenantId = await resolveTenantId(slug);
+    }
+
     const db = await getDb();
     const filter: Record<string, unknown> = {};
     if (featured) filter.featured = true;
     if (type === 'visual' || type === 'thematic') filter.type = type;
+    if (tenantId) filter.tenantId = tenantId;
 
     const collections = await db
       .collection('gallery_collections')
