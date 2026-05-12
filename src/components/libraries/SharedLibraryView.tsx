@@ -185,7 +185,7 @@ export default function SharedLibraryView({
               <UnifiedSearch dropdownPosition="bottom" />
               {isBph && catalogTotal > 0 ? (
                 <Link
-                  href={forceEmbedded ? '/catalog' : `${basePath}/catalog`}
+                  href={forceEmbedded ? '/catalogue' : `${basePath}/catalogue`}
                   className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
                 >
                   <Search className="w-3.5 h-3.5" />

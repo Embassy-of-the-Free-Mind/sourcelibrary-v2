@@ -14,7 +14,7 @@ const NON_TENANT_PATHS = new Set([
   'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
   // User pages (standalone, not tenant-scoped)
   'favorites', 'reading-history', 'timeline', 'topics', 'languages',
-  'categories', 'catalog', 'artwork', 'artist',
+  'categories', 'catalog', 'catalogue', 'artwork', 'artist',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
   // Other root pages
@@ -353,13 +353,19 @@ export async function proxy(request: NextRequest) {
       } else {
         url.pathname = `/embed/${tenant}${pathname}`;
       }
-    } else if (pathname === '/catalog') {
-      // Catalog page on tenant subdomain — show the full library catalog (e.g. all 28k BPH works)
+    } else if (pathname === '/catalogue' || pathname === '/catalog') {
+      // Catalogue page on tenant subdomain — show the full library catalogue
+      // (e.g. all 28k BPH works). `/catalog` kept as legacy alias for any
+      // bookmarks or backlinks; canonical public URL is `/catalogue`.
       url.pathname = `/embed/${tenant}`;
       url.searchParams.set('view', 'catalog');
-    } else if (pathname.startsWith('/catalog/')) {
-      // Catalog entry detail (e.g. /catalog/12345 for UBN-keyed BPH works)
-      url.pathname = `/embed/${tenant}${pathname}`;
+    } else if (pathname.startsWith('/catalogue/') || pathname.startsWith('/catalog/')) {
+      // Catalogue entry detail (e.g. /catalogue/12345 for UBN-keyed BPH works).
+      // Both spellings forwarded to the existing `/catalog/[ubn]` route folder.
+      const tail = pathname.startsWith('/catalogue/')
+        ? pathname.slice('/catalogue/'.length)
+        : pathname.slice('/catalog/'.length);
+      url.pathname = `/embed/${tenant}/catalog/${tail}`;
     } else if (pathname.startsWith('/gallery')) {
       // Keep gallery traffic inside the tenant subdomain — never redirect out
       // to sourcelibrary.org (BPH lockdown invariant).
