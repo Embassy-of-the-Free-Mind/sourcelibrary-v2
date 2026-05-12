@@ -86,11 +86,27 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     // to the tenant slug here, which matches the current BPH tenant 1:1.
     const probablyBph = tenant === 'bph';
 
+    // The BPH catalogue + books views render only <BphUnifiedCatalogue>,
+    // which sources its own data via /api/catalog/bph. The hero, gallery,
+    // Selected Books row, and contributing-libraries panel are all hidden,
+    // so the heavy upstream loaders (Mongo + Supabase) are pure dead weight
+    // on those URLs — and `view=catalog&display=list` was timing out in the
+    // browser before render finished. Skip them and pass empty placeholders.
+    const skipHeavyLoaders = probablyBph && (view === 'catalog' || view === 'books');
+
     const [libraryData, dominantProvider, cataloguedBookIds] = await Promise.all([
-        // (deferred filter applied below once Supabase ids resolve)
-        fetchTenantLibraryData(tenantId, sort, language, offset, q || undefined),
+        skipHeavyLoaders
+            ? Promise.resolve({
+                books: [],
+                total: 0,
+                topBooks: [],
+                languages: [],
+                galleryImages: [],
+                contributingLibraries: [],
+            } as Awaited<ReturnType<typeof fetchTenantLibraryData>>)
+            : fetchTenantLibraryData(tenantId, sort, language, offset, q || undefined),
         getTenantDominantProvider(tenantId),
-        probablyBph ? fetchTenantBphCataloguedBookIds() : Promise.resolve(null),
+        probablyBph && !skipHeavyLoaders ? fetchTenantBphCataloguedBookIds() : Promise.resolve(null),
     ]);
 
     // Filter the Selected Books row to books that exist in the Supabase
