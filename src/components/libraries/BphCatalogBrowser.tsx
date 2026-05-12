@@ -133,13 +133,11 @@ interface Props {
       asked for the digitised+translated filter, so all rows must be SL-backed.
       Hides the digitisation control in Advanced so the user can't override it. */
   lockDigitized?: boolean;
-  /** Optional baseline count to display when no user filter is applied.
-      The unified catalogue passes the MongoDB-derived digitised total (2,280)
-      so the list view counter matches the grid view's counter — the Supabase
-      bph_works count is 291 lower (books without numeric UBN). When the user
-      types a search or applies an advanced filter, we fall back to the live
-      filtered count from Supabase. */
-  displayTotal?: number;
+  /** "list" (default) renders the table + pagination. "grid" renders a covers
+      grid using the same Supabase data so search + Advanced filter the covers
+      live. The chrome above stays identical so the look at the top doesn't
+      shift between views. */
+  display?: 'list' | 'grid';
 }
 
 export default function BphCatalogBrowser({
@@ -153,7 +151,7 @@ export default function BphCatalogBrowser({
   resultsHeaderSlot,
   catalogTotal,
   lockDigitized = false,
-  displayTotal,
+  display = 'list',
 }: Props) {
   const searchParams = useSearchParams();
 
@@ -455,22 +453,11 @@ export default function BphCatalogBrowser({
           view icons on the right. Only rendered when the parent passes a
           slot (the unified shell does so for the BPH iframe). The count
           renders here regardless of hideInlineCount — that prop only gates
-          the inline count in the search row above.
-
-          When the parent passes a displayTotal (the MongoDB-derived
-          digitised total, 2,280) and the user hasn't applied a search or
-          advanced filter, show that number instead of Supabase's `total`
-          (1,989). Keeps the list-view count in sync with the grid-view
-          count (#1700 follow-up B5). Once the user types/filters, the live
-          Supabase total takes over so the displayed count reflects what's
-          actually in the table. */}
-      {sortLivesInHeader && (() => {
-        const userFiltered = !!searchQuery || !!keyword || advCount > 0;
-        const headerCount = displayTotal != null && !userFiltered ? displayTotal : total;
-        return (
+          the inline count in the search row above. */}
+      {sortLivesInHeader && (
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-sm text-muted">
-            <span className="font-medium text-primary">{headerCount.toLocaleString()}</span>
+            <span className="font-medium text-primary">{total.toLocaleString()}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString()} works` : ' works'}
           </span>
           <div className="flex items-center gap-3 ml-auto">
@@ -489,8 +476,7 @@ export default function BphCatalogBrowser({
             {resultsHeaderSlot}
           </div>
         </div>
-        );
-      })()}
+      )}
 
       {/* Advanced search panel */}
       {showAdvanced && (
@@ -555,7 +541,10 @@ export default function BphCatalogBrowser({
         </div>
       )}
 
-      {/* Table */}
+      {/* Table + pagination — only in list mode. Grid mode shows just the
+          chrome above; the parent renders the covers grid below. */}
+      {display === 'list' && (
+      <>
       <div className="border border-border-light rounded-lg overflow-hidden bg-white">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -567,7 +556,6 @@ export default function BphCatalogBrowser({
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Shelfmark</th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
-                <th className="text-center px-3 py-2.5 font-medium text-secondary w-10" title="On Source Library">SL</th>
               </tr>
             </thead>
             <tbody className={loading ? 'opacity-50' : ''}>
@@ -629,24 +617,12 @@ export default function BphCatalogBrowser({
                         <span className="text-muted">—</span>
                       )}
                     </td>
-                    <td className="px-3 py-2 align-top text-center">
-                      {digitized ? (
-                        <a
-                          href={tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)}
-                          title="Read on Source Library"
-                        >
-                          <BookMarked className="w-4 h-4 text-accent-rust inline-block" />
-                        </a>
-                      ) : (
-                        <span className="text-muted/30">·</span>
-                      )}
-                    </td>
                   </tr>
                 );
               })}
               {!loading && works.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-3 py-12 text-center text-muted">
+                  <td colSpan={6} className="px-3 py-12 text-center text-muted">
                     No works found matching your search.
                   </td>
                 </tr>
@@ -677,6 +653,8 @@ export default function BphCatalogBrowser({
             Next <ChevronRight className="w-4 h-4" />
           </button>
         </div>
+      )}
+      </>
       )}
     </div>
   );
