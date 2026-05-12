@@ -102,8 +102,8 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
   return (
     <details className="mt-4">
       <summary className="cursor-pointer text-sm text-stone-400 hover:text-stone-200 transition-colors list-none flex items-center gap-2 [&::-webkit-details-marker]:hidden">
-        <svg className="w-4 h-4 transition-transform [details[open]_&]:rotate-90" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path fillRule="evenodd" d="M6.5 4a.5.5 0 01.854-.354l6 6a.5.5 0 010 .708l-6 6A.5.5 0 016.5 16V4z" clipRule="evenodd"/>
+        <svg className="w-4 h-4 transition-transform [details[open]_&]:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
         </svg>
         Catalogue record (BPH UBN {work.ubn})
       </summary>

@@ -602,7 +602,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-8">
             {/* Thumbnail - clickable to change */}
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
               <CoverImagePicker
