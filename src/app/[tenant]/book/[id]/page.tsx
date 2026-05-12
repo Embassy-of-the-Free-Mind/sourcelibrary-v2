@@ -868,14 +868,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               </BibliographicInfo>
 
               {/* BPH catalogue record — side-loaded from Supabase bph_works when
-                  this book has a numeric UBN. Surfaces variant titles, printer,
-                  shelf marks, provenance, etc. inline rather than via the
-                  separate /catalog/{ubn} page (issue #1688). */}
+                  this book has a catalogue key. Two key formats:
+                  - Printed books: numeric UBN in dublin_core.dc_identifier
+                  - Allard Pierson IIIF manuscripts: PH-shelfmark in
+                    image_source.shelfmark (e.g. "PH441") — backfilled into
+                    bph_works.ubn by scripts/backfill-bph-allard-pierson.mjs */}
               {(() => {
                 const dc = (book as { dublin_core?: { dc_identifier?: unknown } }).dublin_core?.dc_identifier;
-                const ubn = typeof dc === 'string' && /^\d+$/.test(dc)
+                const numericUbn = typeof dc === 'string' && /^\d+$/.test(dc)
                   ? dc
                   : Array.isArray(dc) ? dc.find((v): v is string => typeof v === 'string' && /^\d+$/.test(v)) : null;
+                const apShelfmark = (book as { image_source?: { shelfmark?: unknown } }).image_source?.shelfmark;
+                const apKey = typeof apShelfmark === 'string' && /^PH/.test(apShelfmark.trim()) ? apShelfmark.trim() : null;
+                const ubn = numericUbn || apKey;
                 if (!ubn) return null;
                 return (
                   <Suspense fallback={null}>
