@@ -368,8 +368,8 @@ export default function SharedLibraryView({
 
             {/* In BPH unified mode, language/sort filters still belong above
                 the grid — render them in their own row without the heading.
-                Default sort matches the list view (Title A-Z) so the same
-                filter shows the same order in either display. */}
+                Default sort matches the SSR default (Oldest first) so the
+                dropdown's advertised selection matches the rendered order. */}
             {showUnifiedCatalogue && (
               <div className="flex justify-end mb-4">
                 <CollectionFilters
@@ -377,7 +377,7 @@ export default function SharedLibraryView({
                   languages={filteredLanguages}
                   basePath={basePath}
                   showSearch
-                  defaultSort="title"
+                  defaultSort="year_asc"
                 />
               </div>
             )}
