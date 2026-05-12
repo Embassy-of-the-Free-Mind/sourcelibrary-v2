@@ -6,7 +6,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { message, page, name, email } = body;
+    const { message, page, name, email, wantsToHelp } = body;
 
     if (!message || typeof message !== 'string' || message.trim().length < 2) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
@@ -17,19 +17,52 @@ export async function POST(request: NextRequest) {
     }
 
     const db = await getDb();
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null;
+    const trimmedEmail = email?.trim()?.toLowerCase() || null;
+    const wantsHelp = wantsToHelp === true;
 
     const doc = {
       message: message.trim(),
       page: page || null,
       name: name?.trim() || null,
-      email: email?.trim() || null,
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null,
+      email: trimmedEmail,
+      ip,
       user_agent: request.headers.get('user-agent') || null,
       created_at: new Date(),
       read: false,
+      wants_to_help: wantsHelp,
     };
 
     await db.collection('feedback').insertOne(doc);
+
+    // Upsert a lightweight volunteer record when the user checks "I'd like to help".
+    // Full survey (languages, interests) is captured in /welcome or follow-up.
+    if (wantsHelp && trimmedEmail && trimmedEmail.includes('@')) {
+      await db.collection('volunteers').updateOne(
+        { email: trimmedEmail },
+        {
+          $setOnInsert: {
+            email: trimmedEmail,
+            name: name?.trim() || null,
+            languages: [],
+            interests: [],
+            source: 'feedback_widget',
+            ip,
+            created_at: new Date(),
+            contacted: false,
+          },
+          $push: {
+            signals: {
+              type: 'feedback',
+              message: message.trim(),
+              page: page || null,
+              at: new Date(),
+            },
+          },
+        } as Record<string, unknown>,
+        { upsert: true }
+      );
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
