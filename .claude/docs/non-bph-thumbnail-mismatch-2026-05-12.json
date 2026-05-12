@@ -1,0 +1,123 @@
+{
+  "scan_date": "2026-05-12T13:46:47.902Z",
+  "total_books_scanned": 21970,
+  "offenders": 16,
+  "total_mismatches": 1747,
+  "by_provider": {
+    "internet_archive": 16
+  },
+  "by_book": [
+    {
+      "id": "69b220ccf79d8af0eab7fd3a",
+      "slug": "erotemata-greek-grammar-with-latin-translation-aldine-lascaris",
+      "provider": "internet_archive",
+      "pages_count": 340,
+      "mismatches": 339
+    },
+    {
+      "id": "69b2ff745545150b61b48482",
+      "slug": "appendix-continens-objectiones-quintas-gassendi-gassendi",
+      "provider": "internet_archive",
+      "pages_count": 263,
+      "mismatches": 263
+    },
+    {
+      "id": "69b2230156715b0e32475fd8",
+      "slug": "le-vulgari-elegantie-aldine-press-liburnio",
+      "provider": "internet_archive",
+      "pages_count": 140,
+      "mismatches": 134
+    },
+    {
+      "id": "69b2216108069e96e842facd",
+      "slug": "lucian-philostratus-callistratus-imagines-and-lives-of-the-philostratus",
+      "provider": "internet_archive",
+      "pages_count": 134,
+      "mismatches": 134
+    },
+    {
+      "id": "69b220da56715b0e32473793",
+      "slug": "epiphyllides-in-dialecticis-with-averroes-on-aristotle-maiolo",
+      "provider": "internet_archive",
+      "pages_count": 132,
+      "mismatches": 132
+    },
+    {
+      "id": "69b2fef45545150b61b46c9f",
+      "slug": "emblemata-aldine-edition-alciato",
+      "provider": "internet_archive",
+      "pages_count": 112,
+      "mismatches": 112
+    },
+    {
+      "id": "69afcf9d1b215b8741e34d4f",
+      "slug": "quaestiones-de-tribus-principiis-de-ente-et-essentia-aquinas",
+      "provider": "internet_archive",
+      "pages_count": 144,
+      "mismatches": 93
+    },
+    {
+      "id": "69b2fefaa1a4246ddb45ab09",
+      "slug": "aminta-tasso",
+      "provider": "internet_archive",
+      "pages_count": 92,
+      "mismatches": 92
+    },
+    {
+      "id": "69af20547f848c415820c63d",
+      "slug": "introductorium-in-astronomiam-1489-mashar",
+      "provider": "internet_archive",
+      "pages_count": 151,
+      "mismatches": 80
+    },
+    {
+      "id": "69b220de56715b0e3247381a",
+      "slug": "de-morbo-gallico-on-the-french-disease-aldine-press-leoniceno",
+      "provider": "internet_archive",
+      "pages_count": 76,
+      "mismatches": 76
+    },
+    {
+      "id": "69b21d7db7c52df2b4f2a0c3",
+      "slug": "index-librorum-prohibitorum-tridentine-1564-iv",
+      "provider": "internet_archive",
+      "pages_count": 76,
+      "mismatches": 76
+    },
+    {
+      "id": "69b220c6f79d8af0eab7fcef",
+      "slug": "de-aetna-aldine-press-bembo",
+      "provider": "internet_archive",
+      "pages_count": 72,
+      "mismatches": 72
+    },
+    {
+      "id": "69b185bcc4be2cdd0edc418e",
+      "slug": "commentationes-in-motum-terrae-diurnum-et-annuum-lansberge",
+      "provider": "internet_archive",
+      "pages_count": 126,
+      "mismatches": 65
+    },
+    {
+      "id": "69b220e256715b0e32473869",
+      "slug": "vaticinium-aldine-press-amaseus",
+      "provider": "internet_archive",
+      "pages_count": 40,
+      "mismatches": 40
+    },
+    {
+      "id": "69b2232256715b0e324765e8",
+      "slug": "petrus-alcyonius-medices-legatus-de-exsilio-aldine-press-alcionio",
+      "provider": "internet_archive",
+      "pages_count": 156,
+      "mismatches": 27
+    },
+    {
+      "id": "69b220cff79d8af0eab7fe91",
+      "slug": "de-gradibus-medicinarum-aldine-press-maiolo",
+      "provider": "internet_archive",
+      "pages_count": 128,
+      "mismatches": 12
+    }
+  ]
+}
