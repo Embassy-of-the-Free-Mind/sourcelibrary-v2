@@ -18,7 +18,12 @@
       "mcp__claude_ai_Source_Library__get_book",
       "Bash(cp /Users/dereklomas/sourcelibrary/.claude/handoffs/2026-05-06-bph-language-pair-eval.md .claude/handoffs/)",
       "Bash(git add *)",
-      "Bash(git -c user.email=j.d.lomas@tudelft.nl -c user.name=JDerekLomas commit -s -m ' *)"
+      "Bash(git -c user.email=j.d.lomas@tudelft.nl -c user.name=JDerekLomas commit -s -m ' *)",
+      "Bash(ssh root@46.224.122.120 \"tail -f /var/log/sourcelibrary/hires-backfill.log\")",
+      "Bash(ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=3 root@46.224.122.120 \"tail -F /var/log/sourcelibrary/hires-backfill.log\")",
+      "Bash(grep -E --line-buffered \"Stragglers|Done|FAIL|Error|BPH books|/[0-9]+$\")",
+      "Bash(ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=3 root@46.224.122.120 \"tail -F /var/log/sourcelibrary/hires-backfill-retry.log\")",
+      "Bash(ssh -o ServerAliveInterval=30 root@46.224.122.120 \"tail -F /var/log/sourcelibrary/r2-snapshot.log\")"
     ]
   }
 }
