@@ -145,9 +145,10 @@ export default function SharedLibraryView({
   const catalogueMode = view === 'books' ? 'digitized' : 'all';
   const effectiveDisplay: 'list' | 'grid' =
     display ?? (catalogueMode === 'digitized' ? 'grid' : 'list');
-  // Render the books grid for non-BPH tenants always; for BPH only when the
-  // unified shell is active AND the user picked grid display.
-  const showBooksGrid = !isBph || (showUnifiedCatalogue && effectiveDisplay === 'grid');
+  // Render the books grid for non-BPH tenants always. BPH grid view is
+  // rendered inside BphUnifiedCatalogue/BphCatalogBrowser using the Supabase
+  // data source (so search + Advanced filter the covers live).
+  const showBooksGrid = !isBph;
 
   return (
     <div className="min-h-screen bg-cream">

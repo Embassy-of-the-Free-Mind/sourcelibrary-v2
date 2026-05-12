@@ -42,6 +42,9 @@ interface BphWork {
   sl_book_slug: string | null;
   ia_identifier: string | null;
   ustc_sn: string | null;
+  /** Source Library cover URL, attached server-side by /api/catalog/bph
+      when the row is linked to a digitised SL book. Powers the grid view. */
+  sl_cover?: string | null;
 }
 
 interface AdvancedFilters {
@@ -541,10 +544,10 @@ export default function BphCatalogBrowser({
         </div>
       )}
 
-      {/* Table + pagination — only in list mode. Grid mode shows just the
-          chrome above; the parent renders the covers grid below. */}
-      {display === 'list' && (
-      <>
+      {/* Results — table for list view, covers for grid view. The chrome
+          above is identical in both modes so the top of the page doesn't
+          shift between displays. */}
+      {display === 'list' ? (
       <div className="border border-border-light rounded-lg overflow-hidden bg-white">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -631,8 +634,66 @@ export default function BphCatalogBrowser({
           </table>
         </div>
       </div>
+      ) : (
+        // Grid view: covers for the same filtered + sorted page. Every row
+        // has a sl_book_id (lockDigitized='sl' enforces it), so detailUrl
+        // links to the SL book — the catalogue detail page is reserved for
+        // list rows where the user is browsing the catalogue itself.
+        <div className={loading ? 'opacity-50' : ''}>
+          {works.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {works.map((w) => {
+                const digitized = resolveDigitized(w);
+                const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
+                const displayAuthor = w.author || w.variant_author || w.pseudonym;
+                const href = digitized
+                  ? tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)
+                  : detailUrl(w.ubn);
+                return (
+                  <a
+                    key={w.ubn}
+                    href={href}
+                    className="group flex flex-col text-left"
+                  >
+                    <div className="relative aspect-[2/3] bg-warm rounded-md overflow-hidden border border-border-light group-hover:border-accent-rust/40 transition-colors">
+                      {w.sl_cover ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={w.sl_cover}
+                          alt={displayTitle}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center text-muted">
+                          <BookMarked className="w-8 h-8 opacity-40" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-2 text-sm font-medium text-primary leading-snug line-clamp-2 group-hover:text-accent-rust transition-colors">
+                      {displayTitle}
+                    </div>
+                    {displayAuthor && (
+                      <div className="text-xs text-muted mt-0.5 line-clamp-1">
+                        {displayAuthor}
+                        {w.year ? ` · ${w.year}` : ''}
+                      </div>
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          ) : (
+            !loading && (
+              <div className="text-center py-16 text-muted">
+                No works found matching your search.
+              </div>
+            )
+          )}
+        </div>
+      )}
 
-      {/* Pagination */}
+      {/* Pagination — shared by both displays. */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
           <button
@@ -653,8 +714,6 @@ export default function BphCatalogBrowser({
             Next <ChevronRight className="w-4 h-4" />
           </button>
         </div>
-      )}
-      </>
       )}
     </div>
   );
