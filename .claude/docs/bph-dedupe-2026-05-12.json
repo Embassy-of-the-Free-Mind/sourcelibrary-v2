@@ -1,0 +1,1824 @@
+{
+  "run_at": "2026-05-12T10:52:34.193Z",
+  "mode": "apply",
+  "count": 52,
+  "results": [
+    {
+      "ubn": "17624",
+      "books": [
+        {
+          "id": "69c753296a0f3d112faf861b",
+          "title": "Continuatio Catalogi librorum Zetznerianorum ad annum 1641",
+          "year": 1641,
+          "pages": 7,
+          "ocr": 7,
+          "tr": 7
+        },
+        {
+          "id": "68fb103412055a03a58d3307",
+          "title": "Continuatio Catalogi librorum Zetznerianorum ad annum 1641",
+          "year": 1641,
+          "pages": 7,
+          "ocr": 7,
+          "tr": 7
+        }
+      ],
+      "bph_works": {
+        "ubn": "17624",
+        "title": "Continuatio Catalogi librorum Zetznerianorum ad annum 1641",
+        "year": 1641,
+        "sl_book_id": "68fb103412055a03a58d3307"
+      },
+      "canonical_id": "68fb103412055a03a58d3307",
+      "loser_ids": [
+        "69c753296a0f3d112faf861b"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21441",
+      "books": [
+        {
+          "id": "69c80ec56c6f3cc53c8470a5",
+          "title": "Nachricht von der zu Berlin auf die Gesellschafft der Aletophilorum oder Liebhaber der Wahrheit geschlagenen Müntze",
+          "year": 1740,
+          "pages": 10,
+          "ocr": 10,
+          "tr": 10
+        },
+        {
+          "id": "68fb108512055a03a58d3311",
+          "title": "Nachricht von der zu Berlin auf die Gesellschafft der Aletophilorum oder Liebhaber der Wahrheit geschlagenen Müntze",
+          "year": 1740,
+          "pages": 10,
+          "ocr": 10,
+          "tr": 10
+        }
+      ],
+      "bph_works": {
+        "ubn": "21441",
+        "title": "Nachricht von der zu Berlin auf die Gesellschafft der Aletophilorum oder Liebhaber der Wahrheit geschlagenen Müntze",
+        "year": 1740,
+        "sl_book_id": "68fb108512055a03a58d3311"
+      },
+      "canonical_id": "68fb108512055a03a58d3311",
+      "loser_ids": [
+        "69c80ec56c6f3cc53c8470a5"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "15719",
+      "books": [
+        {
+          "id": "69c6e84dda9771c7163145ff",
+          "title": "Warhafft, umbständ und gründlicher Bericht, aus einem Original Schreiben hoher Potentaten extrahiret",
+          "year": 1624,
+          "pages": 10,
+          "ocr": 10,
+          "tr": 10
+        },
+        {
+          "id": "68fb0f9712055a03a58d32fb",
+          "title": "Warhafft, umbständ und gründlicher Bericht, aus einem Original Schreiben hoher Potentaten extrahiret",
+          "year": 1624,
+          "pages": 10,
+          "ocr": 10,
+          "tr": 10
+        }
+      ],
+      "bph_works": {
+        "ubn": "15719",
+        "title": "Warhafft, umbständ und gründlicher Bericht, aus einem Original Schreiben hoher Potentaten extrahiret",
+        "year": 1624,
+        "sl_book_id": "68fb0f9712055a03a58d32fb"
+      },
+      "canonical_id": "68fb0f9712055a03a58d32fb",
+      "loser_ids": [
+        "69c6e84dda9771c7163145ff"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "10148",
+      "books": [
+        {
+          "id": "69c880be6c6f3cc53c85913d",
+          "title": "[Nosce te ipsum]",
+          "year": 1650,
+          "pages": 29,
+          "ocr": 29,
+          "tr": 29
+        },
+        {
+          "id": "6909caa0cf28baa1b4cafc87",
+          "title": "[Nosce te ipsum]",
+          "year": 1678,
+          "pages": 53,
+          "ocr": 53,
+          "tr": 53
+        }
+      ],
+      "bph_works": {
+        "ubn": "10148",
+        "title": "[Nosce te ipsum]",
+        "year": null,
+        "sl_book_id": "6909caa0cf28baa1b4cafc87"
+      },
+      "canonical_id": "6909caa0cf28baa1b4cafc87",
+      "loser_ids": [
+        "69c880be6c6f3cc53c85913d"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30562",
+      "books": [
+        {
+          "id": "69c850b66c6f3cc53c852e7c",
+          "title": "Der mitternächtige Post-Reuter",
+          "year": 1631,
+          "pages": 29,
+          "ocr": 29,
+          "tr": 29
+        },
+        {
+          "id": "6909d1c8cf28baa1b4cb0023",
+          "title": "Der mitternächtige Post-Reuter",
+          "year": 1631,
+          "pages": 29,
+          "ocr": 29,
+          "tr": 28
+        }
+      ],
+      "bph_works": {
+        "ubn": "30562",
+        "title": "Der mitternächtige Post-Reuter",
+        "year": 1631,
+        "sl_book_id": "6909d1c8cf28baa1b4cb0023"
+      },
+      "canonical_id": "69c850b66c6f3cc53c852e7c",
+      "loser_ids": [
+        "6909d1c8cf28baa1b4cb0023"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909d1c8cf28baa1b4cb0023",
+        "to": "69c850b66c6f3cc53c852e7c"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "20591",
+      "books": [
+        {
+          "id": "69c7eea2fb10016c3f389f29",
+          "title": "Le cimetière d'Amboise",
+          "year": 1801,
+          "pages": 31,
+          "ocr": 31,
+          "tr": 31
+        },
+        {
+          "id": "6909bf03cf28baa1b4caf69d",
+          "title": "Le cimetière d'Amboise",
+          "year": 1801,
+          "pages": 21,
+          "ocr": 21,
+          "tr": 21
+        }
+      ],
+      "bph_works": {
+        "ubn": "20591",
+        "title": "Le cimetière d'Amboise",
+        "year": 1801,
+        "sl_book_id": "6909bf03cf28baa1b4caf69d"
+      },
+      "canonical_id": "69c7eea2fb10016c3f389f29",
+      "loser_ids": [
+        "6909bf03cf28baa1b4caf69d"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909bf03cf28baa1b4caf69d",
+        "to": "69c7eea2fb10016c3f389f29"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "1",
+      "books": [
+        {
+          "id": "697768b0e832d9422ad6e0ba",
+          "title": "De bombardis: ac item de typographia",
+          "year": 1620,
+          "pages": 36,
+          "ocr": 36,
+          "tr": 36
+        },
+        {
+          "id": "6836f8ee811c8ab472a49e36",
+          "title": "Tractatus duo. De natura elementorum. De quinta essentia",
+          "year": 1628,
+          "pages": 69,
+          "ocr": 69,
+          "tr": 69
+        }
+      ],
+      "bph_works": {
+        "ubn": "1",
+        "title": "Aldine press books at the Harry Ransom Humanities Research Center, the University of Texas at Austin. A descriptive catalogue",
+        "year": 1998,
+        "sl_book_id": "6836f8ee811c8ab472a49e36"
+      },
+      "action": "flag_review",
+      "reason": "titles differ — likely bad dc_identifier shared across unrelated books"
+    },
+    {
+      "ubn": "16588",
+      "books": [
+        {
+          "id": "69c892506c6f3cc53c85bc0d",
+          "title": "The strange effects of faith. Fourth part",
+          "year": 1814,
+          "pages": 50,
+          "ocr": 50,
+          "tr": 50
+        },
+        {
+          "id": "6909afeecf28baa1b4caf0b5",
+          "title": "The strange effects of faith. Fourth part",
+          "year": 1814,
+          "pages": 50,
+          "ocr": 50,
+          "tr": 50
+        }
+      ],
+      "bph_works": {
+        "ubn": "16588",
+        "title": "The strange effects of faith. Fourth part",
+        "year": 1814,
+        "sl_book_id": "6909afeecf28baa1b4caf0b5"
+      },
+      "canonical_id": "6909afeecf28baa1b4caf0b5",
+      "loser_ids": [
+        "69c892506c6f3cc53c85bc0d"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21107",
+      "books": [
+        {
+          "id": "69c8014b6c6f3cc53c844292",
+          "title": "La sabiduria universal del Raymundo Lullio",
+          "year": 1712,
+          "pages": 52,
+          "ocr": 52,
+          "tr": 52
+        },
+        {
+          "id": "6909bd18cf28baa1b4caf5a5",
+          "title": "La sabiduria universal del Raymundo Lullio",
+          "year": 1712,
+          "pages": 77,
+          "ocr": 77,
+          "tr": 74
+        }
+      ],
+      "bph_works": {
+        "ubn": "21107",
+        "title": "La sabiduria universal del Raymundo Lullio",
+        "year": 1712,
+        "sl_book_id": "6909bd18cf28baa1b4caf5a5"
+      },
+      "canonical_id": "6909bd18cf28baa1b4caf5a5",
+      "loser_ids": [
+        "69c8014b6c6f3cc53c844292"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "8413",
+      "books": [
+        {
+          "id": "69819209e4f4f6455d89c7b8",
+          "title": "Von der liebe gottes ein wunder huebsch underrichtung",
+          "year": 1520,
+          "pages": 54,
+          "ocr": 54,
+          "tr": 54
+        },
+        {
+          "id": "69099983cf28baa1b4cae913",
+          "title": "Von der liebe Gottes ein wunder hübsch underrichtung",
+          "year": 1520,
+          "pages": 40,
+          "ocr": 40,
+          "tr": 40
+        }
+      ],
+      "bph_works": {
+        "ubn": "8413",
+        "title": "Von der liebe gottes ein wunder huebsch underrichtung",
+        "year": 1520,
+        "sl_book_id": "69099983cf28baa1b4cae913"
+      },
+      "canonical_id": "69819209e4f4f6455d89c7b8",
+      "loser_ids": [
+        "69099983cf28baa1b4cae913"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "69099983cf28baa1b4cae913",
+        "to": "69819209e4f4f6455d89c7b8"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30936",
+      "books": [
+        {
+          "id": "69c860306c6f3cc53c855748",
+          "title": "Raphael oder Artzt-Engel",
+          "year": 1676,
+          "pages": 56,
+          "ocr": 56,
+          "tr": 56
+        },
+        {
+          "id": "6985ca729161b1d5fa8abc70",
+          "title": "Raphael oder Artzt-Engel",
+          "year": 1676,
+          "pages": 73,
+          "ocr": 73,
+          "tr": 73
+        }
+      ],
+      "bph_works": {
+        "ubn": "30936",
+        "title": "Raphael oder Artzt-Engel",
+        "year": 1676,
+        "sl_book_id": "6985ca729161b1d5fa8abc70"
+      },
+      "canonical_id": "6985ca729161b1d5fa8abc70",
+      "loser_ids": [
+        "69c860306c6f3cc53c855748"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "22853",
+      "books": [
+        {
+          "id": "69c8244f6c6f3cc53c84b3cf",
+          "title": "Brunnen der Weisheit und Erkänntniss der Natur",
+          "year": 1706,
+          "pages": 56,
+          "ocr": 56,
+          "tr": 56
+        },
+        {
+          "id": "6909c8ebcf28baa1b4cafbb7",
+          "title": "Brunnen der Weisheit und Erkänntniss der Natur",
+          "year": 1706,
+          "pages": 85,
+          "ocr": 85,
+          "tr": 82
+        }
+      ],
+      "bph_works": {
+        "ubn": "22853",
+        "title": "Brunnen der Weisheit und Erkänntniss der Natur",
+        "year": 1706,
+        "sl_book_id": "6909c8ebcf28baa1b4cafbb7"
+      },
+      "canonical_id": "6909c8ebcf28baa1b4cafbb7",
+      "loser_ids": [
+        "69c8244f6c6f3cc53c84b3cf"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21172",
+      "books": [
+        {
+          "id": "69c8059e6c6f3cc53c845290",
+          "title": "Kennzeichen der wahren Wiedergeburt und des Erneuerung des Geistes",
+          "year": 1731,
+          "pages": 56,
+          "ocr": 56,
+          "tr": 56
+        },
+        {
+          "id": "690c3284e0787282ad5936c1",
+          "title": "Kennzeichen der wahren Wiedergeburt und des Erneuerung des Geistes",
+          "year": 1731,
+          "pages": 56,
+          "ocr": 56,
+          "tr": 56
+        }
+      ],
+      "bph_works": {
+        "ubn": "21172",
+        "title": "Kennzeichen der wahren Wiedergeburt und des Erneuerung des Geistes",
+        "year": 1731,
+        "sl_book_id": "690c3284e0787282ad5936c1"
+      },
+      "canonical_id": "690c3284e0787282ad5936c1",
+      "loser_ids": [
+        "69c8059e6c6f3cc53c845290"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "3047",
+      "books": [
+        {
+          "id": "697958faeef1c286564aa43d",
+          "title": "Complementum astrologiae und auszführliche Erklerung des fünffjährigen Prognostici 1619 zu Hall gedruckt",
+          "year": 1620,
+          "pages": 57,
+          "ocr": 57,
+          "tr": 57
+        },
+        {
+          "id": "6867a87bfc518f6dbf33510a",
+          "title": "Complementum Astrologiae",
+          "year": 1620,
+          "pages": 56,
+          "ocr": 56,
+          "tr": 56
+        }
+      ],
+      "bph_works": {
+        "ubn": "3047",
+        "title": "Complementum astrologiae und auszführliche Erklerung des fünffjährigen Prognostici 1619 zu Hall gedruckt",
+        "year": 1620,
+        "sl_book_id": "6867a87bfc518f6dbf33510a"
+      },
+      "canonical_id": "697958faeef1c286564aa43d",
+      "loser_ids": [
+        "6867a87bfc518f6dbf33510a"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6867a87bfc518f6dbf33510a",
+        "to": "697958faeef1c286564aa43d"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "19517",
+      "books": [
+        {
+          "id": "69c79f1492b884e4f817372f",
+          "title": "[Hebrew: Sefer ha-bahir]",
+          "year": 1651,
+          "pages": 65,
+          "ocr": 65,
+          "tr": 63
+        },
+        {
+          "id": "6911cf678cb6d2ae494a1061",
+          "title": "Sefer ha-bahir",
+          "year": 1651,
+          "pages": 62,
+          "ocr": 62,
+          "tr": 61
+        }
+      ],
+      "bph_works": {
+        "ubn": "19517",
+        "title": "[Hebrew: Sefer ha-bahir]",
+        "year": 1651,
+        "sl_book_id": "6911cf678cb6d2ae494a1061"
+      },
+      "action": "flag_review",
+      "reason": "titles differ — likely bad dc_identifier shared across unrelated books"
+    },
+    {
+      "ubn": "20574",
+      "books": [
+        {
+          "id": "69c7e57afb10016c3f389b7e",
+          "title": "Ausführlicher Bericht vom Gebrauch desz Instruments so titulirt physico astrologicum instrumentum",
+          "year": 1640,
+          "pages": 72,
+          "ocr": 72,
+          "tr": 72
+        },
+        {
+          "id": "6867aa3e009d20a23245ab41",
+          "title": "Ausführlicher Bericht vom Gebrauch desz Instruments so titulirt physico astrologicum instrumentum",
+          "year": 1640,
+          "pages": 107,
+          "ocr": 107,
+          "tr": 103
+        }
+      ],
+      "bph_works": {
+        "ubn": "20574",
+        "title": "Ausführlicher Bericht vom Gebrauch desz Instruments so titulirt physico astrologicum instrumentum",
+        "year": 1640,
+        "sl_book_id": "6867aa3e009d20a23245ab41"
+      },
+      "canonical_id": "6867aa3e009d20a23245ab41",
+      "loser_ids": [
+        "69c7e57afb10016c3f389b7e"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21036",
+      "books": [
+        {
+          "id": "69c7fdfd6c6f3cc53c8435f1",
+          "title": "Kurtze Instruction zu der Geomantia, Auff die neue Arth nach astrologischer Application solches getheilet in Theoriam & Praxin",
+          "year": 1701,
+          "pages": 93,
+          "ocr": 93,
+          "tr": 81
+        },
+        {
+          "id": "6867ad0f009d20a23245abad",
+          "title": "Kurtze Instruction zu der Geomantia, Auff die neue Arth nach astrologischer Application solches getheilet in Theoriam & Praxin",
+          "year": 1686,
+          "pages": 93,
+          "ocr": 93,
+          "tr": 82
+        }
+      ],
+      "bph_works": {
+        "ubn": "21036",
+        "title": "Kurtze Instruction zu der Geomantia, Auff die neue Arth nach astrologischer Application solches getheilet in Theoriam & Praxin",
+        "year": 1686,
+        "sl_book_id": "6867ad0f009d20a23245abad"
+      },
+      "canonical_id": "6867ad0f009d20a23245abad",
+      "loser_ids": [
+        "69c7fdfd6c6f3cc53c8435f1"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "608",
+      "books": [
+        {
+          "id": "69c8681f6c6f3cc53c856667",
+          "title": "Ander Theil [Greek: Gnothi seauton]. Nosce teipsum [!]. Erkenne dich selber O Mensch: heisset Astrologia theologizata",
+          "year": 1618,
+          "pages": 125,
+          "ocr": 125,
+          "tr": 122
+        },
+        {
+          "id": "68679f27fc518f6dbf334eb6",
+          "title": "Ander Theil Gnothi Seauton. Nosce teipsum. Astrologia theologizata",
+          "year": 1618,
+          "pages": 65,
+          "ocr": 65,
+          "tr": 65
+        }
+      ],
+      "bph_works": {
+        "ubn": "608",
+        "title": "Ander Theil [Greek: Gnothi seauton]. Nosce teipsum [!]. Erkenne dich selber O Mensch: heisset Astrologia theologizata",
+        "year": 1618,
+        "sl_book_id": "68679f27fc518f6dbf334eb6"
+      },
+      "action": "flag_review",
+      "reason": "titles differ — likely bad dc_identifier shared across unrelated books"
+    },
+    {
+      "ubn": "21745",
+      "books": [
+        {
+          "id": "69c81da66c6f3cc53c84a036",
+          "title": "Essai sur le feu sacré et sur les Vestales",
+          "year": 1768,
+          "pages": 125,
+          "ocr": 125,
+          "tr": 125
+        },
+        {
+          "id": "6909eb1acf28baa1b4cb0943",
+          "title": "Essai sur le feu sacré et sur les Vestales",
+          "year": 1778,
+          "pages": 185,
+          "ocr": 185,
+          "tr": 181
+        }
+      ],
+      "bph_works": {
+        "ubn": "21745",
+        "title": "Essai sur le feu sacré et sur les Vestales",
+        "year": 1778,
+        "sl_book_id": "6909eb1acf28baa1b4cb0943"
+      },
+      "canonical_id": "6909eb1acf28baa1b4cb0943",
+      "loser_ids": [
+        "69c81da66c6f3cc53c84a036"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "31185",
+      "books": [
+        {
+          "id": "69c8a3ef6c6f3cc53c85e76e",
+          "title": "Origine de la maçonnerie adonhiramite",
+          "year": 1787,
+          "pages": 175,
+          "ocr": 175,
+          "tr": 173
+        },
+        {
+          "id": "6984e84ed13e559bb970b9a4",
+          "title": "Origine de la maçonnerie adonhiramite",
+          "year": 1787,
+          "pages": 166,
+          "ocr": 166,
+          "tr": 166
+        }
+      ],
+      "bph_works": {
+        "ubn": "31185",
+        "title": "Origine de la maçonnerie adonhiramite",
+        "year": 1787,
+        "sl_book_id": "6984e84ed13e559bb970b9a4"
+      },
+      "canonical_id": "69c8a3ef6c6f3cc53c85e76e",
+      "loser_ids": [
+        "6984e84ed13e559bb970b9a4"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6984e84ed13e559bb970b9a4",
+        "to": "69c8a3ef6c6f3cc53c85e76e"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "17163",
+      "books": [
+        {
+          "id": "69c7395e6a0f3d112faf78df",
+          "title": "Curiosa physica",
+          "year": 1714,
+          "pages": 179,
+          "ocr": 179,
+          "tr": 179
+        },
+        {
+          "id": "dbdc472a-b39f-4005-abb4-654428f7bf61",
+          "title": "Curiosa physica",
+          "year": 1714,
+          "pages": 268,
+          "ocr": 268,
+          "tr": 266
+        }
+      ],
+      "bph_works": {
+        "ubn": "17163",
+        "title": "Curiosa physica",
+        "year": 1714,
+        "sl_book_id": "dbdc472a-b39f-4005-abb4-654428f7bf61"
+      },
+      "canonical_id": "dbdc472a-b39f-4005-abb4-654428f7bf61",
+      "loser_ids": [
+        "69c7395e6a0f3d112faf78df"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "10220",
+      "books": [
+        {
+          "id": "690986dccf28baa1b4cae0e3",
+          "title": "Novum lumen chymicum",
+          "year": 1628,
+          "pages": 209,
+          "ocr": 209,
+          "tr": 209
+        },
+        {
+          "id": "698420e0acbeea3119317587",
+          "title": "Novum lumen chymicum",
+          "year": 1628,
+          "pages": 219,
+          "ocr": 219,
+          "tr": 219
+        }
+      ],
+      "bph_works": {
+        "ubn": "10220",
+        "title": "Novum lumen chymicum",
+        "year": 1628,
+        "sl_book_id": "690986dccf28baa1b4cae0e3"
+      },
+      "canonical_id": "698420e0acbeea3119317587",
+      "loser_ids": [
+        "690986dccf28baa1b4cae0e3"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "690986dccf28baa1b4cae0e3",
+        "to": "698420e0acbeea3119317587"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "18282",
+      "books": [
+        {
+          "id": "69c764b46a0f3d112faf8ed5",
+          "title": "Seht da den Menschen! Aus dem Franzoesischen: Ecce homo",
+          "year": 1819,
+          "pages": 227,
+          "ocr": 227,
+          "tr": 220
+        },
+        {
+          "id": "6909b0a0cf28baa1b4caf0e9",
+          "title": "Seht da den Menschen! Aus dem Franzoesischen: Ecce homo",
+          "year": 1819,
+          "pages": 227,
+          "ocr": 227,
+          "tr": 223
+        }
+      ],
+      "bph_works": {
+        "ubn": "18282",
+        "title": "Seht da den Menschen! Aus dem Franzoesischen: Ecce homo",
+        "year": 1819,
+        "sl_book_id": "6909b0a0cf28baa1b4caf0e9"
+      },
+      "canonical_id": "6909b0a0cf28baa1b4caf0e9",
+      "loser_ids": [
+        "69c764b46a0f3d112faf8ed5"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30465",
+      "books": [
+        {
+          "id": "69c84e366c6f3cc53c852895",
+          "title": "Raphael artem medicam explanans",
+          "year": 1629,
+          "pages": 236,
+          "ocr": 236,
+          "tr": 231
+        },
+        {
+          "id": "6909d388cf28baa1b4cb0103",
+          "title": "Raphael artem medicam explanans",
+          "year": 1629,
+          "pages": 80,
+          "ocr": 80,
+          "tr": 80
+        }
+      ],
+      "bph_works": {
+        "ubn": "30465",
+        "title": "Raphael artem medicam explanans",
+        "year": 1629,
+        "sl_book_id": "6909d388cf28baa1b4cb0103"
+      },
+      "canonical_id": "69c84e366c6f3cc53c852895",
+      "loser_ids": [
+        "6909d388cf28baa1b4cb0103"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909d388cf28baa1b4cb0103",
+        "to": "69c84e366c6f3cc53c852895"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "20573",
+      "books": [
+        {
+          "id": "69c7e48e295ea01b70c8d988",
+          "title": "Geometrie practique",
+          "year": 1547,
+          "pages": 236,
+          "ocr": 236,
+          "tr": 230
+        },
+        {
+          "id": "c1eb9995-02e3-45b3-afa1-c0a52fd5b646",
+          "title": "Geometrie practique",
+          "year": 1547,
+          "pages": 73,
+          "ocr": 73,
+          "tr": 73
+        }
+      ],
+      "bph_works": {
+        "ubn": "20573",
+        "title": "Geometrie practique",
+        "year": 1547,
+        "sl_book_id": "c1eb9995-02e3-45b3-afa1-c0a52fd5b646"
+      },
+      "canonical_id": "69c7e48e295ea01b70c8d988",
+      "loser_ids": [
+        "c1eb9995-02e3-45b3-afa1-c0a52fd5b646"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "c1eb9995-02e3-45b3-afa1-c0a52fd5b646",
+        "to": "69c7e48e295ea01b70c8d988"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30882",
+      "books": [
+        {
+          "id": "69c85e7f6c6f3cc53c855203",
+          "title": "Enchiridion Leonis papae",
+          "year": 1740,
+          "pages": 281,
+          "ocr": 281,
+          "tr": 279
+        },
+        {
+          "id": "697b079611cc8928b55ea386",
+          "title": "Enchiridion Leonis papae",
+          "year": 1810,
+          "pages": 224,
+          "ocr": 224,
+          "tr": 224
+        }
+      ],
+      "bph_works": {
+        "ubn": "30882",
+        "title": "Enchiridion Leonis papae",
+        "year": 1810,
+        "sl_book_id": "697b079611cc8928b55ea386"
+      },
+      "canonical_id": "69c85e7f6c6f3cc53c855203",
+      "loser_ids": [
+        "697b079611cc8928b55ea386"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "697b079611cc8928b55ea386",
+        "to": "69c85e7f6c6f3cc53c855203"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21524",
+      "books": [
+        {
+          "id": "69c8148e6c6f3cc53c84823f",
+          "title": "Geestelijcke tyd-kortingen, van den christelyken dagh, of Gewichtige opmerckingen der geloovigen",
+          "year": 1667,
+          "pages": 281,
+          "ocr": 281,
+          "tr": 276
+        },
+        {
+          "id": "6909bda4cf28baa1b4caf5dd",
+          "title": "Geestelijcke tyd-kortingen, van den christelyken dagh, of Gewichtige opmerckingen der geloovigen",
+          "year": 1667,
+          "pages": 281,
+          "ocr": 281,
+          "tr": 276
+        }
+      ],
+      "bph_works": {
+        "ubn": "21524",
+        "title": "Geestelijcke tyd-kortingen, van den christelyken dagh, of Gewichtige opmerckingen der geloovigen",
+        "year": 1667,
+        "sl_book_id": "6909bda4cf28baa1b4caf5dd"
+      },
+      "canonical_id": "6909bda4cf28baa1b4caf5dd",
+      "loser_ids": [
+        "69c8148e6c6f3cc53c84823f"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "15423",
+      "books": [
+        {
+          "id": "69c63cbcb463eebe7caac51f",
+          "title": "Vier Tractaetlein",
+          "year": 1704,
+          "pages": 291,
+          "ocr": 291,
+          "tr": 291
+        },
+        {
+          "id": "6909cd99cf28baa1b4cafdf1",
+          "title": "Vier Tractaetlein",
+          "year": 1704,
+          "pages": 147,
+          "ocr": 147,
+          "tr": 147
+        }
+      ],
+      "bph_works": {
+        "ubn": "15423",
+        "title": "Vier Tractaetlein",
+        "year": 1704,
+        "sl_book_id": "6909cd99cf28baa1b4cafdf1"
+      },
+      "canonical_id": "69c63cbcb463eebe7caac51f",
+      "loser_ids": [
+        "6909cd99cf28baa1b4cafdf1"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909cd99cf28baa1b4cafdf1",
+        "to": "69c63cbcb463eebe7caac51f"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "13257",
+      "books": [
+        {
+          "id": "69c88a0d6c6f3cc53c85a52d",
+          "title": "Silentium post clamores, das ist, Apologi und Verantwortung",
+          "year": 1617,
+          "pages": 299,
+          "ocr": 299,
+          "tr": 294
+        },
+        {
+          "id": "690c3840e0787282ad59386d",
+          "title": "Silentium post clamores, das ist, Apologi und Verantwortung",
+          "year": 1617,
+          "pages": 299,
+          "ocr": 299,
+          "tr": 294
+        }
+      ],
+      "bph_works": {
+        "ubn": "13257",
+        "title": "Silentium post clamores, das ist, Apologi und Verantwortung",
+        "year": 1617,
+        "sl_book_id": "69c88a0d6c6f3cc53c85a52d"
+      },
+      "canonical_id": "69c88a0d6c6f3cc53c85a52d",
+      "loser_ids": [
+        "690c3840e0787282ad59386d"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "17508",
+      "books": [
+        {
+          "id": "69c746236a0f3d112faf7f5c",
+          "title": "Historia: von dem Leben und Wandel der heyligen Barlaam dess Einsidels, unnd Josaphat dess König in Indien Sohn",
+          "year": 1608,
+          "pages": 339,
+          "ocr": 339,
+          "tr": 338
+        },
+        {
+          "id": "023f2b73-5a9f-4ada-92c2-258a408d89c2",
+          "title": "Historia: von dem Leben und Wandel der heyligen Barlaam dess Einsidels, unnd Josaphat dess König in Indien Sohn",
+          "year": 1603,
+          "pages": 320,
+          "ocr": 320,
+          "tr": 319
+        }
+      ],
+      "bph_works": {
+        "ubn": "17508",
+        "title": "Historia: von dem Leben und Wandel der heyligen Barlaam dess Einsidels, unnd Josaphat dess König in Indien Sohn",
+        "year": 1603,
+        "sl_book_id": "023f2b73-5a9f-4ada-92c2-258a408d89c2"
+      },
+      "canonical_id": "69c746236a0f3d112faf7f5c",
+      "loser_ids": [
+        "023f2b73-5a9f-4ada-92c2-258a408d89c2"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "023f2b73-5a9f-4ada-92c2-258a408d89c2",
+        "to": "69c746236a0f3d112faf7f5c"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "648",
+      "books": [
+        {
+          "id": "69c868636c6f3cc53c8566cb",
+          "title": "Anleitung zur primitiven gabalistischen Wissenschaft",
+          "year": 1784,
+          "pages": 377,
+          "ocr": 377,
+          "tr": 370
+        },
+        {
+          "id": "6867c831aadfee9e955ecc6a",
+          "title": "Anleitung zur primitiven gabalistischen Wissenschaft",
+          "year": 1789,
+          "pages": 250,
+          "ocr": 250,
+          "tr": 250
+        }
+      ],
+      "bph_works": {
+        "ubn": "648",
+        "title": "Anleitung zur primitiven gabalistischen Wissenschaft",
+        "year": 1780,
+        "sl_book_id": "6867c831aadfee9e955ecc6a"
+      },
+      "canonical_id": "69c868636c6f3cc53c8566cb",
+      "loser_ids": [
+        "6867c831aadfee9e955ecc6a"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6867c831aadfee9e955ecc6a",
+        "to": "69c868636c6f3cc53c8566cb"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21142",
+      "books": [
+        {
+          "id": "69c804406c6f3cc53c844dd0",
+          "title": "Philosophia pia",
+          "year": 1671,
+          "pages": 386,
+          "ocr": 373,
+          "tr": 77
+        },
+        {
+          "id": "6909b22fcf28baa1b4caf185",
+          "title": "Philosophia pia",
+          "year": 1671,
+          "pages": 386,
+          "ocr": 261,
+          "tr": 249
+        }
+      ],
+      "bph_works": {
+        "ubn": "21142",
+        "title": "Philosophia pia",
+        "year": 1671,
+        "sl_book_id": "6909b22fcf28baa1b4caf185"
+      },
+      "canonical_id": "69c804406c6f3cc53c844dd0",
+      "loser_ids": [
+        "6909b22fcf28baa1b4caf185"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909b22fcf28baa1b4caf185",
+        "to": "69c804406c6f3cc53c844dd0"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30968",
+      "books": [
+        {
+          "id": "69c89ea66c6f3cc53c85da9f",
+          "title": "Die Macht der Kinder in der letzten Zeit",
+          "year": 1709,
+          "pages": 488,
+          "ocr": 487,
+          "tr": 480
+        },
+        {
+          "id": "6909e609cf28baa1b4cb0705",
+          "title": "Die Macht der Kinder in der letzten Zeit",
+          "year": 1709,
+          "pages": 488,
+          "ocr": 488,
+          "tr": 486
+        }
+      ],
+      "bph_works": {
+        "ubn": "30968",
+        "title": "Die Macht der Kinder in der letzten Zeit",
+        "year": 1709,
+        "sl_book_id": "6909e609cf28baa1b4cb0705"
+      },
+      "canonical_id": "6909e609cf28baa1b4cb0705",
+      "loser_ids": [
+        "69c89ea66c6f3cc53c85da9f"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30891",
+      "books": [
+        {
+          "id": "69c85f626c6f3cc53c855514",
+          "title": "Mirabilium divinorum humanorumque volumina quattuor",
+          "year": 1517,
+          "pages": 491,
+          "ocr": 489,
+          "tr": 482
+        },
+        {
+          "id": "6909aba7cf28baa1b4caef69",
+          "title": "Mirabilium divinorum humanorumque volumina quattuor",
+          "year": 1517,
+          "pages": 491,
+          "ocr": 491,
+          "tr": 484
+        }
+      ],
+      "bph_works": {
+        "ubn": "30891",
+        "title": "Mirabilium divinorum humanorumque volumina quattuor",
+        "year": 1517,
+        "sl_book_id": "6909aba7cf28baa1b4caef69"
+      },
+      "canonical_id": "6909aba7cf28baa1b4caef69",
+      "loser_ids": [
+        "69c85f626c6f3cc53c855514"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21141",
+      "books": [
+        {
+          "id": "69c803a86c6f3cc53c844c10",
+          "title": "Controversiae cum Judaeis prodromi libri II",
+          "year": 1758,
+          "pages": 497,
+          "ocr": 497,
+          "tr": 493
+        },
+        {
+          "id": "6909ba43cf28baa1b4caf455",
+          "title": "Controversiae cum Judaeis prodromi libri II",
+          "year": 1758,
+          "pages": 497,
+          "ocr": 497,
+          "tr": 491
+        }
+      ],
+      "bph_works": {
+        "ubn": "21141",
+        "title": "Controversiae cum Judaeis prodromi libri II",
+        "year": 1758,
+        "sl_book_id": "6909ba43cf28baa1b4caf455"
+      },
+      "canonical_id": "69c803a86c6f3cc53c844c10",
+      "loser_ids": [
+        "6909ba43cf28baa1b4caf455"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909ba43cf28baa1b4caf455",
+        "to": "69c803a86c6f3cc53c844c10"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "16548",
+      "books": [
+        {
+          "id": "69c70c73da9771c716316023",
+          "title": "Drey christliche Predigten von Versuchungen",
+          "year": 1712,
+          "pages": 565,
+          "ocr": 565,
+          "tr": 563
+        },
+        {
+          "id": "69099ab2cf28baa1b4cae97f",
+          "title": "Drey christliche Predigten von Versuchungen",
+          "year": 1712,
+          "pages": 565,
+          "ocr": 565,
+          "tr": 563
+        }
+      ],
+      "bph_works": {
+        "ubn": "16548",
+        "title": "Drey christliche Predigten von Versuchungen",
+        "year": 1712,
+        "sl_book_id": "69099ab2cf28baa1b4cae97f"
+      },
+      "canonical_id": "69099ab2cf28baa1b4cae97f",
+      "loser_ids": [
+        "69c70c73da9771c716316023"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21528",
+      "books": [
+        {
+          "id": "69c815536c6f3cc53c84857d",
+          "title": "Histoire curieuse de la vie, de la conduite, & des vrais sentiments du Sr. Jean de Labadie",
+          "year": 1670,
+          "pages": 584,
+          "ocr": 584,
+          "tr": 573
+        },
+        {
+          "id": "6909bf46cf28baa1b4caf6b5",
+          "title": "Histoire curieuse de la vie, de la conduite, & des vrais sentiments du Sr. Jean de Labadie",
+          "year": 1670,
+          "pages": 584,
+          "ocr": 583,
+          "tr": 577
+        }
+      ],
+      "bph_works": {
+        "ubn": "21528",
+        "title": "Histoire curieuse de la vie, de la conduite, & des vrais sentiments du Sr. Jean de Labadie",
+        "year": 1670,
+        "sl_book_id": "6909bf46cf28baa1b4caf6b5"
+      },
+      "canonical_id": "69c815536c6f3cc53c84857d",
+      "loser_ids": [
+        "6909bf46cf28baa1b4caf6b5"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909bf46cf28baa1b4caf6b5",
+        "to": "69c815536c6f3cc53c84857d"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "20840",
+      "books": [
+        {
+          "id": "69c7f9496c6f3cc53c84261b",
+          "title": "Erzählungen zum Vergnügen und zur Seelenbildung",
+          "year": 1785,
+          "pages": 638,
+          "ocr": 638,
+          "tr": 635
+        },
+        {
+          "id": "6909f42ecf28baa1b4cb0dc3",
+          "title": "Erzählungen zum Vergnügen und zur Seelenbildung",
+          "year": 1785,
+          "pages": 424,
+          "ocr": 424,
+          "tr": 424
+        }
+      ],
+      "bph_works": {
+        "ubn": "20840",
+        "title": "Erzählungen zum Vergnügen und zur Seelenbildung",
+        "year": 1785,
+        "sl_book_id": "6909f42ecf28baa1b4cb0dc3"
+      },
+      "canonical_id": "69c7f9496c6f3cc53c84261b",
+      "loser_ids": [
+        "6909f42ecf28baa1b4cb0dc3"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909f42ecf28baa1b4cb0dc3",
+        "to": "69c7f9496c6f3cc53c84261b"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30959",
+      "books": [
+        {
+          "id": "69c863316c6f3cc53c855ca6",
+          "title": "Die uralte Weisheit. Eine kurzgefasste Darstellung der Lehren der Theosophie",
+          "year": 1780,
+          "pages": 671,
+          "ocr": 670,
+          "tr": 667
+        },
+        {
+          "id": "6867c580aadfee9e955eca92",
+          "title": "Morgenröte im Aufgang, das ist: die Wurzel oder Mutter der Philosophiae, Astrolgiae und Theologiae",
+          "year": 1780,
+          "pages": 671,
+          "ocr": 670,
+          "tr": 664
+        }
+      ],
+      "bph_works": {
+        "ubn": "30959",
+        "title": "Morgenröte im Aufgang, das ist: die Wurzel oder Mutter der Philosophiae, Astrolgiae und Theologiae",
+        "year": 1780,
+        "sl_book_id": "6867c580aadfee9e955eca92"
+      },
+      "action": "flag_review",
+      "reason": "titles differ — likely bad dc_identifier shared across unrelated books"
+    },
+    {
+      "ubn": "23311",
+      "books": [
+        {
+          "id": "69c83c816c6f3cc53c84f9c2",
+          "title": "Metaphysische Kezereien",
+          "year": 1796,
+          "pages": 680,
+          "ocr": 680,
+          "tr": 674
+        },
+        {
+          "id": "6909b50ecf28baa1b4caf28b",
+          "title": "Metaphysische Kezereien",
+          "year": 1796,
+          "pages": 680,
+          "ocr": 680,
+          "tr": 676
+        }
+      ],
+      "bph_works": {
+        "ubn": "23311",
+        "title": "Metaphysische Kezereien",
+        "year": 1796,
+        "sl_book_id": "6909b50ecf28baa1b4caf28b"
+      },
+      "canonical_id": "6909b50ecf28baa1b4caf28b",
+      "loser_ids": [
+        "69c83c816c6f3cc53c84f9c2"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "16584",
+      "books": [
+        {
+          "id": "69c71882da9771c716316633",
+          "title": "Astrologia aphoristica Ptolemaei, Hermetis, Ludovici de Rigiis, Almansoris, Hieronymi Cardani, et autoris innominati",
+          "year": 1641,
+          "pages": 695,
+          "ocr": 691,
+          "tr": 685
+        },
+        {
+          "id": "6867a4fefc518f6dbf334f36",
+          "title": "Astrologia aphoristica Ptolemaei, Hermetis, Ludovici de Rigiis, Almansoris, Hieronymi Cardani, et autoris innominati",
+          "year": 1641,
+          "pages": 695,
+          "ocr": 695,
+          "tr": 689
+        }
+      ],
+      "bph_works": {
+        "ubn": "16584",
+        "title": "Astrologia aphoristica Ptolemaei, Hermetis, Ludovici de Rigiis, Almansoris, Hieronymi Cardani, et autoris innominati",
+        "year": 1641,
+        "sl_book_id": "6867a4fefc518f6dbf334f36"
+      },
+      "canonical_id": "6867a4fefc518f6dbf334f36",
+      "loser_ids": [
+        "69c71882da9771c716316633"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30161",
+      "books": [
+        {
+          "id": "69c8437d6c6f3cc53c851018",
+          "title": "Medulla animae, das ist, von Vollkommenheit aller Tugenden",
+          "year": 1672,
+          "pages": 875,
+          "ocr": 875,
+          "tr": 872
+        },
+        {
+          "id": "690c4d40e0787282ad59401f",
+          "title": "Medulla animae, das ist, von Vollkommenheit aller Tugenden",
+          "year": 1672,
+          "pages": 307,
+          "ocr": 307,
+          "tr": 307
+        }
+      ],
+      "bph_works": {
+        "ubn": "30161",
+        "title": "Medulla animae, das ist, von Vollkommenheit aller Tugenden",
+        "year": 1672,
+        "sl_book_id": "690c4d40e0787282ad59401f"
+      },
+      "canonical_id": "69c8437d6c6f3cc53c851018",
+      "loser_ids": [
+        "690c4d40e0787282ad59401f"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "690c4d40e0787282ad59401f",
+        "to": "69c8437d6c6f3cc53c851018"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21571",
+      "books": [
+        {
+          "id": "69c8168e6c6f3cc53c848b0c",
+          "title": "Opera",
+          "year": 1566,
+          "pages": 953,
+          "ocr": 929,
+          "tr": 923
+        },
+        {
+          "id": "690c2b8fe0787282ad593441",
+          "title": "Opera",
+          "year": 1566,
+          "pages": 632,
+          "ocr": 632,
+          "tr": 632
+        }
+      ],
+      "bph_works": {
+        "ubn": "21571",
+        "title": "Opera",
+        "year": 1566,
+        "sl_book_id": "690c2b8fe0787282ad593441"
+      },
+      "canonical_id": "69c8168e6c6f3cc53c848b0c",
+      "loser_ids": [
+        "690c2b8fe0787282ad593441"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "690c2b8fe0787282ad593441",
+        "to": "69c8168e6c6f3cc53c848b0c"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "30601",
+      "books": [
+        {
+          "id": "69c853c66c6f3cc53c8536f2",
+          "title": "Kirchen- oder Haus-Postill, über die Sonntags- und fürnehmste Fest-Evangelien durchs gantze Jahr",
+          "year": 1700,
+          "pages": 1004,
+          "ocr": 1004,
+          "tr": 1001
+        },
+        {
+          "id": "690c44f3e0787282ad593d7d",
+          "title": "Kirchen- oder Haus-Postill, über die Sonntags- und fürnehmste Fest-Evangelien durchs gantze Jahr",
+          "year": 1700,
+          "pages": 1004,
+          "ocr": 998,
+          "tr": 995
+        }
+      ],
+      "bph_works": {
+        "ubn": "30601",
+        "title": "Kirchen- oder Haus-Postill, über die Sonntags- und fürnehmste Fest-Evangelien durchs gantze Jahr",
+        "year": 1700,
+        "sl_book_id": "690c44f3e0787282ad593d7d"
+      },
+      "canonical_id": "69c853c66c6f3cc53c8536f2",
+      "loser_ids": [
+        "690c44f3e0787282ad593d7d"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "690c44f3e0787282ad593d7d",
+        "to": "69c853c66c6f3cc53c8536f2"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "21639",
+      "books": [
+        {
+          "id": "69c819256c6f3cc53c8492d0",
+          "title": "In quatuor Evangelia enarationes luculentissimae",
+          "year": 1540,
+          "pages": 1529,
+          "ocr": 1521,
+          "tr": 1507
+        },
+        {
+          "id": "6909ec3ecf28baa1b4cb09c3",
+          "title": "In quatuor Evangelia enarrationes luculentissimae",
+          "year": 1540,
+          "pages": 1529,
+          "ocr": 1529,
+          "tr": 1521
+        }
+      ],
+      "bph_works": {
+        "ubn": "21639",
+        "title": "In quatuor Evangelia enarationes luculentissimae",
+        "year": 1540,
+        "sl_book_id": "6909ec3ecf28baa1b4cb09c3"
+      },
+      "canonical_id": "6909ec3ecf28baa1b4cb09c3",
+      "loser_ids": [
+        "69c819256c6f3cc53c8492d0"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "17625",
+      "books": [
+        {
+          "id": "69c753b26a0f3d112faf8620",
+          "title": "Opuscula theologici, historici et philosophici argumenti tomi prioris",
+          "year": 1751,
+          "pages": 1763,
+          "ocr": 1761,
+          "tr": 1758
+        },
+        {
+          "id": "6909d654cf28baa1b4cb0269",
+          "title": "Opuscula theologici, historici et philosophici argumenti tomi prioris",
+          "year": 1751,
+          "pages": 1763,
+          "ocr": 1763,
+          "tr": 1759
+        }
+      ],
+      "bph_works": {
+        "ubn": "17625",
+        "title": "Opuscula theologici, historici et philosophici argumenti tomi prioris",
+        "year": 1751,
+        "sl_book_id": "6909d654cf28baa1b4cb0269"
+      },
+      "canonical_id": "6909d654cf28baa1b4cb0269",
+      "loser_ids": [
+        "69c753b26a0f3d112faf8620"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "3585",
+      "books": [
+        {
+          "id": "697a5562c915282d8f071f74",
+          "title": "Dichiaratione sopra il XIII. cap. dell'Apocalisse",
+          "year": 1562,
+          "pages": 40,
+          "ocr": 40,
+          "tr": 40
+        },
+        {
+          "id": "6909c96acf28baa1b4cafbf3",
+          "title": "Dichiaratione sopra il XIII cap. dell'Apocalisse",
+          "year": 1562,
+          "pages": 50,
+          "ocr": 0,
+          "tr": 0
+        }
+      ],
+      "bph_works": {
+        "ubn": "3585",
+        "title": "Dichiaratione sopra il XIII. cap. dell'Apocalisse",
+        "year": 1562,
+        "sl_book_id": "6909c96acf28baa1b4cafbf3"
+      },
+      "canonical_id": "697a5562c915282d8f071f74",
+      "loser_ids": [
+        "6909c96acf28baa1b4cafbf3"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "6909c96acf28baa1b4cafbf3",
+        "to": "697a5562c915282d8f071f74"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "5220",
+      "books": [
+        {
+          "id": "697c8e0fbaa544415f85b6c6",
+          "title": "Die Lehren der Rosenkreuzer aus dem 16ten und 17ten Jahrhundert. Oder einfältig ABC Büchlein für junge Schüler",
+          "year": 1785,
+          "pages": 169,
+          "ocr": 169,
+          "tr": 169
+        },
+        {
+          "id": "690c27e6e0787282ad593281",
+          "title": "Die Lehren der Rosenkreuzer aus dem 16ten und 17ten Jahrhundert. Oder einfältig ABC Büchlein für junge Schüler",
+          "year": 1785,
+          "pages": 117,
+          "ocr": 117,
+          "tr": 82
+        }
+      ],
+      "bph_works": {
+        "ubn": "5220",
+        "title": "Die Lehren der Rosenkreuzer aus dem 16ten und 17ten Jahrhundert. Oder einfältig ABC Büchlein für junge Schüler",
+        "year": 1785,
+        "sl_book_id": "690c27e6e0787282ad593281"
+      },
+      "canonical_id": "697c8e0fbaa544415f85b6c6",
+      "loser_ids": [
+        "690c27e6e0787282ad593281"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "690c27e6e0787282ad593281",
+        "to": "697c8e0fbaa544415f85b6c6"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "3977",
+      "books": [
+        {
+          "id": "697b0799b42177f3ebcc7f4d",
+          "title": "Echo der von Gott hocherleuchten Fraternitet dess löblichen Ordens R.C",
+          "year": 1616,
+          "pages": 313,
+          "ocr": 313,
+          "tr": 313
+        },
+        {
+          "id": "6909a8c1cf28baa1b4caee49",
+          "title": "Echo der von Gott hocherleuchten Fraternitet dess löblichen Ordens R.C.",
+          "year": 1616,
+          "pages": 425,
+          "ocr": 425,
+          "tr": 416
+        }
+      ],
+      "bph_works": {
+        "ubn": "3977",
+        "title": "Echo der von Gott hocherleuchten Fraternitet dess löblichen Ordens R.C",
+        "year": 1616,
+        "sl_book_id": "6909a8c1cf28baa1b4caee49"
+      },
+      "canonical_id": "6909a8c1cf28baa1b4caee49",
+      "loser_ids": [
+        "697b0799b42177f3ebcc7f4d"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "8338",
+      "books": [
+        {
+          "id": "6980941e4664a62963e01f38",
+          "title": "Liber egregius de unitate ecclesia",
+          "year": 1520,
+          "pages": 320,
+          "ocr": 320,
+          "tr": 320
+        },
+        {
+          "id": "68fb0b2712055a03a58d3193",
+          "title": "Liber egregius de unitate ecclesia",
+          "year": 1520,
+          "pages": 377,
+          "ocr": 152,
+          "tr": 127
+        }
+      ],
+      "bph_works": {
+        "ubn": "8338",
+        "title": "Liber egregius de unitate ecclesia",
+        "year": 1520,
+        "sl_book_id": "68fb0b2712055a03a58d3193"
+      },
+      "canonical_id": "6980941e4664a62963e01f38",
+      "loser_ids": [
+        "68fb0b2712055a03a58d3193"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "68fb0b2712055a03a58d3193",
+        "to": "6980941e4664a62963e01f38"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "6941",
+      "books": [
+        {
+          "id": "697e23c8bb80b2397e771e23",
+          "title": "Hypnerotomachie, ou discours du songe de Poliphile",
+          "year": 1561,
+          "pages": 425,
+          "ocr": 425,
+          "tr": 425
+        },
+        {
+          "id": "69099eb5cf28baa1b4caeb37",
+          "title": "Hypnerotomachie ou discours du songe de Poliphile",
+          "year": 1561,
+          "pages": 338,
+          "ocr": 338,
+          "tr": 338
+        }
+      ],
+      "bph_works": {
+        "ubn": "6941",
+        "title": "Hypnerotomachie, ou discours du songe de Poliphile",
+        "year": 1561,
+        "sl_book_id": "69099eb5cf28baa1b4caeb37"
+      },
+      "canonical_id": "697e23c8bb80b2397e771e23",
+      "loser_ids": [
+        "69099eb5cf28baa1b4caeb37"
+      ],
+      "action": "swap_and_hide",
+      "swap": {
+        "from": "69099eb5cf28baa1b4caeb37",
+        "to": "697e23c8bb80b2397e771e23"
+      },
+      "mongo_modified": 1
+    },
+    {
+      "ubn": "11807",
+      "books": [
+        {
+          "id": "6985ca72b037546226b9db91",
+          "title": "Pymander",
+          "year": 1585,
+          "pages": 532,
+          "ocr": 532,
+          "tr": 532
+        },
+        {
+          "id": "68fb0dc412055a03a58d3281",
+          "title": "Pymander, de potestate et sapientia Dei",
+          "year": 1532,
+          "pages": 705,
+          "ocr": 705,
+          "tr": 701
+        }
+      ],
+      "bph_works": {
+        "ubn": "11807",
+        "title": "Pymander",
+        "year": 1585,
+        "sl_book_id": "68fb0dc412055a03a58d3281"
+      },
+      "canonical_id": "68fb0dc412055a03a58d3281",
+      "loser_ids": [
+        "6985ca72b037546226b9db91"
+      ],
+      "action": "hide_loser",
+      "swap": null,
+      "mongo_modified": 1
+    }
+  ]
+}
