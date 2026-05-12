@@ -1153,6 +1153,34 @@ async function createBatchJobInline(model, requests, displayName) {
   throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 }
 
+// Sweep stale sl-batch-*.jsonl files left behind by past runs.
+// Each orchestrator run uploads + unlinks its JSONL inline, but a throw
+// past the unlink call (network error, 5xx, FAILED_PRECONDITION, SIGKILL)
+// strands the file. The orchestrator runs every ~2 min, so anything older
+// than 30 min is definitively orphaned.
+function cleanupStaleJsonlFiles() {
+  const tmpRoot = os.tmpdir();
+  const cutoff = Date.now() - 30 * 60 * 1000;
+  let removed = 0;
+  let bytesFreed = 0;
+  let entries;
+  try { entries = fs.readdirSync(tmpRoot); } catch { return; }
+  for (const name of entries) {
+    if (!name.startsWith('sl-batch-') || !name.endsWith('.jsonl')) continue;
+    const full = path.join(tmpRoot, name);
+    try {
+      const st = fs.statSync(full);
+      if (st.mtimeMs >= cutoff) continue;
+      bytesFreed += st.size;
+      fs.unlinkSync(full);
+      removed++;
+    } catch {}
+  }
+  if (removed > 0) {
+    console.log(`[orchestrator] Swept ${removed} stale JSONL files (${(bytesFreed / (1024 ** 3)).toFixed(2)} GB freed)`);
+  }
+}
+
 /**
  * Build JSONL as a temp file, writing one line at a time to avoid holding
  * the entire string in memory. Frees each image buffer after serialization.
@@ -1407,7 +1435,9 @@ Output structure:
 
       // Upload JSONL + create batch — both must use the same key (files are key-scoped).
       // Round-robin start key across projects to spread load evenly.
+      // Non-quota errors capture into __submitErr so we always reach the unlink below.
       let uploadKeyIndex = -1;
+      let __submitErr = null;
       const bestKey = getLeastLoadedKey();
       const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -1424,7 +1454,8 @@ Output structure:
             _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
-          throw uploadErr;
+          __submitErr = uploadErr;
+          break;
         }
 
         try {
@@ -1442,11 +1473,13 @@ Output structure:
             _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
-          throw batchErr;
+          __submitErr = batchErr;
+          break;
         }
       }
-      // Clean up temp JSONL file
+      // Clean up temp JSONL file (always runs, even on non-quota errors above)
       try { fs.unlinkSync(jsonlFile); } catch (_) {}
+      if (__submitErr) throw __submitErr;
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       // Inline: small batch, embed base64 directly in request body
@@ -1650,7 +1683,9 @@ async function submitCrossBookOcrBatches(db, books) {
   console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${allDownloaded.length} pages`);
 
   // Upload + create batch with key rotation (same pattern as image extraction)
+  // Non-quota errors capture into __submitErr so we always reach the unlink below.
   let batchJob = null;
+  let __submitErr = null;
   const bestKey = getLeastLoadedKey();
   const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
   for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -1666,7 +1701,8 @@ async function submitCrossBookOcrBatches(db, books) {
         _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
         continue;
       }
-      throw uploadErr;
+      __submitErr = uploadErr;
+      break;
     }
     try {
       batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uki);
@@ -1681,10 +1717,12 @@ async function submitCrossBookOcrBatches(db, books) {
         _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
         continue;
       }
-      throw batchErr;
+      __submitErr = batchErr;
+      break;
     }
   }
   try { fs.unlinkSync(jsonlFile); } catch (_) {}
+  if (__submitErr) throw __submitErr;
   if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
   // Record in batch_jobs with book_ids array
@@ -1885,7 +1923,9 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
       // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
+      // Non-quota errors capture into __submitErr so we always reach the unlink below.
       let uploadKeyIndex = -1;
+      let __submitErr = null;
       const imgBestKey = getLeastLoadedKey();
       const imgStartKey = imgBestKey >= 0 ? imgBestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -1901,7 +1941,8 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
             console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
             continue;
           }
-          throw uploadErr;
+          __submitErr = uploadErr;
+          break;
         }
 
         try {
@@ -1919,10 +1960,12 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
             _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
-          throw batchErr;
+          __submitErr = batchErr;
+          break;
         }
       }
       try { fs.unlinkSync(jsonlFile); } catch (_) {}
+      if (__submitErr) throw __submitErr;
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       const inlineRequests = chunk.map(item => ({
@@ -2114,7 +2157,9 @@ async function submitCrossBookImageBatches(db, bookItems) {
     console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
     // Upload + create batch with same key (files are key-scoped). Least-loaded key first.
+    // Non-quota errors capture into __submitErr so we always reach the unlink below.
     let batchJob = null;
+    let __submitErr = null;
     const crossBestKey = getLeastLoadedKey();
     const crossStartKey = crossBestKey >= 0 ? crossBestKey : nextBatchKeyIndex();
     for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -2130,7 +2175,8 @@ async function submitCrossBookImageBatches(db, bookItems) {
           _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
           continue;
         }
-        throw uploadErr;
+        __submitErr = uploadErr;
+        break;
       }
 
       try {
@@ -2148,10 +2194,12 @@ async function submitCrossBookImageBatches(db, bookItems) {
           _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
           continue;
         }
-        throw batchErr;
+        __submitErr = batchErr;
+        break;
       }
     }
     try { fs.unlinkSync(jsonlFile); } catch (_) {}
+    if (__submitErr) throw __submitErr;
     if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
     // Record in batch_jobs — use book_ids array for cross-book, book_id for backward compat
@@ -2213,6 +2261,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
 async function run() {
   const startTime = Date.now();
+  cleanupStaleJsonlFiles();
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 30000 });
   await client.connect();
   const db = client.db('bookstore');
