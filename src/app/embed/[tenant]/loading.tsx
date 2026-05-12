@@ -1,38 +1,22 @@
 /**
  * Suspense fallback for /embed/[tenant] cold loads and intra-iframe navigation.
  *
- * Mirrors the layout of {@link SharedLibraryView} so the visible frame doesn't
- * jump when real content arrives:
- *   1. Hero band (dark, max-w-7xl, matches the partner hero block)
- *   2. "Selected Books" placeholder row (6 covers)
- *   3. Catalogue chrome (heading, search row with segmented toggle and
- *      list/grid icons, then table rows)
+ * Mirrors the catalogue portion of {@link SharedLibraryView} so the visible
+ * frame doesn't jump when real content arrives:
+ *   - "Selected Books" placeholder row (6 covers)
+ *   - Catalogue chrome (heading, search row with segmented toggle and
+ *     list/grid icons, then table rows)
  *
- * Class names, paddings, and container widths match the real components
- * one-for-one — when SSR completes and replaces this, the catalogue rows
- * align with the eventual table; on list/grid views (no hero) only the
- * hero band gets discarded, which is brief and visually neutral.
+ * The hero band is intentionally omitted — it only shows on the default
+ * landing, and on list/grid views (no hero) a placeholder hero would cause
+ * a visible band to flash during transitions. Cold load shows the catalogue
+ * skeleton aligned at the page width; the real hero renders above when SSR
+ * completes.
  */
 export default function EmbedTenantLoading() {
     return (
         <div className="min-h-screen bg-cream" aria-busy="true" aria-live="polite">
             <span className="sr-only">Loading library…</span>
-
-            {/* Hero band */}
-            <div className="relative bg-dark overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
-                <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
-                    <div className="h-10 sm:h-12 md:h-14 w-2/3 max-w-xl bg-white/10 rounded animate-pulse" />
-                    <div className="h-4 w-full max-w-2xl bg-white/10 rounded mt-4 animate-pulse" />
-                    <div className="h-4 w-3/4 max-w-xl bg-white/10 rounded mt-2 animate-pulse" />
-                    <div className="h-11 w-full max-w-2xl bg-white/10 rounded mt-5 animate-pulse" />
-                    <div className="flex flex-wrap items-center gap-4 mt-5">
-                        <div className="h-4 w-40 bg-white/10 rounded animate-pulse" />
-                        <span className="w-px h-4 bg-white/10" />
-                        <div className="h-4 w-32 bg-white/10 rounded animate-pulse" />
-                    </div>
-                </div>
-            </div>
 
             <div className="max-w-7xl mx-auto px-6 py-10">
                 {/* Selected Books row */}
