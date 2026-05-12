@@ -86,10 +86,15 @@ function hasRenderableContent(w: BphWorkRow): boolean {
 }
 
 export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
-  if (!ubn || !/^\d+$/.test(ubn)) return null;
+  // Accept any non-empty key; bph_works.ubn is the catalogue primary key and
+  // is mostly numeric for the printed-book set, but the Allard Pierson IIIF
+  // manuscripts (backfill-bph-allard-pierson.mjs) use their PH-shelfmark
+  // (e.g. "PH441") as the catalogue key. Reject only empty strings.
+  if (!ubn) return null;
   const work = await fetchWork(ubn);
   if (!work) return null;
   if (!hasRenderableContent(work)) return null;
+  const isNumericUbn = /^\d+$/.test(work.ubn);
 
   // Show bibliographic_format only when its source is genuine (not derived
   // from book size — BPH librarians prefer blank over an estimate).
@@ -105,7 +110,7 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
         <svg className="w-4 h-4 transition-transform [details[open]_&]:rotate-90" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fillRule="evenodd" d="M6.5 4a.5.5 0 01.854-.354l6 6a.5.5 0 010 .708l-6 6A.5.5 0 016.5 16V4z" clipRule="evenodd"/>
         </svg>
-        Catalogue record (BPH UBN {work.ubn})
+        Catalogue record ({isNumericUbn ? `BPH UBN ${work.ubn}` : `BPH shelfmark ${work.ubn}`})
       </summary>
 
       <div className="mt-3 p-4 bg-stone-800/50 rounded-lg border border-stone-700 space-y-4">
@@ -175,7 +180,7 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
         )}
 
         <Section title="Identifiers">
-          <Field label="UBN" value={work.ubn} mono />
+          <Field label={isNumericUbn ? 'UBN' : 'BPH shelfmark'} value={work.ubn} mono />
           <Field label="USTC" value={work.ustc_sn} mono />
           {work.ia_identifier && (
             <FieldRaw label="Internet Archive">
@@ -193,7 +198,8 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
         </Section>
 
         <p className="text-xs text-stone-500 border-t border-stone-700 pt-3">
-          Sourced from the Bibliotheca Philosophica Hermetica catalogue (UBN {work.ubn}).
+          Sourced from the Bibliotheca Philosophica Hermetica catalogue
+          {isNumericUbn ? ` (UBN ${work.ubn})` : ` (shelfmark ${work.ubn})`}.
         </p>
       </div>
     </details>
