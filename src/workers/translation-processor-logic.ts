@@ -179,7 +179,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     }
   }
 
-  const modelId = job.config.model || getModelForBook(bookDoc as { image_source?: { provider?: string } } | null) || DEFAULT_MODEL;
+  const modelId = job.config.model || getModelForBook(bookDoc as { image_source?: { provider?: string }; language?: string | null } | null) || DEFAULT_MODEL;
   const startTime = Date.now();
 
   // Resolve the translation prompt from DB (source of truth for prompt content + version)

@@ -105,7 +105,7 @@ export const POST = withAuth(async (request, session) => {
       config: {
         page_ids: pageIds,
         custom_prompt: customPrompt,
-        model: getModelForBook(book as { image_source?: { provider?: string } }),
+        model: getModelForBook(book as { image_source?: { provider?: string }; language?: string | null }),
         language: book.language || "auto-detect"
       },
       initiated_by: 'user',
