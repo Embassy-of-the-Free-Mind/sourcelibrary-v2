@@ -105,11 +105,11 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
   );
 
   return (
-    // Open by default so the full bibliographic record sits at the same
-    // prominence as on the white /catalog/{ubn} page — partner-reported
-    // confusion was that the dark book page's biblio looked "compressed"
-    // compared to the catalog page (B7). Users can still collapse it.
-    <details className="mt-4" open>
+    // Closed by default on the book detail page: the catalogue record is
+    // reference material, and the primary action here is to start reading.
+    // Users arrive from bph.sourcelibrary.org expecting the book, not the
+    // bibliographic dossier — they can expand it when they want the detail.
+    <details className="mt-4">
       <summary className="cursor-pointer text-sm text-stone-400 hover:text-stone-200 transition-colors list-none flex items-center gap-2 [&::-webkit-details-marker]:hidden">
         <svg className="w-4 h-4 transition-transform [details[open]_&]:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="m6 9 6 6 6-6"/>
