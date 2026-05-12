@@ -38,8 +38,52 @@ const SINGLE_PAGE = process.argv.includes('--single-page');
 const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce batch size
 const MODEL_FLASH = 'gemini-3-flash-preview';
 const MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+
+// Latin-script languages safe for flash-lite translation. Non-Latin scripts
+// (Tibetan, Arabic, Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) route to flash.
+// flash-lite hallucinates on low-resource scripts during OCR — translation
+// from those OCR outputs is doubly exposed. Keep in sync with the matching
+// list in src/lib/types/ai-models.ts and pipeline-orchestrator.mjs.
+const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
+  'english', 'en', 'eng',
+  'latin', 'la', 'lat',
+  'french', 'fr', 'fra',
+  'italian', 'it', 'ita',
+  'spanish', 'es', 'spa',
+  'portuguese', 'pt', 'por',
+  'romanian', 'ro', 'ron', 'rum',
+  'catalan', 'ca', 'cat',
+  'german', 'de', 'deu', 'ger',
+  'dutch', 'nl', 'nld', 'dut',
+  'swedish', 'sv', 'swe',
+  'norwegian', 'no', 'nor',
+  'danish', 'da', 'dan',
+  'finnish', 'fi', 'fin',
+  'icelandic', 'is', 'isl', 'ice',
+  'welsh', 'cy', 'cym', 'wel',
+  'irish', 'ga', 'gle',
+  'polish', 'pl', 'pol',
+  'czech', 'cs', 'ces', 'cze',
+  'slovak', 'sk', 'slk', 'slo',
+  'slovenian', 'sl', 'slv',
+  'croatian', 'hr', 'hrv',
+  'hungarian', 'hu', 'hun',
+  'estonian', 'et', 'est',
+  'latvian', 'lv', 'lav',
+  'lithuanian', 'lt', 'lit',
+  'albanian', 'sq', 'sqi', 'alb',
+  'turkish', 'tr', 'tur',
+  'indonesian', 'id', 'ind',
+  'vietnamese', 'vi', 'vie',
+  'malay', 'ms', 'msa',
+  'tagalog', 'tl', 'tgl', 'filipino',
+  'swahili', 'sw', 'swa',
+]);
+
 function getModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
+  const lang = (book?.language || '').toLowerCase().trim();
+  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return MODEL_FLASH;
   return MODEL_LITE;
 }
 const PROMPT_VERSION = 'v10';

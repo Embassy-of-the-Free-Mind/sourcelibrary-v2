@@ -50,8 +50,33 @@ function getGeminiApiKey(keyIndex = 0) {
   return GEMINI_BATCH_KEYS[keyIndex] || GEMINI_BATCH_KEYS[0];
 }
 
+// Latin-script languages safe for flash-lite. Non-Latin scripts get flash
+// because flash-lite hallucinates on low-resource scripts. See
+// src/lib/types/ai-models.ts for the canonical list.
+const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
+  'english', 'en', 'eng', 'latin', 'la', 'lat',
+  'french', 'fr', 'fra', 'italian', 'it', 'ita',
+  'spanish', 'es', 'spa', 'portuguese', 'pt', 'por',
+  'romanian', 'ro', 'ron', 'rum', 'catalan', 'ca', 'cat',
+  'german', 'de', 'deu', 'ger', 'dutch', 'nl', 'nld', 'dut',
+  'swedish', 'sv', 'swe', 'norwegian', 'no', 'nor',
+  'danish', 'da', 'dan', 'finnish', 'fi', 'fin',
+  'icelandic', 'is', 'isl', 'ice',
+  'welsh', 'cy', 'cym', 'wel', 'irish', 'ga', 'gle',
+  'polish', 'pl', 'pol', 'czech', 'cs', 'ces', 'cze',
+  'slovak', 'sk', 'slk', 'slo', 'slovenian', 'sl', 'slv',
+  'croatian', 'hr', 'hrv', 'hungarian', 'hu', 'hun',
+  'estonian', 'et', 'est', 'latvian', 'lv', 'lav',
+  'lithuanian', 'lt', 'lit', 'albanian', 'sq', 'sqi', 'alb',
+  'turkish', 'tr', 'tur', 'indonesian', 'id', 'ind',
+  'vietnamese', 'vi', 'vie', 'malay', 'ms', 'msa',
+  'tagalog', 'tl', 'tgl', 'filipino', 'swahili', 'sw', 'swa',
+]);
+
 function getOcrModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
+  const lang = (book?.language || '').toLowerCase().trim();
+  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return MODEL_FLASH;
   return MODEL_LITE;
 }
 
