@@ -393,13 +393,29 @@ export async function fetchTenantBphDigitizedMap(tenantId: string): Promise<Reco
 
 /**
  * Get BPH catalog total for a tenant.
+ *
+ * Module-level TTL cache keeps the displayed total stable across rapid page
+ * navigations. Without it, ongoing imports (e.g. PR #1712 adding 101 Allard
+ * Pierson manuscripts mid-session) cause the counter to drift between pages
+ * — partner perceived this as a count bug (B11). A 60s window is short
+ * enough to stay near-live but long enough to span a normal browsing
+ * session.
  */
-export async function fetchTenantBphCatalogTotal(tenantId: string): Promise<number> {
-  // For now, return the global BPH catalog total since it's not tenant-scoped in Supabase
+let cachedBphCatalogTotal: { value: number; expiresAt: number } | null = null;
+const BPH_CATALOG_TOTAL_TTL_MS = 60_000;
+
+export async function fetchTenantBphCatalogTotal(_tenantId: string): Promise<number> {
+  const now = Date.now();
+  if (cachedBphCatalogTotal && cachedBphCatalogTotal.expiresAt > now) {
+    return cachedBphCatalogTotal.value;
+  }
+  // bph_works isn't tenant-scoped in Supabase today — return the global total.
   const { count } = await supabase
     .from('bph_works')
     .select('*', { count: 'exact', head: true });
-  return count || 0;
+  const value = count || 0;
+  cachedBphCatalogTotal = { value, expiresAt: now + BPH_CATALOG_TOTAL_TTL_MS };
+  return value;
 }
 
 /**
