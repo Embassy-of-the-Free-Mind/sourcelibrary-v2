@@ -2,13 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 /**
- * Log broken image reports from the client.
- * Fire-and-forget — never fails to the client.
+ * Log broken-image reports from the client.
+ *
+ * Bot traffic is dropped at the door: link-preview crawlers (Meta, Slack,
+ * etc.) request every page on the site and trigger image-load errors at
+ * scale, drowning out the human signal. Bot reports get silently 200'd.
  *
  * POST /api/analytics/broken-image
  * Body: { urls: string[], page: string, timestamp: string }
  */
 const DB_TIMEOUT_MS = 3000;
+
+const BOT_RE = /bot|crawler|spider|preview|facebookexternalhit|meta-externalagent|slurp|slackbot|googlebot|bingbot|twitterbot|whatsapp|linkedinbot|telegrambot|discordbot|applebot|pingdom|uptime|monitor|headless/i;
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,10 +22,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
+    const ua = request.headers.get('user-agent') || '';
+    if (BOT_RE.test(ua)) {
+      return NextResponse.json({ ok: true });
+    }
+
     // Cap at 20 per report to prevent abuse
     const capped = urls.slice(0, 20);
-
-    const ua = request.headers.get('user-agent') || '';
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
 
     const dbWork = (async () => {
