@@ -1,18 +1,18 @@
 /**
  * Suspense fallback for /embed/[tenant] cold loads and intra-iframe navigation.
  *
- * Aligned with the catalogue render path (the dominant view on BPH and other
- * partner subdomains via `?view=catalog`): heading + search row + table.
+ * Scope: heading + search/filter row + results header only. The table itself
+ * is intentionally NOT skeletoned here — BphCatalogBrowser is a client
+ * component that fetches from /api/catalog/bph after hydration and renders
+ * its own table-row skeleton while loading. Including a second table skeleton
+ * here causes a visible flicker as the outer (`bg-warm` bars) is replaced by
+ * the inner (`bg-border-light/40` bars inside a real <table> with real
+ * column headers).
  *
- * The hero band, Illustrations strip, and Selected Books row are intentionally
- * omitted. On `?view=catalog` / `?view=books` they don't render at all, so any
- * placeholder for them would flash and disappear. On the bare-root landing
- * they DO render, but they live above the catalogue — the real content drops
- * in above the skeleton as SSR completes, mirroring the existing hero pop-in.
- *
- * Column proportions match BphCatalogBrowser's table (Title 5, Author 3,
- * Year 1, Place 2, Shelfmark 1 — responsive cols collapse on narrow screens
- * just like the real table).
+ * Hero, Illustrations strip, and Selected Books row are also omitted. On
+ * `?view=catalog` / `?view=books` they don't render; on the bare-root
+ * landing they pop in above the catalogue when SSR completes, same way
+ * the hero already did.
  */
 export default function EmbedTenantLoading() {
     return (
@@ -44,28 +44,9 @@ export default function EmbedTenantLoading() {
                     </div>
                 </div>
 
-                {/* Table — header row + 10 data rows matching column proportions */}
-                <div className="border border-border-light rounded-lg overflow-hidden bg-white">
-                    <div className="grid grid-cols-12 gap-3 px-3 py-2.5 border-b border-border-light bg-warm animate-pulse">
-                        <div className="col-span-5 h-3.5 bg-border-light rounded" />
-                        <div className="col-span-3 h-3.5 bg-border-light rounded hidden sm:block" />
-                        <div className="col-span-1 h-3.5 bg-border-light rounded" />
-                        <div className="col-span-2 h-3.5 bg-border-light rounded hidden md:block" />
-                        <div className="col-span-1 h-3.5 bg-border-light rounded hidden md:block" />
-                    </div>
-                    {Array.from({ length: 10 }).map((_, i) => (
-                        <div
-                            key={i}
-                            className="grid grid-cols-12 gap-3 px-3 py-3 border-b border-border-light last:border-b-0 animate-pulse"
-                        >
-                            <div className="col-span-5 h-4 bg-warm rounded" />
-                            <div className="col-span-3 h-4 bg-warm rounded hidden sm:block" />
-                            <div className="col-span-1 h-4 bg-warm rounded" />
-                            <div className="col-span-2 h-4 bg-warm rounded hidden md:block" />
-                            <div className="col-span-1 h-4 bg-warm rounded hidden md:block" />
-                        </div>
-                    ))}
-                </div>
+                {/* Table is rendered by BphCatalogBrowser with its own internal
+                    skeleton — see BphCatalogBrowser line ~569. No outer table
+                    skeleton here on purpose. */}
             </div>
         </div>
     );
