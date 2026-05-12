@@ -14,6 +14,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import IconclassFilter from '@/components/gallery/IconclassFilter';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { useEmbedContext } from '@/hooks/useEmbedContext';
 import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
@@ -89,6 +90,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const router = useRouter();
   const pathname = usePathname();
   const identity = useIdentity();
+  // On tenant subdomains the global SL header (Collections, Gallery, Browse…)
+  // is a lockdown leak — see CLAUDE.md invariant #5. Suppress it; the tenant
+  // shell renders its own chrome.
+  const { isEmbedded } = useEmbedContext();
 
   const pathParts = pathname.split('/').filter(Boolean);
   const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
@@ -294,11 +299,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   return (
     <>
-      <SiteHeader
-        variant="dark"
-        sticky
-        breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
-      />
+      {!isEmbedded && (
+        <SiteHeader
+          variant="dark"
+          sticky
+          breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
+        />
+      )}
 
       <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
         {/* Search & Filter Bar */}
