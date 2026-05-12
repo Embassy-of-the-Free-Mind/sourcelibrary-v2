@@ -558,8 +558,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   const hasOcr = ocrCount > 0;
   const hasTranslations = translatedCount > totalPages / 2; // >50% translated
   // Image downloads restricted for non-commercial licensed sources (BSB, Bodleian, Vatican, etc.)
+  // Exceptions: BPH (Embassy of the Free Mind — all hermetic/historical material), and any book
+  // published before 1930 (out of copyright in the US) regardless of license metadata.
   const imgLicense = (book as any).image_source?.license || 'unknown';
-  const imageRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
+  const imgProvider = (book as any).image_source?.provider;
+  const yearPublished = (book as unknown as { year_published?: number }).year_published;
+  const publicDomainByAge = typeof yearPublished === 'number' && yearPublished < 1930;
+  const licenseRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
+  const imageRestricted = licenseRestricted && imgProvider !== 'bph' && !publicDomainByAge;
   const bookSummaryObj = (book as unknown as { index?: { bookSummary?: { brief?: string; detailed?: string; abstract?: string } } }).index?.bookSummary;
   const indexBrief = bookSummaryObj?.brief;
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;

@@ -15,15 +15,24 @@ const NC_LICENSE_PATTERNS = [
  * Check if a book's page images carry a non-commercial restriction.
  * Returns true if images CANNOT be sold (NC-restricted).
  * Text-only formats (translation, OCR) are always commercially safe.
+ *
+ * Exemptions to the conservative "unknown = restricted" default:
+ *  - BPH provider (Embassy of the Free Mind): curated hermetic/historical material, all pre-1930.
+ *  - year_published < 1930: out of US copyright regardless of license metadata.
  */
 export async function isImageRestricted(bookId: string): Promise<boolean> {
   const db = await getDb();
   const book = await db.collection('books').findOne(
-    { _id: bookId as any },
-    { projection: { 'image_source.license': 1 } },
+    { $or: [{ id: bookId }, { _id: bookId as any }] },
+    { projection: { 'image_source.license': 1, 'image_source.provider': 1, year_published: 1 } },
   );
-  const license = book?.image_source?.license;
-  if (!license || license === 'unknown') return true; // conservative: unknown = restricted
+  if (!book) return true;
+  const license = book.image_source?.license;
+  const provider = book.image_source?.provider;
+  const year = (book as { year_published?: number }).year_published;
+  if (provider === 'bph') return false;
+  if (typeof year === 'number' && year < 1930) return false;
+  if (!license || license === 'unknown') return true; // conservative default
   return NC_LICENSE_PATTERNS.some(p => p.test(license));
 }
 
