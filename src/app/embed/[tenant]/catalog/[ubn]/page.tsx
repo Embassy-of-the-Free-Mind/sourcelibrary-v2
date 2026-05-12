@@ -1,10 +1,10 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { BookMarked, ExternalLink, BookOpen } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
-import { formatAuthor } from '@/lib/utils';
+import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 
 interface Props {
   params: Promise<{ tenant: string; ubn: string }>;
@@ -72,6 +72,10 @@ interface SlBook {
   is_first_translation?: boolean;
   doi?: string;
   reading_summary?: { overview?: string };
+  image_display?: string | null;
+  image_thumb?: string | null;
+  thumbnail?: string | null;
+  thumbnail_blob?: string | null;
 }
 
 async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
@@ -106,6 +110,7 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
           pages_count: 1, pages_ocr: 1, pages_translated: 1,
           categories: 1, is_first_translation: 1, doi: 1,
           'reading_summary.overview': 1,
+          image_display: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1,
         },
         maxTimeMS: 8_000,
       }
@@ -129,6 +134,10 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
       is_first_translation: book.is_first_translation as boolean | undefined,
       doi: book.doi as string | undefined,
       reading_summary: book.reading_summary as { overview?: string } | undefined,
+      image_display: book.image_display as string | null | undefined,
+      image_thumb: book.image_thumb as string | null | undefined,
+      thumbnail: book.thumbnail as string | null | undefined,
+      thumbnail_blob: book.thumbnail_blob as string | null | undefined,
     };
   } catch {
     return null;
@@ -157,15 +166,7 @@ export default async function CatalogEntryPage({ params }: Props) {
 
   const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
   const slBookHref = slBook ? tenantBookUrl({ id: slBook.id, slug: slBook.slug }, tenant) : null;
-
-  // When a digitised SL copy exists, the reading view is the canonical place
-  // for this work — it now side-loads the BPH catalogue record inline via
-  // <BphCatalogueRecord />. Redirect so the partner stops seeing two pages
-  // for the same book (issue #1688). Catalogue-only entries (no SL book)
-  // continue to render below.
-  if (slBook && slBookHref) {
-    redirect(slBookHref);
-  }
+  const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const canonicalAuthor = slBook?.author ? formatAuthor(slBook.author).name : null;
   const translationPct = slBook && slBook.pages_translated && slBook.pages_ocr
     ? Math.round((slBook.pages_translated / Math.max(slBook.pages_ocr, 1)) * 100)
@@ -205,6 +206,20 @@ export default async function CatalogEntryPage({ params }: Props) {
               <BookMarked className="w-4 h-4 text-accent-rust" />
               <h2 className="text-sm font-medium text-accent-rust uppercase tracking-wide">Digitised copy</h2>
             </div>
+
+            <div className="flex gap-4">
+              {slCoverUrl && (
+                <a href={slBookHref} className="shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={slCoverUrl}
+                    alt={slBook.display_title || slBook.title || displayTitle}
+                    className="w-28 sm:w-32 rounded shadow-sm border border-border-light bg-cream object-cover"
+                    loading="lazy"
+                  />
+                </a>
+              )}
+              <div className="flex-1 min-w-0">
 
             {slBook.display_title && slBook.display_title !== work.title && (
               <p className="text-lg text-primary font-display leading-snug mb-1">
@@ -268,6 +283,8 @@ export default async function CatalogEntryPage({ params }: Props) {
               <BookOpen className="w-4 h-4" />
               Read the digitised copy
             </a>
+              </div>
+            </div>
           </section>
         )}
 
