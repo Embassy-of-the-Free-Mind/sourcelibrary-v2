@@ -349,7 +349,7 @@ export default function TimelineClient({ initialData }: Props) {
           </button>
         )}
         <span className="text-sm text-stone-500 ml-auto font-body">
-          {filteredSummary.total.toLocaleString()} texts
+          {filteredSummary.total.toLocaleString('en-US')} texts
         </span>
       </div>
 
@@ -480,7 +480,7 @@ export default function TimelineClient({ initialData }: Props) {
                   </span>
                 )}
                 <span className="ml-3 text-base font-sans font-normal text-stone-500">
-                  {booksTotal.toLocaleString()} {viewMode === 'art' ? (booksTotal === 1 ? 'artist' : 'artists') : (booksTotal === 1 ? 'text' : 'texts')}
+                  {booksTotal.toLocaleString('en-US')} {viewMode === 'art' ? (booksTotal === 1 ? 'artist' : 'artists') : (booksTotal === 1 ? 'text' : 'texts')}
                 </span>
               </h2>
 

@@ -579,7 +579,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         <span className="w-px h-5 mx-1 hidden sm:block" style={{ background: 'var(--border-light)' }} />
 
         <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-          {filtered.length.toLocaleString()} / {parsed.length.toLocaleString()} entities
+          {filtered.length.toLocaleString('en-US')} / {parsed.length.toLocaleString('en-US')} entities
           &nbsp;&middot;&nbsp;
           {viewStart}–{viewEnd}
         </span>

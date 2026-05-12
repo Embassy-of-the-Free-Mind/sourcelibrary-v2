@@ -36,7 +36,7 @@ export default function DataSources({ sources }: DataSourcesProps) {
                 {source.label}
               </span>
               <span className="text-sm font-mono" style={{ color: 'var(--text-secondary)' }}>
-                {source.count.toLocaleString()}
+                {source.count.toLocaleString('en-US')}
               </span>
             </div>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>

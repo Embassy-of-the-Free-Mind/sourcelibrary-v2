@@ -180,7 +180,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
         className="w-full h-auto rounded-lg"
         style={{ background: '#f5f0e8' }}
         role="img"
-        aria-label={`${totalBooks.toLocaleString()} books across ${domains.length} knowledge domains`}
+        aria-label={`${totalBooks.toLocaleString('en-US')} books across ${domains.length} knowledge domains`}
       >
         {/* Level 1: Group backgrounds + headers */}
         {(root.children as RNode[] | undefined)?.map((group) => {
@@ -225,7 +225,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
                     fontSize={9} fontWeight={600} opacity={0.9}
                     fontFamily="var(--font-display, 'Playfair Display'), serif"
                     style={{ pointerEvents: 'none' }}>
-                    {dd.name} ({(domain.value || 0).toLocaleString()})
+                    {dd.name} ({(domain.value || 0).toLocaleString('en-US')})
                   </text>
                 )}
               </g>
@@ -302,7 +302,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
                   fontSize={fontSize-2} opacity={0.6}
                   fontFamily="var(--font-sans, Inter), sans-serif"
                   style={{ pointerEvents: 'none', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
-                  {(leaf.value || 0).toLocaleString()}
+                  {(leaf.value || 0).toLocaleString('en-US')}
                 </text>
               )}
             </g>
@@ -329,7 +329,7 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
             {tooltip.label}
           </div>
           <div className="text-xs text-secondary mt-0.5">
-            {tooltip.count.toLocaleString()} books
+            {tooltip.count.toLocaleString('en-US')} books
           </div>
         </div>
       )}

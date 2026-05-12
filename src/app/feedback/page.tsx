@@ -83,7 +83,7 @@ export default function FeedbackPage() {
                       {item.page}
                     </Link>
                   )}
-                  <span>{new Date(item.created_at).toLocaleString()}</span>
+                  <span>{new Date(item.created_at).toLocaleString('en-US')}</span>
                   {!item.read && (
                     <span className="px-1.5 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(217, 119, 6, 0.1)', color: 'var(--accent-amber)' }}>
                       new

@@ -51,7 +51,7 @@ function getProgress(job: Job) {
 }
 
 function formatDate(date: Date | string) {
-    return new Date(date).toLocaleString();
+    return new Date(date).toLocaleString('en-US');
 }
 
 export function JobCard({ job, onRetry, onDelete }: JobCardProps) {

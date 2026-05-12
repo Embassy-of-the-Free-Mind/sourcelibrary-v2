@@ -197,7 +197,7 @@ export default async function SacredTextsPortal() {
 
           <div className="flex flex-wrap gap-8 text-sm text-white/40">
             <div>
-              <span className="text-2xl font-semibold text-white/80 block">{totalBooks.toLocaleString()}</span>
+              <span className="text-2xl font-semibold text-white/80 block">{totalBooks.toLocaleString('en-US')}</span>
               core texts
             </div>
             <div>

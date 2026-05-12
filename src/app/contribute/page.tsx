@@ -75,7 +75,7 @@ export default async function ParticipatePage() {
             world&apos;s rarest books
           </h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl mb-10 leading-relaxed">
-            {stats.totalBooks.toLocaleString()} texts from {stats.languageCount} languages, scanned from {' '}
+            {stats.totalBooks.toLocaleString('en-US')} texts from {stats.languageCount} languages, scanned from {' '}
             13 digital archives. Open, translated by AI, and free forever.
             We need human eyes to make the translations good.
           </p>
@@ -98,7 +98,7 @@ export default async function ParticipatePage() {
         <div className="max-w-5xl mx-auto px-6 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             <div>
-              <div className="text-2xl md:text-3xl font-semibold text-primary">{stats.totalBooks.toLocaleString()}</div>
+              <div className="text-2xl md:text-3xl font-semibold text-primary">{stats.totalBooks.toLocaleString('en-US')}</div>
               <div className="text-sm text-muted mt-0.5">rare books</div>
             </div>
             <div>
@@ -106,7 +106,7 @@ export default async function ParticipatePage() {
               <div className="text-sm text-muted mt-0.5">manuscript pages</div>
             </div>
             <div>
-              <div className="text-2xl md:text-3xl font-semibold text-primary">{stats.translatedCount.toLocaleString()}</div>
+              <div className="text-2xl md:text-3xl font-semibold text-primary">{stats.translatedCount.toLocaleString('en-US')}</div>
               <div className="text-sm text-muted mt-0.5">books with translations</div>
             </div>
             <div>

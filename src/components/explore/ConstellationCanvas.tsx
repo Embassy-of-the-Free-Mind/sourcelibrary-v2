@@ -449,7 +449,7 @@ export default function ConstellationCanvas({ points }: { points: ConstellationP
         />
         {searchQuery && highlightedIds && (
           <span className="self-center text-xs text-stone-500 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1.5 shadow-sm">
-            {highlightedIds.size.toLocaleString()} matches
+            {highlightedIds.size.toLocaleString('en-US')} matches
           </span>
         )}
       </div>
@@ -481,7 +481,7 @@ export default function ConstellationCanvas({ points }: { points: ConstellationP
 
       {/* Stats */}
       <div className="absolute bottom-4 left-4 z-20 text-xs text-stone-400 bg-white/80 backdrop-blur-sm rounded px-2 py-1">
-        {points.length.toLocaleString()} items &middot; scroll to zoom &middot; drag to pan &middot; click to open
+        {points.length.toLocaleString('en-US')} items &middot; scroll to zoom &middot; drag to pan &middot; click to open
       </div>
 
       {/* Tooltip */}

@@ -49,7 +49,7 @@ export default function TrafficTab() {
                 <span className="text-sm font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Total Visitors</span>
               </div>
               <div className="text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                {data.totalVisitors.toLocaleString()}
+                {data.totalVisitors.toLocaleString('en-US')}
               </div>
             </div>
           )}
@@ -60,7 +60,7 @@ export default function TrafficTab() {
                 <span className="text-sm font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Total Pageviews</span>
               </div>
               <div className="text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                {data.totalPageviews.toLocaleString()}
+                {data.totalPageviews.toLocaleString('en-US')}
               </div>
             </div>
           )}
@@ -86,7 +86,7 @@ export default function TrafficTab() {
             {data.topPages.map((page, idx) => (
               <div key={idx} className="flex items-center justify-between pb-3" style={{ borderBottom: idx < data.topPages!.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
                 <p className="font-medium truncate" style={{ color: 'var(--text-primary)' }}>{page.path}</p>
-                <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{page.count.toLocaleString()} views</p>
+                <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{page.count.toLocaleString('en-US')} views</p>
               </div>
             ))}
           </div>
@@ -102,7 +102,7 @@ export default function TrafficTab() {
               {data.topReferrers.map((referrer, idx) => (
                 <div key={idx} className="flex items-center justify-between pb-3" style={{ borderBottom: idx < data.topReferrers!.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
                   <p className="font-medium truncate" style={{ color: 'var(--text-primary)' }}>{referrer.referrer || 'Direct traffic'}</p>
-                  <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{referrer.count.toLocaleString()} visitors</p>
+                  <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{referrer.count.toLocaleString('en-US')} visitors</p>
                 </div>
               ))}
             </div>
@@ -119,7 +119,7 @@ export default function TrafficTab() {
               {data.topCountries.map((country, idx) => (
                 <div key={idx} className="flex items-center justify-between pb-3" style={{ borderBottom: idx < data.topCountries!.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
                   <p className="font-medium" style={{ color: 'var(--text-primary)' }}>{country.country}</p>
-                  <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{country.count.toLocaleString()} visitors</p>
+                  <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{country.count.toLocaleString('en-US')} visitors</p>
                 </div>
               ))}
             </div>

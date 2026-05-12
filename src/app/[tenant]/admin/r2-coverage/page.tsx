@@ -108,14 +108,14 @@ export default function R2CoveragePage() {
             <>
               <h2 style={{ fontSize: 16, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 0.5, marginTop: 24, marginBottom: 8 }}>Library-wide</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 8 }}>
-                <Card label="R2 coverage" value={`${snap.library.r2_pct}%`} hint={`${snap.library.r2_pages.toLocaleString()} of ${snap.library.total_pages.toLocaleString()} pages`} />
-                <Card label="Books fully on R2" value={snap.coverage_buckets.full.toLocaleString()} hint="≥99% archived" good />
-                <Card label="Books partially on R2" value={(snap.coverage_buckets.partial_high + snap.coverage_buckets.partial_med + snap.coverage_buckets.partial_low).toLocaleString()} hint={`high ${snap.coverage_buckets.partial_high}, med ${snap.coverage_buckets.partial_med}, low ${snap.coverage_buckets.partial_low}`} warn />
-                <Card label="Books with zero R2" value={snap.coverage_buckets.none.toLocaleString()} hint="have pages but never archived" warn />
-                <Card label="Pages to archive" value={snap.library.unarchived_pages.toLocaleString()} hint={`${snap.library.failed_pages.toLocaleString()} permanently failed`} warn />
+                <Card label="R2 coverage" value={`${snap.library.r2_pct}%`} hint={`${snap.library.r2_pages.toLocaleString('en-US')} of ${snap.library.total_pages.toLocaleString('en-US')} pages`} />
+                <Card label="Books fully on R2" value={snap.coverage_buckets.full.toLocaleString('en-US')} hint="≥99% archived" good />
+                <Card label="Books partially on R2" value={(snap.coverage_buckets.partial_high + snap.coverage_buckets.partial_med + snap.coverage_buckets.partial_low).toLocaleString('en-US')} hint={`high ${snap.coverage_buckets.partial_high}, med ${snap.coverage_buckets.partial_med}, low ${snap.coverage_buckets.partial_low}`} warn />
+                <Card label="Books with zero R2" value={snap.coverage_buckets.none.toLocaleString('en-US')} hint="have pages but never archived" warn />
+                <Card label="Pages to archive" value={snap.library.unarchived_pages.toLocaleString('en-US')} hint={`${snap.library.failed_pages.toLocaleString('en-US')} permanently failed`} warn />
               </div>
               <p style={{ fontSize: 11, color: '#8b949e', marginTop: 0, marginBottom: 24 }}>
-                Snapshot computed {new Date(snap.computed_at).toLocaleString()} in {(snap.computation_ms / 1000).toFixed(1)}s. Refresh: <code style={{ background: '#161b22', padding: '1px 5px', borderRadius: 3 }}>node scripts/workers/r2-coverage-snapshot.mjs</code>
+                Snapshot computed {new Date(snap.computed_at).toLocaleString('en-US')} in {(snap.computation_ms / 1000).toFixed(1)}s. Refresh: <code style={{ background: '#161b22', padding: '1px 5px', borderRadius: 3 }}>node scripts/workers/r2-coverage-snapshot.mjs</code>
               </p>
             </>
           ) : (
@@ -133,8 +133,8 @@ export default function R2CoveragePage() {
                   return (
                     <div key={provider} style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: 8, padding: '10px 14px', minWidth: 180 }}>
                       <div style={{ fontSize: 12, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 0.5 }}>{provider}</div>
-                      <div style={{ fontSize: 16, marginTop: 2 }}>{p.books.toLocaleString()} books · {pct}% R2</div>
-                      <div style={{ fontSize: 11, color: '#8b949e', marginTop: 2 }}>{(p.pages - p.r2 - p.failed).toLocaleString()} pages to archive</div>
+                      <div style={{ fontSize: 16, marginTop: 2 }}>{p.books.toLocaleString('en-US')} books · {pct}% R2</div>
+                      <div style={{ fontSize: 11, color: '#8b949e', marginTop: 2 }}>{(p.pages - p.r2 - p.failed).toLocaleString('en-US')} pages to archive</div>
                     </div>
                   );
                 })}
@@ -213,8 +213,8 @@ function StuckTable({ rows }: { rows: StuckBook[] }) {
               </Td>
               <Td>{b.language}</Td>
               <Td>{b.provider}</Td>
-              <Td align="right">{b.pages_r2.toLocaleString()} / {b.pages_total.toLocaleString()}</Td>
-              <Td align="right" warn={b.pages_unarchived > 0}>{b.pages_unarchived.toLocaleString()}</Td>
+              <Td align="right">{b.pages_r2.toLocaleString('en-US')} / {b.pages_total.toLocaleString('en-US')}</Td>
+              <Td align="right" warn={b.pages_unarchived > 0}>{b.pages_unarchived.toLocaleString('en-US')}</Td>
               <Td align="right"><Bar pct={b.r2_pct} /></Td>
             </tr>
           ))}
@@ -228,7 +228,7 @@ function PartialTable({ rows, totalAvailable, showing }: { rows: PartialBook[]; 
   return (
     <>
       {totalAvailable > showing && (
-        <p style={{ fontSize: 12, color: '#8b949e', margin: '0 0 8px' }}>Showing top {showing} of {totalAvailable.toLocaleString()} partial-R2 books (sorted by unarchived pages).</p>
+        <p style={{ fontSize: 12, color: '#8b949e', margin: '0 0 8px' }}>Showing top {showing} of {totalAvailable.toLocaleString('en-US')} partial-R2 books (sorted by unarchived pages).</p>
       )}
       <div style={{ overflowX: 'auto', background: '#161b22', border: '1px solid #30363d', borderRadius: 8 }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
@@ -254,8 +254,8 @@ function PartialTable({ rows, totalAvailable, showing }: { rows: PartialBook[]; 
                 <Td>{b.language}</Td>
                 <Td>{b.provider}</Td>
                 <Td>{b.status || '—'}</Td>
-                <Td align="right">{b.r2.toLocaleString()} / {b.pages.toLocaleString()}</Td>
-                <Td align="right" warn={b.unarchived > 0}>{b.unarchived.toLocaleString()}</Td>
+                <Td align="right">{b.r2.toLocaleString('en-US')} / {b.pages.toLocaleString('en-US')}</Td>
+                <Td align="right" warn={b.unarchived > 0}>{b.unarchived.toLocaleString('en-US')}</Td>
                 <Td align="right"><Bar pct={b.pct} /></Td>
               </tr>
             ))}
@@ -270,7 +270,7 @@ function NoR2Table({ rows, totalAvailable, showing }: { rows: NoR2Book[]; totalA
   return (
     <>
       {totalAvailable > showing && (
-        <p style={{ fontSize: 12, color: '#8b949e', margin: '0 0 8px' }}>Showing top {showing} of {totalAvailable.toLocaleString()} zero-R2 books (sorted by pages).</p>
+        <p style={{ fontSize: 12, color: '#8b949e', margin: '0 0 8px' }}>Showing top {showing} of {totalAvailable.toLocaleString('en-US')} zero-R2 books (sorted by pages).</p>
       )}
       <div style={{ overflowX: 'auto', background: '#161b22', border: '1px solid #30363d', borderRadius: 8 }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
@@ -294,7 +294,7 @@ function NoR2Table({ rows, totalAvailable, showing }: { rows: NoR2Book[]; totalA
                 <Td>{b.language}</Td>
                 <Td>{b.provider}</Td>
                 <Td>{b.status || '—'}</Td>
-                <Td align="right" warn>{b.pages.toLocaleString()}</Td>
+                <Td align="right" warn>{b.pages.toLocaleString('en-US')}</Td>
               </tr>
             ))}
           </tbody>

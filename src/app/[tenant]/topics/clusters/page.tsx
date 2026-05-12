@@ -120,7 +120,7 @@ export default async function TopicsPage() {
       header={
         <ContentHeader
           title="Browse by Topic"
-          subtitle={`${totalBooks.toLocaleString()} books organized into ${topics.length} topics, discovered by clustering the library's keyword indexes.`}
+          subtitle={`${totalBooks.toLocaleString('en-US')} books organized into ${topics.length} topics, discovered by clustering the library's keyword indexes.`}
         />
       }
     >

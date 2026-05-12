@@ -111,8 +111,8 @@ export default function ApiKeyUsagePage() {
           {/* Summary cards */}
           <div className="grid grid-cols-4 gap-4 mb-8">
             {[
-              { label: 'Total Requests', value: data.totals.total_requests.toLocaleString() },
-              { label: 'Pages Served', value: data.totals.total_pages.toLocaleString() },
+              { label: 'Total Requests', value: data.totals.total_requests.toLocaleString('en-US') },
+              { label: 'Pages Served', value: data.totals.total_pages.toLocaleString('en-US') },
               { label: 'Active Keys', value: data.totals.active_keys },
               { label: 'Total Keys', value: data.totals.total_keys },
             ].map(card => (
@@ -163,10 +163,10 @@ export default function ApiKeyUsagePage() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right font-mono text-stone-700">
-                        {k.total_requests.toLocaleString()}
+                        {k.total_requests.toLocaleString('en-US')}
                       </td>
                       <td className="px-4 py-3 text-right font-mono text-stone-700">
-                        {k.total_pages.toLocaleString()}
+                        {k.total_pages.toLocaleString('en-US')}
                       </td>
                       <td className="px-4 py-3">
                         <Sparkline data={sparkData} />
@@ -210,8 +210,8 @@ export default function ApiKeyUsagePage() {
                           {endpoints.map(([ep, stats]) => (
                             <tr key={ep} className="border-b border-stone-50">
                               <td className="py-1.5 font-mono text-xs text-stone-700">{ep}</td>
-                              <td className="py-1.5 text-right text-stone-600">{stats.requests.toLocaleString()}</td>
-                              <td className="py-1.5 text-right text-stone-600">{stats.pages.toLocaleString()}</td>
+                              <td className="py-1.5 text-right text-stone-600">{stats.requests.toLocaleString('en-US')}</td>
+                              <td className="py-1.5 text-right text-stone-600">{stats.pages.toLocaleString('en-US')}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -238,8 +238,8 @@ export default function ApiKeyUsagePage() {
                             {sorted.map(d => (
                               <tr key={d.date} className="border-b border-stone-50">
                                 <td className="py-1.5 text-stone-700">{d.date}</td>
-                                <td className="py-1.5 text-right text-stone-600">{d.requests.toLocaleString()}</td>
-                                <td className="py-1.5 text-right text-stone-600">{d.pages.toLocaleString()}</td>
+                                <td className="py-1.5 text-right text-stone-600">{d.requests.toLocaleString('en-US')}</td>
+                                <td className="py-1.5 text-right text-stone-600">{d.pages.toLocaleString('en-US')}</td>
                               </tr>
                             ))}
                           </tbody>

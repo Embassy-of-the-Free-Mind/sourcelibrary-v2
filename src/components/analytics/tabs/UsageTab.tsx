@@ -263,10 +263,10 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
                 background: tier.color,
                 clipPath: `polygon(${50 - topPct / 2}% 0, ${50 + topPct / 2}% 0, ${50 + botPct / 2}% 100%, ${50 - botPct / 2}% 100%)`,
               }}
-              title={`${tier.label}: ${tier.count.toLocaleString()} books${i > 0 ? ` (${Math.round((tier.count / tiers[0].count) * 100)}% of enrolled)` : ''}`}
+              title={`${tier.label}: ${tier.count.toLocaleString('en-US')} books${i > 0 ? ` (${Math.round((tier.count / tiers[0].count) * 100)}% of enrolled)` : ''}`}
             >
               <span className="font-medium mr-2">{tier.label}</span>
-              <span className="font-bold">{tier.count.toLocaleString()}</span>
+              <span className="font-bold">{tier.count.toLocaleString('en-US')}</span>
             </div>
           );
         })}
@@ -283,7 +283,7 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
           ))}
           {notEnrolled > 0 && (
             <span className="text-xs px-2 py-1 rounded-full" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
-              {notEnrolled.toLocaleString()} not enrolled
+              {notEnrolled.toLocaleString('en-US')} not enrolled
             </span>
           )}
           {needsAttention > 0 && (

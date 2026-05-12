@@ -248,12 +248,12 @@ export default function CollectionAllBooks({
           <p className="text-sm text-muted mt-1">
             {expanded ? (
               loading
-                ? `Loading ${total.toLocaleString()} ${itemLabel}…`
+                ? `Loading ${total.toLocaleString('en-US')} ${itemLabel}…`
                 : query || language
-                  ? `${sorted.length.toLocaleString()} of ${allBooks.length.toLocaleString()} ${itemLabel}`
-                  : `${allBooks.length.toLocaleString()} ${itemLabel} in this collection`
+                  ? `${sorted.length.toLocaleString('en-US')} of ${allBooks.length.toLocaleString('en-US')} ${itemLabel}`
+                  : `${allBooks.length.toLocaleString('en-US')} ${itemLabel} in this collection`
             ) : (
-              `${total.toLocaleString()} ${itemLabel} in this collection`
+              `${total.toLocaleString('en-US')} ${itemLabel} in this collection`
             )}
           </p>
         </div>
@@ -416,7 +416,7 @@ export default function CollectionAllBooks({
                   <ArrowRight className="w-5 h-5 text-stone-400" />
                 </div>
                 <span className="text-sm font-medium text-stone-300 group-hover:text-white transition-colors">
-                  See all {total.toLocaleString()}
+                  See all {total.toLocaleString('en-US')}
                 </span>
                 <span className="text-xs text-stone-500">{itemLabel}</span>
               </button>
@@ -480,7 +480,7 @@ export default function CollectionAllBooks({
               </div>
               <div className="relative z-10 text-center px-3">
                 <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
-                  See all {total.toLocaleString()}
+                  See all {total.toLocaleString('en-US')}
                 </span>
                 <span className="text-xs text-muted">{itemLabel}</span>
               </div>

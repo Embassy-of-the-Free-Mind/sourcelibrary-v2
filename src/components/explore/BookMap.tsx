@@ -199,7 +199,7 @@ export default function BookMap({ locations }: BookMapProps) {
           className="text-base font-semibold tracking-tight mb-2.5"
           style={{ fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}
         >
-          {bookCount.toLocaleString()} books across {cityPins.length.toLocaleString()} cities
+          {bookCount.toLocaleString('en-US')} books across {cityPins.length.toLocaleString('en-US')} cities
         </h1>
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">

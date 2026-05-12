@@ -96,7 +96,7 @@ export default async function WorkPage({ params }: PageProps) {
           )}
           {earliest && earliest === latest && <span>{earliest}</span>}
           {languages.length > 0 && <span>{languages.join(', ')}</span>}
-          <span>{totalPages.toLocaleString()} pages</span>
+          <span>{totalPages.toLocaleString('en-US')} pages</span>
           <span>{editions.length} editions</span>
           {editions.filter(e => (e.pages_translated || 0) > 0).length >= 2 && (
             <Link

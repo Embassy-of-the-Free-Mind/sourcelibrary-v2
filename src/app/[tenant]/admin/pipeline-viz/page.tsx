@@ -52,7 +52,7 @@ const EDGES: [string, string][] = [
 function fmt(n: number): string {
   if (n >= 10000) return `${(n / 1000).toFixed(1)}k`;
   if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
-  return n.toLocaleString();
+  return n.toLocaleString('en-US');
 }
 
 function getHealthColor(count: number, stageId: string): string {
@@ -147,9 +147,9 @@ export default function PipelineViz() {
               Pipeline Flow
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: 14, margin: '4px 0 0' }}>
-              {totalInPipeline.toLocaleString()} in pipeline &middot; {totalComplete.toLocaleString()} complete
+              {totalInPipeline.toLocaleString('en-US')} in pipeline &middot; {totalComplete.toLocaleString('en-US')} complete
               {failedCount > 0 && <span style={{ color: 'var(--accent-rust)' }}> &middot; {failedCount} failed</span>}
-              {notEnrolled > 0 && <span> &middot; {notEnrolled.toLocaleString()} not enrolled</span>}
+              {notEnrolled > 0 && <span> &middot; {notEnrolled.toLocaleString('en-US')} not enrolled</span>}
             </p>
           </div>
           <button
@@ -261,7 +261,7 @@ export default function PipelineViz() {
                   </text>
 
                   {/* Hover tooltip area */}
-                  <title>{`${stage.label} (Phase ${stage.phase})\n${count.toLocaleString()} books\n${stage.description}`}</title>
+                  <title>{`${stage.label} (Phase ${stage.phase})\n${count.toLocaleString('en-US')} books\n${stage.description}`}</title>
                 </g>
               );
             })}

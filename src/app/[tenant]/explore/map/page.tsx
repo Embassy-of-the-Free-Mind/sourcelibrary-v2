@@ -102,7 +102,7 @@ export default async function MapPage() {
         header={
           <ContentHeader
             title="Map"
-            subtitle={`${locationCount.toLocaleString()} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
+            subtitle={`${locationCount.toLocaleString('en-US')} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
           >
             <div className="mt-5">
               <ExploreTabBar />

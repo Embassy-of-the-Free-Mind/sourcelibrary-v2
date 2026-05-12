@@ -110,7 +110,7 @@ export default function PipelineDiagram({ stages }: { stages: StageData[] }) {
                           color: stage.textColor,
                         }}
                       >
-                        {stage.count.toLocaleString()}
+                        {stage.count.toLocaleString('en-US')}
                       </span>
                       <svg
                         className={`w-4 h-4 text-muted transition-transform ${isExpanded ? 'rotate-180' : ''}`}

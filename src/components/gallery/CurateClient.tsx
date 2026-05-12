@@ -933,7 +933,7 @@ export default function CurateClient() {
                 </>
               )}
               {' / '}
-              <span>{total.toLocaleString()}</span> total
+              <span>{total.toLocaleString('en-US')}</span> total
             </span>
           </div>
 

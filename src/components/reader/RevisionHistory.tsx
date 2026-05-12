@@ -224,7 +224,7 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                          {rev.data.length.toLocaleString()} chars
+                          {rev.data.length.toLocaleString('en-US')} chars
                         </span>
                         <button
                           onClick={(e) => { e.stopPropagation(); handleRestore(rev.id); }}

@@ -1073,7 +1073,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
               {!browseImageLoading && browseImageTotal > 0 && (
                 <div className="text-muted">
-                  <span className="font-medium text-primary">{browseImageTotal.toLocaleString()}</span> images
+                  <span className="font-medium text-primary">{browseImageTotal.toLocaleString('en-US')}</span> images
                   {browseImageTotal > resultsPerPage && (
                     <span className="ml-2 text-faint">
                       (showing {offset + 1}&ndash;{Math.min(offset + resultsPerPage, browseImageTotal)})
@@ -1459,7 +1459,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                 Catalog matches
                 {catalogTotal > 0 && (
                   <span className="ml-1 text-muted/70 normal-case">
-                    · {catalogTotal.toLocaleString()} {catalogTotal === 1 ? 'work' : 'works'}
+                    · {catalogTotal.toLocaleString('en-US')} {catalogTotal === 1 ? 'work' : 'works'}
                   </span>
                 )}
               </h2>
@@ -1846,7 +1846,7 @@ function SearchCollectionCard({ col }: { col: { slug: string; name: string; book
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3">
         <p className="text-white/50 text-[11px] mb-1">
-          {col.book_count.toLocaleString()} books
+          {col.book_count.toLocaleString('en-US')} books
         </p>
         <h3 className="font-serif text-sm sm:text-base text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
           {col.name}

@@ -242,19 +242,19 @@ node scripts/catalog-coverage/build.mjs`}
             <div className="mb-10 space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div>
-                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.editions.toLocaleString()}</div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.editions.toLocaleString('en-US')}</div>
                   <div className="text-sm text-[#6b6560] mt-1">editions catalogued</div>
                 </div>
                 <div>
-                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{nonEnglish.toLocaleString()}</div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{nonEnglish.toLocaleString('en-US')}</div>
                   <div className="text-sm text-[#6b6560] mt-1">non-English editions</div>
                 </div>
                 <div>
-                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{totalWorks.toLocaleString()}</div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{totalWorks.toLocaleString('en-US')}</div>
                   <div className="text-sm text-[#6b6560] mt-1">distinct works</div>
                 </div>
                 <div>
-                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.with_scan.toLocaleString()}</div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.with_scan.toLocaleString('en-US')}</div>
                   <div className="text-sm text-[#6b6560] mt-1">with digital scans <span className="text-[#a09a92]">({pct(t.with_scan, t.editions)}%)</span></div>
                 </div>
               </div>
@@ -275,13 +275,13 @@ node scripts/catalog-coverage/build.mjs`}
           <div className="border border-[#e8e4dc] rounded-lg p-6 mb-10 bg-[#f5f0e8]">
             <h2 className="font-['Cormorant_Garamond'] text-xl font-semibold text-[#1a1612] mb-2">The Opportunity</h2>
             <p className="text-[#444]">
-              <span className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#9e4a3a]">{scannedNotTranslated.toLocaleString()}</span>{' '}
+              <span className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#9e4a3a]">{scannedNotTranslated.toLocaleString('en-US')}</span>{' '}
               non-English works have been digitized but never translated into English.
               They are waiting to be read.
             </p>
             {works.works_neither > 0 && (
               <p className="text-sm text-[#6b6560] mt-2">
-                Another {works.works_neither.toLocaleString()} works have not yet been digitized at all.
+                Another {works.works_neither.toLocaleString('en-US')} works have not yet been digitized at all.
                 Knowing which of these to scan first is itself a form of scholarship.
               </p>
             )}
@@ -333,7 +333,7 @@ node scripts/catalog-coverage/build.mjs`}
                       active ? 'border-[#9e4a3a] bg-[#f5f0e8] text-[#9e4a3a]' : 'border-[#e8e4dc] text-[#6b6560] hover:border-[#d4cfc4]'
                     }`}
                   >
-                    {g.label}{g.count !== undefined && <span className="ml-1 font-medium">{g.count.toLocaleString()}</span>}
+                    {g.label}{g.count !== undefined && <span className="ml-1 font-medium">{g.count.toLocaleString('en-US')}</span>}
                   </button>
                 );
               })}
@@ -349,7 +349,7 @@ node scripts/catalog-coverage/build.mjs`}
 
             {searching && <div className="text-center py-8"><BookLoader /></div>}
             {!searching && searchTotal > 0 && (
-              <p className="text-sm text-[#6b6560] mb-3">{searchTotal.toLocaleString()} editions</p>
+              <p className="text-sm text-[#6b6560] mb-3">{searchTotal.toLocaleString('en-US')} editions</p>
             )}
             {!searching && searchResults.length > 0 && <SearchResultsTable results={searchResults} />}
           </div>
@@ -410,7 +410,7 @@ node scripts/catalog-coverage/build.mjs`}
               </button>
             </div>
 
-            {searchTotal > 0 && <p className="text-sm text-[#6b6560] mb-3">{searchTotal.toLocaleString()} results</p>}
+            {searchTotal > 0 && <p className="text-sm text-[#6b6560] mb-3">{searchTotal.toLocaleString('en-US')} results</p>}
             {searchResults.length > 0 && <SearchResultsTable results={searchResults} />}
           </div>
         )}
@@ -479,30 +479,30 @@ function LanguageTable({ data, onLanguageClick }: { data: LanguageStat[]; onLang
             return (
               <tr key={l.language} className="border-b border-[#f5f0e8] hover:bg-[#f5f0e8]/50">
                 <td className="py-3 pr-4 text-[#1a1612]">{l.language}</td>
-                <td className="py-3 px-4 text-right text-[#444] tabular-nums">{l.editions.toLocaleString()}</td>
+                <td className="py-3 px-4 text-right text-[#444] tabular-nums">{l.editions.toLocaleString('en-US')}</td>
                 <td className="py-3 px-4 text-right tabular-nums">
-                  <span className="text-[#444]">{l.with_scan.toLocaleString()}</span>
+                  <span className="text-[#444]">{l.with_scan.toLocaleString('en-US')}</span>
                   <span className="text-[#a09a92] ml-1 text-xs">{l.pct_scanned}%</span>
                   {(l.scans_high > 0 || l.scans_low > 0) && (
                     <div className="text-[10px] text-[#a09a92] mt-0.5">
-                      {l.scans_high > 0 && <span className="text-[#8b9a7d]">{l.scans_high.toLocaleString()} high</span>}
+                      {l.scans_high > 0 && <span className="text-[#8b9a7d]">{l.scans_high.toLocaleString('en-US')} high</span>}
                       {l.scans_high > 0 && l.scans_low > 0 && ' · '}
-                      {l.scans_low > 0 && <span className="text-[#c9a86c]">{l.scans_low.toLocaleString()} microfilm</span>}
+                      {l.scans_low > 0 && <span className="text-[#c9a86c]">{l.scans_low.toLocaleString('en-US')} microfilm</span>}
                     </div>
                   )}
                 </td>
                 <td className="py-3 px-4 text-right tabular-nums">
-                  <span className="text-[#444]">{l.with_translation.toLocaleString()}</span>
+                  <span className="text-[#444]">{l.with_translation.toLocaleString('en-US')}</span>
                   <span className="text-[#a09a92] ml-1 text-xs">{l.pct_translated}%</span>
                 </td>
-                <td className="py-3 px-4 text-right text-[#444] tabular-nums">{l.in_source_library.toLocaleString()}</td>
+                <td className="py-3 px-4 text-right text-[#444] tabular-nums">{l.in_source_library.toLocaleString('en-US')}</td>
                 <td className="py-3 pl-4 text-right">
                   {gap > 0 ? (
                     <button
                       onClick={() => onLanguageClick(l.language)}
                       className="text-[#9e4a3a] hover:underline tabular-nums"
                     >
-                      {gap.toLocaleString()}
+                      {gap.toLocaleString('en-US')}
                     </button>
                   ) : (
                     <span className="text-[#d4cfc4]">{'\u2014'}</span>
@@ -536,11 +536,11 @@ function TimelineChart({ data }: { data: TimelineDecade[] }) {
               <div className="absolute inset-y-0 left-0 bg-[#c9a86c] rounded-sm" style={{ width: `${(d.with_scan / maxEditions) * 100}%` }} />
               <div className="absolute inset-y-0 left-0 bg-[#8b9a7d] rounded-sm" style={{ width: `${(d.with_translation / maxEditions) * 100}%` }} />
               <div className="absolute inset-0 flex items-center px-2 text-[11px] text-[#444] opacity-0 group-hover:opacity-100 transition-opacity">
-                {d.editions.toLocaleString()} editions {'\u00B7'} {d.pct_scanned}% scanned {'\u00B7'} {d.pct_translated}% translated
+                {d.editions.toLocaleString('en-US')} editions {'\u00B7'} {d.pct_scanned}% scanned {'\u00B7'} {d.pct_translated}% translated
               </div>
             </div>
             <div className="w-16 text-xs text-[#a09a92] text-right shrink-0 tabular-nums">
-              {d.editions.toLocaleString()}
+              {d.editions.toLocaleString('en-US')}
             </div>
           </div>
         ))}
