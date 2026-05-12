@@ -24,8 +24,15 @@ interface BookOverviewProps {
   pages: OverviewPage[];
 }
 
-// Two-tier image URLs: fast thumbnail for overview, high-res for zoom
+// Two-tier image URLs: fast thumbnail for overview, high-res for zoom.
+// Split-page handling MUST come first — page.photo and page.archived_photo
+// both point at the full uncropped spread for split pages, so falling
+// through to them renders the wrong image. cropped_photo is the half-page
+// crop and is the canonical source for split pages.
 function getThumbUrl(page: OverviewPage): string | null {
+  if (page.split_from_spread || page.crop) {
+    return page.thumbnail_blob || page.cropped_photo || null;
+  }
   if (page.thumbnail_blob) return page.thumbnail_blob;
   if (page.thumbnail) return page.thumbnail;
   if (page.archived_photo) return page.archived_photo;
@@ -34,8 +41,9 @@ function getThumbUrl(page: OverviewPage): string | null {
 }
 
 function getHiresUrl(page: OverviewPage): string | null {
-  // Split pages: use photo directly (the cropped half), not the full spread
-  if (page.split_from_spread || page.crop) return page.photo || null;
+  if (page.split_from_spread || page.crop) {
+    return page.cropped_photo || page.photo || null;
+  }
   // Best available high-res: archived R2 > display > original > photo
   if (page.archived_photo) return page.archived_photo;
   if (page.display_photo) return page.display_photo;

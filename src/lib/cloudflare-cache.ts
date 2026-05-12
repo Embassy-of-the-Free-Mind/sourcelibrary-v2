@@ -5,6 +5,11 @@
  * This ensures Cloudflare serves fresh content after pipeline updates, not a
  * stale cached copy.
  *
+ * Tenant-aware: when a path is tenant-scoped (e.g. `/bph/book/foo`), the
+ * book is also served from the tenant subdomain (`bph.sourcelibrary.org`)
+ * which has a SEPARATE Cloudflare cache entry. We must purge both forms or
+ * the subdomain keeps serving stale HTML after backfills.
+ *
  * Requires env vars:
  *   CLOUDFLARE_ZONE_ID   — from Cloudflare dashboard (Overview page)
  *   CLOUDFLARE_API_TOKEN  — with Zone.Cache Purge permission only
@@ -12,14 +17,51 @@
  * Gracefully no-ops if env vars are missing (safe for local dev).
  */
 
-const BASE_URL = 'https://sourcelibrary.org';
+const APEX = 'https://sourcelibrary.org';
+
+// Tenant slug → public subdomain. Visitors reach tenant routes via the
+// subdomain proxy; if we only purge the apex form (`/{tenant}/book/...`),
+// the subdomain cache stays stale. Add subdomains here when new tenants
+// launch.
+const TENANT_SUBDOMAINS: Record<string, string> = {
+  bph: 'https://bph.sourcelibrary.org',
+};
+
+/**
+ * Expand a route path into every public URL that Cloudflare may have
+ * cached for it. Always returns the apex form; if the path is tenant-
+ * scoped, also returns the subdomain forms (with and without /embed/).
+ */
+function publicUrlsForPath(path: string): string[] {
+  const out: string[] = [`${APEX}${path}`];
+
+  const m = path.match(/^\/(?:embed\/)?([a-z0-9_-]+)(\/.*)?$/i);
+  if (m) {
+    const tenant = m[1];
+    const rest = m[2] || '';
+    const subdomain = TENANT_SUBDOMAINS[tenant];
+    if (subdomain) {
+      out.push(`${subdomain}${rest}`);
+      // The subdomain proxy rewrites to /embed/{tenant}/... internally —
+      // Vercel/Cloudflare may also have cached that form.
+      if (!path.startsWith('/embed/')) {
+        out.push(`${subdomain}/embed/${tenant}${rest}`);
+      }
+    }
+  }
+  return out;
+}
 
 export async function purgeCloudflareUrls(paths: string[]): Promise<void> {
   const zoneId = process.env.CLOUDFLARE_ZONE_ID;
   const token = process.env.CLOUDFLARE_API_TOKEN;
   if (!zoneId || !token || paths.length === 0) return;
 
-  const urls = paths.map(p => `${BASE_URL}${p}`);
+  const urlSet = new Set<string>();
+  for (const p of paths) {
+    for (const u of publicUrlsForPath(p)) urlSet.add(u);
+  }
+  const urls = Array.from(urlSet);
 
   // Cloudflare allows 30 URLs per purge call
   for (let i = 0; i < urls.length; i += 30) {

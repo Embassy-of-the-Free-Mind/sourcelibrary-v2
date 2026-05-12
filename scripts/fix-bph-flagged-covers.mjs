@@ -170,7 +170,7 @@ async function pickReplacement(db, bookId) {
 
 async function main() {
   const audit = JSON.parse(readFileSync(AUDIT_PATH, 'utf8'));
-  let flagged = audit.results.filter(r => r.state === 'BLANK' || r.state === 'PLACEHOLDER');
+  let flagged = audit.results.filter(r => r.state === 'BLANK' || r.state === 'PLACEHOLDER' || r.state === 'MISSING');
   if (ONLY_ID) flagged = flagged.filter(r => r.id === ONLY_ID);
   if (ONLY_N) flagged = flagged.slice(0, ONLY_N);
 
