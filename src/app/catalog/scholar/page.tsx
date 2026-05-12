@@ -32,7 +32,7 @@ export default async function ScholarCatalogPage() {
           Catalog
         </h1>
         <p className="text-lg mb-10" style={{ color: 'var(--text-muted)' }}>
-          {browseResult.total.toLocaleString()} works. Bibliographic records with permalinks, OCR status, and translation coverage.
+          {browseResult.total.toLocaleString('en-US')} works. Bibliographic records with permalinks, OCR status, and translation coverage.
         </p>
 
         <ScholarCatalog

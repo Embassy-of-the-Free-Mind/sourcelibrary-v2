@@ -6,11 +6,11 @@ export function formatDuration(ms: number): string {
 }
 
 export function formatTime(timestamp: number): string {
-  return new Date(timestamp).toLocaleString();
+  return new Date(timestamp).toLocaleString('en-US');
 }
 
 export function formatNumber(n: number): string {
-  return n.toLocaleString();
+  return n.toLocaleString('en-US');
 }
 
 export function formatCost(cost: number): string {

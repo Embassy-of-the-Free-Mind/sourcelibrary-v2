@@ -335,7 +335,7 @@ export default async function TopicDetailPage({ params }: Props) {
             </p>
 
             <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-              <span>{data.totalBooks.toLocaleString()} books</span>
+              <span>{data.totalBooks.toLocaleString('en-US')} books</span>
               {data.languages.length > 0 && (
                 <>
                   <span className="w-px h-4 bg-white/20" />

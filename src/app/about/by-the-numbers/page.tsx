@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about/by-the-numbers' },
 };
 
-const fmt = (n: number) => n.toLocaleString();
+const fmt = (n: number) => n.toLocaleString('en-US');
 
 // ---------- Data (snapshot 2026-05-07) ----------
 

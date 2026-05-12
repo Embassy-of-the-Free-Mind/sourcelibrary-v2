@@ -45,7 +45,7 @@ export default async function SubjectsPage() {
             Browse by Subject
           </h1>
           <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
-            Explore {tree ? tree.total_items.toLocaleString() : ''} classified images through the{' '}
+            Explore {tree ? tree.total_items.toLocaleString('en-US') : ''} classified images through the{' '}
             <a
               href="https://iconclass.org"
               target="_blank"
@@ -95,7 +95,7 @@ export default async function SubjectsPage() {
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <p className="text-white font-display text-sm leading-tight">{div.label}</p>
                     <p className="text-white/70 text-xs mt-0.5">
-                      {node.count.toLocaleString()} images
+                      {node.count.toLocaleString('en-US')} images
                     </p>
                   </div>
                 </Link>

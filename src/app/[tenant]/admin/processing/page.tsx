@@ -152,7 +152,7 @@ export default function ProcessingPage() {
               className="text-xs px-2 py-0.5 rounded-full"
               style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}
             >
-              {filtered.length.toLocaleString()} / {rows.length.toLocaleString()} books
+              {filtered.length.toLocaleString('en-US')} / {rows.length.toLocaleString('en-US')} books
             </span>
           </div>
 

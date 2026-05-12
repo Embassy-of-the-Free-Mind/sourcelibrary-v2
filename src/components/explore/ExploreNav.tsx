@@ -88,7 +88,7 @@ function CardContent({ card, count }: { card: typeof VIZ_CARDS[number]; count: n
         {card.description}
       </p>
       <div className="text-sm font-medium" style={{ color: card.color }}>
-        {count.toLocaleString()} {card.statLabel}
+        {count.toLocaleString('en-US')} {card.statLabel}
       </div>
     </>
   );

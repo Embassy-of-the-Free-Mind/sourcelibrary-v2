@@ -95,7 +95,7 @@ export default async function ResearchSessionPage({ params }: PageProps) {
       {/* Stats */}
       <div className="flex gap-6 text-sm text-muted mb-8">
         <span>{s.message_count} messages</span>
-        <span>{s.word_count.toLocaleString()} words</span>
+        <span>{s.word_count.toLocaleString('en-US')} words</span>
         <span>{s.duration_minutes} min</span>
         {s.books_imported.length > 0 && (
           <span>{s.books_imported.length} books imported</span>

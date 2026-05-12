@@ -223,7 +223,7 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
       <div className="absolute top-4 left-5 z-10 pointer-events-none">
         <a href="/" className="text-white/30 hover:text-white/60 text-xs font-mono tracking-[0.2em] uppercase transition-colors pointer-events-auto">Source Library</a>
         <div className="text-white/70 font-serif text-xl leading-tight">Image Atlas</div>
-        <div className="text-white/25 text-xs mt-0.5 font-mono">{stats.total.toLocaleString()} illustrations from {stats.books.toLocaleString()} books</div>
+        <div className="text-white/25 text-xs mt-0.5 font-mono">{stats.total.toLocaleString('en-US')} illustrations from {stats.books.toLocaleString('en-US')} books</div>
         <div className="text-white/15 text-xs mt-0.5 font-mono">{loadStatus}</div>
       </div>
 

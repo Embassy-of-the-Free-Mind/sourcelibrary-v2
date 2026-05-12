@@ -78,7 +78,7 @@ function TalkPageCard({
             </span>
           </div>
           <div className="text-sm text-muted mt-0.5">
-            {post.pages.toLocaleString()} pages, {post.pct}% translated
+            {post.pages.toLocaleString('en-US')} pages, {post.pct}% translated
           </div>
         </div>
         <span

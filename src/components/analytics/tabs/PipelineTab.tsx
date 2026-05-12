@@ -128,9 +128,9 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
               )}
             </div>
             <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              {ec!.translation.toLocaleString()} / {ec!.ocr.toLocaleString()} books with OCR
+              {ec!.translation.toLocaleString('en-US')} / {ec!.ocr.toLocaleString('en-US')} books with OCR
               {progressBar.etaDays > 0 && translateRate > 0 && (
-                <span> &middot; ~{progressBar.etaDays < 1 ? `${progressBar.etaHours}h` : `${progressBar.etaDays}d`} remaining at {translateRate.toLocaleString()}/hr</span>
+                <span> &middot; ~{progressBar.etaDays < 1 ? `${progressBar.etaHours}h` : `${progressBar.etaDays}d`} remaining at {translateRate.toLocaleString('en-US')}/hr</span>
               )}
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           </div>
           <div className="flex justify-between mt-1">
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{progressBar.pct}% have translation</span>
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{progressBar.fullyDone.toLocaleString()} pipeline complete ({progressBar.fullyPct}%)</span>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{progressBar.fullyDone.toLocaleString('en-US')} pipeline complete ({progressBar.fullyPct}%)</span>
           </div>
         </div>
       )}
@@ -182,14 +182,14 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #fffbeb)', border: '1px solid var(--border-light)' }}>
           <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>First Translations</div>
           <div className="text-3xl font-bold" style={{ color: 'var(--accent-gold-dark)' }}>
-            {(pipelineData.milestones?.firstTranslations || 0).toLocaleString()}
+            {(pipelineData.milestones?.firstTranslations || 0).toLocaleString('en-US')}
           </div>
           <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>into English</div>
         </div>
         <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #fdf4ff)', border: '1px solid var(--border-light)' }}>
           <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>&gt;90% Translated</div>
           <div className="text-3xl font-bold" style={{ color: '#a855f7' }}>
-            {(pipelineData.milestones?.nearComplete || 0).toLocaleString()}
+            {(pipelineData.milestones?.nearComplete || 0).toLocaleString('en-US')}
           </div>
           <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>books</div>
         </div>
@@ -260,7 +260,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
                     />
                   </div>
                   <div className="w-16 text-xs font-bold text-right" style={{ color: 'var(--text-secondary)' }}>
-                    {count.toLocaleString()}
+                    {count.toLocaleString('en-US')}
                   </div>
                 </div>
               ))}
@@ -300,7 +300,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
               )}
             </h2>
             <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
-              {total.toLocaleString()} books with pages &middot; {cov.galleryImages.toLocaleString()} gallery images
+              {total.toLocaleString('en-US')} books with pages &middot; {cov.galleryImages.toLocaleString('en-US')} gallery images
             </p>
             <div className="space-y-2.5">
               {phases.map(({ label, count, color }) => {
@@ -317,7 +317,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
                       />
                     </div>
                     <div className="w-24 text-xs text-right" style={{ color: 'var(--text-secondary)' }}>
-                      <span className="font-bold">{count.toLocaleString()}</span>
+                      <span className="font-bold">{count.toLocaleString('en-US')}</span>
                       <span className="ml-1" style={{ color: 'var(--text-muted)' }}>({pct}%)</span>
                     </div>
                   </div>
@@ -453,7 +453,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
                       <td className="py-2.5 pr-4 font-medium" style={{ color: 'var(--text-primary)' }}>{name}</td>
                       <td className="py-2.5 pr-4" style={{ color: 'var(--text-muted)' }}>
                         {timeSince !== null ? (
-                          <span title={new Date(health.lastRun!).toLocaleString()}>
+                          <span title={new Date(health.lastRun!).toLocaleString('en-US')}>
                             {timeSince < 60 ? `${timeSince}m ago` : `${Math.round(timeSince / 60)}h ago`}
                           </span>
                         ) : 'Never'}

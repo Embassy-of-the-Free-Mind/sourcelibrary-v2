@@ -210,22 +210,22 @@ export default function RealtimeDashboard() {
             />
             <StatCard
               label="Pages in Flight"
-              value={totalActivePages.toLocaleString()}
-              sub={`${totalCompletedPages.toLocaleString()} done, ${totalFailedPages} failed`}
+              value={totalActivePages.toLocaleString('en-US')}
+              sub={`${totalCompletedPages.toLocaleString('en-US')} done, ${totalFailedPages} failed`}
               icon={<Zap className="w-4 h-4" />}
               color="var(--accent-gold)"
             />
             <StatCard
               label="Last Hour"
-              value={data.hourly.totalCalls.toLocaleString()}
+              value={data.hourly.totalCalls.toLocaleString('en-US')}
               sub={`$${data.hourly.totalCost.toFixed(3)} spent`}
               icon={<Clock className="w-4 h-4" />}
               color="var(--accent-sage)"
             />
             <StatCard
               label="Pipeline Queue"
-              value={sortedFunnel.reduce((s, f) => s + f.count, 0).toLocaleString()}
-              sub={`${completedCount.toLocaleString()} complete, ${failedCount} failed`}
+              value={sortedFunnel.reduce((s, f) => s + f.count, 0).toLocaleString('en-US')}
+              sub={`${completedCount.toLocaleString('en-US')} complete, ${failedCount} failed`}
               icon={<BookOpen className="w-4 h-4" />}
               color="var(--accent-violet)"
             />
@@ -249,7 +249,7 @@ export default function RealtimeDashboard() {
                         style={{ background: TYPE_COLORS[t.type] || 'var(--text-muted)' }}
                       />
                       <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                        {t.count.toLocaleString()}
+                        {t.count.toLocaleString('en-US')}
                       </span>
                       <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                         {t.type}
@@ -350,7 +350,7 @@ export default function RealtimeDashboard() {
                       className="text-xs tabular-nums w-12 text-right"
                       style={{ color: 'var(--text-secondary)', fontWeight: isActive ? 600 : 400 }}
                     >
-                      {s.count.toLocaleString()}
+                      {s.count.toLocaleString('en-US')}
                     </span>
                   </div>
                 );
@@ -361,7 +361,7 @@ export default function RealtimeDashboard() {
                   <CheckCircle className="w-3 h-3 inline mr-1" />complete
                 </span>
                 <span className="text-sm tabular-nums" style={{ color: 'var(--accent-sage)' }}>
-                  {completedCount.toLocaleString()}
+                  {completedCount.toLocaleString('en-US')}
                 </span>
                 {failedCount > 0 && (
                   <>

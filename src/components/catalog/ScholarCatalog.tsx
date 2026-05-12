@@ -375,8 +375,8 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
         <div className="flex items-center gap-3">
           <p className="text-sm text-muted">
             {query || hasActiveFilters
-              ? `${total.toLocaleString()} of ${initialTotal.toLocaleString()} books`
-              : `${total.toLocaleString()} books`}
+              ? `${total.toLocaleString('en-US')} of ${initialTotal.toLocaleString('en-US')} books`
+              : `${total.toLocaleString('en-US')} books`}
           </p>
           <a
             href={csvUrl}
@@ -546,7 +546,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
         <div className="mb-8 p-4 rounded-lg border border-border-light bg-warm/30">
           <h3 className="text-xs uppercase tracking-wide text-muted font-medium mb-3 flex items-center gap-1.5">
             <FileText className="w-3.5 h-3.5" />
-            Content matches ({contentTotal.toLocaleString()} results)
+            Content matches ({contentTotal.toLocaleString('en-US')} results)
           </h3>
           <div className="space-y-2">
             {contentMatches.map((match, i) => {
@@ -576,7 +576,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
               href={`/search?q=${encodeURIComponent(query)}${filters.language ? `&language=${filters.language}` : ''}`}
               className="inline-block mt-3 text-xs text-accent-rust hover:underline"
             >
-              See all {contentTotal.toLocaleString()} content matches →
+              See all {contentTotal.toLocaleString('en-US')} content matches →
             </Link>
           )}
         </div>

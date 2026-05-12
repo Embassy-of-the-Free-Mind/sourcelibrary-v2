@@ -850,7 +850,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
                 className="text-sm text-muted hover:text-accent-rust transition-colors"
               >
-                Browse all {galleryTotalImages.toLocaleString()}
+                Browse all {galleryTotalImages.toLocaleString('en-US')}
               </Link>
             </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 mt-5">
@@ -897,7 +897,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
                 >
                   <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
-                    View all {galleryTotalImages.toLocaleString()}
+                    View all {galleryTotalImages.toLocaleString('en-US')}
                   </span>
                 </Link>
               )}

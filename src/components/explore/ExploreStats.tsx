@@ -28,7 +28,7 @@ export default function ExploreStats({ totals }: ExploreStatsProps) {
           style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)' }}
         >
           <div className="text-2xl sm:text-3xl font-semibold" style={{ color: 'var(--text-primary)' }}>
-            {totals[key].toLocaleString()}
+            {totals[key].toLocaleString('en-US')}
           </div>
           <div className="text-sm font-medium mt-1" style={{ color: 'var(--text-secondary)' }}>
             {label}

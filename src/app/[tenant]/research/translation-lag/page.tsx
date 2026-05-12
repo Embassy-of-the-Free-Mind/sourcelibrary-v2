@@ -131,8 +131,8 @@ export default async function TranslationLagPage() {
     >
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Books analyzed" value={data.length.toLocaleString()} />
-        <StatCard label="First translations" value={firstTranslations.length.toLocaleString()} />
+        <StatCard label="Books analyzed" value={data.length.toLocaleString('en-US')} />
+        <StatCard label="First translations" value={firstTranslations.length.toLocaleString('en-US')} />
         <StatCard label="Average lag" value={`${avgLag} years`} />
         <StatCard label="Median lag" value={`${medianLag} years`} />
       </div>
@@ -203,7 +203,7 @@ export default async function TranslationLagPage() {
                   <td className="py-2 pr-4 text-[var(--text-muted)]">{d.composed_display}</td>
                   <td className="py-2 pr-4">{d.year}</td>
                   <td className="py-2 pr-4">{d.language}</td>
-                  <td className="py-2 pr-4 text-right font-medium">{d.lag.toLocaleString()}y</td>
+                  <td className="py-2 pr-4 text-right font-medium">{d.lag.toLocaleString('en-US')}y</td>
                 </tr>
               ))}
             </tbody>
@@ -224,7 +224,7 @@ export default async function TranslationLagPage() {
           For translations and later editions, the &ldquo;lag&rdquo; represents how long it took for the text to reach
           this particular linguistic community — not necessarily the total time before any printed edition existed.
           Works with estimated composition dates (e.g., &ldquo;c. 3rd century CE&rdquo;) use the midpoint of the estimated range.
-          {data.length.toLocaleString()} of {'>'}2,400 visible books have computable composition dates.
+          {data.length.toLocaleString('en-US')} of {'>'}2,400 visible books have computable composition dates.
         </p>
       </div>
     </ContentPageLayout>
@@ -252,7 +252,7 @@ function LagBar({ label, value, max, count }: { label: string; value: number; ma
         />
       </div>
       <div className="w-20 text-sm text-right text-[var(--text-muted)]">
-        {value.toLocaleString()}y <span className="text-xs">({count})</span>
+        {value.toLocaleString('en-US')}y <span className="text-xs">({count})</span>
       </div>
     </div>
   );

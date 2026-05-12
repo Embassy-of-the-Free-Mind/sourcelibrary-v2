@@ -198,7 +198,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
           </h1>
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString()} books</span>
+            <span>{total.toLocaleString('en-US')} books</span>
             {firstTranslationCount > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
@@ -259,7 +259,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
           <div>
             <h2 className="text-2xl sm:text-3xl text-primary font-display">All Books</h2>
             <p className="text-sm text-muted mt-1">
-              {total.toLocaleString()} {langName} texts
+              {total.toLocaleString('en-US')} {langName} texts
             </p>
           </div>
 

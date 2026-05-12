@@ -225,8 +225,8 @@ export default function PipelineDashboard() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <StatCard
               label="Pipeline Queue"
-              value={inFlightCount.toLocaleString()}
-              sub={`${completedCount.toLocaleString()} complete`}
+              value={inFlightCount.toLocaleString('en-US')}
+              sub={`${completedCount.toLocaleString('en-US')} complete`}
               icon={<BookOpen className="w-4 h-4" />}
               color="var(--accent-violet)"
             />
@@ -289,7 +289,7 @@ export default function PipelineDashboard() {
                       className="text-xs tabular-nums w-12 text-right"
                       style={{ color: 'var(--text-secondary)', fontWeight: isActive ? 600 : 400 }}
                     >
-                      {s.count.toLocaleString()}
+                      {s.count.toLocaleString('en-US')}
                     </span>
                     {isFailed && s.count > 0 && (
                       <button
@@ -310,7 +310,7 @@ export default function PipelineDashboard() {
                   <CheckCircle className="w-3 h-3 inline mr-1" />complete
                 </span>
                 <span className="text-sm tabular-nums" style={{ color: 'var(--accent-sage)' }}>
-                  {completedCount.toLocaleString()}
+                  {completedCount.toLocaleString('en-US')}
                 </span>
               </div>
             </div>

@@ -617,7 +617,7 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
         </a>
         <div className="text-white/70 font-serif text-xl leading-tight">Image Atlas</div>
         <div className="text-white/25 text-xs mt-0.5 font-mono">
-          {stats.totalImages.toLocaleString()} illustrations from {stats.nBooks.toLocaleString()} books
+          {stats.totalImages.toLocaleString('en-US')} illustrations from {stats.nBooks.toLocaleString('en-US')} books
         </div>
       </div>
 
@@ -685,10 +685,10 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
           onClick={(e) => e.stopPropagation()}
         >
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div><div className="text-gray-800 font-mono text-xl">{stats.totalImages.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Images</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.totalImages.toLocaleString('en-US')}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Images</div></div>
             <div><div className="text-gray-800 font-mono text-xl">{stats.nClusters}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Clusters</div></div>
             <div><div className="text-gray-800 font-mono text-xl">{stats.nTypes}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Image Types</div></div>
-            <div><div className="text-gray-800 font-mono text-xl">{stats.nBooks.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Books</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.nBooks.toLocaleString('en-US')}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Books</div></div>
           </div>
           <div className="border-t border-gray-200 pt-3 text-gray-500 text-sm leading-relaxed space-y-2">
             <p>

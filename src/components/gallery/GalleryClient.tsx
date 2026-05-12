@@ -98,13 +98,22 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const pathParts = pathname.split('/').filter(Boolean);
   const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
 
-  // Shuffle initial items client-side so order varies each visit
-  const [data, setData] = useState<GalleryResponse>(() => ({
-    ...initialData,
-    items: shuffle(initialData.items),
-  }));
-  // Accumulated items for "Load More" pattern
-  const [allItems, setAllItems] = useState<GalleryItem[]>(() => shuffle(initialData.items));
+  // Render the server-provided order on first paint (matches SSR HTML so we
+  // don't trip React error #418 hydration mismatch), then shuffle once we're
+  // past hydration. Math.random() inside a useState initializer ran twice —
+  // once on the server, once on the client — and produced different orders.
+  const [data, setData] = useState<GalleryResponse>(initialData);
+  const [allItems, setAllItems] = useState<GalleryItem[]>(initialData.items);
+  const [hasShuffled, setHasShuffled] = useState(false);
+  useEffect(() => {
+    if (hasShuffled) return;
+    const shuffled = shuffle(initialData.items);
+    setData(prev => ({ ...prev, items: shuffled }));
+    setAllItems(shuffled);
+    setHasShuffled(true);
+    // initialData is the prop from the server — stable for the lifetime of this mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -614,7 +623,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <div className="mb-4">
                 <h2 className="text-2xl font-serif text-stone-800 mb-1">Browse Images</h2>
                 <p className="text-stone-500 text-base">
-                  {data.total.toLocaleString()} illustrations from rare historical manuscripts.
+                  {data.total.toLocaleString('en-US')} illustrations from rare historical manuscripts.
                 </p>
               </div>
             )}
@@ -639,7 +648,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
-                  {loadingMore ? 'Loading...' : `Load more (${remainingCount.toLocaleString()} remaining)`}
+                  {loadingMore ? 'Loading...' : `Load more (${remainingCount.toLocaleString('en-US')} remaining)`}
                 </button>
               </div>
             )}

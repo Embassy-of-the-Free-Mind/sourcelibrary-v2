@@ -1280,7 +1280,7 @@ function StatCard({ label, value, sub, icon, color }: {
         <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</span>
       </div>
       <div className="text-2xl font-serif tabular-nums" style={{ color: 'var(--text-primary)' }}>
-        {typeof value === 'number' ? value.toLocaleString() : value}
+        {typeof value === 'number' ? value.toLocaleString('en-US') : value}
       </div>
       <div className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>{sub}</div>
     </div>

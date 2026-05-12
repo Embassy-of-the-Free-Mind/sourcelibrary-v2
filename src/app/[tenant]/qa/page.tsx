@@ -82,7 +82,7 @@ export default function QASamplingPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white rounded-lg border border-stone-200 p-4">
                 <div className="text-2xl font-bold text-stone-900">
-                  {data.population.translatedPages.toLocaleString()}
+                  {data.population.translatedPages.toLocaleString('en-US')}
                 </div>
                 <div className="text-sm text-stone-500">Translated Pages</div>
               </div>
@@ -119,7 +119,7 @@ export default function QASamplingPage() {
                       <div>
                         <div className="font-medium text-sm">{stat.model}</div>
                         <div className="text-xs text-stone-500">
-                          {stat.count} pages, avg {stat.avgLength.toLocaleString()} chars
+                          {stat.count} pages, avg {stat.avgLength.toLocaleString('en-US')} chars
                         </div>
                       </div>
                       <div className="text-right">
@@ -149,7 +149,7 @@ export default function QASamplingPage() {
                       <div>
                         <div className="font-medium text-sm">{stat.model}</div>
                         <div className="text-xs text-stone-500">
-                          {stat.count} pages, avg {stat.avgLength.toLocaleString()} chars
+                          {stat.count} pages, avg {stat.avgLength.toLocaleString('en-US')} chars
                         </div>
                       </div>
                       <div className="text-right">

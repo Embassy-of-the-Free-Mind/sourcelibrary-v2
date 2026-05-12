@@ -137,7 +137,7 @@ export default function WorldsLargestCollectionPage() {
                 <div className="flex justify-between items-baseline mb-1">
                   <span className="text-sm text-secondary font-medium">{col.name}</span>
                   <span className="text-xs text-muted">
-                    {col.count.toLocaleString()} texts &middot; {col.access}
+                    {col.count.toLocaleString('en-US')} texts &middot; {col.access}
                   </span>
                 </div>
                 <div className="w-full bg-cream rounded-full h-6 overflow-hidden">
@@ -148,7 +148,7 @@ export default function WorldsLargestCollectionPage() {
                       backgroundColor: col.color,
                     }}
                   >
-                    <span className="text-xs text-white font-medium">{col.count.toLocaleString()}</span>
+                    <span className="text-xs text-white font-medium">{col.count.toLocaleString('en-US')}</span>
                   </div>
                 </div>
               </div>
@@ -330,7 +330,7 @@ export default function WorldsLargestCollectionPage() {
                   <tr key={lib.name} className="border-b border-border-light">
                     <td className="py-2.5 text-secondary font-medium">{lib.name}</td>
                     <td className="py-2.5 text-right px-4 text-muted tabular-nums">
-                      {lib.translations ? `~${lib.translations.toLocaleString()}` : 'thousands'}
+                      {lib.translations ? `~${lib.translations.toLocaleString('en-US')}` : 'thousands'}
                     </td>
                     <td className="py-2.5">
                       {lib.newTranslations ? (

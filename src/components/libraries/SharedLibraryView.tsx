@@ -189,7 +189,7 @@ export default function SharedLibraryView({
                   className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
                 >
                   <Search className="w-3.5 h-3.5" />
-                  Browse the full catalogue ({catalogTotal.toLocaleString()} works)
+                  Browse the full catalogue ({catalogTotal.toLocaleString('en-US')} works)
                 </Link>
               ) : (
                 <Link
@@ -206,12 +206,12 @@ export default function SharedLibraryView({
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
             {isBph && catalogTotal > 0 ? (
               <>
-                <span>{catalogTotal.toLocaleString()} works in catalogue</span>
+                <span>{catalogTotal.toLocaleString('en-US')} works in catalogue</span>
                 <span className="w-px h-4 bg-white/20" />
-                <span>{total.toLocaleString()} digitised on Source Library</span>
+                <span>{total.toLocaleString('en-US')} digitised on Source Library</span>
               </>
             ) : (
-              <span>{total.toLocaleString()} translated books</span>
+              <span>{total.toLocaleString('en-US')} translated books</span>
             )}
             {languages.length > 0 && (
               <>
@@ -353,7 +353,7 @@ export default function SharedLibraryView({
                     All Books
                   </h2>
                   <p className="text-sm text-muted mt-1">
-                    {total.toLocaleString()} books from {partner.name}
+                    {total.toLocaleString('en-US')} books from {partner.name}
                   </p>
                 </div>
 
@@ -457,7 +457,7 @@ export default function SharedLibraryView({
                   Selected Books
                 </h2>
                 <p className="text-sm text-muted mb-4">
-                  {total.toLocaleString()} books from the BPH collection translated on Source Library.
+                  {total.toLocaleString('en-US')} books from the BPH collection translated on Source Library.
                 </p>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
                   {topBooks.map((book, i) => (
@@ -508,7 +508,7 @@ export default function SharedLibraryView({
                     Library Catalogue
                   </h2>
                   <p className="text-sm text-muted mt-1">
-                    Complete catalogue of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString()} works in the collection.
+                    Complete catalogue of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString('en-US')} works in the collection.
                     Works available on Source Library are marked with a book icon.
                   </p>
                 </div>

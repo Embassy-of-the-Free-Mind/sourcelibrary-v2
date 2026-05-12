@@ -187,7 +187,7 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
         <div className={`flex items-center gap-3 ${isHero || isFeatured ? 'mt-5' : 'mt-3'}`}>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
             <BookOpen className="w-3 h-3" />
-            {count.toLocaleString()} books
+            {count.toLocaleString('en-US')} books
           </span>
           {topLangs && (
             <span className="inline-flex items-center gap-1.5 text-xs text-white/50">
@@ -238,7 +238,7 @@ export default async function LibrariesPage() {
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6">
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">Libraries</h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">
-            {totalBooks.toLocaleString()} books sourced from {partners.length} libraries and archives
+            {totalBooks.toLocaleString('en-US')} books sourced from {partners.length} libraries and archives
             {totalInstitutions > 0 ? ` across ${totalInstitutions} contributing institutions` : ''} worldwide.
           </p>
         </div>

@@ -447,7 +447,7 @@ export default function BphCatalogBrowser({
 
         {!hideInlineCount && !sortLivesInHeader && (
           <span className="text-sm text-muted ml-auto">
-            {total.toLocaleString()} works
+            {total.toLocaleString('en-US')} works
           </span>
         )}
       </div>
@@ -460,8 +460,8 @@ export default function BphCatalogBrowser({
       {sortLivesInHeader && (
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-sm text-muted">
-            <span className="font-medium text-primary">{total.toLocaleString()}</span>
-            {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString()} works` : ' works'}
+            <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
+            {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
           </span>
           <div className="flex items-center gap-3 ml-auto">
             <label className="inline-flex items-center gap-2 text-sm text-muted">

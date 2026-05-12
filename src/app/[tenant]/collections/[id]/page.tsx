@@ -800,7 +800,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
                       {child.book_count ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {child.book_count.toLocaleString()} {itemLabel}
+                          {child.book_count.toLocaleString('en-US')} {itemLabel}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
@@ -827,7 +827,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}` : `/gallery?collection=${id}`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors"
               >
-                Browse all {galleryTotalImages.toLocaleString()}
+                Browse all {galleryTotalImages.toLocaleString('en-US')}
               </Link>
             </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 mt-5">
@@ -874,7 +874,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
                 >
                   <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
-                    View all {galleryTotalImages.toLocaleString()}
+                    View all {galleryTotalImages.toLocaleString('en-US')}
                   </span>
                 </Link>
               )}

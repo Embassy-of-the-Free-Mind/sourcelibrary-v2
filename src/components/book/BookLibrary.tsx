@@ -392,7 +392,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
         </h2>
         {showCollections && (
           <p className="text-stone-500 mt-2">
-            {totalBooks.toLocaleString()} texts across {collections.length} collections
+            {totalBooks.toLocaleString('en-US')} texts across {collections.length} collections
           </p>
         )}
       </div>
@@ -544,7 +544,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
               onClick={() => setBrowseAll(true)}
               className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-stone-700 transition-colors"
             >
-              Browse all {totalBooks.toLocaleString()} books
+              Browse all {totalBooks.toLocaleString('en-US')} books
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>

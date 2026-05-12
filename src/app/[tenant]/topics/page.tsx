@@ -138,7 +138,7 @@ function FacetValueCard({ value, facetId }: { value: FacetCount; facetId: string
             {value.label}
           </h3>
           <span className="text-xs text-muted whitespace-nowrap flex-shrink-0">
-            {value.count.toLocaleString()}
+            {value.count.toLocaleString('en-US')}
           </span>
         </div>
       </div>
@@ -204,7 +204,7 @@ export default async function TopicsPage() {
       header={
         <ContentHeader
           title="Browse the Library"
-          subtitle={`${totalBooks.toLocaleString()} books across six dimensions. Click any tag to explore, or combine tags to narrow your search.`}
+          subtitle={`${totalBooks.toLocaleString('en-US')} books across six dimensions. Click any tag to explore, or combine tags to narrow your search.`}
         />
       }
     >
