@@ -70,14 +70,18 @@ export default function BphUnifiedCatalogue({
 
   // "Show all" forces list display: grid only renders books with thumbnails
   // (the digitised subset), so preserving grid here would make the toggle a
-  // visual no-op — the very bug a user reported as "Show all doesn't show
-  // all". List is the only display that can faithfully show the full 27,706
-  // works. "Show digitised" preserves display since both modes work for that
-  // subset. View-icons toggle still preserves the current filter.
+  // visual no-op. List is the only display that can faithfully show the full
+  // 27,706 works.
+  //
+  // The grid icon is the inverse case — grid *only* makes sense on the
+  // digitised subset, so clicking grid from any state must land on
+  // view=books. Previously gridHref preserved the current mode, which routed
+  // list+all → catalog+grid (a broken combination — grid has no thumbnails
+  // for non-digitised books). Force books so grid always shows covers.
   const allHref = embedHref(makeHref(basePath, 'catalog', 'list'));
   const digitizedHref = embedHref(makeHref(basePath, 'books', display));
   const listHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list'));
-  const gridHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'grid'));
+  const gridHref = embedHref(makeHref(basePath, 'books', 'grid'));
   // Grid view doesn't host the Advanced filter panel (those fields query
   // bph_works in Supabase, which only the list view consumes). When the
   // user clicks Advanced from the grid we route them to the list view with
@@ -187,6 +191,11 @@ export default function BphUnifiedCatalogue({
           resultsHeaderSlot={viewIconsNode}
           catalogTotal={catalogTotal}
           lockDigitized={mode === 'digitized'}
+          // Use the MongoDB-derived digitised count as the displayed baseline
+          // so the list view counter matches the grid view (#1700 follow-up).
+          // The browser falls back to its live Supabase count once the user
+          // applies a search or advanced filter.
+          displayTotal={mode === 'digitized' ? digitizedTotal : undefined}
         />
       ) : (
         // Grid view: the covers grid lives in SharedLibraryView (fed by
