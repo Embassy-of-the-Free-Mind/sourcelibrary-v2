@@ -48,7 +48,8 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     const language = typeof sp.language === 'string' ? sp.language : '';
     const q = typeof sp.q === 'string' ? sp.q : '';
     const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0', 10) || 0;
-    const view = typeof sp.view === 'string' ? sp.view : 'books';
+    const rawView = typeof sp.view === 'string' ? sp.view : 'books';
+    const view = rawView === 'catalogue' ? 'catalog' : rawView;
     // Display dimension is independent of the view filter. When unset, default
     // matches what the partner mockup leads with: catalog→list, books→grid.
     // Once the user picks an icon, their choice persists across filter switches.

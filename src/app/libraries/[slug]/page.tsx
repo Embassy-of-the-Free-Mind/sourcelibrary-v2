@@ -204,7 +204,8 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
   const language = typeof sp.language === 'string' ? sp.language : '';
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
-  const view = typeof sp.view === 'string' ? sp.view : '';
+  const rawView = typeof sp.view === 'string' ? sp.view : '';
+  const view = rawView === 'catalogue' ? 'catalog' : rawView;
 
   const isBph = partner.providerKey === 'bph';
 
