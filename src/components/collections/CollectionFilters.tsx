@@ -23,13 +23,15 @@ interface CollectionFiltersProps {
   searchPath?: string;
   /** Show a search input for filtering within this collection */
   showSearch?: boolean;
+  /** Default sort when no `?sort=` is in the URL (e.g. 'title' for BPH grid). */
+  defaultSort?: string;
 }
 
-export default function CollectionFilters({ collectionId, languages, basePath, searchPath, showSearch }: CollectionFiltersProps) {
+export default function CollectionFilters({ collectionId, languages, basePath, searchPath, showSearch, defaultSort = 'relevance' }: CollectionFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const sort = searchParams.get('sort') || 'relevance';
+  const sort = searchParams.get('sort') || defaultSort;
   const language = searchParams.get('language') || '';
   const initialQ = searchParams.get('q') || '';
   const [searchQuery, setSearchQuery] = useState(initialQ);
