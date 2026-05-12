@@ -20,6 +20,8 @@ const NON_TENANT_PATHS = new Set([
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
   'research', 'embed', 'shwep', 'for-researchers', 'identify',
+  // Welcome flow (post-signup interstitial + temporary preview route)
+  'welcome', 'welcome-preview',
 ]);
 
 // Domains that enable the Ficino Society social layer
