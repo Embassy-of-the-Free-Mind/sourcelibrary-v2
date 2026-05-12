@@ -6,30 +6,18 @@
  *   FILTER (view)        Show all (catalog)  vs  Show digitised & translated (books)
  *   DISPLAY (display)    List  vs  Grid
  *
- * The segmented toggle changes FILTER. "Show digitised" preserves the
- * user's display choice; "Show all" forces list because grid can't actually
- * represent the full catalogue (thumbnails only exist for the digitised
- * subset). The list/grid icons change DISPLAY only — preserving the filter.
- *
- * Render matrix:
- *   filter=all     + display=list  → BphCatalogBrowser (full 27,706 works)
- *   filter=all     + display=grid  → covers grid (renders below; only the
- *                                    digitised subset has thumbnails, so
- *                                    a small note explains the gap — reached
- *                                    via the grid icon, not the filter toggle)
- *   filter=digitised + display=grid  → covers grid (digitised subset)
- *   filter=digitised + display=list  → BphCatalogBrowser locked to digitised='sl'
- *
- * The covers grid (display=grid) is rendered by SharedLibraryView's books
- * branch — we only render the unified header here. The BphCatalogBrowser
- * for display=list is rendered inside this component.
+ * BphCatalogBrowser renders the same search/filter chrome in both displays so
+ * the top of the page doesn't shift between views. In list mode it also renders
+ * the catalogue table; in grid mode it renders a covers grid driven by the
+ * same Supabase data, so search + Advanced filter the covers live.
+ * Grid mode locks the filter to the digitised subset since covers only exist
+ * for SL-backed books.
  */
 
 import Link from 'next/link';
-import { LayoutGrid, List, SlidersHorizontal, ArrowRight } from 'lucide-react';
+import { LayoutGrid, List } from 'lucide-react';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import { useEmbedHref } from '@/lib/EmbedContext';
-import { useState } from 'react';
 
 export type CatalogueMode = 'all' | 'digitized';
 export type CatalogueDisplay = 'list' | 'grid';
@@ -41,9 +29,6 @@ interface Props {
   display: CatalogueDisplay;
   /** Total works in bph_works (denominator for the counter, regardless of mode). */
   catalogTotal: number;
-  /** When mode='digitized', the count of digitised+translated SL books (server-fetched).
-      When mode='all', this is ignored — the catalogue table reports its own filtered count. */
-  digitizedTotal: number;
   /** basePath for embed/link construction (e.g. "/embed/bph"). */
   basePath: string;
   /** UBN → {id, slug} map for the catalogue browser's "digitised copy" hyperlinks. */
@@ -61,7 +46,6 @@ export default function BphUnifiedCatalogue({
   mode,
   display,
   catalogTotal,
-  digitizedTotal,
   basePath,
   digitizedUbns,
   tenantSlug,
@@ -75,46 +59,12 @@ export default function BphUnifiedCatalogue({
   //
   // The grid icon is the inverse case — grid *only* makes sense on the
   // digitised subset, so clicking grid from any state must land on
-  // view=books. Previously gridHref preserved the current mode, which routed
-  // list+all → catalog+grid (a broken combination — grid has no thumbnails
-  // for non-digitised books). Force books so grid always shows covers.
+  // view=books. Forcing books here keeps the chrome's count consistent with
+  // the visible covers.
   const allHref = embedHref(makeHref(basePath, 'catalog', 'list'));
   const digitizedHref = embedHref(makeHref(basePath, 'books', display));
   const listHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list'));
   const gridHref = embedHref(makeHref(basePath, 'books', 'grid'));
-  // Grid view doesn't host the Advanced filter panel (those fields query
-  // bph_works in Supabase, which only the list view consumes). When the
-  // user clicks Advanced from the grid we route them to the list view with
-  // `cadv=1` so BphCatalogBrowser auto-opens the panel on arrival. Full
-  // cross-referenced filtering across grid covers is a follow-up (issue
-  // #1687) — this is the minimum-viable affordance.
-  const advancedFromGridHref =
-    embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list')) + '&cadv=1';
-
-  // For display='list' the catalogue table owns its own filtered count
-  // (the count drops as the user types in search). Hoist it up via a
-  // callback so the unified header can show "X of 27,706 works".
-  // `isFiltered` distinguishes "user has searched/filtered" from "baseline,
-  // showing everything". When mode='digitized' and the user hasn't filtered,
-  // we prefer the MongoDB-derived digitizedTotal (2,280) over the Supabase
-  // count (1,989) — the gap is books whose UBN isn't in bph_works. Showing
-  // the MongoDB total makes the digitised count consistent with the grid
-  // view's count (#1689).
-  const [filteredTotal, setFilteredTotal] = useState<number | null>(null);
-  const [isFiltered, setIsFiltered] = useState(false);
-  const handleTotalChange = (total: number, filtered: boolean) => {
-    setFilteredTotal(total);
-    setIsFiltered(filtered);
-  };
-
-  let visibleTotal: number;
-  if (display !== 'list') {
-    visibleTotal = digitizedTotal;
-  } else if (mode === 'digitized' && !isFiltered) {
-    visibleTotal = digitizedTotal;
-  } else {
-    visibleTotal = filteredTotal ?? catalogTotal;
-  }
 
   const toggleNode = (
     <SegmentedToggle mode={mode} allHref={allHref} digitizedHref={digitizedHref} />
@@ -122,41 +72,12 @@ export default function BphUnifiedCatalogue({
   const viewIconsNode = (
     <ViewIcons display={display} listHref={listHref} gridHref={gridHref} />
   );
-  // Grid view advertises that Advanced moves you to list view — partner
-  // feedback was that the implicit switch felt like the back button was
-  // broken. Inline arrow + caption replaces the aria-only warning.
-  const advancedButtonNode = (
-    <Link
-      href={advancedFromGridHref}
-      className="inline-flex items-center gap-1.5 text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary hover:bg-warm transition-colors"
-      aria-label="Advanced filters (opens in list view)"
-      title="Advanced filters open in list view"
-    >
-      <SlidersHorizontal className="w-3.5 h-3.5" />
-      Advanced
-      <ArrowRight className="w-3 h-3 text-muted" aria-hidden="true" />
-    </Link>
-  );
-  // In grid mode, the filter toggle is asymmetric: "Show digitised" stays in
-  // grid, but "Show all" *has to* flip to list because the grid only has
-  // thumbnails for the digitised subset. Hiding the toggle and offering an
-  // explicit "browse full catalogue" link removes the silent-flip surprise
-  // (B2/#1700-followup) without losing the affordance.
-  const gridSwitchToListNode = (
-    <Link
-      href={allHref}
-      className="inline-flex items-center gap-1.5 text-sm text-accent-rust hover:underline"
-    >
-      Browse all {catalogTotal.toLocaleString()} works in list view
-      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-    </Link>
-  );
-  const counterNode = (
-    <span className="text-sm text-muted">
-      <span className="font-medium text-primary">{visibleTotal.toLocaleString()}</span>{' '}
-      of {catalogTotal.toLocaleString()} works
-    </span>
-  );
+
+  // Grid view shows only the digitised subset (covers only exist for
+  // SL-backed books). Lock the catalogue filter to digitised so the chrome's
+  // count reflects what's visible — the "Show all" branch of the segmented
+  // toggle still routes to list view (allHref forces display=list).
+  const effectiveLockDigitized = mode === 'digitized' || display === 'grid';
 
   return (
     <>
@@ -169,56 +90,20 @@ export default function BphUnifiedCatalogue({
         </p>
       </div>
 
-      {display === 'list' ? (
-        // List view: BphCatalogBrowser owns the search row and now hosts both
-        // the toggle (inline with filters) and the view icons (in the
-        // results-header row alongside count + sort) — matching the partner
-        // mockup row grouping. When mode='digitized', lock the underlying
-        // browser to digitized='sl' so the table reflects the chosen filter.
-        <BphCatalogBrowser
-          // Remount when the filter toggles. BphCatalogBrowser seeds its
-          // `adv.digitized` state from `lockDigitized` once in `useState`,
-          // and has no effect to reset it when the prop flips — so without a
-          // key the table keeps the previous filter and "Show all" appears
-          // not to work.
-          key={`bph-cat-${mode}`}
-          basePath={basePath}
-          digitizedUbns={digitizedUbns}
-          tenantSlug={tenantSlug}
-          onTotalChange={handleTotalChange}
-          hideInlineCount
-          searchRowSlot={toggleNode}
-          resultsHeaderSlot={viewIconsNode}
-          catalogTotal={catalogTotal}
-          lockDigitized={mode === 'digitized'}
-          // Use the MongoDB-derived digitised count as the displayed baseline
-          // so the list view counter matches the grid view (#1700 follow-up).
-          // The browser falls back to its live Supabase count once the user
-          // applies a search or advanced filter.
-          displayTotal={mode === 'digitized' ? digitizedTotal : undefined}
-        />
-      ) : (
-        // Grid view: the covers grid lives in SharedLibraryView (fed by
-        // server-side data). Render row chrome with an explicit "Browse all
-        // in list view" link instead of the segmented toggle — grid can
-        // only show the digitised subset (thumbnails are the gating data),
-        // so the toggle was a UX trap when it auto-flipped views (B2).
-        <>
-          <div className="flex flex-wrap items-center gap-3 mb-3">
-            <span className="inline-flex items-center px-3 py-2 text-sm font-medium border border-border-light rounded-md bg-warm text-primary">
-              Digitised &amp; translated
-            </span>
-            {advancedButtonNode}
-          </div>
-          <div className="flex flex-wrap items-center gap-3 mb-2">
-            {counterNode}
-            <div className="ml-auto">{viewIconsNode}</div>
-          </div>
-          <div className="mb-4">
-            {gridSwitchToListNode}
-          </div>
-        </>
-      )}
+      <BphCatalogBrowser
+        // Remount when filter or display flips so internal state (incl.
+        // `adv.digitized` seeded from lockDigitized) resets cleanly.
+        key={`bph-cat-${mode}-${display}`}
+        basePath={basePath}
+        digitizedUbns={digitizedUbns}
+        tenantSlug={tenantSlug}
+        hideInlineCount
+        searchRowSlot={toggleNode}
+        resultsHeaderSlot={viewIconsNode}
+        catalogTotal={catalogTotal}
+        lockDigitized={effectiveLockDigitized}
+        display={display}
+      />
     </>
   );
 }

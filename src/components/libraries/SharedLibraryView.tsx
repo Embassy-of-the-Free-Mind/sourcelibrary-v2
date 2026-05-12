@@ -145,9 +145,10 @@ export default function SharedLibraryView({
   const catalogueMode = view === 'books' ? 'digitized' : 'all';
   const effectiveDisplay: 'list' | 'grid' =
     display ?? (catalogueMode === 'digitized' ? 'grid' : 'list');
-  // Render the books grid for non-BPH tenants always; for BPH only when the
-  // unified shell is active AND the user picked grid display.
-  const showBooksGrid = !isBph || (showUnifiedCatalogue && effectiveDisplay === 'grid');
+  // Render the books grid for non-BPH tenants always. BPH grid view is
+  // rendered inside BphUnifiedCatalogue/BphCatalogBrowser using the Supabase
+  // data source (so search + Advanced filter the covers live).
+  const showBooksGrid = !isBph;
 
   return (
     <div className="min-h-screen bg-cream">
@@ -334,7 +335,6 @@ export default function SharedLibraryView({
             mode={catalogueMode}
             display={effectiveDisplay}
             catalogTotal={catalogTotal}
-            digitizedTotal={total}
             basePath={basePath}
             digitizedUbns={digitizedUbns}
             tenantSlug={tenantSlug ?? undefined}
@@ -366,21 +366,10 @@ export default function SharedLibraryView({
               </div>
             )}
 
-            {/* In BPH unified mode, language/sort filters still belong above
-                the grid — render them in their own row without the heading.
-                Default sort matches the SSR default (Oldest first) so the
-                dropdown's advertised selection matches the rendered order. */}
-            {showUnifiedCatalogue && (
-              <div className="flex justify-end mb-4">
-                <CollectionFilters
-                  collectionId={partner.slug}
-                  languages={filteredLanguages}
-                  basePath={basePath}
-                  showSearch
-                  defaultSort="year_asc"
-                />
-              </div>
-            )}
+            {/* BPH unified mode renders the search/sort chrome above via
+                BphUnifiedCatalogue so the look is identical in list and
+                grid view. Skip the per-grid filter row here to avoid a
+                duplicate sort dropdown. */}
 
             {/* Books Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">

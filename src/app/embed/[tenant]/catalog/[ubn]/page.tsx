@@ -1,10 +1,8 @@
 import { notFound, redirect } from 'next/navigation';
-import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ArrowLeft, BookMarked, ExternalLink, BookOpen } from 'lucide-react';
+import { BookMarked, ExternalLink, BookOpen } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
-import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor } from '@/lib/utils';
 
@@ -175,17 +173,7 @@ export default async function CatalogEntryPage({ params }: Props) {
 
   return (
     <div className="bg-cream">
-      <ConditionalSiteHeader variant="dark" />
-
       <div className="max-w-2xl mx-auto px-6 py-8">
-        <Link
-          href="/catalog"
-          className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-primary mb-4 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to catalogue
-        </Link>
-
         {/* Identity */}
         <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
           {displayTitle}

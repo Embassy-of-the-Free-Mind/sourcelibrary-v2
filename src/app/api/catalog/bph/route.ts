@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase, sanitizeFilterValue } from '@/lib/supabase';
 import { normalizeBphSearchText } from '@/lib/text-normalize';
+import { getReadDb } from '@/lib/mongodb';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -217,7 +219,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: result.error.message }, { status: 500 });
   }
 
-  let works = result.data || [];
+  // Loose-typed rows — Supabase's typed select() returns a union including a
+  // GenericStringError variant which prevents us from spreading the cover URL
+  // onto rows. The actual rows are plain catalog records.
+  let works = (result.data || []) as unknown as Array<Record<string, unknown>>;
 
   // Title-prefix relevance bump (issue #1690).
   //
@@ -245,6 +250,56 @@ export async function GET(req: NextRequest) {
     });
     decorated.sort((a, b) => a.prefixMatch - b.prefixMatch || a.idx - b.idx);
     works = decorated.map((d) => d.row);
+  }
+
+  // Attach the SL book cover URL for rows that are linked to a Source Library
+  // book. The grid view renders covers from this field; list view ignores it.
+  // Best-effort: any MongoDB lookup error simply leaves rows without covers.
+  const slBookIds = Array.from(
+    new Set(
+      works
+        .map((w) => (w as { sl_book_id?: string | null }).sl_book_id)
+        .filter((id): id is string => typeof id === 'string' && id.length > 0),
+    ),
+  );
+  if (slBookIds.length > 0) {
+    try {
+      const db = await getReadDb();
+      const books = await db
+        .collection('books')
+        .find(
+          { id: { $in: slBookIds } },
+          {
+            projection: {
+              id: 1,
+              image_display: 1,
+              image_thumb: 1,
+              thumbnail: 1,
+              thumbnail_blob: 1,
+            },
+            maxTimeMS: 8_000,
+          },
+        )
+        .toArray();
+      const coverById = new Map<string, string | null>();
+      for (const b of books as unknown as Array<{
+        id: string;
+        image_display?: string | null;
+        image_thumb?: string | null;
+        thumbnail?: string | null;
+        thumbnail_blob?: string | null;
+      }>) {
+        coverById.set(b.id, getBookThumbnailUrl(b, 'display'));
+      }
+      works = works.map((w) => {
+        const row = w as { sl_book_id?: string | null };
+        const id = row.sl_book_id;
+        return id ? { ...row, sl_cover: coverById.get(id) ?? null } : w;
+      });
+    } catch {
+      // Covers are decorative for list view and non-essential for grid;
+      // skip silently rather than failing the catalogue query.
+    }
   }
 
   return NextResponse.json({
