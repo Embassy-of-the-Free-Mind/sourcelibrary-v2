@@ -6,6 +6,8 @@ import { toast } from 'sonner';
 import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 
+type ImageAccess = 'open' | 'nc-free' | 'blocked';
+
 interface DownloadButtonProps {
   bookId: string;
   bookTitle?: string;
@@ -13,10 +15,11 @@ interface DownloadButtonProps {
   hasOcr: boolean;
   hasImages?: boolean;
   imageRestricted?: boolean;
+  imageAccess?: ImageAccess;
   variant?: 'default' | 'header';
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, variant = 'default' }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default' }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(false);
@@ -27,34 +30,27 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if payments are enabled; if not, everyone gets free access
-    fetch('/api/config').then(r => r.json()).then(cfg => {
-      if (!cfg.payments) {
-        setHasAccess(true);
-        setAccessChecked(true);
-        return;
-      }
-      if (isMember) {
-        setHasAccess(true);
-        setAccessChecked(true);
-        return;
-      }
-      if (session?.user) {
-        fetch(`/api/access?type=book&itemId=${bookId}`)
-          .then(r => r.json())
-          .then(data => {
-            setHasAccess(data.allowed);
-            setAccessChecked(true);
-          })
-          .catch(() => setAccessChecked(true));
-      } else {
-        setAccessChecked(true);
-      }
-    }).catch(() => {
-      // Config fetch failed — default to free access
+    // All downloads require sign-in. Anonymous users see a Sign-in prompt
+    // instead of the format menu.
+    if (!session?.user) {
+      setHasAccess(false);
+      setAccessChecked(true);
+      return;
+    }
+    if (isMember) {
       setHasAccess(true);
       setAccessChecked(true);
-    });
+      return;
+    }
+    fetch(`/api/access?type=book&itemId=${bookId}`)
+      .then(r => r.json())
+      .then(data => {
+        // `allowed` here gates the paid (text + open-image) formats. NC-free
+        // image formats bypass this and are handled per-format in handleDownload.
+        setHasAccess(!!data.allowed);
+        setAccessChecked(true);
+      })
+      .catch(() => setAccessChecked(true));
   }, [bookId, session, isMember]);
 
   useEffect(() => {
@@ -67,9 +63,21 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const isImageFormat = (f: BookDownloadFormats) =>
+    f === 'images-zip' || f === 'epub-images' || f === 'epub-facsimile';
+  const isNcFreeFormat = (f: BookDownloadFormats) =>
+    imageAccess === 'nc-free' && isImageFormat(f);
+
   const handleDownload = async (format: BookDownloadFormats) => {
-    // If no access, redirect to purchase
-    if (accessChecked && !hasAccess) {
+    // Anonymous → send to sign-in
+    if (!session?.user) {
+      window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+      return;
+    }
+
+    // Signed-in but no purchase: NC-free image formats are free; everything
+    // else still routes through the paid flow.
+    if (accessChecked && !hasAccess && !isNcFreeFormat(format)) {
       handlePurchase();
       return;
     }
@@ -78,6 +86,11 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     try {
       const response = await books.download(bookId, format);
 
+      if (response.status === 401) {
+        setDownloading(null);
+        window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+        return;
+      }
       if (response.status === 402) {
         setDownloading(null);
         handlePurchase();
@@ -142,7 +155,9 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     return null;
   }
 
-  const needsPurchase = accessChecked && !hasAccess;
+  const isAnonymous = accessChecked && !session?.user;
+  const needsPurchase = accessChecked && !!session?.user && !hasAccess;
+  const ncImagesFree = imageAccess === 'nc-free';
 
   const buttonClass = variant === 'header'
     ? "flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg text-sm transition-colors"
@@ -162,7 +177,24 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-stone-200 py-2 z-50">
 
-          {/* Quiet download prompt for non-members */}
+          {/* Sign-in wall — all downloads require an account */}
+          {isAnonymous && (
+            <div className="px-3 py-3 border-b border-stone-100">
+              <button
+                onClick={() => {
+                  window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+                }}
+                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors"
+              >
+                Sign in to download
+              </button>
+              <p className="mt-2 text-xs text-stone-400 text-center">
+                {ncImagesFree ? 'Page scans are free; other formats may require a member account.' : 'Free for members.'}
+              </p>
+            </div>
+          )}
+
+          {/* Quiet purchase prompt for signed-in non-members */}
           {needsPurchase && (
             <div className="px-3 py-3 border-b border-stone-100">
               <button
@@ -173,7 +205,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 {purchasing ? 'Redirecting...' : 'Download this book ($5)'}
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                All formats included
+                {ncImagesFree ? 'Page scans are free; other formats included with purchase.' : 'All formats included'}
               </p>
             </div>
           )}
@@ -240,8 +272,11 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           {hasImages && !imageRestricted && (
             <>
-              <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
-                Page Scans
+              <div className="px-3 py-2 border-t border-stone-100 mt-2 flex items-center justify-between">
+                <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">Page Scans</span>
+                {ncImagesFree && (
+                  <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
+                )}
               </div>
               <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
                 icon={<Image className="w-4 h-4 text-stone-600" />}
@@ -254,8 +289,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           {hasImages && imageRestricted && (
             <div className="px-3 py-2 border-t border-stone-100 mt-2">
               <p className="text-xs text-stone-400">
-                Image downloads unavailable &mdash; source institution&rsquo;s non-commercial license.
-                View images on the book page.
+                Image downloads unavailable &mdash; the source institution has not released the scans under a redistributable license. View images on the book page.
               </p>
             </div>
           )}

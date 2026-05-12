@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
-import { canDownload, isImageRestricted, PRICES } from '@/lib/purchases';
+import { canDownload, classifyImageAccess, PRICES } from '@/lib/purchases';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -2353,18 +2353,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    // Access check: must be a member or have purchased this book
-    // Skip gating entirely if Stripe isn't configured (monetization dormant)
-    if (process.env.STRIPE_SECRET_KEY) {
-      const session = await auth();
-      const userId = session?.user?.id || null;
-      const allowed = await canDownload(userId, 'book', id);
-      if (!allowed) {
-        return NextResponse.json(
-          { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
-          { status: 402 }
-        );
-      }
+    // All downloads require sign-in.
+    const session = await auth();
+    const userId = session?.user?.id || null;
+    if (!userId) {
+      return NextResponse.json(
+        { error: 'Sign in required', requires_signin: true },
+        { status: 401 },
+      );
     }
 
     // Get optional edition_id for scholarly format
@@ -2377,18 +2373,31 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const isScholarly = format === 'epub-scholarly';
     const isBilingual = format === 'epub-bilingual';
     const isImagesZip = format === 'images-zip';
-
-    // Image-containing formats require a commercially-clear license.
-    // NC-restricted books (BSB, Bodleian, Vatican, etc.) block paid image downloads.
     const imageFormat = isFacsimile || isImagesOnly || isImagesZip;
-    if (imageFormat && await isImageRestricted(id)) {
-      return NextResponse.json(
-        {
-          error: 'Image downloads are not available for this book due to the source institution\'s non-commercial license. Text-only formats (TXT, EPUB translation) are available.',
-          license_restricted: true,
-        },
-        { status: 403 },
-      );
+
+    let imageAccess: 'open' | 'nc-free' | 'blocked' = 'open';
+    if (imageFormat) {
+      imageAccess = await classifyImageAccess(id);
+      if (imageAccess === 'blocked') {
+        return NextResponse.json(
+          {
+            error: 'Image downloads are not available for this book — the source institution has not released the scans under a redistributable license.',
+            license_restricted: true,
+          },
+          { status: 403 },
+        );
+      }
+    }
+
+    // NC-free image formats skip the paid gate (charging would cross the NC line).
+    if (process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+      const allowed = await canDownload(userId, 'book', id);
+      if (!allowed) {
+        return NextResponse.json(
+          { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
+          { status: 402 },
+        );
+      }
     }
 
     const db = await getDb();
