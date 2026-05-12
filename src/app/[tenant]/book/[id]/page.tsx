@@ -557,15 +557,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
   const hasTranslations = translatedCount > totalPages / 2; // >50% translated
-  // Image downloads restricted for non-commercial licensed sources (BSB, Bodleian, Vatican, etc.)
-  // Exceptions: BPH (Embassy of the Free Mind — all hermetic/historical material), and any book
-  // published before 1930 (out of copyright in the US) regardless of license metadata.
+  // Image-download access classification (mirrors classifyImageAccess in lib/purchases.ts):
+  //  - 'open': PD / CC-BY / BPH / pre-1930 → flows through the normal member/pay gate
+  //  - 'nc-free': NC-licensed → free for any signed-in user, never charged
+  //  - 'blocked': modern + unknown license + non-BPH → withheld entirely
   const imgLicense = (book as any).image_source?.license || 'unknown';
   const imgProvider = (book as any).image_source?.provider;
   const yearPublished = (book as unknown as { year_published?: number }).year_published;
-  const publicDomainByAge = typeof yearPublished === 'number' && yearPublished < 1930;
-  const licenseRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
-  const imageRestricted = licenseRestricted && imgProvider !== 'bph' && !publicDomainByAge;
+  const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
+  const imageAccess: 'open' | 'nc-free' | 'blocked' =
+    imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
+      ? 'open'
+      : isNcLicense
+        ? 'nc-free'
+        : (!imgLicense || imgLicense === 'unknown')
+          ? 'blocked'
+          : 'open';
+  const imageRestricted = imageAccess === 'blocked';
   const bookSummaryObj = (book as unknown as { index?: { bookSummary?: { brief?: string; detailed?: string; abstract?: string } } }).index?.bookSummary;
   const indexBrief = bookSummaryObj?.brief;
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
@@ -838,6 +846,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                       hasOcr={hasOcr}
                       hasImages={pages.length > 0}
                       imageRestricted={imageRestricted}
+                      imageAccess={imageAccess}
                       variant="header"
                     />
                     <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
