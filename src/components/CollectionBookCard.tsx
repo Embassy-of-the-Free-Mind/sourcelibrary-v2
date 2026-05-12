@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Calendar, FileText } from 'lucide-react';
 import { cn, getBookThumbnailUrl } from '@/lib/utils';
+import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
 import { getEffectiveByline } from '@/lib/byline';
@@ -75,6 +76,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           {thumbnailUrl && !imageError ? (
             <Image
               src={thumbnailUrl}
+              loader={bookCoverResponsiveLoader}
               alt={book.display_title || book.title}
               fill
               quality={85}
