@@ -268,7 +268,7 @@ export async function fetchTenantLibraryData(
   sort: string,
   language: string,
   offset: number,
-  q?: string
+  q?: string,
 ): Promise<TenantLibraryData> {
   const db = await getReadDb();
 
@@ -400,4 +400,31 @@ export async function fetchTenantBphCatalogTotal(tenantId: string): Promise<numb
     .from('bph_works')
     .select('*', { count: 'exact', head: true });
   return count || 0;
+}
+
+/**
+ * Canonical "is this book in the BPH catalogue?" set, drawn from Supabase
+ * `bph_works.sl_book_id`. Used to keep the Selected Books row consistent
+ * with the catalogue list view (both view the same set of linked books).
+ *
+ * Returns the set of MongoDB book ids that appear as `sl_book_id` on any
+ * bph_works row — about 2,200 books at last count, fits in memory easily.
+ * Paginates around the Supabase 1,000-row default cap.
+ */
+export async function fetchTenantBphCataloguedBookIds(): Promise<Set<string>> {
+  const ids = new Set<string>();
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from('bph_works')
+      .select('sl_book_id')
+      .not('sl_book_id', 'is', null)
+      .range(from, from + 999);
+    if (error) break;
+    if (!data || data.length === 0) break;
+    for (const r of data) if (r.sl_book_id) ids.add(r.sl_book_id);
+    if (data.length < 1000) break;
+    from += 1000;
+  }
+  return ids;
 }

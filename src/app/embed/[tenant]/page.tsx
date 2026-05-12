@@ -5,6 +5,7 @@ import {
     getTenantDominantProvider,
     fetchTenantBphDigitizedMap,
     fetchTenantBphCatalogTotal,
+    fetchTenantBphCataloguedBookIds,
 } from '@/lib/tenant-library-loaders';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
@@ -78,12 +79,28 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     const tenantDoc = await db.collection('tenants').findOne({ id: tenantId });
     if (!tenantDoc) notFound();
 
-    const [libraryData, dominantProvider] = await Promise.all([
+    // Cheap pre-check so the Supabase catalogue-id fetch can run in parallel
+    // with the main library fetch. dominantProvider is the canonical isBph
+    // signal (`canonicalPartner?.providerKey === 'bph'` below) but it
+    // resolves only after the main loaders run; for parallelism we fall back
+    // to the tenant slug here, which matches the current BPH tenant 1:1.
+    const probablyBph = tenant === 'bph';
+
+    const [libraryData, dominantProvider, cataloguedBookIds] = await Promise.all([
+        // (deferred filter applied below once Supabase ids resolve)
         fetchTenantLibraryData(tenantId, sort, language, offset, q || undefined),
         getTenantDominantProvider(tenantId),
+        probablyBph ? fetchTenantBphCataloguedBookIds() : Promise.resolve(null),
     ]);
 
-    const { books, total, topBooks, languages, galleryImages, contributingLibraries } = libraryData;
+    // Filter the Selected Books row to books that exist in the Supabase
+    // catalogue (bph_works.sl_book_id). Consistent with the catalogue list
+    // view, which is the source of truth. No-op today (all top-popular books
+    // are already linked) but prevents future divergence (#1715 follow-up).
+    const topBooks = cataloguedBookIds
+        ? libraryData.topBooks.filter(b => cataloguedBookIds.has(b.id))
+        : libraryData.topBooks;
+    const { books, total, languages, galleryImages, contributingLibraries } = libraryData;
 
     const canonicalPartner = getPartnerBySlug(tenant) || (dominantProvider ? getPartnerByProvider(dominantProvider) : undefined);
     const tenantRecord = tenantDoc as Record<string, unknown>;
