@@ -87,3 +87,6 @@ split-review.html
 input.json
 supabase/.temp/
 .wrangler/
+
+# Per-book undo snapshots from data-repair scripts (#1713/#1721/#1719)
+.claude/docs/snapshots/
