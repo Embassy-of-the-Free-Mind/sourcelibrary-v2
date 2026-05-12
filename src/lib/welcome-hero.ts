@@ -7,40 +7,24 @@ export type WelcomeHero = {
   description?: string | null;
 };
 
-const FALLBACK: WelcomeHero = {
-  imageUrl: 'https://images.sourcelibrary.org/archived/69b525942379d2fed6c291f6/45.jpg',
-  bookTitle: 'Toonneel des aerdrycks',
-  bookYear: 1635,
-  description: 'A celestial map from the collection.',
-};
+// Locked hero — single chosen image for the welcome page. Metadata is fetched
+// from the gallery_images collection by URL so the attribution stays accurate.
+const HERO_IMAGE_URL = 'https://images.sourcelibrary.org/archived/69b525af95677df8153c6f62/66.jpg';
 
-// Curated pool of beautiful landscape illustrations. Server-fetched, rotated per render.
-// Filters: top-quality, large landscape orientation, well-ranked books.
 export async function getWelcomeHero(): Promise<WelcomeHero> {
   try {
     const db = await getReadDb();
-    const candidates = await db.collection('gallery_images').aggregate([
-      {
-        $match: {
-          gallery_quality: { $gte: 0.9 },
-          book_rank: { $lte: 1 },
-          extracted_width: { $gte: 1400 },
-          extracted_height: { $gte: 800 },
-          $expr: { $gt: ['$extracted_width', { $multiply: ['$extracted_height', 1.05] }] },
-        },
-      },
-      { $sample: { size: 1 } },
-      { $project: { _id: 0, image_url: 1, book_title: 1, book_year: 1, description: 1 } },
-    ]).toArray();
-    const pick = candidates[0];
-    if (!pick?.image_url) return FALLBACK;
+    const doc = await db.collection('gallery_images').findOne(
+      { image_url: HERO_IMAGE_URL },
+      { projection: { _id: 0, image_url: 1, book_title: 1, book_year: 1, description: 1 } }
+    );
     return {
-      imageUrl: pick.image_url,
-      bookTitle: pick.book_title ? String(pick.book_title).trim() : null,
-      bookYear: pick.book_year ?? null,
-      description: pick.description ?? null,
+      imageUrl: HERO_IMAGE_URL,
+      bookTitle: doc?.book_title ? String(doc.book_title).trim() : null,
+      bookYear: doc?.book_year ?? null,
+      description: doc?.description ?? null,
     };
   } catch {
-    return FALLBACK;
+    return { imageUrl: HERO_IMAGE_URL };
   }
 }
