@@ -22,17 +22,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json().catch(() => ({}));
     const skip = body?.skip === true;
 
-    const languages = Array.isArray(body?.languages)
-      ? Array.from(new Set(
-          body.languages
-            .filter((l: unknown): l is string => typeof l === 'string')
-            .map((l: string) => l.trim())
-            .filter((l: string) => l.length > 0 && l.length <= 60)
-        )).slice(0, 30)
-      : [];
-
-    const interests = typeof body?.interests === 'string'
-      ? body.interests.trim().slice(0, 2000)
+    const aboutYou = typeof body?.about_you === 'string'
+      ? body.about_you.trim().slice(0, 4000)
       : '';
 
     const helpDescription = typeof body?.help_description === 'string'
@@ -51,8 +42,7 @@ export async function POST(request: NextRequest) {
       welcomedAt: now,
     };
     if (!skip) {
-      userUpdate['profile.languages'] = languages;
-      userUpdate['profile.interests'] = interests;
+      userUpdate['profile.aboutYou'] = aboutYou;
       userUpdate['profile.helpDescription'] = helpDescription;
       userUpdate['profile.updatedAt'] = now;
     }
@@ -64,15 +54,14 @@ export async function POST(request: NextRequest) {
 
     // Mirror into volunteers when the user shared anything — keeps the outreach
     // list usable without joining against users.
-    if (!skip && (languages.length > 0 || interests || helpDescription)) {
+    if (!skip && (aboutYou || helpDescription)) {
       await db.collection('volunteers').updateOne(
         { email },
         {
           $set: {
             email,
             name: session.user.name || null,
-            languages,
-            interests,
+            about_you: aboutYou,
             help_description: helpDescription,
             updated_at: now,
           },
