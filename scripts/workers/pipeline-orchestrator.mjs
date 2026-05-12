@@ -3325,10 +3325,15 @@ Rules:
             if (!book) continue;
 
             // Check if book already exists in live (can have different _id)
-            const existingLive = await db.collection('books').findOne({ id: candidate.id }, { projection: { _id: 1 } });
+            const existingLive = await db.collection('books').findOne({ id: candidate.id }, { projection: { _id: 1, slug: 1 } });
             if (existingLive) {
-              // Update in place, preserving live _id
+              // Update in place, preserving live _id and live slug.
+              // The live slug may have been disambiguated on first promotion
+              // (e.g. `foo-2`), while warehouse still holds the original `foo`.
+              // Overwriting would re-trigger E11000 against the record that
+              // owns `foo` in live.
               const { _id, ...bookWithoutId } = book;
+              if (existingLive.slug) delete bookWithoutId.slug;
               await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
             } else {
               // Fresh insert — deduplicate slug to avoid E11000 on books_slug_idx
