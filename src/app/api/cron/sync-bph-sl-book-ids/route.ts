@@ -25,6 +25,11 @@ export const dynamic = 'force-dynamic';
  *
  * Out of scope: BPH books imported via IIIF where `dc_identifier` is a manifest
  * URL rather than a numeric UBN. Those need a separate IIIF-URL → UBN resolver.
+ *
+ * Opt-out: setting `bph_catalog_link: false` on a book's MongoDB doc removes
+ * it from the linkable set, so an unlink in Supabase persists across cron
+ * runs. Used to set books aside for partner review without losing the
+ * MongoDB record. Clear the flag to resume linking.
  */
 
 const PARALLEL = 10;
@@ -72,10 +77,15 @@ export async function GET(request: NextRequest) {
   const db = await getDb();
 
   // Read all BPH books with a dc_identifier and project just the fields we need.
+  // `bph_catalog_link: false` opts a book out of the sync (see header comment).
   const docs = await db
     .collection('books')
     .find(
-      { 'image_source.provider': 'bph', 'dublin_core.dc_identifier': { $exists: true, $ne: '' } },
+      {
+        'image_source.provider': 'bph',
+        'dublin_core.dc_identifier': { $exists: true, $ne: '' },
+        bph_catalog_link: { $ne: false },
+      },
       { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 30_000 },
     )
     .toArray();
