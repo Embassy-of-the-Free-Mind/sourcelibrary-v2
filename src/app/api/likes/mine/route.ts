@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
 import { LikeTargetType } from '@/lib/types';
 import { buildCropUrl } from '@/lib/social-image-selector';
@@ -21,9 +22,13 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
  */
 export async function GET(request: NextRequest) {
   try {
+    const session = await auth();
     const { searchParams } = new URL(request.url);
     const tenantContext = getTenantContextFromRequest(request.headers);
-    const visitorId = searchParams.get('visitor_id');
+    // Authenticated users always see their own likes regardless of any
+    // stale visitor_id the client passes (favorites page still reads
+    // localStorage). Anonymous visitors fall back to the supplied param.
+    const visitorId = session?.user?.id || searchParams.get('visitor_id');
     const targetType = searchParams.get('type') as LikeTargetType | null;
 
     if (tenantContext.slug && !tenantContext.id) {

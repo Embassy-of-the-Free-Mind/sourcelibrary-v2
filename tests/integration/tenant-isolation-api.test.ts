@@ -89,14 +89,18 @@ describe('Tenant API isolation', () => {
     const db = getTestDb();
 
     // Same target across both tenants; alpha has 2 likes, beta has 1.
+    // The authenticated test user (TEST_USER_ID) owns one of the alpha likes
+    // so `liked` reflects the server-side session, which takes precedence
+    // over any client-supplied visitor_id.
     await db.collection('likes').insertMany([
-      { target_type: 'page', target_id: 'page-1', visitor_id: 'v1', tenantId: 'tenant-alpha', created_at: new Date() },
+      { target_type: 'page', target_id: 'page-1', visitor_id: TEST_USER_ID, tenantId: 'tenant-alpha', created_at: new Date() },
       { target_type: 'page', target_id: 'page-1', visitor_id: 'v2', tenantId: 'tenant-alpha', created_at: new Date() },
       { target_type: 'page', target_id: 'page-1', visitor_id: 'v3', tenantId: 'tenant-beta', created_at: new Date() },
     ]);
 
     const targets = encodeURIComponent(JSON.stringify([{ type: 'page', id: 'page-1' }]));
-    const req = makeGet(`/api/alpha/likes?targets=${targets}&visitor_id=v1`);
+    // visitor_id=spoofed is ignored — auth() wins, so liked is computed for TEST_USER_ID.
+    const req = makeGet(`/api/alpha/likes?targets=${targets}&visitor_id=spoofed`);
 
     const res = await likesGet(req as any, { params: Promise.resolve({ tenant: 'alpha' }) });
     const data = await res.json();
@@ -225,12 +229,14 @@ describe('Tenant API isolation', () => {
       { id: 'book-b', title: 'Beta Favorites', tenantId: 'tenant-beta' },
     ]);
 
+    // Likes filed under the authenticated user — auth() now wins over the
+    // visitor_id query param, so the favorites listing follows the session.
     await db.collection('likes').insertMany([
-      { target_type: 'book', target_id: 'book-a', visitor_id: 'visitor-1', tenantId: 'tenant-alpha', created_at: new Date() },
-      { target_type: 'book', target_id: 'book-b', visitor_id: 'visitor-1', tenantId: 'tenant-beta', created_at: new Date() },
+      { target_type: 'book', target_id: 'book-a', visitor_id: TEST_USER_ID, tenantId: 'tenant-alpha', created_at: new Date() },
+      { target_type: 'book', target_id: 'book-b', visitor_id: TEST_USER_ID, tenantId: 'tenant-beta', created_at: new Date() },
     ]);
 
-    const req = makeGet('/api/likes/mine?visitor_id=visitor-1&type=book', {
+    const req = makeGet('/api/likes/mine?visitor_id=spoofed&type=book', {
       'x-tenant-slug': 'alpha',
       'x-tenant-id': 'tenant-alpha',
     });

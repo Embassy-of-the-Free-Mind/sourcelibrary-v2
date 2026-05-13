@@ -6,6 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { LikeTargetType } from '@/lib/types';
@@ -69,8 +70,16 @@ async function resolveTargetTenantId(
  */
 export async function POST(request: NextRequest) {
   try {
+    const session = await auth();
     const body = await request.json();
-    const { target_type, target_id, visitor_id } = body;
+    const { target_type, target_id } = body;
+
+    // Prefer the authenticated user id; fall back to client-supplied
+    // visitor_id for anonymous visitors. This is what keeps likes attached to
+    // the user account across devices and survives the client-side session
+    // hydration race that previously stranded authenticated likes under
+    // anonymous v_… ids.
+    const visitor_id: string | undefined = session?.user?.id || body.visitor_id;
 
     if (!target_type || !target_id || !visitor_id) {
       return NextResponse.json(
@@ -186,9 +195,12 @@ export async function POST(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   try {
+    const session = await auth();
     const { searchParams } = new URL(request.url);
     const targetsJson = searchParams.get('targets');
-    const visitorId = searchParams.get('visitor_id');
+    // Authenticated session takes precedence over the query param so the
+    // "liked" lookup hits the same id the POST now files under.
+    const visitorId = session?.user?.id || searchParams.get('visitor_id');
 
     if (!targetsJson) {
       return NextResponse.json(
@@ -278,8 +290,14 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Public cache is only safe when the response is keyed purely by URL.
+    // Once we mix in the NextAuth cookie to compute `liked`, we must mark it
+    // private so a CDN doesn't serve one user's state to another.
+    const cacheControl = session?.user?.id
+      ? 'private, max-age=30'
+      : 'public, max-age=60, stale-while-revalidate=300';
     return NextResponse.json({ results }, {
-      headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' },
+      headers: { 'Cache-Control': cacheControl },
     });
   } catch (error) {
     console.error('Error getting likes:', error);
