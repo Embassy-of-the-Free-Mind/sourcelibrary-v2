@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
 import { LikeTargetType } from '@/lib/types';
 import { buildCropUrl } from '@/lib/social-image-selector';
@@ -22,8 +23,9 @@ export async function GET(
       return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
     }
 
+    const session = await auth();
     const { searchParams } = new URL(request.url);
-    const visitorId = searchParams.get('visitor_id');
+    const visitorId = session?.user?.id || searchParams.get('visitor_id');
     const targetType = searchParams.get('type') as LikeTargetType | null;
 
     if (!visitorId) {

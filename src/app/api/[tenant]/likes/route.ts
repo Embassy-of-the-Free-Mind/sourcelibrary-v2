@@ -6,6 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { LikeTargetType } from '@/lib/types';
@@ -22,8 +23,12 @@ export async function POST(
       return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
     }
 
+    const session = await auth();
     const body = await request.json();
-    const { target_type, target_id, visitor_id } = body;
+    const { target_type, target_id } = body;
+    // Prefer authenticated user id over client-supplied visitor_id so likes
+    // stay attached to the account regardless of client-side hydration state.
+    const visitor_id: string | undefined = session?.user?.id || body.visitor_id;
 
     if (!target_type || !target_id || !visitor_id) {
       return NextResponse.json(
@@ -117,9 +122,10 @@ export async function GET(
       return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
     }
 
+    const session = await auth();
     const { searchParams } = new URL(request.url);
     const targetsJson = searchParams.get('targets');
-    const visitorId = searchParams.get('visitor_id');
+    const visitorId = session?.user?.id || searchParams.get('visitor_id');
 
     if (!targetsJson) {
       return NextResponse.json({ error: 'targets parameter is required' }, { status: 400 });
@@ -188,9 +194,12 @@ export async function GET(
       }
     }
 
+    const cacheControl = session?.user?.id
+      ? 'private, max-age=30'
+      : 'public, max-age=60, stale-while-revalidate=300';
     return NextResponse.json(
       { results },
-      { headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' } }
+      { headers: { 'Cache-Control': cacheControl } }
     );
   } catch (error) {
     console.error('Error getting likes:', error);
