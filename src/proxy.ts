@@ -15,6 +15,8 @@ const NON_TENANT_PATHS = new Set([
   // User pages (standalone, not tenant-scoped)
   'favorites', 'reading-history', 'timeline', 'topics', 'languages',
   'categories', 'catalog', 'catalogue', 'artwork', 'artist',
+  // Short share links — redirected to /explore/* in next.config.ts redirects()
+  'map', 'constellation',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
   // Other root pages

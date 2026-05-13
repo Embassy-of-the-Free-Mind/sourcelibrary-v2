@@ -1,3 +1,1 @@
-import ExploreTimelinePage from '../../[tenant]/explore/timeline/page';
-
-export default ExploreTimelinePage;
+export { default, metadata } from '../../[tenant]/explore/timeline/page';
