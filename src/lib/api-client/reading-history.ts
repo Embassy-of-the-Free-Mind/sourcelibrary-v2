@@ -1,4 +1,4 @@
-import { apiClient, getTenantSlug } from './client';
+import { apiClient } from './client';
 
 export interface ReadingHistoryEntry {
   book_id: string;
@@ -34,6 +34,12 @@ export interface ReadingHistoryResponse {
   limit: number;
 }
 
+// All routes target the global `/api/reading-history` namespace. The proxy
+// attaches a tenant header on tenant subdomains and `/[tenant]/...` paths;
+// the global routes also resolve tenant from the book itself when needed,
+// so canonical `/book/{slug}` URLs work the same way.
+const BASE = '/api/reading-history';
+
 export const readingHistory = {
   /**
    * Record a page view (fire-and-forget via sendBeacon)
@@ -41,8 +47,6 @@ export const readingHistory = {
    */
   record: (bookId: string, pageId: string, pageNumber: number, referrer?: string) => {
     if (typeof navigator === 'undefined' || !navigator.sendBeacon) return;
-    const tenant = getTenantSlug();
-    if (!tenant) return;
 
     const payload = JSON.stringify({
       book_id: bookId,
@@ -51,26 +55,24 @@ export const readingHistory = {
       ...(referrer ? { referrer } : {}),
     });
 
-    navigator.sendBeacon(`/api/${tenant}/reading-history`, new Blob([payload], { type: 'application/json' }));
+    navigator.sendBeacon(BASE, new Blob([payload], { type: 'application/json' }));
   },
 
   /**
    * List reading history (requires auth)
    */
   list: async (params?: { limit?: number; offset?: number }): Promise<ReadingHistoryResponse> => {
-    const tenant = getTenantSlug();
     const qs = new URLSearchParams();
     if (params?.limit) qs.set('limit', String(params.limit));
     if (params?.offset) qs.set('offset', String(params.offset));
     const query = qs.toString();
-    return await apiClient.get(`/api/${tenant}/reading-history${query ? `?${query}` : ''}`);
+    return await apiClient.get(`${BASE}${query ? `?${query}` : ''}`);
   },
 
   /**
    * Clear reading history (one book or all)
    */
   clear: async (bookId?: string): Promise<{ success: boolean; deleted: number }> => {
-    const tenant = getTenantSlug();
-    return await apiClient.post(`/api/${tenant}/reading-history/clear`, bookId ? { book_id: bookId } : {});
+    return await apiClient.post(`${BASE}/clear`, bookId ? { book_id: bookId } : {});
   },
 };
