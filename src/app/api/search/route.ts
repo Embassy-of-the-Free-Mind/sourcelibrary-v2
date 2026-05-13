@@ -249,6 +249,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
 
           return await db.collection('pages').aggregate([
             buildPageSearchStage(query, filteredBookIds),
+            { $match: { page_number: { $gt: 0 } } },
             { $limit: pageLimit },
             {
               $project: {

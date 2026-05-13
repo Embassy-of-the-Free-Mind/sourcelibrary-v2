@@ -90,3 +90,10 @@ supabase/.temp/
 
 # Per-book undo snapshots from data-repair scripts (#1713/#1721/#1719)
 .claude/docs/snapshots/
+
+# Dedup workflow transient state (proposals, review queue)
+.claude/docs/dedup-proposals/
+.claude/docs/dedup-proposals-applied/
+.claude/docs/dedup-proposals-staging/
+.claude/docs/dedup-review-queue/
+.claude/docs/dedup-review-queue-resolved/
