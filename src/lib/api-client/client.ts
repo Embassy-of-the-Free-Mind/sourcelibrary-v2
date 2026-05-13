@@ -12,6 +12,7 @@ const NON_TENANT_SEGMENTS = new Set([
   'categories', 'catalog', 'artwork', 'artist', 'book', 'collections',
   'author', 'work', 'connect', 'data', 'read', 'research', 'embed', 'shwep',
   'identify', 'for-researchers', 'admin',
+  'map', 'constellation',
 ]);
 
 export function getTenantSlugFromPathname(pathname: string): string | null {

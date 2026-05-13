@@ -1,3 +1,1 @@
-import ExploreMapPage from '../../[tenant]/explore/map/page';
-
-export default ExploreMapPage;
+export { default, metadata } from '../../[tenant]/explore/map/page';
