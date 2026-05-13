@@ -32,8 +32,11 @@ async function syncPageCounts(db) {
   console.log('\n--- Sync Page Counts ---');
   const start = Date.now();
 
-  // Single aggregation: count OCR and translation pages per book
+  // Single aggregation: count OCR and translation pages per book.
+  // Excludes hidden pages (page_number <= 0) so dedup-hidden pages and
+  // archived-spread layers don't inflate pages_count.
   const pageStats = await db.collection('pages').aggregate([
+    { $match: { page_number: { $gt: 0 } } },
     {
       $group: {
         _id: '$book_id',

@@ -121,6 +121,8 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
       ];
 
   const filter: Document[] = [];
+  // Hidden / deduped pages live at page_number ≤ 0. Exclude them from search.
+  filter.push({ range: { path: 'page_number', gt: 0 } });
   if (bookIds) {
     if (typeof bookIds === 'string') {
       filter.push({ equals: { path: 'book_id', value: bookIds } });
@@ -135,7 +137,7 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
       compound: {
         should,
         minimumShouldMatch: 1,
-        ...(filter.length > 0 && { filter }),
+        filter,
       },
       highlight: {
         path: ['translation.data', 'ocr.data'],
