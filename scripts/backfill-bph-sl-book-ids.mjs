@@ -70,10 +70,16 @@ async function main() {
   const db = client.db('bookstore');
 
   console.log('Loading BPH books with dc_identifier from MongoDB…');
+  // `bph_catalog_link: false` opts a book out of the catalog link, matching
+  // the cron at src/app/api/cron/sync-bph-sl-book-ids/route.ts.
   const docs = await db
     .collection('books')
     .find(
-      { 'image_source.provider': 'bph', 'dublin_core.dc_identifier': { $exists: true, $ne: '' } },
+      {
+        'image_source.provider': 'bph',
+        'dublin_core.dc_identifier': { $exists: true, $ne: '' },
+        bph_catalog_link: { $ne: false },
+      },
       { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 } }
     )
     .toArray();
