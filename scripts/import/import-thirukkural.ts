@@ -134,7 +134,7 @@ async function importBook(client: MongoClient, book: BookImport) {
   const now = new Date();
 
   const getPageImageUrl = (n: number) =>
-    `https://archive.org/download/${book.ia_identifier}/page/n${n}/full/pct:50/0/default.jpg`;
+    `https://archive.org/download/${book.ia_identifier}/page/n${n}/full/full/0/default.jpg`;
   const getThumbnailUrl = (n: number) =>
     `https://archive.org/download/${book.ia_identifier}/page/n${n}/full/pct:15/0/default.jpg`;
 

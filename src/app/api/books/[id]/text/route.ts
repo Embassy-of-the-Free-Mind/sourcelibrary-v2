@@ -3,6 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
 import { getChapterTexts } from '@/lib/chapter-text';
+import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
+import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 
 export const maxDuration = 30;
 
@@ -20,10 +22,11 @@ export const maxDuration = 30;
  *   format=json|plain (default: json)
  *   include_metadata=true — include page-level OCR/translation metadata
  */
-export async function GET(
+export const GET = withApiAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+  { params }: { params: Promise<{ id: string }> },
+  identity: ApiIdentity
+) => {
   try {
     const { id: bookId } = await params;
     const { searchParams } = new URL(request.url);
@@ -38,6 +41,18 @@ export async function GET(
 
     if (!['ocr', 'translation', 'both'].includes(content)) {
       return NextResponse.json({ error: 'content must be ocr, translation, or both' }, { status: 400 });
+    }
+
+    // Bulk-page budget: defends the paid-tier business model. Key holders pass
+    // through; everyone else has a rolling 24h cap on /text page-equivalents.
+    // Honors API_AUTH_ENFORCE so log-only mode doesn't break anything yet.
+    const enforce = process.env.API_AUTH_ENFORCE === '1';
+    const budget = await checkPageBudget({ identity, request });
+    if (enforce && !budget.allowed) {
+      return NextResponse.json(bulkBudgetExceededBody(budget), {
+        status: 429,
+        headers: { 'Retry-After': '3600' },
+      });
     }
 
     const db = await getDb();
@@ -108,6 +123,9 @@ export async function GET(
         ? allParts[0]
         : allParts.find(p => p.part === requestedPart) || allParts[0];
 
+      // Page-equivalent count for the budget: number of underlying pages in this chapter.
+      const chapterPageCount = Math.max(1, (ct.pageEnd ?? ct.pageStart) - ct.pageStart + 1);
+
       if (format === 'plain') {
         const partLabel = ct.parts_total ? ` (part ${ct.part} of ${ct.parts_total})` : '';
         const header = [
@@ -121,7 +139,11 @@ export async function GET(
         ].join('\n');
 
         return new Response(header, {
-          headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'public, max-age=3600',
+            'X-Pages-Served': String(chapterPageCount),
+          },
         });
       }
 
@@ -145,7 +167,10 @@ export async function GET(
           ...(content === 'both' && ct.ocr_text ? { ocr_text: ct.ocr_text } : {}),
         },
       }, {
-        headers: { 'Cache-Control': 'public, max-age=3600' },
+        headers: {
+          'Cache-Control': 'public, max-age=3600',
+          'X-Pages-Served': String(chapterPageCount),
+        },
       });
     }
 
@@ -232,6 +257,7 @@ export async function GET(
         headers: {
           'Content-Type': 'text/plain; charset=utf-8',
           'Cache-Control': 'public, max-age=3600',
+          'X-Pages-Served': String(pages.length),
         },
       });
     }
@@ -307,10 +333,11 @@ export async function GET(
     return NextResponse.json(result, {
       headers: {
         'Cache-Control': 'public, max-age=3600',
+        'X-Pages-Served': String(pagesWithContent.length),
       },
     });
   } catch (error) {
     console.error('Bulk text error:', error);
     return NextResponse.json({ error: 'Failed to fetch text' }, { status: 500 });
   }
-}
+}, { route: 'books.text' });

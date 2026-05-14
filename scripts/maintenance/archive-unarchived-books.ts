@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
+import { upgradeToFullRes, rateLimitedFetch } from '../lib/iiif-utils.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = (() => {
@@ -36,74 +37,35 @@ const CONCURRENCY = (() => {
   return idx !== -1 ? parseInt(process.argv[idx + 1]) : 10;
 })();
 
-const DOWNLOAD_TIMEOUT = 30000;
 const MAX_RETRIES = 3;
 
-// Rate limiter per domain
-const domainBuckets = new Map();
-const DOMAIN_LIMITS = {
-  'archive.org': 10, 'gallica.bnf.fr': 3, 'api.digitale-sammlungen.de': 5,
-  'iiif.wellcomecollection.org': 5, 'www.e-rara.ch': 2, 'digi.vatlib.it': 3,
-  'iiif.bodleian.ox.ac.uk': 3, 'images.lib.cam.ac.uk': 3, 'image.digitalcollections.manchester.ac.uk': 3,
-  'images.uba.uva.nl': 3, 'cdm21059.contentdm.oclc.org': 3, 'dl.ndl.go.jp': 3,
-};
-
-function getDomainLimit(url) {
-  try { const host = new URL(url).hostname; return DOMAIN_LIMITS[host] || 5; }
-  catch { return 5; }
-}
-
-async function rateLimitedFetch(url) {
-  let host;
-  try { host = new URL(url).hostname; } catch { host = 'unknown'; }
-  const limit = getDomainLimit(url);
-
-  if (!domainBuckets.has(host)) domainBuckets.set(host, { last: 0, count: 0 });
-  const bucket = domainBuckets.get(host);
-
-  const now = Date.now();
-  if (now - bucket.last > 1000) { bucket.count = 0; bucket.last = now; }
-  if (bucket.count >= limit) {
-    const wait = 1000 - (now - bucket.last);
-    if (wait > 0) await new Promise(r => setTimeout(r, wait));
-    bucket.count = 0;
-    bucket.last = Date.now();
-  }
-  bucket.count++;
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), DOWNLOAD_TIMEOUT);
-  try {
-    const res = await fetch(url, {
-      signal: controller.signal,
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)' }
-    });
-    clearTimeout(timeout);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return Buffer.from(await res.arrayBuffer());
-  } catch (e) {
-    clearTimeout(timeout);
-    throw e;
-  }
-}
-
 async function archivePage(db, page) {
-  const sourceUrl = page.photo_original || page.photo;
-  if (!sourceUrl || sourceUrl.startsWith('failed:')) return 'skip';
-  if (!sourceUrl.startsWith('http')) return 'skip';
+  const originalUrl = page.photo_original || page.photo;
+  if (!originalUrl || originalUrl.startsWith('failed:')) return 'skip';
+  if (!originalUrl.startsWith('http')) return 'skip';
 
   // Already archived
   if (page.archived_photo?.startsWith('http')) return 'skip';
 
+  // Try IIIF full-res first; fall back to original URL if rejected.
+  const fullResUrl = upgradeToFullRes(originalUrl);
+
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
-      const imageBuffer = await rateLimitedFetch(sourceUrl);
+      let imageBuffer: Buffer;
+      try {
+        imageBuffer = await rateLimitedFetch(fullResUrl);
+      } catch (err) {
+        if (fullResUrl !== originalUrl) imageBuffer = await rateLimitedFetch(originalUrl);
+        else throw err;
+      }
 
-      // Process with sharp — resize to max 2000px wide, JPEG 85%
+      // Preserve native resolution. Only cap at 6000px to avoid pathological tiles.
+      // Drops the previous 2000px down-resize that was discarding source detail.
       const processed = await sharp(imageBuffer)
         .rotate() // auto-rotate EXIF
-        .resize(2000, null, { withoutEnlargement: true })
-        .jpeg({ quality: 85, mozjpeg: true })
+        .resize(6000, null, { withoutEnlargement: true })
+        .jpeg({ quality: 90, mozjpeg: true })
         .toBuffer();
 
       // Upload to storage

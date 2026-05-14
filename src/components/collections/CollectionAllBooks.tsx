@@ -17,6 +17,7 @@ interface BookItem {
   title: string;
   display_title?: string;
   author?: string;
+  editor?: string;
   year?: number;
   language?: string;
   pages_count?: number;
@@ -247,12 +248,12 @@ export default function CollectionAllBooks({
           <p className="text-sm text-muted mt-1">
             {expanded ? (
               loading
-                ? `Loading ${total.toLocaleString()} ${itemLabel}…`
+                ? `Loading ${total.toLocaleString('en-US')} ${itemLabel}…`
                 : query || language
-                  ? `${sorted.length.toLocaleString()} of ${allBooks.length.toLocaleString()} ${itemLabel}`
-                  : `${allBooks.length.toLocaleString()} ${itemLabel} in this collection`
+                  ? `${sorted.length.toLocaleString('en-US')} of ${allBooks.length.toLocaleString('en-US')} ${itemLabel}`
+                  : `${allBooks.length.toLocaleString('en-US')} ${itemLabel} in this collection`
             ) : (
-              `${total.toLocaleString()} ${itemLabel} in this collection`
+              `${total.toLocaleString('en-US')} ${itemLabel} in this collection`
             )}
           </p>
         </div>
@@ -415,7 +416,7 @@ export default function CollectionAllBooks({
                   <ArrowRight className="w-5 h-5 text-stone-400" />
                 </div>
                 <span className="text-sm font-medium text-stone-300 group-hover:text-white transition-colors">
-                  See all {total.toLocaleString()}
+                  See all {total.toLocaleString('en-US')}
                 </span>
                 <span className="text-xs text-stone-500">{itemLabel}</span>
               </button>
@@ -433,6 +434,7 @@ export default function CollectionAllBooks({
                 slug: book.slug,
                 title: bookTitle(book),
                 author: book.author || '',
+                editor: book.editor,
                 year: book.year || parseInt(book.published || '', 10) || 0,
                 pages_count: book.pages_count,
                 pages_ocr: book.pages_ocr,
@@ -478,7 +480,7 @@ export default function CollectionAllBooks({
               </div>
               <div className="relative z-10 text-center px-3">
                 <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
-                  See all {total.toLocaleString()}
+                  See all {total.toLocaleString('en-US')}
                 </span>
                 <span className="text-xs text-muted">{itemLabel}</span>
               </div>

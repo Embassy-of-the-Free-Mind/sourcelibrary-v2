@@ -6,11 +6,12 @@ import { useDebouncedCallback } from 'use-debounce';
 import { Search, X } from 'lucide-react';
 
 const SORT_OPTIONS = [
-  { value: 'relevance', label: 'Most relevant' },
-  { value: 'popular', label: 'Most popular' },
+  { value: 'title', label: 'Title A-Z' },
+  { value: 'author', label: 'Author A-Z' },
   { value: 'year_asc', label: 'Oldest first' },
   { value: 'year_desc', label: 'Newest first' },
-  { value: 'title', label: 'Title A-Z' },
+  { value: 'shelfmark', label: 'Shelf mark' },
+  { value: 'popular', label: 'Most read' },
   { value: 'recent', label: 'Recently added' },
 ];
 
@@ -23,13 +24,15 @@ interface CollectionFiltersProps {
   searchPath?: string;
   /** Show a search input for filtering within this collection */
   showSearch?: boolean;
+  /** Default sort when no `?sort=` is in the URL (e.g. 'title' for BPH grid). */
+  defaultSort?: string;
 }
 
-export default function CollectionFilters({ collectionId, languages, basePath, searchPath, showSearch }: CollectionFiltersProps) {
+export default function CollectionFilters({ collectionId, languages, basePath, searchPath, showSearch, defaultSort = 'relevance' }: CollectionFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const sort = searchParams.get('sort') || 'relevance';
+  const sort = searchParams.get('sort') || defaultSort;
   const language = searchParams.get('language') || '';
   const initialQ = searchParams.get('q') || '';
   const [searchQuery, setSearchQuery] = useState(initialQ);

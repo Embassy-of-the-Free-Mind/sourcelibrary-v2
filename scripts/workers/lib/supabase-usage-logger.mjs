@@ -70,6 +70,9 @@ export async function logUsage(params, db = null) {
     job_id: params.job_id || null,
     batch_job_id: params.batch_job_id || null,
     endpoint: params.endpoint || null,
+    // Provenance: cron | manual | auto_recovery | worker | unknown.
+    // Workers default to 'worker'; cron jobs override via TRIGGER_SOURCE=cron.
+    triggered_by: params.triggered_by || process.env.TRIGGER_SOURCE || 'worker',
     completed_at: null,
   };
 

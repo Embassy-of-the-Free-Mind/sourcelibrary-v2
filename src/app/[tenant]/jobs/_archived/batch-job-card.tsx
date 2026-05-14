@@ -96,7 +96,7 @@ export function BatchJobCard({ job }: Props) {
           )}
 
           <div className="text-xs text-stone-500 mt-2">
-            Created {new Date(job.created_at).toLocaleString()}
+            Created {new Date(job.created_at).toLocaleString('en-US')}
           </div>
         </div>
       </div>

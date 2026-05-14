@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const maxDuration = 15;
 
@@ -27,6 +29,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ results: [], query: '', total: 0 });
   }
 
+  // Tenant context — when present, only return images whose book is in this
+  // tenant. Required for tenant subdomain lockdown (e.g. bph.sourcelibrary.org).
+  const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
+  if (tenantSlug && !tenantId) {
+    return NextResponse.json({ results: [], query, total: 0 });
+  }
+
   try {
     // Encode text query via CLIP text encoder on Hetzner
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
@@ -51,11 +60,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Search Supabase for visually matching images
+    // Search Supabase for visually matching images. The CLIP RPC has no
+    // tenant column, so when a tenant filter is active we post-filter the
+    // matches in MongoDB below — oversample here so enough survive the
+    // filter (top-N globally would otherwise leave only a handful for niche
+    // tenant queries). Until the RPC gains a tenant column, this is the
+    // pragmatic fix.
+    const baseCount = offset + limit + 10;
     const { data, error } = await supabase.rpc('match_clip_text', {
       query_embedding: embedding,
       match_threshold: threshold,
-      match_count: offset + limit + 10,
+      match_count: tenantId ? Math.min(baseCount * 10, 1000) : baseCount,
     });
 
     if (error) {
@@ -78,9 +93,25 @@ export async function GET(request: NextRequest) {
       similarity: number;
     }>;
 
+    // Tenant filter: keep only matches whose book is in this tenant.
+    let scoped = matches;
+    if (tenantId) {
+      const bookIds = Array.from(new Set(matches.map(m => m.book_id).filter(Boolean)));
+      if (bookIds.length === 0) {
+        scoped = [];
+      } else {
+        const db = await getReadDb();
+        const allowedDocs = await db.collection('books')
+          .find({ id: { $in: bookIds }, tenantId }, { projection: { id: 1 } })
+          .toArray();
+        const allowed = new Set(allowedDocs.map(d => d.id as string));
+        scoped = matches.filter(m => allowed.has(m.book_id));
+      }
+    }
+
     // Deduplicate by book — max 3 per book for diversity
     const byBook = new Map<string, number>();
-    const deduped = matches.filter(m => {
+    const deduped = scoped.filter(m => {
       const count = byBook.get(m.book_id) || 0;
       if (count >= 3) return false;
       byBook.set(m.book_id, count + 1);

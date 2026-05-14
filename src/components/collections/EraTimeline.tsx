@@ -131,7 +131,7 @@ export default function EraTimeline({ decades, total }: Props) {
               Browse by era
             </h2>
             <p className="text-stone-500 text-sm font-body">
-              {total.toLocaleString()} texts across three millennia
+              {total.toLocaleString('en-US')} texts across three millennia
             </p>
           </div>
 
@@ -204,7 +204,7 @@ export default function EraTimeline({ decades, total }: Props) {
                           {era.tagline}
                         </p>
                         <span className="text-xs text-stone-600 shrink-0 tabular-nums">
-                          {count.toLocaleString()} texts
+                          {count.toLocaleString('en-US')} texts
                         </span>
                       </div>
 

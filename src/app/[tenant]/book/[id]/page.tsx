@@ -20,6 +20,7 @@ import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
+import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
 import RelatedEditions from '@/components/book/RelatedEditions';
 import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
@@ -31,7 +32,6 @@ import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
-import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -40,6 +40,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
 import { formatAuthor } from '@/lib/utils';
+import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { resolveTenantId } from '@/lib/tenant-context';
@@ -157,22 +158,35 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Book Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
-  // Wrong tenant — suppress metadata entirely so the 404 isn't indexed
-  const bookTenantId = (book as any).tenantId || (book as any).tenant_id;
-  if (bookTenantId && tenantId && bookTenantId !== tenantId) {
+  // Wrong tenant — suppress metadata entirely so the 404 isn't indexed.
+  // Match either UUID (tenantId) or slug (tenant_id) — legacy docs may have only one set.
+  const bookTenantUuid = (book as any).tenantId as string | undefined;
+  const bookTenantSlug = (book as any).tenant_id as string | undefined;
+  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
+  const matchesTenant =
+    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
+    (bookTenantSlug && tenant && bookTenantSlug === tenant);
+  if (hasTenantField && !matchesTenant) {
     return { title: 'Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
   const title = book.display_title || book.title;
   const ogTitle = book.published ? `${title} (${book.published})` : title;
-  const author = formatAuthor(book.author).name || book.author;
+  // Byline for citations / meta tags. Falls back to editor for edited volumes,
+  // magazines and anthologies where the catalogue has no single author. Keep
+  // formatAuthor() in the chain to strip bibliographic brackets etc.
+  const byline = getEffectiveByline(book);
+  const bylineName = byline.displayName
+    ? formatAuthor(byline.displayName).name || byline.displayName
+    : formatAuthor(book.author).name || book.author;
+  const bylineLabel = byline.isEditor ? `${bylineName} (ed.)` : bylineName;
   const year = book.published ? ` (${book.published})` : '';
-  // Build description front-loading title+author+date, truncated to 155 chars for SEO
-  let description = `${title} by ${author}${year} — read the full English translation online.`;
+  // Build description front-loading title+byline+date, truncated to 155 chars for SEO
+  let description = `${title} by ${bylineLabel}${year} — read the full English translation online.`;
   if (description.length > 155) {
-    description = `${title} by ${author}${year}`.slice(0, 152) + '...';
+    description = `${title} by ${bylineLabel}${year}`.slice(0, 152) + '...';
   }
-  const bookUrl = tenant ? `/${tenant}/book/${book.slug || book.id}` : `/book/${book.slug || book.id}`;
+  const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
@@ -187,9 +201,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Google Scholar meta tags for academic discoverability
   // https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
+  //
+  // citation_author covers both authors and editors for compilations — Google
+  // Scholar doesn't have a separate citation_editor tag, but the `(ed.)`
+  // suffix is the standard convention and is preserved through search results.
   const scholarMeta: Record<string, string | string[]> = {
     'citation_title': book.title,
-    'citation_author': formatAuthor(book.author).name || book.author,
+    'citation_author': bylineLabel,
     'citation_fulltext_html_url': `https://sourcelibrary.org${bookUrl}`,
   };
   if (book.published) scholarMeta['citation_publication_date'] = book.published;
@@ -225,7 +243,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       // OG image generated by opengraph-image.tsx (branded 1200x630 card)
       ...(publishedDate && { publishedTime: publishedDate }),
       ...(modifiedDate && { modifiedTime: modifiedDate }),
-      authors: [formatAuthor(book.author).name || book.author],
+      authors: [bylineLabel],
     },
     twitter: {
       card: 'summary_large_image',
@@ -310,6 +328,8 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           cropped_photo: 1,
           thumbnail: 1,
           thumbnail_blob: 1,
+          image_display: 1,
+          image_thumb: 1,
           crop: 1,
           'ocr.updated_at': 1,
           'translation.updated_at': 1,
@@ -473,9 +493,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
-  // book.tenant_id is set by the data pipeline for all tenant-scoped books.
-  const bookTenantId = (book as any).tenantId || (book as any).tenant_id;
-  if (tenantId && bookTenantId && bookTenantId !== tenantId) {
+  // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
+  // Match against whichever form is present so legacy artwork docs (slug-only) don't 404.
+  const bookTenantUuid = (book as any).tenantId as string | undefined;
+  const bookTenantSlug = (book as any).tenant_id as string | undefined;
+  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
+  const matchesTenant =
+    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
+    (bookTenantSlug && tenantSlug && bookTenantSlug === tenantSlug);
+  if (hasTenantField && !matchesTenant) {
     notFound();
   }
 
@@ -498,7 +524,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
       relatedBooksByAuthor = await artDb.collection('books')
         .find(
           { author: authorName, content_type: { $ne: 'artwork' }, pages_count: { $gt: 0 } },
-          { projection: { id: 1, slug: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 }, maxTimeMS: 3000 },
+          { projection: { id: 1, slug: 1, title: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1 }, maxTimeMS: 3000 },
         )
         .limit(6)
         .toArray()
@@ -511,6 +537,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
         book={book}
         collections={bookCollections}
         relatedBooks={relatedBooksByAuthor}
+        isEmbedded={!embedPolicy.showAuthorCrossReference}
       />
     );
   }
@@ -530,9 +557,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
   const hasTranslations = translatedCount > totalPages / 2; // >50% translated
-  // Image downloads restricted for non-commercial licensed sources (BSB, Bodleian, Vatican, etc.)
+  // Image-download access classification (mirrors classifyImageAccess in lib/purchases.ts):
+  //  - 'open': PD / CC-BY / BPH / pre-1930 → flows through the normal member/pay gate
+  //  - 'nc-free': NC-licensed → free for any signed-in user, never charged
+  //  - 'blocked': modern + unknown license + non-BPH → withheld entirely
   const imgLicense = (book as any).image_source?.license || 'unknown';
-  const imageRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
+  const imgProvider = (book as any).image_source?.provider;
+  const yearPublished = (book as unknown as { year_published?: number }).year_published;
+  const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
+  const imageAccess: 'open' | 'nc-free' | 'blocked' =
+    imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
+      ? 'open'
+      : isNcLicense
+        ? 'nc-free'
+        : (!imgLicense || imgLicense === 'unknown')
+          ? 'blocked'
+          : 'open';
+  const imageRestricted = imageAccess === 'blocked';
   const bookSummaryObj = (book as unknown as { index?: { bookSummary?: { brief?: string; detailed?: string; abstract?: string } } }).index?.bookSummary;
   const indexBrief = bookSummaryObj?.brief;
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
@@ -575,7 +616,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-8">
             {/* Thumbnail - clickable to change */}
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
               <CoverImagePicker
@@ -593,13 +634,31 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               {book.display_title && book.title !== book.display_title && (
                 <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
               )}
-              <p className="text-lg sm:text-xl text-stone-300 mt-2">
-                {authorUrl(book.author) ? (
-                  <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
-                    <AuthorName author={book.author} />
-                  </Link>
-                ) : <AuthorName author={book.author} />}
-              </p>
+              {/* Byline: prefer author; fall back to "edited by {editor}" for
+                  magazines / edited volumes / anthologies where the catalogue
+                  has no single author. When both fields are present, show
+                  author with the editor as a secondary credit. See
+                  src/lib/byline.ts for the case-insensitive "Unknown"
+                  placeholder rules shared with cards and citations. */}
+              {(() => {
+                const heroByline = getEffectiveByline(book);
+                return (
+                  <p className="text-lg sm:text-xl text-stone-300 mt-2">
+                    {heroByline.role === 'author' ? (
+                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
+                        <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
+                          <AuthorName author={book.author} />
+                        </Link>
+                      ) : <AuthorName author={book.author} />
+                    ) : heroByline.role === 'editor' ? (
+                      <span>edited by <AuthorName author={heroByline.editor} /></span>
+                    ) : <AuthorName author={book.author} />}
+                    {heroByline.role === 'author' && heroByline.editor && (
+                      <span className="text-stone-400 text-base"> · edited by <AuthorName author={heroByline.editor} /></span>
+                    )}
+                  </p>
+                );
+              })()}
 
               {/* DOI badge */}
               {book.doi && (
@@ -715,30 +774,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 </div>
               )}
 
-              {/* Collections — visible in both modes, clickable only when not embedded */}
-              {bookCollections.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2 mt-3">
-                  {bookCollections.map(col =>
-                    embedPolicy.enableBookCollectionNavigation ? (
-                      <Link
-                        key={col.slug}
-                        href={`/collections/${col.slug}`}
-                        className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
-                      >
-                        {col.name}
-                      </Link>
-                    ) : (
-                      <span
-                        key={col.slug}
-                        className="text-xs text-stone-400 bg-white/5 px-2.5 py-1 rounded-full"
-                      >
-                        {col.name}
-                      </span>
-                    )
-                  )}
-                </div>
-              )}
-
               {/* Dedication */}
               <div className="mt-3">
                 <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
@@ -811,6 +846,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                       hasOcr={hasOcr}
                       hasImages={pages.length > 0}
                       imageRestricted={imageRestricted}
+                      imageAccess={imageAccess}
                       variant="header"
                     />
                     <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
@@ -824,17 +860,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                         className="text-stone-300"
                       />
                     </div>
-                    <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
-                    <BookShare
-                      title={book.display_title || book.title}
-                      author={book.author}
-                      year={book.published}
-                      bookId={book.slug || book.id}
-                      doi={book.doi}
-                      label="Share"
-                      tenantSlug={tenantSlug || undefined}
-                      className="text-stone-300 hover:text-white hover:bg-white/10"
-                    />
                   </div>
                 </div>
 
@@ -850,15 +875,39 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink}
                 showExternalLinks={embedPolicy.showExternalLinks}
               >
-                {(book as unknown as { work_id?: string }).work_id && (
+                {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
                     <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
                   </Suspense>
                 )}
               </BibliographicInfo>
 
-              {/* Cross-reference: artworks by this author (pre-computed) */}
-              {(book as any).author_cross_ref && (
+              {/* BPH catalogue record — side-loaded from Supabase bph_works when
+                  this book has a catalogue key. Two key formats:
+                  - Printed books: numeric UBN in dublin_core.dc_identifier
+                  - Allard Pierson IIIF manuscripts: PH-shelfmark in
+                    image_source.shelfmark (e.g. "PH441") — backfilled into
+                    bph_works.ubn by scripts/backfill-bph-allard-pierson.mjs */}
+              {(() => {
+                const dc = (book as { dublin_core?: { dc_identifier?: unknown } }).dublin_core?.dc_identifier;
+                const numericUbn = typeof dc === 'string' && /^\d+$/.test(dc)
+                  ? dc
+                  : Array.isArray(dc) ? dc.find((v): v is string => typeof v === 'string' && /^\d+$/.test(v)) : null;
+                const apShelfmark = (book as { image_source?: { shelfmark?: unknown } }).image_source?.shelfmark;
+                const apKey = typeof apShelfmark === 'string' && /^PH/.test(apShelfmark.trim()) ? apShelfmark.trim() : null;
+                const ubn = numericUbn || apKey;
+                if (!ubn) return null;
+                return (
+                  <Suspense fallback={null}>
+                    <BphCatalogueRecord ubn={ubn} />
+                  </Suspense>
+                );
+              })()}
+
+              {/* Cross-reference: artworks by this author (pre-computed).
+                  Hidden in embed mode — the pre-computed data is not tenant-filtered,
+                  so it can include artworks/books from other tenants. */}
+              {embedPolicy.showAuthorCrossReference && (book as any).author_cross_ref && (
                 <AuthorCrossReference
                   author={book.author}
                   crossRef={(book as any).author_cross_ref}
@@ -897,7 +946,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     ))}
                   </div>
                   {hasTranslations && (
-                    <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
+                    <ExpandableGuide embedPolicy={embedPolicy} bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
                   )}
                 </>
               ) : hasTranslations ? (
@@ -999,6 +1048,25 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               </div>
             )}
 
+            {/* Collections — hidden in embed/tenant views since these would jump to the full Source Library */}
+            {embedPolicy.enableBookCollectionNavigation && bookCollections.length > 0 && (
+              <div>
+                <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>Collections</h3>
+                <div className="flex flex-wrap gap-2">
+                  {bookCollections.map(col => (
+                    <Link
+                      key={col.slug}
+                      href={`/collections/${col.slug}`}
+                      className="text-xs px-2.5 py-1 rounded-full transition-colors"
+                      style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-tertiary)' }}
+                    >
+                      {col.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Related Books — pre-computed, zero extra queries */}
             {embedPolicy.showBookRelatedBooks && book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
               <RelatedBooks relatedBooks={book.related_books} />
@@ -1017,7 +1085,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               Pages
             </h2>
             <Link
-              href={`/${tenantSlug}/book/${book.slug || book.id}/overview`}
+              href={`/book/${book.slug || book.id}/overview`}
               className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="opacity-70">
@@ -1041,7 +1109,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
           }
           return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
-        <AuthCheck role="admin">
+        <AuthCheck role="inner_circle">
           <BookHistory bookId={book.id} />
         </AuthCheck>
       </main>

@@ -7,6 +7,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 
 export const preferredRegion = 'fra1';
 
@@ -61,8 +62,8 @@ export async function GET(
         archived_photo: 1,
         display_photo: 1,
         cropped_photo: 1,
-        thumbnail: 1,
-        thumbnail_blob: 1,
+        thumbnail: 1, image_display: 1,
+        thumbnail_blob: 1, image_thumb: 1,
         crop: 1,
         'ocr.updated_at': 1,
         'translation.updated_at': 1,
@@ -248,10 +249,13 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Allowed fields to update
+    // Allowed fields to update.
+    // Cover-write fields come from a shared constant so adding a field there
+    // automatically threads through to PATCH writers.
     const allowedFields = [
       'title', 'display_title', 'author', 'language', 'published',
-      'thumbnail', 'thumbnail_blob', 'thumbnail_source', 'categories', 'status', 'summary', 'dublin_core',
+      ...COVER_WRITE_FIELDS,
+      'categories', 'status', 'summary', 'dublin_core',
       // USTC catalog fields
       'ustc_id', 'place_published', 'publisher', 'format',
       // Image source and licensing

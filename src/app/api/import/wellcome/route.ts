@@ -197,8 +197,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       const imageUrl = canvas?.images?.[0]?.resource?.service?.['@id'] ||
                        canvas?.images?.[0]?.resource?.['@id'];
       if (imageUrl) {
-        // Use IIIF Image API for consistent sizing
-        return `${imageUrl}/full/2000,/0/default.jpg`;
+        // Use IIIF Image API at native resolution
+        return `${imageUrl}/full/full/0/default.jpg`;
       }
       return null;
     };

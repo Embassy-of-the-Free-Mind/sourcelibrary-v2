@@ -197,8 +197,8 @@ function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, f
   const lang = book.language || 'Latin';
   const langNote = lang !== 'English' ? ` Original ${lang} alongside translation.` : '';
   const desc = config.wikiDesc
-    ? `${config.wikiDesc}. ${book.pages_count.toLocaleString()} pages, ${pct}% complete.`
-    : `page-by-page English translation. ${book.pages_count.toLocaleString()} pages, ${pct}% complete.`;
+    ? `${config.wikiDesc}. ${book.pages_count.toLocaleString('en-US')} pages, ${pct}% complete.`
+    : `page-by-page English translation. ${book.pages_count.toLocaleString('en-US')} pages, ${pct}% complete.`;
 
   const heading = config.slug.includes('corpus-hermeticum') || config.slug.includes('pymander')
     ? '== External link suggestion: 1532 Latin edition at Source Library =='
@@ -220,7 +220,7 @@ function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, f
   if (config.slug === 'history-of-both-worlds-macrocosm-fludd' && fludd2) {
     const f2denom = Math.max(fludd2.pages_count - (fludd2.pages_blank || 0), 1);
     const f2pct = fludd2.pages_count > 0 ? Math.round(fludd2.pages_translated / f2denom * 100) : 0;
-    body += `\n* [https://sourcelibrary.org/book/history-of-both-worlds-microcosm-fludd Utriusque Cosmi Historia Vol. 2 (1619)] — ${fludd2.pages_count.toLocaleString()} pages, ${f2pct}% complete.`;
+    body += `\n* [https://sourcelibrary.org/book/history-of-both-worlds-microcosm-fludd Utriusque Cosmi Historia Vol. 2 (1619)] — ${fludd2.pages_count.toLocaleString('en-US')} pages, ${f2pct}% complete.`;
   }
 
   return `${heading}\n\n{{edit COI}} I'm affiliated with Source Library.\n\n${body}\n\n~~~~`;

@@ -1,20 +1,5 @@
-import { apiClient } from './client';
+import { apiClient, getTenantSlug } from './client';
 import type { LikeTargetType } from '@/lib/types';
-
-function getTenantSlug(): string {
-  if (typeof window === 'undefined') return '';
-  const parts = window.location.pathname.split('/').filter(Boolean);
-  
-  // Handle embed routes: /embed/[tenant]/... -> extract [tenant]
-  if (parts[0] === 'embed' && parts.length > 1) {
-    const tenant = parts[1];
-    return /^[a-z0-9-]+$/.test(tenant) ? tenant : '';
-  }
-  
-  // Handle regular routes: /[tenant]/... -> extract [tenant]
-  const tenant = parts[0] || '';
-  return /^[a-z0-9-]+$/.test(tenant) ? tenant : '';
-}
 
 /**
  * Likes API client

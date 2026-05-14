@@ -711,10 +711,10 @@ export default function BookConstellationViz({ data, initialColorMode }: { data:
           onClick={(e) => e.stopPropagation()}
         >
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div><div className="text-gray-800 font-mono text-xl">{stats.totalBooks.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Books</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.totalBooks.toLocaleString('en-US')}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Books</div></div>
             <div><div className="text-gray-800 font-mono text-xl">{stats.nClusters}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Clusters</div></div>
             <div><div className="text-gray-800 font-mono text-xl">{stats.nLanguages}</div><div className="text-gray-400 text-xs uppercase tracking-wider">Languages</div></div>
-            <div><div className="text-gray-800 font-mono text-xl">{stats.firstTranslations.toLocaleString()}</div><div className="text-gray-400 text-xs uppercase tracking-wider">First Trans.</div></div>
+            <div><div className="text-gray-800 font-mono text-xl">{stats.firstTranslations.toLocaleString('en-US')}</div><div className="text-gray-400 text-xs uppercase tracking-wider">First Trans.</div></div>
           </div>
           <div className="border-t border-gray-200 pt-3 text-gray-500 text-sm leading-relaxed space-y-2">
             <p>

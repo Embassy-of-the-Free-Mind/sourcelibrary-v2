@@ -10,6 +10,7 @@ import { search as searchApi } from '@/lib/api-client';
 import { bookUrl } from '@/lib/slugify';
 import type { UnifiedSearchResponse } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { getEffectiveByline } from '@/lib/byline';
 import HighlightedText from './HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 
@@ -75,7 +76,14 @@ function findCompletion(input: string, vocab: string[]): string | null {
   return null;
 }
 
-export default function UnifiedSearch() {
+interface UnifiedSearchProps {
+  /** Where the results dropdown opens. 'top' (default) opens upward — matches
+   *  the global hero where the search sits at the bottom of the viewport.
+   *  'bottom' opens downward — use when the input has content beneath it. */
+  dropdownPosition?: 'top' | 'bottom';
+}
+
+export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearchProps = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const [query, setQuery] = useState('');
@@ -321,7 +329,7 @@ export default function UnifiedSearch() {
 
       {/* Results Dropdown */}
       {isOpen && (hasResults || noResults) && (
-        <div id="search-results" role="listbox" className="absolute bottom-full mb-2 left-0 right-0 bg-white rounded-xl shadow-xl border border-stone-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto">
+        <div id="search-results" role="listbox" className={`absolute ${dropdownPosition === 'bottom' ? 'top-full mt-2' : 'bottom-full mb-2'} left-0 right-0 bg-white rounded-xl shadow-xl border border-stone-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto`}>
           {noResults ? (
             <div className="p-6 text-center">
               <Search className="w-8 h-8 text-stone-300 mx-auto mb-2" />
@@ -406,7 +414,13 @@ export default function UnifiedSearch() {
                               <HighlightedText text={book.display_title || book.title} query={query} />
                             </p>
                             <p className="text-xs text-stone-500 truncate">
-                              <HighlightedText text={book.author} query={query} />
+                              {(() => {
+                                const byline = getEffectiveByline(book);
+                                if (byline.role === 'editor') {
+                                  return <>ed. <HighlightedText text={byline.editor} query={query} /></>;
+                                }
+                                return <HighlightedText text={book.author} query={query} />;
+                              })()}
                             </p>
                           </div>
                           {book.translation_percent !== undefined && book.translation_percent > 0 && (
@@ -507,7 +521,11 @@ export default function UnifiedSearch() {
                               {sem.title}
                             </p>
                             <p className="text-xs text-stone-500 truncate">
-                              {sem.author}{sem.year ? ` · ${sem.year}` : ''}
+                              {(() => {
+                                const byline = getEffectiveByline({ author: sem.author, editor: sem.editor });
+                                if (byline.role === 'editor') return `ed. ${byline.editor}`;
+                                return sem.author || '';
+                              })()}{sem.year ? ` · ${sem.year}` : ''}
                               {sem.relevance_hint ? ` · ${sem.relevance_hint}` : ''}
                             </p>
                             {sem.summary_snippet && (

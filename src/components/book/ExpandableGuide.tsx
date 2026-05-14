@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { BookText, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { books, gallery } from '@/lib/api-client';
 import SectionsNav from '@/components/layout/SectionsNav';
+import { EmbedUiPolicy } from '@/lib/embed-ui-policy';
 
 interface SectionSummary {
   title: string;
@@ -31,12 +32,13 @@ interface GalleryItem {
 }
 
 interface ExpandableGuideProps {
+  embedPolicy: EmbedUiPolicy;
   bookId: string;
   /** Detailed summary text, passed from server — renders instantly on expand */
   detailedSummary?: string;
 }
 
-export default function ExpandableGuide({ bookId, detailedSummary }: ExpandableGuideProps) {
+export default function ExpandableGuide({ embedPolicy, bookId, detailedSummary, }: ExpandableGuideProps) {
   const pathname = usePathname();
 
   // Extract tenant prefix from pathname (format: /{tenant}/book/...)
@@ -131,7 +133,7 @@ export default function ExpandableGuide({ bookId, detailedSummary }: ExpandableG
           )}
 
           {/* Illustrations — lazy-loaded */}
-          {illustrations.length > 0 && (
+          {embedPolicy.showGalleryImages && illustrations.length > 0 && (
             <div>
               <button
                 onClick={() => setShowIllustrations(!showIllustrations)}

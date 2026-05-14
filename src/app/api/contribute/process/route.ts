@@ -2,9 +2,11 @@ import { NextRequest } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
+import { DEFAULT_MODEL, extractPageType, extractColumns } from '@/lib/types';
+import type { PromptReference } from '@/lib/types';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
-import { getOcrPrompt } from '@/lib/prompts';
+import { getOcrPrompt, getTranslationPrompt } from '@/lib/prompts';
+import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
@@ -18,17 +20,25 @@ function getImageUrl(page: { archived_photo?: string; cropped_photo?: string; ph
   return page.archived_photo || page.cropped_photo || page.photo || page.photo_original || '';
 }
 
+interface ContributorAiResult {
+  text: string;
+  inputTokens: number;
+  outputTokens: number;
+  durationMs: number;
+  promptRef: PromptReference;
+}
+
 // OCR with contributor's API key
 async function performOCRWithKey(
   apiKey: string,
   imageUrl: string,
   language: string,
   previousPageOcr?: string
-): Promise<{ text: string; tokens: number }> {
+): Promise<ContributorAiResult> {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
 
-  const promptResult = await getOcrPrompt();
+  const promptResult = await getOcrPrompt({ language });
   let prompt = promptResult.text;
   if (previousPageOcr) {
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
@@ -40,15 +50,21 @@ async function performOCRWithKey(
     ? { base64: imageData, mimeType: 'image/jpeg' }
     : imageData;
 
+  const startedAt = Date.now();
   const result = await model.generateContent([
     prompt,
     { inlineData: { mimeType, data: base64 } },
   ]);
+  const durationMs = Date.now() - startedAt;
 
   const usageMetadata = result.response.usageMetadata;
-  const tokens = (usageMetadata?.promptTokenCount || 0) + (usageMetadata?.candidatesTokenCount || 0);
-
-  return { text: result.response.text(), tokens };
+  return {
+    text: result.response.text(),
+    inputTokens: usageMetadata?.promptTokenCount || 0,
+    outputTokens: usageMetadata?.candidatesTokenCount || 0,
+    durationMs,
+    promptRef: promptResult.reference,
+  };
 }
 
 // Translation with contributor's API key
@@ -57,13 +73,12 @@ async function performTranslationWithKey(
   ocrText: string,
   sourceLanguage: string,
   previousPageTranslation?: string
-): Promise<{ text: string; tokens: number }> {
+): Promise<ContributorAiResult> {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
 
-  let prompt = DEFAULT_PROMPTS.translation
-    .replace('{source_language}', sourceLanguage)
-    .replace('{target_language}', 'English');
+  const promptResult = await getTranslationPrompt(sourceLanguage);
+  let prompt = promptResult.text;
 
   prompt += `\n\n**Text to translate:**\n${ocrText}`;
 
@@ -71,12 +86,18 @@ async function performTranslationWithKey(
     prompt += `\n\n**Previous page translation for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`;
   }
 
+  const startedAt = Date.now();
   const result = await model.generateContent(prompt);
+  const durationMs = Date.now() - startedAt;
 
   const usageMetadata = result.response.usageMetadata;
-  const tokens = (usageMetadata?.promptTokenCount || 0) + (usageMetadata?.candidatesTokenCount || 0);
-
-  return { text: result.response.text(), tokens };
+  return {
+    text: result.response.text(),
+    inputTokens: usageMetadata?.promptTokenCount || 0,
+    outputTokens: usageMetadata?.candidatesTokenCount || 0,
+    durationMs,
+    promptRef: promptResult.reference,
+  };
 }
 
 export async function POST(request: NextRequest) {
@@ -200,7 +221,10 @@ export async function POST(request: NextRequest) {
                     'ocr.data': result.text,
                     'ocr.content_hash': contentHash(result.text),
                     'ocr.model': DEFAULT_MODEL,
-                    'ocr.prompt_version': PROMPT_VERSION,
+                    'ocr.prompt_version': String(result.promptRef.version),
+                    'ocr.prompt_id': result.promptRef.id,
+                    'ocr.prompt_hash': result.promptRef.content_hash,
+                    'ocr.prompt_name': result.promptRef.name,
                     'ocr.processed_at': new Date(),
                     'ocr.source': 'contributor',
                     'ocr.contributed_by': contributorName || 'Anonymous',
@@ -210,9 +234,30 @@ export async function POST(request: NextRequest) {
                 }
               );
 
+              // Log AI usage to gemini_usage so contributor work shows up in
+              // analytics (cost is on the contributor's key, but the call still
+              // produced data we should be able to trace).
+              await logGeminiCall({
+                type: 'ocr',
+                mode: 'realtime',
+                model: DEFAULT_MODEL,
+                book_id: page.id ? bookId : undefined,
+                book_title: book.title,
+                page_ids: page.id ? [page.id] : undefined,
+                page_count: 1,
+                input_tokens: result.inputTokens,
+                output_tokens: result.outputTokens,
+                status: 'success',
+                duration_ms: result.durationMs,
+                prompt_version: String(result.promptRef.version),
+                endpoint: '/api/contribute/process',
+                triggered_by: 'manual',
+              });
+
               previousText = result.text;
-              totalTokens += result.tokens;
-              totalCostSpent += estimateCost(result.tokens);
+              const totalTokensThisCall = result.inputTokens + result.outputTokens;
+              totalTokens += totalTokensThisCall;
+              totalCostSpent += estimateCost(totalTokensThisCall);
             } else {
               // Translation
               const ocrText = page.ocr?.data;
@@ -240,7 +285,10 @@ export async function POST(request: NextRequest) {
                       data: result.text,
                       content_hash: contentHash(result.text),
                       model: DEFAULT_MODEL,
-                      prompt_version: PROMPT_VERSION,
+                      prompt_version: String(result.promptRef.version),
+                      prompt_id: result.promptRef.id,
+                      prompt_hash: result.promptRef.content_hash,
+                      prompt_name: result.promptRef.name,
                       processed_at: new Date(),
                       source: 'contributor',
                       contributed_by: contributorName || 'Anonymous',
@@ -250,9 +298,27 @@ export async function POST(request: NextRequest) {
                 }
               );
 
+              await logGeminiCall({
+                type: 'translation',
+                mode: 'realtime',
+                model: DEFAULT_MODEL,
+                book_id: page.id ? bookId : undefined,
+                book_title: book.title,
+                page_ids: page.id ? [page.id] : undefined,
+                page_count: 1,
+                input_tokens: result.inputTokens,
+                output_tokens: result.outputTokens,
+                status: 'success',
+                duration_ms: result.durationMs,
+                prompt_version: String(result.promptRef.version),
+                endpoint: '/api/contribute/process',
+                triggered_by: 'manual',
+              });
+
               previousText = result.text;
-              totalTokens += result.tokens;
-              totalCostSpent += estimateCost(result.tokens);
+              const totalTokensThisCall = result.inputTokens + result.outputTokens;
+              totalTokens += totalTokensThisCall;
+              totalCostSpent += estimateCost(totalTokensThisCall);
             }
 
             pagesCompleted++;

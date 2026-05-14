@@ -12,9 +12,10 @@ const NON_TENANT_SEGMENTS = new Set([
   'categories', 'catalog', 'artwork', 'artist', 'book', 'collections',
   'author', 'work', 'connect', 'data', 'read', 'research', 'embed', 'shwep',
   'identify', 'for-researchers', 'admin',
+  'map', 'constellation',
 ]);
 
-function getTenantSlugFromPathname(pathname: string): string | null {
+export function getTenantSlugFromPathname(pathname: string): string | null {
   const segments = pathname.split('/').filter(Boolean);
   // Handle /embed/{tenant}/... paths (tenant subdomains rewrite to /embed/bph/...)
   if (segments[0] === 'embed' && segments[1]) {
@@ -29,6 +30,14 @@ function getTenantSlugFromPathname(pathname: string): string | null {
   if (!/^[a-z0-9-]+$/.test(slug)) return null;
   if (NON_TENANT_SEGMENTS.has(slug)) return null;
   return slug;
+}
+
+// Browser-only wrapper. Returns the tenant slug for the current page, or ''
+// for SSR or non-tenant root routes (`/book/...`, `/gallery/...`, etc).
+// Used by sibling api-client modules to build tenant-scoped URLs.
+export function getTenantSlug(): string {
+  if (typeof window === 'undefined') return '';
+  return getTenantSlugFromPathname(window.location.pathname) ?? '';
 }
 
 // Create axios instance with defaults

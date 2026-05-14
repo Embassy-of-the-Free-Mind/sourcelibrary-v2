@@ -297,8 +297,8 @@ export default function ConceptDiffusionViz({
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
             placeholder={
               mode === 'keywords'
-                ? `Search ${terms.length.toLocaleString()} keywords...`
-                : `Search ${terms.length.toLocaleString()} terms...`
+                ? `Search ${terms.length.toLocaleString('en-US')} keywords...`
+                : `Search ${terms.length.toLocaleString('en-US')} terms...`
             }
             className="px-3 py-1.5 text-sm border border-[var(--border-light)] rounded-lg bg-white w-56"
           />

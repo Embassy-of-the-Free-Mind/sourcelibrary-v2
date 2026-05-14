@@ -160,9 +160,9 @@ export default function ConceptDiffusionPage() {
     >
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Books indexed" value={corpus.totalBooks.toLocaleString()} />
-        <StatCard label="English keywords" value={keywords.length.toLocaleString()} />
-        <StatCard label="Original vocabulary" value={vocab.length.toLocaleString()} />
+        <StatCard label="Books indexed" value={corpus.totalBooks.toLocaleString('en-US')} />
+        <StatCard label="English keywords" value={keywords.length.toLocaleString('en-US')} />
+        <StatCard label="Original vocabulary" value={vocab.length.toLocaleString('en-US')} />
         <StatCard label="Date range" value={dateRange} />
       </div>
 
@@ -170,8 +170,8 @@ export default function ConceptDiffusionPage() {
       <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6 mb-8">
         <h2 className="font-serif text-xl mb-1">Term Frequency Over Time</h2>
         <p className="text-[var(--text-muted)] text-sm mb-4">
-          Search {keywords.length.toLocaleString()} English keywords or{' '}
-          {vocab.length.toLocaleString()} original-language vocabulary terms. Each line shows how
+          Search {keywords.length.toLocaleString('en-US')} English keywords or{' '}
+          {vocab.length.toLocaleString('en-US')} original-language vocabulary terms. Each line shows how
           often a term appears across 50-year periods. Toggle between keywords (from AI translations)
           and vocabulary (from OCR of original texts).
         </p>
@@ -262,20 +262,20 @@ export default function ConceptDiffusionPage() {
         <h3 className="font-serif text-lg mb-2">Methodology</h3>
         <p className="mb-2">
           This dataset draws on two complementary extraction methods applied to{' '}
-          {corpus.totalBooks.toLocaleString()} pre-modern texts from {corpus.periods[0]} to{' '}
+          {corpus.totalBooks.toLocaleString('en-US')} pre-modern texts from {corpus.periods[0]} to{' '}
           {corpus.periods[corpus.periods.length - 1] + 50}:
         </p>
         <p className="mb-2">
           <strong>English keywords</strong> are extracted by AI (Gemini) from each page&apos;s
           translated text. Every page produces a set of &lt;keywords&gt; tags identifying the key
-          concepts discussed on that page. The {keywords.length.toLocaleString()} keywords shown here
+          concepts discussed on that page. The {keywords.length.toLocaleString('en-US')} keywords shown here
           each appear in 50 or more books. Keywords are grouped by subject category based on which
           category of books most frequently produces each keyword.
         </p>
         <p className="mb-2">
           <strong>Original vocabulary</strong> is extracted from OCR output of the original texts —
           Latin, German, Greek, French, Sanskrit, and other languages. These{' '}
-          {vocab.length.toLocaleString()} terms (each appearing in 20+ books) are grouped by primary
+          {vocab.length.toLocaleString('en-US')} terms (each appearing in 20+ books) are grouped by primary
           language. This preserves the actual terminology used by historical authors, complementing
           the standardized English keywords.
         </p>

@@ -14,6 +14,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import IconclassFilter from '@/components/gallery/IconclassFilter';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { useEmbedContext } from '@/hooks/useEmbedContext';
 import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
@@ -89,17 +90,30 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const router = useRouter();
   const pathname = usePathname();
   const identity = useIdentity();
+  // On tenant subdomains the global SL header (Collections, Gallery, Browse…)
+  // is a lockdown leak — see CLAUDE.md invariant #5. Suppress it; the tenant
+  // shell renders its own chrome.
+  const { isEmbedded } = useEmbedContext();
 
   const pathParts = pathname.split('/').filter(Boolean);
   const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
 
-  // Shuffle initial items client-side so order varies each visit
-  const [data, setData] = useState<GalleryResponse>(() => ({
-    ...initialData,
-    items: shuffle(initialData.items),
-  }));
-  // Accumulated items for "Load More" pattern
-  const [allItems, setAllItems] = useState<GalleryItem[]>(() => shuffle(initialData.items));
+  // Render the server-provided order on first paint (matches SSR HTML so we
+  // don't trip React error #418 hydration mismatch), then shuffle once we're
+  // past hydration. Math.random() inside a useState initializer ran twice —
+  // once on the server, once on the client — and produced different orders.
+  const [data, setData] = useState<GalleryResponse>(initialData);
+  const [allItems, setAllItems] = useState<GalleryItem[]>(initialData.items);
+  const [hasShuffled, setHasShuffled] = useState(false);
+  useEffect(() => {
+    if (hasShuffled) return;
+    const shuffled = shuffle(initialData.items);
+    setData(prev => ({ ...prev, items: shuffled }));
+    setAllItems(shuffled);
+    setHasShuffled(true);
+    // initialData is the prop from the server — stable for the lifetime of this mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -294,11 +308,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   return (
     <>
-      <SiteHeader
-        variant="dark"
-        sticky
-        breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
-      />
+      {!isEmbedded && (
+        <SiteHeader
+          variant="dark"
+          sticky
+          breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
+        />
+      )}
 
       <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
         {/* Search & Filter Bar */}
@@ -357,25 +373,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             <SlidersHorizontal className="w-4 h-4" />
             Filters
           </button>
-
-          {/* Image Wall link */}
-          <Link
-            href={`${tenantPrefix}/gallery/wall`}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border border-stone-300 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="w-4 h-4">
-              <rect x="1" y="1" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.6" />
-              <rect x="6" y="1" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.4" />
-              <rect x="11" y="1" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.7" />
-              <rect x="1" y="6" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.5" />
-              <rect x="6" y="6" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.8" />
-              <rect x="11" y="6" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.3" />
-              <rect x="1" y="11" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.7" />
-              <rect x="6" y="11" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.5" />
-              <rect x="11" y="11" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.6" />
-            </svg>
-            Wall
-          </Link>
         </div>
 
         {/* Active Filters / Book Info */}
@@ -626,7 +623,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <div className="mb-4">
                 <h2 className="text-2xl font-serif text-stone-800 mb-1">Browse Images</h2>
                 <p className="text-stone-500 text-base">
-                  {data.total.toLocaleString()} illustrations from rare historical manuscripts.
+                  {data.total.toLocaleString('en-US')} illustrations from rare historical manuscripts.
                 </p>
               </div>
             )}
@@ -651,7 +648,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
-                  {loadingMore ? 'Loading...' : `Load more (${remainingCount.toLocaleString()} remaining)`}
+                  {loadingMore ? 'Loading...' : `Load more (${remainingCount.toLocaleString('en-US')} remaining)`}
                 </button>
               </div>
             )}

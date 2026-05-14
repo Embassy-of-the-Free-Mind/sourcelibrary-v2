@@ -234,7 +234,9 @@ export async function GET(request: NextRequest) {
             input_tokens: 0,
             output_tokens: 0,
             status: 'submitted',
+            prompt_version: PROMPT_VERSION,
             endpoint: '/api/admin/bulk-reocr',
+            triggered_by: 'cron',
           });
         } catch (error) {
           console.error(`[bulk-reocr] Batch submit error for ${label}:`, error);

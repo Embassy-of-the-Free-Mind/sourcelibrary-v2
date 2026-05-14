@@ -13,7 +13,7 @@ const PER_PAGE = 60;
 
 interface BrowseOptions {
   tenantId: string;
-  sort: 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent';
+  sort: 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'shelfmark' | 'recent';
   language?: string;
   search?: string;
   offset: number;
@@ -101,9 +101,13 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
     { $match: { $and: matchConditions } },
   ];
 
-  const sortStage: Record<string, 1 | -1> = {
-    title: 1,
-  };
+  // MongoDB applies sort keys in declaration order — the first key is the
+  // primary sort, the rest are tiebreakers. Previously this object seeded
+  // `{ title: 1 }` *before* the switch, so every sort silently behaved like
+  // Title A-Z because `title` always came first in the key order. Each case
+  // now declares its own primary key, with `title` appended as a stable
+  // tiebreaker (so equal years still come out alphabetically).
+  const sortStage: Record<string, 1 | -1> = {};
   switch (opts.sort) {
     case 'popular':
       sortStage['quality_score'] = -1;
@@ -113,16 +117,23 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
     case 'title':
       sortStage['title'] = 1;
       break;
+    case 'author':
+      sortStage['author'] = 1;
+      break;
     case 'year_asc':
       sortStage['year'] = 1;
       break;
     case 'year_desc':
       sortStage['year'] = -1;
       break;
+    case 'shelfmark':
+      sortStage['dublin_core.dc_source'] = 1;
+      break;
     case 'recent':
       sortStage['last_processed'] = -1;
       break;
   }
+  if (!('title' in sortStage)) sortStage['title'] = 1;
 
   const projection = {
     _id: 0,
@@ -131,8 +142,8 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
     title: 1,
     display_title: 1,
     author: 1,
-    thumbnail: 1,
-    thumbnail_blob: 1,
+    thumbnail: 1, image_display: 1,
+    thumbnail_blob: 1, image_thumb: 1,
     language: 1,
     published: 1,
     pages_count: 1,
@@ -257,7 +268,7 @@ export async function fetchTenantLibraryData(
   sort: string,
   language: string,
   offset: number,
-  q?: string
+  q?: string,
 ): Promise<TenantLibraryData> {
   const db = await getReadDb();
 
@@ -265,7 +276,7 @@ export async function fetchTenantLibraryData(
   const [booksResult, languages, topBooksResult] = await Promise.all([
     browseTenantBooks({
       tenantId,
-      sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
+      sort: (sort as BrowseOptions['sort']) || 'popular',
       language: language || undefined,
       search: q && q.length >= 2 ? q : undefined,
       offset,
@@ -382,11 +393,54 @@ export async function fetchTenantBphDigitizedMap(tenantId: string): Promise<Reco
 
 /**
  * Get BPH catalog total for a tenant.
+ *
+ * Module-level TTL cache keeps the displayed total stable across rapid page
+ * navigations. Without it, ongoing imports (e.g. PR #1712 adding 101 Allard
+ * Pierson manuscripts mid-session) cause the counter to drift between pages
+ * — partner perceived this as a count bug (B11). A 60s window is short
+ * enough to stay near-live but long enough to span a normal browsing
+ * session.
  */
-export async function fetchTenantBphCatalogTotal(tenantId: string): Promise<number> {
-  // For now, return the global BPH catalog total since it's not tenant-scoped in Supabase
+let cachedBphCatalogTotal: { value: number; expiresAt: number } | null = null;
+const BPH_CATALOG_TOTAL_TTL_MS = 60_000;
+
+export async function fetchTenantBphCatalogTotal(_tenantId: string): Promise<number> {
+  const now = Date.now();
+  if (cachedBphCatalogTotal && cachedBphCatalogTotal.expiresAt > now) {
+    return cachedBphCatalogTotal.value;
+  }
+  // bph_works isn't tenant-scoped in Supabase today — return the global total.
   const { count } = await supabase
     .from('bph_works')
     .select('*', { count: 'exact', head: true });
-  return count || 0;
+  const value = count || 0;
+  cachedBphCatalogTotal = { value, expiresAt: now + BPH_CATALOG_TOTAL_TTL_MS };
+  return value;
+}
+
+/**
+ * Canonical "is this book in the BPH catalogue?" set, drawn from Supabase
+ * `bph_works.sl_book_id`. Used to keep the Selected Books row consistent
+ * with the catalogue list view (both view the same set of linked books).
+ *
+ * Returns the set of MongoDB book ids that appear as `sl_book_id` on any
+ * bph_works row — about 2,200 books at last count, fits in memory easily.
+ * Paginates around the Supabase 1,000-row default cap.
+ */
+export async function fetchTenantBphCataloguedBookIds(): Promise<Set<string>> {
+  const ids = new Set<string>();
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from('bph_works')
+      .select('sl_book_id')
+      .not('sl_book_id', 'is', null)
+      .range(from, from + 999);
+    if (error) break;
+    if (!data || data.length === 0) break;
+    for (const r of data) if (r.sl_book_id) ids.add(r.sl_book_id);
+    if (data.length < 1000) break;
+    from += 1000;
+  }
+  return ids;
 }

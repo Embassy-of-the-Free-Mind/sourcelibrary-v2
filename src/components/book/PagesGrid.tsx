@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useParams, usePathname } from 'next/navigation';
 import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw } from 'lucide-react';
 import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -69,10 +68,6 @@ export default function PagesGrid({
   totalCount,
 }: PagesGridProps) {
   const displayTotal = totalCount || pages.length;
-  const params = useParams<{ tenant: string }>();
-  const pathname = usePathname();
-  const isOnEmbedRoute = pathname?.startsWith('/embed/');
-  const tenantPrefix = params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '';
   // CSS brightness filter — only apply when not default (1.0)
   const brightnessStyle = brightness && brightness !== 1.0
     ? { filter: `brightness(${brightness})` }
@@ -173,7 +168,7 @@ export default function PagesGrid({
             return (
               <div key={page.id} className="group relative">
                 <a
-                  href={`${tenantPrefix}/book/${bookId}/page/${page.id}`}
+                  href={`/book/${bookId}/page/${page.id}`}
                 >
                   <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (

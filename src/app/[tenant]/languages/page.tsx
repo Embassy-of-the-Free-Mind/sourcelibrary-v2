@@ -94,7 +94,7 @@ export default async function LanguagesPage() {
     <ContentPageLayout>
       <ContentHeader
         title="Languages"
-        subtitle={`${totalBooks.toLocaleString()} books across ${languages.length} languages, spanning five millennia of human thought.`}
+        subtitle={`${totalBooks.toLocaleString('en-US')} books across ${languages.length} languages, spanning five millennia of human thought.`}
         image={major.find(l => l.heroImage)?.heroImage}
         imageAlt="Multilingual manuscript page"
       />
@@ -122,7 +122,7 @@ export default async function LanguagesPage() {
             <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
               <div className="flex items-center gap-2 mb-2">
                 <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
-                  {lang.bookCount.toLocaleString()} books
+                  {lang.bookCount.toLocaleString('en-US')} books
                 </span>
                 {lang.yearRange && (
                   <span className="text-xs text-white/50">{lang.yearRange}</span>

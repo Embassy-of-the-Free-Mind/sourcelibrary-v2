@@ -13,7 +13,7 @@ import type { Book } from './types/book';
 import { getGeminiClient } from './gemini-client';
 import { getPageImageUrl } from './utils';
 import { images } from './api-client/images';
-import { logGeminiCall } from './gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 import { classifyError } from './errors';
 import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { MODEL_PRICING } from './ai';
@@ -80,7 +80,8 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
 export async function selectBestCover(
   db: Db,
   bookId: string,
-  maxPages: number = 10
+  maxPages: number = 10,
+  options?: { triggered_by?: GeminiTrigger },
 ): Promise<CoverSelectionResult> {
   const startTime = Date.now();
 
@@ -245,8 +246,10 @@ If all pages are poor quality or blank, select page 1 and mark confidence as "lo
       input_tokens: inputTokens,
       output_tokens: outputTokens,
       status: 'success',
+      prompt_version: 'cover-selection-v1',
       endpoint: 'cover-selection',
-      duration_ms: Date.now() - startTime
+      duration_ms: Date.now() - startTime,
+      triggered_by: options?.triggered_by,
     });
 
     return {
@@ -272,8 +275,10 @@ If all pages are poor quality or blank, select page 1 and mark confidence as "lo
       status: 'failed',
       error_message: message,
       error_category: category,
+      prompt_version: 'cover-selection-v1',
       endpoint: 'cover-selection',
-      duration_ms: Date.now() - startTime
+      duration_ms: Date.now() - startTime,
+      triggered_by: options?.triggered_by,
     });
 
     // Fallback to first page

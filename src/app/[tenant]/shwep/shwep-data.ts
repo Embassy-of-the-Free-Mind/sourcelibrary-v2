@@ -106,7 +106,7 @@ async function fetchMatchedBooks(db: any): Promise<Map<string, MatchedBook>> {
       projection: {
         _id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
         language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
-        thumbnail: 1, thumbnail_blob: 1,
+        thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
         'reading_summary.overview': 1, 'index.bookSummary.brief': 1, summary: 1,
       },
       maxTimeMS: 45000,
@@ -232,7 +232,7 @@ export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpi
         projection: {
           _id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
           language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
-          thumbnail: 1, thumbnail_blob: 1,
+          thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
           'reading_summary.overview': 1, 'index.bookSummary.brief': 1, summary: 1,
         },
       }

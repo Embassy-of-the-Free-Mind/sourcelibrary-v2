@@ -37,6 +37,7 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logUsage as logUsageToSupabase } from './lib/supabase-usage-logger.mjs';
+import { createBookRevisions } from './lib/book-revisions.mjs';
 import { createClient } from '@supabase/supabase-js';
 
 /** Trigger on-demand revalidation for a book page after enrichment completes. */
@@ -1053,6 +1054,7 @@ async function enrichBook(db, book) {
       generated_at: new Date(),
       page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
       model: LITE_MODEL,
+      source: 'ai',
     };
     updateData.reading_summary = {
       overview: bookSummary.abstract || bookSummary.brief,
@@ -1061,8 +1063,13 @@ async function enrichBook(db, book) {
       quotes: groundedBatchQuotes.slice(0, 15),
       generated_at: new Date(),
       model: LITE_MODEL,
+      source: 'ai',
     };
   }
+
+  // Snapshot prior summary/reading_summary/index before overwriting so
+  // regenerations are recoverable. (See src/lib/book-revisions.ts.)
+  await createBookRevisions(db, bookId, ['summary', 'reading_summary', 'index']);
 
   await db.collection('books').updateOne(
     { id: bookId },
@@ -1373,6 +1380,9 @@ async function extractChaptersForBook(db, bookId) {
 
   chapters.sort((a, b) => a.pageNumber - b.pageNumber);
   computeEndPages(chapters, pages.length);
+
+  // Snapshot prior chapters before overwriting (revisable history)
+  await createBookRevisions(db, bookId, ['chapters']);
 
   // Save
   await db.collection('books').updateOne(

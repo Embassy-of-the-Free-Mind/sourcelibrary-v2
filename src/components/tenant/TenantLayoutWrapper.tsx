@@ -1,16 +1,17 @@
 'use client';
 
 import { EmbedContext } from '@/lib/EmbedContext';
-import { usePathname } from 'next/navigation';
+import { useEmbedContext } from '@/hooks/useEmbedContext';
 
 export function TenantLayoutWrapper({ children }: { children: React.ReactNode }) {
-    const pathname = usePathname();
-    const onEmbedRoute = pathname?.startsWith('/embed/') ?? false;
-    const inIframe = typeof window !== 'undefined' && window.self !== window.top;
-    const embed = onEmbedRoute || inIframe;
+    // Reuse the central detection — pathname + iframe + tenant subdomain.
+    // Previously this wrapper only checked pathname/iframe, so on tenant
+    // subdomains (bph.sourcelibrary.org) the EmbedContext value was wrong
+    // and the SL header leaked through anywhere consumers gated on it.
+    const { isEmbedded } = useEmbedContext();
 
     return (
-        <EmbedContext.Provider value={embed}>
+        <EmbedContext.Provider value={isEmbedded}>
             {children}
         </EmbedContext.Provider>
     );

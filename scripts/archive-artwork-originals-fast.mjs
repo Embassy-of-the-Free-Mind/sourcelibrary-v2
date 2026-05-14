@@ -74,6 +74,8 @@ async function archiveOne(doc) {
       await db.collection('books').updateOne({ _id: doc._id }, {
         $set: {
           archived_full_url: `https://images.sourcelibrary.org/${key}`,
+          image_full: `https://images.sourcelibrary.org/${key}`,
+          image_source_url: doc.commons_full_url,
           full_width: metadata.width,
           full_height: metadata.height,
           updated_at: new Date(),

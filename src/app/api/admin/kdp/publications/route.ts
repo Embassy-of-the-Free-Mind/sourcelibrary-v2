@@ -25,7 +25,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     const bookIds = publications.map(p => p.book_id);
     const books = await db.collection('books').find(
       { id: { $in: bookIds } },
-      { projection: { id: 1, title: 1, display_title: 1, author: 1, thumbnail_blob: 1, thumbnail: 1, slug: 1 } }
+      { projection: { id: 1, title: 1, display_title: 1, author: 1, thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1, slug: 1 } }
     ).toArray();
     const bookMap = new Map(books.map(b => [b.id, b]));
 

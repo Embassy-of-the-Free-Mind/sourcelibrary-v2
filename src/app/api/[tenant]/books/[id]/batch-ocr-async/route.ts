@@ -3,6 +3,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
@@ -150,6 +151,7 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { tenant, id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
@@ -220,6 +222,13 @@ export const POST = withAuth(async (request, session, context) => {
     // Get the main OCR prompt with language substituted
     const ocrPromptResult = await getOcrPrompt();
     const prompt = ocrPromptResult.text;
+    const promptRef = ocrPromptResult.reference;
+    const promptProvenance = {
+      prompt_id: promptRef.id,
+      prompt_name: promptRef.name,
+      prompt_version: String(promptRef.version),
+      prompt_hash: promptRef.content_hash,
+    };
 
     // Step 1: Validate image URLs and fetch images (parallel with concurrency limit)
     const preparedPages: Array<{ id: string; pageNumber: number; image: { data: string; mimeType: string } }> = [];
@@ -369,7 +378,7 @@ export const POST = withAuth(async (request, session, context) => {
         model,
         language,
         force,
-        prompt_version: PROMPT_VERSION,
+        ...promptProvenance,
         page_ids: allPageIds,
         page_count: allPageIds.length,
         pages_per_request: effectivePPR,
@@ -393,7 +402,9 @@ export const POST = withAuth(async (request, session, context) => {
         input_tokens: 0,
         output_tokens: 0,
         status: 'submitted',
-        endpoint: '/api/books/[id]/batch-ocr-async',
+        prompt_version: PROMPT_VERSION,
+        endpoint: '/api/[tenant]/books/[id]/batch-ocr-async',
+        triggered_by: triggeredBy,
         pages_per_request: effectivePPR,
       });
 
@@ -464,7 +475,7 @@ export const POST = withAuth(async (request, session, context) => {
         model,
         language,
         force,
-        prompt_version: PROMPT_VERSION,
+        ...promptProvenance,
         page_ids: child.batchPageIds,
         page_count: child.batchPageIds.length,
         pages_per_request: effectivePPR,
@@ -485,7 +496,7 @@ export const POST = withAuth(async (request, session, context) => {
       model,
       language,
       force,
-      prompt_version: PROMPT_VERSION,
+      ...promptProvenance,
       page_ids: allPageIds,
       page_count: allPageIds.length,
       total_pages: allPageIds.length,
@@ -511,7 +522,9 @@ export const POST = withAuth(async (request, session, context) => {
       input_tokens: 0,
       output_tokens: 0,
       status: 'submitted',
-      endpoint: '/api/books/[id]/batch-ocr-async',
+      prompt_version: PROMPT_VERSION,
+      endpoint: '/api/[tenant]/books/[id]/batch-ocr-async',
+      triggered_by: triggeredBy,
       pages_per_request: effectivePPR,
     });
 
@@ -547,6 +560,7 @@ export const POST = withAuth(async (request, session, context) => {
 export const GET = withAuth(async (request, session, context) => {
   try {
     const { tenant, id: bookId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const { searchParams } = new URL(request.url);
     const jobName = searchParams.get('jobName');
 
@@ -692,6 +706,8 @@ export const GET = withAuth(async (request, session, context) => {
                   'ocr.language': jobDoc.language,
                   'ocr.source': 'batch_api',
                   'ocr.prompt_version': jobDoc.prompt_version || PROMPT_VERSION,
+                  'ocr.prompt_id': jobDoc.prompt_id,
+                  'ocr.prompt_hash': jobDoc.prompt_hash,
                   'ocr.prompt_name': jobDoc.prompt_name || 'Standard OCR',
                   'ocr.batch_job_id': jobDoc.job_name,
                   ...(jobDoc.pages_per_request > 1 && { 'ocr.pages_per_request': jobDoc.pages_per_request }),
@@ -748,7 +764,9 @@ export const GET = withAuth(async (request, session, context) => {
           input_tokens: totalInputTokens,
           output_tokens: totalOutputTokens,
           status: successCount > 0 ? 'success' : 'failed',
-          endpoint: '/api/books/[id]/batch-ocr-async',
+          prompt_version: jobDoc.prompt_version || PROMPT_VERSION,
+          endpoint: '/api/[tenant]/books/[id]/batch-ocr-async',
+          triggered_by: triggeredBy,
           pages_per_request: jobDoc.pages_per_request,
         });
 

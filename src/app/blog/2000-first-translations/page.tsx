@@ -447,7 +447,7 @@ export default function TwoThousandFirstTranslations() {
                       }}
                     >
                       <span className="text-white text-sm font-semibold drop-shadow-sm whitespace-nowrap">
-                        {t.gap.toLocaleString()} years
+                        {t.gap.toLocaleString('en-US')} years
                       </span>
                     </div>
                   </div>

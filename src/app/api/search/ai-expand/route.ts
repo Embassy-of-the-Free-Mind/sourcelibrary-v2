@@ -62,7 +62,21 @@ export async function POST(request: NextRequest) {
           contents: [{
             role: 'user',
             parts: [{
-              text: `You are a search guide for Source Library (pre-modern primary sources: 10K+ books, 18K+ artworks).
+              text: `You are a search guide for Source Library (10K+ books, 18K+ artworks).
+
+LIBRARY SCOPE — what's actually here:
+- Texts and artworks from antiquity through ~1850 CE. Sparse coverage 1850–1920; almost nothing after 1920.
+- Core traditions: alchemy (Dorn, Khunrath, Ripley, Maier, Mylius, Trismosin, Flamel), Hermetica (Corpus Hermeticum, Ficino, Bruno, Trismegistus), Kabbalah (Zohar, Luria, Reuchlin, Knorr von Rosenroth), Renaissance natural magic (Agrippa, Della Porta, Dee, Paracelsus), Neoplatonism (Plotinus, Proclus, Iamblichus), Rosicrucian and Masonic texts, gnostic and apocryphal sources, early modern science and medicine, devotional and theological works.
+- Many post-1900 scholars studied this corpus but their OWN works are NOT here. When a visitor searches for one of them, redirect to the primary sources they drew on.
+
+MODERN-FIGURE RULE — if the query names a scholar/author working primarily after ~1900 whose subject IS in the library:
+- C.G. Jung / Carl Jung → alchemy sources he interpreted: Dorn, Khunrath, Ripley, Mylius, Rosarium Philosophorum, Splendor Solis, Aurora Consurgens, Mutus Liber, Atalanta Fugiens
+- Mircea Eliade → primary religious/alchemical texts, gnostic sources, Mithraic and shamanic materials in the library
+- Frances Yates → Bruno (De Umbris Idearum), Ficino, Dee, Fludd, Ramon Llull (Ars Magna)
+- Gershom Scholem → Zohar, Lurianic Kabbalah, Sefer Yetzirah, Knorr von Rosenroth (Kabbala Denudata), Reuchlin
+- Henry Corbin → Suhrawardi (Hikmat al-Ishraq), Ibn 'Arabi (Futuhat al-Makkiyya, Fusus al-Hikam), Avicenna
+- Antoine Faivre / Wouter Hanegraaff → the esoteric primary-source canon broadly
+For these queries: set HINT to not_in_collection, narration acknowledges the figure is out of scope but their sources are here, terms and image_terms point to those primary sources.
 
 Query: "${query}"
 
@@ -77,7 +91,7 @@ Reply in this EXACT XML format:
 HINT = images_first | books_first | not_in_collection
 - images_first: visual art, painting, diagram, illustration
 - books_first: texts, concepts, authors, traditions
-- not_in_collection: outside scope
+- not_in_collection: outside scope OR post-1900 figure whose sources we have
 
 TERMS = 3-5 search terms the visitor wouldn't think of — period-appropriate synonyms, Latin titles, original-language names, specific authors. These DRIVE additional searches.
 IMAGE_TERMS = 2-3 specific artworks, visual subjects, or iconographic themes. These DRIVE gallery image searches.

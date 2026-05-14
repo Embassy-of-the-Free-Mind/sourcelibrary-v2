@@ -14,12 +14,16 @@ const NON_TENANT_PATHS = new Set([
   'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
   // User pages (standalone, not tenant-scoped)
   'favorites', 'reading-history', 'timeline', 'topics', 'languages',
-  'categories', 'catalog', 'artwork', 'artist',
+  'categories', 'catalog', 'catalogue', 'artwork', 'artist',
+  // Short share links — redirected to /explore/* in next.config.ts redirects()
+  'map', 'constellation',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
   'research', 'embed', 'shwep', 'for-researchers', 'identify',
+  // Welcome flow (post-signup interstitial + temporary preview route)
+  'welcome', 'welcome-preview',
 ]);
 
 // Domains that enable the Ficino Society social layer
@@ -335,8 +339,11 @@ export async function proxy(request: NextRequest) {
   if (tenant && !pathname.startsWith('/embed/') && !pathname.startsWith('/_next/') && !pathname.startsWith('/api/')) {
     const url = request.nextUrl.clone();
     // Map common paths to embed equivalents
-    if (pathname === '/' || pathname === '/search') {
+    if (pathname === '/') {
       url.pathname = `/embed/${tenant}`;
+    } else if (pathname === '/search' || pathname.startsWith('/search/')) {
+      // Dedicated search results page — keep traffic in embed namespace.
+      url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/book/') && (pathname.includes('/page/') || pathname.includes('/page-number/'))) {
       // Page reader + page-number: keep traffic in embed namespace
       url.pathname = `/embed/${tenant}${pathname}`;
@@ -348,32 +355,49 @@ export async function proxy(request: NextRequest) {
       } else {
         url.pathname = `/embed/${tenant}${pathname}`;
       }
-    } else if (pathname === '/catalog') {
+    } else if (pathname === '/catalogue' || pathname === '/catalog') {
+      // Catalogue page on tenant subdomain — show the full library catalogue
+      // (e.g. all 28k BPH works). `/catalog` kept as legacy alias for any
+      // bookmarks or backlinks; canonical public URL is `/catalogue`.
       url.pathname = `/embed/${tenant}`;
+      url.searchParams.set('view', 'catalog');
+    } else if (pathname.startsWith('/catalogue/') || pathname.startsWith('/catalog/')) {
+      // Catalogue entry detail (e.g. /catalogue/12345 for UBN-keyed BPH works).
+      // Both spellings forwarded to the existing `/catalog/[ubn]` route folder.
+      const tail = pathname.startsWith('/catalogue/')
+        ? pathname.slice('/catalogue/'.length)
+        : pathname.slice('/catalog/'.length);
+      url.pathname = `/embed/${tenant}/catalog/${tail}`;
     } else if (pathname.startsWith('/gallery')) {
-      // Gallery doesn't have tenant-specific embeds — redirect to main site
-      const mainUrl = request.nextUrl.clone();
-      mainUrl.host = 'sourcelibrary.org';
-      mainUrl.port = '';
-      return NextResponse.redirect(mainUrl, 302);
+      // Keep gallery traffic inside the tenant subdomain — never redirect out
+      // to sourcelibrary.org (BPH lockdown invariant).
+      url.pathname = `/embed/${tenant}${pathname}`;
     } else {
       // All other paths on tenant subdomain → embed root (filtered search)
       url.pathname = `/embed/${tenant}`;
     }
-    return NextResponse.rewrite(url);
+    // Resolve and forward the tenant id so embed pages that read tenant context
+    // from headers (e.g. /[tenant]/gallery/page.tsx, re-exported under
+    // /embed/[tenant]/gallery) see the tenant. Pages that already read the
+    // tenant slug from URL params are unaffected.
+    const subdomainTenant = await resolveTenantByExactSlug(tenant);
+    const subdomainHeaders = new Headers(request.headers);
+    subdomainHeaders.set('x-tenant-slug', tenant);
+    if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
+    return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
   }
 
-  // --- Legacy root route compatibility ---
-  // Root routes moved to /{tenant}/... but global surfaces still emit legacy URLs.
-  // Resolve tenant from the resource itself so mixed-tenant cards open correctly.
-  if (pathname.startsWith('/book/')) {
-    const segment = pathname.split('/')[2] || '';
-    const tenantSlug = await resolveTenantForBookSegment(segment)
-      || (await resolveTenantByExactSlug('default'))?.slug
-      || null;
-    if (tenantSlug) {
+  // --- Canonical book URLs ---
+  // Book URLs are tenant-agnostic: always /book/{slug} (no tenant prefix).
+  // Strip any leading /{tenant} from book paths so old links canonicalize.
+  const tenantBookMatch = pathname.match(/^\/([^/]+)(\/book(?:\/.*)?)$/);
+  if (tenantBookMatch) {
+    const tenantSegment = tenantBookMatch[1];
+    const bookSuffix = tenantBookMatch[2];
+    const directTenant = await resolveActiveTenant(tenantSegment);
+    if (directTenant) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${tenantSlug}${pathname}`;
+      url.pathname = bookSuffix;
       return NextResponse.redirect(url, 308);
     }
   }
@@ -462,6 +486,22 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // Internal tenant routing for /book/...:
+  // The route lives at [tenant]/book/[id] (3+ segments), but the public URL is
+  // /book/{id}. Rewrite (don't redirect) so the URL stays clean — no tenant
+  // prefix ever appears in the address bar.
+  if (pathname.startsWith('/book/')) {
+    const segment = pathname.split('/')[2] || '';
+    const tenantSlug = await resolveTenantForBookSegment(segment)
+      || (await resolveTenantByExactSlug('default'))?.slug
+      || null;
+    if (tenantSlug) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${tenantSlug}${pathname}`;
+      return NextResponse.rewrite(url);
+    }
+  }
+
   // --- Bot rate limiting (soft) ---
   // Browser rate limiting is handled by Vercel WAF (dashboard config).
   // This in-memory limiter only applies to bots as a defense-in-depth layer.
@@ -536,16 +576,30 @@ export async function proxy(request: NextRequest) {
   }
 
   // Root /api/* calls from tenant pages do not include the tenant segment in the pathname.
-  // Infer tenant from referer so legacy root APIs remain tenant-safe during migration.
+  // Infer tenant from host (subdomain), then path, then referer so legacy root
+  // APIs remain tenant-safe.
   if (!tenantId && pathname.startsWith('/api/')) {
-    const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+    // Tenant subdomain (e.g. bph.sourcelibrary.org/api/search) — map host to
+    // tenant. Without this, client-side fetches from tenant subdomains would
+    // hit global APIs unfiltered and leak cross-tenant content.
+    if (tenant) {
+      const subdomainTenant = await resolveTenantByExactSlug(tenant);
+      if (subdomainTenant?.id) {
+        tenantId = subdomainTenant.id;
+        tenantSlug = tenant;
+      }
+    }
 
-    // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
-    if (apiPrefix === 'api' && apiTenantSegment) {
-      const pathTenant = await resolveActiveTenant(apiTenantSegment);
-      if (pathTenant) {
-        tenantId = pathTenant.id;
-        tenantSlug = pathTenant.slug;
+    if (!tenantId) {
+      const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+
+      // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
+      if (apiPrefix === 'api' && apiTenantSegment) {
+        const pathTenant = await resolveActiveTenant(apiTenantSegment);
+        if (pathTenant) {
+          tenantId = pathTenant.id;
+          tenantSlug = pathTenant.slug;
+        }
       }
     }
 
@@ -584,13 +638,11 @@ export async function proxy(request: NextRequest) {
   // override CDN-Cache-Control because Next.js ISR sets it after middleware.
 
   // --- X-Frame-Options ---
-  // Tenant-scoped paths (/{tenant}/book/*, /{tenant}) and /libraries/*; global paths (/collections/*, /gallery/*, etc.)
-  // are embeddable by allowlisted partner origins (and localhost for dev).
+  // Allow framing only for explicit embed namespace and tenant-scoped paths.
   // Everything else gets DENY to prevent clickjacking.
   const isEmbeddablePath =
-    // Legacy root paths (kept for backwards compat during migration)
-    pathname.startsWith('/book/') ||
-    pathname.startsWith('/collections/') ||
+    pathname === '/embed' ||
+    pathname.startsWith('/embed/') ||
     pathname.startsWith('/libraries/') ||
     // Tenant-scoped paths: allow all paths under a resolved tenant
     (tenantSlug && (

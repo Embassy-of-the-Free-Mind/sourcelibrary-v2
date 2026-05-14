@@ -34,6 +34,9 @@ export interface BatchJob {
   model?: string;
   language?: string;
   prompt_version?: string;
+  prompt_id?: string;     // ID of prompt used (DB ObjectId, 'hardcoded', or 'custom')
+  prompt_name?: string;   // Display name of prompt
+  prompt_hash?: string;   // md5 of prompt content for immutable provenance
   force?: boolean;  // Overwrite existing data
 
   // Timestamps

@@ -24,7 +24,7 @@ async function getWorkEditions(workId: string) {
       projection: {
         id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
         language: 1, original_language: 1, 'image_source.provider_name': 1,
-        thumbnail_blob: 1, thumbnail: 1, pages_count: 1, pages_ocr: 1,
+        thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1, pages_count: 1, pages_ocr: 1,
         pages_translated: 1, resource_type: 1,
       },
       sort: { published: 1 },
@@ -96,7 +96,7 @@ export default async function WorkPage({ params }: PageProps) {
           )}
           {earliest && earliest === latest && <span>{earliest}</span>}
           {languages.length > 0 && <span>{languages.join(', ')}</span>}
-          <span>{totalPages.toLocaleString()} pages</span>
+          <span>{totalPages.toLocaleString('en-US')} pages</span>
           <span>{editions.length} editions</span>
           {editions.filter(e => (e.pages_translated || 0) > 0).length >= 2 && (
             <Link

@@ -300,7 +300,7 @@ export default function EntityMap({ entities, stats }: EntityMapProps) {
 
           {/* Count */}
           <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-            {filtered.length.toLocaleString()} / {entities.length.toLocaleString()}
+            {filtered.length.toLocaleString('en-US')} / {entities.length.toLocaleString('en-US')}
           </span>
         </div>
       </div>

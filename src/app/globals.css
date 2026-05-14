@@ -644,6 +644,3 @@ body:has(.embed-mode) [data-site-mode-indicator] {
 body:has(.embed-mode) {
   background: #fafaf8;
 }
-body:has(.embed-mode) #main-content {
-  min-height: 100vh;
-}

@@ -27,6 +27,21 @@ export function isUsableImageUrl(url: string | undefined | null): url is string 
 }
 
 /**
+ * Locale-stable number formatter. Pins locale to en-US so server-side
+ * rendering (Node's default) and client-side rendering (the user's browser
+ * locale) produce identical strings — otherwise we trip React error #418
+ * hydration mismatches for visitors whose browser locale isn't en-US.
+ *
+ * Use this instead of `n.toLocaleString()` anywhere a number is rendered to
+ * JSX text. The bare `.toLocaleString()` is fine in side-effects and event
+ * handlers, but not in render output.
+ */
+export function formatNumber(n: number | null | undefined): string {
+  if (n == null || !Number.isFinite(n)) return '';
+  return n.toLocaleString('en-US');
+}
+
+/**
  * Return the best book image URL for the given display context.
  *
  * R2 image variants (see src/lib/storage.ts for path helpers):
@@ -39,14 +54,13 @@ export function isUsableImageUrl(url: string | undefined | null): url is string 
  *   - Use 'thumb' for tiny previews (<100px, search results, list rows)
  */
 export function getBookThumbnailUrl(
-  book: { thumbnail?: string | null; thumbnail_blob?: string | null },
+  book: { thumbnail?: string | null; thumbnail_blob?: string | null; image_display?: string | null; image_thumb?: string | null },
   size: 'display' | 'thumb' = 'display'
 ): string | null {
-  // For display size, prefer the archived page image (higher res) over the tiny blob thumbnail.
-  // For thumb size, prefer the blob (small, fast).
+  // Prefer canonical image_* fields, fall back to legacy thumbnail/thumbnail_blob
   const raw = size === 'display'
-    ? (book.thumbnail || book.thumbnail_blob || null)
-    : (book.thumbnail_blob || book.thumbnail || null);
+    ? (book.image_display || book.thumbnail || book.thumbnail_blob || null)
+    : (book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
 
   // Wikimedia Commons: rewrite to thumb.php for CDN-cached resized images.

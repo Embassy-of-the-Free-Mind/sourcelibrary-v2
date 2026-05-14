@@ -40,7 +40,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
       db.collection('books').find(bookFilter, {
         projection: {
           id: 1, title: 1, display_title: 1, author: 1, language: 1,
-          published: 1, categories: 1, thumbnail_blob: 1, thumbnail: 1,
+          published: 1, categories: 1, thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1,
           pages_count: 1, pages_translated: 1, pages_blank: 1, read_count: 1,
           kdp_score: 1, kdp_score_breakdown: 1, is_first_translation: 1,
           slug: 1,

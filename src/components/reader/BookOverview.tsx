@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface OverviewPage {
   id: string;
@@ -24,8 +24,15 @@ interface BookOverviewProps {
   pages: OverviewPage[];
 }
 
-// Two-tier image URLs: fast thumbnail for overview, high-res for zoom
+// Two-tier image URLs: fast thumbnail for overview, high-res for zoom.
+// Split-page handling MUST come first — page.photo and page.archived_photo
+// both point at the full uncropped spread for split pages, so falling
+// through to them renders the wrong image. cropped_photo is the half-page
+// crop and is the canonical source for split pages.
 function getThumbUrl(page: OverviewPage): string | null {
+  if (page.split_from_spread || page.crop) {
+    return page.thumbnail_blob || page.cropped_photo || null;
+  }
   if (page.thumbnail_blob) return page.thumbnail_blob;
   if (page.thumbnail) return page.thumbnail;
   if (page.archived_photo) return page.archived_photo;
@@ -34,8 +41,9 @@ function getThumbUrl(page: OverviewPage): string | null {
 }
 
 function getHiresUrl(page: OverviewPage): string | null {
-  // Split pages: use photo directly (the cropped half), not the full spread
-  if (page.split_from_spread || page.crop) return page.photo || null;
+  if (page.split_from_spread || page.crop) {
+    return page.cropped_photo || page.photo || null;
+  }
   // Best available high-res: archived R2 > display > original > photo
   if (page.archived_photo) return page.archived_photo;
   if (page.display_photo) return page.display_photo;
@@ -60,8 +68,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const params = useParams<{ tenant: string }>();
-  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
+  // Book URLs are tenant-agnostic — the proxy resolves the tenant. No prefix here.
 
   // Camera state (not React state — updated every frame)
   const camRef = useRef({ x: 0, y: 0, zoom: 1 });
@@ -347,7 +354,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
           const idx = hitTest(sx, sy);
           if (idx >= 0) {
             const page = pagesWithImages[idx];
-            const bookPath = `${tenantPrefix}/book/${bookSlug || bookId}`;
+            const bookPath = `/book/${bookSlug || bookId}`;
             router.push(`${bookPath}/page/${page.id}`);
           }
         }
@@ -411,7 +418,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
           const idx = hitTest(sx, sy);
           if (idx >= 0) {
             const page = pagesWithImages[idx];
-            const bookPath = `${tenantPrefix}/book/${bookSlug || bookId}`;
+            const bookPath = `/book/${bookSlug || bookId}`;
             router.push(`${bookPath}/page/${page.id}`);
           }
         }
@@ -469,7 +476,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     dirtyRef.current = true;
   };
 
-  const bookPath = `${tenantPrefix}/book/${bookSlug || bookId}`;
+  const bookPath = `/book/${bookSlug || bookId}`;
 
   return (
     <div ref={containerRef} className="relative w-full h-[calc(100vh-56px)] bg-[#0a0a0a]">

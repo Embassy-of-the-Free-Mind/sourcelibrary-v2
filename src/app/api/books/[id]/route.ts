@@ -5,15 +5,18 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
+import { withApiAuth } from '@/lib/api-auth';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { mirrorBookToCatalog } from '@/lib/books-catalog';
+import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 
 export const preferredRegion = 'fra1';
 
-export async function GET(
+export const GET = withApiAuth(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
@@ -61,8 +64,8 @@ export async function GET(
         archived_photo: 1,
         display_photo: 1,
         cropped_photo: 1,
-        thumbnail: 1,
-        thumbnail_blob: 1,
+        thumbnail: 1, image_display: 1,
+        thumbnail_blob: 1, image_thumb: 1,
         crop: 1,
         'ocr.updated_at': 1,
         'translation.updated_at': 1,
@@ -102,7 +105,7 @@ export async function GET(
     console.error('Error fetching book:', error);
     return NextResponse.json({ error: 'Failed to fetch book' }, { status: 500 });
   }
-}
+}, { route: 'books.get' });
 
 export const DELETE = withAdminAuth(async (request, session, context) => {
   try {
@@ -236,10 +239,13 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Allowed fields to update
+    // Allowed fields to update.
+    // Cover-write fields come from a shared constant so adding a field there
+    // automatically threads through to PATCH writers.
     const allowedFields = [
       'title', 'display_title', 'author', 'language', 'published',
-      'thumbnail', 'thumbnail_blob', 'thumbnail_source', 'categories', 'status', 'summary', 'dublin_core',
+      ...COVER_WRITE_FIELDS,
+      'categories', 'status', 'summary', 'dublin_core',
       // USTC catalog fields
       'ustc_id', 'place_published', 'publisher', 'format',
       // Image source and licensing
@@ -260,6 +266,10 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
 
     const bookId = book.id || book._id.toString();
     const changedFields = Object.keys(updates).filter(k => k !== 'updated_at');
+
+    // Mirror to Supabase books_catalog so cover/title/author edits surface
+    // immediately instead of waiting for the 5-min Hetzner sync cron.
+    await mirrorBookToCatalog(bookId, updates);
     if (changedFields.length > 0) {
       logAuditEvent({
         action: 'book_metadata_updated',

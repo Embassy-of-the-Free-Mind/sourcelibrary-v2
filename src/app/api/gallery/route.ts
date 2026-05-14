@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { supabase } from '@/lib/supabase';
@@ -385,8 +386,11 @@ export async function GET(request: NextRequest) {
       total = await db.collection('gallery_images').estimatedDocumentCount();
     }
 
-    // Fetch like counts (and visitor's liked status) for these images
-    const visitorId = searchParams.get('visitor_id');
+    // Fetch like counts (and visitor's liked status) for these images.
+    // Prefer the authenticated user id so likedByVisitor stays correct
+    // even when the client hasn't hydrated its session yet.
+    const session = await auth();
+    const visitorId = session?.user?.id || searchParams.get('visitor_id');
     const imageIds = items.map(doc => `${doc.page_id}-${doc.detection_index}`);
     let likesMap: Record<string, { count: number; liked: boolean }> = {};
     if (imageIds.length > 0) {

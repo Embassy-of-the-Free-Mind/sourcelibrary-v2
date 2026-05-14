@@ -11,20 +11,36 @@ const NC_LICENSE_PATTERNS = [
   /non.?commercial/i,
 ];
 
+export type ImageAccess =
+  | 'open'      // No license concern — flows through the normal member-or-pay gate
+  | 'nc-free'   // NC-licensed — free for any signed-in user, never enters the paid flow
+  | 'blocked';  // Unknown license + no public-domain signal — withheld entirely
+
 /**
- * Check if a book's page images carry a non-commercial restriction.
- * Returns true if images CANNOT be sold (NC-restricted).
- * Text-only formats (translation, OCR) are always commercially safe.
+ * Classify how a book's page images can be downloaded.
+ *
+ *  - 'open': public domain, CC-BY, BPH provider, or year_published < 1930.
+ *           Flows through the normal canDownload() / Stripe gate.
+ *  - 'nc-free': any NoC-NC / CC-BY-NC variant. We're a non-commercial scholarly
+ *              platform, so redistribution is fine — but charging for an NC scan
+ *              would cross the commercial line. So: free for any signed-in user.
+ *  - 'blocked': unknown license, non-BPH, not pre-1930. Conservative default.
  */
-export async function isImageRestricted(bookId: string): Promise<boolean> {
+export async function classifyImageAccess(bookId: string): Promise<ImageAccess> {
   const db = await getDb();
   const book = await db.collection('books').findOne(
-    { _id: bookId as any },
-    { projection: { 'image_source.license': 1 } },
+    { $or: [{ id: bookId }, { _id: bookId as any }] },
+    { projection: { 'image_source.license': 1, 'image_source.provider': 1, year_published: 1 } },
   );
-  const license = book?.image_source?.license;
-  if (!license || license === 'unknown') return true; // conservative: unknown = restricted
-  return NC_LICENSE_PATTERNS.some(p => p.test(license));
+  if (!book) return 'blocked';
+  const license = book.image_source?.license;
+  const provider = book.image_source?.provider;
+  const year = (book as { year_published?: number }).year_published;
+  if (provider === 'bph') return 'open';
+  if (typeof year === 'number' && year < 1930) return 'open';
+  if (license && NC_LICENSE_PATTERNS.some(p => p.test(license))) return 'nc-free';
+  if (!license || license === 'unknown') return 'blocked';
+  return 'open';
 }
 
 export type PurchaseType = keyof typeof PRICES;

@@ -89,7 +89,7 @@ async function getImagesForCode(db: any, code: string, limit = 48): Promise<Gall
         },
         {
           projection: {
-            id: 1, slug: 1, title: 1, author: 1, thumbnail: 1,
+            id: 1, slug: 1, title: 1, author: 1, thumbnail: 1, image_display: 1,
             'enrichment.description': 1,
           },
         },
@@ -201,7 +201,7 @@ export default async function SubjectCategoryPage({ params }: Props) {
           </h1>
           <div className="flex items-center gap-4">
             <p style={{ color: 'var(--text-muted)' }}>
-              {node ? `${node.count.toLocaleString()} images` : 'No indexed images'}
+              {node ? `${node.count.toLocaleString('en-US')} images` : 'No indexed images'}
             </p>
             <a
               href={`https://iconclass.org/${encodeURIComponent(code)}`}
@@ -248,7 +248,7 @@ export default async function SubjectCategoryPage({ params }: Props) {
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <p className="text-white font-display text-sm leading-tight">{child.label}</p>
                     <p className="text-white/70 text-xs mt-0.5">
-                      <span className="font-mono">{child.code}</span> · {child.count.toLocaleString()}
+                      <span className="font-mono">{child.code}</span> · {child.count.toLocaleString('en-US')}
                     </p>
                   </div>
                 </Link>

@@ -5,8 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Calendar, FileText } from 'lucide-react';
 import { cn, getBookThumbnailUrl } from '@/lib/utils';
+import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
+import { getEffectiveByline } from '@/lib/byline';
 import { useEmbedHref } from '@/lib/EmbedContext';
 
 interface CollectionBook {
@@ -16,6 +18,9 @@ interface CollectionBook {
   title: string;
   display_title?: string | null;
   author: string;
+  /** Editor for edited volumes/anthologies — shown as "edited by X" when
+   *  author is missing/"Unknown". See src/lib/byline.ts. */
+  editor?: string | null;
   year: number;
   pages?: number;
   pages_count?: number;
@@ -71,6 +76,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           {thumbnailUrl && !imageError ? (
             <Image
               src={thumbnailUrl}
+              loader={bookCoverResponsiveLoader}
               alt={book.display_title || book.title}
               fill
               quality={85}
@@ -123,41 +129,55 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           >
             {book.display_title || book.title}
           </h3>
-          <p className="text-sm text-secondary mb-3 line-clamp-1"><AuthorName author={book.author} /></p>
+          <p className="text-sm text-secondary mb-3 line-clamp-1">
+            {(() => {
+              const byline = getEffectiveByline(book);
+              if (byline.role === 'editor') {
+                return <span>edited by <AuthorName author={byline.editor} /></span>;
+              }
+              return <AuthorName author={book.author} />;
+            })()}
+          </p>
 
           <div className="flex flex-wrap gap-2 text-xs text-muted">
-            {book.year > 0 && (
-              <span className="flex items-center gap-1">
-                <Calendar className="w-3 h-3" />
-                {book.year}
-              </span>
-            )}
-            {isArtwork ? (
-              <>{book.resource_type && (
-                <>
-                  <span>•</span>
-                  <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span>
-                </>
-              )}</>
-            ) : (
-              <>
-                {pageCount > 0 && (
-                  <>
-                    <span>•</span>
-                    <span className="flex items-center gap-1">
+            {(() => {
+              const chips: React.ReactNode[] = [];
+              if (book.year > 0) {
+                chips.push(
+                  <span key="year" className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {book.year}
+                  </span>
+                );
+              } else if (book.published) {
+                chips.push(
+                  <span key="year" className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {book.published}
+                  </span>
+                );
+              }
+              if (isArtwork) {
+                if (book.resource_type) {
+                  chips.push(
+                    <span key="type" className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span>
+                  );
+                }
+              } else {
+                if (pageCount > 0) {
+                  chips.push(
+                    <span key="pages" className="flex items-center gap-1">
                       <FileText className="w-3 h-3" />
                       {pageCount} pages
                     </span>
-                  </>
-                )}
-                {book.language && (
-                  <>
-                    <span>•</span>
-                    <span>{book.language}</span>
-                  </>
-                )}
-              </>
-            )}
+                  );
+                }
+                if (book.language) {
+                  chips.push(<span key="lang">{book.language}</span>);
+                }
+              }
+              return chips.flatMap((chip, i) => i === 0 ? [chip] : [<span key={`sep-${i}`}>•</span>, chip]);
+            })()}
           </div>
         </div>
       </div>

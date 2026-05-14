@@ -1,0 +1,2982 @@
+{
+  "run_at": "2026-05-12T10:47:29.730Z",
+  "mode": "apply",
+  "total": 142,
+  "results": [
+    {
+      "book": {
+        "id": "69c581e41a75791c06b6824e",
+        "slug": "verborgenheit-des-unsterblichen-liquoris-alcahest",
+        "title": "Verborgenheit des unsterblichen liquoris alcahest",
+        "author": "[Starkey, George]",
+        "year": 1707,
+        "language": "Unknown"
+      },
+      "candidate_count": 10,
+      "final": {
+        "reasoning": "The digitised book's title, author, and year match perfectly with the entry in the catalogue (ubn 15204).",
+        "evidence": "The title \"Verborgenheit des unsterblichen liquoris alcahest\" is identical to the title in ubn=15204; the author \"[Starkey, George]\" matches perfectly; the year 1707 matches exactly.",
+        "confidence": "high",
+        "matched_ubn": "15204"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3354cca56a12bc607",
+        "slug": "versammlungs-rede-bph",
+        "title": "Versammlungs-Rede",
+        "author": "[Woellner, Johann Christoph von]  Goehrung, Jos",
+        "year": 1781,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "evidence": "The title \"Versammlungs-Rede\" is identical; the author \"[Woellner, Johann Christoph von] Goehrung, Jos\" matches perfectly; the year 1781 matches perfectly.",
+        "reasoning": "The digitised book's original title, author, and year are an exact match for the entry with UBN 15298.",
+        "confidence": "high",
+        "matched_ubn": "15298"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3551fbd40b95eaa38",
+        "slug": "reasons-why-the-most-serene-and-mighty-prince-and-lord-anonymous",
+        "title": "Ursachen warumb der durchleuchtigste, grossmächtigste Fürst und Herr, Herr Gustavus Adolphus der Schweden [...] endlich einmahl sich auff teutschen Boden mit Kriegsmacht zubegeben getrungen worden ist",
+        "author": "anonymous",
+        "year": 1630,
+        "language": "German"
+      },
+      "candidate_count": 0,
+      "final": {
+        "reasoning": "The title and year provided for the digitised book match the catalogue entry 15092 exactly.",
+        "confidence": "high",
+        "matched_ubn": "15092",
+        "evidence": "Title matches the original title provided exactly: \"Ursachen warumb der durchleuchtigste, grossmächtigste Fürst und Herr, Herr Gustavus Adolphus der Schweden [...] endlich einmahl sich auff teutschen Boden mit Kriegsmacht zubegeben getrungen worden ist\". Year matches (1630). Author matches (\"anonymous\")."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c581e4a0ac0c96f42b4016",
+        "slug": "veritatis-proscenium-fludd-1621",
+        "title": "Veritatis proscenium",
+        "author": "Fludd, Robert",
+        "year": 1621,
+        "language": "Unknown"
+      },
+      "candidate_count": 15,
+      "final": {
+        "reasoning": "The digitised book’s title, author, and year match ubn 15256 perfectly.",
+        "matched_ubn": "15256",
+        "confidence": "high",
+        "evidence": "title \"Veritatis proscenium\" matches exactly; author \"Fludd, Robert\" matches exactly; year 1621 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3551fbd40b95eaa34",
+        "slug": "an-explanation-of-the-table-of-the-three-principles-bohme",
+        "title": "Eene verklaringh ofte uyt-leggingh over de tafel vande drie principien",
+        "author": "Böhme, Jacob|",
+        "year": 1642,
+        "language": "Dutch"
+      },
+      "candidate_count": 9,
+      "final": {
+        "evidence": "Title \"Eene verklaringh ofte uyt-leggingh over de tafel vande drie principien\" matches ubn=15268 perfectly; year 1642 matches; author \"Böhme, Jacob\" matches.",
+        "reasoning": "The title provided for the digitised book is an exact match for the title of ubn=15268, and the year and author also align perfectly.",
+        "confidence": "high",
+        "matched_ubn": "15268"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee610d",
+        "slug": "the-mineral-gluten-walchin",
+        "title": "Das mineralische Gluten",
+        "author": "[Walchin, Dorothea Juliana]",
+        "year": 1722,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "confidence": "high",
+        "evidence": "title matches exactly (\"Das mineralische Gluten\"); author matches exactly (\"[Walchin, Dorothea Juliana]\"); year matches exactly (1722).",
+        "matched_ubn": "9255",
+        "reasoning": "The digitised book and UBN 9255 share identical title, author, and publication year information, confirming a perfect match."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e43954e1ebf355ef93",
+        "slug": "sendivogii-third-beginning-of-mineral-things-1677",
+        "title": "Der verlangete dritte Anfang der mineralischen Dinge",
+        "author": "[Hautnorthon, Josaphat Friederich]",
+        "year": 1656,
+        "language": "Unknown"
+      },
+      "candidate_count": 3,
+      "final": {
+        "matched_ubn": "15272",
+        "evidence": "title matches exactly; author matches exactly; year matches exactly (1656).",
+        "confidence": "high",
+        "reasoning": "The digitised book's title, author, and year (1656) align perfectly with UBN 15272."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e32e2f948a050a505a",
+        "slug": "investigation-into-the-secret-and-customs-of-the-knights-anton",
+        "title": "Untersuchung über das Geheimnis und die Gebräuche der Tempelherren",
+        "author": "Anton, Karl Gottlob",
+        "year": 1782,
+        "language": "German"
+      },
+      "candidate_count": 6,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "15033",
+        "evidence": "Title \"Untersuchung über das Geheimnis und die Gebräuche der Tempelherren\" matches perfectly; Author \"Anton, Karl Gottlob\" matches perfectly; Year 1782 matches perfectly.",
+        "reasoning": "The title, author, and year in the digitised book are an exact match for the catalogue entry ubn 15033."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3551fbd40b95eaa3a",
+        "slug": "prophecies-or-predictions-of-illustrious-men-fiore",
+        "title": "Vaticinia seu praedictiones illustrium virorum... Vaticini overo predittioni d' huomini illustri",
+        "author": "Joachim of Fiore",
+        "year": 1605,
+        "language": "Latin"
+      },
+      "candidate_count": 5,
+      "final": {
+        "confidence": "high",
+        "evidence": "Title identical (\"Vaticinia seu praedictiones illustrium virorum... Vaticini overo predittioni d' huomini illustri\"); Author matches (\"Joachim of Fiore\"); Year matches (1605).",
+        "reasoning": "The digitised book title and author match the entry for UBN 21549 perfectly, and the date 1605 aligns with this edition.",
+        "matched_ubn": "21549"
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 21549 already linked to a different book (69c816166c6f3cc53c848928)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c581e34cc41628b775aa84",
+        "slug": "defense-for-master-caspar-schwenckfeld-berner",
+        "title": "Veranthwortung fuer Herr Caspar Schwenckfelden",
+        "author": "Berner, Alexander",
+        "year": 1552,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The digitised book and the catalogue entry share an identical title, author, and year, confirming they are the same work.",
+        "evidence": "Title matches exactly (\"Veranthwortung fuer Herr Caspar Schwenckfelden\"); Author matches exactly (\"Berner, Alexander\"); Year matches exactly (1552).",
+        "confidence": "high",
+        "matched_ubn": "15189"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee611b",
+        "slug": "adamite-magic-or-the-antiquity-of-magic-vaughan",
+        "title": "Magia adamica oder das Alterthum der Magie",
+        "author": "[Vaughan, Thomas]",
+        "year": 1704,
+        "language": "German"
+      },
+      "candidate_count": 6,
+      "final": {
+        "evidence": "Title \"Magia adamica oder das Alterthum der Magie\" matches perfectly; Year 1704 matches perfectly; Author [Vaughan, Thomas] matches perfectly.",
+        "matched_ubn": "8680",
+        "confidence": "high",
+        "reasoning": "The digitised book's original title, author, and year align perfectly with UBN 8680 in the catalogue."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee610b",
+        "slug": "philaletha-illustrated-or-an-open-entrance-to-the-closed-faust",
+        "title": "Philaletha illustratus",
+        "author": "Faust, Johannes Michael",
+        "year": 1728,
+        "language": "Latin"
+      },
+      "candidate_count": 0,
+      "final": {
+        "reasoning": "The digitised book's author, title, and year correspond perfectly with the catalogue entry 11077. The provided title \"Philaletha Illustrated...\" is the English translation/explanation of the Latin title \"Philaletha illustratus\".",
+        "matched_ubn": "11077",
+        "confidence": "high",
+        "evidence": "Title 'Philaletha illustratus' matches exactly; Author 'Faust, Johannes Michael' matches exactly; Year 1728 matches exactly."
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 11077 already linked to a different book (6909d208cf28baa1b4cb003b)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6113",
+        "slug": "menippus-or-a-century-of-satirical-dialogues-andreae-2",
+        "title": "Menippus sive dialogorum satyricorum centuria",
+        "author": "[Andreae, Johann Valentin]",
+        "year": 1618,
+        "language": "Latin"
+      },
+      "candidate_count": 11,
+      "final": {
+        "evidence": "title=\"Menippus sive dialogorum satyricorum centuria\" matches ubn=9105 exactly; author \"[Andreae, Johann Valentin]\" matches exactly; year 1618 matches exactly.",
+        "confidence": "high",
+        "reasoning": "The digitised book and the catalogue entry ubn=9105 share the exact same Latin title, author, and publication year.",
+        "matched_ubn": "9105"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e34cc41628b775aa82",
+        "slug": "urim-and-thummim-of-moses-which-aaron-wore-in-the-mensenriet",
+        "title": "Urim & Thumim Moysis welches Aaron in Amts-Schildlein getragen Feuer-bleibendes Wasser",
+        "author": "Mensenriet",
+        "year": 1737,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title matches (original German title vs catalogue title are identical: \"Urim & Thumim Moysis welches Aaron in Amts-Schildlein getragen Feuer-bleibendes Wasser\"); Author matches (\"Mensenriet\"); Year matches (1737).",
+        "matched_ubn": "15079",
+        "reasoning": "The title, author, and year in the digitised metadata are identical to the information provided in the catalogue entry for ubn 15079.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e34cc41628b775aa86",
+        "slug": "de-usu-et-mysteriis-notarum-liber-gohory",
+        "title": "De usu et mysteriis notarum liber",
+        "author": "Gohory, Jacques",
+        "year": 1550,
+        "language": "Latin"
+      },
+      "candidate_count": 3,
+      "final": {
+        "confidence": "high",
+        "evidence": "Title \"De usu et mysteriis notarum liber\" matches exactly; author \"Gohory, Jacques\" matches exactly; year 1550 matches exactly.",
+        "reasoning": "The digitised book details are a perfect match for the entry in the BPH printed-book catalogue (ubn=15119).",
+        "matched_ubn": "15119"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6107",
+        "slug": "philosophia-maturata-or-a-detailed-philosophical-treatise-colson",
+        "title": "Philosophia maturata, oder ein ausführlicher philosophischer Tractat",
+        "author": "Colson, Lancelot",
+        "year": 1696,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The book search returned an exact match for the title, author, and year in the catalogue.",
+        "matched_ubn": "11122",
+        "evidence": "Title \"Philosophia maturata, oder ein ausführlicher philosophischer Tractat\" matches exactly; Author \"Colson, Lancelot\" matches; Year 1696 matches."
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 11122 already linked to a different book (6909c9d0cf28baa1b4cafc1b)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee610f",
+        "slug": "the-hieroglyphic-monad-dee-2",
+        "title": "Monas hieroglyphica",
+        "author": "Dee, John",
+        "year": 1591,
+        "language": "Latin"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book and candidate ubn=9374 share identical author, title, and publication year, confirming they are the same work.",
+        "confidence": "high",
+        "evidence": "title=\"Monas hieroglyphica\" matches perfectly; author=\"Dee, John\" matches perfectly; year=1591 matches perfectly.",
+        "matched_ubn": "9374"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6125",
+        "slug": "short-treatise-on-the-kabbalistic-hearing-lull",
+        "title": "Opusculum de auditu kabbalistico sive ad omnes scientias introductorium",
+        "author": "Lull, Ramón",
+        "year": 1601,
+        "language": "Latin"
+      },
+      "candidate_count": 10,
+      "final": {
+        "reasoning": "The title and author of the digitised book are an exact match for the entry ubn=10621 in the BPH catalogue, and the year is also identical.",
+        "evidence": "title \"Opusculum de auditu kabbalistico sive ad omnes scientias introductorium\" is identical; author \"Lull, Ramón\" matches; year 1601 matches.",
+        "matched_ubn": "10621",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6111",
+        "slug": "metaphysical-heresies-gleichen-2",
+        "title": "Metaphysische Kezereien",
+        "author": "[Gleichen, Karl Heinrich von]",
+        "year": 1791,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "evidence": "title \"Metaphysische Kezereien\" matches perfectly; author \"[Gleichen, Karl Heinrich von]\" matches perfectly; year 1791 matches perfectly.",
+        "confidence": "high",
+        "reasoning": "The digitised book's original title, author, and year are identical to the information provided for ubn 9207.",
+        "matched_ubn": "9207"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6105",
+        "slug": "the-most-secret-mysteries-of-the-high-degrees-of-masonry-koppen-2",
+        "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés",
+        "author": "[Köppen, Karl Friedrich]",
+        "year": 1786,
+        "language": "French"
+      },
+      "candidate_count": 4,
+      "final": {
+        "evidence": "Title \"Les plus secrets mystères des hauts grades de la maçonnerie dévoilés\" matches perfectly; author matches; year 1786 matches exactly.",
+        "confidence": "high",
+        "reasoning": "The digitised book's title, author, and publication year (1786) match exactly with the entry for UBN 11415 in the BPH catalogue.",
+        "matched_ubn": "11415"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3551fbd40b95eaa32",
+        "slug": "attempt-at-a-history-of-the-order-of-the-temple-anton",
+        "title": "Versuch einer Geschichte des Tempelherrenordens",
+        "author": "[Anton, Karl Gottlob]",
+        "year": 1779,
+        "language": "de"
+      },
+      "candidate_count": 6,
+      "final": {
+        "reasoning": "The digitised book matches UBN 15311 in title, author, and year exactly. UBN 15310 is a later edition (1781) of the same work.",
+        "evidence": "Title \"Versuch einer Geschichte des Tempelherrenordens\" matches exactly; author \"Anton, Karl Gottlob\" matches exactly; year \"1779\" matches exactly.",
+        "matched_ubn": "15311",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6121",
+        "slug": "the-most-secret-mysteries-of-the-high-degrees-of-masonry-koppen-3",
+        "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés",
+        "author": "[Köppen, Karl Friedrich]",
+        "year": 1767,
+        "language": "French"
+      },
+      "candidate_count": 4,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The digitised book title, author, and publication year correspond exactly with ubn 11417 in the catalogue.",
+        "matched_ubn": "11417",
+        "evidence": "Title \"Les plus secrets mystères des hauts grades de la maçonnerie dévoilés\" matches perfectly; author \"[Köppen, Karl Friedrich]\" matches perfectly; year 1767 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3354cca56a12bc603",
+        "slug": "unterredungen-ueber-die-geheimen-wissenschaften",
+        "title": "Unterredungen ueber die geheimen Wissenschaften",
+        "author": "Montfaucon de Villars, Nicolas-Pierre-Henri",
+        "year": 1764,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "15027",
+        "evidence": "Title \"Unterredungen ueber die geheimen Wissenschaften\" matches perfectly; Year 1764 matches perfectly; Place \"Berlijn en Leipzig\" is consistent with a German edition of this work.",
+        "confidence": "high",
+        "reasoning": "The title and year match exactly with the catalogue entry 15027. The content described in the digitised book corresponds to the known German translation of 'Le Comte de Gabalis', which is what this work is."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6115",
+        "slug": "the-most-secret-mysteries-of-the-high-degrees-of-koppen-2",
+        "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés",
+        "author": "[Köppen, Karl Friedrich]",
+        "year": 1766,
+        "language": "French"
+      },
+      "candidate_count": 4,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "11416",
+        "reasoning": "The digitised book's title, author, and publication year 1766 perfectly align with the details of UBN 11416 in the catalogue.",
+        "evidence": "The title \"Les plus secrets mystères des hauts grades de la maçonnerie dévoilés\" matches perfectly; the author \"[Köppen, Karl Friedrich]\" matches perfectly; the year 1766 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6103",
+        "slug": "the-most-secret-mysteries-of-the-high-degrees-of-masonry-koppen",
+        "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés",
+        "author": "[Köppen, Karl Friedrich]",
+        "year": 1774,
+        "language": "French"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book's title, author, and year are an exact match for the entry in the BPH printed-book catalogue with ubn 11419.",
+        "matched_ubn": "11419",
+        "evidence": "title \"Les plus secrets mystères des hauts grades de la maçonnerie dévoilés\" matches ubn=11419; author \"[Köppen, Karl Friedrich]\" matches ubn=11419; year 1774 matches ubn=11419.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3354cca56a12bc609",
+        "slug": "unpartheyische-und-christliche-erwegung-ein-hirt-und-eine-krakewitz",
+        "title": "Unpartheyische und christliche Erwegung ... ein Hirt und eine Heerde",
+        "author": "Krakewitz, Albert Joachim von",
+        "year": 1706,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "The title \"Unpartheyische und christliche Erwegung ... ein Hirt und eine Heerde\" matches perfectly. The author \"Krakewitz, Albert Joachim von\" matches perfectly. The year 1706 matches perfectly.",
+        "confidence": "high",
+        "reasoning": "The digitised book and the catalogue entry share an identical title, author, and publication year, confirming they are the same work.",
+        "matched_ubn": "15009"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6117",
+        "slug": "a-new-chemical-light-sendivogius-2",
+        "title": "Novum lumen chymicum",
+        "author": "[Sendivogius, Michael]",
+        "year": 1628,
+        "language": "Latin"
+      },
+      "candidate_count": 8,
+      "final": {
+        "reasoning": "The search result for \"Novum lumen chymicum\" by Sendivogius published in 1628 is a direct match for the digitised book, whereas the initial list of candidates did not include this specific edition.",
+        "matched_ubn": "10220",
+        "evidence": "Title \"Novum lumen chymicum\" matches exactly; author \"[Sendivogius, Michael]\" matches exactly; year 1628 matches exactly.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 10220 already linked to a different book (690986dccf28baa1b4cae0e3)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6119",
+        "slug": "on-the-miraculous-word-reuchlin-2",
+        "title": "Liber de verbo mirifico",
+        "author": "Reuchlin, Johann",
+        "year": 1552,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The digitised book and the catalogue entry match exactly in title, author, and publication year.",
+        "matched_ubn": "8335",
+        "evidence": "Title \"Liber de verbo mirifico\" matches perfectly; Author \"Reuchlin, Johann\" matches perfectly; Year 1552 matches perfectly; Place \"Lyon\" is consistent with the printer Jean de Tournes active there in 1552.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee611f",
+        "slug": "biographies-of-famous-men-from-the-times-of-the-restoration-meiners",
+        "title": "Lebensbeschreibungen berühmter Männer aus den Zeiten der Wiederherstellung der Wissenschaften",
+        "author": "Meiners, Christoph",
+        "year": 1795,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The digitised book title, author, and year correspond exactly to UBN 8139 in the catalogue.",
+        "confidence": "high",
+        "matched_ubn": "8139",
+        "evidence": "Title: \"Lebensbeschreibungen berühmter Männer aus den Zeiten der Wiederherstellung der Wissenschaften\" matches exactly. Author: \"Meiners, Christoph\" matches exactly. Year: 1795 matches exactly."
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 8139 already linked to a different book (690c2476e0787282ad5930dd)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c581e32e2f948a050a505c",
+        "slug": "the-hermetic-philosophical-messenger-bringing-joyful-and-potier",
+        "title": "Veredarius hermetico-philosophicus laetum et inauditum nuncium ad ferens",
+        "author": "Potier, Michael",
+        "year": 1622,
+        "language": "Latin"
+      },
+      "candidate_count": 2,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "15211",
+        "reasoning": "The title, author, and year in the digitised book metadata match the entry 15211 in the catalogue perfectly.",
+        "evidence": "title \"Veredarius hermetico-philosophicus laetum et inauditum nuncium ad ferens\" matches ubn=15211 exactly; year 1622 matches; author \"Potier, Michael\" matches."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e48e452b634cbc3698",
+        "slug": "the-instructed-beginner-in-chemistry-a-hermetic-epistle-marsciano",
+        "title": "Der unterwiesene Anfänger in der Chymie hermetisches Sendschreiben",
+        "author": "Marsciano, Francesco Onofrio di",
+        "year": 1751,
+        "language": "German"
+      },
+      "candidate_count": 4,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "15048",
+        "evidence": "title matches exactly (in German); author matches exactly; year matches exactly (1751).",
+        "reasoning": "The digitised book's title, author, and year (1751) match candidate 15048 perfectly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3551fbd40b95eaa3e",
+        "slug": "attempt-at-a-history-of-arianism-starck",
+        "title": "Versuch einer Geschichte des Arianismus",
+        "author": "[Starck, Johann August von]",
+        "year": 1783,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "A search of the catalogue identified a perfect match for the digitised book, confirming the title, author, and publication year.",
+        "confidence": "high",
+        "matched_ubn": "15309",
+        "evidence": "Title (exact match: \"Versuch einer Geschichte des Arianismus\"), author (exact match: \"[Starck, Johann August von]\"), and year (exact match: 1783) all align perfectly."
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 15309 already linked to a different book (6909cae5cf28baa1b4cafca7)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c581f0a0ac0c96f42b4018",
+        "slug": "an-interpretation-of-the-number-666-potter-2",
+        "title": "Een verklaringh over het getal 666",
+        "author": "Potter, Francis",
+        "year": 1659,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "confidence": "high",
+        "evidence": "title \"Een verklaringh over het getal 666\" ↔ \"Een verklaringh over het getal 666\"; author \"Potter, Francis\" ↔ \"Potter, Francis\"; year 1659 ↔ 1659.",
+        "matched_ubn": "15269",
+        "reasoning": "The metadata for the digitised book perfectly matches the catalogue entry (ubn 15269) in title, author, and year."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e32e2f948a050a5056",
+        "slug": "ancient-chemical-work-eleazar-2",
+        "title": "Uraltes chymisches Werck",
+        "author": "Abraham Eleazar",
+        "year": 1735,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "evidence": "title=\"Uraltes chymisches Werck\" matches exactly; author \"Abraham Eleazar\" matches exactly; year 1735 matches exactly.",
+        "confidence": "high",
+        "reasoning": "The digitised book and candidate ubn 15063 match perfectly in title, author, and year of publication.",
+        "matched_ubn": "15063"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3551fbd40b95eaa36",
+        "slug": "ancient-chemical-work-eleazar",
+        "title": "Uraltes chymisches Werk",
+        "author": "Abraham Eleazar",
+        "year": 1760,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The digitised book and the catalogue entry correspond perfectly in title, author, and year, confirming they are the same work.",
+        "matched_ubn": "15065",
+        "confidence": "high",
+        "evidence": "Title: \"Uraltes chymisches Werk\" matches exactly; Author: \"Abraham Eleazar\" matches exactly; Year: 1760 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e32e2f948a050a5058",
+        "slug": "attempt-at-a-history-of-the-order-of-the-temple-anton-2",
+        "title": "Versuch einer Geschichte des Tempelherrenordens",
+        "author": "Anton, Karl Gottlob",
+        "year": 1781,
+        "language": "German"
+      },
+      "candidate_count": 4,
+      "final": {
+        "matched_ubn": "15310",
+        "reasoning": "The digitised book's original title, author, and year match the catalogue entry for ubn 15310 perfectly.",
+        "evidence": "Title (original) \"Versuch einer Geschichte des Tempelherrenordens\" matches exactly; author \"Anton, Karl Gottlob\" matches exactly; year 1781 matches exactly.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e32e2f948a050a5054",
+        "slug": "les-secrets-les-plus-caches-de-la-philosophie-des-anciens-colonne",
+        "title": "Les secrets les plus cachés de la philosophie des anciens",
+        "author": "[Colonne, François-Marie-Pompée]",
+        "year": 1762,
+        "language": "French"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "12970",
+        "evidence": "Title \"Les secrets les plus cachés de la philosophie des anciens\" matches exactly; author \"[Colonne, François-Marie-Pompée]\" matches exactly; year 1762 matches exactly.",
+        "reasoning": "The digitised book details (title, author, and year) are an exact match for the catalogue entry ubn=12970.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e32e2f948a050a505e",
+        "slug": "on-the-origin-and-principal-fates-of-the-orders-of-buhle",
+        "title": "Ueber den Ursprung und die vornehmsten Schicksale der Orden der Rosenkreuzer und Freymaurer",
+        "author": "Buhle, Johann Gottlieb",
+        "year": 1804,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title: \"Ueber den Ursprung und die vornehmsten Schicksale der Orden der Rosenkreuzer und Freymaurer\" matches ubn=15103; Author: \"Buhle, Johann Gottlieb\" matches ubn=15103; Year: 1804 matches ubn=15103.",
+        "confidence": "high",
+        "reasoning": "The digitised book's title, author, and year are an exact match for the catalogue entry ubn=15103.",
+        "matched_ubn": "15103"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6123",
+        "slug": "pymander-asclepius-and-on-the-mysteries-of-the-egyptians-trismegistus",
+        "title": "Pymander. Asclepius. De mysteriis Aegyptiorum. In Platonicum Alcibiadem, de anima & daemone. De sacrificio",
+        "author": "Hermes Trismegistus|Jamblichus|Proclus",
+        "year": 1532,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "11805",
+        "reasoning": "A search for the author \"Hermes Trismegistus\" and the year 1532 successfully located the exact volume in the catalogue. The digitised book's title and authors are an exact match for UBN 11805.",
+        "confidence": "high",
+        "evidence": "Title: \"Pymander. Asclepius. De mysteriis Aegyptiorum...\" matches exactly (11805); Year: 1532 matches exactly; Authors match exactly."
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 11805 already linked to a different book (690989d5cf28baa1b4cae1c9)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee611d",
+        "slug": "revealer-of-the-great-secret-of-the-philosophers-anonymous-2",
+        "title": "Magni philosophorum arcani revelator",
+        "author": "anonymous",
+        "year": 1688,
+        "language": "Latin"
+      },
+      "candidate_count": 0,
+      "final": {
+        "confidence": "low",
+        "evidence": "No candidate matches were found in the BPH catalogue for the Latin title \"Magni philosophorum arcani revelator\" or the associated contents (Antonio de Abatia, Opus Jovis) within the timeframe.",
+        "matched_ubn": "",
+        "reasoning": "Extensive searching of the BPH catalogue using the title, authors, and components of the digitized work yielded no matching entry."
+      },
+      "applied": null,
+      "toolCalls": 5
+    },
+    {
+      "book": {
+        "id": "69c581e4ef9444b5fe7c4794",
+        "slug": "impartial-collections-for-the-history-of-the-rosicrucians-semler",
+        "title": "Unparteiische Samlungen zur Historie der Rosenkreuzer",
+        "author": "Semler, Johann Salomo",
+        "year": 1786,
+        "language": "German"
+      },
+      "candidate_count": 4,
+      "final": {
+        "reasoning": "The title, author, and year in the digitised book metadata match the entry ubn=15002 in the catalogue perfectly.",
+        "matched_ubn": "15002",
+        "confidence": "high",
+        "evidence": "Title \"Unparteiische Samlungen zur Historie der Rosenkreuzer\" matches exactly; author \"Semler, Johann Salomo\" matches exactly; year 1786 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c4ec33a3a4a7c546ee6109",
+        "slug": "philosophy-of-love-abrabanel",
+        "title": "Philosophie d'amour",
+        "author": "Abrabanel, Jehuda",
+        "year": 1551,
+        "language": "French"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The digitized book's title, author, and year match perfectly with the entry ubn=11157 in the catalogue.",
+        "evidence": "title \"Philosophie d'amour\" matches exactly; author \"Abrabanel, Jehuda\" matches; year 1551 matches.",
+        "confidence": "high",
+        "matched_ubn": "11157"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3551fbd40b95eaa3c",
+        "slug": "explanation-of-the-evangelical-parables-vitringa",
+        "title": "Verklaring van de evangelische parabolen",
+        "author": "Vitringa, Campegius",
+        "year": 1726,
+        "language": "Dutch"
+      },
+      "candidate_count": 8,
+      "final": {
+        "matched_ubn": "15267",
+        "reasoning": "The digitised book and the catalogue entry ubn=15267 share identical title, author, and year, confirming they are the same work.",
+        "confidence": "high",
+        "evidence": "The digitised book's title \"Verklaring van de evangelische parabolen\" is an exact match for ubn=15267. The author \"Vitringa, Campegius\" matches, and the year 1726 matches perfectly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69c581e3354cca56a12bc605",
+        "slug": "augmented-and-generally-improved-heavenly-love-kiss-muller",
+        "title": "Vermeerderde en doorgaans verbeterde hemelsche liefdes-kus",
+        "author": "Müller, Heinrich",
+        "year": 1738,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "15283",
+        "evidence": "Title is identical (Vermeerderde en doorgaans verbeterde hemelsche liefdes-kus); Author matches (Müller, Heinrich); Year 1738 (digitised) vs 1740 (catalogue) are within a 2-year range.",
+        "reasoning": "The title and author match perfectly, and the year difference is only 2 years, which is well within the acceptable tolerance for different editions of the same work.",
+        "confidence": "medium"
+      },
+      "applied": null,
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69c581e44d2f9394d7db2f01",
+        "slug": "impartial-history-of-the-church-and-heretics-arnold",
+        "title": "Unpartheyische Kirchen- und Ketzer-Historie, vom Anfang des Neuen Testaments bisz auf das Jahr Christi 1688",
+        "author": "Arnold, Gottfried",
+        "year": 1729,
+        "language": "German"
+      },
+      "candidate_count": 16,
+      "final": {
+        "matched_ubn": "15007",
+        "evidence": "Title \"Unpartheyische Kirchen- und Ketzer-Historie, vom Anfang des Neuen Testaments bisz auf das Jahr Christ...\" matches exactly; author \"Arnold, Gottfried\" matches; year \"1729\" matches exactly; language \"German\" matches.",
+        "confidence": "high",
+        "reasoning": "The digitised book is a perfect match for UBN 15007, which shares the exact title, author, year (1729), and language."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "674057212677591a7c897d60",
+        "slug": "on-the-mysteries-ficini",
+        "title": "De Voluptate (On Pleasure) - Fragment",
+        "author": "Marsilio Ficini",
+        "year": 1497,
+        "language": "Latin"
+      },
+      "candidate_count": 7,
+      "final": {
+        "evidence": "The digitised book \"De Voluptate\" (1497) is identified as a component work within the 1497 edition of \"De mysteriis Aegyptiorum\" (ubn=26106), which explicitly includes \"De voluptate\" in its full, composite title. Author Marsilio Ficino is listed as one of the contributing authors in the catalogue record.",
+        "reasoning": "The digitised book is a fragment of the collection published in 1497 by Aldus Manutius, which contains Ficino's 'De voluptate'. The title provided in the catalogue record for ubn=26106 explicitly lists 'De voluptate' among the included treatises.",
+        "confidence": "high",
+        "matched_ubn": "26106"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0278c48c054845a3bacfb",
+        "slug": "subsequent-themes-of-controversial-law-ehinger",
+        "title": "Themata juris controversi subsequentia",
+        "author": "Ehinger, Burckhardus",
+        "year": 1615,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The digitised book's original title, author, and year perfectly match the catalogue entry for ubn 14151.",
+        "matched_ubn": "14151",
+        "evidence": "Title: \"Themata juris controversi subsequentia\" matches; Author: \"Ehinger, Burckhardus\" matches; Year: 1615 matches."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "68611c716122a466ae2491ab",
+        "slug": "icons-of-plants-or-herbs-plantin",
+        "title": "Plantarum seu Stirpium Icones (preface)",
+        "author": "Matthias de Lobel; pub. Christophe Plantin",
+        "year": 1581,
+        "language": "Latin"
+      },
+      "candidate_count": 0,
+      "final": {
+        "reasoning": "The search of the catalogue yielded no relevant botanical works by Matthias de Lobel or published by Christophe Plantin from the specified era. Therefore, no match can be confirmed.",
+        "matched_ubn": "",
+        "confidence": "low",
+        "evidence": "No entry for Matthias de Lobel's \"Plantarum seu Stirpium Icones\" (1581) was found in the BPH catalogue, despite searching by author name and title variants."
+      },
+      "applied": null,
+      "toolCalls": 4
+    },
+    {
+      "book": {
+        "id": "699ef9f2c2bcb75dbdbaad94",
+        "slug": "sun-without-clothing-or-thirty-experiments-orschall",
+        "title": "Sol sine veste. Oder Dreyssig Experimenta",
+        "author": "Orschall, Johann Christian",
+        "year": 1739,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "13332",
+        "confidence": "high",
+        "evidence": "Title matches (\"Sol sine veste. Oder Dreyssig Experimenta\" matches the Original title); Author matches (\"Orschall, Johann Christian\"); Year matches (1739).",
+        "reasoning": "The digitised book's original title, author, and year align perfectly with the catalogue entry for ubn 13332."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9ff0c193b4c7eab48d1",
+        "slug": "missive-to-the-highly-enlightened-brotherhood-of-the-rosy-anonymous",
+        "title": "Sendtschreiben oder einfeltige Antwort an die hocherleuchte Brüderschafft dess hochlöblichen Ordens dess RosenCreutzes",
+        "author": "Anonymous",
+        "year": 1615,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "The title in the catalogue (ubn 13054) matches the original German title provided in the prompt exactly: \"Sendtschreiben oder einfeltige Antwort an die hocherleuchte Brüderschafft dess hochlöblichen Ordens dess RosenCreutzes\". The year (1615) and author (anonymous) also match perfectly.",
+        "matched_ubn": "13054",
+        "reasoning": "The digitised book's provided German title is identical to the title entry for ubn 13054. The year and authorship also align perfectly.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 3
+    },
+    {
+      "book": {
+        "id": "685a9b1bcdbe778e22823a64",
+        "slug": "on-the-mysteries-ficino",
+        "title": "De Voluptate (On Pleasure)",
+        "author": "Ficino",
+        "year": 1497,
+        "language": "Latin"
+      },
+      "candidate_count": 6,
+      "final": {
+        "reasoning": "The digitised book is clearly a 1497 Aldine collection of Neoplatonic texts, which corresponds exactly to UBN 26106, a known 1497 Aldine incunabulum containing these specific works. The provided candidates in the original list were incorrect/incomplete, but the search revealed the correct matching record.",
+        "evidence": "The digitised book is described as a 1497 Aldine incunabulum containing Iamblichus's 'De mysteriis' and works by Ficino including 'De voluptate'. UBN 26106 matches the printer (Aldus Manutius), year (1497), and contains the listed authors and titles ('De mysteriis', 'De voluptate').",
+        "matched_ubn": "26106",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 26106 already linked to a different book (674057212677591a7c897d60)"
+      },
+      "toolCalls": 2
+    },
+    {
+      "book": {
+        "id": "699ef9fb1ec3ccc75bf5317e",
+        "slug": "sendbrieff-oder-bericht-an-alle-welche-von-den-newen-sperber",
+        "title": "Sendbrieff oder Bericht an Alle, welche von den newen Bruderschafft des Ordens von Rosen Creutz genant, etwas gelesen, oder von andern per modum discursus der sachen beschaffenheit, vernommen",
+        "author": "[Sperber, Julius]",
+        "year": 1615,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The title, author, and year all perfectly align between the digitised book and the catalogue entry ubn=13042.",
+        "confidence": "high",
+        "evidence": "The title \"Sendbrieff oder Bericht an Alle, welche von den newen Bruderschafft des Ordens von Rosen Creutz gena[nt...]\" in the catalogue (ubn=13042) is nearly identical to the provided title, and both the author ([Sperber, Julius]) and the year (1615) match perfectly.",
+        "matched_ubn": "13042"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9ff111f0f0ade163a6b",
+        "slug": "von-der-speise-des-ewigen-lebens-schwenckfeld",
+        "title": "Von der Speise des Ewigen Lebens",
+        "author": "[Schwenckfeld, Caspar]",
+        "year": 1547,
+        "language": "German"
+      },
+      "candidate_count": 15,
+      "final": {
+        "evidence": "Title (Original title: \"Von der Speise des Ewigen Lebens\" ↔ ubn 13479 title: \"Von der Speise des Ewigen Lebens\"); Year (1547 ↔ 1547); Author ([Schwenckfeld, Caspar] ↔ [Schwenckfeld, Caspar])",
+        "reasoning": "The title, year, and author of the digitised book match the entry in the bph_works catalogue perfectly.",
+        "matched_ubn": "13479",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278b0918b78c8a2efe00",
+        "slug": "traces-du-magnetisme-cambry",
+        "title": "Traces du magnetisme",
+        "author": "[Cambry, Jacques]",
+        "year": 1784,
+        "language": "French"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The digitised book and the catalogue entry share the same title, author, and publication year, confirming they are the same work.",
+        "evidence": "Title matches (\"Traces du magnetisme\"), author matches ([Cambry, Jacques]), and year matches (1784).",
+        "matched_ubn": "14529",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699efa00eb65a28130254492",
+        "slug": "sophompaneas-or-joseph-at-court-groot",
+        "title": "Sofompaneas of Josef in 't hof",
+        "author": "Groot, Hugo de",
+        "year": 1655,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The provided digitised book details (Title, Author, Year) match the BPH catalogue entry 13318 perfectly.",
+        "matched_ubn": "13318",
+        "evidence": "title \"Sofompaneas of Josef in 't hof\" matches exactly; year 1655 matches exactly; author \"Groot, Hugo de\" matches."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699efa00cf04bb8aafc20e83",
+        "slug": "stellae-prodigiosae-seu-cometae-per-oculum-triplicem-nagel",
+        "title": "Stellae prodigiosae seu cometae per oculum triplicem observatio & explicatio. Das ist: des newen Cometen und Wunder Sterns im October, November und December 1618. erschienen, warhafftige Deutung",
+        "author": "Nagel, Paul",
+        "year": 1619,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "evidence": "Title \"Stellae prodigiosae...\" matches; Author \"Nagel, Paul\" matches; Year 1619 matches.",
+        "reasoning": "The title provided in the digitised book metadata, while truncated in the catalogue list, clearly corresponds to the catalogue entry ubn 13638. All key identifiers (author, year, and the distinct Latin/German title) match perfectly.",
+        "matched_ubn": "13638",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278e8bd5062dbf9e3a96",
+        "slug": "tractatus-chymico-philosophicus-de-rebus-naturalibus-et-valentinus",
+        "title": "Tractatus chymico-philosophicus de rebus naturalibus et supernaturalibus",
+        "author": "Basilius Valentinus",
+        "year": 1679,
+        "language": "Latin"
+      },
+      "candidate_count": 10,
+      "final": {
+        "reasoning": "The candidate with ubn 14547 is a direct match for the digitised book, as both the title, author, and year are identical.",
+        "confidence": "high",
+        "matched_ubn": "14547",
+        "evidence": "Title matches perfectly (\"Tractatus chymico-philosophicus de rebus naturalibus et supernaturalibus\"); author matches (\"Basilius Valentinus\"); year matches (1679)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278feb6b73741de5d616",
+        "slug": "de-superstitione-vinculis-daemonum-secundum-aegyptiorum-et-grippis",
+        "title": "De superstitione & vinculis daemonum secundum Aegyptiorum et Chaldaeorum dogmata iuxta",
+        "author": "[Grippis, Joseph Fortunatus de]",
+        "year": 1805,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "13834",
+        "evidence": "Title (\"De superstitione & vinculis daemonum secundum Aegyptiorum et Chaldaeorum dogmata iuxta\"), author (\"[Grippis, Joseph Fortunatus de]\"), and year (1805) are identical between the digitised book and the catalogue entry.",
+        "reasoning": "The digitised book and catalogue entry ubn 13834 have an exact match in title, author, and year, confirming they represent the same work.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278ca7e9465eead94093",
+        "slug": "theologia-germanica-frankfurtian",
+        "title": "Theologia teuetsch",
+        "author": "Anonymous (The Frankfurtian)",
+        "year": 1520,
+        "language": "German"
+      },
+      "candidate_count": 0,
+      "final": {
+        "evidence": "None of the searched titles (Theologia teuetsch, Theologia, Teuetsch, Theologia Germanica) or author variants (Luther) yielded a hit in the BPH catalogue for the specified timeframe.",
+        "reasoning": "Extensive searching of the BPH catalogue using both the original German title and the edited Latinate title, as well as searching for works by Martin Luther in the relevant timeframe, failed to produce any matching record.",
+        "confidence": "low",
+        "matched_ubn": ""
+      },
+      "applied": null,
+      "toolCalls": 5
+    },
+    {
+      "book": {
+        "id": "699efa001883acb2a0ffbe8e",
+        "slug": "are-today-s-freemasons-and-illuminati-not-descendants-of",
+        "title": "Sind die heutigen Freymaurer und Illuminaten nicht Abkoemmlinge der Manichaeer?",
+        "author": "Unknown",
+        "year": 1792,
+        "language": "German"
+      },
+      "candidate_count": 0,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The catalogue entry for UBN 13269 is an exact match for the digitised book's title, year, and anonymous authorship.",
+        "evidence": "The title matches exactly (allowing for minor orthographic variations in the query/catalogue); the year 1792 matches exactly; the language matches; the author is anonymous in both cases.",
+        "matched_ubn": "13269"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "699ef9fc8d06654d932fa64f",
+        "slug": "studium-universale-das-ist-alles-dasjenige-so-von-anfang-weigel",
+        "title": "Studium universale, das ist, alles dasjenige, so von Anfang der Welt biss an das Ende je gelebet, geschrieben, gelesen, oder gelernet [...] werden möchte",
+        "author": "Weigel, Valentin",
+        "year": 1698,
+        "language": "German"
+      },
+      "candidate_count": 15,
+      "final": {
+        "reasoning": "The digitised book's title, author, and year (1698) match ubn 13770 perfectly. The title in the catalogue entry is slightly truncated (\"ge\" instead of \"gelebet\"), which is common for descriptive titles in bibliographic records, but the core information confirms it is the same edition.",
+        "matched_ubn": "13770",
+        "evidence": "Title: \"Studium universale, das ist, alles dasjenige, so von Anfang der Welt biss an das Ende je gelebet, ge...\" (ubn 13770) matches the provided digitised title; Year: 1698 matches perfectly; Author: Weigel, Valentin matches.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "785e0f79-eb56-49f6-9c47-b75c8e859159",
+        "slug": "on-presages-divination-and-astrological-fragments-paracelsus",
+        "title": "On Presages, Divination, and Astrological and Astronomical Fragments",
+        "author": "Paracelsus",
+        "year": 1569,
+        "language": "Latin"
+      },
+      "candidate_count": 15,
+      "final": {
+        "reasoning": "A thorough search of the bph_works catalogue under Paracelsus for the years 1564-1574 yielded no matching title. While Gerhard Dorn did translate many Paracelsian works published by Peter Perna in Basel during this period (such as 'De meteoris' or 'Philosophiae magnae'), the specific title provided does not correspond to an entry in this catalogue.",
+        "evidence": "No direct title match found in the bph_works catalogue for the provided title \"On Presages, Divination, and Astrological and Astronomical Fragments\".",
+        "confidence": "low",
+        "matched_ubn": ""
+      },
+      "applied": null,
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0278a21bd8ed4d8e01187",
+        "slug": "theology-of-weigel-that-is-a-public-confession-of-faith-weigel",
+        "title": "Theologia Weigelii. Das ist: Offentliche Glaubens Bekaendtnuess",
+        "author": "Weigel, Valentin",
+        "year": 1618,
+        "language": "German"
+      },
+      "candidate_count": 16,
+      "final": {
+        "confidence": "high",
+        "evidence": "Title: \"Theologia Weigelii. Das ist: Offentliche Glaubens Bekaendtnuess\" (digitised) matches title of ubn 14210 (\"Theologia Weigelii. Das ist: Offentliche Glaubens Bekaendtnuess\"); Year: 1618 (digitised) matches 1618 (ubn 14210); Author: Weigel, Valentin (digitised) matches Weigel, Valentin (ubn 14210).",
+        "matched_ubn": "14210",
+        "reasoning": "The digitised book's title, author, and year match ubn 14210 exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699efa00cb2f8cc49c70bb94",
+        "slug": "six-theosophic-points-sex-puncta-theosophica-bohme",
+        "title": "Sex puncta theosophica, oder von sechs theosophischen Puncten",
+        "author": "Böhme, Jacob",
+        "year": 1730,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "matched_ubn": "13163",
+        "evidence": "Title \"Sex puncta theosophica, oder von sechs theosophischen Puncten\" matches ubn 13163 exactly. Author \"Böhme, Jacob\" matches. Year 1730 matches.",
+        "confidence": "high",
+        "reasoning": "The title, author, and year of the digitised book are an exact match for the record with ubn 13163."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9f4b0a976d32fd3746b",
+        "slug": "some-characteristics-of-the-interior-church-lopukhin",
+        "title": "[Cyrillisch:] Sommige kentekenen van de innerlijke kerk",
+        "author": "[Lopukhin, Iwan Vladimirovitch]",
+        "year": 1801,
+        "language": "Russian"
+      },
+      "candidate_count": 2,
+      "final": {
+        "matched_ubn": "13363",
+        "confidence": "high",
+        "reasoning": "The digitised book and the catalogue entry UBN 13363 share the exact same title, author, and year, confirming it is the same edition.",
+        "evidence": "Title matches exactly (original Russian title provided: [Cyrillisch:] Sommige kentekenen van de innerlijke kerk); author matches (Lopukhin, Iwan Vladimirovitch); year matches (1801)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fc7543a5cb5d64cf08",
+        "slug": "the-contest-of-wisdom-with-folly-fludd",
+        "title": "Sophiae cum moria certamen",
+        "author": "Fludd, Robert",
+        "year": 1629,
+        "language": "Latin"
+      },
+      "candidate_count": 15,
+      "final": {
+        "matched_ubn": "13406",
+        "confidence": "high",
+        "reasoning": "The digitised book's original title, author, and year correspond exactly to the entry for ubn 13406 in the catalogue.",
+        "evidence": "Title \"Sophiae cum moria certamen\" matches ubn=13406 exactly; Year 1629 matches ubn=13406 exactly; Author \"Fludd, Robert\" matches ubn=13406 exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fd80564f7e71c48025",
+        "slug": "destructorium-vitiorum-ex-similitudinum-creaturarum-anonymous",
+        "title": "Destructorium vitiorum ex similitudinum creaturarum exemplorum appropriatione per modum dyalogi",
+        "author": "Anonymous",
+        "year": 1509,
+        "language": "Latin"
+      },
+      "candidate_count": 0,
+      "final": {
+        "reasoning": "The title provided in the digitised book's metadata matches the BPH catalogue entry exactly, and the year 1509 is identical.",
+        "confidence": "high",
+        "evidence": "Title \"Destructorium vitiorum ex similitudinum creaturarum exemplorum appropriatione per modum dyalogi\" is an exact match; year 1509 matches; author \"anonymous\" matches.",
+        "matched_ubn": "13689"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 2
+    },
+    {
+      "book": {
+        "id": "699ef9f4b0a976d32fd37469",
+        "slug": "splendor-of-light-splendor-lucis-wienner-von",
+        "title": "[Hebrew: Or nagah] Splendor lucis, oder Glanz des Lichts. Eine kurze physico-cabalistische Auslegung des grössten Naturgeheimnisses, insgemein Lapis Philosophorum genannt",
+        "author": "Wienner von Sonnenfels, Aloys",
+        "year": 1785,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title: \"[Hebrew: Or nagah] Splendor lucis, oder Glanz des Lichts. Eine kurze physico-cabalistische Auslegung\" matches the candidate's core title; author \"Wienner von Sonnenfels, Aloys\" matches; year 1785 matches.",
+        "confidence": "high",
+        "matched_ubn": "13581",
+        "reasoning": "The title, author, and year match perfectly between the digitised book and the catalogue entry. The catalogue entry provides a truncated version of the full title listed in the digitised book's metadata, which is standard for catalogue records."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278c71a9e3ffd8bfe901",
+        "slug": "the-highest-good-fludd",
+        "title": "Summum bonum",
+        "author": "[Fludd, Robert]",
+        "year": 1629,
+        "language": "Latin"
+      },
+      "candidate_count": 15,
+      "final": {
+        "matched_ubn": "13822",
+        "reasoning": "The digitised book's title \"Summum bonum\" matches the title of candidate ubn 13822, and both the year (1629) and the author (Fludd, Robert) are identical.",
+        "confidence": "high",
+        "evidence": "Title \"Summum bonum\" (original title matches candidate title); Year 1629 matches exactly; Author [Fludd, Robert] matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278e853551712745fbff",
+        "slug": "solomon-s-temple-semler",
+        "title": "Der Tempel Salomonis",
+        "author": "[Semler, Christian]",
+        "year": 1718,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "The title \"Der Tempel Salomonis\" is identical; the author \"[Semler, Christian]\" is identical; the year 1718 is identical.",
+        "confidence": "high",
+        "matched_ubn": "14054",
+        "reasoning": "The digitised book and the catalogue entry share an identical title, author, and year, confirming they are the same work."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278a0f0393701f60e73b",
+        "slug": "treatise-on-universal-medicine-monte-snyders",
+        "title": "Tractatus de medicina universali das ist Von der Universal Medicin",
+        "author": "Monte-Snyders, Johannes de",
+        "year": 1662,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The title, author, and year provided in the digitised book metadata match the entry ubn=14553 perfectly.",
+        "evidence": "title \"Tractatus de medicina universali das ist Von der Universal Medicin\" matches exactly; author \"Monte-Snyders, Johannes de\" matches exactly; year 1662 matches exactly.",
+        "confidence": "high",
+        "matched_ubn": "14553"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02781bd4078a454714f69",
+        "slug": "la-suite-du-comte-de-gabalis-ou-nouveaux-entretiens-sur-les-villars-2",
+        "title": "La suite du comte de Gabalis, ou nouveaux entretiens sur les sciences secrètes",
+        "author": "[Villars, Nicolas de Montfaucon de]",
+        "year": 1715,
+        "language": "French"
+      },
+      "candidate_count": 3,
+      "final": {
+        "evidence": "Title \"La suite du comte de Gabalis, ou nouveaux entretiens sur les sciences secrètes\" matches perfectly; Author \"[Villars, Nicolas de Montfaucon de]\" matches; Year 1715 matches.",
+        "reasoning": "The digitised book and ubn 13808 are identical in title, author, and publication year.",
+        "confidence": "high",
+        "matched_ubn": "13808"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fe6fe9b1f2f6af869d",
+        "slug": "die-sieben-lezten-posaunen-oder-wehen-wann-sie-anfangen-und-armbruster",
+        "title": "Die sieben lezten Posaunen, oder Wehen wann sie anfangen und aufhören und von den 70 Danielischen Wochen und 42 prophetischen Monaten",
+        "author": "Armbruster, Christian",
+        "year": 1819,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "evidence": "The title (truncated in the catalogue but clearly matching the provided original title), author (Armbruster, Christian), and year (1819) all match perfectly with ubn=13213.",
+        "reasoning": "The digitised book's author, title, and year match exactly with the entry ubn=13213 in the BPH catalogue. Ubn=13214 was an earlier edition (1818), making 13213 the precise match for the 1819 date.",
+        "confidence": "high",
+        "matched_ubn": "13213"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9ffee5e6e68fd8dea54",
+        "slug": "silence-after-the-clamor-maier",
+        "title": "Silentium post clamores, hoc est, tractatus apologeticus",
+        "author": "Maier, Michael",
+        "year": 1617,
+        "language": "Latin"
+      },
+      "candidate_count": 15,
+      "final": {
+        "matched_ubn": "13255",
+        "confidence": "high",
+        "evidence": "Title \"Silentium post clamores, hoc est, tractatus apologeticus\" matches ubn=13255 exactly; year 1617 matches; author Michael Maier matches.",
+        "reasoning": "The digitised book matches ubn 13255, which is the 1617 edition of the title \"Silentium post clamores, hoc est, tractatus apologeticus\" by Michael Maier. While the initial candidate list only included the 1624 reprint (ubn 13256), a search of the catalogue revealed the correct 1617 edition."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a027816a20ac4e1fc40518",
+        "slug": "tafereel-of-beschrijving-van-den-prachtigen-tempel-der-zang-labarre-de-beaumarch",
+        "title": "Tafereel, of beschrijving van den prachtigen tempel der zang-godinnen, vertoond in LX heerlyke kunststukken",
+        "author": "Labarre de Beaumarchais, Antoine de",
+        "year": 1733,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title is almost identical (the catalogue entry stops at \"kunst\", whereas the digitised book specifies \"kunststukken\"). Author (Labarre de Beaumarchais) and Year (1733) match perfectly.",
+        "reasoning": "The digitised book and the catalogue entry share the same author, publication year, and a virtually identical title (the difference being a likely abbreviation in the catalogue entry).",
+        "confidence": "high",
+        "matched_ubn": "13996"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278b8073102dfd86044b",
+        "slug": "tafereelen-der-eerste-christenen-bestaande-in-92-konst-luyken",
+        "title": "Tafereelen der eerste christenen, bestaande in 92 konst-prenten van Jan Luiken",
+        "author": "Luyken, Jan|Langendyk, Pieter  Bruin, Claas",
+        "year": 1722,
+        "language": "Dutch"
+      },
+      "candidate_count": 4,
+      "final": {
+        "evidence": "title matches exactly (\"Tafereelen der eerste christenen, bestaande in 92 konst-prenten van Jan Luiken\"); author matches exactly (\"Luyken, Jan|Langendyk, Pieter Bruin, Claas\"); year matches exactly (1722).",
+        "confidence": "high",
+        "reasoning": "The digitised book's title, author, and year match perfectly with the record for UBN 13997 in the catalogue.",
+        "matched_ubn": "13997"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278ff1ddb4629f5a3a8e",
+        "slug": "tractatus-de-lapide-philosophico-oder-vom-stein-der-weisen-hollandus",
+        "title": "Tractatus de lapide philosophico oder vom Stein der Weisen",
+        "author": "Hollandus, Johannes Isaac",
+        "year": 1669,
+        "language": "German"
+      },
+      "candidate_count": 9,
+      "final": {
+        "evidence": "Title (exact match): \"Tractatus de lapide philosophico oder vom Stein der Weisen\"; Author: \"Hollandus, Johannes Isaac\" matches in both; Year: \"1669\" matches in both; Place: \"Frankfurt\" matches the catalogue entry's place.",
+        "matched_ubn": "14552",
+        "reasoning": "The digitised book's title, author, and year align perfectly with UBN 14552 in the catalogue. There is no ambiguity.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0279006093ffd43c08217",
+        "slug": "la-suite-du-comte-de-gabalis-ou-nouveaux-entretiens-sur-les-villars",
+        "title": "La suite du comte de Gabalis, ou nouveaux entretiens sur les sciences secrètes",
+        "author": "[Villars, Nicolas de Montfaucon de]",
+        "year": 1708,
+        "language": "French"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book and the catalogue entry ubn=13807 share identical title, author, and year, confirming they are the same work.",
+        "evidence": "title matches exactly (La suite du comte de Gabalis, ou nouveaux entretiens sur les sciences secrètes); author matches exactly ([Villars, Nicolas de Montfaucon de]); year matches exactly (1708).",
+        "confidence": "high",
+        "matched_ubn": "13807"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027816a20ac4e1fc40514",
+        "slug": "the-telescope-of-zoroaster-or-key-to-the-great-divinatory-nerciat",
+        "title": "Téléscope de Zoroastre, ou clef de la grande cabale divinatoire des mages",
+        "author": "[Nerciat, Andrea de?]",
+        "year": 1796,
+        "language": "French"
+      },
+      "candidate_count": 0,
+      "final": {
+        "reasoning": "The digitised book and the catalogue entry share an identical title, publication year, and author attribution.",
+        "evidence": "The title \"Téléscope de Zoroastre, ou clef de la grande cabale divinatoire des mages\" matches exactly; the year 1796 matches exactly; the author attribution \"[Nerciat, Andrea de?]\" matches exactly.",
+        "confidence": "high",
+        "matched_ubn": "14040"
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 14040 already linked to a different book (6909d4a7cf28baa1b4cb01a5)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0278f677e04041df0334e",
+        "slug": "tomus-secundus-de-supernaturali-naturali-praeternaturali-et-fludd",
+        "title": "Tomus secundus de supernaturali, naturali, praeternaturali et contranaturali microcosmi historia",
+        "author": "Fludd, Robert",
+        "year": 1619,
+        "language": "Latin"
+      },
+      "candidate_count": 14,
+      "final": {
+        "evidence": "Title \"Tomus secundus de supernaturali, naturali, praeternaturali et contranaturali microcosmi historia\" is an exact match for ubn=13832; year 1619 matches exactly; author Robert Fludd matches.",
+        "confidence": "high",
+        "reasoning": "The digitised book's original title matches ubn=13832 exactly, as do the author and year of publication.",
+        "matched_ubn": "13832"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278b3901873085afcdf5",
+        "slug": "theosophischer-wunder-saal-richtenfels",
+        "title": "Theosophischer Wunder-Saal",
+        "author": "[Richtenfels]",
+        "year": 1709,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book and UBN 14354 share identical title, author, and publication year information, confirming them as the same work.",
+        "matched_ubn": "14354",
+        "evidence": "title \"Theosophischer Wunder-Saal\" matches exactly; author \"[Richtenfels]\" matches exactly; year 1709 matches exactly.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02781bd4078a454714f67",
+        "slug": "apologetic-treatise-defending-the-integrity-of-the-society-fludd",
+        "title": "Tractatus apologeticus integritatem Societatis de Roseae Cruce defendens",
+        "author": "Fludd, Robert",
+        "year": 1617,
+        "language": "Latin"
+      },
+      "candidate_count": 14,
+      "final": {
+        "reasoning": "The digitised book's title is an exact match to the title provided for ubn 14542 in the catalogue. The author and year also align perfectly.",
+        "confidence": "high",
+        "evidence": "title=\"Tractatus apologeticus integritatem Societatis de Roseae Cruce defendens\" matches ubn=14542 exactly; year 1617 matches; author Robert Fludd matches.",
+        "matched_ubn": "14542"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278c47581121be87cf42",
+        "slug": "die-symbolische-weisheit-der-aegypter-aus-den-verborgensten-bremer",
+        "title": "Die symbolische Weisheit der Aegypter aus den verborgensten Denkmälern des Alterthums",
+        "author": "[Bremer, J.G.]",
+        "year": 1793,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "13905",
+        "reasoning": "The candidate entry in the bph_works catalogue perfectly matches all bibliographic details (title, author, and year) provided for the digitised book.",
+        "confidence": "high",
+        "evidence": "Title: \"Die symbolische Weisheit der Aegypter aus den verborgensten Denkmälern des Alterthums\" matches exactly; Author: \"[Bremer, J.G.]\" matches exactly; Year: 1793 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "fec0b295-0795-440f-a467-434e17ba2a8e",
+        "slug": "essence-of-pomegranates-gallico",
+        "title": "Asis rimonim",
+        "author": "Gallico, Samuel",
+        "year": 1575,
+        "language": "Hebrew"
+      },
+      "candidate_count": 0,
+      "final": {
+        "confidence": "medium",
+        "evidence": "Title: 'Asis rimonim' (digitised) vs '[Hebrew: Sefer asis rimmonim]' (UBN 20203); Author: 'Gallico, Samuel' (both); Year: 1575 (digitised) vs 1623 (UBN 20203).",
+        "matched_ubn": "20203",
+        "reasoning": "The author and the distinctive title (Asis Rimonim) match perfectly. While the date 1623 in the catalogue is later than the 1575 date provided for the digitised book, these are clearly the same intellectual work. It is likely the digitised copy is an earlier edition not present in the current BPH printed-book catalogue."
+      },
+      "applied": null,
+      "toolCalls": 3
+    },
+    {
+      "book": {
+        "id": "699ef9f4b0a976d32fd37467",
+        "slug": "stonehenge-stukeley",
+        "title": "Stonehenge",
+        "author": "Stukeley, William",
+        "year": 1740,
+        "language": "English"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The title, author, and year in the digitised book match the catalogue entry for ubn 13668 perfectly.",
+        "confidence": "high",
+        "evidence": "Title matches exactly (\"Stonehenge\"); Author matches exactly (\"Stukeley, William\"); Year matches exactly (1740).",
+        "matched_ubn": "13668"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9ff56e1710c66738155",
+        "slug": "signatura-rerum-or-the-signature-of-all-things-boehme",
+        "title": "Signatura rerum: or the signature of all things",
+        "author": "Boehme, Jacob",
+        "year": 1651,
+        "language": "English"
+      },
+      "candidate_count": 15,
+      "final": {
+        "reasoning": "The title, author, and year provided in the digitised book metadata correspond perfectly to the entry for ubn 13240 in the BPH printed-book catalogue.",
+        "confidence": "high",
+        "matched_ubn": "13240",
+        "evidence": "Title \"Signatura rerum: or the signature of all things\" matches ubn=13240 exactly; Year 1651 matches exactly; Author \"Boehme, Jacob\" matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027902531a78a2bc03cc5",
+        "slug": "system-und-folgen-des-illuminatenordens-weishaupt",
+        "title": "System und Folgen des Illuminatenordens",
+        "author": "[Weishaupt, Adam]",
+        "year": 1787,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "evidence": "Title matches \"System und Folgen des Illuminatenordens\" (exact match); Author matches \"[Weishaupt, Adam]\"; Year matches 1787.",
+        "reasoning": "The digitised book's title, author, and year are identical to the catalogue entry for ubn=13957.",
+        "confidence": "high",
+        "matched_ubn": "13957"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027816a20ac4e1fc40522",
+        "slug": "thesaurinella-olympica-aurea-tripartita-das-ist-ein-figulus-2",
+        "title": "Thesaurinella Olympica aurea tripartita. Das ist: ein himmlisch güldenes Schatzkämmerlein",
+        "author": "Figulus, Benedictus",
+        "year": 1608,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "14366",
+        "reasoning": "The title of the digitised book is an exact match for the title listed in the BPH catalogue entry ubn=14366, which also matches the provided author and year.",
+        "evidence": "Title \"Thesaurinella Olympica aurea tripartita. Das ist: ein himmlisch güldenes Schatzkämmerlein\" matches ubn=14366 exactly; Author \"Figulus, Benedictus\" matches; Year 1608 matches."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9f2c2bcb75dbdbaad92",
+        "slug": "hebrew-sha-arei-orah-gikatilla",
+        "title": "[Hebrew: Sha'arei orah]",
+        "author": "Gikatilla, Joseph ben Abraham",
+        "year": 1715,
+        "language": "Hebrew"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "13167",
+        "evidence": "Title matches (Hebrew title \"Sha'arei orah\"); Author matches \"Gikatilla, Joseph ben Abraham\"; Year matches \"1715\".",
+        "reasoning": "The digitised book's title, author, and year align perfectly with the catalogue entry for ubn 13167.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "d850a255-4633-43d5-8383-7c67a7e55144",
+        "slug": "incipit-from-a-certain-manuscript-of-the-philosopher-r-c-anonymous",
+        "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+        "author": "Anonymous",
+        "year": 1650,
+        "language": "Latin"
+      },
+      "candidate_count": 0,
+      "final": {
+        "evidence": "Searched extensively for \"Philosophi R.C.\", \"Speculum Luminis\", and \"extractum\" within the relevant time frame, but found no matches in the catalogue.",
+        "confidence": "low",
+        "matched_ubn": "",
+        "reasoning": "No entry in the BPH printed-book catalogue matches the provided title or specific combination of treatises (\"Speculum Luminu\", \"Philosophi A.C.\", \"G.B.\") within the 1650 time frame."
+      },
+      "applied": null,
+      "toolCalls": 4
+    },
+    {
+      "book": {
+        "id": "699ef9f3b0a976d32fd37463",
+        "slug": "the-signature-of-all-things-de-signatura-rerum-bohme",
+        "title": "De signatura rerum oder von der Geburt und Bezeichnung aller Wesen",
+        "author": "Böhme, Jacob",
+        "year": 1730,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "13239",
+        "reasoning": "The digitised metadata provides the original German title, which is an exact match for the title of ubn 13239. The author and year also correspond perfectly.",
+        "evidence": "title matches identically (with the exception of the original language vs translated title provided in the digitised metadata); author matches; year matches exactly (1730)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fe16733aa5a290e3d6",
+        "slug": "a-short-enquiry-concerning-the-hermetick-art-to-which-is-anonymous",
+        "title": "A short enquiry concerning the hermetick art. To which is annexed, a collection from Kabbala denudata, and translation of the chymical-cabbalistical treatise, intituled, Aesch-mezareph; or, purifying fire",
+        "author": "Anonymous",
+        "year": 1714,
+        "language": "English"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title matches (slight truncation in catalogue title: \"A short enquiry concerning the hermetick art. To which is annexed, a collection from Kabbala denudat\" matches digitised \"A short enquiry concerning the hermetick art. To which is annexed, a collection from Kabbala denudata...\"), year 1714 matches, author \"anonymous\" matches.",
+        "reasoning": "The digitised book and the catalogue entry share an identical title (noting minor truncation in the catalogue), year, and authorship, confirming they represent the same work.",
+        "confidence": "high",
+        "matched_ubn": "13177"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278bdc88b49d6b8da841",
+        "slug": "themis-aurea-das-ist-von-den-gesetzen-und-ordnungen-der-maier",
+        "title": "Themis aurea, das ist, von den Gesetzen, und Ordnungen der löblichen Fraternitet R.C",
+        "author": "Maier, Michael",
+        "year": 1618,
+        "language": "German"
+      },
+      "candidate_count": 15,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The digitised book's original title is identical to the title entry for ubn 14153 in the BPH catalogue, and the year and author also correspond perfectly.",
+        "matched_ubn": "14153",
+        "evidence": "The title \"Themis aurea, das ist, von den Gesetzen, und Ordnungen der löblichen Fraternitet R.C\" matches exactly with ubn 14153. Year 1618 matches exactly. Author Michael Maier matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02790924103b56eb6b3a6",
+        "slug": "tractat-von-dem-grossen-stein-der-uhralten-repetition-de-valentinus",
+        "title": "Tractat, von dem grossen Stein der Uhralten. Repetition. De microcosmo. Von der grossen Heimligkeit der Welt. Von der Wissenschaft und verborgenen Geheimnüssen der sieben Planeten",
+        "author": "Basilius Valentinus",
+        "year": 1626,
+        "language": "German"
+      },
+      "candidate_count": 13,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "14535",
+        "reasoning": "The digitised book's title, author, and year (1626) are a precise match for the entry ubn 14535 in the catalogue.",
+        "evidence": "Title: \"Tractat, von dem grossen Stein der Uhralten. Repetition. De microcosmo. Von der grossen Heimligkeit der Welt...\" matches ubn=14535 title almost verbatim; year 1626 matches exactly; author Basilius Valentinus matches."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027816a20ac4e1fc4051e",
+        "slug": "theologia-sive-mistica-phylosophia-aristoteles",
+        "title": "Theologia sive mistica phylosophia",
+        "author": "Aristoteles",
+        "year": 1519,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The digitised book and the catalogue entry share an identical title, author, and year, confirming they are the same edition.",
+        "evidence": "title \"Theologia sive mistica phylosophia\" matches perfectly; author \"Aristoteles\" matches perfectly; year 1519 matches perfectly.",
+        "confidence": "high",
+        "matched_ubn": "14207"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027908cfc6783dac7c492",
+        "slug": "tetradymus-containing-i-hodegus-ii-clidophorus-iii-hypatia-toland",
+        "title": "Tetradymus. Containing I. Hodegus ... II. Clidophorus ... III. Hypatia. ... IV. Mangoneutes",
+        "author": "Toland, John",
+        "year": 1720,
+        "language": "English"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The digitised book's title, author, and year are a perfect match for the entry with ubn 14110 in the BPH printed-book catalogue.",
+        "matched_ubn": "14110",
+        "confidence": "high",
+        "evidence": "The title \"Tetradymus. Containing I. Hodegus ... II. Clidophorus ... III. Hypatia. ... IV. Mangoneutes\" is identical to the entry for ubn 14110. Both entries share the same author (John Toland) and the same publication year (1720)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278ce52224ef8fd05762",
+        "slug": "theologia-aethiopum-ex-liturgiis-fidei-confessionibus-oertel",
+        "title": "Theologia aethiopum ex liturgiis fidei confessionibus",
+        "author": "Oertel, Johann Gottfried",
+        "year": 1746,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The provided metadata for the digitised book perfectly matches the entry in the catalogue (ubn=14171) in terms of author, title, and year.",
+        "confidence": "high",
+        "matched_ubn": "14171",
+        "evidence": "title \"Theologia aethiopum ex liturgiis fidei confessionibus\" matches exactly; author \"Oertel, Johann Gottfried\" matches exactly; year 1746 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9feb3e659e2762a5731",
+        "slug": "integer-nitidus-macrobius",
+        "title": "Integer nitidus",
+        "author": "Macrobius, Ambrosius Theodosius",
+        "year": 1513,
+        "language": "Latin"
+      },
+      "candidate_count": 6,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "13368",
+        "reasoning": "The candidate ubn 13368 is a perfect match for the digitised book, confirming the title, year, author, and the specific publisher (Giunta) mentioned in the description.",
+        "evidence": "Title \"Integer nitidus\" matches; year 1513 matches; Author \"Macrobius, Ambrosius Theodosius\" matches; Publisher \"Giunta, Lucantonio\" matches the digitised book description."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "699ef9ff1ac826c051774733",
+        "slug": "der-signatstern",
+        "title": "Der Signatstern",
+        "author": "Unknown",
+        "year": 1803,
+        "language": "German"
+      },
+      "candidate_count": 0,
+      "final": {
+        "matched_ubn": "",
+        "confidence": "low",
+        "evidence": "Digitised title \"Der Signatstern\" (1803) vs. catalogue title \"Der Signatstern, oder die enthüllten sämmtlichen sieben Graden und Geheimnisse der mystischen Freimaurerei\" (1866, UBN 20805).",
+        "reasoning": "While the title matches the digitised work's 'Original title', the publication year of the only catalogue entry found (1866) is too far removed from the digitised work's year (1803) to confirm they are the same edition. No other candidates matching the 1803 date were found."
+      },
+      "applied": null,
+      "toolCalls": 4
+    },
+    {
+      "book": {
+        "id": "699efa0065d565508394f1f1",
+        "slug": "mirror-or-touchstone-of-pastors-speculum-seu-lapis-lydius-breckling",
+        "title": "Speculum seu lapis lydius pastorum: darinnen alle Prediger und Lehrer dieser letzten Welt sich beschawen, und [...] examiniren sollen",
+        "author": "Breckling, Friedrich",
+        "year": 1660,
+        "language": "German"
+      },
+      "candidate_count": 7,
+      "final": {
+        "matched_ubn": "13469",
+        "confidence": "high",
+        "evidence": "Digitised title/original title \"Speculum seu lapis lydius pastorum: darinnen alle Prediger und Lehrer dieser letzten Welt sich beschawen\" matches ubn=13469 title \"Speculum seu lapis lydius pastorum: darinnen alle Prediger und Lehrer dieser letzten Welt sich besch\" almost perfectly. Author \"Breckling, Friedrich\" matches exactly. Year 1660 matches exactly.",
+        "reasoning": "The digitised book's original Latin and German title matches the catalogue entry 13469 almost verbatim, with the same author and year of publication."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02790f43c714c4e6bceff",
+        "slug": "die-theoretischen-bruder-oder-zweite-stuffe-der-lohrbach-2",
+        "title": "Die theoretischen Brüder oder zweite Stuffe der Rosenkreutzer und ihrer Instruktion",
+        "author": "[Löhrbach, Graf von]",
+        "year": 1789,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "matched_ubn": "14285",
+        "reasoning": "The metadata for the digitised book perfectly matches the catalogue entry for ubn 14285, including the exact title, author, and publication year.",
+        "evidence": "Title matches exactly; author matches exactly; year 1789 matches exactly.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02790c2c6e5c837e27908",
+        "slug": "die-theoretischen-bruder-oder-zweite-stuffe-der-lohrbach",
+        "title": "Die theoretischen Brüder oder zweite Stuffe der Rosenkreutzer und ihrer Instruktion",
+        "author": "[Löhrbach, Graf von]",
+        "year": 1785,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book's title, author, and year match exactly with the entry 14284 in the BPH catalogue.",
+        "confidence": "high",
+        "evidence": "Title matches perfectly; Author matches ([Löhrbach, Graf von]); Year 1785 matches exactly (ubn 14284).",
+        "matched_ubn": "14284"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "6867bf5a009d20a23245ac0d",
+        "slug": "the-book-of-meteors-fourth-book-of-paramirum-on-the-matrix-paracelsus",
+        "title": "Das Buch Meteororum",
+        "author": "Paracelsus, Theophrastus",
+        "year": 1566,
+        "language": "German"
+      },
+      "candidate_count": 15,
+      "final": {
+        "matched_ubn": "2067",
+        "evidence": "Title matches (\"Das Buoch, meteororum. Liber quartus paramiri de matrice\" ↔ \"Das Buch Meteororum\" / \"Book of Meteors; Fourth Book of Paramirum on the Matrix\"); year matches (1566 ↔ 1566); author matches (Paracelsus); language matches (German).",
+        "confidence": "high",
+        "reasoning": "The searched title \"Das Buoch, meteororum. Liber quartus paramiri de matrice\" (ubn 2067) is an exact match for the digitised book's description of it being the \"Fourth Book of Paramirum on the Matrix\" and \"Das Buch Meteororum\", published in 1566."
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 2067 already linked to a different book (6977813098a09acb229a3f0d)"
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0278a2f6d8b761bf95215",
+        "slug": "the-sum-of-perfection-of-the-magistery-geber",
+        "title": "Summa perfectionis",
+        "author": "Geber",
+        "year": 1682,
+        "language": "Latin"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The candidate UBN 13813 is a perfect match for all primary bibliographical fields provided in the digitised book metadata.",
+        "evidence": "title \"Summa perfectionis\" matches exactly; author \"Geber\" matches exactly; year 1682 matches exactly.",
+        "matched_ubn": "13813",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "699ef9fc6b1fc7b9ac07a425",
+        "slug": "missive-to-the-honorable-lodge-of-freemasons-in-berlin-simonetti",
+        "title": "Sendschreiben an die erhrwuerdige Loge der Freymaurer in Berlin",
+        "author": "Simonetti, Christian Ernst",
+        "year": 1744,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The digitised book and the catalogue entry share an identical title, author, and year, confirming they represent the same work.",
+        "matched_ubn": "13047",
+        "evidence": "Title matches exactly (\"Sendschreiben an die erhrwuerdige Loge der Freymaurer in Berlin\"); Author matches exactly (\"Simonetti, Christian Ernst\"); Year matches exactly (1744)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fd1e07de1241872058",
+        "slug": "the-sentiments-of-philo-judeus-bryant",
+        "title": "The sentiments of Philo Judeus",
+        "author": "Bryant, Jacob",
+        "year": 1797,
+        "language": "English"
+      },
+      "candidate_count": 2,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "13073",
+        "evidence": "title \"The sentiments of Philo Judeus\" matches exactly; author \"Bryant, Jacob\" matches exactly; year 1797 matches exactly.",
+        "reasoning": "The digitised book's title, author, and year match ubn 13073 in the catalogue perfectly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699efa00f4653e687a18b3e8",
+        "slug": "disinterested-sentiments-on-the-retreat-of-the-pastors-of-artis",
+        "title": "Sentimens des-interessés sur la retraite des pasteurs de France",
+        "author": "[Artis, Gabriel d']",
+        "year": 1688,
+        "language": "French"
+      },
+      "candidate_count": 1,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The digitised book and the catalogue entry share the identical French title, author, and publication year, confirming they refer to the same work.",
+        "matched_ubn": "13071",
+        "evidence": "Title matches the original French title provided exactly; author matches; year matches (1688)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278d6bc332f148ccf4a4",
+        "slug": "taeda-trifida-chimica-das-ist-dreyfache-chimische-fackel-dienheim",
+        "title": "Taeda trifida chimica, das ist: dreyfache chimische Fackel  Medicina universalis. Verbum dimissum. Saturnia regna",
+        "author": "Dienheim, Johann Wolfgang|anonymous|Huginus a Barma",
+        "year": 1674,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The metadata for the digitised book is an exact match for the catalogue entry ubn=13992 in terms of title, authorship, and year.",
+        "evidence": "Title matches (\"Taeda trifida chimica, das ist: dreyfache chimische Fackel  Medicina universalis. Verbum dimissum. S\" matches the provided title start); Author matches (\"Dienheim, Johann Wolfgang|anonymous|Huginus a Barma\"); Year matches (1674).",
+        "confidence": "high",
+        "matched_ubn": "13992"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027907cf58c3e17f32eb6",
+        "slug": "suplement-au-glossaire-du-roman-de-la-rose-damerey",
+        "title": "Suplement au glossaire du roman de la rose",
+        "author": "[Lantin de Damerey]",
+        "year": 1737,
+        "language": "French"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The candidate UBN 13836 is an exact match for the title, author, and year of the digitised book.",
+        "evidence": "Title \"Suplement au glossaire du roman de la rose\" matches exactly; Author \"[Lantin de Damerey]\" matches exactly; Year 1737 matches exactly.",
+        "confidence": "high",
+        "matched_ubn": "13836"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278d8bbf35ad197cccc7",
+        "slug": "tegenwoordige-staet-der-doopsgezinden-of-mennonieten-rues",
+        "title": "Tegenwoordige staet der doopsgezinden of Mennonieten",
+        "author": "Rues, Simeon Friedrich",
+        "year": 1745,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The digitised book details and the catalogue entry 14038 match perfectly in title, author, and year, confirming they are the same work.",
+        "evidence": "title \"Tegenwoordige staet der doopsgezinden of Mennonieten\" matches exactly; author \"Rues, Simeon Friedrich\" matches exactly; year 1745 matches exactly.",
+        "matched_ubn": "14038",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fbc384f32a28ff58c1",
+        "slug": "spinozism-in-judaism-wachter",
+        "title": "Der Spinozismus im Jüdenthumb, oder die von dem heutigen Judenthumb und dessen Geheimen Kabbala vergötterte Welt",
+        "author": "Wachter, Johann Georg",
+        "year": 1699,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book and catalogue entry ubn 13538 share the exact same author, year, and a near-identical title.",
+        "evidence": "Title \"Der Spinozismus im Jüdenthumb...\" matches ubn 13538 exactly (allowing for minor truncation in the catalogue entry); Author \"Wachter, Johann Georg\" matches; Year \"1699\" matches exactly.",
+        "matched_ubn": "13538",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027816a20ac4e1fc4051a",
+        "slug": "three-letters-to-the-bishop-of-bangor-law",
+        "title": "Three letters to the bishop of Bangor",
+        "author": "Law, William",
+        "year": 1721,
+        "language": "English"
+      },
+      "candidate_count": 11,
+      "final": {
+        "matched_ubn": "14431",
+        "reasoning": "The digitised book title, author, and year match entry 14431 in the catalogue perfectly.",
+        "confidence": "high",
+        "evidence": "Title \"Three letters to the bishop of Bangor\" matches exactly; author \"Law, William\" matches exactly; year 1721 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fd0600353e655fe517",
+        "slug": "key-to-the-secrets-of-nature-eckartshausen-2",
+        "title": "[Cyrillisch:] Sleutel tot de geheimen van de natuur",
+        "author": "Eckartshausen, Karl von",
+        "year": 1804,
+        "language": "Russian"
+      },
+      "candidate_count": 15,
+      "final": {
+        "evidence": "Matched by exact title \"[Cyrillisch:] Sleutel tot de geheimen van de natuur\", author, year 1804, and language \"Russian\".",
+        "matched_ubn": "13298",
+        "confidence": "high",
+        "reasoning": "The search confirmed an exact match in the catalogue for the provided title, author, year, and language."
+      },
+      "applied": {
+        "applied": false,
+        "reason": "ubn 13298 already linked to a different book (69099634cf28baa1b4cae779)"
+      },
+      "toolCalls": 2
+    },
+    {
+      "book": {
+        "id": "699ef9f4b0a976d32fd37465",
+        "slug": "the-signature-of-all-things-de-signatura-rerum-boehme",
+        "title": "De signatura rerum: das ist, Bezeichnung aller dingen",
+        "author": "Boehme, Jacob",
+        "year": 1635,
+        "language": "German"
+      },
+      "candidate_count": 15,
+      "final": {
+        "evidence": "Title match: \"De signatura rerum: das ist, Bezeichnung aller dingen\" (Catalogue UBN 13235) vs \"De signatura rerum: das ist, Bezeichnung aller dingen\" (Digitised); Year match: 1635; Author match: Boehme, Jacob.",
+        "confidence": "high",
+        "reasoning": "The title, author, and year (1635) match perfectly with UBN 13235 found in the catalogue.",
+        "matched_ubn": "13235"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0279038ced073edf2f2bc",
+        "slug": "thesaurinella-olympica-aurea-tripartita-das-ist-ein-figulus",
+        "title": "Thesaurinella olympica aurea tripartita, Das ist: ein himmlisch güldenes Schatzkämmerlein",
+        "author": "Figulus, Benedictus",
+        "year": 1682,
+        "language": "German"
+      },
+      "candidate_count": 2,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The title, author, and publication year of the digitised book are identical to the information provided for ubn 14365 in the catalogue.",
+        "matched_ubn": "14365",
+        "evidence": "Title: \"Thesaurinella olympica aurea tripartita, Das ist: ein himmlisch güldenes Schatzkämmerlein\" matches perfectly with ubn 14365; Author \"Figulus, Benedictus\" matches; Year 1682 matches."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278d6cd1aeeab4e7dafd",
+        "slug": "summa-perfectionis-geber",
+        "title": "Summa perfectionis",
+        "author": "Geber",
+        "year": 1542,
+        "language": "Latin"
+      },
+      "candidate_count": 2,
+      "final": {
+        "evidence": "The title \"Summa perfectionis\" matches exactly; the year 1542 matches exactly; the author \"Geber\" matches.",
+        "confidence": "high",
+        "matched_ubn": "13812",
+        "reasoning": "The digitised book's title, author, and year match ubn 13812 perfectly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "68d5571a110616ec557a3708",
+        "slug": "eight-books-on-astronomy-maternus",
+        "title": "Astronomicon libri VIII",
+        "author": "Julius Firmicus Maternus",
+        "year": 1533,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "reasoning": "The available candidate (ubn=4797) is a different author (Hyginus) and a different title (Fabularum liber/Poeticon astronomicon) than the digitised work (Firmicus Maternus/Astronomicon libri VIII). No matching edition for Firmicus Maternus's work was found in the catalogue.",
+        "confidence": "low",
+        "evidence": "None; the candidate ubn=4797 is an edition of Hyginus's 'Poeticon astronomicon', which is distinct from Firmicus Maternus's 'Astronomicon libri VIII'.",
+        "matched_ubn": ""
+      },
+      "applied": null,
+      "toolCalls": 2
+    },
+    {
+      "book": {
+        "id": "69a02781bd4078a454714f6d",
+        "slug": "theologia-germanica",
+        "title": "Theologia germanica",
+        "author": "Unknown",
+        "year": 1557,
+        "language": "Latin"
+      },
+      "candidate_count": 2,
+      "final": {
+        "evidence": "Title \"Theologia germanica\" matches perfectly; Year 1557 matches perfectly; Place \"Basel\" is associated with the 1557 Sebastian Castellio edition.",
+        "matched_ubn": "14187",
+        "confidence": "high",
+        "reasoning": "The digitised book is identified as the 1557 Latin translation by Sebastian Castellio, which matches the details of ubn 14187 perfectly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0278d28c4c686bcfe2c91",
+        "slug": "three-tracts-i-remarks-upon-this-question-whether-the-lowman",
+        "title": "Three tracts. I. Remarks upon this question: whether the appearances under the Old Testament were appearances of the true God Himself. II. An essay on the Schechinah. III. Texts of Scripture relating to the Logos considered",
+        "author": "Lowman, Moses",
+        "year": 1756,
+        "language": "English"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The candidate ubn=14437 contains the exact author, year, and the beginning of the title provided for the digitised book, confirming it is the same work.",
+        "evidence": "Title (partial match, cut off in database), Author (Lowman, Moses), and Year (1756) all match exactly.",
+        "confidence": "high",
+        "matched_ubn": "14437"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278cd6077fba05ddf28e",
+        "slug": "system-des-transcendentalen-idealismus-schelling",
+        "title": "System des transcendentalen Idealismus",
+        "author": "Schelling, Friedrich Wilhelm Joseph von",
+        "year": 1800,
+        "language": "German"
+      },
+      "candidate_count": 8,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The digitised book's original title, year, and author match candidate ubn 13951 perfectly.",
+        "matched_ubn": "13951",
+        "evidence": "title \"System des transcendentalen Idealismus\" matches exactly; year 1800 matches exactly; author \"Schelling, Friedrich Wilhelm Joseph von\" matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278ef18d153a4103bf21",
+        "slug": "testamentum-lull",
+        "title": "Testamentum",
+        "author": "Lull, Ramón",
+        "year": 1573,
+        "language": "Latin"
+      },
+      "candidate_count": 8,
+      "final": {
+        "matched_ubn": "14106",
+        "confidence": "high",
+        "evidence": "The title \"Testamentum\" matches the original title provided; the author \"Lull, Ramón\" matches; the year 1573 matches perfectly.",
+        "reasoning": "The digitised book's title \"Testamentum\" and author \"Lull, Ramón\" match perfectly with ubn 14106, which is also dated 1573 and published in Cologne."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278d8960b813fc282504",
+        "slug": "a-new-system-or-an-analysis-of-ancient-mythology-bryant",
+        "title": "A new system, or an analysis of ancient mythology",
+        "author": "Bryant, Jacob",
+        "year": 1775,
+        "language": "English"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The title, author, and year of publication are an exact match with the catalogue entry 13955.",
+        "confidence": "high",
+        "evidence": "title matches exactly (\"A new system, or an analysis of ancient mythology\"); year matches exactly (1775); author matches exactly (Bryant, Jacob).",
+        "matched_ubn": "13955"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027907cc3c931d2cea27e",
+        "slug": "de-synagoga-vetere-libri-tres-vitringa",
+        "title": "De synagoga vetere libri tres",
+        "author": "Vitringa, Campegius",
+        "year": 1696,
+        "language": "Latin"
+      },
+      "candidate_count": 2,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The digitised book's original title, author, and year match perfectly with the catalogue entry ubn=13936.",
+        "matched_ubn": "13936",
+        "evidence": "Title: \"De synagoga vetere libri tres\" matches exactly; Author: \"Vitringa, Campegius\" matches exactly; Year: 1696 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02790da8b726682c09aae",
+        "slug": "thesaurus-pharmaceuticus-medicamentorum-omnium-fere-schwenckfeld",
+        "title": "Thesaurus pharmaceuticus, medicamentorum, omnium fere facultates & praeparationes continens. Tractatus de succedaneis",
+        "author": "Schwenckfeld, Caspar [von Greifenberg]|Rondelet, Guillaume",
+        "year": 1587,
+        "language": "Latin"
+      },
+      "candidate_count": 15,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "14376",
+        "reasoning": "The catalogue entry for ubn 14376 perfectly matches the author names and the original Latin title provided for the digitised book, including the year 1587. The catalogue title is slightly truncated, which is expected.",
+        "evidence": "title near-identical (\"Thesaurus pharmaceuticus, medicamentorum, omnium fere facultates & praeparationes continens. Tractat\" vs \"Thesaurus pharmaceuticus, medicamentorum, omnium fere facultates & praeparationes continens. Tractatus de succedaneis\"); year 1587 matches; author matches perfectly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fd535742af105d25e7",
+        "slug": "the-combat-between-flesh-and-spirit-love",
+        "title": "Den strijdt tusschen vleesch en geest",
+        "author": "Love, Christopher",
+        "year": 1656,
+        "language": "Dutch"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book's original title, author, and publication year match ubn=13686 exactly.",
+        "confidence": "high",
+        "matched_ubn": "13686",
+        "evidence": "Title \"Den strijdt tusschen vleesch en geest\" matches ubn=13686 exactly. Year 1656 matches ubn=13686 exactly. Author \"Christopher Love\" matches ubn=13686."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027816a20ac4e1fc40516",
+        "slug": "theosophia-pneumatica-oder-geheime-gottes-lehre-haug",
+        "title": "Theosophia pneumatica, oder geheime Gottes-Lehre",
+        "author": "[Haug, Johann Friedrich]",
+        "year": 1710,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "The title \"Theosophia pneumatica, oder geheime Gottes-Lehre\" matches exactly; author \"[Haug, Johann Friedrich]\" matches exactly; year 1710 matches exactly.",
+        "reasoning": "The digitised book and the catalogue entry are identical in title, author, and year, confirming they represent the same work.",
+        "matched_ubn": "14315",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278d85c1e425d0314107",
+        "slug": "synopsis-rerum-ab-orbe-conditio-gestarum-besold",
+        "title": "Synopsis rerum ab orbe conditio gestarum",
+        "author": "Besold, Christoph",
+        "year": 1639,
+        "language": "Latin"
+      },
+      "candidate_count": 8,
+      "final": {
+        "evidence": "The Latin original title \"Synopsis rerum ab orbe conditio gestarum\" matches exactly with ubn=13940. Both have the same author (Christoph Besold) and the same publication year (1639).",
+        "matched_ubn": "13940",
+        "confidence": "high",
+        "reasoning": "The digitised book's Latin title and the author match ubn=13940 perfectly, and the year 1639 also coincides exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278f0723f5e6c1715da5",
+        "slug": "theatrum-chimicum-ofte-geopende-deure-der-chymische-blankaart",
+        "title": "Theatrum chimicum, ofte geopende deure der chymische verborgentheden ontsloten",
+        "author": "[Blankaart, Steven]|Digby, Kenelm",
+        "year": 1693,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title \"Theatrum chimicum, ofte geopende deure der chymische verborgentheden ontsloten\" matches ubn=14145; author \"[Blankaart, Steven]|Digby, Kenelm\" matches ubn=14145; year 1693 matches ubn=14145.",
+        "reasoning": "The metadata for the digitised book is an exact match with the catalogue entry 14145 regarding title, author, and year of publication.",
+        "confidence": "high",
+        "matched_ubn": "14145"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699efa008dfdc5d432c16182",
+        "slug": "sleutel-der-devotie-teellinck",
+        "title": "Sleutel der devotie",
+        "author": "Teellinck, Willem",
+        "year": 1624,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title \"Sleutel der devotie\" matches perfectly; author \"Teellinck, Willem\" matches perfectly; year 1624 matches perfectly.",
+        "confidence": "high",
+        "matched_ubn": "13297",
+        "reasoning": "The digitised book details (title, author, and year) are an exact match for the catalogue entry ubn 13297."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0278c04ccae579af8549c",
+        "slug": "la-suitte-des-tableaux-de-philostrate-philostratus",
+        "title": "La suitte des tableaux de Philostrate",
+        "author": "Philostratus",
+        "year": 1597,
+        "language": "French"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The title provided in the digitised book's original title field is an exact match for the title of ubn 13809, and the publication year (1597) also aligns perfectly.",
+        "confidence": "high",
+        "matched_ubn": "13809",
+        "evidence": "Title \"La suitte des tableaux de Philostrate\" matches perfectly with ubn 13809. Year 1597 matches exactly. Author \"Philostratus\" matches."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9f2c2bcb75dbdbaad8e",
+        "slug": "sethos-histoire-ou-vie-tiree-des-monuments-anecdotes-de-l-terrasson",
+        "title": "Sethos, histoire ou vie tirée des monuments anecdotes de l'ancienne Egypte",
+        "author": "[Terrasson, Jean]",
+        "year": 1732,
+        "language": "French"
+      },
+      "candidate_count": 1,
+      "final": {
+        "evidence": "Title matches (100%); Author matches (Terrasson, Jean); Year matches (1732).",
+        "matched_ubn": "13147",
+        "reasoning": "The candidate entry 13147 is an exact match for the digitised book in terms of title, author, and year.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278fdb6656a74eb33962",
+        "slug": "theatrum-chemicum-anonymous",
+        "title": "Theatrum chemicum",
+        "author": "Anonymous",
+        "year": 1659,
+        "language": "Latin"
+      },
+      "candidate_count": 0,
+      "final": {
+        "confidence": "high",
+        "evidence": "Title \"Theatrum chemicum\" matches exactly; year 1659 matches exactly; author \"anonymous\" matches.",
+        "matched_ubn": "14140",
+        "reasoning": "The title and year provided for the digitised book perfectly match the 1659 edition of 'Theatrum chemicum' published by the heirs of Zetzner in Strassburg (ubn 14140)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 1
+    },
+    {
+      "book": {
+        "id": "69a0278bc49f0f5eda46533f",
+        "slug": "theosophische-schrifften-scleus",
+        "title": "Theosophische-Schrifften",
+        "author": "Scleus, Bartholomeus",
+        "year": 1686,
+        "language": "German"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "14348",
+        "reasoning": "The metadata for the digitised book perfectly matches the catalogue entry ubn 14348 in terms of title, author, and year.",
+        "evidence": "title=\"Theosophische-Schrifften\" (candidate) vs \"Theosophische-Schrifften\" (book's original title); author=\"Scleus, Bartholomeus\" (candidate) vs \"Scleus, Bartholomeus\" (book); year=1686 (candidate) vs 1686 (book).",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027816a20ac4e1fc40520",
+        "slug": "theologia-practica-dat-is-alle-de-theologische-wercken-love",
+        "title": "Theologia practica, dat is: alle de theologische wercken",
+        "author": "Love, Christopher",
+        "year": 1664,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "14206",
+        "reasoning": "The digitised book's title and author match the candidate entry perfectly, and the year is identical.",
+        "evidence": "title matches perfectly (\"Theologia practica, dat is: alle de theologische wercken\"); author matches (\"Love, Christopher\"); year matches (1664)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fd15618a982bb1ebd9",
+        "slug": "hebrew-sefer-shnei-luchot-ha-brit-horowitz",
+        "title": "[Hebrew: Sefer shnei luchot ha-brit]",
+        "author": "Horowitz, Isaiah ben Abraham Halevi",
+        "year": 1698,
+        "language": "Hebrew"
+      },
+      "candidate_count": 2,
+      "final": {
+        "confidence": "high",
+        "matched_ubn": "13172",
+        "reasoning": "The digitised book matches the catalogue entry 13172 perfectly in title, author, and year of publication.",
+        "evidence": "Title \"[Hebrew: Sefer shnei luchot ha-brit]\" matches exactly; Author \"Horowitz, Isaiah ben Abraham Halevi\" matches exactly; Year 1698 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02790cf8bef555d035ba8",
+        "slug": "thresor-de-l-histoire-des-langues-de-cest-univers-duret",
+        "title": "Thresor de l'histoire des langues de cest univers",
+        "author": "Duret, Claude",
+        "year": 1619,
+        "language": "French"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book's metadata matches UBN 14443 perfectly in terms of title, author, and year.",
+        "confidence": "high",
+        "matched_ubn": "14443",
+        "evidence": "title matches exactly (\"Thresor de l'histoire des langues de cest univers\"); author matches exactly (\"Duret, Claude\"); year matches exactly (1619)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02781bd4078a454714f65",
+        "slug": "thresor-de-l-histoire-des-langues-de-cest-univers-duret-2",
+        "title": "Thresor de l'histoire des langues de cest univers",
+        "author": "Duret, Claude",
+        "year": 1613,
+        "language": "French"
+      },
+      "candidate_count": 2,
+      "final": {
+        "reasoning": "The digitised book matches the 1613 edition (ubn 14444) perfectly in title, author, and publication year.",
+        "matched_ubn": "14444",
+        "evidence": "title=\"Thresor de l'histoire des langues de cest univers\" matches exactly; author \"Duret, Claude\" matches; year 1613 matches exactly.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699efa0091da87d04bf47489",
+        "slug": "looking-unto-jesus-ambrose",
+        "title": "Het sien op Jesus: een ghesicht des eeuwigen Evangeliums",
+        "author": "Ambrose, Isaac",
+        "year": 1664,
+        "language": "Dutch"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "13229",
+        "evidence": "Title matches exactly: \"Het sien op Jesus: een ghesicht des eeuwigen Evangeliums\"; Author matches: \"Ambrose, Isaac\"; Year matches: 1664; Language matches: Dutch.",
+        "reasoning": "The digitised book details (title, author, year, language) perfectly align with the data for UBN 13229 in the catalogue.",
+        "confidence": "high"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a02781bd4078a454714f71",
+        "slug": "de-synagoga-vetere-libri-tres-vitringa-2",
+        "title": "De synagoga vetere libri tres",
+        "author": "Vitringa, Campegius",
+        "year": 1726,
+        "language": "Latin"
+      },
+      "candidate_count": 7,
+      "final": {
+        "confidence": "high",
+        "reasoning": "The candidate ubn=13935 perfectly matches the title, author, and year provided in the digitised book metadata.",
+        "matched_ubn": "13935",
+        "evidence": "Title (\"De synagoga vetere libri tres\" matches exactly), Author (\"Vitringa, Campegius\" matches exactly), Year (1726 matches exactly)."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "699ef9fb02f97b3168ee8228",
+        "slug": "sitten-lehre-der-heiligen-schrift-mosheim",
+        "title": "Sitten-Lehre der Heiligen Schrift",
+        "author": "Mosheim, Johann Lorenz von",
+        "year": 1737,
+        "language": "German"
+      },
+      "candidate_count": 3,
+      "final": {
+        "reasoning": "The title, author, and year all perfectly match the candidate ubn=13280.",
+        "confidence": "high",
+        "evidence": "title=\"Sitten-Lehre der Heiligen Schrift\" matches exactly; author \"Mosheim, Johann Lorenz von\" matches exactly; year 1737 matches exactly.",
+        "matched_ubn": "13280"
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a0278f5a61461956f4ce1d",
+        "slug": "thesaurus-practicus-besold-2",
+        "title": "Thesaurus practicus",
+        "author": "Besold, Christoph",
+        "year": 1740,
+        "language": "Latin"
+      },
+      "candidate_count": 1,
+      "final": {
+        "matched_ubn": "14378",
+        "reasoning": "The digitised book details (title, author, and year) are an exact match for the catalogue entry ubn=14378.",
+        "confidence": "high",
+        "evidence": "title \"Thesaurus practicus\" matches exactly; author \"Besold, Christoph\" matches exactly; year 1740 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    },
+    {
+      "book": {
+        "id": "69a027907a1dc5d92b41908f",
+        "slug": "greek-symphonia-novi-testamenti-concordantiae-graecae-door",
+        "title": "[Greek Symphonia. Novi Testamenti concordantiae graecae. [Door Xystus Betuleius]",
+        "author": "Unknown",
+        "year": 1546,
+        "language": "Latin"
+      },
+      "candidate_count": 12,
+      "final": {
+        "matched_ubn": "13931",
+        "confidence": "high",
+        "reasoning": "The digitised book's provided \"Original title\" matches the title of ubn=13931 in the catalogue exactly, and the year (1546) is also identical. Note: The provided \"Description\" in the digitised book metadata seems to describe a different work (Castellio's Bible), which is contradictory to the title provided, but the title and date strongly point to ubn=13931.",
+        "evidence": "The title \"[Greek Symphonia. Novi Testamenti concordantiae graecae. [Door Xystus Betuleius]\" in the digitised book metadata exactly matches the title for ubn=13931. The year 1546 matches exactly."
+      },
+      "applied": {
+        "applied": true
+      },
+      "toolCalls": 0
+    }
+  ]
+}

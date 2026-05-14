@@ -25,6 +25,9 @@ export default function EmbedNavigationReporter({ book = null, page = null }: Pr
       { type: 'sl-navigate', book, page },
       '*'
     );
+
+    // Signal to EmbedNavigationOverlay that the new page has begun rendering.
+    window.dispatchEvent(new Event('embed:nav-end'));
   }, [book, page]);
 
   return null;

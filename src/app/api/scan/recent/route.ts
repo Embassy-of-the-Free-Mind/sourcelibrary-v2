@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
         pages_ocr: 1,
         pages_translated: 1,
         status: 1,
-        thumbnail: 1,
+        thumbnail: 1, image_display: 1,
         'pipeline_auto.status': 1,
         created_at: 1,
       })

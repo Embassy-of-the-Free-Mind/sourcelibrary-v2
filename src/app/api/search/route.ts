@@ -6,6 +6,7 @@ import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { withApiAuth } from '@/lib/api-auth';
 
 export const preferredRegion = 'fra1';
 
@@ -42,7 +43,7 @@ function extractSnippet(text: string, query: string, contextChars = 150): string
 }
 
 // GET /api/search - Search across books and translations
-export async function GET(request: NextRequest) {
+export const GET = withApiAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
@@ -133,6 +134,7 @@ export async function GET(request: NextRequest) {
         title: typedBook.title,
         display_title: typedBook.display_title,
         author: typedBook.author,
+        editor: (typedBook as any).editor,
         language: typedBook.language,
         published: typedBook.published,
         page_count: typedBook.pages_count,
@@ -161,7 +163,7 @@ export async function GET(request: NextRequest) {
         if (bookId || pagesOnly) return [];
         const matchingIds = await searchBookIds(query, { limit: limit * 2 });
         const bookFilters = buildBookFilters();
-        const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
+        const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
 
         let books: any[] = [];
         if (matchingIds.length > 0) {
@@ -247,6 +249,7 @@ export async function GET(request: NextRequest) {
 
           return await db.collection('pages').aggregate([
             buildPageSearchStage(query, filteredBookIds),
+            { $match: { page_number: { $gt: 0 } } },
             { $limit: pageLimit },
             {
               $project: {
@@ -323,7 +326,7 @@ export async function GET(request: NextRequest) {
         const pageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -366,6 +369,7 @@ export async function GET(request: NextRequest) {
           title: book.title,
           display_title: book.display_title,
           author: book.author,
+          editor: (book as any).editor,
           language: book.language,
           published: book.published,
           page_count: book.pages_count,
@@ -402,7 +406,7 @@ export async function GET(request: NextRequest) {
         const semBooks = await db.collection('books')
           .find(
             { id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 } },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -426,6 +430,7 @@ export async function GET(request: NextRequest) {
             title: book.title as string,
             display_title: book.display_title as string | undefined,
             author: (book.author as string) || 'Unknown',
+            editor: (book as any).editor,
             language: (book.language as string) || 'Unknown',
             published: (book.published as string) || 'Unknown',
             page_count: book.pages_count as number,
@@ -465,7 +470,7 @@ export async function GET(request: NextRequest) {
         const semPageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 } },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -489,6 +494,7 @@ export async function GET(request: NextRequest) {
           title: book.title || sp.book_title,
           display_title: book.display_title,
           author: book.author || sp.book_author || undefined,
+          editor: book.editor,
           language: book.language || sp.book_language || undefined,
           published: book.published,
           page_count: book.pages_count,
@@ -677,4 +683,4 @@ export async function GET(request: NextRequest) {
       },
     });
   }
-}
+}, { route: 'search' });

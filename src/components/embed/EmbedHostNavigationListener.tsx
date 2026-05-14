@@ -42,6 +42,10 @@ export default function EmbedHostNavigationListener() {
             const current = window.location.pathname + window.location.search;
             if (current === target) return;
 
+            // Show the loader before kicking off the route transition so it
+            // paints before Next.js mounts the new page.
+            window.dispatchEvent(new Event('embed:nav-start'));
+
             // Host owns browser history; keep iframe navigation internal and snappy.
             router.replace(target);
         };

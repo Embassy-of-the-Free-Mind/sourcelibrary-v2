@@ -278,6 +278,22 @@ const nextConfig: NextConfig = {
         destination: '/librarian/voice',
         permanent: true,
       },
+      // Short share links for explore pages
+      {
+        source: '/map',
+        destination: '/explore/map',
+        permanent: false,
+      },
+      {
+        source: '/timeline',
+        destination: '/explore/timeline',
+        permanent: false,
+      },
+      {
+        source: '/constellation',
+        destination: '/explore/constellation',
+        permanent: false,
+      },
     ];
   },
 };

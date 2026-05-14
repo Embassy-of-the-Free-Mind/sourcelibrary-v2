@@ -15,7 +15,7 @@ async function getBookForOG(tenantSlug: string, id: string): Promise<Book | null
     const db = await getReadDb();
     const result = await findTenantBookByIdOrSlug(db, tenantSlug, id, {
       _id: 0, id: 1, title: 1, display_title: 1, author: 1,
-      published: 1, language: 1, thumbnail: 1, slug: 1,
+      published: 1, language: 1, thumbnail: 1, image_display: 1, slug: 1,
     });
     return result ? (result.book as unknown as Book) : null;
   } catch {

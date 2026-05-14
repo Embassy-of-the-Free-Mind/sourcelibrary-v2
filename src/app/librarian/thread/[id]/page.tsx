@@ -334,39 +334,70 @@ function SourceCards({ threadId }: { threadId: string }) {
       {expanded && (
         <div className="mt-3 grid gap-3">
           {bookList.map(([bookId, book]) => {
-            const bookUrl = `https://sourcelibrary.org/book/${book.slug || bookId}`;
+            const bookSlug = book.slug || bookId;
+            const sortedPages = [...book.pages].sort((a, b) => a - b);
+            // Single-cited-page: card click jumps straight to that page. Multi-page:
+            // each page number is its own link so the visible "Page N" label and the
+            // destination always match (was a bug where card → /book/{slug} only).
+            const cardHref = sortedPages.length === 1
+              ? `https://sourcelibrary.org/book/${bookSlug}/page-number/${sortedPages[0]}`
+              : `https://sourcelibrary.org/book/${bookSlug}`;
             const thumbUrl = `https://sourcelibrary.org/api/image?url=https://images.sourcelibrary.org/covers/${bookId}.jpg&w=120&q=75`;
             return (
-              <a
+              <div
                 key={bookId}
-                href={bookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="flex gap-3 p-3 bg-white rounded-lg border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors group"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={thumbUrl}
-                  alt=""
-                  className="w-14 h-20 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
-                  loading="lazy"
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                />
+                <a href={cardHref} target="_blank" rel="noopener noreferrer" className="flex-shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={thumbUrl}
+                    alt=""
+                    className="w-14 h-20 object-cover rounded bg-[#f0ece4]"
+                    loading="lazy"
+                    onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
+                </a>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[13px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors" style={{ fontWeight: 400 }}>
-                    {book.title}
-                  </p>
-                  <p className="text-[11px] text-[#8a8480] font-sans mt-0.5">
-                    {book.author}
-                  </p>
-                  <p className="text-[11px] text-[#9e4a3a] font-sans mt-1">
-                    {book.pages.length === 1
-                      ? `Page ${book.pages[0]}`
-                      : `Pages ${book.pages.sort((a, b) => a - b).join(', ')}`
-                    }
+                  <a href={cardHref} target="_blank" rel="noopener noreferrer" className="block">
+                    <p className="text-[13px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors" style={{ fontWeight: 400 }}>
+                      {book.title}
+                    </p>
+                    <p className="text-[11px] text-[#8a8480] font-sans mt-0.5">
+                      {book.author}
+                    </p>
+                  </a>
+                  <p className="text-[11px] font-sans mt-1">
+                    {sortedPages.length === 1 ? (
+                      <a
+                        href={`https://sourcelibrary.org/book/${bookSlug}/page-number/${sortedPages[0]}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#9e4a3a] hover:underline"
+                      >
+                        Page {sortedPages[0]}
+                      </a>
+                    ) : (
+                      <>
+                        <span className="text-[#8a8480]">Pages </span>
+                        {sortedPages.map((p, i) => (
+                          <span key={p}>
+                            <a
+                              href={`https://sourcelibrary.org/book/${bookSlug}/page-number/${p}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#9e4a3a] hover:underline"
+                            >
+                              {p}
+                            </a>
+                            {i < sortedPages.length - 1 ? <span className="text-[#8a8480]">, </span> : null}
+                          </span>
+                        ))}
+                      </>
+                    )}
                   </p>
                 </div>
-              </a>
+              </div>
             );
           })}
 

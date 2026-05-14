@@ -6,7 +6,7 @@
 import { getGeminiClient } from './gemini-client';
 import { getDb } from './mongodb';
 import { DigestContent, renderDigestHtml } from './email-templates';
-import { logGeminiCall } from './gemini-logger';
+import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 
 interface DigestContext {
   new_books: Array<{
@@ -135,7 +135,7 @@ OUTPUT FORMAT (JSON only, no markdown):
 Only include new_books entries for books that actually have interesting content to describe. If there are too many, pick the 5 most notable.`;
 }
 
-export async function generateDigest(periodDays: number = 14): Promise<{
+export async function generateDigest(periodDays: number = 14, options?: { triggered_by?: GeminiTrigger }): Promise<{
   html: string;
   subject: string;
   context: DigestContext;
@@ -201,6 +201,9 @@ export async function generateDigest(periodDays: number = 14): Promise<{
     output_tokens: usage?.candidatesTokenCount || 0,
     status: 'success',
     duration_ms: duration,
+    prompt_version: 'email-digest-v1',
+    endpoint: 'lib/email-digest-generator',
+    triggered_by: options?.triggered_by,
   }).catch(() => {});
 
   return { html, subject: parsed.subject, context: ctx, model };

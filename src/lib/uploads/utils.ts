@@ -106,6 +106,7 @@ export async function updateBookAfterUpload(
     try {
       const coverResult = await selectBestCover(db, bookId);
       updateFields.thumbnail = coverResult.selectedImageUrl;
+      updateFields.image_display = coverResult.selectedImageUrl; // canonical field
       updateFields.thumbnail_page = coverResult.pageNumber;
       updateFields.thumbnail_confidence = coverResult.confidence;
     } catch (error) {

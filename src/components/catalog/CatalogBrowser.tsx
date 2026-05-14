@@ -201,9 +201,9 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
         <div className="flex items-center gap-3">
           <p className="text-sm text-muted">
             {query || language ? (
-              `${total.toLocaleString()} of ${initialTotal.toLocaleString()} books`
+              `${total.toLocaleString('en-US')} of ${initialTotal.toLocaleString('en-US')} books`
             ) : (
-              `${total.toLocaleString()} books`
+              `${total.toLocaleString('en-US')} books`
             )}
           </p>
           <a

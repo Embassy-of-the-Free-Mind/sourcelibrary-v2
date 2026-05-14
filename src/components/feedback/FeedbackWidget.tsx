@@ -9,17 +9,22 @@ export default function FeedbackWidget({ className, style, initialMessage, label
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [wantsToHelp, setWantsToHelp] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const signedInName = session?.user?.name || '';
   const signedInEmail = session?.user?.email || '';
+  const effectiveEmail = signedInEmail || email.trim();
+  const needsEmailForVolunteer = wantsToHelp && !signedInEmail && !email.trim();
 
   useEffect(() => { setMounted(true); }, []);
 
   const submit = async () => {
     if (!message.trim()) return;
+    if (needsEmailForVolunteer) return;
     setStatus('sending');
     try {
       const res = await fetch('/api/feedback', {
@@ -28,15 +33,19 @@ export default function FeedbackWidget({ className, style, initialMessage, label
         body: JSON.stringify({
           message: message.trim(),
           name: signedInName || name.trim() || null,
-          email: signedInEmail || null,
+          email: effectiveEmail || null,
           page: typeof window !== 'undefined' ? window.location.pathname : null,
+          wantsToHelp,
         }),
       });
       if (!res.ok) throw new Error();
       setStatus('sent');
       setMessage('');
       setName('');
-      setTimeout(() => { setOpen(false); setStatus('idle'); }, 2000);
+      setEmail('');
+      const sentWithVolunteer = wantsToHelp;
+      setWantsToHelp(false);
+      setTimeout(() => { setOpen(false); setStatus('idle'); }, sentWithVolunteer ? 2400 : 2000);
     } catch {
       setStatus('error');
     }
@@ -51,7 +60,9 @@ export default function FeedbackWidget({ className, style, initialMessage, label
         {status === 'sent' ? (
           <div className="text-center py-4">
             <p className="text-lg font-medium text-stone-800">Thank you!</p>
-            <p className="text-sm text-stone-500 mt-1">Your feedback has been received.</p>
+            <p className="text-sm text-stone-500 mt-1">
+              {wantsToHelp ? "We'll be in touch about helping out." : 'Your feedback has been received.'}
+            </p>
           </div>
         ) : (
           <>
@@ -85,13 +96,37 @@ export default function FeedbackWidget({ className, style, initialMessage, label
               />
             )}
 
+            <label className="flex items-start gap-2.5 mt-4 p-3 rounded-lg bg-stone-50 border border-stone-200 cursor-pointer hover:bg-stone-100 transition-colors">
+              <input
+                type="checkbox"
+                checked={wantsToHelp}
+                onChange={(e) => setWantsToHelp(e.target.checked)}
+                className="mt-0.5 accent-stone-900"
+              />
+              <span className="text-sm text-stone-700 leading-snug">
+                I&rsquo;d like to help — translations, research, or suggesting books.
+                <span className="block text-xs text-stone-500 mt-0.5">We&rsquo;ll email you to learn more.</span>
+              </span>
+            </label>
+
+            {wantsToHelp && !signedInEmail && (
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email (so we can reach out)"
+                required
+                className="w-full px-3 py-2 mt-2 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold"
+              />
+            )}
+
             <div className="flex items-center justify-between mt-4">
               <p className="text-xs text-stone-400">
                 Sent from {typeof window !== 'undefined' ? window.location.pathname : '/'}
               </p>
               <button
                 onClick={submit}
-                disabled={!message.trim() || status === 'sending'}
+                disabled={!message.trim() || status === 'sending' || needsEmailForVolunteer}
                 className="px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
               >
                 {status === 'sending' ? 'Sending...' : status === 'error' ? 'Try again' : 'Send'}

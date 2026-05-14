@@ -90,7 +90,7 @@ async function getStats() {
 function fmt(n: number): string {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
   if (n >= 1_000) return (n / 1_000).toFixed(n >= 10_000 ? 0 : 1) + 'k';
-  return n.toLocaleString();
+  return n.toLocaleString('en-US');
 }
 
 /* ── Pipeline stages ── */

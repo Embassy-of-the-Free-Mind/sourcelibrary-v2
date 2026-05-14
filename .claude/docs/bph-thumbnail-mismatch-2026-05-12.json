@@ -1,0 +1,5748 @@
+{
+  "scan_date": "2026-05-12T13:27:27.130Z",
+  "total_books_scanned": 2254,
+  "offenders": 1148,
+  "total_mismatches": 396412,
+  "by_book": [
+    {
+      "id": "69c80dd96c6f3cc53c846e1f",
+      "slug": "opera-bucher-und-schrifften-paracelsus",
+      "mismatches": 1784
+    },
+    {
+      "id": "6974b63d19126e775cf6d7d3",
+      "slug": "apostolic-light-and-law-lange",
+      "mismatches": 1765
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a18",
+      "slug": "kabbalah-unveiled-kabbala-denudata",
+      "mismatches": 1704
+    },
+    {
+      "id": "6970e36a9b09d309d780a286",
+      "slug": "the-first-part-of-the-works-teellinck",
+      "mismatches": 1690
+    },
+    {
+      "id": "697750b7b66c66fb54c69ce4",
+      "slug": "biblical-historical-light-and-right-lange",
+      "mismatches": 1591
+    },
+    {
+      "id": "698255f272562d277d385143",
+      "slug": "mosaic-light-and-law-lange",
+      "mismatches": 1554
+    },
+    {
+      "id": "697a8395e680cef7cedae3a1",
+      "slug": "philological-theological-dissertations-lampe",
+      "mismatches": 1539
+    },
+    {
+      "id": "697b079611cc8928b55ea394",
+      "slug": "the-opened-way-to-peace-with-god-and-all-creatures-dippel",
+      "mismatches": 1536
+    },
+    {
+      "id": "697b079a265ada318df401ce",
+      "slug": "the-first-love-a-true-representation-of-the-early-christians-arnold",
+      "mismatches": 1526
+    },
+    {
+      "id": "6985ca710531933f311879cf",
+      "slug": "prophetic-light-and-right-lange",
+      "mismatches": 1508
+    },
+    {
+      "id": "69a027907a1dc5d92b41908f",
+      "slug": "greek-symphonia-novi-testamenti-concordantiae-graecae-door",
+      "mismatches": 1486
+    },
+    {
+      "id": "697e23c8210324a53baf49fa",
+      "slug": "history-of-the-city-and-kingdom-of-jerusalem-besold",
+      "mismatches": 1486
+    },
+    {
+      "id": "69a0278f5a61461956f4ce1d",
+      "slug": "thesaurus-practicus-besold-2",
+      "mismatches": 1480
+    },
+    {
+      "id": "6981920750e2d1bcc98aeee3",
+      "slug": "memoirs-mornay",
+      "mismatches": 1446
+    },
+    {
+      "id": "697e23ca56a65c90a0e5beba",
+      "slug": "the-imagines-of-philostratus-philostratus",
+      "mismatches": 1432
+    },
+    {
+      "id": "698192079534729403fc4db4",
+      "slug": "medico-chemical-wonders-or-the-highest-medical-and-paracelsus",
+      "mismatches": 1430
+    },
+    {
+      "id": "698255f14685a7a983170f91",
+      "slug": "the-symbolic-world-picinello",
+      "mismatches": 1422
+    },
+    {
+      "id": "697e23cbf0067adc5e2f28e7",
+      "slug": "ideas-for-reforming-the-antichrist-oraeus",
+      "mismatches": 1398
+    },
+    {
+      "id": "697b07993db05804f2b82140",
+      "slug": "the-revelation-of-st-john-explained-bengel",
+      "mismatches": 1394
+    },
+    {
+      "id": "6988a5a2527da41c982b4b02",
+      "slug": "prejudices-of-the-modern-age-concerning-the-articles-of-engelschall",
+      "mismatches": 1392
+    },
+    {
+      "id": "6979536eeef1c286564aa437",
+      "slug": "new-alchemical-compendium-or-pandora-explained-faust",
+      "mismatches": 1374
+    },
+    {
+      "id": "697a36a1e1d81a84b06d2d6d",
+      "slug": "monument-of-ancient-christianity-arnold",
+      "mismatches": 1336
+    },
+    {
+      "id": "698420e4e8a1d0539ce47e1d",
+      "slug": "revelation-of-divine-majesty-gutman",
+      "mismatches": 1306
+    },
+    {
+      "id": "697b079711cc8928b55ea3a8",
+      "slug": "ecclesiastical-history-caesariensis",
+      "mismatches": 1303
+    },
+    {
+      "id": "699ef9fb02f97b3168ee8228",
+      "slug": "sitten-lehre-der-heiligen-schrift-mosheim",
+      "mismatches": 1294
+    },
+    {
+      "id": "6977af1e235fbd25a519477b",
+      "slug": "critique-of-the-most-celebrated-authors-blount",
+      "mismatches": 1281
+    },
+    {
+      "id": "6975158ca88d83c830d99e2e",
+      "slug": "dissertation-on-the-most-august-sacrament-of-the-lord-s-marcellius",
+      "mismatches": 1279
+    },
+    {
+      "id": "69a02781bd4078a454714f71",
+      "slug": "de-synagoga-vetere-libri-tres-vitringa-2",
+      "mismatches": 1278
+    },
+    {
+      "id": "6977b945112cb9b4f70c3ffc",
+      "slug": "religious-ceremonies-picard",
+      "mismatches": 1260
+    },
+    {
+      "id": "69c836fd6c6f3cc53c84ed4c",
+      "slug": "der-gantze-psalter-davids-arndt",
+      "mismatches": 1258
+    },
+    {
+      "id": "697e23c9eb423a42938f5f9e",
+      "slug": "ecclesiastical-history-lange",
+      "mismatches": 1256
+    },
+    {
+      "id": "69751588a88d83c830d99e16",
+      "slug": "the-art-of-gold-making-artis-auriferae-morienus",
+      "mismatches": 1250
+    },
+    {
+      "id": "697e23c92fa889c1fde00ac0",
+      "slug": "history-of-the-reformation-brandt",
+      "mismatches": 1245
+    },
+    {
+      "id": "697a3055f757bfc134c75d9f",
+      "slug": "a-course-of-chymistry-lemery",
+      "mismatches": 1232
+    },
+    {
+      "id": "697d9c99f2b56306a9ec961e",
+      "slug": "the-ancient-jewish-sanctuaries-religions-and-customs-lundius",
+      "mismatches": 1230
+    },
+    {
+      "id": "6988a5a3d2f1da19024de734",
+      "slug": "a-literary-history-of-ecclesiastical-writers-cave",
+      "mismatches": 1204
+    },
+    {
+      "id": "697b079a90f4fbd2e5f32a57",
+      "slug": "the-first-temple-of-god-in-christ-glusing",
+      "mismatches": 1202
+    },
+    {
+      "id": "6970e3549b09d309d780a242",
+      "slug": "adages-erasmus",
+      "mismatches": 1200
+    },
+    {
+      "id": "697b079ac66889d6835b576a",
+      "slug": "introduction-to-the-true-knowledge-of-the-great-mystery-of-bohme",
+      "mismatches": 1199
+    },
+    {
+      "id": "697b079923ddbe14e3d73c46",
+      "slug": "judaism-unmasked-entdecktes-judenthum-eisenmenger",
+      "mismatches": 1186
+    },
+    {
+      "id": "6988a5a076a49ee3a652f51c",
+      "slug": "revealer-of-secrets-cregut",
+      "mismatches": 1184
+    },
+    {
+      "id": "699efa0091da87d04bf47489",
+      "slug": "looking-unto-jesus-ambrose",
+      "mismatches": 1160
+    },
+    {
+      "id": "697704f7a8ad77b9e64fc7c7",
+      "slug": "the-new-testament",
+      "mismatches": 1160
+    },
+    {
+      "id": "69772b6b47dc849429ffb22e",
+      "slug": "the-curious-chemical-library-manget",
+      "mismatches": 1152
+    },
+    {
+      "id": "69804b931076b05d8d70fe71",
+      "slug": "royal-chemical-and-medicinal-palace-cardilucius",
+      "mismatches": 1146
+    },
+    {
+      "id": "69751588a88d83c830d99e18",
+      "slug": "the-cabalistic-art-vol-1-pistorius",
+      "mismatches": 1134
+    },
+    {
+      "id": "698255f0b964b6154f32f9a6",
+      "slug": "harmonic-nosology-petraeus",
+      "mismatches": 1122
+    },
+    {
+      "id": "697e23c2eae9ff63cff4df64",
+      "slug": "history-of-the-heavens-pluche-3",
+      "mismatches": 1120
+    },
+    {
+      "id": "6984e84d408b747f87b809b2",
+      "slug": "theosophical-writings-bohme",
+      "mismatches": 1114
+    },
+    {
+      "id": "69a02781bd4078a454714f65",
+      "slug": "thresor-de-l-histoire-des-langues-de-cest-univers-duret-2",
+      "mismatches": 1094
+    },
+    {
+      "id": "697a3055d1756edbe38da50a",
+      "slug": "the-book-of-concord-concordia-anonymous",
+      "mismatches": 1092
+    },
+    {
+      "id": "69751591233423aeec9e88f6",
+      "slug": "select-biographies-of-holy-souls-tersteegen",
+      "mismatches": 1086
+    },
+    {
+      "id": "69a02790cf8bef555d035ba8",
+      "slug": "thresor-de-l-histoire-des-langues-de-cest-univers-duret",
+      "mismatches": 1048
+    },
+    {
+      "id": "698255ef792a04eb812c4860",
+      "slug": "the-reformed-and-enlarged-hermetic-museum-anonymous",
+      "mismatches": 1048
+    },
+    {
+      "id": "699ef9fd15618a982bb1ebd9",
+      "slug": "hebrew-sefer-shnei-luchot-ha-brit-horowitz",
+      "mismatches": 1028
+    },
+    {
+      "id": "6974b63d19126e775cf6d7d1",
+      "slug": "apostolic-antiquities-cave",
+      "mismatches": 1026
+    },
+    {
+      "id": "697751fccb3de08f8055b176",
+      "slug": "book-of-biblical-names-heyden",
+      "mismatches": 1024
+    },
+    {
+      "id": "6988a5a34117f4323f13af0d",
+      "slug": "a-revelation-of-the-revelation-brightman",
+      "mismatches": 1019
+    },
+    {
+      "id": "6978ee3af4d5bdc7b3df604c",
+      "slug": "chemical-writings-valentinus",
+      "mismatches": 1014
+    },
+    {
+      "id": "697b0799a12a626fbfe93ae4",
+      "slug": "preparation-for-the-gospel-caesariensis",
+      "mismatches": 1002
+    },
+    {
+      "id": "698420e35484bd017cef00ec",
+      "slug": "select-observations-on-literary-matters",
+      "mismatches": 996
+    },
+    {
+      "id": "6988a5a2301445517705927c",
+      "slug": "book-of-rulers-lauterbeck",
+      "mismatches": 994
+    },
+    {
+      "id": "6984e84f9404d58b48aca521",
+      "slug": "complete-philosophical-works-the-enneads-plotinus",
+      "mismatches": 994
+    },
+    {
+      "id": "698255f3d93c2585cd5723da",
+      "slug": "mysterium-magnum-or-exposition-of-the-first-book-of-moses-bohme-2",
+      "mismatches": 988
+    },
+    {
+      "id": "6970e37f9b09d309d780a2ca",
+      "slug": "biblical-antiquities-diedericus",
+      "mismatches": 982
+    },
+    {
+      "id": "698255eec282658a9aa7ab7e",
+      "slug": "sacred-miscellanies-in-four-books-witsius",
+      "mismatches": 975
+    },
+    {
+      "id": "697c8e114dd52b3f0e02bb87",
+      "slug": "the-gospel-treasury-opened-everard",
+      "mismatches": 972
+    },
+    {
+      "id": "697b07991ec34adb26378467",
+      "slug": "on-solid-learning-poiret",
+      "mismatches": 959
+    },
+    {
+      "id": "69770aaa77ed318b9f256bf2",
+      "slug": "the-holy-bible-die-heilige-schrift",
+      "mismatches": 952
+    },
+    {
+      "id": "697e23c982ca28a1280f850a",
+      "slug": "historical-and-theological-introduction-to-religious-walch",
+      "mismatches": 946
+    },
+    {
+      "id": "6974b642457dd8909910b9e5",
+      "slug": "on-the-secrets-of-catholic-truth-and-the-kabbalistic-art-columna",
+      "mismatches": 945
+    },
+    {
+      "id": "69a027816a20ac4e1fc40520",
+      "slug": "theologia-practica-dat-is-alle-de-theologische-wercken-love",
+      "mismatches": 934
+    },
+    {
+      "id": "698255ec3e158c7e3c9a4f78",
+      "slug": "newly-arranged-hymnbook",
+      "mismatches": 933
+    },
+    {
+      "id": "697d9c999788c62e1238c872",
+      "slug": "hierolexicon-sacred-dictionary-macromelitensis",
+      "mismatches": 933
+    },
+    {
+      "id": "697e23c909333779c3c93962",
+      "slug": "the-history-of-the-evangelical-churches-of-the-valleys-of-morland",
+      "mismatches": 932
+    },
+    {
+      "id": "697708b9d2171799db0a7341",
+      "slug": "the-bible-den-bibel",
+      "mismatches": 918
+    },
+    {
+      "id": "69751591233423aeec9e88f2",
+      "slug": "selected-extracts-ueberfeld",
+      "mismatches": 916
+    },
+    {
+      "id": "697e23caef147585fcdb6bb2",
+      "slug": "introduction-to-the-history-of-hebrew-philosophy-buddeus",
+      "mismatches": 914
+    },
+    {
+      "id": "698255eeba4a4f5294b2a026",
+      "slug": "mosaic-history-of-the-hebrew-church-goeree",
+      "mismatches": 912
+    },
+    {
+      "id": "6984e84fc2e08fbff662264b",
+      "slug": "the-philosophy-of-love-abrabanel",
+      "mismatches": 904
+    },
+    {
+      "id": "697d9c99f2b56306a9ec961c",
+      "slug": "history-of-the-life-of-philippe-de-mornay",
+      "mismatches": 904
+    },
+    {
+      "id": "6970e3849b09d309d780a2da",
+      "slug": "the-secluded-cave-of-nature-and-art-cardilucius",
+      "mismatches": 902
+    },
+    {
+      "id": "6975158da88d83c830d99e38",
+      "slug": "the-golden-fleece-aureum-vellus-trissmosin",
+      "mismatches": 897
+    },
+    {
+      "id": "6976f5fb7b4366f057e0e974",
+      "slug": "the-royal-chemistry-basilica-chymica-crollius",
+      "mismatches": 890
+    },
+    {
+      "id": "69a0278bc49f0f5eda46533f",
+      "slug": "theosophische-schrifften-scleus",
+      "mismatches": 886
+    },
+    {
+      "id": "697a642bb981745f5fac1d74",
+      "slug": "on-the-syrian-gods-selden",
+      "mismatches": 884
+    },
+    {
+      "id": "698255e93e158c7e3c9a4f72",
+      "slug": "mysterium-magnum-boehme",
+      "mismatches": 883
+    },
+    {
+      "id": "6978ee3aa6943c06198ef83f",
+      "slug": "christian-theology-pictet",
+      "mismatches": 877
+    },
+    {
+      "id": "698255f31193d0a53f503c46",
+      "slug": "mysterium-magnum-or-exposition-of-the-first-book-of-moses-bohme",
+      "mismatches": 875
+    },
+    {
+      "id": "69a0278fdb6656a74eb33962",
+      "slug": "theatrum-chemicum-anonymous",
+      "mismatches": 874
+    },
+    {
+      "id": "697d9c99f2b56306a9ec9614",
+      "slug": "gynaeceum-haeretico-fanaticum-a-history-of-false-feustking",
+      "mismatches": 872
+    },
+    {
+      "id": "699ef9f2c2bcb75dbdbaad8e",
+      "slug": "sethos-histoire-ou-vie-tiree-des-monuments-anecdotes-de-l-terrasson",
+      "mismatches": 870
+    },
+    {
+      "id": "6980941fe1cdc8e435ed69b2",
+      "slug": "biographies-of-prominent-dutch-men-and-women-stijl",
+      "mismatches": 866
+    },
+    {
+      "id": "6988a59f85cb2dd0f1e56e5b",
+      "slug": "collection-of-various-proven-chemical-writings-hollandus",
+      "mismatches": 862
+    },
+    {
+      "id": "697d9c9b971fd6d8096654da",
+      "slug": "the-pagan-world-and-the-origin-of-its-gods-herold",
+      "mismatches": 862
+    },
+    {
+      "id": "6988a5a23b430836d7855294",
+      "slug": "the-romance-of-the-rose-lorris-3",
+      "mismatches": 861
+    },
+    {
+      "id": "6978ee3a3e0718a88d9fa068",
+      "slug": "the-real-christian-saint-jure",
+      "mismatches": 860
+    },
+    {
+      "id": "697e23cbcb3f7c9faa3f06a8",
+      "slug": "iliad-and-odyssey-homerus",
+      "mismatches": 858
+    },
+    {
+      "id": "6984e8498a2f054f912420c3",
+      "slug": "subterranean-physics-becher",
+      "mismatches": 854
+    },
+    {
+      "id": "697a7087367f907242581fe3",
+      "slug": "cabalistic-disputation-on-the-soul-moses",
+      "mismatches": 851
+    },
+    {
+      "id": "697c8e0f6000fdec2f130612",
+      "slug": "spiritual-correspondence-schutz",
+      "mismatches": 848
+    },
+    {
+      "id": "697a604ba24fc91936a91757",
+      "slug": "on-the-german-gods-schedius",
+      "mismatches": 840
+    },
+    {
+      "id": "697d9c9e971fd6d8096654e6",
+      "slug": "golden-jewel-of-the-children-of-god-sonthom",
+      "mismatches": 840
+    },
+    {
+      "id": "69a0278c04ccae579af8549c",
+      "slug": "la-suitte-des-tableaux-de-philostrate-philostratus",
+      "mismatches": 836
+    },
+    {
+      "id": "697d9c999788c62e1238c882",
+      "slug": "the-holy-for-the-holy-yvon",
+      "mismatches": 822
+    },
+    {
+      "id": "697b07990eef59aefe0d99a4",
+      "slug": "primitive-christianity-cave",
+      "mismatches": 819
+    },
+    {
+      "id": "697c8e0f150e68b9f4070204",
+      "slug": "divine-and-true-metaphysics-pordage",
+      "mismatches": 810
+    },
+    {
+      "id": "697947a145e954e8a877872d",
+      "slug": "commentary-on-the-triumphal-chariot-of-antimony-kerckring",
+      "mismatches": 804
+    },
+    {
+      "id": "6984e8498a2f054f912420bb",
+      "slug": "280-paradoxes-franck",
+      "mismatches": 804
+    },
+    {
+      "id": "697a80bce680cef7cedae39d",
+      "slug": "volume-of-dissertations-on-ecclesiastical-history-mosheim",
+      "mismatches": 804
+    },
+    {
+      "id": "697d9ca09d16e8e91199bee5",
+      "slug": "the-grave-of-false-theology-bourignon",
+      "mismatches": 800
+    },
+    {
+      "id": "6984e84db96022f6fa69b4c8",
+      "slug": "opus-mago-cabbalisticum-et-theosophicum-welling-2",
+      "mismatches": 798
+    },
+    {
+      "id": "6988a59f894ca90f56984e37",
+      "slug": "the-christian-religion-ditton",
+      "mismatches": 794
+    },
+    {
+      "id": "6988a59f9b275a14696ffe63",
+      "slug": "the-renewal-of-the-evangelical-spirit-bourignon",
+      "mismatches": 790
+    },
+    {
+      "id": "697a30565f904ad9c01e0cd7",
+      "slug": "six-books-of-danish-monuments-worm",
+      "mismatches": 780
+    },
+    {
+      "id": "6984e84eb0a0cf6a811c6398",
+      "slug": "magico-cabbalistic-and-theosophical-work-welling",
+      "mismatches": 778
+    },
+    {
+      "id": "69804b933892bd38914dcdfc",
+      "slug": "on-crypto-catholicism-proselytism-jesuitism-and-secret-starck",
+      "mismatches": 776
+    },
+    {
+      "id": "698255e93e158c7e3c9a4f6e",
+      "slug": "nature-unveiled-kirchweger",
+      "mismatches": 774
+    },
+    {
+      "id": "697d9c999788c62e1238c878",
+      "slug": "history-of-the-heavens-pluche",
+      "mismatches": 774
+    },
+    {
+      "id": "697d9c9c72d515cb07bb3850",
+      "slug": "golden-epistles-of-the-ancient-christians-arnold",
+      "mismatches": 770
+    },
+    {
+      "id": "697b079addee0ea10ea898dc",
+      "slug": "exposition-on-the-apocalypse-fiore",
+      "mismatches": 765
+    },
+    {
+      "id": "6977ace4235fbd25a5194779",
+      "slug": "celtic-researches-on-the-origin-traditions-language-of-the-davies",
+      "mismatches": 760
+    },
+    {
+      "id": "697e23ca23d221f1d368e1a0",
+      "slug": "historical-account-of-the-labadist-schism-koelman",
+      "mismatches": 760
+    },
+    {
+      "id": "6975158ea88d83c830d99e3c",
+      "slug": "the-golden-art-auriferae-artis-anonymous",
+      "mismatches": 756
+    },
+    {
+      "id": "697d9ca2e11cc91718cc8269",
+      "slug": "critical-history-of-mani-and-manichaeism-beausobre",
+      "mismatches": 756
+    },
+    {
+      "id": "69c846d76c6f3cc53c85182b",
+      "slug": "guldnes-schatz-kastlein-der-kinder-gottes-bogatzky",
+      "mismatches": 754
+    },
+    {
+      "id": "698420e1acbeea311931758b",
+      "slug": "complete-theological-works-simons",
+      "mismatches": 745
+    },
+    {
+      "id": "697a8670e680cef7cedae3aa",
+      "slug": "the-guide-for-the-perplexed-moreh-nevukhim-maimon",
+      "mismatches": 745
+    },
+    {
+      "id": "699efa008dfdc5d432c16182",
+      "slug": "sleutel-der-devotie-teellinck",
+      "mismatches": 744
+    },
+    {
+      "id": "698420e1f1fb376a3d580616",
+      "slug": "of-the-uncertainty-and-vanity-of-the-sciences-and-arts-agrippa",
+      "mismatches": 740
+    },
+    {
+      "id": "698255ee128106b4b385da06",
+      "slug": "the-exposed-enthusiasm-of-the-herrnhuters-kulenkamp",
+      "mismatches": 740
+    },
+    {
+      "id": "697d9c989788c62e1238c868",
+      "slug": "critical-history-of-eclecticism-maleville",
+      "mismatches": 738
+    },
+    {
+      "id": "697e23c9b78d1eaf03952b67",
+      "slug": "history-and-description-of-mystical-theology-arnold",
+      "mismatches": 736
+    },
+    {
+      "id": "697e23c80991cfe5bac5529b",
+      "slug": "ecclesiastical-history-caesariensis-2",
+      "mismatches": 736
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df6c",
+      "slug": "the-morbific-hydra-exterminated-by-the-chemical-hercules-planis-campy",
+      "mismatches": 736
+    },
+    {
+      "id": "697e23cbd0f4042c71a7116f",
+      "slug": "historical-description-of-the-life-of-our-lord-jesus-christ-schabaelje",
+      "mismatches": 735
+    },
+    {
+      "id": "69a0278f0723f5e6c1715da5",
+      "slug": "theatrum-chimicum-ofte-geopende-deure-der-chymische-blankaart",
+      "mismatches": 732
+    },
+    {
+      "id": "697d9c999788c62e1238c87a",
+      "slug": "hieroglyphica-or-emblems-of-the-ancient-peoples-hooghe",
+      "mismatches": 726
+    },
+    {
+      "id": "6975158ea88d83c830d99e40",
+      "slug": "aurora-that-is-the-day-spring-boehme",
+      "mismatches": 724
+    },
+    {
+      "id": "6985ca74e3007574295ea81b",
+      "slug": "trial-of-the-knights-templar-moldenhawer",
+      "mismatches": 724
+    },
+    {
+      "id": "69804b95ce9c2609d4113f12",
+      "slug": "ecclesiastical-history-of-the-waldensian-churches-gillis",
+      "mismatches": 724
+    },
+    {
+      "id": "697e23c9a2b46f2d5c1bfa93",
+      "slug": "horus-or-astrognostic-final-judgment-wunsch",
+      "mismatches": 720
+    },
+    {
+      "id": "69a0278d85c1e425d0314107",
+      "slug": "synopsis-rerum-ab-orbe-conditio-gestarum-besold",
+      "mismatches": 718
+    },
+    {
+      "id": "698420e3a4e0ac82b9a6f9b6",
+      "slug": "the-sacrifice-of-the-lord-anonymous",
+      "mismatches": 714
+    },
+    {
+      "id": "6988a5a17e133dc0c53dfe25",
+      "slug": "the-knights-of-the-temple-of-jerusalem-jeune",
+      "mismatches": 710
+    },
+    {
+      "id": "6988a5a12c0a235652bd0826",
+      "slug": "on-the-secrets-of-the-adepts-weidenfeld",
+      "mismatches": 710
+    },
+    {
+      "id": "69794974eef1c286564aa423",
+      "slug": "academic-commentary-on-the-harmony-of-the-christian-buddeus",
+      "mismatches": 702
+    },
+    {
+      "id": "697c8e14a68a70e0c13c7162",
+      "slug": "pascal-s-thoughts-pensees-pascal",
+      "mismatches": 702
+    },
+    {
+      "id": "69a027816a20ac4e1fc40516",
+      "slug": "theosophia-pneumatica-oder-geheime-gottes-lehre-haug",
+      "mismatches": 698
+    },
+    {
+      "id": "698255f48ea663743f78ab0e",
+      "slug": "the-north-star-of-true-godliness-teellinck",
+      "mismatches": 698
+    },
+    {
+      "id": "69c75d9a6a0f3d112faf8b18",
+      "slug": "astronomia-inferior-oder-septem-planetarum-terrestrium-ritter",
+      "mismatches": 686
+    },
+    {
+      "id": "6988a59fdf35fdd0691cdc42",
+      "slug": "royal-chemistry-crollius",
+      "mismatches": 686
+    },
+    {
+      "id": "6970e3679b09d309d780a27e",
+      "slug": "general-history-of-the-waldensians-leger",
+      "mismatches": 685
+    },
+    {
+      "id": "699ef9fd535742af105d25e7",
+      "slug": "the-combat-between-flesh-and-spirit-love",
+      "mismatches": 684
+    },
+    {
+      "id": "697718b37e1d5a07ae945888",
+      "slug": "history-of-the-old-and-new-testaments",
+      "mismatches": 683
+    },
+    {
+      "id": "697b079611cc8928b55ea388",
+      "slug": "egyptian-and-greek-fables-pernety",
+      "mismatches": 680
+    },
+    {
+      "id": "698420e1f1fb376a3d58061c",
+      "slug": "three-books-of-occult-philosophy-agrippa",
+      "mismatches": 680
+    },
+    {
+      "id": "697d9c999788c62e1238c86c",
+      "slug": "inscrutable-chemico-philosophical-harmonies-grasshoff",
+      "mismatches": 678
+    },
+    {
+      "id": "69804b9505679690fbffc25a",
+      "slug": "a-key-to-physic-and-the-occult-sciences-sibly",
+      "mismatches": 675
+    },
+    {
+      "id": "6988a5a31c883f4d9068a49e",
+      "slug": "augustan-seleniana-andreae",
+      "mismatches": 674
+    },
+    {
+      "id": "6970e35d9b09d309d780a25e",
+      "slug": "the-quran-al-coranus",
+      "mismatches": 674
+    },
+    {
+      "id": "6974b642457dd8909910b9e3",
+      "slug": "on-the-secrets-of-catholic-truth-columna",
+      "mismatches": 674
+    },
+    {
+      "id": "697e23c8071dd1199d62a132",
+      "slug": "the-history-of-the-holy-grail",
+      "mismatches": 671
+    },
+    {
+      "id": "698192090262143fe66eb184",
+      "slug": "dictionary-of-heresies-pluquet",
+      "mismatches": 668
+    },
+    {
+      "id": "698255efb4dfc70a3675eb70",
+      "slug": "a-modest-enquiry-into-the-mystery-of-iniquity-more",
+      "mismatches": 666
+    },
+    {
+      "id": "69c81aed6c6f3cc53c849851",
+      "slug": "fides-et-ratio-collatae-poiret",
+      "mismatches": 664
+    },
+    {
+      "id": "697e23c2eae9ff63cff4df62",
+      "slug": "the-history-of-the-waldensians-perrin",
+      "mismatches": 661
+    },
+    {
+      "id": "69a02790da8b726682c09aae",
+      "slug": "thesaurus-pharmaceuticus-medicamentorum-omnium-fere-schwenckfeld",
+      "mismatches": 660
+    },
+    {
+      "id": "69c80e106c6f3cc53c846ec1",
+      "slug": "chirurgische-bucher-und-schrifften-paracelsus",
+      "mismatches": 658
+    },
+    {
+      "id": "69776b9de832d9422ad6e0c0",
+      "slug": "the-brahmanic-religious-system-kleuker",
+      "mismatches": 658
+    },
+    {
+      "id": "6980941f08ed39e7ae2ef412",
+      "slug": "lexicon-of-alchemy-ruland-sr",
+      "mismatches": 653
+    },
+    {
+      "id": "6979446ddcf302c58a41a4d5",
+      "slug": "commentary-on-the-apocalypse-of-john-deutz",
+      "mismatches": 650
+    },
+    {
+      "id": "698255efbbbbc748060197e1",
+      "slug": "mythology-and-fables-explained-by-history-banier",
+      "mismatches": 650
+    },
+    {
+      "id": "697a30536dc6ae6bd18cd1e1",
+      "slug": "confucius-philosopher-of-the-chinese-intorcetta",
+      "mismatches": 646
+    },
+    {
+      "id": "69770ae377ed318b9f256bf4",
+      "slug": "bible-epistle-to-the-romans",
+      "mismatches": 640
+    },
+    {
+      "id": "698192088a34efe8087e9ae2",
+      "slug": "the-garden-of-the-mind-schabaelje",
+      "mismatches": 636
+    },
+    {
+      "id": "69a027907cc3c931d2cea27e",
+      "slug": "de-synagoga-vetere-libri-tres-vitringa",
+      "mismatches": 632
+    },
+    {
+      "id": "69804b94fd9231461e343d23",
+      "slug": "prudence-united-with-virtue-eckartshausen",
+      "mismatches": 632
+    },
+    {
+      "id": "697b079920ebe13ce499c770",
+      "slug": "of-errors-and-truth-saint-martin",
+      "mismatches": 632
+    },
+    {
+      "id": "697d9c99f2b56306a9ec962e",
+      "slug": "literary-history-of-the-troubadours-millot",
+      "mismatches": 630
+    },
+    {
+      "id": "698420e1f1fb376a3d580614",
+      "slug": "singular-medical-observations-book-ii-horst",
+      "mismatches": 628
+    },
+    {
+      "id": "697b079a70252867f394cd70",
+      "slug": "the-married-and-unmarried-life-of-the-early-christians-arnold",
+      "mismatches": 626
+    },
+    {
+      "id": "697a491bc915282d8f071f63",
+      "slug": "dialogues-of-love-abrabanel",
+      "mismatches": 626
+    },
+    {
+      "id": "6985ca73ded609684eedac9c",
+      "slug": "prosopography-or-description-of-illustrious-persons-verdier",
+      "mismatches": 624
+    },
+    {
+      "id": "69751590233423aeec9e88ee",
+      "slug": "aurora-or-the-day-spring-boehme",
+      "mismatches": 620
+    },
+    {
+      "id": "6988a59f1d68da8eccae8cf8",
+      "slug": "sacred-observations-book-one-vitringa",
+      "mismatches": 616
+    },
+    {
+      "id": "69819204084978306e4933f8",
+      "slug": "memorable-things-or-secrets-of-every-kind-mizaldus",
+      "mismatches": 616
+    },
+    {
+      "id": "697d9ca075f6fb4a5578ba91",
+      "slug": "manuscripts-for-friends-of-secret-sciences-linden",
+      "mismatches": 616
+    },
+    {
+      "id": "6970e3639b09d309d780a270",
+      "slug": "alchymia-denudata-alchemical-unveiled-naxagoras",
+      "mismatches": 608
+    },
+    {
+      "id": "698255e93e158c7e3c9a4f66",
+      "slug": "religious-ceremonies-and-customs-picard",
+      "mismatches": 606
+    },
+    {
+      "id": "6980941f0c6ccbd65c7e9c46",
+      "slug": "sacred-and-profane-hieroglyphic-lexicon-koning",
+      "mismatches": 604
+    },
+    {
+      "id": "69804b952c90f692f9716e32",
+      "slug": "a-summary-of-right-and-true-christianity-labadie",
+      "mismatches": 599
+    },
+    {
+      "id": "6988a5a0f46f53b3122c22b3",
+      "slug": "ripley-reviv-d-or-an-exposition-upon-sir-george-ripley-s-starkey",
+      "mismatches": 598
+    },
+    {
+      "id": "6970e3689b09d309d780a282",
+      "slug": "the-quran-alkoran",
+      "mismatches": 596
+    },
+    {
+      "id": "6985ca722e0a90ed2966989e",
+      "slug": "the-practice-of-piety-bayly",
+      "mismatches": 596
+    },
+    {
+      "id": "6988a5a2c9cb59aebe69eda0",
+      "slug": "the-religion-of-the-gauls-martin",
+      "mismatches": 592
+    },
+    {
+      "id": "697b079957403b932c4a76b3",
+      "slug": "triple-hermetic-cloverleaf-nuysement",
+      "mismatches": 592
+    },
+    {
+      "id": "6978ee3a696f7923ca0f5c12",
+      "slug": "alchemical-writings-trevisanus",
+      "mismatches": 590
+    },
+    {
+      "id": "697d9c999788c62e1238c874",
+      "slug": "holy-delight-of-the-soul-scheffler",
+      "mismatches": 586
+    },
+    {
+      "id": "697704f4594860622102d565",
+      "slug": "description-of-the-three-active-fundamental-properties-of-fleischer",
+      "mismatches": 584
+    },
+    {
+      "id": "69792492f35c6bbfbfd252eb",
+      "slug": "monastic-practice-kempis",
+      "mismatches": 584
+    },
+    {
+      "id": "6985ca738a253bc84a4ee824",
+      "slug": "the-precious-pearl-pretiosa-margarita-bonus",
+      "mismatches": 581
+    },
+    {
+      "id": "6976e865caea4bb6304d1aac",
+      "slug": "the-chemical-basilica-on-signatures-crollius",
+      "mismatches": 580
+    },
+    {
+      "id": "698255f34c90c7f65c860b31",
+      "slug": "on-the-mysteries-of-the-egyptians-trismegistus",
+      "mismatches": 580
+    },
+    {
+      "id": "697e23cc8fac627cef65b76b",
+      "slug": "the-idea-of-philosophical-medicine-severinus",
+      "mismatches": 580
+    },
+    {
+      "id": "697e23cc5b0aa47f54413b11",
+      "slug": "interpretation-of-the-prophet-jeremiah-fiore",
+      "mismatches": 579
+    },
+    {
+      "id": "6985ca72d480ab10e5c48434",
+      "slug": "on-the-method-of-making-the-philosopher-s-stone-ventura",
+      "mismatches": 578
+    },
+    {
+      "id": "697d9c9f4e69405a95c4a9cf",
+      "slug": "history-of-the-knight-of-the-sun-ortunez-de-calahorra",
+      "mismatches": 576
+    },
+    {
+      "id": "6988a5a1f175deb1479febb7",
+      "slug": "on-the-republic-of-the-hebrews-bertram",
+      "mismatches": 574
+    },
+    {
+      "id": "698255eea406f4e0de15476d",
+      "slug": "the-marrow-of-souls-tauler",
+      "mismatches": 574
+    },
+    {
+      "id": "697b079adfbc5a3161ad43fb",
+      "slug": "elucidation-of-secrets-elucidatio-secretorum-lullius",
+      "mismatches": 574
+    },
+    {
+      "id": "698192073b43a3cfc842cc4f",
+      "slug": "manichaeism-before-the-manichaeans-and-its-revival-in-wolf",
+      "mismatches": 574
+    },
+    {
+      "id": "697d9c99f2b56306a9ec9612",
+      "slug": "mystic-harmony-or-the-agreement-of-the-chemical-philosophers-l-agneau",
+      "mismatches": 568
+    },
+    {
+      "id": "69a0278d8960b813fc282504",
+      "slug": "a-new-system-or-an-analysis-of-ancient-mythology-bryant",
+      "mismatches": 568
+    },
+    {
+      "id": "697d9c9c971fd6d8096654e0",
+      "slug": "guide-to-chemistry-lancilotti",
+      "mismatches": 568
+    },
+    {
+      "id": "6978ee37a87012956d883ad4",
+      "slug": "the-way-to-christ-christosophia-bohme",
+      "mismatches": 566
+    },
+    {
+      "id": "697e23c92c49c6746f47a40b",
+      "slug": "the-man-of-desire-saint-martin",
+      "mismatches": 566
+    },
+    {
+      "id": "697d9ca1b83f6c7ea8aae6d9",
+      "slug": "history-of-the-heavens-pluche-2",
+      "mismatches": 566
+    },
+    {
+      "id": "6985ca730084f4f4247ccf80",
+      "slug": "news-from-parnassus-second-century-boccalini",
+      "mismatches": 564
+    },
+    {
+      "id": "6984e8498a2f054f912420b7",
+      "slug": "a-forerunner-of-universal-wisdom-comenius",
+      "mismatches": 562
+    },
+    {
+      "id": "6974b643457dd8909910b9e7",
+      "slug": "on-the-secrets-of-state-clapmarius",
+      "mismatches": 560
+    },
+    {
+      "id": "697e23cb40a0cf44cf8800bc",
+      "slug": "on-the-hyleal-or-universal-natural-chaos-khunrath",
+      "mismatches": 558
+    },
+    {
+      "id": "698420e330aac710f1240925",
+      "slug": "complete-extant-works-alexandrinus",
+      "mismatches": 556
+    },
+    {
+      "id": "697d9c989788c62e1238c866",
+      "slug": "heomo-verekehe-or-useful-and-pleasant-entertainments-x-j-p-j-f-h-g-w",
+      "mismatches": 556
+    },
+    {
+      "id": "69778edbb450898084dfd92b",
+      "slug": "select-and-obscure-dogmas-of-the-cabalists-borgonovo",
+      "mismatches": 556
+    },
+    {
+      "id": "697b07994ae513fd49116c7e",
+      "slug": "elucidation-of-secrets-elucidatio-secretorum-lull",
+      "mismatches": 556
+    },
+    {
+      "id": "6970e36b9b09d309d780a288",
+      "slug": "on-all-the-miracles-of-jesus-driessen",
+      "mismatches": 555
+    },
+    {
+      "id": "697934668e450bc779a9cad5",
+      "slug": "on-recognizing-and-curing-diseases-from-the-position-of-the-virdung-von-hasfurt",
+      "mismatches": 555
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df70",
+      "slug": "on-the-hyleal-or-primaterial-universal-natural-chaos-khunrath",
+      "mismatches": 554
+    },
+    {
+      "id": "697a4a13c915282d8f071f67",
+      "slug": "the-dialogue-of-saint-catherine-of-siena-siena",
+      "mismatches": 553
+    },
+    {
+      "id": "6988a5a2697c2f799c5c6c1d",
+      "slug": "saturn-mercury-and-hercules-three-oriental-allegories-court-de-gebelin",
+      "mismatches": 552
+    },
+    {
+      "id": "698255eeaf854f912ffb30e6",
+      "slug": "the-ministry-of-the-man-spirit-saint-martin",
+      "mismatches": 552
+    },
+    {
+      "id": "6988a5a163409d3be003e1ca",
+      "slug": "the-remainder-of-books-englished-by-john-sparrow-bohme",
+      "mismatches": 548
+    },
+    {
+      "id": "6985ca72393e8bdc385ba1de",
+      "slug": "forty-questions-boehme",
+      "mismatches": 548
+    },
+    {
+      "id": "697c8e0f0db04f9b26df0d0b",
+      "slug": "the-divine-and-most-necessary-doctrine-of-the-triune-god-doehring",
+      "mismatches": 546
+    },
+    {
+      "id": "6970e3579b09d309d780a24a",
+      "slug": "aegyptiaca-and-the-ten-tribes-witsius",
+      "mismatches": 544
+    },
+    {
+      "id": "690c3ec7e0787282ad593b41",
+      "slug": "a-christian-and-heavenly-treatise-containing-medicine-for-abernethy",
+      "mismatches": 544
+    },
+    {
+      "id": "6988a5a1a15916541b5aaa0a",
+      "slug": "collections-on-ethics-for-all-people-eckartshausen",
+      "mismatches": 542
+    },
+    {
+      "id": "698255f2e01baf05a44d293a",
+      "slug": "the-nascent-world-barin",
+      "mismatches": 542
+    },
+    {
+      "id": "6970e3619b09d309d780a26a",
+      "slug": "several-small-works-on-alchemy-anonymous",
+      "mismatches": 540
+    },
+    {
+      "id": "69790f99eb0dcfd399123426",
+      "slug": "cimbrian-pagan-religion-arnkiel",
+      "mismatches": 540
+    },
+    {
+      "id": "697a30595f904ad9c01e0cdd",
+      "slug": "declaration-on-the-name-of-jesus-borgonovo",
+      "mismatches": 538
+    },
+    {
+      "id": "698255f1ca3a4ca551f8e747",
+      "slug": "two-books-of-sacred-miscellanies-hackspan",
+      "mismatches": 538
+    },
+    {
+      "id": "69a0278ef18d153a4103bf21",
+      "slug": "testamentum-lull",
+      "mismatches": 536
+    },
+    {
+      "id": "697c8e11f81f9680d27f6349",
+      "slug": "chemical-fates-fata-chymica-hortulanus",
+      "mismatches": 535
+    },
+    {
+      "id": "697c8e0f14b7d066516d71b9",
+      "slug": "the-flaming-star-tschoudy",
+      "mismatches": 534
+    },
+    {
+      "id": "697e23cbed510657aed145f2",
+      "slug": "the-imitation-of-christ-kempis",
+      "mismatches": 534
+    },
+    {
+      "id": "697e23c93a6a01116a038fab",
+      "slug": "the-historie-of-the-heretics-of-the-first-two-centuries-lardner",
+      "mismatches": 533
+    },
+    {
+      "id": "6980941c4d203adff9b6aaa1",
+      "slug": "the-doctrine-of-the-most-holy-trinity-russmeyer",
+      "mismatches": 531
+    },
+    {
+      "id": "697a30565f904ad9c01e0cd9",
+      "slug": "dante-with-the-site-and-form-of-hell-alighieri",
+      "mismatches": 530
+    },
+    {
+      "id": "6974b645457dd8909910b9f1",
+      "slug": "archidoxes-ten-books-paracelsus",
+      "mismatches": 530
+    },
+    {
+      "id": "6988a59f8f2b65d11145d732",
+      "slug": "on-the-secrets-of-women-on-the-virtues-of-herbs-stones-and-magnus",
+      "mismatches": 524
+    },
+    {
+      "id": "69a0278d28c4c686bcfe2c91",
+      "slug": "three-tracts-i-remarks-upon-this-question-whether-the-lowman",
+      "mismatches": 524
+    },
+    {
+      "id": "69a0278cd6077fba05ddf28e",
+      "slug": "system-des-transcendentalen-idealismus-schelling",
+      "mismatches": 524
+    },
+    {
+      "id": "698255f0571a901a01ef5a1c",
+      "slug": "the-mineral-glow-walchin",
+      "mismatches": 524
+    },
+    {
+      "id": "6988a5a055fce396773aa43d",
+      "slug": "the-romance-of-the-rose-lorris",
+      "mismatches": 522
+    },
+    {
+      "id": "69a02781bd4078a454714f6d",
+      "slug": "theologia-germanica",
+      "mismatches": 520
+    },
+    {
+      "id": "6985ca6d9d0a51f65288236f",
+      "slug": "probaseology-probaseologie-eckartshausen",
+      "mismatches": 518
+    },
+    {
+      "id": "697d9c999788c62e1238c876",
+      "slug": "the-heliotrope-drechsel",
+      "mismatches": 518
+    },
+    {
+      "id": "6984e8498a2f054f912420c9",
+      "slug": "on-the-harmony-of-the-world-postel",
+      "mismatches": 515
+    },
+    {
+      "id": "6975158da88d83c830d99e3a",
+      "slug": "the-golden-fleece-aureum-vellus-trissmosin-2",
+      "mismatches": 514
+    },
+    {
+      "id": "697a49d4c915282d8f071f65",
+      "slug": "dialogues-of-love-abrabanel-3",
+      "mismatches": 514
+    },
+    {
+      "id": "69819208328784f93c9344c8",
+      "slug": "luther-s-fore-runners-or-a-cloud-of-witnesses-perrin",
+      "mismatches": 514
+    },
+    {
+      "id": "6974b646457dd8909910b9f5",
+      "slug": "archive-for-freemasons-and-rosicrucians",
+      "mismatches": 512
+    },
+    {
+      "id": "697b0799083a1eb33f8e8112",
+      "slug": "eukleria-or-choosing-the-better-part-schurman",
+      "mismatches": 510
+    },
+    {
+      "id": "697a42340d0e32a21b277187",
+      "slug": "dialogues-of-love-abrabanel-2",
+      "mismatches": 510
+    },
+    {
+      "id": "697c8e13036107d98b601005",
+      "slug": "sacred-physics-scheuchzer",
+      "mismatches": 510
+    },
+    {
+      "id": "6988a5a2398040d4594e5d3f",
+      "slug": "index-of-all-the-theosophical-writings-of-jacob-boehme",
+      "mismatches": 507
+    },
+    {
+      "id": "69774d1db66c66fb54c69ce2",
+      "slug": "library-of-chemical-philosophers-salmon",
+      "mismatches": 506
+    },
+    {
+      "id": "698255eef4d521599e8c772c",
+      "slug": "on-the-miracles-attributed-to-pythagoras-apollonius-of-zimmermann",
+      "mismatches": 504
+    },
+    {
+      "id": "697b079ae303c59b5d833abc",
+      "slug": "spiritual-exercises-tauler",
+      "mismatches": 502
+    },
+    {
+      "id": "697c8e0f150e68b9f40701fc",
+      "slug": "continued-vain-prejudices-engelschall",
+      "mismatches": 497
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a06",
+      "slug": "concise-church-history-of-the-old-and-new-testaments-arnold",
+      "mismatches": 496
+    },
+    {
+      "id": "698420e1f1fb376a3d580612",
+      "slug": "posthumous-works-saint-martin",
+      "mismatches": 492
+    },
+    {
+      "id": "69c8771d6c6f3cc53c857f82",
+      "slug": "epistolae-theosophicae-oder-theosophische-send-briefe-boehme",
+      "mismatches": 490
+    },
+    {
+      "id": "69a0278d6cd1aeeab4e7dafd",
+      "slug": "summa-perfectionis-geber",
+      "mismatches": 490
+    },
+    {
+      "id": "697d9c9b971fd6d8096654d8",
+      "slug": "alchemical-heptad-select-philosophical-treatises-neander",
+      "mismatches": 490
+    },
+    {
+      "id": "697b079940232b96c794c2c9",
+      "slug": "essays-on-theodicy-leibnitz",
+      "mismatches": 490
+    },
+    {
+      "id": "697c8e0f6000fdec2f13060a",
+      "slug": "history-of-the-evangelical-churches-of-the-valleys-of-leger",
+      "mismatches": 487
+    },
+    {
+      "id": "697b079711cc8928b55ea39e",
+      "slug": "an-essay-of-the-wonders-of-god-espagnet",
+      "mismatches": 486
+    },
+    {
+      "id": "697d9c9b971fd6d8096654dc",
+      "slug": "the-god-enlightened-guide-guyon",
+      "mismatches": 486
+    },
+    {
+      "id": "6978ee3a12c6659f58909362",
+      "slug": "the-way-to-christ-boehme-2",
+      "mismatches": 486
+    },
+    {
+      "id": "698255ec3e158c7e3c9a4f76",
+      "slug": "new-collection-of-old-and-rare-philosophical-and-alchemical-anonymous",
+      "mismatches": 482
+    },
+    {
+      "id": "697d9c999788c62e1238c87c",
+      "slug": "natural-history-of-speech-court-de-gebelin",
+      "mismatches": 480
+    },
+    {
+      "id": "697c8e0f0db04f9b26df0d09",
+      "slug": "fortuitous-remarks-tollius",
+      "mismatches": 478
+    },
+    {
+      "id": "697e23c8afb300a993b89f08",
+      "slug": "history-of-the-christians-commonly-called-waldensians-schagen",
+      "mismatches": 477
+    },
+    {
+      "id": "6984e84e2e485a023c5f62a8",
+      "slug": "the-touchstone-bourignon",
+      "mismatches": 476
+    },
+    {
+      "id": "698255f303a67896d7639237",
+      "slug": "supplement-of-further-original-writings-concerning-the",
+      "mismatches": 476
+    },
+    {
+      "id": "6970e36e9b09d309d780a294",
+      "slug": "alphabetical-list-of-the-principal-heretics",
+      "mismatches": 474
+    },
+    {
+      "id": "69794d37eef1c286564aa429",
+      "slug": "the-compass-of-the-wise-jolyfief",
+      "mismatches": 472
+    },
+    {
+      "id": "6974b642457dd8909910b9e1",
+      "slug": "on-the-secrets-of-catholic-truth-and-the-kabbalah-columna",
+      "mismatches": 472
+    },
+    {
+      "id": "6988a5a0b35a40d0f7621798",
+      "slug": "six-invaluable-mystical-tracts-lead",
+      "mismatches": 471
+    },
+    {
+      "id": "69804b952b1bf1ce85110bef",
+      "slug": "a-brief-summary-of-the-eternal-gospel-gerhard",
+      "mismatches": 470
+    },
+    {
+      "id": "698420e1d453c841a6c1d045",
+      "slug": "the-secret-miracles-of-nature-lemnius",
+      "mismatches": 468
+    },
+    {
+      "id": "698192057ae81699f5f20d48",
+      "slug": "historical-memoirs-on-the-templars-grouvelle",
+      "mismatches": 468
+    },
+    {
+      "id": "6988a5a067c850b3e65d943e",
+      "slug": "the-ruins-or-meditation-on-the-revolutions-of-empires-volney",
+      "mismatches": 467
+    },
+    {
+      "id": "697b0799093f320f0a302167",
+      "slug": "original-writings-of-the-order-of-the-illuminati-zwack",
+      "mismatches": 466
+    },
+    {
+      "id": "697d9c9d971fd6d8096654e4",
+      "slug": "critical-history-of-nicolas-flamel-and-his-wife-pernelle-villain",
+      "mismatches": 466
+    },
+    {
+      "id": "697c8e13d4a23f3bc792c88a",
+      "slug": "the-secret-chancellery-of-the-prince-of-anhalt-jocher",
+      "mismatches": 465
+    },
+    {
+      "id": "698192072d82c5a14710ca48",
+      "slug": "menippus-or-satirical-dialogues-andreae",
+      "mismatches": 464
+    },
+    {
+      "id": "697e23cad41bbe1bad72f53c",
+      "slug": "important-truths-with-extracts-from-the-way-to-christ-by",
+      "mismatches": 464
+    },
+    {
+      "id": "697d9c999788c62e1238c884",
+      "slug": "harmony-or-consensus-of-the-chemical-philosophers-l-agneau",
+      "mismatches": 462
+    },
+    {
+      "id": "6978ee3af4d5bdc7b3df604a",
+      "slug": "christ-the-way-the-truth-and-the-life-brown",
+      "mismatches": 460
+    },
+    {
+      "id": "6970e3539b09d309d780a23e",
+      "slug": "on-abstinence-from-animal-food-porphyrius",
+      "mismatches": 460
+    },
+    {
+      "id": "6984e84e6f1450a3574a387f",
+      "slug": "works-benivieni",
+      "mismatches": 460
+    },
+    {
+      "id": "697a305506ef913279fbe8f3",
+      "slug": "the-count-of-gabalis-villars",
+      "mismatches": 460
+    },
+    {
+      "id": "6975158ca88d83c830d99e32",
+      "slug": "aurea-catena-homeri-homer-s-golden-chain-kirchweger",
+      "mismatches": 458
+    },
+    {
+      "id": "6984e84f6aad85d382376f57",
+      "slug": "zend-avesta-ormuzd-s-living-word-to-zoroaster-eckard",
+      "mismatches": 458
+    },
+    {
+      "id": "698255efee1fed4ccc4237fa",
+      "slug": "a-miscellaneous-metaphysical-essay-or-an-hypothesis-cosway",
+      "mismatches": 456
+    },
+    {
+      "id": "69804b944fc6323824f38b3f",
+      "slug": "life-and-fates-of-the-notorious-franz-rudolph-von-grossing-wadzeck",
+      "mismatches": 456
+    },
+    {
+      "id": "697a3055d9b65a7d77af7708",
+      "slug": "the-waldensian-confession-heidenrichius",
+      "mismatches": 456
+    },
+    {
+      "id": "6988a5a2992256533aeb0568",
+      "slug": "autobiography-andreae",
+      "mismatches": 454
+    },
+    {
+      "id": "698255efdcf8cad50f319c80",
+      "slug": "mystery-of-the-cross-douzetemps",
+      "mismatches": 452
+    },
+    {
+      "id": "6974b63e19126e775cf6d7d7",
+      "slug": "the-call-of-god-and-the-refusal-of-men-bourignon",
+      "mismatches": 448
+    },
+    {
+      "id": "6978ee3a4dd45894c171ae9f",
+      "slug": "chemical-writings-sendivogius",
+      "mismatches": 448
+    },
+    {
+      "id": "6970e3719b09d309d780a29c",
+      "slug": "the-soul-in-love-with-her-god-guyon",
+      "mismatches": 446
+    },
+    {
+      "id": "6984e8509997eabe3e80f242",
+      "slug": "the-little-peasant-a-philosophical-and-chemical-treatise-grasshoff-2",
+      "mismatches": 446
+    },
+    {
+      "id": "6984e8498a2f054f912420d9",
+      "slug": "compendium-of-universal-philosophy-and-medicine-paracelsus",
+      "mismatches": 446
+    },
+    {
+      "id": "698255f1dec6220cc3bf1b25",
+      "slug": "a-new-chemical-light-from-the-fountain-of-nature-sendivogius",
+      "mismatches": 444
+    },
+    {
+      "id": "6902ed49583dd7d2641408a5",
+      "slug": "dawn-rising-boehme",
+      "mismatches": 444
+    },
+    {
+      "id": "6978ee3aa5bfdfb63c9a9f63",
+      "slug": "the-chemical-winnowing-basket-chymica-vannus-anonymous",
+      "mismatches": 440
+    },
+    {
+      "id": "698255f1d12278086554456d",
+      "slug": "chemical-medical-miracles-and-mysteries-chemical-muller",
+      "mismatches": 440
+    },
+    {
+      "id": "697a30565f904ad9c01e0cd5",
+      "slug": "unheard-of-curiosities-concerning-the-talismanic-figures-of-gaffarel",
+      "mismatches": 436
+    },
+    {
+      "id": "69a0279038ced073edf2f2bc",
+      "slug": "thesaurinella-olympica-aurea-tripartita-das-ist-ein-figulus",
+      "mismatches": 434
+    },
+    {
+      "id": "6984e850dd6092c0226caa07",
+      "slug": "the-little-peasant-a-philosophical-and-chemical-treatise-grasshoff",
+      "mismatches": 432
+    },
+    {
+      "id": "69804b9019712623cff10893",
+      "slug": "ecclesiastical-history-of-the-waldensians-martinet",
+      "mismatches": 432
+    },
+    {
+      "id": "697c8e118b8a616cfc81ea57",
+      "slug": "the-mystery-of-the-first-born-of-all-creatures-petersen",
+      "mismatches": 432
+    },
+    {
+      "id": "697d9c999788c62e1238c886",
+      "slug": "the-history-of-barlaam-and-josaphat-anonymous",
+      "mismatches": 430
+    },
+    {
+      "id": "697b0799f58a82da7c04cfcb",
+      "slug": "examination-of-the-new-philosophy-libavius",
+      "mismatches": 430
+    },
+    {
+      "id": "699ef9fd0600353e655fe517",
+      "slug": "key-to-the-secrets-of-nature-eckartshausen-2",
+      "mismatches": 430
+    },
+    {
+      "id": "699ef9f4b0a976d32fd37465",
+      "slug": "the-signature-of-all-things-de-signatura-rerum-boehme",
+      "mismatches": 430
+    },
+    {
+      "id": "6984e84d875ef560e34aef4e",
+      "slug": "minor-works-opuscula-schurman",
+      "mismatches": 430
+    },
+    {
+      "id": "6909a2e7cf28baa1b4caec93",
+      "slug": "on-the-ancient-hermetic-medicine-of-the-egyptians-and-the-conring",
+      "mismatches": 430
+    },
+    {
+      "id": "6985ca71d6a3951c0372a83f",
+      "slug": "exercises-in-alchemy-or-chemical-problems-ruland-jr",
+      "mismatches": 428
+    },
+    {
+      "id": "698255ef0c050e24890fc3a0",
+      "slug": "book-of-mercuries-lull",
+      "mismatches": 428
+    },
+    {
+      "id": "69793d7cdcf302c58a41a4c4",
+      "slug": "commentaries-on-the-mystical-theology-of-st-dionysius-the-eck",
+      "mismatches": 428
+    },
+    {
+      "id": "697d9ca110b6e9d43ae16c75",
+      "slug": "book-of-heroes-of-the-rose-garden-rostius",
+      "mismatches": 427
+    },
+    {
+      "id": "6974b63c19126e775cf6d7cd",
+      "slug": "apostolici-or-the-history-of-the-lives-acts-death-and-cave",
+      "mismatches": 426
+    },
+    {
+      "id": "697d9ca30f7412636eff8af0",
+      "slug": "the-grave-of-false-theology-bourignon-2",
+      "mismatches": 426
+    },
+    {
+      "id": "697e23c9c945c30de53ea463",
+      "slug": "theosophical-devotions-of-the-heart-ernst-august",
+      "mismatches": 424
+    },
+    {
+      "id": "69795290eef1c286564aa433",
+      "slug": "a-compendious-view-of-the-grounds-of-the-teutonick-boehme",
+      "mismatches": 424
+    },
+    {
+      "id": "697e23c8bb80b2397e771e23",
+      "slug": "hypnerotomachia-or-the-dream-of-poliphilus-colonna",
+      "mismatches": 423
+    },
+    {
+      "id": "6970e3709b09d309d780a298",
+      "slug": "on-the-ancient-and-modern-mysteries-starck",
+      "mismatches": 422
+    },
+    {
+      "id": "6984e8498a2f054f912420b9",
+      "slug": "complete-works-magnus",
+      "mismatches": 422
+    },
+    {
+      "id": "697c8e145ea422b025bbdc70",
+      "slug": "the-hand-of-the-philosophers-hollandus",
+      "mismatches": 422
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6b6",
+      "slug": "spiritual-heart-imaginations-mattsperger",
+      "mismatches": 420
+    },
+    {
+      "id": "697b079711cc8928b55ea3b2",
+      "slug": "the-twofold-confession-of-the-waldensians",
+      "mismatches": 417
+    },
+    {
+      "id": "697a8647e680cef7cedae3a8",
+      "slug": "divine-pymander-asclepius-trismegistus",
+      "mismatches": 416
+    },
+    {
+      "id": "6977413fd3c5725511424d63",
+      "slug": "select-library-of-mystics-poiret",
+      "mismatches": 413
+    },
+    {
+      "id": "6970e37a9b09d309d780a2b8",
+      "slug": "remarks-on-basil-valentine-s-triumphal-chariot-of-antimony-kerckring",
+      "mismatches": 412
+    },
+    {
+      "id": "6970e35f9b09d309d780a264",
+      "slug": "on-alchemy-de-alchemia-geber-bacon",
+      "mismatches": 412
+    },
+    {
+      "id": "69819209ca8d51b8a58afe3d",
+      "slug": "hermetic-philosophical-guidance-to-true-philosophical-vanderbeeg",
+      "mismatches": 411
+    },
+    {
+      "id": "69a027816a20ac4e1fc4051a",
+      "slug": "three-letters-to-the-bishop-of-bangor-law",
+      "mismatches": 410
+    },
+    {
+      "id": "698420e3a907eafa9ae63f83",
+      "slug": "occult-philosophy-agrippa",
+      "mismatches": 410
+    },
+    {
+      "id": "69819207379d5ce6675ec02e",
+      "slug": "magikon-or-the-secret-system-kleuker",
+      "mismatches": 408
+    },
+    {
+      "id": "6980941f1eb524781a7fdc09",
+      "slug": "on-the-fourfold-life-champier",
+      "mismatches": 408
+    },
+    {
+      "id": "697d9c99f2b56306a9ec9622",
+      "slug": "thorough-account-of-the-first-principles-of-the-anabaptist-moded",
+      "mismatches": 408
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a10",
+      "slug": "the-essence-of-all-prayers-neumann",
+      "mismatches": 406
+    },
+    {
+      "id": "697d9ca1361634bd363e2fdf",
+      "slug": "the-hermetic-museum-anonymous",
+      "mismatches": 406
+    },
+    {
+      "id": "6970e0757c9ab1d50ed22d41",
+      "slug": "abraham-the-patriarch-hoogvliet",
+      "mismatches": 405
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee611f",
+      "slug": "biographies-of-famous-men-from-the-times-of-the-restoration-meiners",
+      "mismatches": 404
+    },
+    {
+      "id": "69c817f26c6f3cc53c848ee8",
+      "slug": "christus-in-den-christen-blijvende-teellinck",
+      "mismatches": 402
+    },
+    {
+      "id": "6978ee3a4c10f187b13c7816",
+      "slug": "chronicle-of-the-waldensians-sudermann",
+      "mismatches": 402
+    },
+    {
+      "id": "6988a5a216091789ea4967ef",
+      "slug": "saint-nicaise-or-a-collection-of-remarkable-letters-starck",
+      "mismatches": 402
+    },
+    {
+      "id": "697c8e0f6000fdec2f130608",
+      "slug": "on-secret-sciences-initiations-and-modern-societies-anonymous",
+      "mismatches": 402
+    },
+    {
+      "id": "697779c04d686b5ceb28357c",
+      "slug": "books-and-writings-together-with-his-holy-miraculous-life-seuse",
+      "mismatches": 402
+    },
+    {
+      "id": "6980941fbcce774f5bbd7db3",
+      "slug": "lexicon-of-alchemy-faust",
+      "mismatches": 401
+    },
+    {
+      "id": "6981920829276dc0500a60dc",
+      "slug": "a-new-light-kindled-by-phosphorus-cohausen",
+      "mismatches": 400
+    },
+    {
+      "id": "6976dbb5097b3607ee4be2fb",
+      "slug": "azoth-and-ignis-or-the-golden-fleece-fictuld",
+      "mismatches": 398
+    },
+    {
+      "id": "699ef9fbc384f32a28ff58c1",
+      "slug": "spinozism-in-judaism-wachter",
+      "mismatches": 398
+    },
+    {
+      "id": "6984e850369805a0caaf5adf",
+      "slug": "origin-of-discoveries-attributed-to-the-moderns-dutens",
+      "mismatches": 396
+    },
+    {
+      "id": "698255f2f58cf5619ea32632",
+      "slug": "metamorphosis-paracelsus",
+      "mismatches": 396
+    },
+    {
+      "id": "6975158ca88d83c830d99e2c",
+      "slug": "peerless-example-of-the-most-serene-house-of-augustus-andreae",
+      "mismatches": 395
+    },
+    {
+      "id": "697d9ca2e930671f09614566",
+      "slug": "the-harmony-of-the-world-kepler",
+      "mismatches": 392
+    },
+    {
+      "id": "6988a59e193b008ee3811520",
+      "slug": "the-most-hidden-secrets-of-the-philosophy-of-the-ancients-colonne",
+      "mismatches": 390
+    },
+    {
+      "id": "69a0278d8bbf35ad197cccc7",
+      "slug": "tegenwoordige-staet-der-doopsgezinden-of-mennonieten-rues",
+      "mismatches": 390
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6c8",
+      "slug": "history-of-human-folly-adelung",
+      "mismatches": 390
+    },
+    {
+      "id": "69751590233423aeec9e88f0",
+      "slug": "select-chemical-treatises-starkey",
+      "mismatches": 388
+    },
+    {
+      "id": "69a027907cf58c3e17f32eb6",
+      "slug": "suplement-au-glossaire-du-roman-de-la-rose-damerey",
+      "mismatches": 386
+    },
+    {
+      "id": "69804b9019712623cff10899",
+      "slug": "the-clear-proof-of-the-true-church-of-god-hoogwandt",
+      "mismatches": 386
+    },
+    {
+      "id": "69790e9eeb0dcfd399123423",
+      "slug": "the-adornment-of-the-spiritual-marriage-ruusbroec-2",
+      "mismatches": 386
+    },
+    {
+      "id": "697704f5a8ad77b9e64fc7c3",
+      "slug": "reflections-on-lessing-s-fragments-fleischer",
+      "mismatches": 384
+    },
+    {
+      "id": "6974b64719126e775cf6d7e7",
+      "slug": "the-art-and-science-of-the-true-proportion-of-attic-letters-tory",
+      "mismatches": 384
+    },
+    {
+      "id": "6981920896d524cea5bb59f1",
+      "slug": "magia-adamica-or-the-antiquity-of-magic-vaughan",
+      "mismatches": 382
+    },
+    {
+      "id": "69804b9019712623cff10895",
+      "slug": "kabbalistic-prayers-sperber",
+      "mismatches": 382
+    },
+    {
+      "id": "69792cdef35c6bbfbfd252fb",
+      "slug": "the-chemical-heaven-unlocked-toeltius",
+      "mismatches": 380
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a08",
+      "slug": "doctrine-of-holy-baptism-and-its-pure-administration-yvon",
+      "mismatches": 380
+    },
+    {
+      "id": "697e23ca6517938331138f79",
+      "slug": "one-hundred-fifty-five-biblical-illustrations-anslo",
+      "mismatches": 380
+    },
+    {
+      "id": "6984e8498a2f054f912420cd",
+      "slug": "golden-and-blessed-pandora-of-natural-wonders-figulus",
+      "mismatches": 380
+    },
+    {
+      "id": "698255f0ba923b56eda3c0bb",
+      "slug": "the-mystagogue-hermann",
+      "mismatches": 380
+    },
+    {
+      "id": "697d9ca14ac45ee328347502",
+      "slug": "the-hermetic-philosopher-or-master-key-anonymous",
+      "mismatches": 380
+    },
+    {
+      "id": "697d9c999788c62e1238c86e",
+      "slug": "haliographia-a-description-of-all-salt-minerals-tholde",
+      "mismatches": 380
+    },
+    {
+      "id": "69a0278d6bc332f148ccf4a4",
+      "slug": "taeda-trifida-chimica-das-ist-dreyfache-chimische-fackel-dienheim",
+      "mismatches": 378
+    },
+    {
+      "id": "698420e33ade13bcefaeb7d1",
+      "slug": "complete-extant-works-pico-della-mirandola",
+      "mismatches": 378
+    },
+    {
+      "id": "6981920864032ee0e58e12fb",
+      "slug": "the-manual-of-xefolius-wimpfen",
+      "mismatches": 376
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df66",
+      "slug": "historical-description-of-the-antiquities-of-the-greeks-newton",
+      "mismatches": 376
+    },
+    {
+      "id": "6984e84f8e42dbf1a2806f54",
+      "slug": "the-philosophers-of-the-first-three-centuries-of-the-church-nonnotte",
+      "mismatches": 374
+    },
+    {
+      "id": "697b079a086dd98fdbf8aa98",
+      "slug": "ethical-handbook-enchiridion-ethicum-more",
+      "mismatches": 374
+    },
+    {
+      "id": "6975158ba88d83c830d99e26",
+      "slug": "the-raised-curtain-of-freemasonry-wierz",
+      "mismatches": 374
+    },
+    {
+      "id": "698192080410b6704286ac3d",
+      "slug": "light-emerging-by-itself-from-darkness-crasselame",
+      "mismatches": 372
+    },
+    {
+      "id": "697c8e11f81f9680d27f634d",
+      "slug": "a-collection-of-various-old-rare-and-true-philosophical-hellwig",
+      "mismatches": 372
+    },
+    {
+      "id": "698420e2c1fd8fb625abf66d",
+      "slug": "complete-extant-works-opera-quae-extant-omnia-apostata",
+      "mismatches": 370
+    },
+    {
+      "id": "697932b1f35c6bbfbfd252fd",
+      "slug": "rational-thoughts-on-god-the-soul-and-evil-poiret",
+      "mismatches": 370
+    },
+    {
+      "id": "69751591233423aeec9e88f4",
+      "slug": "the-aurora-boehme",
+      "mismatches": 370
+    },
+    {
+      "id": "6985ca711c89f522ebc0db71",
+      "slug": "english-and-roman-prophecy-monmouth",
+      "mismatches": 370
+    },
+    {
+      "id": "697a873ce680cef7cedae3b0",
+      "slug": "the-three-pillars-schumacher",
+      "mismatches": 368
+    },
+    {
+      "id": "6988a59ffc2299bffde5f21a",
+      "slug": "defense-of-the-authenticity-of-the-rosicrucian-society-fludd",
+      "mismatches": 366
+    },
+    {
+      "id": "6985ca72077b71ae19896a1c",
+      "slug": "defense-of-the-terms-and-doctrine-of-ramon-lull-zepeda",
+      "mismatches": 364
+    },
+    {
+      "id": "6984e84e29eec62325221704",
+      "slug": "orthodoxy-of-teutonic-boehmian-theosophy-defended-zimmermann",
+      "mismatches": 364
+    },
+    {
+      "id": "6984e8498a2f054f912420cb",
+      "slug": "pandora-the-noblest-gift-of-god-reusner",
+      "mismatches": 364
+    },
+    {
+      "id": "699efa00f4653e687a18b3e8",
+      "slug": "disinterested-sentiments-on-the-retreat-of-the-pastors-of-artis",
+      "mismatches": 362
+    },
+    {
+      "id": "697a3055a3866af9498458ac",
+      "slug": "unheard-of-curiosities-concerning-the-talismanic-sculpture-gaffarel",
+      "mismatches": 362
+    },
+    {
+      "id": "697d9c999788c62e1238c87e",
+      "slug": "the-great-mystery-of-godliness-hall",
+      "mismatches": 360
+    },
+    {
+      "id": "69804b9338f170788b479568",
+      "slug": "the-marrow-of-alchemy-starkey",
+      "mismatches": 360
+    },
+    {
+      "id": "69c70871da9771c716315cfd",
+      "slug": "die-goettliche-gueltigkeit-der-kinder-tauff-spener",
+      "mismatches": 356
+    },
+    {
+      "id": "6970e35b9b09d309d780a256",
+      "slug": "the-outer-and-inner-golden-eye-mirror-anonymous",
+      "mismatches": 356
+    },
+    {
+      "id": "6984e8498a2f054f912420c5",
+      "slug": "mosaic-philosophy-fludd",
+      "mismatches": 356
+    },
+    {
+      "id": "698420e34c380925a276bb5d",
+      "slug": "observations-upon-the-prophecies-of-daniel-and-the-newton",
+      "mismatches": 355
+    },
+    {
+      "id": "6988a5a1a78be4e0932cb1dd",
+      "slug": "on-the-secrets-of-nature-or-the-fifth-essence-lull",
+      "mismatches": 354
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee6119",
+      "slug": "on-the-miraculous-word-reuchlin-2",
+      "mismatches": 354
+    },
+    {
+      "id": "6970e35c9b09d309d780a25a",
+      "slug": "aglais-eckartshausen",
+      "mismatches": 354
+    },
+    {
+      "id": "699ef9fd1e07de1241872058",
+      "slug": "the-sentiments-of-philo-judeus-bryant",
+      "mismatches": 354
+    },
+    {
+      "id": "6970e3759b09d309d780a2aa",
+      "slug": "on-the-triple-anatomy-fludd",
+      "mismatches": 352
+    },
+    {
+      "id": "698420e332feb5c8a34dbc42",
+      "slug": "on-secret-notations-in-writing-porta",
+      "mismatches": 352
+    },
+    {
+      "id": "698255eec7e5d26b8a0eb612",
+      "slug": "misopogon-and-letters-apostata",
+      "mismatches": 352
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6ba",
+      "slug": "antimonial-pharmacy-lancilotti",
+      "mismatches": 352
+    },
+    {
+      "id": "697b079996ae1f6ea7847cfa",
+      "slug": "several-masonic-assembly-speeches-anonymous",
+      "mismatches": 352
+    },
+    {
+      "id": "699ef9fc6b1fc7b9ac07a425",
+      "slug": "missive-to-the-honorable-lodge-of-freemasons-in-berlin-simonetti",
+      "mismatches": 348
+    },
+    {
+      "id": "69a0278a2f6d8b761bf95215",
+      "slug": "the-sum-of-perfection-of-the-magistery-geber",
+      "mismatches": 346
+    },
+    {
+      "id": "698420e3a3e2ae019cbe61cf",
+      "slug": "a-new-chemical-light-with-twelve-secret-chemical-tables-sendivogius",
+      "mismatches": 346
+    },
+    {
+      "id": "697773f2e832d9422ad6e0ce",
+      "slug": "the-book-of-job-sander",
+      "mismatches": 342
+    },
+    {
+      "id": "698255f30fc1d3bd62674a04",
+      "slug": "mosaicall-philosophy-fludd-2",
+      "mismatches": 340
+    },
+    {
+      "id": "697b079acd0c0e44509f27f3",
+      "slug": "elements-and-principles-of-astronomy-roussat",
+      "mismatches": 340
+    },
+    {
+      "id": "69c746236a0f3d112faf7f5c",
+      "slug": "historia-von-dem-leben-und-wandel-der-heyligen-barlaam-dess-anonymous",
+      "mismatches": 338
+    },
+    {
+      "id": "6978ee3a9ff927bc5394751d",
+      "slug": "chemical-works-flamel",
+      "mismatches": 338
+    },
+    {
+      "id": "6988a59f280c68b8795e5ba9",
+      "slug": "revelation-of-the-mysteries-of-the-essential-tinctures-of-valentinus",
+      "mismatches": 337
+    },
+    {
+      "id": "6970a31cd0c3aedc9cf10a92",
+      "slug": "50-homilies-or-explanations-macarius",
+      "mismatches": 336
+    },
+    {
+      "id": "6978ee3ad91ebc82b3e7c479",
+      "slug": "christ-among-men-eckartshausen",
+      "mismatches": 334
+    },
+    {
+      "id": "697b0799606defbadb0f6d0b",
+      "slug": "the-experimental-artworks-of-the-english-count-of-s-anonymous",
+      "mismatches": 334
+    },
+    {
+      "id": "69a02790c2c6e5c837e27908",
+      "slug": "die-theoretischen-bruder-oder-zweite-stuffe-der-lohrbach",
+      "mismatches": 332
+    },
+    {
+      "id": "6970e3609b09d309d780a266",
+      "slug": "books-of-alchemy-geber",
+      "mismatches": 330
+    },
+    {
+      "id": "697c8e0f150e68b9f40701f6",
+      "slug": "a-fine-treatise-on-many-wonderful-things-sperber",
+      "mismatches": 330
+    },
+    {
+      "id": "697c8e0f150e68b9f40701fe",
+      "slug": "secret-history-of-a-rosicrucian-albrecht",
+      "mismatches": 330
+    },
+    {
+      "id": "697b079611cc8928b55ea396",
+      "slug": "some-philosophical-and-medicinal-treatises-anonymous",
+      "mismatches": 330
+    },
+    {
+      "id": "697d9c989788c62e1238c862",
+      "slug": "the-hermetic-north-star-anonymous",
+      "mismatches": 330
+    },
+    {
+      "id": "697b07990411081cde5f4e66",
+      "slug": "handbook-of-restored-physics-espagnet",
+      "mismatches": 330
+    },
+    {
+      "id": "697d9c9d971fd6d8096654e2",
+      "slug": "history-of-the-abolition-of-the-order-of-the-templars-hodin",
+      "mismatches": 328
+    },
+    {
+      "id": "697722eb7e1d5a07ae945894",
+      "slug": "library-of-the-anti-trinitarians-sand",
+      "mismatches": 328
+    },
+    {
+      "id": "6970e35e9b09d309d780a260",
+      "slug": "on-alchemy-the-sum-of-perfection-and-book-of-investigation-geber",
+      "mismatches": 326
+    },
+    {
+      "id": "6970e35b9b09d309d780a258",
+      "slug": "portraits-of-men-learned-in-the-word-of-god-verheiden",
+      "mismatches": 326
+    },
+    {
+      "id": "698094204b0c4ab8525e0440",
+      "slug": "the-codicil-or-vademecum-lull",
+      "mismatches": 325
+    },
+    {
+      "id": "697704f1d2171799db0a7337",
+      "slug": "albrecht-durer-s-description-of-human-proportion-durer",
+      "mismatches": 325
+    },
+    {
+      "id": "69c817fe6c6f3cc53c848f05",
+      "slug": "den-christen-uyt-christo-vruchtbaerheydt-treckenden-teellinck",
+      "mismatches": 324
+    },
+    {
+      "id": "697d9c999788c62e1238c888",
+      "slug": "god-is-the-purest-love-eckartshausen-3",
+      "mismatches": 324
+    },
+    {
+      "id": "697a3055b43fe17045043be2",
+      "slug": "the-heart-of-philosophy-anonymous",
+      "mismatches": 324
+    },
+    {
+      "id": "697d9ca23ae651930d9afc0d",
+      "slug": "four-books-on-human-proportion-durer",
+      "mismatches": 323
+    },
+    {
+      "id": "69a02790f43c714c4e6bceff",
+      "slug": "die-theoretischen-bruder-oder-zweite-stuffe-der-lohrbach-2",
+      "mismatches": 320
+    },
+    {
+      "id": "697b0799653ff2afbfb554a4",
+      "slug": "the-epistles-boehme",
+      "mismatches": 319
+    },
+    {
+      "id": "6974b63b19126e775cf6d7cb",
+      "slug": "apology-for-all-the-great-men-accused-of-magic-naude",
+      "mismatches": 318
+    },
+    {
+      "id": "699efa0065d565508394f1f1",
+      "slug": "mirror-or-touchstone-of-pastors-speculum-seu-lapis-lydius-breckling",
+      "mismatches": 318
+    },
+    {
+      "id": "6984e84fc81b55263f750a02",
+      "slug": "the-duties-of-the-gold-and-rosy-cross-of-the-old-system-goehrung",
+      "mismatches": 318
+    },
+    {
+      "id": "6980941e4664a62963e01f38",
+      "slug": "an-excellent-book-on-the-unity-of-the-church-hus",
+      "mismatches": 318
+    },
+    {
+      "id": "697c8e114b63479c885455fa",
+      "slug": "the-secret-doctrine-of-the-ancient-orientals-and-jews-hallenberg",
+      "mismatches": 318
+    },
+    {
+      "id": "697b07997f21d8314d7852fb",
+      "slug": "remarks-on-the-origin-and-history-of-the-rosicrucians-and-nicolai",
+      "mismatches": 318
+    },
+    {
+      "id": "6970c9313932a3984e9117f6",
+      "slug": "treatise-on-the-free-investigation-of-the-canon-semler",
+      "mismatches": 318
+    },
+    {
+      "id": "697711607e1d5a07ae945879",
+      "slug": "the-five-books-of-moses-torah",
+      "mismatches": 316
+    },
+    {
+      "id": "6970e35c9b09d309d780a25c",
+      "slug": "documentary-account-of-the-german-union-hoffmann",
+      "mismatches": 316
+    },
+    {
+      "id": "6978ee3a598a6361bba7fbaf",
+      "slug": "the-sum-of-perfection-and-the-marrow-of-alchemy-geber",
+      "mismatches": 316
+    },
+    {
+      "id": "6984e84ed5f8f46c74022baa",
+      "slug": "the-persecutions-of-the-righteous-bourignon",
+      "mismatches": 314
+    },
+    {
+      "id": "699ef9ff1ac826c051774733",
+      "slug": "der-signatstern",
+      "mismatches": 312
+    },
+    {
+      "id": "69773f72094afd77cbd39c0c",
+      "slug": "chemical-library-borel",
+      "mismatches": 312
+    },
+    {
+      "id": "6975158ba88d83c830d99e28",
+      "slug": "sincere-account-of-the-jewish-teachers-opfergelt",
+      "mismatches": 312
+    },
+    {
+      "id": "697936168e450bc779a9cad9",
+      "slug": "a-collection-of-several-philosophical-writings-more",
+      "mismatches": 311
+    },
+    {
+      "id": "697e23ca05adde1df98f104f",
+      "slug": "iamblichus-book-one-augurellus",
+      "mismatches": 310
+    },
+    {
+      "id": "697c8e0f14b7d066516d71c5",
+      "slug": "a-secret-treatise-on-the-three-ages-sperber",
+      "mismatches": 310
+    },
+    {
+      "id": "6978ee3a586230b8def021c7",
+      "slug": "the-way-to-christ-christosophia-boehme",
+      "mismatches": 310
+    },
+    {
+      "id": "69793cdbdcf302c58a41a4c2",
+      "slug": "the-unshakeable-pillars-of-the-catholic-religion-danne",
+      "mismatches": 310
+    },
+    {
+      "id": "6985ca7115d1f651b83cf3a4",
+      "slug": "reflections-on-the-five-books-of-moses-allix",
+      "mismatches": 308
+    },
+    {
+      "id": "698192096df0137d367e6754",
+      "slug": "menippus-or-a-century-of-satirical-dialogues-andreae",
+      "mismatches": 308
+    },
+    {
+      "id": "698420e0f1fb376a3d58060a",
+      "slug": "the-eye-of-eternity-spiritual-knowledge-of-god-franckenberg",
+      "mismatches": 308
+    },
+    {
+      "id": "69804b94b7c36a3f69dfaa88",
+      "slug": "kabbalistic-prayers-and-introduction-sperber",
+      "mismatches": 308
+    },
+    {
+      "id": "697c8e0f58e66b1bd4f095da",
+      "slug": "the-fifth-book-of-the-authour-of-the-becoming-man-boehme",
+      "mismatches": 307
+    },
+    {
+      "id": "69a0278ce52224ef8fd05762",
+      "slug": "theologia-aethiopum-ex-liturgiis-fidei-confessionibus-oertel",
+      "mismatches": 304
+    },
+    {
+      "id": "699ef9feb3e659e2762a5731",
+      "slug": "integer-nitidus-macrobius",
+      "mismatches": 304
+    },
+    {
+      "id": "6978ee3a9ff927bc5394751b",
+      "slug": "chemical-experiments-meyer",
+      "mismatches": 302
+    },
+    {
+      "id": "697d9c9fb401034cf463d2bb",
+      "slug": "the-golden-lion-or-the-vinegar-of-the-sages-vreeswyk",
+      "mismatches": 302
+    },
+    {
+      "id": "697c8e0f127f6cd8290b33a3",
+      "slug": "golden-source-of-nature-and-art-richter",
+      "mismatches": 302
+    },
+    {
+      "id": "697d9ca3f53719fc3b56053a",
+      "slug": "the-green-lion-or-the-light-of-the-philosophers-vreeswyk",
+      "mismatches": 302
+    },
+    {
+      "id": "69c80a866c6f3cc53c8464a4",
+      "slug": "garten-ordnung-peschel",
+      "mismatches": 300
+    },
+    {
+      "id": "697c8e0f150e68b9f40701f8",
+      "slug": "little-prayer-book",
+      "mismatches": 300
+    },
+    {
+      "id": "6979242af35c6bbfbfd252e9",
+      "slug": "the-key-to-the-whole-of-chemical-philosophy-dorn",
+      "mismatches": 298
+    },
+    {
+      "id": "697d9ca25456cb07a7d28755",
+      "slug": "the-chemical-hippocrates-tachenius",
+      "mismatches": 298
+    },
+    {
+      "id": "69a027908cfc6783dac7c492",
+      "slug": "tetradymus-containing-i-hodegus-ii-clidophorus-iii-hypatia-toland",
+      "mismatches": 296
+    },
+    {
+      "id": "6988a5a36884b21140ae93c1",
+      "slug": "the-hieroglyphics-de-sacris-notis-et-sculpturis-horapollo",
+      "mismatches": 294
+    },
+    {
+      "id": "6980941d60e14b26f355058e",
+      "slug": "chemical-lexicon-johnson",
+      "mismatches": 294
+    },
+    {
+      "id": "6977549361ed34486ac0e43b",
+      "slug": "anthology-blumenlese-boehme",
+      "mismatches": 294
+    },
+    {
+      "id": "6985ca7130d79dd170ec623f",
+      "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+      "mismatches": 294
+    },
+    {
+      "id": "6976db51097b3607ee4be2f9",
+      "slug": "holy-service-avodat-ha-kodesh-gabbai",
+      "mismatches": 292
+    },
+    {
+      "id": "69c63cbcb463eebe7caac51f",
+      "slug": "vier-tractaetlein-pordage",
+      "mismatches": 290
+    },
+    {
+      "id": "69a02790924103b56eb6b3a6",
+      "slug": "tractat-von-dem-grossen-stein-der-uhralten-repetition-de-valentinus",
+      "mismatches": 290
+    },
+    {
+      "id": "69a027816a20ac4e1fc4051e",
+      "slug": "theologia-sive-mistica-phylosophia-aristoteles",
+      "mismatches": 290
+    },
+    {
+      "id": "6984e84f08842bf83ce887a9",
+      "slug": "philosophical-dialogue-between-the-flying-mercury-and-a-jugel",
+      "mismatches": 290
+    },
+    {
+      "id": "6975158aa88d83c830d99e22",
+      "slug": "astronomica-et-astrologica-astronomical-and-astrological-paracelsus",
+      "mismatches": 289
+    },
+    {
+      "id": "69c835706c6f3cc53c84e8f6",
+      "slug": "schediasmatum-apocalypticorum-brunsmand",
+      "mismatches": 288
+    },
+    {
+      "id": "6974b647457dd8909910b9f9",
+      "slug": "the-chemical-art-ars-chemica-trismegistus",
+      "mismatches": 287
+    },
+    {
+      "id": "698420e0f1fb376a3d58060c",
+      "slug": "observations-on-freemasonry-martinism-the-visions-of-anonymous",
+      "mismatches": 286
+    },
+    {
+      "id": "6988a59f4faa6559b7ce93ab",
+      "slug": "secret-and-now-freely-disclosed-experimental-secrets-jugel",
+      "mismatches": 284
+    },
+    {
+      "id": "697a30538bbc03d0d2f03b43",
+      "slug": "concerning-the-election-of-grace-boehme",
+      "mismatches": 284
+    },
+    {
+      "id": "697c8e0f150e68b9f40701f2",
+      "slug": "gloria-mundi-or-the-table-of-paradise-anonymous",
+      "mismatches": 284
+    },
+    {
+      "id": "69a0278bdc88b49d6b8da841",
+      "slug": "themis-aurea-das-ist-von-den-gesetzen-und-ordnungen-der-maier",
+      "mismatches": 284
+    },
+    {
+      "id": "6970e3879b09d309d780a2e4",
+      "slug": "the-open-chest-of-the-most-artful-secret-grasshoff-2",
+      "mismatches": 284
+    },
+    {
+      "id": "697c8e0f0db04f9b26df0d07",
+      "slug": "god-is-the-purest-love-eckartshausen-2",
+      "mismatches": 283
+    },
+    {
+      "id": "697e23c2eae9ff63cff4df60",
+      "slug": "history-of-jacob-boehme-the-shoemaker-of-gorlitz-schweinichen",
+      "mismatches": 282
+    },
+    {
+      "id": "697b07999112654799ca2929",
+      "slug": "essay-on-the-accusations-brought-against-the-templars-nicolai",
+      "mismatches": 282
+    },
+    {
+      "id": "6988a5a1b16bf7c5562e3317",
+      "slug": "the-romance-of-the-rose-lorris-2",
+      "mismatches": 281
+    },
+    {
+      "id": "697b0799b5571bf8ea6bc1d6",
+      "slug": "elijah-with-the-teachings-of-the-talmud-and-the-rabbis-muller",
+      "mismatches": 280
+    },
+    {
+      "id": "6988a5a04e0a871daa2ae29c",
+      "slug": "new-olympic-and-blessed-rose-garden-figulus",
+      "mismatches": 278
+    },
+    {
+      "id": "698192052d58020467d2dd57",
+      "slug": "the-marrow-of-alchemy-bacon",
+      "mismatches": 278
+    },
+    {
+      "id": "697d9c9e971fd6d8096654e8",
+      "slug": "of-the-heavenly-medicine-schwenckfeld",
+      "mismatches": 278
+    },
+    {
+      "id": "6977c24948f877905d75d69b",
+      "slug": "a-childe-of-light-goodwin",
+      "mismatches": 277
+    },
+    {
+      "id": "6974b649457dd8909910b9fd",
+      "slug": "the-art-of-thinking-well-and-contemplating-the-passion-lucca",
+      "mismatches": 277
+    },
+    {
+      "id": "6988a5a2436cb6932fa10b20",
+      "slug": "the-red-lion-or-the-salt-of-the-philosophers-vreeswyk",
+      "mismatches": 274
+    },
+    {
+      "id": "697c8e0f150e68b9f40701f4",
+      "slug": "glory-of-the-world-gloria-mundi-anonymous",
+      "mismatches": 274
+    },
+    {
+      "id": "698420e337b21343da6f63b6",
+      "slug": "a-new-medical-light-polemann-2",
+      "mismatches": 274
+    },
+    {
+      "id": "697e23cc296d4e4fca04a95b",
+      "slug": "the-mystical-janus-a-scriptural-contemplation-of-mystical-frank",
+      "mismatches": 274
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df74",
+      "slug": "interpretation-of-the-number-666-potter",
+      "mismatches": 274
+    },
+    {
+      "id": "697a37fae1d81a84b06d2d73",
+      "slug": "the-diadem-of-the-sages-loos",
+      "mismatches": 274
+    },
+    {
+      "id": "697934e28e450bc779a9cad7",
+      "slug": "collectanea-chymica-a-collection-of-ten-several-treatises-anonymous",
+      "mismatches": 272
+    },
+    {
+      "id": "6970e3689b09d309d780a280",
+      "slug": "the-alkahest-or-the-universal-solvent-of-van-helmont-le-pelletier",
+      "mismatches": 270
+    },
+    {
+      "id": "699ef9fe16733aa5a290e3d6",
+      "slug": "a-short-enquiry-concerning-the-hermetick-art-to-which-is-anonymous",
+      "mismatches": 270
+    },
+    {
+      "id": "699ef9f3b0a976d32fd37463",
+      "slug": "the-signature-of-all-things-de-signatura-rerum-bohme",
+      "mismatches": 268
+    },
+    {
+      "id": "697a78cd367f907242581fef",
+      "slug": "historical-critical-dissertation-on-ancient-and-new-alticotius",
+      "mismatches": 268
+    },
+    {
+      "id": "69c864236c6f3cc53c855eb1",
+      "slug": "curationum-empericarum-historicarum-centuria-quinta-ruland-sr",
+      "mismatches": 266
+    },
+    {
+      "id": "69c63762881bf48c13c424d5",
+      "slug": "vervolg-van-t-cabinet-der-mineralen-vreeswyk",
+      "mismatches": 266
+    },
+    {
+      "id": "6988a59e0d60689cec71ff35",
+      "slug": "the-rosicrucian-exposed-ecker-und-eckhoffen",
+      "mismatches": 266
+    },
+    {
+      "id": "6980941c60e14b26f355058c",
+      "slug": "on-the-doctrine-of-spinoza-in-letters-to-moses-mendelssohn-jacobi",
+      "mismatches": 266
+    },
+    {
+      "id": "699ef9f2c2bcb75dbdbaad92",
+      "slug": "hebrew-sha-arei-orah-gikatilla",
+      "mismatches": 266
+    },
+    {
+      "id": "697e23cca90e1780032ca2f2",
+      "slug": "an-open-entrance-to-the-closed-palace-of-the-king-starkey",
+      "mismatches": 266
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df72",
+      "slug": "general-idea-of-pagan-theology-binet",
+      "mismatches": 266
+    },
+    {
+      "id": "697e23cb571370e531cd1e1e",
+      "slug": "interpretation-of-the-psalms-apollinarius",
+      "mismatches": 266
+    },
+    {
+      "id": "697a8014e680cef7cedae395",
+      "slug": "political-legal-dissertation-on-majesty-in-general-besold",
+      "mismatches": 265
+    },
+    {
+      "id": "69a027816a20ac4e1fc40522",
+      "slug": "thesaurinella-olympica-aurea-tripartita-das-ist-ein-figulus-2",
+      "mismatches": 264
+    },
+    {
+      "id": "6984e84d9a4135a5aea12423",
+      "slug": "the-philosophical-epitaph-cooper",
+      "mismatches": 264
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6c2",
+      "slug": "history-of-the-abolition-of-the-order-of-the-knights-templar-hodin",
+      "mismatches": 264
+    },
+    {
+      "id": "6970e3869b09d309d780a2e0",
+      "slug": "the-open-chest-of-the-most-artful-secret-grasshoff",
+      "mismatches": 264
+    },
+    {
+      "id": "69c738676a0f3d112faf779a",
+      "slug": "fluch-abc-das-ist-christlicher-theologischer-bericht-von-albrecht",
+      "mismatches": 262
+    },
+    {
+      "id": "69751589a88d83c830d99e1a",
+      "slug": "the-academy-of-the-kabbalistic-art-morestel",
+      "mismatches": 262
+    },
+    {
+      "id": "697a572ec915282d8f071f76",
+      "slug": "poems-for-the-consideration-of-our-age-andreae",
+      "mismatches": 262
+    },
+    {
+      "id": "6970e3879b09d309d780a2e2",
+      "slug": "the-open-chest-of-the-most-artful-secret-grasshoff-3",
+      "mismatches": 262
+    },
+    {
+      "id": "697e23c98953b9fd64fe75f5",
+      "slug": "history-of-the-templars-gurtler",
+      "mismatches": 262
+    },
+    {
+      "id": "697914f0f35c6bbfbfd252d2",
+      "slug": "the-christian-citizen-andreae",
+      "mismatches": 260
+    },
+    {
+      "id": "697798bfb450898084dfd93d",
+      "slug": "the-song-of-solomon-guyon",
+      "mismatches": 260
+    },
+    {
+      "id": "69a027902531a78a2bc03cc5",
+      "slug": "system-und-folgen-des-illuminatenordens-weishaupt",
+      "mismatches": 260
+    },
+    {
+      "id": "697d9ca3b81580c494bf992a",
+      "slug": "saint-balthasar-a-rosicrucian-brother-anonymous",
+      "mismatches": 260
+    },
+    {
+      "id": "697b079a19353e5ee89fb4c1",
+      "slug": "elias-artista-with-the-philosopher-s-stone-muller",
+      "mismatches": 259
+    },
+    {
+      "id": "697a3055e7ce85e28a965e7b",
+      "slug": "believe-me-crede-mihi-norton",
+      "mismatches": 259
+    },
+    {
+      "id": "6970e3599b09d309d780a252",
+      "slug": "on-the-public-treasury-besold",
+      "mismatches": 258
+    },
+    {
+      "id": "6978ee3a80caf3f781acfd97",
+      "slug": "christ-the-greatest-hero-in-battle-eckartshausen",
+      "mismatches": 258
+    },
+    {
+      "id": "697704f48434ac5a1c2d966d",
+      "slug": "reflections-on-god-and-religion-vondel",
+      "mismatches": 256
+    },
+    {
+      "id": "69777387e832d9422ad6e0ca",
+      "slug": "bruno-or-on-the-divine-and-natural-principle-of-things-schelling",
+      "mismatches": 256
+    },
+    {
+      "id": "697c8e11f81f9680d27f6347",
+      "slug": "mercurial-pharmaceutics-lancilotti",
+      "mismatches": 256
+    },
+    {
+      "id": "6976d747097b3607ee4be2f7",
+      "slug": "the-adventures-of-the-unknown-philosopher-belin",
+      "mismatches": 254
+    },
+    {
+      "id": "6977a5455006b852ab453568",
+      "slug": "catechism-of-the-christian-religion",
+      "mismatches": 252
+    },
+    {
+      "id": "697b0799fe56d93a87bdc790",
+      "slug": "on-the-election-of-grace-de-electione-gratiae-boehme",
+      "mismatches": 252
+    },
+    {
+      "id": "699ef9ff56e1710c66738155",
+      "slug": "signatura-rerum-or-the-signature-of-all-things-boehme",
+      "mismatches": 252
+    },
+    {
+      "id": "6970e3509b09d309d780a236",
+      "slug": "abraham-the-blessing-of-all-nations-muller",
+      "mismatches": 250
+    },
+    {
+      "id": "698255f1861f3361ae3249e0",
+      "slug": "a-new-chemical-light-sendivogius",
+      "mismatches": 250
+    },
+    {
+      "id": "697c8e15ab6a5fd9eae882ea",
+      "slug": "thoughts-on-fire-eberhard",
+      "mismatches": 248
+    },
+    {
+      "id": "6977813098a09acb229a3f0d",
+      "slug": "the-book-of-meteors-paracelsus",
+      "mismatches": 248
+    },
+    {
+      "id": "6988a5a3d12d1fa76f36177c",
+      "slug": "the-rosicrucians-parny",
+      "mismatches": 248
+    },
+    {
+      "id": "698255f34c247322ad6ab3fa",
+      "slug": "the-great-mystery-mysterium-magnum-sperber",
+      "mismatches": 248
+    },
+    {
+      "id": "697a5fa2239d25106b8753fd",
+      "slug": "god-is-the-purest-love-eckartshausen",
+      "mismatches": 248
+    },
+    {
+      "id": "6975158ea88d83c830d99e3e",
+      "slug": "aurora-and-the-treasure-of-the-philosophers-the-water-stone-paracelsus",
+      "mismatches": 246
+    },
+    {
+      "id": "6970e3659b09d309d780a276",
+      "slug": "the-alchemical-seven-stars-anonymous",
+      "mismatches": 246
+    },
+    {
+      "id": "6970e3529b09d309d780a23a",
+      "slug": "abraxas-or-the-unbelieving-believer-macarius",
+      "mismatches": 246
+    },
+    {
+      "id": "698420e34c3c9f36bc43d974",
+      "slug": "the-odyssey-odyssea-homerus",
+      "mismatches": 246
+    },
+    {
+      "id": "6975158ba88d83c830d99e24",
+      "slug": "atalanta-fleeing-maier",
+      "mismatches": 245
+    },
+    {
+      "id": "6977af6e235fbd25a519477d",
+      "slug": "the-centiloquium-bonaventura",
+      "mismatches": 244
+    },
+    {
+      "id": "697b079a85b57def86b75297",
+      "slug": "the-elixir-of-the-philosophers-pope",
+      "mismatches": 244
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a20",
+      "slug": "a-brief-opening-and-instruction-on-the-three-principles-and-gichtel",
+      "mismatches": 244
+    },
+    {
+      "id": "697c8e0f58e66b1bd4f095d8",
+      "slug": "freemasons-library-anonymous",
+      "mismatches": 244
+    },
+    {
+      "id": "6981920839f105b3013d99c8",
+      "slug": "lux-orientalis-or-an-enquiry-into-the-opinion-of-the-glanvill",
+      "mismatches": 244
+    },
+    {
+      "id": "6970e3619b09d309d780a26c",
+      "slug": "the-alchemical-seven-stars-anonymous-2",
+      "mismatches": 242
+    },
+    {
+      "id": "6984e84e45b45b78e8d48ab4",
+      "slug": "book-of-the-bell-and-the-pomegranate-sefer-pa-amon-ve-rimon",
+      "mismatches": 242
+    },
+    {
+      "id": "697a30555760769ad3c96636",
+      "slug": "copy-of-the-resolution-of-the-elector-of-saxony-anonymous",
+      "mismatches": 240
+    },
+    {
+      "id": "6974b63919126e775cf6d7c3",
+      "slug": "spagyric-and-philosophical-apocalypse-hermogenes",
+      "mismatches": 240
+    },
+    {
+      "id": "697d9c9c72d515cb07bb3852",
+      "slug": "the-hermetic-triumph-limojon-de-saint",
+      "mismatches": 240
+    },
+    {
+      "id": "697d9c99f2b56306a9ec962a",
+      "slug": "the-golden-rose-or-a-testimony-of-the-truth-schutz",
+      "mismatches": 240
+    },
+    {
+      "id": "69804b9312c17a1925ecb6e8",
+      "slug": "in-praise-of-the-holy-cross-maurus",
+      "mismatches": 240
+    },
+    {
+      "id": "698255f2a88c3db9194ef509",
+      "slug": "new-discourses-on-the-secret-sciences-or-the-count-of-villars-2",
+      "mismatches": 239
+    },
+    {
+      "id": "69c83b886c6f3cc53c84f6bc",
+      "slug": "biblisches-psalter-schaz-kastlein-anonymous",
+      "mismatches": 238
+    },
+    {
+      "id": "6988a5a1f3319e17203eb918",
+      "slug": "key-to-the-cabinet-of-the-secret-treasury-of-nature-walchin",
+      "mismatches": 236
+    },
+    {
+      "id": "6985ca72d53aa86216a37add",
+      "slug": "theological-prophecy-of-the-last-day-rostius",
+      "mismatches": 234
+    },
+    {
+      "id": "6980941ea0b89e58a402eb09",
+      "slug": "living-theology-of-the-heart-hoburg",
+      "mismatches": 234
+    },
+    {
+      "id": "6984e850381012abd26a3bef",
+      "slug": "a-sketch-of-universal-wisdom-pansophiae-diatyposis-comenius",
+      "mismatches": 232
+    },
+    {
+      "id": "698255f0c8ae6303bcff9a97",
+      "slug": "part-of-the-mishnah-zeraim",
+      "mismatches": 232
+    },
+    {
+      "id": "6970e3779b09d309d780a2ae",
+      "slug": "fourth-part-of-the-anhalt-chancery-hercynianus",
+      "mismatches": 230
+    },
+    {
+      "id": "6988a59f3b3cedbf42d473a7",
+      "slug": "the-second-wash-or-the-moore-scour-d-once-more-vaughan",
+      "mismatches": 230
+    },
+    {
+      "id": "6970e3549b09d309d780a240",
+      "slug": "abury-stukeley",
+      "mismatches": 230
+    },
+    {
+      "id": "697a30569f4a4a764855ca29",
+      "slug": "the-count-of-gabalis-or-the-extravagant-mysteries-of-the-villars",
+      "mismatches": 230
+    },
+    {
+      "id": "69a0278c47581121be87cf42",
+      "slug": "die-symbolische-weisheit-der-aegypter-aus-den-verborgensten-bremer",
+      "mismatches": 230
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df7c",
+      "slug": "jesus-and-the-soul-luyken",
+      "mismatches": 230
+    },
+    {
+      "id": "6988a5a0a23e0a8ef27fec91",
+      "slug": "sefer-yetzirah-the-book-of-formation",
+      "mismatches": 229
+    },
+    {
+      "id": "6984e84ec36fbef76974152e",
+      "slug": "the-adornment-of-the-spiritual-marriage-ruusbroec-3",
+      "mismatches": 229
+    },
+    {
+      "id": "69c850ce6c6f3cc53c852ed0",
+      "slug": "fernere-nothige-und-zur-seelen-seligkeit-sehr-nutzliche-tennhardt",
+      "mismatches": 228
+    },
+    {
+      "id": "69c8125f6c6f3cc53c847b72",
+      "slug": "dr-fludds-answer-to-m-foster-or-the-squesing-of-parson-fludd",
+      "mismatches": 228
+    },
+    {
+      "id": "6970e3579b09d309d780a24c",
+      "slug": "aelia-laelia-crispis-not-born-rising-again-malvasia",
+      "mismatches": 226
+    },
+    {
+      "id": "69a02781bd4078a454714f67",
+      "slug": "apologetic-treatise-defending-the-integrity-of-the-society-fludd",
+      "mismatches": 226
+    },
+    {
+      "id": "69804b94a2d708b2ae066d39",
+      "slug": "a-brief-opening-and-instruction-on-the-three-principles-gichtel",
+      "mismatches": 226
+    },
+    {
+      "id": "699ef9f4b0a976d32fd37467",
+      "slug": "stonehenge-stukeley",
+      "mismatches": 226
+    },
+    {
+      "id": "6984e84e018466b0ebaa3653",
+      "slug": "of-the-ancient-mysteries-starck",
+      "mismatches": 224
+    },
+    {
+      "id": "69a0278f677e04041df0334e",
+      "slug": "tomus-secundus-de-supernaturali-naturali-praeternaturali-et-fludd",
+      "mismatches": 224
+    },
+    {
+      "id": "69a0278b3901873085afcdf5",
+      "slug": "theosophischer-wunder-saal-richtenfels",
+      "mismatches": 224
+    },
+    {
+      "id": "697929a0f35c6bbfbfd252f5",
+      "slug": "the-heaven-of-the-philosophers-or-the-secrets-of-nature-ulstad",
+      "mismatches": 224
+    },
+    {
+      "id": "69c752776a0f3d112faf8607",
+      "slug": "juridico-politicae-dissertationes-besold",
+      "mismatches": 222
+    },
+    {
+      "id": "6984e84d97e383e5dd001adc",
+      "slug": "philosophy-of-limbo-paracelsus",
+      "mismatches": 222
+    },
+    {
+      "id": "697c8e1230ece38bd4ca78d6",
+      "slug": "ariadne-s-thread-reibehand",
+      "mismatches": 222
+    },
+    {
+      "id": "698255f20fdc0a098b59a3c0",
+      "slug": "the-new-jerusalem-teellinck",
+      "mismatches": 220
+    },
+    {
+      "id": "6988a5a040a7affa5422d5d2",
+      "slug": "on-religion-freethinking-and-enlightenment-eckartshausen",
+      "mismatches": 220
+    },
+    {
+      "id": "6988a59f3605c4167e76a79c",
+      "slug": "the-jewel-of-the-sages-loos",
+      "mismatches": 220
+    },
+    {
+      "id": "6978ee3a01b1963bc31ee9f0",
+      "slug": "on-the-chemical-miracle-called-the-philosopher-s-stone-bernhardus-trevisanu",
+      "mismatches": 220
+    },
+    {
+      "id": "6975158ca88d83c830d99e36",
+      "slug": "the-golden-age-revealed-alitophilus",
+      "mismatches": 220
+    },
+    {
+      "id": "697090e5d0c3aedc9cf10864",
+      "slug": "40-questions-concerning-the-soule-propounded-by-dr-boehme",
+      "mismatches": 220
+    },
+    {
+      "id": "698255f0eaf8b0c7698ab6a5",
+      "slug": "the-nature-and-grounds-of-faith-koelman",
+      "mismatches": 220
+    },
+    {
+      "id": "698255f37fdcaf06a9760acc",
+      "slug": "the-cyranides-trismegistus",
+      "mismatches": 220
+    },
+    {
+      "id": "6979272bf35c6bbfbfd252ef",
+      "slug": "codicillus-vade-mecum-lull",
+      "mismatches": 218
+    },
+    {
+      "id": "69809420a9d6ab7a613ab629",
+      "slug": "five-books-on-long-life-paracelsus",
+      "mismatches": 218
+    },
+    {
+      "id": "697b079711cc8928b55ea3a4",
+      "slug": "biblical-exercises-pfeiffer",
+      "mismatches": 217
+    },
+    {
+      "id": "6974b648457dd8909910b9fb",
+      "slug": "on-the-art-of-the-kabbalah-reuchlin",
+      "mismatches": 216
+    },
+    {
+      "id": "69a027816a20ac4e1fc40514",
+      "slug": "the-telescope-of-zoroaster-or-key-to-the-great-divinatory-nerciat",
+      "mismatches": 216
+    },
+    {
+      "id": "697d9ca0497b33476ec3a451",
+      "slug": "the-hebrew-mysteries-reinhold",
+      "mismatches": 216
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6c0",
+      "slug": "gloria-mundi-the-little-tablet-of-paradise-anonymous",
+      "mismatches": 215
+    },
+    {
+      "id": "697d9c9e971fd6d8096654ec",
+      "slug": "the-wisdom-of-hermes-the-egyptians-and-the-chemists-borrichius",
+      "mismatches": 214
+    },
+    {
+      "id": "69c83bc96c6f3cc53c84f7a2",
+      "slug": "alle-de-wercken-cats",
+      "mismatches": 212
+    },
+    {
+      "id": "6985ca74c1f3606329aff17c",
+      "slug": "forerunner-of-the-cosmographic-dissertations-kepler",
+      "mismatches": 212
+    },
+    {
+      "id": "69c7515b6a0f3d112faf84f8",
+      "slug": "discursus-politici-besold",
+      "mismatches": 210
+    },
+    {
+      "id": "6985ca6d9d0a51f652882367",
+      "slug": "pyrotechny-asserted-and-illustrated-starkey",
+      "mismatches": 210
+    },
+    {
+      "id": "69776dfe4896622ce9e30c70",
+      "slug": "letters-to-a-friend-in-switzerland-semler",
+      "mismatches": 210
+    },
+    {
+      "id": "69a0279006093ffd43c08217",
+      "slug": "la-suite-du-comte-de-gabalis-ou-nouveaux-entretiens-sur-les-villars",
+      "mismatches": 210
+    },
+    {
+      "id": "6975158ba88d83c830d99e2a",
+      "slug": "on-auguries-and-hieroglyphics-nifo",
+      "mismatches": 208
+    },
+    {
+      "id": "6988a59f090ba3597e45028a",
+      "slug": "sessions-of-the-normal-schools-saint-martin",
+      "mismatches": 208
+    },
+    {
+      "id": "6970e37a9b09d309d780a2ba",
+      "slug": "remarks-on-the-horus-unger",
+      "mismatches": 207
+    },
+    {
+      "id": "697d9c9b72d515cb07bb3846",
+      "slug": "hermippus-redivivus-or-the-sage-s-triumph-over-old-age-and-cohausen",
+      "mismatches": 206
+    },
+    {
+      "id": "6970e3709b09d309d780a29a",
+      "slug": "the-proverbs-and-examples-of-the-ancient-sages-bidpai",
+      "mismatches": 206
+    },
+    {
+      "id": "697952d9eef1c286564aa435",
+      "slug": "compendium-of-alchemy-garlandia",
+      "mismatches": 206
+    },
+    {
+      "id": "697c8e11483a1e6963dab86d",
+      "slug": "prototypes-of-the-deviations-of-israel-according-to-the-tscheer",
+      "mismatches": 206
+    },
+    {
+      "id": "69c80da96c6f3cc53c846da6",
+      "slug": "erbauliche-gedanken-von-dem-vater-herzen-gottes-und-dem-bogatzky",
+      "mismatches": 204
+    },
+    {
+      "id": "69a0278ff1ddb4629f5a3a8e",
+      "slug": "tractatus-de-lapide-philosophico-oder-vom-stein-der-weisen-hollandus",
+      "mismatches": 204
+    },
+    {
+      "id": "698255f071f849b62f11b4b6",
+      "slug": "the-microscope-of-basil-valentine-kirchweger",
+      "mismatches": 204
+    },
+    {
+      "id": "698255ef2882fc99ba22a711",
+      "slug": "metamorphosis-of-the-planets-monte-snyders",
+      "mismatches": 204
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6bc",
+      "slug": "feelings-in-the-temple-of-nature-eckartshausen",
+      "mismatches": 204
+    },
+    {
+      "id": "6988a5a269667c9410a93b5f",
+      "slug": "letter-to-the-gold-seeking-lovers-of-chemistry-and-alchemy-anonymous",
+      "mismatches": 202
+    },
+    {
+      "id": "6985ca72c9d0c217260e737b",
+      "slug": "the-most-secret-mysteries-of-the-high-degrees-of-koppen",
+      "mismatches": 202
+    },
+    {
+      "id": "698255f145774ed8d6329888",
+      "slug": "on-nature-and-grace-on-the-spirit-and-the-letter-augustinus",
+      "mismatches": 202
+    },
+    {
+      "id": "69c864706c6f3cc53c855faa",
+      "slug": "curationum-empericarum-historicarum-centuria-quarta-ruland-sr",
+      "mismatches": 200
+    },
+    {
+      "id": "6970b969c208a2e2cbe86818",
+      "slug": "treatise-on-the-golden-fleece-creiling",
+      "mismatches": 200
+    },
+    {
+      "id": "697e23ca35e7839f484f69be",
+      "slug": "dissertation-on-magical-idolatry-filesac",
+      "mismatches": 200
+    },
+    {
+      "id": "6978ee36a87012956d883ad2",
+      "slug": "on-the-marvelous-things-in-nature-coelestinus",
+      "mismatches": 198
+    },
+    {
+      "id": "6974b64019126e775cf6d7df",
+      "slug": "a-chest-rich-in-treasures-glauber",
+      "mismatches": 198
+    },
+    {
+      "id": "6970e35a9b09d309d780a254",
+      "slug": "on-eternity-drechsel",
+      "mismatches": 198
+    },
+    {
+      "id": "697c8e0f150e68b9f40701f0",
+      "slug": "the-assisting-genies-and-irreconcilable-gnomes-androl",
+      "mismatches": 198
+    },
+    {
+      "id": "690989d5cf28baa1b4cae1c9",
+      "slug": "pymander-asclepius-on-the-mysteries-of-the-egyptians-on-trismegistus",
+      "mismatches": 198
+    },
+    {
+      "id": "698192084a98f5b317403e71",
+      "slug": "memoirs-of-the-life-death-burial-and-wonderful-writings-of-okely",
+      "mismatches": 196
+    },
+    {
+      "id": "6974b646457dd8909910b9f7",
+      "slug": "the-short-art-ars-brevis-lull",
+      "mismatches": 196
+    },
+    {
+      "id": "69a0278b8073102dfd86044b",
+      "slug": "tafereelen-der-eerste-christenen-bestaande-in-92-konst-luyken",
+      "mismatches": 196
+    },
+    {
+      "id": "69c7f9f76c6f3cc53c8428c4",
+      "slug": "nochmalicher-zusatz-uber-die-unter-erdische-naturkundigung-becher",
+      "mismatches": 194
+    },
+    {
+      "id": "69c7f98e6c6f3cc53c842718",
+      "slug": "experimentum-chymicum-novum-oder-neue-chymische-prob-becher",
+      "mismatches": 194
+    },
+    {
+      "id": "69c7cb7525ec2ba5ccd7ff8e",
+      "slug": "herculis-christiani-luctae-xxiv-andreae",
+      "mismatches": 194
+    },
+    {
+      "id": "69c70e32da9771c716316148",
+      "slug": "die-lautere-milch-des-evangelii-spener",
+      "mismatches": 194
+    },
+    {
+      "id": "69771d5c7e1d5a07ae945890",
+      "slug": "bible-of-the-old-testament-biblia-veteris-testamenti",
+      "mismatches": 192
+    },
+    {
+      "id": "698192058fb5ea37caee24ba",
+      "slug": "the-antiquity-of-magic-magia-adamica-vaughan",
+      "mismatches": 192
+    },
+    {
+      "id": "6984e84f4310c53b1a85b5dc",
+      "slug": "sacred-palaeography-or-discourses-on-sacred-subjects-stukeley",
+      "mismatches": 192
+    },
+    {
+      "id": "69794f7beef1c286564aa431",
+      "slug": "a-compendious-yet-complete-philosophical-handbook-keil",
+      "mismatches": 192
+    },
+    {
+      "id": "698192086be99c37f168298a",
+      "slug": "memorials-of-honor-love-and-condolence-andreae",
+      "mismatches": 192
+    },
+    {
+      "id": "6988a5a3d8fdf4cf94c34930",
+      "slug": "book-of-the-unleavened-bread-of-watchfulness-sefer-matzat-spira",
+      "mismatches": 190
+    },
+    {
+      "id": "6985ca74c3d506385a1383b8",
+      "slug": "precious-collection-of-adonhiramite-masonry-guillemain-de-saint",
+      "mismatches": 190
+    },
+    {
+      "id": "697b0799c053cffe354fc37d",
+      "slug": "simple-instruction-on-prayer-weigel",
+      "mismatches": 188
+    },
+    {
+      "id": "697a3775e1d81a84b06d2d6f",
+      "slug": "the-last-mercy-of-god-bourignon",
+      "mismatches": 188
+    },
+    {
+      "id": "6970e37b9b09d309d780a2bc",
+      "slug": "religious-year-of-the-theophilanthropists-chemin-dupontes",
+      "mismatches": 186
+    },
+    {
+      "id": "697c8e113f8fcbfb1d9c400b",
+      "slug": "the-revealed-influence-of-true-freemasonry-on-the-general-schleiss-von",
+      "mismatches": 185
+    },
+    {
+      "id": "697e23cabda3810523da7fb7",
+      "slug": "history-of-the-bogomils-wolf",
+      "mismatches": 185
+    },
+    {
+      "id": "69c8055c6c6f3cc53c84516d",
+      "slug": "gedenkschriften-guiscard",
+      "mismatches": 184
+    },
+    {
+      "id": "6988a5a1215deb318410d5ea",
+      "slug": "the-saturnian-kingdoms-barma",
+      "mismatches": 184
+    },
+    {
+      "id": "697a3055d9a110b1c1fd5030",
+      "slug": "short-and-clear-refutation-of-john-calvin-s-arguments-on-castellio",
+      "mismatches": 184
+    },
+    {
+      "id": "698420e1f1fb376a3d58061a",
+      "slug": "a-new-medical-light-polemann",
+      "mismatches": 184
+    },
+    {
+      "id": "697b07993eb443e24a4901f6",
+      "slug": "explanations-of-the-new-testament-herder",
+      "mismatches": 184
+    },
+    {
+      "id": "6985ca718cc5870aa46cfd9c",
+      "slug": "silent-poetry-speaking-painting-mannasser",
+      "mismatches": 184
+    },
+    {
+      "id": "697e23cbb5c17cc976123b56",
+      "slug": "on-the-secret-external-and-visible-fire-of-the-magi-and-khunrath",
+      "mismatches": 184
+    },
+    {
+      "id": "69a027816a20ac4e1fc40518",
+      "slug": "tafereel-of-beschrijving-van-den-prachtigen-tempel-der-zang-labarre-de-beaumarch",
+      "mismatches": 182
+    },
+    {
+      "id": "697e23c831e1cf55aea428d6",
+      "slug": "theosophical-heart-devotions-directed-to-the-highest-sole-ernst-august",
+      "mismatches": 181
+    },
+    {
+      "id": "6980941ee3b0852e94638f6a",
+      "slug": "on-the-miraculous-word-reuchlin",
+      "mismatches": 181
+    },
+    {
+      "id": "6988a5a361359449470ed10b",
+      "slug": "secrets-reveal-d-or-an-open-entrance-to-the-shut-palace-starkey",
+      "mismatches": 180
+    },
+    {
+      "id": "6979081aeb0dcfd39912341f",
+      "slug": "two-chemical-treatises-open-entrance-to-the-closed-palace-starkey",
+      "mismatches": 180
+    },
+    {
+      "id": "69804b9530e286f1b1c3a22f",
+      "slug": "short-questions",
+      "mismatches": 180
+    },
+    {
+      "id": "69819208ec2318ad2e395ce7",
+      "slug": "literary-accounts-of-the-history-of-so-called-gold-making-murr",
+      "mismatches": 180
+    },
+    {
+      "id": "6977089cd2171799db0a733f",
+      "slug": "the-apocrypha",
+      "mismatches": 178
+    },
+    {
+      "id": "698255f193a818bfc04b84bd",
+      "slug": "microcosmic-preludes-of-the-new-heaven-and-the-new-earth-dippel",
+      "mismatches": 178
+    },
+    {
+      "id": "697b0799a875a4971652f194",
+      "slug": "the-exposition-of-geber-bracesco",
+      "mismatches": 178
+    },
+    {
+      "id": "697a87ade680cef7cedae3b2",
+      "slug": "three-excellent-and-never-before-printed-chymical-books-tetzen",
+      "mismatches": 178
+    },
+    {
+      "id": "6984e84ebcfafeceb11019c1",
+      "slug": "the-philosophical-pearl-tree-walchin",
+      "mismatches": 176
+    },
+    {
+      "id": "69c8562a6c6f3cc53c853d05",
+      "slug": "grondelicke-onderrichtinghe-vande-leere-ende-den-geest-des-emmius",
+      "mismatches": 176
+    },
+    {
+      "id": "698420e0f1fb376a3d58060e",
+      "slug": "revelations-lead",
+      "mismatches": 176
+    },
+    {
+      "id": "697c8e14a4e0ce991303e91e",
+      "slug": "ariadne-s-thread-reibehand-2",
+      "mismatches": 176
+    },
+    {
+      "id": "69c8228d6c6f3cc53c84ad57",
+      "slug": "ein-reise-gesprach-von-dem-wege-zur-seligkeit-bogatzky",
+      "mismatches": 174
+    },
+    {
+      "id": "697c8e1295b02364811475f2",
+      "slug": "fama-remissa-answer-to-the-fama-and-confession-of-the-rosy-neuheuser",
+      "mismatches": 172
+    },
+    {
+      "id": "69792abef35c6bbfbfd252f7",
+      "slug": "the-sky-of-the-philosophers-coelum-philosophorum-anonymous",
+      "mismatches": 172
+    },
+    {
+      "id": "697719257e1d5a07ae94588e",
+      "slug": "bible-or-the-contents-of-the-old-and-new-testaments",
+      "mismatches": 172
+    },
+    {
+      "id": "698255f29bba70f96bd29ca0",
+      "slug": "the-new-testament-2",
+      "mismatches": 172
+    },
+    {
+      "id": "697e23cb2cc8a329a9e5fa46",
+      "slug": "instruction-to-france-on-the-truth-of-the-history-of-the-naude",
+      "mismatches": 172
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a1e",
+      "slug": "john-the-messenger-of-repentance-vondel",
+      "mismatches": 171
+    },
+    {
+      "id": "698255f139a4ffd10d19f7c6",
+      "slug": "new-discourses-on-the-secret-sciences-or-the-count-of-villars",
+      "mismatches": 170
+    },
+    {
+      "id": "69a02781bd4078a454714f69",
+      "slug": "la-suite-du-comte-de-gabalis-ou-nouveaux-entretiens-sur-les-villars-2",
+      "mismatches": 170
+    },
+    {
+      "id": "69794a6ceef1c286564aa427",
+      "slug": "communication-of-an-excellent-chemical-medicine-gualdus",
+      "mismatches": 168
+    },
+    {
+      "id": "6978f4c3eb0dcfd39912341a",
+      "slug": "chemical-mirror-of-nature-stiller",
+      "mismatches": 168
+    },
+    {
+      "id": "6984e84e1a2124a93951c229",
+      "slug": "a-small-work-on-kabbalistic-hearing-lull",
+      "mismatches": 168
+    },
+    {
+      "id": "699ef9fe6fe9b1f2f6af869d",
+      "slug": "die-sieben-lezten-posaunen-oder-wehen-wann-sie-anfangen-und-armbruster",
+      "mismatches": 168
+    },
+    {
+      "id": "699ef9ffee5e6e68fd8dea54",
+      "slug": "silence-after-the-clamor-maier",
+      "mismatches": 168
+    },
+    {
+      "id": "6970e3829b09d309d780a2d4",
+      "slug": "antithesis-of-christ-and-antichrist-rosarius",
+      "mismatches": 166
+    },
+    {
+      "id": "6985ca72a57ab7da79b0fb12",
+      "slug": "poimandres-trismegistus",
+      "mismatches": 166
+    },
+    {
+      "id": "698255f314d583f70c9aee0c",
+      "slug": "curious-medico-physical-miscellanies-anonymous",
+      "mismatches": 165
+    },
+    {
+      "id": "69c8013c6c6f3cc53c84424d",
+      "slug": "haeretici-descriptio-aemstelredamus",
+      "mismatches": 164
+    },
+    {
+      "id": "69a0278e853551712745fbff",
+      "slug": "solomon-s-temple-semler",
+      "mismatches": 164
+    },
+    {
+      "id": "69a0278a0f0393701f60e73b",
+      "slug": "treatise-on-universal-medicine-monte-snyders",
+      "mismatches": 164
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6c6",
+      "slug": "the-secret-symbols-of-the-rosicrucians",
+      "mismatches": 164
+    },
+    {
+      "id": "69c835306c6f3cc53c84e801",
+      "slug": "theatrum-divinae-providentiae-oder-die-historia-des-von-derschau",
+      "mismatches": 162
+    },
+    {
+      "id": "69c7f9d96c6f3cc53c842856",
+      "slug": "oedipus-chymicus-oder-chymischer-ratseldeuter-becher",
+      "mismatches": 162
+    },
+    {
+      "id": "69c7afcd25ec2ba5ccd7f28f",
+      "slug": "observations-sur-le-magnetisme-animal-eslon",
+      "mismatches": 162
+    },
+    {
+      "id": "6970e3539b09d309d780a23c",
+      "slug": "key-to-things-hidden-since-the-foundation-of-the-world-postel",
+      "mismatches": 162
+    },
+    {
+      "id": "6984e8498a2f054f912420b3",
+      "slug": "opus-vegetabile-the-vegetable-work-hollandus",
+      "mismatches": 162
+    },
+    {
+      "id": "697948777524bd991c5aa4dd",
+      "slug": "commentary-on-obadiah-and-enoch-pfeiffer",
+      "mismatches": 161
+    },
+    {
+      "id": "697a6e5cb981745f5fac1d7e",
+      "slug": "singular-political-discourses-besold",
+      "mismatches": 160
+    },
+    {
+      "id": "697b079611cc8928b55ea39a",
+      "slug": "the-eternal-gospel-breckling",
+      "mismatches": 160
+    },
+    {
+      "id": "69a0278c71a9e3ffd8bfe901",
+      "slug": "the-highest-good-fludd",
+      "mismatches": 160
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df80",
+      "slug": "on-jesuits-freemasons-and-german-rosicrucians-knigge-2",
+      "mismatches": 160
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df7e",
+      "slug": "on-jesuits-freemasons-and-german-rosicrucians-knigge",
+      "mismatches": 160
+    },
+    {
+      "id": "6984e84edb115ba000975327",
+      "slug": "philosophy-as-the-interpreter-of-holy-scripture-meyer",
+      "mismatches": 158
+    },
+    {
+      "id": "6984e8507eb10d325a7aac61",
+      "slug": "commentary-on-the-song-of-songs-gallico",
+      "mismatches": 158
+    },
+    {
+      "id": "697910dbeb0dcfd39912342a",
+      "slug": "of-the-compass-and-ruler-lautensack",
+      "mismatches": 157
+    },
+    {
+      "id": "6978ee37a87012956d883ada",
+      "slug": "of-christs-testaments-boehme",
+      "mismatches": 157
+    },
+    {
+      "id": "6988a59f89d9e7e535be96cc",
+      "slug": "the-revelation-of-revelations-lead",
+      "mismatches": 156
+    },
+    {
+      "id": "6985ca745eb811b263caf4d7",
+      "slug": "theosophical-questions-quaestiones-theosophicae-bohme",
+      "mismatches": 156
+    },
+    {
+      "id": "698255f0f59423082f6c7781",
+      "slug": "the-mirror-of-alchemy-bacon",
+      "mismatches": 156
+    },
+    {
+      "id": "6988a5a077951571d9158ece",
+      "slug": "description-of-the-republic-of-christianopolis-andreae",
+      "mismatches": 154
+    },
+    {
+      "id": "6979159df35c6bbfbfd252d6",
+      "slug": "a-clear-and-faithful-admonitory-disputation-comitibus",
+      "mismatches": 154
+    },
+    {
+      "id": "6970e35e9b09d309d780a262",
+      "slug": "two-dialogues-on-alchemy-the-sentence-and-the-tree-of-life-bracesco",
+      "mismatches": 154
+    },
+    {
+      "id": "699ef9fd80564f7e71c48025",
+      "slug": "destructorium-vitiorum-ex-similitudinum-creaturarum-anonymous",
+      "mismatches": 154
+    },
+    {
+      "id": "699ef9f4b0a976d32fd37469",
+      "slug": "splendor-of-light-splendor-lucis-wienner-von",
+      "mismatches": 154
+    },
+    {
+      "id": "698255f11c400b7689a9d39a",
+      "slug": "of-natural-and-supernatural-things-valentinus",
+      "mismatches": 154
+    },
+    {
+      "id": "69c822506c6f3cc53c84ac97",
+      "slug": "description-de-l-hotel-de-ville-d-amsterdam-anonymous",
+      "mismatches": 152
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6ac",
+      "slug": "on-the-making-of-gold-morhof",
+      "mismatches": 152
+    },
+    {
+      "id": "697936d98e450bc779a9cadb",
+      "slug": "rosicrucian-colloquy-colloquium-rhodostauroticum-anonymous",
+      "mismatches": 150
+    },
+    {
+      "id": "697d9ca25452c5a11710c52d",
+      "slug": "the-great-book-of-nature-or-the-apocalypse-anonymous",
+      "mismatches": 150
+    },
+    {
+      "id": "6970e3859b09d309d780a2dc",
+      "slug": "answer-to-eight-questions-tritheim",
+      "mismatches": 148
+    },
+    {
+      "id": "6984e84f5905f8d14dbe659b",
+      "slug": "magico-cabbalistic-and-theological-work-welling",
+      "mismatches": 148
+    },
+    {
+      "id": "697e23cb375280c8c92ad640",
+      "slug": "ideas-on-the-affirmative-principle-of-life-eckartshausen",
+      "mismatches": 148
+    },
+    {
+      "id": "698255e93e158c7e3c9a4f64",
+      "slug": "microcosmic-preludes-dippel",
+      "mismatches": 148
+    },
+    {
+      "id": "69c830236c6f3cc53c84d9b6",
+      "slug": "judicium-caspar-schwenckfelds-uber-herrn-johann-brentzen-schwenckfeld",
+      "mismatches": 146
+    },
+    {
+      "id": "69c7090bda9771c716315d91",
+      "slug": "die-goettliche-straf-gerichte-unserer-zeiten-spener",
+      "mismatches": 146
+    },
+    {
+      "id": "69792ac2f35c6bbfbfd252f9",
+      "slug": "the-sky-of-the-philosophers-coelum-philosophorum-ulstad",
+      "mismatches": 146
+    },
+    {
+      "id": "6978ee3a54992dc0fea379b4",
+      "slug": "a-christian-epistle-on-prayer-schwenckfeld",
+      "mismatches": 145
+    },
+    {
+      "id": "6985ca74925975beb6da3bef",
+      "slug": "practice-of-the-green-lion-the-true-path-to-the-royal-anonymous",
+      "mismatches": 144
+    },
+    {
+      "id": "698255ee089a910e1e2ae850",
+      "slug": "missive-to-the-brotherhood-of-the-golden-and-rosy-cross-anonymous-lenz",
+      "mismatches": 144
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df76",
+      "slug": "introduction-to-true-physics-hellwig",
+      "mismatches": 144
+    },
+    {
+      "id": "697b079a84b05e7a498568b6",
+      "slug": "thirteen-secret-letters-anonymous",
+      "mismatches": 144
+    },
+    {
+      "id": "69776915e832d9422ad6e0be",
+      "slug": "the-system-of-discipline-and-ecclesiastical-order-of-the-comenius",
+      "mismatches": 143
+    },
+    {
+      "id": "69c834526c6f3cc53c84e505",
+      "slug": "warhaffte-und-glaubwurdige-relation-von-dem-theologischen-wegelin",
+      "mismatches": 142
+    },
+    {
+      "id": "69804b940187d498033e67f0",
+      "slug": "mineral-stone-lapis-mineralis-or-the-highest-medicine-dolhopff",
+      "mismatches": 142
+    },
+    {
+      "id": "69c802936c6f3cc53c8447b8",
+      "slug": "wunderbare-krafte-der-natur-durch-die-sym-und-antipathie-hermstadt",
+      "mismatches": 142
+    },
+    {
+      "id": "698255eeba3a154c96ca0660",
+      "slug": "moses-the-god-of-aaron-riper",
+      "mismatches": 142
+    },
+    {
+      "id": "6980941f5367f35de76b6516",
+      "slug": "the-secret-book-assisi",
+      "mismatches": 142
+    },
+    {
+      "id": "697953e3eef1c286564aa439",
+      "slug": "the-complaint-and-the-consolation-or-night-thoughts-young",
+      "mismatches": 141
+    },
+    {
+      "id": "699efa00cb2f8cc49c70bb94",
+      "slug": "six-theosophic-points-sex-puncta-theosophica-bohme",
+      "mismatches": 140
+    },
+    {
+      "id": "699ef9f4b0a976d32fd3746b",
+      "slug": "some-characteristics-of-the-interior-church-lopukhin",
+      "mismatches": 140
+    },
+    {
+      "id": "697d9c9b72d515cb07bb383e",
+      "slug": "the-count-of-gabalis-villars-2",
+      "mismatches": 140
+    },
+    {
+      "id": "699ef9fc7543a5cb5d64cf08",
+      "slug": "the-contest-of-wisdom-with-folly-fludd",
+      "mismatches": 140
+    },
+    {
+      "id": "69c87f9c6c6f3cc53c858f42",
+      "slug": "de-mystica-theologia-areopagita",
+      "mismatches": 138
+    },
+    {
+      "id": "6988a59ef2833fb36a54e166",
+      "slug": "supplement-to-the-roman-spanish-chancellery-anonymous",
+      "mismatches": 138
+    },
+    {
+      "id": "69751587a88d83c830d99e14",
+      "slug": "articles-of-the-holy-faith-lull",
+      "mismatches": 138
+    },
+    {
+      "id": "69a0278a21bd8ed4d8e01187",
+      "slug": "theology-of-weigel-that-is-a-public-confession-of-faith-weigel",
+      "mismatches": 138
+    },
+    {
+      "id": "697b079931eb6dd07b7c2311",
+      "slug": "elucidarius-a-noble-little-book-parisiensis",
+      "mismatches": 138
+    },
+    {
+      "id": "6985ca6c9d0a51f652882357",
+      "slug": "gates-of-light-portae-lucis-gikatilla",
+      "mismatches": 138
+    },
+    {
+      "id": "69819209af2dab8d37da80d0",
+      "slug": "the-man-mouse-taken-in-a-trap-vaughan",
+      "mismatches": 136
+    },
+    {
+      "id": "697d9c98f2b56306a9ec960e",
+      "slug": "hermes-a-journal-in-occasional-issues",
+      "mismatches": 136
+    },
+    {
+      "id": "697c8e11e6dd503e0113aed5",
+      "slug": "free-thoughts-on-god-the-universe-man-freemasons-elsasser",
+      "mismatches": 136
+    },
+    {
+      "id": "6970e36d9b09d309d780a28e",
+      "slug": "the-most-hidden-secrets-of-the-principal-degrees-of-masonry-koppen",
+      "mismatches": 135
+    },
+    {
+      "id": "697e23ca5b90626170f7b3d2",
+      "slug": "the-history-and-chronology-of-the-fabulous-ages-considered-wise",
+      "mismatches": 135
+    },
+    {
+      "id": "69c70944da9771c716315dcf",
+      "slug": "das-amt-des-h-geistes-spener",
+      "mismatches": 134
+    },
+    {
+      "id": "697a4d5cc915282d8f071f6d",
+      "slug": "dialogue-on-christianity-weigel",
+      "mismatches": 134
+    },
+    {
+      "id": "6988a5a159f3a9c9513f9f17",
+      "slug": "mystical-rosary-of-the-faithful-soul-anonymous",
+      "mismatches": 134
+    },
+    {
+      "id": "698420e3d31cb006fd2462cc",
+      "slug": "the-sophic-nucleus-an-interpretation-of-the-physical-benedictus",
+      "mismatches": 134
+    },
+    {
+      "id": "697a305542fc94964b20316a",
+      "slug": "course-on-the-book-of-thoth-alliette",
+      "mismatches": 134
+    },
+    {
+      "id": "697d9c9b72d515cb07bb3840",
+      "slug": "a-thorough-explanation-of-the-nature-and-properties-of-the-drebbel",
+      "mismatches": 134
+    },
+    {
+      "id": "697b079910a96682ef80935d",
+      "slug": "an-enquiry-into-the-patriarchal-and-druidical-religion-cooke",
+      "mismatches": 133
+    },
+    {
+      "id": "698420e357e6f7c58cb93f98",
+      "slug": "a-useful-little-treatise-on-the-place-of-the-world-weigel",
+      "mismatches": 133
+    },
+    {
+      "id": "69c822ed6c6f3cc53c84ae7d",
+      "slug": "versuch-einer-auflosung-der-177-fragen-aus-jakob-bohm-oetinger",
+      "mismatches": 132
+    },
+    {
+      "id": "6988a59fa4de5da34fd130e0",
+      "slug": "gates-of-righteousness-sha-arei-zedek-gikatilla",
+      "mismatches": 132
+    },
+    {
+      "id": "6980941fc4809d9906d9b575",
+      "slug": "little-book-of-dialogues-glauber",
+      "mismatches": 132
+    },
+    {
+      "id": "697d9c98f2b56306a9ec960c",
+      "slug": "hermes-trismegistus-s-true-ancient-way-of-nature-anonymous",
+      "mismatches": 132
+    },
+    {
+      "id": "6970e3629b09d309d780a26e",
+      "slug": "mirror-of-alchemy-morienus",
+      "mismatches": 132
+    },
+    {
+      "id": "697e23cb32e94c72715dd0cf",
+      "slug": "informatorium-or-short-instruction-weigel",
+      "mismatches": 132
+    },
+    {
+      "id": "697e23ca0293c2dd47709e4e",
+      "slug": "on-the-secret-fire-of-the-magi-and-philosophers-khunrath",
+      "mismatches": 132
+    },
+    {
+      "id": "698192073c8982703992d2f9",
+      "slug": "lumen-de-lumine-or-a-new-magical-light-vaughan",
+      "mismatches": 131
+    },
+    {
+      "id": "69c8728b6c6f3cc53c8578bd",
+      "slug": "a-dispute-between-the-woman-and-the-powers-of-darkness-southcott",
+      "mismatches": 130
+    },
+    {
+      "id": "69c80d416c6f3cc53c846c9a",
+      "slug": "greek-gnothi-seauton-nosce-teipsum-erkenne-dich-selbst-weigel",
+      "mismatches": 130
+    },
+    {
+      "id": "697a30565f904ad9c01e0cd3",
+      "slug": "conclusions-on-public-law-clapmarius",
+      "mismatches": 130
+    },
+    {
+      "id": "6984e8498a2f054f912420c7",
+      "slug": "natural-philosophy-of-three-ancient-philosophers-artephius-flamel",
+      "mismatches": 130
+    },
+    {
+      "id": "697d9c99f2b56306a9ec9610",
+      "slug": "hermetic-rosary-hermetischer-rosenkrantz-trevisanus",
+      "mismatches": 130
+    },
+    {
+      "id": "6970e3519b09d309d780a238",
+      "slug": "the-book-of-formation-sefer-yetzirah-postel",
+      "mismatches": 130
+    },
+    {
+      "id": "6970e3609b09d309d780a268",
+      "slug": "three-books-on-alchemy-geber",
+      "mismatches": 129
+    },
+    {
+      "id": "69c8368a6c6f3cc53c84ec24",
+      "slug": "evangelischer-bericht-von-dem-leben-jesu-christi-anonymous",
+      "mismatches": 128
+    },
+    {
+      "id": "69c63da4b463eebe7caac5ae",
+      "slug": "viridarium-chymicum-das-ist-chymisches-lust-gartlein-maier",
+      "mismatches": 128
+    },
+    {
+      "id": "697b079711cc8928b55ea3b0",
+      "slug": "fama-fraternitatis-discovery-of-the-brotherhood-of-the-rosy-anonymous",
+      "mismatches": 128
+    },
+    {
+      "id": "697c8e11847588071851a998",
+      "slug": "the-mystery-of-iniquity-stattler",
+      "mismatches": 126
+    },
+    {
+      "id": "697d9c9c72d515cb07bb3854",
+      "slug": "history-of-the-templars-jacquelin",
+      "mismatches": 126
+    },
+    {
+      "id": "6985ca74a480a17bd2c4c109",
+      "slug": "prodromus-or-forerunner-anonymous",
+      "mismatches": 125
+    },
+    {
+      "id": "69c70311da9771c7163158d0",
+      "slug": "zweyter-nachtrag-einiger-beruhigungen-uber-die-einwurfe-des-anonymous",
+      "mismatches": 124
+    },
+    {
+      "id": "69c807e46c6f3cc53c845a7f",
+      "slug": "mercurii-zweyfacher-schlangen-stab-das-ist-i-glucks-ruthe-anonymous",
+      "mismatches": 124
+    },
+    {
+      "id": "69c764016a0f3d112faf8de3",
+      "slug": "cras-credo-hodie-nihil-heinsius",
+      "mismatches": 124
+    },
+    {
+      "id": "6980941f04705cd4f648c945",
+      "slug": "the-roaring-lion-on-the-prophetic-decision-of-the-bohemian-felgenhauer",
+      "mismatches": 124
+    },
+    {
+      "id": "69c892ec6c6f3cc53c85bd8e",
+      "slug": "bekantnus-der-sunden",
+      "mismatches": 122
+    },
+    {
+      "id": "69c82fe16c6f3cc53c84d947",
+      "slug": "vom-christlichen-streytt-schwenckfeld",
+      "mismatches": 122
+    },
+    {
+      "id": "69c818c66c6f3cc53c8491c4",
+      "slug": "tafereel-van-sinne-mal-venne",
+      "mismatches": 122
+    },
+    {
+      "id": "69c818716c6f3cc53c849091",
+      "slug": "erklarung-der-offenbarung-johannis-barrefelt",
+      "mismatches": 122
+    },
+    {
+      "id": "697d9c99f2b56306a9ec9616",
+      "slug": "hermetic-rosary-anonymous",
+      "mismatches": 122
+    },
+    {
+      "id": "69794da1eef1c286564aa42b",
+      "slug": "the-compass-of-the-wise-jolyfief-2",
+      "mismatches": 122
+    },
+    {
+      "id": "6970e3859b09d309d780a2de",
+      "slug": "an-adept-s-instructions-for-reading-hermetic-writings-anonymous",
+      "mismatches": 122
+    },
+    {
+      "id": "699ef9fc8d06654d932fa64f",
+      "slug": "studium-universale-das-ist-alles-dasjenige-so-von-anfang-weigel",
+      "mismatches": 122
+    },
+    {
+      "id": "697a4a7bc915282d8f071f69",
+      "slug": "dialogue-on-divine-and-human-love-abrabanel",
+      "mismatches": 122
+    },
+    {
+      "id": "69773e18094afd77cbd39c0a",
+      "slug": "chemical-library-or-catalogue-of-chemical-books-roth-scholtz",
+      "mismatches": 122
+    },
+    {
+      "id": "69819209c3e109986dfc4453",
+      "slug": "the-christian-struggle-a-prayer-on-the-fiftieth-psalm-moltherus",
+      "mismatches": 121
+    },
+    {
+      "id": "6978f4c9eb0dcfd39912341c",
+      "slug": "chemical-cabinet-maier",
+      "mismatches": 121
+    },
+    {
+      "id": "69804b93374856599c34762b",
+      "slug": "a-short-treatise-on-the-love-of-god",
+      "mismatches": 120
+    },
+    {
+      "id": "69c8893a6c6f3cc53c85a3ef",
+      "slug": "the-second-book-of-wonders-southcott",
+      "mismatches": 118
+    },
+    {
+      "id": "69c80ecb6c6f3cc53c8470b8",
+      "slug": "apologia-pro-jul-caesare-vanino-arpe",
+      "mismatches": 118
+    },
+    {
+      "id": "69c7fffb6c6f3cc53c843d7c",
+      "slug": "sacrarum-apodixeon-seu-euclides-christiani-lib-ii-postel",
+      "mismatches": 118
+    },
+    {
+      "id": "6970e3889b09d309d780a2e6",
+      "slug": "aphorisms-of-hippocrates-conde",
+      "mismatches": 118
+    },
+    {
+      "id": "697901386448981b999139af",
+      "slug": "chemical-pleasure-garden-anonymous",
+      "mismatches": 118
+    },
+    {
+      "id": "6974b63619126e775cf6d7bd",
+      "slug": "apocalypse-of-notable-heresiarchs-sichem",
+      "mismatches": 118
+    },
+    {
+      "id": "6985ca73a2facf247bb26ab5",
+      "slug": "postil-on-the-gospel-of-john-iii-on-rebirth-schwenckfeld",
+      "mismatches": 117
+    },
+    {
+      "id": "69c83c576c6f3cc53c84f922",
+      "slug": "studium-universale-das-ist-alles-dasjenige-so-von-anfang-weigel-2",
+      "mismatches": 116
+    },
+    {
+      "id": "69c8a0296c6f3cc53c85df42",
+      "slug": "tractatus-theologico-politicus-quo-auctor-quidam-anonymus-knorr",
+      "mismatches": 116
+    },
+    {
+      "id": "69c80b4f6c6f3cc53c8466f0",
+      "slug": "an-die-freunde-lessings-ein-anhang-mendelssohn",
+      "mismatches": 116
+    },
+    {
+      "id": "697a30556317345e3f0a665c",
+      "slug": "medical-advice-on-rare-cases-clacius",
+      "mismatches": 116
+    },
+    {
+      "id": "697a30556955037f112a4711",
+      "slug": "the-count-de-gabalis-being-a-diverting-historie-of-the-villars",
+      "mismatches": 116
+    },
+    {
+      "id": "6977958a887488c1e5342ee7",
+      "slug": "cabalomachia-the-battle-against-the-kabbalah-berlendi",
+      "mismatches": 116
+    },
+    {
+      "id": "697e23c9431946b9c076a152",
+      "slug": "ideal-shadow-of-general-wisdom-sabbathier",
+      "mismatches": 116
+    },
+    {
+      "id": "698255f2e7e5bb2407f7a97e",
+      "slug": "the-sophic-knot-untied-anonymous",
+      "mismatches": 114
+    },
+    {
+      "id": "6984e84f99e67a12430e0685",
+      "slug": "philadelphia-or-brotherly-love-to-the-studious-in-the-anonymous",
+      "mismatches": 114
+    },
+    {
+      "id": "697a84d1e680cef7cedae3a3",
+      "slug": "the-diverting-history-of-the-count-de-gabalis-villars",
+      "mismatches": 114
+    },
+    {
+      "id": "698255f0a054f7b10c4520ba",
+      "slug": "the-metallic-orchard-steinbergen",
+      "mismatches": 114
+    },
+    {
+      "id": "69804b955c426468e85d8bdd",
+      "slug": "the-vegetable-stone-or-the-highest-medicine-anonymous-paracelsus",
+      "mismatches": 112
+    },
+    {
+      "id": "697d9c989788c62e1238c864",
+      "slug": "hermaphroditic-child-of-the-sun-and-moon-brunnhofer",
+      "mismatches": 112
+    },
+    {
+      "id": "69c82fdb6c6f3cc53c84d93e",
+      "slug": "auslegung-dess-cxxxiii-psalms-schwenckfeld",
+      "mismatches": 110
+    },
+    {
+      "id": "69c7395d6a0f3d112faf78d5",
+      "slug": "philosophische-brieffe-hellwig",
+      "mismatches": 110
+    },
+    {
+      "id": "69c8199c6c6f3cc53c84945f",
+      "slug": "theologische-sendschreiben-von-dem-rechten-kirchen-gehen-franckenberg",
+      "mismatches": 110
+    },
+    {
+      "id": "69804b95e4bbe66acad27e35",
+      "slug": "the-microcosmic-animal-stone-or-the-supreme-medicine-dolhopff",
+      "mismatches": 110
+    },
+    {
+      "id": "698255f3aa0b916adb58c0d1",
+      "slug": "a-new-light-of-alchymie-of-the-nature-of-things-chymicall-sendivogius",
+      "mismatches": 110
+    },
+    {
+      "id": "69790aaaeb0dcfd399123421",
+      "slug": "the-reformed-sky-bruno",
+      "mismatches": 110
+    },
+    {
+      "id": "697b079995ae8fd6ea6be808",
+      "slug": "explanation-of-the-words-of-solomon-glauber",
+      "mismatches": 110
+    },
+    {
+      "id": "6988a5a24dc12b4588052a2c",
+      "slug": "images-of-the-saints-and-martyrs-of-christ",
+      "mismatches": 110
+    },
+    {
+      "id": "697b079711cc8928b55ea3a2",
+      "slug": "several-tablets-and-principal-pieces-from-the-church-at-munster",
+      "mismatches": 110
+    },
+    {
+      "id": "6985ca7194b042cd03912166",
+      "slug": "the-book-of-the-angel-raziel",
+      "mismatches": 109
+    },
+    {
+      "id": "6977a719ed849ecd7e62d673",
+      "slug": "the-chemical-cato-hanneman",
+      "mismatches": 108
+    },
+    {
+      "id": "6970e3769b09d309d780a2ac",
+      "slug": "anhalt-chancellery-part-6-anonymous",
+      "mismatches": 107
+    },
+    {
+      "id": "697d9ca199fdb36d2bfd8be8",
+      "slug": "on-the-albigensian-heresy-brenna",
+      "mismatches": 107
+    },
+    {
+      "id": "69772b6347dc849429ffb22c",
+      "slug": "abridged-chemical-library-albineus",
+      "mismatches": 106
+    },
+    {
+      "id": "6974b63719126e775cf6d7bf",
+      "slug": "apocalypsis-or-the-revelation-of-certain-notorious-sichem",
+      "mismatches": 106
+    },
+    {
+      "id": "697c8e147328a057349692c7",
+      "slug": "secret-and-hidden-chemical-laboratory-anonymous",
+      "mismatches": 106
+    },
+    {
+      "id": "697c8e0f127f6cd8290b33a1",
+      "slug": "the-secret-of-hermetic-philosophy-anonymous",
+      "mismatches": 106
+    },
+    {
+      "id": "697a3055811ccb8665fbde1c",
+      "slug": "crollius-revived-the-hermetic-wonder-tree",
+      "mismatches": 105
+    },
+    {
+      "id": "6978ee3a783b5e7fe48ce83e",
+      "slug": "chemical-experiments-on-the-radical-dissolution-of-bodies-eckartshausen",
+      "mismatches": 104
+    },
+    {
+      "id": "6970e3749b09d309d780a2a6",
+      "slug": "analogy-of-physical-and-spiritual-birth-oswald",
+      "mismatches": 104
+    },
+    {
+      "id": "699efa001883acb2a0ffbe8e",
+      "slug": "are-today-s-freemasons-and-illuminati-not-descendants-of",
+      "mismatches": 104
+    },
+    {
+      "id": "697b07992690aeaf7e6cd250",
+      "slug": "ernst-and-falk-dialogues-for-freemasons-lessing",
+      "mismatches": 104
+    },
+    {
+      "id": "697a6aa5b981745f5fac1d78",
+      "slug": "discourse-on-curious-matters-meerheim",
+      "mismatches": 104
+    },
+    {
+      "id": "6970e37c9b09d309d780a2c0",
+      "slug": "the-answer-foley",
+      "mismatches": 103
+    },
+    {
+      "id": "6977b866112cb9b4f70c3ff8",
+      "slug": "centrum-naturae-concentratum-or-the-salt-of-nature-puli",
+      "mismatches": 102
+    },
+    {
+      "id": "6984e8498a2f054f912420d7",
+      "slug": "the-atropic-phoenix-returned-from-death-anonymous",
+      "mismatches": 102
+    },
+    {
+      "id": "6970e3559b09d309d780a244",
+      "slug": "on-the-marvelous-power-of-art-and-nature-bacon",
+      "mismatches": 100
+    },
+    {
+      "id": "69c70f18da9771c7163161ca",
+      "slug": "thimotheus-zum-furbilde-francke",
+      "mismatches": 100
+    },
+    {
+      "id": "698255f1da76f23a1bf0a2e0",
+      "slug": "on-the-nature-and-origin-of-the-doctrine-of-emanation-among-kleuker",
+      "mismatches": 100
+    },
+    {
+      "id": "69819203f7754d4eadfcf38c",
+      "slug": "the-life-of-the-great-picus-prince-of-mirandula-more",
+      "mismatches": 100
+    },
+    {
+      "id": "69a0278ca7e9465eead94093",
+      "slug": "theologia-germanica-frankfurtian",
+      "mismatches": 100
+    },
+    {
+      "id": "697e23ca32fdac74c7ee6f47",
+      "slug": "on-the-order-of-the-illuminati",
+      "mismatches": 99
+    },
+    {
+      "id": "69c818696c6f3cc53c84906f",
+      "slug": "von-der-verborgnen-ewigkeit-christi-barrefelt",
+      "mismatches": 98
+    },
+    {
+      "id": "6988a5a042616682a1d17809",
+      "slug": "appendix-to-the-roman-spanish-chancellery-anonymous",
+      "mismatches": 98
+    },
+    {
+      "id": "697c8e137aeb5769e4cf1a26",
+      "slug": "the-secret-of-the-decay-and-combustion-of-all-things-loen",
+      "mismatches": 98
+    },
+    {
+      "id": "697a30556ac1961072012a65",
+      "slug": "a-short-examination-and-judgment-of-johannes-uytenbogaert-drielenburch",
+      "mismatches": 98
+    },
+    {
+      "id": "697704f1d2171799db0a7331",
+      "slug": "description-of-christ-in-us-wernsdorf",
+      "mismatches": 98
+    },
+    {
+      "id": "697704f1d2171799db0a7335",
+      "slug": "report-and-answer-to-the-bavarian-anhalt-secret-chancellery-anonymous",
+      "mismatches": 97
+    },
+    {
+      "id": "69c85f1e6c6f3cc53c855417",
+      "slug": "brief-aan-den-eerwaarden-hermannus-schyn-waar-in-de-leere-dooregeest",
+      "mismatches": 96
+    },
+    {
+      "id": "69c87b896c6f3cc53c85888b",
+      "slug": "de-klachte-pauli-teellinck",
+      "mismatches": 96
+    },
+    {
+      "id": "697e23cbd0c7ab010cddfdb8",
+      "slug": "introduction-to-the-true-knowledge-of-the-triune-god-and-sperber-2",
+      "mismatches": 96
+    },
+    {
+      "id": "697e23c3eae9ff63cff4df7a",
+      "slug": "introduction-to-the-true-knowledge-of-the-triune-god-and-sperber",
+      "mismatches": 96
+    },
+    {
+      "id": "6977573d61ed34486ac0e43d",
+      "slug": "the-blood-of-nature-anonymous",
+      "mismatches": 96
+    },
+    {
+      "id": "697d9ca36ee2f39a34458cc5",
+      "slug": "the-grave-blair",
+      "mismatches": 95
+    },
+    {
+      "id": "69c871686c6f3cc53c857584",
+      "slug": "copies-and-parts-of-copies-of-letters-and-communications-southcott",
+      "mismatches": 94
+    },
+    {
+      "id": "69c86e486c6f3cc53c856e68",
+      "slug": "a-catalogue-of-chymicall-books-cooper",
+      "mismatches": 94
+    },
+    {
+      "id": "69c83b456c6f3cc53c84f60f",
+      "slug": "eines-freundes-erinnerungen-gegen-cypriani-anmerckungen-anonymous",
+      "mismatches": 94
+    },
+    {
+      "id": "697e23cb096732be4a8355c0",
+      "slug": "introduction-to-alchemy-wedel",
+      "mismatches": 94
+    },
+    {
+      "id": "697b079711cc8928b55ea3aa",
+      "slug": "the-opened-philosophical-father-heart-anonymous",
+      "mismatches": 92
+    },
+    {
+      "id": "697b079aea5a5d2bda197d25",
+      "slug": "letter-on-the-secret-works-of-art-and-nature-bacon",
+      "mismatches": 92
+    },
+    {
+      "id": "69c842e06c6f3cc53c850dec",
+      "slug": "periculum-palmyrenum-rhenferd",
+      "mismatches": 90
+    },
+    {
+      "id": "69c8053e6c6f3cc53c8450e4",
+      "slug": "la-verite-de-la-resurrection-de-jesus-christ-defendu-contre-colerus",
+      "mismatches": 90
+    },
+    {
+      "id": "697796e4b58638948b302822",
+      "slug": "new-prophetic-jubilee-calendar-felgenhauer",
+      "mismatches": 90
+    },
+    {
+      "id": "69819208d2e928b4f447f80c",
+      "slug": "the-salic-law-postel",
+      "mismatches": 90
+    },
+    {
+      "id": "697a6530b981745f5fac1d76",
+      "slug": "discourse-on-curious-matters-meerheim-2",
+      "mismatches": 90
+    },
+    {
+      "id": "6974b63e19126e775cf6d7db",
+      "slug": "ar-lamech-of-sirap-s-songs-rescued-from-the-deluge-eckartshausen",
+      "mismatches": 90
+    },
+    {
+      "id": "6970e37d9b09d309d780a2c2",
+      "slug": "anthroposophia-theomagica-or-a-discourse-of-the-nature-of-vaughan",
+      "mismatches": 90
+    },
+    {
+      "id": "6970e3739b09d309d780a2a4",
+      "slug": "a-discourse-on-anagrams-a-part-of-the-kabbalah-puteanus",
+      "mismatches": 90
+    },
+    {
+      "id": "69791d88f35c6bbfbfd252dd",
+      "slug": "the-little-key-of-hermetic-science-anonymous",
+      "mismatches": 90
+    },
+    {
+      "id": "697704f4e3cf0372d885d0e1",
+      "slug": "confession-of-the-holy-sacrament-of-the-body-and-blood-of-schwenckfeld",
+      "mismatches": 88
+    },
+    {
+      "id": "697e23cc2337aec04643a3a5",
+      "slug": "an-interpretation-of-the-number-666-potter",
+      "mismatches": 88
+    },
+    {
+      "id": "69c871996c6f3cc53c857600",
+      "slug": "deux-traitez-nouveaux-sur-la-philosophie-naturelle",
+      "mismatches": 88
+    },
+    {
+      "id": "69751589a88d83c830d99e1c",
+      "slug": "the-asian-in-his-nakedness-anonymous",
+      "mismatches": 88
+    },
+    {
+      "id": "697e23ccd65892ec89483d0a",
+      "slug": "inner-exercise-of-faith-and-love-of-a-soul-hoffmann",
+      "mismatches": 88
+    },
+    {
+      "id": "69c736dc6a0f3d112faf7704",
+      "slug": "de-miraculis-mortuorum-kornmann",
+      "mismatches": 86
+    },
+    {
+      "id": "69c70d42da9771c7163160aa",
+      "slug": "vollstandiger-catalogus-aller-im-druck-befindlichen",
+      "mismatches": 86
+    },
+    {
+      "id": "6988a59e9a7c579a2bf143f6",
+      "slug": "description-of-the-illuminati-weishaupt",
+      "mismatches": 86
+    },
+    {
+      "id": "6979260bf35c6bbfbfd252ed",
+      "slug": "shield-of-truth-clypeum-veritatis-grick",
+      "mismatches": 86
+    },
+    {
+      "id": "698255f2ab25735ca679857d",
+      "slug": "new-spice-and-herb-calendar-for-the-year-1654-ritter",
+      "mismatches": 86
+    },
+    {
+      "id": "69c877496c6f3cc53c857ff5",
+      "slug": "figurae-libri-apocalypsis-beati-joannis-apostoli-figures-du",
+      "mismatches": 84
+    },
+    {
+      "id": "6970e3849b09d309d780a2d8",
+      "slug": "antroposophia-theomagica-das-ist-eine-rede-von-der-natur-vaughan",
+      "mismatches": 84
+    },
+    {
+      "id": "69a0278feb6b73741de5d616",
+      "slug": "de-superstitione-vinculis-daemonum-secundum-aegyptiorum-et-grippis",
+      "mismatches": 84
+    },
+    {
+      "id": "69c8996c6c6f3cc53c85ce01",
+      "slug": "the-fourth-book-of-wonders-southcott",
+      "mismatches": 82
+    },
+    {
+      "id": "69c834296c6f3cc53c84e484",
+      "slug": "der-guldene-griff-weigel",
+      "mismatches": 82
+    },
+    {
+      "id": "69c800066c6f3cc53c843da3",
+      "slug": "gospel-nicodemus",
+      "mismatches": 82
+    },
+    {
+      "id": "69c6e98eda9771c7163146ce",
+      "slug": "was-sucht-der-wahre-freymaurer-noch-zu-siener-vollkommenheit-cronenberg",
+      "mismatches": 82
+    },
+    {
+      "id": "69804b9019712623cff1088d",
+      "slug": "joseph-in-egypt-vondel",
+      "mismatches": 82
+    },
+    {
+      "id": "69779625b58638948b30281e",
+      "slug": "the-cabinet-of-minerals-vreeswyk",
+      "mismatches": 82
+    },
+    {
+      "id": "698255f2460ac42327bd5e3b",
+      "slug": "book-25-of-the-muses-urania-to-dominicus-bonifacio",
+      "mismatches": 82
+    },
+    {
+      "id": "697c8e0f150e68b9f40701fa",
+      "slug": "the-secret-of-the-life-and-multiplication-of-all-things-anonymous",
+      "mismatches": 82
+    },
+    {
+      "id": "697922f1f35c6bbfbfd252e7",
+      "slug": "the-key-to-steganography-tritheim",
+      "mismatches": 82
+    },
+    {
+      "id": "698255e93e158c7e3c9a4f6c",
+      "slug": "new-experiments-in-artificial-saltpeter-production-eckartshausen",
+      "mismatches": 80
+    },
+    {
+      "id": "6984e84fd4483599c1db69d5",
+      "slug": "philosophical-golden-source-of-nature-and-art-wassermann",
+      "mismatches": 80
+    },
+    {
+      "id": "6984e8498a2f054f912420db",
+      "slug": "a-pious-and-useful-admonition-concerning-the-brothers-of-neuhusius",
+      "mismatches": 80
+    },
+    {
+      "id": "6970e37f9b09d309d780a2c8",
+      "slug": "antiqua-restaurata-a-concise-historical-account-of-the-des-moulins",
+      "mismatches": 80
+    },
+    {
+      "id": "69c82f9a6c6f3cc53c84d8cd",
+      "slug": "vonn-der-mittelunge-schwenckfeld",
+      "mismatches": 78
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a22",
+      "slug": "introduction-to-a-true-and-unheard-of-physics-scheffer",
+      "mismatches": 78
+    },
+    {
+      "id": "697b0799f4d9463650506f0d",
+      "slug": "ernst-and-falk-dialogues-for-freemasons-lessing-2",
+      "mismatches": 78
+    },
+    {
+      "id": "697a3055d002da535fbae6a4",
+      "slug": "the-costly-folly-t-costelick-mal-huygens",
+      "mismatches": 78
+    },
+    {
+      "id": "6970e3569b09d309d780a248",
+      "slug": "admonition-concerning-certain-prophecies-regarding-these-osiandrus",
+      "mismatches": 78
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6c4",
+      "slug": "mystery-of-the-last-days-anonymous",
+      "mismatches": 78
+    },
+    {
+      "id": "69a0278e8bd5062dbf9e3a96",
+      "slug": "tractatus-chymico-philosophicus-de-rebus-naturalibus-et-valentinus",
+      "mismatches": 78
+    },
+    {
+      "id": "69804b934d0284dcb8301564",
+      "slug": "joseph-in-dothan-vondel",
+      "mismatches": 76
+    },
+    {
+      "id": "69c894056c6f3cc53c85c02b",
+      "slug": "the-fifth-book-of-wonders-southcott",
+      "mismatches": 76
+    },
+    {
+      "id": "6980941d4d203adff9b6aaa3",
+      "slug": "a-little-book-of-disputation-weigel",
+      "mismatches": 76
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a14",
+      "slug": "theological-judgment-on-the-rosicrucian-brotherhood-meder",
+      "mismatches": 76
+    },
+    {
+      "id": "698420e1f1fb376a3d58061e",
+      "slug": "on-occult-philosophy-of-the-secret-miraculous-birth-of-the-valentinus",
+      "mismatches": 76
+    },
+    {
+      "id": "697c8e0f14b7d066516d71bd",
+      "slug": "the-perilous-fountain-with-the-charter-of-love-anonymous",
+      "mismatches": 76
+    },
+    {
+      "id": "697b07999248ec21ecc32729",
+      "slug": "epitimia-fr-r-c-final-revelation-and-defense-of-the-grick",
+      "mismatches": 76
+    },
+    {
+      "id": "697a3055143dc97a39f2a22f",
+      "slug": "new-and-wonderful-fishing-conjectures-gotz",
+      "mismatches": 76
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6be",
+      "slug": "fortress-of-science-fortalitium-scientiae-grick",
+      "mismatches": 76
+    },
+    {
+      "id": "699efa00cf04bb8aafc20e83",
+      "slug": "stellae-prodigiosae-seu-cometae-per-oculum-triplicem-nagel",
+      "mismatches": 76
+    },
+    {
+      "id": "6988a5a1fc4961cb1cc53ea8",
+      "slug": "response-to-foster-s-squeezing-of-the-weapon-salve-sponge-fludd",
+      "mismatches": 75
+    },
+    {
+      "id": "697b079711cc8928b55ea3a6",
+      "slug": "the-gloselian-duel-duellum-gloselianum-pfalz",
+      "mismatches": 74
+    },
+    {
+      "id": "69804b95370ddc6f3e47c57d",
+      "slug": "the-child-bed-of-the-philosopher-s-stone-anonymous",
+      "mismatches": 74
+    },
+    {
+      "id": "697c8e136f86d35d5ff04271",
+      "slug": "friendly-missive-of-an-adept-of-the-hermetic-art-anonymous",
+      "mismatches": 74
+    },
+    {
+      "id": "697a305570562c8f31560787",
+      "slug": "curious-thoughts-on-true-alchemy-anonymous",
+      "mismatches": 74
+    },
+    {
+      "id": "6970e37d9b09d309d780a2c4",
+      "slug": "anti-cotton-plaix",
+      "mismatches": 74
+    },
+    {
+      "id": "697c8e0f150e68b9f4070202",
+      "slug": "thoughts-on-the-persecution-of-the-illuminati-in-bavaria",
+      "mismatches": 73
+    },
+    {
+      "id": "6985ca729161b1d5fa8abc70",
+      "slug": "raphael-or-the-physician-angel-franckenberg",
+      "mismatches": 72
+    },
+    {
+      "id": "697b079aace11a36c66feec5",
+      "slug": "eulogy-of-court-de-gebelin-albon",
+      "mismatches": 72
+    },
+    {
+      "id": "6980941f47addb6bb3431a48",
+      "slug": "the-roaring-lion-decision-on-the-bohemian-war-felgenhauer",
+      "mismatches": 70
+    },
+    {
+      "id": "697c8e13b2d7ab5ea61a0d0c",
+      "slug": "on-faith-and-works-augustinus",
+      "mismatches": 70
+    },
+    {
+      "id": "698255eff929d2810b62cdc2",
+      "slug": "mytho-hermetic-archive-duplessis",
+      "mismatches": 70
+    },
+    {
+      "id": "698420e0f1fb376a3d580608",
+      "slug": "useful-instruction-in-hermetic-philosophical-science-moscherosch",
+      "mismatches": 70
+    },
+    {
+      "id": "698094203eab68ce935a3d93",
+      "slug": "on-the-execution-of-eternal-predestination-staupitz",
+      "mismatches": 70
+    },
+    {
+      "id": "6970e3669b09d309d780a27a",
+      "slug": "alchemical-letters-meyer",
+      "mismatches": 70
+    },
+    {
+      "id": "698420e1f1fb376a3d580618",
+      "slug": "the-ideal-shadow-of-universal-wisdom-sabbathier",
+      "mismatches": 70
+    },
+    {
+      "id": "69c822d76c6f3cc53c84ae3a",
+      "slug": "danksagungs-und-abschiedspredigt-schollkopf",
+      "mismatches": 68
+    },
+    {
+      "id": "69c889376c6f3cc53c85a3ed",
+      "slug": "scriptures-wich-shew-for-what-christ-died",
+      "mismatches": 68
+    },
+    {
+      "id": "69c872d76c6f3cc53c85796f",
+      "slug": "dissertatio-de-cultu-solis-keyssler",
+      "mismatches": 68
+    },
+    {
+      "id": "69c8189b6c6f3cc53c84913b",
+      "slug": "paradisus-aureolus-hermeticus-figulus",
+      "mismatches": 68
+    },
+    {
+      "id": "69c581e3551fbd40b95eaa3a",
+      "slug": "prophecies-or-predictions-of-illustrious-men-fiore",
+      "mismatches": 68
+    },
+    {
+      "id": "69804b9019712623cff1089b",
+      "slug": "the-king-showing-himself-to-all-the-world-anonymous",
+      "mismatches": 68
+    },
+    {
+      "id": "6970e3759b09d309d780a2a8",
+      "slug": "anatomy-of-the-fanatical-dragon-ulricus",
+      "mismatches": 68
+    },
+    {
+      "id": "69c8771f6c6f3cc53c857f86",
+      "slug": "an-explanation-of-the-parables-southcott",
+      "mismatches": 66
+    },
+    {
+      "id": "69c834576c6f3cc53c84e511",
+      "slug": "christliche-predigt-fussel",
+      "mismatches": 66
+    },
+    {
+      "id": "69c82f756c6f3cc53c84d886",
+      "slug": "von-der-menschwerdung-des-herren-christi-cassianus",
+      "mismatches": 66
+    },
+    {
+      "id": "69c71e58da9771c716316a90",
+      "slug": "ein-einfeltige-weyse-zu-betten-fur-einen-gutten-freundt-luther",
+      "mismatches": 66
+    },
+    {
+      "id": "697b079a2dc1670ec50504db",
+      "slug": "a-learned-explanation-of-whether-kings-may-alienate-their-las-casas",
+      "mismatches": 66
+    },
+    {
+      "id": "69c857416c6f3cc53c853fe7",
+      "slug": "historia-und-lebens-lauff-des-seeligen-christian-hoburgs-anonymous",
+      "mismatches": 66
+    },
+    {
+      "id": "697c8e0f6000fdec2f130606",
+      "slug": "the-ladies-chamber-of-the-sisters-of-the-rosy-cross-anonymous",
+      "mismatches": 66
+    },
+    {
+      "id": "697b079711cc8928b55ea3ae",
+      "slug": "echo-of-the-rosicrucian-colloquy-hilarionus",
+      "mismatches": 66
+    },
+    {
+      "id": "69751590233423aeec9e88ec",
+      "slug": "the-golden-fleece-naxagoras",
+      "mismatches": 66
+    },
+    {
+      "id": "69c870736c6f3cc53c8572dc",
+      "slug": "clavis-ofte-sleutel-boehme",
+      "mismatches": 64
+    },
+    {
+      "id": "697e23cc10ae21088f4e9d29",
+      "slug": "introduction-to-a-true-and-unheard-of-physics-hellwig",
+      "mismatches": 64
+    },
+    {
+      "id": "69791609f35c6bbfbfd252d8",
+      "slug": "the-key-of-solomon-and-pneumatic-theosophy-anonymous",
+      "mismatches": 64
+    },
+    {
+      "id": "697a76c4367f907242581feb",
+      "slug": "disquisition-on-the-celebrated-poetic-book-theuerdanck-titz",
+      "mismatches": 64
+    },
+    {
+      "id": "699efa00eb65a28130254492",
+      "slug": "sophompaneas-or-joseph-at-court-groot",
+      "mismatches": 64
+    },
+    {
+      "id": "69804b945629990f549553b9",
+      "slug": "brief-and-thorough-defense-schwenckfeld",
+      "mismatches": 62
+    },
+    {
+      "id": "69c899586c6f3cc53c85cdbc",
+      "slug": "erinnerung-von-brauch-und-miszbrauch-boeser-exempel-arnold",
+      "mismatches": 62
+    },
+    {
+      "id": "697c8e0f6000fdec2f130610",
+      "slug": "on-the-most-dangerous-plan-of-the-illuminati",
+      "mismatches": 62
+    },
+    {
+      "id": "697a728e367f907242581fe5",
+      "slug": "a-solemn-historical-disputation-on-the-rosicrucians-wolf",
+      "mismatches": 62
+    },
+    {
+      "id": "6975158aa88d83c830d99e20",
+      "slug": "astrologie-theologized-weigel",
+      "mismatches": 62
+    },
+    {
+      "id": "69c86b4e6c6f3cc53c856b0a",
+      "slug": "ausslegung-des-evangelii-matth-ix-schwenckfeld",
+      "mismatches": 60
+    },
+    {
+      "id": "69c834666c6f3cc53c84e53b",
+      "slug": "prognosticon-spirituale-oder-geistlicher-calender-unnd-neomenius",
+      "mismatches": 60
+    },
+    {
+      "id": "69c7f9dc6c6f3cc53c84285c",
+      "slug": "trifolium-becherianum-hollandicum-oder-drey-neue-erfindungen-becher",
+      "mismatches": 60
+    },
+    {
+      "id": "697927f6f35c6bbfbfd252f1",
+      "slug": "index-of-the-kabbalistic-manuscripts-of-pico-della-mirandola-gaffarel",
+      "mismatches": 60
+    },
+    {
+      "id": "6985ca74b2c12feb240b8bce",
+      "slug": "prophecy-of-count-bombaste-knight-of-the-rose-cross-anonymous",
+      "mismatches": 60
+    },
+    {
+      "id": "69c85cdb6c6f3cc53c854d92",
+      "slug": "apologia-ofte-schut-rede-bohme",
+      "mismatches": 58
+    },
+    {
+      "id": "69c8347d6c6f3cc53c84e57a",
+      "slug": "rachel-plorans-das-ist-christliche-klag-und-trostpredigt-neomenius",
+      "mismatches": 58
+    },
+    {
+      "id": "69c82fc86c6f3cc53c84d923",
+      "slug": "vom-artickell-unsers-christlichen-glaubens-das-christus-ist-schwenckfeld",
+      "mismatches": 58
+    },
+    {
+      "id": "69c7391b6a0f3d112faf789a",
+      "slug": "kurtze-beschreibung-lob-nutz-und-gebrauch-des-theriacs-und-hellwig",
+      "mismatches": 58
+    },
+    {
+      "id": "697b0799f820c22b1fa94a89",
+      "slug": "the-final-fate-of-the-masonic-order-anonymous",
+      "mismatches": 58
+    },
+    {
+      "id": "6985ca710e83136d85d45de6",
+      "slug": "apology-for-the-harmony-of-the-world-kepler",
+      "mismatches": 58
+    },
+    {
+      "id": "69c822d46c6f3cc53c84ae33",
+      "slug": "inbegriff-der-grundweisheit-oder-kurzer-auszug-aus-den-oetinger",
+      "mismatches": 56
+    },
+    {
+      "id": "69c8990c6c6f3cc53c85ccbf",
+      "slug": "reflexions-d-un-observateur-sur-la-question-quelles-sont-saint-martin",
+      "mismatches": 56
+    },
+    {
+      "id": "6970e36e9b09d309d780a292",
+      "slug": "general-principles-of-the-freemasons-anonymous",
+      "mismatches": 56
+    },
+    {
+      "id": "6976ce66097b3607ee4be2eb",
+      "slug": "interpretation-of-the-gospel-luke-5-schwenckfeld",
+      "mismatches": 56
+    },
+    {
+      "id": "697958faeef1c286564aa43d",
+      "slug": "the-complement-of-astrology-nagel",
+      "mismatches": 55
+    },
+    {
+      "id": "69c89ce76c6f3cc53c85d6ba",
+      "slug": "letters-and-observations-to-ministers-crossley",
+      "mismatches": 54
+    },
+    {
+      "id": "69c898b66c6f3cc53c85cbdc",
+      "slug": "the-strange-effects-of-faith-being-a-continuation-of-joanna-southcott",
+      "mismatches": 54
+    },
+    {
+      "id": "69c85cbf6c6f3cc53c854d54",
+      "slug": "de-hoogh-waardighe-poorte-vande-goddelycke-beschouwelyckheyt-boehme",
+      "mismatches": 54
+    },
+    {
+      "id": "69c807486c6f3cc53c84580d",
+      "slug": "greek-homilia-chrysostomus",
+      "mismatches": 54
+    },
+    {
+      "id": "69c7c98225ec2ba5ccd7fd13",
+      "slug": "bibliotheca-askeviana-manu-scripta-sive-catalogus-librorum",
+      "mismatches": 54
+    },
+    {
+      "id": "697c8e0f0db04f9b26df0d05",
+      "slug": "fama-syderea-nova-gemein-offentliches-aussschreiben-faulhaber",
+      "mismatches": 54
+    },
+    {
+      "id": "697a30558bd1fb4875964410",
+      "slug": "crata-repoa-initiation-into-the-ancient-secret-society-of-koppen",
+      "mismatches": 54
+    },
+    {
+      "id": "69a0278b0918b78c8a2efe00",
+      "slug": "traces-du-magnetisme-cambry",
+      "mismatches": 54
+    },
+    {
+      "id": "697a7fc5e680cef7cedae391",
+      "slug": "the-tradition-of-tradition-a-dissertation-on-the-masorah-meyer",
+      "mismatches": 52
+    },
+    {
+      "id": "69777171e832d9422ad6e0c8",
+      "slug": "letters-from-an-honest-man-to-an-honest-man-on-the-anonymous",
+      "mismatches": 52
+    },
+    {
+      "id": "69c834a36c6f3cc53c84e5de",
+      "slug": "hominis-tabenaculum-terrestre-aedificium-coeleste-des-neomenius",
+      "mismatches": 52
+    },
+    {
+      "id": "69c82e456c6f3cc53c84d5d8",
+      "slug": "volstaendiges-verzeichnis-aller-in-druk-gekommenen-burk",
+      "mismatches": 52
+    },
+    {
+      "id": "697c8e146c65d07127a59f82",
+      "slug": "brother-not-brother-a-warning-to-the-disciples-of-the-rosy-grick",
+      "mismatches": 52
+    },
+    {
+      "id": "69791dc5f35c6bbfbfd252e5",
+      "slug": "the-key-of-wisdom-artephius",
+      "mismatches": 52
+    },
+    {
+      "id": "699ef9ff111f0f0ade163a6b",
+      "slug": "von-der-speise-des-ewigen-lebens-schwenckfeld",
+      "mismatches": 52
+    },
+    {
+      "id": "69c899356c6f3cc53c85cd2d",
+      "slug": "romanus-buchlein-anonymous",
+      "mismatches": 50
+    },
+    {
+      "id": "69c898ab6c6f3cc53c85cbbe",
+      "slug": "the-strange-effects-of-faith-sixth-part-southcott-2",
+      "mismatches": 50
+    },
+    {
+      "id": "69c898976c6f3cc53c85cb8d",
+      "slug": "the-strange-effects-of-faith-fifth-part-southcott-2",
+      "mismatches": 50
+    },
+    {
+      "id": "69c8988b6c6f3cc53c85cb67",
+      "slug": "the-strange-effects-of-faith-fourth-part-southcott-3",
+      "mismatches": 50
+    },
+    {
+      "id": "69c8986c6c6f3cc53c85cb05",
+      "slug": "the-strange-effects-of-faith-third-part-southcott-2",
+      "mismatches": 50
+    },
+    {
+      "id": "69c8984e6c6f3cc53c85caa2",
+      "slug": "the-strange-effects-of-faith-second-part-southcott-2",
+      "mismatches": 50
+    },
+    {
+      "id": "69c8926f6c6f3cc53c85bc53",
+      "slug": "the-strange-effects-of-faith-fifth-part-southcott",
+      "mismatches": 50
+    },
+    {
+      "id": "69c892326c6f3cc53c85bbc6",
+      "slug": "the-strange-effects-of-faith-third-part-southcott",
+      "mismatches": 50
+    },
+    {
+      "id": "69c892176c6f3cc53c85bb7c",
+      "slug": "the-strange-effects-of-faith-second-part-southcott",
+      "mismatches": 50
+    },
+    {
+      "id": "69c833d76c6f3cc53c84e354",
+      "slug": "bestandige-ehren-rettung-das-ist-kurtze-vor-antwort-auff-anonymous",
+      "mismatches": 50
+    },
+    {
+      "id": "6980941f371d9ee79b34f525",
+      "slug": "the-lion-of-the-north-leo-septentrionalis-felgenhauer",
+      "mismatches": 50
+    },
+    {
+      "id": "697c8e0f6000fdec2f130602",
+      "slug": "masonic-rules-according-to-the-convent-of-wilhelmsbad-beyerle",
+      "mismatches": 50
+    },
+    {
+      "id": "6977b7fc112cb9b4f70c3ff4",
+      "slug": "a-virgilian-cento-on-the-brothers-of-the-rosy-cross-grick",
+      "mismatches": 50
+    },
+    {
+      "id": "6976cb83097b3607ee4be2e8",
+      "slug": "detailed-report-and-well-grounded-reasons-quirinus",
+      "mismatches": 50
+    },
+    {
+      "id": "69819209e4f4f6455d89c7b8",
+      "slug": "a-wonderfully-beautiful-instruction-on-the-love-of-god-staupitz-2",
+      "mismatches": 50
+    },
+    {
+      "id": "69804b9019712623cff10891",
+      "slug": "brief-and-well-founded-account-of-the-bohemian-secret-anonymous",
+      "mismatches": 48
+    },
+    {
+      "id": "698255e93e158c7e3c9a4f6a",
+      "slug": "on-the-nature-and-law-of-waters-haugwitz",
+      "mismatches": 48
+    },
+    {
+      "id": "69778b4db450898084dfd929",
+      "slug": "introduction-to-the-kabbalah-montecuccoli",
+      "mismatches": 48
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6cc",
+      "slug": "the-birth-of-christ-rodenburgh",
+      "mismatches": 48
+    },
+    {
+      "id": "69c8349f6c6f3cc53c84e5da",
+      "slug": "christliche-leichpredigt-bey-dem-begrebnuss-des-herren-neomenius",
+      "mismatches": 46
+    },
+    {
+      "id": "69c834886c6f3cc53c84e598",
+      "slug": "christliche-klag-und-trostpredigt-uber-dem-todtlichen-neomenius",
+      "mismatches": 46
+    },
+    {
+      "id": "69c8303f6c6f3cc53c84d9e4",
+      "slug": "ein-christlicher-sendbrieff-vom-span-und-rechten-mittel-schwenckfeld",
+      "mismatches": 46
+    },
+    {
+      "id": "69c6f2feda9771c716314dec",
+      "slug": "wilt-du-den-kayser-sehen-so-siehe-hinten-in-diesen-brieff-anonymous",
+      "mismatches": 46
+    },
+    {
+      "id": "69c63cbcb463eebe7caac51e",
+      "slug": "van-de-vier-complexien-boehme",
+      "mismatches": 46
+    },
+    {
+      "id": "69c8928e6c6f3cc53c85bc99",
+      "slug": "the-strange-effects-of-faith-sixth-part-southcott",
+      "mismatches": 46
+    },
+    {
+      "id": "69c7f7706c6f3cc53c8420a9",
+      "slug": "consideratio-praesentium-horum-osiandrus",
+      "mismatches": 46
+    },
+    {
+      "id": "6981920786654d9d793ff3a2",
+      "slug": "arbatel-on-the-magic-of-the-ancients-anonymous",
+      "mismatches": 44
+    },
+    {
+      "id": "698255f30b7815826b5ac95b",
+      "slug": "mytho-hermetic-archive-duplessis-2",
+      "mismatches": 44
+    },
+    {
+      "id": "697a86f8e680cef7cedae3ac",
+      "slug": "a-simple-and-concise-manual-for-hebrew-accents-pfeiffer",
+      "mismatches": 44
+    },
+    {
+      "id": "697a7ce0e680cef7cedae38b",
+      "slug": "a-juridical-historical-dissertation-on-the-crucifixion-of-reyher",
+      "mismatches": 44
+    },
+    {
+      "id": "697a77e4367f907242581fed",
+      "slug": "a-dissertation-on-trial-by-fire-and-water-heinius",
+      "mismatches": 44
+    },
+    {
+      "id": "6988a5a2ee89ad144aa273c0",
+      "slug": "creation-through-numbers-and-words-gleichen",
+      "mismatches": 44
+    },
+    {
+      "id": "6976d3d4097b3607ee4be2f1",
+      "slug": "interpretation-of-the-gospel-of-luke-chapter-6-schwenckfeld",
+      "mismatches": 44
+    },
+    {
+      "id": "699ef9fb1ec3ccc75bf5317e",
+      "slug": "sendbrieff-oder-bericht-an-alle-welche-von-den-newen-sperber",
+      "mismatches": 44
+    },
+    {
+      "id": "69c84dae6c6f3cc53c852795",
+      "slug": "ausslegung-dess-evangelii-luce-6-schwenckfeld",
+      "mismatches": 42
+    },
+    {
+      "id": "69c82fb26c6f3cc53c84d8fb",
+      "slug": "ein-schoner-sendbrieff-vom-saligmachenden-erkandtnus-christi-schwenckfeld",
+      "mismatches": 42
+    },
+    {
+      "id": "69c8072e6c6f3cc53c8457b9",
+      "slug": "greek-omilia-chrysostomus",
+      "mismatches": 42
+    },
+    {
+      "id": "69c7391b6a0f3d112faf78ab",
+      "slug": "zwey-sendschreiben-hellwig",
+      "mismatches": 42
+    },
+    {
+      "id": "69c6e911da9771c71631467b",
+      "slug": "warhaffter-bestandiger-gegenbericht-welcher-massen-das-anonymous",
+      "mismatches": 42
+    },
+    {
+      "id": "69c89c9c6c6f3cc53c85d5ff",
+      "slug": "die-zeichen-der-zeiten-lead",
+      "mismatches": 42
+    },
+    {
+      "id": "69c71ed5da9771c716316ac8",
+      "slug": "ein-hertzlich-betrachtung-des-leydens-christi-jesu",
+      "mismatches": 42
+    },
+    {
+      "id": "69c581e3551fbd40b95eaa34",
+      "slug": "an-explanation-of-the-table-of-the-three-principles-bohme",
+      "mismatches": 42
+    },
+    {
+      "id": "69804b952c52aad359879321",
+      "slug": "on-the-philosopher-s-stone-lambspringk",
+      "mismatches": 42
+    },
+    {
+      "id": "698420e370dfb8f6def32219",
+      "slug": "now-i-have-finally-become-catholic-anonymous",
+      "mismatches": 40
+    },
+    {
+      "id": "69c8a47d6c6f3cc53c85e8ff",
+      "slug": "bedenken-uber-die-schropferischen-geisterbeschworungen-crusius",
+      "mismatches": 40
+    },
+    {
+      "id": "6985ca722dee84d6b6afece9",
+      "slug": "restoration-to-the-fraternity-of-the-rosy-cross-anonymous",
+      "mismatches": 40
+    },
+    {
+      "id": "6976d4c1097b3607ee4be2f5",
+      "slug": "extract-on-the-ministry-of-preaching-schwenckfeld",
+      "mismatches": 40
+    },
+    {
+      "id": "69c87ed96c6f3cc53c858dd7",
+      "slug": "moise-tabernaculum-cum-suis-tribus-partibus-zum-greek-weigel",
+      "mismatches": 38
+    },
+    {
+      "id": "6970e37e9b09d309d780a2c6",
+      "slug": "antikrisis-a-short-rejoinder-and-defense-grick",
+      "mismatches": 38
+    },
+    {
+      "id": "697a7e85e680cef7cedae38d",
+      "slug": "a-juridical-political-dissertation-on-the-growth-and-care-rauscher",
+      "mismatches": 38
+    },
+    {
+      "id": "697a3055f077efe5c8fd6a2c",
+      "slug": "crata-repoa-initiations-into-the-ancient-secret-society-of-koppen",
+      "mismatches": 38
+    },
+    {
+      "id": "697b079aa8c26e7bda1b988d",
+      "slug": "on-the-extinction-of-the-order-of-the-templars-wichmanshausen",
+      "mismatches": 38
+    },
+    {
+      "id": "697a5562c915282d8f071f74",
+      "slug": "declaration-on-chapter-13-of-revelation-doni",
+      "mismatches": 38
+    },
+    {
+      "id": "698255f201db8acc6dc74cc9",
+      "slug": "necessary-appendix-to-the-final-fate-of-the-masonic-order-anonymous",
+      "mismatches": 36
+    },
+    {
+      "id": "6978ee3a5ca42f98164d5396",
+      "slug": "chrysorrhoas-a-dialogue-on-the-chemical-art-anonymous",
+      "mismatches": 36
+    },
+    {
+      "id": "697768b0e832d9422ad6e0ba",
+      "slug": "on-cannons-and-typography-besold",
+      "mismatches": 36
+    },
+    {
+      "id": "69c807766c6f3cc53c84589c",
+      "slug": "greek-tractatus-in-terraemotum-chrysostomus",
+      "mismatches": 36
+    },
+    {
+      "id": "698420e3265806e3d80fe352",
+      "slug": "discovery-of-certain-secret-dealings-of-the-jesuits-anonymous",
+      "mismatches": 36
+    },
+    {
+      "id": "69c86ea16c6f3cc53c856f35",
+      "slug": "catholische-sturm-glocke-zu-auffmerckung-der-spanischen-anonymous",
+      "mismatches": 34
+    },
+    {
+      "id": "69c82ffe6c6f3cc53c84d978",
+      "slug": "vom-ewigen-wesen-gottes-schwenckfeld",
+      "mismatches": 34
+    },
+    {
+      "id": "6974b63819126e775cf6d7c1",
+      "slug": "the-revelation-of-st-john-apocalypsis-s-joannis",
+      "mismatches": 34
+    },
+    {
+      "id": "697a6b9bb981745f5fac1d7a",
+      "slug": "discourse-on-the-angels-or-spirits-of-empires-besold",
+      "mismatches": 34
+    },
+    {
+      "id": "699ef9ff0c193b4c7eab48d1",
+      "slug": "missive-to-the-highly-enlightened-brotherhood-of-the-rosy-anonymous",
+      "mismatches": 34
+    },
+    {
+      "id": "6988a5a203b42b4e53318d32",
+      "slug": "the-key-of-david-vadianus",
+      "mismatches": 33
+    },
+    {
+      "id": "6985ca6c9d0a51f652882353",
+      "slug": "forerunner-of-the-eternal-gospel-felgenhauer",
+      "mismatches": 32
+    },
+    {
+      "id": "697b07993311b160c0f9b6f8",
+      "slug": "significant-motives-for-leaving-the-papacy-vrillac",
+      "mismatches": 32
+    },
+    {
+      "id": "69819209941a62e72926f9a9",
+      "slug": "magical-oracles-magica-oracula-zoroaster",
+      "mismatches": 32
+    },
+    {
+      "id": "69c842ce6c6f3cc53c850db1",
+      "slug": "the-olive-leafe-or-universall-abce-top",
+      "mismatches": 30
+    },
+    {
+      "id": "69c822cb6c6f3cc53c84ae12",
+      "slug": "merkwaardige-beschryving-van-het-eiland-formosa-anonymous",
+      "mismatches": 30
+    },
+    {
+      "id": "69c832956c6f3cc53c84dfce",
+      "slug": "thesauri-et-armamentarii-medico-chymici-appendix-anonymous",
+      "mismatches": 30
+    },
+    {
+      "id": "697b079611cc8928b55ea38c",
+      "slug": "threefold-arcana-to-the-rosicrucian-fraternity-anonymous",
+      "mismatches": 30
+    },
+    {
+      "id": "697d9ca341ae75bfde3a007a",
+      "slug": "the-heavenly-samaritan-and-the-two-stemmed-knight-of-jacob-anonymous",
+      "mismatches": 28
+    },
+    {
+      "id": "697d9c99f2b56306a9ec961a",
+      "slug": "a-thorough-report-on-the-brotherhood-of-the-rosy-cross-anonymous",
+      "mismatches": 28
+    },
+    {
+      "id": "697704f46c2d4c1753571409",
+      "slug": "report-on-secular-authority-radecker",
+      "mismatches": 28
+    },
+    {
+      "id": "6977a4235006b852ab453564",
+      "slug": "christian-penitential-sermons-spener",
+      "mismatches": 28
+    },
+    {
+      "id": "69c709e8da9771c716315e76",
+      "slug": "ueber-den-nach-goettlicher-direction-erfolgten-abzug-des",
+      "mismatches": 26
+    },
+    {
+      "id": "69c581e3551fbd40b95eaa38",
+      "slug": "reasons-why-the-most-serene-and-mighty-prince-and-lord-anonymous",
+      "mismatches": 26
+    },
+    {
+      "id": "6970e3799b09d309d780a2b6",
+      "slug": "in-the-name-of-jesus-announcement-of-the-day-of-vengeance-breckling",
+      "mismatches": 26
+    },
+    {
+      "id": "699ef9f2c2bcb75dbdbaad94",
+      "slug": "sun-without-clothing-or-thirty-experiments-orschall",
+      "mismatches": 26
+    },
+    {
+      "id": "69c8744e6c6f3cc53c857c55",
+      "slug": "ecce-homo-ziet-den-mensch-rodenburgh",
+      "mismatches": 24
+    },
+    {
+      "id": "697d9c99f2b56306a9ec9626",
+      "slug": "on-the-hebrews-besold",
+      "mismatches": 24
+    },
+    {
+      "id": "6970e3639b09d309d780a272",
+      "slug": "alchymiae-complementum-et-perfectio-norton",
+      "mismatches": 24
+    },
+    {
+      "id": "697e23c91dbad46262376aa4",
+      "slug": "illustrious-questions-from-the-last-four-books-of-the-forstner",
+      "mismatches": 24
+    },
+    {
+      "id": "69778932ea8c250fd9c79a17",
+      "slug": "cabala-mirror-of-art-and-nature-in-alchemy-michelspacher",
+      "mismatches": 24
+    },
+    {
+      "id": "69c822c26c6f3cc53c84adf0",
+      "slug": "merkwurdiger-americanischer-haushaltungs-calender-anonymous",
+      "mismatches": 22
+    },
+    {
+      "id": "6988a59fc4b7f7f0405a901a",
+      "slug": "christ-is-the-goal-of-my-life-wangenheim",
+      "mismatches": 22
+    },
+    {
+      "id": "697a81b1e680cef7cedae39f",
+      "slug": "philological-dissertations-besold",
+      "mismatches": 22
+    },
+    {
+      "id": "69791077eb0dcfd399123428",
+      "slug": "a-medley-of-legal-problems-besold",
+      "mismatches": 22
+    },
+    {
+      "id": "698255f390aaf7ca4ec0e934",
+      "slug": "to-the-neighbor-with-advice-an-epistle-to-friedrich-von-claudius",
+      "mismatches": 22
+    },
+    {
+      "id": "69c8661c6c6f3cc53c856357",
+      "slug": "aendachticheyt-op-s-doods-ghedachtens-zoetheydts-rodenburgh",
+      "mismatches": 20
+    },
+    {
+      "id": "69c8356a6c6f3cc53c84e8e2",
+      "slug": "victoria-perpetua-das-ist-unendliche-freude-der-anonymous",
+      "mismatches": 18
+    },
+    {
+      "id": "69c807696c6f3cc53c845874",
+      "slug": "greek-de-sancto-martyre-romano-oratio-ii-chrysostomus",
+      "mismatches": 18
+    },
+    {
+      "id": "69c7d4b225ec2ba5ccd804ac",
+      "slug": "offen-ausschreiben-warumb-wir-die-cron-boheimb-und-der-pfaltz",
+      "mismatches": 18
+    },
+    {
+      "id": "6984e84e9a954caa99f6e4df",
+      "slug": "monetary-paradoxes-anonymous",
+      "mismatches": 18
+    },
+    {
+      "id": "69804b94a95170ed4cd828ea",
+      "slug": "judgment-on-the-last-booklet-of-flacius-illyricus-schwenckfeld",
+      "mismatches": 18
+    },
+    {
+      "id": "697d9c9c971fd6d8096654de",
+      "slug": "thorough-report-on-a-new-and-unusual-star-kepler",
+      "mismatches": 18
+    },
+    {
+      "id": "6911cf678cb6d2ae494a1061",
+      "slug": "the-book-of-brightness-hakana",
+      "mismatches": 18
+    },
+    {
+      "id": "697e23c9de4157152fdec099",
+      "slug": "high-and-deep-grounds-of-the-threefold-life-of-man-boehme",
+      "mismatches": 18
+    },
+    {
+      "id": "697a73ae367f907242581fe7",
+      "slug": "legal-disputation-on-the-right-of-emphyteusis-wiebelius",
+      "mismatches": 16
+    },
+    {
+      "id": "69c83c836c6f3cc53c84f9c8",
+      "slug": "greek-de-invidia-homilia-xvii-chrysostomus",
+      "mismatches": 14
+    },
+    {
+      "id": "69c6e894da9771c71631462d",
+      "slug": "warhaffte-und-eigentliche-beschreibung-welcher-gestalt-herr",
+      "mismatches": 14
+    },
+    {
+      "id": "697a34543ad9628e518f3410",
+      "slug": "deduction-concerning-the-free-exercise-of-the-augsburg",
+      "mismatches": 14
+    },
+    {
+      "id": "6988a5a2c072fc1650156238",
+      "slug": "letter-from-christian-iv-of-denmark-to-ambrosio-spinola-anonymous",
+      "mismatches": 14
+    },
+    {
+      "id": "697a3055e5f7054dcf9cc423",
+      "slug": "copy-of-the-mandate-of-gustavus-adolphus-anonymous",
+      "mismatches": 14
+    },
+    {
+      "id": "69819209c73493ba18172b35",
+      "slug": "philosophical-magic-patrizi",
+      "mismatches": 12
+    },
+    {
+      "id": "69c8861c6c6f3cc53c859d0a",
+      "slug": "protestation-schrifft-pfalz",
+      "mismatches": 10
+    },
+    {
+      "id": "69c8349e6c6f3cc53c84e5d6",
+      "slug": "abdanckung-bey-den-volckreichen-begrabnis-des-herrn-schickfus",
+      "mismatches": 10
+    },
+    {
+      "id": "69c7d4cd25ec2ba5ccd804dd",
+      "slug": "der-rom-kays-maj-zum-reichs-deputation-tag-verordneten-anonymous",
+      "mismatches": 10
+    },
+    {
+      "id": "69c6fa9dda9771c716315338",
+      "slug": "das-wunderseltzame-leben-auffnehmung-unnd-grosswerdung-der-anonymous",
+      "mismatches": 10
+    },
+    {
+      "id": "6970b86b1c3cc0c3f5d65708",
+      "slug": "copy-of-the-royal-patents-regarding-commerce-on-the-elbe-anonymous",
+      "mismatches": 10
+    },
+    {
+      "id": "697e23c9fe383588b24e60b8",
+      "slug": "a-collection-of-illustrious-questions-from-books-1-and-2-breitschwerdt",
+      "mismatches": 8
+    },
+    {
+      "id": "697a7643367f907242581fe9",
+      "slug": "legal-disputation-on-selected-decisions-of-controversial-law-hauss",
+      "mismatches": 8
+    },
+    {
+      "id": "69a0278c48c054845a3bacfb",
+      "slug": "subsequent-themes-of-controversial-law-ehinger",
+      "mismatches": 8
+    },
+    {
+      "id": "697e23c889129c76cafde618",
+      "slug": "a-medley-of-political-questions-mockelius",
+      "mismatches": 6
+    },
+    {
+      "id": "6985ca71baced3616f202e2d",
+      "slug": "selected-controversial-questions-from-the-pandects-pfaud",
+      "mismatches": 6
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee610b",
+      "slug": "philaletha-illustrated-or-an-open-entrance-to-the-closed-faust",
+      "mismatches": 6
+    },
+    {
+      "id": "68679f27fc518f6dbf334eb6",
+      "slug": "know-thyself-o-man-astrology-theologized-weigel",
+      "mismatches": 4
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee610d",
+      "slug": "the-mineral-gluten-walchin",
+      "mismatches": 2
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee611b",
+      "slug": "adamite-magic-or-the-antiquity-of-magic-vaughan",
+      "mismatches": 2
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee6113",
+      "slug": "menippus-or-a-century-of-satirical-dialogues-andreae-2",
+      "mismatches": 2
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee6111",
+      "slug": "metaphysical-heresies-gleichen-2",
+      "mismatches": 2
+    }
+  ]
+}

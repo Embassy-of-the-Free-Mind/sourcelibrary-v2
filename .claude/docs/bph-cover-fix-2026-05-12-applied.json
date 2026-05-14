@@ -1,0 +1,654 @@
+{
+  "run_date": "2026-05-12",
+  "mode": "apply",
+  "counts": {
+    "fixed": 38,
+    "skipped": 0,
+    "manual": 0
+  },
+  "fixed": [
+    {
+      "id": "6985ca6c9d0a51f65288235d",
+      "slug": "on-presages-prophecies-and-divinations-paracelsus",
+      "title": "De praesagiis, vatiticinijs [!] et divinationibus. Astronomica item et astrologica fragmenta",
+      "read_count": 17,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6985ca6c9d0a51f65288235d/6985cb07151e1f381bc5279b.jpg"
+      }
+    },
+    {
+      "id": "69819203084978306e4933f4",
+      "slug": "universal-medicine-or-the-mystic-sanctuary-of-the-healing-fludd",
+      "title": "Medicina catholica, seu mysticum artis medicandi sacrarium",
+      "read_count": 6,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/69819203084978306e4933f4/698193451c3027d6de3747ef.jpg"
+      }
+    },
+    {
+      "id": "6974b64619126e775cf6d7e1",
+      "slug": "argonautica-rhodius",
+      "title": "[Greek] Argonauticon libri IIII",
+      "read_count": 5,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6974b64619126e775cf6d7e1/6975cb146d2d7fc05ae6bdf1.jpg"
+      }
+    },
+    {
+      "id": "6970e3729b09d309d780a29e",
+      "slug": "three-dialogues-on-love-abrabanel",
+      "title": "De amore dialogi tres",
+      "read_count": 5,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 19,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6970e3729b09d309d780a29e/6974c0d4f190a58e3eaf7e80.jpg"
+      }
+    },
+    {
+      "id": "6974b64919126e775cf6d7ed",
+      "slug": "on-the-great-art-democritus",
+      "title": "De arte magna",
+      "read_count": 4,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 9,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6974b64919126e775cf6d7ed/697604c66ab59fe02ae4bb5d.jpg"
+      }
+    },
+    {
+      "id": "697c8e0f6000fdec2f13060c",
+      "slug": "new-geomancy-weigel",
+      "title": "Geomantia nova",
+      "read_count": 4,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 1,
+        "strategy": "early:pg1",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0f6000fdec2f13060c/697c8e8e5089aaebdcee2e23.jpg"
+      }
+    },
+    {
+      "id": "6985ca6c9d0a51f65288235f",
+      "slug": "general-and-rational-plan-of-the-primitive-world-court-de-gebelin",
+      "title": "Plan général et raisonné des divers objets...qui composent...Monde primitif",
+      "read_count": 4,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 1,
+        "strategy": "early:pg1",
+        "url": "https://images.sourcelibrary.org/uploads/6985ca6c9d0a51f65288235f/6985ca6fc2d0de96fd41ada8.jpg"
+      }
+    },
+    {
+      "id": "6984e8498a2f054f912420bf",
+      "slug": "the-revived-philosophical-adrop-phoenix-atropicus-anonymous-hollandus",
+      "title": "Phoenix atropicus de morte redux. Der wiederum frisch belebte gebenedeyte philosophische Adrop. Tractatus de urina",
+      "read_count": 3,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 3,
+        "strategy": "early:pg3",
+        "url": "https://images.sourcelibrary.org/uploads/6984e8498a2f054f912420bf/6984e8f1571cdafe994837fe.jpg"
+      }
+    },
+    {
+      "id": "6985ca6d9d0a51f652882365",
+      "slug": "pyrrho-clidensis-redivivus-a-consideration-of-the-hoffmann",
+      "title": "Pyrrho Clidensis: redivivus. Das ist, philosophisch, doch noch zur zeit nichts determinirente [!] Consideration, von der hochberühmbten newen Brüderschafft derer von Rosencreutz",
+      "read_count": 3,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 2,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6985ca6d9d0a51f652882365/6985ca76cac5ff7d5cc6d43a.jpg"
+      }
+    },
+    {
+      "id": "697c8e0f14b7d066516d71c3",
+      "slug": "on-freemasonry-anonymous",
+      "title": "Ueber Freymaurerey",
+      "read_count": 3,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 1,
+        "strategy": "early:pg1",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0f14b7d066516d71c3/697c8e1c50f363038fa8e3f0.jpg"
+      }
+    },
+    {
+      "id": "6974b644457dd8909910b9ef",
+      "slug": "philosophical-archaeologies-burnet",
+      "title": "Archaeologiae philosophicae sive doctrina antiqua de rerum originibus. Libri duo",
+      "read_count": 2,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 7,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6974b644457dd8909910b9ef/6975a05fefc24c700962bbc4.jpg"
+      }
+    },
+    {
+      "id": "6984e8498a2f054f912420bd",
+      "slug": "sacred-and-truly-christian-philosophy-fludd-2",
+      "title": "Philosophia sacra et vere christiana seu meteorologia cosmica",
+      "read_count": 2,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 2,
+        "page_type": "illustration",
+        "strategy": "illustration",
+        "url": "https://images.sourcelibrary.org/uploads/6984e8498a2f054f912420bd/6984e934571cdafe99483812.jpg"
+      }
+    },
+    {
+      "id": "6974b644457dd8909910b9ed",
+      "slug": "the-secret-work-of-hermetic-philosophy-espagnet",
+      "title": "Arcanum hermeticae philosophiae opus",
+      "read_count": 1,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 7,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6974b644457dd8909910b9ed/697590e38fc1ded665c69583.jpg"
+      }
+    },
+    {
+      "id": "6974b64919126e775cf6d7ef",
+      "slug": "articles-of-agreement-of-the-three-estates-of-the-kingdom-anonymous",
+      "title": "Articul der Vergleichung aller dreyen Stände dess Königreichs Böhemen",
+      "read_count": 1,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 1,
+        "strategy": "early:pg1",
+        "url": "https://images.sourcelibrary.org/uploads/6974b64919126e775cf6d7ef/6976058de78526a06b2769ef.jpg"
+      }
+    },
+    {
+      "id": "697d9c9c72d515cb07bb384c",
+      "slug": "the-foundation-barrefelt",
+      "title": "Das Grund-Stuck",
+      "read_count": 1,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 4,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697d9c9c72d515cb07bb384c/697d9d31de227f6016459744.jpg"
+      }
+    },
+    {
+      "id": "6978ee37a87012956d883ad6",
+      "slug": "a-christian-reflection-on-the-common-rumor-maier",
+      "title": "Ein christlich Bedencken: Von dem gemeynen Geschrey",
+      "read_count": 1,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6978ee37a87012956d883ad6/6978ef513a7ffaa2e622fe7c.jpg"
+      }
+    },
+    {
+      "id": "6984e8498a2f054f912420d3",
+      "slug": "two-volumes-of-pasquils",
+      "title": "Pasquillorum tomi duo",
+      "read_count": 1,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 9,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6984e8498a2f054f912420d3/6984e92276b419925fb85507.jpg"
+      }
+    },
+    {
+      "id": "6978ee37a87012956d883ad8",
+      "slug": "a-christian-and-heavenly-treatise-containing-physicke-for-th-abernethy-883ad8",
+      "title": "A christian and heavenly treatise. Containing physicke for the soule",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 7,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6978ee37a87012956d883ad8/6978f0a3593d8101a61696a8.jpg"
+      }
+    },
+    {
+      "id": "6970e3729b09d309d780a2a0",
+      "slug": "amphitheater-of-eternal-wisdom-the-only-true-christian-kabba-khunrath-80a2a0",
+      "title": "Amphitheatrum sapientiae aeternae",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 1,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6970e3729b09d309d780a2a0/6974c9c561bd780d0f4bc7f3.jpg"
+      }
+    },
+    {
+      "id": "6974b64619126e775cf6d7e3",
+      "slug": "ars-brevis-lull-f6d7e3",
+      "title": "Ars brevis",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 2,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6974b64619126e775cf6d7e3/6975cf074d40d43aed55fb9e.jpg"
+      }
+    },
+    {
+      "id": "6978ee3a9ff927bc53947519",
+      "slug": "chymische-schrifften-bernhardus-trevisanus-947519",
+      "title": "Chymische Schrifften",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 1,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6978ee3a9ff927bc53947519/6978ee9a4ce94f837f2ea58c.jpg"
+      }
+    },
+    {
+      "id": "697c8e0f4733b2a5648ad8bf",
+      "slug": "the-secret-of-all-secrets-or-the-golden-concept-of-the-anonymous",
+      "title": "Das Geheimnis aller Geheimnisse ex Macrocosmo et Microcosmo, oder der güldene Begriff der geheimsten Geheimnisse der Rosen- und Gülden-Kreutzer",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 2,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0f4733b2a5648ad8bf/697c8e1d6e6c85d2bdeee714.jpg"
+      }
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6b4",
+      "slug": "the-secret-of-the-cross-of-jesus-christ-and-his-members-douzetemps",
+      "title": "Das Geheimnis des betrübenden und tröstenden, des tödtenden und lebendigmachenden, des erniedrigenden und triumphirenden Kreutzes Jesu Christi und seiner Glieder",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 9,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0fbaa544415f85b6b4/697c8f1b475eac27c98839ed.jpg"
+      }
+    },
+    {
+      "id": "697d9c9b72d515cb07bb3842",
+      "slug": "the-heavenly-cloud-now-breaking-lead",
+      "title": "De hemelsche wolcke nu doorbreekende",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 8,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697d9c9b72d515cb07bb3842/697d9e0443a5e3b7a6c2b747.jpg"
+      }
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a1a",
+      "slug": "the-long-desired-and-promised-chemical-philosophical-fictuld",
+      "title": "Der längst gewünschte und versprochenen chymisch-philosophischen Probier-Steins",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/69804b901fb2ba7cf1d43a1a/69804bf1c34bcd1c5fc42c6b.jpg"
+      }
+    },
+    {
+      "id": "697b079611cc8928b55ea390",
+      "slug": "des-erreurs-et-de-la-verite-saint-martin-5ea390",
+      "title": "Des erreurs et de la verite",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697b079611cc8928b55ea390/697b08952a17f8faf5dda4fd.jpg"
+      }
+    },
+    {
+      "id": "697b079611cc8928b55ea392",
+      "slug": "explanation-of-the-hermetic-golden-stream-monte-hermetis",
+      "title": "Explicatio centri in trigono centri per somnium, das ist: Erläuterung dess hermetischen güldenen Fluss",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 7,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697b079611cc8928b55ea392/697b091aa50a8a7612aca4a7.jpg"
+      }
+    },
+    {
+      "id": "697c8e0fbaa544415f85b6b2",
+      "slug": "geoffenbarter-einfluss-in-das-allgemeine-wohl-der-staaten-de-schleiss-von-lowenfeld-85b6b2",
+      "title": "Geoffenbarter Einfluss in das allgemeine Wohl der Staaten der ächten Freymaeurerey",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0fbaa544415f85b6b2/697c8ee957e0cbc907f85937.jpg"
+      }
+    },
+    {
+      "id": "697c8e0f6000fdec2f13060e",
+      "slug": "geoffenbarter-einfluss-in-das-allgemeine-wohl-der-staaten-de-schleiss-von-lowenfeld-13060e",
+      "title": "Geoffenbarter Einfluss in das allgemeine Wohl der Staaten der ächten Freymaeurerey",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0f6000fdec2f13060e/697c8e6c5089aaebdcee2e1c.jpg"
+      }
+    },
+    {
+      "id": "697c8e0f4733b2a5648ad8bd",
+      "slug": "god-herder",
+      "title": "Gott",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0f4733b2a5648ad8bd/697c8ebbcd311f82eda97ab4.jpg"
+      }
+    },
+    {
+      "id": "697d9c9b72d515cb07bb3844",
+      "slug": "gott-ist-die-reinste-liebe-eckartshausen-bb3844",
+      "title": "Gott ist die reinste Liebe",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 8,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697d9c9b72d515cb07bb3844/697d9dedea5cc3ecadba527b.jpg"
+      }
+    },
+    {
+      "id": "697d9c9c72d515cb07bb384e",
+      "slug": "hermetischer-rosenkrantz-anonymous-bb384e",
+      "title": "Hermetischer Rosenkrantz",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 6,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697d9c9c72d515cb07bb384e/697d9d98f5387c4b5d1d9200.jpg"
+      }
+    },
+    {
+      "id": "697c8e0f14b7d066516d71c1",
+      "slug": "i-n-j-goldene-quelle-der-natur-und-kunst-richter-6d71c1",
+      "title": "I.N.J. Göldene Quelle der Natur und Kunst",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/697c8e0f14b7d066516d71c1/697c8f2344fcd6d4db42890f.jpg"
+      }
+    },
+    {
+      "id": "69804b901fb2ba7cf1d43a1c",
+      "slug": "lebensbeschreibungen-beruhmter-manner-aus-den-zeiten-der-wie-meiners-d43a1c",
+      "title": "Lebensbeschreibungen berühmter Männer aus den Zeiten der Wiederherstellung der Wissenschaften",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/69804b901fb2ba7cf1d43a1c/69804c4c11862cca6f48ce3f.jpg"
+      }
+    },
+    {
+      "id": "6985ca6d9d0a51f652882363",
+      "slug": "les-plus-secrets-mysteres-des-hauts-grades-de-la-maconnerie-koppen-882363",
+      "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6985ca6d9d0a51f652882363/6985cb6a220a2cf6724ca150.jpg"
+      }
+    },
+    {
+      "id": "69819203084978306e4933f6",
+      "slug": "revealer-of-the-great-secret-of-the-philosophers-in-which-th-anonymous-4933f6",
+      "title": "Magni philosophorum arcani revelator",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 5,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/69819203084978306e4933f6/698193630bf5dccdd84fa84c.jpg"
+      }
+    },
+    {
+      "id": "6984e8498a2f054f912420d1",
+      "slug": "philaletha-illustratus-faust-2420d1",
+      "title": "Philaletha illustratus",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 2,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6984e8498a2f054f912420d1/6984e9558da2dd6d5b922feb.jpg"
+      }
+    },
+    {
+      "id": "6978ee3a9ff927bc53947517",
+      "slug": "detailed-account-of-his-supposed-death-bachstrom",
+      "title": "Umständliche Erzehlung, wie es seinem vermeinten Tode zugegangen sey",
+      "read_count": 0,
+      "from": {
+        "page": null,
+        "state": "MISSING",
+        "url": null
+      },
+      "to": {
+        "page": 7,
+        "page_type": "title-page",
+        "strategy": "title-page",
+        "url": "https://images.sourcelibrary.org/uploads/6978ee3a9ff927bc53947517/6978eee2e973a18f298f40a1.jpg"
+      }
+    }
+  ],
+  "skipped": [],
+  "manual": []
+}

@@ -9,6 +9,12 @@ const SESSION_GAP_MS = 30 * 60 * 1000; // 30 minutes
 
 /**
  * POST /api/reading-history — record a page view (sendBeacon)
+ *
+ * The proxy attaches a tenant header on tenant subdomains and `/[tenant]/`
+ * paths. For canonical `/book/{slug}` URLs there is no tenant in the path and
+ * no referer slug to infer from, so we resolve the tenant from the book
+ * itself — same pattern the likes route uses.
+ *
  * Silent no-op for anonymous users.
  */
 export async function POST(request: NextRequest) {
@@ -26,15 +32,24 @@ export async function POST(request: NextRequest) {
     }
 
     const userId = session.user.id;
-    const { id: tenantId } = getTenantContextFromRequest(request);
-    if (!tenantId) {
-      return NextResponse.json({ success: true }); // silent fail
-    }
-
     const now = new Date();
 
     const dbWork = (async () => {
       const db = await getDb();
+
+      // Tenant from proxy header if available; otherwise look up the book.
+      let tenantId = getTenantContextFromRequest(request).id;
+      let resolvedBookId = book_id;
+      if (!tenantId) {
+        const book = await db.collection('books').findOne(
+          { $or: [{ id: book_id }, { slug: book_id }] },
+          { projection: { id: 1, tenantId: 1 } }
+        );
+        tenantId = (book?.tenantId as string) || null;
+        if (book?.id) resolvedBookId = book.id as string;
+      }
+      if (!tenantId) return; // unknown book/tenant — silent fail
+
       const collection = db.collection('reading_history');
       const cutoff = new Date(now.getTime() - SESSION_GAP_MS);
 
@@ -42,7 +57,7 @@ export async function POST(request: NextRequest) {
       const existing = await collection.findOne(
         {
           user_id: userId,
-          book_id,
+          book_id: resolvedBookId,
           tenantId,
           updated_at: { $gte: cutoff },
         },
@@ -60,13 +75,12 @@ export async function POST(request: NextRequest) {
             },
             $inc: { pages_viewed: 1 },
             $addToSet: { pages_read: { page_id, page_number } },
-          tenantId,
           }
         );
       } else {
         await collection.insertOne({
           user_id: userId,
-          book_id,
+          book_id: resolvedBookId,
           first_page_id: page_id,
           first_page_number: page_number,
           last_page_id: page_id,
@@ -75,6 +89,7 @@ export async function POST(request: NextRequest) {
           pages_read: [{ page_id, page_number }],
           started_at: now,
           updated_at: now,
+          tenantId,
           ...(referrer ? { referrer } : {}),
         });
       }
@@ -92,23 +107,27 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * GET /api/reading-history — list reading history (auth required)
+ * GET /api/reading-history — list reading history (auth required).
+ *
+ * Scopes to the tenant if the proxy injected a tenant header (e.g. on
+ * bph.sourcelibrary.org or /[tenant]/reading-history). On the canonical
+ * /reading-history page there is no tenant context and we show every book
+ * the user has read across the library.
  */
 export const GET = withAuth(async (request, session) => {
   const { searchParams } = new URL(request.url);
   const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
-  const userId = session.user!.id;
+  const userId = session.user!.id as string;
   const { id: tenantId } = getTenantContextFromRequest(request);
 
-  if (!tenantId) {
-    return NextResponse.json({ entries: [], total: 0 });
-  }
+  const baseMatch: Record<string, string> = { user_id: userId };
+  if (tenantId) baseMatch.tenantId = tenantId;
 
   const db = await getDb();
 
   const pipeline = [
-    { $match: { user_id: userId, tenantId } },
+    { $match: baseMatch },
     { $sort: { updated_at: -1 as const } },
     { $skip: offset },
     { $limit: limit },
@@ -127,8 +146,8 @@ export const GET = withAuth(async (request, session) => {
               author: 1,
               year: 1,
               language: 1,
-              thumbnail: 1,
-              thumbnail_blob: 1,
+              thumbnail: 1, image_display: 1,
+              thumbnail_blob: 1, image_thumb: 1,
               slug: 1,
               pages_count: 1,
               pages_translated: 1,
@@ -160,7 +179,7 @@ export const GET = withAuth(async (request, session) => {
 
   const [entries, totalResult] = await Promise.all([
     db.collection('reading_history').aggregate(pipeline).toArray(),
-    db.collection('reading_history').countDocuments({ user_id: userId, tenantId }),
+    db.collection('reading_history').countDocuments(baseMatch),
   ]);
 
   return NextResponse.json({ entries, total: totalResult, offset, limit });

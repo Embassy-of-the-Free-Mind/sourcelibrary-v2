@@ -1307,7 +1307,7 @@ export default function SocialAdminPage() {
                       <p className="text-xs text-stone-400 mt-2">{tag.relevance}</p>
                       {tag.followers && (
                         <p className="text-xs text-stone-500 mt-1">
-                          {tag.followers.toLocaleString()} followers
+                          {tag.followers.toLocaleString('en-US')} followers
                         </p>
                       )}
                     </div>
@@ -1459,7 +1459,7 @@ export default function SocialAdminPage() {
               </div>
               {config.usage.last_tweet_at && (
                 <p className="text-sm text-stone-500 mt-4">
-                  Last tweet: {new Date(config.usage.last_tweet_at).toLocaleString()}
+                  Last tweet: {new Date(config.usage.last_tweet_at).toLocaleString('en-US')}
                 </p>
               )}
             </div>
@@ -1701,25 +1701,25 @@ function PostCard({
           <div className="mt-3 flex flex-wrap gap-3 py-2 px-3 bg-stone-800/50 rounded-lg">
             <div className="flex items-center gap-1 text-xs">
               <Eye className="w-3.5 h-3.5 text-stone-400" />
-              <span className="text-stone-300">{post.metrics.impressions.toLocaleString()}</span>
+              <span className="text-stone-300">{post.metrics.impressions.toLocaleString('en-US')}</span>
               <span className="text-stone-500">views</span>
             </div>
             <div className="flex items-center gap-1 text-xs">
               <Heart className="w-3.5 h-3.5 text-red-400" />
-              <span className="text-stone-300">{post.metrics.likes.toLocaleString()}</span>
+              <span className="text-stone-300">{post.metrics.likes.toLocaleString('en-US')}</span>
             </div>
             <div className="flex items-center gap-1 text-xs">
               <Repeat className="w-3.5 h-3.5 text-green-400" />
-              <span className="text-stone-300">{post.metrics.retweets.toLocaleString()}</span>
+              <span className="text-stone-300">{post.metrics.retweets.toLocaleString('en-US')}</span>
             </div>
             <div className="flex items-center gap-1 text-xs">
               <MessageCircle className="w-3.5 h-3.5 text-sky-400" />
-              <span className="text-stone-300">{post.metrics.replies.toLocaleString()}</span>
+              <span className="text-stone-300">{post.metrics.replies.toLocaleString('en-US')}</span>
             </div>
             {post.metrics.url_clicks > 0 && (
               <div className="flex items-center gap-1 text-xs">
                 <ExternalLink className="w-3.5 h-3.5 text-violet-400" />
-                <span className="text-stone-300">{post.metrics.url_clicks.toLocaleString()}</span>
+                <span className="text-stone-300">{post.metrics.url_clicks.toLocaleString('en-US')}</span>
                 <span className="text-stone-500">clicks</span>
               </div>
             )}

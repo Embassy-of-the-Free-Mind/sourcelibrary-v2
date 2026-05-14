@@ -8,15 +8,17 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, ExternalLink, Images, Library } from 'lucide-react';
+import { BookOpen, ExternalLink, Images, Library, Search } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
+import BphUnifiedCatalogue from '@/components/libraries/BphUnifiedCatalogue';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { getEmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
+import UnifiedSearch from '@/components/search/UnifiedSearch';
 
 export const PER_PAGE = 60;
 
@@ -90,6 +92,8 @@ export interface SharedLibraryViewProps {
   q?: string;
   offset: number;
   view: string;
+  /** Display dimension on the BPH unified catalogue. Independent of `view`. */
+  display?: 'list' | 'grid';
   isBph: boolean;
   digitizedUbns?: Record<string, { id: string; slug: string }>;
   catalogTotal?: number;
@@ -113,6 +117,7 @@ export default function SharedLibraryView({
   q,
   offset,
   view,
+  display,
   isBph,
   digitizedUbns = {},
   catalogTotal = 0,
@@ -129,12 +134,32 @@ export default function SharedLibraryView({
   const hasExternalPartnerUrl = /^https?:\/\//i.test(externalPartnerUrl);
   const embedPolicy = getEmbedUiPolicy(embed);
 
-  // BPH shows: Selected Books + Catalog by default, full grid on ?view=books
-  const showBooksGrid = !isBph || view === 'books';
+  // BPH layout: `view` selects the FILTER (catalog = all 27,706, books =
+  // digitised+translated subset). `display` selects the VIEW MODE (list =
+  // BphCatalogBrowser table, grid = book covers grid). The two are independent —
+  // clicking the list/grid icons changes display only; the Show all / Show
+  // digitised toggle changes view only. Default landing (no view) keeps the
+  // legacy Selected Books + Catalog combo.
+  const showSelectedBooksRow = isBph && view !== 'books' && view !== 'catalog';
+  const showUnifiedCatalogue = isBph && (view === 'books' || view === 'catalog');
+  const catalogueMode = view === 'books' ? 'digitized' : 'all';
+  const effectiveDisplay: 'list' | 'grid' =
+    display ?? (catalogueMode === 'digitized' ? 'grid' : 'list');
+  // Render the books grid for non-BPH tenants always. BPH grid view is
+  // rendered inside BphUnifiedCatalogue/BphCatalogBrowser using the Supabase
+  // data source (so search + Advanced filter the covers live).
+  const showBooksGrid = !isBph;
 
   return (
     <div className="min-h-screen bg-cream">
       {!embed && <ConditionalSiteHeader variant="dark" />}
+      {/* Hero, Illustrations, and Contributing Libraries are suppressed on
+          the dedicated BPH catalogue/books views so the iframe renders just
+          the catalogue. Webflow partners build their own page chrome around
+          the iframe, so the hero is duplicative there. The default landing
+          (no view param) and other tenants still show the full hero. */}
+      {!showUnifiedCatalogue && (
+      <>
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
@@ -150,13 +175,43 @@ export default function SharedLibraryView({
             {partner.description}
           </p>
 
+          {/* On a tenant subdomain, `/search` is rewritten by proxy.ts to keep the
+              URL clean. On a tenant URL prefix, link with the prefix so navigation
+              stays scoped (the global /search route is not tenant-aware here).
+              For BPH, the hero CTA points at the full catalogue (27,706 works);
+              the unified search above only covers the digitised+translated subset. */}
+          {tenantSlug && (
+            <div className="max-w-2xl mb-5">
+              <UnifiedSearch dropdownPosition="bottom" />
+              {isBph && catalogTotal > 0 ? (
+                <Link
+                  href={forceEmbedded ? '/catalogue' : `${basePath}/catalogue`}
+                  className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
+                >
+                  <Search className="w-3.5 h-3.5" />
+                  Browse the full catalogue ({catalogTotal.toLocaleString('en-US')} works)
+                </Link>
+              ) : (
+                <Link
+                  href={forceEmbedded ? '/search' : `${basePath}/search`}
+                  className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
+                >
+                  <Search className="w-3.5 h-3.5" />
+                  Open the full search page
+                </Link>
+              )}
+            </div>
+          )}
+
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString()} translated books</span>
-            {isBph && catalogTotal > 0 && (
+            {isBph && catalogTotal > 0 ? (
               <>
+                <span>{catalogTotal.toLocaleString('en-US')} works in catalogue</span>
                 <span className="w-px h-4 bg-white/20" />
-                <span>{catalogTotal.toLocaleString()} works in catalog</span>
+                <span>{total.toLocaleString('en-US')} digitised on Source Library</span>
               </>
+            ) : (
+              <span>{total.toLocaleString('en-US')} translated books</span>
             )}
             {languages.length > 0 && (
               <>
@@ -271,30 +326,50 @@ export default function SharedLibraryView({
           </div>
         </div>
       )}
+      </>
+      )}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
+        {showUnifiedCatalogue && (
+          <BphUnifiedCatalogue
+            mode={catalogueMode}
+            display={effectiveDisplay}
+            catalogTotal={catalogTotal}
+            basePath={basePath}
+            digitizedUbns={digitizedUbns}
+            tenantSlug={tenantSlug ?? undefined}
+          />
+        )}
         {showBooksGrid ? (
           <>
-            {/* All Books Header */}
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-              <div>
-                <h2
-                  className="text-2xl sm:text-3xl text-primary font-display"
-                >
-                  All Books
-                </h2>
-                <p className="text-sm text-muted mt-1">
-                  {total.toLocaleString()} books from {partner.name}
-                </p>
-              </div>
+            {/* All Books Header — only for non-BPH tenants. BPH uses the
+                unified catalogue shell above for both modes. */}
+            {!showUnifiedCatalogue && (
+              <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+                <div>
+                  <h2
+                    className="text-2xl sm:text-3xl text-primary font-display"
+                  >
+                    All Books
+                  </h2>
+                  <p className="text-sm text-muted mt-1">
+                    {total.toLocaleString('en-US')} books from {partner.name}
+                  </p>
+                </div>
 
-              <CollectionFilters
-                collectionId={partner.slug}
-                languages={filteredLanguages}
-                basePath={basePath}
-                showSearch
-              />
-            </div>
+                <CollectionFilters
+                  collectionId={partner.slug}
+                  languages={filteredLanguages}
+                  basePath={basePath}
+                  showSearch
+                />
+              </div>
+            )}
+
+            {/* BPH unified mode renders the search/sort chrome above via
+                BphUnifiedCatalogue so the look is identical in list and
+                grid view. Skip the per-grid filter row here to avoid a
+                duplicate sort dropdown. */}
 
             {/* Books Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -373,16 +448,16 @@ export default function SharedLibraryView({
             )}
           </>
         ) : (
-          /* BPH default: Selected Books + Catalog */
+          /* BPH: Catalog (with optional Selected Books on the default landing) */
           <div>
-            {/* Selected Books row */}
-            {topBooks.length > 0 && (
+            {/* Selected Books row — hidden on the dedicated /catalog view */}
+            {showSelectedBooksRow && topBooks.length > 0 && (
               <div className="mb-10">
                 <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">
                   Selected Books
                 </h2>
                 <p className="text-sm text-muted mb-4">
-                  {total.toLocaleString()} books from the BPH collection translated on Source Library.
+                  {total.toLocaleString('en-US')} books from the BPH collection translated on Source Library.
                 </p>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
                   {topBooks.map((book, i) => (
@@ -423,21 +498,30 @@ export default function SharedLibraryView({
               </div>
             )}
 
-            {/* Library Catalog */}
-            <div className="mb-6">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
-                Library Catalog
-              </h2>
-              <p className="text-sm text-muted mt-1">
-                Complete catalog of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString()} works in the collection.
-                Works available on Source Library are marked with a book icon.
-              </p>
-            </div>
-            <BphCatalogBrowser
-              basePath={basePath}
-              digitizedUbns={digitizedUbns}
-              tenantSlug={tenantSlug ?? undefined}
-            />
+            {/* Library Catalogue heading — only on the default landing
+                (showSelectedBooksRow). The /catalog view uses the unified
+                shell rendered above instead. */}
+            {showSelectedBooksRow && (
+              <>
+                <div className="mb-6">
+                  <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                    Library Catalogue
+                  </h2>
+                  <p className="text-sm text-muted mt-1">
+                    Complete catalogue of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString('en-US')} works in the collection.
+                    Works available on Source Library are marked with a book icon.
+                  </p>
+                </div>
+                <BphCatalogBrowser
+                  basePath={basePath}
+                  digitizedUbns={digitizedUbns}
+                  tenantSlug={tenantSlug ?? undefined}
+                />
+              </>
+            )}
+            {/* On the dedicated /catalog view (showUnifiedCatalogue=true,
+                showSelectedBooksRow=false) the BphCatalogBrowser is rendered
+                inside <BphUnifiedCatalogue> above. */}
           </div>
         )}
 

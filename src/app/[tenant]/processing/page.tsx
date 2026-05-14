@@ -212,10 +212,10 @@ export default function ProcessingPage() {
         {/* Summary cards */}
         {data && (
           <div className="grid grid-cols-4 gap-4">
-            <SummaryCard icon={<Layers className="w-5 h-5" />} label="Total Steps" value={data.summary.total_steps.toLocaleString()} />
+            <SummaryCard icon={<Layers className="w-5 h-5" />} label="Total Steps" value={data.summary.total_steps.toLocaleString('en-US')} />
             <SummaryCard icon={<DollarSign className="w-5 h-5" />} label="Total Cost" value={formatCost(data.summary.total_cost)} />
-            <SummaryCard icon={<BookOpen className="w-5 h-5" />} label="Books Processed" value={data.summary.books_processed.toLocaleString()} />
-            <SummaryCard icon={<FileText className="w-5 h-5" />} label="Pages Processed" value={data.summary.pages_processed.toLocaleString()} />
+            <SummaryCard icon={<BookOpen className="w-5 h-5" />} label="Books Processed" value={data.summary.books_processed.toLocaleString('en-US')} />
+            <SummaryCard icon={<FileText className="w-5 h-5" />} label="Pages Processed" value={data.summary.pages_processed.toLocaleString('en-US')} />
           </div>
         )}
 
@@ -282,7 +282,7 @@ export default function ProcessingPage() {
                         {formatDate(row.date_start, row.date_end)}
                       </td>
                       <td className="px-4 py-3 text-right tabular-nums" style={{ color: 'var(--text-secondary)' }}>
-                        {row.pages.toLocaleString()}
+                        {row.pages.toLocaleString('en-US')}
                       </td>
                       <td className="px-4 py-3 text-right tabular-nums" style={{ color: 'var(--text-secondary)' }}>
                         {formatCost(row.cost_usd)}
@@ -307,7 +307,7 @@ export default function ProcessingPage() {
             {totalPages > 1 && (
               <div className="flex items-center justify-between px-4 py-3" style={{ borderTop: '1px solid var(--border-light)', background: 'var(--bg-warm)' }}>
                 <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                  {offset + 1}-{Math.min(offset + PAGE_SIZE, data.total)} of {data.total.toLocaleString()}
+                  {offset + 1}-{Math.min(offset + PAGE_SIZE, data.total)} of {data.total.toLocaleString('en-US')}
                 </span>
                 <div className="flex items-center gap-2">
                   <button
@@ -414,13 +414,13 @@ function StepBadge({ step, mode }: { step: string; mode?: string }) {
 
 function StatusCell({ success, failed }: { success: number; failed: number }) {
   if (failed === 0) {
-    return <span style={{ color: '#16a34a' }}>{success.toLocaleString()}</span>;
+    return <span style={{ color: '#16a34a' }}>{success.toLocaleString('en-US')}</span>;
   }
   return (
     <span>
-      <span style={{ color: '#16a34a' }}>{success.toLocaleString()}</span>
+      <span style={{ color: '#16a34a' }}>{success.toLocaleString('en-US')}</span>
       <span style={{ color: 'var(--text-muted)' }}> / </span>
-      <span style={{ color: '#dc2626' }}>{failed.toLocaleString()}</span>
+      <span style={{ color: '#dc2626' }}>{failed.toLocaleString('en-US')}</span>
     </span>
   );
 }

@@ -5,6 +5,7 @@ import { SiteModeProvider } from './SiteModeProvider';
 import { SiteModeConfig } from '@/lib/site-mode';
 import ErrorReporter from './ErrorReporter';
 import MigrateOnSignIn from '@/components/auth/MigrateOnSignIn';
+import WelcomeGate from '@/components/auth/WelcomeGate';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default function Providers({ children, siteMode }: ProvidersProps) {
       <SiteModeProvider initialMode={siteMode}>
         <ErrorReporter>
           <MigrateOnSignIn />
+          <WelcomeGate />
           {children}
         </ErrorReporter>
       </SiteModeProvider>

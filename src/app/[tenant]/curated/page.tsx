@@ -106,7 +106,7 @@ function PublishedCard({ col, priority = false }: { col: CuratedCollection; prio
         )}
         {col.book_count > 0 && (
           <p className="text-xs text-white/40 mt-2">
-            {col.book_count.toLocaleString()} books
+            {col.book_count.toLocaleString('en-US')} books
           </p>
         )}
       </div>

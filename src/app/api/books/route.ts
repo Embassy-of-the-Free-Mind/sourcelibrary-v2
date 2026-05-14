@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
           projection: {
             _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1,
             published: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
-            status: 1, slug: 1, thumbnail: 1, thumbnail_blob: 1, created_at: 1,
+            status: 1, slug: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, created_at: 1,
             ia_identifier: 1, image_source: 1, collections: 1,
           },
           maxTimeMS: 8000,

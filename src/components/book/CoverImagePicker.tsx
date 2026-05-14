@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BookOpen, X, Check, Loader2 } from 'lucide-react';
 import { books } from '@/lib/api-client';
 import type { Page } from '@/lib/types';
-import { getCoverImageCandidates } from '@/lib/utils';
+import { buildCoverUpdate } from '@/lib/cover-fields';
 import { AuthCheck } from '../auth/AuthCheck';
 
 interface CoverImagePickerProps {
@@ -21,25 +21,17 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
-  const candidates = useMemo(
-    () =>
-      getCoverImageCandidates(
-        { thumbnail: currentThumbnail, thumbnail_blob: currentThumbnailBlob },
-        pages as Record<string, unknown>[],
-      ),
-    [currentThumbnail, currentThumbnailBlob, pages],
-  );
-  const [candidateIndex, setCandidateIndex] = useState(0);
-  const displayThumbnail =
-    candidateIndex < candidates.length ? candidates[candidateIndex] : undefined;
-  const pageIdsKey = useMemo(() => pages.map((p) => p.id).join(','), [pages]);
+  const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnail || currentThumbnailBlob);
+  const [thumbnailError, setThumbnailError] = useState(false);
 
-  useEffect(() => {
-    setCandidateIndex(0);
-  }, [currentThumbnail, currentThumbnailBlob, pageIdsKey]);
-
+  // If the primary thumbnail fails, fall back to thumbnail_blob
   const handleThumbnailError = () => {
-    setCandidateIndex((i) => Math.min(i + 1, candidates.length));
+    if (!thumbnailError && currentThumbnailBlob && displayThumbnail !== currentThumbnailBlob) {
+      setDisplayThumbnail(currentThumbnailBlob);
+      setThumbnailError(true);
+    } else {
+      setThumbnailError(true);
+    }
   };
 
   // Handle Escape key to close
@@ -54,13 +46,19 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   }, [isOpen, handleClose]);
 
   const getPageImageUrl = (page: Page) => {
-    // Split pages: use photo directly (the cropped half), skip legacy fallback
-    if (page.split_from_spread || page.crop) return page.photo;
+    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
+
+    // Split pages: use cropped_photo (the actual half-page image).
+    // `page.photo` points at the full uncropped spread for these, so
+    // returning it would render both halves of the spread instead of
+    // the individual page.
+    if (page.split_from_spread || page.crop) {
+      return typedPage.cropped_photo || page.photo;
+    }
 
     // Prefer pre-generated R2 thumbnail (fast CDN)
     if (page.thumbnail_blob) return page.thumbnail_blob;
 
-    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
     const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
     if (!baseUrl) return null;
     return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
@@ -69,26 +67,18 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   const selectCover = async (page: Page) => {
     setSaving(page.id);
     try {
-      // Prefer Blob URLs for fast loading; fall back to /api/image proxy
-      const typedPage = page as Page & { archived_photo?: string };
-      const updates: Record<string, unknown> = {};
-
-      if (page.thumbnail_blob) {
-        updates.thumbnail_blob = page.thumbnail_blob;
+      const update = buildCoverUpdate(page, {
+        source: 'manual',
+        actor: 'admin',
+        method: 'cover-picker-ui',
+        confidence: 1,
+      });
+      if (!update) {
+        console.error('Cover Picker: page has no usable image URL', page);
+        return;
       }
-
-      // For the main thumbnail, prefer cropped_photo (split pages) > archived_photo > direct source URL.
-      // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
-      const typedPageWithCrop = page as Page & { archived_photo?: string; cropped_photo?: string; enhanced_photo?: string };
-      const directUrl = (page.split_from_spread || page.crop)
-        ? page.photo
-        : (typedPageWithCrop.enhanced_photo || typedPageWithCrop.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
-      if (directUrl) {
-        updates.thumbnail = directUrl;
-      }
-
-      updates.thumbnail_source = 'manual';
-      await books.update(bookId, updates);
+      await books.update(bookId, update as unknown as Record<string, unknown>);
+      setDisplayThumbnail(update.image_display);
       setIsOpen(false);
       router.refresh();
     } catch (error) {
@@ -105,7 +95,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         fallback={
           // Non-authenticated users see the cover image but cannot click
           <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
-            {displayThumbnail ? (
+            {displayThumbnail && !thumbnailError ? (
               <Image
                 src={displayThumbnail}
                 alt={bookTitle}
@@ -129,7 +119,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
           className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
           title="Click to change cover image"
         >
-          {displayThumbnail ? (
+          {displayThumbnail && !thumbnailError ? (
             <Image
               src={displayThumbnail}
               alt={bookTitle}

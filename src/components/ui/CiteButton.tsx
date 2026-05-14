@@ -53,8 +53,11 @@ function buildCitableUrl(props: CiteButtonProps, origin: string): string {
   }
 
   const vParam = props.editionVersion ? `?v=${props.editionVersion}` : '';
-  const bookPath = props.tenantSlug ? `/${props.tenantSlug}/book/${props.bookId}` : `/book/${props.bookId}`;
-  return `${origin}${bookPath}${vParam}`;
+  // Canonical book URL is /book/{slug} on every host. proxy.ts (380+) 308s
+  // any /{tenant}/book/... back to /book/... so a citation that included the
+  // tenant prefix would just redirect — split the SEO signal across two URLs
+  // and confuse social-share previews (B13). Emit the canonical form here.
+  return `${origin}/book/${props.bookId}${vParam}`;
 }
 
 interface CiteButtonProps {
@@ -81,7 +84,7 @@ function formatAccessedDate(): string {
 }
 
 function generateApa(props: CiteButtonProps, origin: string): string {
-  const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion, tenantSlug } = props;
+  const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion } = props;
   const url = buildCitableUrl(props, origin);
   const displayName = displayTitle || title;
   const yearStr = year || 'n.d.';

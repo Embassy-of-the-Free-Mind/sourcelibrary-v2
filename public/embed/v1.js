@@ -86,7 +86,7 @@
   }
 
   function withEmbedContext(src) {
-    var sep = src.indexOf('?') === -1 ? '?' : '&';
+    var sep = src.indexOf('?') === -1 ? '?' : '&';    
     return src + sep + 'host_path=' + encodeURIComponent(getHostPathname());
   }
 
@@ -212,6 +212,13 @@
           iframe.style.height = px;
           wrap.style.height = px;
         }
+        return;
+      }
+
+      // Navigation start — scroll the host back to the iframe top so the
+      // iframe's loading overlay is in view before the new page renders.
+      if (data.type === 'sl-nav-start') {
+        scrollToTop();
         return;
       }
 

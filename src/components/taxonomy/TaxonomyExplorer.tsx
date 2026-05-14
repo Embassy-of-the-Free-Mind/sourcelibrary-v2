@@ -277,7 +277,7 @@ export function TaxonomyExplorer() {
         </div>
         <p className="text-stone-500 text-sm">
           {data.total_clusters} clusters &middot; {data.total_subclusters}{' '}
-          subclusters &middot; {data.total_books.toLocaleString()} books
+          subclusters &middot; {data.total_books.toLocaleString('en-US')} books
         </p>
       </div>
 

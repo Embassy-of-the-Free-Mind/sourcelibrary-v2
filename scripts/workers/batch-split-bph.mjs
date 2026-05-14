@@ -2,16 +2,24 @@
 /**
  * Batch split detection + cropping for BPH imported books.
  *
- * For each book with needs_splitting=true at archive_complete:
- * 1. Check each page's aspect ratio
- * 2. If spread (w/h > 1.2): crop left/right halves, upload to R2, create right-half page
+ * For each book with needs_splitting=true at archive_complete (or needs_resplit=true):
+ * 1. Check each page's aspect ratio (w/h > 1.2 = spread)
+ * 2. For spreads: detect the binding crease, crop left+right halves with a
+ *    small overlap, upload both halves to R2, create a new right-half page doc
  * 3. Renumber all pages sequentially
  * 4. Update book counts + advance pipeline
  *
- * Uses simple center-split heuristic (good enough for BPH scans which are
- * consistently centered spreads). No Gemini API calls needed.
+ * Gutter detection:
+ *   Earlier versions cut at width/2. BPH scans have gutters offset by up to
+ *   19% from geometric center, which chopped ~12 characters off the right
+ *   margin of every line on the left page. Current detector finds the widest
+ *   run of ink-free columns inside x∈[30%, 70%] of the spread (measured over
+ *   y∈[25%, 75%] to skip headers/footers, ink defined as min(R,G,B) < 120 so
+ *   red rubrications register). Narrow runs (< 15% of W) → cut at run end;
+ *   wide runs (blank-page scenarios) → cut at run center. Falls back to
+ *   geometric center when no usable run is found. See detectGutterColumn().
  *
- * Run on Hetzner:
+ * Run on Hetzner (or any machine with R2 + Mongo creds):
  *   set -a; source .env.production.local; set +a
  *   node scripts/workers/batch-split-bph.mjs --limit 10
  *   node scripts/workers/batch-split-bph.mjs --dry-run
@@ -94,6 +102,93 @@ async function fetchImage(url) {
   return Buffer.from(await res.arrayBuffer());
 }
 
+// --- Gutter detection ---
+// Find the binding by locating the widest horizontal RUN of ink-free columns
+// in the central x∈[30%, 70%] region, measured over a central y∈[25%, 75%]
+// band so headers/footers don't interfere. Brightness-based methods all
+// failed in earlier attempts (binding shadow is too faint to discriminate
+// from text on BPH scans; the bright peak in the middle is the LEFT page's
+// right margin, not the gutter). This approach measures content directly:
+// the gutter is the widest column-run where no row has ink. For each column
+// we count the fraction of rows in the central band where any RGB channel
+// is below 120 (so red rubrications and blue notes count as ink, not just
+// black). Threshold at 2% ink, then find the longest run.
+//
+// Narrow vs wide gap dispatch:
+//   - Narrow gap (< 15% of width): the gap IS the binding region. The left
+//     page text ends just before the gap and the right page text starts
+//     just after. Cut at gap END so the left half captures all left-page
+//     text plus the binding crease.
+//   - Wide gap (≥ 15%): the spread has lots of blank space (title page,
+//     blank verso, ornamental dividers). The binding sits somewhere inside
+//     the wide gap; cut at gap CENTER as a safe middle ground.
+//
+// If no usable gap (< 10px wide), fall back to geometric center.
+async function detectGutterColumn(spreadBuf, imgWidth, imgHeight) {
+  try {
+    const W = 800;
+    const ratio = W / imgWidth;
+    const H = Math.round(imgHeight * ratio);
+    // Keep RGB so colored ink (red rubrications, blue annotations) registers
+    // as "dark" — grayscale weights red at only 21% and lets red title text
+    // appear as light gray, which made the detector treat rubricated title
+    // pages as if there was no ink near the binding (e.g. Hieroglyphica's
+    // red title chopped the leading letter off every line).
+    const raw = await sharp(spreadBuf)
+      .resize(W, H, { fit: 'fill' })
+      .removeAlpha()
+      .toColourspace('srgb')
+      .raw()
+      .toBuffer();
+    const bandStart = Math.round(H * 0.25);
+    const bandEnd = Math.round(H * 0.75);
+    const DARK = 120;
+    const inkPerCol = new Float32Array(W);
+    for (let x = 0; x < W; x++) {
+      let d = 0;
+      for (let y = bandStart; y < bandEnd; y++) {
+        const i = (y * W + x) * 3;
+        const m = Math.min(raw[i], raw[i + 1], raw[i + 2]);
+        if (m < DARK) d++;
+      }
+      inkPerCol[x] = d / (bandEnd - bandStart);
+    }
+    // Light smoothing (±5px) so the inter-character white slivers in text
+    // don't fragment what we want to detect as a single gap.
+    const half = 5;
+    const smoothed = new Float32Array(W);
+    for (let x = 0; x < W; x++) {
+      const lo = Math.max(0, x - half);
+      const hi = Math.min(W - 1, x + half);
+      let s = 0;
+      for (let i = lo; i <= hi; i++) s += inkPerCol[i];
+      smoothed[x] = s / (hi - lo + 1);
+    }
+    const cs = Math.round(W * 0.30);
+    const ce = Math.round(W * 0.70);
+    const NO_INK = 0.02;
+    let bestStart = -1, bestLen = 0;
+    let curStart = -1, curLen = 0;
+    for (let x = cs; x < ce; x++) {
+      if (smoothed[x] < NO_INK) {
+        if (curStart < 0) curStart = x;
+        curLen = x - curStart + 1;
+        if (curLen > bestLen) { bestLen = curLen; bestStart = curStart; }
+      } else {
+        curStart = -1; curLen = 0;
+      }
+    }
+    if (bestStart < 0 || bestLen < 10) return Math.round(imgWidth / 2);
+    const WIDE = Math.round(W * 0.15);
+    const chosen = bestLen < WIDE
+      ? bestStart + bestLen                       // narrow gap → cut at gap end
+      : bestStart + Math.floor(bestLen / 2);      // wide gap → cut at gap center
+    return Math.round(chosen / ratio);
+  } catch {
+    return Math.round(imgWidth / 2);
+  }
+}
+
 // --- Concurrency limiter ---
 async function parallelMap(items, fn, concurrency) {
   const results = [];
@@ -123,13 +218,18 @@ async function processBook(r2, db, book) {
     return { skipped: true };
   }
 
-  // Check first non-cover page for aspect ratio
+  // Check first non-cover page for aspect ratio.
+  // For books in the 2026-05-06 spread-translation crisis cohort
+  // (`needs_resplit: true`) we KNOW some pages are spreads but the early
+  // sample can be misleading — these books often have a non-spread
+  // bookplate or flyleaf in the first 3 pages with content spreads
+  // appearing later. Force per-page evaluation in that case.
   const samplePage = pages.length > 2 ? pages[2] : pages[0];
   const sampleBuf = await fetchImage(samplePage.photo);
   const meta = await sharp(sampleBuf).metadata();
   const ratio = (meta.width || 1) / (meta.height || 1);
 
-  if (ratio <= ASPECT_RATIO_THRESHOLD) {
+  if (ratio <= ASPECT_RATIO_THRESHOLD && !book.needs_resplit) {
     console.log(`  Portrait (ratio ${ratio.toFixed(2)}) — not a spread, marking split_checked`);
     if (!DRY_RUN) {
       await booksCol.updateOne({ id: book.id }, {
@@ -141,6 +241,9 @@ async function processBook(r2, db, book) {
       });
     }
     return { portrait: true };
+  }
+  if (book.needs_resplit && ratio <= ASPECT_RATIO_THRESHOLD) {
+    console.log(`  Sample ratio ${ratio.toFixed(2)} ≤ threshold but needs_resplit=true → forcing per-page evaluation`);
   }
 
   console.log(`  Spread detected (ratio ${ratio.toFixed(2)}), processing ${pages.length} pages...`);
@@ -200,10 +303,14 @@ async function processBook(r2, db, book) {
       const spreadKey = `archived/${book.id}/${page.page_number}-spread.jpg`;
       const spreadR2Url = await uploadToR2(r2, spreadKey, buf);
 
-      // Split at center
+      // Split at the detected gutter (darkest vertical band near the middle).
+      // Centered cuts fail on books photographed with off-center bindings —
+      // observed up to 19% off in the BPH cohort, chopping ~12 chars from
+      // every line on the left page. Fall back to geometric center if
+      // detection finds nothing convincing.
       const imgWidth = pageMeta.width || 1000;
       const imgHeight = pageMeta.height || 1000;
-      const splitX = Math.round(imgWidth / 2);
+      const splitX = await detectGutterColumn(buf, imgWidth, imgHeight);
 
       // Crop left half
       const leftBuf = await sharp(buf)
@@ -287,10 +394,15 @@ async function processBook(r2, db, book) {
       });
 
       // Create right-half page
+      // Both tenant fields: tenant_id (snake_case slug) is legacy; tenantId (camelCase
+      // UUID) is what /api/[tenant]/pages/[id] filters by. Missing tenantId causes
+      // the client API to 404 on the new right-half page, which silently breaks
+      // reader navigation (image stays on the previous page).
       newPages.push({
         _id: new ObjectId(rightPageId),
         id: rightPageId,
         tenant_id: 'default',
+        ...(book.tenantId ? { tenantId: book.tenantId } : {}),
         book_id: book.id,
         page_number: rightPageNum, // 0.5 — renumbered later
         photo: rightFullUrl,
@@ -355,21 +467,44 @@ async function processBook(r2, db, book) {
     'translation.data': { $exists: true, $ne: '' },
   });
 
-  // Set thumbnail to first page
+  // Set thumbnail to first page. Prefer R2-hosted URLs over the page's
+  // original `photo` field, which for IIIF imports points at the source
+  // library's image server (e.g. images.uba.uva.nl) — that violates the
+  // R2-only policy. archived_photo is set during the archive phase to a
+  // canonical /archived/{id}/{n}.jpg URL on R2.
   const firstPage = allPages[0];
+  const isR2 = (u) => u && u.includes('images.sourcelibrary.org');
+  const thumbnailUrl =
+    (isR2(firstPage?.archived_photo) ? firstPage.archived_photo : null)
+    || (isR2(firstPage?.photo) ? firstPage.photo : null)
+    || firstPage?.archived_photo
+    || firstPage?.photo
+    || firstPage?.cropped_photo;
 
-  await booksCol.updateOne({ id: book.id }, {
-    $set: {
-      pages_count: allPages.length,
-      pages_ocr: ocrCount,
-      pages_translated: translateCount,
-      needs_splitting: false,
-      thumbnail: firstPage?.photo || firstPage?.cropped_photo,
-      'pipeline_auto.split_checked': true,
-      'pipeline_auto.last_updated': new Date(),
-      updated_at: new Date(),
-    },
-  });
+  const setDoc = {
+    pages_count: allPages.length,
+    pages_ocr: ocrCount,
+    pages_translated: translateCount,
+    needs_splitting: false,
+    thumbnail: thumbnailUrl,
+    'pipeline_auto.split_checked': true,
+    'pipeline_auto.last_updated': new Date(),
+    updated_at: new Date(),
+  };
+  // For the 2026-05-06 resplit cohort: roll the book back to archive_complete
+  // so the orchestrator's Phase 2 (OCR-submit) and Phase 5 (translate) re-run
+  // against the new half-pages. Clear the crisis flags so the book is
+  // reabsorbed into normal pipeline flow.
+  const updateDoc = { $set: setDoc };
+  if (book.needs_resplit) {
+    setDoc['pipeline_auto.status'] = 'archive_complete';
+    updateDoc.$unset = {
+      needs_resplit: '',
+      spread_translation_crisis: '',
+      translation_stale_reason: '',
+    };
+  }
+  await booksCol.updateOne({ id: book.id }, updateDoc);
 
   console.log(`  Done: ${splitCount} spreads split, ${singleCount} single pages, ${errors} errors → ${allPages.length} total pages`);
   return { splitCount, singleCount, errors, totalPages: allPages.length };
@@ -385,21 +520,31 @@ async function main() {
   await mongo.connect();
   const db = mongo.db('bookstore');
 
-  // Find books to process
+  // Find books to process.
+  // Two cohorts:
+  //   1. Fresh imports at archive_complete with needs_splitting=true
+  //   2. The 2026-05-06 resplit cohort: books that finished the pipeline
+  //      with OCR/translation done on combined spreads. They're at
+  //      pipeline_auto.status='complete' or 'images_complete' so the
+  //      first cohort filter would miss them. The needs_resplit flag
+  //      identifies them precisely.
   let query;
   if (BOOK_ID) {
     query = { id: BOOK_ID };
   } else {
-    query = {
-      needs_splitting: true,
-      'pipeline_auto.status': 'archive_complete',
-      'pipeline_auto.split_checked': { $ne: true },
-    };
+    query = { $or: [
+      {
+        needs_splitting: true,
+        'pipeline_auto.status': 'archive_complete',
+        'pipeline_auto.split_checked': { $ne: true },
+      },
+      { needs_resplit: true },
+    ] };
   }
 
   const books = await db.collection('books')
     .find(query)
-    .project({ id: 1, title: 1, pages_count: 1 })
+    .project({ id: 1, title: 1, pages_count: 1, needs_resplit: 1, tenantId: 1, tenant_id: 1 })
     .limit(LIMIT)
     .toArray();
 

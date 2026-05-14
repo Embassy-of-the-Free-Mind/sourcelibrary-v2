@@ -1,8 +1,18 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
-import BookDetailPage from '@/app/[tenant]/book/[id]/page';
-export { generateMetadata } from '@/app/[tenant]/book/[id]/page';
+import BookDetailPage, { generateMetadata as parentGenerateMetadata } from '@/app/[tenant]/book/[id]/page';
+
+// The parent generateMetadata expects params.id; this route's param is named
+// `slug`. Forward it as id so the lookup actually has a value — otherwise
+// findBookByIdOrSlug builds {$or: [{slug: undefined}, {id: undefined}]},
+// which Mongo collapses to {$or: [{}, {}]} and returns the first book in
+// the tenant, breaking <title> tags on every embed book page.
+export async function generateMetadata({ params }: { params: Promise<{ tenant: string; slug: string }> }): Promise<Metadata> {
+  const { tenant, slug } = await params;
+  return parentGenerateMetadata({ params: Promise.resolve({ tenant, id: slug }) });
+}
 
 export const revalidate = 86400;
 export const preferredRegion = 'fra1';

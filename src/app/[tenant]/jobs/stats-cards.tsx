@@ -63,7 +63,7 @@ export function StatsCards({
                     className="text-2xl font-medium mt-1"
                     style={{ color: 'var(--accent-gold)' }}
                 >
-                    {stats.total_pages_needing_ocr.toLocaleString()}
+                    {stats.total_pages_needing_ocr.toLocaleString('en-US')}
                 </div>
                 <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
                     {stats.books_needing_ocr} books
@@ -88,7 +88,7 @@ export function StatsCards({
                     className="text-2xl font-medium mt-1"
                     style={{ color: 'var(--accent-sage)' }}
                 >
-                    {stats.total_pages_needing_translation.toLocaleString()}
+                    {stats.total_pages_needing_translation.toLocaleString('en-US')}
                 </div>
                 <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
                     {stats.books_needing_translation} books

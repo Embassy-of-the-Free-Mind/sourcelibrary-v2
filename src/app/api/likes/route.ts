@@ -6,9 +6,57 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { LikeTargetType } from '@/lib/types';
+
+/**
+ * Resolve the tenantId that a like for this target should be filed under.
+ *
+ * Toggle requests come in from many surfaces: tenant subdomains, /[tenant]/...
+ * paths, and (most often) global URLs like /book/{slug}, /favorites, and
+ * /gallery/image/{id}. The proxy can only attach a tenant header for the first
+ * two. For the rest, we fall back to looking up the target's own tenantId —
+ * books, pages, and gallery images all carry one. This keeps likes correctly
+ * scoped without relying on the request path.
+ */
+async function resolveTargetTenantId(
+  db: Awaited<ReturnType<typeof getDb>>,
+  targetType: LikeTargetType,
+  targetId: string
+): Promise<string | null> {
+  try {
+    if (targetType === 'book') {
+      const book = await db.collection('books').findOne(
+        { $or: [{ id: targetId }, { slug: targetId }] },
+        { projection: { tenantId: 1 } }
+      );
+      return (book?.tenantId as string) || null;
+    }
+    if (targetType === 'page') {
+      const page = await db.collection('pages').findOne(
+        { id: targetId },
+        { projection: { tenantId: 1 } }
+      );
+      return (page?.tenantId as string) || null;
+    }
+    if (targetType === 'image') {
+      // Image targetIds are `{pageId}:{detectionIndex}` — the tenant lives on
+      // the parent page.
+      const pageId = targetId.split(':')[0] || targetId.split('-').slice(0, -1).join('-');
+      if (!pageId) return null;
+      const page = await db.collection('pages').findOne(
+        { id: pageId },
+        { projection: { tenantId: 1 } }
+      );
+      return (page?.tenantId as string) || null;
+    }
+  } catch {
+    // Lookup failures fall through to null — the caller decides what to do.
+  }
+  return null;
+}
 
 /**
  * POST /api/likes
@@ -22,8 +70,16 @@ import { LikeTargetType } from '@/lib/types';
  */
 export async function POST(request: NextRequest) {
   try {
+    const session = await auth();
     const body = await request.json();
-    const { target_type, target_id, visitor_id } = body;
+    const { target_type, target_id } = body;
+
+    // Prefer the authenticated user id; fall back to client-supplied
+    // visitor_id for anonymous visitors. This is what keeps likes attached to
+    // the user account across devices and survives the client-side session
+    // hydration race that previously stranded authenticated likes under
+    // anonymous v_… ids.
+    const visitor_id: string | undefined = session?.user?.id || body.visitor_id;
 
     if (!target_type || !target_id || !visitor_id) {
       return NextResponse.json(
@@ -39,15 +95,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { id: tenantId } = getTenantContextFromRequest(request);
+    const db = await getDb();
+
+    // Prefer the tenant header attached by the proxy; fall back to the
+    // target's own tenantId for likes initiated from non-tenant URLs.
+    let tenantId = getTenantContextFromRequest(request).id;
+    if (!tenantId) {
+      tenantId = await resolveTargetTenantId(db, target_type as LikeTargetType, target_id);
+    }
     if (!tenantId) {
       return NextResponse.json(
-        { error: 'Tenant not found' },
-        { status: 400 }
+        { error: 'Target not found' },
+        { status: 404 }
       );
     }
 
-    const db = await getDb();
     const filter = { target_type, target_id, visitor_id, tenantId };
 
     // Atomic toggle: try to delete first — if nothing was deleted, insert
@@ -124,12 +186,21 @@ export async function POST(request: NextRequest) {
  *   - visitor_id: string (optional, to check if liked)
  *
  * Example: /api/likes?targets=[{"type":"image","id":"abc:0"}]&visitor_id=xyz
+ *
+ * Tenant scoping: when the request carries a tenant header (subdomain or
+ * /[tenant]/ route), counts are scoped to that tenant. Without a tenant
+ * header — the common case for likes initiated from /book/{slug},
+ * /favorites, etc. — we count across all tenants. Target IDs are globally
+ * unique so the cross-tenant count is the correct one.
  */
 export async function GET(request: NextRequest) {
   try {
+    const session = await auth();
     const { searchParams } = new URL(request.url);
     const targetsJson = searchParams.get('targets');
-    const visitorId = searchParams.get('visitor_id');
+    // Authenticated session takes precedence over the query param so the
+    // "liked" lookup hits the same id the POST now files under.
+    const visitorId = session?.user?.id || searchParams.get('visitor_id');
 
     if (!targetsJson) {
       return NextResponse.json(
@@ -158,12 +229,7 @@ export async function GET(request: NextRequest) {
     }
 
     const { id: tenantId } = getTenantContextFromRequest(request);
-    if (!tenantId) {
-      return NextResponse.json(
-        { error: 'Tenant not found' },
-        { status: 400 }
-      );
-    }
+    const tenantFilter = tenantId ? { tenantId } : {};
 
     const db = await getDb();
 
@@ -171,7 +237,7 @@ export async function GET(request: NextRequest) {
     const countPipeline = [
       {
         $match: {
-          tenantId,
+          ...tenantFilter,
           $or: targets.map(t => ({
             target_type: t.type,
             target_id: t.id,
@@ -208,7 +274,7 @@ export async function GET(request: NextRequest) {
     // Check if visitor has liked (if visitor_id provided)
     if (visitorId) {
       const visitorLikes = await db.collection('likes').find({
-        tenantId,
+        ...tenantFilter,
         visitor_id: visitorId,
         $or: targets.map(t => ({
           target_type: t.type,
@@ -224,8 +290,14 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Public cache is only safe when the response is keyed purely by URL.
+    // Once we mix in the NextAuth cookie to compute `liked`, we must mark it
+    // private so a CDN doesn't serve one user's state to another.
+    const cacheControl = session?.user?.id
+      ? 'private, max-age=30'
+      : 'public, max-age=60, stale-while-revalidate=300';
     return NextResponse.json({ results }, {
-      headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' },
+      headers: { 'Cache-Control': cacheControl },
     });
   } catch (error) {
     console.error('Error getting likes:', error);

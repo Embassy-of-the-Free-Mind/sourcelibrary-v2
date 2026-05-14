@@ -8,7 +8,7 @@
  * via the Hetzner supabase-sync cron.
  */
 
-import { supabase, sanitizeFilterValue } from '@/lib/supabase';
+import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 
 export interface CatalogBook {
   id: string;
@@ -307,6 +307,19 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
 const SEARCH_SELECT = `${BOOK_SELECT}, summary_text, doi, work_id`;
 
 /**
+ * Author alias groups. Each group lists name variants that should be treated as
+ * equivalent at search time — querying any member surfaces records whose author
+ * field matches any other member.
+ *
+ * Why: the books_catalog `author` column stores a single display form (e.g.
+ * "C.G. Jung" on one record, "Carl Gustav Jung" on another). Without aliasing,
+ * a search for "carl jung" misses the "C.G. Jung" record entirely.
+ */
+const AUTHOR_ALIAS_GROUPS: string[][] = [
+  ['carl jung', 'carl gustav jung', 'c.g. jung'],
+];
+
+/**
  * Search books by title/author text — returns full metadata for search display.
  *
  * Single Supabase query replaces the old two-hop pattern:
@@ -344,7 +357,22 @@ export async function searchBooksCatalog(
   } else if (words.length >= 2) {
     const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
-    orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+    const authorAnds = words.map(w => `author.ilike.%${w}%`).join(',');
+    orFilter += `,and(${titleAnds}),and(${displayAnds}),and(${authorAnds})`;
+
+    // Author alias expansion: if the query matches a known alias group, also
+    // search authors using each alternate variant in the group.
+    const lowerSafe = safe.toLowerCase();
+    const aliasGroup = AUTHOR_ALIAS_GROUPS.find(group => group.some(a => lowerSafe.includes(a)));
+    if (aliasGroup) {
+      for (const variant of aliasGroup) {
+        if (lowerSafe.includes(variant)) continue;
+        const variantWords = variant.split(/\s+/).filter(w => w.length >= 2);
+        if (variantWords.length < 2) continue;
+        const variantAnds = variantWords.map(w => `author.ilike.%${w}%`).join(',');
+        orFilter += `,and(${variantAnds})`;
+      }
+    }
 
     // Cross-field AND: author + title words (catches "newton principia")
     if (contentWords.length >= 2 && contentWords.length <= 3) {
@@ -540,4 +568,43 @@ export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBo
   }
 
   return null;
+}
+
+/**
+ * Mirror a subset of changed book fields to Supabase books_catalog immediately.
+ * Used by /api/books/[id] PATCH so cover/title/author edits surface in <1s
+ * instead of waiting up to 5 min for the Hetzner sync cron.
+ *
+ * Only mirrors fields that exist in books_catalog. Silently no-ops if no
+ * mirrored fields changed, or if supabaseAdmin is unavailable (e.g., local
+ * dev without service-role key).
+ */
+const CATALOG_MIRROR_FIELDS = [
+  'title', 'display_title', 'author', 'thumbnail', 'thumbnail_blob',
+  'language', 'published', 'categories', 'publisher', 'place_published', 'doi',
+] as const;
+
+export async function mirrorBookToCatalog(
+  bookId: string,
+  updates: Record<string, unknown>,
+): Promise<void> {
+  if (!supabaseAdmin) return;
+
+  const mirrored: Record<string, unknown> = {};
+  for (const field of CATALOG_MIRROR_FIELDS) {
+    if (field in updates) mirrored[field] = updates[field];
+  }
+  if (Object.keys(mirrored).length === 0) return;
+
+  mirrored.updated_at = new Date().toISOString();
+
+  const { error } = await supabaseAdmin
+    .from('books_catalog')
+    .update(mirrored)
+    .eq('id', bookId);
+
+  if (error) {
+    // Non-fatal — the next cron sync will pick up the change.
+    console.warn(`[books-catalog mirror] failed for ${bookId}:`, error.message);
+  }
 }

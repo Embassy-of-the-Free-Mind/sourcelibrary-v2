@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
             _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
             author: 1, language: 1, published: 1, year: 1,
             pages_count: 1, pages_translated: 1,
-            thumbnail: 1, thumbnail_blob: 1,
+            thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
           })
           .sort(sortSpec)
           .skip(offset)
@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
         year: b.year,
         pages_count: b.pages_count,
         pages_translated: b.pages_translated || 0,
-        thumbnail: b.thumbnail_blob || b.thumbnail,
+        thumbnail: b.image_thumb || b.image_display || b.thumbnail_blob || b.thumbnail,
         url: `/book/${b.slug || b.id}`,
       }));
 

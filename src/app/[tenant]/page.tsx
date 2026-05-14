@@ -32,7 +32,11 @@ export default async function TenantRoot({ params, searchParams }: Props) {
   const language = typeof sp.language === 'string' ? sp.language : '';
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
-  const view = typeof sp.view === 'string' ? sp.view : '';
+  const rawView = typeof sp.view === 'string' ? sp.view : '';
+  const view = rawView === 'catalogue' ? 'catalog' : rawView;
+  const displayParam = typeof sp.display === 'string' ? sp.display : '';
+  const display: 'list' | 'grid' | undefined =
+    displayParam === 'list' || displayParam === 'grid' ? displayParam : undefined;
 
   // Fetch tenant data
   const db = await getDb();
@@ -92,6 +96,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
     q,
     offset,
     view,
+    display,
     isBph,
     digitizedUbns,
     catalogTotal,

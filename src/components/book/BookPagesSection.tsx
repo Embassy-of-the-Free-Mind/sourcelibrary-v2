@@ -8,6 +8,7 @@ import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
 import { getPageThumbUrl } from '@/lib/utils';
+import { buildCoverUpdate } from '@/lib/cover-fields';
 import JobStatusBanner from './JobStatusBanner';
 import PagesGrid from './PagesGrid';
 
@@ -460,26 +461,17 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const setCoverImage = async (page: Page) => {
     setSettingCover(page.id);
     try {
-      const updates: Record<string, unknown> = {};
-
-      // Set thumbnail_blob from pre-generated CDN thumbnail
-      if (page.thumbnail_blob) {
-        updates.thumbnail_blob = page.thumbnail_blob;
+      const update = buildCoverUpdate(page, {
+        source: 'manual',
+        actor: 'admin',
+        method: 'pages-grid-set-cover',
+        confidence: 1,
+      });
+      if (!update) {
+        console.error('Set cover: page has no usable image URL', page);
+        return;
       }
-
-      // For main thumbnail, prefer archived/cropped photos, fall back to direct source URL.
-      // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
-      // Split-from-spread pages: use photo directly (no legacy fallback)
-      const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string; enhanced_photo?: string };
-      const directUrl = (page.split_from_spread || (page as any).crop)
-        ? page.photo
-        : (typedPage.enhanced_photo || typedPage.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
-      if (directUrl) {
-        updates.thumbnail = directUrl;
-      }
-
-      updates.thumbnail_source = 'manual';
-      await books.update(bookId, updates);
+      await books.update(bookId, update as unknown as Record<string, unknown>);
     } catch (error) {
       console.error('Error setting cover:', error);
     } finally {

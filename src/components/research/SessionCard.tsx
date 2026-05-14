@@ -39,7 +39,7 @@ export default function SessionCard({ session }: { session: CuratorSessionListIt
               </span>
               <span className="text-stone-300">|</span>
               <span className="text-sm text-muted">
-                {session.word_count.toLocaleString()} words
+                {session.word_count.toLocaleString('en-US')} words
               </span>
               {session.duration_minutes > 1 && (
                 <>

@@ -1,3 +1,1 @@
-import ExplorePage from '../[tenant]/explore/page';
-
-export default ExplorePage;
+export { default, metadata } from '../[tenant]/explore/page';

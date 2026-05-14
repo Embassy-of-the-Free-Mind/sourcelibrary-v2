@@ -19,6 +19,21 @@ export const metadata: Metadata = {
     url: 'https://sourcelibrary.org/explore/map',
     siteName: 'Source Library',
     type: 'website',
+    images: [
+      {
+        url: 'https://sourcelibrary.org/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Source Library map — historical texts plotted by publication city and author birthplace',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Map — Explore — Source Library',
+    description:
+      'Geographic distribution of historical texts across 500+ cities worldwide.',
+    images: ['https://sourcelibrary.org/og-image.jpg'],
   },
 };
 
@@ -102,7 +117,7 @@ export default async function MapPage() {
         header={
           <ContentHeader
             title="Map"
-            subtitle={`${locationCount.toLocaleString()} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
+            subtitle={`${locationCount.toLocaleString('en-US')} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
           >
             <div className="mt-5">
               <ExploreTabBar />

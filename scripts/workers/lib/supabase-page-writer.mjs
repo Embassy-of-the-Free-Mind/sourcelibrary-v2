@@ -17,14 +17,18 @@ if (!SUPABASE_SERVICE_KEY) {
 const FIELD_MAP = {
   // OCR fields (dot-notation and subdoc)
   'ocr.data': 'ocr_data', 'ocr.updated_at': 'ocr_updated_at', 'ocr.model': 'ocr_model',
-  'ocr.language': 'ocr_language', 'ocr.source': 'ocr_source', 'ocr.prompt_version': 'ocr_prompt_version',
+  'ocr.language': 'ocr_language', 'ocr.source': 'ocr_source',
+  'ocr.prompt_version': 'ocr_prompt_version',
+  'ocr.prompt_id': 'ocr_prompt_id', 'ocr.prompt_hash': 'ocr_prompt_hash', 'ocr.prompt_name': 'ocr_prompt_name',
   'ocr.batch_job_id': 'ocr_batch_job_id', 'ocr.input_tokens': 'ocr_input_tokens', 'ocr.output_tokens': 'ocr_output_tokens',
   // Translation fields (dot-notation and subdoc)
   'translation.data': 'translation_data', 'translation.updated_at': 'translation_updated_at',
   'translation.model': 'translation_model', 'translation.language': 'translation_language',
   'translation.source_language': 'translation_source_language', 'translation.source': 'translation_source',
   'translation.target_language': null, // not in Supabase schema
-  'translation.prompt_version': 'translation_prompt_version', 'translation.batch_job_id': 'translation_batch_job_id',
+  'translation.prompt_version': 'translation_prompt_version',
+  'translation.prompt_id': 'translation_prompt_id', 'translation.prompt_hash': 'translation_prompt_hash', 'translation.prompt_name': 'translation_prompt_name',
+  'translation.batch_job_id': 'translation_batch_job_id',
   'translation.input_tokens': 'translation_input_tokens', 'translation.output_tokens': 'translation_output_tokens',
   'translation.recitation_blocked': 'translation_recitation_blocked',
   'translation.safety_blocked': 'translation_safety_blocked', 'translation.safety_reason': 'translation_safety_reason',

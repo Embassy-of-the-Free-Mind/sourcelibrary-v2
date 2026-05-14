@@ -152,6 +152,7 @@ export const POST = withAuth(async (request, session, context) => {
               {
                 $set: {
                   thumbnail_blob: blob.url,
+                  image_thumb: blob.url,
                   updated_at: new Date()
                 }
               }

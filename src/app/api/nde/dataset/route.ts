@@ -59,10 +59,10 @@ export async function GET() {
       '@language': 'en',
       '@value':
         `Digital facsimiles, OCR transcriptions, and AI-assisted English translations of ${totalBooks} books ` +
-        `(${pageTotals.pages.toLocaleString()} pages) from the Bibliotheca Philosophica Hermetica (BPH), ` +
+        `(${pageTotals.pages.toLocaleString('en-US')} pages) from the Bibliotheca Philosophica Hermetica (BPH), ` +
         `housed at the Embassy of the Free Mind in Amsterdam. The collection covers Hermetica, alchemy, ` +
         `Kabbalah, Rosicrucianism, and Western esoteric traditions from the 15th–19th centuries. ` +
-        `${pageTotals.translated.toLocaleString()} pages have been translated into English.`,
+        `${pageTotals.translated.toLocaleString('en-US')} pages have been translated into English.`,
     },
     url: 'https://sourcelibrary.org/libraries/bibliotheca-philosophica-hermetica',
     mainEntityOfPage: 'https://sourcelibrary.org/libraries/bibliotheca-philosophica-hermetica',
@@ -141,7 +141,7 @@ export async function GET() {
     dateModified: new Date().toISOString().split('T')[0],
     measurementTechnique:
       'OCR via Google Gemini AI; English translations via Google Gemini AI with cross-page context.',
-    size: `${totalBooks} books, ${pageTotals.pages.toLocaleString()} pages`,
+    size: `${totalBooks} books, ${pageTotals.pages.toLocaleString('en-US')} pages`,
   };
 
   return new NextResponse(JSON.stringify(dataset, null, 2), {

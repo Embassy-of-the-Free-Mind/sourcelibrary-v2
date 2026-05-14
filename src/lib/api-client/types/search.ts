@@ -12,6 +12,9 @@ export interface SearchResult {
   title: string;
   display_title?: string;
   author: string;
+  /** Editor name (compiler/editor of an edited volume). Used as the byline
+   *  fallback when `author` is missing or "Unknown" — see src/lib/byline.ts. */
+  editor?: string;
   language: string;
   published: string;
   page_count?: number;
@@ -27,6 +30,8 @@ export interface SearchResult {
   snippet_type?: 'translation' | 'ocr' | 'summary';
   thumbnail?: string;
   thumbnail_blob?: string;
+  image_display?: string;
+  image_thumb?: string;
   quality_score?: number;
 }
 
@@ -96,6 +101,8 @@ export interface SemanticSearchResult {
   book_id: string;
   title: string;
   author: string | null;
+  /** Editor name for edited volumes — falls back as byline when author missing. */
+  editor?: string | null;
   language: string | null;
   year: number | null;
   summary_snippet: string;

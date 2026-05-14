@@ -79,7 +79,7 @@ export default async function ArtworkLandingPage() {
             Paintings, prints, sculptures, and manuscripts from antiquity to the nineteenth century — cross-referenced with the texts that inspired them.
           </p>
           <div className="flex flex-wrap items-center gap-6 mt-10 text-sm text-stone-500">
-            <span className="font-medium text-stone-400">{totalCount.toLocaleString()} works</span>
+            <span className="font-medium text-stone-400">{totalCount.toLocaleString('en-US')} works</span>
             <span className="w-px h-4 bg-stone-700" />
             <span>{collections.length} collections</span>
             <span className="w-px h-4 bg-stone-700" />

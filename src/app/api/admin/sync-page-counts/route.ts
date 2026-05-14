@@ -35,7 +35,9 @@ export const POST = withAdminAuth(async (request, session) => {
       if (!bookId) continue;
 
       const pageStats = await pages.aggregate([
-        { $match: { book_id: bookId } },
+        // Only visible pages — dedup-hidden (page_number<0) and archived-spread
+        // layers must not be counted, or they'll re-inflate pages_count.
+        { $match: { book_id: bookId, page_number: { $gt: 0 } } },
         {
           $group: {
             _id: null,

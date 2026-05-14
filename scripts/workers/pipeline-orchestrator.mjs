@@ -79,9 +79,55 @@ async function saveRevisionBeforeOverwrite(db, pageId, field) {
 
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
 const OCR_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+
+// Latin-script languages safe for flash-lite. Anything else (Tibetan, Arabic,
+// Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) routes to flash because
+// flash-lite hallucinates on low-resource scripts — it over-relies on
+// linguistic priors when visual decoding is hard, producing plausible-sounding
+// content that has nothing to do with the page. See src/app/blog/tibetan-ocr/.
+// Must stay in sync with LATIN_SCRIPT_LANGUAGES in src/lib/types/ai-models.ts.
+const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
+  'english', 'en', 'eng',
+  'latin', 'la', 'lat',
+  'french', 'fr', 'fra',
+  'italian', 'it', 'ita',
+  'spanish', 'es', 'spa',
+  'portuguese', 'pt', 'por',
+  'romanian', 'ro', 'ron', 'rum',
+  'catalan', 'ca', 'cat',
+  'german', 'de', 'deu', 'ger',
+  'dutch', 'nl', 'nld', 'dut',
+  'swedish', 'sv', 'swe',
+  'norwegian', 'no', 'nor',
+  'danish', 'da', 'dan',
+  'finnish', 'fi', 'fin',
+  'icelandic', 'is', 'isl', 'ice',
+  'welsh', 'cy', 'cym', 'wel',
+  'irish', 'ga', 'gle',
+  'polish', 'pl', 'pol',
+  'czech', 'cs', 'ces', 'cze',
+  'slovak', 'sk', 'slk', 'slo',
+  'slovenian', 'sl', 'slv',
+  'croatian', 'hr', 'hrv',
+  'hungarian', 'hu', 'hun',
+  'estonian', 'et', 'est',
+  'latvian', 'lv', 'lav',
+  'lithuanian', 'lt', 'lit',
+  'albanian', 'sq', 'sqi', 'alb',
+  'turkish', 'tr', 'tur',
+  'indonesian', 'id', 'ind',
+  'vietnamese', 'vi', 'vie',
+  'malay', 'ms', 'msa',
+  'tagalog', 'tl', 'tgl', 'filipino',
+  'swahili', 'sw', 'swa',
+]);
+
 function getOcrModelForBook(book) {
   // BPH books use Flash Preview for higher quality on historical manuscripts
   if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
+  // Non-Latin scripts: flash-lite hallucinates on low-resource pretraining data
+  const lang = (book?.language || '').toLowerCase().trim();
+  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return OCR_MODEL_FLASH;
   return OCR_MODEL_LITE;
 }
 const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
@@ -525,7 +571,9 @@ async function transliteratePage(db, page, sourceScript) {
 
 // ── Direct translation (Gemini realtime, FIFO per book) ──
 
-// Translation prompt loaded from DB prompts collection (single source of truth)
+// Translation prompt loaded from DB prompts collection (single source of truth).
+// Returns { text, id, name, version, content_hash } so callers can stamp
+// prompt_id / prompt_hash / prompt_name on each page write.
 let _cachedTranslationPrompt = null;
 async function getTranslationPromptFromDb(db) {
   if (_cachedTranslationPrompt) return _cachedTranslationPrompt;
@@ -535,7 +583,13 @@ async function getTranslationPromptFromDb(db) {
   );
   if (!prompt?.content) throw new Error('No default translation prompt found in DB');
   console.log(`[pipeline] Loaded translation prompt v${prompt.version} from DB`);
-  _cachedTranslationPrompt = prompt.content;
+  _cachedTranslationPrompt = {
+    text: prompt.content,
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
   return _cachedTranslationPrompt;
 }
 
@@ -549,7 +603,13 @@ async function getEnglishModernizationPromptFromDb(db) {
   );
   if (!prompt?.content) throw new Error('No default english_modernization prompt found in DB');
   console.log(`[pipeline] Loaded english modernization prompt v${prompt.version} from DB`);
-  _cachedEnglishPrompt = prompt.content;
+  _cachedEnglishPrompt = {
+    text: prompt.content,
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
   return _cachedEnglishPrompt;
 }
 
@@ -582,8 +642,8 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
   const isEnglish = sourceLanguage.toLowerCase() === 'english';
   const translationPrompt = await getTranslationPromptFromDb(db);
   const englishPrompt = await getEnglishModernizationPromptFromDb(db);
-  const basePrompt = isEnglish ? englishPrompt : translationPrompt;
-  let prompt = basePrompt
+  const basePromptRef = isEnglish ? englishPrompt : translationPrompt;
+  let prompt = basePromptRef.text
     .replace('{source_language}', sourceLanguage)
     .replace('{target_language}', 'English');
 
@@ -638,7 +698,10 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
         'translation.model': TRANSLATE_MODEL,
         'translation.updated_at': new Date(),
         'translation.source': 'ai',
-        'translation.prompt_version': TRANSLATE_PROMPT_VERSION,
+        'translation.prompt_version': basePromptRef.version || TRANSLATE_PROMPT_VERSION,
+        'translation.prompt_id': basePromptRef.id,
+        'translation.prompt_hash': basePromptRef.content_hash,
+        'translation.prompt_name': basePromptRef.name,
         ...meta,
         updated_at: new Date(),
       },
@@ -1136,6 +1199,34 @@ async function createBatchJobInline(model, requests, displayName) {
   throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 }
 
+// Sweep stale sl-batch-*.jsonl files left behind by past runs.
+// Each orchestrator run uploads + unlinks its JSONL inline, but a throw
+// past the unlink call (network error, 5xx, FAILED_PRECONDITION, SIGKILL)
+// strands the file. The orchestrator runs every ~2 min, so anything older
+// than 30 min is definitively orphaned.
+function cleanupStaleJsonlFiles() {
+  const tmpRoot = os.tmpdir();
+  const cutoff = Date.now() - 30 * 60 * 1000;
+  let removed = 0;
+  let bytesFreed = 0;
+  let entries;
+  try { entries = fs.readdirSync(tmpRoot); } catch { return; }
+  for (const name of entries) {
+    if (!name.startsWith('sl-batch-') || !name.endsWith('.jsonl')) continue;
+    const full = path.join(tmpRoot, name);
+    try {
+      const st = fs.statSync(full);
+      if (st.mtimeMs >= cutoff) continue;
+      bytesFreed += st.size;
+      fs.unlinkSync(full);
+      removed++;
+    } catch {}
+  }
+  if (removed > 0) {
+    console.log(`[orchestrator] Swept ${removed} stale JSONL files (${(bytesFreed / (1024 ** 3)).toFixed(2)} GB freed)`);
+  }
+}
+
 /**
  * Build JSONL as a temp file, writing one line at a time to avoid holding
  * the entire string in memory. Frees each image buffer after serialization.
@@ -1196,9 +1287,15 @@ async function getOcrPromptFromDb(db) {
 
   const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
 
-  return prompt.content
-    .replace('{language_instruction}', languageInstruction)
-    .replace('{language}', '');
+  return {
+    text: prompt.content
+      .replace('{language_instruction}', languageInstruction)
+      .replace('{language}', ''),
+    id: prompt._id?.toString(),
+    name: prompt.name,
+    version: String(prompt.version ?? 1),
+    content_hash: prompt.content_hash,
+  };
 }
 
 /**
@@ -1297,7 +1394,8 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
   }
   console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
 
-  let prompt = await getOcrPromptFromDb(db);
+  const ocrPromptRef = await getOcrPromptFromDb(db);
+  let prompt = ocrPromptRef.text;
 
   // Spread OCR: for BPH two-page spread books, prepend instructions to process
   // both pages separately with <split-position> and <page-break/> markers.
@@ -1383,7 +1481,9 @@ Output structure:
 
       // Upload JSONL + create batch — both must use the same key (files are key-scoped).
       // Round-robin start key across projects to spread load evenly.
+      // Non-quota errors capture into __submitErr so we always reach the unlink below.
       let uploadKeyIndex = -1;
+      let __submitErr = null;
       const bestKey = getLeastLoadedKey();
       const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -1400,7 +1500,8 @@ Output structure:
             _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
-          throw uploadErr;
+          __submitErr = uploadErr;
+          break;
         }
 
         try {
@@ -1418,11 +1519,13 @@ Output structure:
             _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
-          throw batchErr;
+          __submitErr = batchErr;
+          break;
         }
       }
-      // Clean up temp JSONL file
+      // Clean up temp JSONL file (always runs, even on non-quota errors above)
       try { fs.unlinkSync(jsonlFile); } catch (_) {}
+      if (__submitErr) throw __submitErr;
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       // Inline: small batch, embed base64 directly in request body
@@ -1465,7 +1568,10 @@ Output structure:
       page_count: chunk.length,
       status: 'pending',
       model: ocrModel,
-      prompt_version: OCR_PROMPT_VERSION,
+      prompt_version: ocrPromptRef.version || OCR_PROMPT_VERSION,
+      prompt_id: ocrPromptRef.id,
+      prompt_name: ocrPromptRef.name,
+      prompt_hash: ocrPromptRef.content_hash,
       submission_method: useFileBased ? 'file' : 'inline',
       key_index: batchJob.keyIndex,
       force: false,
@@ -1497,7 +1603,10 @@ Output structure:
       total_pages: totalSubmitted,
       status: 'pending',
       model: ocrModel,
-      prompt_version: OCR_PROMPT_VERSION,
+      prompt_version: ocrPromptRef.version || OCR_PROMPT_VERSION,
+      prompt_id: ocrPromptRef.id,
+      prompt_name: ocrPromptRef.name,
+      prompt_hash: ocrPromptRef.content_hash,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -1516,7 +1625,8 @@ const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-bo
 
 async function submitCrossBookOcrBatches(db, books) {
   const ocrModel = OCR_MODEL_LITE;
-  const basePrompt = await getOcrPromptFromDb(db);
+  const basePromptRef = await getOcrPromptFromDb(db);
+  const basePrompt = basePromptRef.text;
 
   // Guard: skip books with active batch_jobs or needs_splitting
   const eligible = [];
@@ -1619,7 +1729,9 @@ async function submitCrossBookOcrBatches(db, books) {
   console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${allDownloaded.length} pages`);
 
   // Upload + create batch with key rotation (same pattern as image extraction)
+  // Non-quota errors capture into __submitErr so we always reach the unlink below.
   let batchJob = null;
+  let __submitErr = null;
   const bestKey = getLeastLoadedKey();
   const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
   for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -1635,7 +1747,8 @@ async function submitCrossBookOcrBatches(db, books) {
         _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
         continue;
       }
-      throw uploadErr;
+      __submitErr = uploadErr;
+      break;
     }
     try {
       batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uki);
@@ -1650,10 +1763,12 @@ async function submitCrossBookOcrBatches(db, books) {
         _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
         continue;
       }
-      throw batchErr;
+      __submitErr = batchErr;
+      break;
     }
   }
   try { fs.unlinkSync(jsonlFile); } catch (_) {}
+  if (__submitErr) throw __submitErr;
   if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
   // Record in batch_jobs with book_ids array
@@ -1668,7 +1783,10 @@ async function submitCrossBookOcrBatches(db, books) {
     page_count: allDownloaded.length,
     status: 'pending',
     model: ocrModel,
-    prompt_version: OCR_PROMPT_VERSION,
+    prompt_version: basePromptRef.version || OCR_PROMPT_VERSION,
+    prompt_id: basePromptRef.id,
+    prompt_name: basePromptRef.name,
+    prompt_hash: basePromptRef.content_hash,
     submission_method: 'file',
     key_index: batchJob.keyIndex,
     cross_book: true,
@@ -1851,7 +1969,9 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
       // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
+      // Non-quota errors capture into __submitErr so we always reach the unlink below.
       let uploadKeyIndex = -1;
+      let __submitErr = null;
       const imgBestKey = getLeastLoadedKey();
       const imgStartKey = imgBestKey >= 0 ? imgBestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -1867,7 +1987,8 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
             console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
             continue;
           }
-          throw uploadErr;
+          __submitErr = uploadErr;
+          break;
         }
 
         try {
@@ -1885,10 +2006,12 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
             _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
-          throw batchErr;
+          __submitErr = batchErr;
+          break;
         }
       }
       try { fs.unlinkSync(jsonlFile); } catch (_) {}
+      if (__submitErr) throw __submitErr;
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       const inlineRequests = chunk.map(item => ({
@@ -2080,7 +2203,9 @@ async function submitCrossBookImageBatches(db, bookItems) {
     console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
     // Upload + create batch with same key (files are key-scoped). Least-loaded key first.
+    // Non-quota errors capture into __submitErr so we always reach the unlink below.
     let batchJob = null;
+    let __submitErr = null;
     const crossBestKey = getLeastLoadedKey();
     const crossStartKey = crossBestKey >= 0 ? crossBestKey : nextBatchKeyIndex();
     for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
@@ -2096,7 +2221,8 @@ async function submitCrossBookImageBatches(db, bookItems) {
           _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
           continue;
         }
-        throw uploadErr;
+        __submitErr = uploadErr;
+        break;
       }
 
       try {
@@ -2114,10 +2240,12 @@ async function submitCrossBookImageBatches(db, bookItems) {
           _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
           continue;
         }
-        throw batchErr;
+        __submitErr = batchErr;
+        break;
       }
     }
     try { fs.unlinkSync(jsonlFile); } catch (_) {}
+    if (__submitErr) throw __submitErr;
     if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
     // Record in batch_jobs — use book_ids array for cross-book, book_id for backward compat
@@ -2179,6 +2307,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
 async function run() {
   const startTime = Date.now();
+  cleanupStaleJsonlFiles();
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 30000 });
   await client.connect();
   const db = client.db('bookstore');
@@ -2728,7 +2857,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
       console.log(`  Books ready for preview OCR: ${readyForPreview.length}`);
 
-      const previewOcrPrompt = await getOcrPromptFromDb(db);
+      const previewOcrPromptRef = await getOcrPromptFromDb(db);
+      const previewOcrPrompt = previewOcrPromptRef.text;
       const previewApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
       const previewModel = OCR_MODEL_LITE;
       let previewDone = 0;
@@ -2824,7 +2954,10 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                   { $set: {
                     'ocr.data': text,
                     'ocr.model': previewModel,
-                    'ocr.prompt_version': OCR_PROMPT_VERSION,
+                    'ocr.prompt_version': previewOcrPromptRef.version || OCR_PROMPT_VERSION,
+                    'ocr.prompt_id': previewOcrPromptRef.id,
+                    'ocr.prompt_hash': previewOcrPromptRef.content_hash,
+                    'ocr.prompt_name': previewOcrPromptRef.name,
                     'ocr.updated_at': new Date(),
                     'ocr.source': 'pipeline_preview',
                     updated_at: new Date(),
@@ -3238,10 +3371,15 @@ Rules:
             if (!book) continue;
 
             // Check if book already exists in live (can have different _id)
-            const existingLive = await db.collection('books').findOne({ id: candidate.id }, { projection: { _id: 1 } });
+            const existingLive = await db.collection('books').findOne({ id: candidate.id }, { projection: { _id: 1, slug: 1 } });
             if (existingLive) {
-              // Update in place, preserving live _id
+              // Update in place, preserving live _id and live slug.
+              // The live slug may have been disambiguated on first promotion
+              // (e.g. `foo-2`), while warehouse still holds the original `foo`.
+              // Overwriting would re-trigger E11000 against the record that
+              // owns `foo` in live.
               const { _id, ...bookWithoutId } = book;
+              if (existingLive.slug) delete bookWithoutId.slug;
               await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
             } else {
               // Fresh insert — deduplicate slug to avoid E11000 on books_slug_idx
