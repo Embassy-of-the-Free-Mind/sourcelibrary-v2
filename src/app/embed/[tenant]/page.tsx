@@ -12,6 +12,13 @@ import { resolveTenantId } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
 
+// Cold-start with several BPH-only Supabase/Mongo loaders can exceed the
+// Vercel default function budget (10s) under Atlas load, surfacing as
+// "Something went wrong" inside EFM's iframe at /digital-collection-search.
+// Loader-level caching/timeouts in tenant-library-loaders.ts should keep us
+// well under this; the bump is a safety net for cold lambdas.
+export const maxDuration = 30;
+
 interface Props {
     params: Promise<{ tenant: string }>;
     searchParams: Promise<Record<string, string | string[] | undefined>>;
