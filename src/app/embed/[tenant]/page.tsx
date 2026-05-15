@@ -102,6 +102,14 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     // browser before render finished. Skip them and pass empty placeholders.
     const skipHeavyLoaders = probablyBph && (view === 'catalog' || view === 'books');
 
+    // dominantProvider is only consulted as a fallback when the tenant slug
+    // doesn't map to a known partner — for known slugs (bph, ficino, bhutan,
+    // …) `getPartnerBySlug` already wins. For BPH specifically this
+    // aggregation is a `$group` over ~17K books and was the 4–8s warm SSR
+    // bottleneck on cold lambdas (cache is per-instance and misses often).
+    // Skip the query when we already know the partner from the slug.
+    const knownPartner = getPartnerBySlug(tenant);
+
     const [libraryData, dominantProvider, cataloguedBookIds] = await Promise.all([
         skipHeavyLoaders
             ? Promise.resolve({
@@ -113,7 +121,7 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
                 contributingLibraries: [],
             } as Awaited<ReturnType<typeof fetchTenantLibraryData>>)
             : fetchTenantLibraryData(tenantId, sort, language, offset, q || undefined),
-        getTenantDominantProvider(tenantId),
+        knownPartner ? Promise.resolve(null) : getTenantDominantProvider(tenantId),
         probablyBph && !skipHeavyLoaders ? fetchTenantBphCataloguedBookIds() : Promise.resolve(null),
     ]);
 
@@ -126,7 +134,7 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         : libraryData.topBooks;
     const { books, total, languages, galleryImages, contributingLibraries } = libraryData;
 
-    const canonicalPartner = getPartnerBySlug(tenant) || (dominantProvider ? getPartnerByProvider(dominantProvider) : undefined);
+    const canonicalPartner = knownPartner || (dominantProvider ? getPartnerByProvider(dominantProvider) : undefined);
     const tenantRecord = tenantDoc as Record<string, unknown>;
     const tenantExternalUrl =
         getOptionalStringField(tenantRecord.url) ||
