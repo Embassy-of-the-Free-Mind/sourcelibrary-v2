@@ -42,12 +42,9 @@ const CATALOG_PARAM_KEYS = [
 const BOOKS_PARAM_KEYS = ['q', 'sort', 'language', 'offset'];
 
 export default async function EmbedTenantRoot({ params, searchParams }: Props) {
-    const __t0 = Date.now();
-    const __tick = (label: string) => console.log(`[embed/[tenant]] ${label} +${Date.now() - __t0}ms`);
     const { tenant } = await params;
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) notFound();
-    __tick(`resolveTenantId tenant=${tenant}`);
 
     const sp = await searchParams;
     // BPH partner prefers Oldest first so a fresh visit lands on the
@@ -87,10 +84,8 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     }
 
     const db = await getDb();
-    __tick('getDb');
     const tenantDoc = await db.collection('tenants').findOne({ id: tenantId });
     if (!tenantDoc) notFound();
-    __tick('tenants.findOne');
 
     // Cheap pre-check so the Supabase catalogue-id fetch can run in parallel
     // with the main library fetch. dominantProvider is the canonical isBph
@@ -129,7 +124,6 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         knownPartner ? Promise.resolve(null) : getTenantDominantProvider(tenantId),
         probablyBph && !skipHeavyLoaders ? fetchTenantBphCataloguedBookIds() : Promise.resolve(null),
     ]);
-    __tick(`batch1 (skipHeavy=${skipHeavyLoaders}, knownPartner=${!!knownPartner})`);
 
     // Filter the Selected Books row to books that exist in the Supabase
     // catalogue (bph_works.sl_book_id). Consistent with the catalogue list
@@ -155,7 +149,6 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
             fetchTenantBphCatalogTotal(tenantId),
         ])
         : [{} as Record<string, { id: string; slug: string }>, 0];
-    __tick(`batch2 (isBph=${isBph})`);
 
     const basePath = `/embed/${tenant}`;
 
