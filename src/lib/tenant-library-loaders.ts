@@ -351,22 +351,32 @@ export async function fetchTenantLibraryData(
  * Used to apply provider-specific defaults (e.g., BPH catalog).
  */
 export async function getTenantDominantProvider(tenantId: string): Promise<string | null> {
-  const db = await getReadDb();
-
-  const result = await db.collection('books').aggregate([
-    { $match: { tenantId, visible: true } },
-    { $group: { _id: '$image_source.provider', count: { $sum: 1 } } },
-    { $sort: { count: -1 } },
-    { $limit: 1 },
-  ], { maxTimeMS: 10_000 }).toArray();
-
-  return result[0]?._id || null;
+  try {
+    const db = await getReadDb();
+    const result = await db.collection('books').aggregate([
+      { $match: { tenantId, visible: true } },
+      { $group: { _id: '$image_source.provider', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 1 },
+    ], { maxTimeMS: 4_000 }).toArray();
+    return result[0]?._id || null;
+  } catch (err) {
+    console.warn('[tenant-library-loaders] getTenantDominantProvider failed:', err);
+    return null;
+  }
 }
 
 /**
  * Build UBN map for BPH books in a tenant (for catalog browser).
  */
+let cachedBphDigitizedMap: { value: Record<string, { id: string; slug: string }>; expiresAt: number } | null = null;
+const BPH_DIGITIZED_MAP_TTL_MS = 60_000;
+
 export async function fetchTenantBphDigitizedMap(tenantId: string): Promise<Record<string, { id: string; slug: string }>> {
+  const now = Date.now();
+  if (cachedBphDigitizedMap && cachedBphDigitizedMap.expiresAt > now) {
+    return cachedBphDigitizedMap.value;
+  }
   try {
     const db = await getReadDb();
     const bphBooks = await db.collection('books').find(
@@ -375,7 +385,7 @@ export async function fetchTenantBphDigitizedMap(tenantId: string): Promise<Reco
         'image_source.provider': 'bph',
         'dublin_core.dc_identifier': { $exists: true },
       },
-      { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 15_000 }
+      { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 4_000 }
     ).toArray();
 
     const map: Record<string, { id: string; slug: string }> = {};
@@ -385,8 +395,11 @@ export async function fetchTenantBphDigitizedMap(tenantId: string): Promise<Reco
         map[ubn] = { id: b.id, slug: b.slug || b.id };
       }
     }
+    cachedBphDigitizedMap = { value: map, expiresAt: now + BPH_DIGITIZED_MAP_TTL_MS };
     return map;
-  } catch {
+  } catch (err) {
+    console.warn('[tenant-library-loaders] fetchTenantBphDigitizedMap failed, serving stale or empty:', err);
+    if (cachedBphDigitizedMap) return cachedBphDigitizedMap.value;
     return {};
   }
 }
@@ -403,19 +416,39 @@ export async function fetchTenantBphDigitizedMap(tenantId: string): Promise<Reco
  */
 let cachedBphCatalogTotal: { value: number; expiresAt: number } | null = null;
 const BPH_CATALOG_TOTAL_TTL_MS = 60_000;
+const SUPABASE_CALL_TIMEOUT_MS = 4_000;
+
+function withTimeout<T>(promise: PromiseLike<T>, ms: number, label: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+    Promise.resolve(promise).then(
+      v => { clearTimeout(t); resolve(v); },
+      e => { clearTimeout(t); reject(e); },
+    );
+  });
+}
 
 export async function fetchTenantBphCatalogTotal(_tenantId: string): Promise<number> {
   const now = Date.now();
   if (cachedBphCatalogTotal && cachedBphCatalogTotal.expiresAt > now) {
     return cachedBphCatalogTotal.value;
   }
-  // bph_works isn't tenant-scoped in Supabase today — return the global total.
-  const { count } = await supabase
-    .from('bph_works')
-    .select('*', { count: 'exact', head: true });
-  const value = count || 0;
-  cachedBphCatalogTotal = { value, expiresAt: now + BPH_CATALOG_TOTAL_TTL_MS };
-  return value;
+  try {
+    // bph_works isn't tenant-scoped in Supabase today — return the global total.
+    const { count } = await withTimeout(
+      supabase.from('bph_works').select('*', { count: 'exact', head: true }),
+      SUPABASE_CALL_TIMEOUT_MS,
+      'fetchTenantBphCatalogTotal',
+    );
+    const value = count || 0;
+    cachedBphCatalogTotal = { value, expiresAt: now + BPH_CATALOG_TOTAL_TTL_MS };
+    return value;
+  } catch (err) {
+    console.warn('[tenant-library-loaders] fetchTenantBphCatalogTotal failed, serving stale or 0:', err);
+    // Serve the last cached value even if expired — better than 0 for the UI count.
+    if (cachedBphCatalogTotal) return cachedBphCatalogTotal.value;
+    return 0;
+  }
 }
 
 /**
@@ -427,20 +460,40 @@ export async function fetchTenantBphCatalogTotal(_tenantId: string): Promise<num
  * bph_works row — about 2,200 books at last count, fits in memory easily.
  * Paginates around the Supabase 1,000-row default cap.
  */
-export async function fetchTenantBphCataloguedBookIds(): Promise<Set<string>> {
-  const ids = new Set<string>();
-  let from = 0;
-  while (true) {
-    const { data, error } = await supabase
-      .from('bph_works')
-      .select('sl_book_id')
-      .not('sl_book_id', 'is', null)
-      .range(from, from + 999);
-    if (error) break;
-    if (!data || data.length === 0) break;
-    for (const r of data) if (r.sl_book_id) ids.add(r.sl_book_id);
-    if (data.length < 1000) break;
-    from += 1000;
+let cachedBphCataloguedIds: { value: Set<string>; expiresAt: number } | null = null;
+const BPH_CATALOGUED_IDS_TTL_MS = 60_000;
+
+export async function fetchTenantBphCataloguedBookIds(): Promise<Set<string> | null> {
+  const now = Date.now();
+  if (cachedBphCataloguedIds && cachedBphCataloguedIds.expiresAt > now) {
+    return cachedBphCataloguedIds.value;
   }
-  return ids;
+  try {
+    const ids = new Set<string>();
+    let from = 0;
+    while (true) {
+      const { data, error } = await withTimeout(
+        supabase
+          .from('bph_works')
+          .select('sl_book_id')
+          .not('sl_book_id', 'is', null)
+          .range(from, from + 999),
+        SUPABASE_CALL_TIMEOUT_MS,
+        'fetchTenantBphCataloguedBookIds',
+      );
+      if (error) throw new Error(`Supabase error: ${error.message}`);
+      if (!data || data.length === 0) break;
+      for (const r of data) if (r.sl_book_id) ids.add(r.sl_book_id);
+      if (data.length < 1000) break;
+      from += 1000;
+    }
+    cachedBphCataloguedIds = { value: ids, expiresAt: now + BPH_CATALOGUED_IDS_TTL_MS };
+    return ids;
+  } catch (err) {
+    console.warn('[tenant-library-loaders] fetchTenantBphCataloguedBookIds failed:', err);
+    // Serve the last cached value even if expired; otherwise null so the caller
+    // falls back to the unfiltered topBooks list (page.tsx already handles null).
+    if (cachedBphCataloguedIds) return cachedBphCataloguedIds.value;
+    return null;
+  }
 }
