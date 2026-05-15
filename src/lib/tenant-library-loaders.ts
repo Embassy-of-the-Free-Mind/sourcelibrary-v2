@@ -349,8 +349,20 @@ export async function fetchTenantLibraryData(
 /**
  * Determine the dominant image source provider for a tenant.
  * Used to apply provider-specific defaults (e.g., BPH catalog).
+ *
+ * Group-by aggregation across all tenant books (~17K for BPH) was the
+ * dominant cost in the embed SSR path on warm lambdas — TTFB ~230ms,
+ * total ~5s, with this query accounting for most of the gap. The
+ * dominant provider for a tenant changes on the order of weeks, so a
+ * long-lived per-lambda cache is safe and cheap.
  */
+const TENANT_DOMINANT_PROVIDER_TTL_MS = 5 * 60_000;
+const cachedDominantProvider = new Map<string, { value: string | null; expiresAt: number }>();
+
 export async function getTenantDominantProvider(tenantId: string): Promise<string | null> {
+  const now = Date.now();
+  const hit = cachedDominantProvider.get(tenantId);
+  if (hit && hit.expiresAt > now) return hit.value;
   try {
     const db = await getReadDb();
     const result = await db.collection('books').aggregate([
@@ -359,10 +371,13 @@ export async function getTenantDominantProvider(tenantId: string): Promise<strin
       { $sort: { count: -1 } },
       { $limit: 1 },
     ], { maxTimeMS: 4_000 }).toArray();
-    return result[0]?._id || null;
+    const value = (result[0]?._id as string | undefined) || null;
+    cachedDominantProvider.set(tenantId, { value, expiresAt: now + TENANT_DOMINANT_PROVIDER_TTL_MS });
+    return value;
   } catch (err) {
     console.warn('[tenant-library-loaders] getTenantDominantProvider failed:', err);
-    return null;
+    // Serve stale on error if we have any prior value.
+    return hit?.value ?? null;
   }
 }
 
