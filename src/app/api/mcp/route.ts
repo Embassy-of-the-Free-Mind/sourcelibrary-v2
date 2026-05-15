@@ -113,6 +113,34 @@ async function searchPassages(args: Record<string, unknown>) {
   };
 }
 
+async function searchConcept(args: Record<string, unknown>) {
+  const limit = Math.min(Number(args.limit) || 15, 50);
+  const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(limit) });
+
+  const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
+  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
+    book_id: r.book_id,
+    title: r.book_title,
+    author: r.book_author,
+    language: r.book_language,
+    published: r.book_year,
+    page: r.page_number,
+    snippet: r.snippet,
+    // Semantic-page snippets are verbatim translation excerpts, not AI summaries —
+    // always safe to quote (the AI step is upstream in the embedding, not the snippet).
+    snippet_type: 'translation',
+    similarity: r.score,
+    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+  })) || [];
+  return {
+    query: result.query,
+    total_matches: passages.length,
+    returned: passages.length,
+    passages,
+    tip: 'These results are ranked by conceptual similarity (cosine distance on Gemini embeddings), not literal keyword match. Lower similarity scores mean weaker matches — be skeptical below ~0.45.',
+  };
+}
+
 async function searchWithinBook(args: Record<string, unknown>) {
   const params = new URLSearchParams({ q: String(args.query) });
   const result = await apiGet(`/books/${args.book_id}/search`, params) as Record<string, unknown>;
@@ -280,6 +308,19 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'search_concept',
+    description: 'Conceptual / semantic passage search. Use when the modern term won\'t literally appear in historical texts — e.g. "distributed cognition" maps to passages about active intellect, art of memory, wax tablet metaphors; "social contract" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings (768d), so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Each passage includes a similarity score (0-1); treat scores below ~0.45 with skepticism.',
+    annotations: { title: 'Search by Concept', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        query: { type: 'string', description: 'A concept or natural-language description — full sentences are fine (e.g. "tools that extend the mind beyond the body"). Unlike search_translations, this does NOT require words that appear in the corpus.' },
+        limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
+      },
+      required: ['query'],
+    },
+  },
+  {
     name: 'search_within_book',
     description: 'Search inside a specific book\'s pages (OCR and translations). Returns matching pages with snippets.',
     annotations: { title: 'Search Within Book', ...READ_ONLY },
@@ -386,6 +427,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'search_library': return searchLibrary(args);
     case 'search_translations':
     case 'search_passages': return searchPassages(args);
+    case 'search_concept': return searchConcept(args);
     case 'search_within_book': return searchWithinBook(args);
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
