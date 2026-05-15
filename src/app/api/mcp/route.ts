@@ -1,6 +1,8 @@
 import type { NextRequest } from 'next/server';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth } from '@/lib/api-auth';
+import { logMcpToolCall } from '@/lib/mcp-usage';
+import { getClientIp } from '@/lib/rate-limit';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -394,7 +396,7 @@ async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: 
 
 // ── Create a fresh MCP server instance (stateless per-request) ─────
 
-function createServer() {
+function createServer(reqContext: { ip: string; userAgent: string | null }) {
   const server = new Server(
     { name: 'source-library', version: '4.2.0' },
     { capabilities: { tools: {} } },
@@ -409,8 +411,14 @@ function createServer() {
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
+    const argsObj = (args || {}) as ToolArgs;
+    const started = Date.now();
     try {
-      const result = await handleToolCall(name, (args || {}) as ToolArgs);
+      const result = await handleToolCall(name, argsObj);
+      logMcpToolCall({
+        tool: name, args: argsObj, ms: Date.now() - started,
+        ip: reqContext.ip, userAgent: reqContext.userAgent,
+      });
 
       // search_images: return image content blocks alongside text metadata
       if (name === 'search_images' && result && typeof result === 'object' && 'images' in result) {
@@ -437,8 +445,13 @@ function createServer() {
       const text = typeof result === 'string' ? result : JSON.stringify(result, null, 2);
       return { content: [{ type: 'text' as const, text }] };
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      logMcpToolCall({
+        tool: name, args: argsObj, ms: Date.now() - started, error: message,
+        ip: reqContext.ip, userAgent: reqContext.userAgent,
+      });
       return {
-        content: [{ type: 'text' as const, text: `Error: ${error instanceof Error ? error.message : 'Unknown error'}` }],
+        content: [{ type: 'text' as const, text: `Error: ${message}` }],
         isError: true,
       };
     }
@@ -479,7 +492,10 @@ export const POST = withApiAuth(async (req: NextRequest) => {
       sessionIdGenerator: undefined, // Stateless for serverless
       enableJsonResponse: true,
     });
-    const server = createServer();
+    const server = createServer({
+      ip: getClientIp(req),
+      userAgent: req.headers.get('user-agent'),
+    });
     await server.connect(transport);
     try {
       return await transport.handleRequest(fixedReq, { parsedBody: body });
