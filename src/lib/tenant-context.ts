@@ -67,16 +67,29 @@ export function getTenantContextFromRequest(
 }
 
 /**
- * Resolve a tenant slug → UUID, using KV cache (5 min TTL) with DB fallback.
+ * Resolve a tenant slug → UUID, with a 5-minute in-memory cache.
  * Returns null if no active/suspended tenant exists for the slug.
  * Used in API routes and server actions that receive a slug param but run
  * outside the [tenant] layout (e.g. /api/platform/tenants/[slug]/invite).
+ *
+ * Slug → id mapping is essentially immutable in practice (renames are rare
+ * and require migration), so the cache is safe to keep long. Negative
+ * results are cached too — a 5-minute window of "no such tenant" is fine
+ * because new tenants take longer than that to fully provision.
  */
+const TENANT_ID_TTL_MS = 5 * 60_000;
+const cachedTenantId = new Map<string, { value: string | null; expiresAt: number }>();
+
 export async function resolveTenantId(slug: string): Promise<string | null> {
+  const now = Date.now();
+  const hit = cachedTenantId.get(slug);
+  if (hit && hit.expiresAt > now) return hit.value;
   const db = await getDb();
   const tenant = await db.collection('tenants').findOne({
     slug,
     status: { $ne: 'deleted' },
   });
-  return tenant ? (tenant.id as string) : null;
+  const value = tenant ? (tenant.id as string) : null;
+  cachedTenantId.set(slug, { value, expiresAt: now + TENANT_ID_TTL_MS });
+  return value;
 }
