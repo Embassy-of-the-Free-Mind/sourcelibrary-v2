@@ -43,15 +43,15 @@ async function apiPost(path: string, body: unknown) {
 // ── Tool implementations (mirrors mcp-server/src/api.ts) ───────────
 
 async function searchLibrary(args: Record<string, unknown>) {
-  const params = new URLSearchParams({ q: String(args.query) });
+  const limit = Math.min(Number(args.limit) || 10, 100);
+  const offset = Number(args.offset) || 0;
+  const params = new URLSearchParams({ q: String(args.query), limit: String(limit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
   if (args.year_from) params.set('year_from', String(args.year_from));
   if (args.year_to) params.set('year_to', String(args.year_to));
   if (args.has_doi) params.set('has_doi', 'true');
   if (args.has_translation) params.set('has_translation', 'true');
   if (args.sort) params.set('sort', String(args.sort));
-  if (args.limit) params.set('limit', String(Math.min(Number(args.limit), 100)));
-  if (args.offset) params.set('offset', String(args.offset));
 
   const result = await apiGet('/search', params) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
@@ -63,17 +63,26 @@ async function searchLibrary(args: Record<string, unknown>) {
     published: r.published,
     has_doi: r.has_doi,
     ...(r.page_number ? { page_number: r.page_number } : {}),
-    ...(r.snippet ? { snippet: r.snippet } : {}),
+    ...(r.snippet ? { snippet: r.snippet, snippet_type: r.snippet_type } : {}),
     url: r.page_number
       ? `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}?page=${r.page_number}`
       : `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}`,
     iiif_manifest: `https://sourcelibrary.org/api/iiif/${r.book_id || r.id}/manifest`,
-  }));
-  return { query: result.query, total: result.total, results, ...(result.nearby ? { nearby: result.nearby } : {}) };
+  })) || [];
+  return {
+    query: result.query,
+    total_matches: result.total,
+    returned: results.length,
+    offset,
+    results,
+    ...(result.nearby ? { nearby: result.nearby } : {}),
+  };
 }
 
 async function searchPassages(args: Record<string, unknown>) {
-  const params = new URLSearchParams({ q: String(args.query), pages_only: 'true', limit: String(Math.min(Number(args.limit) || 20, 50)) });
+  const limit = Math.min(Number(args.limit) || 20, 50);
+  const offset = Number(args.offset) || 0;
+  const params = new URLSearchParams({ q: String(args.query), pages_only: 'true', limit: String(limit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
   if (args.year_from) params.set('year_from', String(args.year_from));
   if (args.year_to) params.set('year_to', String(args.year_to));
@@ -88,10 +97,48 @@ async function searchPassages(args: Record<string, unknown>) {
     published: r.published,
     page: r.page_number,
     snippet: r.snippet,
-    snippet_source: r.snippet_type,
+    // snippet_type:
+    //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
+    //   'summary'             = AI-generated description (do NOT quote as the author's words)
+    snippet_type: r.snippet_type,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
-  }));
-  return { query: result.query, total: result.total, passages, tip: 'Use get_book_text with book_id to read the full text around these passages.' };
+  })) || [];
+  return {
+    query: result.query,
+    total_matches: result.total,
+    returned: passages.length,
+    offset,
+    passages,
+    tip: 'Only quote snippets where snippet_type is "translation" or "ocr". Use get_book_text with book_id to read full context around any passage.',
+  };
+}
+
+async function searchConcept(args: Record<string, unknown>) {
+  const limit = Math.min(Number(args.limit) || 15, 50);
+  const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(limit) });
+
+  const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
+  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
+    book_id: r.book_id,
+    title: r.book_title,
+    author: r.book_author,
+    language: r.book_language,
+    published: r.book_year,
+    page: r.page_number,
+    snippet: r.snippet,
+    // Semantic-page snippets are verbatim translation excerpts, not AI summaries —
+    // always safe to quote (the AI step is upstream in the embedding, not the snippet).
+    snippet_type: 'translation',
+    similarity: r.score,
+    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+  })) || [];
+  return {
+    query: result.query,
+    total_matches: passages.length,
+    returned: passages.length,
+    passages,
+    tip: 'These results are ranked by conceptual similarity (cosine distance on Gemini embeddings), not literal keyword match. Lower similarity scores mean weaker matches — be skeptical below ~0.45.',
+  };
 }
 
 async function searchWithinBook(args: Record<string, unknown>) {
@@ -226,34 +273,49 @@ const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: 
 const TOOLS: Tool[] = [
   {
     name: 'search_library',
-    description: 'Full-text search across Source Library\'s 22,000+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs.',
+    description: 'Find BOOKS matching a topic. Searches titles, authors, subjects, and (as a secondary signal) translated text. Use this when you want a list of works on a subject. For locating specific passages inside books, use search_translations instead. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination.',
     annotations: { title: 'Search Library', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: { type: 'string', description: 'Search query' },
+        query: { type: 'string', description: 'Search query — prefer single distinctive concepts ("alchemy", "tree of life") over long natural-language phrases. Wrap in "double quotes" for exact phrase.' },
         language: { type: 'string', description: 'Filter by original language (e.g., Latin, German, Greek)' },
         year_from: { type: 'number', description: 'Publication year range start' },
         year_to: { type: 'number', description: 'Publication year range end' },
         has_translation: { type: 'boolean', description: 'Only return books with translations' },
         sort: { type: 'string', enum: ['relevance', 'date_asc', 'date_desc', 'title'] },
-        limit: { type: 'number', description: 'Max results (default 10, max 100)' },
+        limit: { type: 'number', description: 'Max results per page (default 10, max 100)' },
+        offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
       },
       required: ['query'],
     },
   },
   {
     name: 'search_translations',
-    description: 'Search inside translated page text across the entire library. THE tool for finding what historical authors wrote about a topic. Returns passage snippets with page numbers and citation URLs.',
+    description: 'Find specific PASSAGES inside books — returns page-level snippets with citation URLs. Use this when you want a quote or evidence on a topic. For finding which BOOKS cover a topic, use search_library. Query tips: single distinctive terms ("memory palace", "wax tablet") work best; multi-word natural-English queries ("unity of the intellect") may return fewer results because matching is term-based, not phrase-based. Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination.',
     annotations: { title: 'Search Translations', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: { type: 'string', description: 'Search inside page translations (e.g., "harmony of the spheres")' },
+        query: { type: 'string', description: 'Search term — prefer single distinctive concepts ("harmony of the spheres", "active intellect") over long natural-language phrases. Multi-word queries match all terms (not phrase); wrap in "double quotes" for exact phrase.' },
         language: { type: 'string', description: 'Filter by book\'s original language' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
-        limit: { type: 'number', description: 'Max results (default 20, max 50)' },
+        limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
+        offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
+      },
+      required: ['query'],
+    },
+  },
+  {
+    name: 'search_concept',
+    description: 'Conceptual / semantic passage search. Use when the modern term won\'t literally appear in historical texts — e.g. "distributed cognition" maps to passages about active intellect, art of memory, wax tablet metaphors; "social contract" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings (768d), so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Each passage includes a similarity score (0-1); treat scores below ~0.45 with skepticism.',
+    annotations: { title: 'Search by Concept', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        query: { type: 'string', description: 'A concept or natural-language description — full sentences are fine (e.g. "tools that extend the mind beyond the body"). Unlike search_translations, this does NOT require words that appear in the corpus.' },
+        limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
       },
       required: ['query'],
     },
@@ -365,6 +427,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'search_library': return searchLibrary(args);
     case 'search_translations':
     case 'search_passages': return searchPassages(args);
+    case 'search_concept': return searchConcept(args);
     case 'search_within_book': return searchWithinBook(args);
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
