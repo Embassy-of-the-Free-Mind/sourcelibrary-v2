@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'the-deletion',
+    title: 'The Deletion',
+    subtitle: 'How a Claude Code session in one of my ten open terminals hard-deleted 4,758 books from our rare-books library — with the actual prompts, the actual postmortem, and what it means for running AI agents against production data.',
+    date: '15 May 2026',
+    readTime: '13 min read',
+    tag: 'Postmortem',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+  },
+  {
     slug: 'confident-hallucinator',
     title: 'The Confident Hallucinator',
     subtitle: 'What we learned evaluating AI OCR across five scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy.',
