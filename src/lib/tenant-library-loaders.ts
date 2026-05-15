@@ -260,10 +260,46 @@ function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, u
   };
 }
 
+// In-memory TTL cache for fetchTenantLibraryData.
+// The function runs 5+ queries (Mongo + Supabase) and gates the entire embed
+// /embed/[tenant] render. Without a cache, every iframe load eats the full
+// 4-6s rebuild because pages with `await searchParams` are dynamic — Next.js
+// can't cache them with `revalidate`. A 5-min in-memory TTL is enough to
+// span normal browsing sessions while staying near-live. Cache is per-Vercel-
+// function-instance (no shared cross-instance state needed); cold function
+// starts pay the rebuild but warm ones serve from RAM.
+const TENANT_LIBRARY_CACHE_TTL_MS = 5 * 60_000;
+const tenantLibraryCache = new Map<string, { value: TenantLibraryData; expiresAt: number }>();
+
 /**
  * Fetch all library data for a tenant, scoped by tenantId instead of provider.
  */
 export async function fetchTenantLibraryData(
+  tenantId: string,
+  sort: string,
+  language: string,
+  offset: number,
+  q?: string,
+): Promise<TenantLibraryData> {
+  const cacheKey = JSON.stringify([tenantId, sort, language, offset, q || '']);
+  const now = Date.now();
+  const cached = tenantLibraryCache.get(cacheKey);
+  if (cached && cached.expiresAt > now) return cached.value;
+
+  const result = await fetchTenantLibraryDataUncached(tenantId, sort, language, offset, q);
+  tenantLibraryCache.set(cacheKey, { value: result, expiresAt: now + TENANT_LIBRARY_CACHE_TTL_MS });
+
+  // Trim if cache grows unbounded (shouldn't, but defence-in-depth).
+  if (tenantLibraryCache.size > 200) {
+    const cutoff = now;
+    for (const [k, v] of tenantLibraryCache) {
+      if (v.expiresAt <= cutoff) tenantLibraryCache.delete(k);
+    }
+  }
+  return result;
+}
+
+async function fetchTenantLibraryDataUncached(
   tenantId: string,
   sort: string,
   language: string,
