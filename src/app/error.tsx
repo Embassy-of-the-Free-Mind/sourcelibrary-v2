@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import { reportError } from '@/components/providers/ErrorReporter';
 
 export default function GlobalError({
   error,
@@ -13,6 +14,11 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     console.error('Application error:', error);
+    reportError({
+      message: error.digest ? `${error.message} [digest:${error.digest}]` : error.message,
+      stack: error.stack,
+      source: 'app_error_boundary',
+    });
   }, [error]);
 
   return (
