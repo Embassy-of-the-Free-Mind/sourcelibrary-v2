@@ -147,34 +147,69 @@ export default function ForLibrariesPage() {
         </div>
       </section>
 
-      {/* Live demo */}
+      {/* Live demos */}
       <section className="mb-16">
-        <h2 className="text-2xl md:text-3xl text-primary mb-3">Try it live</h2>
-        <p className="text-secondary mb-6 max-w-2xl">
-          This is the Embassy of the Free Mind&apos;s collection, embedded right here using the same
-          one-line script shown above. Search a term, open a book, read a translated page &mdash; it
-          all happens inside the iframe.
+        <h2 className="text-2xl md:text-3xl text-primary mb-3">Two libraries, one platform</h2>
+        <p className="text-secondary mb-8 max-w-2xl">
+          Both collections below are live, embedded right here using the same one-line script
+          shown above. Different institutions, different subject focus, different audiences
+          &mdash; same underlying platform.
         </p>
 
-        <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm">
+        {/* BPH demo */}
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm mb-8">
           <div className="bg-stone-100 px-4 py-2.5 border-b border-border-light flex items-center justify-between">
-            <span className="text-sm font-medium text-stone-700">
-              Bibliotheca Philosophica Hermetica &mdash; live embed
-            </span>
+            <div>
+              <span className="text-sm font-medium text-stone-700">
+                Bibliotheca Philosophica Hermetica &mdash; Embassy of the Free Mind
+              </span>
+              <span className="hidden md:inline text-xs text-muted ml-2">
+                Hermetic, alchemical &amp; Rosicrucian works
+              </span>
+            </div>
             <a
               href="https://bph.sourcelibrary.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-accent-rust hover:underline"
+              className="text-xs text-accent-rust hover:underline whitespace-nowrap"
             >
               Open in new tab &rarr;
             </a>
           </div>
           <iframe
             src="https://bph.sourcelibrary.org"
-            title="Bibliotheca Philosophica Hermetica search demo"
+            title="Bibliotheca Philosophica Hermetica live embed"
             className="w-full"
-            style={{ height: '720px', border: 0 }}
+            style={{ height: '640px', border: 0 }}
+            loading="lazy"
+          />
+        </div>
+
+        {/* Kloss demo */}
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden shadow-sm">
+          <div className="bg-stone-100 px-4 py-2.5 border-b border-border-light flex items-center justify-between">
+            <div>
+              <span className="text-sm font-medium text-stone-700">
+                Bibliotheca Klossiana &mdash; CMC Prins Frederik, The Hague
+              </span>
+              <span className="hidden md:inline text-xs text-muted ml-2">
+                Masonic, Rosicrucian &amp; esoteric collection of Georg Kloss (1787&ndash;1854)
+              </span>
+            </div>
+            <a
+              href="https://kloss.sourcelibrary.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-accent-rust hover:underline whitespace-nowrap"
+            >
+              Open in new tab &rarr;
+            </a>
+          </div>
+          <iframe
+            src="https://kloss.sourcelibrary.org"
+            title="Bibliotheca Klossiana live embed"
+            className="w-full"
+            style={{ height: '640px', border: 0 }}
             loading="lazy"
           />
         </div>
