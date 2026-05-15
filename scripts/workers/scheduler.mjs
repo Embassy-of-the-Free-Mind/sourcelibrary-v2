@@ -198,11 +198,11 @@ const WORKERS = [
   },
   {
     name: 'archive-bulk',
-    cmd: 'node scripts/workers/archive-bulk.mjs --limit=100 --concurrency=3',
+    cmd: 'node scripts/workers/archive-bulk.mjs --limit=30 --concurrency=1',
     lock: '/tmp/sl-archive-bulk.lock',
     connections: 5,
     tier: 4,
-    interval: 600,      // every 10 min
+    interval: 1200,     // every 20 min — throttled 2026-05-15 after bulk import caused 8s search latency (Atlas write saturation from concurrent JP2 decompression + page inserts)
     healthMin: 'degraded',
     log: '/var/log/sourcelibrary/archive-bulk.log',
   },
