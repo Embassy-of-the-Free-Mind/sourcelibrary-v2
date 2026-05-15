@@ -78,6 +78,9 @@ const BOOK_CONCURRENCY = parseInt(process.env.ENRICH_CONCURRENCY || '8');
 const MAX_BATCH_CONCURRENCY = 20; // Cap parallel Gemini calls per book (prevents 100+ simultaneous calls for huge books)
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
 const MAX_RUNTIME_MS = 90 * 60 * 1000; // 90 min hard cap — prevents 12h runs blocking the scheduler
+const PHASE_7_BOOK_TIMEOUT_MS = 5 * 60 * 1000;  // 5 min per book for chapter extraction
+const PHASE_7_5_BOOK_TIMEOUT_MS = 2 * 60 * 1000; // 2 min per book for quality scoring (one Gemini call)
+const PHASE_7_6_BATCH_TIMEOUT_MS = 3 * 60 * 1000; // 3 min per collection-assignment batch
 const PROCESS_START = Date.now();
 const PER_BOOK_TIMEOUT_MS = 10 * 60 * 1000; // 10 min per book max
 
@@ -1542,6 +1545,11 @@ async function main() {
       const chQueue = [...books];
       const chWorkers = Array.from({ length: Math.min(BOOK_CONCURRENCY, chQueue.length) }, async () => {
         while (chQueue.length > 0) {
+          if (Date.now() - PROCESS_START > MAX_RUNTIME_MS) {
+            console.log(`  Runtime limit reached (${Math.round(MAX_RUNTIME_MS / 60000)}min) — stopping Phase 7`);
+            chQueue.length = 0;
+            break;
+          }
           const book = chQueue.shift();
           try {
             if ((book.pages_count || 0) < 10) {
@@ -1551,7 +1559,10 @@ async function main() {
             }
 
             await setPipelineStatus(db, book.id, 'chapters');
-            await extractChaptersForBook(db, book.id);
+            await Promise.race([
+              extractChaptersForBook(db, book.id),
+              new Promise((_, reject) => setTimeout(() => reject(new Error(`Phase 7 timeout after ${Math.round(PHASE_7_BOOK_TIMEOUT_MS / 60000)}min`)), PHASE_7_BOOK_TIMEOUT_MS)),
+            ]);
             await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
             revalidateBookPage(book.id).catch(() => {});
             chaptersExtracted++;
@@ -1612,6 +1623,10 @@ async function main() {
     console.log(`  Unscored books found: ${unscoredBooks.length}`);
 
     for (const book of unscoredBooks) {
+      if (Date.now() - PROCESS_START > MAX_RUNTIME_MS) {
+        console.log(`  Runtime limit reached (${Math.round(MAX_RUNTIME_MS / 60000)}min) — stopping Phase 7.5`);
+        break;
+      }
       const title = book.display_title || book.title;
       try {
         const galleryCount = await db.collection('gallery_images').countDocuments({ book_id: book.id });
@@ -1653,7 +1668,10 @@ Guidelines:
           generationConfig: { temperature: 0.1, maxOutputTokens: 2048, responseMimeType: 'application/json' },
         });
 
-        const result = await model.generateContent(prompt);
+        const result = await Promise.race([
+          model.generateContent(prompt),
+          new Promise((_, reject) => setTimeout(() => reject(new Error(`Phase 7.5 Gemini timeout after ${Math.round(PHASE_7_5_BOOK_TIMEOUT_MS / 60000)}min`)), PHASE_7_5_BOOK_TIMEOUT_MS)),
+        ]);
         const text = result.response.text().trim();
         const usageMeta = result.response.usageMetadata;
 
@@ -1800,6 +1818,10 @@ NO explanation, just the JSON array.`;
       if (unclassifiedBooks.length > 0 && !DRY_RUN) {
         // Process in batches of COLLECTION_BATCH_SIZE
         for (let i = 0; i < unclassifiedBooks.length; i += COLLECTION_BATCH_SIZE) {
+          if (Date.now() - PROCESS_START > MAX_RUNTIME_MS) {
+            console.log(`  Runtime limit reached (${Math.round(MAX_RUNTIME_MS / 60000)}min) — stopping Phase 7.6`);
+            break;
+          }
           const batch = unclassifiedBooks.slice(i, i + COLLECTION_BATCH_SIZE);
 
           const booksText = batch.map((b, idx) => {
@@ -1821,7 +1843,10 @@ NO explanation, just the JSON array.`;
                 systemInstruction: collectionSystemPrompt,
               });
 
-              const result = await model.generateContent(prompt);
+              const result = await Promise.race([
+                model.generateContent(prompt),
+                new Promise((_, reject) => setTimeout(() => reject(new Error(`Phase 7.6 Gemini timeout after ${Math.round(PHASE_7_6_BATCH_TIMEOUT_MS / 60000)}min`)), PHASE_7_6_BATCH_TIMEOUT_MS)),
+              ]);
               const text = result.response.text().trim();
               const usageMeta = result.response.usageMetadata;
 

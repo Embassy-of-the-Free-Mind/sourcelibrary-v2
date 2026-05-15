@@ -161,47 +161,54 @@ export const GET = withApiAuth(async (request: NextRequest) => {
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       (async () => {
         if (bookId || pagesOnly) return [];
-        const matchingIds = await searchBookIds(query, { limit: limit * 2 });
-        const bookFilters = buildBookFilters();
-        const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
+        try {
+          const matchingIds = await searchBookIds(query, { limit: limit * 2 });
+          const bookFilters = buildBookFilters();
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
 
-        let books: any[] = [];
-        if (matchingIds.length > 0) {
-          books = await db.collection('books')
-            .find({ id: { $in: matchingIds }, ...bookFilters })
-            .project(bookProjection)
-            .limit(limit)
-            .maxTimeMS(5000)
-            .toArray();
-        }
-
-        // Metadata fallback: search categories/subject_keywords/language in MongoDB
-        // Only fires when Supabase found nothing (avoids slow regex on common queries)
-        if (books.length === 0) {
-          const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-          const words = matchQuery.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
-          if (words.length >= 2) {
-            const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+          let books: any[] = [];
+          if (matchingIds.length > 0) {
             books = await db.collection('books')
-              .find({
-                $and: wordRegexes.map(rx => ({
-                  $or: [
-                    { categories: rx },
-                    { subject_keywords: rx },
-                    { language: rx },
-                    { title: rx },
-                    { display_title: rx },
-                  ],
-                })),
-                ...bookFilters,
-              })
+              .find({ id: { $in: matchingIds }, ...bookFilters })
               .project(bookProjection)
               .limit(limit)
-              .maxTimeMS(3000)
+              .maxTimeMS(5000)
               .toArray();
           }
+
+          // Metadata fallback: search categories/subject_keywords/language in MongoDB
+          // Only fires when Supabase found nothing (avoids slow regex on common queries)
+          if (books.length === 0) {
+            const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
+            const words = matchQuery.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
+            if (words.length >= 2) {
+              const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+              books = await db.collection('books')
+                .find({
+                  $and: wordRegexes.map(rx => ({
+                    $or: [
+                      { categories: rx },
+                      { subject_keywords: rx },
+                      { language: rx },
+                      { title: rx },
+                      { display_title: rx },
+                    ],
+                  })),
+                  ...bookFilters,
+                })
+                .project(bookProjection)
+                .limit(limit)
+                .maxTimeMS(3000)
+                .toArray();
+            }
+          }
+          return books;
+        } catch (err) {
+          // Fail-soft: a Supabase trigram timeout or MongoDB error should not 500 the whole route.
+          // The other 3 lanes (Atlas Search, semantic books, semantic pages) can still produce results.
+          console.warn('[search] Book lane failed:', err instanceof Error ? err.message : String(err));
+          return [];
         }
-        return books;
       })(),
 
       // --- Page content search (aggregation pipeline truncates text for snippets) ---
