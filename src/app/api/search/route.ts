@@ -325,7 +325,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         }
       }),
 
-      // --- Semantic page search (finds specific passages across all 2.6M pages) ---
+      // --- Semantic page search (finds specific passages across all 3.9M pages) ---
       // Catches passages buried inside large works that book-level search misses
       // (e.g. Martial's "masturbator" epigram, Diogenes's public acts in Laertius)
       timed(async () => {

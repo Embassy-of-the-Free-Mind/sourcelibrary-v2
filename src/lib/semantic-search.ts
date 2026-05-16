@@ -236,7 +236,7 @@ export interface SemanticPageSearchOptions {
 
 /**
  * Global page-level semantic search via match_semantic RPC.
- * Now that all 2.6M pages have embeddings, this finds specific passages
+ * Now that all 3.9M pages have embeddings, this finds specific passages
  * that book-level search misses (e.g. Martial's "masturbator" epigram
  * inside a 400-page book about Roman wit).
  *

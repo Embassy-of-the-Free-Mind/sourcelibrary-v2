@@ -5,7 +5,7 @@ import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Open API over 22,000+ rare historical texts. No auth required — call /api/mcp from curl, the browser, or any MCP client. 9 research tools, REST endpoints, CLI.',
+  description: 'Open API over 26,000+ rare historical texts. No auth required — call /api/mcp from curl, the browser, or any MCP client. 9 research tools, REST endpoints, CLI.',
   alternates: {
     canonical: '/developers',
   },
@@ -17,7 +17,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Open API over 22,000+ rare historical texts. No auth needed to start — sign in for a free key to lift rate limits and help us see what you're building."
+          subtitle="Open API over 26,000+ rare historical texts. No auth needed to start — sign in for a free key to lift rate limits and help us see what you're building."
         />
       }
     >
