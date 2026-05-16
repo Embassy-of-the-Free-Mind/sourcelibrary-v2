@@ -330,6 +330,7 @@ async function main() {
         {
           book_id: book.id,
           photo: { $exists: true, $nin: [null, ''] },
+          'archive_metadata.blocked': { $ne: true }, // Skip pages marked dead by cleanup-dead-pages.mjs
           $or: [
             { archived_photo: { $exists: false } },
             { archived_photo: null },
