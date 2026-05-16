@@ -14,6 +14,7 @@
  * Modes:
  *   --full        Process all pages with OCR or translation
  *   --incremental Process pages newer than latest in Supabase (default)
+ *   --missing-only Process only books that have pages with embedding IS NULL (~3-4h vs 85h for --full)
  *   --book ID     Process a single book
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
@@ -43,6 +44,7 @@ if (!MONGODB_URI || !SUPABASE_KEY || !GEMINI_KEY) {
 
 const args = process.argv.slice(2);
 const FULL_MODE = args.includes('--full');
+const MISSING_ONLY = args.includes('--missing-only');
 const DRY_RUN = args.includes('--dry-run');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
@@ -147,7 +149,7 @@ async function getLastSyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : MISSING_ONLY ? 'missing-only' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}`);
 
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
@@ -164,6 +166,32 @@ const pageQuery = {
 if (BOOK_ID) {
   pageQuery.book_id = BOOK_ID;
   console.log(`Processing book: ${BOOK_ID}`);
+} else if (MISSING_ONLY) {
+  // Fetch book_ids that have pages with embedding IS NULL in Supabase.
+  // Much faster than --full: skips books already fully embedded (~4M pages → only the missing ~169K).
+  console.log('Fetching book_ids with missing embeddings from Supabase...');
+  const missingBookIds = new Set();
+  let offset = 0;
+  const pageSize = 1000;
+  while (true) {
+    const { data, error } = await supabase
+      .from('page_translations')
+      .select('book_id')
+      .is('embedding', null)
+      .range(offset, offset + pageSize - 1);
+    if (error) { console.error('Supabase error fetching missing book_ids:', error.message); process.exit(1); }
+    if (!data || data.length === 0) break;
+    for (const row of data) missingBookIds.add(row.book_id);
+    if (data.length < pageSize) break;
+    offset += pageSize;
+  }
+  if (missingBookIds.size === 0) {
+    console.log('No pages with missing embeddings found. All caught up.');
+    await mongoClient.close();
+    process.exit(0);
+  }
+  pageQuery.book_id = { $in: [...missingBookIds] };
+  console.log(`Processing ${missingBookIds.size.toLocaleString()} books with missing page embeddings`);
 } else if (!FULL_MODE) {
   const lastSync = await getLastSyncTime();
   if (lastSync) {
