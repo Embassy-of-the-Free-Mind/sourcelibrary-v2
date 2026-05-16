@@ -127,22 +127,22 @@ async function applyProvenanceMarks(buffer) {
  * @returns {{ display: Buffer, thumb: Buffer }} - The generated variants
  */
 export async function generateDisplayVariants(fullResBuffer) {
-  // Display: 1200px wide, provenance marks on ~10% of pages (random)
-  const displayResized = await sharp(fullResBuffer)
-    .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
-    .jpeg({ quality: DISPLAY_QUALITY, progressive: true })
-    .toBuffer();
+  const displayPromise = (async () => {
+    const displayResized = await sharp(fullResBuffer)
+      .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: DISPLAY_QUALITY, progressive: true })
+      .toBuffer();
+    return Math.random() < 0.1
+      ? await applyProvenanceMarks(displayResized)
+      : displayResized;
+  })();
 
-  const display = Math.random() < 0.1
-    ? await applyProvenanceMarks(displayResized)
-    : displayResized;
-
-  // Thumbnail: 150px wide, no provenance marks (too small)
-  const thumb = await sharp(fullResBuffer)
+  const thumbPromise = sharp(fullResBuffer)
     .resize(THUMB_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: THUMB_QUALITY })
     .toBuffer();
 
+  const [display, thumb] = await Promise.all([displayPromise, thumbPromise]);
   return { display, thumb };
 }
 
@@ -170,28 +170,38 @@ export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uplo
   if (!bookId) throw new Error(`uploadPageVariants: bookId is ${bookId} for page ${pageNumber}`);
   const num = String(pageNumber).padStart(4, '0');
 
-  // Read full-res dimensions before any resizing
-  const meta = await sharp(fullResBuffer).metadata();
-  const width = meta.width || null;
-  const height = meta.height || null;
-
-  // Upload full-res (to the existing archived/ path for backward compat)
   const archivedKey = `archived/${bookId}/${pageNumber}.jpg`;
-  validateR2Key(archivedKey);
-  const archivedUrl = await uploadFn(archivedKey, fullResBuffer, 'image/jpeg');
-
-  // Generate variants
-  const { display, thumb } = await generateDisplayVariants(fullResBuffer);
-
-  // Upload display (1200px with provenance)
   const displayKey = `pages/${bookId}/${num}.jpg`;
-  validateR2Key(displayKey);
-  const displayUrl = await uploadFn(displayKey, display, 'image/jpeg');
-
-  // Upload thumbnail (150px)
   const thumbKey = `pages/${bookId}/${num}-thumb.jpg`;
+  validateR2Key(archivedKey);
+  validateR2Key(displayKey);
   validateR2Key(thumbKey);
-  const thumbUrl = await uploadFn(thumbKey, thumb, 'image/jpeg');
 
-  return { archived: archivedUrl, display: displayUrl, thumb: thumbUrl, width, height };
+  // Kick off full-res upload and metadata read against the buffer we already have,
+  // while sharp generates the resized variants in parallel.
+  const metaPromise = sharp(fullResBuffer).metadata();
+  const archivedUploadPromise = uploadFn(archivedKey, fullResBuffer, 'image/jpeg');
+  const variantsPromise = generateDisplayVariants(fullResBuffer);
+
+  // Once variants are ready, start their uploads — they run alongside the full-res upload.
+  const variantUploadsPromise = variantsPromise.then(({ display, thumb }) =>
+    Promise.all([
+      uploadFn(displayKey, display, 'image/jpeg'),
+      uploadFn(thumbKey, thumb, 'image/jpeg'),
+    ])
+  );
+
+  const [archivedUrl, [displayUrl, thumbUrl], meta] = await Promise.all([
+    archivedUploadPromise,
+    variantUploadsPromise,
+    metaPromise,
+  ]);
+
+  return {
+    archived: archivedUrl,
+    display: displayUrl,
+    thumb: thumbUrl,
+    width: meta.width || null,
+    height: meta.height || null,
+  };
 }

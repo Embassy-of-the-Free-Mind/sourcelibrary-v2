@@ -37,7 +37,7 @@ const hasFlag = (name) => args.includes(`--${name}`);
 
 const BOOK_LIMIT = parseInt(getArg('limit') || '20', 10);  // Books per cron run
 const BOOK_CONCURRENCY = parseInt(getArg('concurrency') || '2', 10);
-const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10);
+const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '16', 10);
 const DRY_RUN = hasFlag('dry-run');
 const JPEG_QUALITY = 85;
 const MAX_DIMENSION = 3000;
@@ -406,7 +406,7 @@ async function main() {
 
   cleanupStaleTmpDirs();
 
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 10, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
 

@@ -221,7 +221,7 @@ async function archivePage(page, db) {
 
 async function main() {
   const start = Date.now();
-  const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 5 });
+  const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 10 });
   const db = client.db('bookstore');
 
   // Check processing_control pause
@@ -335,6 +335,16 @@ async function main() {
             { archived_photo: null },
             { archived_photo: '' },
           ],
+          // Skip pages that have failed 3+ times — they have permanently broken
+          // source URLs (e.g. malformed IIIF templates from old imports). They
+          // poison every run by tripping the per-domain circuit breaker (5 fails
+          // with 0 oks). Re-archiving these requires fixing the photo URL first.
+          $and: [{
+            $or: [
+              { 'archive_metadata.failure_count': { $exists: false } },
+              { 'archive_metadata.failure_count': { $lt: 3 } },
+            ],
+          }],
         },
         { projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 } }
       )
@@ -371,7 +381,7 @@ async function main() {
 
   // Process all domains in parallel — each domain runs multiple concurrent workers.
   // The token bucket ensures we stay within rate limits even with concurrency.
-  const DOMAIN_CONCURRENCY = 5; // Workers per domain (token bucket throttles them)
+  const DOMAIN_CONCURRENCY = 8; // Workers per domain (token bucket throttles them)
   let circuitBroken = new Set(); // Domains that hit circuit breaker
 
   const domainWorkers = Object.entries(byDomain).map(async ([domain, domainPages]) => {
