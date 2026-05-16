@@ -17,7 +17,11 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { nanoid } from 'nanoid';
+import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+
+const SCAN_QUALITY_VERSION = 2;
+sharp.concurrency(1);
 
 // ── Config ──
 const CONCURRENCY = 25;           // Books processed simultaneously
@@ -102,7 +106,71 @@ GALLERY QUALITY (0.0-1.0):
 
 MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer sees and its significance.
 
-Return ONLY a valid JSON array. If no significant illustrations, return: []`;
+────────────────────────────────────────────────────────────────────────────────
+PAGE-LEVEL SCAN QUALITY (technical, not curatorial)
+────────────────────────────────────────────────────────────────────────────────
+Independently of the illustrations above, assess the TECHNICAL DIGITIZATION QUALITY
+of the page itself. This is about HOW the page was scanned/photographed, not
+whether the content is important.
+
+scan_score (0-100):
+  90-100 = pristine, sharp, full tonal range, faithful to original
+  70-89  = solid working scan, minor artifacts
+  50-69  = noticeable degradation but content preserved
+  30-49  = severe degradation, content partially lost
+  0-29   = unusable (blank, corrupt, fragment)
+
+scan_class — use exactly one:
+  color_photo       — full-color photograph of original (modern archival)
+  color_print       — color scan of a color print
+  grayscale_photo   — high-bit grayscale photo of original (manuscripts often)
+  grayscale_print   — grayscale scan of printed page
+  bitonal_clean     — pure black/white, SHARP (modern OCR-ready or pristine woodcut)
+  bitonal_microfilm — pure black/white WITH pepper noise / jagged edges / scan-of-scan
+  microfiche        — bitonal_microfilm + visible mottling or uneven illumination
+  blank             — page is empty or near-empty (no usable content)
+  corrupt           — broken, partial capture, or shows scanner bed instead of page
+
+Distinguishing bitonal_clean from bitonal_microfilm is the MOST IMPORTANT
+classification call. The signature of microfilm is JAGGED edges and PEPPER NOISE
+in flat areas. A clean bitonal woodcut has crisp continuous strokes.
+
+page_completeness:
+  full_page          — single page captured fully
+  partial_capture    — page clearly cropped/cut off
+  two_pages_one_image — facing pages captured as one image (folio scan defect)
+  fragment           — only a small portion of any page is captured
+  blank              — captured but page is empty
+
+illustration_fidelity (assess only if illustrations are present):
+  pristine | good | degraded | destroyed | no_illustration
+
+concerns: list any of these that apply, exact strings only:
+  bleed_through, gutter_shadow, page_skew, fold_distortion, low_resolution,
+  scan_of_scan, pepper_noise, faded_text, faded_color, water_damage, yellow_tone,
+  out_of_focus, uneven_illumination, wrong_orientation, partial_capture,
+  blank_page, scanner_bed_visible, two_pages_captured, compression_artifacts, color_cast
+
+────────────────────────────────────────────────────────────────────────────────
+OUTPUT FORMAT
+────────────────────────────────────────────────────────────────────────────────
+Return ONLY a single valid JSON object with this exact shape:
+
+{
+  "extracted_images": [ /* array of illustration objects as specified above; [] if none */ ],
+  "scan_quality": {
+    "scan_score": <int>,
+    "scan_class": "<one of the values above>",
+    "readable_text": <true|false>,
+    "illustration_fidelity": "<one of the values above>",
+    "page_completeness": "<one of the values above>",
+    "concerns": [ "...", "..." ],
+    "reasoning": "<1-2 sentence justification>"
+  }
+}
+
+If the page is blank or corrupt, still return the object — set extracted_images: []
+and fill scan_quality accordingly.`;
 
 // ── Helpers ──
 function getPageImageUrl(page) {
@@ -111,14 +179,16 @@ function getPageImageUrl(page) {
   return page.photo_original || page.photo || null;
 }
 
-async function fetchImageBase64(url) {
+async function fetchImage(url) {
   try {
     const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
     if (!response.ok) return null;
-    const buffer = await response.arrayBuffer();
+    const arrayBuf = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuf);
     const contentType = response.headers.get('content-type') || 'image/jpeg';
     return {
-      data: Buffer.from(buffer).toString('base64'),
+      buffer,
+      data: buffer.toString('base64'),
       mimeType: contentType.split(';')[0].trim(),
     };
   } catch {
@@ -126,17 +196,155 @@ async function fetchImageBase64(url) {
   }
 }
 
-function parseImageExtractionResponse(text) {
-  if (!text || typeof text !== 'string') return [];
-  const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
-  const jsonMatch = cleaned.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) return [];
+// Layer 1 deterministic characteristics — sharp pixel-stats + Laplacian variance,
+// histogram entropy, bimodality, chroma spread. Returns null on decode failure.
+async function computeImageCharacteristics(buffer) {
   try {
-    const parsed = JSON.parse(jsonMatch[0]);
-    return Array.isArray(parsed) ? parsed : [];
+    const [meta, stats] = await Promise.all([
+      sharp(buffer).metadata(),
+      sharp(buffer).stats(),
+    ]);
+    const ch = stats.channels;
+    if (!ch || ch.length === 0) return null;
+
+    const numChannels = ch.length;
+    const meanBrightness = ch.reduce((s, c) => s + c.mean, 0) / numChannels;
+    const meanStdev = ch.reduce((s, c) => s + c.stdev, 0) / numChannels;
+    const dynamicRange = Math.max(...ch.map(c => c.max - c.min));
+    const chromaSpread = numChannels >= 3
+      ? Math.max(
+          Math.abs(ch[0].mean - ch[1].mean),
+          Math.abs(ch[1].mean - ch[2].mean),
+          Math.abs(ch[0].mean - ch[2].mean),
+        )
+      : 0;
+
+    // Downsample once to grayscale for Laplacian + entropy + bimodality.
+    const small = await sharp(buffer)
+      .resize(512, null, { fit: 'inside' })
+      .greyscale()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const { data, info } = small;
+    const w = info.width;
+    const h = info.height;
+
+    let lapSum = 0, lapSumSq = 0, lapN = 0;
+    for (let y = 1; y < h - 1; y++) {
+      for (let x = 1; x < w - 1; x++) {
+        const i = y * w + x;
+        const lap = -4 * data[i] + data[i - 1] + data[i + 1] + data[i - w] + data[i + w];
+        lapSum += lap;
+        lapSumSq += lap * lap;
+        lapN++;
+      }
+    }
+    const lapMean = lapN ? lapSum / lapN : 0;
+    const sharpnessVar = lapN ? lapSumSq / lapN - lapMean * lapMean : 0;
+
+    const hist = new Array(256).fill(0);
+    for (let i = 0; i < data.length; i++) hist[data[i]]++;
+    let entropy = 0;
+    for (const c of hist) {
+      if (c) {
+        const p = c / data.length;
+        entropy -= p * Math.log2(p);
+      }
+    }
+    const sortedHist = [...hist].sort((a, b) => b - a);
+    const bimodality = (sortedHist[0] + sortedHist[1]) / data.length;
+
+    const pixels = (meta.width || 1) * (meta.height || 1);
+    const bytesPerPixel = buffer.length / pixels;
+    const megapixels = pixels / 1_000_000;
+
+    const flags = {
+      is_blank: dynamicRange < 5 && sharpnessVar < 10,
+      is_monochrome: chromaSpread < 5,
+      is_bitonal: bimodality > 0.5 && entropy < 4,
+      is_over_compressed: bytesPerPixel < 0.015,
+      is_low_resolution: megapixels < 1,
+    };
+
+    return {
+      width: meta.width,
+      height: meta.height,
+      megapixels: Math.round(megapixels * 100) / 100,
+      bytes_per_pixel: Math.round(bytesPerPixel * 1000) / 1000,
+      mean_brightness: Math.round(meanBrightness * 10) / 10,
+      mean_stdev: Math.round(meanStdev * 10) / 10,
+      dynamic_range: dynamicRange,
+      chroma_spread: Math.round(chromaSpread * 10) / 10,
+      sharpness_var: Math.round(sharpnessVar),
+      histogram_entropy: Math.round(entropy * 100) / 100,
+      bimodality: Math.round(bimodality * 1000) / 1000,
+      flags,
+      version: SCAN_QUALITY_VERSION,
+    };
   } catch {
-    return [];
+    return null;
   }
+}
+
+const VALID_SCAN_CLASSES = new Set([
+  'color_photo', 'color_print', 'grayscale_photo', 'grayscale_print',
+  'bitonal_clean', 'bitonal_microfilm', 'microfiche', 'blank', 'corrupt',
+]);
+const VALID_FIDELITY = new Set([
+  'pristine', 'good', 'degraded', 'destroyed', 'no_illustration',
+]);
+const VALID_COMPLETENESS = new Set([
+  'full_page', 'partial_capture', 'two_pages_one_image', 'fragment', 'blank',
+]);
+
+function normalizeScanQuality(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const score = Math.max(0, Math.min(100, parseInt(raw.scan_score, 10) || 0));
+  const cls = VALID_SCAN_CLASSES.has(raw.scan_class) ? raw.scan_class : null;
+  const fidelity = VALID_FIDELITY.has(raw.illustration_fidelity) ? raw.illustration_fidelity : null;
+  const completeness = VALID_COMPLETENESS.has(raw.page_completeness) ? raw.page_completeness : null;
+  const concerns = Array.isArray(raw.concerns)
+    ? raw.concerns.filter(c => typeof c === 'string').slice(0, 20)
+    : [];
+  return {
+    scan_score: score,
+    scan_class: cls,
+    readable_text: raw.readable_text === true,
+    illustration_fidelity: fidelity,
+    page_completeness: completeness,
+    concerns,
+    reasoning: typeof raw.reasoning === 'string' ? raw.reasoning.slice(0, 600) : '',
+  };
+}
+
+// Backwards-compatible parser: accepts the new {extracted_images, scan_quality}
+// object form, and falls back to bare-array form if the model regresses.
+function parseImageExtractionResponse(text) {
+  const empty = { extracted_images: [], scan_quality: null };
+  if (!text || typeof text !== 'string') return empty;
+  const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
+  // Try object form first
+  const objMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (objMatch) {
+    try {
+      const parsed = JSON.parse(objMatch[0]);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        return {
+          extracted_images: Array.isArray(parsed.extracted_images) ? parsed.extracted_images : [],
+          scan_quality: normalizeScanQuality(parsed.scan_quality),
+        };
+      }
+    } catch { /* fall through to array form */ }
+  }
+  // Fallback: legacy array-only response
+  const arrMatch = cleaned.match(/\[[\s\S]*\]/);
+  if (arrMatch) {
+    try {
+      const parsed = JSON.parse(arrMatch[0]);
+      return { extracted_images: Array.isArray(parsed) ? parsed : [], scan_quality: null };
+    } catch { /* nope */ }
+  }
+  return empty;
 }
 
 function normalizeBbox(raw) {
@@ -181,8 +389,12 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
   const url = getPageImageUrl(page);
   if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
 
-  const image = await fetchImageBase64(url);
+  const image = await fetchImage(url);
   if (!image) return null;
+
+  // Layer 1 — deterministic characteristics from the raw buffer.
+  // Run in parallel with the Gemini call to keep latency flat.
+  const characteristicsPromise = computeImageCharacteristics(image.buffer);
 
   const model = getClient().getGenerativeModel({
     model: MODEL,
@@ -195,7 +407,8 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
     ],
     generationConfig: {
       temperature: 0.1,
-      maxOutputTokens: 2048,
+      maxOutputTokens: 4096,
+      responseMimeType: 'application/json',
     },
   });
 
@@ -207,10 +420,12 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
   const response = result.response;
   const text = response.text();
   const usage = response.usageMetadata || {};
+  const characteristics = await characteristicsPromise;
 
   return {
     pageId: page.id,
     text,
+    characteristics,
     inputTokens: usage.promptTokenCount || 0,
     outputTokens: usage.candidatesTokenCount || 0,
   };
@@ -269,14 +484,33 @@ async function processBook(db, book) {
         continue;
       }
 
-      const { pageId, text, inputTokens, outputTokens } = settled.value;
+      const { pageId, text, characteristics, inputTokens, outputTokens } = settled.value;
       totalInputTokens += inputTokens;
       totalOutputTokens += outputTokens;
       pagesProcessed++;
 
-      const parsed = parseImageExtractionResponse(text);
-      if (parsed.length > 0) {
-        const detectedImages = parsed.map(img => ({
+      const { extracted_images: extractedRaw, scan_quality: scanQualityRaw } = parseImageExtractionResponse(text);
+
+      // Build the page-level scan_quality object that will land on `pages` and
+      // be inherited by each gallery_image extracted from this page.
+      const pageScanQuality = scanQualityRaw
+        ? {
+            ...scanQualityRaw,
+            model: MODEL,
+            version: SCAN_QUALITY_VERSION,
+            assessed_at: now,
+          }
+        : null;
+
+      const pageSet = {
+        image_extraction_updated_at: now,
+        updated_at: now,
+      };
+      if (characteristics) pageSet.image_characteristics = characteristics;
+      if (pageScanQuality) pageSet.scan_quality = pageScanQuality;
+
+      if (extractedRaw.length > 0) {
+        const detectedImages = extractedRaw.map(img => ({
           description: img.description || '',
           type: img.type || 'unknown',
           bbox: img.bbox ? normalizeBbox(img.bbox) : undefined,
@@ -291,17 +525,11 @@ async function processBook(db, book) {
         }));
 
         totalImages += detectedImages.length;
-
-        bulkOps.push({
-          updateOne: {
-            filter: { id: pageId },
-            update: { $set: { detected_images: detectedImages, image_extraction_updated_at: now, updated_at: now } },
-          },
-        });
+        pageSet.detected_images = detectedImages;
 
         for (let di = 0; di < detectedImages.length; di++) {
           const img = detectedImages[di];
-          galleryDocs.push({
+          const galleryDoc = {
             id: `${pageId}-${di}`,
             page_id: pageId,
             book_id: book.id,
@@ -317,16 +545,39 @@ async function processBook(db, book) {
             detection_source: 'vision_model',
             model: MODEL,
             updated_at: now,
-          });
+          };
+          // Inherit page-level scan quality so the gallery_image carries it standalone.
+          // Per-crop sharpness can be added later in a separate pass on extracted_url.
+          if (pageScanQuality) {
+            galleryDoc.scan_quality = {
+              score: pageScanQuality.scan_score,
+              scan_class: pageScanQuality.scan_class,
+              illustration_fidelity: pageScanQuality.illustration_fidelity,
+              page_completeness: pageScanQuality.page_completeness,
+              concerns: pageScanQuality.concerns,
+              source: 'page_inherited',
+              version: SCAN_QUALITY_VERSION,
+              assessed_at: now,
+            };
+          }
+          if (characteristics) {
+            galleryDoc.page_image_characteristics = {
+              megapixels: characteristics.megapixels,
+              sharpness_var: characteristics.sharpness_var,
+              chroma_spread: characteristics.chroma_spread,
+              flags: characteristics.flags,
+            };
+          }
+          galleryDocs.push(galleryDoc);
         }
-      } else {
-        bulkOps.push({
-          updateOne: {
-            filter: { id: pageId },
-            update: { $set: { image_extraction_updated_at: now, updated_at: now } },
-          },
-        });
       }
+
+      bulkOps.push({
+        updateOne: {
+          filter: { id: pageId },
+          update: { $set: pageSet },
+        },
+      });
     }
   }
 
