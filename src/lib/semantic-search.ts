@@ -229,6 +229,8 @@ export interface SemanticPageSearchOptions {
   maxPerBook?: number;
   tenantId?: string;
   language?: string;
+  languages?: string[];
+  excludeLanguages?: string[];
 }
 
 /**
@@ -255,9 +257,9 @@ export async function semanticPageSearchGlobal(
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
-  // Over-request only when maxPerBook filtering is needed (JS post-hoc).
-  // language/year are filtered at the RPC level so no over-requesting needed for those.
-  const overRequest = (opts.maxPerBook ?? 0) > 0 ? Math.min(limit * 3, 50) : limit;
+  // Over-request when post-hoc JS filtering is needed (maxPerBook, languages, excludeLanguages).
+  const needsPostHocFilter = (opts.maxPerBook ?? 0) > 0 || (opts.languages?.length ?? 0) > 0 || (opts.excludeLanguages?.length ?? 0) > 0;
+  const overRequest = needsPostHocFilter ? Math.min(limit * 3, 50) : limit;
 
   const { data, error } = await supabase.rpc('match_semantic', {
     query_embedding: JSON.stringify(queryEmbedding),
@@ -276,6 +278,14 @@ export async function semanticPageSearchGlobal(
 
   let rows = (data || []) as any[];
 
+  if ((opts.languages?.length ?? 0) > 0) {
+    const set = new Set(opts.languages!.map(l => l.toLowerCase()));
+    rows = rows.filter(r => r.book_language && set.has(String(r.book_language).toLowerCase()));
+  }
+  if ((opts.excludeLanguages?.length ?? 0) > 0) {
+    const set = new Set(opts.excludeLanguages!.map(l => l.toLowerCase()));
+    rows = rows.filter(r => !r.book_language || !set.has(String(r.book_language).toLowerCase()));
+  }
   if ((opts.maxPerBook ?? 0) > 0) {
     const perBook = new Map<string, number>();
     rows = rows.filter(r => {

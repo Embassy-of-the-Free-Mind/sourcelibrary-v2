@@ -30,6 +30,10 @@ export async function GET(request: NextRequest) {
   const level = searchParams.get('level') === 'page' ? 'page' : 'book';
   const limit = Math.min(parseInt(searchParams.get('limit') || '20', 10), 50);
   const language = searchParams.get('language') || undefined;
+  const languagesParam = searchParams.get('languages');
+  const excludeLanguagesParam = searchParams.get('exclude_languages');
+  const languages = languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : undefined;
+  const excludeLanguages = excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : undefined;
   const yearMin = searchParams.get('year_min') ? parseInt(searchParams.get('year_min')!, 10) : undefined;
   const yearMax = searchParams.get('year_max') ? parseInt(searchParams.get('year_max')!, 10) : undefined;
   const maxPerBook = searchParams.get('max_per_book') ? parseInt(searchParams.get('max_per_book')!, 10) : undefined;
@@ -43,7 +47,7 @@ export async function GET(request: NextRequest) {
 
   if (level === 'page') {
     try {
-      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, yearMin, yearMax, maxPerBook });
+      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, languages, excludeLanguages, yearMin, yearMax, maxPerBook });
       const bookIds = [...new Set(pages.map(p => p.book_id))];
       let slugMap: Record<string, string> = {};
       if (bookIds.length > 0) {
