@@ -1,0 +1,47 @@
+[
+  {
+    "ia_identifier": "lesparadisartif00quingoog",
+    "title": "Les Paradis Artificiels: opium et haschisch",
+    "author": "Charles Baudelaire",
+    "year": 1860,
+    "original_language": "French",
+    "language": "French",
+    "notes": "1860 first edition (French). Baudelaire's foundational literary study of drug-induced altered states; appended is his French adaptation of De Quincey's Confessions as 'Un Mangeur d'Opium'."
+  },
+  {
+    "ia_identifier": "confessionsofeng03dequ",
+    "title": "Confessions of an English Opium-Eater, and Suspiria de Profundis",
+    "author": "Thomas De Quincey",
+    "year": 1822,
+    "original_language": "English",
+    "language": "English",
+    "notes": "1850 edition bound with Suspiria de Profundis, De Quincey's visionary hallucinatory sequel. First published 1821-22. Founding text of literary drug writing."
+  },
+  {
+    "ia_identifier": "histoiredemafui00casagoog",
+    "title": "Histoire de ma fuite des prisons de la République de Venise",
+    "author": "Giacomo Casanova",
+    "year": 1788,
+    "original_language": "French",
+    "language": "French",
+    "notes": "Casanova's only autobiographical work published in his lifetime (Prague/Leipzig 1788, French). His own account of escaping the Leads prison of the Venetian Inquisition in 1756."
+  },
+  {
+    "ia_identifier": "mmoiresdejacque01ligngoog",
+    "title": "Mémoires de Jacques Casanova de Seingalt, Vol. 1",
+    "author": "Giacomo Casanova",
+    "year": 1789,
+    "original_language": "French",
+    "language": "French",
+    "notes": "Garnier 1871 edition (French). Volume 1 of the Mémoires that Casanova wrote in French c.1789-1798."
+  },
+  {
+    "ia_identifier": "mmoiresdejacque02ligngoog",
+    "title": "Mémoires de Jacques Casanova de Seingalt, Vol. 2",
+    "author": "Giacomo Casanova",
+    "year": 1789,
+    "original_language": "French",
+    "language": "French",
+    "notes": "Garnier 1871 edition (French). Volume 2 of the Mémoires."
+  }
+]
