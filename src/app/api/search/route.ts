@@ -7,6 +7,7 @@ import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
+import { expandLanguages } from '@/lib/language-utils';
 
 export const preferredRegion = 'fra1';
 
@@ -50,8 +51,8 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     const language = searchParams.get('language');
     const languagesParam = searchParams.get('languages');
     const excludeLanguagesParam = searchParams.get('exclude_languages');
-    const languages = languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : [];
-    const excludeLanguages = excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : [];
+    const languages = expandLanguages(languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
+    const excludeLanguages = expandLanguages(excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
     const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');

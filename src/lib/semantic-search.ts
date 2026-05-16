@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { expandLanguages } from '@/lib/language-utils';
 
 /**
  * Generate query embedding via Gemini embedding-2-preview.
@@ -279,11 +280,11 @@ export async function semanticPageSearchGlobal(
   let rows = (data || []) as any[];
 
   if ((opts.languages?.length ?? 0) > 0) {
-    const set = new Set(opts.languages!.map(l => l.toLowerCase()));
+    const set = new Set(expandLanguages(opts.languages!).map(l => l.toLowerCase()));
     rows = rows.filter(r => r.book_language && set.has(String(r.book_language).toLowerCase()));
   }
   if ((opts.excludeLanguages?.length ?? 0) > 0) {
-    const set = new Set(opts.excludeLanguages!.map(l => l.toLowerCase()));
+    const set = new Set(expandLanguages(opts.excludeLanguages!).map(l => l.toLowerCase()));
     rows = rows.filter(r => !r.book_language || !set.has(String(r.book_language).toLowerCase()));
   }
   if ((opts.maxPerBook ?? 0) > 0) {
