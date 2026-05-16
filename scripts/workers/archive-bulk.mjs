@@ -363,9 +363,18 @@ async function processBook(book, db) {
         { maxTimeMS: 10000 }
       );
       const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
+      const update = { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() };
+      // Stamp completion time when a book reaches archive_complete. Lets
+      // downstream queries bucket archival throughput by day/week without
+      // scanning the pages collection (which is too large for ad-hoc aggregates).
+      // The worker already filters out books with all pages archived, so this
+      // gets written essentially once per book at first completion.
+      if (archiveStatus === 'archive_complete') {
+        update.archive_completed_at = new Date();
+      }
       await db.collection(booksCol).updateOne(
         { id: book.id },
-        { $set: { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() } }
+        { $set: update }
       );
     }
 
