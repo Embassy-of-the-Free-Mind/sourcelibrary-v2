@@ -48,6 +48,8 @@ const MISSING_ONLY = args.includes('--missing-only');
 const DRY_RUN = args.includes('--dry-run');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
+const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
+const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
 
 const EMBED_BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
 const UPSERT_BATCH_SIZE = 10; // Small batches for Supabase — HNSW index updates are expensive
@@ -149,7 +151,7 @@ async function getLastSyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : MISSING_ONLY ? 'missing-only' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : MISSING_ONLY ? 'missing-only' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
@@ -185,10 +187,19 @@ if (BOOK_ID) {
     await mongoClient.close();
     process.exit(0);
   }
-  globalThis.MISSING_PAGE_IDS = new Set(rows.map(r => r.page_id));
-  const missingBookIds = [...new Set(rows.map(r => r.book_id))];
-  pageQuery.book_id = { $in: missingBookIds };
-  console.log(`Processing ${rows.length.toLocaleString()} missing pages across ${missingBookIds.length.toLocaleString()} books`);
+  // Partition books across workers when parallelizing. Each worker owns a
+  // disjoint slice of book_ids — no coordination needed at runtime.
+  const allBookIds = [...new Set(rows.map(r => r.book_id))].sort();
+  let myBookIds = allBookIds;
+  if (WORKER_COUNT > 1) {
+    myBookIds = allBookIds.filter((_, i) => i % WORKER_COUNT === WORKER_ID);
+    console.log(`Worker ${WORKER_ID}/${WORKER_COUNT}: ${myBookIds.length.toLocaleString()}/${allBookIds.length.toLocaleString()} books`);
+  }
+  const myBookSet = new Set(myBookIds);
+  const myRows = rows.filter(r => myBookSet.has(r.book_id));
+  globalThis.MISSING_PAGE_IDS = new Set(myRows.map(r => r.page_id));
+  pageQuery.book_id = { $in: myBookIds };
+  console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
 } else if (!FULL_MODE) {
   const lastSync = await getLastSyncTime();
   if (lastSync) {
