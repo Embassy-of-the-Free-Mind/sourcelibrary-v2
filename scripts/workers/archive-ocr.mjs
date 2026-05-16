@@ -424,9 +424,24 @@ async function main() {
         { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
         { maxTimeMS: 10000 }
       );
+      // Look up pages_count for the status flip (the IA bulk worker has this
+      // in its book projection; here we don't, so look it up).
+      const bookDoc = await db.collection(booksCol).findOne(
+        { id: bookId },
+        { projection: { pages_count: 1 } },
+      );
+      const isComplete = bookDoc && archivedCount >= (bookDoc.pages_count || 0);
+      const update = {
+        pages_archived: archivedCount,
+        archive_status: isComplete ? 'archive_complete' : 'archive_partial',
+        updated_at: new Date(),
+      };
+      // See archive-bulk.mjs for the same pattern — stamp completion time
+      // so weekly-throughput queries don't have to scan pages.
+      if (isComplete) update.archive_completed_at = new Date();
       await db.collection(booksCol).updateOne(
         { id: bookId },
-        { $set: { pages_archived: archivedCount, updated_at: new Date() } }
+        { $set: update }
       );
       synced++;
     }

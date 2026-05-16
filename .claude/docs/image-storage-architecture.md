@@ -139,3 +139,64 @@ When auditing image storage:
 - Check `archived_photo` for actual R2 archiving status
 - For BPH books, check if `photo` already points to `images.sourcelibrary.org` — if so, the image is in R2 regardless of `archived_photo` (the convention, not a gap)
 - Subtract books that haven't reached the archiving pipeline phase yet — but remember the cron runs independently, so `pages_archived` is the only ground truth
+
+### Time-bucketing throughput
+
+Both workers stamp `book.archive_completed_at` (a `Date`) when the book reaches `archive_status: 'archive_complete'`. Use that for throughput queries instead of scanning the `pages` collection (the page-level approach reliably times out on Atlas):
+
+```js
+// Books fully archived in the past 7 days
+db.books.countDocuments({ archive_completed_at: { $gte: new Date(Date.now() - 7*864e5) } })
+
+// Per-day bucket
+db.books.aggregate([
+  { $match: { archive_completed_at: { $gte: new Date(Date.now() - 7*864e5) } } },
+  { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$archive_completed_at' } },
+              books: { $sum: 1 }, pages: { $sum: '$pages_count' } } },
+  { $sort: { _id: 1 } },
+])
+```
+
+Note: this field was added 2026-05-16, so books archived before that date won't have it — fall back to `updated_at` as a coarse proxy for older entries.
+
+## Worker Health Monitoring
+
+`archive-bulk` and `archive-ocr` are running on a 10-min and 30-min cadence respectively, but they can silently degrade — a small bug in URL construction or a missing User-Agent can cause every fetch to fail with no visible error to the operator. They also keep running and looking healthy in `ps` while archiving nothing.
+
+**Each run writes a summary to `cron_runs`** with `actions.archived`, `actions.failed`, and per-domain stats. Check it routinely:
+
+```js
+// Average pages archived per run, past 24h
+db.cron_runs.aggregate([
+  { $match: { cron: { $in: ['archive-bulk', 'archive-ocr'] },
+              timestamp: { $gte: new Date(Date.now() - 864e5) } } },
+  { $group: { _id: '$cron', runs: { $sum: 1 },
+              avgArchived: { $avg: '$actions.archived' },
+              avgFailed:   { $avg: '$actions.failed' } } },
+])
+```
+
+**Red flags:**
+- `archive-ocr` averaging <50 pages archived per run over a day → almost certainly a per-domain breakage; check `/var/log/sourcelibrary/archive-ocr.log` for the HTTP status pattern by domain (`Per-domain: …`)
+- `archive-bulk` averaging 0 archived but high `Done in N s` → JP2 download chain (`opj_decompress`, `unzip`) is broken, look at the per-book `[ERROR]` lines
+- Both workers reporting 0 candidates → the book query filter no longer matches new imports (we hit this when provider value changed from `ia` to `internet_archive`)
+
+**Per-domain failure modes** (lessons learned, mostly the hard way):
+
+| Source | Hostname | Gotcha | Reference |
+|--------|----------|--------|-----------|
+| Internet Archive | `archive.org` | Some items are `access-restricted-item: true` (borrow-only) — every page returns 403. The import route now records this in `catalog_metadata.access_restricted`; honour it. | PR #1794 |
+| MDZ (BSB) | `digitale-sammlungen.de` | URL pattern drift — old `bsbXXXXX/image_{N}` paths 404 after MDZ migrations. Worker hits the circuit breaker after 5 consecutive 404s. | _open_ |
+| NDL Japan | `dl.ndl.go.jp` | IIIF tile requests with the wrong `region` segment get HTTP 500 (not 400). Worker also tripping circuit breaker. | _open_ |
+| e-rara | `e-rara.ch` | (1) Blocks Hetzner IP entirely — needs the dedicated `archive-erara.mjs` on a Mac. (2) Rejects bare-`fetch` with no User-Agent (403). | PR #1800 |
+| Vatican | `digi.vatlib.it` | robots.txt requires 10s crawl-delay — rate limit set to 0.1/s. Archiving a Vatican manuscript takes hours, not minutes. | — |
+| Qatar Digital Library | `iiif.qdl.qa` | Blocks all automated access regardless of headers. Use manual PDF download + `/api/import/pdf` route. | curator skill |
+| Gallica | `gallica.bnf.fr` | 429 above 2 req/s — was getting throttled at 4/s. | — |
+
+When adding a new provider to the curator's import targets, run a sanity-check archive of one book end-to-end before bulk-importing N hundred — that catches most per-provider gotchas at the cost of one round-trip.
+
+## See Also
+
+- [R2 Storage](./r2-storage.md) — the bucket layout, URL patterns, the CDN in front of it
+- [Curator Reference](./curator-reference.md) — adding a new source to the import surface
+- Hetzner crontab — `ssh root@46.224.122.120 crontab -l` for the live scheduler entries (the unified scheduler at `scripts/workers/scheduler.mjs` orchestrates most archive timing)
