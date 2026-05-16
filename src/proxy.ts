@@ -24,6 +24,8 @@ const NON_TENANT_PATHS = new Set([
   'research', 'embed', 'shwep', 'for-researchers', 'identify',
   // Welcome flow (post-signup interstitial + temporary preview route)
   'welcome', 'welcome-preview',
+  // Shortlinks — /q/[code] must pass through to src/app/q/[code]/route.ts
+  'q',
 ]);
 
 // Domains that enable the Ficino Society social layer
