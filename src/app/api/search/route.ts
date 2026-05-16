@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
-import { buildPageSearchStage } from '@/lib/atlas-search';
+import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -276,7 +276,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
 
           return await db.collection('pages').aggregate([
             buildPageSearchStage(query, filteredBookIds),
-            { $match: { page_number: { $gt: 0 } } },
+            { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
             { $limit: pageLimit },
             {
               $project: {
@@ -331,7 +331,20 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (bookId || !searchContent) return [];
         try {
-          return await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
+          const pages = await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
+          if (pages.length === 0) return pages;
+          // Drop semantic matches on non-content pages (cover/blank/illustration/etc.).
+          // The Supabase embedding table has these — they pollute conceptual queries.
+          const ids = pages.map(p => p.page_id);
+          const typeDocs = await db.collection('pages')
+            .find({ id: { $in: ids } }, { projection: { id: 1, page_type: 1 } })
+            .toArray();
+          const badIds = new Set(
+            typeDocs
+              .filter(d => (NON_CONTENT_PAGE_TYPES as readonly string[]).includes(d.page_type as string))
+              .map(d => d.id as string),
+          );
+          return pages.filter(p => !badIds.has(p.page_id));
         } catch {
           return [];
         }
