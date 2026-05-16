@@ -1,8 +1,8 @@
 import type { NextRequest } from 'next/server';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { withApiAuth } from '@/lib/api-auth';
+import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { logMcpToolCall } from '@/lib/mcp-usage';
-import { getClientIp } from '@/lib/rate-limit';
+import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -468,7 +468,39 @@ async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: 
 
 // ── Create a fresh MCP server instance (stateless per-request) ─────
 
-function createServer(reqContext: { ip: string; userAgent: string | null }) {
+const ANON_LIMIT_PER_HOUR = Number(process.env.API_ANON_LIMIT_PER_HOUR || 60);
+
+/**
+ * Build a `_meta.upgrade_hint` payload for anonymous callers approaching their
+ * rate-limit ceiling. Returns null for signed-in / API-key / bot identities —
+ * they don't need to upgrade. Returns null for anonymous callers under 80% of
+ * quota to keep responses noise-free.
+ *
+ * The hint is structured rather than a string so MCP clients can present it
+ * however they like (banner, inline note, or ignore). Agents reading it can
+ * decide whether to surface the message to the human user.
+ */
+function buildUpgradeHint(identity: ApiIdentity, ip: string) {
+  if (identity.kind !== 'anon') return null;
+  const usage = peekRateLimit(
+    { name: 'api:anon', limit: ANON_LIMIT_PER_HOUR, windowSeconds: 3600 },
+    ip,
+  );
+  if (usage.count < usage.limit * 0.8) return null;
+  return {
+    type: 'rate_limit_approaching',
+    usage: { count: usage.count, limit: usage.limit, remaining: usage.remaining },
+    reset_at_unix_ms: usage.resetAt,
+    message:
+      `You've used ${usage.count} of ${usage.limit} anonymous requests this hour. ` +
+      `Sign in at sourcelibrary.org/auth/signin for a much higher limit, ` +
+      `or get an API key at sourcelibrary.org/developers.`,
+    sign_in_url: 'https://sourcelibrary.org/auth/signin',
+    api_key_url: 'https://sourcelibrary.org/developers',
+  };
+}
+
+function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
     { name: 'source-library', version: '4.2.0' },
     { capabilities: { tools: {} } },
@@ -478,6 +510,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null }) {
     tools: TOOLS,
     _meta: {
       about: 'Source Library — 22,000+ rare alchemical, Hermetic, and early scientific texts translated into English. The largest AI-ready corpus of pre-modern esoteric knowledge. https://sourcelibrary.org',
+      sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
     },
   }));
 
@@ -491,6 +524,9 @@ function createServer(reqContext: { ip: string; userAgent: string | null }) {
         tool: name, args: argsObj, ms: Date.now() - started,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
       });
+
+      const upgradeHint = buildUpgradeHint(reqContext.identity, reqContext.ip);
+      const meta = upgradeHint ? { _meta: { upgrade_hint: upgradeHint } } : {};
 
       // search_images: return image content blocks alongside text metadata
       if (name === 'search_images' && result && typeof result === 'object' && 'images' in result) {
@@ -511,11 +547,11 @@ function createServer(reqContext: { ip: string; userAgent: string | null }) {
           }
         }
 
-        return { content };
+        return { content, ...meta };
       }
 
       const text = typeof result === 'string' ? result : JSON.stringify(result, null, 2);
-      return { content: [{ type: 'text' as const, text }] };
+      return { content: [{ type: 'text' as const, text }], ...meta };
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       logMcpToolCall({
@@ -550,7 +586,7 @@ export async function GET() {
   });
 }
 
-export const POST = withApiAuth(async (req: NextRequest) => {
+export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
   try {
     const body = await req.json();
 
@@ -567,6 +603,7 @@ export const POST = withApiAuth(async (req: NextRequest) => {
     const server = createServer({
       ip: getClientIp(req),
       userAgent: req.headers.get('user-agent'),
+      identity,
     });
     await server.connect(transport);
     try {
