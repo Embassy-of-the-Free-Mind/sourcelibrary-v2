@@ -7,7 +7,7 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Connect Source Library to Claude',
-  description: 'Give Claude access to 22,000+ rare historical texts in 30 seconds. Search, read, and cite alchemical, Hermetic, and early scientific works directly in your conversation.',
+  description: 'Give Claude access to 26,000+ rare historical texts in 30 seconds. Search, read, and cite alchemical, Hermetic, and early scientific works directly in your conversation.',
   alternates: { canonical: '/connect' },
 };
 
@@ -17,7 +17,7 @@ export default function ConnectPage() {
       header={
         <ContentHeader
           title="Connect Source Library to Claude"
-          subtitle="Search, read, and cite 22,000+ rare historical texts — directly in your conversation."
+          subtitle="Search, read, and cite 26,000+ rare historical texts — directly in your conversation."
         />
       }
     >
@@ -155,7 +155,7 @@ export default function ConnectPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">22,000+</p>
+            <p className="text-2xl font-bold text-accent-rust">26,000+</p>
             <p className="text-sm text-muted mt-1">books</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">

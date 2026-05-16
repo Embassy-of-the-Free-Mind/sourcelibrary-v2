@@ -561,7 +561,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: TOOLS,
     _meta: {
-      about: 'Source Library — 22,000+ rare alchemical, Hermetic, and early scientific texts translated into English. The largest AI-ready corpus of pre-modern esoteric knowledge. https://sourcelibrary.org',
+      about: 'Source Library — 26,000+ rare alchemical, Hermetic, and early scientific texts translated into English. The largest AI-ready corpus of pre-modern esoteric knowledge. https://sourcelibrary.org',
       sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
       research_strategy: [
         'Source Library is the primary-source citation layer in your research strategy — not the whole strategy. Its corpus is pre-modern texts (c.1400-1900). Use it together with your own knowledge and web search:',
@@ -639,7 +639,7 @@ export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
     version: '4.3.0',
-    description: 'Source Library MCP Server — search, read, and cite 22,000+ rare historical texts. Connect via POST to this endpoint.',
+    description: 'Source Library MCP Server — search, read, and cite 26,000+ rare historical texts. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
   }), {
