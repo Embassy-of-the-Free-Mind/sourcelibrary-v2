@@ -220,7 +220,30 @@ async function getBookText(args: Record<string, unknown>) {
   const slug = book?.slug || book?.id || args.book_id;
   const pages = result.pages as Array<Record<string, unknown>> | undefined;
   if (pages) for (const p of pages) p.url = `https://sourcelibrary.org/book/${slug}?page=${p.page_number}`;
-  (result as Record<string, unknown>).tip = 'When quoting from these pages, copy text verbatim from the translation field.';
+
+  // Detect truncation: signal clearly when pages_returned < total_pages so LLMs
+  // don't infer "the book ends here" from an incomplete response.
+  const totalPages = Number(result.total_pages || 0);
+  const pagesReturned = Number(result.pages_returned || 0);
+  // Chapter mode returns different shape — only add truncation signal for page-range mode
+  if (!args.chapter && totalPages > 0) {
+    const fromPage = args.from !== undefined ? Number(args.from) : 1;
+    const expectedUpTo = args.to !== undefined ? Number(args.to) : totalPages;
+    const lastPageReturned = pagesReturned > 0 ? fromPage + pagesReturned - 1 : fromPage - 1;
+    const isTruncated = lastPageReturned < expectedUpTo;
+    result.truncated = isTruncated;
+    if (isTruncated) {
+      const nextFrom = lastPageReturned + 1;
+      const nextTo = Math.min(nextFrom + 49, totalPages);
+      result.truncation_note =
+        `TRUNCATED — received ${pagesReturned} pages (up to p.${lastPageReturned}) ` +
+        `but requested up to p.${expectedUpTo} of ${totalPages} total. ` +
+        `This is NOT end-of-book — call get_book_text again with from=${nextFrom} to=${nextTo} ` +
+        `to read the next chunk. Repeat until you reach total_pages (${totalPages}).`;
+    }
+  }
+
+  result.tip = 'When quoting from these pages, copy text verbatim from the translation field.';
   return result;
 }
 
@@ -387,18 +410,18 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'get_book_text',
-    description: 'Read a book. Use chapter param to read one chapter at a time (includes [Page N] markers for citation). Or use from/to for page ranges. Call get_book first for the chapter list.',
+    description: 'Read a book\'s text. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation) — call get_book first to get the chapter list. Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.',
     annotations: { title: 'Read Book Text', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
         book_id: { type: 'string', description: 'The book ID' },
-        chapter: { type: 'number', description: 'Chapter index (0-based)' },
-        part: { type: 'number', description: 'Part number for large chapters' },
-        content: { type: 'string', enum: ['ocr', 'translation', 'both'], description: 'Default: both' },
-        from: { type: 'number', description: 'Start page' },
-        to: { type: 'number', description: 'End page' },
-        format: { type: 'string', enum: ['json', 'plain'] },
+        chapter: { type: 'number', description: 'Chapter index (0-based). Preferred over from/to — returns pre-structured chapter text with embedded [Page N] markers.' },
+        part: { type: 'number', description: 'Part number (1-based) for large chapters split into multiple parts' },
+        content: { type: 'string', enum: ['ocr', 'translation', 'both'], description: 'Which text to include: ocr (original language), translation (English), or both (default)' },
+        from: { type: 'number', description: 'Start page number (inclusive). Use with to for explicit page ranges.' },
+        to: { type: 'number', description: 'End page number (inclusive). Recommended chunk size: 50 pages. If the response has truncated=true, use the next from/to from truncation_note.' },
+        format: { type: 'string', enum: ['json', 'plain'], description: 'json (default, structured with per-page fields) or plain (concatenated text with page markers)' },
       },
       required: ['book_id'],
     },

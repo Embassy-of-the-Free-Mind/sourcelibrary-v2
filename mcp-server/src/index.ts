@@ -217,7 +217,7 @@ const TOOLS: Tool[] = [
   {
     name: "get_book_text",
     description:
-      "READ A BOOK — start here. Preferred: use 'chapter' param to read one chapter at a time (includes page markers like [Page 42] for citation). Or use page ranges (from/to) for focused reading. Call get_book first to see the chapter list.",
+      "READ A BOOK — start here. Preferred: use 'chapter' param to read one chapter at a time (includes page markers like [Page 42] for citation). Or use page ranges (from/to) for focused reading. Call get_book first to see the chapter list. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; always check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -240,11 +240,11 @@ const TOOLS: Tool[] = [
         },
         from: {
           type: "number",
-          description: "Start page number (inclusive). Use chapter param instead when possible.",
+          description: "Start page number (inclusive). Use with to for explicit page ranges. If the response has truncated=true, use the next from/to from truncation_note.",
         },
         to: {
           type: "number",
-          description: "End page number (inclusive). Use chapter param instead when possible.",
+          description: "End page number (inclusive). Recommended chunk size: 50 pages. If the response has truncated=true, use the next from/to from truncation_note.",
         },
         format: {
           type: "string",
