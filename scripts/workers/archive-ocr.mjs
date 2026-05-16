@@ -96,12 +96,20 @@ const r2 = new S3Client({
 const BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary-images';
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 
+// Many archives (e-rara, some Bodleian endpoints, Wellcome, Vatican) reject
+// requests without a User-Agent — Node's default UA gets blocked. Match the
+// UA the IA bulk archiver uses so per-provider policies are consistent.
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+
 async function downloadImage(url, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
     try {
-      const res = await fetch(url, { signal: controller.signal });
+      const res = await fetch(url, {
+        signal: controller.signal,
+        headers: { 'User-Agent': USER_AGENT, Accept: 'image/jpeg,image/png,image/*;q=0.9,*/*;q=0.1' },
+      });
       if (res.status === 429 || res.status === 503) {
         clearTimeout(timeout);
         if (attempt < retries) {
