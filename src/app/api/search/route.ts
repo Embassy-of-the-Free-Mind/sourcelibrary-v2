@@ -8,6 +8,7 @@ import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-sea
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
+import { logSearchQuery } from '@/lib/search-log';
 
 export const preferredRegion = 'fra1';
 
@@ -44,7 +45,8 @@ function extractSnippet(text: string, query: string, contextChars = 150): string
 }
 
 // GET /api/search - Search across books and translations
-export const GET = withApiAuth(async (request: NextRequest) => {
+export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
+  const _searchStart = Date.now();
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
@@ -656,6 +658,16 @@ export const GET = withApiAuth(async (request: NextRequest) => {
       created_at: new Date(),
     }).catch(() => {});
 
+    logSearchQuery({
+      request, identity, route: 'search', query,
+      total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
+      filters: {
+        language, category, year, year_from: yearFrom, year_to: yearTo,
+        languages, exclude_languages: excludeLanguages,
+        has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
+        pages_only: pagesOnly, sort: sortBy,
+      },
+    });
     return NextResponse.json({
       query,
       total: dedupedResults.length,
@@ -689,6 +701,11 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     });
   } catch (error) {
     console.error('Search error:', error);
+    logSearchQuery({
+      request, identity, route: 'search',
+      query: new URL(request.url).searchParams.get('q') || '',
+      ms: Date.now() - _searchStart, ok: false,
+    });
     return NextResponse.json({
       error: 'Search failed',
       message: error instanceof Error ? error.message : String(error),
