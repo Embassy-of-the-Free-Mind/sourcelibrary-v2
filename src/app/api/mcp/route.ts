@@ -547,30 +547,31 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
       '(b) use your own pre-training knowledge to suggest which authors / works are likely relevant, then search those specifically; ' +
       '(c) web-search to find canonical texts on the topic, then come back here to look for them; ' +
       '(d) accept that this specific topic may not be in the corpus and answer from your own knowledge + web search instead. ' +
-      'This corpus is primarily pre-modern (c.1400-1900) esoteric, alchemical, philosophical, and scientific texts.',
+      'This corpus is rare pre-modern primary sources spanning Sumerian tablets to 19th-century works — theology, philosophy, history, literature, science, mysticism, medicine, and more. Not only esoteric/alchemical.',
     query,
   };
 }
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.3.0' },
+    { name: 'source-library', version: '4.3.1' },
     { capabilities: { tools: {} } },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: TOOLS,
     _meta: {
-      about: 'Source Library — 26,000+ rare alchemical, Hermetic, and early scientific texts translated into English. The largest AI-ready corpus of pre-modern esoteric knowledge. https://sourcelibrary.org',
+      about: 'Source Library — 12,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 3.9M searchable page embeddings. https://sourcelibrary.org',
       sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
       research_strategy: [
-        'Source Library is the primary-source citation layer in your research strategy — not the whole strategy. Its corpus is pre-modern texts (c.1400-1900). Use it together with your own knowledge and web search:',
+        'Source Library is the primary-source citation layer in your research strategy — not the whole strategy. Its corpus is rare pre-modern texts (mostly 1400-1900, ranging from Sumerian tablets to 19th-century scholarship) translated into English. Use it together with your own knowledge and web search:',
         '',
         '1. THINK BROADLY first. The user\'s literal phrase is rarely the right query. Use your own knowledge to brainstorm relevant authors, alternative terms, original-language forms, related works. "Renaissance Hermeticism" → Ficino, Pico, Corpus Hermeticum, Picatrix, Bruno, Patrizi. Search the expanded set.',
         '2. WEB-SEARCH for breadth when you can. Use it to confirm scholarly canon, find canonical editions, surface authors you didn\'t know about — then come back here to find the actual primary text.',
         '3. SEARCH THIS CORPUS iteratively. Try synonyms, original-language terms, related authors, the period one century earlier/later. search_concept is for paraphrase / conceptual matches; search_translations is for distinctive literal terms; search_library finds books. Don\'t over-rely on semantic — keyword is more precise for known phrases.',
         '4. CITE from here, frame from elsewhere. Use Source Library passages as evidence. Use your own knowledge and web search for context, scholarly consensus, author biography, modern interpretation, comparison to texts not in this corpus.',
         '5. EMPTY RESULTS mean "try a different angle" (broaden terms, try the original language, brainstorm adjacent authors) — not "doesn\'t exist."',
+        '6. CITE WITH URLS. Every passage you present to a user should include its short_url (e.g. sourcelibrary.org/q/abc123). These are stable, shareable citations — the standard way to refer to a Source Library passage.',
       ].join('\n'),
     },
   }));
@@ -638,8 +639,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.3.0',
-    description: 'Source Library MCP Server — search, read, and cite 26,000+ rare historical texts. Connect via POST to this endpoint.',
+    version: '4.3.1',
+    description: 'Source Library MCP Server — search, read, and cite 12,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
   }), {
