@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
 
   if (level === 'page') {
     try {
-      const pages = await semanticPageSearchGlobal(searchQuery, limit);
+      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, yearMin, yearMax });
       const bookIds = [...new Set(pages.map(p => p.book_id))];
       let slugMap: Record<string, string> = {};
       if (bookIds.length > 0) {

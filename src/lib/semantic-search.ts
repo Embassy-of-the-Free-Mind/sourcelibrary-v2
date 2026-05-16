@@ -202,7 +202,7 @@ export async function semanticArtworkSearch(
 export async function semanticPageSearchGlobal(
   query: string,
   limit: number = 15,
-  tenantId?: string,
+  opts?: { tenantId?: string; language?: string; yearMin?: number; yearMax?: number },
 ): Promise<SemanticPageResult[]> {
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
@@ -211,7 +211,10 @@ export async function semanticPageSearchGlobal(
     query_embedding: JSON.stringify(queryEmbedding),
     match_threshold: 0.3,
     match_count: limit,
-    filter_tenant_id: tenantId ?? null,
+    filter_tenant_id: opts?.tenantId ?? null,
+    filter_language: opts?.language ?? null,
+    filter_year_min: opts?.yearMin ?? null,
+    filter_year_max: opts?.yearMax ?? null,
   });
 
   if (error) {

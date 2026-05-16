@@ -191,6 +191,46 @@ export async function searchPassages(args: {
   };
 }
 
+export async function searchConcept(args: {
+  query: string;
+  language?: string;
+  year_from?: number;
+  year_to?: number;
+  limit?: number;
+}) {
+  const params = new URLSearchParams({
+    q: args.query,
+    level: "page",
+    limit: String(Math.min(args.limit || 15, 50)),
+  });
+  if (args.language) params.set("language", args.language);
+  if (args.year_from) params.set("year_min", String(args.year_from));
+  if (args.year_to) params.set("year_max", String(args.year_to));
+
+  const result = (await apiGet("/search/semantic", params)) as Record<string, unknown>;
+
+  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
+    book_id: r.book_id,
+    title: r.book_title,
+    author: r.book_author,
+    language: r.book_language,
+    published: r.book_year,
+    page: r.page_number,
+    snippet: r.snippet,
+    snippet_type: "translation",
+    similarity: r.score,
+    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+  })) || [];
+
+  return {
+    query: result.query,
+    total_matches: passages.length,
+    returned: passages.length,
+    passages,
+    tip: "Results ranked by conceptual similarity (Gemini embeddings). Treat scores below ~0.45 with skepticism.",
+  };
+}
+
 export async function searchWithinBook(args: {
   book_id: string;
   query: string;
