@@ -21,9 +21,36 @@ export default function DevelopersPage() {
         />
       }
     >
+      {/* Easiest path — just ask Claude */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">The easiest path: just ask Claude</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          You don&apos;t need to install anything to use this collection with an AI. Open Claude (or any
+          assistant with web access) and ask it to look something up on sourcelibrary.org — it will
+          search, read pages, and quote with citation links. No SDK, no key, no setup.
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-5 space-y-3">
+          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
+            &ldquo;Use sourcelibrary.org to find what Paracelsus says about the spagyric process. Quote a few passages with citation URLs.&rdquo;
+          </p>
+          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
+            &ldquo;Search sourcelibrary.org for early modern texts on the harmony of the spheres &mdash; give me three with page links.&rdquo;
+          </p>
+          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
+            &ldquo;On sourcelibrary.org, read the first 20 pages of Fludd&apos;s Utriusque Cosmi Historia and summarize the cosmological model.&rdquo;
+          </p>
+        </div>
+
+        <p className="text-muted text-sm mt-4 max-w-2xl">
+          For richer, structured access &mdash; semantic search, 50-page bulk reads, image search,
+          DOI-backed citations &mdash; install the MCP server below or call the API directly.
+        </p>
+      </section>
+
       {/* 30-second start */}
       <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-2">30-second start</h2>
+        <h2 className="text-2xl font-semibold text-primary mb-2">30-second start (API)</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           One endpoint, no key required to begin. It speaks JSON-RPC over HTTP, so anything that can POST JSON can talk to it.
         </p>
