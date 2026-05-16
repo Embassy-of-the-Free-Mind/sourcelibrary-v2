@@ -39,7 +39,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
-import { formatAuthor } from '@/lib/utils';
+import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -621,8 +621,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
               <CoverImagePicker
                 bookId={book.id}
-                currentThumbnail={book.thumbnail}
-                currentThumbnailBlob={book.thumbnail_blob}
+                currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
+                currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
                 bookTitle={book.title}
                 pages={pages}
               />
