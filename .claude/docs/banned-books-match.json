@@ -1,0 +1,5116 @@
+{
+  "compiled": "2026-05-16T21:36:45.479Z",
+  "total_entries": 91,
+  "total_candidate_books": 1149,
+  "total_books_matched_strict": 442,
+  "total_books_author_matched": 1149,
+  "have": [
+    {
+      "author": "Baruch Spinoza",
+      "scope": "opera_omnia",
+      "condemned": 1679,
+      "category": "philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b4cd2cd5b6c3815e1a4837",
+          "title": "De nagelate schriften — Opera Posthuma",
+          "author": "Baruch Spinoza",
+          "year": 1677,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21d57b74d4e5ea24c3c60",
+          "title": "Tractatus Theologico-Politicus (1st edition)",
+          "author": "Baruch Spinoza",
+          "year": 1670,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1caf7a282e3475aab4081",
+          "title": "Renatus Des Cartes Beginzelen der Wysbegeerte",
+          "author": "Baruch Spinoza; Pieter Balling",
+          "year": 1664,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1caf1a282e3475aab3eea",
+          "title": "Een rechtsinnige theologant, of godgeleerde staatkundige verhandelinge",
+          "author": "Baruch Spinoza",
+          "year": 1693,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1cad7a282e3475aab3a6f",
+          "title": "Stelkonstige Reeckening van den Regenboog",
+          "author": "Baruch Spinoza",
+          "year": 1687,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1cad0a282e3475aab3794",
+          "title": "De nagelate schriften",
+          "author": "Baruch Spinoza",
+          "year": 1677,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b17be3938cbe91c8720452",
+          "title": "B.D.S. Opera Posthuma",
+          "author": "Benedictus de Spinoza",
+          "year": 1677,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6954344c1479a63c110890f8",
+          "title": "Short Treatise on God, Man and His Wellbeing",
+          "author": "Baruch Spinoza",
+          "year": 1852,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695434491479a63c11088f29",
+          "title": "Chief Works of Spinoza Vol. I (Elwes)",
+          "author": "Baruch Spinoza",
+          "year": 1883,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695434471479a63c11088d8c",
+          "title": "Tractatus Theologico-Politicus",
+          "author": "Baruch Spinoza",
+          "year": 1670,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695434421479a63c11088c27",
+          "title": "Ethic Demonstrated in Geometrical Order (White Translation)",
+          "author": "Baruch Spinoza",
+          "year": 1883,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6954343f1479a63c11088b5b",
+          "title": "Ethica (Latin Original)",
+          "author": "Baruch Spinoza",
+          "year": 1915,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Francesco Patrizi",
+      "scope": "single_work",
+      "condemned": 1594,
+      "category": "hermetic-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b51e1aefd8df28f2db09a8",
+          "title": "Nova De Universis Philosophia : Libris quinquaginta comprehensa ; in qua Aristotelica methodo non per motum, sed per lucem, et lumina ad primam causam ascenditur ; deinde noua quadam, ac peculiari methodo tota in contemplationem venit diuinitas ; postremo methodo Platonica rerum uniuersitas à conditore Deo deducitur",
+          "author": "Patrizi, Francesco",
+          "year": 1593,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Nova de universis philosophia"
+        },
+        {
+          "id": "6991ebe2e93551dd846a79cd",
+          "title": "Nova de Universis Philosophia",
+          "author": "Francesco Patrizi",
+          "year": 1593,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Nova de universis philosophia"
+        }
+      ],
+      "also_in_library_not_banned": 6
+    },
+    {
+      "author": "Galileo Galilei",
+      "scope": "selected",
+      "condemned": 1633,
+      "category": "astronomy-natural-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69e8b14e2ff2a8dc09e75a36",
+          "title": "Dialogo sopra i due massimi sistemi del mondo",
+          "author": "Galileo Galilei",
+          "year": 1632,
+          "language": "Italian",
+          "confidence": "work+author",
+          "work_match": "Dialogo sopra i due massimi sistemi del mondo"
+        },
+        {
+          "id": "6953e47777f38f6761bee635",
+          "title": "Dialogo sopra i due massimi sistemi del mondo (1632)",
+          "author": "Galileo Galilei",
+          "year": 1635,
+          "language": "Italian",
+          "confidence": "work+author",
+          "work_match": "Dialogo sopra i due massimi sistemi del mondo"
+        }
+      ],
+      "also_in_library_not_banned": 15
+    },
+    {
+      "author": "Giordano Bruno",
+      "scope": "opera_omnia",
+      "condemned": 1603,
+      "category": "hermetic-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b66a3fb3f4fc044157616c",
+          "title": "Summa terminorum metaphysicorum, ad capessendum logicae &amp; philosophiae studium",
+          "author": "Bruno, Giordano",
+          "year": 1595,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e2b9a81ef7feb3d0f68",
+          "title": "Le ciel reformé : essai de traduction de partie du libre italien, spaccio della bestia trionfante",
+          "author": "Bruno, Giordano",
+          "year": 1750,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e28768235dc6598d227",
+          "title": "Il Giordano overo il cittadino gentiluomo : commedia",
+          "author": "Giordano Bruno",
+          "year": 1736,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e1947b06ecd58189f62",
+          "title": "Oratio valedictoria : [de sapientia Dei]",
+          "author": "Bruno, Giordano",
+          "year": null,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e1747b06ecd58189c60",
+          "title": "De Vmbris Idearvm : Implicantibus artem Quaerendi, Inveniendi, Iudicandi, Ordinandi & Applicandi ; Ad internam scripturam, & non vulgata per memoriam operationes explicatis ; Ad Henricum III. Serenis. Gallor. Poloniuúmque Regem, &c. Protestatio",
+          "author": "Bruno, Giordano",
+          "year": 1582,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e53503581bd76212e5769e",
+          "title": "Unnamed Figures",
+          "author": "Giordano Bruno",
+          "year": 1588,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e53500581bd76212e57695",
+          "title": "Opera Latine Conscripta, Volume 2 - p139b",
+          "author": "Giordano Bruno",
+          "year": 1879,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e534fd581bd76212e5768f",
+          "title": "Opera Latine Conscripta, Volume 2 - p136b",
+          "author": "Iordanus Brunus",
+          "year": 1879,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e534fb581bd76212e5768b",
+          "title": "Opera Latine Conscripta, Volume 2 - p111",
+          "author": "Iordanus Brunus",
+          "year": 1879,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e534fb581bd76212e57689",
+          "title": "Opera Latine Conscripta, Volume 2 - p106",
+          "author": "Giordano Bruno",
+          "year": 1879,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c7cbf125ec2ba5ccd800a4",
+          "title": "Summa terminorum metaphysicorum",
+          "author": "Bruno, Giordano",
+          "year": 1595,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6660eb3f4fc0441558978",
+          "title": "Iordani Bruni Nolani de imaginum, signorum, &amp; idearum compositione : ad omnia inventionum, dispositionum, &amp; memoriae genera libri tres",
+          "author": "Bruno, Giordano",
+          "year": 1591,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6660cb3f4fc044155888e",
+          "title": "Jordani Bruni Nolani de triplici minimo et mensura ad trium speculativarum scientiarum &amp; multarum activarum artium principia libri V ...",
+          "author": "Bruno, Giordano",
+          "year": 1591,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e26cf111105c429788f",
+          "title": "Vita del ... D. Luca Giordano pittore neapolitano",
+          "author": "Giordano Bruno",
+          "year": 1729,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e18cf111105c4296fba",
+          "title": "La cena de le Ceneri : Descritta in cinque dialogi ...",
+          "author": "Bruno, Giordano",
+          "year": 1584,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b418ff2b0edf3eaa2de7aa",
+          "title": "Of the Infinite Universe and Innumerable Worlds — Giordano Bruno (PH218)",
+          "author": "Giordano Bruno",
+          "year": 1670,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69ac8939e5cfec73a7bd9107",
+          "title": "Spaccio de la bestia trionfante",
+          "author": "Giordano Bruno",
+          "year": 1584,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69905e232fd6a039938a1235",
+          "title": "Opera Latine Conscripta Vol. III (De Magia, De Vinculis)",
+          "author": "Giordano Bruno",
+          "year": 1891,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "699050d07d19f3f2aac1e6e4",
+          "title": "De Umbris Idearum",
+          "author": "Giordano Bruno",
+          "year": 1582,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69790aaaeb0dcfd399123421",
+          "title": "Le ciel reformé",
+          "author": "Bruno, Giordano",
+          "year": 1750,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6955d9dc8407b7c9ae213470",
+          "title": "Jordani Bruni Nolani Opera Latine Conscripta",
+          "author": "Giordano Bruno",
+          "year": 1879,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6952dbc477f38f6761bc75f1",
+          "title": "Opere di Giordano Bruno Nolano",
+          "author": "Giordano Bruno",
+          "year": 1830,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69527326ab34727b1f048b7a",
+          "title": "De Triplici Minimo et Mensura",
+          "author": "Giordano Bruno",
+          "year": 1591,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69527313ab34727b1f048b15",
+          "title": "Opera Latine Conscripta",
+          "author": "Giordano Bruno",
+          "year": 1886,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695272feab34727b1f048676",
+          "title": "Le Opere Italiane",
+          "author": "Giordano Bruno",
+          "year": 1888,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69520588ab34727b1f042d0c",
+          "title": "De gli eroici furori",
+          "author": "Giordano Bruno",
+          "year": 1585,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69520579ab34727b1f042cb6",
+          "title": "Cantus circaeus",
+          "author": "Giordano Bruno",
+          "year": 1582,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "694b3a03ffae839f0ec62004",
+          "title": "Jordani Bruni Nolani opera latine conscripta publicis sumptibus edita",
+          "author": "Bruno, Giordano, 1548-1600",
+          "year": 1879,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Heinrich Cornelius Agrippa",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "magic-occult",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b51e9e768235dc659968b9",
+          "title": "Henrici Cornelii Agrippae armatae militiae equitis aurati & u. i. doctoris In artem brevem Raymundi Lullii commentaria",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1568,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e9dcf111105c42a176b",
+          "title": "Henrici Cornelii Agrippae armatae militiae equitis aurati et utriusq[ue] iuris doctoris In artem breuem Raymundi Lullii commentaria",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1538,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e2847b06ecd5818acfb",
+          "title": "Allgemeine Schutz-Schrifft Des Ehrsamen Weiber-Handwerckes, Welches Aus der Zunfft der Römischen Geistlichkeit, Wider Göttliche Verordnung, Menschlicher Weise ausgestossen worden : Welche Unbilligkeit Nebst der Höchsten Würde dieses Geschlechts, über alle andere Geschöpffe, absonderlich über den Mann selbsten ... probiret wird",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1730,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e26261c58d636650278",
+          "title": "Henri Corneille Agrippa De Nettesheim, Sur l'incertitude, aussi bien que la vanité des Sciences & des Arts. Tome Seconde",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1726,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e24768235dc6598cbcc",
+          "title": "Henrici Cornelii Agrippae Ungewißheit Und Eitelkeit Aller Künste und Wissenschafften : auch Wie selbige dem Menschlichen Geschlechte mehr schädlich als nutzlich sind",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1713,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e2147b06ecd5818a75f",
+          "title": "Abigail, das ist, des lob-würdigen Frauen-Zimmers Adel und Fôrträfligkeit",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1650,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e1c768235dc6598c56a",
+          "title": "Henrici Cornelii Agrippae ab Nettesheym ... Opera : in duos tomos concinne digesta, & nunc denuo, sublatis omnibus mendis, ... recusa. 1",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1600,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e1c47b06ecd5818a033",
+          "title": "Henrici Cornelii Agrippae Ab Nettesheym Armatae Militiae Eqvitis Avrati ... Opera : In Dvos Tomos Concinne Digesta. 1",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1600,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e17768235dc6598c102",
+          "title": "Henrici Cornelii Agrippae Liber Quartus De Occulta Philosophia, seu de Cerimonijs Magicis : Cui accesserunt, Elementa Magica Petri de Abano, Philosophi",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1565,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e17cf111105c4296d3f",
+          "title": "Henrici Cornelii Agrippae Ab Nettesheym, De Incertitvdine Et vanitate scientiarum declamatio inuectiua",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1575,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e15efd8df28f2db014b",
+          "title": "Henrici Cornelii Agrippae Ab Nettesheym, Armatae Militiae Equitis aurati, & I.V. ad medicinae Doctoris. Opera, Qvaecvmqve Hactenvs vel in lucem prodierunt, vel inueniri potuerunt omnia : in duos tomos concinnè digesta, & diligenti studio recognita .... [1]",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1600,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e11261c58d63664ee5b",
+          "title": "Splendidae Nobilitatis Viri & armatæ militiæ Equitis aurati, ac utrius[que] Iuris Doctoris, Sacræ Cæsareæ Maiestatis a consilijs & archiuis Inditiarij, Henrici Cornelij Agrippæ ab Nettesheym, De Incertitudine & Vanitate Scientiarum, & Artium at[que] excellentia Verbi Dei, Declamatio.",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1532,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e11efd8df28f2daff79",
+          "title": "Henrici Cornelii Agrippae, Ab Nettesheym ... Apologia aduersus calumnias propter Declamationem de Vanitate scientiarum, & excellentia uerbi Dei, sibi per aliquos Louanienses Theologistas intentatas",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e11261c58d63664ecb5",
+          "title": "Henrici Cornelii Agrippae ab Nettesheym ... De occulta Philosophia : libri tres",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e1047b06ecd58189255",
+          "title": "Henrici Cornelii Agrippae ab Nettesheym, De incertitudi[n]e & vanitate scientiarum declamatio inuectiua : qua vniversa illa sophorum gigantomachia plus quam Herculea impugnatur audacia: doceturq[ue] nusqua[m] certi quicquam, perpetui, & diuini, nisi in solidis eloquijs atque eminentia verbi dei latere",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1531,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e10261c58d63664ec06",
+          "title": "Henrici Cornelii Agrippae de nobilitate & praecellentia foeminei, sexus, ad Margaretam Augustam Austriaco. & Burgundionus principes",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1529,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e10768235dc6598b999",
+          "title": "Henrici Cornelii Agrippae De Nobilitate & Praecellentia Foeminei sexus, ad Margaretam Augustam Austriacorum & Burgundionum Principem",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1532,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b4cc42d2bf9b45ea4799d3",
+          "title": "Henrici Cornelii Agrippae Opera Omnia",
+          "author": "Heinrich Cornelius Agrippa von Nettesheim",
+          "year": 1630,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e536725917566bf878f169",
+          "title": "Pentagram and human body (Agrippa)",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 2019,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e5359a581bd76212e5779d",
+          "title": "Agrippa von Nettesheim - 3 Alphabets",
+          "author": "Heinrich Cornelius Agrippa von Nettesheim",
+          "year": 1510,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69bd9edaf6d63c919747d0bd",
+          "title": "Henrici Cornelii Agrippae ab Nettesheym de incertitudine &amp; vanitate omnium scientiarum &amp; artium liber, lectu plane iucundus &amp; elegans et de nobilitate et praecellentia foeminei sexus, eiusdemque supra virilem eminentia libellus, lectu etiam iucundissimus ...",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1653,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69bd9d416120d54bd037457f",
+          "title": "Henrici Cornelii Agrippae ab Nettesheym De incertitudine et vanitate scientiarum declamatio invectiva, ex postrema authoris recognitione",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1584,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69bd9ca46120d54bd037001f",
+          "title": "Henrici Cornelii Agrippae ... De occulta philosophia libri tres",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b642051c1c21a373889f10",
+          "title": "Henrici Cor. Agrippae ab Nettesheym a consiliis et archivis inditiarii sacrae maiestatis, De occulta philosophia libri III",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1550,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e2fcf111105c429800b",
+          "title": "Heinr. Corn. Agrippa von Nettesheim über Des Weibes Adel und Vorzug vor dem Manne",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1798,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e1c47b06ecd5818a308",
+          "title": "Henr. Cornelii Agrippae ab Nettesheym De incertitudine et vanitate omnium scientiarum & artium liber : lectu plane iucundus & elegans",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1598,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e1cefd8df28f2db0c37",
+          "title": "Henrici Cornelii Agrippae ab Nettesheim Operum Pars ... Quorum Catalogum exhibebunt tibi paginae sequentes : Uncacum ... indice & locuplete & certo. Huic accesserunt Epistolarum ad familiares libri septem & orationes decem ante hoc seorsim editae. 2. - [ca. 1600]. - 8 Bl., 664 S., 8 Bl.",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1600,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e17261c58d63664f680",
+          "title": "Henrici Cornelii Agrippae Liber ... De Occvlta Philosophia, seu de Cerimonijs Magicis. 4, Liber Qvartvs",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1559,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e16cf111105c4296b94",
+          "title": "De occulta philosophia",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1551,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e15261c58d63664f304",
+          "title": "Henrici Cor. Agrippae ab Nettesheym ... De Occvlta Philosophia Libri III",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1550,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e13768235dc6598ba7b",
+          "title": "Della vanità delle scienze",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1549,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e12768235dc6598ba6a",
+          "title": "Lobe des Esels",
+          "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+          "year": 1534,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b4cc3fbb3208142d7bc86d",
+          "title": "De Occulta Philosophia Liber III",
+          "author": "Heinrich Cornelius Agrippa von Nettesheim",
+          "year": 1531,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b4cc3dd2bf9b45ea4796f8",
+          "title": "De Occulta Philosophia Liber II",
+          "author": "Heinrich Cornelius Agrippa von Nettesheim",
+          "year": 1531,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b3e5a2c94a4ff7cce22e04",
+          "title": "De occulta philosophia libri tres",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69907011245959b9547d672b",
+          "title": "De Occulta Philosophia Liber Quartus",
+          "author": "Pseudo-Agrippa (Heinrich Cornelius Agrippa, attributed)",
+          "year": 1559,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69904fcd7d19f3f2aac1da09",
+          "title": "De Incertitudine et Vanitate Omnium Scientiarum",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1530,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695925e615b4070cb1e7fd2c",
+          "title": "Fourth Book of Occult Philosophy, Arbatel of Magick, Peter de Abano",
+          "author": "Heinrich Cornelius Agrippa et al.",
+          "year": 1655,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695925a1aecc3a7338f95f0a",
+          "title": "De occulta philosophia (complete edition)",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1551,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6956eaf4f23ebf30578dba35",
+          "title": "De occulta philosophia libri I (Latin, 1531)",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1531,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6956ead7b5d89fc3ccb478d1",
+          "title": "La philosophie occulte (De occulta philosophia) Tome 2",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1727,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6956eacbb5d89fc3ccb47706",
+          "title": "La philosophie occulte (De occulta philosophia) Tome 1",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1727,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6955939c7bd6d2cd1d61c19c",
+          "title": "Agrippa Opera In Duos Tomos (1553)",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1579,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6952daa277f38f6761bc6551",
+          "title": "De Occulta Philosophia Libri Tres",
+          "author": "Heinrich Cornelius Agrippa von Nettesheim",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69520717ab34727b1f0436db",
+          "title": "De incertitudine et vanitate scientiarum et artium",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1531,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6952018fab34727b1f04177d",
+          "title": "De nobilitate et praecellentia foeminei sexus",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1529,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "0c19cab9-00d4-49b1-ace1-9122b5a45cc9",
+          "title": "De Occulta Philosophia Libri Tres (1533)",
+          "author": "Heinrich Cornelius Agrippa",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "694bf8d2343422769f237558",
+          "title": "De occulta philosophia libri III",
+          "author": "Heinrich Cornelius Agrippa von Nettesheim",
+          "year": 1550,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Heinrich Khunrath",
+      "scope": "single_work",
+      "condemned": 1625,
+      "category": "alchemy-kabbalah",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69ef33e26c5c0455cc3f602f",
+          "title": "Amphitheatrum sapientiae aeternae",
+          "author": "Khunrath, Heinrich",
+          "language": "auto-detect",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "69b51d36261c58d63664908a",
+          "title": "Amphitheatrum Sapientiae aeternae Christiano-Kabalisticum",
+          "author": "Khunrath, Heinrich",
+          "year": 1609,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "69b51d0e47b06ecd5818329c",
+          "title": "Amphitheatrvm Sapientiae Aeternae, Solivs Verae, Christiano-Kabalisticvm, Divino-Magicvm, nec non Physico-Chymicvm, Tertrivnvm-Catholicon",
+          "author": "Khunrath, Heinrich",
+          "year": 1602,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "49781080b5e37bd92655d2d6",
+          "title": "Amphitheatrum Sapientiae — Alchemist's Laboratory",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "7dce8ce068bd56d4d3ec5eaf",
+          "title": "Porta Amphitheatri Sapientiae Aeternae",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "334634e12b78df839086462f",
+          "title": "Autograph of H. Khunrath; from Amphitheatrum..., 1609",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "1db24959954131544db7d489",
+          "title": "Houghton Typ 620.09.482 Heinrich Khunrath, Amphitheatrvm sapientiae aeternae",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "7837ced4180b032c912df25d",
+          "title": "Smaragdtafel - Amphitheatrum sapientiae aeternae",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "8772371e9be5750dbec18f87",
+          "title": "Amphitheatrum sapientiae aeternae - The cosmic rose",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "516bfc21e8b67c9adfcb0c6e",
+          "title": "Amphitheatrum sapientiae aeternae - The hermaphrodite",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "07a515b9abd4b2245efccb30",
+          "title": "Title page of Amphitheatrum sapientiae aeternae - Heinrich Khunrath",
+          "author": "Heinrich Khunrath",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "69bd9de56120d54bd0379fce",
+          "title": "Amphitheatrum sapientiae aeternae, solius verae, christiano-kabalisticum, divino-magicum, nec non physico-chymicum, tertriunum, catholicon",
+          "author": "Khunrath, Heinrich",
+          "year": 1609,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "69b51dcacf111105c4290453",
+          "title": "Amphitheatrvm Sapientiae Aeternae, Solius, Verae: Christiano-Kabalisticvm, Divino-Magicvm, Physico-Chymicvm, Tertrivnvm-Catholicon",
+          "author": "Khunrath, Heinrich",
+          "year": 1653,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "69b4190a2b0edf3eaa2de972",
+          "title": "Amphitheatrum Sapientiae Aeternae — Heinrich Khunrath (PH355)",
+          "author": "Heinrich Khunrath",
+          "year": 1702,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "6970e3729b09d309d780a2a0",
+          "title": "Amphitheatrum sapientiae aeternae",
+          "author": "Khunrath, Heinrich",
+          "year": 1608,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "6952d08677f38f6761bc5477",
+          "title": "Amphitheatrum sapientiae aeternae",
+          "author": "Khunrath, Heinrich",
+          "year": 1609,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        },
+        {
+          "id": "69487f16b75c15feb90b27ef",
+          "title": "Amphitheatrum Sapientiae Aeternae",
+          "author": "Heinrich Khunrath",
+          "year": 1609,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Amphitheatrum sapientiae aeternae"
+        }
+      ],
+      "also_in_library_not_banned": 37
+    },
+    {
+      "author": "Jacob Boehme",
+      "scope": "selected",
+      "condemned": 1612,
+      "category": "mysticism",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69bd9eedf6d63c919747d754",
+          "title": "Morgen-Röte im Aufgangk das ist die Wurtzel oder Mutter der Philosophiae, Astrologiae und Theologiae, aus rechtem Grunde oder Beschreibung der Natur ...",
+          "author": "Boehme, Jacob",
+          "year": 1656,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Aurora, oder Morgenröte im Aufgang"
+        },
+        {
+          "id": "69751590233423aeec9e88ee",
+          "title": "Aurora, oder Morgen-Roehte im Auffgang",
+          "author": "Boehme, Jacob",
+          "year": 1676,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Aurora, oder Morgenröte im Aufgang"
+        },
+        {
+          "id": "695934e3b282844d7b2784b4",
+          "title": "Theosophia Revelata - Aurora, oder Morgenröthe (Vol. 1)",
+          "author": "Boehme, Jacob",
+          "year": 1730,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Aurora, oder Morgenröte im Aufgang"
+        },
+        {
+          "id": "6902ed49583dd7d2641408a5",
+          "title": "Morgenroete im Aufgang",
+          "author": "Boehme, Jacob",
+          "year": 1780,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Aurora, oder Morgenröte im Aufgang"
+        }
+      ],
+      "also_in_library_not_banned": 105
+    },
+    {
+      "author": "Johann Weyer",
+      "scope": "single_work",
+      "condemned": 1571,
+      "category": "magic-occult",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b51e7bcf111105c429dd56",
+          "title": "Ioannis Wieri De praestigiis daemonum, et +& incantationibus ac veneficiis libri sex",
+          "author": "Wier, Johannes",
+          "year": 1583,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De praestigiis daemonum"
+        },
+        {
+          "id": "69b51e7a768235dc65993d42",
+          "title": "Ioannis Wieri De praestigiis daemonum, et +& incantationibus ac veneficiis libri sex : cum rerum et uerborum copioso indice",
+          "author": "Wier, Johannes",
+          "year": 1577,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De praestigiis daemonum"
+        },
+        {
+          "id": "695925acaecc3a7338f964dc",
+          "title": "Opera omnia (De praestigiis, De lamiis, De ira morbo)",
+          "author": "Johann Weyer",
+          "year": 1660,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De praestigiis daemonum"
+        },
+        {
+          "id": "695925a9aecc3a7338f962f1",
+          "title": "De praestigiis daemonum et incantationibus ac veneficiis",
+          "author": "Johann Weyer",
+          "year": 1563,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De praestigiis daemonum"
+        },
+        {
+          "id": "bb7bfc2d-b703-4c8e-8fdf-99040bf4db4b",
+          "title": "De Praestigiis Daemonum",
+          "author": "Johann Weyer",
+          "year": 1563,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De praestigiis daemonum"
+        }
+      ],
+      "also_in_library_not_banned": 2
+    },
+    {
+      "author": "Johannes Kepler",
+      "scope": "selected",
+      "condemned": 1619,
+      "category": "astronomy-natural-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b686d470c69d645a746941",
+          "title": "Epitome astronomiae copernicanae usitata forma quaestionum &amp; responsionum conscripta, inque VII. libros digesta ...",
+          "author": "Kepler, Johannes",
+          "year": 1618,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Epitome astronomiae Copernicanae"
+        },
+        {
+          "id": "6952d1a077f38f6761bc626b",
+          "title": "Ad Vitellionem Paralipomena (Astronomiae Pars Optica)",
+          "author": "Kepler, Johannes",
+          "year": 1604,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Epitome astronomiae Copernicanae"
+        },
+        {
+          "id": "6952d19c77f38f6761bc5fd2",
+          "title": "Epitome Astronomiae Copernicanae",
+          "author": "Kepler, Johannes",
+          "year": 1618,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Epitome astronomiae Copernicanae"
+        }
+      ],
+      "also_in_library_not_banned": 24
+    },
+    {
+      "author": "Johannes Trithemius",
+      "scope": "single_work",
+      "condemned": 1609,
+      "category": "magic-occult",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69bd9e1d6120d54bd037b95d",
+          "title": "Trithemius sui-ipsius vindex sive steganographiae ... viri Ioannis Trithemii, primo Spanheimensis ... apologetica defensio : accessit in fine fragmentum quaestionum eiusdem Trithemii",
+          "author": "Trithemius, Johannes",
+          "year": 1616,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69b51e889a81ef7feb3d70b6",
+          "title": "Steganographia",
+          "author": "Trithemius, Johannes",
+          "year": 1721,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69b51e8847b06ecd58191fd7",
+          "title": "Steganographia : quae hucusque a nemine intellecta ... nunc tandem vindicata reserata & illustrata",
+          "author": "Trithemius, Johannes",
+          "year": 1721,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69b51e7e9a81ef7feb3d63b1",
+          "title": "Steganographia: Hoc est: Ars Per Occultam Scripturam Animi Sui Voluntatem Absentibus aperiendi certa",
+          "author": "Trithemius, Johannes",
+          "year": 1606,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69b51e7e47b06ecd581911ac",
+          "title": "Clavis Steganographiae Joannis Trithemii Abbatis Spanheimensis",
+          "author": "Trithemius, Johannes",
+          "year": 1606,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69b51e88768235dc659950db",
+          "title": "Johannis Trithemii Primo Spanheimensis Deinde Divi Jacobi Peapolitani Abbatis Steganographia, Qvae Hvcvsqve A Nemine Intellecta, Sed Passim Vt Svpposititia Perniciosa ... Damnata ... Nvnc Tandem Vindicata Reserata Et Illvstrata : Vbi Post Vindicias Trithemii Clarissime Explicantvr Conjvrationes Spiritvvm Ex Arabicis, Hebraicis, Chaldaicis Et Graecis Spiritvvm Nominibvs ... Deinde Solvvntvr Et Exhibentvr Artificia Nova Steganographica A Trithemio ... Promissa, In Hvnc Diem A Neminae Capta ... Svmme Desiderata",
+          "author": "Trithemius, Johannes",
+          "year": 1721,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69b51e83cf111105c429ead5",
+          "title": "Johannis Trithemii Primo Spanheimensis Deinde Divi Jacobi Peapolitani Abbatis Steganographia : Quae Hucusq[ue] a nemine intellecta, sed passim ut supposititia, perniciosa, magica & necromantica, rejecta, elusa, damnata & sententiam inquisitionis passa; Nunc Tandem Vindicata Reserata Et Illustrata Vbi post vindicias Trithemii clarißime explicantur Coniurationes Spirituum Ex Arabicis, Hebraicis, Chaldaicis & Graecis Spirituum nominibus juxta ... concinnatae. Deinde solvuntur & exhibentur Artificia Nova Steganographica A Trithemio in Literis ad Arnoldum Bostium & Polygraphia promissa ...",
+          "author": "Trithemius, Johannes",
+          "year": 1676,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69b51e7f9a81ef7feb3d64c8",
+          "title": "Trithemius sui ipsius vindex : sine Steganographiae admodum rever. ... ; Ex ipso fere Trithemio collecta & publici juris facta ; Autore ... Sigismundo ... in Bavaria monasterii Seon o. s. B. abbate",
+          "author": "Trithemius, Johannes",
+          "year": 1616,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "695929a57c072c27f686d29f",
+          "title": "Steganographia vindicata, reserata et illustrata",
+          "author": "Johannes Trithemius",
+          "year": 1676,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "6955923c7bd6d2cd1d619f48",
+          "title": "Trithemius Clavis Generalis Triplex (Key to Steganographia)",
+          "author": "Johannes Trithemius",
+          "year": 1608,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        },
+        {
+          "id": "69520773ab34727b1f043c4d",
+          "title": "Steganographia",
+          "author": "Johannes Trithemius",
+          "year": 1621,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Steganographia"
+        }
+      ],
+      "also_in_library_not_banned": 12
+    },
+    {
+      "author": "Marsilio Ficino",
+      "scope": "selected",
+      "condemned": 1489,
+      "category": "hermetic-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69906831249ce014347d5b5c",
+          "title": "De Vita Libri Tres (Three Books on Life)",
+          "author": "Marsilio Ficino",
+          "year": 1489,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De vita libri tres (especially De vita coelitus comparanda)"
+        },
+        {
+          "id": "6969262b4fa3b04c6de87333",
+          "title": "De vita libri tres (Three Books on Life, 1529)",
+          "author": "Marsilio Ficino",
+          "year": 1529,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De vita libri tres (especially De vita coelitus comparanda)"
+        },
+        {
+          "id": "694f396c23a1d0c2ad1d8698",
+          "title": "De vita libri tres (De triplici vita)",
+          "author": "Ficino, Marsilio (1433-1499)",
+          "year": 1489,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De vita libri tres (especially De vita coelitus comparanda)"
+        },
+        {
+          "id": "6948856a2f9c70e60597cb30",
+          "title": "Marsilii Ficini Florentini medici atq[ue] philosophi celeberrimi, de vita libri tres, recens iam à mendis sitúq[ue] uindicati : qvorvm primus, de studiosorum sanitate tuenda ; secundus, de vita producenda ; tertius, de vita coelitus comparanda ; apologia ; his accessit eiusdem epidemiarum antidotus, tutelae quoq[ue] bonae ualetudinis attinens ; cum omnium nouo rerum atque indice",
+          "author": "Ficino, Marsilio, 1433-1499",
+          "year": 1529,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De vita libri tres (especially De vita coelitus comparanda)"
+        }
+      ],
+      "also_in_library_not_banned": 69
+    },
+    {
+      "author": "Michael Servetus",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "reformation-theology",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b6fec53c7947b468d92d14",
+          "title": "Christianismi restitutio ... MDLIII",
+          "author": "Servetus, Michael",
+          "year": 1790,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b4193f2b0edf3eaa2df265",
+          "title": "De Trinitatis Erroribus — Michael Servetus (PH474)",
+          "author": "Michael Servetus",
+          "year": 1531,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Nicolaus Copernicus",
+      "scope": "single_work",
+      "condemned": 1616,
+      "category": "astronomy-natural-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "6953e46b77f38f6761bee386",
+          "title": "De Revolutionibus - German Translation with Commentary",
+          "author": "Nicolaus Copernicus; C.L. Menzzer",
+          "year": 1879,
+          "language": "Latin-German",
+          "confidence": "work+author",
+          "work_match": "De revolutionibus orbium coelestium"
+        },
+        {
+          "id": "606a74d7-2ac1-420b-924d-de761439fb3f",
+          "title": "De Revolutionibus Orbium Coelestium",
+          "author": "Nicolaus Copernicus",
+          "year": 1543,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De revolutionibus orbium coelestium"
+        },
+        {
+          "id": "694f49d3f9b1ecc07965e424",
+          "title": "De revolutionibus orbium coelestium libri VI",
+          "author": "Copernicus, Nicolaus (1473-1543)",
+          "year": 1543,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De revolutionibus orbium coelestium"
+        },
+        {
+          "id": "694b3b5b58a47807cc735dce",
+          "title": "De revolutionibus orbium coelestium, libri VI",
+          "author": "Copernicus, Nicolaus, 1473-1543",
+          "year": 1543,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De revolutionibus orbium coelestium"
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Paracelsus",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "alchemy-medicine",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b51d21f23ccdcced3062bb",
+          "title": "Nobiblis, Clarissimi Ac probatissimi Philosophi & Medici, Dn. Aureoli Philippi Theophrasti Bombast, Ab Hohenheim, Dicti Paracelsi, Operum Medico-Chimicorum Sive Paradoxorum Tomus Genuinus ... : Recenter latine factus, & in usum Asseclarum Novae & Veteris Philosophiae foras datus. 6, E Chymicis Primus, Continens, Processus & praeparationes Spagyricas rerum naturalium ad usum Medicinae: multaque alia de Tinctura Physicorum: de Coementis item & gradationibus",
+          "author": "Paracelsus",
+          "year": 1605,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De natura rerum"
+        },
+        {
+          "id": "69b51cd398963ba069532994",
+          "title": "Archidoxae Philippi Theophrasti Paracelsi Magni: Germani Philosophi & Medici Sollertißimi, ac Mysteriorum naturae scrutatoris & Artificis absolutissimi. Libri X",
+          "author": "Paracelsus",
+          "year": 1573,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De natura rerum"
+        },
+        {
+          "id": "69b4d643853c26e0d15603c8",
+          "title": "Archidoxae Philippi Theophrasti Paracelsi Magni: Germani Philosophi & Medici Sollertißimi, ac Mysteriorum naturae scrutatoris & Artificis absolutissimi. Libri X",
+          "author": "Paracelsus",
+          "year": 1569,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De natura rerum"
+        },
+        {
+          "id": "6956eae3b5d89fc3ccb47a2a",
+          "title": "Astronomia Magna (Philosophia Sagax)",
+          "author": "Paracelsus (Theophrastus Bombastus von Hohenheim)",
+          "year": 1571,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Astronomia magna (Philosophia sagax)"
+        }
+      ],
+      "also_in_library_not_banned": 62
+    },
+    {
+      "author": "Pico della Mirandola, Giovanni",
+      "scope": "selected",
+      "condemned": 1487,
+      "category": "kabbalah-hermetic",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b51e3eff09e4fe943aa31a",
+          "title": "Opera Omnia Ioannis Pici, Mirandvlae Concordiaeque comitis, Theologorum & Philosophorum, sine controuersia, principis ... : Sunt Autem Haec Quae Ab hoc autore felicissime scripta sunt. Heptaplus, de Dei creatoris sex dierum opere Geneseos. Conclusiones nongentae, Romae publice propositae ...",
+          "author": "Pico della Mirandola, Giovanni",
+          "year": 1557,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conclusiones nongentae (900 Theses)"
+        },
+        {
+          "id": "69b51e36ff09e4fe943aa09d",
+          "title": "Pici Mirandolani conclusiones sive theses XC Romae a. 1486 disputandae (sed non admissae) - BSB Clm 11807",
+          "author": "Pico della Mirandola, Giovanni",
+          "year": 1518,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conclusiones nongentae (900 Theses)"
+        },
+        {
+          "id": "69b4cc27d2bf9b45ea4783aa",
+          "title": "Conclusiones sive Theses DCCCC",
+          "author": "Giovanni Pico della Mirandola",
+          "year": 1487,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conclusiones nongentae (900 Theses)"
+        },
+        {
+          "id": "694f8d99efce46492e19fdad",
+          "title": "Conclusiones sive Theses DCCCC",
+          "author": "Pico della Mirandola, Giovanni (1463-1494)",
+          "year": 1486,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conclusiones nongentae (900 Theses)"
+        }
+      ],
+      "also_in_library_not_banned": 38
+    },
+    {
+      "author": "Pietro Pomponazzi",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "natural-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69905f2040bc3a0478efaf14",
+          "title": "De naturalium effectuum causis, sive de incantationibus",
+          "author": "Pietro Pomponazzi",
+          "year": 1556,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De incantationibus"
+        },
+        {
+          "id": "695d0e6c3193c630d70495ca",
+          "title": "Tractatus de immortalitate animae",
+          "author": "Pietro Pomponazzi",
+          "year": 1600,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De immortalitate animae"
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Pseudo-Ficino / Pseudo-Albertus / grimoire tradition",
+      "scope": "selected",
+      "condemned": null,
+      "category": "magic-occult",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "6959359d3b43cb6630c913d9",
+          "title": "Liber Juratus Honorii (Sworn Book of Honorius)",
+          "author": "Honorius of Thebes (attr.)",
+          "year": 1300,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Liber Iuratus Honorii"
+        },
+        {
+          "id": "6953ab4577f38f6761bd6c6f",
+          "title": "Picatrix Fragment, Steganographia, Paracelsus & Chemical Secrets",
+          "author": "Trithemius; Picatrix; Paracelsus",
+          "year": 1650,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Picatrix (Ghāyat al-Ḥakīm)"
+        }
+      ],
+      "also_in_library_not_banned": 12
+    },
+    {
+      "author": "Robert Fludd",
+      "scope": "selected",
+      "condemned": 1631,
+      "category": "hermetic-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69bd9e3c6120d54bd037c2d8",
+          "title": "Tractatus theologo-philosophicus, in libros tres distributus, quorum I. de vita. II. de morte. III. de resurrectione : cui inseruntur nonnulla sapientiae veteris, Adami infortunio superstitis, fragmenta: ex profundiori sacrarum literarum sensu &amp; lumine, atque ex limpidiori &amp; liquidiori saniorum philosophorum fonte hausta atque collecta, fratribusque a Cruce Rosea dictis, dedicata",
+          "author": "Fludd, Robert",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Tractatus apologeticus"
+        },
+        {
+          "id": "69bd9e2f6120d54bd037be4d",
+          "title": "Utriusque cosmi maioris scilicet et minoris metaphysica, physica atque technica historia in duo volumina secundum cosmi differentiam divisa",
+          "author": "Fludd, Robert",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04de3f85a444d9ea076",
+          "title": "UtriusqueCosmiMajoris 0012",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04ce3f85a444d9ea074",
+          "title": "Utriusque Cosmi Majoris, plate, pg. 37",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04ce3f85a444d9ea073",
+          "title": "Utriusque Cosmi Majoris, Solis, pg 19",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04ce3f85a444d9ea072",
+          "title": "Utriusque Cosmi Majoris",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04be3f85a444d9ea071",
+          "title": "UtriusqueCosmiMicrocosm",
+          "author": "Robert Fludd",
+          "year": 1621,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04be3f85a444d9ea070",
+          "title": "UtriusqueCosmiMacrocosm",
+          "author": "Robert Fludd",
+          "year": 1621,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04ae3f85a444d9ea06e",
+          "title": "Science of casting horoscopes, from Utriusque Cosmi Historia, by Robert Fludd",
+          "author": "Robert Fludd",
+          "year": 1618,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d04ae3f85a444d9ea06c",
+          "title": "Utriusque Cosmi Majoris, page 341",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d049e3f85a444d9ea06b",
+          "title": "Utriusque cosmi majoris scilicet et minoris metaphysica, page 331",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d044e3f85a444d9ea05e",
+          "title": "Utriusque cosmi majoris pg. 41 plate01",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d043e3f85a444d9ea05b",
+          "title": "Robert Fludd, 'Utriusque cosmi … historia'. Oppenheim 1617",
+          "author": "Robert Fludd",
+          "year": 2018,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d042e3f85a444d9ea05a",
+          "title": "Robert Fludd Utriusque cosmi",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d040e3f85a444d9ea056",
+          "title": "R. Fludd,\"Utriusque cosmi historia...\", 1624: temple of music",
+          "author": "Robert Fludd",
+          "year": 2014,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69e4d03fe3f85a444d9ea054",
+          "title": "R. Fludd, Utriusque cosmi...metaphysica; microcosm",
+          "author": "Robert Fludd",
+          "year": 2014,
+          "language": "Unknown",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "c26d4a980a8ce224a2a1bef4",
+          "title": "Tomvs secvndvs de svpernatvrali, natvrali, præternaturali et contranaturali microcosmi historia, in tractatus tres distributa... Oppenheimij impensis Johannis Theodorij de Brÿ, tÿpis Hieronymj Galleri 1619",
+          "author": "Robert Fludd",
+          "language": "Visual",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69b697c6080b19f98fcf4664",
+          "title": "Philosophia moysaica in qua sapientia &amp; scientia creationis &amp; creaturarum sacra veréque christiana (vt pote cujus basis sive fundamentum est unicus ille lapis angularis Iesus Christus) ad amussim &amp; enucleaté explicatur",
+          "author": "Fludd, Robert",
+          "year": 1638,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Philosophia Moysaica"
+        },
+        {
+          "id": "69b51dc2768235dc65987739",
+          "title": "Philosophia Moysaica : in qua sapientia & scientia creationis & creaturarum sacra veréque Christiana ... ad amussim & enucleaté explicatur",
+          "author": "Fludd, Robert",
+          "year": 1638,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Philosophia Moysaica"
+        },
+        {
+          "id": "69b51dc0efd8df28f2daa62a",
+          "title": "Integrum Morborum Mysterium: Sive Medicinae Catholicae Tomi Primi Tractatus Secundus : in Sectiones distributus duas ; Quorum Prior generalem Morborum Naturam, sive variam Munimenti Salutis hostiliter invadendi atq[ue oppugnandi rationem, more novo & minime antea audito, sive intellecto describit. Ultima, universale Medicorum sive Aegrotorum depingit Catoptron ...",
+          "author": "Fludd, Robert",
+          "year": 1631,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Tractatus apologeticus"
+        },
+        {
+          "id": "69b51dc0768235dc659876d6",
+          "title": "Integrvm Morborvm Mysterivm: Sive Medicinae Catholicae Tomi Primi Tractatvs Secundus, in Sectiones distributus duas; Quorvm Prior generalem Morborum Naturam ... describit. Vltima, vniuersale Medicorum siue Aegrotorum depingit Catoptron .... 1,2,3, Pvlsvs Seu Nova Et Arcana Pvlsvvm Historia : E Sacro Fonte Radicaliter Extracta, Nec Non Medicorvm Ethnicorvm Dictis & authoritate comprobata. Hoc Est, Portionis Tertiae Pars Tertia, De Pulsuum Scientia",
+          "author": "Fludd, Robert",
+          "year": 1631,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69b51dbbff09e4fe943a8366",
+          "title": "Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque Technica Historia : In duo Volumina secundum Cosmi differentiam divisa. [2,2,]1,3, De Anatomia Triplici : In partes tres divisa ...",
+          "author": "Fludd, Robert",
+          "year": 1623,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69b51dbaff09e4fe943a828d",
+          "title": "Tomi Secundi Tractatus Secundus, De Praeternaturali Utriusque Mundi Historia : In Sectiones tres divisa, In Quarum Prima, de Meteororum tam Macro, quam Microcosmicorum causis, earumque effectibus in genere agitur ...",
+          "author": "Fludd, Robert",
+          "year": 1621,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69b51dbaefd8df28f2da9f26",
+          "title": "Tomi Secundi Tractatus Primi, Sectio Secunda, De technica Microcosmi historia : in Portiones VII. divisa",
+          "author": "Fludd, Robert",
+          "year": 1619,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69b51d8eff09e4fe943a6fb4",
+          "title": "Tomus Secundus De Supernaturali, Naturali, Praeternaturali Et Contranaturali Microcosmi historia : in Tractatus tres distributa",
+          "author": "Fludd, Robert",
+          "year": 1619,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69b51d86f23ccdcced308522",
+          "title": "Tractatus Secundus De Naturae Simia Seu Technica macrocosmi historia : in partes undecim divisa",
+          "author": "Fludd, Robert",
+          "year": 1618,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69a0278f677e04041df0334e",
+          "title": "Tomus secundus de supernaturali, naturali, praeternaturali et contranaturali microcosmi historia",
+          "author": "Fludd, Robert",
+          "year": 1619,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69a02781bd4078a454714f67",
+          "title": "Tractatus apologeticus integritatem Societatis de Roseae Cruce defendens",
+          "author": "Fludd, Robert",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Tractatus apologeticus"
+        },
+        {
+          "id": "69904dd67d19f3f2aac1d49d",
+          "title": "Utriusque Cosmi Historia",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "6985ca7130d79dd170ec623f",
+          "title": "Tomi secundi tractatus secundus; De praeternaturali utriusque mundi historia",
+          "author": "Fludd, Robert",
+          "year": 1621,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "6984e8498a2f054f912420c5",
+          "title": "Philosophia moysaica",
+          "author": "Fludd, Robert",
+          "year": 1638,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Philosophia Moysaica"
+        },
+        {
+          "id": "6984e8498a2f054f912420bd",
+          "title": "Philosophia sacra et vere christiana seu meteorologia cosmica",
+          "author": "Fludd, Robert",
+          "year": 1626,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Philosophia Moysaica"
+        },
+        {
+          "id": "69593416b282844d7b277b86",
+          "title": "Utriusque Cosmi Historia - Philosophia Sacra et Meteorologia Cosmica",
+          "author": "Robert Fludd",
+          "year": 1626,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69593413b282844d7b277aaf",
+          "title": "Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "695591c87bd6d2cd1d61978b",
+          "title": "Anatomiae Amphitheatrum",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Anatomiae amphitheatrum"
+        },
+        {
+          "id": "6952dac977f38f6761bc6cb0",
+          "title": "Utriusque Cosmi Historia Vol. 2",
+          "author": "Robert Fludd",
+          "year": 1619,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "6952dac677f38f6761bc683a",
+          "title": "Utriusque Cosmi Historia Vol. 1",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69527227ab34727b1f047c85",
+          "title": "Philosophia Moysaica",
+          "author": "Robert Fludd",
+          "year": 1638,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Philosophia Moysaica"
+        },
+        {
+          "id": "695201adab34727b1f0419c7",
+          "title": "Philosophia sacra et vere christiana seu Meteorologia cosmica",
+          "author": "Robert Fludd",
+          "year": 1626,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Philosophia Moysaica"
+        },
+        {
+          "id": "695201a9ab34727b1f041826",
+          "title": "Tomus secundus de supernaturali, naturali, praeternaturali et contranaturali microcosmi historia",
+          "author": "Robert Fludd",
+          "year": 1619,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        },
+        {
+          "id": "69520176ab34727b1f04136b",
+          "title": "Utriusque cosmi majoris scilicet et minoris metaphysica, physica atque technica historia",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Utriusque cosmi maioris scilicet et minoris... historia"
+        }
+      ],
+      "also_in_library_not_banned": 85
+    },
+    {
+      "author": "Tommaso Campanella",
+      "scope": "selected",
+      "condemned": 1633,
+      "category": "hermetic-philosophy",
+      "priority": 1,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b3038c5facc83a9a3d9e96",
+          "title": "De Monarchia Hispanica",
+          "author": "Tommaso Campanella",
+          "year": 1641,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Monarchia di Spagna"
+        },
+        {
+          "id": "699065793dc2ed39a49f18f3",
+          "title": "Atheismus Triumphatus",
+          "author": "Tommaso Campanella",
+          "year": 1631,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Atheismus triumphatus"
+        },
+        {
+          "id": "6990652d726f64800c109dae",
+          "title": "De Sensu Rerum et Magia",
+          "author": "Tommaso Campanella",
+          "year": 1620,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De sensu rerum et magia"
+        },
+        {
+          "id": "69905d1a2fd6a0399389ee80",
+          "title": "Realis Philosophiae Epilogisticae (Civitas Solis)",
+          "author": "Tommaso Campanella",
+          "year": 1623,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Civitas Solis"
+        }
+      ],
+      "also_in_library_not_banned": 8
+    },
+    {
+      "author": "Desiderius Erasmus",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "humanism-theology",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c1134637989a445aea0d5f",
+          "title": "Opus Epistolarum vol. VII (Allen)",
+          "author": "Desiderius Erasmus",
+          "year": 1928,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c1133b37989a445aea0b2c",
+          "title": "Opus Epistolarum vol. VI (Allen)",
+          "author": "Desiderius Erasmus",
+          "year": 1926,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c1133337989a445aea0889",
+          "title": "Opus Epistolarum vol. V (Allen)",
+          "author": "Desiderius Erasmus",
+          "year": 1924,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c1132a37989a445aea05cd",
+          "title": "Opus Epistolarum vol. III (Allen)",
+          "author": "Desiderius Erasmus",
+          "year": 1913,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c1132037989a445aea0344",
+          "title": "Opus Epistolarum vol. II (Allen)",
+          "author": "Desiderius Erasmus",
+          "year": 1910,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c1131737989a445aea00ad",
+          "title": "Opus Epistolarum vol. I (Allen)",
+          "author": "Desiderius Erasmus",
+          "year": 1906,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69bd9f17f6d63c919747f37f",
+          "title": "Adagiorum Desiderii Erasmi Roterodami epitome",
+          "author": "Erasmus, Desiderius",
+          "year": 1663,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2fff75545150b61b4aee3",
+          "title": "Adagiorum Chiliades (Froben 1533)",
+          "author": "Erasmus",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21d0c429e087c6f866964",
+          "title": "Adagiorum Chiliades",
+          "author": "Desiderius Erasmus",
+          "year": 1559,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69bda135f6d63c919748ec78",
+          "title": "Lob der Narrheit",
+          "author": "Erasmus, Desiderius",
+          "year": 1780,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69bd9c8e6120d54bd036f9d9",
+          "title": "Arnobii Afri ... commentarii ... In omnes psalmos, sermone Latino, sed tum apud Afros vulgari",
+          "author": "Erasmus, Desiderius",
+          "year": 1522,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b65af418b87551bfd060ad",
+          "title": "De civilitate morum puerilium libellus",
+          "author": "Erasmus, Desiderius",
+          "year": 1580,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6576f18b87551bfce96b6",
+          "title": "Erasmi Roterodami Civilitas morum in succinctas quaestiones digesta, ac per Reinhardum Hadamarium locupletata",
+          "author": "Erasmus, Desiderius",
+          "year": 1575,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b4ccead5b6c3815e1a29dd",
+          "title": "Lucubrationes",
+          "author": "Desiderius Erasmus",
+          "year": 1517,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b4cce5d5b6c3815e1a2931",
+          "title": "Enchiridion militis christiani",
+          "author": "Desiderius Erasmus",
+          "year": 1515,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b30270224824a9f190698c",
+          "title": "Adagia (Elzevir 1650)",
+          "author": "Erasmus",
+          "year": 1650,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2fffb5545150b61b4b42f",
+          "title": "De Borussiae Antiquitatibus",
+          "author": "Erasmus Stella",
+          "year": 1518,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ffeae5d6d64d8e197d0c",
+          "title": "Responsio ad Epistolam Alberti Pii",
+          "author": "Erasmus",
+          "year": 1529,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ffe8e5d6d64d8e197c88",
+          "title": "De Sarcienda Ecclesiae Concordia",
+          "author": "Erasmus",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ffe5e5d6d64d8e197ba5",
+          "title": "Explanatio Symboli Apostolorum",
+          "author": "Erasmus",
+          "year": 1533,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ffe2e5d6d64d8e1979e7",
+          "title": "Paraphraseon in Novum Testamentum",
+          "author": "Erasmus",
+          "year": 1532,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ffdfe5d6d64d8e1976c2",
+          "title": "Annotationes in Novum Testamentum (1527 ed.)",
+          "author": "Erasmus",
+          "year": 1527,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ffdc5545150b61b4a290",
+          "title": "Apophthegmatum Opus",
+          "author": "Erasmus",
+          "year": 1535,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ffd25545150b61b49c94",
+          "title": "Annotationes in Novum Testamentum",
+          "author": "Erasmus",
+          "year": 1540,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ff19a1a4246ddb45ae6a",
+          "title": "Moriae Encomium (Praise of Folly)",
+          "author": "Erasmus",
+          "year": 1540,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ff09a1a4246ddb45ab68",
+          "title": "Novum Instrumentum omne (First Greek New Testament)",
+          "author": "Erasmus",
+          "year": 1516,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2feee65b9d6bf89925558",
+          "title": "Adagiorum Chiliades (Aldine edition)",
+          "author": "Erasmus",
+          "year": 1520,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2f4675ef23d31023f6961",
+          "title": "Adagiorum opus (Erasmus Adages)",
+          "author": "Erasmus (printed by Robert Estienne)",
+          "year": 1558,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2f3a221208ea9dc278764",
+          "title": "De recta Latini Graecique sermonis pronuntiatione dialogus",
+          "author": "Erasmus (printed by Robert Estienne)",
+          "year": 1547,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2234856715b0e32476e75",
+          "title": "Institutionum Grammaticarum Libri Quatuor — with Erasmus on Parts of Speech (Aldine Press, 2nd ed.)",
+          "author": "Aldus Manutius & Erasmus",
+          "year": 1523,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2221708069e96e843259c",
+          "title": "Lucian, Opuscula — Translated by Erasmus and Thomas More (Aldine Press)",
+          "author": "Erasmus of Rotterdam & Thomas More",
+          "year": 1516,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21d292dce6e2d5b8d02ea",
+          "title": "In Novum Testamentum Paraphrases",
+          "author": "Desiderius Erasmus",
+          "year": 1521,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21d1a429e087c6f866ee7",
+          "title": "Opera (Erasmus edition)",
+          "author": "Lucius Annaeus Seneca / Erasmus (ed.)",
+          "year": 1515,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21d11429e087c6f866e0f",
+          "title": "Ratio Verae Theologiae",
+          "author": "Desiderius Erasmus",
+          "year": 1520,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21cf8429e087c6f866456",
+          "title": "Novum Testamentum (Greek-Latin, 2nd Froben edition)",
+          "author": "Desiderius Erasmus",
+          "year": 1519,
+          "language": "Greek",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21c6c429e087c6f8646f6",
+          "title": "Colloquia",
+          "author": "Desiderius Erasmus",
+          "year": 1636,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b21c26429e087c6f863f81",
+          "title": "Hecuba et Iphigenia in Aulide (trans. Erasmus)",
+          "author": "Euripides / Erasmus",
+          "year": 1507,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6999c2e7b31f7d70e4567bab",
+          "title": "De ratione studii ac legendi interpretandique auctores",
+          "author": "Erasmus von Rotterdam",
+          "year": 1520,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69998545b5672e29e5ff6570",
+          "title": "De ratione studii ac legendi interpretandique auctores",
+          "author": "Desiderius Erasmus",
+          "year": 1512,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69938963ce15387065946bf9",
+          "title": "Tetraevangelium (Erasmus Greek Gospels, 12th c.)",
+          "author": "Anonymous (annotations by Erasmus)",
+          "year": 1100,
+          "language": "Greek",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6970e3549b09d309d780a242",
+          "title": "Adagiorum chiliades quatuor cum sesquicenturia",
+          "author": "Erasmus, Desiderius",
+          "year": 1559,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6952e50377f38f6761bc933f",
+          "title": "Erasmus Opera Omnia - Novum Testamentum",
+          "author": "Desiderius Erasmus",
+          "year": 1705,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Faustus Socinus",
+      "scope": "opera_omnia",
+      "condemned": 1603,
+      "category": "reformation-theology",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c774ad6a0f3d112faf9347",
+          "title": "Bibliotheca Fratrum Polonorum quos Unitarios vocant instructa operibus omnibus Fausti Socini, Johannis Crellii, Jonae Schlitingii & Johannis Ludovici Wolzogenii",
+          "author": "Socinus, Faustus",
+          "year": 1668,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Friedrich Spee",
+      "scope": "single_work",
+      "condemned": null,
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69905e072fd6a039938a0bec",
+          "title": "Cautio Criminalis, seu De Processibus Contra Sagas",
+          "author": "Friedrich Spee von Langenfeld",
+          "year": 1631,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Cautio Criminalis"
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Gerolamo Cardano",
+      "scope": "selected",
+      "condemned": 1570,
+      "category": "natural-philosophy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c8001f6c6f3cc53c843e25",
+          "title": "De rerum varietate",
+          "author": "Cardano, Girolamo",
+          "year": 1557,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De rerum varietate"
+        },
+        {
+          "id": "699062f8e7b7642c081dd233",
+          "title": "De Rerum Varietate",
+          "author": "Girolamo Cardano",
+          "year": 1557,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De rerum varietate"
+        },
+        {
+          "id": "0a481175-492d-46c5-95b9-8042e7b6710a",
+          "title": "De Subtilitate",
+          "author": "Girolamo Cardano",
+          "year": 1550,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De subtilitate"
+        }
+      ],
+      "also_in_library_not_banned": 10
+    },
+    {
+      "author": "Giovanni Battista della Porta",
+      "scope": "selected",
+      "condemned": 1592,
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b51e8747b06ecd58191b58",
+          "title": "Magia Naturalis. 1. (1713)",
+          "author": "Della Porta, Giambattista",
+          "year": 1713,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        },
+        {
+          "id": "69b51e87cf111105c429f16a",
+          "title": "Magia Naturalis. 1",
+          "author": "Della Porta, Giambattista",
+          "year": 1715,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        },
+        {
+          "id": "69b51e8447b06ecd58191583",
+          "title": "Magia Naturalis. 1. (1680)",
+          "author": "Della Porta, Giambattista",
+          "year": 1680,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        },
+        {
+          "id": "69b51e84cf111105c429ec84",
+          "title": "Des vortrefflichen Herren Johann Baptista Portae von Neapolis Magia Naturalis, oder Haus-, Kunst- und Wunder-Buch : Zu erst von demselben Lateinisch beschrieben ... ; Zu erst von demselben Lateinisch beschrieben; hernach von Ihm selbst vermehret; nunmehr aber allen Liebhabern der natürlichen Wissenschafften zum besten, übersetzet.... 1",
+          "author": "Della Porta, Giambattista",
+          "year": 1680,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        },
+        {
+          "id": "69c89f516c6f3cc53c85dc4c",
+          "title": "Magiae naturalis libri viginti",
+          "author": "Porta, Giovanni Battista della",
+          "year": 1664,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        },
+        {
+          "id": "69b51e87768235dc65994d40",
+          "title": "Magia Naturalis. 2",
+          "author": "Della Porta, Giambattista",
+          "year": 1715,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        },
+        {
+          "id": "69b51e879a81ef7feb3d6cec",
+          "title": "Magia Naturalis. 2. Amphitheatrum Magiae universae. - 1714",
+          "author": "Della Porta, Giambattista",
+          "year": 1714,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        },
+        {
+          "id": "69b51e7c9a81ef7feb3d604a",
+          "title": "Io. Baptistae Portae Neapolitani, Magiae Naturalis Libri Viginti : Ab ipso quidem authore ante biennium adaucti, nunc verò ab infinitis, quibus editio illa scatebat mendis, optimè repurgati: in quibus scientiarum Naturalium divitiae & deliciae demonstrantur ; Acceßit Index, rem omnem dilucide repraesentans, copiosißimus",
+          "author": "Della Porta, Giambattista",
+          "year": 1591,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Magia naturalis"
+        }
+      ],
+      "also_in_library_not_banned": 5
+    },
+    {
+      "author": "Jean Baptiste van Helmont",
+      "scope": "selected",
+      "condemned": 1625,
+      "category": "alchemy-medicine",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "6952855fab34727b1f04b383",
+          "title": "Ortus Medicinae",
+          "author": "Jan Baptist van Helmont",
+          "year": 1648,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Ortus medicinae"
+        }
+      ],
+      "also_in_library_not_banned": 4
+    },
+    {
+      "author": "Jean Bodin",
+      "scope": "selected",
+      "condemned": 1592,
+      "category": "political-philosophy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "695925eb15b4070cb1e7fe1f",
+          "title": "De la demonomanie des sorciers",
+          "author": "Jean Bodin",
+          "year": 1603,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Démonomanie des sorciers"
+        }
+      ],
+      "also_in_library_not_banned": 2
+    },
+    {
+      "author": "John Calvin",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "reformation-theology",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c1138537989a445aea1ac1",
+          "title": "Opera Quae Supersunt Omnia (Corpus Reformatorum)",
+          "author": "John Calvin",
+          "year": 1863,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2f3cca9a500a45e5e87bf",
+          "title": "Mosis libri V cum Ioannis Calvini commentariis",
+          "author": "Jean Calvin (printed by Robert Estienne)",
+          "year": 1563,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2f3bfa9a500a45e5e857c",
+          "title": "Institutio Christianae Religionis (definitive edition)",
+          "author": "Jean Calvin (printed by Robert Estienne)",
+          "year": 1559,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2f367a9a500a45e5e802d",
+          "title": "Institutio Christianae Religionis (Greek trans.)",
+          "author": "Jean Calvin (trans. Henri II Estienne)",
+          "year": 1575,
+          "language": "Greek",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "John Dee",
+      "scope": "selected",
+      "condemned": null,
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b51e7b768235dc65993fa9",
+          "title": "Monas hieroglyphica",
+          "author": "Dee, John",
+          "year": 1591,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Monas Hieroglyphica"
+        },
+        {
+          "id": "69b51e79768235dc65993cff",
+          "title": "Monas hieroglyphica",
+          "author": "Dee, John",
+          "year": 1564,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Monas Hieroglyphica"
+        },
+        {
+          "id": "69c4ec33a3a4a7c546ee610f",
+          "title": "Monas hieroglyphica",
+          "author": "Dee, John",
+          "year": 1591,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Monas Hieroglyphica"
+        },
+        {
+          "id": "695592a67bd6d2cd1d61af6f",
+          "title": "John Dee Monas Hieroglyphica (1591)",
+          "author": "John Dee",
+          "year": 1591,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Monas Hieroglyphica"
+        },
+        {
+          "id": "6952d04f77f38f6761bc4ee2",
+          "title": "Monas Hieroglyphica",
+          "author": "Dee, John",
+          "year": 1564,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Monas Hieroglyphica"
+        },
+        {
+          "id": "69520571ab34727b1f042c78",
+          "title": "Monas hieroglyphica",
+          "author": "John Dee",
+          "year": 1564,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Monas Hieroglyphica"
+        }
+      ],
+      "also_in_library_not_banned": 16
+    },
+    {
+      "author": "Lucilio Vanini",
+      "scope": "opera_omnia",
+      "condemned": 1616,
+      "category": "natural-philosophy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69bd9e146120d54bd037b465",
+          "title": "Amphitheatrum aeternae providentiae divino-magicum, christiano-physicum nec non astrologo-catholicum adversus veteres philosophos, atheos, epicureos, peripateticos et stoicos : autore Iulio Caesare Vanino",
+          "author": "Vanini, Giulio Cesare",
+          "year": 1615,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Martin Luther",
+      "scope": "opera_omnia",
+      "condemned": 1521,
+      "category": "reformation-theology",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c1137237989a445aea166c",
+          "title": "Briefwechsel (De Wette-based edition)",
+          "author": "Martin Luther",
+          "year": 1866,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69ae952e7b20cd7c9bfcbcb9",
+          "title": "Nicomachus of Gerasa: Introduction to Arithmetic",
+          "author": "Nicomachus (trans. Martin Luther D'Ooge)",
+          "year": 1926,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "699209ee3314ba2d80f86964",
+          "title": "Biblia: Luther Bible (1535)",
+          "author": "Martin Luther",
+          "year": 1535,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c71e58da9771c716316a90",
+          "title": "Ein einfeltige weyse zu betten für einen gutten freundt",
+          "author": "[Luther, Martin]",
+          "year": 1539,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b4ccfcd5b6c3815e1a33a4",
+          "title": "Catechismus",
+          "author": "Martin Luther",
+          "year": 1560,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Niccolò Machiavelli",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "political-philosophy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69bf61cc76287c6679d5f78b",
+          "title": "La Mandragola",
+          "author": "Niccolò Machiavelli",
+          "year": 1554,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69aebfa1c337b1e6a4d58005",
+          "title": "Discorsi di Nicolo Machiavelli sopra la prima deca di Tito Livio",
+          "author": "Machiavelli, Niccolò",
+          "year": 1554,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69aea59e57ed98c21d25a62a",
+          "title": "Il Principe",
+          "author": "Niccolò Machiavelli",
+          "year": 1819,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6991ea652f801130a473d77a",
+          "title": "The Florentine History",
+          "author": "Niccolò Machiavelli, tr. W.K. Marriott",
+          "year": 1909,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6991e7bdc91ce7d733e4fa95",
+          "title": "Le Istorie Fiorentine",
+          "author": "Niccolò Machiavelli",
+          "year": 1532,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Pico della Mirandola, Gianfrancesco",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "6990523e8d19cbc90d9d5ea5",
+          "title": "Strix, sive de ludificatione daemonum",
+          "author": "Gianfrancesco Pico della Mirandola",
+          "year": 1523,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Strix sive de ludificatione daemonum"
+        }
+      ],
+      "also_in_library_not_banned": 3
+    },
+    {
+      "author": "Pietro d'Abano",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69dbcb221040d1d5e20b2c65",
+          "title": "Conciliator differentiarum philosophorum et medicorum. Ed: Franciscus Argilagnes. Add: De venenis",
+          "author": "Petrus de Abano",
+          "year": 1496,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conciliator differentiarum philosophorum"
+        },
+        {
+          "id": "69dbcb211040d1d5e20b2a23",
+          "title": "Conciliator differentiarum philosophorum et medicorum. Ed: Franciscus Argilagnes",
+          "author": "Petrus de Abano",
+          "year": 1483,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conciliator differentiarum philosophorum"
+        },
+        {
+          "id": "69dbcb1f1040d1d5e20b27f1",
+          "title": "Conciliator differentiarum philosophorum et medicorum. Add: De venenis. Mathaeus Silvaticus: De lapide begaar ex Pandectis. Petrus de Carariis: De terminatione venenorum",
+          "author": "Petrus de Abano",
+          "year": 1476,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conciliator differentiarum philosophorum"
+        },
+        {
+          "id": "69dbcb1e1040d1d5e20b250f",
+          "title": "Conciliator differentiarum philosophorum et medicorum. Add: De venenis",
+          "author": "Petrus de Abano",
+          "year": 1472,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conciliator differentiarum philosophorum"
+        },
+        {
+          "id": "69905e262fd6a039938a154f",
+          "title": "Elementa Magica (Heptameron) cum Agrippa Liber Quartus",
+          "author": "Pietro d'Abano; Agrippa",
+          "year": 1559,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Heptameron (pseudonymous)"
+        },
+        {
+          "id": "695285a6ab34727b1f04b9e8",
+          "title": "Conciliator Differentiarum Philosophorum",
+          "author": "Pietro d'Abano",
+          "year": 1472,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Conciliator differentiarum philosophorum"
+        }
+      ],
+      "also_in_library_not_banned": 5
+    },
+    {
+      "author": "Ramon Llull",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "alchemy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b418f82b0edf3eaa2de64c",
+          "title": "Collection of Alchemical Texts — Flamel, Bernard, Llull (PH228)",
+          "author": "Nicolas Flamel; Bernard of Trevisan; Ramon Llull",
+          "year": 1740,
+          "language": "Multiple",
+          "confidence": "work+author",
+          "work_match": "Pseudo-Lullian alchemical corpus (Testamentum, Codicillus)"
+        },
+        {
+          "id": "69b418ee2b0edf3eaa2de472",
+          "title": "Alchemical Texts — Hollandus, Llull, Ashmole, Ripley (PH435)",
+          "author": "Johan Isaäc Hollandus; Ramon Llull; Elias Ashmole; George Ripley",
+          "year": 1740,
+          "language": "English",
+          "confidence": "work+author",
+          "work_match": "Pseudo-Lullian alchemical corpus (Testamentum, Codicillus)"
+        },
+        {
+          "id": "6991c5413074a1745a4109c2",
+          "title": "Alchemical Texts with 20 Colored Plates (Vadianische Sammlung, Ms. 391)",
+          "author": "Pseudo-Raimundus Lullus",
+          "year": 1535,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Pseudo-Lullian alchemical corpus (Testamentum, Codicillus)"
+        }
+      ],
+      "also_in_library_not_banned": 11
+    },
+    {
+      "author": "Reginald Scot",
+      "scope": "single_work",
+      "condemned": 1603,
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "695926cc15b4070cb1e80050",
+          "title": "The Discoverie of Witchcraft",
+          "author": "Reginald Scot",
+          "year": 1584,
+          "language": "English",
+          "confidence": "work+author",
+          "work_match": "The Discoverie of Witchcraft"
+        },
+        {
+          "id": "6952310fab34727b1f0448a1",
+          "title": "The Discovery of Witchcraft",
+          "author": "Reginald Scot",
+          "year": 1665,
+          "language": "English",
+          "confidence": "work+author",
+          "work_match": "The Discoverie of Witchcraft"
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "René Descartes",
+      "scope": "opera_omnia",
+      "condemned": 1663,
+      "category": "philosophy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c113a237989a445aea2335",
+          "title": "Oeuvres vol. VIII — Correspondance (Adam-Tannery)",
+          "author": "René Descartes",
+          "year": 1897,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6a41d080b19f98fd1de30",
+          "title": "Renati Des-Cartes musicae compendium",
+          "author": "Descartes, René",
+          "year": 1656,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6b40f96dc15d4a16dd4bc",
+          "title": "Renati Des-Cartes Principia Philosophiæ",
+          "author": "Descartes, René",
+          "year": 1677,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b69d32080b19f98fd0ac3e",
+          "title": "Renati Des-Cartes opera philosophica",
+          "author": "Descartes, René",
+          "year": 1650,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b69ab0080b19f98fcff173",
+          "title": "Petri Gassendi disqvisitio metaphysica : seu dubitationes, &amp; instantiae: Adversus Renati Cartesii metaphysicam, &amp; responsa",
+          "author": "Descartes, René",
+          "year": 1644,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ff7ba1a4246ddb45affd",
+          "title": "Notae in Programma quoddam",
+          "author": "René Descartes",
+          "year": 1648,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ff6ee5d6d64d8e1964e3",
+          "title": "Opera Philosophica",
+          "author": "René Descartes",
+          "year": 1672,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ff68e5d6d64d8e19638c",
+          "title": "Principia Philosophiae",
+          "author": "René Descartes",
+          "year": 1650,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b2ff655545150b61b47f30",
+          "title": "Meditationes de Prima Philosophia",
+          "author": "René Descartes",
+          "year": 1642,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1cb14a282e3475aab4440",
+          "title": "Epistola ad celeberrimum virum D. Gisbertum Voetium",
+          "author": "René Descartes",
+          "year": 1643,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1cb0ea282e3475aab42f6",
+          "title": "Tractatus de homine",
+          "author": "René Descartes",
+          "year": 1677,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1cb02a282e3475aab417f",
+          "title": "Passiones animae",
+          "author": "René Descartes",
+          "year": 1650,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b1cafca282e3475aab4148",
+          "title": "Musicae compendium",
+          "author": "René Descartes",
+          "year": 1656,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6955dc6c8407b7c9ae213b80",
+          "title": "Principia Philosophiae",
+          "author": "René Descartes",
+          "year": 1644,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953eacc1479a63c11087caa",
+          "title": "Philosophical Works Vol. I (Haldane-Ross Translation)",
+          "author": "René Descartes",
+          "year": 1912,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953eac21479a63c11087997",
+          "title": "Oeuvres de Descartes Vol. VIII (Principia Philosophiae)",
+          "author": "René Descartes",
+          "year": 1905,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953eab81479a63c1108770c",
+          "title": "Oeuvres de Descartes Vol. VII (Meditationes)",
+          "author": "René Descartes",
+          "year": 1904,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953eaad1479a63c11087441",
+          "title": "Oeuvres de Descartes Vol. I (Correspondance)",
+          "author": "René Descartes",
+          "year": 1897,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953e52177f38f6761beffa2",
+          "title": "Oeuvres de Descartes Vol. VI (La Géométrie)",
+          "author": "René Descartes",
+          "year": 1902,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953e51e77f38f6761befe79",
+          "title": "Discourse on Method, Meditations, Principles of Philosophy",
+          "author": "René Descartes",
+          "year": 1912,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953e51c77f38f6761befc93",
+          "title": "Discours de la Méthode suivi des Méditations Métaphysiques",
+          "author": "René Descartes",
+          "year": 1900,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Roger Bacon",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "alchemy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69bd9f53f6d63c9197480ad7",
+          "title": "Vier chymische Tractätlein: I. Lucens lux in tenebris, das ist: Das hellscheinende Licht in Finsternis. II. De vitriolo &amp; eius oleo secretissimo, das ist: Von dem Vitriol und seinem geheimesten Oehle [Roger Bacon] III. De animali rationali: Vom vernünfftigen Thiere und seiner herrlichen Artzney. IV. Aurum vitae oder Gold des Lebens",
+          "author": "Bacon, Roger",
+          "year": 1677,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "De secretis operibus artis et naturae"
+        },
+        {
+          "id": "69af133593903bf8119f392b",
+          "title": "Epistolae Fratris Rogerii Baconis de Secretis Operibus Artis et Naturae",
+          "author": "Roger Bacon",
+          "year": 1618,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De secretis operibus artis et naturae"
+        },
+        {
+          "id": "697b079aea5a5d2bda197d25",
+          "title": "Epistolae de secretis operibus artis et naturae",
+          "author": "Bacon, Roger",
+          "year": 1618,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De secretis operibus artis et naturae"
+        },
+        {
+          "id": "6970e35f9b09d309d780a264",
+          "title": "De alchemia. De investigatione perfectionis metallorum. Summae perfectionis metallorum. De inventione veritatis. De fornacibus construendis. Speculum alchimiae. Correctorium alchimiae. Rosarius minor. Liber secretorum alchemiae. Tabula smaragdina. Super tabulam smaragdinam Hermetis commentarius",
+          "author": "Geber|Bacon, Roger|Richardus Anglicus|Calid|Hermes Trismegistus|Hortulanus",
+          "year": 1541,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Speculum alchemiae (attrib.)"
+        }
+      ],
+      "also_in_library_not_banned": 38
+    },
+    {
+      "author": "Thomas Hobbes",
+      "scope": "opera_omnia",
+      "condemned": 1654,
+      "category": "philosophy",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b18a89c4be2cdd0edc810d",
+          "title": "Elementa Philosophica de Cive",
+          "author": "Thomas Hobbes",
+          "year": 1657,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b18a82c4be2cdd0edc7f8e",
+          "title": "Leviathan, sive De Materia",
+          "author": "Thomas Hobbes",
+          "year": 1668,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b18a7cc4be2cdd0edc7c3b",
+          "title": "Leviathan, of van de Stoffe",
+          "author": "Thomas Hobbes",
+          "year": 1667,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69906623ef12272ffdc952c7",
+          "title": "Leviathan (1651 first edition)",
+          "author": "Thomas Hobbes",
+          "year": 1651,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Valentin Weigel",
+      "scope": "opera_omnia",
+      "condemned": 1624,
+      "category": "mysticism",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c87ed96c6f3cc53c858dd7",
+          "title": "Moise tabernaculum cum suis tribus partibus zum [Greek: gnothi seauton] fuehrende",
+          "author": "Weigel, Valentin",
+          "year": 1618,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c8681f6c6f3cc53c856667",
+          "title": "Ander Theil [Greek: Gnothi seauton]. Nosce teipsum [!]. Erkenne dich selber O Mensch: heisset Astrologia theologizata",
+          "author": "Weigel, Valentin",
+          "year": 1618,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c860096c6f3cc53c8556f9",
+          "title": "Kirchen oder Hauspostill, über die Sonntags und fürnembsten Fest Evangelien durchs gantze Jahr",
+          "author": "Weigel, Valentin",
+          "year": 1617,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c853c66c6f3cc53c8536f2",
+          "title": "Kirchen- oder Haus-Postill, über die Sonntags- und fürnehmste Fest-Evangelien durchs gantze Jahr",
+          "author": "Weigel, Valentin",
+          "year": 1700,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c83c576c6f3cc53c84f922",
+          "title": "Studium universale, das ist, alles dasjenige, so von Anfang der Welt biss an das Ende",
+          "author": "Weigel, Valentin",
+          "year": 1700,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c834296c6f3cc53c84e484",
+          "title": "Der güldene Griff",
+          "author": "Weigel, Valentin",
+          "year": 1616,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c8341e6c6f3cc53c84e45f",
+          "title": "[Greek: Gnothi seauton]. Nosce teipsum. Erkenne dich selbst",
+          "author": "Weigel, Valentin",
+          "year": 1615,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c81fb36c6f3cc53c84a634",
+          "title": "Informatorium oder kurzer Unterricht",
+          "author": "Weigel, Valentin",
+          "year": 1695,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c80d416c6f3cc53c846c9a",
+          "title": "[Greek: Gnothi seauton]. Nosce teipsum. Erkenne dich selbst",
+          "author": "Weigel, Valentin",
+          "year": 1618,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e9047b06ecd581937f5",
+          "title": "Informatorium Oder kurtzer Unterricht, welcher gestalt man durch drey Mittel den schmalen Weg zu Christo sich führen kan lassen : Als I. Durch übung deß Gebetts. II. Durch die Leyter Jacobs. III. Durch den Schlüssel Davids",
+          "author": "Weigel, Valentin",
+          "year": 1616,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b418cf2b0edf3eaa2ddf20",
+          "title": "Van de betragting des leuens Christi — Valentin Weigel (PH395)",
+          "author": "Valentin Weigel",
+          "year": 1710,
+          "language": "Dutch",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69a0278a21bd8ed4d8e01187",
+          "title": "Theologia Weigelii. Das ist: Offentliche Glaubens Bekaendtnuess",
+          "author": "Weigel, Valentin",
+          "year": 1618,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "699ef9fc8d06654d932fa64f",
+          "title": "Studium universale, das ist, alles dasjenige, so von Anfang der Welt biss an das Ende je gelebet, geschrieben, gelesen, oder gelernet [...] werden möchte",
+          "author": "Weigel, Valentin",
+          "year": 1698,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "698420e357e6f7c58cb93f98",
+          "title": "Ein nützliches Tractätlein vom Ort der Welt",
+          "author": "Weigel, Valentin",
+          "year": 1614,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6980941d4d203adff9b6aaa3",
+          "title": "Libellus disputatorius. Das ist ein Disputation-Buechlein",
+          "author": "Weigel, Valentin",
+          "year": 1618,
+          "language": "Latin-German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "697e23cb32e94c72715dd0cf",
+          "title": "Informatorium oder kurzer Unterricht",
+          "author": "Weigel, Valentin",
+          "year": 1695,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "697c8e0f6000fdec2f13060c",
+          "title": "Geomantia nova",
+          "author": "Weigel, Valentin",
+          "year": 1686,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "697b0799c053cffe354fc37d",
+          "title": "Einfaeltiger Unterricht vom Gebeth",
+          "author": "Weigel, Valentin",
+          "year": 1700,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "697a4d5cc915282d8f071f6d",
+          "title": "Dialogus de Christianismo: das ist, ein christliches, hochwichtiges nothwendiges Colloquium",
+          "author": "Weigel, Valentin",
+          "year": 1618,
+          "language": "Latin-German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6975158aa88d83c830d99e20",
+          "title": "Astrologie theologized",
+          "author": "Weigel, Valentin",
+          "year": 1649,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Zohar",
+      "scope": "single_work",
+      "condemned": 1559,
+      "category": "kabbalah",
+      "priority": 2,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "699067ef249ce014347d4e4f",
+          "title": "Sefer ha-Zohar (Book of Splendour)",
+          "author": "Moses de Leon",
+          "year": 1310,
+          "language": "Hebrew",
+          "confidence": "work+author",
+          "work_match": "Sefer ha-Zohar"
+        },
+        {
+          "id": "6990633def12272ffdc907b0",
+          "title": "Sefer ha-Zohar (Mantua 1558)",
+          "author": "Moses de León (attributed)",
+          "year": 1558,
+          "language": "Hebrew",
+          "confidence": "work+author",
+          "work_match": "Sefer ha-Zohar"
+        },
+        {
+          "id": "6990630be7b7642c081de08b",
+          "title": "Sefer ha-Zohar (Cremona 1558)",
+          "author": "Moses de León (attributed)",
+          "year": 1558,
+          "language": "Hebrew",
+          "confidence": "work+author",
+          "work_match": "Sefer ha-Zohar"
+        }
+      ],
+      "also_in_library_not_banned": 4
+    },
+    {
+      "author": "Arnaldus de Villa Nova",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "alchemy-medicine",
+      "priority": 3,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69dbc8151040d1d5e2096f8c",
+          "title": "Speculum medicinae. With additions by Martinus Polichius de Mellerstadt",
+          "author": "Arnoldus de Villa Nova",
+          "year": 1495,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Speculum alchemiae"
+        },
+        {
+          "id": "69c8088e6c6f3cc53c845de2",
+          "title": "Opus aureum ... drey unterschiedliche Tractat von der Alchimey",
+          "author": "Arnaldus de Villanova",
+          "year": 1604,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Opus aureum"
+        },
+        {
+          "id": "69aea74c971abe996d21c3c0",
+          "title": "Opera Chymica (Alchemical Works)",
+          "author": "Arnaldus de Villanova",
+          "year": 1603,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Opera Chymica"
+        },
+        {
+          "id": "6991c5763074a1745a411600",
+          "title": "Annotationes Magistri Peritissimi; Operationes Chymicae (Leiden VCF 24)",
+          "author": "Various; Pseudo-Arnaldus de Villanova",
+          "year": 1650,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Opera Chymica"
+        },
+        {
+          "id": "697d9c99f2b56306a9ec9610",
+          "title": "Hermetischer Rosenkrantz, das ist: vier schöne, ausserlesene chymische Tractätlein. Von der geheimen Kunst, und Stein der Weisen, geheimes Buch. Compendium alchimiae. Erklärung über den Commentarium Hortulani. Tractat vom Stein der Weisen",
+          "author": "anonymous|Artephius|Hortulanus|Arnaldus de Villanova|Bernhardus Trevisanus",
+          "year": 1682,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Tractat von der Alchimey"
+        },
+        {
+          "id": "6953aba777f38f6761bd7d2c",
+          "title": "Opus Mulierum & Bernard of Treviso on the Philosophers Stone",
+          "author": "Bernard of Treviso; Arnaldus de Villanova",
+          "year": 1200,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Opus Mulierum"
+        },
+        {
+          "id": "6953ab5577f38f6761bd6daa",
+          "title": "Hermetic Treatises (Khalid ibn Yazid, Arnaldus de Villanova)",
+          "author": "Khalid ibn Yazid; Arnaldus de Villanova",
+          "year": 1350,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Hermetic Treatises"
+        }
+      ],
+      "also_in_library_not_banned": 6
+    },
+    {
+      "author": "Blaise Pascal",
+      "scope": "selected",
+      "condemned": 1657,
+      "category": "philosophy-theology",
+      "priority": 3,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b3030c18264608f1e12b04",
+          "title": "Les Provinciales",
+          "author": "Blaise Pascal",
+          "year": 1658,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "Lettres provinciales"
+        }
+      ],
+      "also_in_library_not_banned": 4
+    },
+    {
+      "author": "Caspar Schwenckfeld",
+      "scope": "opera_omnia",
+      "condemned": 1540,
+      "category": "reformation-theology",
+      "priority": 3,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c86b4e6c6f3cc53c856b0a",
+          "title": "Ausslegung des Evangelii, Matth.IX",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c86b016c6f3cc53c856ab5",
+          "title": "Ausslegung des Evangelii, Matth.V",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c869926c6f3cc53c8568a7",
+          "title": "Apologia: das ist, Verandtwortung: fuer Herr Caspar Schwenckfelden",
+          "author": "[Schwenckfeld, Caspar]",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c84dae6c6f3cc53c852795",
+          "title": "Ausslegung dess Evangelii, Luce.6",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c83e9d6c6f3cc53c8501d0",
+          "title": "Vom christenlichen Streyt",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1533,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c8303f6c6f3cc53c84d9e4",
+          "title": "Ein christlicher Sendbrieff, vom span und rechten Mittel zwischen der Luthrischen und zwinglischen opinion",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1561,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c830236c6f3cc53c84d9b6",
+          "title": "Judicium Caspar Schwenckfelds uber Herrn Johann Brentzen leere",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1558,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c82ffe6c6f3cc53c84d978",
+          "title": "Vom ewigen Wesen Gottes",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1562,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c82fe16c6f3cc53c84d947",
+          "title": "Vom christlichen Streytt",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c82fdb6c6f3cc53c84d93e",
+          "title": "Auslegung dess CXXXIII Psalms",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c82fc86c6f3cc53c84d923",
+          "title": "Vom Artickell unsers christlichen glaubens: Das Christus ist auffgestigen gen himmel",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1562,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c82fb26c6f3cc53c84d8fb",
+          "title": "Ein schöner Sendbrieff - vom säligmachenden erkandtnus Christi",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1558,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c82f9a6c6f3cc53c84d8cd",
+          "title": "Vonn der Mittelunge",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1543,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c82f726c6f3cc53c84d882",
+          "title": "Ermanunge zum waren und selig machende Erkanthnus Christi",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1539,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69c71d84da9771c716316a06",
+          "title": "Ain schöner christlicher sendbrieff und bericht",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69a02790da8b726682c09aae",
+          "title": "Thesaurus pharmaceuticus, medicamentorum, omnium fere facultates & praeparationes continens. Tractatus de succedaneis",
+          "author": "Schwenckfeld, Caspar [von Greifenberg]|Rondelet, Guillaume",
+          "year": 1587,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "699ef9ff111f0f0ade163a6b",
+          "title": "Von der Speise des Ewigen Lebens",
+          "author": "[Schwenckfeld, Caspar]",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6985ca73a2facf247bb26ab5",
+          "title": "Postill. Uber das Evangelium Johannis III (...) Von der Widergeburt",
+          "author": "[Schwenckfeld, Caspar]",
+          "year": 1550,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69804b94a95170ed4cd828ea",
+          "title": "Judicium auff Flaccii Illyrici letzt Buechlin, so im 1557 Jar wider C. Schwenckfeldt, an die von Straszburg, ist auszgangen",
+          "author": "[Schwenckfeld, Caspar]",
+          "year": 1558,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69804b945629990f549553b9",
+          "title": "Kurtze grundliche verantwortung",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1561,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "697d9c9e971fd6d8096654e8",
+          "title": "Von der himmlischen Arzeney, oder dass Jesus Christus der wahre Arzt ... sey",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1820,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6978ee3a54992dc0fea379b4",
+          "title": "Ain Christlicher Sendbrieff an Gaistliche personen geschriben. Vom Gebeet (...)",
+          "author": "[Schwenckfeld, Caspar]",
+          "year": 1547,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "697704f4e3cf0372d885d0e1",
+          "title": "Bekandtnusz vom hayligen Sacrament des Leibs und Bluts Christi",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1534,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6976d4c1097b3607ee4be2f5",
+          "title": "Auszzug was Caspar Schwenckfeldt von Predigamt ... halte",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1558,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6976d3d4097b3607ee4be2f1",
+          "title": "Ausslegung des Evangelii, Luce.6",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1596,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6976ce66097b3607ee4be2eb",
+          "title": "Ausslegung des Evangelii, Luce.5",
+          "author": "Schwenckfeld, Caspar",
+          "year": 1596,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Cesare Cremonini",
+      "scope": "opera_omnia",
+      "condemned": 1666,
+      "category": "natural-philosophy",
+      "priority": 3,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b2ff81a1a4246ddb45b056",
+          "title": "De Calido Innato et Semine",
+          "author": "Cesare Cremonini",
+          "year": 1634,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "David Hume",
+      "scope": "opera_omnia",
+      "condemned": 1761,
+      "category": "philosophy",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69b64240535439aaa48939ab",
+          "title": "An Enquiry Concerning Human Understanding",
+          "author": "David Hume",
+          "year": 1900,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695690aaaeb4b980d9ebdbfa",
+          "title": "A Treatise of Human Nature - Volume 3",
+          "author": "David Hume",
+          "year": 1739,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695690a8aeb4b980d9ebdaac",
+          "title": "A Treatise of Human Nature - Volume 2",
+          "author": "David Hume",
+          "year": 1739,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695690a6aeb4b980d9ebd8c2",
+          "title": "A Treatise of Human Nature - Volume 1",
+          "author": "David Hume",
+          "year": 1739,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Giovanni Boccaccio",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "literature",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69de1c99d10d4b0d3f6f3175",
+          "title": "The Decameron (first English, 1620)",
+          "author": "Giovanni Boccaccio",
+          "year": 1620,
+          "language": "en",
+          "confidence": "work+author",
+          "work_match": "Decameron"
+        },
+        {
+          "id": "69de1c91d10d4b0d3f6f2ef8",
+          "title": "Decamerone (1483)",
+          "author": "Giovanni Boccaccio",
+          "year": 1483,
+          "language": "it",
+          "confidence": "work+author",
+          "work_match": "Decameron"
+        },
+        {
+          "id": "69b3025b97fb03b3863b4b8f",
+          "title": "Il Decamerone (Elzevir pocket)",
+          "author": "Giovanni Boccaccio",
+          "year": 1665,
+          "language": "Italian",
+          "confidence": "work+author",
+          "work_match": "Decameron"
+        },
+        {
+          "id": "69b2230956715b0e32476067",
+          "title": "Decameron (Aldine Press)",
+          "author": "Giovanni Boccaccio",
+          "year": 1522,
+          "language": "Italian",
+          "confidence": "work+author",
+          "work_match": "Decameron"
+        }
+      ],
+      "also_in_library_not_banned": 15
+    },
+    {
+      "author": "Immanuel Kant",
+      "scope": "single_work",
+      "condemned": 1827,
+      "category": "philosophy",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69ade6c3438676c30518a579",
+          "title": "Kritik der reinen Vernunft",
+          "author": "Immanuel Kant",
+          "year": 1878,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Critik der reinen Vernunft"
+        },
+        {
+          "id": "695434811479a63c11089ee5",
+          "title": "Die Religion innerhalb der Grenzen der blossen Vernunft",
+          "author": "Immanuel Kant",
+          "year": 1793,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Critik der reinen Vernunft"
+        },
+        {
+          "id": "6954346f1479a63c11089855",
+          "title": "Kritik der praktischen Vernunft (German)",
+          "author": "Immanuel Kant",
+          "year": 1788,
+          "language": "German",
+          "confidence": "work+author",
+          "work_match": "Critik der reinen Vernunft"
+        }
+      ],
+      "also_in_library_not_banned": 6
+    },
+    {
+      "author": "Jan Hus",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "reformation-theology",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69b63e9a2a1dde00d5a9f09f",
+          "title": "De Ecclesia (The Church)",
+          "author": "Jan Hus",
+          "year": 1915,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Jean-Jacques Rousseau",
+      "scope": "selected",
+      "condemned": 1762,
+      "category": "enlightenment",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69aea40c9d2eb853bde35834",
+          "title": "Du contrat social, ou Principes du droit politique",
+          "author": "Jean-Jacques Rousseau",
+          "year": 1762,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "Du contrat social"
+        }
+      ],
+      "also_in_library_not_banned": 1
+    },
+    {
+      "author": "John Wycliffe",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "reformation-theology",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "699246c6bc722ec0ee8137ed",
+          "title": "The Holy Bible (Wycliffe), Vol. 4",
+          "author": "John Wycliffe / Forshall & Madden (eds.)",
+          "year": 1850,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "699246c0bc722ec0ee812c18",
+          "title": "The Holy Bible (Wycliffe), Vol. 3",
+          "author": "John Wycliffe / Forshall & Madden (eds.)",
+          "year": 1850,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "699246babc722ec0ee8120e8",
+          "title": "The Holy Bible (Wycliffe), Vol. 2",
+          "author": "John Wycliffe / Forshall & Madden (eds.)",
+          "year": 1850,
+          "language": "Hebrew-Greek",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "699246b3bc722ec0ee81144f",
+          "title": "The Holy Bible (Wycliffe), Vol. 1",
+          "author": "John Wycliffe / Forshall & Madden (eds.)",
+          "year": 1850,
+          "language": "Hebrew-Greek",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Pier Paolo Vergerio",
+      "scope": "opera_omnia",
+      "condemned": 1549,
+      "category": "reformation-theology",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69aeb683bf00526d1d64c365",
+          "title": "De Ingenuis Moribus et Liberalibus Adulescentiae Studiis",
+          "author": "Pier Paolo Vergerio",
+          "year": 1472,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Pierre Bayle",
+      "scope": "single_work",
+      "condemned": 1701,
+      "category": "philosophy",
+      "priority": 3,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69b18a5dc4be2cdd0edc7538",
+          "title": "Dictionaire Historique et Critique",
+          "author": "Pierre Bayle",
+          "year": 1697,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "Dictionnaire historique et critique"
+        }
+      ],
+      "also_in_library_not_banned": 3
+    },
+    {
+      "author": "Pierre Charron",
+      "scope": "single_work",
+      "condemned": 1605,
+      "category": "philosophy",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69b2ffd55545150b61b49fc9",
+          "title": "De la Sagesse",
+          "author": "Pierre Charron",
+          "year": 1646,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "De la sagesse"
+        },
+        {
+          "id": "69b2ffd55545150b61b49fc9",
+          "title": "De la Sagesse",
+          "author": "Pierre Charron",
+          "year": 1646,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "De la sagesse"
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Pietro Aretino",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "literature",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69de11fa86e6d59321ba213d",
+          "title": "Dubbj amorosi e Sonetti lussuriosi",
+          "author": "Pietro Aretino",
+          "year": 1792,
+          "language": "it",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69de0e32006cdd4b9e56cbac",
+          "title": "I Ragionamenti (Vol. 2)",
+          "author": "Pietro Aretino",
+          "year": 1920,
+          "language": "it",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69de0e2e006cdd4b9e56c982",
+          "title": "Capricciosi & piacevoli ragionamenti",
+          "author": "Pietro Aretino",
+          "year": 1660,
+          "language": "it",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69de0e27006cdd4b9e56c7e6",
+          "title": "La terza et ultima parte de Ragionamenti",
+          "author": "Pietro Aretino",
+          "year": 1589,
+          "language": "it",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69de0e21006cdd4b9e56c4fd",
+          "title": "La prima parte de Ragionamenti",
+          "author": "Pietro Aretino",
+          "year": 1584,
+          "language": "it",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69de0cec80210ba13d79f998",
+          "title": "I Ragionamenti",
+          "author": "Pietro Aretino",
+          "year": 1920,
+          "language": "it",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69aebfc3e997cc01b0caafe3",
+          "title": "Lettere di M. Pietro Aretino (vol. 3)",
+          "author": "Aretino, Pietro",
+          "year": 1609,
+          "language": "Italian",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Pseudo-Geber",
+      "scope": "selected",
+      "condemned": 1559,
+      "category": "alchemy",
+      "priority": 3,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69dbca101040d1d5e20a8fae",
+          "title": "Summa perfectionis magisterii. Add: Liber trium verborum. Alexander Magnus: Epistola, 'Quidam breviter dicunt'. Parabola super lapide philosophorum. Geber: De investigatione magisterii. Six alchemical poems in Latin and Italian (some attributed to Cecco d'Ascoli and Helias Cretensis Hebraeus)",
+          "author": "Geber",
+          "year": 1485,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Summa perfectionis"
+        },
+        {
+          "id": "69a0278d6cd1aeeab4e7dafd",
+          "title": "Summa perfectionis",
+          "author": "Geber",
+          "year": 1542,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Summa perfectionis"
+        },
+        {
+          "id": "69a0278a2f6d8b761bf95215",
+          "title": "Summa perfectionis",
+          "author": "Geber",
+          "year": 1682,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Summa perfectionis"
+        },
+        {
+          "id": "6978ee3a598a6361bba7fbaf",
+          "title": "Chimia sive traditio summae perfectionis. Medulla alchimiae",
+          "author": "Geber",
+          "year": 1668,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Summa perfectionis"
+        },
+        {
+          "id": "6970e35f9b09d309d780a264",
+          "title": "De alchemia. De investigatione perfectionis metallorum. Summae perfectionis metallorum. De inventione veritatis. De fornacibus construendis. Speculum alchimiae. Correctorium alchimiae. Rosarius minor. Liber secretorum alchemiae. Tabula smaragdina. Super tabulam smaragdinam Hermetis commentarius",
+          "author": "Geber|Bacon, Roger|Richardus Anglicus|Calid|Hermes Trismegistus|Hortulanus",
+          "year": 1541,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Summa perfectionis"
+        },
+        {
+          "id": "6970e35e9b09d309d780a260",
+          "title": "De alchemia. Traditio summae perfectionis. Liber investigationis",
+          "author": "Geber",
+          "year": 1598,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Summa perfectionis"
+        },
+        {
+          "id": "695262d8ab34727b1f046ade",
+          "title": "Summa perfectionis magisterii",
+          "author": "Pseudo-Geber (Paul of Taranto)",
+          "year": 1542,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "Summa perfectionis"
+        }
+      ],
+      "also_in_library_not_banned": 12
+    },
+    {
+      "author": "Sebastian Franck",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "mysticism",
+      "priority": 3,
+      "in_scope": true,
+      "books": [
+        {
+          "id": "69c858e96c6f3cc53c8543dc",
+          "title": "Unterschiedliche, theils verteutschte, theils selbst verfertigte Schrifften",
+          "author": "Franck, Sebastian",
+          "year": 1692,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6992017e7c226bdd25f99525",
+          "title": "Germaniae Chronicon",
+          "author": "Sebastian Franck",
+          "year": 1538,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6992017d7c226bdd25f99444",
+          "title": "The Forbidden Fruit, or a Treatise of the Tree of Knowledge",
+          "author": "Sebastian Franck",
+          "year": 1539,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6992017b7c226bdd25f99131",
+          "title": "Paradoxa Ducenta Octoginta",
+          "author": "Sebastian Franck",
+          "year": 1558,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6984e8498a2f054f912420bb",
+          "title": "Paradoxa CCLXXX. Das ist: zweyhundert und achtzig Wunder-Reden",
+          "author": "Franck, Sebastian",
+          "year": 1690,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Voltaire",
+      "scope": "opera_omnia",
+      "condemned": 1752,
+      "category": "enlightenment",
+      "priority": 3,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69e792279adaf7b110e3a29e",
+          "title": "Candide, ou l'Optimisme",
+          "author": "Voltaire",
+          "year": 1759,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69e41ed5d0364cb0bcf797ab",
+          "title": "La Pucelle (The Maid of Orleans), Vol. 1",
+          "author": "Voltaire",
+          "year": 1899,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6423009a998b4c36dd9e8",
+          "title": "Dictionnaire philosophique portatif",
+          "author": "Voltaire",
+          "year": 1765,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69aea5ac57ed98c21d25aa60",
+          "title": "Dictionnaire philosophique (Vol. 2)",
+          "author": "Voltaire",
+          "year": 1809,
+          "language": "French",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Cyrano de Bergerac",
+      "scope": "selected",
+      "condemned": null,
+      "category": "literature",
+      "priority": 4,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69905d0eaaa7f10ed4cfd7bd",
+          "title": "Les Oeuvres Diverses (Histoire comique de la Lune)",
+          "author": "Cyrano de Bergerac",
+          "year": 1657,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "L'Autre Monde: Histoire comique des États et Empires de la Lune"
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Hugo Grotius",
+      "scope": "selected",
+      "condemned": 1626,
+      "category": "political-philosophy",
+      "priority": 4,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "6991e171b53cae6bb6024476",
+          "title": "De Iure Belli ac Pacis",
+          "author": "Hugo Grotius",
+          "year": 1625,
+          "language": "Latin",
+          "confidence": "work+author",
+          "work_match": "De jure belli ac pacis"
+        }
+      ],
+      "also_in_library_not_banned": 4
+    },
+    {
+      "author": "Philipp Melanchthon",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "reformation-theology",
+      "priority": 4,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69b51e43ff09e4fe943aadca",
+          "title": "Elementorvm Rhetorices Libri Dvo",
+          "author": "Melanchthon, Philipp",
+          "year": 1588,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e3d768235dc6598e149",
+          "title": "Elementorvm Rhetorices Libri Dvo : Acceßit demum Index ...",
+          "author": "Melanchthon, Philipp",
+          "year": 1556,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e3c9a81ef7feb3d20da",
+          "title": "Elementorum rhetorices libri duo",
+          "author": "Melanchthon, Philipp",
+          "year": 1554,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e39cf111105c4298955",
+          "title": "Elementorum rhetorices libri duo",
+          "author": "Melanchthon, Philipp",
+          "year": 1544,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e399a81ef7feb3d1def",
+          "title": "Philippi Melanthonis Elementorum rhetorices libri duo : cum indice ad libri calcem adiecto",
+          "author": "Melanchthon, Philipp",
+          "year": 1544,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b51e379a81ef7feb3d1c41",
+          "title": "Elementorum Rhetorices libri duo",
+          "author": "Melanchthon, Philipp",
+          "year": 1542,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b69221080b19f98fce5a65",
+          "title": "... De melancholia hypochondriaca positiones inaugurales",
+          "author": "Melanchthon, Philipp",
+          "year": 1629,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6508318b87551bfc9ef24",
+          "title": "Iudicium D. Philippi Melanchthonis De controversia Coenae Domini : ad illustrissimum Principem ac D.D. Fridericum Comitem Palatinum Rheni, Sacri Romani Imperii Archidapiferum, Electorem, Bavariae Ducem, &amp;c. ; Accessit &amp; alia Epistola eiusdem, de eodem negotio, ad amicum quendam, nunc primum edita",
+          "author": "Melanchthon, Philipp",
+          "year": 1560,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b6508118b87551bfc9ee5a",
+          "title": "Philippi Melanthonis Epigrammatvm Libri Tres",
+          "author": "Melanchthon, Philipp",
+          "year": 1560,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Pierre Charron",
+      "scope": "single_work",
+      "condemned": 1605,
+      "category": "philosophy",
+      "priority": 4,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69b2ffd55545150b61b49fc9",
+          "title": "De la Sagesse",
+          "author": "Pierre Charron",
+          "year": 1646,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "De la sagesse"
+        },
+        {
+          "id": "69b2ffd55545150b61b49fc9",
+          "title": "De la Sagesse",
+          "author": "Pierre Charron",
+          "year": 1646,
+          "language": "French",
+          "confidence": "work+author",
+          "work_match": "De la sagesse"
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Samuel Pufendorf",
+      "scope": "opera_omnia",
+      "condemned": 1701,
+      "category": "political-philosophy",
+      "priority": 4,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "6956905950d4fc9bdc434e3a",
+          "title": "Of the Law of Nature and Nations",
+          "author": "Samuel Pufendorf",
+          "year": 1729,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Theodore Beza",
+      "scope": "opera_omnia",
+      "condemned": 1559,
+      "category": "reformation-theology",
+      "priority": 4,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69b6305f1c1c21a373801112",
+          "title": "Canticum canticorum Solomonis, latinis versibus expressum. Theodoro Beza Vezelio auctore.",
+          "author": "Bèze, Théodore de",
+          "year": 1584,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b660e2b3f4fc04415350b9",
+          "title": "Response aux cinq premieres et principales demandes de F. Jean Hay, moine jesuite, aux ministres escossois",
+          "author": "Bèze, Théodore de",
+          "year": 1586,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b660dfb3f4fc0441534fff",
+          "title": "Ad Danielis Hofmanni demonstrationes ad oculum, Theodori Bezae Conspicillum",
+          "author": "Bèze, Théodore de",
+          "year": 1586,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b65ffbb3f4fc044152e34c",
+          "title": "Ad Gilberti Genebrardi accusationem Theodori Bezae defensio",
+          "author": "Bèze, Théodore de",
+          "year": 1585,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b65a5418b87551bfd01d62",
+          "title": "De peste quaestiones duae explicatae : una, sitne contagiosa : altera, an &amp; quatenus sit Christianis per secessionem vitanda",
+          "author": "Bèze, Théodore de",
+          "year": 1579,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b658dd18b87551bfcf6d3c",
+          "title": "Lex Dei moralis, ceremonialis, et politica, ex libris Mosis excerpta, et in certas classes distributa",
+          "author": "Bèze, Théodore de",
+          "year": 1577,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "69b62f641c1c21a3737f5129",
+          "title": "Ad acta colloquii Montisbelgardensis Tubingae edita, Theodori Bezae responsionis, pars prior. Editio secunda",
+          "author": "Bèze, Théodore de",
+          "year": 1588,
+          "language": "Latin",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    },
+    {
+      "author": "Aleister Crowley",
+      "scope": "opera_omnia",
+      "condemned": 1929,
+      "category": "magic-occult",
+      "priority": 5,
+      "in_scope": false,
+      "books": [
+        {
+          "id": "69e536f2860f4574c2e71546",
+          "title": "Circle of Solomon and Triangle of Solomon from The Lesser Key of Solomon",
+          "author": "Samuel Liddell MacGregor Mathers and Aleister Crowley",
+          "year": 1904,
+          "language": "Unknown",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "695936143b43cb6630c916a6",
+          "title": "The Book of the Goetia of Solomon the King (Crowley/Mathers)",
+          "author": "S.L. MacGregor Mathers / Aleister Crowley",
+          "year": 1925,
+          "language": "German",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953e3c677f38f6761bee1fb",
+          "title": "Diary of a Drug Fiend",
+          "author": "Aleister Crowley",
+          "year": 1925,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953e3b777f38f6761bedcf8",
+          "title": "Book Four - Magick",
+          "author": "Aleister Crowley",
+          "year": 1913,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        },
+        {
+          "id": "6953e3b577f38f6761bedb15",
+          "title": "Magick in Theory and Practice",
+          "author": "Aleister Crowley",
+          "year": 1929,
+          "language": "English",
+          "confidence": "opera_omnia",
+          "work_match": null
+        }
+      ],
+      "also_in_library_not_banned": 0
+    }
+  ],
+  "missing_specific_work": [
+    {
+      "author": "Johann Reuchlin",
+      "scope": "selected",
+      "works": [
+        "Augenspiegel"
+      ],
+      "condemned": 1520,
+      "index": "Augenspiegel condemned by Leo X 1520 after the long Reuchlin-Pfefferkorn affair; the Kabbalistic works (De verbo mirifico, De arte cabalistica) suspected but not formally condemned.",
+      "category": "kabbalah-hermetic",
+      "priority": 2,
+      "in_scope": true,
+      "notes": "First Christian Hebraist; defended the Talmud against Pfefferkorn's burning campaign.",
+      "author_books_in_library": 21,
+      "sample_titles": [
+        "Briefwechsel (Geiger ed.)",
+        "[Vocabularius breviloquus]",
+        "[Vocabularius breviloquus]"
+      ]
+    },
+    {
+      "author": "Sebastian Castellio",
+      "scope": "selected",
+      "works": [
+        "De haereticis an sint persequendi",
+        "De arte dubitandi"
+      ],
+      "condemned": 1559,
+      "index": "Roman 1559.",
+      "category": "reformation-theology",
+      "priority": 2,
+      "in_scope": true,
+      "notes": "Tolerationist; opposed Calvin over execution of Servetus.",
+      "author_books_in_library": 3,
+      "sample_titles": [
+        "Contra libellum Calvini in quo ostendere conatur haereticos jure gladii coercendos esse",
+        "Proeve vant ware ende valsche gheloove, ... /, Sebastianus Castellio ; Uyt 't Lat. overgh. door D. V. Coornhert.",
+        "Corte ende duydelijcke wederlegginghe, van 'tghene door Mr.Johan Calvijn, tot beweringe vande macht der Overheyt, int straffen der ketteren, by gebracht wert: in seker boecxken van hem ge-intituleert: Wederlegginghe der dolinghen van Michiel Servet"
+      ]
+    },
+    {
+      "author": "John Locke",
+      "scope": "single_work",
+      "works": [
+        "An Essay Concerning Human Understanding"
+      ],
+      "condemned": 1734,
+      "index": "Essay on Roman Index 1734.",
+      "category": "philosophy",
+      "priority": 3,
+      "in_scope": true,
+      "notes": "",
+      "author_books_in_library": 1,
+      "sample_titles": [
+        "Some Considerations of the Consequences of the Lowering of Interest, and Raising the Value of Money"
+      ]
+    },
+    {
+      "author": "Lorenzo Valla",
+      "scope": "selected",
+      "works": [
+        "De falso credita et ementita Constantini donatione",
+        "De libero arbitrio"
+      ],
+      "condemned": 1559,
+      "index": "Donation of Constantine treatise on Roman 1559.",
+      "category": "humanism-theology",
+      "priority": 3,
+      "in_scope": true,
+      "notes": "",
+      "author_books_in_library": 8,
+      "sample_titles": [
+        "[Elegantiae linguae latinae] : ; [Daran: Invectiva in errores Antonii Raudensis]",
+        "Elegantiae terminorum",
+        "De elegantiis terminorum"
+      ]
+    },
+    {
+      "author": "Conrad Gessner",
+      "scope": "selected",
+      "works": [],
+      "condemned": 1559,
+      "index": "Roman 1559; Class I auctor damnatus because Protestant; later expurgated editions of natural-history works permitted.",
+      "category": "natural-history",
+      "priority": 3,
+      "in_scope": false,
+      "notes": "",
+      "author_books_in_library": 7,
+      "sample_titles": [
+        "Bibliotheca instituta et collecta primum a Conrado Gesnero : habes hic ... catalogum locupletissimum omnium fere scriptorum, a mundi initio ad hunc usque diem, extantium & non extantium, publicatorum & passim in bibliothecis latitantium ...",
+        "Epitome Bibliothecae Conradi Gesneri",
+        "Bibliotheca Institvta Et Collecta, Primvm A Conrado Gesnero"
+      ]
+    },
+    {
+      "author": "Dante Alighieri",
+      "scope": "single_work",
+      "works": [
+        "De Monarchia"
+      ],
+      "condemned": 1554,
+      "index": "De Monarchia banned at Trent 1554; placed on Roman Index 1559; remained until 1881.",
+      "category": "political-philosophy",
+      "priority": 3,
+      "in_scope": false,
+      "notes": "",
+      "author_books_in_library": 12,
+      "sample_titles": [
+        "The Day Dream",
+        "Dante con l'espositione di Christoforo Landino et di Alessandro Vellutello",
+        "Orpheus and Eurydice"
+      ]
+    },
+    {
+      "author": "Denis Diderot",
+      "scope": "selected",
+      "works": [
+        "Encyclopédie",
+        "Pensées philosophiques",
+        "Lettre sur les aveugles"
+      ],
+      "condemned": 1751,
+      "index": "Pensées 1751; Encyclopédie on Roman Index 1759; Lettre sur les aveugles led to brief imprisonment 1749.",
+      "category": "enlightenment",
+      "priority": 3,
+      "in_scope": false,
+      "notes": "",
+      "author_books_in_library": 2,
+      "sample_titles": [
+        "La Religieuse",
+        "Les Bijoux indiscrets"
+      ]
+    },
+    {
+      "author": "Marin Mersenne",
+      "scope": "selected",
+      "works": [],
+      "condemned": null,
+      "index": "Mersenne attacked Fludd, Bruno, Cardano. Not banned; included for context.",
+      "category": "natural-philosophy",
+      "priority": 3,
+      "in_scope": false,
+      "notes": "",
+      "author_books_in_library": 14,
+      "sample_titles": [
+        "F. Marini Mersenni ... cogitata physico-mathematica / F. Marini Mersenni ... tractatus mechanicus theoricus et practicus",
+        "L'impieté des Deistes",
+        "Universae Geometriae mixtaeque Mathematicae Synopsis, et bini refractionum demonstratarum tractatus"
+      ]
+    },
+    {
+      "author": "Christoph Besold",
+      "scope": "selected",
+      "works": [],
+      "condemned": null,
+      "index": "Suspect by Lutheran authorities; converted to Catholicism.",
+      "category": "political-philosophy",
+      "priority": 4,
+      "in_scope": false,
+      "notes": "",
+      "author_books_in_library": 22,
+      "sample_titles": [
+        "Principium Et Finis Politicae Doctrinae : Hoc est: dissertationes duae, quarum una praecognita proponit, altera de republica curanda agit",
+        "Christophori Besoldi ... Operis Politici, Variis Digressionibvs Philologicis et Iuridicis illustrati, Editio Nova : Reipublicae Naturam Et Constitutionem eiusq[ue] in omnibus partibus gubernationem ... absolvens",
+        "Principium et finis politicae doctrinae : Hoc est: dissertationes duae, quarum una praecognita politices proponit, altera de republica curanda agit"
+      ]
+    },
+    {
+      "author": "John Toland",
+      "scope": "single_work",
+      "works": [
+        "Christianity not Mysterious"
+      ],
+      "condemned": 1697,
+      "index": "Burned by Irish parliament 1697; pantheism term coined.",
+      "category": "enlightenment",
+      "priority": 4,
+      "in_scope": false,
+      "notes": "",
+      "author_books_in_library": 2,
+      "sample_titles": [
+        "Le Nazaréen, ou le Christianisme des Juifs, des gentils et des Mahométans",
+        "Tetradymus. Containing I. Hodegus ... II. Clidophorus ... III. Hypatia. ... IV. Mangoneutes"
+      ]
+    },
+    {
+      "author": "Olaus Magnus",
+      "scope": "selected",
+      "works": [],
+      "condemned": 1559,
+      "index": "Roman 1559.",
+      "category": "natural-history",
+      "priority": 4,
+      "in_scope": false,
+      "notes": "",
+      "author_books_in_library": 1,
+      "sample_titles": [
+        "Historia de Gentibus Septentrionalibus"
+      ]
+    }
+  ],
+  "missing_entirely": [
+    {
+      "author": "Bernardino Telesio",
+      "scope": "single_work",
+      "works": [
+        "De rerum natura iuxta propria principia"
+      ],
+      "condemned": 1596,
+      "index": "Roman 1596 donec corrigatur.",
+      "category": "natural-philosophy",
+      "priority": 2,
+      "in_scope": true,
+      "notes": "Naturalistic Renaissance philosopher; teacher of Campanella."
+    },
+    {
+      "author": "Cecco d'Ascoli",
+      "scope": "single_work",
+      "works": [
+        "Acerba"
+      ],
+      "condemned": 1327,
+      "index": "Burned 1327 with the author (Florence); placed on Roman Index 1559.",
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "notes": "Astrologer-poet; executed for heresy in Florence. His commentary on Sacrobosco's Sphaera was also suppressed."
+    },
+    {
+      "author": "Cornelius Loos",
+      "scope": "single_work",
+      "works": [
+        "De vera et falsa magia"
+      ],
+      "condemned": 1592,
+      "index": "Suppressed; printed sheets seized at Cologne 1592.",
+      "category": "magic-occult",
+      "priority": 2,
+      "in_scope": true,
+      "notes": "Critic of witch trials; suppressed before publication."
+    },
+    {
+      "author": "Talmud",
+      "scope": "single_work",
+      "works": [
+        "Talmud"
+      ],
+      "condemned": 1559,
+      "index": "Roman 1559 (Paul IV); thousands of copies burned at Cremona 1559. Earlier Paris burning 1242, Pope Innocent IV. Sixtus V 1590 permitted expurgated edition.",
+      "category": "judaica",
+      "priority": 2,
+      "in_scope": true,
+      "notes": "Wholesale burnings: Paris 1242, Cremona 1559. The Basel Talmud (1578-81) heavily expurgated."
+    },
+    {
+      "author": "Theophrastus von Hohenheim (pseudo-Paracelsiana)",
+      "scope": "selected",
+      "works": [
+        "Archidoxis magica",
+        "Liber Azoth",
+        "De occulta philosophia (attrib.)"
+      ],
+      "condemned": 1559,
+      "index": "Theological pseudo-Paracelsian writings on Index.",
+      "category": "alchemy",
+      "priority": 3,
+      "in_scope": true,
+      "notes": ""
+    },
+    {
+      "author": "Anton Francesco Doni",
+      "scope": "opera_omnia",
+      "works": [],
+      "condemned": 1559,
+      "index": "Roman 1559.",
+      "category": "literature",
+      "priority": 3,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Bernardino Ochino",
+      "scope": "opera_omnia",
+      "works": [],
+      "condemned": 1559,
+      "index": "Roman 1559.",
+      "category": "reformation-theology",
+      "priority": 3,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Michel de Montaigne",
+      "scope": "single_work",
+      "works": [
+        "Essais"
+      ],
+      "condemned": 1676,
+      "index": "Essais on Roman Index 1676.",
+      "category": "humanism",
+      "priority": 3,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Petrus Ramus",
+      "scope": "opera_omnia",
+      "works": [],
+      "condemned": 1559,
+      "index": "Roman 1559 (Class I); killed in St Bartholomew's Day Massacre 1572.",
+      "category": "humanism",
+      "priority": 3,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Anthony Collins",
+      "scope": "selected",
+      "works": [
+        "Discourse of Free-Thinking"
+      ],
+      "condemned": 1713,
+      "index": "Roman Index 1713.",
+      "category": "enlightenment",
+      "priority": 4,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Caelio Secondo Curione",
+      "scope": "opera_omnia",
+      "works": [],
+      "condemned": 1559,
+      "index": "Roman 1559.",
+      "category": "humanism-reformation",
+      "priority": 4,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Hermann von Wied",
+      "scope": "single_work",
+      "works": [
+        "Einfaltigs Bedencken"
+      ],
+      "condemned": 1551,
+      "index": "Roman 1551.",
+      "category": "reformation-theology",
+      "priority": 4,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Matthew Tindal",
+      "scope": "selected",
+      "works": [
+        "Christianity as Old as the Creation"
+      ],
+      "condemned": 1734,
+      "index": "Roman Index 1734.",
+      "category": "enlightenment",
+      "priority": 4,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Olympia Fulvia Morata",
+      "scope": "opera_omnia",
+      "works": [],
+      "condemned": 1559,
+      "index": "Roman 1559.",
+      "category": "humanism-reformation",
+      "priority": 4,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Pomponius Algerius",
+      "scope": "opera_omnia",
+      "works": [],
+      "condemned": 1556,
+      "index": "Executed by boiling in oil/lead, Rome 1556.",
+      "category": "reformation-theology",
+      "priority": 4,
+      "in_scope": false,
+      "notes": ""
+    },
+    {
+      "author": "Marie de Gournay",
+      "scope": "selected",
+      "works": [],
+      "condemned": null,
+      "index": "Not banned; included for Montaigne-circle context.",
+      "category": "humanism",
+      "priority": 5,
+      "in_scope": false,
+      "notes": ""
+    }
+  ]
+}
