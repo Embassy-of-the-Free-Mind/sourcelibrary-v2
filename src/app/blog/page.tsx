@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'what-makes-a-good-scan',
+    title: 'What Makes a Good Scan?',
+    subtitle: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
+    date: '17 May 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+  },
+  {
     slug: 'the-deletion',
     title: 'The Deletion',
     subtitle: 'How a Claude Code session in one of my ten open terminals hard-deleted 4,758 books from our rare-books library — with the actual prompts, the actual postmortem, and what it means for running AI agents against production data.',
