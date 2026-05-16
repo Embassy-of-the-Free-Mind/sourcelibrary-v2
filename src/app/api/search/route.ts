@@ -423,7 +423,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (semanticBookIds.length > 0) {
         const semBooks = await db.collection('books')
           .find(
-            { id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 } },
+            {
+              id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(languages.length > 0 ? { language: { $in: languages } } : {}),
+              ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
+            },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
           )
           .maxTimeMS(3000)
@@ -487,7 +491,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (pageBookIds.length > 0) {
         const semPageBooks = await db.collection('books')
           .find(
-            { id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 } },
+            {
+              id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(languages.length > 0 ? { language: { $in: languages } } : {}),
+              ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
+            },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
           )
           .maxTimeMS(3000)
