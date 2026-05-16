@@ -116,6 +116,9 @@ async function searchPassages(args: Record<string, unknown>) {
 async function searchConcept(args: Record<string, unknown>) {
   const limit = Math.min(Number(args.limit) || 15, 50);
   const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(limit) });
+  if (args.year_from) params.set('year_min', String(args.year_from));
+  if (args.year_to) params.set('year_max', String(args.year_to));
+  if (args.max_per_book) params.set('max_per_book', String(args.max_per_book));
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
   const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
@@ -126,9 +129,10 @@ async function searchConcept(args: Record<string, unknown>) {
     published: r.book_year,
     page: r.page_number,
     snippet: r.snippet,
-    // Semantic-page snippets are verbatim translation excerpts, not AI summaries —
-    // always safe to quote (the AI step is upstream in the embedding, not the snippet).
-    snippet_type: 'translation',
+    // 'translation' = verbatim source text (safe to quote).
+    // 'summary'     = AI-written page-continuity preamble we couldn't cleanly strip —
+    //                 useful as topical evidence but DO NOT quote as the author's words.
+    snippet_type: r.snippet_type || 'translation',
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
   })) || [];
@@ -137,7 +141,7 @@ async function searchConcept(args: Record<string, unknown>) {
     total_matches: passages.length,
     returned: passages.length,
     passages,
-    tip: 'These results are ranked by conceptual similarity (cosine distance on Gemini embeddings), not literal keyword match. Lower similarity scores mean weaker matches — be skeptical below ~0.45.',
+    tip: 'Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote.',
   };
 }
 
@@ -309,13 +313,16 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_concept',
-    description: 'Conceptual / semantic passage search. Use when the modern term won\'t literally appear in historical texts — e.g. "distributed cognition" maps to passages about active intellect, art of memory, wax tablet metaphors; "social contract" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings (768d), so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Each passage includes a similarity score (0-1); treat scores below ~0.45 with skepticism.',
+    description: 'Conceptual / semantic passage search. Use when the modern term won\'t literally appear in historical texts — e.g. "distributed cognition" maps to passages about active intellect, art of memory, wax tablet metaphors; "social contract" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings (768d), so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Similarity calibration: 0.70+ is a strong match, 0.55–0.70 is worth reading but verify, below 0.55 is mostly conceptual drift. Set max_per_book to diversify results across many books rather than cluster on one source. Each passage carries a snippet_type — quote only "translation" snippets, never "summary".',
     annotations: { title: 'Search by Concept', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
         query: { type: 'string', description: 'A concept or natural-language description — full sentences are fine (e.g. "tools that extend the mind beyond the body"). Unlike search_translations, this does NOT require words that appear in the corpus.' },
         limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
+        year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
+        year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
+        max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },
       },
       required: ['query'],
     },

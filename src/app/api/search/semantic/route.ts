@@ -16,12 +16,13 @@ export const dynamic = 'force-dynamic';
  * Replaces the broken hybrid_search on 3M+ page_translations (issue #1158).
  *
  * Query params:
- *   q        — search query (required)
- *   level    — 'book' (default) or 'page'
- *   limit    — max results (default 20, max 50)
- *   language — filter by language (book-level only)
- *   year_min — filter by minimum year (book-level only)
- *   year_max — filter by maximum year (book-level only)
+ *   q             — search query (required)
+ *   level         — 'book' (default) or 'page'
+ *   limit         — max results (default 20, max 50)
+ *   language      — filter by language (book-level only)
+ *   year_min      — filter by minimum year (book + page level)
+ *   year_max      — filter by maximum year (book + page level)
+ *   max_per_book  — page-level only: cap on passages from any single book
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -31,6 +32,7 @@ export async function GET(request: NextRequest) {
   const language = searchParams.get('language') || undefined;
   const yearMin = searchParams.get('year_min') ? parseInt(searchParams.get('year_min')!, 10) : undefined;
   const yearMax = searchParams.get('year_max') ? parseInt(searchParams.get('year_max')!, 10) : undefined;
+  const maxPerBook = searchParams.get('max_per_book') ? parseInt(searchParams.get('max_per_book')!, 10) : undefined;
 
   if (!query || query.length < 2) {
     return NextResponse.json({ results: [], query: '' });
@@ -41,7 +43,11 @@ export async function GET(request: NextRequest) {
 
   if (level === 'page') {
     try {
-      const pages = await semanticPageSearchGlobal(searchQuery, limit);
+      const pages = await semanticPageSearchGlobal(searchQuery, limit, {
+        yearMin,
+        yearMax,
+        maxPerBook,
+      });
       const bookIds = [...new Set(pages.map(p => p.book_id))];
       let slugMap: Record<string, string> = {};
       if (bookIds.length > 0) {
