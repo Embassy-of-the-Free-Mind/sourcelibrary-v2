@@ -106,7 +106,7 @@ async function searchPassages(args: Record<string, unknown>) {
     snippet_type: r.snippet_type,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
     short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
-  })) || [];
+  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || [];
   return {
     query: result.query,
     total_matches: result.total,
@@ -143,7 +143,7 @@ async function searchConcept(args: Record<string, unknown>) {
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
     short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
-  })) || [];
+  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || [];
   return {
     query: result.query,
     total_matches: passages.length,
