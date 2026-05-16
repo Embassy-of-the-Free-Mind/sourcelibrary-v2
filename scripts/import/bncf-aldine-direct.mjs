@@ -243,6 +243,11 @@ async function main() {
           access_date: new Date(),
         },
         page_count_source: pageCountSource,
+        // High priority so archive-bulk/archive-ocr crons pick this book up
+        // on their next pass instead of waiting behind the long-tail backlog.
+        // Cleared/recomputed once the book reaches downstream pipeline phases.
+        processing_priority: 80,
+        processing_priority_breakdown: { import_default: 'fresh import — promote for archive priority' },
         status: 'draft',
         hidden: true,
         visible: false,
