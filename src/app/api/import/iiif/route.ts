@@ -72,6 +72,10 @@ interface IIIFManifest {
   attribution?: string | { '@value'?: string; '@language'?: string }[];
   requiredStatement?: { label?: Record<string, string[]>; value?: Record<string, string[]> }; // v3
   logo?: string | { '@id'?: string };
+  metadata?: Array<{ label?: unknown; value?: unknown }>;
+  seeAlso?: unknown | unknown[];
+  navDate?: string;
+  viewingDirection?: string;
   sequences?: Array<{
     canvases?: IIIFv2Canvas[];
   }>;
@@ -363,6 +367,82 @@ export const POST = withCuratorAuth(async (request, session) => {
       if (vals?.[0]) attributionText = vals[0].replace(/<[^>]*>/g, '').trim();
     }
 
+    // Extract the manifest's `metadata` array — IIIF stores publisher,
+    // creator, persistent ID, call number, DOI, etc. as label/value pairs
+    // here. Both v2 and v3 use the same structure but values can be a
+    // string, array, or {language: [strings]} map. Normalise to {label: string,
+    // value: string} for downstream display.
+    const flattenIiifValue = (v: unknown): string => {
+      if (typeof v === 'string') return v.replace(/<[^>]*>/g, '').trim();
+      if (Array.isArray(v)) return v.map(flattenIiifValue).filter(Boolean).join(' / ');
+      if (v && typeof v === 'object') {
+        const obj = v as Record<string, unknown>;
+        // v3 language map: {en: ['…']}
+        const en = obj['en'] || obj['none'] || Object.values(obj)[0];
+        if (Array.isArray(en)) return en.map(flattenIiifValue).filter(Boolean).join(' / ');
+        if (typeof en === 'string') return en;
+      }
+      return '';
+    };
+    const iiifMetadata: Array<{ label: string; value: string }> = [];
+    for (const item of (manifest.metadata || [])) {
+      const label = flattenIiifValue(item.label);
+      const value = flattenIiifValue(item.value);
+      if (label && value) iiifMetadata.push({ label, value });
+    }
+    // Index by common labels for quick access. Labels vary per institution
+    // ("Publisher", "Publication Date", "Author", "Creator", "Call Number",
+    // "DOI", "Persistent ID", "Bibliographic ID") — we collapse a few
+    // synonyms so the catalog_metadata has stable keys.
+    const labelGet = (...needles: string[]): string | null => {
+      for (const n of needles) {
+        const hit = iiifMetadata.find(m => m.label.toLowerCase().includes(n.toLowerCase()));
+        if (hit) return hit.value;
+      }
+      return null;
+    };
+    const iiifPublisher = labelGet('publisher');
+    const iiifPlace = labelGet('publication place', 'place of publication', 'place');
+    const iiifPubDate = labelGet('publication date', 'date issued', 'date');
+    const iiifCreator = labelGet('creator', 'author');
+    const iiifCallNumber = labelGet('call number', 'shelfmark', 'shelf mark');
+    const iiifDoi = labelGet('doi');
+    const iiifBibId = labelGet('bibliographic id', 'bibliographic identifier', 'identifier');
+    const iiifPersistentId = labelGet('persistent id', 'persistent identifier');
+    const iiifDescription = v3
+      ? flattenIiifValue(manifest.summary)
+      : (manifest.description ? flattenIiifValue(manifest.description) : '');
+    const iiifSeeAlso: string[] = [];
+    for (const ref of (Array.isArray(manifest.seeAlso) ? manifest.seeAlso : manifest.seeAlso ? [manifest.seeAlso] : [])) {
+      const id = ref?.id || ref?.['@id'] || ref;
+      if (typeof id === 'string') iiifSeeAlso.push(id);
+    }
+
+    const iiifCatalog: Record<string, unknown> = {
+      source: 'iiif',
+      manifest_url,
+      manifest_version: v3 ? 'v3' : 'v2',
+      publisher: iiifPublisher,
+      place: iiifPlace,
+      publication_date: iiifPubDate,
+      creator: iiifCreator,
+      call_number: iiifCallNumber,
+      doi: iiifDoi,
+      bibliographic_id: iiifBibId,
+      persistent_id: iiifPersistentId,
+      description: iiifDescription,
+      see_also: iiifSeeAlso,
+      metadata_pairs: iiifMetadata,
+      nav_date: manifest.navDate || null,
+      viewing_direction: manifest.viewingDirection || null,
+      attribution: attributionText || null,
+      scraped_at: new Date().toISOString(),
+    };
+    for (const k of Object.keys(iiifCatalog)) {
+      const v = iiifCatalog[k];
+      if (v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0)) delete iiifCatalog[k];
+    }
+
     // Determine provider name
     let providerName = provider || 'IIIF Source';
     const manifestId = manifest['@id'] || manifest.id || manifest_url;
@@ -422,9 +502,19 @@ export const POST = withCuratorAuth(async (request, session) => {
       pages_ocr: 0,
       pages_translated: 0,
       dublin_core: {
-        dc_identifier: [`IIIF:${rawManifestId}`],
-        dc_source: rawManifestId
+        dc_identifier: [
+          `IIIF:${rawManifestId}`,
+          ...(iiifCatalog.persistent_id ? [String(iiifCatalog.persistent_id)] : []),
+          ...(iiifCatalog.doi ? [`DOI:${iiifCatalog.doi}`] : []),
+          ...(iiifCatalog.bibliographic_id ? [`BIB:${iiifCatalog.bibliographic_id}`] : []),
+        ],
+        dc_source: rawManifestId,
+        ...(iiifCatalog.publisher ? { dc_publisher: iiifCatalog.publisher } : {}),
+        ...(iiifCatalog.description ? { dc_description: iiifCatalog.description } : {}),
       },
+      catalog_metadata: iiifCatalog,
+      ...(iiifCatalog.place ? { place_published: String(iiifCatalog.place) } : {}),
+      ...(iiifCatalog.publisher ? { publisher: String(iiifCatalog.publisher) } : {}),
       image_source: {
         provider: PROVIDER_NAME_TO_KEY[providerName] || (bodleianMatch ? 'bodleian' : 'iiif'),
         provider_name: providerName,
