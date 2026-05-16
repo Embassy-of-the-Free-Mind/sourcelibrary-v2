@@ -154,3 +154,23 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
     },
   };
 }
+
+/**
+ * Non-content `page_type` values that should never surface in search results.
+ * These pages typically carry library-scanner boilerplate (e.g. "Für weitere
+ * Informationen siehe auch [Link]"), title-page metadata, or are blank — they
+ * have OCR + embeddings but aren't part of the work itself, and pollute
+ * conceptual search results.
+ *
+ * Use as a `$match` filter after `$search` (cheaper than re-indexing page_type
+ * into the Atlas Search schema) or as a JS-side post-filter on semantic
+ * results.
+ */
+export const NON_CONTENT_PAGE_TYPES = [
+  'blank',
+  'illustration',
+  'title-page',
+  'colophon',
+  'frontispiece',
+  'digitizer-insert',
+] as const;

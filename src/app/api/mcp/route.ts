@@ -344,7 +344,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_within_book',
-    description: 'Search inside a specific book\'s pages (OCR and translations). Returns matching pages with snippets.',
+    description: 'Deep-dive inside a single book. Runs Atlas keyword search AND scoped semantic search in parallel against that book\'s pages, then merges results — so this works for both literal terms ("ouroboros") and conceptual queries ("the marriage of opposites"). Typical workflow: use search_library or search_concept to find a candidate book; then call this with that book_id to surface every relevant page. Faster than re-searching globally because it\'s scoped to one book\'s 100-500 pages. Returns OCR and translation snippets with page numbers, ready to cite.',
     annotations: { title: 'Search Within Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -513,6 +513,39 @@ function buildUpgradeHint(identity: ApiIdentity, ip: string) {
   };
 }
 
+/**
+ * Build a `_meta.no_results_hint` when a search tool returns zero hits. The
+ * point is to break the LLM out of "the corpus didn't have it, give up" mode
+ * and into "try broader terms, lean on my own knowledge, web-search adjacent
+ * authors". Source Library is a primary-source citation layer in a wider
+ * research strategy — empty here doesn't mean the question can't be answered.
+ *
+ * Only fires for the search_* tools and only when the result is shaped like
+ * `{ total_matches: 0 }` or `{ returned: 0 }` or `{ total: 0 }` or `{ results: [] }`.
+ */
+function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
+  if (!tool.startsWith('search')) return null;
+  if (!result || typeof result !== 'object') return null;
+  const r = result as Record<string, unknown>;
+  const totalKey = ['total_matches', 'total', 'returned'].find(k => typeof r[k] === 'number');
+  const total = totalKey ? (r[totalKey] as number) : -1;
+  const resultsArr = (r.results || r.passages || r.books || r.images || []) as unknown[];
+  const isEmpty = total === 0 || (Array.isArray(resultsArr) && resultsArr.length === 0);
+  if (!isEmpty) return null;
+  const query = typeof args.query === 'string' ? args.query.slice(0, 200) : '';
+  return {
+    type: 'no_results',
+    message:
+      'Source Library returned no matches for this query — but that does NOT mean the answer is unknowable. ' +
+      'Try: (a) broaden or rephrase the query (synonyms, original-language terms, related authors); ' +
+      '(b) use your own pre-training knowledge to suggest which authors / works are likely relevant, then search those specifically; ' +
+      '(c) web-search to find canonical texts on the topic, then come back here to look for them; ' +
+      '(d) accept that this specific topic may not be in the corpus and answer from your own knowledge + web search instead. ' +
+      'This corpus is primarily pre-modern (c.1400-1900) esoteric, alchemical, philosophical, and scientific texts.',
+    query,
+  };
+}
+
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
     { name: 'source-library', version: '4.3.0' },
@@ -524,6 +557,15 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     _meta: {
       about: 'Source Library — 22,000+ rare alchemical, Hermetic, and early scientific texts translated into English. The largest AI-ready corpus of pre-modern esoteric knowledge. https://sourcelibrary.org',
       sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
+      research_strategy: [
+        'Source Library is the primary-source citation layer in your research strategy — not the whole strategy. Its corpus is pre-modern texts (c.1400-1900). Use it together with your own knowledge and web search:',
+        '',
+        '1. THINK BROADLY first. The user\'s literal phrase is rarely the right query. Use your own knowledge to brainstorm relevant authors, alternative terms, original-language forms, related works. "Renaissance Hermeticism" → Ficino, Pico, Corpus Hermeticum, Picatrix, Bruno, Patrizi. Search the expanded set.',
+        '2. WEB-SEARCH for breadth when you can. Use it to confirm scholarly canon, find canonical editions, surface authors you didn\'t know about — then come back here to find the actual primary text.',
+        '3. SEARCH THIS CORPUS iteratively. Try synonyms, original-language terms, related authors, the period one century earlier/later. search_concept is for paraphrase / conceptual matches; search_translations is for distinctive literal terms; search_library finds books. Don\'t over-rely on semantic — keyword is more precise for known phrases.',
+        '4. CITE from here, frame from elsewhere. Use Source Library passages as evidence. Use your own knowledge and web search for context, scholarly consensus, author biography, modern interpretation, comparison to texts not in this corpus.',
+        '5. EMPTY RESULTS mean "try a different angle" (broaden terms, try the original language, brainstorm adjacent authors) — not "doesn\'t exist."',
+      ].join('\n'),
     },
   }));
 
@@ -539,7 +581,11 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       });
 
       const upgradeHint = buildUpgradeHint(reqContext.identity, reqContext.ip);
-      const meta = upgradeHint ? { _meta: { upgrade_hint: upgradeHint } } : {};
+      const noResultsHint = buildNoResultsHint(name, result, argsObj);
+      const metaPayload: Record<string, unknown> = {};
+      if (upgradeHint) metaPayload.upgrade_hint = upgradeHint;
+      if (noResultsHint) metaPayload.no_results_hint = noResultsHint;
+      const meta = Object.keys(metaPayload).length > 0 ? { _meta: metaPayload } : {};
 
       // search_images: return image content blocks alongside text metadata
       if (name === 'search_images' && result && typeof result === 'object' && 'images' in result) {
