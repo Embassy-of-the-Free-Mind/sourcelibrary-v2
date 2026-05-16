@@ -29,7 +29,7 @@ const TOOLS: Tool[] = [
   {
     name: "search_library",
     description:
-      "Full-text search across Source Library's 1,200+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs.",
+      "Full-text search across Source Library's 22,000+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs. ORIENTATION HINT: when the user has named a specific author or work, call get_book directly (or list_books to find the ID first) — the AI-generated book summary is usually the right first answer and saves repeated passage hunting.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -77,7 +77,7 @@ const TOOLS: Tool[] = [
   {
     name: "list_books",
     description:
-      "Browse the full collection with filters. Returns books with title, author, language, year, page counts, and translation progress. Unlike search_library (full-text search), this returns a filtered list. Use for browsing by language, finding recently translated works, or getting collection statistics.",
+      "Browse the catalog by metadata — filter by author/title fragment, language, category, or translation recency. Returns books with title, author, language, year, page counts, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content; for content matches (passages on a topic) use search_translations or search_concept.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -113,7 +113,7 @@ const TOOLS: Tool[] = [
   {
     name: "search_translations",
     description:
-      "Search inside translated page text across the entire library. THE tool for finding what historical authors wrote about a topic. Unlike search_library (which matches titles/authors), this searches inside the actual text. Returns passage snippets with page numbers, book info, and citation URLs. (Also available as 'search_passages'.)",
+      "Search inside translated page text across the entire library. THE tool for sweeping across many books for evidence on a theme. Unlike search_library (which matches titles/authors), this searches inside the actual text. Returns passage snippets with page numbers, book info, and citation URLs. ORIENTATION HINT: if the user has named a specific author or work, prefer get_book first — every book has an AI-generated summary + chapter outline that is usually the right first read. Use search_translations when looking for evidence across multiple books. (Also available as 'search_passages'.)",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -149,7 +149,7 @@ const TOOLS: Tool[] = [
   {
     name: "search_concept",
     description:
-      "Conceptual / semantic passage search. Use when the modern term won't literally appear in historical texts — e.g. \"distributed cognition\" maps to passages about active intellect, art of memory, wax tablet metaphors; \"social contract\" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings, so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Each passage includes a similarity score (0-1); treat scores below ~0.45 with skepticism.",
+      "Conceptual / semantic passage search across the whole library. Use when the modern term won't literally appear in historical texts — e.g. \"distributed cognition\" maps to passages about active intellect, art of memory, wax tablet metaphors; \"social contract\" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings, so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. ORIENTATION HINT: if the user named a specific author or work, prefer get_book first — semantic search is expensive and best reserved for cross-corpus discovery. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Similarity calibration: 0.70+ strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly conceptual drift.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -202,7 +202,7 @@ const TOOLS: Tool[] = [
   {
     name: "get_book",
     description:
-      "Get detailed metadata about a book: summary, chapters, index stats, DOI, page counts, and processing status. Use this for context before reading with get_book_text.",
+      "Get a book's AI-generated summary, chapter list, index stats, edition metadata, DOI, page counts, and processing status. THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book's argument, structure, and significance, often answering the question without any further searching. Pair with get_book_text to read selected chapters, or search_within_book to locate passages inside it.",
     inputSchema: {
       type: "object" as const,
       properties: {
