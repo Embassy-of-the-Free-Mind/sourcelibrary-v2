@@ -92,28 +92,33 @@ async function searchPassages(args: Record<string, unknown>) {
   if (args.book_id) params.set('book_id', String(args.book_id));
 
   const result = await apiGet('/search', params) as Record<string, unknown>;
-  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
-    book_id: r.book_id,
-    title: r.display_title || r.title,
-    author: r.author,
-    language: r.language,
-    published: r.published,
-    page: r.page_number,
-    snippet: r.snippet,
-    // snippet_type:
-    //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
-    //   'summary'             = AI-generated description (do NOT quote as the author's words)
-    snippet_type: r.snippet_type,
-    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
-    short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
-  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || [];
+  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => {
+    const snippetType = r.snippet_type as string | undefined;
+    const snippetLanguage = snippetType === 'ocr' ? r.language : 'English';
+    return {
+      book_id: r.book_id,
+      title: r.display_title || r.title,
+      author: r.author,
+      original_language: r.language,
+      snippet_language: snippetLanguage,
+      published: r.published,
+      page: r.page_number,
+      snippet: r.snippet,
+      // snippet_type:
+      //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
+      //   'summary'             = AI-generated description (do NOT quote as the author's words)
+      snippet_type: snippetType,
+      url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+      short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
+    };
+  }).filter(p => !!(p.snippet as string | undefined)?.trim()) || [];
   return {
     query: result.query,
     total_matches: result.total,
     returned: passages.length,
     offset,
     passages,
-    tip: 'Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
+    tip: 'original_language is the book\'s source language; snippet_language is the language of the snippet text (English for translations/summaries, source language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -132,7 +137,8 @@ async function searchConcept(args: Record<string, unknown>) {
     book_id: r.book_id,
     title: r.book_title,
     author: r.book_author,
-    language: r.book_language,
+    original_language: r.book_language,
+    snippet_language: 'English',
     published: r.book_year,
     page: r.page_number,
     snippet: r.snippet,
@@ -149,7 +155,7 @@ async function searchConcept(args: Record<string, unknown>) {
     total_matches: passages.length,
     returned: passages.length,
     passages,
-    tip: 'Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
+    tip: 'original_language is the book\'s source language; semantic search always returns English translation text (snippet_language: "English"). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
 }
 
