@@ -167,25 +167,28 @@ if (BOOK_ID) {
   pageQuery.book_id = BOOK_ID;
   console.log(`Processing book: ${BOOK_ID}`);
 } else if (MISSING_ONLY) {
-  // Fetch distinct book_ids with embedding IS NULL via a single direct-PG query.
-  // Offset-based REST pagination on a 4M-row table is O(n²) — use SQL instead.
-  console.log('Fetching book_ids with missing embeddings via direct PG...');
+  // Fetch (book_id, page_id) pairs where embedding IS NULL via direct PG.
+  // We limit MongoDB by book_id ($in) to keep the stream small, then filter
+  // in JS by page_id so we ONLY embed pages that actually need it — not all
+  // pages of any book that has at least one missing embedding.
+  console.log('Fetching page_ids with missing embeddings via direct PG...');
   const pg = await getPgClient();
   if (!pg) {
     console.error('SUPABASE_DB_URL required for --missing-only (REST pagination is too slow on 4M rows)');
     process.exit(1);
   }
   const { rows } = await pg.query(
-    'SELECT DISTINCT book_id FROM page_translations WHERE embedding IS NULL'
+    'SELECT book_id, page_id FROM page_translations WHERE embedding IS NULL'
   );
-  const missingBookIds = rows.map(r => r.book_id);
-  if (missingBookIds.length === 0) {
+  if (rows.length === 0) {
     console.log('No pages with missing embeddings found. All caught up.');
     await mongoClient.close();
     process.exit(0);
   }
+  globalThis.MISSING_PAGE_IDS = new Set(rows.map(r => r.page_id));
+  const missingBookIds = [...new Set(rows.map(r => r.book_id))];
   pageQuery.book_id = { $in: missingBookIds };
-  console.log(`Processing ${missingBookIds.length.toLocaleString()} books with missing page embeddings`);
+  console.log(`Processing ${rows.length.toLocaleString()} missing pages across ${missingBookIds.length.toLocaleString()} books`);
 } else if (!FULL_MODE) {
   const lastSync = await getLastSyncTime();
   if (lastSync) {
@@ -261,6 +264,15 @@ let supabaseBackoff = 0;
 
 for await (const page of cursor) {
   if (LIMIT && processed >= LIMIT) break;
+
+  // In --missing-only mode, only embed pages that actually lack an embedding
+  // (the MongoDB query is scoped to candidate books, but most of their pages
+  // already have valid embeddings — skip those)
+  if (MISSING_ONLY && !globalThis.MISSING_PAGE_IDS.has(page.id)) {
+    skipped++;
+    processed++;
+    continue;
+  }
 
   const ocrText = cleanText(page.ocr?.data);
   const translationText = cleanText(page.translation?.data);
