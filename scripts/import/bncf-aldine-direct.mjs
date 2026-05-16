@@ -49,6 +49,19 @@ function sleep(ms) {
 function normalizeTitle(t) {
   return t?.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim() || '';
 }
+
+/**
+ * Encode a filename component for an archive.org URL.
+ *
+ * IA stores Arabic/Hebrew/Persian filenames as NFD (decomposed Unicode) on
+ * disk: e.g. أ is stored as ا + ٔ (alif + combining hamza-above), not as the
+ * precomposed U+0623. CDN mirrors and the IIIF image server 404 on the NFC
+ * form. NFD-normalizing first is a no-op for ASCII filenames, so it's safe
+ * to apply universally.
+ */
+function nfdEnc(filename) {
+  return encodeURIComponent(filename.normalize('NFD'));
+}
 function normalizeAuthor(a) {
   return a?.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim() || '';
 }
@@ -181,19 +194,19 @@ async function main() {
       let getPageUrl, getThumbUrl;
       if (jpgFiles && jp2Zip) {
         const zipBase = jp2Zip.replace('.zip', '');
-        const iiifBase = `${encodeURIComponent(entry.ia_identifier)}%2F${encodeURIComponent(jp2Zip)}%2F${encodeURIComponent(zipBase)}`;
+        const iiifBase = `${nfdEnc(entry.ia_identifier)}%2F${nfdEnc(jp2Zip)}%2F${nfdEnc(zipBase)}`;
         const stem = jpgFiles[0].replace(/\d+\.jpg$/, '');
         getPageUrl = (n) => {
           const idx = String(n - 1).padStart(jpgFiles[0].match(/(\d+)\.jpg$/)[1].length, '0');
-          return `https://iiif.archive.org/image/iiif/3/${iiifBase}%2F${encodeURIComponent(stem + idx + '.jp2')}/full/max/0/default.jpg`;
+          return `https://iiif.archive.org/image/iiif/3/${iiifBase}%2F${nfdEnc(stem + idx + '.jp2')}/full/max/0/default.jpg`;
         };
         getThumbUrl = (n) => {
           const idx = String(n - 1).padStart(jpgFiles[0].match(/(\d+)\.jpg$/)[1].length, '0');
-          return `https://iiif.archive.org/image/iiif/3/${iiifBase}%2F${encodeURIComponent(stem + idx + '.jp2')}/full/pct:15/0/default.jpg`;
+          return `https://iiif.archive.org/image/iiif/3/${iiifBase}%2F${nfdEnc(stem + idx + '.jp2')}/full/pct:15/0/default.jpg`;
         };
       } else if (jpgFiles) {
-        getPageUrl = (n) => `https://archive.org/download/${entry.ia_identifier}/${jpgFiles[n - 1]}`;
-        getThumbUrl = (n) => `https://archive.org/download/${entry.ia_identifier}/${jpgFiles[n - 1].replace('.jpg', '_thumb.jpg')}`;
+        getPageUrl = (n) => `https://archive.org/download/${nfdEnc(entry.ia_identifier)}/${nfdEnc(jpgFiles[n - 1])}`;
+        getThumbUrl = (n) => `https://archive.org/download/${nfdEnc(entry.ia_identifier)}/${nfdEnc(jpgFiles[n - 1].replace('.jpg', '_thumb.jpg'))}`;
       } else {
         getPageUrl = (n) => `https://archive.org/download/${entry.ia_identifier}/page/n${n}/full/full/0/default.jpg`;
         getThumbUrl = (n) => `https://archive.org/download/${entry.ia_identifier}/page/n${n}/full/pct:15/0/default.jpg`;
