@@ -30,6 +30,7 @@ const NAV_COLUMNS = [
       { label: 'Privacy', href: '/privacy' },
       { label: 'Cookie Settings', href: '#cookie-settings' },
       { label: 'Terms', href: '/terms' },
+      { label: 'Copyright & DMCA', href: '/dmca' },
     ],
   },
   {
