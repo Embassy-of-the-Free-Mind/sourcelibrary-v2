@@ -68,7 +68,6 @@ export async function semanticBookSearch(
     filter_language: opts?.language ?? null,
     filter_year_min: opts?.yearMin ?? null,
     filter_year_max: opts?.yearMax ?? null,
-    filter_tenant_id: opts?.tenantId ?? null,
   });
 
   if (error) {
