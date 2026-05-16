@@ -62,6 +62,32 @@ export function checkRateLimit(
 }
 
 /**
+ * Read-only sibling of checkRateLimit — returns the current usage state for an
+ * IP without incrementing the counter. Used to surface "you're at N% of your
+ * quota" hints in responses before the hard 401 ever fires.
+ *
+ * Returns { count: 0, ... } when no entry exists yet for this IP (i.e. the
+ * counter was pruned or the user is on a fresh instance — usage looks low).
+ */
+export function peekRateLimit(
+  config: RateLimitConfig,
+  ip: string,
+): { count: number; limit: number; remaining: number; resetAt: number } {
+  const store = limiters.get(config.name);
+  const now = Date.now();
+  const entry = store?.get(ip);
+  if (!entry || entry.resetAt < now) {
+    return { count: 0, limit: config.limit, remaining: config.limit, resetAt: now + config.windowSeconds * 1000 };
+  }
+  return {
+    count: entry.count,
+    limit: config.limit,
+    remaining: Math.max(0, config.limit - entry.count),
+    resetAt: entry.resetAt,
+  };
+}
+
+/**
  * Extract client IP from request headers.
  * Vercel sets x-forwarded-for; Cloudflare sets cf-connecting-ip.
  */
