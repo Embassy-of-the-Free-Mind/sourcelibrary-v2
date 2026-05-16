@@ -85,6 +85,8 @@ async function searchPassages(args: Record<string, unknown>) {
   const offset = Number(args.offset) || 0;
   const params = new URLSearchParams({ q: String(args.query), pages_only: 'true', limit: String(limit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
+  if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
+  if (Array.isArray(args.exclude_languages) && args.exclude_languages.length > 0) params.set('exclude_languages', args.exclude_languages.join(','));
   if (args.year_from) params.set('year_from', String(args.year_from));
   if (args.year_to) params.set('year_to', String(args.year_to));
   if (args.book_id) params.set('book_id', String(args.book_id));
@@ -119,6 +121,8 @@ async function searchConcept(args: Record<string, unknown>) {
   const limit = Math.min(Number(args.limit) || 15, 50);
   const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(limit) });
   if (args.language) params.set('language', String(args.language));
+  if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
+  if (Array.isArray(args.exclude_languages) && args.exclude_languages.length > 0) params.set('exclude_languages', args.exclude_languages.join(','));
   if (args.year_from) params.set('year_min', String(args.year_from));
   if (args.year_to) params.set('year_max', String(args.year_to));
   if (args.max_per_book) params.set('max_per_book', String(args.max_per_book));
@@ -308,7 +312,9 @@ const TOOLS: Tool[] = [
       type: 'object' as const,
       properties: {
         query: { type: 'string', description: 'Search term — prefer single distinctive concepts ("harmony of the spheres", "active intellect") over long natural-language phrases. Multi-word queries match all terms (not phrase); wrap in "double quotes" for exact phrase.' },
-        language: { type: 'string', description: 'Filter by book\'s original language' },
+        language: { type: 'string', description: 'Filter by a single original language' },
+        languages: { type: 'array', items: { type: 'string' }, description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.' },
+        exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
@@ -325,7 +331,9 @@ const TOOLS: Tool[] = [
       type: 'object' as const,
       properties: {
         query: { type: 'string', description: 'A concept or natural-language description — full sentences are fine (e.g. "tools that extend the mind beyond the body"). Unlike search_translations, this does NOT require words that appear in the corpus.' },
-        language: { type: 'string', description: 'Filter by original language (e.g., Latin, German, Greek, Arabic)' },
+        language: { type: 'string', description: 'Filter by a single original language' },
+        languages: { type: 'array', items: { type: 'string' }, description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.' },
+        exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
         year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
         max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },

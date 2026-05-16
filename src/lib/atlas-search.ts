@@ -6,6 +6,8 @@ export const PAGE_SEARCH_INDEX = 'pages_search';
 export interface BookSearchFilters {
   tenantId?: string;
   language?: string;
+  languages?: string[];
+  excludeLanguages?: string[];
   category?: string;
   yearExact?: number;
   yearFrom?: number;
@@ -59,8 +61,13 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
   // Exclude empty shell books (0 pages from failed imports)
   filter.push({ range: { path: 'pages_count', gt: 0 } });
 
-  if (filters.language) {
+  if (filters.languages && filters.languages.length > 0) {
+    filter.push({ in: { path: 'language', value: filters.languages } });
+  } else if (filters.language) {
     filter.push({ equals: { path: 'language', value: filters.language } });
+  }
+  if (filters.excludeLanguages && filters.excludeLanguages.length > 0) {
+    mustNot.push({ in: { path: 'language', value: filters.excludeLanguages } });
   }
   if (filters.category) {
     filter.push({ equals: { path: 'categories', value: filters.category } });

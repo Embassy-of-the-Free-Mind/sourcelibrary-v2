@@ -48,6 +48,10 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
     const language = searchParams.get('language');
+    const languagesParam = searchParams.get('languages');
+    const excludeLanguagesParam = searchParams.get('exclude_languages');
+    const languages = languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : [];
+    const excludeLanguages = excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : [];
     const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');
@@ -91,7 +95,9 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     function buildBookFilters(): Record<string, unknown> {
       const filters: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
       if (tenantId) filters.tenantId = tenantId;
-      if (language) filters.language = language;
+      if (languages.length > 0) filters.language = { $in: languages };
+      else if (excludeLanguages.length > 0) filters.language = { $nin: excludeLanguages };
+      else if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
         filters.published = {};
@@ -155,7 +161,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     }
 
     // Run book search and page content search in parallel
-    const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
+    const hasBookLevelFilters = !!(language || languages.length > 0 || excludeLanguages.length > 0 || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
     const [bookDocs, pageDocs, semanticDocs, semanticPageDocs] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
@@ -223,7 +229,9 @@ export const GET = withApiAuth(async (request: NextRequest) => {
           } else if (hasBookLevelFilters) {
             const bookIdFilter: Record<string, unknown> = { visible: true };
             if (tenantId) bookIdFilter.tenantId = tenantId;
-            if (language) bookIdFilter.language = language;
+            if (languages.length > 0) bookIdFilter.language = { $in: languages };
+            else if (excludeLanguages.length > 0) bookIdFilter.language = { $nin: excludeLanguages };
+            else if (language) bookIdFilter.language = language;
             if (category) bookIdFilter.categories = category;
             if (dateFrom || dateTo) {
               bookIdFilter.published = {};
