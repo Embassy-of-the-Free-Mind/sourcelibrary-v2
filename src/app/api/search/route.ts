@@ -166,9 +166,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Run book search and page content search in parallel
     const hasBookLevelFilters = !!(language || languages.length > 0 || excludeLanguages.length > 0 || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
-    const [bookDocs, pageDocs, semanticDocs, semanticPageDocs] = await Promise.all([
+    // Per-stage timing so we can see which lane is dragging the total wall-clock.
+    // Total latency = max(stages) since they run in parallel; recording each
+    // individually tells us where to optimize.
+    async function timed<T>(fn: () => Promise<T>): Promise<{ value: T; ms: number }> {
+      const start = Date.now();
+      const value = await fn();
+      return { value, ms: Date.now() - start };
+    }
+
+    const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
-      (async () => {
+      timed(async () => {
         if (bookId || pagesOnly) return [];
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
@@ -218,11 +227,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           console.warn('[search] Book lane failed:', err instanceof Error ? err.message : String(err));
           return [];
         }
-      })(),
+      }),
 
       // --- Page content search (aggregation pipeline truncates text for snippets) ---
       // Wrapped in a timeout race to prevent Atlas Search from blocking the response
-      (async () => {
+      timed(async () => {
         if (!searchContent && !pagesOnly) return [];
 
         const pageSearchPromise = (async () => {
@@ -290,10 +299,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             resolve([]);
           }, 8000)),
         ]).catch(() => []);
-      })(),
+      }),
 
       // --- Semantic book search (finds conceptually related books) ---
-      (async () => {
+      timed(async () => {
         if (bookId || !searchContent) return [];
         try {
           const books = await semanticBookSearch(matchQuery, MAX_PAGE_RESULTS, {
@@ -314,20 +323,33 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         } catch {
           return [];
         }
-      })(),
+      }),
 
       // --- Semantic page search (finds specific passages across all 2.6M pages) ---
       // Catches passages buried inside large works that book-level search misses
       // (e.g. Martial's "masturbator" epigram, Diogenes's public acts in Laertius)
-      (async () => {
+      timed(async () => {
         if (bookId || !searchContent) return [];
         try {
           return await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
         } catch {
           return [];
         }
-      })(),
+      }),
     ]);
+
+    const bookDocs = bookResult.value;
+    const pageDocs = pageResult.value;
+    const semanticDocs = semanticResult.value;
+    const semanticPageDocs = semanticPageResult.value;
+    const stageMs = {
+      book: bookResult.ms,
+      page: pageResult.ms,
+      semantic_book: semanticResult.ms,
+      semantic_page: semanticPageResult.ms,
+    };
+    // Surface if the page lane hit its 8s ceiling — likely degraded results.
+    const pageSearchHitTimeout = pageResult.ms >= 8000 && pageDocs.length === 0;
 
     // Process book results
     for (const book of bookDocs) {
@@ -661,6 +683,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     logSearchQuery({
       request, identity, route: 'search', query,
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
+      stage_ms: stageMs,
+      page_search_timed_out: pageSearchHitTimeout,
       filters: {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,

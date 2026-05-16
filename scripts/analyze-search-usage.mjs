@@ -142,7 +142,45 @@ async function main() {
     console.log(`  ${rpad(q.n, 4)}  ${pad(src, 8)} ${pad(tools, 32)} ${qstr}`);
   }
 
-  // --- 4. User-agent mix (MCP only — web side has it too but we keep this terse) ---
+  // --- 4. /api/search per-stage latency breakdown ---
+  if (sqExists) {
+    const stageRows = await sqCol.aggregate([
+      { $match: { ts: { $gte: since }, route: 'search', stage_ms: { $exists: true } } },
+      { $group: {
+          _id: null,
+          n: { $sum: 1 },
+          timeouts: { $sum: { $cond: ['$page_search_timed_out', 1, 0] } },
+          all_book: { $push: '$stage_ms.book' },
+          all_page: { $push: '$stage_ms.page' },
+          all_sem_book: { $push: '$stage_ms.semantic_book' },
+          all_sem_page: { $push: '$stage_ms.semantic_page' },
+          all_total: { $push: '$ms' },
+      } },
+    ]).toArray();
+    if (stageRows[0]?.n) {
+      const r = stageRows[0];
+      const pcts = (arr) => {
+        const s = arr.filter(x => typeof x === 'number').sort((a, b) => a - b);
+        const p = (q) => s.length ? s[Math.min(s.length - 1, Math.floor((q / 100) * s.length))] : 0;
+        return { p50: p(50), p95: p(95), p99: p(99) };
+      };
+      console.log(`\n[4] /api/search stage latencies (${fmtNum(r.n)} samples, ${r.timeouts} page-search timeouts):\n`);
+      console.log(`  ${pad('stage', 18)} ${rpad('p50', 7)} ${rpad('p95', 7)} ${rpad('p99', 7)}`);
+      const stages = [
+        ['book', r.all_book], ['page (Atlas)', r.all_page],
+        ['semantic_book', r.all_sem_book], ['semantic_page', r.all_sem_page],
+        ['TOTAL wall', r.all_total],
+      ];
+      for (const [name, arr] of stages) {
+        const p = pcts(arr);
+        console.log(`  ${pad(name, 18)} ${rpad(p.p50, 7)} ${rpad(p.p95, 7)} ${rpad(p.p99, 7)}`);
+      }
+    } else {
+      console.log(`\n[4] /api/search stage latencies: no stage_ms data yet (waiting for traffic after stage-timing deploy)`);
+    }
+  }
+
+  // --- 5. User-agent mix (MCP only — web side has it too but we keep this terse) ---
   const byUa = await mcpCol.aggregate([
     { $match: { ts: { $gte: since } } },
     { $project: { ua_stem: { $substr: ['$user_agent', 0, 40] } } },
@@ -150,12 +188,12 @@ async function main() {
     { $sort: { n: -1 } },
     { $limit: 10 },
   ]).toArray();
-  console.log(`\n[4] Top MCP user-agent prefixes (first 40 chars):\n`);
+  console.log(`\n[5] Top MCP user-agent prefixes (first 40 chars):\n`);
   for (const r of byUa) {
     console.log(`  ${pad(r._id || '(none)', 42)} ${rpad(r.n, 6)}`);
   }
 
-  // --- 5. Daily volume trend ---
+  // --- 6. Daily volume trend ---
   const daily = await mcpCol.aggregate([
     { $match: { ts: { $gte: since } } },
     {
@@ -166,7 +204,7 @@ async function main() {
     },
     { $sort: { _id: 1 } },
   ]).toArray();
-  console.log(`\n[5] Daily MCP call volume:\n`);
+  console.log(`\n[6] Daily MCP call volume:\n`);
   for (const d of daily) {
     const bar = '█'.repeat(Math.min(60, Math.ceil(d.n / Math.max(1, mcpTotal / DAYS / 10))));
     console.log(`  ${d._id}  ${rpad(d.n, 5)} ${bar}`);
