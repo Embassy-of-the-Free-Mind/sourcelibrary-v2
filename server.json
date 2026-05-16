@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.embassy-of-the-free-mind/sourcelibrary",
+  "name": "io.github.Embassy-of-the-Free-Mind/sourcelibrary",
   "title": "Source Library",
-  "description": "Search and cite 26,000+ rare pre-modern texts (alchemy, Hermetica, philosophy, early science) translated into English. Semantic + keyword passage search across 3.9M page embeddings with stable citation URLs.",
+  "description": "Search and cite 26K pre-modern primary sources: alchemy, Hermetica, philosophy, early science.",
   "version": "4.3.0",
   "repository": {
     "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2",
