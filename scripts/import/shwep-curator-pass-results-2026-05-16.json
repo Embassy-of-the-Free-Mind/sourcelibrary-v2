@@ -1,0 +1,188 @@
+{
+  "imported": 25,
+  "skipped": 1,
+  "errors": 0,
+  "results": [
+    {
+      "id": "mrvvilliamshakes00shak",
+      "title": "Mr. William Shakespeares Comedies, Histories, & Tragedies (First Folio)",
+      "bookId": "6a08fcc325e3a402b23b237e",
+      "slug": "mr-william-shakespeares-comedies-histories-tragedies-first-f",
+      "pageCount": 924
+    },
+    {
+      "id": "mrwilliamshakesp00shak_8",
+      "title": "Mr. William Shakespeares Comedies, Histories, and Tragedies (Second Folio)",
+      "bookId": "6a08fcca25e3a402b23b271b",
+      "slug": "mr-william-shakespeares-comedies-histories-and-tragedies-sec",
+      "pageCount": 924
+    },
+    {
+      "id": "mrwilliamshakesp00shak_4",
+      "title": "Mr. William Shakespeares Comedies, Histories, and Tragedies (Third Folio)",
+      "bookId": "6a08fcd125e3a402b23b2ab8",
+      "slug": "mr-william-shakespeares-comedies-histories-and-tragedies-thi",
+      "pageCount": 920
+    },
+    {
+      "id": "mrwilliamshakesp00shak_7",
+      "title": "Mr. William Shakespear's Comedies, Histories, and Tragedies (Fourth Folio)",
+      "bookId": "6a08fcd925e3a402b23b2e51",
+      "slug": "mr-william-shakespears-comedies-histories-and-tragedies-four",
+      "pageCount": 934
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_an-excellent-conceited-t_shakespeare-william_1597",
+      "title": "An Excellent Conceited Tragedie of Romeo and Juliet (Q1)",
+      "bookId": "6a08fce225e3a402b23b31f8",
+      "slug": "an-excellent-conceited-tragedie-of-romeo-and-juliet-q1-willi",
+      "pageCount": 77
+    },
+    {
+      "id": "shakespeareromeoandjulietQ2",
+      "title": "The Most Excellent and Lamentable Tragedie, of Romeo and Juliet (Q2)",
+      "bookId": "6a08fce825e3a402b23b3246",
+      "slug": "the-most-excellent-and-lamentable-tragedie-of-romeo-and-juli",
+      "pageCount": 100
+    },
+    {
+      "id": "chroniclehistory00shak_1",
+      "title": "The Chronicle History of Henry the Fift, vvith his Battell Fought at Agin Court",
+      "bookId": "6a08fced25e3a402b23b32ab",
+      "slug": "the-chronicle-history-of-henry-the-fift-vvith-his-battell-fo",
+      "pageCount": 68
+    },
+    {
+      "id": "tragedyofhamletp00shak_1",
+      "title": "The Tragedy of Hamlet Prince of Denmarke",
+      "bookId": "6a08fcf425e3a402b23b32f0",
+      "slug": "the-tragedy-of-hamlet-prince-of-denmarke-william-shakespeare",
+      "pageCount": 116
+    },
+    {
+      "id": "workesofbenjamin01jons",
+      "title": "The Workes of Benjamin Jonson (First Folio)",
+      "skipped": true,
+      "existingId": "69de99681b234a773e43ab9b"
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_the-workes-of-benjamin-j_jonson-benjamin_1640",
+      "title": "The Workes of Benjamin Jonson (1640 Second Folio, Vol. 1)",
+      "bookId": "6a08fd0125e3a402b23b3365",
+      "slug": "the-workes-of-benjamin-jonson-1640-second-folio-vol-1-ben-jo",
+      "pageCount": 937
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_the-workes-of-benjamin-j_jonson-benjamin_1640_2",
+      "title": "The Workes of Benjamin Jonson (1640 Second Folio, Vol. 2)",
+      "bookId": "6a08fd0925e3a402b23b370f",
+      "slug": "the-workes-of-benjamin-jonson-1640-second-folio-vol-2-ben-jo",
+      "pageCount": 869
+    },
+    {
+      "id": "jonsonalchemist",
+      "title": "The Alchemist (1612 First Quarto, Scolar Press facsimile)",
+      "bookId": "6a08fd1125e3a402b23b3a75",
+      "slug": "the-alchemist-1612-first-quarto-scolar-press-facsimile-ben-j",
+      "pageCount": 112
+    },
+    {
+      "id": "jonsonvolpone",
+      "title": "Ben: Ionson His Volpone or The Foxe",
+      "bookId": "6a08fd1d25e3a402b23b3ae6",
+      "slug": "ben-ionson-his-volpone-or-the-foxe-ben-jonson",
+      "pageCount": 117
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_seianus-his-fall_jonson-benjamin_1605",
+      "title": "Seianus his Fall",
+      "bookId": "6a08fd2625e3a402b23b3b5c",
+      "slug": "seianus-his-fall-ben-jonson",
+      "pageCount": 109
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_catiline-his-conspiracy_jonson-benjamin_1611",
+      "title": "Catiline, his Conspiracy",
+      "bookId": "6a08fd2e25e3a402b23b3bca",
+      "slug": "catiline-his-conspiracy-ben-jonson",
+      "pageCount": 111
+    },
+    {
+      "id": "jonsonbartholomewfair",
+      "title": "Bartholmevv Fayre: a Comedie, acted in the yeare, 1614",
+      "bookId": "6a08fd3425e3a402b23b3c3a",
+      "slug": "bartholmevv-fayre-a-comedie-acted-in-the-yeare-1614-ben-jons",
+      "pageCount": 106
+    },
+    {
+      "id": "marlowetamburlaine",
+      "title": "Tamburlaine the Great, Parts I & II",
+      "bookId": "6a08fd3e25e3a402b23b3ca5",
+      "slug": "tamburlaine-the-great-parts-i-ii-christopher-marlowe",
+      "pageCount": 160
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_the-tragicall-history-of_marlowe-christopher_1616",
+      "title": "The Tragicall History of the Life and Death of Doctor Faustus (B-text)",
+      "bookId": "6a08fd4c25e3a402b23b3d46",
+      "slug": "the-tragicall-history-of-the-life-and-death-of-doctor-faustu",
+      "pageCount": 63
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_the-tragicall-history-of_marlowe-christopher_1620",
+      "title": "The Tragicall History of the Life and Death of Doctor Faustus (1620)",
+      "bookId": "6a08fd5425e3a402b23b3d86",
+      "slug": "the-tragicall-history-of-the-life-and-death-of-doctor-faustu-2",
+      "pageCount": 67
+    },
+    {
+      "id": "marlowedoctorfaustus1631",
+      "title": "The Tragicall Historie of the Life and Death of Doctor Faustus (1631)",
+      "bookId": "6a08fd5b25e3a402b23b3dca",
+      "slug": "the-tragicall-historie-of-the-life-and-death-of-doctor-faust",
+      "pageCount": 74
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_the-famous-tragedy-of-th_marlowe-christopher_1633",
+      "title": "The Famous Tragedy of the Rich Jew of Malta",
+      "bookId": "6a08fd6325e3a402b23b3e15",
+      "slug": "the-famous-tragedy-of-the-rich-jew-of-malta-christopher-marl",
+      "pageCount": 74
+    },
+    {
+      "id": "marloweedwardthesecond",
+      "title": "The Troublesome Raigne and Lamentable Death of Edward the Second",
+      "bookId": "6a08fd6925e3a402b23b3e60",
+      "slug": "the-troublesome-raigne-and-lamentable-death-of-edward-the-se",
+      "pageCount": 95
+    },
+    {
+      "id": "case_3a_631",
+      "title": "The Massacre at Paris",
+      "bookId": "6a08fd6f25e3a402b23b3ec0",
+      "slug": "the-massacre-at-paris-christopher-marlowe",
+      "pageCount": 70
+    },
+    {
+      "id": "bim_early-english-books-1475-1640_hero-and-leander_marlowe-christopher_1637",
+      "title": "Hero and Leander",
+      "bookId": "6a08fd7725e3a402b23b3f07",
+      "slug": "hero-and-leander-christopher-marlowe",
+      "pageCount": 81
+    },
+    {
+      "id": "isbn_9781110840175",
+      "title": "Dido, Queen of Carthage",
+      "bookId": "6a08fd7e25e3a402b23b3f59",
+      "slug": "dido-queen-of-carthage-christopher-marlowe",
+      "pageCount": 86
+    },
+    {
+      "id": "CatMssAlchGr/CMAG-6-Psellus-Proclus",
+      "title": "Catalogue des manuscrits alchimiques grecs, Vol. VI: Michel Psellus, Opuscules et Extraits",
+      "bookId": "6a08fd8125e3a402b23b3fb0",
+      "slug": "catalogue-des-manuscrits-alchimiques-grecs-vol-vi-michel-pse",
+      "pageCount": 257
+    }
+  ]
+}
