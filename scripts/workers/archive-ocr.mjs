@@ -198,6 +198,23 @@ async function archivePage(page, db) {
     );
     return { ok: true, bytes: buffer.byteLength, domain };
   } catch (err) {
+    // Record the failure on the page document so future cron runs have
+    // visibility into why the page is stuck (previously the worker returned
+    // silently and left `archive_metadata` empty, producing infinite-retry
+    // loops with no diagnostic trace — see MDZ 915-book stall, 2026-05-16).
+    try {
+      await db.collection(pagesCol).updateOne(
+        { _id: page._id },
+        {
+          $set: {
+            'archive_metadata.last_failure_at': new Date(),
+            'archive_metadata.last_failure_reason': String(err.message || err).slice(0, 200),
+            'archive_metadata.last_failure_source_url': sourceUrl,
+          },
+          $inc: { 'archive_metadata.failure_count': 1 },
+        }
+      );
+    } catch {/* swallow — diagnostic write must not poison the result */}
     return { ok: false, error: err.message, domain };
   }
 }
