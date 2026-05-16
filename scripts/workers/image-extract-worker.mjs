@@ -75,6 +75,13 @@ IMAGE TYPES (use these exactly):
 - symbol: Alchemical, astrological symbols
 - map: Geographic representation
 
+GRID LAYOUTS — IMPORTANT:
+If the page contains a grid or matrix of small images, symbols, or sigils (e.g. a wall of
+24 Goetia seals in 6×4 cells, a table of alchemical glyphs, a plate of musical fragments),
+extract THE ENTIRE GRID as a single illustration (one bbox covering the whole matrix).
+Do NOT skip a page just because no element is individually large. Type these as
+diagram, symbol, or emblem depending on content.
+
 SKIP these — do NOT include them:
 - Page ornaments, borders, decorative initials, printer's devices
 - Marbled papers, blank frames, ruled lines
@@ -125,15 +132,32 @@ scan_class — use exactly one:
   color_print       — color scan of a color print
   grayscale_photo   — high-bit grayscale photo of original (manuscripts often)
   grayscale_print   — grayscale scan of printed page
-  bitonal_clean     — pure black/white, SHARP (modern OCR-ready or pristine woodcut)
-  bitonal_microfilm — pure black/white WITH pepper noise / jagged edges / scan-of-scan
-  microfiche        — bitonal_microfilm + visible mottling or uneven illumination
+  bitonal_clean     — pure black/white, sharp. DEFAULT for any bitonal page where strokes
+                      are continuous and edges are clean — includes woodcuts, engravings,
+                      letterpress text, and modern OCR-ready bitonal scans, REGARDLESS of
+                      age. A 1500 woodcut is bitonal_clean. A 1900 letterpress page is
+                      bitonal_clean.
+  bitonal_microfilm — REQUIRES visible high-frequency speckling ("pepper noise") in flat
+                      white areas AND visibly jagged/broken edges around dark shapes.
+                      Both signatures must be present. If you do not actually see speckling
+                      in the white background, this is NOT bitonal_microfilm — use
+                      bitonal_clean instead. Do NOT use this class merely because the page
+                      is monochrome and high-contrast.
+  microfiche        — bitonal_microfilm + visible mottling or uneven illumination across
+                      the page (caused by the microfilm reader's lamp)
+  scanner_metadata  — the page is NOT a book page at all — it is a calibration target,
+                      color reference card, ruler, scanner-bed test pattern, or other
+                      digitization-process artifact accidentally captured as a page.
+                      Score these in the 5-25 range; they are not "broken scans" but
+                      they are not content either.
   blank             — page is empty or near-empty (no usable content)
-  corrupt           — broken, partial capture, or shows scanner bed instead of page
+  corrupt           — broken file, partial capture due to scan failure, or shows the
+                      scanner bed/background instead of a placed page
 
-Distinguishing bitonal_clean from bitonal_microfilm is the MOST IMPORTANT
-classification call. The signature of microfilm is JAGGED edges and PEPPER NOISE
-in flat areas. A clean bitonal woodcut has crisp continuous strokes.
+Distinguishing bitonal_clean from bitonal_microfilm is the MOST IMPORTANT and most
+common classification mistake. ERR ON THE SIDE OF bitonal_clean. Only use
+bitonal_microfilm when you can actually see speckled noise in the empty/white regions
+of the page — not just when the page happens to be bitonal black-and-white.
 
 page_completeness:
   full_page          — single page captured fully
@@ -154,10 +178,10 @@ concerns: list any of these that apply, exact strings only:
 ────────────────────────────────────────────────────────────────────────────────
 OUTPUT FORMAT
 ────────────────────────────────────────────────────────────────────────────────
-Return ONLY a single valid JSON object with this exact shape:
+Return ONLY a single valid JSON object with this exact shape — scan_quality FIRST,
+extracted_images SECOND:
 
 {
-  "extracted_images": [ /* array of illustration objects as specified above; [] if none */ ],
   "scan_quality": {
     "scan_score": <int>,
     "scan_class": "<one of the values above>",
@@ -166,11 +190,18 @@ Return ONLY a single valid JSON object with this exact shape:
     "page_completeness": "<one of the values above>",
     "concerns": [ "...", "..." ],
     "reasoning": "<1-2 sentence justification>"
-  }
+  },
+  "extracted_images": [ /* array of illustration objects as specified above; [] if none */ ]
 }
 
-If the page is blank or corrupt, still return the object — set extracted_images: []
-and fill scan_quality accordingly.`;
+CRITICAL: scan_quality MUST be present in every response, with all six fields populated.
+This is true even when:
+  - the page is blank → scan_class: blank, score: 0, extracted_images: []
+  - the page is a scanner calibration card → scan_class: scanner_metadata
+  - the page is pure text with no illustrations → scan_class: <whatever fits>, extracted_images: []
+  - the page is corrupt → scan_class: corrupt, extracted_images: []
+Never omit scan_quality. Never return only extracted_images. scan_quality is the most
+important field in this response.`;
 
 // ── Helpers ──
 function getPageImageUrl(page) {
@@ -288,7 +319,8 @@ async function computeImageCharacteristics(buffer) {
 
 const VALID_SCAN_CLASSES = new Set([
   'color_photo', 'color_print', 'grayscale_photo', 'grayscale_print',
-  'bitonal_clean', 'bitonal_microfilm', 'microfiche', 'blank', 'corrupt',
+  'bitonal_clean', 'bitonal_microfilm', 'microfiche',
+  'scanner_metadata', 'blank', 'corrupt',
 ]);
 const VALID_FIDELITY = new Set([
   'pristine', 'good', 'degraded', 'destroyed', 'no_illustration',
