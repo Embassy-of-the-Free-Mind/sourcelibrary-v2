@@ -229,6 +229,7 @@ export interface SemanticPageSearchOptions {
   yearMax?: number;
   maxPerBook?: number;
   tenantId?: string;
+  language?: string;
 }
 
 /**
@@ -255,14 +256,18 @@ export async function semanticPageSearchGlobal(
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
-  const filtering = opts.yearMin !== undefined || opts.yearMax !== undefined || (opts.maxPerBook ?? 0) > 0;
-  const overRequest = filtering ? Math.min(limit * 3, 50) : limit;
+  // Over-request only when maxPerBook filtering is needed (JS post-hoc).
+  // language/year are filtered at the RPC level so no over-requesting needed for those.
+  const overRequest = (opts.maxPerBook ?? 0) > 0 ? Math.min(limit * 3, 50) : limit;
 
   const { data, error } = await supabase.rpc('match_semantic', {
     query_embedding: JSON.stringify(queryEmbedding),
     match_threshold: 0.3,
     match_count: overRequest,
     filter_tenant_id: opts.tenantId ?? null,
+    filter_language: opts.language ?? null,
+    filter_year_min: opts.yearMin ?? null,
+    filter_year_max: opts.yearMax ?? null,
   });
 
   if (error) {
@@ -271,9 +276,6 @@ export async function semanticPageSearchGlobal(
   }
 
   let rows = (data || []) as any[];
-
-  if (opts.yearMin !== undefined) rows = rows.filter(r => (r.book_year ?? null) !== null && r.book_year >= opts.yearMin!);
-  if (opts.yearMax !== undefined) rows = rows.filter(r => (r.book_year ?? null) !== null && r.book_year <= opts.yearMax!);
 
   if ((opts.maxPerBook ?? 0) > 0) {
     const perBook = new Map<string, number>();

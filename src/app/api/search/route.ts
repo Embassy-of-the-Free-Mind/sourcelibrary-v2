@@ -311,7 +311,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          return await semanticPageSearchGlobal(matchQuery, 15, tenantId || undefined);
+          return await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
         } catch {
           return [];
         }

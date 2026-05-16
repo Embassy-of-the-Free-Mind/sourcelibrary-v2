@@ -11,6 +11,7 @@ import {
 import {
   searchLibrary,
   searchPassages,
+  searchConcept,
   searchWithinBook,
   listBooks,
   getBook,
@@ -139,6 +140,38 @@ const TOOLS: Tool[] = [
         limit: {
           type: "number",
           description: "Maximum results (default 20, max 50)",
+        },
+      },
+      required: ["query"],
+    },
+  },
+
+  {
+    name: "search_concept",
+    description:
+      "Conceptual / semantic passage search. Use when the modern term won't literally appear in historical texts — e.g. \"distributed cognition\" maps to passages about active intellect, art of memory, wax tablet metaphors; \"social contract\" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings, so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Each passage includes a similarity score (0-1); treat scores below ~0.45 with skepticism.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        query: {
+          type: "string",
+          description: "A concept or natural-language description — full sentences are fine. Unlike search_translations, this does NOT require words that appear in the corpus.",
+        },
+        language: {
+          type: "string",
+          description: "Filter by original language (e.g., Latin, German, Greek, Arabic)",
+        },
+        year_from: {
+          type: "number",
+          description: "Filter by publication year (start, inclusive)",
+        },
+        year_to: {
+          type: "number",
+          description: "Filter by publication year (end, inclusive)",
+        },
+        limit: {
+          type: "number",
+          description: "Max passages (default 15, max 50)",
         },
       },
       required: ["query"],
@@ -410,6 +443,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "search_passages":
         result = await searchPassages(args as Parameters<typeof searchPassages>[0]);
         break;
+      case "search_concept":
+        result = await searchConcept(args as Parameters<typeof searchConcept>[0]);
+        break;
       case "search_within_book":
         result = await searchWithinBook(args as Parameters<typeof searchWithinBook>[0]);
         break;
@@ -466,7 +502,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v4.2.0 running (9 tools)");
+  console.error("Source Library MCP server v4.3.0 running (10 tools)");
 }
 
 main().catch((error) => {

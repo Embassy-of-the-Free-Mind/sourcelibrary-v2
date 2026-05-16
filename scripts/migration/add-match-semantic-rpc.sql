@@ -16,7 +16,10 @@ CREATE OR REPLACE FUNCTION match_semantic(
   query_embedding vector(768),
   match_threshold FLOAT DEFAULT 0.3,
   match_count INT DEFAULT 15,
-  filter_tenant_id TEXT DEFAULT NULL
+  filter_tenant_id TEXT DEFAULT NULL,
+  filter_language TEXT DEFAULT NULL,
+  filter_year_min INT DEFAULT NULL,
+  filter_year_max INT DEFAULT NULL
 )
 RETURNS TABLE (
   page_id TEXT,
@@ -46,8 +49,11 @@ BEGIN
   FROM page_translations p
   WHERE p.embedding IS NOT NULL
     AND 1 - (p.embedding <=> query_embedding) > match_threshold
-    -- filter_tenant_id is accepted for API parity with match_books_semantic but
-    -- is currently a no-op: page_translations has no tenant_id column.
+    -- filter_tenant_id is accepted for API parity but is a no-op:
+    -- page_translations has no tenant_id column yet.
+    AND (filter_language IS NULL OR p.book_language = filter_language)
+    AND (filter_year_min IS NULL OR p.book_year >= filter_year_min)
+    AND (filter_year_max IS NULL OR p.book_year <= filter_year_max)
   ORDER BY p.embedding <=> query_embedding
   LIMIT match_count;
 END;

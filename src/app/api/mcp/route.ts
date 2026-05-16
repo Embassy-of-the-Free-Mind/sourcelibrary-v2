@@ -116,6 +116,7 @@ async function searchPassages(args: Record<string, unknown>) {
 async function searchConcept(args: Record<string, unknown>) {
   const limit = Math.min(Number(args.limit) || 15, 50);
   const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(limit) });
+  if (args.language) params.set('language', String(args.language));
   if (args.year_from) params.set('year_min', String(args.year_from));
   if (args.year_to) params.set('year_max', String(args.year_to));
   if (args.max_per_book) params.set('max_per_book', String(args.max_per_book));
@@ -319,10 +320,11 @@ const TOOLS: Tool[] = [
       type: 'object' as const,
       properties: {
         query: { type: 'string', description: 'A concept or natural-language description — full sentences are fine (e.g. "tools that extend the mind beyond the body"). Unlike search_translations, this does NOT require words that appear in the corpus.' },
-        limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
+        language: { type: 'string', description: 'Filter by original language (e.g., Latin, German, Greek, Arabic)' },
         year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
         year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
         max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },
+        limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
       },
       required: ['query'],
     },
