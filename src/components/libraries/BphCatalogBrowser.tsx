@@ -40,11 +40,39 @@ interface BphWork {
   file_count: number | null;
   sl_book_id: string | null;
   sl_book_slug: string | null;
+  /** Cross-provider link: BPH holds this work physically, but the scan
+      lives at another archive (IA, CMC Kloss, MDZ, Gallica, e-rara, etc.)
+      and is readable through Source Library. Kept separate from sl_book_id
+      so "BPH digitised" counters don't conflate the two. */
+  sl_external_book_id?: string | null;
+  sl_external_slug?: string | null;
+  sl_external_source?: string | null;
   ia_identifier: string | null;
   ustc_sn: string | null;
   /** Source Library cover URL, attached server-side by /api/catalog/bph
       when the row is linked to a digitised SL book. Powers the grid view. */
   sl_cover?: string | null;
+}
+
+/** Human-readable label for an external scan source. Defaults to a Title-Cased
+    fallback when we don't have a curated label for a provider yet. */
+function externalSourceLabel(source: string | null | undefined): string {
+  if (!source) return 'another archive';
+  const map: Record<string, string> = {
+    internet_archive: 'Internet Archive',
+    cmc_kloss: 'CMC (Kloss collection)',
+    mdz: 'MDZ',
+    gallica: 'Gallica',
+    'e-rara': 'e-rara',
+    google_books: 'Google Books',
+    allard_pierson: 'Allard Pierson',
+    bodleian: 'Bodleian',
+    vatican: 'Vatican',
+    cambridge: 'Cambridge',
+    laurenziana: 'Laurenziana',
+  };
+  if (map[source]) return map[source];
+  return source.replace(/[_-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 interface AdvancedFilters {
@@ -366,6 +394,19 @@ export default function BphCatalogBrowser({
     return null;
   };
 
+  // External scan: BPH-held work whose digitisation lives at another archive
+  // (IA, CMC Kloss, MDZ, etc.) and is readable on Source Library. Surfaced
+  // as a secondary "Read at [source]" link only when the row has no BPH-native
+  // scan — when both exist, BPH-native wins.
+  const resolveExternal = (w: BphWork, hasDigitized: boolean) => {
+    if (hasDigitized || !w.sl_external_book_id) return null;
+    return {
+      id: w.sl_external_book_id,
+      slug: w.sl_external_slug || w.sl_external_book_id,
+      source: w.sl_external_source || null,
+    };
+  };
+
   // Detail-page URL for a catalog entry. Always nest under basePath so the
   // link works in every host context: bph.sourcelibrary.org (where the proxy
   // serves /embed/bph/catalog/{ubn} directly), sourcelibrary.org/embed/bph
@@ -592,6 +633,7 @@ export default function BphCatalogBrowser({
               )}
               {works.map((w) => {
                 const digitized = resolveDigitized(w);
+                const external = resolveExternal(w, !!digitized);
                 const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
                 const displayAuthor = w.author || w.variant_author || w.pseudonym;
                 return (
@@ -615,6 +657,15 @@ export default function BphCatalogBrowser({
                         >
                           <BookMarked className="w-3 h-3" />
                           Digitised copy
+                        </a>
+                      )}
+                      {external && (
+                        <a
+                          href={tenantBookUrl({ id: external.id, slug: external.slug }, tenantSlug)}
+                          className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
+                        >
+                          <BookMarked className="w-3 h-3 opacity-60" />
+                          Read at {externalSourceLabel(external.source)}
                         </a>
                       )}
                       {/* Mobile: show author + place inline */}
@@ -684,11 +735,14 @@ export default function BphCatalogBrowser({
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {works.map((w) => {
                 const digitized = resolveDigitized(w);
+                const external = resolveExternal(w, !!digitized);
                 const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
                 const displayAuthor = w.author || w.variant_author || w.pseudonym;
                 const href = digitized
                   ? tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)
-                  : detailUrl(w.ubn);
+                  : external
+                    ? tenantBookUrl({ id: external.id, slug: external.slug }, tenantSlug)
+                    : detailUrl(w.ubn);
                 return (
                   <a
                     key={w.ubn}
@@ -707,6 +761,11 @@ export default function BphCatalogBrowser({
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-muted">
                           <BookMarked className="w-8 h-8 opacity-40" />
+                        </div>
+                      )}
+                      {external && (
+                        <div className="absolute bottom-1 left-1 right-1 px-1.5 py-0.5 text-[10px] leading-tight text-white bg-black/55 rounded-sm text-center">
+                          via {externalSourceLabel(external.source)}
                         </div>
                       )}
                     </div>

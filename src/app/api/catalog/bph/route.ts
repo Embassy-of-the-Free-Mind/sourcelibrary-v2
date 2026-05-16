@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 const PER_PAGE = 50;
 
 // New (expanded) field set — requires expand-bph-works-schema.sql to have been run.
-const FIELDS_NEW = [
+const FIELDS_NEW_CORE = [
   'ubn',
   'title', 'parallel_title', 'uniform_title',
   'author', 'variant_author', 'pseudonym',
@@ -25,7 +25,14 @@ const FIELDS_NEW = [
   'thumbnail', 'file_count',
   'sl_book_id', 'sl_book_slug',
   'ia_identifier', 'ustc_sn',
-].join(', ');
+];
+// Cross-provider link (BPH holds the work physically, scans live at another
+// archive — IA, CMC Kloss, MDZ, Gallica, e-rara, etc.). Surfaced as a
+// secondary "Read at [source]" link in the catalogue UI. Deliberately kept
+// separate from sl_book_id so existing "BPH digitised" counters stay accurate.
+// Added by add-bph-external-links.sql; gated by hasExternalLinks so the
+// route degrades gracefully on a runtime that boots before the migration runs.
+const FIELDS_EXTERNAL = ['sl_external_book_id', 'sl_external_slug', 'sl_external_source'];
 
 // Legacy field set — works against the original 11-column bph_works schema.
 const FIELDS_LEGACY = 'ubn, title, author, year, shelf_mark, keywords, ia_identifier, ustc_sn, place, publisher, printer';
@@ -37,6 +44,10 @@ let schemaMode: 'new' | 'legacy' | null = null;
 // the first query that uses them; falls back to plain ilike on the original
 // columns if they don't exist yet.
 let hasNormalizedColumns: boolean | null = null;
+// Tracks whether the sl_external_* columns from add-bph-external-links.sql
+// have been applied. Auto-detected on first error; degrades gracefully so
+// pre-migration runtimes still serve the rest of the v2 schema.
+let hasExternalLinks: boolean | null = null;
 
 function isMissingColumnError(err: { message?: string; code?: string }): boolean {
   if (!err) return false;
@@ -79,7 +90,15 @@ export async function GET(req: NextRequest) {
 
   // Run the query in the requested mode. Returns the supabase result object.
   async function runQuery(mode: 'new' | 'legacy') {
-    const fields = mode === 'new' ? FIELDS_NEW : FIELDS_LEGACY;
+    let fields: string;
+    if (mode === 'legacy') {
+      fields = FIELDS_LEGACY;
+    } else {
+      const cols = hasExternalLinks === false
+        ? FIELDS_NEW_CORE
+        : [...FIELDS_NEW_CORE, ...FIELDS_EXTERNAL];
+      fields = cols.join(', ');
+    }
     let query = supabase.from('bph_works').select(fields, { count: 'exact' });
 
     // Simple search. When the diacritic-normalised `search_norm` column
@@ -193,9 +212,18 @@ export async function GET(req: NextRequest) {
   }
 
   // Try the cached mode; on missing-column error, retry — first by
-  // disabling the diacritic-norm columns (the most recent addition), then
-  // by falling back to the legacy schema.
+  // disabling the external-link columns (the most recent addition), then
+  // the diacritic-norm columns, then by falling back to the legacy schema.
   let result = await runQuery(schemaMode || 'new');
+  if (
+    result.error &&
+    isMissingColumnError(result.error) &&
+    (schemaMode || 'new') === 'new' &&
+    hasExternalLinks !== false
+  ) {
+    hasExternalLinks = false;
+    result = await runQuery('new');
+  }
   if (
     result.error &&
     isMissingColumnError(result.error) &&
@@ -213,6 +241,7 @@ export async function GET(req: NextRequest) {
   } else if (!result.error && schemaMode === null) {
     schemaMode = 'new';
     if (hasNormalizedColumns === null) hasNormalizedColumns = true;
+    if (hasExternalLinks === null) hasExternalLinks = true;
   }
 
   if (result.error) {
