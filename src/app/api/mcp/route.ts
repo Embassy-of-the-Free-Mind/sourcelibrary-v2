@@ -3,6 +3,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth } from '@/lib/api-auth';
 import { logMcpToolCall } from '@/lib/mcp-usage';
 import { getClientIp } from '@/lib/rate-limit';
+import { getShortUrl } from '@/lib/shortlinks';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -102,6 +103,7 @@ async function searchPassages(args: Record<string, unknown>) {
     //   'summary'             = AI-generated description (do NOT quote as the author's words)
     snippet_type: r.snippet_type,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+    short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
   })) || [];
   return {
     query: result.query,
@@ -109,7 +111,7 @@ async function searchPassages(args: Record<string, unknown>) {
     returned: passages.length,
     offset,
     passages,
-    tip: 'Only quote snippets where snippet_type is "translation" or "ocr". Use get_book_text with book_id to read full context around any passage.',
+    tip: 'Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -136,13 +138,14 @@ async function searchConcept(args: Record<string, unknown>) {
     snippet_type: r.snippet_type || 'translation',
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+    short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
   })) || [];
   return {
     query: result.query,
     total_matches: passages.length,
     returned: passages.length,
     passages,
-    tip: 'Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote.',
+    tip: 'Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -152,9 +155,11 @@ async function searchWithinBook(args: Record<string, unknown>) {
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => {
     const matches = r.matches as Array<Record<string, unknown>>;
     const best = matches?.find((m) => m.field === 'translation') || matches?.[0];
-    return { page: r.pageNumber, snippet: best?.snippet, source: best?.field, match_count: matches?.length || 0, url: `https://sourcelibrary.org/book/${args.book_id}?page=${r.pageNumber}` };
+    const bookId = String(args.book_id);
+    const pageNum = Number(r.pageNumber);
+    return { page: pageNum, snippet: best?.snippet, source: best?.field, match_count: matches?.length || 0, url: `https://sourcelibrary.org/book/${bookId}?page=${pageNum}`, short_url: bookId && pageNum ? getShortUrl(bookId, pageNum) : undefined };
   });
-  return { book_id: args.book_id, query: result.query, total: result.total, results, tip: 'Use get_book_text with from/to page numbers to read the full text around these matches.' };
+  return { book_id: args.book_id, query: result.query, total: result.total, results, tip: 'Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.' };
 }
 
 async function listBooks(args: Record<string, unknown>) {
