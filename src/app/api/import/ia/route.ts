@@ -187,6 +187,60 @@ export const POST = withCuratorAuth(async (request, session) => {
     const contributor = typeof iaMetadata.contributor === 'string' ? stripHtml(iaMetadata.contributor) : null;
     const sponsor = typeof iaMetadata.sponsor === 'string' ? stripHtml(iaMetadata.sponsor) : null;
 
+    // Normalise fields that may arrive as string or array. IA frequently
+    // wraps free-text fields (description, notes) in HTML — strip it so the
+    // catalog_metadata holds clean plain text for display/search.
+    const stripText = (s: string) => s.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    const firstOf = (v: unknown): string | null => {
+      const raw = Array.isArray(v) ? (typeof v[0] === 'string' ? v[0] : null) : (typeof v === 'string' ? v : null);
+      return raw ? stripText(raw) || null : null;
+    };
+    const arrOf = (v: unknown): string[] => {
+      const raw = Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : (typeof v === 'string' ? [v] : []);
+      return raw.map(stripText).filter(Boolean);
+    };
+
+    // Pull every field we might want downstream into catalog_metadata so the
+    // book page can show provenance, ARK/OCLC/LCCN cross-refs, edition info,
+    // and scanning provenance without re-fetching IA. Drops null/empty after.
+    const iaCatalog: Record<string, unknown> = {
+      source: 'internet_archive',
+      identifier: ia_identifier,
+      ark: iaMetadata['identifier-ark'] || null,
+      mediatype: iaMetadata.mediatype || null,
+      collections: arrOf(iaMetadata.collection),
+      access_restricted: iaMetadata['access-restricted-item'] === 'true' || iaMetadata['access-restricted-item'] === true,
+      publisher: firstOf(iaMetadata.publisher),
+      place: firstOf(iaMetadata.publishplace) || firstOf(iaMetadata.place),
+      creator: firstOf(iaMetadata.creator),
+      edition: firstOf(iaMetadata.edition),
+      volume: firstOf(iaMetadata.volume),
+      description: firstOf(iaMetadata.description),
+      subjects: arrOf(iaMetadata.subject),
+      notes: arrOf(iaMetadata.notes),
+      isbn: arrOf(iaMetadata.isbn),
+      oclc_id: firstOf(iaMetadata['oclc-id']),
+      lccn: firstOf(iaMetadata.lccn),
+      openlibrary_work: firstOf(iaMetadata.openlibrary_work),
+      openlibrary_edition: firstOf(iaMetadata.openlibrary_edition),
+      external_identifiers: arrOf(iaMetadata['external-identifier']),
+      page_progression: firstOf(iaMetadata['page-progression']),
+      ppi: iaMetadata.ppi ? parseInt(String(iaMetadata.ppi), 10) : null,
+      imagecount: iaMetadata.imagecount ? parseInt(String(iaMetadata.imagecount), 10) : null,
+      ocr_detected_lang: firstOf(iaMetadata.ocr_detected_lang),
+      ocr_detected_script: firstOf(iaMetadata.ocr_detected_script),
+      date_iso: firstOf(iaMetadata.date),
+      public_date: firstOf(iaMetadata.publicdate),
+      scan_date: firstOf(iaMetadata.scandate),
+      scanning_center: firstOf(iaMetadata.scanningcenter),
+      scanner: firstOf(iaMetadata.scanner),
+      scraped_at: new Date().toISOString(),
+    };
+    for (const k of Object.keys(iaCatalog)) {
+      const v = iaCatalog[k];
+      if (v === null || v === undefined || (Array.isArray(v) && v.length === 0)) delete iaCatalog[k];
+    }
+
     const slug = await generateUniqueBookSlug(db, title, author, display_title);
 
     const bookDoc = {
@@ -208,9 +262,22 @@ export const POST = withCuratorAuth(async (request, session) => {
       pages_ocr: 0,
       pages_translated: 0,
       dublin_core: dublin_core || {
-        dc_identifier: [`IA:${ia_identifier}`],
-        dc_source: `https://archive.org/details/${ia_identifier}`
+        dc_identifier: [
+          `IA:${ia_identifier}`,
+          ...(iaCatalog.ark ? [String(iaCatalog.ark)] : []),
+          ...(iaCatalog.oclc_id ? [`OCLC:${iaCatalog.oclc_id}`] : []),
+          ...(iaCatalog.lccn ? [`LCCN:${iaCatalog.lccn}`] : []),
+        ],
+        dc_source: `https://archive.org/details/${ia_identifier}`,
+        ...(iaCatalog.publisher ? { dc_publisher: iaCatalog.publisher } : {}),
+        ...(iaCatalog.description ? { dc_description: iaCatalog.description } : {}),
+        ...(iaCatalog.subjects && Array.isArray(iaCatalog.subjects) && iaCatalog.subjects.length
+          ? { dc_subject: iaCatalog.subjects }
+          : {}),
       },
+      catalog_metadata: iaCatalog,
+      ...(iaCatalog.place ? { place_published: String(iaCatalog.place) } : {}),
+      ...(iaCatalog.publisher ? { publisher: String(iaCatalog.publisher) } : {}),
       image_source: {
         provider: 'internet_archive',
         provider_name: 'Internet Archive',
