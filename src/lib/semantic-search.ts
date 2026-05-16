@@ -194,27 +194,80 @@ export async function semanticArtworkSearch(
 // ── Global page-level semantic search ────────────────────────────────
 
 /**
+ * Translations from books processed through the multi-page pipeline can begin
+ * with an AI-written "Continuity:" preamble — a 1-3 sentence summary of what
+ * came before, separated from the real verbatim translation by a markdown
+ * heading. Snippets that lead with this preamble look quotable but aren't;
+ * worse, the slice(0, 300) often truncates entirely inside the preamble so
+ * the actual source text never surfaces.
+ *
+ * We try to detect the boundary (a heading marker like `. # `, `. -># `, or
+ * an ALL-CAPS chapter title) and trim past it. When detected the snippet is
+ * still verbatim translation. When not detected we keep the original text but
+ * tag the snippet as 'summary' so consumers don't quote AI prose as source.
+ */
+function stripContinuityPrefix(text: string): { snippet: string; type: 'translation' | 'summary' } {
+  if (!text) return { snippet: '', type: 'translation' };
+  if (!/^Continuity:\s/i.test(text)) return { snippet: text.slice(0, 300), type: 'translation' };
+
+  const head = text.slice(0, 1000);
+  // Heading markers, in order of specificity:
+  //   . # Heading  /  . ## Heading  /  . ### Heading
+  //   . ->#  Heading  (arrow-prefixed markdown heading)
+  //   . PART ONE.  /  . CHAPTER XII.  (ALL-CAPS chapter title)
+  //   . 1.  /  . 23.  (numbered section)
+  const headingMatch = head.match(/\.\s+(?:->#{1,4}\s|#{1,4}\s|[A-Z][A-Z\s']{3,}\.\s|\d+\.\s)/);
+  if (headingMatch && headingMatch.index !== undefined) {
+    const stripped = text.slice(headingMatch.index + 1).trimStart();
+    return { snippet: stripped.slice(0, 300), type: 'translation' };
+  }
+  return { snippet: text.slice(0, 300), type: 'summary' };
+}
+
+export interface SemanticPageSearchOptions {
+  yearMin?: number;
+  yearMax?: number;
+  maxPerBook?: number;
+  tenantId?: string;
+  language?: string;
+}
+
+/**
  * Global page-level semantic search via match_semantic RPC.
  * Now that all 2.6M pages have embeddings, this finds specific passages
  * that book-level search misses (e.g. Martial's "masturbator" epigram
  * inside a 400-page book about Roman wit).
+ *
+ * yearMin / yearMax / maxPerBook are applied post-hoc in JS because the
+ * underlying RPC doesn't accept these filters. We over-request from Supabase
+ * (3x the requested limit, capped at 50 — the RPC's hard ceiling) so that
+ * filtering still yields close to the requested count when filters are tight.
+ *
+ * The `tenantId` parameter is accepted as the 2nd positional arg for backward
+ * compatibility with earlier callers that passed (query, limit, tenantId).
  */
 export async function semanticPageSearchGlobal(
   query: string,
   limit: number = 15,
-  opts?: { tenantId?: string; language?: string; yearMin?: number; yearMax?: number },
+  optsOrTenantId?: SemanticPageSearchOptions | string,
 ): Promise<SemanticPageResult[]> {
+  const opts: SemanticPageSearchOptions =
+    typeof optsOrTenantId === 'string' ? { tenantId: optsOrTenantId } : (optsOrTenantId || {});
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
+
+  // Over-request only when maxPerBook filtering is needed (JS post-hoc).
+  // language/year are filtered at the RPC level so no over-requesting needed for those.
+  const overRequest = (opts.maxPerBook ?? 0) > 0 ? Math.min(limit * 3, 50) : limit;
 
   const { data, error } = await supabase.rpc('match_semantic', {
     query_embedding: JSON.stringify(queryEmbedding),
     match_threshold: 0.3,
-    match_count: limit,
-    filter_tenant_id: opts?.tenantId ?? null,
-    filter_language: opts?.language ?? null,
-    filter_year_min: opts?.yearMin ?? null,
-    filter_year_max: opts?.yearMax ?? null,
+    match_count: overRequest,
+    filter_tenant_id: opts.tenantId ?? null,
+    filter_language: opts.language ?? null,
+    filter_year_min: opts.yearMin ?? null,
+    filter_year_max: opts.yearMax ?? null,
   });
 
   if (error) {
@@ -222,17 +275,32 @@ export async function semanticPageSearchGlobal(
     return [];
   }
 
-  return (data || []).map((row: any) => ({
-    page_id: row.page_id,
-    book_id: row.book_id,
-    page_number: row.page_number,
-    snippet: (row.translation || '').slice(0, 300),
-    score: Number(row.similarity) || 0,
-    book_title: row.book_title,
-    book_author: row.book_author,
-    book_language: row.book_language,
-    book_year: row.book_year,
-  }));
+  let rows = (data || []) as any[];
+
+  if ((opts.maxPerBook ?? 0) > 0) {
+    const perBook = new Map<string, number>();
+    rows = rows.filter(r => {
+      const n = (perBook.get(r.book_id) || 0) + 1;
+      perBook.set(r.book_id, n);
+      return n <= opts.maxPerBook!;
+    });
+  }
+
+  return rows.slice(0, limit).map((row) => {
+    const { snippet, type } = stripContinuityPrefix(row.translation || '');
+    return {
+      page_id: row.page_id,
+      book_id: row.book_id,
+      page_number: row.page_number,
+      snippet,
+      snippet_type: type,
+      score: Number(row.similarity) || 0,
+      book_title: row.book_title,
+      book_author: row.book_author,
+      book_language: row.book_language,
+      book_year: row.book_year,
+    };
+  });
 }
 
 // ── Page-level scoped search (step 2: within specific books) ────────
@@ -242,6 +310,9 @@ export interface SemanticPageResult {
   book_id: string;
   page_number: number;
   snippet: string;
+  // 'translation' = verbatim source text (safe to quote)
+  // 'summary'     = AI-written continuity preamble that we could not cleanly strip
+  snippet_type?: 'translation' | 'summary';
   score: number;
   book_title: string;
   book_author: string | null;
@@ -278,15 +349,19 @@ export async function semanticPageSearchScoped(
     return [];
   }
 
-  return (data || []).map((row: any) => ({
-    page_id: row.page_id,
-    book_id: row.book_id,
-    page_number: row.page_number,
-    snippet: (row.translation || '').slice(0, 300),
-    score: Number(row.similarity) || 0,
-    book_title: row.book_title,
-    book_author: row.book_author,
-    book_language: row.book_language,
-    book_year: row.book_year,
-  }));
+  return (data || []).map((row: any) => {
+    const { snippet, type } = stripContinuityPrefix(row.translation || '');
+    return {
+      page_id: row.page_id,
+      book_id: row.book_id,
+      page_number: row.page_number,
+      snippet,
+      snippet_type: type,
+      score: Number(row.similarity) || 0,
+      book_title: row.book_title,
+      book_author: row.book_author,
+      book_language: row.book_language,
+      book_year: row.book_year,
+    };
+  });
 }
