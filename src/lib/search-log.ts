@@ -59,6 +59,13 @@ export interface LogSearchQueryInput {
   /** Free-form bag of filter params (language, year range, etc.). Values
    *  are coerced to primitives; arrays of strings preserved. */
   filters?: Record<string, unknown>;
+  /** Per-lane latency breakdown for `/api/search` (book / page / semantic_book /
+   *  semantic_page). Total wall-clock = max(lanes) since they run in parallel.
+   *  Lets us correlate slow queries with which lane stalled. */
+  stage_ms?: Record<string, number>;
+  /** True if the page-content Atlas Search lane hit its hardcoded timeout and
+   *  returned empty results. Used to size the quality-vs-latency tradeoff. */
+  page_search_timed_out?: boolean;
 }
 
 export function logSearchQuery(input: LogSearchQueryInput): void {
@@ -92,5 +99,7 @@ async function writeEntry(input: LogSearchQueryInput) {
     ip_hash: hashIp(ip),
     user_agent: (input.request.headers.get('user-agent') || '').slice(0, 200),
     filters,
+    ...(input.stage_ms ? { stage_ms: input.stage_ms } : {}),
+    ...(input.page_search_timed_out ? { page_search_timed_out: true } : {}),
   });
 }
