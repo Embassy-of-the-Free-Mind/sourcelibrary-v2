@@ -15,7 +15,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
 const API_BASE = 'https://sourcelibrary.org/api';
-const MCP_HEADERS = { 'User-Agent': 'SourceLibrary-MCP/4.2', 'Accept-Language': 'en' };
+const MCP_HEADERS = { 'User-Agent': 'SourceLibrary-MCP/4.3', 'Accept-Language': 'en' };
 
 async function apiGet(path: string, params?: URLSearchParams) {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
@@ -507,7 +507,7 @@ function buildUpgradeHint(identity: ApiIdentity, ip: string) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.2.0' },
+    { name: 'source-library', version: '4.3.0' },
     { capabilities: { tools: {} } },
   );
 
@@ -578,7 +578,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.2.0',
+    version: '4.3.0',
     description: 'Source Library MCP Server — search, read, and cite 22,000+ rare historical texts. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
