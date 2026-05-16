@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 import { getDb } from '@/lib/mongodb';
+import { logSearchQuery } from '@/lib/search-log';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +26,7 @@ export const dynamic = 'force-dynamic';
  *   max_per_book  — page-level only: cap on passages from any single book
  */
 export async function GET(request: NextRequest) {
+  const _searchStart = Date.now();
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q')?.trim();
   const level = searchParams.get('level') === 'page' ? 'page' : 'book';
@@ -64,6 +66,11 @@ export async function GET(request: NextRequest) {
         ...p,
         slug: slugMap[p.book_id] || null,
       }));
+      logSearchQuery({
+        request, route: 'search.semantic.page', query: query!,
+        total: enriched.length, ms: Date.now() - _searchStart, ok: true,
+        filters: { language, languages, exclude_languages: excludeLanguages, year_min: yearMin, year_max: yearMax, max_per_book: maxPerBook },
+      });
       return NextResponse.json({
         results: enriched,
         query,
@@ -75,6 +82,10 @@ export async function GET(request: NextRequest) {
       });
     } catch (error) {
       console.error('[semantic-search] page-level error:', error);
+      logSearchQuery({
+        request, route: 'search.semantic.page', query: query!,
+        ms: Date.now() - _searchStart, ok: false,
+      });
       return NextResponse.json(
         { error: 'Search failed', results: [], query },
         { status: 500 }
@@ -122,6 +133,11 @@ export async function GET(request: NextRequest) {
         slug: thumbnailMap[b.book_id]?.slug || b.book_id,
       }));
 
+    logSearchQuery({
+      request, route: 'search.semantic.book', query: query!,
+      total: enriched.length, ms: Date.now() - _searchStart, ok: true,
+      filters: { language, year_min: yearMin, year_max: yearMax },
+    });
     return NextResponse.json({
       results: enriched,
       query,
@@ -132,6 +148,10 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('[semantic-search] Error:', error);
+    logSearchQuery({
+      request, route: 'search.semantic.book', query: query!,
+      ms: Date.now() - _searchStart, ok: false,
+    });
     return NextResponse.json(
       { error: 'Search failed', results: [], query },
       { status: 500 }
