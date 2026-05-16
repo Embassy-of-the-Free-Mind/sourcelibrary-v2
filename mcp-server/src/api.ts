@@ -171,17 +171,22 @@ export async function searchPassages(args: {
 
   const passages = (
     result.results as Array<Record<string, unknown>>
-  )?.map((r) => ({
-    book_id: r.book_id,
-    title: r.display_title || r.title,
-    author: r.author,
-    language: r.language,
-    published: r.published,
-    page: r.page_number,
-    snippet: r.snippet,
-    snippet_source: r.snippet_type,
-    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
-  }));
+  )?.map((r) => {
+    const snippetType = r.snippet_type as string | undefined;
+    const snippetLanguage = snippetType === 'ocr' ? r.language : 'English';
+    return {
+      book_id: r.book_id,
+      title: r.display_title || r.title,
+      author: r.author,
+      original_language: r.language,
+      snippet_language: snippetLanguage,
+      published: r.published,
+      page: r.page_number,
+      snippet: r.snippet,
+      snippet_source: snippetType,
+      url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+    };
+  }).filter((p) => !!(p.snippet as string | undefined)?.trim());
 
   return {
     query: result.query,
@@ -213,14 +218,15 @@ export async function searchConcept(args: {
     book_id: r.book_id,
     title: r.book_title,
     author: r.book_author,
-    language: r.book_language,
+    original_language: r.book_language,
+    snippet_language: 'English',
     published: r.book_year,
     page: r.page_number,
     snippet: r.snippet,
     snippet_type: "translation",
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
-  })) || [];
+  })).filter((p) => !!(p.snippet as string | undefined)?.trim()) || [];
 
   return {
     query: result.query,
