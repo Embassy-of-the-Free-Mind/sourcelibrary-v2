@@ -25,24 +25,23 @@ the curator pass:
 - Book id: `6a08fd1125e3a402b23b3a75`
 - Wired into ep 216 in `shwep-book-matches.ts`
 
-## ⚠ 2. Boll (ed.), *CCAG vol. VII: Codices Germanici* (1908) — DEFERRED (found but blocked)
+## ✓ 2. Boll (ed.), *CCAG vol. VII: Codices Germanici* (1908) — IMPORTED
 
 - Cited in: Ep 217 ("βίβλος σοφίας καὶ συνέσεως ἀποτελεσμάτων Ἀπολλονίου τοῦ
   Τυανέως" — the Book of Apollonios of Tyana, pp. 175–81)
-- **Located on HathiTrust:** `mdp.39015033004238` (University of Michigan
-  scan, full-view US public domain). Catalog record:
-  https://catalog.hathitrust.org/Record/000527862
-- **Wayback PDF mirror:** 13.16 MB at
+- HathiTrust canonical: `mdp.39015033004238` (Michigan scan, full-view US)
+- Imported via the **Wayback PDF mirror** (Hathi's image endpoint 403s
+  programmatic fetches, so we used the bundled 13.16 MB PDF at
   https://web.archive.org/web/20240730113802id_/http://hellenisticastrology.com/ccag/CCAG07.pdf
-  — confirmed `application/pdf`, complete book, derives from the same Michigan scan.
-- **Blocker:** HathiTrust's `babel.hathitrust.org/cgi/imgsrv/image` endpoint
-  returns 403 to programmatic requests even with browser user-agent, so we
-  can't hot-link page images. Direct PDF download requires HathiTrust partner
-  login.
-- **Follow-up path:** use the existing `POST /api/import/pdf` route (or its
-  direct-DB analogue) to download the Wayback PDF, render pages via
-  `pdftoppm` at 150 DPI, upload to Vercel Blob/R2, and create the book +
-  pages. That's the path used by the CMC Kloss imports.
+  — same Michigan scan, no auth required).
+- Pipeline: `scripts/import/ccag-vii-pdf-direct.mjs` — download PDF,
+  `pdftoppm -jpeg -r 150 quality=85`, upload pages to R2
+  (`books/{bookId}/pages/{NNNN}.jpg`), insert book + pages as draft.
+- 141 pages (each is a 2-page book spread; ~282 book pages total).
+  Book flagged `needs_splitting: true` so the splitter pipeline can
+  carve each spread into individual pages.
+- Book id: `6a09017f94673cde0ecee5c2`
+- Wired into ep 217 in `shwep-book-matches.ts`
 
 ## Expanded scope — Renaissance dramatists (per user request)
 
