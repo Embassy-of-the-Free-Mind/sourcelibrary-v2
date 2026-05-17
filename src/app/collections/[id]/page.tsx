@@ -7,6 +7,8 @@ import { headers } from 'next/headers';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
+import IndexCatalogSection from '@/components/collections/IndexCatalogSection';
 import { notFound } from 'next/navigation';
 import { unstable_noStore } from 'next/cache';
 import CollectionSchema from '@/components/seo/CollectionSchema';
@@ -560,6 +562,34 @@ async function fetchCollectionData(id: string, provider?: string) {
     }
   }
 
+  // Reference catalog lookup — if an index_catalogs row points at this
+  // collection_slug, surface its entry_count + held-count for the page footer
+  // catalog section (issue #1851). Silent on Supabase errors; the section just
+  // doesn't render.
+  let catalogMeta: { indexId: string; indexName: string; totalEntries: number; heldCount: number } | null = null;
+  try {
+    const { data: catalogRow } = await supabase
+      .from('index_catalogs')
+      .select('id, name, entry_count')
+      .eq('collection_slug', id)
+      .maybeSingle();
+    if (catalogRow?.id) {
+      const { count: heldCount } = await supabase
+        .from('index_catalog_entries')
+        .select('id', { count: 'exact', head: true })
+        .eq('index_id', catalogRow.id)
+        .not('sl_book_id', 'is', null);
+      catalogMeta = {
+        indexId: catalogRow.id,
+        indexName: catalogRow.name,
+        totalEntries: catalogRow.entry_count || 0,
+        heldCount: heldCount || 0,
+      };
+    }
+  } catch (e) {
+    console.warn('IndexCatalog meta lookup failed:', e);
+  }
+
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     collection: collectionClean as any,
@@ -577,6 +607,7 @@ async function fetchCollectionData(id: string, provider?: string) {
     childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; artwork_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
+    catalogMeta,
   };
 }
 
@@ -598,7 +629,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, catalogMeta } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const isArtCollection = collection.collection_type === 'visual_art';
   const artworkCount = collection.artwork_count || artworks.length || 0;
@@ -1269,6 +1300,17 @@ export default async function CollectionDetailPage({ params, provider }: Props &
           collectionType={collection.collection_type}
           provider={provider}
         />
+
+        {/* Reference catalog (issue #1851) — surfaces only when an
+            index_catalogs row points at this collection_slug. */}
+        {catalogMeta && (
+          <IndexCatalogSection
+            indexId={catalogMeta.indexId}
+            indexName={catalogMeta.indexName}
+            totalEntries={catalogMeta.totalEntries}
+            heldCount={catalogMeta.heldCount}
+          />
+        )}
       </div>
       <SignUpCTA />
     </div>
