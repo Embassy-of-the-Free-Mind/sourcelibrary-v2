@@ -69,7 +69,7 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs/queue-books" \
   -d '{"bookIds": ["BOOK_ID"], "action": "image_extraction"}'
 ```
 
-**IMPORTANT: Always use `gemini-3-flash-preview` for all OCR and translation tasks. Do NOT use `gemini-2.5-flash`.**
+**Model selection:** Don't hardcode a model — prefer `getModelForBook(book)` from `src/lib/types/ai-models.ts`, which routes BPH books and non-Latin-script languages to `gemini-3-flash-preview` (full quality) and everything else to `gemini-3.1-flash-lite-preview` (50% cheaper, comparable quality on Latin script). If you must specify a model in a job payload, pick based on this rule. Never use Gemini below v3 (`gemini-2.x` is deprecated).
 
 ### Option 2: Gemini Batch API (50% Cheaper, Automated Pipeline)
 
@@ -77,9 +77,11 @@ The post-import-pipeline cron uses Gemini Batch API for automated processing of 
 
 | Job Type | API | Model | Cost |
 |----------|-----|-------|------|
-| Single page | Realtime (Lambda) | gemini-3-flash-preview | Full price |
-| batch_ocr | Batch API | gemini-3-flash-preview | **50% off** |
-| batch_translate | Batch API | gemini-3-flash-preview | **50% off** |
+| Single page | Realtime (Lambda) | per `getModelForBook(book)` | Full price |
+| batch_ocr | Batch API | per `getModelForBook(book)` | **50% off** |
+| batch_translate | Batch API | per `getModelForBook(book)` | **50% off** |
+
+Stacking discounts: lite + Batch API on a Latin-script non-BPH book is ~75% off full flash realtime.
 
 ## OCR Output Format
 
@@ -195,7 +197,7 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs" \
     \"type\": \"batch_ocr\",
     \"book_id\": \"BOOK_ID\",
     \"book_title\": \"BOOK_TITLE\",
-    \"model\": \"gemini-3-flash-preview\",
+    \"model\": \"gemini-3.1-flash-lite-preview\",
     \"language\": \"Latin\",
     \"page_ids\": $OCR_IDS
   }"
@@ -232,7 +234,7 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs" \
     \"type\": \"batch_translate\",
     \"book_id\": \"BOOK_ID\",
     \"book_title\": \"BOOK_TITLE\",
-    \"model\": \"gemini-3-flash-preview\",
+    \"model\": \"gemini-3.1-flash-lite-preview\",
     \"language\": \"Latin\",
     \"page_ids\": $TRANS_IDS
   }"
