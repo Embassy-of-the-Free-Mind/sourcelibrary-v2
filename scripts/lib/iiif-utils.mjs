@@ -120,6 +120,12 @@ export function upgradeToFullRes(url) {
     if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\//)) {
       return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
     }
+    // NDL Japan returns HTTP 500 on /full/max/ (IIIF v3 syntax their server
+    // doesn't honor); /full/full/ returns the native-resolution image. Many
+    // imported NDL URLs use /full/max/ from a v3-style manifest crawl.
+    if (url.includes('dl.ndl.go.jp') && url.includes('/full/max/')) {
+      return url.replace('/full/max/', '/full/full/');
+    }
     if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
       return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
     }
