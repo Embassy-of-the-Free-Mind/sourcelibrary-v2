@@ -368,9 +368,14 @@ async function main() {
   // Group by domain with per-domain cap
   // Skip Gallica pages — handled locally by archive-gallica.mjs (Hetzner gets 429)
   const byDomain = {};
+  // Skip domains that block Hetzner egress IPs outright — they're handled by
+  // launchd-driven local workers on Mac (archive-gallica, archive-erara).
+  // Including them here just trips the 5-fail-0-ok circuit breaker and burns
+  // failure_count budget on pages that have no chance of succeeding here.
+  const HETZNER_BLOCKED_DOMAINS = new Set(['gallica.bnf.fr', 'e-rara.ch']);
   for (const page of pages) {
     const domain = getDomain(page.photo);
-    if (domain === 'gallica.bnf.fr') continue;
+    if (HETZNER_BLOCKED_DOMAINS.has(domain)) continue;
     if (!byDomain[domain]) byDomain[domain] = [];
     if (byDomain[domain].length < MAX_PAGES_PER_DOMAIN) {
       byDomain[domain].push(page);
