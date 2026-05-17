@@ -182,6 +182,7 @@ function logBotAccess(request: NextRequest, action: string) {
 // Adding a new tenant: insert a row here and create the DNS record.
 const TENANT_SUBDOMAINS: Record<string, string> = {
   'bph.sourcelibrary.org': 'bph',
+  'kloss.sourcelibrary.org': 'kloss-collection',
   // 'ritman.sourcelibrary.org': 'ritman',
 };
 
