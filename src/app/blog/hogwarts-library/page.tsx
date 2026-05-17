@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'The Real Hogwarts Library',
     description:
       'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world — bestiaries, alchemy, grimoires, Kabbalah — read in modern English.',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/2.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg', width: 1200, height: 630 }],
   },
   alternates: {
     canonical: '/blog/hogwarts-library',
@@ -25,8 +25,8 @@ export default function HogwartsLibraryPage() {
         <ContentHeader
           title="The Real Hogwarts Library"
           subtitle="J.K. Rowling has said she &ldquo;learned a ridiculous amount about alchemy&rdquo; inventing the wizarding world. The books on Dumbledore&rsquo;s shelves are real &mdash; and most of them are here."
-          image="https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/2.jpg"
-          imageAlt="Detail from the Ripley Scroll, 15th-century illustrated alchemical manuscript, Bodleian Library MS Bodl. Rolls 1"
+          image="https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg"
+          imageAlt="Joseph Wright of Derby, The Alchymist, in Search of the Philosopher's Stone, Discovers Phosphorus, 1771. Derby Museum and Art Gallery."
         >
           <p className="text-stone-400 text-sm mt-4">17 May 2026 &middot; 16 min read</p>
         </ContentHeader>
@@ -187,18 +187,6 @@ export default function HogwartsLibraryPage() {
             &mdash; the 1750 edition of a text first printed in 1612, attributed to Flamel himself,
             describing the symbols he supposedly read on the walls of the Cimeti&egrave;re des Innocents.
           </p>
-
-          <figure className="my-12">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg"
-              alt="Joseph Wright of Derby, The Alchymist, in Search of the Philosopher's Stone, Discovers Phosphorus, 1771. Oil on canvas, Derby Museum and Art Gallery."
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-            />
-            <figcaption className="text-center text-sm text-muted mt-3 italic">
-              Joseph Wright of Derby, <em>The Alchymist, in Search of the Philosopher&rsquo;s Stone, Discovers Phosphorus</em>, 1771. Derby Museum and Art Gallery. Wright paints the historical 1669 discovery of phosphorus as if alchemy were succeeding &mdash; the alchemist kneels at his furnace as the flask blazes into white light.
-            </figcaption>
-          </figure>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             What did the Philosopher&rsquo;s Stone actually look like, in the alchemical tradition?
