@@ -501,6 +501,127 @@ function normalizeBbox(raw) {
   return { x, y, width, height };
 }
 
+// ── Phase 2: book-level scan_quality rollup ──
+// Aggregates pages.scan_quality (v2) into a book-level summary that downstream
+// use cases (dedupe tiebreaker, re-source queue, provider dashboards) can query
+// directly. Preserves legacy { score, classification } fields for backwards
+// compat with enhance-scan-quality.mjs.
+
+const CONTENT_SCAN_CLASSES = new Set([
+  'color_photo', 'color_print',
+  'grayscale_photo', 'grayscale_print',
+  'bitonal_clean', 'bitonal_microfilm', 'microfiche',
+]);
+
+function legacyClassificationFor(dominantClass) {
+  if (['bitonal_clean', 'bitonal_microfilm', 'microfiche'].includes(dominantClass)) return 'bw';
+  if (['grayscale_photo', 'grayscale_print'].includes(dominantClass)) return 'grayscale';
+  if (['color_photo', 'color_print'].includes(dominantClass)) return 'color';
+  return null;
+}
+
+async function computeBookScanQualityRollup(db, bookId) {
+  const pages = await db.collection('pages').find(
+    { book_id: bookId, 'scan_quality.version': 2 },
+    {
+      projection: {
+        id: 1, page_number: 1,
+        'scan_quality.scan_score': 1,
+        'scan_quality.scan_class': 1,
+        'scan_quality.page_completeness': 1,
+        'scan_quality.concerns': 1,
+        'scan_quality.illustration_fidelity': 1,
+        'scan_quality.class_corrected': 1,
+        'image_characteristics.megapixels': 1,
+        'image_characteristics.sharpness_var': 1,
+        'image_characteristics.flags': 1,
+      },
+    },
+  ).toArray();
+
+  if (pages.length === 0) return null;
+
+  const scores = pages
+    .map(p => p.scan_quality?.scan_score)
+    .filter(s => typeof s === 'number')
+    .sort((a, b) => a - b);
+  if (scores.length === 0) return null;
+
+  const median = scores[Math.floor(scores.length / 2)];
+  const min = scores[0];
+  const max = scores[scores.length - 1];
+
+  const classCounts = {};
+  const concernCounts = {};
+  let classCorrectedCount = 0;
+  let completenessIssues = 0;
+
+  for (const p of pages) {
+    const sq = p.scan_quality;
+    if (!sq) continue;
+    if (sq.scan_class) classCounts[sq.scan_class] = (classCounts[sq.scan_class] || 0) + 1;
+    for (const c of (sq.concerns || [])) {
+      concernCounts[c] = (concernCounts[c] || 0) + 1;
+    }
+    if (sq.class_corrected) classCorrectedCount++;
+    if (sq.page_completeness && sq.page_completeness !== 'full_page') completenessIssues++;
+  }
+
+  // Dominant class — most-frequent across all v2 pages
+  const classEntries = Object.entries(classCounts).sort((a, b) => b[1] - a[1]);
+  const dominantClass = classEntries[0]?.[0] || null;
+
+  // Content-page pointers (ignore blank / scanner_metadata / corrupt for worst/best — those
+  // are noise pages, not content quality signals)
+  const contentPages = pages
+    .filter(p => CONTENT_SCAN_CLASSES.has(p.scan_quality?.scan_class))
+    .filter(p => typeof p.scan_quality?.scan_score === 'number')
+    .sort((a, b) => a.scan_quality.scan_score - b.scan_quality.scan_score);
+  const worstImage = contentPages[0]
+    ? {
+        page_id: contentPages[0].id,
+        page_number: contentPages[0].page_number,
+        scan_score: contentPages[0].scan_quality.scan_score,
+        scan_class: contentPages[0].scan_quality.scan_class,
+        concerns: contentPages[0].scan_quality.concerns || [],
+      }
+    : null;
+  const bestImage = contentPages.length
+    ? {
+        page_id: contentPages[contentPages.length - 1].id,
+        page_number: contentPages[contentPages.length - 1].page_number,
+        scan_score: contentPages[contentPages.length - 1].scan_quality.scan_score,
+        scan_class: contentPages[contentPages.length - 1].scan_quality.scan_class,
+      }
+    : null;
+
+  return {
+    // ── legacy fields for backwards compat (enhance-scan-quality.mjs, audit-scan-quality.mjs) ──
+    score: median,
+    classification: legacyClassificationFor(dominantClass),
+
+    // ── v2 rollup fields ──
+    median_score: median,
+    min_score: min,
+    max_score: max,
+    pages_assessed: pages.length,
+    content_pages_assessed: contentPages.length,
+    dominant_scan_class: dominantClass,
+    class_distribution: classCounts,
+    concerns_distribution: concernCounts,
+    has_microfilm_pages: !!(classCounts.bitonal_microfilm || classCounts.microfiche),
+    has_blank_pages: !!classCounts.blank,
+    has_scanner_metadata_pages: !!classCounts.scanner_metadata,
+    has_corrupt_pages: !!classCounts.corrupt,
+    completeness_issues_count: completenessIssues,
+    class_corrected_count: classCorrectedCount,
+    worst_image: worstImage,
+    best_image: bestImage,
+    rollup_at: new Date(),
+    version: SCAN_QUALITY_VERSION,
+  };
+}
+
 async function setPipelineStatus(db, bookId, status, extra = {}) {
   const update = {
     'pipeline_auto.status': status,
@@ -746,9 +867,21 @@ async function processBook(db, book) {
     book_id: book.id,
     'detected_images.0': { $exists: true },
   });
+  const bookUpdate = { detected_images_count: imgCount, updated_at: now };
+
+  // Phase 2: roll up page-level scan_quality (v2) into book.scan_quality so downstream
+  // use cases (dedupe, re-source queue, dashboards) don't have to aggregate on the fly.
+  // Best-effort: any error here doesn't fail the book or block pipeline advance.
+  try {
+    const rollup = await computeBookScanQualityRollup(db, book.id);
+    if (rollup) bookUpdate.scan_quality = rollup;
+  } catch (err) {
+    console.error(`  scan_quality rollup failed for ${book.id}: ${err.message}`);
+  }
+
   await db.collection('books').updateOne(
     { id: book.id },
-    { $set: { detected_images_count: imgCount, updated_at: now } },
+    { $set: bookUpdate },
   );
 
   // Advance pipeline
