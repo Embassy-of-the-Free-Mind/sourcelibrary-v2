@@ -2850,6 +2850,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': true,
           'pipeline_auto.preview_ocr_done': { $ne: true },
+          'pipeline_auto.recitation_retry': { $ne: true },
+          'pipeline_auto.recitation_blocked': { $ne: true },
         })
         .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
         .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
