@@ -96,9 +96,9 @@ async function main() {
   console.log();
 
   // Banned books specifically
-  const bannedTotal = await books.countDocuments({ collections: 'banned-books' });
-  const bannedWithUstc = await books.countDocuments({ collections: 'banned-books', ustc_id: { $exists: true, $ne: null } });
-  console.log(`Banned-books collection: ${bannedWithUstc}/${bannedTotal} have ustc_id (${(bannedWithUstc / bannedTotal * 100).toFixed(1)}%)`);
+  const bannedTotal = await books.countDocuments({ collections: 'index-librorum-prohibitorum' });
+  const bannedWithUstc = await books.countDocuments({ collections: 'index-librorum-prohibitorum', ustc_id: { $exists: true, $ne: null } });
+  console.log(`Index Librorum Prohibitorum collection: ${bannedWithUstc}/${bannedTotal} have ustc_id (${(bannedWithUstc / bannedTotal * 100).toFixed(1)}%)`);
 
   if (WRITE_MD) {
     let md = `# USTC Linkage Coverage\n\n_Generated ${new Date().toISOString()}_\n\n`;
@@ -108,7 +108,7 @@ async function main() {
     md += `| With \`ustc_id\` | ${withUstc} (${(withUstc / total * 100).toFixed(1)}%) |\n`;
     md += `| Pre-1830 in scope | ${pre1830} |\n`;
     md += `| Pre-1830 with \`ustc_id\` | ${pre1830WithUstc} (${(pre1830WithUstc / pre1830 * 100).toFixed(1)}%) |\n`;
-    md += `| Banned books linked | ${bannedWithUstc}/${bannedTotal} (${(bannedWithUstc / bannedTotal * 100).toFixed(1)}%) |\n\n`;
+    md += `| Index Librorum Prohibitorum books linked | ${bannedWithUstc}/${bannedTotal} (${(bannedWithUstc / bannedTotal * 100).toFixed(1)}%) |\n\n`;
 
     md += `## By Decade\n\n`;
     md += `| Decade | Total | With USTC | % |\n|---|---:|---:|---:|\n`;

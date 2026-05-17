@@ -33,7 +33,7 @@ const REPORT_JSON = join(ROOT, '.claude/docs/banned-books-via-ustc.json');
 const REPORT_MD = join(ROOT, '.claude/docs/banned-books-via-ustc.md');
 
 const TAG = process.argv.includes('--tag');
-const SLUG = 'banned-books';
+const SLUG = 'index-librorum-prohibitorum';
 
 const SUPA_URL = process.env.SUPABASE_URL;
 const SUPA_KEY = process.env.SUPABASE_ANON_KEY;
@@ -172,10 +172,13 @@ async function main() {
       if (e.is_opera_omnia) confidence = 'opera_omnia';
       else if (e.title_tokens.length && hits >= Math.max(1, Math.min(3, e.title_tokens.length - 1))) confidence = hits >= 3 ? 'high' : 'medium';
       if (confidence) {
-        // Year proximity: prefer editions within 50 years of Bujanda period
+        // Year proximity: ±50 years was previously ±100 — too loose. The
+        // tighter window catches cases like David Lipsii's 1678 dissertation
+        // accidentally matching Justus Lipsius's 1613 banned Orationes via
+        // shared 17c. academic boilerplate ("in gratiam studiosae iuventutis").
         const bujandaYear = parseInt((e.period || '').match(/\d{4}/)?.[0] || '0');
         const edYear = ed.year || 0;
-        const yearOk = !bujandaYear || !edYear || Math.abs(bujandaYear - edYear) <= 100;
+        const yearOk = !bujandaYear || !edYear || Math.abs(bujandaYear - edYear) <= 50;
         if (yearOk) matches.push({ entry: e, edition: ed, confidence });
       }
     }

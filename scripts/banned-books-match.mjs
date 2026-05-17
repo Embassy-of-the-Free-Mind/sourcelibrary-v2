@@ -26,7 +26,7 @@ const REPORT_JSON = join(ROOT, '.claude/docs/banned-books-match.json');
 const REPORT_MD = join(ROOT, '.claude/docs/banned-books-match.md');
 
 const TAG = process.argv.includes('--tag');
-const SLUG = 'banned-books';
+const SLUG = 'index-librorum-prohibitorum';
 
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -80,20 +80,24 @@ function titleMatchesWork(book, entry) {
     for (const v of variants) {
       if (v.length >= 6 && title.includes(v)) return w;
     }
-    // 2) Distinctive tokens (>= 6 chars, not stopwords) — any single one is enough
+    // 2) Distinctive tokens (>= 6 chars, not stopwords) — need ≥2 hits to avoid
+    //    one-shared-word false matches like Kant's "Kritik der praktischen Vernunft"
+    //    matching the banned "Critik der reinen Vernunft" on "Vernunft" alone.
+    //    Single-token match is only allowed if the work title has exactly one token.
     const tokens = normalizeName(w.replace(/\([^)]*\)/g, ' '))
       .split(/\s+/)
       .filter(t => t.length >= 6 && !STOP.has(t));
-    for (const t of tokens) {
-      if (title.includes(t)) return w;
-    }
+    let longHits = 0;
+    for (const t of tokens) if (title.includes(t)) longHits++;
+    if (tokens.length === 1 && longHits >= 1) return w;
+    if (longHits >= 2) return w;
     // 3) Two short distinctive tokens (>= 4 chars, not stopwords)
     const short = normalizeName(w.replace(/\([^)]*\)/g, ' '))
       .split(/\s+/)
       .filter(t => t.length >= 4 && !STOP.has(t));
     let hits = 0;
     for (const t of short) if (title.includes(t)) hits++;
-    if (hits >= 2) return w;
+    if (hits >= 3) return w;
   }
   return null;
 }
@@ -123,9 +127,11 @@ async function main() {
   }));
 
   console.log(`Querying ${allAliases.length} aliases across books collection…`);
+  // Exclude non-book resource types: artwork, emblem (extracted illustrations), etc.
+  const NON_BOOK_TYPES = ['artwork', 'emblem', 'image', 'illustration', 'manuscript-fragment'];
   const candidates = await books
     .find(
-      { $or: orRegex, visible: { $ne: false } },
+      { $or: orRegex, visible: { $ne: false }, resource_type: { $nin: NON_BOOK_TYPES } },
       { projection: { id: 1, slug: 1, title: 1, author: 1, author_normalized: 1, canonical_author_normalized: 1, year: 1, language: 1, collections: 1, cover_image: 1, thumbnail: 1 } }
     )
     .toArray();
