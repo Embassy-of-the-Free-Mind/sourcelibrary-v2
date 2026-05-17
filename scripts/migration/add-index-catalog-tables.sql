@@ -56,13 +56,20 @@ CREATE TABLE IF NOT EXISTS index_catalog_entries (
   legal_ref           TEXT,
   notes               TEXT,
 
-  -- Cross-references
+  -- Source provenance — where in our scanned/OCR'd printed Index did this
+  -- entry come from? Lets us cite back to the actual page in our copy.
+  source_book_id      TEXT,                               -- Mongo book._id of the Index edition we extracted from
+  source_book_slug    TEXT,
+  source_page         INTEGER,                            -- 1-indexed page number in the scan
+  source_excerpt      TEXT,                               -- Verbatim OCR snippet from which this entry was parsed
+
+  -- Cross-references to the entry's PRIMARY work (not the source Index)
   ustc_sn             BIGINT,                             -- Linked USTC edition serial number (FK to ustc_editions.sn — not enforced; USTC table may not always have the ed)
-  sl_book_id          TEXT,                               -- Linked Source Library book Mongo _id
+  sl_book_id          TEXT,                               -- Linked Source Library book Mongo _id (we hold this work)
   sl_book_slug        TEXT,
   acquisition_sources JSONB,                              -- [{provider:'IA', url:'...'}, {provider:'Gallica', ...}]
   match_confidence    TEXT,                               -- 'high' | 'medium' | 'low' | null (no match)
-  match_method        TEXT,                               -- 'csv_import' | 'ustc_join' | 'manual'
+  match_method        TEXT,                               -- 'ocr_extraction' | 'csv_import' | 'ustc_join' | 'manual'
   field_provenance    JSONB,
 
   created_at          TIMESTAMPTZ DEFAULT NOW(),
@@ -75,6 +82,7 @@ CREATE INDEX IF NOT EXISTS ix_ice_ustc_sn             ON index_catalog_entries(u
 CREATE INDEX IF NOT EXISTS ix_ice_sl_book_id          ON index_catalog_entries(sl_book_id)     WHERE sl_book_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS ix_ice_condemnation_year   ON index_catalog_entries(condemnation_year);
 CREATE INDEX IF NOT EXISTS ix_ice_index_sl            ON index_catalog_entries(index_id, sl_book_id);
+CREATE INDEX IF NOT EXISTS ix_ice_source_book_id      ON index_catalog_entries(source_book_id) WHERE source_book_id IS NOT NULL;
 
 -- Trigram index for diacritic-insensitive search on title + author
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
