@@ -29,6 +29,7 @@ type ImageCharacteristics = {
   bimodality?: number;
   sharpness_var?: number;
   dynamic_range?: number;
+  version?: number;
   flags?: {
     is_blank?: boolean;
     is_monochrome?: boolean;
@@ -134,57 +135,112 @@ const SECTION_SPECS: SectionSpec[] = [
   },
 ];
 
+// Test the SectionSpec filter against an in-memory page record. We pre-load
+// every page from books that have a v2 rollup (small set), then bucket them
+// by section using these predicates instead of issuing 6 server-side queries
+// against an unindexed field on a million-doc collection.
+function matchesFilter(spec: SectionSpec, p: PageDoc): boolean {
+  const sq = p.scan_quality || {};
+  const ch = p.image_characteristics || {};
+  const flags = ch.flags || {};
+  const v2Page = sq.version === 2;
+  const v2Chars = ch.version === 2;
+
+  switch (spec.key) {
+    case 'normalizer':
+      return v2Page && !!sq.class_corrected;
+    case 'color-bitonal':
+      return v2Page && sq.scan_class === 'color_photo'
+        && flags.is_bitonal === true && flags.is_monochrome === true;
+    case 'microfilm-color':
+      return v2Page
+        && (sq.scan_class === 'bitonal_microfilm' || sq.scan_class === 'microfiche')
+        && typeof ch.chroma_spread === 'number' && ch.chroma_spread >= 8;
+    case 'borderline':
+      return v2Page && typeof sq.scan_score === 'number'
+        && sq.scan_score >= 40 && sq.scan_score <= 65;
+    case 'missing':
+      return v2Chars && !v2Page;
+    case 'near-blank': {
+      const contentClasses = ['bitonal_clean', 'color_photo', 'grayscale_photo', 'color_print', 'grayscale_print'];
+      return v2Page
+        && contentClasses.includes(sq.scan_class || '')
+        && typeof sq.scan_score === 'number' && sq.scan_score >= 80
+        && typeof ch.histogram_entropy === 'number' && ch.histogram_entropy < 1.5
+        && typeof ch.bimodality === 'number' && ch.bimodality >= 0.9;
+    }
+    default:
+      return false;
+  }
+}
+
 async function loadSections(): Promise<Section[]> {
   const db = await getReadDb();
   const pages = db.collection('pages');
   const books = db.collection('books');
 
+  // Drive everything from the books collection. Books with a v2 rollup is a tiny
+  // set (currently dozens); books is ~25K docs vs pages which is millions. We
+  // also pick up books with image_characteristics-only pages (the "missing
+  // scan_quality" section) by including any book that's been touched by the
+  // image-extract worker at v2 — for now we approximate this via the v2 rollup.
+  let v2Books: BookMini[] = [];
+  try {
+    v2Books = await books
+      .find(
+        { 'scan_quality.version': 2 },
+        { projection: { id: 1, title: 1, year: 1, 'image_source.provider': 1 }, maxTimeMS: 8000 },
+      )
+      .limit(500)
+      .toArray() as unknown as BookMini[];
+  } catch (err) {
+    throw new Error(`books.find(scan_quality.version=2) failed: ${err instanceof Error ? err.message : String(err)}`);
+  }
+
+  if (v2Books.length === 0) {
+    return SECTION_SPECS.map(spec => ({
+      key: spec.key,
+      title: spec.title,
+      blurb: spec.blurb,
+      rows: [],
+      total: 0,
+      saturated: false,
+    }));
+  }
+
+  const bookIds = v2Books.map(b => b.id);
+  const bookById = new Map(v2Books.map(b => [b.id, b]));
+
+  // Pull every relevant page from those books in ONE query. book_id is indexed,
+  // so this is fast even with hundreds of books. We over-fetch slightly (some
+  // pages may not match any section), then bucket client-side.
   const PROJECTION = {
     _id: 1, id: 1, book_id: 1, page_number: 1, archived_photo: 1,
     scan_quality: 1, image_characteristics: 1,
   };
 
-  // Single $facet aggregation: one round-trip, Atlas runs the six page lookups
-  // server-side in parallel rather than us issuing 12 sequential queries from
-  // a serverless function with maxPoolSize=3. Bound runtime with maxTimeMS so
-  // a single slow filter can't take down the whole render.
-  const facetStages: Record<string, unknown[]> = {};
-  for (const spec of SECTION_SPECS) {
-    facetStages[spec.key] = [
-      { $match: spec.filter },
-      { $limit: PER_SECTION },
-      { $project: PROJECTION },
-    ];
-  }
-
-  let facetResult: Record<string, PageDoc[]> = {};
+  let candidatePages: PageDoc[] = [];
   try {
-    const agg = await pages
-      .aggregate([{ $facet: facetStages }], { maxTimeMS: 25000, allowDiskUse: true })
-      .toArray();
-    facetResult = (agg[0] || {}) as unknown as Record<string, PageDoc[]>;
+    candidatePages = await pages
+      .find(
+        {
+          book_id: { $in: bookIds },
+          $or: [
+            { 'scan_quality.version': 2 },
+            { 'image_characteristics.version': 2 },
+          ],
+        },
+        { projection: PROJECTION, maxTimeMS: 15000 },
+      )
+      .toArray() as unknown as PageDoc[];
   } catch (err) {
-    // Surface a useful error in the UI rather than blanking the whole page.
-    throw new Error(`pages.$facet failed: ${err instanceof Error ? err.message : String(err)}`);
+    throw new Error(`pages.find(book_id IN v2Books) failed: ${err instanceof Error ? err.message : String(err)}`);
   }
 
-  // Pull book metadata for every page we plan to render in a single query.
-  const allRows: PageDoc[] = SECTION_SPECS.flatMap(spec => facetResult[spec.key] || []);
-  const bookIds = Array.from(new Set(allRows.map(r => r.book_id).filter(Boolean)));
-  let bookById = new Map<string, BookMini>();
-  if (bookIds.length) {
-    try {
-      const bookDocs = await books
-        .find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, year: 1, 'image_source.provider': 1 }, maxTimeMS: 8000 })
-        .toArray() as unknown as BookMini[];
-      bookById = new Map(bookDocs.map(b => [b.id, b]));
-    } catch {
-      // Book titles are nice-to-have; if this lookup times out, render page_id only.
-    }
-  }
-
+  // Bucket each page into any sections it matches.
   return SECTION_SPECS.map(spec => {
-    const rows = (facetResult[spec.key] || []).map(r => ({
+    const matching = candidatePages.filter(p => matchesFilter(spec, p));
+    const rows = matching.slice(0, PER_SECTION).map(r => ({
       ...r,
       book: bookById.get(r.book_id),
       reason: spec.reason,
@@ -194,11 +250,8 @@ async function loadSections(): Promise<Section[]> {
       title: spec.title,
       blurb: spec.blurb,
       rows,
-      // total: rows.length is what we show; we don't compute true totals (the count
-      // queries are what timed out in v1 of this page). Showing "8+ matches" when
-      // saturated is enough signal.
-      total: rows.length,
-      saturated: rows.length >= PER_SECTION,
+      total: matching.length,
+      saturated: matching.length > PER_SECTION,
     };
   });
 }
@@ -337,11 +390,11 @@ export default async function ScanEvaluationPage() {
           <div className="flex items-baseline gap-3 mb-2">
             <h2 className="text-xl font-semibold text-stone-900">{section.title}</h2>
             <span className="text-sm text-stone-500">
-              {section.rows.length === 0
+              {section.total === 0
                 ? 'no cases match this filter'
                 : section.saturated
-                  ? `showing ${section.rows.length}+ matches`
-                  : `${section.rows.length} match${section.rows.length === 1 ? '' : 'es'}`}
+                  ? `showing ${section.rows.length} of ${section.total} matches`
+                  : `${section.total} match${section.total === 1 ? '' : 'es'}`}
             </span>
           </div>
           <p className="text-sm text-stone-600 max-w-3xl mb-4 leading-snug">{section.blurb}</p>
