@@ -61,7 +61,78 @@ type Section = {
   blurb: string;
   rows: Array<PageDoc & { book?: BookMini; reason: string }>;
   total: number;
+  saturated: boolean;
 };
+
+type SectionSpec = {
+  key: string;
+  title: string;
+  blurb: string;
+  reason: string;
+  filter: Record<string, unknown>;
+};
+
+const PER_SECTION = 8;
+
+const SECTION_SPECS: SectionSpec[] = [
+  {
+    key: 'normalizer',
+    title: 'Normalizer auto-corrected',
+    blurb: 'The v4 worker flagged Gemini’s response as internally contradictory and fixed scan_class to match the concerns/completeness fields. These are exactly where Gemini self-reported contradictory evidence — worth confirming the auto-fix landed on the right class.',
+    reason: 'Normalizer overrode Gemini’s scan_class.',
+    filter: { 'scan_quality.version': 2, 'scan_quality.class_corrected': { $exists: true } },
+  },
+  {
+    key: 'color-bitonal',
+    title: 'Color photograph of bitonal content',
+    blurb: 'Gemini called the SCAN color_photo but the pixel-stats flag the IMAGE as bitonal + monochrome. Definition tension: a clean color photograph of black ink on aged paper. Should this be color_photo (the medium) or bitonal_clean (the content)? Schema says scan medium wins, but the cases are worth confirming.',
+    reason: 'Pixel-stats say monochrome/bitonal; class says color_photo.',
+    filter: {
+      'scan_quality.version': 2,
+      'scan_quality.scan_class': 'color_photo',
+      'image_characteristics.flags.is_bitonal': true,
+      'image_characteristics.flags.is_monochrome': true,
+    },
+  },
+  {
+    key: 'microfilm-color',
+    title: 'Microfilm class on a page with color information',
+    blurb: 'Gemini called this bitonal_microfilm or microfiche, but the pixel-stats see meaningful color spread (chroma > 8) — incompatible with a true bitonal scan. Likely the model overreached on microfilm signals. These are the Pausanias-p623 family: a color photograph of yellowed line art misread as microfilm.',
+    reason: 'scan_class says microfilm but pixel chroma_spread > 8.',
+    filter: {
+      'scan_quality.version': 2,
+      'scan_quality.scan_class': { $in: ['bitonal_microfilm', 'microfiche'] },
+      'image_characteristics.chroma_spread': { $gte: 8 },
+    },
+  },
+  {
+    key: 'borderline',
+    title: 'Borderline scores (40–65)',
+    blurb: 'The mid-band where Gemini’s judgments are most unstable across same-source pages. Worth eyeballing a few — if you mostly agree, the system is calibrated; if you disagree, the rubric needs tuning.',
+    reason: 'Score in 40–65 range — stability test.',
+    filter: { 'scan_quality.version': 2, 'scan_quality.scan_score': { $gte: 40, $lte: 65 } },
+  },
+  {
+    key: 'missing',
+    title: 'scan_quality missing despite characteristics present',
+    blurb: 'Pages where the deterministic image_characteristics landed but Gemini didn’t emit a scan_quality block. responseSchema is supposed to make this impossible — each occurrence is evidence the SDK isn’t strictly enforcing required fields.',
+    reason: 'image_characteristics present but scan_quality missing.',
+    filter: { 'image_characteristics.version': 2, 'scan_quality.version': { $ne: 2 } },
+  },
+  {
+    key: 'near-blank',
+    title: 'High score despite near-blank pixel-stats',
+    blurb: 'Score ≥ 80 but the page’s pixel histogram says almost nothing is there (entropy < 1.5, bimodality ≥ 0.9). These are pages like a near-empty endpaper with a small library stamp — likely over-scored. An L1-backstop rule (tracked in #16) would downgrade these to blank or low scores.',
+    reason: 'High score on a page whose characteristics scream near-blank.',
+    filter: {
+      'scan_quality.version': 2,
+      'scan_quality.scan_class': { $in: ['bitonal_clean', 'color_photo', 'grayscale_photo', 'color_print', 'grayscale_print'] },
+      'scan_quality.scan_score': { $gte: 80 },
+      'image_characteristics.histogram_entropy': { $lt: 1.5 },
+      'image_characteristics.bimodality': { $gte: 0.9 },
+    },
+  },
+];
 
 async function loadSections(): Promise<Section[]> {
   const db = await getReadDb();
@@ -72,123 +143,64 @@ async function loadSections(): Promise<Section[]> {
     _id: 1, id: 1, book_id: 1, page_number: 1, archived_photo: 1,
     scan_quality: 1, image_characteristics: 1,
   };
-  const PER_SECTION = 8;
 
-  // ── Section 1: normalizer auto-corrected ──
-  const correctedFilter = {
-    'scan_quality.version': 2,
-    'scan_quality.class_corrected': { $exists: true },
-  };
-  const corrected = await pages.find(correctedFilter, { projection: PROJECTION }).limit(PER_SECTION).toArray() as unknown as PageDoc[];
-  const correctedTotal = await pages.countDocuments(correctedFilter);
+  // Single $facet aggregation: one round-trip, Atlas runs the six page lookups
+  // server-side in parallel rather than us issuing 12 sequential queries from
+  // a serverless function with maxPoolSize=3. Bound runtime with maxTimeMS so
+  // a single slow filter can't take down the whole render.
+  const facetStages: Record<string, unknown[]> = {};
+  for (const spec of SECTION_SPECS) {
+    facetStages[spec.key] = [
+      { $match: spec.filter },
+      { $limit: PER_SECTION },
+      { $project: PROJECTION },
+    ];
+  }
 
-  // ── Section 2: color_photo class but pixel-stats say monochrome bitonal ──
-  // (The definition tension — clean color scan of bitonal line-art content)
-  const colorBitonalFilter = {
-    'scan_quality.version': 2,
-    'scan_quality.scan_class': 'color_photo',
-    'image_characteristics.flags.is_bitonal': true,
-    'image_characteristics.flags.is_monochrome': true,
-  };
-  const colorBitonal = await pages.find(colorBitonalFilter, { projection: PROJECTION }).limit(PER_SECTION).toArray() as unknown as PageDoc[];
-  const colorBitonalTotal = await pages.countDocuments(colorBitonalFilter);
+  let facetResult: Record<string, PageDoc[]> = {};
+  try {
+    const agg = await pages
+      .aggregate([{ $facet: facetStages }], { maxTimeMS: 25000, allowDiskUse: true })
+      .toArray();
+    facetResult = (agg[0] || {}) as unknown as Record<string, PageDoc[]>;
+  } catch (err) {
+    // Surface a useful error in the UI rather than blanking the whole page.
+    throw new Error(`pages.$facet failed: ${err instanceof Error ? err.message : String(err)}`);
+  }
 
-  // ── Section 3: bitonal_microfilm class but page has color information ──
-  // (Possible false positive on microfilm — the scan IS color, but Gemini saw artifacts)
-  const microfilmColorFilter = {
-    'scan_quality.version': 2,
-    'scan_quality.scan_class': { $in: ['bitonal_microfilm', 'microfiche'] },
-    'image_characteristics.chroma_spread': { $gte: 8 },
-  };
-  const microfilmColor = await pages.find(microfilmColorFilter, { projection: PROJECTION }).limit(PER_SECTION).toArray() as unknown as PageDoc[];
-  const microfilmColorTotal = await pages.countDocuments(microfilmColorFilter);
-
-  // ── Section 4: borderline scores 40-65 ──
-  const borderlineFilter = {
-    'scan_quality.version': 2,
-    'scan_quality.scan_score': { $gte: 40, $lte: 65 },
-  };
-  const borderline = await pages.find(borderlineFilter, { projection: PROJECTION }).limit(PER_SECTION).toArray() as unknown as PageDoc[];
-  const borderlineTotal = await pages.countDocuments(borderlineFilter);
-
-  // ── Section 5: missing scan_quality despite image_characteristics ──
-  // (responseSchema enforcement gap)
-  const missingFilter = {
-    'image_characteristics.version': 2,
-    'scan_quality.version': { $ne: 2 },
-  };
-  const missing = await pages.find(missingFilter, { projection: PROJECTION }).limit(PER_SECTION).toArray() as unknown as PageDoc[];
-  const missingTotal = await pages.countDocuments(missingFilter);
-
-  // ── Section 6: characteristics say near-blank but classified as content ──
-  // (The Eckhart-p4-style case — bookplate stamp page over-scored as bitonal_clean 98)
-  const nearBlankFilter = {
-    'scan_quality.version': 2,
-    'scan_quality.scan_class': { $in: ['bitonal_clean', 'color_photo', 'grayscale_photo', 'color_print', 'grayscale_print'] },
-    'scan_quality.scan_score': { $gte: 80 },
-    'image_characteristics.histogram_entropy': { $lt: 1.5 },
-    'image_characteristics.bimodality': { $gte: 0.9 },
-  };
-  const nearBlank = await pages.find(nearBlankFilter, { projection: PROJECTION }).limit(PER_SECTION).toArray() as unknown as PageDoc[];
-  const nearBlankTotal = await pages.countDocuments(nearBlankFilter);
-
-  // Collect all unique book_ids from rows we plan to render so we can pull titles
-  // in a single batched query.
-  const allRows: PageDoc[] = [...corrected, ...colorBitonal, ...microfilmColor, ...borderline, ...missing, ...nearBlank] as PageDoc[];
+  // Pull book metadata for every page we plan to render in a single query.
+  const allRows: PageDoc[] = SECTION_SPECS.flatMap(spec => facetResult[spec.key] || []);
   const bookIds = Array.from(new Set(allRows.map(r => r.book_id).filter(Boolean)));
-  const bookDocs = bookIds.length
-    ? await books.find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, year: 1, 'image_source.provider': 1 } }).toArray() as unknown as BookMini[]
-    : [];
-  const bookById = new Map<string, BookMini>();
-  for (const b of bookDocs) bookById.set(b.id, b);
+  let bookById = new Map<string, BookMini>();
+  if (bookIds.length) {
+    try {
+      const bookDocs = await books
+        .find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, year: 1, 'image_source.provider': 1 }, maxTimeMS: 8000 })
+        .toArray() as unknown as BookMini[];
+      bookById = new Map(bookDocs.map(b => [b.id, b]));
+    } catch {
+      // Book titles are nice-to-have; if this lookup times out, render page_id only.
+    }
+  }
 
-  const attach = (rows: PageDoc[], reason: string) =>
-    rows.map(r => ({ ...r, book: bookById.get(r.book_id), reason }));
-
-  return [
-    {
-      key: 'normalizer',
-      title: 'Normalizer auto-corrected',
-      blurb: 'The v4 worker flagged Gemini’s response as internally contradictory and fixed scan_class to match the concerns/completeness fields. These are exactly where Gemini self-reported contradictory evidence — worth confirming the auto-fix landed on the right class.',
-      rows: attach(corrected, 'Normalizer overrode Gemini’s scan_class.'),
-      total: correctedTotal,
-    },
-    {
-      key: 'color-bitonal',
-      title: 'Color photograph of bitonal content',
-      blurb: 'Gemini called the SCAN color_photo but the pixel-stats flag the IMAGE as bitonal + monochrome. Definition tension: a clean color photograph of black ink on aged paper. Should this be color_photo (the medium) or bitonal_clean (the content)? Schema says scan medium wins, but the cases are worth confirming.',
-      rows: attach(colorBitonal, 'Pixel-stats say monochrome/bitonal; class says color_photo.'),
-      total: colorBitonalTotal,
-    },
-    {
-      key: 'microfilm-color',
-      title: 'Microfilm class on a page with color information',
-      blurb: 'Gemini called this bitonal_microfilm or microfiche, but the pixel-stats see meaningful color spread (chroma > 8) — incompatible with a true bitonal scan. Likely the model overreached on microfilm signals. These are the Pausanias-p623 family: a color photograph of yellowed line art misread as microfilm.',
-      rows: attach(microfilmColor, 'scan_class says microfilm but pixel chroma_spread > 8.'),
-      total: microfilmColorTotal,
-    },
-    {
-      key: 'borderline',
-      title: 'Borderline scores (40–65)',
-      blurb: 'The mid-band where Gemini’s judgments are most unstable across same-source pages. Worth eyeballing a few — if you mostly agree, the system is calibrated; if you disagree, the rubric needs tuning.',
-      rows: attach(borderline, 'Score in 40–65 range — stability test.'),
-      total: borderlineTotal,
-    },
-    {
-      key: 'missing',
-      title: 'scan_quality missing despite characteristics present',
-      blurb: 'Pages where the deterministic image_characteristics landed but Gemini didn’t emit a scan_quality block. responseSchema is supposed to make this impossible — each occurrence is evidence the SDK isn’t strictly enforcing required fields.',
-      rows: attach(missing, 'image_characteristics present but scan_quality missing.'),
-      total: missingTotal,
-    },
-    {
-      key: 'near-blank',
-      title: 'High score despite near-blank pixel-stats',
-      blurb: 'Score ≥ 80 but the page’s pixel histogram says almost nothing is there (entropy < 1.5, bimodality ≥ 0.9). These are pages like a near-empty endpaper with a small library stamp — likely over-scored. An L1-backstop rule (tracked in #16) would downgrade these to blank or low scores.',
-      rows: attach(nearBlank, 'High score on a page whose characteristics scream near-blank.'),
-      total: nearBlankTotal,
-    },
-  ];
+  return SECTION_SPECS.map(spec => {
+    const rows = (facetResult[spec.key] || []).map(r => ({
+      ...r,
+      book: bookById.get(r.book_id),
+      reason: spec.reason,
+    }));
+    return {
+      key: spec.key,
+      title: spec.title,
+      blurb: spec.blurb,
+      rows,
+      // total: rows.length is what we show; we don't compute true totals (the count
+      // queries are what timed out in v1 of this page). Showing "8+ matches" when
+      // saturated is enough signal.
+      total: rows.length,
+      saturated: rows.length >= PER_SECTION,
+    };
+  });
 }
 
 function pageImageUrl(p: PageDoc): string {
@@ -325,7 +337,11 @@ export default async function ScanEvaluationPage() {
           <div className="flex items-baseline gap-3 mb-2">
             <h2 className="text-xl font-semibold text-stone-900">{section.title}</h2>
             <span className="text-sm text-stone-500">
-              showing {section.rows.length} of {section.total} total
+              {section.rows.length === 0
+                ? 'no cases match this filter'
+                : section.saturated
+                  ? `showing ${section.rows.length}+ matches`
+                  : `${section.rows.length} match${section.rows.length === 1 ? '' : 'es'}`}
             </span>
           </div>
           <p className="text-sm text-stone-600 max-w-3xl mb-4 leading-snug">{section.blurb}</p>
