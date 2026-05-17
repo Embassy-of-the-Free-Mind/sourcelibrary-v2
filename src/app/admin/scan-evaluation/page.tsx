@@ -174,27 +174,54 @@ function matchesFilter(spec: SectionSpec, p: PageDoc): boolean {
   }
 }
 
+// Seed list of book IDs known to have v2 scan_quality rollup. We can't query
+// books.scan_quality.version=2 efficiently because the field isn't indexed
+// (and Vercel→Atlas cross-region + Hetzner load makes COLLSCANs blow past
+// our 8s timeout even on the 25K-doc books collection).
+//
+// As Phase 3 backfills more books, add their IDs here. When this list grows
+// past ~100, the right move is to ask Atlas admin for an index on
+// books.scan_quality.version and re-enable the dynamic query path below.
+const KNOWN_V2_BOOK_IDS: string[] = [
+  // Phase 1 verification (Llull, Lesser Key, Schlacht)
+  '695592c47bd6d2cd1d61b10b',
+  '695936103b43cb6630c91643',
+  '6968d9624fa3b04c6de86ecd',
+  // v4 production verification
+  '6992ca1cd4d545ae73fed82b', // Pelliot chinois (Dunhuang)
+  '69a5ee3cbfd8cafd91e43719', // Schachzabelspiel
+  '69b6e5d0f8a84d859cddaf05', // Roger Bacon Opus Maius
+  '6955d9b48407b7c9ae212fd5', // Meister Eckhart
+  // Targeted-test set
+  '69908a7093003de39c965796', // Haut-Senegal-Niger
+  '69b51e17261c58d63664f680', // Agrippa De Occulta IV
+  '69b656eb18b87551bfce4b84', // Apianus Cosmographia
+  '6992cd9643713c66ea63769d', // 三才圖會 Sancai Tuhui
+  '69924f5d5976b55115ffe2fd', // Pausanias Vol 5
+  '69b2234e56715b0e32477031', // Vitruvius Aldine
+];
+
 async function loadSections(): Promise<Section[]> {
   const db = await getReadDb();
   const pages = db.collection('pages');
   const books = db.collection('books');
 
-  // Drive everything from the books collection. Books with a v2 rollup is a tiny
-  // set (currently dozens); books is ~25K docs vs pages which is millions. We
-  // also pick up books with image_characteristics-only pages (the "missing
-  // scan_quality" section) by including any book that's been touched by the
-  // image-extract worker at v2 — for now we approximate this via the v2 rollup.
+  // The book set is driven by KNOWN_V2_BOOK_IDS — fast indexed { id: { $in } }
+  // lookup instead of an unindexed COLLSCAN on scan_quality.version. Trades
+  // dynamism for sub-second page loads. See the comment above the constant
+  // for the indexing decision.
+  const bookIds = KNOWN_V2_BOOK_IDS;
+
   let v2Books: BookMini[] = [];
   try {
     v2Books = await books
       .find(
-        { 'scan_quality.version': 2 },
+        { id: { $in: bookIds } },
         { projection: { id: 1, title: 1, year: 1, 'image_source.provider': 1 }, maxTimeMS: 8000 },
       )
-      .limit(500)
       .toArray() as unknown as BookMini[];
   } catch (err) {
-    throw new Error(`books.find(scan_quality.version=2) failed: ${err instanceof Error ? err.message : String(err)}`);
+    throw new Error(`books.find(id IN known_v2) failed: ${err instanceof Error ? err.message : String(err)}`);
   }
 
   if (v2Books.length === 0) {
@@ -208,7 +235,6 @@ async function loadSections(): Promise<Section[]> {
     }));
   }
 
-  const bookIds = v2Books.map(b => b.id);
   const bookById = new Map(v2Books.map(b => [b.id, b]));
 
   // Pull every relevant page from those books in ONE query. book_id is indexed,
