@@ -188,6 +188,18 @@ export default function HogwartsLibraryPage() {
             describing the symbols he supposedly read on the walls of the Cimeti&egrave;re des Innocents.
           </p>
 
+          <figure className="my-12">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg"
+              alt="Joseph Wright of Derby, The Alchymist, in Search of the Philosopher's Stone, Discovers Phosphorus, 1771. Oil on canvas, Derby Museum and Art Gallery."
+              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              Joseph Wright of Derby, <em>The Alchymist, in Search of the Philosopher&rsquo;s Stone, Discovers Phosphorus</em>, 1771. Derby Museum and Art Gallery. Wright paints the historical 1669 discovery of phosphorus as if alchemy were succeeding &mdash; the alchemist kneels at his furnace as the flask blazes into white light.
+            </figcaption>
+          </figure>
+
           <p className="text-secondary leading-relaxed mb-6 font-body">
             What did the Philosopher&rsquo;s Stone actually look like, in the alchemical tradition?
             Source Library has{' '}
@@ -222,17 +234,33 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            <Link href="/book/699065973dc2ed39a49f1e71">
+            <Link href="/book/69526359ab34727b1f046d5a">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/2.jpg"
-                alt="Detail from the Ripley Scroll, a 15th-century illustrated alchemical manuscript at the Bodleian Library showing the alchemical Work as a sequence of figures and verses"
+                src="https://images.sourcelibrary.org/gallery/69526359ab34727b1f046d5a/69568fa01479a63c1108cdb0-0.jpg"
+                alt="Plate 4 of the Mutus Liber: alchemists collecting morning dew on linen sheets, with Sol and Luna above. 1677 engraving."
                 className="w-full max-w-md mx-auto rounded-lg shadow-md"
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The Ripley Scroll &mdash; a 6-metre illustrated alchemical manuscript, c. 1450, attributed
-              to George Ripley.{' '}
+              The <em>Mutus Liber</em>, Plate 4 (1677): alchemists collect morning dew on linen sheets stretched in a meadow, while Sol and Luna preside from above. The whole &ldquo;wordless book&rdquo; teaches the Stone in pictures alone.{' '}
+              <Link href="/book/69526359ab34727b1f046d5a" className="text-accent-rust hover:text-accent-rust not-italic">
+                View in Source Library &rarr;
+              </Link>
+            </figcaption>
+          </figure>
+
+          <figure className="my-12">
+            <Link href="/book/699065973dc2ed39a49f1e71">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/gallery/699065973dc2ed39a49f1e71/699065983dc2ed39a49f1e72-0.jpg"
+                alt="Opening of the Ripley Scroll showing Hermes Trismegistus holding an alchemical flask and a toad. c. 1450, Bodleian MS Bodl. Rolls 1."
+                className="w-full max-w-md mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              The opening of the Ripley Scroll, c. 1450 &mdash; Hermes Trismegistus holding an alchemical flask and a toad. Six metres of illustrated alchemy, kept rolled.{' '}
               <Link href="/book/699065973dc2ed39a49f1e71" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
@@ -304,6 +332,23 @@ export default function HogwartsLibraryPage() {
             (c. 1000 CE) contains the original mandrake plates &mdash; the source from which all later
             screaming-mandrake imagery descends.
           </p>
+
+          <figure className="my-12">
+            <Link href="/book/6957ef6bcbe1dcad7b76beff">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/gallery/6957ef6bcbe1dcad7b76beff/6957ef6bcbe1dcad7b76c099-0.jpg"
+                alt="Hand-coloured woodcut from the Hortus Sanitatis, 1491: an apothecary's shop with two figures and shelves of medicinal jars."
+                className="w-full max-w-md mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              The apothecary&rsquo;s shop, from the <em>Hortus Sanitatis</em> (1491) &mdash; the universal Garden of Health. Hand-coloured woodcut.{' '}
+              <Link href="/book/6957ef6bcbe1dcad7b76beff" className="text-accent-rust hover:text-accent-rust not-italic">
+                View in Source Library &rarr;
+              </Link>
+            </figcaption>
+          </figure>
         </section>
 
         <hr className="border-border-light my-12" />
@@ -393,6 +438,23 @@ export default function HogwartsLibraryPage() {
             (1551) cover to cover &mdash; the founding text of modern zoology, in which unicorns and
             manticores sit alongside cats and goats with the same matter-of-fact tone.
           </p>
+
+          <figure className="my-12">
+            <Link href="/book/6958e968813ea03889c32a24">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/gallery/6958e968813ea03889c32a24/6958e968813ea03889c32bb1-0.jpg"
+                alt="Woodcut of a seven-headed hydra with human-like faces, long scaly body, and clawed feet. From Aldrovandi's Serpentum et Draconum Historiae, 1640."
+                className="w-full max-w-md mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              A seven-headed hydra, from Ulisse Aldrovandi&rsquo;s <em>Serpentum et Draconum Historiae</em> (1640). Aldrovandi catalogued these alongside actual snakes &mdash; the line between zoology and fantastic beasts was thinner than ours.{' '}
+              <Link href="/book/6958e968813ea03889c32a24" className="text-accent-rust hover:text-accent-rust not-italic">
+                View in Source Library &rarr;
+              </Link>
+            </figcaption>
+          </figure>
         </section>
 
         <hr className="border-border-light my-12" />
@@ -444,6 +506,18 @@ export default function HogwartsLibraryPage() {
             it. Hermione&rsquo;s textbook on the persecution of medieval witches isn&rsquo;t a comic
             invention.
           </p>
+
+          <figure className="my-12">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/9/93/Francisco_de_Goya_y_Lucientes_-_Witches%27_Sabbath_-_WGA10007.jpg"
+              alt="Francisco de Goya, Witches' Sabbath (El Aquelarre), 1798. Oil on canvas, Museo Lázaro Galdiano, Madrid."
+              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
+            />
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              Francisco de Goya, <em>Witches&rsquo; Sabbath (El Aquelarre)</em>, 1798. Museo L&aacute;zaro Galdiano, Madrid. Goya paints the witch-trial imagination at its most baroque &mdash; a horned satyr-goat presides over a coven offering infants, two centuries after the <em>Malleus</em>.
+            </figcaption>
+          </figure>
         </section>
 
         <hr className="border-border-light my-12" />
@@ -543,6 +617,23 @@ export default function HogwartsLibraryPage() {
             crystal ball, recording the apparitions in his journals, which Meric Casaubon published
             posthumously. It is the strangest book in this entire collection.
           </p>
+
+          <figure className="my-12">
+            <Link href="/book/69593025a41e40e9146a4acd">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/gallery/69593025a41e40e9146a4acd/69593026a41e40e9146a4b2b-0.jpg"
+                alt="The Holy Table from John Dee's Enochian system: a square diagram with letters and seals, used to summon and converse with angels."
+                className="w-full max-w-md mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              The Holy Table from John Dee&rsquo;s Enochian system &mdash; the actual apparatus on which Dee and Edward Kelley conversed with what they took to be angels. Reproduced in Meric Casaubon&rsquo;s 1659 edition.{' '}
+              <Link href="/book/69593025a41e40e9146a4acd" className="text-accent-rust hover:text-accent-rust not-italic">
+                View in Source Library &rarr;
+              </Link>
+            </figcaption>
+          </figure>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             For Astronomy &mdash; Professor Sinistra&rsquo;s class &mdash; the standard texts are still
@@ -682,6 +773,23 @@ export default function HogwartsLibraryPage() {
             memoriae</em> &mdash; the art of memory &mdash; with the magic dialled up but the
             architecture intact.
           </p>
+
+          <figure className="my-12">
+            <Link href="/book/69904dd67d19f3f2aac1d49d">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/gallery/69904dd67d19f3f2aac1d49d/69904dd77d19f3f2aac1d500-0.jpg"
+                alt="Robert Fludd's Monochordum Mundanum: the divine hand reaching from a cloud to tune a cosmic monochord stretched across the spheres of the universe."
+                className="w-full max-w-md mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              Robert Fludd, <em>Monochordum Mundanum</em> (the World Monochord), 1617. The divine hand reaches from a cloud to tune the universe like a musical instrument. Fludd&rsquo;s book contains the most elaborate memory diagrams in the European tradition.{' '}
+              <Link href="/book/69904dd67d19f3f2aac1d49d" className="text-accent-rust hover:text-accent-rust not-italic">
+                View in Source Library &rarr;
+              </Link>
+            </figcaption>
+          </figure>
         </section>
 
         <hr className="border-border-light my-12" />
