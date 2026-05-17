@@ -1160,22 +1160,61 @@ async function run() {
   // texts. Lambda workers have a fallback chain (2.5-flash → 2.0-flash → 1.5-flash).
   // Reset to archive_complete with recitation_retry flag so the orchestrator can
   // route these through Lambda or use a different batch model.
+  //
+  // Two-pass logic to detect second consecutive RECITATION (fallback model also failed):
+  //   1st RECITATION → set recitation_retry: true  (orchestrator will use gemini-2.5-flash)
+  //   2nd RECITATION → set recitation_blocked: true + needs_attention (permanent block, human review)
   if (recitationBooks.size > 0) {
-    console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
+    console.log(`\nRECITATION recovery: checking ${recitationBooks.size} books`);
+
+    // Fetch current recitation_retry state for all affected books in one query
+    const bookIdList = [...recitationBooks];
+    const existingBooks = await db.collection('books')
+      .find(
+        { id: { $in: bookIdList } },
+        { projection: { id: 1, 'pipeline_auto.recitation_retry': 1 } }
+      )
+      .toArray();
+    const alreadyInRetry = new Set(
+      existingBooks
+        .filter(b => b.pipeline_auto?.recitation_retry === true)
+        .map(b => b.id)
+    );
+
     for (const bookId of recitationBooks) {
       try {
-        await db.collection('books').updateOne(
-          { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
-          {
-            $set: {
-              'pipeline_auto.status': 'archive_complete',
-              'pipeline_auto.last_updated': new Date(),
-              'pipeline_auto.recitation_retry': true,
-              updated_at: new Date(),
-            },
-          }
-        );
-        console.log(`  Reset ${bookId} -> archive_complete (recitation_retry)`);
+        if (alreadyInRetry.has(bookId)) {
+          // Second consecutive RECITATION — fallback model also failed. Permanent block.
+          await db.collection('books').updateOne(
+            { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
+            {
+              $set: {
+                'pipeline_auto.status': 'archive_complete',
+                'pipeline_auto.last_updated': new Date(),
+                'pipeline_auto.recitation_blocked': true,
+                'pipeline_auto.recitation_blocked_at': new Date(),
+                needs_attention: true,
+                updated_at: new Date(),
+              },
+              $unset: { 'pipeline_auto.recitation_retry': '' },
+            }
+          );
+          console.log(`  RECITATION BLOCKED ${bookId} — fallback model also failed, needs human review`);
+        } else {
+          // First RECITATION — reset for retry with fallback model (gemini-2.5-flash)
+          await db.collection('books').updateOne(
+            { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
+            {
+              $set: {
+                'pipeline_auto.status': 'archive_complete',
+                'pipeline_auto.last_updated': new Date(),
+                'pipeline_auto.recitation_retry': true,
+                updated_at: new Date(),
+              },
+            }
+          );
+          console.log(`  Reset ${bookId} -> archive_complete (recitation_retry, will use fallback model)`);
+        }
       } catch (e) { console.error(`  RECITATION reset error ${bookId}: ${e.message}`); }
     }
   }
