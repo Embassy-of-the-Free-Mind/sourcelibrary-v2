@@ -337,7 +337,8 @@ async function run() {
     lines.push(`  Archive failures (24h): ${brokenImages}`);
 
     const message = lines.join('\n');
-    const title = `📊 Daily snapshot — ${dateLabel}`;
+    // Title must be ASCII (HTTP header constraint) — emoji belongs in body / Tags.
+    const title = `Daily snapshot — ${dateLabel}`;
 
     console.log(`\n${title}\n${'─'.repeat(40)}`);
     console.log(message);
