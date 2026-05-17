@@ -8,9 +8,17 @@
 -- catches the error and returns []. Discovered 2026-05-15 while shipping the
 -- MCP search_concept tool that depends on this.
 --
+-- Cross-lingual gotcha (fixed 2026-05-17): HNSW + post-filter returns 0 rows
+-- when filter_language scopes the result set to a language that doesn't appear
+-- in the top-N nearest neighbors of the query. Example: an English query for
+-- "medicinal herbs" finds Latin/English passages in the top 200, so a Chinese
+-- language filter strips everything to 0. Fix: when filter_language is set,
+-- branch to a sequential-scan path that filters by language FIRST then sorts
+-- by similarity. 88K Chinese rows is small enough to scan in <1s. The HNSW
+-- index is still used when filter_language is null (the common case).
+--
 -- Tenant filter: page_translations doesn't currently carry a tenant_id column,
--- so we accept the parameter for API compatibility but ignore it. Add a
--- tenant_id column + filter clause once multi-tenant page scoping is needed.
+-- so we accept the parameter for API compatibility but ignore it.
 
 CREATE OR REPLACE FUNCTION match_semantic(
   query_embedding vector(768),
@@ -35,27 +43,50 @@ RETURNS TABLE (
 LANGUAGE plpgsql
 AS $$
 BEGIN
-  RETURN QUERY
-  SELECT
-    p.page_id,
-    p.book_id,
-    p.page_number,
-    p.translation,
-    p.book_title,
-    p.book_author,
-    p.book_language,
-    p.book_year,
-    1 - (p.embedding <=> query_embedding) AS similarity
-  FROM page_translations p
-  WHERE p.embedding IS NOT NULL
-    AND 1 - (p.embedding <=> query_embedding) > match_threshold
-    -- filter_tenant_id is accepted for API parity but is a no-op:
-    -- page_translations has no tenant_id column yet.
-    AND (filter_language IS NULL OR p.book_language = filter_language)
-    AND (filter_year_min IS NULL OR p.book_year >= filter_year_min)
-    AND (filter_year_max IS NULL OR p.book_year <= filter_year_max)
-  ORDER BY p.embedding <=> query_embedding
-  LIMIT match_count;
+  IF filter_language IS NOT NULL THEN
+    -- Language-scoped path: filter first, sort by distance after.
+    -- Avoids the HNSW post-filter gotcha where the index returns top-N
+    -- nearest vectors globally and the language filter strips them all.
+    RETURN QUERY
+    SELECT
+      p.page_id,
+      p.book_id,
+      p.page_number,
+      p.translation,
+      p.book_title,
+      p.book_author,
+      p.book_language,
+      p.book_year,
+      1 - (p.embedding <=> query_embedding) AS similarity
+    FROM page_translations p
+    WHERE p.book_language = filter_language
+      AND p.embedding IS NOT NULL
+      AND 1 - (p.embedding <=> query_embedding) > match_threshold
+      AND (filter_year_min IS NULL OR p.book_year >= filter_year_min)
+      AND (filter_year_max IS NULL OR p.book_year <= filter_year_max)
+    ORDER BY p.embedding <=> query_embedding
+    LIMIT match_count;
+  ELSE
+    -- HNSW path: index scan over the full table.
+    RETURN QUERY
+    SELECT
+      p.page_id,
+      p.book_id,
+      p.page_number,
+      p.translation,
+      p.book_title,
+      p.book_author,
+      p.book_language,
+      p.book_year,
+      1 - (p.embedding <=> query_embedding) AS similarity
+    FROM page_translations p
+    WHERE p.embedding IS NOT NULL
+      AND 1 - (p.embedding <=> query_embedding) > match_threshold
+      AND (filter_year_min IS NULL OR p.book_year >= filter_year_min)
+      AND (filter_year_max IS NULL OR p.book_year <= filter_year_max)
+    ORDER BY p.embedding <=> query_embedding
+    LIMIT match_count;
+  END IF;
 END;
 $$;
 
@@ -66,3 +97,8 @@ $$;
 --   CREATE INDEX page_translations_embedding_idx
 --     ON page_translations USING hnsw (embedding vector_cosine_ops)
 --     WITH (m = 16, ef_construction = 64);
+--
+-- For the language-filtered path, the planner uses a sequential scan with
+-- an in-memory sort. If that gets slow (e.g., English at 436K rows), add:
+--   CREATE INDEX page_translations_lang_idx
+--     ON page_translations (book_language) WHERE embedding IS NOT NULL;
