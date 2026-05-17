@@ -30,6 +30,7 @@ const TOOLS: Tool[] = [
     name: "search_library",
     description:
       "Full-text search across Source Library's 22,000+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs. ORIENTATION HINT: when the user has named a specific author or work, call get_book directly (or list_books to find the ID first) — the AI-generated book summary is usually the right first answer and saves repeated passage hunting.",
+    annotations: { title: "Search Library", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -78,6 +79,7 @@ const TOOLS: Tool[] = [
     name: "list_books",
     description:
       "Browse the catalog by metadata — filter by author/title fragment, language, category, or translation recency. Returns books with title, author, language, year, page counts, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content; for content matches (passages on a topic) use search_translations or search_concept.",
+    annotations: { title: "List Books", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -114,6 +116,7 @@ const TOOLS: Tool[] = [
     name: "search_translations",
     description:
       "Search inside translated page text across the entire library. THE tool for sweeping across many books for evidence on a theme. Unlike search_library (which matches titles/authors), this searches inside the actual text. Returns passage snippets with page numbers, book info, and citation URLs. ORIENTATION HINT: if the user has named a specific author or work, prefer get_book first — every book has an AI-generated summary + chapter outline that is usually the right first read. Use search_translations when looking for evidence across multiple books. (Also available as 'search_passages'.)",
+    annotations: { title: "Search Translations", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -150,6 +153,7 @@ const TOOLS: Tool[] = [
     name: "search_concept",
     description:
       "Conceptual / semantic passage search across the whole library. Use when the modern term won't literally appear in historical texts — e.g. \"distributed cognition\" maps to passages about active intellect, art of memory, wax tablet metaphors; \"social contract\" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings, so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. ORIENTATION HINT: if the user named a specific author or work, prefer get_book first — semantic search is expensive and best reserved for cross-corpus discovery. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Similarity calibration: 0.70+ strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly conceptual drift.",
+    annotations: { title: "Semantic Concept Search", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -182,6 +186,7 @@ const TOOLS: Tool[] = [
     name: "search_within_book",
     description:
       "Search inside a specific book's pages (OCR and translations). Returns matching pages with snippets and citation URLs. Use after finding a book to locate specific passages.",
+    annotations: { title: "Search Within Book", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -203,6 +208,7 @@ const TOOLS: Tool[] = [
     name: "get_book",
     description:
       "Get a book's AI-generated summary, chapter list, index stats, edition metadata, DOI, page counts, and processing status. THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book's argument, structure, and significance, often answering the question without any further searching. Pair with get_book_text to read selected chapters, or search_within_book to locate passages inside it.",
+    annotations: { title: "Get Book", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -218,6 +224,7 @@ const TOOLS: Tool[] = [
     name: "get_book_text",
     description:
       "READ A BOOK — start here. Preferred: use 'chapter' param to read one chapter at a time (includes page markers like [Page 42] for citation). Or use page ranges (from/to) for focused reading. Call get_book first to see the chapter list. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; always check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.",
+    annotations: { title: "Read Book Text", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -265,6 +272,7 @@ const TOOLS: Tool[] = [
     name: "get_quote",
     description:
       "Get the exact translated text of a single page for quoting. Returns the full translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response. Do not paraphrase or reconstruct from memory.",
+    annotations: { title: "Get Quote", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -286,6 +294,7 @@ const TOOLS: Tool[] = [
     name: "search_images",
     description:
       "Search the visual collection: 50,000+ illustrations extracted from book pages PLUS 23,000+ standalone artworks (paintings, frescoes, prints, sculptures from Met, Rijksmuseum, Wikimedia, NGA). Filter by type, subject, figure, symbol, year, book, or text query. Each result has a `source` field — `gallery` (illustration in a book) or `artwork` (standalone museum work). Use `type=painting` or `type=fresco` to find standalone works; `type=woodcut`, `type=engraving`, `type=emblem` etc. surface mostly book illustrations. The `source` parameter narrows the search: 'all' (default), 'gallery' (illustrations only), or 'artworks' (standalone works only).",
+    annotations: { title: "Search Images", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -342,6 +351,7 @@ const TOOLS: Tool[] = [
     name: "check_duplicate",
     description:
       "Check if a book already exists in Source Library before importing. Uses 4-tier matching: source fingerprint, title+author normalization, keyword search, and semantic similarity. Returns confidence level, matches with URLs, and a suggestion (safe to import / review matches / likely duplicate). Use this BEFORE every import to avoid duplicates.",
+    annotations: { title: "Check Duplicate", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -379,6 +389,13 @@ const TOOLS: Tool[] = [
     name: "submit_feedback",
     description:
       "Submit feedback, bug reports, feature requests, or comments to the Source Library team. Messages go directly to the maintainers.",
+    annotations: {
+      title: "Submit Feedback",
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: true,
+    },
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -406,24 +423,37 @@ const TOOLS: Tool[] = [
 
 // ── Server Setup ──────────────────────────────────────────────────────
 
+// Orientation for the calling model. Sent via the MCP `instructions` field
+// on the initialize response — this is the spec-blessed channel for
+// server-level guidance and is surfaced by Claude clients.
+const SERVER_INSTRUCTIONS = `Source Library is a project to recover and open up the vast untranslated inheritance of pre-modern thought — alchemy, Hermetica, Kabbalah, Rosicrucianism, natural philosophy, theology, the early scientific revolution. Most of these ~22,000 books have been effectively sealed for centuries: rare, never reprinted after their 16th–18th century editions, locked behind Latin, German, Greek, Arabic, and the difficulty of microfilm-quality scans. This is also, by the same fact, the corpus current LLMs were *not* trained on — the knowledge sitting just beyond what AI already knows. Source Library brings it back into circulation with AI-generated translations, summaries, and structured chapter outlines, so the texts that shaped Ficino, Newton, Leibniz, Jung — and the ones they were reading that we've forgotten — become readable again.
+
+How to use it well: treat Source Library and your own training as complementary. You know what Ficino, Paracelsus, or Robert Fludd argued in broad outline — Source Library has the actual pages. You know that "the unconscious" is anachronistic for 1600 — but you may not know whether to search for spiritus, anima sensitiva, imaginatio, or vis imaginativa in a given author. When in doubt, web-search for the historical terminology first, then query Source Library with the words a period author would have used. Don't ask Source Library "what is alchemy" — ask it for the specific texts, passages, and images that let you answer that yourself with primary evidence.
+
+Practical orientation: named author/work → get_book first (the AI summary often answers the question). Cross-corpus themes → search_concept (semantic) or search_translations (literal). Always get_quote before quoting — paraphrasing from memory will hallucinate.
+
+Feedback: submit_feedback. Partnerships: derek@sourcelibrary.org.`;
+
 const server = new Server(
   {
     name: "source-library",
-    version: "4.2.0",
+    version: "4.3.0",
   },
   {
     capabilities: {
       tools: {},
     },
+    instructions: SERVER_INSTRUCTIONS,
   }
 );
 
-// Handle list tools
+// Handle list tools. _meta.about is a fallback for clients that don't surface
+// the InitializeResult.instructions field to the model.
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: TOOLS,
     _meta: {
-      about: "Source Library — 5,000+ rare alchemical, Hermetic, and early scientific texts translated into English for the first time. The largest AI-ready corpus of pre-modern esoteric knowledge. Use submit_feedback to send bug reports, feature requests, or comments. Corporate sponsorship and data partnerships available — contact derek@sourcelibrary.org.",
+      about: "Source Library — ~22,000 rare pre-modern books (alchemy, Hermetica, Kabbalah, theology, early science) with AI-generated English translations. See server instructions for orientation. Feedback: submit_feedback. Partnerships: derek@sourcelibrary.org.",
     },
   };
 });
@@ -502,7 +532,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v4.3.0 running (10 tools)");
+  console.error(`Source Library MCP server v4.3.0 running (${TOOLS.length} tools)`);
 }
 
 main().catch((error) => {
