@@ -95,17 +95,29 @@ async function supaQuery(path) {
   return r.json();
 }
 
-// Fetch all USTC editions with a given surname (across author_1/2/3 fields)
+// Fetch USTC editions where author_1 starts with the surname.
+// USTC stores authors as "Surname, Forename" (occasionally "Surname Forename"),
+// so an anchored prefix `ilike.${surname}*` is index-efficient (b-tree on author_1)
+// — the unanchored `ilike.*${s}*` form times out on the 1.6M-row table.
+// Trade-off: misses cases where the surname is in author_2/3 or mid-string.
 async function ustcEditionsBySurname(s) {
+  // Capitalize the way USTC stores it. ilike is case-insensitive but
+  // sending normalized lowercase to PostgREST `like.` operator works either way.
   const enc = encodeURIComponent(s);
-  // PostgREST: ilike with wildcard
   const editions = [];
   let offset = 0;
   while (true) {
-    const path = `ustc_editions?or=(author_1.ilike.*${enc}*,author_2.ilike.*${enc}*,author_3.ilike.*${enc}*)&select=sn,source_library_id,title,author_1,year,country,classification_1&limit=1000&offset=${offset}`;
-    const r = await supaQuery(path);
+    const path = `ustc_editions?author_1=ilike.${enc}*&select=sn,source_library_id,title,author_1,year,country,classification_1&limit=1000&offset=${offset}`;
+    let r;
+    try {
+      r = await supaQuery(path);
+    } catch (e) {
+      // If still timing out, surname is too common (e.g. single common word). Bail.
+      if (String(e).includes('57014')) return editions;
+      throw e;
+    }
     editions.push(...r);
-    if (r.length < 1000) break;
+    if (r.length < 1000 || offset >= 5000) break; // cap pagination at 5000 per surname
     offset += 1000;
   }
   return editions;
