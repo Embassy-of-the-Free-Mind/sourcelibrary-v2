@@ -308,23 +308,21 @@ curl -s "https://sourcelibrary.org/api/books" | jq '.[] | select(.author | conta
 - `FLAG:INCOMPLETE` - Missing pages
 - `FLAG:DUPLICATE` - Already in collection
 
-## Current Gaps (Priority Acquisitions)
+## Identifying Current Gaps
 
-### URGENT - Missing Key Authors
-| Author | What We Need | Priority |
-|--------|--------------|----------|
-| Thomas Vaughan | Lumen de Lumine, Aula Lucis, Anima Magica Abscondita | HIGH |
-| Gichtel | Theosophia Practica | HIGH |
-| Jane Lead | English Philadelphian Society | MEDIUM |
-| Cudworth | True Intellectual System | MEDIUM |
+Don't trust a hardcoded gap list — the collection drifts. Always check what's actually there before treating something as a priority acquisition:
 
-### Have Some, Need More
-| Author/Text | Have | Need |
-|-------------|------|------|
-| Boehme | 3 works | More German originals (Aurora, Signatura Rerum) |
-| Fludd | 3 works | Complete Utriusque Cosmi (5+ volumes) |
-| Dee | 1 work | True Relation, Monas hieroglyphica |
-| Paracelsus | Several | Individual treatises in German |
+```bash
+# Author coverage check — how many works do we have by this author?
+curl -s "https://sourcelibrary.org/api/search?q=AUTHOR_NAME" | jq '[.[] | select(.author | test("AUTHOR_NAME"; "i"))] | length'
+
+# What editions of a specific work do we have?
+curl -s "https://sourcelibrary.org/api/search?q=TITLE+KEYWORD" | jq '[.[] | {title, author, published}]'
+```
+
+Note open gaps in [issue #1815](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1815) (non-Western originals) and check it before declaring a "gap." When you fill one, update the issue.
+
+For thematic priorities, follow the Primary/Secondary Collections taxonomy above rather than a fixed-author hit list — those are stable, individual coverage shifts every batch.
 
 ## Batch Size & Pacing
 - **Target**: 5-20 books per acquisition session
