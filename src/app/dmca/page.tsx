@@ -60,7 +60,7 @@ export default function DmcaPage() {
             <tr>
               <td className="font-medium pr-6 py-1">Email</td>
               <td>
-                <a href="mailto:dereklomas@gmail.com">dereklomas@gmail.com</a>
+                <a href="mailto:contact@sourcelibrary.org">contact@sourcelibrary.org</a>
               </td>
             </tr>
           </tbody>
@@ -98,7 +98,7 @@ export default function DmcaPage() {
         </ol>
         <p>
           Send notices to{' '}
-          <a href="mailto:dereklomas@gmail.com">dereklomas@gmail.com</a> with the subject
+          <a href="mailto:contact@sourcelibrary.org">contact@sourcelibrary.org</a> with the subject
           line <strong>DMCA Takedown Notice</strong>.
         </p>
         <p>
