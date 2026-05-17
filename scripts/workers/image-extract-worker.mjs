@@ -15,10 +15,67 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+
+// Structured-output schema. Forces scan_quality to be present as an object with the
+// required fields populated; extracted_images is left loosely shaped because its
+// per-item structure is bigger than we want to constrain at the schema layer
+// (the prompt + downstream parser handle that).
+const RESPONSE_SCHEMA = {
+  type: SchemaType.OBJECT,
+  properties: {
+    scan_quality: {
+      type: SchemaType.OBJECT,
+      properties: {
+        scan_score: { type: SchemaType.INTEGER },
+        scan_class: { type: SchemaType.STRING },
+        readable_text: { type: SchemaType.BOOLEAN },
+        illustration_fidelity: { type: SchemaType.STRING },
+        page_completeness: { type: SchemaType.STRING },
+        concerns: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+        reasoning: { type: SchemaType.STRING },
+      },
+      required: ['scan_score', 'scan_class', 'readable_text', 'page_completeness', 'concerns', 'reasoning'],
+    },
+    extracted_images: {
+      type: SchemaType.ARRAY,
+      items: {
+        type: SchemaType.OBJECT,
+        properties: {
+          description: { type: SchemaType.STRING },
+          type: { type: SchemaType.STRING },
+          bbox: {
+            type: SchemaType.OBJECT,
+            properties: {
+              x: { type: SchemaType.NUMBER },
+              y: { type: SchemaType.NUMBER },
+              width: { type: SchemaType.NUMBER },
+              height: { type: SchemaType.NUMBER },
+            },
+          },
+          confidence: { type: SchemaType.NUMBER },
+          gallery_quality: { type: SchemaType.NUMBER },
+          gallery_rationale: { type: SchemaType.STRING },
+          metadata: {
+            type: SchemaType.OBJECT,
+            properties: {
+              subjects: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+              figures: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+              symbols: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+              style: { type: SchemaType.STRING },
+              technique: { type: SchemaType.STRING },
+            },
+          },
+          museum_description: { type: SchemaType.STRING },
+        },
+      },
+    },
+  },
+  required: ['scan_quality', 'extracted_images'],
+};
 
 const SCAN_QUALITY_VERSION = 2;
 sharp.concurrency(1);
@@ -137,14 +194,23 @@ scan_class — use exactly one:
                       letterpress text, and modern OCR-ready bitonal scans, REGARDLESS of
                       age. A 1500 woodcut is bitonal_clean. A 1900 letterpress page is
                       bitonal_clean.
-  bitonal_microfilm — REQUIRES visible high-frequency speckling ("pepper noise") in flat
-                      white areas AND visibly jagged/broken edges around dark shapes.
-                      Both signatures must be present. If you do not actually see speckling
-                      in the white background, this is NOT bitonal_microfilm — use
-                      bitonal_clean instead. Do NOT use this class merely because the page
-                      is monochrome and high-contrast.
-  microfiche        — bitonal_microfilm + visible mottling or uneven illumination across
-                      the page (caused by the microfilm reader's lamp)
+  bitonal_microfilm — bitonal page reproduced via microfilm or scan-of-scan. Use this
+                      class if you see ANY of these signatures (one is enough):
+                        (a) UNIFORM GRAY background instead of white — the page background
+                            is grey or yellow-gray rather than paper-white. This is the
+                            single most reliable signal: a real book page on a flatbed
+                            scanner produces a near-white background; a microfilm frame
+                            produces uniform gray from the reader's illumination.
+                        (b) visible high-frequency speckling ("pepper noise") in flat areas
+                        (c) jagged or broken edges around characters and dark shapes
+                        (d) "Digitized by Google" or similar Google Books footer on an
+                            older monochrome scan (these were almost all microfilm-sourced)
+                      A microfilm scan can be high-resolution and still microfilm —
+                      megapixel count is not a defense against this class. Modern OCR-ready
+                      scans of CLEAN bitonal originals have white (not gray) backgrounds
+                      and crisp edges; those are bitonal_clean.
+  microfiche        — bitonal_microfilm + visible mottling, dark patches, or uneven
+                      illumination across the page caused by the microfilm reader
   scanner_metadata  — the page is NOT a book page at all — it is a calibration target,
                       color reference card, ruler, scanner-bed test pattern, or other
                       digitization-process artifact accidentally captured as a page.
@@ -154,10 +220,11 @@ scan_class — use exactly one:
   corrupt           — broken file, partial capture due to scan failure, or shows the
                       scanner bed/background instead of a placed page
 
-Distinguishing bitonal_clean from bitonal_microfilm is the MOST IMPORTANT and most
-common classification mistake. ERR ON THE SIDE OF bitonal_clean. Only use
-bitonal_microfilm when you can actually see speckled noise in the empty/white regions
-of the page — not just when the page happens to be bitonal black-and-white.
+Distinguishing bitonal_clean from bitonal_microfilm is the MOST IMPORTANT classification
+call. The decisive question: is the page background WHITE (clean) or GRAY (microfilm)?
+A 1500 woodcut on white paper photographed by a flatbed scanner is bitonal_clean.
+A 1500 woodcut photographed onto microfilm and then digitized off the microfilm reader
+is bitonal_microfilm — even if the woodcut itself looks sharp. The background tells you.
 
 page_completeness:
   full_page          — single page captured fully
@@ -200,8 +267,20 @@ This is true even when:
   - the page is a scanner calibration card → scan_class: scanner_metadata
   - the page is pure text with no illustrations → scan_class: <whatever fits>, extracted_images: []
   - the page is corrupt → scan_class: corrupt, extracted_images: []
-Never omit scan_quality. Never return only extracted_images. scan_quality is the most
-important field in this response.`;
+Never omit scan_quality. Never return only extracted_images.
+
+INTERNAL CONSISTENCY RULES — your response must satisfy ALL of these:
+  1. If "concerns" contains "pepper_noise", "scan_of_scan", or "compression_artifacts",
+     scan_class MUST be "bitonal_microfilm" or "microfiche" — never "bitonal_clean".
+     These concerns are themselves evidence of microfilm origin; classifying as clean
+     while flagging them is contradictory.
+  2. If "page_completeness" is "partial_capture" or "fragment", scan_class should be
+     "corrupt" (use blank only if the captured fragment is also blank).
+  3. If "page_completeness" is "blank", scan_class MUST be "blank" and scan_score MUST be 0-10.
+  4. If scan_class is "blank" or "scanner_metadata", readable_text MUST be false.
+
+Re-read your scan_quality block before finalizing. If any of these rules is violated,
+fix the scan_class to match the evidence in concerns/completeness, not the other way around.`;
 
 // ── Helpers ──
 function getPageImageUrl(page) {
@@ -329,15 +408,40 @@ const VALID_COMPLETENESS = new Set([
   'full_page', 'partial_capture', 'two_pages_one_image', 'fragment', 'blank',
 ]);
 
+// Concerns that are themselves microfilm-origin evidence. If Gemini lists any of these
+// AND classifies bitonal_clean, the response is internally contradictory — the concerns
+// are the more trustworthy signal (the model saw the artifact), so we downgrade the class.
+const MICROFILM_CONCERNS = new Set(['pepper_noise', 'scan_of_scan', 'compression_artifacts']);
+
 function normalizeScanQuality(raw) {
   if (!raw || typeof raw !== 'object') return null;
   const score = Math.max(0, Math.min(100, parseInt(raw.scan_score, 10) || 0));
-  const cls = VALID_SCAN_CLASSES.has(raw.scan_class) ? raw.scan_class : null;
+  let cls = VALID_SCAN_CLASSES.has(raw.scan_class) ? raw.scan_class : null;
   const fidelity = VALID_FIDELITY.has(raw.illustration_fidelity) ? raw.illustration_fidelity : null;
   const completeness = VALID_COMPLETENESS.has(raw.page_completeness) ? raw.page_completeness : null;
   const concerns = Array.isArray(raw.concerns)
     ? raw.concerns.filter(c => typeof c === 'string').slice(0, 20)
     : [];
+
+  // Backstop enforcement of the cross-field consistency rules from the prompt.
+  // Gemini occasionally still produces contradictory output (microfilm concerns
+  // listed alongside bitonal_clean class); when it does, fix the class to match.
+  const microfilmEvidence = concerns.some(c => MICROFILM_CONCERNS.has(c));
+  let corrected = null;
+  if (cls === 'bitonal_clean' && microfilmEvidence) {
+    cls = 'bitonal_microfilm';
+    corrected = 'bitonal_clean_with_microfilm_concerns';
+  }
+  if ((completeness === 'partial_capture' || completeness === 'fragment')
+      && cls && !['corrupt', 'blank', 'scanner_metadata'].includes(cls)) {
+    cls = 'corrupt';
+    corrected = (corrected ? corrected + '+' : '') + 'incomplete_with_content_class';
+  }
+  if (completeness === 'blank' && cls !== 'blank' && cls !== 'scanner_metadata') {
+    cls = 'blank';
+    corrected = (corrected ? corrected + '+' : '') + 'blank_completeness_with_content_class';
+  }
+
   return {
     scan_score: score,
     scan_class: cls,
@@ -346,6 +450,7 @@ function normalizeScanQuality(raw) {
     page_completeness: completeness,
     concerns,
     reasoning: typeof raw.reasoning === 'string' ? raw.reasoning.slice(0, 600) : '',
+    ...(corrected ? { class_corrected: corrected } : {}),
   };
 }
 
@@ -441,6 +546,7 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
       temperature: 0.1,
       maxOutputTokens: 4096,
       responseMimeType: 'application/json',
+      responseSchema: RESPONSE_SCHEMA,
     },
   });
 
