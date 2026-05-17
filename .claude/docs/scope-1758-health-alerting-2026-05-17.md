@@ -11,7 +11,19 @@
 - `ls scripts/ops/` → directory does not exist. `rg "SessionStart" .claude/` → no results. No hook or ops script has been created.
 - PR #1757 (loader hardening) is **merged**. That was the acute fix. #1758 is the prevention follow-up and is entirely unimplemented.
 
-**Active gap confirmed right now:** `uptime-monitor.mjs` runs every 5 min on Hetzner and checks `api/health` and `api/books?limit=1` via the `.vercel.app` bypass URL. It does NOT check any tenant embed. A live test from Hetzner during this scoping pass shows `/embed/bph` at **3.3s** (above the proposed 3s SLO) while `/embed/ficino` is 145ms. The gap exists today.
+**Active gap confirmed right now:** `uptime-monitor.mjs` runs every 5 min on Hetzner and checks `api/health` and `api/books?limit=1` via the `.vercel.app` bypass URL. It does NOT check any tenant embed. A live test from Hetzner during this scoping pass shows `/embed/bph` at **3.3s** while `/embed/ficino` is 145ms.
+
+**Important caveat — this is a cold-start, not a sustained problem.** Follow-up sampling (3 sequential curls each) revealed:
+
+| Endpoint | Cold (first hit) | Warm (2nd) | Warm (3rd) | Payload |
+|---|---|---|---|---|
+| `/embed/bph?host_path=%2Fdigital-collection-search` | 3.06s (ttfb 0.89s) | 0.34s | 0.19s | **270 KB** |
+| `/embed/ficino` | 0.16s | 0.14s | 0.13s | 20 KB |
+| `/` (main) | 0.22s | 0.12s | 0.14s | — |
+
+So the divergence has two structural causes that the SLO design must account for:
+1. **Payload size**: BPH embed is 13× ficino's because it renders the digital-collection-search grid (hundreds of books, thumbnails inlined) into the initial HTML. Permanent structural reality, not a regression.
+2. **Cold-start penalty**: first hit pays the Vercel function cold-boot + server-side composition cost. After that the response is cached/warm. The 2026-05-15 incident was this same shape but worse — Atlas under load made the cold-start spike into actual user-visible degradation. The cold/warm gap is permanent; the question for monitoring is *how big it gets when something else is wrong*.
 
 ---
 
@@ -36,13 +48,20 @@ All probes must use `.vercel.app` URLs to bypass Cloudflare's JS challenge — H
 |---|---|---|---|
 | API health | `https://sourcelibrary-v2.vercel.app/api/health` | 200, <500ms | Existing; keep |
 | API books | `https://sourcelibrary-v2.vercel.app/api/books?limit=1` | 200, <1s | Existing; keep |
-| BPH embed | `https://sourcelibrary-v2.vercel.app/embed/bph?host_path=%2Fdigital-collection-search` | 200, <3s, no RSC error body | Exact incident endpoint |
+| BPH embed | `https://sourcelibrary-v2.vercel.app/embed/bph?host_path=%2Fdigital-collection-search` | 200, **warm <1s** (see below), no RSC error body | Exact incident endpoint |
 | Ficino embed | `https://sourcelibrary-v2.vercel.app/embed/ficino` | 200, <1s | Cross-tenant baseline |
 | Bhutan embed | `https://sourcelibrary-v2.vercel.app/embed/bhutan` | 200, <1s | Third tenant |
 
 The ficino/bhutan comparison against BPH is the key diagnostic: if all three are slow, it is Vercel/Atlas-wide; if only BPH is slow, it is a BPH-specific regression (the 2026-05-15 pattern exactly).
 
 **Body check:** For embed endpoints, also grep the response body for `Something went wrong` or RSC digest patterns — a 200 with an error boundary payload is a soft failure.
+
+**Cold-start tuning — DO NOT use a flat single-request SLO.** A naive 3s SLO on `/embed/bph` would alert every time the Vercel function went cold (multiple times an hour on low-traffic periods). Two viable approaches, pick one:
+
+- **(Preferred) Two-shot probe**: fire two requests ~200ms apart; only the second counts toward the SLO. The first warms the function; the second measures steady-state. SLO becomes "warm response <1s" — tight, low false-positive rate.
+- **Tolerated cold-start window**: allow up to 4s on a single request, but only alert if `N consecutive` checks (already in the existing `uptime-monitor.mjs` cooldown model) all exceed 4s. Cheaper on bandwidth, slower to alert.
+
+Recommend two-shot. It also automatically captures cold-start latency as a separate metric (log both `cold_ms` and `warm_ms` to `uptime_checks`) — useful for tracking whether the cold-start itself is regressing.
 
 ---
 
@@ -169,8 +188,34 @@ Sync `RESEND_API_KEY` to Hetzner via `vercel env pull`. The `pipeline-health-ale
 
 1. **ntfy.sh subscription confirmed?** Are you actively subscribed to `ntfy.sh/sourcelibrary-uptime` on your phone? The topic is public/unauthed — subscribe in the ntfy app. Without this, Phase 1 alerts are logged to MongoDB but don't reach you in real-time.
 
-2. **BPH latency right now:** During this scoping pass (2026-05-17), `/embed/bph` measured **3.3s** from Hetzner. Phase 1 would immediately trigger warnings at the 3s SLO. Worth knowing if this is expected (e.g., cold lambda) or a real regression.
+2. **BPH latency right now:** ~~During this scoping pass (2026-05-17), `/embed/bph` measured **3.3s** from Hetzner. Phase 1 would immediately trigger warnings at the 3s SLO. Worth knowing if this is expected (e.g., cold lambda) or a real regression.~~ **Resolved during scoping (see §2 caveat):** the 3.3s was a Vercel function cold-start, not a regression. Warm responses are 150–340ms. The SLO design in §3 has been updated to use a two-shot probe so cold-starts don't trigger false positives.
 
 3. **SessionStart hook in `settings.json` (team) vs `settings.local.json` (Derek-only)?** Recommend `settings.json` so it covers all sessions including future contributors. The script only makes HTTP probes and needs no credentials, so there's no privacy concern with checking it in.
 
 4. **RESEND_API_KEY on Hetzner:** The key exists in Vercel env but not in Hetzner's `.env.production.local`. A single `vercel env pull` syncs it and unlocks Phase 4 for free.
+
+---
+
+## 10. Structural finding: BPH cold-start penalty (folded in 2026-05-17)
+
+The BPH embed's permanent latency disadvantage versus other tenants is structural, not a bug. Worth documenting because (a) it shapes how the SLO must be tuned and (b) there are independent optimizations that would shrink it.
+
+### Root cause
+
+`/embed/bph?host_path=%2Fdigital-collection-search` server-renders the digital collection grid (titles, thumbnails, metadata for many books) into the initial HTML. Resulting payload is **270 KB**. Compare `/embed/ficino` (a slim landing page) at **20 KB**. Even with a warm function, BPH renders 13× more bytes; with a cold function, the server-side composition cost (Atlas queries + thumbnail resolution + React tree) compounds the boot delay.
+
+### Why this matters for monitoring
+
+A flat single-request SLO will alarm constantly on cold-starts. See §3 for the two-shot probe approach that side-steps this.
+
+### Independent optimizations (separate from monitoring)
+
+These are NOT part of #1758's MVP, but the work would compound nicely with this monitoring effort. Each could be its own issue:
+
+1. **Reduce initial BPH payload.** Lazy-load the grid below the fold; render only the first 20–30 books server-side, defer the rest. Cuts the 270 KB by ~70%, makes warm responses sub-100ms.
+2. **Vercel warm-up cron.** Add a recurring Vercel cron (or a Hetzner curl every 2 min) hitting `/embed/bph` to keep the function warm. Eliminates the cold-start scenario entirely for the BPH route. Cheap.
+3. **Cache the digital-collection-search HTML.** If the BPH catalogue grid is mostly identical across users (it is — partner-facing, not personalized), serve a fully pre-rendered HTML from edge cache with a short TTL. ISR / `revalidate` pattern.
+
+### Outcome to track
+
+If options 1 + 2 ship, the cold/warm gap collapses and the two-shot probe can be retired in favor of a tight single-request SLO (e.g. 800ms). At that point BPH joins ficino/bhutan in the same SLO tier and the cross-tenant divergence diagnostic in §3 becomes much more sensitive.
