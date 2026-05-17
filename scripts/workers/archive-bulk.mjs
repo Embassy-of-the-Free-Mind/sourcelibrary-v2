@@ -37,7 +37,7 @@ const hasFlag = (name) => args.includes(`--${name}`);
 
 const BOOK_LIMIT = parseInt(getArg('limit') || '20', 10);  // Books per cron run
 const BOOK_CONCURRENCY = parseInt(getArg('concurrency') || '2', 10);
-const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '16', 10);
+const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10);
 const DRY_RUN = hasFlag('dry-run');
 const JPEG_QUALITY = 85;
 const MAX_DIMENSION = 3000;
@@ -197,9 +197,12 @@ function extractJp2Zip(zipPath, destDir) {
 async function jp2ToJpeg(jp2Path) {
   // opj_decompress → BMP → sharp → JPEG
   // Sharp's libvips JP2 support is unreliable on some builds, so use opj_decompress
+  // Use -threads 1: PAGE_CONCURRENCY already runs N decodes in parallel; letting
+  // each opj_decompress also try to grab all cores caused load avg 23 on 8 cores
+  // with 0% idle, because parallel decodes were trampling each other.
   const bmpPath = jp2Path + '.out.tif';
   try {
-    await execFileAsync('opj_decompress', ['-i', jp2Path, '-o', bmpPath, '-threads', 'ALL_CPUS'], { timeout: 120000 });
+    await execFileAsync('opj_decompress', ['-i', jp2Path, '-o', bmpPath, '-threads', '1'], { timeout: 120000 });
   } catch (err) {
     if (!fs.existsSync(bmpPath)) throw new Error(`opj_decompress failed: ${err.stderr?.slice(0, 200) || err.message}`);
   }
