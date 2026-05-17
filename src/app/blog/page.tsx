@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'hogwarts-library',
+    title: 'The Real Hogwarts Library',
+    subtitle: 'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world — alchemy, bestiaries, grimoires, Kabbalah — read in modern English.',
+    date: '17 May 2026',
+    readTime: '16 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/2.jpg',
+    imageAlt: 'Detail from the Ripley Scroll, 15th-century illustrated alchemical manuscript, Bodleian Library MS Bodl. Rolls 1',
+  },
+  {
     slug: 'what-makes-a-good-scan',
     title: 'What Makes a Good Scan?',
     subtitle: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
