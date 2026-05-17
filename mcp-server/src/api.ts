@@ -374,6 +374,28 @@ export async function getBookText(args: {
     }
   }
 
+  // Detect truncation: signal clearly when pages_returned < total_pages so LLMs
+  // don't infer "the book ends here" from an incomplete response.
+  const totalPages = Number(result.total_pages || 0);
+  const pagesReturned = Number(result.pages_returned || 0);
+  // Chapter mode returns different shape — only add truncation signal for page-range mode
+  if (args.chapter === undefined && totalPages > 0) {
+    const fromPage = args.from !== undefined ? args.from : 1;
+    const expectedUpTo = args.to !== undefined ? args.to : totalPages;
+    const lastPageReturned = pagesReturned > 0 ? fromPage + pagesReturned - 1 : fromPage - 1;
+    const isTruncated = lastPageReturned < expectedUpTo;
+    (result as Record<string, unknown>).truncated = isTruncated;
+    if (isTruncated) {
+      const nextFrom = lastPageReturned + 1;
+      const nextTo = Math.min(nextFrom + 49, totalPages);
+      (result as Record<string, unknown>).truncation_note =
+        `TRUNCATED — received ${pagesReturned} pages (up to p.${lastPageReturned}) ` +
+        `but requested up to p.${expectedUpTo} of ${totalPages} total. ` +
+        `This is NOT end-of-book — call get_book_text again with from=${nextFrom} to=${nextTo} ` +
+        `to read the next chunk. Repeat until you reach total_pages (${totalPages}).`;
+    }
+  }
+
   // Add quoting guidance when returning page text
   (result as Record<string, unknown>).tip =
     "When quoting from these pages, copy text verbatim from the translation field. Do not paraphrase or reconstruct from memory.";
