@@ -198,11 +198,11 @@ const WORKERS = [
   },
   {
     name: 'archive-bulk',
-    cmd: 'node scripts/workers/archive-bulk.mjs --limit=30 --concurrency=1',
+    cmd: 'node scripts/workers/archive-bulk.mjs --limit=30 --concurrency=2',
     lock: '/tmp/sl-archive-bulk.lock',
     connections: 5,
     tier: 4,
-    interval: 1200,     // every 20 min — throttled 2026-05-15 after bulk import caused 8s search latency (Atlas write saturation from concurrent JP2 decompression + page inserts)
+    interval: 1200,     // every 20 min — throttled 2026-05-15 after bulk import caused 8s search latency (Atlas write saturation from concurrent JP2 decompression + page inserts). Concurrency bumped back to 2 on 2026-05-17 after #1829 thread fix dropped per-book CPU contention (load 23 → 4) and #1819 raised Mongo pool 5 → 10; with 82% idle CPU at concurrency=1 and ~3 Mongo writes/sec, doubling should fill local headroom without re-saturating Atlas. Watch search latency after deploy and revert to =1 if it spikes.
     healthMin: 'degraded',
     log: '/var/log/sourcelibrary/archive-bulk.log',
   },
