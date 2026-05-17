@@ -8,6 +8,14 @@ export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 50;
 
+// Pinned display count for the default BPH "digitised" view. The real Supabase
+// count drifts up as the sync cron re-links visible twins of deduped books
+// (see issue #1742). Partner-facing convention is to display 2,222 — the
+// number landed at the 2026-05-12 convergence pass — and surface any drift
+// in #1742 rather than in the public counter. The DB count query is skipped
+// entirely when this pin applies, saving a COUNT(*) on every page load.
+const BPH_DIGITIZED_PINNED_TOTAL = 2222;
+
 // New (expanded) field set — requires expand-bph-works-schema.sql to have been run.
 const FIELDS_NEW_CORE = [
   'ubn',
@@ -88,6 +96,15 @@ export async function GET(req: NextRequest) {
   const offset = Math.max(0, parseInt(sp.get('offset') || '0', 10) || 0);
   const limit = Math.min(200, Math.max(1, parseInt(sp.get('limit') || String(PER_PAGE), 10) || PER_PAGE));
 
+  // Default unfiltered "digitised on Source Library" view: skip the COUNT(*)
+  // and return the pinned 2,222. Any filter / search / advanced field falls
+  // through to the normal exact-count path.
+  const isPinnedDigitizedView =
+    digitized === 'sl' &&
+    !q && !author && !title && !place && !printer && !publisher && !editor &&
+    !keyword && !language && !shelfMark && !provenance &&
+    yearFrom === null && yearTo === null;
+
   // Run the query in the requested mode. Returns the supabase result object.
   async function runQuery(mode: 'new' | 'legacy') {
     let fields: string;
@@ -99,7 +116,9 @@ export async function GET(req: NextRequest) {
         : [...FIELDS_NEW_CORE, ...FIELDS_EXTERNAL];
       fields = cols.join(', ');
     }
-    let query = supabase.from('bph_works').select(fields, { count: 'exact' });
+    let query = supabase
+      .from('bph_works')
+      .select(fields, isPinnedDigitizedView ? { count: 'planned', head: false } : { count: 'exact' });
 
     // Simple search. When the diacritic-normalised `search_norm` column
     // exists (after applying add-bph-diacritic-normalization.sql), query
@@ -333,7 +352,7 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({
     works,
-    total: result.count || 0,
+    total: isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0),
     offset,
     limit,
     schemaMode: schemaMode || 'unknown',
