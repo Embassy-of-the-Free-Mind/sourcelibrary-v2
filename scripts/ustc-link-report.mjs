@@ -44,10 +44,10 @@ async function main() {
   console.log(`  Pre-1830 with ustc_id: ${pre1830WithUstc} (${(pre1830WithUstc / pre1830 * 100).toFixed(1)}%)`);
   console.log();
 
-  // By decade
+  // By decade — use $type to check for actual present numeric ustc_id (missing fields evaluate inconsistently with $ne+null)
   const decadeAgg = await books.aggregate([
     { $match: { ...baseQuery, year: { $gte: 1450, $lte: 1850 } } },
-    { $project: { decade: { $multiply: [{ $floor: { $divide: ['$year', 10] } }, 10] }, hasUstc: { $cond: [{ $ne: ['$ustc_id', null] }, 1, 0] } } },
+    { $project: { decade: { $multiply: [{ $floor: { $divide: ['$year', 10] } }, 10] }, hasUstc: { $cond: [{ $gt: [{ $ifNull: ['$ustc_id', 0] }, 0] }, 1, 0] } } },
     { $group: { _id: '$decade', total: { $sum: 1 }, with_ustc: { $sum: '$hasUstc' } } },
     { $sort: { _id: 1 } },
   ]).toArray();

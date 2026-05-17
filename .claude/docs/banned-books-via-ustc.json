@@ -1,10 +1,10 @@
 {
-  "compiled": "2026-05-16T23:22:37.580Z",
+  "compiled": "2026-05-17T03:09:54.683Z",
   "csv_entries": 4327,
   "distinct_ustc_sns_matched": 16005,
-  "sl_books_matched": 48,
-  "have": 46,
-  "missing_in_sl": 15959,
+  "sl_books_matched": 126,
+  "have": 74,
+  "missing_in_sl": 15931,
   "no_ustc_match": 3609,
   "items_have": [
     {
@@ -230,11 +230,32 @@
       "bujanda_period": "1604",
       "confidence": "medium",
       "sl_book": {
-        "id": "69b51e7ecf111105c429e146",
-        "slug": "alberti-magni-de-secretis-mvliervm-libellus-scholiis-auctus-albertus",
-        "title": "Alberti Magni. De Secretis Mvliervm Libellus : Scholiis Auctus, & à mendis repurgatus. Cum Indice locupletissimo",
-        "year": 1615,
-        "_id": "69db9add8ee26ccc99865135",
+        "id": "69bd9d726120d54bd0376d18",
+        "slug": "alberti-magni-de-secretis-mulierum-libellus-scholiis-auctus-albertus-3",
+        "title": "Alberti Magni, de secretis mulierum libellus, scholiis auctus, &amp; a mendis repurgatus : eiusdem de virtutibus herbarum, lapidum, et animalium quorundam libellus ; item de mirabilibus mundi, ac de quibusdam effectibus causatis a quibusdam animalibus, &amp;c.. adiecimus et ob materiae similitudinem Michaelis Scoti ... de secretis naturae opusculum",
+        "year": 1598,
+        "_id": "69db8266f4c595498deb937e",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 760062,
+      "ustc_url": "https://www.ustc.ac.uk/editions/760062",
+      "ustc_title": "Secreta mulierum et virorum (cum commento)",
+      "ustc_author": "Albertus Magnus",
+      "ustc_year": 1513,
+      "ustc_country": "France",
+      "bujanda_id": "9700510",
+      "bujanda_title": "De secretis mulierum",
+      "bujanda_author": "Albertus, Magnus [pseudonymus]",
+      "bujanda_period": "1604",
+      "confidence": "medium",
+      "sl_book": {
+        "id": "69dbc7c11040d1d5e2093a9e",
+        "slug": "secreta-mulierum-et-virorum-cum-commento-albertus-magnus-9",
+        "title": "Secreta mulierum et virorum (cum commento)",
+        "year": 1510,
+        "_id": "69dbc7c11040d1d5e2093a9e",
         "already_tagged": false
       }
     },
@@ -256,6 +277,48 @@
         "title": "De Secretis Mulierum",
         "year": 1607,
         "_id": "69528549ab34727b1f04b240",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 742412,
+      "ustc_url": "https://www.ustc.ac.uk/editions/742412",
+      "ustc_title": "Secreta mulierum et virorum (cum commento)",
+      "ustc_author": "Albertus Magnus",
+      "ustc_year": 1510,
+      "ustc_country": "France",
+      "bujanda_id": "9700510",
+      "bujanda_title": "De secretis mulierum",
+      "bujanda_author": "Albertus, Magnus [pseudonymus]",
+      "bujanda_period": "1604",
+      "confidence": "medium",
+      "sl_book": {
+        "id": "69b51e7847b06ecd58190ce2",
+        "slug": "albertus-magnus-de-secretis-mulierum-et-virorum-albertus",
+        "title": "Albertus magnus de secretis mulierum et virorum",
+        "year": 1510,
+        "_id": "69db97108ee26ccc99865017",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 1513760,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1513760",
+      "ustc_title": "De theologia gentili, et physiologia Christiana",
+      "ustc_author": "Vossius, Gerardus Johannes",
+      "ustc_year": 1649,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9703495",
+      "bujanda_title": "De theologia gnetili et physiologia christiana",
+      "bujanda_author": "Vossius, Gerardus Ioannes",
+      "bujanda_period": "1716",
+      "confidence": "high",
+      "sl_book": {
+        "id": "69c89fe06c6f3cc53c85de54",
+        "slug": "de-physiologia-christiana-et-theologia-gentili-liber-v-vi-vossius",
+        "title": "De physiologia christiana, et theologia gentili liber V. VI. VII. VIII. & IX",
+        "year": 1669,
+        "_id": "69c89fe06c6f3cc53c85de54",
         "already_tagged": false
       }
     },
@@ -299,6 +362,27 @@
         "year": 1554,
         "_id": "69aebfa1c337b1e6a4d58005",
         "already_tagged": true
+      }
+    },
+    {
+      "ustc_sn": 1789609,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1789609",
+      "ustc_title": "Aloisiae Sigaeae, Toletanae satyra sotadica de arcanis amoris et veneris",
+      "ustc_author": "Chorier, Nicolas",
+      "ustc_year": 1678,
+      "ustc_country": "Switzerland",
+      "bujanda_id": "9702017",
+      "bujanda_title": "Elegantiae latini sermonis, seu Alosia Sigaea Toletana de \narcanis amoris et veneris adiunnctis fragmentis quibusdam eroticis",
+      "bujanda_author": "Chorier, Nicolaus",
+      "bujanda_period": "1716",
+      "confidence": "high",
+      "sl_book": {
+        "id": "69e3ff77b142e5dd9d6b03d2",
+        "slug": "satyra-sotadica-aloisia-sigaea",
+        "title": "Satyra Sotadica (Aloisia Sigaea)",
+        "year": 1678,
+        "_id": "69e3ff77b142e5dd9d6b03d2",
+        "already_tagged": false
       }
     },
     {
@@ -365,6 +449,27 @@
       }
     },
     {
+      "ustc_sn": 857621,
+      "ustc_url": "https://www.ustc.ac.uk/editions/857621",
+      "ustc_title": "Le tredici piacevoli notti del signor Giovanni Francesco Straparola, divise in due libri. Novamente ristampate, et con somma diligenza reviste, & corrette",
+      "ustc_author": "Straparola, Giovanni Francesco",
+      "ustc_year": 1578,
+      "ustc_country": "Italy",
+      "bujanda_id": "9703177",
+      "bujanda_title": "Le piacevoli notti",
+      "bujanda_author": "Straparola, Giovanni Francesco",
+      "bujanda_period": "1604",
+      "confidence": "medium",
+      "sl_book": {
+        "id": "69e6c33ccebd408ffa389072",
+        "slug": "le-tredici-piacevoli-notti-straparola",
+        "title": "Le tredici piacevoli notti",
+        "year": 1578,
+        "_id": "69e6c33ccebd408ffa389072",
+        "already_tagged": false
+      }
+    },
+    {
       "ustc_sn": 6039393,
       "ustc_url": "https://www.ustc.ac.uk/editions/6039393",
       "ustc_title": "Renati Des-Cartes Meditationes de prima philosophia, in qua Dei existentia et animae immortalitas demonstratur",
@@ -407,6 +512,174 @@
       }
     },
     {
+      "ustc_sn": 1831191,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1831191",
+      "ustc_title": "Apostolische oudheden, of Het leven der heylige apostelen, evangelisten, en andere oude vaderen, tot het eynde van de vierde eeuw",
+      "ustc_author": "Cave, William",
+      "ustc_year": 1698,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9709743",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Cave, Guilielmus",
+      "bujanda_period": "1693",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "6974b63d19126e775cf6d7d1",
+        "slug": "apostolic-antiquities-cave",
+        "title": "Apostolische oudheden",
+        "year": 1698,
+        "_id": "6974b63d19126e775cf6d7d2",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 3114467,
+      "ustc_url": "https://www.ustc.ac.uk/editions/3114467",
+      "ustc_title": "Scriptorum ecclesiasticorum historia literaria a Christo nato usque ad sæculum XIV. facili methodo digesta. Qua de vita illorum ac rebus gestis, de secta, dogmatibus, elogio, stylo; de scriptis genuinis, dubiis, supposititiis, ineditis, deperditis, fragmentis; deque variis operum editionibus perspicuè agitur. Accedunt scriptores gentiles, Christianæ religionis oppugnatores; & cujusvis sæculi breviarium. Inseruntur suis locis veterum aliquot opuscula &",
+      "ustc_author": "Cave, William",
+      "ustc_year": 1688,
+      "ustc_country": "United Kingdom of Great Britain and Northern Ireland",
+      "bujanda_id": "9709743",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Cave, Guilielmus",
+      "bujanda_period": "1693",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "6988a5a3d2f1da19024de734",
+        "slug": "a-literary-history-of-ecclesiastical-writers-cave",
+        "title": "Scriptorum ecclesiasticorum historia literaria",
+        "year": 1688,
+        "_id": "6988a5a3d2f1da19024de735",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 3091530,
+      "ustc_url": "https://www.ustc.ac.uk/editions/3091530",
+      "ustc_title": "Primitive Christianity: or, The religion of the ancient Christians in the first ages of the Gospel. In three parts. By William Cave, D.D.",
+      "ustc_author": "Cave, William",
+      "ustc_year": 1673,
+      "ustc_country": "United Kingdom of Great Britain and Northern Ireland",
+      "bujanda_id": "9709743",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Cave, Guilielmus",
+      "bujanda_period": "1693",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "697b07990eef59aefe0d99a4",
+        "slug": "primitive-christianity-cave",
+        "title": "Het eerste christendom of de godsdienst der oude Christenen",
+        "year": 1692,
+        "_id": "697b07990eef59aefe0d99a5",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 1825150,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1825150",
+      "ustc_title": "Kort-begryp van't rechte en ware christendom",
+      "ustc_author": "Labadie, Jean de",
+      "ustc_year": 1685,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9701392",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Labadie, Jean de",
+      "bujanda_period": "1654-1694",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69804b952c90f692f9716e32",
+        "slug": "a-summary-of-right-and-true-christianity-labadie",
+        "title": "Kort-begryp van 't rechte en ware christendom",
+        "year": 1685,
+        "_id": "69804b952c90f692f9716e33",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 1545321,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1545321",
+      "ustc_title": "Versaemeling van eenige grontregels der christelycke leere",
+      "ustc_author": "Labadie, Jean de",
+      "ustc_year": 1668,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9701392",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Labadie, Jean de",
+      "bujanda_period": "1654-1694",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69c8158e6c6f3cc53c84869b",
+        "slug": "versameling-van-eenige-gewichtige-gront-regels-der-labadie",
+        "title": "Versameling van eenige gewichtige gront-regels der christelyke leere",
+        "year": 1666,
+        "_id": "69c8158e6c6f3cc53c84869b",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 6138097,
+      "ustc_url": "https://www.ustc.ac.uk/editions/6138097",
+      "ustc_title": "Le Bon usage de l’Eucharistie, ou la vraye et sainte pratique du mistere et du sacrement de la Cene de I.C.N.S. Avec la vraye maniere de s’y bien preparer pour en profiter. Addresse a Messieurs les consuls et gouverneurs",
+      "ustc_author": "Labadie, Jean de",
+      "ustc_year": 1656,
+      "ustc_country": "France",
+      "bujanda_id": "9701392",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Labadie, Jean de",
+      "bujanda_period": "1654-1694",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69c8149b6c6f3cc53c84826c",
+        "slug": "le-bon-usage-de-l-eucharistie-labadie",
+        "title": "Le bon usage de l'Eucharistie",
+        "year": 1656,
+        "_id": "69c8149b6c6f3cc53c84826c",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 1019844,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1019844",
+      "ustc_title": "De arcanis rerumpublicarum libri sex",
+      "ustc_author": "Clapmarius, Arnoldus",
+      "ustc_year": 1644,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9709829",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Clapmarius, Arnoldus",
+      "bujanda_period": "1608-1632",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "6974b643457dd8909910b9e7",
+        "slug": "on-the-secrets-of-state-clapmarius",
+        "title": "De arcanis rerumpublicarum. De eadem materia discursus",
+        "year": 1644,
+        "_id": "6974b643457dd8909910b9e8",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 1031821,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1031821",
+      "ustc_title": "Conclusiones de jure publico",
+      "ustc_author": "Clapmarius, Arnoldus",
+      "ustc_year": 1644,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9709829",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Clapmarius, Arnoldus",
+      "bujanda_period": "1608-1632",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "697a30565f904ad9c01e0cd3",
+        "slug": "conclusions-on-public-law-clapmarius",
+        "title": "Conclusiones de jure publico",
+        "year": 1644,
+        "_id": "697a30565f904ad9c01e0cd4",
+        "already_tagged": false
+      }
+    },
+    {
       "ustc_sn": 1559297,
       "ustc_url": "https://www.ustc.ac.uk/editions/1559297",
       "ustc_title": "Il cardinalismo di santa chiesa [volume 3]",
@@ -446,6 +719,69 @@
         "year": 1617,
         "_id": "69b32d015a396b236494be3c",
         "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 2607237,
+      "ustc_url": "https://www.ustc.ac.uk/editions/2607237",
+      "ustc_title": "Gabrielis Clauderi, Des berühmten Medici Dissertation von der Universal-Tinctur oder dem Stein der Weisen: in welcher 1. Was diese seye 2. ob sie in der Natur gefunden werde, und ob einem Christen nützlich seye, selbe zu erforschen; 3. Aus was für einer Materi; und 4. wie sie bereitet werde ..., Denen Liebhabern zu Gefallen, ins Teutsche versetztet von Einem Teutsch-gesinnten",
+      "ustc_author": "Clauder, Gabriel",
+      "ustc_year": 1682,
+      "ustc_country": "Germany",
+      "bujanda_id": "9709833",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Claude, Jean",
+      "bujanda_period": "1671-1757",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69c7b9e125ec2ba5ccd7f8b5",
+        "slug": "dissertation-von-der-universal-tinctur-clauder",
+        "title": "Dissertation von der Universal-Tinctur",
+        "year": 1682,
+        "_id": "69c7b9e125ec2ba5ccd7f8b5",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 1836629,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1836629",
+      "ustc_title": "Introductionis in universam geographiam tam veterem quam novam libri VI",
+      "ustc_author": "Cluverius, Philippus",
+      "ustc_year": 1686,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9709849",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Cluverius, Ioannes",
+      "bujanda_period": "1640",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69e536145917566bf878f0f2",
+        "slug": "frontispiece-of-introductio-in-universam-geographiam-by-philipp-clver-1686",
+        "title": "Frontispiece of \"Introductio in Universam Geographiam\" by Philipp Clüver, 1686",
+        "year": 1686,
+        "_id": "69e536145917566bf878f0f2",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 2106162,
+      "ustc_url": "https://www.ustc.ac.uk/editions/2106162",
+      "ustc_title": "Summa Terminorum Metaphysicorum, Iordani Bruni Nolani : Accessit Eiusdem Praxis Descensus, seu applicatio Entis ex manuscripto , per Raphaelem Eglinum Iconium Tigurinum in Acad. Marpurg. Profess. Theolog. Cum Supplemento Rodolphi Goclenii Senioris",
+      "ustc_author": "Bruno, Giordano",
+      "ustc_year": 1609,
+      "ustc_country": "Germany",
+      "bujanda_id": "9710346",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Bruno, Giordano",
+      "bujanda_period": "1600",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69c7cbf125ec2ba5ccd800a4",
+        "slug": "summa-terminorum-metaphysicorum-bruno",
+        "title": "Summa terminorum metaphysicorum",
+        "year": 1595,
+        "_id": "69c7cbf125ec2ba5ccd800a4",
+        "already_tagged": true
       }
     },
     {
@@ -508,6 +844,27 @@
         "title": "De Umbris Idearum",
         "year": 1582,
         "_id": "699050d07d19f3f2aac1e6e4",
+        "already_tagged": true
+      }
+    },
+    {
+      "ustc_sn": 668229,
+      "ustc_url": "https://www.ustc.ac.uk/editions/668229",
+      "ustc_title": "Iordani bruni nolani de imaginum, signorum, et idearum eompositione. Ad omnia inventionum, dispositionum, et memoriae genera libri tres.",
+      "ustc_author": "Bruno, Giordano",
+      "ustc_year": 1591,
+      "ustc_country": "Germany",
+      "bujanda_id": "9710346",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Bruno, Giordano",
+      "bujanda_period": "1600",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69b6660eb3f4fc0441558978",
+        "slug": "iordani-bruni-nolani-de-imaginum-signorum-amp-idearum-bruno",
+        "title": "Iordani Bruni Nolani de imaginum, signorum, &amp; idearum compositione : ad omnia inventionum, dispositionum, &amp; memoriae genera libri tres",
+        "year": 1591,
+        "_id": "69b6660eb3f4fc0441558978",
         "already_tagged": true
       }
     },
@@ -596,6 +953,27 @@
       }
     },
     {
+      "ustc_sn": 1807068,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1807068",
+      "ustc_title": "Leviathan, sive De materia, forma, & potestate civitatis ecclesiasticæ et civilis",
+      "ustc_author": "Hobbes, Thomas",
+      "ustc_year": 1670,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9701166",
+      "bujanda_title": "Opera omnia",
+      "bujanda_author": "Hobbes, Thomas",
+      "bujanda_period": "1649-1703",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69b18a82c4be2cdd0edc7f8e",
+        "slug": "leviathan-sive-de-materia-hobbes",
+        "title": "Leviathan, sive De Materia",
+        "year": 1668,
+        "_id": "69b18a82c4be2cdd0edc7f8e",
+        "already_tagged": true
+      }
+    },
+    {
       "ustc_sn": 1841810,
       "ustc_url": "https://www.ustc.ac.uk/editions/1841810",
       "ustc_title": "Elementa philosophica de cive",
@@ -659,6 +1037,27 @@
       }
     },
     {
+      "ustc_sn": 1013936,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1013936",
+      "ustc_title": "Opera philosophica",
+      "ustc_author": "Descartes, René",
+      "ustc_year": 1650,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9709537",
+      "bujanda_title": "Opera philosophica",
+      "bujanda_author": "Descartes, Rene",
+      "bujanda_period": "1663",
+      "confidence": "medium",
+      "sl_book": {
+        "id": "69b69d32080b19f98fd0ac3e",
+        "slug": "renati-des-cartes-opera-philosophica-descartes",
+        "title": "Renati Des-Cartes opera philosophica",
+        "year": 1650,
+        "_id": "69b69d32080b19f98fd0ac3e",
+        "already_tagged": true
+      }
+    },
+    {
       "ustc_sn": 1562394,
       "ustc_url": "https://www.ustc.ac.uk/editions/1562394",
       "ustc_title": "Opera philosophica",
@@ -692,12 +1091,33 @@
       "bujanda_period": "1690",
       "confidence": "medium",
       "sl_book": {
-        "id": "69b4cd2cd5b6c3815e1a4837",
-        "slug": "baruch-spinoza-de-nagelate-schriften-opera-posthuma-1677-spinoza",
-        "title": "De nagelate schriften — Opera Posthuma",
+        "id": "69b17be3938cbe91c8720452",
+        "slug": "b-d-s-opera-posthuma-spinoza",
+        "title": "B.D.S. Opera Posthuma",
         "year": 1677,
-        "_id": "69b4cd2cd5b6c3815e1a4837",
+        "_id": "69b17be3938cbe91c8720452",
         "already_tagged": true
+      }
+    },
+    {
+      "ustc_sn": 1028616,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1028616",
+      "ustc_title": "Opuscula Hebræa, Græca, Latina, Gallica. Prosaica & metrica",
+      "ustc_author": "Schurman, Anna Maria van",
+      "ustc_year": 1648,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9703012",
+      "bujanda_title": "Opuscula hebraea, graeca, latina, gallica, prosaica et metrica",
+      "bujanda_author": "Schurman, Anna Maria a",
+      "bujanda_period": "1658-1678",
+      "confidence": "high",
+      "sl_book": {
+        "id": "6984e84d875ef560e34aef4e",
+        "slug": "minor-works-opuscula-schurman",
+        "title": "Opuscula",
+        "year": 1648,
+        "_id": "6984e84d875ef560e34aef4f",
+        "already_tagged": false
       }
     },
     {
@@ -785,6 +1205,27 @@
       }
     },
     {
+      "ustc_sn": 2001877,
+      "ustc_url": "https://www.ustc.ac.uk/editions/2001877",
+      "ustc_title": "Tractatus De Magnetica Curatione Vulneris citra ullam [et] superstitionem, [et] dolorem, [et] remedii applicationem : orationis forma conscriptus, a priori tum ob rerum [et] causarum, tum exemplorum etiam augmentum longe diversus ; Accesserunt Enim antiqu",
+      "ustc_author": "Goclenius, Rudolph",
+      "ustc_year": 1609,
+      "ustc_country": "Germany",
+      "bujanda_id": "9700954",
+      "bujanda_title": "Tractatus de magnetica vulnerum coratione citra ullum dolorem \net remedii applicationem et superstitionem",
+      "bujanda_author": "Goclenius, Rodolphus",
+      "bujanda_period": "1615",
+      "confidence": "high",
+      "sl_book": {
+        "id": "69b680c270c69d645a71cc55",
+        "slug": "tractatus-novus-de-magnetica-vulnerum-curatione-citra-ullum-goclenius",
+        "title": "Tractatus novus de magnetica vulnerum curatione, citra ullum et dolorem, et remedii applicationem, et superstitionem, mirandarum &amp; in naturae maiestate abditarum rerum causas patefaciens : huic annexus est alter, de luxuriosis ac portentosis nostri seculi conuiuiis, eorumq origine, affeclis &amp; autoribus, lectu ut non indignus, sic nec iniucundus",
+        "year": 1613,
+        "_id": "69b680c270c69d645a71cc55",
+        "already_tagged": false
+      }
+    },
+    {
       "ustc_sn": 2016300,
       "ustc_url": "https://www.ustc.ac.uk/editions/2016300",
       "ustc_title": "Tractatus Novus De Magnetica Vulnerum Curatione, Citra Ullum Et Dolorem, Et Remedii Applicationem, Et Superstitionem, mirandarum [et] in naturae maiestate abditarum rerum causas patefaciens Huic Annexus Est Alter, De Luxuriosis ac portentosis nostri secul",
@@ -844,6 +1285,69 @@
         "title": "Tractatus Theologico-Politicus (1st edition)",
         "year": 1670,
         "_id": "69b21d57b74d4e5ea24c3c60",
+        "already_tagged": true
+      }
+    },
+    {
+      "ustc_sn": 1811335,
+      "ustc_url": "https://www.ustc.ac.uk/editions/1811335",
+      "ustc_title": "Tractatus theologico-politicus",
+      "ustc_author": "Spinoza, Benedictus de",
+      "ustc_year": 1674,
+      "ustc_country": "Netherlands",
+      "bujanda_id": "9703297",
+      "bujanda_title": "Tractatus theologico-politicus",
+      "bujanda_author": "Spinoza, Benedictus de",
+      "bujanda_period": "1679",
+      "confidence": "medium",
+      "sl_book": {
+        "id": "69c8a0296c6f3cc53c85df42",
+        "slug": "tractatus-theologico-politicus-quo-auctor-quidam-anonymus-knorr",
+        "title": "Tractatus theologico-politicus, quo auctor quidam anonymus, conatu improbo, demonstratum ivit libertatem philosophandii",
+        "year": 1674,
+        "_id": "69c8a0296c6f3cc53c85df42",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 3132423,
+      "ustc_url": "https://www.ustc.ac.uk/editions/3132423",
+      "ustc_title": "Father Malebranche his Treatise concerning the search after truth. The whole work complete. To which is added the author's Treatise of nature and grace: being a consequence of the principles contained in the search. Together with his answer to the animadversions upon the first volume: his defence against the accusations of Monsieur De la Ville, &c. relating to the same subject. All translated by T. Taylor, M.A. late of Magdalen College in Oxford. The second",
+      "ustc_author": "Malebranche, Nicolas",
+      "ustc_year": 1700,
+      "ustc_country": "United Kingdom of Great Britain and Northern Ireland",
+      "bujanda_id": "9701784",
+      "bujanda_title": "Traite de la nature et de la grace",
+      "bujanda_author": "Malebranche, Nicolas",
+      "bujanda_period": "1689",
+      "confidence": "medium",
+      "sl_book": {
+        "id": "69c828c36c6f3cc53c84c49e",
+        "slug": "treatise-concerning-the-search-after-truth-malebranche",
+        "title": "Treatise concerning the search after truth",
+        "year": 1700,
+        "_id": "69c828c36c6f3cc53c84c49e",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 2085301,
+      "ustc_url": "https://www.ustc.ac.uk/editions/2085301",
+      "ustc_title": "Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque Technica Historia : In duo Volumina ... , Authore Roberto Flud ...] Teil: [2,2,]1,4: Roberti Fludd alias De Fluctibus Philosophia sacra [et] vere Christiana Seu Meteorologia Cosmica",
+      "ustc_author": "Fludd, Robert",
+      "ustc_year": 1626,
+      "ustc_country": "Germany",
+      "bujanda_id": "9700794",
+      "bujanda_title": "Utriusque cosmi maioris scilicet et minoris metaphysica, \nphysica atque technica historia",
+      "bujanda_author": "Fludd, Robertus",
+      "bujanda_period": "1625",
+      "confidence": "high",
+      "sl_book": {
+        "id": "695201adab34727b1f0419c7",
+        "slug": "sacred-and-truly-christian-philosophy-fludd",
+        "title": "Philosophia sacra et vere christiana seu Meteorologia cosmica",
+        "year": 1626,
+        "_id": "695201adab34727b1f0419c7",
         "already_tagged": true
       }
     },
@@ -911,6 +1415,69 @@
       }
     },
     {
+      "ustc_sn": 2071035,
+      "ustc_url": "https://www.ustc.ac.uk/editions/2071035",
+      "ustc_title": "Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque Technica Historia : In duo Volumina ... , Authore Roberto Flud ...] Teil: 2,2,1,1,2: Tomi Secundi Tractatus Secundus,De Praeternaturali Utriusque Mundi Historia : In Sectiones tres di",
+      "ustc_author": "Fludd, Robert",
+      "ustc_year": 1621,
+      "ustc_country": "Germany",
+      "bujanda_id": "9700794",
+      "bujanda_title": "Utriusque cosmi maioris scilicet et minoris metaphysica, \nphysica atque technica historia",
+      "bujanda_author": "Fludd, Robertus",
+      "bujanda_period": "1625",
+      "confidence": "high",
+      "sl_book": {
+        "id": "6985ca7130d79dd170ec623f",
+        "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+        "title": "Tomi secundi tractatus secundus; De praeternaturali utriusque mundi historia",
+        "year": 1621,
+        "_id": "6985ca7130d79dd170ec6240",
+        "already_tagged": true
+      }
+    },
+    {
+      "ustc_sn": 2165301,
+      "ustc_url": "https://www.ustc.ac.uk/editions/2165301",
+      "ustc_title": "TRACTATUS SECUNDUS, DE NATVRAE SIMIA seu Technica macrocosmi historia, in partes undecim divisa / AUTHORE ROBERTO FLVDD ALIAS DE Fluctibus, armigero [et] in Medicina Doctore Oxoniensi",
+      "ustc_author": "Fludd, Robert",
+      "ustc_year": 1624,
+      "ustc_country": "Germany",
+      "bujanda_id": "9700794",
+      "bujanda_title": "Utriusque cosmi maioris scilicet et minoris metaphysica, \nphysica atque technica historia",
+      "bujanda_author": "Fludd, Robertus",
+      "bujanda_period": "1625",
+      "confidence": "high",
+      "sl_book": {
+        "id": "69e4cfcae3f85a444d9e9f58",
+        "slug": "zahlensystem-der-numerologie",
+        "title": "Zahlensystem der Numerologie",
+        "year": 1624,
+        "_id": "69e4cfcae3f85a444d9e9f58",
+        "already_tagged": false
+      }
+    },
+    {
+      "ustc_sn": 2534958,
+      "ustc_url": "https://www.ustc.ac.uk/editions/2534958",
+      "ustc_title": "Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque Technica Historia: In duo Volumina secundum Cosmi differentiam divisa",
+      "ustc_author": "Fludd, Robert",
+      "ustc_year": 1617,
+      "ustc_country": "Germany",
+      "bujanda_id": "9700794",
+      "bujanda_title": "Utriusque cosmi maioris scilicet et minoris metaphysica, \nphysica atque technica historia",
+      "bujanda_author": "Fludd, Robertus",
+      "bujanda_period": "1625",
+      "confidence": "high",
+      "sl_book": {
+        "id": "6952dac677f38f6761bc683a",
+        "slug": "history-of-both-worlds-macrocosm-fludd",
+        "title": "Utriusque Cosmi Historia Vol. 1",
+        "year": 1617,
+        "_id": "6952dac677f38f6761bc683a",
+        "already_tagged": true
+      }
+    },
+    {
       "ustc_sn": 2017485,
       "ustc_url": "https://www.ustc.ac.uk/editions/2017485",
       "ustc_title": "Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque Technica Historia : In duo Volumina secundum Cosmi differentiam divisa , Authore Roberto Flud alias de Fluctibus, Armigero, [et] in Medicina Doctore Oxoniensi Teil: 1,1: De Macrocosmi ",
@@ -970,6 +1537,27 @@
         "title": "Catechismus",
         "year": 1560,
         "_id": "69b4ccfcd5b6c3815e1a33a4",
+        "already_tagged": true
+      }
+    },
+    {
+      "ustc_sn": 643191,
+      "ustc_url": "https://www.ustc.ac.uk/editions/643191",
+      "ustc_title": "Ein einfeltige weyse zu betten fuer einen gutten freuendt.",
+      "ustc_author": "Luther, Martin",
+      "ustc_year": 1539,
+      "ustc_country": "Germany",
+      "bujanda_id": "9800630",
+      "bujanda_title": "Works",
+      "bujanda_author": "Luther, Martin [1483-1546]",
+      "bujanda_period": "1517-1521",
+      "confidence": "opera_omnia",
+      "sl_book": {
+        "id": "69c71e58da9771c716316a90",
+        "slug": "ein-einfeltige-weyse-zu-betten-fur-einen-gutten-freundt-luther",
+        "title": "Ein einfeltige weyse zu betten für einen gutten freundt",
+        "year": 1539,
+        "_id": "69c71e58da9771c716316a90",
         "already_tagged": true
       }
     }

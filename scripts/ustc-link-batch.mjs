@@ -115,8 +115,11 @@ async function main() {
     return;
   }
 
-  // Stream candidates
-  const cursor = books.find(q, { projection: { id: 1, title: 1, author: 1, year: 1 } });
+  // Materialize candidate list upfront — streaming via cursor hits 10min
+  // server-side cursor timeout on long runs (CursorNotFound, code 43).
+  console.log(`Loading candidate list into memory…`);
+  const candidates = await books.find(q, { projection: { id: 1, title: 1, author: 1, year: 1 } }).toArray();
+  console.log(`  ${candidates.length} candidates loaded.`);
   const cap = LIMIT || Infinity;
   const startedAt = Date.now();
 
@@ -177,7 +180,7 @@ async function main() {
 
   // Feed queue
   let count = 0;
-  for await (const book of cursor) {
+  for (const book of candidates) {
     if (count++ >= cap) break;
     while (queue.length > CONCURRENCY * 4) await new Promise(r => setTimeout(r, 25));
     queue.push(book);

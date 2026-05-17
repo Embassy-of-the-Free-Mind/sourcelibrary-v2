@@ -1,13 +1,13 @@
 # Banned Books via USTC — Cross-Reference Report
 
-_Generated 2026-05-16T23:22:37.585Z_
+_Generated 2026-05-17T03:09:54.692Z_
 
 Joined the Bujanda 1946 Vatican Index (4,327 entries) against Source Library's 1.6M USTC edition records, then checked which USTC editions are linked to Source Library books via `ustc_id`.
 
 - **CSV entries scored:** 4327
 - **Distinct USTC SNs identified:** 16005
-- **Source Library books matched (already in catalog):** 46
-- **USTC editions in Bujanda but NOT in Source Library (acquisition targets):** 15959
+- **Source Library books matched (already in catalog):** 74
+- **USTC editions in Bujanda but NOT in Source Library (acquisition targets):** 15931
 
 ## ✓ Have (Source Library books matching banned USTC editions)
 
@@ -21,42 +21,58 @@ Joined the Bujanda 1946 Vatican Index (4,327 entries) against Source Library's 1
 - [Charron, Pierre] **De la sagesse trois livres** (1646) — SL: `de-la-sagesse-charron` ✓ tagged, [USTC 1027902](https://www.ustc.ac.uk/editions/1027902)
 - [Vossius, Isaacus] **De Lucis Natura & proprietate** (1662) — SL: `de-lucis-natura-et-proprietate-vossius` ◇ NOT tagged yet, [USTC 1556381](https://www.ustc.ac.uk/editions/1556381)
 - [Pufendorf, Samuel von] **De officio hominis et civis juxta legem naturalem libri duo** (1673) — SL: `de-officio-hominis-et-civis-pufendorf` ◇ NOT tagged yet, [USTC 263065](https://www.ustc.ac.uk/editions/263065)
-- [Albertus, Magnus [pseudonymus]] **Alberti Magni. De Secretis Mulierum Libellus, Scholiis Auctus, [et] a ** (1615) — SL: `alberti-magni-de-secretis-mvliervm-libellus-scholiis-auctus-albertus` ◇ NOT tagged yet, [USTC 2042970](https://www.ustc.ac.uk/editions/2042970)
+- [Albertus, Magnus [pseudonymus]] **Alberti Magni. De Secretis Mulierum Libellus, Scholiis Auctus, [et] a ** (1615) — SL: `alberti-magni-de-secretis-mulierum-libellus-scholiis-auctus-albertus-3` ◇ NOT tagged yet, [USTC 2042970](https://www.ustc.ac.uk/editions/2042970)
+- [Albertus, Magnus [pseudonymus]] **Secreta mulierum et virorum (cum commento)** (1513) — SL: `secreta-mulierum-et-virorum-cum-commento-albertus-magnus-9` ◇ NOT tagged yet, [USTC 760062](https://www.ustc.ac.uk/editions/760062)
 - [Albertus, Magnus [pseudonymus]] **De Secretis Mulierum Libellus: Scholiis Auctus, [et] a mendis repurgat** (1607) — SL: `de-secretis-mulierum-et-de-virtutibus-herbarum-magnus` ◇ NOT tagged yet, [USTC 2014515](https://www.ustc.ac.uk/editions/2014515)
+- [Albertus, Magnus [pseudonymus]] **Secreta mulierum et virorum (cum commento)** (1510) — SL: `albertus-magnus-de-secretis-mulierum-et-virorum-albertus` ◇ NOT tagged yet, [USTC 742412](https://www.ustc.ac.uk/editions/742412)
+- [Vossius, Gerardus Ioannes] **De theologia gentili, et physiologia Christiana** (1649) — SL: `de-physiologia-christiana-et-theologia-gentili-liber-v-vi-vossius` ◇ NOT tagged yet, [USTC 1513760](https://www.ustc.ac.uk/editions/1513760)
 - [Vossius, Gerardus Ioannes] **De theologia gentili, et physiologia christiana; sive de origine ac pr** (1641) — SL: `de-theologia-gentili-et-physiologia-christiana-vossius` ◇ NOT tagged yet, [USTC 1013671](https://www.ustc.ac.uk/editions/1013671)
 - [Machiavelli, Niccolo [1469-152] **Discorsi di Nicolo Machiavelli fiorentino, sopra la prima deca di Tito** (1554) — SL: `discorsi-di-nicolo-machiavelli-sopra-la-prima-deca-di-tito-machiavelli` ✓ tagged, [USTC 839368](https://www.ustc.ac.uk/editions/839368)
+- [Chorier, Nicolaus] **Aloisiae Sigaeae, Toletanae satyra sotadica de arcanis amoris et vener** (1678) — SL: `satyra-sotadica-aloisia-sigaea` ◇ NOT tagged yet, [USTC 1789609](https://www.ustc.ac.uk/editions/1789609)
 - [Simon, Richard] **Histoire critique du Vieux Testament** (1680) — SL: `histoire-critique-du-vieux-testament-simon` ◇ NOT tagged yet, [USTC 1816588](https://www.ustc.ac.uk/editions/1816588)
 - [Sarpi, Paolo] **Historia del Concilio Tridentino , di Pietro Soave Polano** (1629) — SL: `historia-del-concilio-tridentino-sarpi` ◇ NOT tagged yet, [USTC 2085766](https://www.ustc.ac.uk/editions/2085766)
 - [Castiglione, Baldessar] **Il libro del cortegiano del conte Baldesar Castiglione** (1528) — SL: `il-libro-del-cortegiano-del-conte-baldesar-castiglione-castiglione` ◇ NOT tagged yet, [USTC 819483](https://www.ustc.ac.uk/editions/819483)
+- [Straparola, Giovanni Francesco] **Le tredici piacevoli notti del signor Giovanni Francesco Straparola, d** (1578) — SL: `le-tredici-piacevoli-notti-straparola` ◇ NOT tagged yet, [USTC 857621](https://www.ustc.ac.uk/editions/857621)
 - [Descartes, Rene] **Renati Des-Cartes Meditationes de prima philosophia, in qua Dei existe** (1641) — SL: `meditationes-de-prima-philosophia-descartes` ◇ NOT tagged yet, [USTC 6039393](https://www.ustc.ac.uk/editions/6039393)
 - [Descartes, Rene] **Notae in programma quoddam in Belgio editum, cum hoc titulo: Explicati** (1648) — SL: `notae-in-programma-quoddam-descartes` ✓ tagged, [USTC 1031856](https://www.ustc.ac.uk/editions/1031856)
+- [Cave, Guilielmus] **Apostolische oudheden, of Het leven der heylige apostelen, evangeliste** (1698) — SL: `apostolic-antiquities-cave` ◇ NOT tagged yet, [USTC 1831191](https://www.ustc.ac.uk/editions/1831191)
+- [Cave, Guilielmus] **Scriptorum ecclesiasticorum historia literaria a Christo nato usque ad** (1688) — SL: `a-literary-history-of-ecclesiastical-writers-cave` ◇ NOT tagged yet, [USTC 3114467](https://www.ustc.ac.uk/editions/3114467)
+- [Cave, Guilielmus] **Primitive Christianity: or, The religion of the ancient Christians in ** (1673) — SL: `primitive-christianity-cave` ◇ NOT tagged yet, [USTC 3091530](https://www.ustc.ac.uk/editions/3091530)
+- [Labadie, Jean de] **Kort-begryp van't rechte en ware christendom** (1685) — SL: `a-summary-of-right-and-true-christianity-labadie` ◇ NOT tagged yet, [USTC 1825150](https://www.ustc.ac.uk/editions/1825150)
+- [Labadie, Jean de] **Versaemeling van eenige grontregels der christelycke leere** (1668) — SL: `versameling-van-eenige-gewichtige-gront-regels-der-labadie` ◇ NOT tagged yet, [USTC 1545321](https://www.ustc.ac.uk/editions/1545321)
+- [Labadie, Jean de] **Le Bon usage de l’Eucharistie, ou la vraye et sainte pratique du miste** (1656) — SL: `le-bon-usage-de-l-eucharistie-labadie` ◇ NOT tagged yet, [USTC 6138097](https://www.ustc.ac.uk/editions/6138097)
+- [Clapmarius, Arnoldus] **De arcanis rerumpublicarum libri sex** (1644) — SL: `on-the-secrets-of-state-clapmarius` ◇ NOT tagged yet, [USTC 1019844](https://www.ustc.ac.uk/editions/1019844)
+- [Clapmarius, Arnoldus] **Conclusiones de jure publico** (1644) — SL: `conclusions-on-public-law-clapmarius` ◇ NOT tagged yet, [USTC 1031821](https://www.ustc.ac.uk/editions/1031821)
 - [Leti, Gregorio] **Il cardinalismo di santa chiesa [volume 3]** (1668) — SL: `il-cardinalismo-di-santa-chiesa-leti` ◇ NOT tagged yet, [USTC 1559297](https://www.ustc.ac.uk/editions/1559297)
 - [De Dominis, Marcus Antonius] **De republica ecclesiastica libri X. Auctore Marco Antonio de Dominis A** (1617) — SL: `de-republica-ecclesiastica-libri-x-vol-1-dominis` ◇ NOT tagged yet, [USTC 3007643](https://www.ustc.ac.uk/editions/3007643)
+- [Claude, Jean] **Gabrielis Clauderi, Des berühmten Medici Dissertation von der Universa** (1682) — SL: `dissertation-von-der-universal-tinctur-clauder` ◇ NOT tagged yet, [USTC 2607237](https://www.ustc.ac.uk/editions/2607237)
+- [Cluverius, Ioannes] **Introductionis in universam geographiam tam veterem quam novam libri V** (1686) — SL: `frontispiece-of-introductio-in-universam-geographiam-by-philipp-clver-1686` ◇ NOT tagged yet, [USTC 1836629](https://www.ustc.ac.uk/editions/1836629)
+- [Bruno, Giordano] **Summa Terminorum Metaphysicorum, Iordani Bruni Nolani : Accessit Eiusd** (1609) — SL: `summa-terminorum-metaphysicorum-bruno` ✓ tagged, [USTC 2106162](https://www.ustc.ac.uk/editions/2106162)
 - [Bruno, Giordano] **De innumerabilibus, immenso et infigurabili seu de universo et mundis ** (1591) — SL: `de-triplici-minimo-et-mensura-bruno` ✓ tagged, [USTC 668230](https://www.ustc.ac.uk/editions/668230)
 - [Bruno, Giordano] **Summa terminorum metaphysicorum, ad capessendum logicae & philosophiae** (1595) — SL: `summa-terminorum-metaphysicorum-ad-capessendum-logicae-amp-bruno` ✓ tagged, [USTC 695150](https://www.ustc.ac.uk/editions/695150)
 - [Bruno, Giordano] **De umbris idearum. Implicantibus artem, quaerendi, inveniendi, jud can** (1582) — SL: `giordano-bruno-de-umbris-idearum-1582-first-edition-bruno` ✓ tagged, [USTC 170614](https://www.ustc.ac.uk/editions/170614)
+- [Bruno, Giordano] **Iordani bruni nolani de imaginum, signorum, et idearum eompositione. A** (1591) — SL: `iordani-bruni-nolani-de-imaginum-signorum-amp-idearum-bruno` ✓ tagged, [USTC 668229](https://www.ustc.ac.uk/editions/668229)
 - [Bruno, Giordano] **Spaccio de la bestia trionfante. Proposto da Giove, effettuato dal con** (1584) — SL: `spaccio-de-la-bestia-trionfante-bruno-2` ✓ tagged, [USTC 130052](https://www.ustc.ac.uk/editions/130052)
 - [Bruno, Giordano] **La cena de ceneri Descritta in cinque dialogi, per quattro interlocuto** (1584) — SL: `la-cena-de-le-ceneri-descritta-in-cinque-dialogi-bruno` ✓ tagged, [USTC 509944](https://www.ustc.ac.uk/editions/509944)
 - [Bruno, Giordano] **De gl' heroici furori** (1585) — SL: `of-heroic-frenzies-bruno` ✓ tagged, [USTC 130053](https://www.ustc.ac.uk/editions/130053)
 - [Bruno, Giordano] **Cantus Circaeus ad eam memoriae praxim ordinatus quam ipse judicariam ** (1582) — SL: `the-incantation-of-circe-bruno` ✓ tagged, [USTC 170603](https://www.ustc.ac.uk/editions/170603)
+- [Hobbes, Thomas] **Leviathan, sive De materia, forma, & potestate civitatis ecclesiasticæ** (1670) — SL: `leviathan-sive-de-materia-hobbes` ✓ tagged, [USTC 1807068](https://www.ustc.ac.uk/editions/1807068)
 - [Hobbes, Thomas] **Elementa philosophica de cive** (1657) — SL: `elementa-philosophica-de-cive-hobbes` ✓ tagged, [USTC 1841810](https://www.ustc.ac.uk/editions/1841810)
 - [Hobbes, Thomas] **Leviathan: of Van de stoffe, gedaente, ende magt van de kerckelycke en** (1667) — SL: `leviathan-of-van-de-stoffe-hobbes` ✓ tagged, [USTC 1803786](https://www.ustc.ac.uk/editions/1803786)
 - [Grotius, Hugo] **The most excellent Hugo Grotius his three books treating of the rights** (1682) — SL: `the-most-excellent-hugo-grotius-his-three-books-treating-of-grotius` ◇ NOT tagged yet, [USTC 3104263](https://www.ustc.ac.uk/editions/3104263)
+- [Descartes, Rene] **Opera philosophica** (1650) — SL: `renati-des-cartes-opera-philosophica-descartes` ✓ tagged, [USTC 1013936](https://www.ustc.ac.uk/editions/1013936)
 - [Descartes, Rene] **Opera philosophica** (1657) — SL: `opera-philosophica-descartes` ✓ tagged, [USTC 1562394](https://www.ustc.ac.uk/editions/1562394)
-- [Spinoza, Benedictus de] **Opera posthuma** (1677) — SL: `baruch-spinoza-de-nagelate-schriften-opera-posthuma-1677-spinoza` ✓ tagged, [USTC 1813760](https://www.ustc.ac.uk/editions/1813760)
+- [Spinoza, Benedictus de] **Opera posthuma** (1677) — SL: `b-d-s-opera-posthuma-spinoza` ✓ tagged, [USTC 1813760](https://www.ustc.ac.uk/editions/1813760)
+- [Schurman, Anna Maria a] **Opuscula Hebræa, Græca, Latina, Gallica. Prosaica & metrica** (1648) — SL: `minor-works-opuscula-schurman` ◇ NOT tagged yet, [USTC 1028616](https://www.ustc.ac.uk/editions/1028616)
 - [Lipsius, Iustus] **Davidis Lipsii Doctoris Philosophi Medici Erfordiani Antipathiae Singu** (1678) — SL: `davidis-lipsii-doctoris-philosophi-medici-erfordiani-lipsius` ◇ NOT tagged yet, [USTC 2602907](https://www.ustc.ac.uk/editions/2602907)
 - [Leusden, Iohannes] **Philologus Hebræo-mixtus, unà cum spicilegio philologico** (1682) — SL: `philologus-hebr-o-mixtus-una-cum-spicilegio-philologico-leusden` ◇ NOT tagged yet, [USTC 1818062](https://www.ustc.ac.uk/editions/1818062)
 - [Browne, Thomas] **Religio, medici.** (1642) — SL: `religio-medici-1642-first-edition-browne` ◇ NOT tagged yet, [USTC 3045701](https://www.ustc.ac.uk/editions/3045701)
 - [Cudworth, Ralph] **The true intellectual system of the universe: the first part; wherein,** (1678) — SL: `the-true-intellectual-system-of-the-universe-cudworth` ◇ NOT tagged yet, [USTC 3096038](https://www.ustc.ac.uk/editions/3096038)
+- [Goclenius, Rodolphus] **Tractatus De Magnetica Curatione Vulneris citra ullam [et] superstitio** (1609) — SL: `tractatus-novus-de-magnetica-vulnerum-curatione-citra-ullum-goclenius` ◇ NOT tagged yet, [USTC 2001877](https://www.ustc.ac.uk/editions/2001877)
 - [Goclenius, Rodolphus] **Tractatus Novus De Magnetica Vulnerum Curatione, Citra Ullum Et Dolore** (1613) — SL: `de-magnetica-vulnerum-curatione-goclenius` ◇ NOT tagged yet, [USTC 2016300](https://www.ustc.ac.uk/editions/2016300)
 - [Spinoza, Benedictus de] **Tractatus Theologico-Politicus: Continens Dissertationes aliquot, Quib** (1670) — SL: `tractatus-theologico-politicus-spinoza` ✓ tagged, [USTC 2557410](https://www.ustc.ac.uk/editions/2557410)
-- [Spinoza, Benedictus de] **Tractatus theologico-politicus** (1670) — SL: `tractatus-theologico-politicus-1st-edition-spinoza` ✓ tagged, [USTC 1565703](https://www.ustc.ac.uk/editions/1565703)
-- [Fludd, Robertus] **Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque** (1619) — SL: `history-of-both-worlds-microcosm-fludd` ✓ tagged, [USTC 2134679](https://www.ustc.ac.uk/editions/2134679)
-- [Fludd, Robertus] **Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque** (1624) — SL: `utriusque-cosmi-maioris-scilicet-et-minoris-metaphysica-fludd` ✓ tagged, [USTC 2130913](https://www.ustc.ac.uk/editions/2130913)
-- [Fludd, Robertus] **Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque** (1617) — SL: `history-of-the-macrocosm-and-microcosm-fludd` ✓ tagged, [USTC 2527797](https://www.ustc.ac.uk/editions/2527797)
-- [Fludd, Robertus] **Utriusque Cosmi Maioris scilicet et Minoris Metaphysica, Physica Atque** (1617) — SL: `utriusque-cosmi-historia-1617-fludd` ✓ tagged, [USTC 2017485](https://www.ustc.ac.uk/editions/2017485)
-- [Luther, Martin [1483-1546]] **Martinus Luther** (1530) — SL: `biblia-luther-bible-1535-luther` ✓ tagged, [USTC 752654](https://www.ustc.ac.uk/editions/752654)
-- [Luther, Martin [1483-1546]] **De grote catechismus** (1560) — SL: `martin-luther-catechismus-1560-luther` ✓ tagged, [USTC 629914](https://www.ustc.ac.uk/editions/629914)
+
+_(+14 more in JSON)_
 
 ## ✗ Acquisition shortlist (banned USTC editions not in Source Library)
 
@@ -161,4 +177,4 @@ Joined the Bujanda 1946 Vatican Index (4,327 entries) against Source Library's 1
 - **An abridgment of Mr. Locke's Essay concerning humane understanding.** by Locke, John (1696, United Kingdom of Great Britain and Northern Ireland) — [USTC 3130778](https://www.ustc.ac.uk/editions/3130778)
 - **A letter to Edward Ld Bishop of Worcester, concerning some passages re** by Locke, John (1697, United Kingdom of Great Britain and Northern Ireland) — [USTC 3131302](https://www.ustc.ac.uk/editions/3131302)
 
-_(+15859 more in JSON)_
+_(+15831 more in JSON)_
