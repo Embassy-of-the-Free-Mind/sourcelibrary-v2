@@ -159,7 +159,7 @@ const TOOLS: Tool[] = [
         },
         language: {
           type: "string",
-          description: "Filter by original language (e.g., Latin, German, Greek, Arabic)",
+          description: "Filter by original language (e.g., Latin, German, Greek, Arabic, Chinese, Sanskrit, Hebrew, Persian, Tibetan). Use this filter when you want passages from a specific tradition — unfiltered English queries skew toward Latin/German/English results, so set language=Chinese/Arabic/etc. explicitly to surface those texts.",
         },
         year_from: {
           type: "number",
