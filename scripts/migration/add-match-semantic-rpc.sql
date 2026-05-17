@@ -12,10 +12,15 @@
 -- when filter_language scopes the result set to a language that doesn't appear
 -- in the top-N nearest neighbors of the query. Example: an English query for
 -- "medicinal herbs" finds Latin/English passages in the top 200, so a Chinese
--- language filter strips everything to 0. Fix: when filter_language is set,
+-- language filter strips everything to 0. Fix: when filter_language(s) is set,
 -- branch to a sequential-scan path that filters by language FIRST then sorts
 -- by similarity. 88K Chinese rows is small enough to scan in <1s. The HNSW
--- index is still used when filter_language is null (the common case).
+-- index is still used when no language filter is set (the common case).
+--
+-- Plural-form extension (2026-05-17): filter_languages and filter_exclude_languages
+-- accept arrays for multi-language queries (e.g. ["Chinese","Sanskrit","Arabic"]
+-- or excluding ["Latin","German","English","French"] to focus on non-Western
+-- traditions). Both also branch to seq scan to avoid the HNSW post-filter gotcha.
 --
 -- Tenant filter: page_translations doesn't currently carry a tenant_id column,
 -- so we accept the parameter for API compatibility but ignore it.
@@ -27,7 +32,9 @@ CREATE OR REPLACE FUNCTION match_semantic(
   filter_tenant_id TEXT DEFAULT NULL,
   filter_language TEXT DEFAULT NULL,
   filter_year_min INT DEFAULT NULL,
-  filter_year_max INT DEFAULT NULL
+  filter_year_max INT DEFAULT NULL,
+  filter_languages TEXT[] DEFAULT NULL,
+  filter_exclude_languages TEXT[] DEFAULT NULL
 )
 RETURNS TABLE (
   page_id TEXT,
@@ -42,11 +49,16 @@ RETURNS TABLE (
 )
 LANGUAGE plpgsql
 AS $$
+DECLARE
+  has_language_filter BOOLEAN := filter_language IS NOT NULL
+    OR (filter_languages IS NOT NULL AND array_length(filter_languages, 1) > 0)
+    OR (filter_exclude_languages IS NOT NULL AND array_length(filter_exclude_languages, 1) > 0);
 BEGIN
-  IF filter_language IS NOT NULL THEN
+  IF has_language_filter THEN
     -- Language-scoped path: filter first, sort by distance after.
     -- Avoids the HNSW post-filter gotcha where the index returns top-N
-    -- nearest vectors globally and the language filter strips them all.
+    -- nearest vectors globally and a language filter strips them all.
+    -- Uses the partial index page_translations_lang_idx for the include cases.
     RETURN QUERY
     SELECT
       p.page_id,
@@ -59,8 +71,12 @@ BEGIN
       p.book_year,
       1 - (p.embedding <=> query_embedding) AS similarity
     FROM page_translations p
-    WHERE p.book_language = filter_language
-      AND p.embedding IS NOT NULL
+    WHERE p.embedding IS NOT NULL
+      AND (filter_language IS NULL OR p.book_language = filter_language)
+      AND (filter_languages IS NULL OR array_length(filter_languages, 1) IS NULL
+           OR p.book_language = ANY(filter_languages))
+      AND (filter_exclude_languages IS NULL OR array_length(filter_exclude_languages, 1) IS NULL
+           OR p.book_language IS NULL OR NOT (p.book_language = ANY(filter_exclude_languages)))
       AND 1 - (p.embedding <=> query_embedding) > match_threshold
       AND (filter_year_min IS NULL OR p.book_year >= filter_year_min)
       AND (filter_year_max IS NULL OR p.book_year <= filter_year_max)
@@ -98,7 +114,6 @@ $$;
 --     ON page_translations USING hnsw (embedding vector_cosine_ops)
 --     WITH (m = 16, ef_construction = 64);
 --
--- For the language-filtered path, the planner uses a sequential scan with
--- an in-memory sort. If that gets slow (e.g., English at 436K rows), add:
---   CREATE INDEX page_translations_lang_idx
---     ON page_translations (book_language) WHERE embedding IS NOT NULL;
+-- For the language-filtered path, the planner uses the partial index
+-- page_translations_lang_idx on (book_language) WHERE embedding IS NOT NULL.
+-- Created 2026-05-17; brings English filtered queries from 450ms → 200ms.
