@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 /**
- * Backfill ustc_sn + sl_book_id on index_catalog_entries.
+ * Backfill ustc_sn + sl_book_id on index_catalog_entries via TWO passes.
  *
- * For each catalog entry that already has author + title extracted from OCR,
- * find the best matching USTC edition (Supabase ustc_editions) and stamp:
- *   - ustc_sn:    the USTC serial number
- *   - sl_book_id: the USTC row's source_library_id (set by Phase 1
- *                 reconciliation + Phase 2 AI matcher in #1847)
+ * Pass 1 (Supabase): catalog entry → USTC edition → SL book if USTC-linked.
+ *   This gives us ustc_sn for every entry that matches a known USTC edition,
+ *   plus sl_book_id when ustc_editions.source_library_id is set (populated
+ *   by Phase 1/2 reconciliation in #1847; ~60% of current banned-books).
  *
- * Pure Supabase operation: read catalog entries, read USTC editions, write
- * catalog entries. No Mongo. Year proximity (±50y from condemnation),
- * surname-prefix match on author_1, title-token overlap scoring.
+ * Pass 2 (Mongo): catalog entry → SL book direct, by author+title fuzzy
+ *   match. Catches the ~40% of held banned books that haven't been linked
+ *   to USTC yet. Only fills sl_book_id where Pass 1 left it null.
  *
  * Re-runnable; only fills entries where ustc_sn IS NULL (unless --force).
  *
@@ -20,6 +19,7 @@
  *   node scripts/backfill-catalog-ustc-sl-links.mjs --index-id roman-1564-tridentine --apply
  *   node scripts/backfill-catalog-ustc-sl-links.mjs --all --apply                            # every index
  */
+import { MongoClient } from 'mongodb';
 
 function arg(name, fallback) {
   const i = process.argv.indexOf(name);
@@ -124,6 +124,58 @@ async function fetchCatalogEntries(indexId) {
   return entries;
 }
 
+// ─── Pass 2: direct Mongo SL match (catches SL books not USTC-linked yet) ──
+
+let mongoClient = null;
+async function getMongo() {
+  if (mongoClient) return mongoClient;
+  mongoClient = new MongoClient(process.env.MONGODB_URI);
+  await mongoClient.connect();
+  return mongoClient;
+}
+
+// Fetch SL books in our domain whose author surname-normalises to `s`.
+// Cache per surname to avoid repeated Mongo queries.
+const slCache = new Map();
+async function slBooksBySurname(s) {
+  if (!s) return [];
+  if (slCache.has(s)) return slCache.get(s);
+  const mc = await getMongo();
+  const db = mc.db('bookstore');
+  const variants = [s];
+  const corrected = fixLongS(s);
+  if (corrected !== s) variants.push(corrected);
+  const re = new RegExp(`(^|[^a-z])(${variants.map(v => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'i');
+  const books = await db.collection('books').find(
+    { $or: [{ author: re }, { author_normalized: re }, { canonical_author_normalized: re }],
+      visible: { $ne: false },
+      resource_type: { $nin: ['artwork', 'emblem', 'image', 'illustration', 'manuscript-fragment'] } },
+    { projection: { _id: 1, id: 1, slug: 1, title: 1, author: 1, year: 1 } }
+  ).limit(80).toArray();
+  slCache.set(s, books);
+  return books;
+}
+
+async function findSlBookFor(entry) {
+  const eds = await slBooksBySurname(entry.author_normalized);
+  if (!eds.length) return null;
+  let best = null;
+  for (const b of eds) {
+    if (entry.scope === 'opera_omnia') {
+      // For opera_omnia, surname match is enough. Prefer SL books with reasonable year proximity.
+      const proximity = entry.condemnation_year && b.year ? Math.abs(entry.condemnation_year - b.year) : 9999;
+      if (!best || proximity < best.proximity) best = { book: b, score: 1, proximity, reason: 'opera_omnia' };
+      continue;
+    }
+    const score = scoreMatch(entry.title, b.title);
+    if (score < 2) continue;
+    if (entry.condemnation_year && b.year && Math.abs(entry.condemnation_year - b.year) > 100) continue;
+    if (best && best.score >= score) continue;
+    best = { book: b, score, reason: `${score}-token-overlap` };
+  }
+  return best;
+}
+
 async function backfillIndex(indexId) {
   console.log(`\n━━━ ${indexId} ━━━`);
   const entries = await fetchCatalogEntries(indexId);
@@ -160,7 +212,27 @@ async function backfillIndex(indexId) {
         if (e.condemnation_year && u.year && Math.abs(e.condemnation_year - u.year) > 60) continue;
         best = { u, score, reason: `${score}-token-overlap` };
       }
-      if (!best) continue;
+      if (!best) {
+        // Pass 2 fallback: no USTC match but maybe we have an SL book directly
+        const slMatch = await findSlBookFor(e);
+        if (!slMatch) continue;
+        matched++;
+        withSl++;
+        ops.push({
+          id: e.id,
+          sl_book_id: String(slMatch.book._id),
+          sl_book_slug: slMatch.book.slug || null,
+          match_confidence: slMatch.score >= 4 ? 'high' : slMatch.score >= 3 ? 'medium' : 'low',
+          match_method: 'ocr_then_mongo_direct',
+        });
+        if (samples.length < 5) samples.push({
+          entry: `"${(e.title || '').slice(0, 40)}" by ${e.author}`,
+          ustc: '(no USTC match)',
+          reason: `direct-SL: ${slMatch.reason}`,
+          sl: `HELD: ${slMatch.book.slug || slMatch.book.id}`,
+        });
+        continue;
+      }
       matched++;
       if (best.u.source_library_id) withSl++;
 
@@ -169,12 +241,27 @@ async function backfillIndex(indexId) {
         best.score >= 4 ? 'high' :
         best.score >= 3 ? 'medium' : 'low';
 
+      // Pass 2: if USTC didn't carry an SL link, try direct Mongo SL match
+      let slBookId = best.u.source_library_id || null;
+      let slBookSlug = null;
+      let directHit = false;
+      if (!slBookId) {
+        const slMatch = await findSlBookFor(e);
+        if (slMatch) {
+          slBookId = String(slMatch.book._id);
+          slBookSlug = slMatch.book.slug || null;
+          directHit = true;
+          withSl++;
+        }
+      }
+
       ops.push({
         id: e.id,
         ustc_sn: best.u.sn,
-        sl_book_id: best.u.source_library_id || null,
+        sl_book_id: slBookId,
+        sl_book_slug: slBookSlug,
         match_confidence: confidence,
-        match_method: 'ocr_then_ustc_join',
+        match_method: directHit ? 'ocr_then_ustc_join+mongo_fallback' : 'ocr_then_ustc_join',
       });
       if (samples.length < 5) {
         samples.push({
@@ -190,7 +277,7 @@ async function backfillIndex(indexId) {
 
   console.log(`Match rate: ${matched}/${entries.length} (${(matched/entries.length*100).toFixed(1)}%)`);
   console.log(`With sl_book_id: ${withSl}`);
-  console.log(`Elapsed: ${((Date.now()-startedAt)/1000).toFixed(1)}s, USTC fetches cached: ${ustcCache.size}\n`);
+  console.log(`Elapsed: ${((Date.now()-startedAt)/1000).toFixed(1)}s, USTC fetches cached: ${ustcCache.size}, SL fetches cached: ${slCache.size}\n`);
   console.log(`Sample matches:`);
   for (const s of samples) {
     console.log(`  [${s.sl}] ${s.entry}`);
@@ -237,8 +324,10 @@ async function main() {
   console.log(`\n━━━ Summary ━━━`);
   console.log(`Indices processed: ${indexIds.length}`);
   console.log(`Total entries    : ${totals.total}`);
-  console.log(`Matched to USTC  : ${totals.matched} (${(totals.matched/Math.max(totals.total,1)*100).toFixed(1)}%)`);
-  console.log(`Linked to SL book: ${totals.withSl}`);
+  console.log(`Matched (USTC or SL): ${totals.matched} (${(totals.matched/Math.max(totals.total,1)*100).toFixed(1)}%)`);
+  console.log(`Linked to SL book   : ${totals.withSl}`);
+
+  if (mongoClient) await mongoClient.close();
 }
 
 main().catch(err => { console.error('Fatal:', err); process.exit(1); });
