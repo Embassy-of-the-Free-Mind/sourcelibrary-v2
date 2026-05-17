@@ -21,7 +21,7 @@ const NON_TENANT_PATHS = new Set([
   'book', 'collections',
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
-  'research', 'embed', 'shwep', 'for-researchers', 'identify',
+  'research', 'embed', 'shwep', 'for-researchers', 'for-libraries', 'identify',
   // Welcome flow (post-signup interstitial + temporary preview route)
   'welcome', 'welcome-preview',
   // Shortlinks — /q/[code] must pass through to src/app/q/[code]/route.ts
