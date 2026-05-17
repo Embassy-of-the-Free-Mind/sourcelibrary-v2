@@ -15,8 +15,11 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type'); // 'category' | 'curated' | null (all)
+    const slug = searchParams.get('slug'); // exact-match lookup by slug
     const includeUnpublished = searchParams.get('unpublished') === 'true';
     const includeChildren = searchParams.get('includeChildren') === 'true';
+    const limit = Math.min(parseInt(searchParams.get('limit') || '500', 10), 1000);
+    const offset = Math.max(parseInt(searchParams.get('offset') || '0', 10), 0);
 
     // Read tenant context resolved by proxy.ts
     const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request);
@@ -36,6 +39,9 @@ export async function GET(request: NextRequest) {
     if (type) {
       filter.type = type;
     }
+    if (slug) {
+      filter.slug = slug;
+    }
 
     // Curated collections have a published flag — hide unpublished by default
     if (!includeUnpublished) {
@@ -49,6 +55,8 @@ export async function GET(request: NextRequest) {
       .collection('collections')
       .find(filter)
       .sort({ order: 1 })
+      .skip(offset)
+      .limit(limit)
       .toArray();
 
     const cleaned = collections.map(({ _id, ...rest }: any) => ({
