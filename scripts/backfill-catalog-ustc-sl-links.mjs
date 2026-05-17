@@ -48,6 +48,99 @@ async function supa(method, path, body) {
   return r.status === 204 ? null : r.json();
 }
 
+// ─── Gemini verification ─────────────────────────────────────────────────
+// Cheap second-stage check: "is candidate match the same person as the Index entry?"
+// Catches surname collisions across centuries that pure heuristics miss
+// (Cellarius Reformer 1564 vs Cellarius astronomer 1660; Flaccus theologian
+// vs Flaccus the Roman satirist; etc.)
+//
+// Cache keyed by (catalog_author + raw_excerpt :: target_author + target_year + target_title).
+// One verification reuses across all entries that share the same pair.
+
+const GEMINI_KEY = process.env.GEMINI_API_KEY;
+const VERIFY_MODEL = 'gemini-3.1-flash-lite-preview';
+const verifyCache = new Map();
+let verifyCallCount = 0;
+let verifyCostTotal = 0;
+
+const VERIFY_PROMPT = `You are verifying whether a candidate book match is correctly attributed to the same person as an entry on a historical printed Index of prohibited books (Index Librorum Prohibitorum or equivalent).
+
+INPUT:
+  - Index entry: an author name as it appears in a 16th-17th c. printed Index, plus the raw OCR snippet, condemnation year, and edition.
+  - Candidate book: a title + author + publication year from a library catalog.
+
+Decide whether they refer to the SAME PERSON. Beware:
+  - Latin name inversions ("Iordanus Brunus" ↔ "Bruno, Giordano") — same person
+  - Long-s OCR errors ("Brandeburgenfis" → "Brandeburgensis") — same person if otherwise matches
+  - Family relations with shared surname (father/son, brothers) — DIFFERENT person
+  - Latin "Stephanus" (Estienne family) — different members are different people
+  - Surname collisions across centuries (Cellarius the 1564 Reformer ≠ Cellarius the 1660 astronomer)
+  - Pen names / pseudonyms
+
+Output JSON:
+{
+  "same_person": true | false,
+  "confidence": "high" | "medium" | "low",
+  "reasoning": "one short sentence"
+}`;
+
+async function geminiVerify(catalogEntry, candidate) {
+  if (!GEMINI_KEY) return { same_person: true, confidence: 'low', reasoning: 'no-key skip' };
+
+  const key = JSON.stringify({
+    ca: catalogEntry.author,
+    cy: catalogEntry.condemnation_year,
+    sa: candidate.author,
+    sy: candidate.year,
+    st: (candidate.title || '').slice(0, 80),
+  });
+  if (verifyCache.has(key)) return verifyCache.get(key);
+
+  const userContent = `Index entry:
+  - Author: ${catalogEntry.author}
+  - Condemnation year: ${catalogEntry.condemnation_year || 'unknown'}
+  - Source page: ${catalogEntry.source_page || 'unknown'} of ${catalogEntry.index_id || 'unknown index'}
+
+Candidate book:
+  - Title: ${candidate.title || '(no title)'}
+  - Author: ${candidate.author || '(no author)'}
+  - Year: ${candidate.year || 'unknown'}`;
+
+  const body = {
+    contents: [{ role: 'user', parts: [{ text: userContent }] }],
+    systemInstruction: { parts: [{ text: VERIFY_PROMPT }] },
+    generationConfig: { responseMimeType: 'application/json', temperature: 0.0, maxOutputTokens: 256 },
+  };
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${VERIFY_MODEL}:generateContent?key=${GEMINI_KEY}`;
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(30000) });
+      if (r.status === 429 || r.status === 503) {
+        await new Promise(res => setTimeout(res, Math.pow(2, attempt) * 1000));
+        continue;
+      }
+      if (!r.ok) throw new Error(`Gemini ${r.status}`);
+      const data = await r.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) throw new Error('no text');
+      const parsed = JSON.parse(text);
+      const usage = data.usageMetadata || {};
+      verifyCostTotal += (usage.promptTokenCount || 0) / 1e6 * 0.10 + (usage.candidatesTokenCount || 0) / 1e6 * 0.40;
+      verifyCallCount++;
+      verifyCache.set(key, parsed);
+      return parsed;
+    } catch (e) {
+      if (attempt === 2) {
+        const fallback = { same_person: false, confidence: 'low', reasoning: `verify failed: ${String(e).slice(0,60)}` };
+        verifyCache.set(key, fallback);
+        return fallback;
+      }
+      await new Promise(res => setTimeout(res, 1000));
+    }
+  }
+}
+
 // ─── Token utilities (shared with banned-books-via-ustc.mjs) ───────────────
 
 const STOP = new Set([
@@ -161,15 +254,19 @@ async function findSlBookFor(entry) {
   if (!eds.length) return null;
   let best = null;
   for (const b of eds) {
+    // Year cap applies to BOTH opera_omnia and title-overlap paths. Without this
+    // a 1564-banned Reformer's surname matches an unrelated 1660 author. ±50y
+    // window covers reprints during the author's plausible lifetime + a generation.
+    if (entry.condemnation_year && b.year && Math.abs(entry.condemnation_year - b.year) > 50) continue;
+
     if (entry.scope === 'opera_omnia') {
-      // For opera_omnia, surname match is enough. Prefer SL books with reasonable year proximity.
       const proximity = entry.condemnation_year && b.year ? Math.abs(entry.condemnation_year - b.year) : 9999;
+      if (proximity === 9999 && entry.condemnation_year) continue; // SL book has no year — too risky for opera_omnia
       if (!best || proximity < best.proximity) best = { book: b, score: 1, proximity, reason: 'opera_omnia' };
       continue;
     }
     const score = scoreMatch(entry.title, b.title);
     if (score < 2) continue;
-    if (entry.condemnation_year && b.year && Math.abs(entry.condemnation_year - b.year) > 100) continue;
     if (best && best.score >= score) continue;
     best = { book: b, score, reason: `${score}-token-overlap` };
   }
@@ -200,46 +297,56 @@ async function backfillIndex(indexId) {
 
       let best = null;
       for (const u of editions) {
+        // Year proximity guard — bans extend to reprints but not unrelated
+        // surname-bearers a century later. Cap at ±50y from condemnation.
+        if (e.condemnation_year && u.year && Math.abs(e.condemnation_year - u.year) > 50) continue;
+
         const score = scoreMatch(e.title, u.title);
-        // For opera_omnia, surname match is sufficient
         if (e.scope === 'opera_omnia') {
-          if (!best || (best.score < 99)) best = { u, score: 99, reason: 'opera_omnia' };
+          // Surname + year proximity is sufficient. Prefer the year-closest edition.
+          const prox = e.condemnation_year && u.year ? Math.abs(e.condemnation_year - u.year) : 9999;
+          if (!best || prox < best.prox) best = { u, score: 99, prox, reason: 'opera_omnia' };
           continue;
         }
         if (score < 2) continue; // need ≥2 distinctive token overlap
         if (best && best.score >= score) continue;
-        // Year proximity (±50y) if both have years
-        if (e.condemnation_year && u.year && Math.abs(e.condemnation_year - u.year) > 60) continue;
         best = { u, score, reason: `${score}-token-overlap` };
       }
       if (!best) {
         // Pass 2 fallback: no USTC match but maybe we have an SL book directly
         const slMatch = await findSlBookFor(e);
         if (!slMatch) continue;
+        // Gemini verify
+        const v = await geminiVerify(e, slMatch.book);
+        if (!v.same_person) continue;
         matched++;
         withSl++;
         ops.push({
           id: e.id,
           sl_book_id: String(slMatch.book._id),
           sl_book_slug: slMatch.book.slug || null,
-          match_confidence: slMatch.score >= 4 ? 'high' : slMatch.score >= 3 ? 'medium' : 'low',
-          match_method: 'ocr_then_mongo_direct',
+          match_confidence: v.confidence,
+          match_method: 'ocr_then_mongo_direct_verified',
         });
         if (samples.length < 5) samples.push({
           entry: `"${(e.title || '').slice(0, 40)}" by ${e.author}`,
           ustc: '(no USTC match)',
-          reason: `direct-SL: ${slMatch.reason}`,
+          reason: `direct-SL verified: ${slMatch.reason}; ${v.reasoning?.slice(0,60)}`,
           sl: `HELD: ${slMatch.book.slug || slMatch.book.id}`,
         });
         continue;
       }
+      // Verify USTC match
+      const vUstc = await geminiVerify(e, { author: best.u.author_1, title: best.u.title, year: best.u.year });
+      if (!vUstc.same_person) continue;
       matched++;
       if (best.u.source_library_id) withSl++;
 
-      const confidence =
-        best.reason === 'opera_omnia' ? 'medium' :
-        best.score >= 4 ? 'high' :
-        best.score >= 3 ? 'medium' : 'low';
+      // Use verifier's confidence — it's a more reliable signal than token overlap
+      const confidence = vUstc.confidence ||
+        (best.reason === 'opera_omnia' ? 'medium' :
+         best.score >= 4 ? 'high' :
+         best.score >= 3 ? 'medium' : 'low');
 
       // Pass 2: if USTC didn't carry an SL link, try direct Mongo SL match
       let slBookId = best.u.source_library_id || null;
@@ -248,10 +355,13 @@ async function backfillIndex(indexId) {
       if (!slBookId) {
         const slMatch = await findSlBookFor(e);
         if (slMatch) {
-          slBookId = String(slMatch.book._id);
-          slBookSlug = slMatch.book.slug || null;
-          directHit = true;
-          withSl++;
+          const vSl = await geminiVerify(e, slMatch.book);
+          if (vSl.same_person) {
+            slBookId = String(slMatch.book._id);
+            slBookSlug = slMatch.book.slug || null;
+            directHit = true;
+            withSl++;
+          }
         }
       }
 
@@ -277,7 +387,8 @@ async function backfillIndex(indexId) {
 
   console.log(`Match rate: ${matched}/${entries.length} (${(matched/entries.length*100).toFixed(1)}%)`);
   console.log(`With sl_book_id: ${withSl}`);
-  console.log(`Elapsed: ${((Date.now()-startedAt)/1000).toFixed(1)}s, USTC fetches cached: ${ustcCache.size}, SL fetches cached: ${slCache.size}\n`);
+  console.log(`Elapsed: ${((Date.now()-startedAt)/1000).toFixed(1)}s, USTC fetches cached: ${ustcCache.size}, SL fetches cached: ${slCache.size}`);
+  console.log(`Gemini verifications: ${verifyCallCount} ($${verifyCostTotal.toFixed(4)}); cache hits: ${verifyCache.size - verifyCallCount}\n`);
   console.log(`Sample matches:`);
   for (const s of samples) {
     console.log(`  [${s.sl}] ${s.entry}`);
