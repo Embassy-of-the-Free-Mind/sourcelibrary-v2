@@ -55,7 +55,7 @@ export default function DmcaPage() {
             </tr>
             <tr>
               <td className="font-medium pr-6 py-1">Address</td>
-              <td>123 Keizersgraacht, Amsterdam, 1015 CJ, Netherlands</td>
+              <td>Keizersgracht 123-4, 1015 CJ Amsterdam, Netherlands</td>
             </tr>
             <tr>
               <td className="font-medium pr-6 py-1">Email</td>
