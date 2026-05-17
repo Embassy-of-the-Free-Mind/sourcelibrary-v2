@@ -188,26 +188,82 @@ Use for any IIIF-compliant library not listed above: British Library, National L
 Before importing, always check if the book is already in the collection:
 
 ```bash
+# Fast direct lookup by IA identifier (server-side filter — preferred)
+curl -s "https://sourcelibrary.org/api/books?ia_identifier=BOOKID&include_hidden=1&include_unindexed=1"
+
 # Search by title
 curl -s "https://sourcelibrary.org/api/search?q=TITLE"
 
-# Get all books
-curl -s "https://sourcelibrary.org/api/books" | jq '.[] | {id, title, author, year}'
-
-# Search by author
+# Search by author (slow — client-side jq over the full list)
 curl -s "https://sourcelibrary.org/api/books" | jq '.[] | select(.author | contains("AUTHOR_NAME"))'
 ```
+
+The duplicate check is also enforced at the import endpoints: they return HTTP 409 with `{"error": "Book already exists"}` if the IA identifier is already in the collection. So you can safely just attempt the import — treat 409 as "skip, we already have it."
+
+## Verify Imports Landed (audit queries)
+
+**Build the audit query before starting a multi-batch campaign**, not at the end. There are three default-hidden gates on `/api/books` that each correctly filter for the public site but collectively obscure your in-progress curation work:
+
+1. `visible: true` — imports start with `visible: null/false` and stay so until promoted
+2. `pages_count > 0` — populated by the sync-page-counts cron every ~6 hours, so freshly imported books read as "0 pages" for a while
+3. `tenantId` — books are scoped to their tenant
+
+To audit your own imports (bypass all three gates):
+
+```bash
+# Confirm a specific import landed (works even if hidden + page-count cron hasn't run)
+curl -s "https://sourcelibrary.org/api/books?ia_identifier=BOOKID&include_hidden=1&include_unindexed=1"
+
+# Recent imports, including hidden ones
+curl -s "https://sourcelibrary.org/api/books?include_hidden=1&include_unindexed=1&limit=50" \
+  | jq '[.[] | {id, ia_identifier, title, pages_count}]'
+
+# Count imports per day from Mongo ObjectId timestamps (works regardless of visibility)
+curl -s "https://sourcelibrary.org/api/books?include_hidden=1&include_unindexed=1&limit=500" | python3 -c "
+import sys, json
+from datetime import datetime, timezone
+buckets = {}
+for b in json.load(sys.stdin):
+  ts = int(b.get('id', '0' * 8)[:8], 16)
+  d = datetime.fromtimestamp(ts, tz=timezone.utc).date().isoformat()
+  buckets[d] = buckets.get(d, 0) + 1
+for d in sorted(buckets.keys(), reverse=True)[:5]:
+  print(f'{d}: {buckets[d]}')
+"
+```
+
+The script's "OK" output is necessary but not sufficient — an import can succeed at the API layer but the Mongo write can still fail transiently. Always confirm via audit query before declaring a batch done.
+
+## Retry transient Atlas errors
+
+About 1 in 8 imports hits a `MongoNetworkTimeoutError` against Atlas. Wrap the import call in retry-with-backoff:
+
+```javascript
+async function importWithRetry(book, route = 'ia') {
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    const res = await fetch(`${BASE}/api/import/${route}`, { /* ... */ });
+    if (res.ok || res.status === 409) return res;
+    const text = await res.text();
+    const transient = res.status >= 500 && /Timeout|timed out|fetch failed/i.test(text);
+    if (!transient || attempt === 4) return res;
+    await new Promise(r => setTimeout(r, 10000));
+  }
+}
+```
+
+Without retry, a 20-book batch will lose 2-3 books to transient errors and you'll think your IDs are bad.
 
 ## Workflow
 
 1. **Identify Theme** - Choose a thematic focus or gap to fill
 2. **Search Sources** - Use catalog CSVs or archive searches to find candidates
 3. **Evaluate Books** - Score each book using criteria above
-4. **Check Collection** - Verify books aren't already imported
+4. **Check Collection** - Verify books aren't already imported (`?ia_identifier=` filter)
 5. **Check for Related Editions** - Search by author to see if this is another edition of an existing work. If a matching book has a `work_id`, pass the same `work_id` in the import request (e.g., `"work_id": "agrippa-de-occulta-philosophia"`). All import routes accept `work_id` as an optional field.
-6. **Import Batch** - Import 5-20 books with thematic coherence
-7. **Generate Report** - Document batch with rationale and notes
-8. **Update Logs** - Add to successes log in agentcurator.md
+6. **Import Batch** - Import 5-20 books with thematic coherence. Use retry-with-backoff for Atlas transients.
+7. **Verify Imports Landed** - Audit-query your own batch (see section above). Don't trust the script's "OK" output alone — confirm the books are in Mongo with the right page counts.
+8. **Generate Report** - Document batch with rationale and notes
+9. **Update Logs** - Add to successes log in agentcurator.md
 
 ## Catalog Sources
 
