@@ -208,13 +208,51 @@ async function fetchCatalogEntries(indexId) {
   let offset = 0;
   while (true) {
     const filter = FORCE ? '' : '&ustc_sn=is.null';
+    // Drop the author_normalized filter so anonymous entries also get matched via title.
     const r = await supa('GET',
-      `index_catalog_entries?index_id=eq.${indexId}${filter}&author_normalized=not.is.null&select=id,title,author,author_normalized,condemnation_year,scope&order=id&limit=1000&offset=${offset}`);
+      `index_catalog_entries?index_id=eq.${indexId}${filter}&select=id,title,author,author_normalized,condemnation_year,scope&order=id&limit=1000&offset=${offset}`);
     entries.push(...r);
     if (r.length < 1000) break;
     offset += 1000;
   }
   return entries;
+}
+
+// ─── Title-fallback USTC search ──────────────────────────────────────────
+// For anonymous entries (no author) OR authored entries where surname-based
+// search yielded nothing, try matching by distinctive title tokens.
+
+const titleCache = new Map();
+async function ustcEditionsByTitleToken(token, condYear) {
+  if (titleCache.has(token)) return titleCache.get(token);
+  const enc = encodeURIComponent(token);
+  const editions = [];
+  try {
+    // Constrain by year ±100 to keep result sets manageable
+    let yearFilter = '';
+    if (condYear) yearFilter = `&year=gte.${Math.max(1450, condYear - 100)}&year=lte.${condYear + 50}`;
+    const r = await supa('GET', `ustc_editions?title=ilike.*${enc}*${yearFilter}&select=sn,source_library_id,title,author_1,year&limit=200`);
+    editions.push(...r);
+  } catch (e) {
+    // 500 (timeout) on rare tokens — bail, will try a different token
+    if (!String(e).includes('500') && !String(e).includes('57014')) throw e;
+  }
+  titleCache.set(token, editions);
+  return editions;
+}
+
+const TITLE_STOP = new Set([
+  'libri','liber','libro','tres','duo','sive','seu','oder','over','quam','est',
+  'das','ist','und','von','dans','dell','della','dello','this','that','sopra',
+  'opera','omnia','tomus','editio','epistola','epistolae','tractatus','dialogo',
+  'oeuvres','works','traite','schriften','memoires','schrift','dialogus',
+  'introductio','annotationes','disputatio','tractatus','commentarius',
+]);
+
+function distinctiveTitleTokens(t) {
+  return norm(t).split(/\s+/)
+    .filter(w => w.length >= 7 && !TITLE_STOP.has(w))
+    .sort((a, b) => b.length - a.length); // longer = more distinctive
 }
 
 // ─── Pass 2: direct Mongo SL match (catches SL books not USTC-linked yet) ──
@@ -291,9 +329,24 @@ async function backfillIndex(indexId) {
     while (queue.length) {
       const e = queue.shift();
       const sn = e.author_normalized;
-      if (!sn || sn.length < 3) continue;
-      const editions = await ustcEditionsBySurname(sn);
-      if (!editions.length) continue;
+
+      // Get USTC candidates: prefer author-based, fall back to title-based
+      let editions = [];
+      let matchedVia = 'author';
+      if (sn && sn.length >= 3) {
+        editions = await ustcEditionsBySurname(sn);
+      }
+      if (editions.length === 0) {
+        // Title-fallback for anonymous OR where author search returned nothing
+        const tokens = distinctiveTitleTokens(e.title || '');
+        for (const tok of tokens.slice(0, 3)) {
+          const r = await ustcEditionsByTitleToken(tok, e.condemnation_year);
+          editions.push(...r);
+          if (editions.length >= 100) break;
+        }
+        if (editions.length === 0) continue;
+        matchedVia = 'title';
+      }
 
       let best = null;
       for (const u of editions) {
@@ -387,7 +440,7 @@ async function backfillIndex(indexId) {
 
   console.log(`Match rate: ${matched}/${entries.length} (${(matched/entries.length*100).toFixed(1)}%)`);
   console.log(`With sl_book_id: ${withSl}`);
-  console.log(`Elapsed: ${((Date.now()-startedAt)/1000).toFixed(1)}s, USTC fetches cached: ${ustcCache.size}, SL fetches cached: ${slCache.size}`);
+  console.log(`Elapsed: ${((Date.now()-startedAt)/1000).toFixed(1)}s, USTC author cache: ${ustcCache.size}, title cache: ${titleCache.size}, SL cache: ${slCache.size}`);
   console.log(`Gemini verifications: ${verifyCallCount} ($${verifyCostTotal.toFixed(4)}); cache hits: ${verifyCache.size - verifyCallCount}\n`);
   console.log(`Sample matches:`);
   for (const s of samples) {
