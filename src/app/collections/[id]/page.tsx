@@ -8,7 +8,7 @@ import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
-import IndexCatalogSection from '@/components/collections/IndexCatalogSection';
+import IndexCatalogWorksTable from '@/components/collections/IndexCatalogWorksTable';
 import { notFound } from 'next/navigation';
 import { unstable_noStore } from 'next/cache';
 import CollectionSchema from '@/components/seo/CollectionSchema';
@@ -1305,11 +1305,10 @@ export default async function CollectionDetailPage({ params, provider }: Props &
           provider={provider}
         />
 
-        {/* Reference catalog (issue #1851) — surfaces every index_catalogs
-            row that points at this collection_slug. Renders as tabs across
-            editions when there's more than one. */}
+        {/* Reference catalog (issue #1851) — deduped works table with one
+            row per banned work and a clickable column per Index edition. */}
         {catalogMeta && catalogMeta.length > 0 && (
-          <IndexCatalogSection catalogs={catalogMeta} />
+          <IndexCatalogWorksTable collectionSlug={id} catalogs={catalogMeta} />
         )}
       </div>
       <SignUpCTA />
