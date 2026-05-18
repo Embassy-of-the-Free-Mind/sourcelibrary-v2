@@ -351,26 +351,24 @@ async function fetchTenantLibraryDataUncached(
     } catch { /* Gallery is optional */ }
   }
 
-  // Contributing libraries (for tenant diversity insight)
-  // Query books visible from any provider in this tenant
-  const { data: contribData } = await supabase
-    .from('books_catalog')
-    .select('contributing_library')
-    .eq('visible', true)
-    .gt('pages_count', 0)
-    .gt('pages_translated', 0)
-    .not('contributing_library', 'is', null);
+  // Contributing libraries — query MongoDB scoped to this tenant.
+  // Supabase books_catalog has no tenant_id column (see tenant-browse.ts),
+  // so the previous Supabase path returned global counts and leaked
+  // unrelated institutions onto tenant subdomains.
+  const contribAgg = await db.collection('books').aggregate<{ _id: string; count: number }>([
+    { $match: {
+        tenantId,
+        visible: true,
+        pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
+        'image_source.contributing_library': { $exists: true, $nin: [null, ''] },
+    }},
+    { $group: { _id: '$image_source.contributing_library', count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: 20 },
+  ]).toArray();
 
-  const contribCounts = new Map<string, number>();
-  for (const row of (contribData || [])) {
-    if (row.contributing_library) {
-      contribCounts.set(row.contributing_library, (contribCounts.get(row.contributing_library) || 0) + 1);
-    }
-  }
-  const contributingLibraries = [...contribCounts.entries()]
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 20);
+  const contributingLibraries = contribAgg.map(row => ({ name: row._id, count: row.count }));
 
   return {
     books: booksResult.books,
