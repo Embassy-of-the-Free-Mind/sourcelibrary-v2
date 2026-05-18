@@ -45,12 +45,17 @@ Before building the script:
 ### Step 3: Determine Collection Assignment
 Before importing, decide which collection(s) the batch belongs to.
 
-**Existing collections (22 curated):**
-alchemy, hermetica, kabbalah, magic, natural-philosophy, demonology, secret-societies, astrology, mysticism, sacred-texts, theology, classical-philosophy, renaissance-philosophy, medicine, indic-traditions, chinese-classics, art-illustrated, literature, music, herbalism, leonardo-da-vinci, shwep-reading-room
+**Existing top-level collections (~36):** alchemy, hermetica, kabbalah, magic, natural-philosophy, demonology, secret-societies, astrology, mysticism, sacred-texts, theology, medicine, art-illustrated, literature, education, philosophy, south-asia, east-asia, the-human-condition, history-political-thought, european-vernacular-erotica, eastern-erotic-literature, games, pharmacopeias, arabic-medicine, miscellany, aesthetic-theory, sacred-plants, norse-antiquities, druids-megaliths, architecture, bhutan, psychology, shwep, banned-books, prehistory-of-ai.
+
+Plus ~308 sub-collections nested under those via the `parent` field.
 
 **Check if an existing collection fits:**
 ```bash
-curl -s "https://sourcelibrary.org/api/collections" | python3 -c "import sys,json; [print(c['slug'], '—', c['name']) for c in json.load(sys.stdin)]"
+# Top-level only (default API filter is `parent: {$exists: false}`):
+curl -s "https://sourcelibrary.org/api/collections" | python3 -c "import sys,json; [print(c['slug'], '—', c['name']) for c in json.load(sys.stdin)['collections']]"
+
+# All 344 including sub-collections (direct Mongo):
+python3 -c "from pymongo import MongoClient; import os; db=MongoClient(os.environ['MONGODB_URI'])['bookstore']; [print(c['slug']) for c in db.collections.find({}, {'slug':1})]"
 ```
 
 **If no collection fits, create a new one** using the API after import (see Step 5).
@@ -205,7 +210,7 @@ For libraries that serve IIIF manifests (NDL Japan, Bodleian, Manchester, Kyoto 
 
 ## PDF Imports (Manual Pipeline)
 
-For large PDFs from sources without IIIF (QDL downloads, scanned books):
+For large PDFs from sources without IIIF (QDL downloads, manually-fetched Google Books PDFs, scanned books):
 
 1. Upload PDF to R2:
 ```javascript
@@ -214,12 +219,95 @@ const r2 = new S3Client({
   region: 'auto',
   endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
   credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY },
+  maxAttempts: 5,
 });
 ```
 
-2. Extract pages with `pdftoppm -r 150 -jpeg`
+2. Extract pages with `pdftoppm -jpeg -r 150 -jpegopt quality=85`
 3. Upload page images to R2 at `books/{bookId}/pages/0001.jpg`
 4. Create book + page records in MongoDB directly (pages need an `id` field — use `new ObjectId().toString()`)
+
+**Production-tested settings** (`_tmp-import-souter-pdf.mjs`, `_tmp-import-googles-batch.mjs`):
+- **Concurrency = 3** for R2 uploads — higher values (8+) cause SSL `bad record mac` errors mid-batch.
+- **Per-upload retry**: wrap `r2.send()` in a 4-6 attempt loop with exponential backoff (500ms × 2^attempt).
+- **pdftoppm timeout**: 30 minutes for ~600pp books, 60-90 minutes for 800pp+. Some Google Books PDFs take much longer than file size suggests.
+- **Inter-batch delay**: 150-200ms `setTimeout` between chunks to let R2 connections settle.
+- **Verify byte-exact download** before pdftoppm — IA's `/download/{id}/{id}.pdf` occasionally serves truncated PDFs; check `content-length` matches downloaded size.
+
+**Unrepairable corruption**: Some IA PDFs (especially Italian National Library `ita-bnc-mag-*`) have no PDF trailer dictionary. Neither `mutool clean` nor `gs -sDEVICE=pdfwrite` can repair them. The corruption is at IA's source. Try an alternative source rather than fighting the file.
+
+**Google Books → check IA mirror first**: Before manually downloading a Google Books PDF, try `https://archive.org/metadata/bub_gb_{google_id}`. If it exists, import via `ia` route instead of the PDF pipeline.
+
+**Cloudflare-protected catalogs (IRD Horizon, Persée, HAL, Wellcome)**: Anubis/JS-rendered search interfaces block automation. Either use `WebFetch` (which can render JS) or hand off to the user with a direct browser URL.
+
+---
+
+## Collection Page Rendering & `mentioned_books`
+
+**Critical:** The collection page (`/collections/{slug}`) renders `description` and `expanded_description` as **plain text** — Markdown is **NOT parsed**. Links written as `[text](url)` show literal brackets and parentheses; `*italic*` and `**bold**` show literal asterisks.
+
+Three things the renderer **does** handle:
+1. **Paragraph breaks** on `\n\n` (split into `<p>` tags).
+2. **Auto-linking of book titles** ≥8 chars that appear as exact substrings in the description text. Matches the book's `title` or `display_title` against the collection's books. Renders as `text-accent-rust hover:underline italic`.
+3. **Explicit `mentioned_books` overrides** that take priority over auto-detection.
+
+### When writing a new collection description
+
+- **Plain prose only.** No Markdown syntax.
+- **Use exact title substrings** ≥8 chars from books in the collection — they'll auto-link.
+- **For shorter references** (e.g. "Liezi" = 5 chars, "Hesiod" = 6) or paraphrased titles that don't match book records — populate `mentioned_books`.
+
+### `mentioned_books` schema
+
+```javascript
+{
+  slug: 'prehistory-of-ai',
+  mentioned_books: [
+    { text: "Synesius of Cyrene's On Dreams", book_id: "69a5e3d8006a4098422166a7" },
+    { text: "Hypnerotomachia Poliphili", book_id: "a7d82d02-1a76-4f5f-af99-339285a345f9" },
+    // Long-form variants first; short-form fallbacks after.
+    { text: "Synesius", book_id: "69a5e3d8006a4098422166a7" },
+    { text: "Hypnerotomachia", book_id: "a7d82d02-1a76-4f5f-af99-339285a345f9" },
+  ]
+}
+```
+
+Patch via `/api/collections` PATCH:
+```bash
+curl -sX PATCH "https://sourcelibrary.org/api/collections" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $CRON_SECRET" \
+  -d @/tmp/mentions.json
+```
+
+### Ordering matters
+
+The matcher sorts `mentioned_books` longest-first to avoid sub-match collisions. So always list:
+1. **Most-specific phrases first** ("Author's Specific Work Title")
+2. **Then medium-specific** ("Author's Work")
+3. **Then short-form fallbacks** ("Title", "Author")
+
+A long-form claim ranges before a short-form, so subsequent occurrences of the short form only match unclaimed text spans.
+
+### Updating descriptions
+
+The PATCH endpoint accepts arbitrary update fields via `{ slug, addBookIds, ...updates }`. So this works:
+
+```bash
+curl -sX PATCH "https://sourcelibrary.org/api/collections" \
+  -d '{"slug":"my-collection","description":"...","mentioned_books":[...],"color":"gold"}'
+```
+
+When patching, the API echoes the full collection object including `description` (which may contain control characters that break `python3 -c 'json.load(...)'`). Use HTTP status (`curl -w '%{http_code}'`) instead of parsing the response body in shell scripts.
+
+### Audit existing collections
+
+```python
+# How many collections have populated mentioned_books?
+from pymongo import MongoClient; import os
+db = MongoClient(os.environ['MONGODB_URI'])['bookstore']
+print(db.collections.count_documents({'mentioned_books': {'$exists': True, '$ne': []}}))
+```
 
 ---
 
