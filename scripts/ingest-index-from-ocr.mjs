@@ -172,18 +172,24 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Resolve book
-  const filter = ObjectId.isValid(BOOK_ID) ? { _id: new ObjectId(BOOK_ID) } : { $or: [{ id: BOOK_ID }, { slug: BOOK_ID }] };
-  const book = await db.collection('books').findOne(filter, {
-    projection: { _id: 1, id: 1, slug: 1, title: 1, author: 1, year: 1, language: 1, pages_count: 1, pages_ocr: 1 },
-  });
+  // Resolve book. The catalog has ~1,186 legacy books where id !== _id (CLAUDE.md),
+  // so even a valid ObjectId hex may NOT be the actual _id — fall back to id/slug.
+  const projection = { _id: 1, id: 1, slug: 1, title: 1, author: 1, year: 1, language: 1, pages_count: 1, pages_ocr: 1 };
+  let book = ObjectId.isValid(BOOK_ID)
+    ? await db.collection('books').findOne({ _id: new ObjectId(BOOK_ID) }, { projection })
+    : null;
+  if (!book) {
+    book = await db.collection('books').findOne({ $or: [{ id: BOOK_ID }, { slug: BOOK_ID }] }, { projection });
+  }
   if (!book) { console.error(`Book not found: ${BOOK_ID}`); process.exit(1); }
   console.log(`Book: "${book.title}" by ${book.author} (${book.year})`);
   console.log(`Pages: total=${book.pages_count}, ocr=${book.pages_ocr}`);
 
-  // Fetch OCR'd pages
+  // Fetch OCR'd pages. For ~1,186 legacy books id !== _id; pages reference book.id
+  // (the app-level identifier), not book._id. Try both to be safe.
+  const bookIdCandidates = [book.id, String(book._id)].filter(Boolean);
   const pages = await db.collection('pages').find(
-    { book_id: String(book._id), 'ocr.data': { $exists: true, $ne: null } },
+    { book_id: { $in: bookIdCandidates }, 'ocr.data': { $exists: true, $ne: null } },
     { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } },
   ).sort({ page_number: 1 }).toArray();
   console.log(`OCR'd pages available: ${pages.length}\n`);
