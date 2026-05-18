@@ -1,5 +1,29 @@
 # Changelog
 
+## 4.3.0 (2026-05-18)
+
+### Server-level orientation
+
+Moved the project-level orientation paragraph from `_meta.about` on `ListToolsResult` (non-standard, unreliably surfaced to models) to the spec-blessed `instructions` field on `InitializeResult`. The new text frames Source Library as the corpus *just beyond* what current LLMs were trained on, and tells the calling model to combine its own training knowledge with web search for period terminology before querying the library.
+
+### Tool annotations
+
+Every tool now carries `annotations: { title, readOnlyHint }`. Read-only hints let clients auto-approve queries (fewer permission prompts). `submit_feedback` declares the writer flags explicitly.
+
+### Versioning
+
+Synced versions across `package.json`, `Server({version})`, `server.json` (MCP registry manifest), and the startup log to **4.3.0**. The tool count in the startup log is now computed from `TOOLS.length` rather than hardcoded (was stuck at "10 tools"; actual is 11). Updated `package.json` and `server.json` descriptions (both were stale — "1,200+" / "5,000+ rare historical texts").
+
+### Catch-up (4.1.0 – 4.2.0)
+
+Releases between 4.0.0 and 4.3.0 weren't logged here; key additions documented in commit history:
+
+- **4.1.0 / 4.1.1**: `get_quote` tool, `check_duplicate` tool, API-key bypass for bot gating, npx-install fix.
+- **4.2.0**: `submit_feedback` tool.
+- **Between 4.2.0 and 4.3.0**: language/year filters on `search_concept`, `snippet_language` on passage results, orientation hints steering toward `get_book` for named authors/works, truncation signaling + pagination docs on `get_book_text`.
+
+---
+
 ## 4.0.0 (2026-02-27)
 
 **Breaking:** Reduced from 14 tools to 7. Removed single-purpose tools that duplicated functionality available through the remaining tools.
