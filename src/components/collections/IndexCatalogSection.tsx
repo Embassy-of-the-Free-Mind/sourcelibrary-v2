@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { BookMarked, ExternalLink, Search, BookOpen } from 'lucide-react';
 
@@ -17,13 +17,20 @@ interface CatalogEntry {
   ustc_sn: number | null;
   sl_book_id: string | null;
   sl_book_slug: string | null;
+  source_book_slug?: string | null;
+  source_page?: number | null;
+}
+
+interface Catalog {
+  indexId: string;
+  indexName: string;
+  startYear: number | null;
+  totalEntries: number;
+  heldCount: number;
 }
 
 interface Props {
-  indexId: string;        // e.g. 'roman-1948'
-  indexName: string;      // e.g. 'Index Librorum Prohibitorum (1946 final)'
-  totalEntries: number;   // for the header label
-  heldCount: number;      // how many we have in SL
+  catalogs: Catalog[];
 }
 
 type Filter = 'all' | 'held' | 'unheld';
@@ -31,9 +38,12 @@ type Sort = 'author' | 'year' | 'condemned';
 
 const PAGE_SIZE = 50;
 
-export default function IndexCatalogSection({ indexId, indexName, totalEntries, heldCount }: Props) {
+export default function IndexCatalogSection({ catalogs }: Props) {
+  const [activeIndexId, setActiveIndexId] = useState<string>(catalogs[0]?.indexId ?? '');
+  const active = useMemo(() => catalogs.find(c => c.indexId === activeIndexId) || catalogs[0], [activeIndexId, catalogs]);
+
   const [entries, setEntries] = useState<CatalogEntry[]>([]);
-  const [total, setTotal] = useState(totalEntries);
+  const [total, setTotal] = useState(active?.totalEntries ?? 0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,7 +52,11 @@ export default function IndexCatalogSection({ indexId, indexName, totalEntries, 
   const [sort, setSort] = useState<Sort>('author');
   const [page, setPage] = useState(1);
 
+  // Reset paging when switching tabs
+  useEffect(() => { setPage(1); }, [activeIndexId]);
+
   const load = useCallback(async (signal?: AbortSignal) => {
+    if (!active) return;
     setLoading(true);
     setError(null);
     try {
@@ -53,7 +67,7 @@ export default function IndexCatalogSection({ indexId, indexName, totalEntries, 
         sort,
       });
       if (q.trim().length >= 2) params.set('q', q.trim());
-      const r = await fetch(`/api/catalogs/${indexId}/entries?${params}`, { signal });
+      const r = await fetch(`/api/catalogs/${active.indexId}/entries?${params}`, { signal });
       if (!r.ok) throw new Error(`API ${r.status}`);
       const data = await r.json();
       setEntries(data.entries || []);
@@ -64,16 +78,20 @@ export default function IndexCatalogSection({ indexId, indexName, totalEntries, 
     } finally {
       setLoading(false);
     }
-  }, [indexId, page, filter, sort, q]);
+  }, [active, page, filter, sort, q]);
 
   useEffect(() => {
     const ctrl = new AbortController();
-    // Debounce search input
     const id = setTimeout(() => load(ctrl.signal), q ? 300 : 0);
     return () => { clearTimeout(id); ctrl.abort(); };
   }, [load, q]);
 
+  if (!active) return null;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  // Header copy adapts to single-catalog vs multi-catalog
+  const totalAllEditions = catalogs.reduce((s, c) => s + c.totalEntries, 0);
+  const totalHeldAllEditions = catalogs.reduce((s, c) => s + c.heldCount, 0);
 
   return (
     <section className="mt-16 border-t border-stone-300 pt-12">
@@ -83,14 +101,40 @@ export default function IndexCatalogSection({ indexId, indexName, totalEntries, 
           <span>Reference catalog</span>
         </div>
         <h2 className="text-3xl font-display font-semibold mb-2 text-stone-900">
-          The full {indexName}
+          The Index, by edition
         </h2>
         <p className="text-stone-700 max-w-3xl">
-          Every work on the index. <strong>{heldCount.toLocaleString()}</strong> are held in Source Library
-          and link back to the book; the remaining <strong>{(totalEntries - heldCount).toLocaleString()}</strong>
-          {' '}are reference entries with USTC and acquisition pointers.
+          The catalog is extracted directly from the OCR of our own scanned printed editions of the Index Librorum Prohibitorum. Across {catalogs.length} editions ({Math.min(...catalogs.map(c => c.startYear || 9999))}&ndash;{Math.max(...catalogs.map(c => c.startYear || 0))}), <strong>{totalAllEditions.toLocaleString()}</strong> banned-book entries. Of these, <strong>{totalHeldAllEditions.toLocaleString()}</strong> link to a book held by Source Library.
         </p>
       </header>
+
+      {/* Edition tabs */}
+      {catalogs.length > 1 && (
+        <div className="flex flex-wrap gap-1 mb-6 border-b border-stone-200">
+          {catalogs.map(c => (
+            <button
+              key={c.indexId}
+              onClick={() => setActiveIndexId(c.indexId)}
+              className={
+                'px-4 py-2 text-sm border-b-2 -mb-px ' +
+                (c.indexId === active.indexId
+                  ? 'border-stone-800 text-stone-900 font-medium'
+                  : 'border-transparent text-stone-500 hover:text-stone-800 hover:border-stone-300')
+              }
+            >
+              <span className="font-display">{c.startYear ?? '?'}</span>
+              <span className="ml-1 text-xs text-stone-400">({c.totalEntries.toLocaleString()})</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="mb-4">
+        <div className="font-display text-lg text-stone-800">{active.indexName}</div>
+        <div className="text-sm text-stone-500 mt-0.5">
+          {active.totalEntries.toLocaleString()} entries · <strong>{active.heldCount}</strong> held by Source Library
+        </div>
+      </div>
 
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-3 mb-6 text-sm">
@@ -157,12 +201,19 @@ export default function IndexCatalogSection({ indexId, indexName, totalEntries, 
                   <div className="text-sm text-stone-600 mt-0.5">
                     {e.author && <span>{e.author}</span>}
                     {e.publication_date && <span className="text-stone-400"> · {e.publication_date}</span>}
-                    {e.condemnation_year && (
-                      <span className="text-stone-400"> · Condemned {e.condemnation_period || e.condemnation_year}</span>
-                    )}
                     {e.scope === 'opera_omnia' && (
                       <span className="ml-2 inline-block text-[10px] uppercase tracking-wider bg-red-100 text-red-900 px-1.5 py-0.5 rounded">
                         Opera omnia
+                      </span>
+                    )}
+                    {e.scope === 'donec_corrigatur' && (
+                      <span className="ml-2 inline-block text-[10px] uppercase tracking-wider bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded">
+                        Donec corrigatur
+                      </span>
+                    )}
+                    {e.scope === 'expurgated' && (
+                      <span className="ml-2 inline-block text-[10px] uppercase tracking-wider bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded">
+                        Expurgated
                       </span>
                     )}
                   </div>
@@ -186,9 +237,7 @@ export default function IndexCatalogSection({ indexId, indexName, totalEntries, 
                       <ExternalLink className="w-3.5 h-3.5" />
                       USTC {e.ustc_sn}
                     </a>
-                  ) : (
-                    <span className="px-3 py-1.5 text-stone-400 italic">Not yet linked</span>
-                  )}
+                  ) : null}
                 </div>
               </li>
             ))}

@@ -562,29 +562,33 @@ async function fetchCollectionData(id: string, provider?: string) {
     }
   }
 
-  // Reference catalog lookup — if an index_catalogs row points at this
-  // collection_slug, surface its entry_count + held-count for the page footer
-  // catalog section (issue #1851). Silent on Supabase errors; the section just
-  // doesn't render.
-  let catalogMeta: { indexId: string; indexName: string; totalEntries: number; heldCount: number } | null = null;
+  // Reference catalog lookup — every index_catalogs row pointing at this
+  // collection_slug becomes a tab in the catalog section. For the IPL this is
+  // 7 editions (1564, 1569, 1596, 1607, 1620, 1664, 1704). Silent on Supabase
+  // errors; the section just doesn't render.
+  let catalogMeta: { indexId: string; indexName: string; startYear: number | null; totalEntries: number; heldCount: number }[] | null = null;
   try {
-    const { data: catalogRow } = await supabase
+    const { data: catalogRows } = await supabase
       .from('index_catalogs')
-      .select('id, name, entry_count')
+      .select('id, name, entry_count, start_year')
       .eq('collection_slug', id)
-      .maybeSingle();
-    if (catalogRow?.id) {
-      const { count: heldCount } = await supabase
-        .from('index_catalog_entries')
-        .select('id', { count: 'exact', head: true })
-        .eq('index_id', catalogRow.id)
-        .not('sl_book_id', 'is', null);
-      catalogMeta = {
-        indexId: catalogRow.id,
-        indexName: catalogRow.name,
-        totalEntries: catalogRow.entry_count || 0,
-        heldCount: heldCount || 0,
-      };
+      .order('start_year', { ascending: true });
+    if (catalogRows && catalogRows.length > 0) {
+      const heldCounts = await Promise.all(catalogRows.map(async row => {
+        const { count } = await supabase
+          .from('index_catalog_entries')
+          .select('id', { count: 'exact', head: true })
+          .eq('index_id', row.id)
+          .not('sl_book_id', 'is', null);
+        return count ?? 0;
+      }));
+      catalogMeta = catalogRows.map((row, i) => ({
+        indexId: row.id,
+        indexName: row.name,
+        startYear: row.start_year,
+        totalEntries: row.entry_count || 0,
+        heldCount: heldCounts[i],
+      }));
     }
   } catch (e) {
     console.warn('IndexCatalog meta lookup failed:', e);
@@ -1301,15 +1305,11 @@ export default async function CollectionDetailPage({ params, provider }: Props &
           provider={provider}
         />
 
-        {/* Reference catalog (issue #1851) — surfaces only when an
-            index_catalogs row points at this collection_slug. */}
-        {catalogMeta && (
-          <IndexCatalogSection
-            indexId={catalogMeta.indexId}
-            indexName={catalogMeta.indexName}
-            totalEntries={catalogMeta.totalEntries}
-            heldCount={catalogMeta.heldCount}
-          />
+        {/* Reference catalog (issue #1851) — surfaces every index_catalogs
+            row that points at this collection_slug. Renders as tabs across
+            editions when there's more than one. */}
+        {catalogMeta && catalogMeta.length > 0 && (
+          <IndexCatalogSection catalogs={catalogMeta} />
         )}
       </div>
       <SignUpCTA />
