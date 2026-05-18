@@ -36,14 +36,18 @@ function extractPageType(text) {
   return match ? match[1].toLowerCase().trim() : null;
 }
 
-/** Check if this page is a digitizer insert — via OCR tag or body-text fallback. */
+/** Check if this page is a digitizer insert — via OCR tag, body-text, or meta-descriptor fallback. */
 function isDigitizerPage(pageType, ocrText) {
   if (pageType === 'digitizer-insert') return true;
   if (!ocrText) return false;
-  // Fallback: match full-page Google/IA notices in body text (not <meta> descriptions)
+  // Body text: full Google "About this book" or IA credit boilerplate (not just a watermark mention)
   const bodyText = ocrText.replace(/<meta>[\s\S]*?<\/meta>/g, '');
-  return /this is a digital copy of a book|reproduction of a library book that was digitized|digitized by google as part of an ongoing/i.test(bodyText) ||
-    /inserted by the internet archive/i.test(bodyText);
+  if (/this is a digital copy of a book|reproduction of a library book that was digitized|digitized by google as part of an ongoing/i.test(bodyText)) return true;
+  if (/inserted by the internet archive|Digitized by the Internet Archive in \d{4}/i.test(bodyText)) return true;
+  // Meta descriptor: the OCR model sometimes correctly identifies the page as a credit in <meta> but mislabels page-type.
+  const metaText = ocrText.match(/<meta>[\s\S]*?<\/meta>/gi)?.join(' ') || '';
+  if (/digitization credit from the Internet Archive|Google Books digital preservation notice|digital preservation notice/i.test(metaText)) return true;
+  return false;
 }
 
 function extractColumns(text) {
