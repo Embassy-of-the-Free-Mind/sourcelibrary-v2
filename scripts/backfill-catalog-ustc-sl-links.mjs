@@ -43,9 +43,30 @@ const headers = { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, 'Conten
 async function supa(method, path, body) {
   const opts = { method, headers };
   if (body !== undefined) opts.body = JSON.stringify(body);
-  const r = await fetch(`${SUPA_URL}/rest/v1/${path}`, opts);
-  if (!r.ok) throw new Error(`Supabase ${method} ${path} → ${r.status}: ${(await r.text()).slice(0, 400)}`);
-  return r.status === 204 ? null : r.json();
+  // Retry on transient network errors (ETIMEDOUT, ENOTFOUND, ECONNRESET) which
+  // happen periodically against Supabase from this client. Exponential backoff.
+  let lastErr;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      const r = await fetch(`${SUPA_URL}/rest/v1/${path}`, opts);
+      if (!r.ok) {
+        const text = (await r.text()).slice(0, 400);
+        if (r.status >= 500 && attempt < 4) {
+          await new Promise(res => setTimeout(res, 1000 * Math.pow(2, attempt)));
+          continue;
+        }
+        throw new Error(`Supabase ${method} ${path} → ${r.status}: ${text}`);
+      }
+      return r.status === 204 ? null : r.json();
+    } catch (e) {
+      lastErr = e;
+      const msg = String(e);
+      const transient = /ETIMEDOUT|ENOTFOUND|ECONNRESET|ECONNREFUSED|fetch failed/i.test(msg);
+      if (!transient || attempt === 4) throw e;
+      await new Promise(res => setTimeout(res, 2000 * Math.pow(2, attempt)));
+    }
+  }
+  throw lastErr;
 }
 
 // ─── Gemini verification ─────────────────────────────────────────────────
