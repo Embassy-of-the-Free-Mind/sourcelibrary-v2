@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getDb, forceReconnect } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 15;
@@ -130,18 +130,25 @@ async function checkEmailProvider(): Promise<AuthCheck> {
 }
 
 async function checkMongoAdapter(): Promise<AuthCheck> {
-  try {
-    const db = await getDb();
-    // Check that the users collection exists and is queryable
-    const count = await db.collection('users').estimatedDocumentCount({ maxTimeMS: 5000 } as any);
-    if (count === 0) {
-      return { provider: 'database', status: 'error', detail: 'Users collection is empty' };
+  // One retry with forced reconnect: Atlas TLS handshakes occasionally drop
+  // ("Client network socket disconnected before secure TLS connection was established").
+  // The MongoDB client recovers transparently for user requests, so a single failed
+  // probe should not page Derek.
+  let lastErr: unknown;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const db = attempt === 0 ? await getDb() : await forceReconnect();
+      const count = await db.collection('users').estimatedDocumentCount({ maxTimeMS: 5000 } as any);
+      if (count === 0) {
+        return { provider: 'database', status: 'error', detail: 'Users collection is empty' };
+      }
+      return { provider: 'database', status: 'ok' };
+    } catch (e) {
+      lastErr = e;
     }
-    return { provider: 'database', status: 'ok' };
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
-    return { provider: 'database', status: 'error', detail: `MongoDB check failed: ${msg}` };
   }
+  const msg = lastErr instanceof Error ? lastErr.message : String(lastErr);
+  return { provider: 'database', status: 'error', detail: `MongoDB check failed (after retry): ${msg}` };
 }
 
 async function sendAuthAlert(failures: AuthCheck[]) {
