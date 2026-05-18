@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'did-the-ai-read-this',
+    title: 'Did the AI Read This?',
+    subtitle: 'A Bayesian survey of which books in our 16,871-volume OCR\'d corpus are already in frontier-model training data. About 43% are confidently new to AI; about 21% are confidently in training.',
+    date: '18 May 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/12.jpg',
+    imageAlt: 'Title page of Cornelius Drebbel\'s Tractatus duo de Natura Elementorum (Hamburg, 1621)',
+  },
+  {
     slug: 'hogwarts-library',
     title: 'The Real Hogwarts Library',
     subtitle: 'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world — alchemy, bestiaries, grimoires, Kabbalah — read in modern English.',
