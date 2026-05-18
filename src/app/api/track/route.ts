@@ -16,6 +16,16 @@ function isBot(userAgent: string | null | undefined): boolean {
 const recentHits = new Map<string, number>();
 const DEDUP_WINDOW_MS = 60_000; // 60 seconds
 
+// Per-IP daily cap: catches spoofed-UA scrapers that pass the bot regex.
+// Tracks count + distinct user-agents per IP over a 24h window. An IP that
+// crosses the cap with only one UA fingerprint is dropped — real users cycle
+// through paths via 1 UA but rarely exceed 500 logged pageviews/day after
+// 60s dedup. Per-instance only (Vercel serverless); good enough for the
+// single-IP scrapers we've seen (BG/RO/RS hitting 400-700 views/day).
+const ipStats = new Map<string, { count: number; uas: Set<string>; resetAt: number }>();
+const IP_DAILY_CAP = 500;
+const IP_WINDOW_MS = 24 * 60 * 60 * 1000;
+
 // Periodic cleanup to prevent memory leaks
 let lastCleanup = Date.now();
 function cleanupRecentHits() {
@@ -24,6 +34,9 @@ function cleanupRecentHits() {
   lastCleanup = now;
   for (const [key, ts] of recentHits) {
     if (now - ts > DEDUP_WINDOW_MS) recentHits.delete(key);
+  }
+  for (const [ip, s] of ipStats) {
+    if (now > s.resetAt) ipStats.delete(ip);
   }
 }
 
@@ -34,6 +47,28 @@ function isDuplicate(ip: string, path: string): boolean {
   const lastHit = recentHits.get(key);
   if (lastHit && now - lastHit < DEDUP_WINDOW_MS) return true;
   recentHits.set(key, now);
+  return false;
+}
+
+function exceedsIpCap(ip: string, ua: string): boolean {
+  const now = Date.now();
+  let s = ipStats.get(ip);
+  if (!s || now > s.resetAt) {
+    s = { count: 0, uas: new Set(), resetAt: now + IP_WINDOW_MS };
+    ipStats.set(ip, s);
+  }
+  s.count++;
+  s.uas.add(ua.slice(0, 60));
+  return s.count > IP_DAILY_CAP && s.uas.size <= 1;
+}
+
+// Cloudflare bot-management signals (we're behind CF). cf-verified-bot is
+// true for legit crawlers we don't want either; cf-threat-score is 0-100
+// (higher = worse). Drop anything CF already classifies as a bot.
+function isCloudflareBot(request: NextRequest): boolean {
+  if (request.headers.get('cf-verified-bot') === 'true') return true;
+  const threat = parseInt(request.headers.get('cf-threat-score') || '', 10);
+  if (Number.isFinite(threat) && threat >= 30) return true;
   return false;
 }
 
@@ -51,7 +86,7 @@ export async function POST(request: NextRequest) {
     const effectiveUA = serverUA || userAgent;
 
     // Drop bot traffic entirely — no DB write
-    if (isBot(effectiveUA)) {
+    if (isBot(effectiveUA) || isCloudflareBot(request)) {
       return NextResponse.json({ success: true });
     }
 
@@ -60,6 +95,11 @@ export async function POST(request: NextRequest) {
 
     // Rate limit: same IP + path within 60s = skip
     if (path && isDuplicate(ip, path)) {
+      return NextResponse.json({ success: true });
+    }
+
+    // Per-IP daily cap with UA-diversity check (drops spoofed-UA scrapers)
+    if (exceedsIpCap(ip, effectiveUA || '')) {
       return NextResponse.json({ success: true });
     }
 
