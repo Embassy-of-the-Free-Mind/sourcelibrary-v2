@@ -95,8 +95,12 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // shell renders its own chrome.
   const { isEmbedded } = useEmbedContext();
 
-  const pathParts = pathname.split('/').filter(Boolean);
-  const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
+  // Path-tenants (e.g. /internet-archive/gallery) should never propagate
+  // into book/page links — those URLs are canonical at /book/{id}. The
+  // pathname is intentionally unused; tenant subdomain rendering is handled
+  // upstream via proxy.ts rewrites.
+  void pathname;
+  const tenantPrefix = '';
 
   // Render the server-provided order on first paint (matches SSR HTML so we
   // don't trip React error #418 hydration mismatch), then shuffle once we're
@@ -744,8 +748,12 @@ function GalleryCard({ item, priority = false, tenantPrefix = '' }: { item: Gall
 
 function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
   const pathname = usePathname();
-  const pathParts = pathname.split('/').filter(Boolean);
-  const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
+  // Path-tenants (e.g. /internet-archive/gallery) should never propagate
+  // into book/page links — those URLs are canonical at /book/{id}. The
+  // pathname is intentionally unused; tenant subdomain rendering is handled
+  // upstream via proxy.ts rewrites.
+  void pathname;
+  const tenantPrefix = '';
   const [extracting, setExtracting] = useState(false);
 
   const handleExtract = async () => {
