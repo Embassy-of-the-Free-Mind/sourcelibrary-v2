@@ -674,6 +674,7 @@ export default function BrandPage() {
               Configured in <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">src/app/layout.tsx</code> (<code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">openGraph.images</code> and <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">twitter.images</code>).
               Dimensions: 1200&times;630 (the OG / Twitter <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">summary_large_image</code> standard).
               Four variants share the same headline and typography; the background is drawn from a different scene of the hero video each time.
+              The canonical URL <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">/og-image.jpg</code> rotates daily through the four variants (day-of-year mod 4), so the share card stays fresh as people post links across the week, while remaining deterministic within a single calendar day to keep crawler caches consistent.
             </p>
             <div className="grid md:grid-cols-2 gap-6 mb-4">
               {[
@@ -697,8 +698,9 @@ export default function BrandPage() {
                 </div>
               ))}
             </div>
-            <div className="bg-stone-100 border border-stone-200 rounded-lg p-4 text-sm text-stone-600">
-              <p className="mb-1"><strong className="text-stone-800">Regenerating:</strong> the four variants are produced by <code className="text-xs bg-white px-1 rounded">scripts/one-off/generate-og-images.mjs</code>, which composites the Source Library wordmark + Beta sup, Playfair Display headline, Newsreader subhead, and Inter footer URL over each hero-video frame.</p>
+            <div className="bg-stone-100 border border-stone-200 rounded-lg p-4 text-sm text-stone-600 space-y-1.5">
+              <p><strong className="text-stone-800">Daily rotation:</strong> a middleware rewrite in <code className="text-xs bg-white px-1 rounded">src/proxy.ts</code> maps <code className="text-xs bg-white px-1 rounded">/og-image.jpg</code> to one of the four named variants based on day-of-year. Adjust the rotation by editing <code className="text-xs bg-white px-1 rounded">OG_VARIANTS</code> in the proxy.</p>
+              <p><strong className="text-stone-800">Regenerating:</strong> the four variants are produced by <code className="text-xs bg-white px-1 rounded">scripts/one-off/generate-og-images.mjs</code>, which composites the Source Library wordmark + Beta sup, Playfair Display headline, Newsreader subhead, and Inter footer URL over each hero-video frame.</p>
               <p>Per-section OG cards for collections and topics are generated dynamically at request time via Next.js <code className="text-xs bg-white px-1 rounded">opengraph-image.tsx</code> route handlers.</p>
             </div>
           </div>
