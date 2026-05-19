@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Eye, Edit3 } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import { getTenantSlug } from '@/lib/api-client/client';
 
 interface BookAnalyticsProps {
   bookId: string;
@@ -18,12 +19,12 @@ export default function BookAnalytics({ bookId, className }: BookAnalyticsProps)
   const [stats, setStats] = useState<BookStats | null>(null);
 
   useEffect(() => {
-    // Track the read (fire-and-forget via sendBeacon to avoid blocking hydration)
+    // Track the read (fire-and-forget via sendBeacon to avoid blocking hydration).
+    // Use the same tenant inference as the api-client; fall back to the non-tenant
+    // route, which resolves tenant from proxy-injected host headers.
     try {
-      const tenant = window.location.pathname.split('/')[1] || '';
-      const trackPath = /^[a-z0-9-]+$/.test(tenant)
-        ? `/api/${tenant}/analytics/track`
-        : '/api/analytics/track';
+      const tenant = getTenantSlug();
+      const trackPath = tenant ? `/api/${tenant}/analytics/track` : '/api/analytics/track';
       const blob = new Blob([JSON.stringify({ event: 'book_read', book_id: bookId })], { type: 'application/json' });
       navigator.sendBeacon(trackPath, blob);
     } catch { /* ignore */ }
