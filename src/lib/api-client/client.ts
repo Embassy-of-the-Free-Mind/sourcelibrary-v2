@@ -53,6 +53,13 @@ export const apiClient: AxiosInstance = axios.create({
 // TODO: Robust system for setting headers based on auth state, tenant, etc.
 apiClient.interceptors.request.use(
   (config) => {
+    // Collapse `/api//foo` to `/api/foo`. Callers that interpolate an empty
+    // tenant slug (e.g. `/api/${tenant}/pages/...` on the global main domain)
+    // would otherwise force a 308 redirect on every request.
+    if (config.url) {
+      config.url = config.url.replace(/^(\/api)\/+/, '$1/');
+    }
+
     // Add auth token if available
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
     if (token) {
