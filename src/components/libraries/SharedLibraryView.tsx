@@ -399,7 +399,6 @@ export default function SharedLibraryView({
                       : 0,
                   }}
                   priority={i < 10}
-                  bookUrlPrefix={basePath !== '/' ? basePath : undefined}
                 />
               ))}
             </div>
@@ -486,7 +485,6 @@ export default function SharedLibraryView({
                           : 0,
                       }}
                       priority={i < 5}
-                      bookUrlPrefix={basePath !== '/' ? basePath : undefined}
                     />
                   ))}
                   <Link
