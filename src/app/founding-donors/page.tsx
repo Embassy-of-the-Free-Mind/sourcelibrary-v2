@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import InputWidget from '@/components/InputWidget';
 
 export const metadata: Metadata = {
   title: 'Founding Donors - Source Library',
@@ -249,6 +250,10 @@ export default function FoundingDonorsPage() {
           <p>derek@sourcelibrary.org &middot; +31-6-3404-5748</p>
           <p>sourcelibrary.org</p>
         </div>
+
+        {/* Page-scoped review widget. Hidden by default in production;
+            activates on any URL with ?getinput so reviewers can edit copy inline. */}
+        <InputWidget allowedHosts={["localhost", "vercel.app"]} />
 
       </div>
     </ContentPageLayout>
