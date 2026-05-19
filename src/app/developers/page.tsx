@@ -418,7 +418,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/catalog/csv</td>
-                  <td className="py-2.5 text-secondary">Download the full catalog as CSV</td>
+                  <td className="py-2.5 text-secondary">Download the full catalogue as CSV</td>
                 </tr>
               </tbody>
             </table>

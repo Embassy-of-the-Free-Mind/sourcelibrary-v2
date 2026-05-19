@@ -330,7 +330,7 @@ export default function IdentifyPage() {
               {/* Catalog numbers */}
               {result.identification.catalog_numbers && result.identification.catalog_numbers.length > 0 && (
                 <div className="pt-3 border-t border-border-light">
-                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1">Catalog references</h3>
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1">Catalogue references</h3>
                   <div className="flex flex-wrap gap-1.5">
                     {result.identification.catalog_numbers.map((num, i) => (
                       <span key={i} className="text-xs bg-stone-100 text-stone-700 rounded px-2 py-0.5 font-mono">{num}</span>

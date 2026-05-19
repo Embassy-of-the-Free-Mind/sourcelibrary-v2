@@ -1488,7 +1488,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                       href={`/catalog?cq=${encodeURIComponent(query)}`}
                       className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1"
                     >
-                      Open all {catalogTotal} catalog matches <ChevronRight className="w-3.5 h-3.5" />
+                      Open all {catalogTotal} catalogue matches <ChevronRight className="w-3.5 h-3.5" />
                     </Link>
                   )}
                 </>

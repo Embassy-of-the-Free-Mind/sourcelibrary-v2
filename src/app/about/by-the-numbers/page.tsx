@@ -434,7 +434,7 @@ export default function ByTheNumbersPage() {
             <StatCard label="OCR transcriptions" value={HERO.pagesOcr} sub="From scan to original-language text" icon={FileText} accent="gold" />
             <StatCard label="Page translations" value={HERO.pagesTranslated} sub="Original languages → English" icon={Languages} accent="violet" />
             <StatCard label="Book embeddings" value={HERO.bookEmbeddings} sub="For semantic similarity & search" icon={Sparkles} accent="sage" />
-            <StatCard label="Illustrations cataloged" value={HERO.galleryImages} sub="Subjects, figures, symbols, technique" icon={ImageIcon} accent="rust" />
+            <StatCard label="Illustrations catalogued" value={HERO.galleryImages} sub="Subjects, figures, symbols, technique" icon={ImageIcon} accent="rust" />
           </div>
         </section>
 
