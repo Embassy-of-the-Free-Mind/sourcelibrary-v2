@@ -7,6 +7,8 @@ import {
   getTenantDominantProvider,
   fetchTenantBphDigitizedMap,
   fetchTenantBphCatalogTotal,
+  fetchTenantCatalogDigitizedMap,
+  fetchTenantCatalogTotal,
 } from '@/lib/tenant-library-loaders';
 import { getDb } from '@/lib/mongodb';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
@@ -64,14 +66,24 @@ export default async function TenantRoot({ params, searchParams }: Props) {
 
   // Check if this tenant is primarily BPH-based
   const isBph = canonicalPartner?.providerKey === 'bph' || dominantProvider === 'bph';
+  // Other tenants with a BPH-parity unified Books|Catalogue structure (kloss
+  // today; future tenants set the flag in library-partners.ts). Reads from
+  // library_catalog_records via /api/catalog/[tenant].
+  const hasUnifiedCatalogue = !isBph && !!canonicalPartner?.hasUnifiedCatalogue;
 
-  // Fetch BPH-specific data if applicable
+  // Fetch catalogue data — BPH uses its bespoke bph_works pipeline; other
+  // unified-catalogue tenants read the generic library_catalog_records table.
   const [digitizedUbns, catalogTotal] = isBph
     ? await Promise.all([
       fetchTenantBphDigitizedMap(tenantId),
       fetchTenantBphCatalogTotal(tenantId),
     ])
-    : [{} as Record<string, { id: string; slug: string }>, 0];
+    : hasUnifiedCatalogue
+      ? await Promise.all([
+        fetchTenantCatalogDigitizedMap(tenantId, canonicalPartner!.providerKey),
+        fetchTenantCatalogTotal(tenant),
+      ])
+      : [{} as Record<string, { id: string; slug: string }>, 0];
 
   const basePath = `/${tenant}`;
 
@@ -98,6 +110,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
     view,
     display,
     isBph,
+    hasUnifiedCatalogue,
     digitizedUbns,
     catalogTotal,
     tenantSlug,
