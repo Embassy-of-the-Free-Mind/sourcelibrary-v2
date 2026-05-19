@@ -32,8 +32,8 @@ export default function FoundingDonorsPage() {
         </p>
 
         <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mb-6">
-          The first Renaissance was triggered by translation. <br className="hidden md:block" />
-          The next one will be too.
+          The first Renaissance was sparked by translations of ancient wisdom. <br className="hidden md:block" />
+          We are preparing for a second Renaissance.
         </h2>
 
         <div className="space-y-5 font-body text-lg text-secondary leading-relaxed">
@@ -42,15 +42,7 @@ export default function FoundingDonorsPage() {
             from Greek into Latin. Yet the Renaissance itself was mostly written in Latin
             &mdash; and less than <strong>3%</strong> has ever been translated into English.
             The same is true across Egyptian, Chinese, Sanskrit, Arabic, Hebrew, and a dozen
-            other traditions. The wisdom is preserved. It is not accessible.
-          </p>
-
-          <p>
-            Source Library uses AI to translate these texts at unprecedented scale and cost.
-            Our pipeline reads every page in its original language, translates it into English,
-            and presents the translation alongside the original scan &mdash; so scholars can
-            verify every line. The library is free to read, free to cite, and connected via
-            API and MCP to the AI systems that will read alongside us.
+            other traditions. We want to make lost knowledge accessible to all.
           </p>
 
           <p className="text-primary font-semibold text-xl">
