@@ -495,7 +495,7 @@ export default async function CatalogEntryPage({ params }: Props) {
         <Section title="Location at the BPH">
           <Field label="Present location" value={work.present_location} />
           <Field label="Shelf mark" value={work.shelf_mark} mono />
-          <Field label="State Collection shelf mark" value={work.state_shelf_mark} mono />
+          <Field label="State Collection shelf mark" value={work.state_shelf_mark?.trim().toLowerCase() === 'neen' ? null : work.state_shelf_mark} mono />
           <Field label="Provenance / collection" value={work.provenance} />
         </Section>
 

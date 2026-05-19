@@ -265,7 +265,7 @@ export default function UploadPage() {
             <div className="bg-accent-gold/8 border border-accent-gold/20 rounded-xl p-4 text-sm text-accent-gold-dark">
               <p className="font-medium mb-1">Two ways to add a book:</p>
               <ol className="list-decimal list-inside space-y-1 text-accent-rust">
-                <li><strong>Search catalogs</strong>: Find the book in Internet Archive or BPH to pre-fill metadata</li>
+                <li><strong>Search catalogues</strong>: Find the book in Internet Archive or BPH to pre-fill metadata</li>
                 <li><strong>Enter manually</strong>: Skip the search and fill in the form below</li>
               </ol>
             </div>
@@ -277,7 +277,7 @@ export default function UploadPage() {
                   <Search className="w-5 h-5 text-blue-700" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-stone-900">Search Catalogs</h2>
+                  <h2 className="text-lg font-semibold text-stone-900">Search Catalogues</h2>
                   <p className="text-sm text-stone-500">~37k books from Internet Archive and BPH</p>
                 </div>
               </div>

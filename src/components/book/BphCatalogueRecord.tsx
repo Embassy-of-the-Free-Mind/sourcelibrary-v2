@@ -167,14 +167,18 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
           </Section>
         )}
 
-        {(work.present_location || work.shelf_mark || work.state_shelf_mark || work.provenance) && (
-          <Section title="Location at the BPH">
-            <Field label="Present location" value={work.present_location} />
-            <Field label="Shelf mark" value={work.shelf_mark} mono />
-            <Field label="State Collection shelf mark" value={work.state_shelf_mark} mono />
-            <Field label="Provenance / collection" value={work.provenance} />
-          </Section>
-        )}
+        {(() => {
+          const stateShelfMark = work.state_shelf_mark?.trim().toLowerCase() === 'neen' ? null : work.state_shelf_mark;
+          if (!work.present_location && !work.shelf_mark && !stateShelfMark && !work.provenance) return null;
+          return (
+            <Section title="Location at the BPH">
+              <Field label="Present location" value={work.present_location} />
+              <Field label="Shelf mark" value={work.shelf_mark} mono />
+              <Field label="State Collection shelf mark" value={stateShelfMark} mono />
+              <Field label="Provenance / collection" value={work.provenance} />
+            </Section>
+          );
+        })()}
 
         {(work.bibliography || work.remarks) && (
           <Section title="Notes">

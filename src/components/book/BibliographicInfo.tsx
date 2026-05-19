@@ -362,7 +362,7 @@ export default function BibliographicInfo({
                           </summary>
                           <div className="mt-1.5 pl-2 border-l border-stone-700/50 space-y-1">
                             <p className="text-stone-400">
-                              <span className="text-stone-500">Catalogs searched:</span>{' '}
+                              <span className="text-stone-500">Catalogues searched:</span>{' '}
                               {book.translation_verification.tools_called
                                 .filter((t: string) => t !== 'make_determination')
                                 .map((t: string) => t.replace('search_', '').replace(/_/g, ' '))

@@ -527,7 +527,7 @@ export const FORM: Facet = {
     },
     {
       id: 'catalog',
-      label: 'Catalog / Bibliography',
+      label: 'Catalogue / Bibliography',
       differentia: 'Systematic list of books, manuscripts, specimens, or objects',
     },
   ],

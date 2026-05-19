@@ -7,8 +7,8 @@ export const revalidate = 86400;
 export const maxDuration = 30;
 
 export const metadata: Metadata = {
-  title: 'Catalog - Source Library',
-  description: 'Browse the complete Source Library catalog — thousands of translated primary sources in alchemy, philosophy, theology, and the esoteric traditions.',
+  title: 'Catalogue - Source Library',
+  description: 'Browse the complete Source Library catalogue — thousands of translated primary sources in alchemy, philosophy, theology, and the esoteric traditions.',
   alternates: { canonical: '/catalog' },
 };
 
