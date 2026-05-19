@@ -66,7 +66,7 @@ export default function DidTheAIReadThisPage() {
           </ol>
         </nav>
 
-        <h2 id="two-questions">1. Two questions, not one</h2>
+        <h2 id="two-questions" className="font-serif text-2xl md:text-3xl text-primary">1. Two questions, not one</h2>
 
         <p>
           Asking &ldquo;is this book in training&rdquo; quietly conflates two different questions. The first is whether the AI has seen the specific scan, transcription, or printing we hold &mdash; the file. The second is whether the AI has encountered the <em>work</em> through some channel: a modern translation, a critical edition, a Wikipedia summary, a scholarly citation. For most pre-modern multilingual books, the answer to the second is what people actually want to know &mdash; whether the AI ecosystem already &ldquo;has&rdquo; the work in some form &mdash; and the answer to the first is approximately unanswerable with black-box probes.
@@ -76,7 +76,7 @@ export default function DidTheAIReadThisPage() {
           We built our detector to answer the second question carefully and to refuse the first one honestly. A <a className="text-accent-rust hover:underline" href="https://arxiv.org/abs/2601.12937">recent skeptical paper</a> showed that the strongest membership-inference attacks on language models collapse under semantics-preserving paraphrase: their signal is overwhelmingly lexical. We don&rsquo;t fight that. We design around it.
         </p>
 
-        <h2 id="prior">2. A prior, for free</h2>
+        <h2 id="prior" className="font-serif text-2xl md:text-3xl text-primary">2. A prior, for free</h2>
 
         <p>
           We already maintain a multi-catalogue translation-verification system, described <Link className="text-accent-rust hover:underline" href="/blog/first-translation-methodology">elsewhere on this blog</Link>. For each historical work we hold, it searches twelve catalogues (UNESCO Index Translationum, Loeb, Brill, Penguin, Cambridge, Open Library, Google Books, Internet Archive, OpenAlex&rsquo;s 250-million scholarly records, the Library of Congress live catalogue, and the USTC) and assigns a disposition: <em>confirmed_first</em> (no prior English translation of the underlying work exists), <em>translation_found</em> (multiple English versions exist), and various intermediates.
@@ -86,7 +86,7 @@ export default function DidTheAIReadThisPage() {
           That disposition turns out to be almost exactly what we need as a Bayesian prior for &ldquo;has this work been propagated through derived editions an AI is likely to have seen.&rdquo; A work with no English translation cannot have been encountered in English; a work with Loeb, Penguin, and Oxford translations almost certainly was. We convert the disposition, the translator/publisher list, the IA-scan presence, and the year of the oldest translation into a log-odds prior. On its own, this bibliographic prior agrees with the full Bayesian detector on 88% of books &mdash; the rare-book infrastructure we already had is doing most of the work.
         </p>
 
-        <h2 id="probe">3. The behavioural probe</h2>
+        <h2 id="probe" className="font-serif text-2xl md:text-3xl text-primary">3. The behavioural probe</h2>
 
         <p>
           To check whether the bibliographic prior is right, and to refine the answer for books in its uncertain middle, we ask the model directly. Two questions, batched twenty-eight at a time:
@@ -105,7 +105,7 @@ export default function DidTheAIReadThisPage() {
           Combining the bibliographic prior with the behavioural probe via Bayes&rsquo; rule produces a posterior probability per book, with a credible interval from Monte Carlo. Total cost: about a hundredth of a US cent per book.
         </p>
 
-        <h2 id="numbers">4. The catalogue numbers</h2>
+        <h2 id="numbers" className="font-serif text-2xl md:text-3xl text-primary">4. The catalogue numbers</h2>
 
         <p>
           Random sample of 1,000 books drawn uniformly from the 16,871 books in the library with at least one OCR&rsquo;d page (the &ldquo;probe-able&rdquo; population &mdash; books for which any text exists for a model to potentially have seen):
@@ -136,7 +136,7 @@ export default function DidTheAIReadThisPage() {
           A second analysis on the 10,911 books that have completed bibliographic verification shows just how strongly disposition predicts the answer. Books judged &ldquo;no prior English translation exists&rdquo; (n=6,306) receive a mean posterior of 0.10, and 77% are classified confidently new to AI. Books judged &ldquo;multiple English translations exist&rdquo; (n=2,866) receive a mean posterior of 0.83, and 69% are classified confidently in training. Almost everything we need to know about a work&rsquo;s training-data status is in its bibliographic propagation history.
         </p>
 
-        <h2 id="what-it-doesnt-measure">5. What this doesn&rsquo;t measure</h2>
+        <h2 id="what-it-doesnt-measure" className="font-serif text-2xl md:text-3xl text-primary">5. What this doesn&rsquo;t measure</h2>
 
         <p>
           The honest qualifier: this method measures whether the AI <em>recognises</em> the work as a scholarly object &mdash; whether some channel of derived editions has reached it &mdash; not whether the model has seen our specific scan. We tested the distinction directly. For ten books our detector classified as &ldquo;in training&rdquo; and ten classified as &ldquo;not in training,&rdquo; we provided eighty characters of the actual OCR as a prefix and asked the model to continue. ROUGE-L of the continuation against the next 300 characters averaged 0.099 for &ldquo;in training&rdquo; books and 0.084 for &ldquo;not in training&rdquo; books &mdash; a ratio of 1.17&times;, well below any meaningful discrimination threshold. <strong>Even on books the model recognises, it cannot reproduce our specific OCR.</strong> Recognition is not file exposure, and we make no claim to the second.
@@ -146,7 +146,7 @@ export default function DidTheAIReadThisPage() {
           We also discovered, in passing, a meaningful calibration regression in the smaller Gemini Flash Lite model relative to its bigger sibling Gemini 2.5 Flash. The Drebbel anecdote is reproducible: the smaller model confidently fabricates content for unfamiliar long-tail works where the larger model declines. We use Flash Lite in our enrichment pipeline (it&rsquo;s cheaper) for tasks that ground the model in book text, but never for tasks that ask it to recall facts about works from training memory. The calibration of refusal at the long-tail boundary matters more for production reliability than raw capability.
         </p>
 
-        <h2 id="why-it-matters">6. Why it matters</h2>
+        <h2 id="why-it-matters" className="font-serif text-2xl md:text-3xl text-primary">6. Why it matters</h2>
 
         <p>
           For the library specifically, the headline finding is that <strong>roughly 7,000 books in our OCR&rsquo;d corpus are confident additions to what frontier AI knows of the world</strong>. Some of these are first translations we&rsquo;ve commissioned of texts that have never appeared in English. Some are obscure 17th-century treatises that haven&rsquo;t been scanned anywhere outside our archive. Some are manuscripts with Vatican or Wolfenb&uuml;ttel shelfmarks whose contents have never been digitised at all. These are the books our work moves into the AI ecosystem; they are what the library&rsquo;s mission concretely produces.
