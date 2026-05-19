@@ -17,11 +17,12 @@ function getAssets() {
   return { svgs, pngs };
 }
 
-type Config = 'logo-full' | 'logo-compact' | 'icon-only' | 'wordmark-only' | 'logo-stacked';
+type Config = 'logo-full' | 'logo-full-beta' | 'logo-compact' | 'icon-only' | 'wordmark-only' | 'logo-stacked';
 type Scheme = 'white-on-dark' | 'black-on-white' | 'white-on-transparent' | 'black-on-transparent';
 
 const CONFIG_LABELS: Record<Config, string> = {
   'logo-full': 'Full Logo',
+  'logo-full-beta': 'Full Logo + Beta',
   'logo-compact': 'Compact Logo',
   'icon-only': 'Icon Only',
   'wordmark-only': 'Wordmark Only',
@@ -197,13 +198,13 @@ export default function BrandPage() {
             <h1 className="text-3xl font-light tracking-wide">Brand Kit & Color System</h1>
           </div>
           <p className="text-stone-400 max-w-2xl text-lg">
-            Logos, color system, typography, and design decisions for Source Library.
-            This page documents the current state, open questions, and proposed alignment.
+            Logos, color system, typography, and design tokens for Source Library.
+            A reference for anyone building UI or producing assets for the project.
           </p>
           <nav className="flex flex-wrap gap-4 mt-8 text-sm">
             <a href="#logos" className="text-stone-400 hover:text-white transition-colors">Logos</a>
             <a href="#color-system" className="text-stone-400 hover:text-white transition-colors">Color System</a>
-            <a href="#decisions" className="text-stone-400 hover:text-white transition-colors">Decisions</a>
+            <a href="#decisions" className="text-stone-400 hover:text-white transition-colors">Open Questions</a>
             <a href="#typography" className="text-stone-400 hover:text-white transition-colors">Typography</a>
             <a href="#usage" className="text-stone-400 hover:text-white transition-colors">Usage</a>
           </nav>
@@ -231,6 +232,7 @@ export default function BrandPage() {
                   </h3>
                   <p className="text-stone-500 mb-4 text-sm">
                     {config === 'logo-full' && 'The primary logo. Use this wherever space allows.'}
+                    {config === 'logo-full-beta' && 'Full logo with a Beta superscript. Matches the live site header during the public-beta period.'}
                     {config === 'logo-compact' && 'Smaller variant for tight spaces, navigation bars, and mobile.'}
                     {config === 'icon-only' && 'The concentric circles mark. Use for favicons, app icons, and avatars.'}
                     {config === 'wordmark-only' && 'Text-only mark. Use when the icon is already present or for inline references.'}
@@ -317,7 +319,7 @@ export default function BrandPage() {
           <h2 className="text-2xl font-semibold text-stone-800 mb-2">Color System</h2>
           <p className="text-stone-500 mb-10 max-w-3xl">
             Two color systems coexist: CSS design tokens (used in ~35 files) and raw Tailwind utilities
-            (used in ~117 files). This section documents both, proposes alignment, and flags decisions needed.
+            (used in ~117 files). Both are documented below.
           </p>
 
           {/* Brand Accent Colors */}
@@ -387,7 +389,6 @@ export default function BrandPage() {
             <p className="text-sm text-stone-600">
               These serve different roles. Amber is saturated and high-energy &mdash; used for clickable actions.
               Gold is muted and warm &mdash; used for decorative/ornamental purposes (search highlight backgrounds, flame accents).
-              See decision below.
             </p>
           </div>
 
@@ -410,33 +411,6 @@ export default function BrandPage() {
               <GradientSwatch from="#f6f3ee" to="#f3ede6" label="Section backgrounds" />
               <GradientSwatch from="#1a1612" to="#2a2520" label="Dark header gradient" />
             </div>
-          </div>
-
-          {/* Dark color inconsistency */}
-          <div className="mb-12 bg-stone-100 border border-stone-200 rounded-lg p-5">
-            <h4 className="font-medium text-stone-800 mb-2">Dark color inconsistency</h4>
-            <div className="flex items-center gap-6 mb-3">
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-stone-300" style={{ backgroundColor: '#1a1612' }} />
-                <p className="text-xs text-stone-600 mt-1 font-medium">CSS token</p>
-                <p className="text-[10px] text-stone-400 font-mono">#1a1612 (warm)</p>
-              </div>
-              <div className="text-stone-300 text-2xl">vs</div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-stone-300" style={{ backgroundColor: '#1a1a1a' }} />
-                <p className="text-xs text-stone-600 mt-1 font-medium">Brand assets</p>
-                <p className="text-[10px] text-stone-400 font-mono">#1a1a1a (neutral)</p>
-              </div>
-              <div className="text-stone-300 text-2xl">vs</div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-stone-300" style={{ backgroundColor: '#000000' }} />
-                <p className="text-xs text-stone-600 mt-1 font-medium">Hero overlay</p>
-                <p className="text-[10px] text-stone-400 font-mono">#000000 (pure)</p>
-              </div>
-            </div>
-            <p className="text-sm text-stone-600">
-              Three different &ldquo;dark&rdquo; values used across the site. See decision below.
-            </p>
           </div>
 
           {/* Text Hierarchy */}
@@ -562,10 +536,10 @@ export default function BrandPage() {
 
         {/* ─── DECISIONS ─── */}
         <section id="decisions" className="border-t border-stone-200 pt-12">
-          <h2 className="text-2xl font-semibold text-stone-800 mb-2">Decisions & Proposals</h2>
+          <h2 className="text-2xl font-semibold text-stone-800 mb-2">Open Questions</h2>
           <p className="text-stone-500 mb-8 max-w-3xl">
-            The color system works but has inconsistencies. Below are the open questions
-            with proposed resolutions based on actual codebase usage data.
+            A few unresolved questions about the color system, with proposed resolutions
+            based on actual codebase usage data.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -578,15 +552,7 @@ export default function BrandPage() {
             />
 
             <DecisionCard
-              title="2. Dark background: which black?"
-              status="proposal"
-              problem="Three 'dark' values: #1a1612 (warm brown-black, CSS token), #1a1a1a (neutral, brand assets), #000000 (pure black, hero overlay). These are visually similar but inconsistent."
-              proposal="Standardize on #1a1612 (the warm brown-black). It matches the warm paper aesthetic of the entire site. Regenerate brand assets with this value. Pure black can stay for overlay gradients where it fades to transparent."
-              evidence="--bg-dark: #1a1612 is the intentional design token. #1a1a1a was a shorthand that crept into the brand kit. The warm tone is consistent with cream/warm backgrounds."
-            />
-
-            <DecisionCard
-              title="3. Remove --accent-slate?"
+              title="2. Remove --accent-slate?"
               status="proposal"
               problem="--accent-slate (#546b8a) is defined in globals.css but never used in any component, page, or stylesheet."
               proposal="Remove it. Zero usage means it's dead code. If a blue-slate accent is ever needed, it can be re-added with actual usage."
@@ -594,23 +560,7 @@ export default function BrandPage() {
             />
 
             <DecisionCard
-              title="4. Warm gradients in brand guidelines?"
-              status="proposal"
-              problem="The warm cream gradients (#fdfcf9 to #f5f0e8, #f6f3ee to #f3ede6) are a distinctive visual signature but aren't documented anywhere."
-              proposal="Yes, include them. They're as much the brand as the logo. Document the 3 signature gradients: page fade (cream to warm), section backgrounds, and dark header."
-              evidence="The paper-like warmth is what distinguishes Source Library from generic websites. Every reader page, search result, and book card uses these tones."
-            />
-
-            <DecisionCard
-              title="5. Scope of this page"
-              status="proposal"
-              problem="Should the brand page be a minimal logo kit, or a fuller design system reference?"
-              proposal="This page: logos + full color palette + typography + key visual patterns. Not a component library. Enough that a designer or second developer can build consistent UI without reverse-engineering globals.css."
-              evidence="The codebase already has a collaborative dev (per CLAUDE.md). This reference prevents color drift and documents the intent behind each token."
-            />
-
-            <DecisionCard
-              title="6. Two color systems: consolidate?"
+              title="3. Two color systems: consolidate?"
               status="open"
               problem="CSS vars (--accent-rust, etc.) are used in ~35 files. Raw Tailwind (amber-*, stone-*) in ~117 files. They overlap — stone-900 and --text-primary are nearly the same color."
               proposal="Don't consolidate now — the cost is too high (touching 117+ files) for minimal benefit. The @theme inline bridge already makes CSS vars available as Tailwind classes. Instead, prefer design tokens for new code and let raw Tailwind usage naturally decrease over time."
@@ -633,10 +583,12 @@ export default function BrandPage() {
                 <p><strong>&ldquo;LIBRARY&rdquo;:</strong> Light (300)</p>
                 <p><strong>Case:</strong> Uppercase</p>
                 <p><strong>Tracking:</strong> 0.05em</p>
+                <p><strong>&ldquo;Beta&rdquo; sup:</strong> 0.6em, weight 300, normal case, tracking-normal, ml 0.25em, opacity 0.8, offset &minus;0.5em</p>
               </div>
               <div className="mt-4 bg-[#1a1612] text-white p-6 rounded-lg inline-block">
                 <span className="font-sans text-2xl uppercase tracking-wider">
                   <span className="font-semibold">Source</span><span className="font-light">Library</span>
+                  <sup className="text-[0.6em] font-light tracking-normal normal-case ml-1 opacity-80 relative -top-[0.5em]">Beta</sup>
                 </span>
               </div>
             </div>
@@ -753,7 +705,7 @@ export default function BrandPage() {
 
           <div className="mt-8 text-sm text-stone-500">
             <p>
-              Brand kit generated by <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">scripts/generate-brand-kit.mjs</code>.
+              Brand kit generated by <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">scripts/one-off/generate-brand-kit.mjs</code>.
               Re-run to regenerate all assets.
               SVGs are potrace-traced outlines with no font dependencies.
             </p>
