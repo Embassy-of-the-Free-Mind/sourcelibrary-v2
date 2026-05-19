@@ -5,6 +5,16 @@ import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
+import { getPartnerBySlug } from '@/lib/library-partners';
+import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
+
+// Catalogue entry routing
+// - BPH (providerKey === 'bph'): legacy `bph_works` table + bespoke fields
+//   like `bibliographic_format` and `field_provenance`. Logic stays in this
+//   file because it predates the unified table.
+// - Other unified-catalogue tenants (kloss-collection, …): read
+//   `library_catalog_records` via GenericCatalogEntry. Selected by partner
+//   metadata (`hasUnifiedCatalogue: true` in library-partners.ts).
 
 interface Props {
   params: Promise<{ tenant: string; ubn: string }>;
@@ -232,7 +242,11 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { ubn } = await params;
+  const { tenant, ubn } = await params;
+  const partner = getPartnerBySlug(tenant);
+  if (partner && partner.providerKey !== 'bph' && partner.hasUnifiedCatalogue) {
+    return generateGenericMetadata(tenant, ubn, partner) as Promise<Metadata>;
+  }
   const work = await fetchWork(ubn);
   if (!work) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
   const title = work.title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
@@ -243,6 +257,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CatalogEntryPage({ params }: Props) {
   const { tenant, ubn } = await params;
+
+  // Generic unified-catalogue tenants (kloss-collection, …) — render via the
+  // shared component that reads library_catalog_records. BPH falls through.
+  const partner = getPartnerBySlug(tenant);
+  if (partner && partner.providerKey !== 'bph' && partner.hasUnifiedCatalogue) {
+    return <GenericCatalogEntry tenant={tenant} catalogId={ubn} partner={partner} />;
+  }
 
   // Fetch BPH catalog row + live SL book in parallel
   const [work, slBook] = await Promise.all([

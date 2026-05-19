@@ -108,6 +108,10 @@ const SORT_OPTIONS = [
 interface Props {
   /** Tenant slug — used in the API path: `/api/catalog/${tenant}`. */
   tenant: string;
+  /** basePath for catalogue detail-page links (e.g. "/embed/kloss-collection").
+   *  Titles link to `${basePath}/catalog/${catalog_id}`; on tenant subdomains
+   *  the proxy also maps the public `/catalogue/{id}` alias to that route. */
+  basePath: string;
   /** Map of catalog_id → { id, slug } for digitised books (overrides sl_book_id from row). */
   digitizedIds: Record<string, { id: string; slug: string }>;
   /** Optional tenant slug for nested book URLs (often matches `tenant`). */
@@ -134,6 +138,7 @@ interface Props {
 
 export default function CatalogBrowser({
   tenant,
+  basePath,
   digitizedIds,
   tenantSlug,
   defaultAdvanced = false,
@@ -350,6 +355,12 @@ export default function CatalogBrowser({
   const yearDisplay = (w: CatalogRecord): string =>
     (w.year ? String(w.year) : '') || (w.year_text || '');
 
+  // Catalogue detail URL — matches the BPH convention (`/catalog/{id}` under
+  // the embed path; the subdomain proxy also maps the public `/catalogue/{id}`
+  // alias to the same route).
+  const detailUrl = (catalogId: string) =>
+    `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(catalogId)}`;
+
   return (
     <div>
       <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -548,14 +559,11 @@ export default function CatalogBrowser({
                 const external = resolveExternal(w, !!digitized);
                 const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
                 const displayAuthor = w.author || w.variant_author || w.pseudonym;
-                // Title link target: digitised SL book if any, then external,
-                // then plain text. We deliberately do NOT link to a catalogue
-                // detail page here — Phase 6 introduces that per tenant.
-                const titleHref = digitized
-                  ? tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)
-                  : external
-                    ? tenantBookUrl({ id: external.id, slug: external.slug }, tenantSlug)
-                    : null;
+                // Title always links to the catalogue detail page. Direct
+                // book-reader access is via the "Digitised copy" / "Read at
+                // [source]" sublinks below — partner-requested separation so
+                // bibliographic context isn't bypassed.
+                const titleHref = detailUrl(w.catalog_id);
                 return (
                   <tr
                     key={w.catalog_id}
@@ -563,13 +571,9 @@ export default function CatalogBrowser({
                   >
                     <td className="px-3 py-2 align-top">
                       <div className="font-medium text-primary leading-snug">
-                        {titleHref ? (
-                          <a href={titleHref} className="hover:text-accent-rust transition-colors">
-                            {displayTitle}
-                          </a>
-                        ) : (
-                          <span>{displayTitle}</span>
-                        )}
+                        <a href={titleHref} className="hover:text-accent-rust transition-colors">
+                          {displayTitle}
+                        </a>
                       </div>
                       {digitized && (
                         <a

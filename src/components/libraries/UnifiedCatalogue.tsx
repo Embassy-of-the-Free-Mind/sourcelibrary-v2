@@ -88,6 +88,7 @@ export default function UnifiedCatalogue({
       <CatalogBrowser
         key={`cat-${tenant}-${mode}-${display}`}
         tenant={tenant}
+        basePath={basePath}
         digitizedIds={digitizedIds}
         tenantSlug={tenantSlug}
         hideInlineCount
