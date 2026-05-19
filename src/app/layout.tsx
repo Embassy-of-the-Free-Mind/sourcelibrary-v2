@@ -4,6 +4,7 @@ import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import Providers from "@/components/providers/Providers";
 import PageTracker from "@/components/reader/PageTracker";
 import BrokenImageReporter from "@/components/BrokenImageReporter";
+import InputWidget from "@/components/InputWidget";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
 import CookieConsent from "@/components/providers/CookieConsent";
@@ -115,6 +116,7 @@ export default async function RootLayout({
         <AnalyticsScripts />
         <PageTracker />
         <BrokenImageReporter />
+        <InputWidget allowedHosts={["localhost", "vercel.app"]} />
       </body>
     </html>
   );
