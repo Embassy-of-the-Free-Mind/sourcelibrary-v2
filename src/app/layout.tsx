@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     ],
   },
   other: {
-    'msapplication-TileColor': '#1c1917',
+    'msapplication-TileColor': '#1a1612',
     'pinterest-rich-pin': 'true',
   },
   openGraph: {

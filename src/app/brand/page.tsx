@@ -207,6 +207,7 @@ export default function BrandPage() {
             <a href="#decisions" className="text-stone-400 hover:text-white transition-colors">Open Questions</a>
             <a href="#typography" className="text-stone-400 hover:text-white transition-colors">Typography</a>
             <a href="#usage" className="text-stone-400 hover:text-white transition-colors">Usage</a>
+            <a href="#social" className="text-stone-400 hover:text-white transition-colors">Social & Identity</a>
           </nav>
         </div>
       </header>
@@ -655,6 +656,141 @@ export default function BrandPage() {
                 <p>Design tokens are preferred for new code. Raw Tailwind for rapid prototyping.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ─── SOCIAL & IDENTITY ─── */}
+        <section id="social" className="border-t border-stone-200 pt-12">
+          <h2 className="text-2xl font-semibold text-stone-800 mb-2">Social & Identity Assets</h2>
+          <p className="text-stone-500 mb-8 max-w-3xl">
+            Share cards, browser identity (favicon, Apple touch icon), and the platforms where Source Library shows up.
+          </p>
+
+          {/* Open Graph share card */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-stone-800 mb-1">Open Graph share card</h3>
+            <p className="text-sm text-stone-500 mb-4">
+              The image that appears when a Source Library link is shared on Twitter/X, LinkedIn, Slack, iMessage, Facebook, Discord, etc.
+              Configured in <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">src/app/layout.tsx</code> (<code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">openGraph.images</code> and <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">twitter.images</code>).
+              Dimensions: 1200&times;630 (the OG / Twitter <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">summary_large_image</code> standard).
+            </p>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <div className="rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/og-image.jpg" alt="Source Library Open Graph share card" className="w-full block" />
+                </div>
+                <div className="mt-2 flex items-center justify-between text-sm">
+                  <span className="text-stone-500">og-image.jpg &middot; 1200&times;630</span>
+                  <a href="/og-image.jpg" download className="text-xs text-stone-400 hover:text-accent-rust">Download</a>
+                </div>
+              </div>
+              <div>
+                <div className="rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/og-poster.jpg" alt="Source Library hero poster (no text)" className="w-full block" />
+                </div>
+                <div className="mt-2 flex items-center justify-between text-sm">
+                  <span className="text-stone-500">og-poster.jpg &middot; background only (no text)</span>
+                  <a href="/og-poster.jpg" download className="text-xs text-stone-400 hover:text-accent-rust">Download</a>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-stone-400 mt-3">
+              Per-section OG cards (e.g. for collections and topics) are generated dynamically via Next.js{' '}
+              <code className="bg-stone-100 px-1 rounded">opengraph-image.tsx</code> route handlers.
+            </p>
+          </div>
+
+          {/* Browser identity */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-stone-800 mb-1">Browser & app identity</h3>
+            <p className="text-sm text-stone-500 mb-4">
+              The marks that appear in browser tabs, bookmarks, the iOS home screen, and the Windows Start menu tile.
+              All use the brand dark <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">#1a1612</code>.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div>
+                <div className="rounded-lg border border-stone-200 bg-white p-6 flex items-center justify-center min-h-[140px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/icon.svg" alt="Favicon" className="w-16 h-16" />
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Favicon</p>
+                <p className="text-xs text-stone-500">SVG, browser tabs &amp; bookmarks</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">src/app/icon.svg</p>
+              </div>
+              <div>
+                <div className="rounded-lg border border-stone-200 bg-white p-6 flex items-center justify-center min-h-[140px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/apple-icon" alt="Apple touch icon" className="w-20 h-20 rounded-2xl" />
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Apple touch icon</p>
+                <p className="text-xs text-stone-500">180&times;180, iOS home screen</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">src/app/apple-icon.tsx</p>
+              </div>
+              <div>
+                <div className="rounded-lg border border-stone-200 p-6 flex items-center justify-center min-h-[140px]" style={{ background: '#1a1612' }}>
+                  <svg viewBox="0 0 24 24" className="w-16 h-16">
+                    <circle cx="12" cy="12" r="10" fill="none" stroke="#ffffff" strokeWidth="1" />
+                    <circle cx="12" cy="12" r="7" fill="none" stroke="#ffffff" strokeWidth="1" />
+                    <circle cx="12" cy="12" r="4" fill="none" stroke="#ffffff" strokeWidth="1" />
+                  </svg>
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Windows tile</p>
+                <p className="text-xs text-stone-500">msapplication-TileColor &middot; #1a1612</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">layout.tsx metadata</p>
+              </div>
+              <div>
+                <div className="rounded-lg border border-stone-200 bg-[#1a1612] p-6 flex items-center justify-center min-h-[140px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/brand/svg/icon-only--white-on-dark.svg" alt="Avatar / app icon" className="w-16 h-16" />
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Social avatar</p>
+                <p className="text-xs text-stone-500">Profile picture on social platforms</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">brand/png/icon-only--white-on-dark--512h.png</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Where we appear */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-stone-800 mb-1">Where we appear</h3>
+            <p className="text-sm text-stone-500 mb-4">
+              Canonical handles and profile URLs. Use these in copy and reference materials.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+              <div className="border border-stone-200 rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-stone-400 mb-1">Twitter / X</p>
+                <p className="font-mono text-stone-700">@SourceLibrary_</p>
+                <p className="text-xs text-stone-500 mt-1">Configured as <code className="bg-stone-100 px-1 rounded">twitter.site</code> in layout.tsx</p>
+              </div>
+              <div className="border border-stone-200 rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-stone-400 mb-1">Primary domain</p>
+                <p className="font-mono text-stone-700">sourcelibrary.org</p>
+                <p className="text-xs text-stone-500 mt-1">Canonical URL for all sharing</p>
+              </div>
+              <div className="border border-stone-200 rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-stone-400 mb-1">Email</p>
+                <p className="font-mono text-stone-700">derek@playpowerlabs.com</p>
+                <p className="text-xs text-stone-500 mt-1">Contact for press, partnerships, donor inquiries</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick share-card recipe */}
+          <div className="bg-stone-100 border border-stone-200 rounded-lg p-5">
+            <h4 className="font-medium text-stone-800 mb-2">Building a new share card</h4>
+            <p className="text-sm text-stone-600 mb-3">
+              For a one-off card (announcement, blog post, etc.) follow the OG card&apos;s layout:
+            </p>
+            <ul className="text-sm text-stone-600 space-y-1.5 list-disc pl-5">
+              <li>1200&times;630 canvas, dark background or a manuscript photograph at low brightness</li>
+              <li>White full logo (use <code className="text-xs bg-white px-1 rounded">brand/svg/logo-full--white-on-dark.svg</code>), top-left, ~60px tall</li>
+              <li>Headline in Playfair Display (display), centered or left-aligned, white</li>
+              <li>Subhead in Newsreader (body) at ~24px, muted white (#d6d3d1)</li>
+              <li>Footer URL: <code className="text-xs bg-white px-1 rounded">sourcelibrary.org</code> in Inter, bottom-left</li>
+              <li>Keep ample dark margin; the card needs to read at 600&times;315 thumbnail size</li>
+            </ul>
           </div>
         </section>
 
