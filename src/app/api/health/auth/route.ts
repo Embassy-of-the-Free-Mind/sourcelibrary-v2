@@ -110,23 +110,30 @@ async function checkEmailProvider(): Promise<AuthCheck> {
     return { provider: 'email', status: 'error', detail: 'RESEND_API_KEY missing' };
   }
 
-  try {
-    // Validate API key by fetching domains (lightweight, no side effects)
-    const res = await fetch('https://api.resend.com/domains', {
-      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
-      signal: AbortSignal.timeout(5000),
-    });
-    if (res.status === 401 || res.status === 403) {
-      return { provider: 'email', status: 'error', detail: 'RESEND_API_KEY is invalid' };
+  // One retry on transient network errors: the api.resend.com probe occasionally
+  // exceeds the 5s budget even though real `resend.emails.send` calls during
+  // sign-in are unaffected. A single failed probe should not page Derek.
+  let lastErr: unknown;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      // Validate API key by fetching domains (lightweight, no side effects)
+      const res = await fetch('https://api.resend.com/domains', {
+        headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+        signal: AbortSignal.timeout(5000),
+      });
+      if (res.status === 401 || res.status === 403) {
+        return { provider: 'email', status: 'error', detail: 'RESEND_API_KEY is invalid' };
+      }
+      if (!res.ok) {
+        return { provider: 'email', status: 'error', detail: `Resend API returned ${res.status}` };
+      }
+      return { provider: 'email', status: 'ok' };
+    } catch (e) {
+      lastErr = e;
     }
-    if (!res.ok) {
-      return { provider: 'email', status: 'error', detail: `Resend API returned ${res.status}` };
-    }
-    return { provider: 'email', status: 'ok' };
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
-    return { provider: 'email', status: 'error', detail: `Resend check failed: ${msg}` };
   }
+  const msg = lastErr instanceof Error ? lastErr.message : String(lastErr);
+  return { provider: 'email', status: 'error', detail: `Resend check failed (after retry): ${msg}` };
 }
 
 async function checkMongoAdapter(): Promise<AuthCheck> {
