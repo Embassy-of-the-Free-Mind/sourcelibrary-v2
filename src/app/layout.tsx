@@ -55,6 +55,7 @@ export const metadata: Metadata = {
     siteName: "Source Library",
     locale: "en_US",
     type: "website",
+    url: "https://sourcelibrary.org/",
     images: [{
       url: '/og-image.jpg',
       width: 1200,
