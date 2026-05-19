@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { X, ZoomIn, ZoomOut, RotateCcw, ExternalLink } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 
 interface FullscreenImageViewerProps {
@@ -295,12 +295,24 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
             </button>
           )}
         </div>
-        <button
-          onClick={onClose}
-          className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
-        >
-          <X className="w-6 h-6 text-white" />
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href={src}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+            title="Open original image (for full pinch-zoom)"
+            aria-label="Open original image in new tab"
+          >
+            <ExternalLink className="w-5 h-5 text-white" />
+          </a>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+        </div>
       </div>
 
       {/* Image container */}
