@@ -40,17 +40,21 @@ export async function GET(
     const db = await getDb();
     const { id: tenantId } = getTenantContextFromRequest(request);
 
-    if (!tenantId) {
-      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
-    }
-
     const { searchParams } = new URL(request.url);
     const full = searchParams.get('full') === 'true';
 
     // Default: exclude detected_images (large array unused by the reader)
     const projection = full ? undefined : { detected_images: 0 };
+
+    // Tenant subdomains and /[tenant]/... paths get tenantId injected by the
+    // proxy and stay tenant-scoped. Calls from the global main domain (e.g.
+    // sourcelibrary.org/book/... prefetching adjacent pages) arrive with no
+    // tenantId — those are allowed to read globally.
+    const filter: Record<string, unknown> = { id };
+    if (tenantId) filter.tenantId = tenantId;
+
     let page = await db.collection('pages').findOne(
-      { id, tenantId },
+      filter,
       projection ? { projection } : undefined
     );
 
@@ -58,8 +62,10 @@ export async function GET(
     if (!page) {
       const { ObjectId } = await import('mongodb');
       if (ObjectId.isValid(id)) {
+        const oidFilter: Record<string, unknown> = { _id: new ObjectId(id) };
+        if (tenantId) oidFilter.tenantId = tenantId;
         page = await db.collection('pages').findOne(
-          { _id: new ObjectId(id), tenantId },
+          oidFilter,
           projection ? { projection } : undefined
         );
       }
