@@ -10,6 +10,12 @@ export interface LibraryPartner {
   color: 'rust' | 'sage' | 'violet' | 'gold';
   /** Hand-picked hero image URL — takes priority over auto-selected gallery images */
   heroImageOverride?: string;
+  /** Has a BPH-style "Books | Catalogue" tab structure driven by a Supabase
+   *  bibliographic export (library_catalog_records). When true, the tenant
+   *  page renders <UnifiedCatalogue> instead of the plain books grid. The
+   *  BPH-specific path (isBph branches) stays on its own bph_works pipeline
+   *  until a follow-up migration consolidates the two. */
+  hasUnifiedCatalogue?: boolean;
 }
 
 /**
@@ -231,6 +237,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Bibliotheca Klossiana at CMC Prins Frederik in The Hague preserves the collection of Georg Kloss (1787–1854), one of the most important Masonic, Rosicrucian, and esoteric manuscript collections in Europe.',
     color: 'gold',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69c1d094b82ba5d5bed99883/0355.jpg',
+    hasUnifiedCatalogue: true,
   },
   'library-of-congress': {
     slug: 'library-of-congress',

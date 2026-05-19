@@ -535,3 +535,89 @@ export async function fetchTenantBphCataloguedBookIds(): Promise<Set<string> | n
     return null;
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Generic catalogue loaders (library_catalog_records)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Build catalog_id → { id, slug } map for digitised books in a tenant's
+ * catalogue. Reads live Mongo books filtered by tenantId + providerKey, where
+ * `image_source.identifier` matches the catalogue's primary key (e.g. priref
+ * for Kloss). Overrides whatever's stored in the row at ETL time.
+ *
+ * Each tenant has its own short cache keyed by (tenantId, providerKey) so
+ * BPH-style cron sync isn't required for the visible counter to stay fresh
+ * within a single browsing session.
+ */
+const catalogDigitizedMapCache = new Map<string, { value: Record<string, { id: string; slug: string }>; expiresAt: number }>();
+const CATALOG_DIGITIZED_MAP_TTL_MS = 60_000;
+
+export async function fetchTenantCatalogDigitizedMap(
+  tenantId: string,
+  providerKey: string,
+): Promise<Record<string, { id: string; slug: string }>> {
+  const cacheKey = `${tenantId}::${providerKey}`;
+  const now = Date.now();
+  const cached = catalogDigitizedMapCache.get(cacheKey);
+  if (cached && cached.expiresAt > now) {
+    return cached.value;
+  }
+  try {
+    const db = await getReadDb();
+    const books = await db.collection('books').find(
+      {
+        tenantId,
+        'image_source.provider': providerKey,
+        'image_source.identifier': { $exists: true },
+      },
+      { projection: { id: 1, slug: 1, 'image_source.identifier': 1 }, maxTimeMS: 4_000 }
+    ).toArray();
+
+    const map: Record<string, { id: string; slug: string }> = {};
+    for (const b of books as unknown as Array<{ id: string; slug?: string; image_source?: { identifier?: string | number } }>) {
+      const ident = b.image_source?.identifier;
+      if (ident !== undefined && ident !== null) {
+        map[String(ident)] = { id: b.id, slug: b.slug || b.id };
+      }
+    }
+    catalogDigitizedMapCache.set(cacheKey, { value: map, expiresAt: now + CATALOG_DIGITIZED_MAP_TTL_MS });
+    return map;
+  } catch (err) {
+    console.warn('[tenant-library-loaders] fetchTenantCatalogDigitizedMap failed, serving stale or empty:', err);
+    if (cached) return cached.value;
+    return {};
+  }
+}
+
+/**
+ * Total catalogue rows for a tenant in `library_catalog_records`. Cached
+ * for 60s so the displayed total stays stable across page navigations.
+ */
+const catalogTotalCache = new Map<string, { value: number; expiresAt: number }>();
+const CATALOG_TOTAL_TTL_MS = 60_000;
+
+export async function fetchTenantCatalogTotal(tenantSlug: string): Promise<number> {
+  const now = Date.now();
+  const cached = catalogTotalCache.get(tenantSlug);
+  if (cached && cached.expiresAt > now) {
+    return cached.value;
+  }
+  try {
+    const { count } = await withTimeout(
+      supabase
+        .from('library_catalog_records')
+        .select('*', { count: 'exact', head: true })
+        .eq('tenant_id', tenantSlug),
+      SUPABASE_CALL_TIMEOUT_MS,
+      'fetchTenantCatalogTotal',
+    );
+    const value = count || 0;
+    catalogTotalCache.set(tenantSlug, { value, expiresAt: now + CATALOG_TOTAL_TTL_MS });
+    return value;
+  } catch (err) {
+    console.warn('[tenant-library-loaders] fetchTenantCatalogTotal failed, serving stale or 0:', err);
+    if (cached) return cached.value;
+    return 0;
+  }
+}
