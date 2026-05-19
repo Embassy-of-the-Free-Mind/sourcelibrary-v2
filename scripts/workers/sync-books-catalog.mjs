@@ -122,15 +122,21 @@ const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
 
-// Sync all visible books (not just those with pages) — browse/language pages need all of them
-let query = { visible: true };
+// Sync books to Supabase.
+//   FULL_MODE: only visible books (cleanup handles the rest)
+//   incremental: any book changed since last sync, regardless of visibility,
+//                so hides propagate (transformBook writes visible:false)
+let query;
 
-if (!FULL_MODE) {
+if (FULL_MODE) {
+  query = { visible: true };
+} else {
   const lastSync = await getLastSyncTime();
   if (lastSync) {
-    query.updated_at = { $gt: lastSync };
-    console.log(`Incremental from: ${lastSync.toISOString()}`);
+    query = { updated_at: { $gt: lastSync } };
+    console.log(`Incremental from: ${lastSync.toISOString()} (visibility changes included)`);
   } else {
+    query = { visible: true };
     console.log('No existing data — doing full sync');
   }
 }
@@ -224,20 +230,43 @@ if (FULL_MODE && synced > 0) {
       if (data.length < 1000) break;
     }
 
+    // Split stale into HIDE (exists in Mongo but visible:false) vs DELETE (no Mongo record).
+    // The incremental sync handles hides, but full-mode also enforces parity for any rows
+    // it might have missed (e.g., a hide that happened during the sync window).
     const stale = sbIds.filter(id => !visibleIds.has(id));
+    const mongoStaleDocs = stale.length > 0
+      ? await db.collection('books').find(
+          { id: { $in: stale } },
+          { projection: { id: 1 } }
+        ).toArray()
+      : [];
+    const mongoStaleSet = new Set(mongoStaleDocs.map(d => d.id));
+    const toHide = stale.filter(id => mongoStaleSet.has(id));
+    const toDelete = stale.filter(id => !mongoStaleSet.has(id));
 
-    // Safety cap: never delete more than 50 rows or 1% of Supabase total
-    const maxDelete = Math.max(50, Math.floor(sbIds.length * 0.01));
-    if (stale.length > maxDelete) {
-      console.warn(`[${new Date().toISOString()}] books_catalog: SKIPPING cleanup — ${stale.length} stale rows exceeds safety cap of ${maxDelete}. Investigate before running manually.`);
-    } else if (stale.length > 0) {
+    // Safety cap on DELETE only: hides are non-destructive (row preserved, visible flipped).
+    // Cap is max(100, 5% of Supabase total) — generous enough to keep up with routine churn.
+    const maxDelete = Math.max(100, Math.floor(sbIds.length * 0.05));
+    if (toDelete.length > maxDelete) {
+      console.warn(`[${new Date().toISOString()}] books_catalog: SKIPPING delete — ${toDelete.length} truly-orphaned rows exceeds safety cap of ${maxDelete}. Investigate before running scripts/output/_tmp-supabase-drift-cleanup.mjs manually.`);
+    } else if (toDelete.length > 0) {
       let deleted = 0;
-      for (let i = 0; i < stale.length; i += 100) {
-        const batch = stale.slice(i, i + 100);
+      for (let i = 0; i < toDelete.length; i += 100) {
+        const batch = toDelete.slice(i, i + 100);
         const { error } = await supabase.from('books_catalog').delete().in('id', batch);
         if (!error) deleted += batch.length;
       }
-      console.log(`[${new Date().toISOString()}] books_catalog: cleaned ${deleted} stale rows (cursor: ${cursorCount}, expected: ${expectedCount})`);
+      console.log(`[${new Date().toISOString()}] books_catalog: deleted ${deleted} orphan rows (no Mongo record)`);
+    }
+
+    if (toHide.length > 0) {
+      let hidden = 0;
+      for (let i = 0; i < toHide.length; i += 100) {
+        const batch = toHide.slice(i, i + 100);
+        const { error } = await supabase.from('books_catalog').update({ visible: false }).in('id', batch);
+        if (!error) hidden += batch.length;
+      }
+      console.log(`[${new Date().toISOString()}] books_catalog: marked ${hidden} rows visible:false (hidden in Mongo)`);
     }
   }
 }

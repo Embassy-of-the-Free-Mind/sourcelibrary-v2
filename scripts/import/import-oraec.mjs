@@ -297,10 +297,37 @@ async function main() {
       continue;
     }
 
+    // Atomic-by-construction: insert page FIRST, then book.
+    // If the page insert fails, no book is created (no orphan with 0 pages).
+    // If the book insert fails after the page is in, the orphan page is harmless
+    // (no book references it) and gets cleaned up by the standard page sweeper.
+    // We also defensively roll back if the book insert fails.
+    const bookId = new ObjectId();
+    const bookIdStr = bookId.toHexString();
+    const pageId = new ObjectId();
+
     try {
-      const bookId = new ObjectId();
-      const bookIdStr = bookId.toHexString();
       const slug = await generateSlug(db, title);
+
+      const pageDoc = {
+        _id: pageId,
+        id: pageId.toHexString(),
+        tenant_id: 'default',
+        book_id: bookIdStr,
+        page_number: 1,
+        photo: null,
+        thumbnail: null,
+        ocr: { data: ocrText, model: 'oraec-corpus', updated_at: new Date() },
+        translation: {
+          data: translationText,
+          model: 'oraec-corpus-de',
+          language: 'de',
+          updated_at: new Date(),
+        },
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
+      await db.collection('pages').insertOne(pageDoc);
 
       const bookDoc = {
         _id: bookId,
@@ -335,7 +362,6 @@ async function main() {
           author: { source: 'oraec', method: 'import', confidence: 0.8, date: new Date() },
           language: { source: 'oraec', method: 'import', confidence: 1.0, date: new Date() },
         },
-        // ORAEC metadata
         oraec_id: oraecId,
         oraec_object_type: objectType,
         oraec_period: period,
@@ -360,35 +386,13 @@ async function main() {
         updated_at: new Date(),
       };
 
-      await db.collection('books').insertOne(bookDoc);
-
-      // Create single page with OCR + translation
-      const pageId = new ObjectId();
-      const pageDoc = {
-        _id: pageId,
-        id: pageId.toHexString(),
-        tenant_id: 'default',
-        book_id: bookIdStr,
-        page_number: 1,
-        // No photo — these are text-only digital editions
-        photo: null,
-        thumbnail: null,
-        ocr: {
-          data: ocrText,
-          model: 'oraec-corpus',
-          updated_at: new Date(),
-        },
-        translation: {
-          data: translationText,
-          model: 'oraec-corpus-de',
-          language: 'de',
-          updated_at: new Date(),
-        },
-        created_at: new Date(),
-        updated_at: new Date(),
-      };
-
-      await db.collection('pages').insertOne(pageDoc);
+      try {
+        await db.collection('books').insertOne(bookDoc);
+      } catch (bookErr) {
+        // Roll back the orphan page so we don't litter the pages collection
+        await db.collection('pages').deleteOne({ _id: pageId }).catch(() => {});
+        throw bookErr;
+      }
 
       imported++;
       totalSentences += contentSentences.length;

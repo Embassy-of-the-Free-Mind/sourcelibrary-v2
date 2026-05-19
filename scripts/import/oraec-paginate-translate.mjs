@@ -108,8 +108,14 @@ async function processBook(db, bookId) {
     return;
   }
 
-  // Delete the old single page
-  await db.collection('pages').deleteOne({ _id: sourcePage._id });
+  // Park the old single page on a temp book_id so the new pages can use page_number: 1,2,...
+  // The book remains pointing at the new pages by book_id. We delete the parked page only
+  // after the new pages are fully written — this prevents a 0-pages book if we crash.
+  const tempBookId = `__paginate_temp_${bid}_${Date.now()}`;
+  await db.collection('pages').updateOne(
+    { _id: sourcePage._id },
+    { $set: { book_id: tempBookId } }
+  );
 
   // Create new pages with English translation
   let totalTranslated = 0;
@@ -163,6 +169,9 @@ async function processBook(db, bookId) {
     process.stdout.write(`  [${pageNum}/${numPages}] sentences ${start + 1}-${end} ✓\n`);
   }
 
+  // Now that new pages are written, delete the parked old page.
+  await db.collection('pages').deleteOne({ _id: sourcePage._id });
+
   // Update book counts
   await db.collection('books').updateOne(
     { _id: book._id },
@@ -178,11 +187,24 @@ async function processBook(db, bookId) {
   console.log(`  Done: ${numPages} pages, ${totalTranslated} sentences translated to English`);
 }
 
+async function sweepStaleTempPages(db) {
+  // Clean up pages parked on temp book_ids from crashed prior runs.
+  const sweep = await db.collection('pages').deleteMany(
+    { book_id: { $regex: /^__paginate_temp_/ } }
+  );
+  if (sweep.deletedCount > 0) {
+    console.log(`Swept ${sweep.deletedCount} stale paginate-temp pages from prior crashes`);
+  }
+}
+
 async function main() {
   const client = new MongoClient(MONGODB_URI, { serverSelectionTimeoutMS: 30000 });
   await client.connect();
   const db = client.db('bookstore');
   console.log('Connected to MongoDB');
+
+  // Clean up any temp pages left from prior crashed runs before starting.
+  await sweepStaleTempPages(db);
 
   if (BOOK_ID) {
     await processBook(db, BOOK_ID);
