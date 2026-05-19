@@ -297,8 +297,12 @@ export default function SharedLibraryView({
         </div>
       )}
 
-      {/* Contributing Libraries (for IA and similar aggregators — hide for BPH since it IS the library) */}
-      {contributingLibraries.length > 0 && !isBph && (
+      {/* Contributing Libraries — only meaningful for aggregator tenants
+          (Internet Archive, Gallica, etc). Single-institution tenants (BPH,
+          Kloss, future partners) get an "Institution + Unknown" pair that
+          adds noise without insight. Show only when there are >=3 distinct
+          contributors. */}
+      {contributingLibraries.length >= 3 && !isBph && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex items-center gap-2 mb-4">
