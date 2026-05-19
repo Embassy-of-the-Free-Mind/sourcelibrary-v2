@@ -32,8 +32,8 @@ export default function FoundingDonorsPage() {
         </p>
 
         <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mb-6">
-          The first Renaissance was triggered by translation. <br className="hidden md:block" />
-          The next one will be too.
+          The first Renaissance was sparked by translations of ancient wisdom. <br className="hidden md:block" />
+          We are preparing for a second Renaissance.
         </h2>
 
         <div className="space-y-5 font-body text-lg text-secondary leading-relaxed">
@@ -42,15 +42,7 @@ export default function FoundingDonorsPage() {
             from Greek into Latin. Yet the Renaissance itself was mostly written in Latin
             &mdash; and less than <strong>3%</strong> has ever been translated into English.
             The same is true across Egyptian, Chinese, Sanskrit, Arabic, Hebrew, and a dozen
-            other traditions. The wisdom is preserved. It is not accessible.
-          </p>
-
-          <p>
-            Source Library uses AI to translate these texts at unprecedented scale and cost.
-            Our pipeline reads every page in its original language, translates it into English,
-            and presents the translation alongside the original scan &mdash; so scholars can
-            verify every line. The library is free to read, free to cite, and connected via
-            API and MCP to the AI systems that will read alongside us.
+            other traditions. We want to make lost knowledge accessible to all.
           </p>
 
           <p className="text-primary font-semibold text-xl">
@@ -74,27 +66,29 @@ export default function FoundingDonorsPage() {
         {/* ── Traction ── */}
         <h3 className="font-serif text-2xl text-primary pt-12 mb-6">Where we are today</h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-          {/* Stats last verified 2026-05-19 — refresh quarterly from the live DB */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+          {/* Stats last verified 2026-05-19 — refresh quarterly from the live DB.
+              Labels intentionally kept to 2-3 words so cards render at consistent height. */}
           {[
             { number: '44,000+', label: 'Books catalogued' },
-            { number: '10,000+', label: 'Books translated to English' },
-            { number: '5,000+', label: 'First-ever English translations' },
-            { number: '6M+', label: 'Pages stored & searchable' },
-            { number: '12+', label: 'Source languages (Latin, Greek, Chinese, Sanskrit, Arabic, Hebrew, Egyptian, &hellip;)' },
-            { number: '< 5,000', label: 'Perseus + Loeb + Sacred-texts combined' },
+            { number: '10,000+', label: 'Books translated' },
+            { number: '5,000+', label: 'First-ever in English' },
+            { number: '6M+', label: 'Pages searchable' },
+            { number: '12+', label: 'Source languages' },
+            { number: 'Free', label: 'Open access, forever' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white rounded-xl p-5 border border-primary/10">
+            <div key={stat.label} className="bg-white rounded-xl p-5 border border-primary/10 flex flex-col justify-center min-h-[96px]">
               <div className="text-2xl md:text-3xl text-accent-rust font-light mb-1">
                 {stat.number}
               </div>
-              <div className="text-muted text-sm" dangerouslySetInnerHTML={{ __html: stat.label }} />
+              <div className="text-muted text-sm">{stat.label}</div>
             </div>
           ))}
         </div>
 
         <p className="font-body text-lg text-secondary leading-relaxed">
-          Larger than every comparable platform combined &mdash; and free.
+          Latin, Greek, Chinese, Sanskrit, Arabic, Hebrew, Egyptian, and more &mdash; larger
+          than Perseus, Loeb, and Sacred-Texts combined, and free.
         </p>
 
         {/* ── The Opportunity ── */}
@@ -212,8 +206,8 @@ export default function FoundingDonorsPage() {
 
           <p>
             Founded by <strong>James Derek Lomas, PhD</strong> (TU Delft), following his work
-            preparing the first English translation of Marsilio Ficino&rsquo;s{' '}
-            <em>Liber de Voluptate</em> (1457) for the Embassy.
+            preparing the first English translation of Ficino&rsquo;s Latin{' '}
+            <em>De Mysteriis</em> (Iamblichus, 1497) for the Embassy.
           </p>
 
           <p className="font-semibold text-primary">
