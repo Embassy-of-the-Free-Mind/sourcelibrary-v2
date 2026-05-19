@@ -133,15 +133,26 @@ export default function FoundingDonorsPage() {
             or +31&nbsp;6&nbsp;3404&nbsp;5748. I read every message myself.
           </p>
 
-          <p className="mb-2">
+          <p className="mb-4">
             With gratitude,
           </p>
-          <p className="mb-1">
-            <strong className="text-primary font-serif text-lg">James Derek Lomas, PhD</strong>
-          </p>
-          <p className="text-muted text-sm tracking-wide">
-            Founder, Source Library &middot; Embassy of the Free Mind
-          </p>
+          <div className="flex items-center gap-4">
+            <img
+              src="/founder-derek.jpg"
+              alt="James Derek Lomas, PhD — Founder, Source Library"
+              width={72}
+              height={72}
+              className="w-[72px] h-[72px] rounded-full object-cover border border-primary/15 shadow-sm shrink-0"
+            />
+            <div>
+              <div className="text-primary font-serif text-lg font-semibold leading-tight">
+                James Derek Lomas, PhD
+              </div>
+              <div className="text-muted text-sm tracking-wide mt-1">
+                Founder, Source Library &middot; Embassy of the Free Mind
+              </div>
+            </div>
+          </div>
 
           <p className="mt-10 text-sm text-muted leading-relaxed border-t border-primary/10 pt-6">
             Source Library is an initiative of the Embassy of the Free Mind (Stichting Het
