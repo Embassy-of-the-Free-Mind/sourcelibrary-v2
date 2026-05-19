@@ -208,8 +208,28 @@ function getCorsHeaders(origin: string): Record<string, string> {
   };
 }
 
+// OG share card rotation. The four named variants live under public/.
+// Day-of-year mod 4 picks one — every link share gets a different look as
+// the week progresses, but a given calendar day is deterministic so the
+// crawler caches stay consistent within a day.
+const OG_VARIANTS = ['cosmological', 'zodiac', 'illuminated', 'arcani'] as const;
+
+function pickOgVariantForToday(now: Date = new Date()): string {
+  const dayOfYear = Math.floor((now.getTime() - Date.UTC(now.getUTCFullYear(), 0, 0)) / 86400000);
+  return OG_VARIANTS[dayOfYear % OG_VARIANTS.length];
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Rewrite /og-image.jpg → /og-image-{variant}.jpg based on day of year.
+  // Must come before any DB work since this fires on every OG crawl.
+  if (pathname === '/og-image.jpg') {
+    const url = request.nextUrl.clone();
+    url.pathname = `/og-image-${pickOgVariantForToday()}.jpg`;
+    return NextResponse.rewrite(url);
+  }
+
   let cachedDbPromise: ReturnType<typeof getDb> | null = null;
 
   function getDbCached() {
@@ -680,5 +700,10 @@ export { proxy as middleware };
 
 export const config = {
   // Match all paths except static files
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)',
+    // OG share-card daily rotation — middleware must see this path even
+    // though it ends in .jpg (the default matcher above excludes dotted paths).
+    '/og-image.jpg',
+  ],
 };
