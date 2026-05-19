@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import InputWidget from '@/components/InputWidget';
 
 export const metadata: Metadata = {
   title: 'Founding Donors - Source Library',
   description:
-    'Join Source Library as a founding donor. Help translate 100,000 rare historical texts into English — the entire digitized Renaissance.',
+    'Join Source Library as a founding donor. Help build a world-class institution making the ancient wisdom of every civilization accessible to people and AI.',
   robots: { index: false }, // internal page, not indexed
 };
 
@@ -31,47 +32,63 @@ export default function FoundingDonorsPage() {
         </p>
 
         <h2 className="font-serif text-3xl md:text-4xl text-primary leading-snug mb-6">
-          95% of what the Renaissance wrote has never been translated.
+          The first Renaissance was triggered by translation. <br className="hidden md:block" />
+          The next one will be too.
         </h2>
 
         <div className="space-y-5 font-body text-lg text-secondary leading-relaxed">
           <p>
-            Thousands of books on alchemy, natural philosophy, and the origins of modern
-            science sit in European libraries &mdash; digitized but unreadable, locked behind
-            Latin, German, and Greek. The books that inspired Copernicus and shaped
-            Newton&rsquo;s thinking are inaccessible to virtually everyone alive today.
+            The first Renaissance began when Plato and Hermes Trismegistus were translated
+            from Greek into Latin. Yet the Renaissance itself was mostly written in Latin
+            &mdash; and less than <strong>3%</strong> has ever been translated into English.
+            The same is true across Egyptian, Chinese, Sanskrit, Arabic, Hebrew, and a dozen
+            other traditions. The wisdom is preserved. It is not accessible.
           </p>
 
           <p>
             Source Library uses AI to translate these texts at unprecedented scale and cost.
             Our pipeline reads every page in its original language, translates it into English,
             and presents the translation alongside the original scan &mdash; so scholars can
-            verify every line.
+            verify every line. The library is free to read, free to cite, and connected via
+            API and MCP to the AI systems that will read alongside us.
           </p>
 
           <p className="text-primary font-semibold text-xl">
-            Cost per book: $1.54. A professional translator charges $15,000&ndash;$50,000.
+            Direct AI translation cost: $1.54 per book. A professional translator charges $15,000&ndash;$50,000.
           </p>
         </div>
+
+        {/* ── Founder Quote ── */}
+        <blockquote className="mt-10 mb-2 pl-6 border-l-4 border-accent-rust">
+          <p className="font-serif italic text-lg md:text-xl text-primary leading-relaxed">
+            &ldquo;We always say here &lsquo;go back to the source&rsquo; &mdash;{' '}
+            <em>ad fontes</em> in Latin. When you go back deeper and further, then you come
+            to the ancient sources and you even become part of the source. Then you can be
+            the source. That&rsquo;s where the magic happens.&rdquo;
+          </p>
+          <footer className="mt-3 text-sm tracking-wide uppercase text-muted">
+            &mdash; Joost Ritman, Founder, Bibliotheca Philosophica Hermetica
+          </footer>
+        </blockquote>
 
         {/* ── Traction ── */}
         <h3 className="font-serif text-2xl text-primary pt-12 mb-6">Where we are today</h3>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-          {/* Stats last verified 2026-04-12 */}
+          {/* Stats last verified 2026-05-19 — refresh quarterly from the live DB */}
           {[
-            { number: '10,000+', label: 'Books in collection' },
-            { number: '10,000+', label: 'Books fully translated' },
-            { number: '3M+', label: 'Pages translated' },
-            { number: '100+', label: 'Source languages' },
+            { number: '44,000+', label: 'Books catalogued' },
+            { number: '10,000+', label: 'Books translated to English' },
+            { number: '5,000+', label: 'First-ever English translations' },
+            { number: '6M+', label: 'Pages stored & searchable' },
+            { number: '12+', label: 'Source languages (Latin, Greek, Chinese, Sanskrit, Arabic, Hebrew, Egyptian, &hellip;)' },
             { number: '< 5,000', label: 'Perseus + Loeb + Sacred-texts combined' },
-            { number: 'Free', label: 'Open access to all' },
           ].map((stat) => (
             <div key={stat.label} className="bg-white rounded-xl p-5 border border-primary/10">
               <div className="text-2xl md:text-3xl text-accent-rust font-light mb-1">
                 {stat.number}
               </div>
-              <div className="text-muted text-sm">{stat.label}</div>
+              <div className="text-muted text-sm" dangerouslySetInnerHTML={{ __html: stat.label }} />
             </div>
           ))}
         </div>
@@ -85,13 +102,24 @@ export default function FoundingDonorsPage() {
 
         <div className="space-y-5 font-body text-lg text-secondary leading-relaxed">
           <p>
-            150,000&ndash;250,000 premodern books are already digitized in European research
-            libraries via IIIF, waiting to be translated. The technology exists. The pipeline
-            works. The unit economics are proven.
+            Hundreds of thousands of premodern books are already digitized across the
+            world&rsquo;s research libraries via IIIF, waiting to be translated. The technology
+            exists. The pipeline works. The unit economics are proven. Two seed donors funded
+            the proof of concept &mdash; 10,000 books translated, 5,000 of them for the first
+            time in history.
+          </p>
+
+          <p>
+            We are now opening a <strong>founding-donor circle of 10&ndash;50 people</strong>{' '}
+            to build Source Library into a world-class institution &mdash; a permanent home
+            for the stewardship of ancient wisdom, from books to oral histories to
+            archaeological expeditions.
           </p>
 
           <p className="text-primary font-semibold text-xl">
-            $250K translates 100,000 books by June &mdash; essentially the entire digitized Renaissance.
+            We are raising <span className="text-accent-rust">$10 million over 5 years</span>{' '}
+            to translate 250,000 books, scan 50,000 more, build a global library
+            partnership network, and convene the world&rsquo;s scholars of ancient wisdom.
           </p>
         </div>
 
@@ -110,9 +138,10 @@ export default function FoundingDonorsPage() {
               {[
                 ['$1,000', '650 books translated \u2014 more than the entire Loeb Classical Library'],
                 ['$10,000', 'One month of full-scale operations'],
-                ['$50,000', '3 months of scaling + first editorial hire'],
-                ['$100,000', '10,000 \u2192 50,000 translated texts'],
-                ['$250,000', '100,000 translated texts by June \u2014 the entire digitized Renaissance'],
+                ['$50,000', 'A full language program \u2014 e.g., a Sanskrit or Arabic corpus'],
+                ['$100,000', 'One year of a scholar-in-residence and a named translation series'],
+                ['$250,000', 'Three years of operations \u2014 or 60,000 books translated'],
+                ['$1,000,000', 'Founding Visionary \u2014 one of 10 named pillars of the institution'],
               ].map(([gift, impact]) => (
                 <tr key={gift} className="border-b border-primary/10">
                   <td className="py-3 pr-6 font-semibold text-accent-rust whitespace-nowrap">{gift}</td>
@@ -129,8 +158,13 @@ export default function FoundingDonorsPage() {
         <div className="space-y-4">
           {[
             {
+              tier: 'Founding Visionary',
+              range: '$1,000,000+',
+              perks: 'One of 10 named pillars of the institution. Permanent recognition on every translated work in a chosen language or tradition. Advisory Board seat, annual private convening at the BPH, multi-year stewardship.',
+            },
+            {
               tier: 'Patron of the Renaissance',
-              range: '$100,000+',
+              range: '$100,000–$999,999',
               perks: 'Named translation series, Advisory Board seat, private BPH tour (20 guests), logo on site',
             },
             {
@@ -216,6 +250,10 @@ export default function FoundingDonorsPage() {
           <p>derek@sourcelibrary.org &middot; +31-6-3404-5748</p>
           <p>sourcelibrary.org</p>
         </div>
+
+        {/* Page-scoped review widget. Hidden by default in production;
+            activates on any URL with ?getinput so reviewers can edit copy inline. */}
+        <InputWidget allowedHosts={["localhost", "vercel.app"]} />
 
       </div>
     </ContentPageLayout>
