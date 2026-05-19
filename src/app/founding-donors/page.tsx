@@ -313,16 +313,12 @@ export default function FoundingDonorsPage() {
       {/* ───────────── INSTITUTIONAL HOME ───────────── */}
       <section className="mt-24 max-w-[68ch] font-body text-base text-secondary leading-relaxed border-t border-primary/10 pt-10">
         <h2 className="font-serif text-2xl text-primary mb-6">About the founder</h2>
-        <p className="mb-5">
+        <p>
           Derek Lomas (PhD, TU Delft) founded Source Library following his work preparing
           the first English translation of Ficino&rsquo;s Latin <em>De Mysteriis</em>{' '}
-          (Iamblichus, 1497) for the Embassy of the Free Mind. He has spent two decades
-          building tools at the intersection of education, AI, and meaning &mdash; previously
-          at PlayPower Labs and Stanford&rsquo;s Lemann Center.
-        </p>
-        <p>
-          He works alongside the Embassy&rsquo;s team and the Ritman family, who have been
-          stewards of the Bibliotheca Philosophica Hermetica since 1957.
+          (Iamblichus, 1497) for the Embassy of the Free Mind. He works alongside the
+          Embassy&rsquo;s team and the Ritman family, who have been stewards of the
+          Bibliotheca Philosophica Hermetica since 1957.
         </p>
       </section>
 
