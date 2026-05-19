@@ -666,40 +666,41 @@ export default function BrandPage() {
             Share cards, browser identity (favicon, Apple touch icon), and the platforms where Source Library shows up.
           </p>
 
-          {/* Open Graph share card */}
+          {/* Open Graph share cards */}
           <div className="mb-12">
-            <h3 className="text-lg font-semibold text-stone-800 mb-1">Open Graph share card</h3>
+            <h3 className="text-lg font-semibold text-stone-800 mb-1">Open Graph share cards</h3>
             <p className="text-sm text-stone-500 mb-4">
               The image that appears when a Source Library link is shared on Twitter/X, LinkedIn, Slack, iMessage, Facebook, Discord, etc.
               Configured in <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">src/app/layout.tsx</code> (<code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">openGraph.images</code> and <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">twitter.images</code>).
               Dimensions: 1200&times;630 (the OG / Twitter <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">summary_large_image</code> standard).
+              Four variants share the same headline and typography; the background is drawn from a different scene of the hero video each time.
             </p>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <div className="rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/og-image.jpg" alt="Source Library Open Graph share card" className="w-full block" />
+            <div className="grid md:grid-cols-2 gap-6 mb-4">
+              {[
+                { file: 'og-image-cosmological.jpg', label: 'Cosmological diagram', desc: 'Concentric planetary rings with geometric letter labels' },
+                { file: 'og-image-zodiac.jpg', label: 'Astrolabe / zodiac wheel', desc: 'Sun in center, zodiac signs around' },
+                { file: 'og-image-illuminated.jpg', label: 'Illuminated cross & rose', desc: 'Rosicrucian iconography on deep-blue manuscript page' },
+                { file: 'og-image-arcani.jpg', label: 'Arcani Consilii Apparatio', desc: 'Renaissance illustrated double-page, classical architecture' },
+              ].map(v => (
+                <div key={v.file}>
+                  <div className="rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`/${v.file}`} alt={`Source Library OG share card — ${v.label}`} className="w-full block" />
+                  </div>
+                  <div className="mt-2 flex items-center justify-between text-sm">
+                    <div>
+                      <p className="text-stone-700 font-medium">{v.label}</p>
+                      <p className="text-xs text-stone-500">{v.desc}</p>
+                    </div>
+                    <a href={`/${v.file}`} download className="text-xs text-stone-400 hover:text-accent-rust shrink-0 ml-3">Download</a>
+                  </div>
                 </div>
-                <div className="mt-2 flex items-center justify-between text-sm">
-                  <span className="text-stone-500">og-image.jpg &middot; 1200&times;630</span>
-                  <a href="/og-image.jpg" download className="text-xs text-stone-400 hover:text-accent-rust">Download</a>
-                </div>
-              </div>
-              <div>
-                <div className="rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/og-poster.jpg" alt="Source Library hero poster (no text)" className="w-full block" />
-                </div>
-                <div className="mt-2 flex items-center justify-between text-sm">
-                  <span className="text-stone-500">og-poster.jpg &middot; background only (no text)</span>
-                  <a href="/og-poster.jpg" download className="text-xs text-stone-400 hover:text-accent-rust">Download</a>
-                </div>
-              </div>
+              ))}
             </div>
-            <p className="text-xs text-stone-400 mt-3">
-              Per-section OG cards (e.g. for collections and topics) are generated dynamically via Next.js{' '}
-              <code className="bg-stone-100 px-1 rounded">opengraph-image.tsx</code> route handlers.
-            </p>
+            <div className="bg-stone-100 border border-stone-200 rounded-lg p-4 text-sm text-stone-600">
+              <p className="mb-1"><strong className="text-stone-800">Regenerating:</strong> the four variants are produced by <code className="text-xs bg-white px-1 rounded">scripts/one-off/generate-og-images.mjs</code>, which composites the Source Library wordmark + Beta sup, Playfair Display headline, Newsreader subhead, and Inter footer URL over each hero-video frame.</p>
+              <p>Per-section OG cards for collections and topics are generated dynamically at request time via Next.js <code className="text-xs bg-white px-1 rounded">opengraph-image.tsx</code> route handlers.</p>
+            </div>
           </div>
 
           {/* Browser identity */}
