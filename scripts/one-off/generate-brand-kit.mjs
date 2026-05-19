@@ -24,6 +24,20 @@ const configs = {
         </span>
       </div>`,
   },
+  'logo-full-beta': {
+    desc: 'Full logo with Beta superscript (matches live site header)',
+    html: (fg, bg) => `
+      <div class="logo" style="background:${bg};padding:24px;display:inline-flex;align-items:center;gap:12px;">
+        <svg style="width:48px;height:48px;" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="${fg}" stroke-width="1"/>
+          <circle cx="12" cy="12" r="7" stroke="${fg}" stroke-width="1"/>
+          <circle cx="12" cy="12" r="4" stroke="${fg}" stroke-width="1"/>
+        </svg>
+        <span class="wm" style="color:${fg};">
+          <span style="font-weight:600;">Source</span><span style="font-weight:300;">Library</span><sup style="font-size:0.6em;font-weight:300;letter-spacing:normal;text-transform:none;margin-left:0.25em;opacity:0.8;position:relative;top:-0.5em;">Beta</sup>
+        </span>
+      </div>`,
+  },
   'logo-compact': {
     desc: 'Compact logo: icon + wordmark, tighter',
     html: (fg, bg) => `
@@ -75,10 +89,10 @@ const configs = {
 };
 
 const schemes = {
-  'white-on-dark':  { fg: 'white',   bg: '#1a1a1a', invertForTrace: true },
-  'black-on-white': { fg: '#1a1a1a', bg: 'white',   invertForTrace: false },
+  'white-on-dark':  { fg: 'white',   bg: '#1a1612', invertForTrace: true },
+  'black-on-white': { fg: '#1a1612', bg: 'white',   invertForTrace: false },
   'white-on-transparent': { fg: 'white',   bg: 'transparent', invertForTrace: true,  transparentBg: true },
-  'black-on-transparent': { fg: '#1a1a1a', bg: 'transparent', invertForTrace: false, transparentBg: true },
+  'black-on-transparent': { fg: '#1a1612', bg: 'transparent', invertForTrace: false, transparentBg: true },
 };
 
 const pngSizes = [32, 48, 64, 96, 128, 192, 256, 512];
@@ -92,7 +106,7 @@ await page.setViewport({ width: 800, height: 400, deviceScaleFactor: 8 });
 await page.setContent(`
   <html>
   <head>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Cormorant+Garamond:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
       * { margin: 0; padding: 0; }
       body { background: transparent; }
@@ -211,6 +225,8 @@ Heights: ${pngSizes.join(', ')}px. Naming: \`{config}--{scheme}--{height}h.png\`
 |----------|-----------------|
 | Website header (dark bg) | \`svg/logo-full--white-on-dark.svg\` |
 | Website header (light bg) | \`svg/logo-full--black-on-white.svg\` |
+| Beta-branded header (dark bg) | \`svg/logo-full-beta--white-on-dark.svg\` |
+| Beta-branded header (light bg) | \`svg/logo-full-beta--black-on-white.svg\` |
 | Favicon | \`png/icon-only--black-on-white--32h.png\` |
 | Social media avatar | \`png/icon-only--white-on-dark--512h.png\` |
 | Social media banner | \`png/logo-full--white-on-dark--512h.png\` |
@@ -222,19 +238,69 @@ Heights: ${pngSizes.join(', ')}px. Naming: \`{config}--{scheme}--{height}h.png\`
 
 ## Brand Colors
 
-| Name | Hex | Usage |
-|------|-----|-------|
-| Dark | \`#1a1a1a\` | Backgrounds, dark text |
-| White | \`#ffffff\` | Light text, light backgrounds |
-| Amber | \`#d97706\` | Accent (CTAs, highlights) |
+Sourced from \`src/app/globals.css\` (CSS variables under \`:root\`).
+
+### Neutrals
+
+| Name | Hex | Variable | Usage |
+|------|-----|----------|-------|
+| Cream | \`#fdfcf9\` | \`--bg-cream\` | Primary page background |
+| Warm | \`#f5f0e8\` | \`--bg-warm\` | Secondary surface (cards, panels) |
+| Dark | \`#1a1612\` | \`--bg-dark\` / \`--text-primary\` | Dark backgrounds, primary text |
+| White | \`#ffffff\` | — | Light text on dark, light surfaces |
+
+### Accents
+
+| Name | Hex | Variable | Usage |
+|------|-----|----------|-------|
+| Rust | \`#9e4a3a\` | \`--accent-rust\` | Primary CTA, links, key actions |
+| Gold | \`#c9a86c\` | \`--accent-gold\` | Highlights, decorative emphasis |
+| Gold (dark) | \`#9e7c3c\` | \`--accent-gold-dark\` | Gold on light backgrounds |
+| Sage | \`#8b9a7d\` | \`--accent-sage\` | Secondary accents, success-adjacent |
+| Sage (dark) | \`#5e6d52\` | \`--accent-sage-dark\` | Sage on light backgrounds |
+| Violet | \`#7c5db5\` | \`--accent-violet\` | Special-case accent (rarely used) |
+
+### Borders
+
+| Name | Hex | Variable | Usage |
+|------|-----|----------|-------|
+| Border light | \`#e8e4dc\` | \`--border-light\` | Hairlines, subtle dividers |
+| Border medium | \`#d4cfc4\` | \`--border-medium\` | Stronger dividers, card edges |
+
+### Text
+
+| Name | Hex | Variable | Usage |
+|------|-----|----------|-------|
+| Primary | \`#1a1612\` | \`--text-primary\` | Body, headings |
+| Muted | \`#6b6560\` | \`--text-muted\` | Captions, secondary text (5.2:1 on cream) |
+| Faint | \`#8a8480\` | \`--text-faint\` | Tertiary text (4.5:1 on cream) |
 
 ## Typography
 
-- **Font**: Inter (Google Fonts)
-- **"Source"**: Weight 600 (semibold)
-- **"Library"**: Weight 300 (light)
-- **Case**: Uppercase
-- **Tracking**: 0.05em
+The site uses four font families from Google Fonts, each with a distinct role.
+
+| Role | Family | Variable | Weights | Used for |
+|------|--------|----------|---------|----------|
+| Sans | **Inter** | \`--font-sans\` | 300, 400, 500, 600 | UI, navigation, **logo**, buttons, headers |
+| Body serif | **Newsreader** | \`--font-body\` | 400, 500, italic 400/500 (opsz 6–72) | Long-form reading prose, book pages |
+| Display serif | **Cormorant Garamond** | \`--font-serif\` | 400, 500, 600 | Section headings, editorial display |
+| Hero display | **Playfair Display** | \`--font-display\` | 400, 600, 700 | Top-of-page hero titles, large display |
+
+### Logo wordmark specifics
+
+- **Family**: Inter
+- **"Source"**: weight 600 (semibold)
+- **"Library"**: weight 300 (light)
+- **"Beta"** (when shown): weight 300, 0.6em, normal case, tracking-normal, opacity 0.8, vertical offset −0.5em
+- **Case**: uppercase
+- **Tracking**: 0.05em (Tailwind \`tracking-wider\`)
+
+### Script fonts (content, not brand)
+
+Used inside the reader for non-Latin scripts; not part of brand identity:
+
+- **Noto Naskh Arabic** / **Noto Sans Arabic** — Arabic text
+- **Noto Sans Hebrew** / **Noto Rashi Hebrew** — Hebrew text
 `;
 
 fs.writeFileSync(`${OUT}/README.md`, readme);
