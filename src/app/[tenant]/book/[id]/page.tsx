@@ -1057,10 +1057,26 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     <Link
                       key={col.slug}
                       href={`/collections/${col.slug}`}
-                      className="text-xs px-2.5 py-1 rounded-full transition-colors"
-                      style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-tertiary)' }}
+                      className="group inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border transition-colors hover:border-accent-rust/40"
+                      style={{
+                        color: 'var(--text-secondary)',
+                        backgroundColor: 'var(--bg-warm)',
+                        borderColor: 'var(--border-light)',
+                      }}
                     >
-                      {col.name}
+                      {col.color && (
+                        <span
+                          className="inline-block w-1.5 h-1.5 rounded-full shrink-0"
+                          style={{ backgroundColor: col.color }}
+                          aria-hidden
+                        />
+                      )}
+                      <span className="group-hover:text-accent-rust transition-colors">{col.name}</span>
+                      {typeof col.book_count === 'number' && col.book_count > 0 && (
+                        <span className="text-[10px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
+                          {col.book_count}
+                        </span>
+                      )}
                     </Link>
                   ))}
                 </div>
