@@ -62,7 +62,7 @@ export async function GET(
     if (targetType === 'book') {
       const booksData = await db.collection('books').find(
         { id: { $in: targetIds }, tenantId },
-        { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, thumbnail_blob: 1, image_thumb: 1, cover_image: 1 } }
+        { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, thumbnail_blob: 1, image_thumb: 1, cover_image: 1, content_type: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
 
@@ -99,6 +99,7 @@ export async function GET(
             thumbnail: book.cover_image || thumbMap.get(book.id) || book.thumbnail_blob,
             featured_images: gallery,
             likeCount: countMap.get(id) || 1,
+            contentType: book.content_type === 'artwork' ? ('artwork' as const) : ('book' as const),
           };
         })
         .filter(Boolean);
