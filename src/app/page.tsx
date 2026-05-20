@@ -263,9 +263,12 @@ async function getDiscoverBooks(): Promise<Book[]> {
   // $sample FIRST so MongoDB uses fast random cursor (O(1) when size < 5% of collection).
   // $match after $sample filters the random sample down.
   // Over-sample to account for hidden/untranslated books being filtered out.
+  // `pages_translated >= 10` already excludes artworks today (they carry
+  // pages_translated: 0), but the explicit content_type guard makes the
+  // intent obvious and prevents a regression if the pages filter changes.
   const books = await db.collection('books').aggregate([
     { $sample: { size: 200 } },
-    { $match: { visible: true, pages_translated: { $gte: 10 } } },
+    { $match: { visible: true, pages_translated: { $gte: 10 }, content_type: { $ne: 'artwork' } } },
     { $limit: 10 },
     { $project: BOOK_PROJECTION },
   ], { maxTimeMS: 8000 }).toArray();
