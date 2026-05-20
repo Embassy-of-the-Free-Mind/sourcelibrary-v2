@@ -1048,40 +1048,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               </div>
             )}
 
-            {/* Collections — hidden in embed/tenant views since these would jump to the full Source Library */}
-            {embedPolicy.enableBookCollectionNavigation && bookCollections.length > 0 && (
-              <div>
-                <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>Collections</h3>
-                <div className="flex flex-wrap gap-2">
-                  {bookCollections.map(col => (
-                    <Link
-                      key={col.slug}
-                      href={`/collections/${col.slug}`}
-                      className="group inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border transition-colors hover:border-accent-rust/40"
-                      style={{
-                        color: 'var(--text-secondary)',
-                        backgroundColor: 'var(--bg-warm)',
-                        borderColor: 'var(--border-light)',
-                      }}
-                    >
-                      {col.color && (
-                        <span
-                          className="inline-block w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ backgroundColor: col.color }}
-                          aria-hidden
-                        />
-                      )}
-                      <span className="group-hover:text-accent-rust transition-colors">{col.name}</span>
-                      {typeof col.book_count === 'number' && col.book_count > 0 && (
-                        <span className="text-[10px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
-                          {col.book_count}
-                        </span>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Collections — removed pending redesign; see #1910 */}
 
             {/* Related Books — pre-computed, zero extra queries */}
             {embedPolicy.showBookRelatedBooks && book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
@@ -1093,13 +1060,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
       {/* Stats + Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        {/* Section header with Overview link */}
+        {/* Overview link — Pages heading is rendered by PagesGrid */}
         {pages.length > 0 && (
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-              <FileText className="w-4 h-4 inline-block mr-2 -mt-0.5 opacity-60" />
-              Pages
-            </h2>
+          <div className="flex items-center justify-end">
             <Link
               href={`/book/${book.slug || book.id}/overview`}
               className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"
