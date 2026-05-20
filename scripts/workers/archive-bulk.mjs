@@ -39,6 +39,7 @@ const BOOK_LIMIT = parseInt(getArg('limit') || '20', 10);  // Books per cron run
 const BOOK_CONCURRENCY = parseInt(getArg('concurrency') || '2', 10);
 const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10);
 const DRY_RUN = hasFlag('dry-run');
+const TARGET_BOOK_ID = getArg('book-id') || null;  // one-off: archive a single book, bypassing the queue
 const JPEG_QUALITY = 85;
 const MAX_DIMENSION = 3000;
 const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;  // 6h — older sl-bulk-* dirs are leaked, sweep them
@@ -271,18 +272,47 @@ async function processBook(book, db) {
 
     const needsArchiveIds = new Set(pages.map(p => (p.id || p._id.toString())));
     const workItems = [];
+    let skippedNoLeaf = 0;
+    let skippedOutOfRange = 0;
+    let skippedMissingFile = 0;
 
     for (const page of allPages) {
       const pageId = page.id || page._id.toString();
       if (!needsArchiveIds.has(pageId)) continue;
       const photoUrl = page.photo_original || page.photo || '';
+      // IA URLs encode the JP2 leaf as /page/nN. If the page has no photo URL
+      // or a non-IA URL, we can't map it to a JP2 file in the zip.
       const leafMatch = photoUrl.match(/\/page\/n(\d+)/);
-      if (!leafMatch) continue;
+      if (!leafMatch) { skippedNoLeaf++; continue; }
       const leafNum = parseInt(leafMatch[1]);
-      if (leafNum >= pageFiles.length) continue;
+      // JP2 zips for partial scans can be sparser than the page count — leaves
+      // past the zip's end have no source file. Count these so the worker
+      // doesn't silently no-op the whole book.
+      if (leafNum >= pageFiles.length) { skippedOutOfRange++; continue; }
       const srcFile = pageFiles[leafNum];
-      if (!fs.existsSync(srcFile)) continue;
+      if (!fs.existsSync(srcFile)) { skippedMissingFile++; continue; }
       workItems.push({ page, srcFile, format: download.format });
+    }
+
+    const totalSkipped = skippedNoLeaf + skippedOutOfRange + skippedMissingFile;
+    if (totalSkipped > 0) {
+      console.log(`    [SKIP-PAGES] ${totalSkipped}/${pages.length}: ${skippedNoLeaf} no-leaf, ${skippedOutOfRange} leaf-out-of-range (zip has ${pageFiles.length}), ${skippedMissingFile} missing-file`);
+    }
+
+    // If JP2 zip is sparser than the candidate pages (or none match), bulk archive
+    // can't recover this book — route it to per-page IIIF (archive-ocr) by recording
+    // a failure. Without this, the book gets picked again every 20 min and silently
+    // no-ops, wasting the JP2 download.
+    if (workItems.length === 0 && pages.length > 0) {
+      const reason = skippedOutOfRange > 0
+        ? `JP2 zip sparser than page count (${pageFiles.length} leaves, ${pages.length} pages unarchived)`
+        : skippedNoLeaf > 0
+        ? `pages have no /page/nN photo URL (${skippedNoLeaf} of ${pages.length})`
+        : 'no work items after filtering';
+      console.log(`    [FAIL-BOOK] ${reason}`);
+      await recordBulkFailure(db, book, reason);
+      stats.booksFailed++;
+      return;
     }
 
     let workIdx = 0;
@@ -424,9 +454,9 @@ async function main() {
   // Find IA books with pages that may need archiving (regardless of pipeline status).
   // Priority: first translations > non-English > English
   const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
-  const iaBooks = await db.collection('books')
-    .aggregate([
-      { $match: {
+  const matchStage = TARGET_BOOK_ID
+    ? { $match: { id: TARGET_BOOK_ID } }
+    : { $match: {
         pages_count: { $gt: 0 },
         $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
         'archive_metadata.blocked': { $ne: true },
@@ -434,7 +464,10 @@ async function main() {
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
         ],
-      }},
+      }};
+  const iaBooks = await db.collection('books')
+    .aggregate([
+      matchStage,
       { $addFields: {
         _priority: {
           $switch: {
@@ -452,8 +485,10 @@ async function main() {
     ])
     .toArray();
 
-  // Also include warehouse IA books — prioritize likely first translations
-  const warehouseIaBooks = await db.collection('books_warehouse')
+  // Also include warehouse IA books — prioritize likely first translations.
+  // When targeting a single book by --book-id, only the live books collection
+  // is consulted (the live id is the canonical surface).
+  const warehouseIaBooks = TARGET_BOOK_ID ? [] : await db.collection('books_warehouse')
     .aggregate([
       { $match: {
         pages_count: { $gt: 0 },
