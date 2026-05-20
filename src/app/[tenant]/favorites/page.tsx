@@ -8,13 +8,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { likes } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
-
-const VISITOR_ID_KEY = 'sl_visitor_id';
-
-function getVisitorId(): string {
-  if (typeof window === 'undefined') return '';
-  return localStorage.getItem(VISITOR_ID_KEY) || '';
-}
+import { useIdentity } from '@/hooks/useIdentity';
 
 interface FeaturedImage {
   url: string;
@@ -67,6 +61,7 @@ type Tab = 'books' | 'pages' | 'images';
 type Mode = 'popular' | 'mine';
 
 export default function FavoritesPage() {
+  const identity = useIdentity();
   const [tab, setTab] = useState<Tab>('books');
   const [mode, setMode] = useState<Mode>('mine');
 
@@ -87,15 +82,21 @@ export default function FavoritesPage() {
   const [loadingMyPages, setLoadingMyPages] = useState(true);
   const [loadingMyImages, setLoadingMyImages] = useState(true);
 
-  // Load my likes on mount
+  // Load my likes once we know who the user is. `useIdentity` returns
+  // session.user.id for authenticated users and a localStorage v_… id for
+  // anonymous visitors. Reading sl_visitor_id directly here used to silently
+  // skip the fetch right after sign-in, because MigrateOnSignIn clears that
+  // key once it has migrated anonymous likes to the account.
   useEffect(() => {
-    const visitorId = getVisitorId();
-    if (!visitorId) {
+    if (identity.loading) return;
+    if (!identity.id) {
       setLoadingMyBooks(false);
       setLoadingMyPages(false);
       setLoadingMyImages(false);
       return;
     }
+
+    const visitorId = identity.id;
 
     likes.getMine<PopularBook>({ type: 'book', visitorId })
       .then(data => setMyBooks(data.items))
@@ -111,7 +112,7 @@ export default function FavoritesPage() {
       .then(data => setMyImages(data.items))
       .catch(console.error)
       .finally(() => setLoadingMyImages(false));
-  }, []);
+  }, [identity.id, identity.loading]);
 
   // Lazy-load popular data only when switching to that mode
   const loadPopular = useCallback(() => {
