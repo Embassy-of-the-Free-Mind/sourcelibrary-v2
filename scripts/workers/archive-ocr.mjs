@@ -304,6 +304,27 @@ async function main() {
     .toArray()
     .catch(() => []);
 
+  // Bulk-unsuitable IA fallback. archive-bulk marks books bulk_unsuitable when
+  // the JP2 zip doesn't align with the IIIF-derived photo URLs (archive drift,
+  // #1504). Those books can't be archived by bulk; route them here so their
+  // per-page photo URLs get fetched directly. archive.org rate limit (15 req/s)
+  // is in the per-domain table.
+  const bulkUnsuitableIa = await db.collection('books')
+    .find(
+      {
+        pages_count: { $gt: 0 },
+        'archive_metadata.blocked': { $ne: true },
+        'archive_metadata.bulk_unsuitable': true,
+        'image_source.provider': 'internet_archive',
+        ...NEEDS_ARCHIVE_EXPR,
+      },
+      { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
+    )
+    .limit(500)
+    .maxTimeMS(30_000)
+    .toArray()
+    .catch(() => []);
+
   // Sort warehouse: likely first translations first (non-English = likely first)
   const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
   warehouseBooks.sort((a, b) => {
@@ -318,8 +339,8 @@ async function main() {
   // Tag warehouse books so we know which collections to query
   warehouseBooks.forEach(b => { b._warehouse = true; });
 
-  const books = [...priorityBooks, ...otherBooks, ...warehouseBooks];
-  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${otherBooks.length} other + ${warehouseBooks.length} warehouse books`);
+  const books = [...priorityBooks, ...bulkUnsuitableIa, ...otherBooks, ...warehouseBooks];
+  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${bulkUnsuitableIa.length} bulk-unsuitable IA + ${otherBooks.length} other + ${warehouseBooks.length} warehouse books`);
 
   if (books.length === 0) {
     console.log(`[archive-ocr] No books with pages found`);

@@ -300,17 +300,30 @@ async function processBook(book, db) {
     }
 
     // If JP2 zip is sparser than the candidate pages (or none match), bulk archive
-    // can't recover this book — route it to per-page IIIF (archive-ocr) by recording
-    // a failure. Without this, the book gets picked again every 20 min and silently
-    // no-ops, wasting the JP2 download.
+    // can't recover this book. Mark it bulk_unsuitable so we don't re-download the
+    // JP2 every cron round, and let archive-ocr pick it up via per-page IIIF.
     if (workItems.length === 0 && pages.length > 0) {
       const reason = skippedOutOfRange > 0
         ? `JP2 zip sparser than page count (${pageFiles.length} leaves, ${pages.length} pages unarchived)`
         : skippedNoLeaf > 0
         ? `pages have no /page/nN photo URL (${skippedNoLeaf} of ${pages.length})`
         : 'no work items after filtering';
-      console.log(`    [FAIL-BOOK] ${reason}`);
-      await recordBulkFailure(db, book, reason);
+      console.log(`    [FAIL-BOOK] ${reason} — marking bulk_unsuitable, routing to archive-ocr`);
+      await db.collection(booksCol).updateOne(
+        { id: book.id },
+        { $set: {
+          'archive_metadata.bulk_unsuitable': true,
+          'archive_metadata.bulk_unsuitable_at': new Date(),
+          'archive_metadata.bulk_unsuitable_reason': reason,
+          updated_at: new Date(),
+        }, $unset: {
+          // Clear stale bulk_failures so the book isn't double-blocked. The
+          // bulk_unsuitable flag is the new source of truth for "skip in bulk".
+          'archive_metadata.bulk_failures': '',
+          'archive_metadata.bulk_last_error': '',
+          'archive_metadata.bulk_last_failed_at': '',
+        }}
+      );
       stats.booksFailed++;
       return;
     }
@@ -460,6 +473,9 @@ async function main() {
         pages_count: { $gt: 0 },
         $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
         'archive_metadata.blocked': { $ne: true },
+        // bulk_unsuitable books have IA JP2 zips that don't align with photo URLs
+        // (archive drift, #1504) — leave them to archive-ocr's per-page IIIF path.
+        'archive_metadata.bulk_unsuitable': { $ne: true },
         $or: [
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
@@ -494,6 +510,7 @@ async function main() {
         pages_count: { $gt: 0 },
         $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
         'archive_metadata.blocked': { $ne: true },
+        'archive_metadata.bulk_unsuitable': { $ne: true },
         $or: [
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
