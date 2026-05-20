@@ -249,12 +249,18 @@ async function main() {
   // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
   // Prioritize providers that are NOT yet fully archived (IIIF, Cambridge, etc.)
   const PRIORITY_PROVIDERS = ['iiif', 'bsb', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl', 'eap', 'met', 'ndl', 'getty', 'stanford', 'darmstadt'];
+  // Candidate queries filter pages_archived < pages_count: without this they're
+  // dominated by fully-archived books and the per-book inner query returns 0
+  // unarchived pages for nearly every book. Symptom is "Found 6 pages across
+  // 3423 books" while the library has hundreds of thousands of unarchived pages.
+  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] } };
   const priorityBooks = await db.collection('books')
     .find(
       {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $in: PRIORITY_PROVIDERS },
+        ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
@@ -271,6 +277,7 @@ async function main() {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', ...PRIORITY_PROVIDERS] },
+        ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
@@ -288,6 +295,7 @@ async function main() {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $in: HETZNER_SAFE_PROVIDERS },
+        ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1, language: 1, is_first_translation: 1 } }
     )
