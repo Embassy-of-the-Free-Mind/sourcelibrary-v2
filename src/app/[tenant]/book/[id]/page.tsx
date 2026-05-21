@@ -720,7 +720,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 </div>
                 {embedPolicy.showGalleryImages && imageCount > 0 && (
                   <Link
-                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                    href={`/gallery?bookId=${book.id}`}
                     className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
                     title="View identified images in gallery"
                   >
@@ -1014,7 +1014,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
                   </h2>
                   <Link
-                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                    href={`/gallery?bookId=${book.id}`}
                     className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
                   >
                     View All &rarr;
@@ -1027,7 +1027,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     return (
                       <Link
                         key={img.id}
-                        href={`/${tenantSlug}/gallery/image/${img.id}`}
+                        href={`/gallery/image/${img.id}`}
                         className="flex-shrink-0 group"
                       >
                         <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
