@@ -249,10 +249,41 @@ export async function proxy(request: NextRequest) {
           { aliases: slug },
           { slug_aliases: slug },
         ],
+        // `kind: 'source'` rows (internet-archive, gallica, …) are book-metadata
+        // pointers, not real partitions — they must not resolve as tenants.
+        // Rows without a `kind` field continue to match (covers bph, kloss-collection,
+        // default until the migration script tags the source-provider rows).
+        kind: { $ne: 'source' },
         status: { $ne: 'deleted' },
       });
       if (!tenant) return null;
       return { id: tenant.id as string, slug: tenant.slug as string };
+    } catch {
+      return null;
+    }
+  }
+
+  // Source-provider rows in `tenants` (kind: 'source') represent the library
+  // that supplied a book — they are not real partitions. We resolve them
+  // separately so the proxy can 301 in-the-wild `/{provider}/*` URLs to the
+  // global equivalents without ever setting `x-tenant-id`.
+  async function resolveSourceProvider(slug: string): Promise<{ id: string; slug: string } | null> {
+    if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
+      return null;
+    }
+    try {
+      const db = await getDbCached();
+      const row = await db.collection('tenants').findOne({
+        $or: [
+          { slug },
+          { aliases: slug },
+          { slug_aliases: slug },
+        ],
+        kind: 'source',
+        status: { $ne: 'deleted' },
+      });
+      if (!row) return null;
+      return { id: row.id as string, slug: row.slug as string };
     } catch {
       return null;
     }
@@ -263,7 +294,7 @@ export async function proxy(request: NextRequest) {
     try {
       const db = await getDbCached();
       const tenant = await db.collection('tenants').findOne(
-        { id: tenantId, status: { $ne: 'deleted' } },
+        { id: tenantId, kind: { $ne: 'source' }, status: { $ne: 'deleted' } },
         { projection: { slug: 1 } }
       );
       return (tenant?.slug as string) || null;
@@ -463,6 +494,48 @@ export async function proxy(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = `/explore${exploreSuffix}`;
       return NextResponse.redirect(url, 308);
+    }
+  }
+
+  // --- Source-provider slug redirects ---
+  // Slugs like `internet-archive`, `gallica`, `bodleian` once lived in `tenants`
+  // so `/libraries/{slug}` and `/{slug}/gallery` could resolve. They aren't real
+  // partitions — they're book metadata. After demotion (kind: 'source'), redirect
+  // any `/{slug}/*` URL still in the wild to the global equivalent. `/libraries/{slug}`
+  // remains the legitimate per-source landing page.
+  if (pathname !== '/') {
+    const [, sourceFirstSegment, ...sourceRestSegments] = pathname.split('/');
+    if (
+      sourceFirstSegment &&
+      !NON_TENANT_PATHS.has(sourceFirstSegment) &&
+      !sourceFirstSegment.includes('.') &&
+      /^[a-z0-9-]+$/.test(sourceFirstSegment)
+    ) {
+      const sourceProvider = await resolveSourceProvider(sourceFirstSegment);
+      if (sourceProvider) {
+        const url = request.nextUrl.clone();
+        const slug = sourceProvider.slug;
+        const subPath = sourceRestSegments.join('/'); // e.g. 'gallery', 'book/foo', ''
+
+        if (subPath === 'gallery' || subPath.startsWith('gallery/')) {
+          url.pathname = '/gallery';
+          url.searchParams.set('library', slug);
+        } else if (subPath === 'browse' || subPath.startsWith('browse/')) {
+          url.pathname = '/browse';
+          url.searchParams.set('library', slug);
+        } else if (subPath.startsWith('book/')) {
+          // Books are global — strip the source-provider prefix entirely.
+          url.pathname = `/${subPath}`;
+        } else if (subPath === 'collections' || subPath.startsWith('collections/')) {
+          // Collections are global — strip the prefix.
+          url.pathname = `/${subPath}`;
+        } else {
+          // Bare /{slug} or anything else — route to the per-source landing page.
+          url.pathname = `/libraries/${slug}`;
+        }
+
+        return NextResponse.redirect(url, 301);
+      }
     }
   }
 

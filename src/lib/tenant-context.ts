@@ -87,6 +87,9 @@ export async function resolveTenantId(slug: string): Promise<string | null> {
   const db = await getDb();
   const tenant = await db.collection('tenants').findOne({
     slug,
+    // Source-provider rows (kind: 'source') are book metadata, not partitions
+    // — must never resolve as a tenant for API filtering.
+    kind: { $ne: 'source' },
     status: { $ne: 'deleted' },
   });
   const value = tenant ? (tenant.id as string) : null;
