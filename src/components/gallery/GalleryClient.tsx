@@ -53,6 +53,8 @@ interface GalleryClientProps {
     coverImage: { url: string; description: string } | null;
   }>;
   bookCollections?: BookCollectionOption[];
+  /** bookId the SSR payload was pre-filtered on (if any). Used to skip the initial client refetch when the URL filter already matches the SSR result. */
+  initialBookId?: string;
 }
 
 /** Downsize a IIIF URL for gallery thumbnails (400px wide instead of full) */
@@ -85,7 +87,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export default function GalleryClient({ initialData, initialCollections, bookCollections = [] }: GalleryClientProps) {
+export default function GalleryClient({ initialData, initialCollections, bookCollections = [], initialBookId = '' }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -166,10 +168,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     router.push(`${tenantPrefix}/gallery?${params.toString()}`);
   }, [searchParams, router, tenantPrefix]);
 
-  // Fetch gallery data when filters change (resets items) — skip on initial load if no URL filters
+  // Fetch gallery data when filters change (resets items).
+  // Skip on initial load when the SSR payload already matches the URL: no URL
+  // filters at all, OR the URL's bookId equals what the server pre-filtered on
+  // and no other filters are present.
   useEffect(() => {
-    const hasUrlFilters = bookId || collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
-    if (isInitialLoad && !hasUrlFilters) {
+    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId) {
       setIsInitialLoad(false);
       return;
     }

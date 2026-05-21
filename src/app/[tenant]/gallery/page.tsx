@@ -5,18 +5,31 @@ import GalleryClient from '@/components/gallery/GalleryClient';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
 
-export const revalidate = 3600; // ISR: rebuild every hour
+export const revalidate = 3600; // ISR: rebuild every hour (unfiltered landing only)
+
+interface GalleryPageProps {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}
 
 /**
  * Gallery page — server component that fetches initial data from gallery_images
  * and passes it to the client component for instant rendering.
+ *
+ * When `?bookId=` is present we pre-filter on the server so the user sees the
+ * right images on first paint — otherwise the client used to render 24 generic
+ * thumbnails, hydrate, then refetch with the filter (visible flash + wasted
+ * image loads). Accessing searchParams marks the page dynamic for filtered
+ * requests; the unfiltered landing stays ISR-cached.
  */
-export default async function GalleryPage() {
+export default async function GalleryPage({ searchParams }: GalleryPageProps) {
   const h = await headers();
   const tenantId = h.get('x-tenant-id');
+  const params = (await searchParams) ?? {};
+  const bookIdParam = params.bookId ?? params.book;
+  const bookId = typeof bookIdParam === 'string' ? bookIdParam : undefined;
 
   const [initialData, initialCollections, bookCollections] = await Promise.all([
-    fetchInitialGalleryData(tenantId),
+    fetchInitialGalleryData(tenantId, bookId),
     fetchFeaturedCollections(tenantId),
     fetchBookCollections(tenantId),
   ]);
@@ -29,6 +42,7 @@ export default async function GalleryPage() {
           initialData={initialData}
           initialCollections={initialCollections}
           bookCollections={bookCollections}
+          initialBookId={bookId}
         />
       </Suspense>
       <SignUpCTA />
@@ -48,8 +62,10 @@ export default async function GalleryPage() {
 
 /**
  * Fetch first page of gallery data directly from MongoDB (no API roundtrip).
+ * When `bookId` is provided we drop the per-book rank cap so all of that
+ * book's images show up immediately, and we resolve bookInfo for the header.
  */
-async function fetchInitialGalleryData(tenantId: string | null): Promise<GalleryResponse> {
+async function fetchInitialGalleryData(tenantId: string | null, bookId?: string): Promise<GalleryResponse> {
   try {
     const db = await getReadDb();
     const limit = 24;
@@ -73,11 +89,15 @@ async function fetchInitialGalleryData(tenantId: string | null): Promise<Gallery
 
     const filter: Record<string, unknown> = {
       gallery_quality: { $gte: minQuality },
-      book_rank: { $lte: maxPerBook },
       book_visible: true,
       extracted_url: { $ne: null },
       image_url: { $ne: null },
     };
+    if (!bookId) {
+      filter.book_rank = { $lte: maxPerBook };
+    } else {
+      filter.book_id = bookId;
+    }
     if (tenantId) {
       filter.tenantId = tenantId;
     }
@@ -101,13 +121,14 @@ async function fetchInitialGalleryData(tenantId: string | null): Promise<Gallery
       yearResult = [{ minYear: 1400, maxYear: 1900 }];
     }
 
-    const [items, total] = await Promise.all([
+    const [items, total, bookInfo] = await Promise.all([
       db.collection('gallery_images')
         .find(filter, { projection: { _id: 0 } })
         .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
         .limit(limit)
         .toArray(),
       db.collection('gallery_images').countDocuments(filter),
+      bookId ? fetchBookInfoForGallery(db, bookId, tenantId) : Promise.resolve(null),
     ]);
 
     const mappedItems = items.map(doc => ({
@@ -136,7 +157,7 @@ async function fetchInitialGalleryData(tenantId: string | null): Promise<Gallery
       total,
       limit,
       offset: 0,
-      bookInfo: null,
+      bookInfo,
       filters: {
         types: typesResult.map(t => t._id as string).filter(Boolean),
         subjects: subjectsResult.map(s => s._id as string).filter(Boolean),
@@ -153,6 +174,54 @@ async function fetchInitialGalleryData(tenantId: string | null): Promise<Gallery
       bookInfo: null,
       filters: { types: [], subjects: [], yearRange: { minYear: null, maxYear: null } },
     };
+  }
+}
+
+/**
+ * Resolve the bookInfo header shown when the gallery is filtered to one book.
+ * Mirrors the API's getBookInfo so the SSR payload matches the client refetch.
+ */
+async function fetchBookInfoForGallery(
+  db: Awaited<ReturnType<typeof getReadDb>>,
+  bookId: string,
+  tenantId: string | null,
+) {
+  try {
+    const scope = tenantId ? { tenantId } : {};
+    const book = await db.collection('books').findOne(
+      { id: bookId, ...scope },
+      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, pages_count: 1 }, maxTimeMS: 5000 },
+    );
+    if (!book) return null;
+
+    const [hasOcr, hasImages] = await Promise.all([
+      db.collection('pages').countDocuments({
+        ...scope,
+        book_id: bookId,
+        'ocr.data': { $exists: true, $ne: '' },
+      }, { maxTimeMS: 5000 }),
+      db.collection('pages').countDocuments({
+        ...scope,
+        book_id: bookId,
+        'detected_images.0': { $exists: true },
+      }, { maxTimeMS: 5000 }),
+    ]);
+
+    return {
+      id: book.id as string,
+      slug: book.slug as string | undefined,
+      title: (book.display_title || book.title) as string,
+      author: book.author as string | undefined,
+      year: book.year as number | undefined,
+      pagesCount: book.pages_count as number | undefined,
+      hasOcr: hasOcr > 0,
+      ocrPageCount: hasOcr,
+      hasImages: hasImages > 0,
+      imagesPageCount: hasImages,
+    };
+  } catch (error) {
+    console.error('Failed to fetch gallery bookInfo:', error);
+    return null;
   }
 }
 
