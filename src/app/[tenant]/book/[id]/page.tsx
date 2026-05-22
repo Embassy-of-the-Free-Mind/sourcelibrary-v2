@@ -630,20 +630,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
             {/* Details */}
             <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
-              {book.display_title && book.title !== book.display_title && (
-                <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
-              )}
-              {/* Byline: prefer author; fall back to "edited by {editor}" for
-                  magazines / edited volumes / anthologies where the catalogue
-                  has no single author. When both fields are present, show
-                  author with the editor as a secondary credit. See
-                  src/lib/byline.ts for the case-insensitive "Unknown"
-                  placeholder rules shared with cards and citations. */}
+              {/* Bibliographic citation order (Paul Dijstelberge, BPH feedback):
+                  author leads, then title, then impressum. The h1 stays on
+                  title for SEO and visual hierarchy; author renders as the
+                  eyebrow above it. See src/lib/byline.ts for "Unknown" rules. */}
               {(() => {
                 const heroByline = getEffectiveByline(book);
                 return (
-                  <p className="text-lg sm:text-xl text-stone-300 mt-2">
+                  <p className="text-base sm:text-lg text-stone-300 mb-1">
                     {heroByline.role === 'author' ? (
                       embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
                         <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
@@ -654,9 +648,27 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                       <span>edited by <AuthorName author={heroByline.editor} /></span>
                     ) : <AuthorName author={book.author} />}
                     {heroByline.role === 'author' && heroByline.editor && (
-                      <span className="text-stone-400 text-base"> · edited by <AuthorName author={heroByline.editor} /></span>
+                      <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} /></span>
                     )}
                   </p>
+                );
+              })()}
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
+              {book.display_title && book.title !== book.display_title && (
+                <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
+              )}
+              {/* Impressum: "Place: Publisher, Year" — same library-card
+                  format as BphCatalogBrowser.formatImpressum so the book page
+                  and catalogue rows line up. */}
+              {(() => {
+                const place = book.place_published?.trim();
+                const publisher = book.publisher?.trim();
+                const year = book.published ? String(book.published).trim() : '';
+                const placePub = [place, publisher].filter(Boolean).join(': ');
+                const impressum = [placePub, year].filter(Boolean).join(', ');
+                if (!impressum) return null;
+                return (
+                  <p className="text-stone-300 mt-2 text-sm sm:text-base">{impressum}</p>
                 );
               })()}
 
@@ -693,27 +705,26 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     ))}
                   </div>
                 )}
-                {(book.published || book.source_work_dates?.length) && (
+                {/* Calendar chip carries composition / translation dates that
+                    enrich the plain print year shown in the impressum line above.
+                    Skip the chip when there's no source_work_dates to add — the
+                    print year alone is already in the impressum. */}
+                {book.source_work_dates?.length ? (
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    {book.source_work_dates?.length ? (
-                      <span>
-                        {book.source_work_dates.find(l => l.type === 'composition')
-                          ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${book.source_work_dates.find(l => l.type === 'composition')!.date_display}`.trim()
-                          : ''}
-                        {book.source_work_dates.find(l => l.type === 'composition') && book.published
-                          ? <span className="text-stone-500"> · published {book.published}</span>
-                          : ''}
-                        {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
-                          ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} trans. ${book.source_work_dates.find(l => l.type === 'translation')!.date_display}`.trim()
-                          : ''}
-                        {!book.source_work_dates.find(l => l.type === 'composition') && !book.source_work_dates.find(l => l.type === 'translation') && book.published
-                          ? book.published
-                          : ''}
-                      </span>
-                    ) : book.published}
+                    <span>
+                      {book.source_work_dates.find(l => l.type === 'composition')
+                        ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${book.source_work_dates.find(l => l.type === 'composition')!.date_display}`.trim()
+                        : ''}
+                      {book.source_work_dates.find(l => l.type === 'composition') && book.published
+                        ? <span className="text-stone-500"> · published {book.published}</span>
+                        : ''}
+                      {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
+                        ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} trans. ${book.source_work_dates.find(l => l.type === 'translation')!.date_display}`.trim()
+                        : ''}
+                    </span>
                   </div>
-                )}
+                ) : null}
                 <div className="flex items-center gap-2">
                   <FileText className="w-4 h-4" />
                   {totalPages} pages

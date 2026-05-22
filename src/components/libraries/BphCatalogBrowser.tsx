@@ -97,7 +97,7 @@ interface AdvancedFilters {
   language: string;
   yearFrom: string;
   yearTo: string;
-  digitized: '' | 'true' | 'sl' | 'false';
+  digitized: '' | 'true' | 'sl' | 'false' | 'held';
 }
 
 const EMPTY_ADV: AdvancedFilters = {
@@ -575,6 +575,7 @@ export default function BphCatalogBrowser({
                   className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary"
                 >
                   <option value="">All books in the library</option>
+                  <option value="held">Physically held at BPH</option>
                   <option value="sl">Digitised on Source Library</option>
                   <option value="true">Digitised anywhere</option>
                   <option value="false">Not yet digitised</option>
