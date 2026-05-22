@@ -240,7 +240,16 @@ async function processBook(book, db) {
   try {
     const download = await resolveDownloadUrl(iaId);
     if (!download) {
-      console.log(`  [SKIP] ${book.title?.slice(0, 50)} — no JP2 zip or PDF`);
+      console.log(`  [SKIP] ${book.title?.slice(0, 50)} — no JP2 zip or PDF, marking bulk_unsuitable`);
+      await db.collection(booksCol).updateOne(
+        { id: book.id },
+        { $set: {
+          'archive_metadata.bulk_unsuitable': true,
+          'archive_metadata.bulk_unsuitable_at': new Date(),
+          'archive_metadata.bulk_unsuitable_reason': 'IA exposes no JP2 zip or PDF download',
+          updated_at: new Date(),
+        }}
+      );
       stats.booksSkipped++;
       return;
     }
