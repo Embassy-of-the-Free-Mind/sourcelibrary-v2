@@ -19,6 +19,11 @@
  *   --min-books=N    Skip authors with fewer than N books (default: 1)
  *   --offset=N       Skip first N authors
  *   --skip-viaf      Skip VIAF, go straight to Wikidata search (for names VIAF misses)
+ *   --provider=KEY   Restrict to authors with at least one book held by, or
+ *                    digitised from, the given source. Matches both
+ *                    held_by=KEY and image_source.provider=KEY so BPH books
+ *                    that link out to other archives (IA, Gallica, …) still
+ *                    count. Example: --provider=bph
  */
 
 import { MongoClient } from 'mongodb';
@@ -36,6 +41,7 @@ const DRY_RUN = args['dry-run'] === 'true';
 const MIN_BOOKS = parseInt(args['min-books'] || '1');
 const OFFSET = parseInt(args.offset || '0');
 const SKIP_VIAF = args['skip-viaf'] === 'true';
+const PROVIDER = args.provider || null;
 
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const DELAY_MS = 400; // polite rate limit
@@ -212,8 +218,20 @@ async function main() {
 
   // Step 1: Get distinct authors with book counts
   console.log('Step 1: Loading distinct authors...');
+  // When --provider is set, scope to books held by or digitised from that
+  // partner. Matches both held_by (physical custody) and
+  // image_source.provider (scan custody) so BPH-held works whose scans
+  // live at IA/Gallica/etc still count.
+  const bookMatch = { hidden: { $ne: true } };
+  if (PROVIDER) {
+    bookMatch.$or = [
+      { held_by: PROVIDER },
+      { 'image_source.provider': PROVIDER },
+    ];
+    console.log(`  Filtering to books with held_by="${PROVIDER}" or image_source.provider="${PROVIDER}"`);
+  }
   const authorGroups = await db.collection('books').aggregate([
-    { $match: { hidden: { $ne: true } } },
+    { $match: bookMatch },
     { $group: {
       _id: '$author',
       count: { $sum: 1 },
