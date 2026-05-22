@@ -43,14 +43,17 @@ const GALLERY_IMAGES = [
 ];
 
 function EmailForm({
-  email, setEmail, status, errorMsg, onSubmit, variant = 'dark',
+  email, setEmail, efmNewsletter, setEfmNewsletter, status, errorMsg, onSubmit, variant = 'dark', idPrefix,
 }: {
   email: string;
   setEmail: (v: string) => void;
+  efmNewsletter: boolean;
+  setEfmNewsletter: (v: boolean) => void;
   status: 'idle' | 'loading' | 'success' | 'error';
   errorMsg: string;
   onSubmit: (e: React.FormEvent) => void;
   variant?: 'dark' | 'light';
+  idPrefix: string;
 }) {
   if (status === 'success') {
     return (
@@ -91,6 +94,24 @@ function EmailForm({
           {status === 'loading' ? 'Joining...' : 'Get Free Access'}
         </button>
       </form>
+      <label
+        htmlFor={`${idPrefix}-efm-newsletter`}
+        className={`flex items-start gap-2 mt-3 cursor-pointer text-sm font-sans ${
+          variant === 'dark' ? 'text-white/60 hover:text-white/80' : 'text-stone-600 hover:text-stone-800'
+        }`}
+      >
+        <input
+          id={`${idPrefix}-efm-newsletter`}
+          type="checkbox"
+          checked={efmNewsletter}
+          onChange={(e) => setEfmNewsletter(e.target.checked)}
+          disabled={status === 'loading'}
+          className="mt-0.5 h-4 w-4 accent-accent-gold cursor-pointer flex-shrink-0"
+        />
+        <span>
+          Also send me the Embassy of the Free Mind newsletter
+        </span>
+      </label>
       {status === 'error' && (
         <p className="text-red-400 text-sm mt-2 font-sans">
           {errorMsg}
@@ -102,6 +123,7 @@ function EmailForm({
 
 export default function BetaLandingPage() {
   const [email, setEmail] = useState('');
+  const [efmNewsletter, setEfmNewsletter] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -122,7 +144,7 @@ export default function BetaLandingPage() {
       const res = await fetch('/api/beta/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), efmNewsletter }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -219,10 +241,13 @@ export default function BetaLandingPage() {
             <EmailForm
               email={email}
               setEmail={setEmail}
+              efmNewsletter={efmNewsletter}
+              setEfmNewsletter={setEfmNewsletter}
               status={status}
               errorMsg={errorMsg}
               onSubmit={handleSubmit}
               variant="dark"
+              idPrefix="hero"
             />
             <p className="text-white/30 text-xs mt-3 font-sans">
               An initiative of the Embassy of the Free Mind, Amsterdam
@@ -401,10 +426,13 @@ export default function BetaLandingPage() {
             <EmailForm
               email={email}
               setEmail={setEmail}
+              efmNewsletter={efmNewsletter}
+              setEfmNewsletter={setEfmNewsletter}
               status={status}
               errorMsg={errorMsg}
               onSubmit={handleSubmit}
               variant="dark"
+              idPrefix="cta"
             />
           </div>
           <p className="text-white/20 text-xs mt-4 font-sans">

@@ -6,15 +6,16 @@ export const GET = withAdminAuth(async (_request: NextRequest) => {
   const db = await getDb();
   const collection = db.collection('beta_subscribers');
 
-  const [total, bySource, recent] = await Promise.all([
+  const [total, bySource, efmOptIn, recent] = await Promise.all([
     collection.countDocuments(),
     collection.aggregate([
       { $group: { _id: '$source', count: { $sum: 1 } } },
     ]).toArray(),
+    collection.countDocuments({ efm_newsletter_opt_in: true }),
     collection.find()
       .sort({ subscribed_at: -1 })
       .limit(20)
-      .project({ email: 1, source: 1, subscribed_at: 1, country: 1 })
+      .project({ email: 1, source: 1, subscribed_at: 1, country: 1, efm_newsletter_opt_in: 1 })
       .toArray(),
   ]);
 
@@ -29,11 +30,13 @@ export const GET = withAdminAuth(async (_request: NextRequest) => {
     source: r.source || 'unknown',
     subscribed_at: r.subscribed_at?.toISOString() || '',
     country: r.country || undefined,
+    efm_newsletter_opt_in: r.efm_newsletter_opt_in === true,
   }));
 
   return NextResponse.json({
     total,
     by_source: sourceMap,
+    efm_newsletter_opt_in: efmOptIn,
     recent: maskedRecent,
   });
 });

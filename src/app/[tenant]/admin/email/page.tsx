@@ -612,6 +612,10 @@ export default function EmailAdminPage() {
                       <div className="text-xs text-stone-400 mt-1">{source.replace(/_/g, ' ')}</div>
                     </div>
                   ))}
+                  <div className="bg-stone-900 rounded-lg p-4 border border-stone-800 text-center">
+                    <div className="text-2xl font-semibold text-accent-gold">{stats.efm_newsletter_opt_in ?? 0}</div>
+                    <div className="text-xs text-stone-400 mt-1">EFM newsletter opt-in</div>
+                  </div>
                 </div>
 
                 {/* Recent signups */}
@@ -626,6 +630,9 @@ export default function EmailAdminPage() {
                         <div className="flex items-center gap-3 text-xs text-stone-500">
                           <span>{r.source?.replace(/_/g, ' ')}</span>
                           {r.country && <span>{r.country}</span>}
+                          {r.efm_newsletter_opt_in && (
+                            <span className="text-accent-gold" title="Opted into EFM newsletter">EFM</span>
+                          )}
                           <span>{new Date(r.subscribed_at).toLocaleDateString()}</span>
                         </div>
                       </div>

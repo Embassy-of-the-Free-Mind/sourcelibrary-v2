@@ -29,11 +29,13 @@ export interface EmailDraft {
 export interface SubscriberStats {
   total: number;
   by_source: Record<string, number>;
+  efm_newsletter_opt_in: number;
   recent: Array<{
     email_masked: string;
     source: string;
     subscribed_at: string;
     country?: string;
+    efm_newsletter_opt_in: boolean;
   }>;
 }
 
