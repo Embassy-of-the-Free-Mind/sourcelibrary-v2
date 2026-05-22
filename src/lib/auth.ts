@@ -10,16 +10,18 @@ const dbName = process.env.MONGODB_DB || 'bookstore';
 
 // --- Role system ---
 // Replaces the old admin | curator | inner_circle | reader system.
-// superadmin: platform owner, cross-tenant (tenantId: null in memberships)
-// admin:      tenant-scoped, manages users + settings
-// editor:     tenant-scoped, manages content + triggers pipeline
-// reader:     authenticated, read + personal data
-export type Role = 'superadmin' | 'admin' | 'editor' | 'reader';
+// superadmin:  platform owner, cross-tenant (tenantId: null in memberships)
+// admin:       tenant-scoped, manages users + settings
+// editor:      tenant-scoped, manages content + triggers pipeline + applies edits
+// contributor: tenant-scoped, *proposes* catalog edits (gated by editor review)
+// reader:      authenticated, read + personal data
+export type Role = 'superadmin' | 'admin' | 'editor' | 'contributor' | 'reader';
 export const ROLE_LEVEL: Record<Role, number> = {
   reader: 1,
-  editor: 2,
-  admin: 3,
-  superadmin: 4,
+  contributor: 2,
+  editor: 3,
+  admin: 4,
+  superadmin: 5,
 };
 
 // TODO: Remove getUserRole — replaced by memberships collection + ROLE_LEVEL system.
