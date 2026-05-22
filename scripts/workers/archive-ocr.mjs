@@ -419,8 +419,14 @@ async function main() {
   const DOMAIN_CONCURRENCY = 8; // Workers per domain (token bucket throttles them)
   let circuitBroken = new Set(); // Domains that hit circuit breaker
 
+  // Threshold for the consecutive-failure breaker. Picked to be:
+  // - high enough to weather a transient blip (a single bad page won't trip it),
+  // - low enough that ~one batch of 8 concurrent workers x ~2 ticks catches a
+  //   sustained 429 storm before it burns hundreds of pages.
+  const CONSECUTIVE_FAIL_THRESHOLD = 20;
+
   const domainWorkers = Object.entries(byDomain).map(async ([domain, domainPages]) => {
-    if (!domainStats[domain]) domainStats[domain] = { ok: 0, fail: 0 };
+    if (!domainStats[domain]) domainStats[domain] = { ok: 0, fail: 0, consecutiveFails: 0 };
     let idx = 0;
 
     async function worker() {
@@ -431,22 +437,40 @@ async function main() {
         const result = await archivePage(page, db);
         processed++;
 
+        const ds = domainStats[domain];
         if (result.ok) {
           archived++;
           totalBytes += result.bytes;
-          domainStats[domain].ok++;
+          ds.ok++;
+          ds.consecutiveFails = 0; // any success resets the streak
           touchedBookIds.add(page.book_id);
         } else {
           failed++;
-          domainStats[domain].fail++;
+          ds.fail++;
+          ds.consecutiveFails = (ds.consecutiveFails || 0) + 1;
           if (failed <= 10) console.error(`  FAIL [${domain}]: ${result.error}`);
-          const ds = domainStats[domain];
+
+          // Cold-start breaker: 5 fails with 0 successes — looks like the
+          // domain is unreachable from the start.
           if (ds.fail >= 5 && ds.ok === 0) {
             console.warn(`  [${domain}] Circuit breaker: 5 failures with 0 successes, skipping domain`);
             circuitBroken.add(domain);
             break;
           }
-          // Ratio-based breaker: if >50 attempts and >90% failure, stop wasting time
+          // Sustained-failure breaker: N back-to-back failures after some
+          // earlier successes. This catches the "rate limit kicks in
+          // mid-run" case the cumulative ratio check misses — once a
+          // domain has thousands of early successes, cumulative ratio
+          // stays under 90% even during a sustained 429 storm, so the
+          // worker would keep burning pages forever (see #1909/#1914
+          // class of issues). Any success resets the counter, so a
+          // transient blip doesn't trip it.
+          if (ds.consecutiveFails >= CONSECUTIVE_FAIL_THRESHOLD) {
+            console.warn(`  [${domain}] Circuit breaker: ${ds.consecutiveFails} consecutive failures after ${ds.ok} successes, skipping domain`);
+            circuitBroken.add(domain);
+            break;
+          }
+          // Cumulative-ratio breaker: noisy domain with mostly-bad pages.
           const total = ds.ok + ds.fail;
           if (total >= 50 && ds.fail / total > 0.9) {
             console.warn(`  [${domain}] Circuit breaker: ${ds.fail}/${total} failed (${(ds.fail/total*100).toFixed(0)}%), skipping domain`);
