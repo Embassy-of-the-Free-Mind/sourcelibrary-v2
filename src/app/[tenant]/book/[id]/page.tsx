@@ -1,5 +1,6 @@
 import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
+import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -32,6 +33,7 @@ import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { AISection } from '@/components/embed/AISection';
+import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
@@ -380,11 +382,37 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   // Fall back to the catalog book (Supabase) if Atlas fetch failed
   const book = fullBookResult?.book ?? quickBook;
 
-  // Fetch full index data from dedicated collection (keeps book docs small)
-  const bookIndexDoc = await db.collection('book_indexes').findOne(
-    { book_id: bookId },
-    { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-  ).catch(() => null);
+  // Author authority record (variants / VIAF / Wikidata) — only when the
+  // book has been linked to an entity. Loaded in parallel with the index
+  // doc; failures are non-fatal (the AuthorAuthority component just doesn't
+  // render). See scripts/enrichment/viaf-author-linking.mjs for how the
+  // link gets set.
+  const authorEntityIdRaw = (book as { author_entity_id?: string }).author_entity_id;
+  const authorEntityId = typeof authorEntityIdRaw === 'string' && ObjectId.isValid(authorEntityIdRaw)
+    ? authorEntityIdRaw
+    : null;
+
+  const [bookIndexDoc, authorEntity] = await Promise.all([
+    db.collection('book_indexes').findOne(
+      { book_id: bookId },
+      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+    ).catch(() => null),
+    authorEntityId
+      ? db.collection('entities').findOne(
+          { _id: new ObjectId(authorEntityId) },
+          {
+            projection: {
+              _id: 0,
+              name: 1, canonical_name: 1, aliases: 1,
+              viaf_id: 1, wikidata_id: 1, lcnaf_id: 1, gnd_id: 1,
+              wikipedia_url: 1,
+              wikidata_birth_date: 1, wikidata_death_date: 1,
+            },
+            maxTimeMS: 3000,
+          }
+        ).catch(() => null)
+      : Promise.resolve(null),
+  ]);
 
   // Merge index data back onto book for rendering (if found in dedicated collection)
   if (bookIndexDoc) {
@@ -428,7 +456,9 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   const galleryImages = deduplicateByDHash(galleryImagesParsed).slice(0, 8) as GalleryImagePreview[];
   const bookCollections = JSON.parse(JSON.stringify(bookCollectionsRaw)) as BookCollectionPreview[];
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug };
+  const serializedEntity = authorEntity ? JSON.parse(JSON.stringify(authorEntity)) : null;
+
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity };
 }
 
 // Skeleton for book info while loading
@@ -491,7 +521,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
   // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
@@ -654,6 +684,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   </p>
                 );
               })()}
+              {authorEntity && (
+                <AuthorAuthority entity={authorEntity} bookAuthor={book.author} />
+              )}
               <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
               {book.display_title && book.title !== book.display_title && (
                 <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
@@ -726,9 +759,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     </span>
                   </div>
                 ) : null}
-                <div className="flex items-center gap-2">
+                {/* "scans" rather than "pages": the count is of scanned
+                    images (IIIF canvases — covers, blanks, endpapers
+                    included). Bibliographic pagination ("[8] 240 [12] pp.")
+                    will live in a separate field once curators capture it
+                    per book. Paul Dijstelberge (BPH) flagged this — none
+                    of the displayed page counts matched the real book. */}
+                <div
+                  className="flex items-center gap-2"
+                  title="Scanned images, including covers and blanks. Bibliographic pagination may differ."
+                >
                   <FileText className="w-4 h-4" />
-                  {totalPages} pages
+                  {totalPages} scans
                 </div>
                 {embedPolicy.showGalleryImages && imageCount > 0 && (
                   <Link
