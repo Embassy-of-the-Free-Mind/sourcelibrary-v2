@@ -528,6 +528,43 @@ export default function SharedLibraryView({
               </div>
             )}
 
+            {/* Connections / virtual collections — only on the BPH default
+                landing, just below Selected Books. Currently a single card
+                pointing at Jung Resonances; structured as a row so future
+                resonance pages (Kloss ↔ BPH, USTC overlaps, etc.) slot in
+                without reworking the layout. */}
+            {showSelectedBooksRow && (
+              <div className="mb-10">
+                <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">
+                  Connections
+                </h2>
+                <p className="text-sm text-muted mb-4">
+                  Bibliographic resonances between BPH and other major collections.
+                </p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Link
+                    href={embedHref(`${basePath}/collections/jung-resonances`)}
+                    className="group block rounded-lg border border-border-light bg-white p-5 hover:border-accent-rust/40 hover:shadow-sm transition-all"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-1">
+                          Virtual Collection
+                        </p>
+                        <h3 className="text-lg text-primary font-display leading-snug mb-1 group-hover:text-accent-rust transition-colors">
+                          Jung Resonances
+                        </h3>
+                        <p className="text-sm text-secondary leading-relaxed">
+                          151 works from Jung&apos;s personal library at Küsnacht
+                          that are also held in the BPH.
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {/* Library Catalogue heading — only on the default landing
                 (showSelectedBooksRow). The /catalog view uses the unified
                 shell rendered above instead. */}
