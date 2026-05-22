@@ -340,14 +340,28 @@ export default async function CatalogEntryPage({ params }: Props) {
     <div className="bg-cream">
       <div className="max-w-2xl mx-auto px-6 py-8">
         {showEditButton && (
-          <div className="flex justify-end gap-2 mb-2">
+          <div className="flex justify-end flex-wrap gap-2 mb-2">
+            <a
+              href={`/catalog/${encodeURIComponent(work.ubn)}/history`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+            >
+              History
+            </a>
             {showReviewLink && (
-              <a
-                href="/catalog/review"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-              >
-                Review queue
-              </a>
+              <>
+                <a
+                  href="/catalog/review"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+                >
+                  Review queue
+                </a>
+                <a
+                  href="/catalog/team"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+                >
+                  Team
+                </a>
+              </>
             )}
             <a
               href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
