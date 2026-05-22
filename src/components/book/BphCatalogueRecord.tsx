@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { ExternalLink } from 'lucide-react';
+import BphCatalogueEditButton from './BphCatalogueEditButton';
 
 /**
  * Inline display of a book's BPH catalogue record, side-loaded from Supabase
@@ -21,8 +22,10 @@ interface FieldProvenance {
 
 interface BphWorkRow {
   ubn: string;
+  title: string | null;
   parallel_title: string | null;
   uniform_title: string | null;
+  author: string | null;
   variant_author: string | null;
   pseudonym: string | null;
   editor: string | null;
@@ -32,6 +35,7 @@ interface BphWorkRow {
   publisher: string | null;
   variant_printer: string | null;
   variant_publisher: string | null;
+  year: number | null;
   shelf_mark: string | null;
   state_shelf_mark: string | null;
   present_location: string | null;
@@ -56,10 +60,10 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   const { data } = await supabase
     .from('bph_works')
     .select(`
-      ubn, parallel_title, uniform_title,
-      variant_author, pseudonym, editor, variant_editor,
+      ubn, title, parallel_title, uniform_title,
+      author, variant_author, pseudonym, editor, variant_editor,
       place, printer, publisher, variant_printer, variant_publisher,
-      shelf_mark, state_shelf_mark, present_location,
+      year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
       bibliography, remarks, number_of_copies, object_size_cm,
       bibliographic_format, binding, bound_with,
@@ -118,6 +122,13 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
       </summary>
 
       <div className="mt-3 p-4 bg-stone-800/50 rounded-lg border border-stone-700 space-y-4">
+        {/* Cataloguer edit affordance — only renders for BPH librarians /
+            global admins via AuthCheck inside the button. Keeps the BPH
+            partner panel where the data lives. */}
+        <div className="flex justify-end -mb-2">
+          <BphCatalogueEditButton work={work} variant="inline" />
+        </div>
+
         {(work.parallel_title || work.uniform_title || work.series_title || work.volume_title) && (
           <Section title="Title">
             <Field label="Full title (transcription)" value={work.parallel_title} />

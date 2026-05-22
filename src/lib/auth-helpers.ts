@@ -254,3 +254,66 @@ export const withInnerCircleAuth = (h: (request: NextRequest, session: Session, 
 // TODO: Remove withCuratorAuth — mapped to 'editor'. Verify each callsite matches
 // this permission level before removing.
 export const withCuratorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
+
+/**
+ * BPH librarian auth wrapper.
+ *
+ * Tenant-scoped editor surface for the BPH cataloguer panel — writes Supabase
+ * `bph_works`. A user passes when they are EITHER:
+ *   - an active `editor`-or-higher member of the BPH tenant (memberships row
+ *     with tenantSlug='bph'), OR
+ *   - a global admin / superadmin.
+ *
+ * Unlike `withAuth`, this guard:
+ *   - Refuses the CRON_SECRET bearer path. Cataloguer edits are a human-only
+ *     surface (audit-trail concerns — a librarian must be attributable).
+ *   - Does not depend on the request `x-tenant-id` header, because the
+ *     editor surface may render from a tenant-scoped path OR from the global
+ *     book detail page (where the same BPH catalogue record is inline). The
+ *     resource being edited (`bph_works.ubn`) is BPH by definition.
+ *
+ * See issue #1921 P2.
+ */
+export function withBphLibrarianAuth(
+  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>,
+): (request: NextRequest, context?: any) => Promise<NextResponse> {
+  return async (request: NextRequest, context?: any) => {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    const globalRole = normalizeRole((session.user as any).role);
+    const isGlobalAdmin = (ROLE_LEVEL[globalRole] ?? 0) >= ROLE_LEVEL['admin'];
+
+    // Resolve BPH tenant id and check membership.
+    let isBphEditor = false;
+    try {
+      const db = await getDb();
+      const bphTenant = await db.collection('tenants').findOne(
+        { slug: 'bph', status: { $ne: 'deleted' } },
+        { projection: { id: 1 } }
+      );
+      if (bphTenant?.id) {
+        const tenantRole = await getTenantMembershipRole(session.user.email, bphTenant.id as string);
+        if (tenantRole && (ROLE_LEVEL[tenantRole] ?? 0) >= ROLE_LEVEL['editor']) {
+          isBphEditor = true;
+        }
+      }
+    } catch {
+      // Fail closed on lookup failure.
+    }
+
+    if (!isGlobalAdmin && !isBphEditor) {
+      return NextResponse.json(
+        { error: 'Forbidden - BPH librarian role required' },
+        { status: 403 }
+      );
+    }
+
+    return handler(request, session, context);
+  };
+}
