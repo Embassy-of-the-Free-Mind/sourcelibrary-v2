@@ -13,6 +13,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
 import { tenantBookUrl } from '@/lib/slugify';
+import { AISection } from '@/components/embed/AISection';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getBookThumbnailUrl } from '@/lib/utils';
 
@@ -177,9 +178,11 @@ export default async function CollectionAreaPage({ params }: Props) {
                                             {book.author}
                                         </p>
                                         {summaryText && (
-                                            <p className="text-xs text-secondary mt-2 line-clamp-2">
-                                                {summaryText}
-                                            </p>
+                                            <AISection>
+                                                <p className="text-xs text-secondary mt-2 line-clamp-2">
+                                                    {summaryText}
+                                                </p>
+                                            </AISection>
                                         )}
                                         {book.pages_count && (
                                             <p className="text-xs text-muted mt-2">
