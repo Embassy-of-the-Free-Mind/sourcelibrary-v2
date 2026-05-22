@@ -1,0 +1,1027 @@
+{
+  "imported": 56,
+  "duplicate": 4,
+  "failed": 0,
+  "results": [
+    {
+      "status": "imported",
+      "bookId": "6a1008daf717292950966438",
+      "pages": 1079,
+      "candidate": {
+        "erara_id": "1171064",
+        "title": "Kabbala denudata, seu, doctrina Hebraeorum transcendentalis et metaphysica atque theologica : opus antiquissimae philosophiae barbaricae variis speciminibus refertissimum ... / [Tomus primus.]",
+        "author": "[s.n.]",
+        "date": "1677",
+        "year": 1677,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1171064",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1171064/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1008e4f717292950966872",
+      "pages": 1468,
+      "candidate": {
+        "erara_id": "1172145",
+        "title": "Kabbala denudata, seu, doctrina Hebraeorum transcendentalis et metaphysica atque theologica : opus antiquissimae philosophiae barbaricae variis speciminibus refertissimum ... / Tomus secundus.",
+        "author": "[s.n.]",
+        "date": "1677",
+        "year": 1677,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1172145",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1172145/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1008e8f717292950966e31",
+      "pages": 596,
+      "candidate": {
+        "erara_id": "1386545",
+        "title": "Bibliothèque des philosophes chimiques / Tome premier.",
+        "author": "[s.n.]",
+        "date": "1741",
+        "year": 1741,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1386545",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1386545/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1008eef717292950967088",
+      "pages": 581,
+      "candidate": {
+        "erara_id": "1387143",
+        "title": "Bibliothèque des philosophes chimiques / Tome second.",
+        "author": "[s.n.]",
+        "date": "1741",
+        "year": 1741,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1387143",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1387143/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1008f3f7172929509672d0",
+      "pages": 593,
+      "candidate": {
+        "erara_id": "1387726",
+        "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+        "author": "[s.n.]",
+        "date": "1741",
+        "year": 1741,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1387726",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1387726/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1008f9f717292950967524",
+      "pages": 112,
+      "candidate": {
+        "erara_id": "1529971",
+        "title": "Gemma gemmarum alchimistarum oder Erleuterung der parabolischen und philosophischen Schrifften Fratris Basilii, der zwölff Schlüssel von dem Stein der uhralten Weisen und desselben aussdrücklichen unnd warhafften Praeparation ... : item Ausslegung Rythmorum Basilii von der Materia des Steins der Philosophen ... / Gemma gemmarum alchimistarum oder Erleuterung der parabolischen und philosophischen Schrifften Fratris Basilii.",
+        "author": "[s.n.]",
+        "date": "1608",
+        "year": 1608,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1529971",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1529971/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1008fef717292950967597",
+      "pages": 86,
+      "candidate": {
+        "erara_id": "1530085",
+        "title": "Gemma gemmarum alchimistarum oder Erleuterung der parabolischen und philosophischen Schrifften Fratris Basilii, der zwölff Schlüssel von dem Stein der uhralten Weisen und desselben aussdrücklichen unnd warhafften Praeparation ... : item Ausslegung Rythmorum Basilii von der Materia des Steins der Philosophen ... / Gründliche Ausslegung und warhafftige Erklerung der rythmorum Fratris Basilii Valentini Monachi.",
+        "author": "[s.n.]",
+        "date": "1608",
+        "year": 1608,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1530085",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1530085/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100903f7172929509675f0",
+      "pages": 356,
+      "candidate": {
+        "erara_id": "1557942",
+        "title": "Lucii Apuleii ... Opera / Tomus I.",
+        "author": "[s.n.]",
+        "date": "1778",
+        "year": 1778,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1557942",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1557942/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10090bf717292950967757",
+      "pages": 318,
+      "candidate": {
+        "erara_id": "1558300",
+        "title": "Lucii Apuleii ... Opera / Tomus II.",
+        "author": "[s.n.]",
+        "date": "1778",
+        "year": 1778,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1558300",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1558300/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100911f717292950967898",
+      "pages": 613,
+      "candidate": {
+        "erara_id": "2206662",
+        "title": "Les  fables egyptiennes et grecques dévoilées &amp; réduites au même principe, avec une explication des hiéroglyphes, et de la guerre de Troye / Tome premier.",
+        "author": "[s.n.]",
+        "date": "1758",
+        "year": 1758,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2206662",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2206662/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100917f717292950967b00",
+      "pages": 452,
+      "candidate": {
+        "erara_id": "1606983",
+        "title": "An  Enquiry into the Nature of the Human Soul : wherein the Immateriality of the Soul is evinced from the Principles of Reason and Philosophy / Volume I.",
+        "author": "[s.n.]",
+        "date": "1745",
+        "year": 1745,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1606983",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1606983/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10091ff717292950967cc7",
+      "pages": 460,
+      "candidate": {
+        "erara_id": "1607437",
+        "title": "An  Enquiry into the Nature of the Human Soul : wherein the Immateriality of the Soul is evinced from the Principles of Reason and Philosophy / Volume II.",
+        "author": "[s.n.]",
+        "date": "1745",
+        "year": 1745,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1607437",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1607437/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "duplicate",
+      "existingId": "6970e37d9b09d309d780a2c2",
+      "error": "Duplicate detected (title_author): matches \"Anthroposophia theomagica; or a discourse of the nature of man and his state after death\"",
+      "candidate": {
+        "erara_id": "1705641",
+        "title": "Anthroposophia Theomagica or a Discourse of the Nature of Man and his State after Death ...",
+        "author": "Vaughan, Thomas",
+        "date": "1650",
+        "year": 1650,
+        "language": "eng",
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1705641",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1705641/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10092af717292950967e96",
+      "pages": 544,
+      "candidate": {
+        "erara_id": "1831696",
+        "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des écrivains de cette science ... / 1",
+        "author": "[s.n.]",
+        "date": "1744",
+        "year": 1744,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1831696",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1831696/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10092ff7172929509680b9",
+      "pages": 527,
+      "candidate": {
+        "erara_id": "1832242",
+        "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des écrivains de cette science ... / 2",
+        "author": "[s.n.]",
+        "date": "1744",
+        "year": 1744,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1832242",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1832242/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100939f7172929509682cb",
+      "pages": 470,
+      "candidate": {
+        "erara_id": "1832773",
+        "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des écrivains de cette science ... / 3",
+        "author": "[s.n.]",
+        "date": "1744",
+        "year": 1744,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1832773",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1832773/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10093ff7172929509684a4",
+      "pages": 1009,
+      "candidate": {
+        "erara_id": "1918267",
+        "title": "Jo. Jacobi Mangeti ... Bibliotheca chemica curiosa, seu rerum ad alchemiam pertinentium thesaurus instructissimus: quo non tantum artis auriferae ... verum etiam tractatus omnes virorum ... ad quorum omnium illustrationem additae sunt quamplurimae figurae aeneae. Tomus primus [-secundus] / Tomus primus.",
+        "author": "[s.n.]",
+        "date": "1702",
+        "year": 1702,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1918267",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1918267/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100946f717292950968898",
+      "pages": 972,
+      "candidate": {
+        "erara_id": "1919276",
+        "title": "Jo. Jacobi Mangeti ... Bibliotheca chemica curiosa, seu rerum ad alchemiam pertinentium thesaurus instructissimus: quo non tantum artis auriferae ... verum etiam tractatus omnes virorum ... ad quorum omnium illustrationem additae sunt quamplurimae figurae aeneae. Tomus primus [-secundus] / Tomus secundus.",
+        "author": "[s.n.]",
+        "date": "1702",
+        "year": 1702,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1919276",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1919276/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10094bf717292950968c67",
+      "pages": 464,
+      "candidate": {
+        "erara_id": "1932286",
+        "title": "Traité historique et dogmatique sur les apparitions, les visions &amp; les révélations particulières : avec des observations sur les dissertations du R. P. Dom Calmet ... sur les apparitions et les revenans / Tome premier.",
+        "author": "[s.n.]",
+        "date": "1751",
+        "year": 1751,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1932286",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1932286/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100951f717292950968e3a",
+      "pages": 468,
+      "candidate": {
+        "erara_id": "1932752",
+        "title": "Traité historique et dogmatique sur les apparitions, les visions &amp; les révélations particulières : avec des observations sur les dissertations du R. P. Dom Calmet ... sur les apparitions et les revenans / Tome second.",
+        "author": "[s.n.]",
+        "date": "1751",
+        "year": 1751,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/1932752",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/1932752/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "duplicate",
+      "existingId": "69b638be1c1c21a373839d77",
+      "error": "Duplicate detected (iiif_manifest): matches \"Opera nuper in lucem prodeuntia : Liber gratie spiritualis visionum &amp; revelationum beate Methildis virginis devotissime ad fidelium instructionem. Evangelium beati Nichodemi de passione Christi ac descensu eius ad inferos testimonio Charini &amp; Leutii resurrectorum. Epistola Lentuli ad Romanos de persona &amp; effigie &amp; moribus Christi, que sola comperta est in annalibus Romanorum. Visio mirabilis Ysaie prophete, que tam divinae trinitatis archana quam generis humani redemptionem manifestat adversus Hebraicam caliginem. Visio sancti Alberti episcopi Agrippinensis de octo regulis vite humane meritoriis a Christo sibi in missa revelatis. Preclarum Erithree Sibille vaticinium ab excidio Troiano usque ad seculi consumationem in orthodoxe fidei testimonium\"",
+      "candidate": {
+        "erara_id": "2035372",
+        "title": "Opera nuper in lucem prodeuntia : Liber gratie spiritualis visionum &amp; revelationum beate Methildis virginis devotissime ad fidelium instructionem. Evangelium beati Nichodemi de passione Christi ac descensu eius ad inferos testimonio Charini &amp; Leutii resurrectorum. Epistola Lentuli ad Romanos de persona &amp; effigie &amp; moribus Christi, que sola comperta est in annalibus Romanorum. Visio mirabilis Ysaie prophete, que tam divinae trinitatis archana quam generis humani redemptionem manifestat adversus Hebraicam caliginem. Visio sancti Alberti episcopi Agrippinensis de octo regulis vite humane meritoriis a Christo sibi in missa revelatis. Preclarum Erithree Sibille vaticinium ab excidio Troiano usque ad seculi consumationem in orthodoxe fidei testimonium",
+        "author": "Mechthild",
+        "date": "1522",
+        "year": 1522,
+        "language": "lat",
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2035372",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2035372/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100962f717292950969011",
+      "pages": 2133,
+      "candidate": {
+        "erara_id": "2040156",
+        "title": "Erster [- zehender] Theil der Bücher und Schrifften des edlen, hochgelehrten und bewehrten philosophi und medici Philippi Theophrasti Bombast von Hohenheim ... / [Erster bis sechster Theil.]",
+        "author": "[s.n.]",
+        "date": "1589",
+        "year": 1589,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2040156",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2040156/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100969f717292950969869",
+      "pages": 2029,
+      "candidate": {
+        "erara_id": "2042289",
+        "title": "Erster [- zehender] Theil der Bücher und Schrifften des edlen, hochgelehrten und bewehrten philosophi und medici Philippi Theophrasti Bombast von Hohenheim ... / [Siebender bis zehender Theil.]",
+        "author": "[s.n.]",
+        "date": "1589",
+        "year": 1589,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2042289",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2042289/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100970f71729295096a059",
+      "pages": 573,
+      "candidate": {
+        "erara_id": "2104282",
+        "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter] / Tomus prior.",
+        "author": "[s.n.]",
+        "date": "1561",
+        "year": 1561,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2104282",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2104282/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100977f71729295096a299",
+      "pages": 502,
+      "candidate": {
+        "erara_id": "2104857",
+        "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter] / Tomus alter.",
+        "author": "[s.n.]",
+        "date": "1561",
+        "year": 1561,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2104857",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2104857/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100980f71729295096a492",
+      "pages": 646,
+      "candidate": {
+        "erara_id": "2206664",
+        "title": "Les  fables egyptiennes et grecques dévoilées &amp; réduites au même principe, avec une explication des hiéroglyphes, et de la guerre de Troye / Tome second.",
+        "author": "[s.n.]",
+        "date": "1758",
+        "year": 1758,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2206664",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2206664/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100987f71729295096a71b",
+      "pages": 832,
+      "candidate": {
+        "erara_id": "2209636",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- sextum] / Volumen primum.",
+        "author": "[s.n.]",
+        "date": "1659",
+        "year": 1659,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2209636",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2209636/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10098ef71729295096aa5e",
+      "pages": 566,
+      "candidate": {
+        "erara_id": "2210470",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- sextum] / Volumen secundum.",
+        "author": "[s.n.]",
+        "date": "1659",
+        "year": 1659,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2210470",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2210470/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a10099af71729295096ac97",
+      "pages": 940,
+      "candidate": {
+        "erara_id": "2284849",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in tres partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- tertium] / Volumen primum.",
+        "author": "[s.n.]",
+        "date": "1602",
+        "year": 1602,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2284849",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2284849/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009a5f71729295096b046",
+      "pages": 198,
+      "candidate": {
+        "erara_id": "2282207",
+        "title": "Historische Wunder-Beschreibung von der sogenannten schönen Melusina, Königs Helmas in Albanien Tochter, welche eine Sirene und Meer-Wunder gewesen, und ihrer Hervorkunft aus dem in Frankreich gelegenen Berg Adelon, auch was sich allda sehr seltsam und merkwürdiges mit ihr zugetragen",
+        "author": "[s.n.]",
+        "date": "uuuu",
+        "year": null,
+        "language": "ger",
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2282207",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2282207/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009aef71729295096b10f",
+      "pages": 649,
+      "candidate": {
+        "erara_id": "2285791",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in tres partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- tertium] / Volumen secundum.",
+        "author": "[s.n.]",
+        "date": "1602",
+        "year": 1602,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2285791",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2285791/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009bbf71729295096b39b",
+      "pages": 1005,
+      "candidate": {
+        "erara_id": "2286442",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in tres partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- tertium] / Volumen tertium.",
+        "author": "[s.n.]",
+        "date": "1602",
+        "year": 1602,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2286442",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2286442/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009c3f71729295096b78b",
+      "pages": 1191,
+      "candidate": {
+        "erara_id": "2287455",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in quatuor partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- quartum] / Volumen quartum.",
+        "author": "[s.n.]",
+        "date": "1613",
+        "year": 1613,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2287455",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2287455/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009c9f71729295096bc35",
+      "pages": 1090,
+      "candidate": {
+        "erara_id": "2288648",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in quatuor partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- quartum] / Volumen quintum.",
+        "author": "[s.n.]",
+        "date": "1613",
+        "year": 1613,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2288648",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2288648/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009d0f71729295096c07a",
+      "pages": 1119,
+      "candidate": {
+        "erara_id": "2289745",
+        "title": "Deutsches theatrum chemicum, auf welchem der berühmtesten Philosophen und Alchymisten Schrifften, die von dem Stein der Weisen, von Verwandlung der schlechten Metalle in bessere ... handeln ... vorgestellet werden / Erster Theil.",
+        "author": "[s.n.]",
+        "date": "1728",
+        "year": 1728,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2289745",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2289745/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009d6f71729295096c4dc",
+      "pages": 979,
+      "candidate": {
+        "erara_id": "2290896",
+        "title": "Deutsches theatrum chemicum, auf welchem der berühmtesten Philosophen und Alchymisten Schrifften, die von dem Stein der Weisen, von Verwandlung der schlechten Metalle in bessere ... handeln ... vorgestellet werden / Zweyter Theil.",
+        "author": "[s.n.]",
+        "date": "1728",
+        "year": 1728,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2290896",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2290896/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009dcf71729295096c8b2",
+      "pages": 1019,
+      "candidate": {
+        "erara_id": "2291876",
+        "title": "Deutsches theatrum chemicum, auf welchem der berühmtesten Philosophen und Alchymisten Schrifften, die von dem Stein der Weisen, von Verwandlung der schlechten Metalle in bessere ... handeln ... vorgestellet werden / Dritter Theil.",
+        "author": "[s.n.]",
+        "date": "1728",
+        "year": 1728,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2291876",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2291876/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009e2f71729295096ccb0",
+      "pages": 884,
+      "candidate": {
+        "erara_id": "2299474",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- sextum] / Volumen tertium.",
+        "author": "[s.n.]",
+        "date": "1659",
+        "year": 1659,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2299474",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2299474/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009edf71729295096d027",
+      "pages": 1083,
+      "candidate": {
+        "erara_id": "2300360",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- sextum] / Volumen quartum.",
+        "author": "[s.n.]",
+        "date": "1659",
+        "year": 1659,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2300360",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2300360/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a1009fbf71729295096d465",
+      "pages": 833,
+      "candidate": {
+        "erara_id": "2301444",
+        "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, &amp; operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero &amp; verborum indice postremis annexo. Volumen primum [- sextum] / Volumen sextum.",
+        "author": "[s.n.]",
+        "date": "1659",
+        "year": 1659,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2301444",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2301444/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a03f71729295096d7a9",
+      "pages": 850,
+      "candidate": {
+        "erara_id": "2575068",
+        "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Erster Theil.",
+        "author": "[s.n.]",
+        "date": "1762",
+        "year": 1762,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2575068",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2575068/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a11f71729295096dafe",
+      "pages": 720,
+      "candidate": {
+        "erara_id": "2575920",
+        "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Zweiter Theil.",
+        "author": "[s.n.]",
+        "date": "1762",
+        "year": 1762,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2575920",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2575920/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a1cf71729295096ddd1",
+      "pages": 728,
+      "candidate": {
+        "erara_id": "2576642",
+        "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Dritter Theil.",
+        "author": "[s.n.]",
+        "date": "1762",
+        "year": 1762,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2576642",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2576642/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a22f71729295096e0ac",
+      "pages": 864,
+      "candidate": {
+        "erara_id": "2577372",
+        "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Vierter Theil.",
+        "author": "[s.n.]",
+        "date": "1762",
+        "year": 1762,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2577372",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2577372/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a2af71729295096e40f",
+      "pages": 960,
+      "candidate": {
+        "erara_id": "2578238",
+        "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Fünfter Theil.",
+        "author": "[s.n.]",
+        "date": "1762",
+        "year": 1762,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2578238",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2578238/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a33f71729295096e7d2",
+      "pages": 1073,
+      "candidate": {
+        "erara_id": "2579200",
+        "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Sechster Theil.",
+        "author": "[s.n.]",
+        "date": "1762",
+        "year": 1762,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2579200",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2579200/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "duplicate",
+      "existingId": "69906181322e01b1349a4aa9",
+      "error": "Duplicate detected (title_author): matches \"The Displaying of Supposed Witchcraft\"",
+      "candidate": {
+        "erara_id": "2581467",
+        "title": "The  displaying of supposed witchcraft ...",
+        "author": "Webster, John",
+        "date": "1677",
+        "year": 1677,
+        "language": "eng",
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2581467",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2581467/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a3cf71729295096ec06",
+      "pages": 354,
+      "candidate": {
+        "erara_id": "2623925",
+        "title": "Unterhaltungen aus der Naturgeschichte / [Textband.]",
+        "author": "[s.n.]",
+        "date": "1792",
+        "year": 1792,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2623925",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2623925/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a41f71729295096ed6b",
+      "pages": 93,
+      "candidate": {
+        "erara_id": "2624281",
+        "title": "Unterhaltungen aus der Naturgeschichte / [Tafelband.]",
+        "author": "[s.n.]",
+        "date": "1792",
+        "year": 1792,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2624281",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2624281/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a46f71729295096edcb",
+      "pages": 541,
+      "candidate": {
+        "erara_id": "2835283",
+        "title": "Origenis opera omnia et quae eius nomine circumferuntur / Tomus primus.",
+        "author": "[s.n.]",
+        "date": "1743",
+        "year": 1743,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2835283",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2835283/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a4bf71729295096efeb",
+      "pages": 696,
+      "candidate": {
+        "erara_id": "2835828",
+        "title": "Origenis opera omnia et quae eius nomine circumferuntur / Tomus secundus.",
+        "author": "[s.n.]",
+        "date": "1743",
+        "year": 1743,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2835828",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2835828/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a50f71729295096f2a6",
+      "pages": 648,
+      "candidate": {
+        "erara_id": "2836526",
+        "title": "Origenis opera omnia et quae eius nomine circumferuntur / Tomus tertius.",
+        "author": "[s.n.]",
+        "date": "1743",
+        "year": 1743,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2836526",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2836526/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a55f71729295096f531",
+      "pages": 772,
+      "candidate": {
+        "erara_id": "2841546",
+        "title": "Sancti Dionysii Areopagitae operum omnium quae extant, et commentariorum quibus illustrantur, tomus primus, in quo universus sancti textus, et Georgii Pachymerae paraphrasis Graece et Latine, cum adnotationibus Balt. Corderii... continentur, omnia studio ... eiusdem Balthasaris Corderii ... tomus II, in quo S. Maximi scholia, Pachymerae paraphrasis in epistolas, et authores varii qui aut vitam S. Dionysii descripserunt, aut dignitatem ipsius areopagiticam asseruerunt, continentur, opera ... Petri Lansselii et Balthasaris Corderii : accessit nunc primum Areopagitae defensio adversus haereticum calvinistam, per... D. Ioannem de Chaumont / Tomus primus.",
+        "author": "[s.n.]",
+        "date": "1644",
+        "year": 1644,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2841546",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2841546/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a5cf71729295096f838",
+      "pages": 887,
+      "candidate": {
+        "erara_id": "2842318",
+        "title": "Sancti Dionysii Areopagitae operum omnium quae extant, et commentariorum quibus illustrantur, tomus primus, in quo universus sancti textus, et Georgii Pachymerae paraphrasis Graece et Latine, cum adnotationibus Balt. Corderii... continentur, omnia studio ... eiusdem Balthasaris Corderii ... tomus II, in quo S. Maximi scholia, Pachymerae paraphrasis in epistolas, et authores varii qui aut vitam S. Dionysii descripserunt, aut dignitatem ipsius areopagiticam asseruerunt, continentur, opera ... Petri Lansselii et Balthasaris Corderii : accessit nunc primum Areopagitae defensio adversus haereticum calvinistam, per... D. Ioannem de Chaumont / Tomus II.",
+        "author": "[s.n.]",
+        "date": "1644",
+        "year": 1644,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/2842318",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/2842318/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "duplicate",
+      "existingId": "6985ca74c3d506385a1383b8",
+      "error": "Duplicate detected (title_author): matches \"Recueil précieux de la maçonnerie adonhiramite\"",
+      "candidate": {
+        "erara_id": "3178659",
+        "title": "Recueil précieux de la maçonnerie adonhiramite ...",
+        "author": "Guillemain de Saint-Victor, Louis",
+        "date": "1786",
+        "year": 1786,
+        "language": "fre",
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/3178659",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/3178659/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a6df71729295096fbb2",
+      "pages": 855,
+      "candidate": {
+        "erara_id": "3464223",
+        "title": "Cérémonies et coutumes religieuses de tous les peuples du monde : avec une explication historique, &amp; quelques dissertations curieuses / [Volume I.]",
+        "author": "[s.n.]",
+        "date": "1723",
+        "year": 1723,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/3464223",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/3464223/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a73f71729295096ff0c",
+      "pages": 826,
+      "candidate": {
+        "erara_id": "3465080",
+        "title": "Cérémonies et coutumes religieuses de tous les peuples du monde : avec une explication historique, &amp; quelques dissertations curieuses / [Volume II.]",
+        "author": "[s.n.]",
+        "date": "1723",
+        "year": 1723,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/3465080",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/3465080/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a78f717292950970249",
+      "pages": 539,
+      "candidate": {
+        "erara_id": "3465906",
+        "title": "Cérémonies et coutumes religieuses de tous les peuples du monde : avec une explication historique, &amp; quelques dissertations curieuses / [Volume III.]",
+        "author": "[s.n.]",
+        "date": "1723",
+        "year": 1723,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/3465906",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/3465906/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a83f717292950970467",
+      "pages": 517,
+      "candidate": {
+        "erara_id": "3472443",
+        "title": "Cérémonies et coutumes religieuses des peuples idolatres : avec une explication historique, &amp; quelques dissertations curieuses / Tome premier.",
+        "author": "[s.n.]",
+        "date": "1723",
+        "year": 1723,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/3472443",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/3472443/manifest",
+        "match_type": "new"
+      }
+    },
+    {
+      "status": "imported",
+      "bookId": "6a100a94f71729295097066f",
+      "pages": 628,
+      "candidate": {
+        "erara_id": "3472963",
+        "title": "Cérémonies et coutumes religieuses des peuples idolatres : avec une explication historique, &amp; quelques dissertations curieuses / Tome second.",
+        "author": "[s.n.]",
+        "date": "1723",
+        "year": 1723,
+        "language": null,
+        "rights": "PDM 1.0",
+        "source_url": "https://www.e-rara.ch/content/titleinfo/3472963",
+        "manifest_url": "https://www.e-rara.ch/i3f/v21/3472963/manifest",
+        "match_type": "new"
+      }
+    }
+  ]
+}

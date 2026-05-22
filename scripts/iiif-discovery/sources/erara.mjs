@@ -124,6 +124,7 @@ function parseOAIResponse(xml) {
         doi,
         rights,
         languages,
+        oai_set: OAI_SET,
       },
     });
   }
