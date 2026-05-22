@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-22T09:15:52.502Z",
+  "generated_at": "2026-05-22T09:59:23.920Z",
   "oai_set": "cgj",
   "jung_count": 345,
   "matched_count": 151,
@@ -25,12 +25,12 @@
             "printer": "Ende, Valentin am",
             "shelf_mark": "A",
             "ustc_sn": 2137504,
-            "_normTitle": "triumph wagen antimonii",
-            "_normAuthor": "basilius valentinus"
+            "_normTitle": "triumf wagen antimonii",
+            "_normAuthor": "basilius ualentinus"
           },
           "score": 9,
           "titleShared": [
-            "triumph",
+            "triumf",
             "wagen",
             "antimonii"
           ],
@@ -48,12 +48,12 @@
             "printer": "Popporeich, Jakob|Bärwald, Zacharias",
             "shelf_mark": "A",
             "ustc_sn": 2078936,
-            "_normTitle": "triumph wagen antimonii",
-            "_normAuthor": "basilius valentinus"
+            "_normTitle": "triumf wagen antimonii",
+            "_normAuthor": "basilius ualentinus"
           },
           "score": 7,
           "titleShared": [
-            "triumph",
+            "triumf",
             "wagen",
             "antimonii"
           ],
@@ -82,7 +82,7 @@
             "printer": "Lichtenthaler, Abraham|Wust, Balthasar Christoph",
             "shelf_mark": "Q",
             "ustc_sn": null,
-            "_normTitle": "kabbala denudata seu doctrina hebraeorum transendentalis et metaphysica atque theologica",
+            "_normTitle": "kabbala denudata seu doctrina hebreorum transendentalis et metafisica atque theologica",
             "_normAuthor": ""
           },
           "score": 17,
@@ -90,8 +90,8 @@
             "kabbala",
             "denudata",
             "doctrina",
-            "hebraeorum",
-            "metaphysica",
+            "hebreorum",
+            "metafisica",
             "atque",
             "theologica"
           ],
@@ -120,7 +120,7 @@
             "printer": "Lichtenthaler, Abraham|Wust, Balthasar Christoph",
             "shelf_mark": "Q",
             "ustc_sn": null,
-            "_normTitle": "kabbala denudata seu doctrina hebraeorum transendentalis et metaphysica atque theologica",
+            "_normTitle": "kabbala denudata seu doctrina hebreorum transendentalis et metafisica atque theologica",
             "_normAuthor": ""
           },
           "score": 17,
@@ -128,8 +128,8 @@
             "kabbala",
             "denudata",
             "doctrina",
-            "hebraeorum",
-            "metaphysica",
+            "hebreorum",
+            "metafisica",
             "atque",
             "theologica"
           ],
@@ -158,8 +158,8 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "aurea catena homeri das ist eine beschreibung von dem ursprung der natur",
-            "_normAuthor": "kirchweger anton joseph"
+            "_normTitle": "aurea catena homeri das ist eine beschreibung uon dem ursprung der natur",
+            "_normAuthor": "kirchweger anton iosef"
           },
           "score": 19,
           "titleShared": [
@@ -173,7 +173,7 @@
           "authorShared": [
             "kirchweger",
             "anton",
-            "joseph"
+            "iosef"
           ],
           "yearScore": 1
         },
@@ -189,7 +189,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "aurea catena homeri",
-            "_normAuthor": "kirchweger anton joseph"
+            "_normAuthor": "kirchweger anton iosef"
           },
           "score": 15,
           "titleShared": [
@@ -200,7 +200,7 @@
           "authorShared": [
             "kirchweger",
             "anton",
-            "joseph"
+            "iosef"
           ],
           "yearScore": 3
         }
@@ -236,7 +236,7 @@
             "printer": "Lichtenthaler, Abraham|Wust, Balthasar Christoph",
             "shelf_mark": "Q",
             "ustc_sn": null,
-            "_normTitle": "kabbala denudata seu doctrina hebraeorum transendentalis et metaphysica atque theologica",
+            "_normTitle": "kabbala denudata seu doctrina hebreorum transendentalis et metafisica atque theologica",
             "_normAuthor": ""
           },
           "score": 17,
@@ -244,8 +244,8 @@
             "kabbala",
             "denudata",
             "doctrina",
-            "hebraeorum",
-            "metaphysica",
+            "hebreorum",
+            "metafisica",
             "atque",
             "theologica"
           ],
@@ -275,7 +275,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "alchimia opuscula complura",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 9,
           "titleShared": [
@@ -297,7 +297,7 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 689790,
-            "_normTitle": "alchimia opuscula apertorium magica naturalis de secretis naturae",
+            "_normTitle": "alchimia opuscula apertorium magica naturalis de secretis nature",
             "_normAuthor": "lull ramon"
           },
           "score": 5,
@@ -360,15 +360,15 @@
             "printer": null,
             "shelf_mark": "Q",
             "ustc_sn": 2694724,
-            "_normTitle": "adumbratio kabbalae christianae id est syncatabasis hebraizans",
-            "_normAuthor": "helmont franciscus mercurius van"
+            "_normTitle": "adumbratio kabbale christiane id est sincatabasis hebraizans",
+            "_normAuthor": "helmont franciscus mercurius uan"
           },
           "score": 19,
           "titleShared": [
             "adumbratio",
-            "kabbalae",
-            "christianae",
-            "syncatabasis",
+            "kabbale",
+            "christiane",
+            "sincatabasis",
             "hebraizans"
           ],
           "authorShared": [
@@ -400,13 +400,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2026933,
-            "_normTitle": "aurei velleris oder der guldin schatz und kunstkammer tractatus iii",
+            "_normTitle": "aurei uelleris oder der guldin schatz und kunstkammer tractatus iii",
             "_normAuthor": "trissmosin salomon"
           },
           "score": 17,
           "titleShared": [
             "aurei",
-            "velleris",
+            "uelleris",
             "guldin",
             "schatz",
             "kunstkammer",
@@ -428,13 +428,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 4040606,
-            "_normTitle": "aurei velleris oder der guldin schatz und kunstkammer tractatus ii",
-            "_normAuthor": "trissmosin salomon paracelsus theophrastus korndorff bartholomeus"
+            "_normTitle": "aurei uelleris oder der guldin schatz und kunstkammer tractatus ii",
+            "_normAuthor": "trissmosin salomon paracelsus theofrastus korndorff bartholomeus"
           },
           "score": 16,
           "titleShared": [
             "aurei",
-            "velleris",
+            "uelleris",
             "guldin",
             "schatz",
             "kunstkammer",
@@ -456,13 +456,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 4040606,
-            "_normTitle": "aurei velleris oder der guldin schatz und kunstkammer tractatus iii",
+            "_normTitle": "aurei uelleris oder der guldin schatz und kunstkammer tractatus iii",
             "_normAuthor": "trissmosin salomon"
           },
           "score": 16,
           "titleShared": [
             "aurei",
-            "velleris",
+            "uelleris",
             "guldin",
             "schatz",
             "kunstkammer",
@@ -495,16 +495,16 @@
             "printer": "Waldkirch, Konrad von",
             "shelf_mark": "A|geplaatst onder Ars",
             "ustc_sn": null,
-            "_normTitle": "artis auriferae quam chemiam vocant volumen prium turbam philosophorum artis auriferae quam chemiam vocant volumen secundum de re metallica",
+            "_normTitle": "artis aurifere quam chemiam uocant uolumen prium turbam filosoforum artis aurifere quam chemiam uocant uolumen secundum de re metallica",
             "_normAuthor": "morienus"
           },
           "score": 15,
           "titleShared": [
             "artis",
-            "auriferae",
+            "aurifere",
             "chemiam",
-            "vocant",
-            "volumen",
+            "uocant",
+            "uolumen",
             "secundum"
           ],
           "authorShared": [],
@@ -552,10 +552,10 @@
             "printer": null,
             "shelf_mark": "A|geplaatst onder Ars",
             "ustc_sn": 613176,
-            "_normTitle": "ars chemica septem tractatus tabula smaragdina studium consilii coniugii de massa solis et lunae",
+            "_normTitle": "ars chemica septem tractatus tabula smaragdina studium consilii coniugii de massa solis et lune",
             "_normAuthor": "hermes trismegistus"
           },
-          "score": 27,
+          "score": 25,
           "titleShared": [
             "chemica",
             "septem",
@@ -566,8 +566,7 @@
             "consilii",
             "coniugii",
             "massa",
-            "solis",
-            "lunae"
+            "solis"
           ],
           "authorShared": [
             "hermes"
@@ -636,17 +635,17 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 47254,
-            "_normTitle": "tableau des riches inventions qui sont representees dans le songe de poliphile",
+            "_normTitle": "tableau des riches inuentions qui sont representees dans le songe de polifile",
             "_normAuthor": "colonna francesco"
           },
           "score": 15,
           "titleShared": [
             "tableau",
             "riches",
-            "inventions",
+            "inuentions",
             "representees",
             "songe",
-            "poliphile"
+            "polifile"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -693,19 +692,19 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
-            "_normAuthor": "richebourg jean maugin de"
+            "_normTitle": "bibliotheque des filosofes chimiques",
+            "_normAuthor": "richebourg iean maugin de"
           },
           "score": 15,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [
             "maugin",
             "richebourg",
-            "jean"
+            "iean"
           ],
           "yearScore": 3
         },
@@ -720,13 +719,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -743,13 +742,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -777,13 +776,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -800,13 +799,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -823,13 +822,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
-            "_normAuthor": "richebourg jean maugin de"
+            "_normTitle": "bibliotheque des filosofes chimiques",
+            "_normAuthor": "richebourg iean maugin de"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -857,13 +856,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -880,13 +879,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -903,13 +902,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
-            "_normAuthor": "richebourg jean maugin de"
+            "_normTitle": "bibliotheque des filosofes chimiques",
+            "_normAuthor": "richebourg iean maugin de"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -937,13 +936,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -960,13 +959,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
+            "_normTitle": "bibliotheque des filosofes chimiques",
             "_normAuthor": "salmon william"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -983,13 +982,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "bibliotheque des philosophes chimiques",
-            "_normAuthor": "richebourg jean maugin de"
+            "_normTitle": "bibliotheque des filosofes chimiques",
+            "_normAuthor": "richebourg iean maugin de"
           },
           "score": 9,
           "titleShared": [
             "bibliotheque",
-            "philosophes",
+            "filosofes",
             "chimiques"
           ],
           "authorShared": [],
@@ -1067,13 +1066,13 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": null,
-            "_normTitle": "quaestiones theosophicae oder betrachtung gottlicher offenbarung",
-            "_normAuthor": "bohme jacob"
+            "_normTitle": "questiones theosofice oder betrachtung gottlicher offenbarung",
+            "_normAuthor": "bohme iacob"
           },
           "score": 15,
           "titleShared": [
-            "quaestiones",
-            "theosophicae",
+            "questiones",
+            "theosofice",
             "betrachtung",
             "gottlicher",
             "offenbarung"
@@ -1105,13 +1104,13 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": null,
-            "_normTitle": "vita et scriptis jacobi boehmii oder ausfuehrlich erlaeuterter historischer bericht",
+            "_normTitle": "uita et scriptis iacobi behmii oder ausfuehrlich erleuterter historischer bericht",
             "_normAuthor": ""
           },
           "score": 11,
           "titleShared": [
             "scriptis",
-            "jacobi",
+            "iacobi",
             "historischer",
             "bericht"
           ],
@@ -1140,14 +1139,14 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": null,
-            "_normTitle": "epistolae theosophicae oder theosophische send briefe",
-            "_normAuthor": "boehme jacob"
+            "_normTitle": "epistole theosofice oder theosofische send briefe",
+            "_normAuthor": "behme iacob"
           },
           "score": 11,
           "titleShared": [
-            "epistolae",
-            "theosophicae",
-            "theosophische",
+            "epistole",
+            "theosofice",
+            "theosofische",
             "briefe"
           ],
           "authorShared": [],
@@ -1205,8 +1204,8 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": 5098079,
-            "_normTitle": "von der menschwerdung jesu christi",
-            "_normAuthor": "boehme jacob"
+            "_normTitle": "uon der menschwerdung iesu christi",
+            "_normAuthor": "behme iacob"
           },
           "score": 7,
           "titleShared": [
@@ -1238,12 +1237,12 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": 1837159,
-            "_normTitle": "viertzig fragen von der seelen urstand",
-            "_normAuthor": "boehme jacob"
+            "_normTitle": "uiertzig fragen uon der seelen urstand",
+            "_normAuthor": "behme iacob"
           },
           "score": 11,
           "titleShared": [
-            "viertzig",
+            "uiertzig",
             "fragen",
             "seelen",
             "urstand"
@@ -1303,8 +1302,8 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": 5081159,
-            "_normTitle": "signatura rerum das ist von der gebuhrt und bezeichnung aller wesen",
-            "_normAuthor": "boehme jacob"
+            "_normTitle": "signatura rerum das ist uon der gebuhrt und bezeichnung aller wesen",
+            "_normAuthor": "behme iacob"
           },
           "score": 15,
           "titleShared": [
@@ -1341,7 +1340,7 @@
             "shelf_mark": "M",
             "ustc_sn": null,
             "_normTitle": "weeg zu christo",
-            "_normAuthor": "boehme jacob"
+            "_normAuthor": "behme iacob"
           },
           "score": 5,
           "titleShared": [
@@ -1372,17 +1371,17 @@
             "printer": null,
             "shelf_mark": "H folio",
             "ustc_sn": null,
-            "_normTitle": "symbolographia sive de arte symbolica",
-            "_normAuthor": "bosch jacob"
+            "_normTitle": "simbolografia siue de arte simbolica",
+            "_normAuthor": "bosch iacob"
           },
           "score": 11,
           "titleShared": [
-            "symbolographia",
-            "symbolica"
+            "simbolografia",
+            "simbolica"
           ],
           "authorShared": [
             "bosch",
-            "jacob"
+            "iacob"
           ],
           "yearScore": 3
         }
@@ -1438,7 +1437,7 @@
             "printer": "[Gaubisch, Jakob I]",
             "shelf_mark": "A",
             "ustc_sn": 2079749,
-            "_normTitle": "gemma gemmarum alchimistarum oder erleuterung der parabolischen und philosophischen schrifften fratris basilii ausslegung rythmorum basilii",
+            "_normTitle": "gemma gemmarum alchimistarum oder erleuterung der parabolischen und filosofischen schrifften fratris basilii ausslegung rithmorum basilii",
             "_normAuthor": "meisner lorentz schuler conrad"
           },
           "score": 27,
@@ -1448,12 +1447,12 @@
             "alchimistarum",
             "erleuterung",
             "parabolischen",
-            "philosophischen",
+            "filosofischen",
             "schrifften",
             "fratris",
             "basilii",
             "ausslegung",
-            "rythmorum"
+            "rithmorum"
           ],
           "authorShared": [
             "meisner"
@@ -1482,7 +1481,7 @@
             "printer": "[Gaubisch, Jakob I]",
             "shelf_mark": "A",
             "ustc_sn": 2079749,
-            "_normTitle": "gemma gemmarum alchimistarum oder erleuterung der parabolischen und philosophischen schrifften fratris basilii ausslegung rythmorum basilii",
+            "_normTitle": "gemma gemmarum alchimistarum oder erleuterung der parabolischen und filosofischen schrifften fratris basilii ausslegung rithmorum basilii",
             "_normAuthor": "meisner lorentz schuler conrad"
           },
           "score": 25,
@@ -1492,12 +1491,12 @@
             "alchimistarum",
             "erleuterung",
             "parabolischen",
-            "philosophischen",
+            "filosofischen",
             "schrifften",
             "fratris",
             "basilii",
             "ausslegung",
-            "rythmorum"
+            "rithmorum"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -1524,7 +1523,7 @@
             "printer": "[Gaubisch, Jakob I]",
             "shelf_mark": "A",
             "ustc_sn": 2079749,
-            "_normTitle": "gemma gemmarum alchimistarum oder erleuterung der parabolischen und philosophischen schrifften fratris basilii ausslegung rythmorum basilii",
+            "_normTitle": "gemma gemmarum alchimistarum oder erleuterung der parabolischen und filosofischen schrifften fratris basilii ausslegung rithmorum basilii",
             "_normAuthor": "meisner lorentz schuler conrad"
           },
           "score": 25,
@@ -1534,12 +1533,12 @@
             "alchimistarum",
             "erleuterung",
             "parabolischen",
-            "philosophischen",
+            "filosofischen",
             "schrifften",
             "fratris",
             "basilii",
             "ausslegung",
-            "rythmorum"
+            "rithmorum"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -1566,16 +1565,16 @@
             "printer": "Hynitzsch, Erasmus",
             "shelf_mark": "A  Geplaatst onder Basilius Valentinus",
             "ustc_sn": 509685,
-            "_normTitle": "valete uber den tractat der arcanorum basilii valentini",
+            "_normTitle": "ualete uber den tractat der arcanorum basilii ualentini",
             "_normAuthor": "rheinhart sr hans christoff"
           },
           "score": 15,
           "titleShared": [
-            "valete",
+            "ualete",
             "tractat",
             "arcanorum",
             "basilii",
-            "valentini"
+            "ualentini"
           ],
           "authorShared": [
             "hans"
@@ -1664,8 +1663,8 @@
             "printer": null,
             "shelf_mark": "Rv",
             "ustc_sn": null,
-            "_normTitle": "compass der weisen von einem mitverwandten der innern verfassung der achten und rechten freymaurerey beschrieben",
-            "_normAuthor": "jolyfief augustin anton pocquieres de"
+            "_normTitle": "compass der weisen uon einem mituerwandten der innern uerfassung der achten und rechten freimaurerei beschrieben",
+            "_normAuthor": "iolifief augustin anton pocquieres de"
           },
           "score": 7,
           "titleShared": [
@@ -1686,8 +1685,8 @@
             "printer": null,
             "shelf_mark": "Rv",
             "ustc_sn": null,
-            "_normTitle": "compass der weisen von einen mitverwandten der innern verfassung der achten und rechten freymaurerey beschrieben",
-            "_normAuthor": "jolyfief augustin anton pocquieres de"
+            "_normTitle": "compass der weisen uon einen mituerwandten der innern uerfassung der achten und rechten freimaurerei beschrieben",
+            "_normAuthor": "iolifief augustin anton pocquieres de"
           },
           "score": 5,
           "titleShared": [
@@ -1729,15 +1728,15 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6129822,
-            "_normTitle": "pilote de l onde vive",
-            "_normAuthor": "eyquem de martineau mathurin"
+            "_normTitle": "pilote de l onde uiue",
+            "_normAuthor": "eiquem de martineau mathurin"
           },
           "score": 11,
           "titleShared": [
             "pilote"
           ],
           "authorShared": [
-            "eyquem",
+            "eiquem",
             "martineau",
             "mathurin"
           ],
@@ -1765,13 +1764,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "drey curieuse chymische tractatlein guldene rose brunn der weissheit und erkanntnis der natur blut der natur",
-            "_normAuthor": "anonymous"
+            "_normTitle": "drei curieuse chimische tractatlein guldene rose brunn der weissheit und erkanntnis der natur blut der natur",
+            "_normAuthor": "anonimous"
           },
           "score": 17,
           "titleShared": [
             "curieuse",
-            "chymische",
+            "chimische",
             "tractatlein",
             "guldene",
             "brunn",
@@ -1792,13 +1791,13 @@
             "printer": "Pfeiffer, Christian Albrecht",
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "drey curieuse chymische tractatlein paradeis spiegel der teutschen schutzen hoff beschreibung des grossen geheimnisses des steins der weisen",
+            "_normTitle": "drei curieuse chimische tractatlein paradeis spiegel der teutschen schutzen hoff beschreibung des grossen geheimnisses des steins der weisen",
             "_normAuthor": "muller ambrosius"
           },
           "score": 8,
           "titleShared": [
             "curieuse",
-            "chymische",
+            "chimische",
             "tractatlein"
           ],
           "authorShared": [],
@@ -1827,7 +1826,7 @@
             "shelf_mark": "A",
             "ustc_sn": 1811901,
             "_normTitle": "aurum superius et inferius",
-            "_normAuthor": "balduinus christianus adolphus"
+            "_normAuthor": "balduinus christianus adolfus"
           },
           "score": 9,
           "titleShared": [
@@ -1850,7 +1849,7 @@
             "shelf_mark": "A",
             "ustc_sn": 1811901,
             "_normTitle": "aurum superius et inferius",
-            "_normAuthor": "balduinus christianus adolphus"
+            "_normAuthor": "balduinus christianus adolfus"
           },
           "score": 9,
           "titleShared": [
@@ -1883,12 +1882,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2582174,
-            "_normTitle": "phosphorus hermeticus",
-            "_normAuthor": "balduinus christianus adolphus"
+            "_normTitle": "fosforus hermeticus",
+            "_normAuthor": "balduinus christianus adolfus"
           },
           "score": 7,
           "titleShared": [
-            "phosphorus",
+            "fosforus",
             "hermeticus"
           ],
           "authorShared": [],
@@ -1916,13 +1915,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "fables egyptiennes et grecques",
-            "_normAuthor": "pernety antoine joseph"
+            "_normTitle": "fables egiptiennes et grecques",
+            "_normAuthor": "perneti antoine iosef"
           },
           "score": 9,
           "titleShared": [
             "fables",
-            "egyptiennes",
+            "egiptiennes",
             "grecques"
           ],
           "authorShared": [],
@@ -1951,7 +1950,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "aureum seculum patefactum oder die eroffnete guldene zeit",
-            "_normAuthor": "chrysandrus alitophilus"
+            "_normAuthor": "chrisandrus alitofilus"
           },
           "score": 15,
           "titleShared": [
@@ -1962,7 +1961,7 @@
             "guldene"
           ],
           "authorShared": [
-            "alitophilus"
+            "alitofilus"
           ],
           "yearScore": 3
         }
@@ -2038,8 +2037,8 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": 662469,
-            "_normTitle": "hexastichon sebastiani brant in memorabiles evangelistarum figuras",
-            "_normAuthor": "petrus von rosenheim"
+            "_normTitle": "hexastichon sebastiani brant in memorabiles euangelistarum figuras",
+            "_normAuthor": "petrus uon rosenheim"
           },
           "score": 16,
           "titleShared": [
@@ -2047,7 +2046,7 @@
             "sebastiani",
             "brant",
             "memorabiles",
-            "evangelistarum",
+            "euangelistarum",
             "figuras"
           ],
           "authorShared": [
@@ -2066,8 +2065,8 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": 662469,
-            "_normTitle": "hexastichon sebastiani brant n memorabiles evangelistarum figuras",
-            "_normAuthor": "petrus von rosenheim"
+            "_normTitle": "hexastichon sebastiani brant n memorabiles euangelistarum figuras",
+            "_normAuthor": "petrus uon rosenheim"
           },
           "score": 16,
           "titleShared": [
@@ -2075,7 +2074,7 @@
             "sebastiani",
             "brant",
             "memorabiles",
-            "evangelistarum",
+            "euangelistarum",
             "figuras"
           ],
           "authorShared": [
@@ -2105,19 +2104,19 @@
             "printer": "Görlin, Johann",
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "chymisches zwey blat das ist zwey vortreffliche chymische tractatlein eroffneter eingang zu dess konigs verschlossenem pallaste von dem stein der weisen",
-            "_normAuthor": "starkey george ferrarius"
+            "_normTitle": "chimisches zwei blat das ist zwei uortreffliche chimische tractatlein eroffneter eingang zu dess konigs uerschlossenem pallaste uon dem stein der weisen",
+            "_normAuthor": "starkei george ferrarius"
           },
           "score": 25,
           "titleShared": [
-            "chymisches",
-            "vortreffliche",
-            "chymische",
+            "chimisches",
+            "uortreffliche",
+            "chimische",
             "tractatlein",
             "eroffneter",
             "eingang",
             "konigs",
-            "verschlossenem",
+            "uerschlossenem",
             "pallaste",
             "stein",
             "weisen"
@@ -2136,18 +2135,18 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "chymisches zwey blat das ist zwey vortreffliche chymische tractatlein eroeffneter eingang zu dess konigs verschlossenem pallaste vom dem stein der weisen",
-            "_normAuthor": "starkey george ferrarius"
+            "_normTitle": "chimisches zwei blat das ist zwei uortreffliche chimische tractatlein ereffneter eingang zu dess konigs uerschlossenem pallaste uom dem stein der weisen",
+            "_normAuthor": "starkei george ferrarius"
           },
           "score": 22,
           "titleShared": [
-            "chymisches",
-            "vortreffliche",
-            "chymische",
+            "chimisches",
+            "uortreffliche",
+            "chimische",
             "tractatlein",
             "eingang",
             "konigs",
-            "verschlossenem",
+            "uerschlossenem",
             "pallaste",
             "stein",
             "weisen"
@@ -2177,29 +2176,27 @@
             "printer": "Richter, Andreas",
             "shelf_mark": "A",
             "ustc_sn": 2651353,
-            "_normTitle": "vier chymische tractatlein lucens lux in tenebris das ist das hellscheinende licht in finsternis de vitriolo ejus oleo secretissimo das ist von dem vitriol und seinem geheimesten oehle de animali rationali von dem venunfftigen thiere aurum vitae oder gold des lebens",
-            "_normAuthor": "anonymous"
+            "_normTitle": "uier chimische tractatlein lucens lux in tenebris das ist das hellscheinende licht in finsternis de uitriolo eius oleo secretissimo das ist uon dem uitriol und seinem geheimesten ehle de animali rationali uon dem uenunfftigen thiere aurum uite oder gold des lebens",
+            "_normAuthor": "anonimous"
           },
-          "score": 41,
+          "score": 37,
           "titleShared": [
-            "chymische",
+            "chimische",
             "tractatlein",
             "lucens",
             "tenebris",
             "hellscheinende",
             "licht",
             "finsternis",
-            "vitriolo",
+            "uitriolo",
             "secretissimo",
-            "vitriol",
+            "uitriol",
             "seinem",
             "geheimesten",
-            "oehle",
             "animali",
             "rationali",
             "thiere",
             "aurum",
-            "vitae",
             "lebens"
           ],
           "authorShared": [],
@@ -2267,8 +2264,8 @@
             "printer": null,
             "shelf_mark": "R",
             "ustc_sn": 2071831,
-            "_normTitle": "tractatus posthumus sive ulysses una cum annexis tractatibus de fraternitate roseae crucis",
-            "_normAuthor": "maier michael"
+            "_normTitle": "tractatus posthumus siue ulisses una cum annexis tractatibus de fraternitate rosee crucis",
+            "_normAuthor": "maier michel"
           },
           "score": 5,
           "titleShared": [
@@ -2300,13 +2297,13 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 6016566,
-            "_normTitle": "symbolica aegyptiorum sapientia",
+            "_normTitle": "simbolica egiptiorum sapientia",
             "_normAuthor": "caussinus nicolaus"
           },
           "score": 9,
           "titleShared": [
-            "symbolica",
-            "aegyptiorum",
+            "simbolica",
+            "egiptiorum",
             "sapientia"
           ],
           "authorShared": [],
@@ -2323,13 +2320,13 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 6016566,
-            "_normTitle": "symbolica aegyptiorum sapientia",
+            "_normTitle": "simbolica egiptiorum sapientia",
             "_normAuthor": "caussinus nicolaus"
           },
           "score": 7,
           "titleShared": [
-            "symbolica",
-            "aegyptiorum",
+            "simbolica",
+            "egiptiorum",
             "sapientia"
           ],
           "authorShared": [],
@@ -2346,13 +2343,13 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 6814812,
-            "_normTitle": "symbolica aegyptiorum sapientia",
+            "_normTitle": "simbolica egiptiorum sapientia",
             "_normAuthor": "caussinus nicolaus"
           },
           "score": 7,
           "titleShared": [
-            "symbolica",
-            "aegyptiorum",
+            "simbolica",
+            "egiptiorum",
             "sapientia"
           ],
           "authorShared": [],
@@ -2380,13 +2377,13 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 6016179,
-            "_normTitle": "polyhistor symbolicus",
+            "_normTitle": "polihistor simbolicus",
             "_normAuthor": "caussinus nicolaus"
           },
           "score": 7,
           "titleShared": [
-            "polyhistor",
-            "symbolicus"
+            "polihistor",
+            "simbolicus"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -2402,13 +2399,13 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 6016179,
-            "_normTitle": "polyhistor symbolicus",
+            "_normTitle": "polihistor simbolicus",
             "_normAuthor": "caussinus nicolaus"
           },
           "score": 5,
           "titleShared": [
-            "polyhistor",
-            "symbolicus"
+            "polihistor",
+            "simbolicus"
           ],
           "authorShared": [],
           "yearScore": 1
@@ -2424,13 +2421,13 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 2133651,
-            "_normTitle": "polyhistor symbolicus",
+            "_normTitle": "polihistor simbolicus",
             "_normAuthor": "caussinus nicolaus"
           },
           "score": 5,
           "titleShared": [
-            "polyhistor",
-            "symbolicus"
+            "polihistor",
+            "simbolicus"
           ],
           "authorShared": [],
           "yearScore": 1
@@ -2477,14 +2474,14 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "geheimniss der hermetischen philosophie",
-            "_normAuthor": "anonymous"
+            "_normTitle": "geheimniss der hermetischen filosofie",
+            "_normAuthor": "anonimous"
           },
           "score": 9,
           "titleShared": [
             "geheimniss",
             "hermetischen",
-            "philosophie"
+            "filosofie"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -2512,7 +2509,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "geheimniss der natur des grossen und kleinen bauers",
-            "_normAuthor": "grasshoff johann"
+            "_normAuthor": "grasshoff iohann"
           },
           "score": 13,
           "titleShared": [
@@ -2547,7 +2544,7 @@
             "printer": null,
             "shelf_mark": "Alch F",
             "ustc_sn": null,
-            "_normTitle": "hermann fictulds abhandlung von der alchymie und derselben gewissheit",
+            "_normTitle": "hermann fictulds abhandlung uon der alchimie und derselben gewissheit",
             "_normAuthor": "fictuld hermann"
           },
           "score": 19,
@@ -2555,7 +2552,7 @@
             "hermann",
             "fictulds",
             "abhandlung",
-            "alchymie",
+            "alchimie",
             "derselben",
             "gewissheit"
           ],
@@ -2597,8 +2594,8 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "geheimniss von dem salz",
-            "_normAuthor": "anonymous"
+            "_normTitle": "geheimniss uon dem salz",
+            "_normAuthor": "anonimous"
           },
           "score": 5,
           "titleShared": [
@@ -2629,7 +2626,7 @@
             "printer": "Schreiber, Georg Friedrich",
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "azoth et ignis das ist das wahre elementarische wasser und feuer aureum vellus oder goldenes vliess",
+            "_normTitle": "azoth et ignis das ist das wahre elementarische wasser und feuer aureum uellus oder goldenes uliess",
             "_normAuthor": "fictuld hermann"
           },
           "score": 27,
@@ -2641,9 +2638,9 @@
             "wasser",
             "feuer",
             "aureum",
-            "vellus",
+            "uellus",
             "goldenes",
-            "vliess"
+            "uliess"
           ],
           "authorShared": [
             "fictuld",
@@ -2713,16 +2710,16 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "langst gewunschte und versprochene chymisch philosophische probier stein",
+            "_normTitle": "langst gewunschte und uersprochene chimisch filosofische probier stein",
             "_normAuthor": "fictuld hermann"
           },
           "score": 21,
           "titleShared": [
             "langst",
             "gewunschte",
-            "versprochene",
-            "chymisch",
-            "philosophische",
+            "uersprochene",
+            "chimisch",
+            "filosofische",
             "probier",
             "stein"
           ],
@@ -2755,7 +2752,7 @@
             "shelf_mark": "A folio",
             "ustc_sn": 1819648,
             "_normTitle": "escalier des sages",
-            "_normAuthor": "coenders van helpen barend"
+            "_normAuthor": "cenders uan helpen barend"
           },
           "score": 9,
           "titleShared": [
@@ -2763,7 +2760,7 @@
             "sages"
           ],
           "authorShared": [
-            "coenders",
+            "cenders",
             "helpen"
           ],
           "yearScore": 1
@@ -2800,8 +2797,8 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 628923,
-            "_normTitle": "alchemia dialogi duo sententia lignum vitae",
-            "_normAuthor": "bracesco giovanni geber lull ramon"
+            "_normTitle": "alchemia dialogi duo sententia lignum uite",
+            "_normAuthor": "bracesco giouanni geber lull ramon"
           },
           "score": 11,
           "titleShared": [
@@ -2810,7 +2807,7 @@
           ],
           "authorShared": [
             "bracesco",
-            "giovanni"
+            "giouanni"
           ],
           "yearScore": 3
         }
@@ -2836,7 +2833,7 @@
             "printer": "Galler, Hieronymus",
             "shelf_mark": "H folio",
             "ustc_sn": 2030476,
-            "_normTitle": "utriusque cosmi maioris scilicet minoris metaphysica physica atque technica historia tomus primus de macrocosmi historia",
+            "_normTitle": "utriusque cosmi maioris scilicet minoris metafisica fisica atque technica historia tomus primus de macrocosmi historia",
             "_normAuthor": "fludd robert"
           },
           "score": 27,
@@ -2846,8 +2843,8 @@
             "maioris",
             "scilicet",
             "minoris",
-            "metaphysica",
-            "physica",
+            "metafisica",
+            "fisica",
             "atque",
             "technica",
             "historia"
@@ -2869,7 +2866,7 @@
             "printer": "Galler, Hieronymus",
             "shelf_mark": "H folio",
             "ustc_sn": 2030476,
-            "_normTitle": "utriusque cosmi maioris scilicet minoris metaphysica physica atque technica historia tomus primus de macrocosmi historia",
+            "_normTitle": "utriusque cosmi maioris scilicet minoris metafisica fisica atque technica historia tomus primus de macrocosmi historia",
             "_normAuthor": "fludd robert"
           },
           "score": 27,
@@ -2879,8 +2876,8 @@
             "maioris",
             "scilicet",
             "minoris",
-            "metaphysica",
-            "physica",
+            "metafisica",
+            "fisica",
             "atque",
             "technica",
             "historia"
@@ -2978,21 +2975,21 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6037421,
-            "_normTitle": "enchiridion physicae restitutae arcanum hermeticae philosophiae opus",
-            "_normAuthor": "espagnet jean d"
+            "_normTitle": "enchiridion fisice restitute arcanum hermetice filosofie opus",
+            "_normAuthor": "espagnet iean d"
           },
           "score": 17,
           "titleShared": [
             "enchiridion",
-            "physicae",
-            "restitutae",
-            "philosophiae",
+            "fisice",
+            "restitute",
+            "filosofie",
             "arcanum",
-            "hermeticae"
+            "hermetice"
           ],
           "authorShared": [
             "espagnet",
-            "jean"
+            "iean"
           ],
           "yearScore": 1
         },
@@ -3007,18 +3004,18 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6004836,
-            "_normTitle": "enchiridion physicae restitutae",
-            "_normAuthor": "espagnet jean d"
+            "_normTitle": "enchiridion fisice restitute",
+            "_normAuthor": "espagnet iean d"
           },
           "score": 13,
           "titleShared": [
             "enchiridion",
-            "physicae",
-            "restitutae"
+            "fisice",
+            "restitute"
           ],
           "authorShared": [
             "espagnet",
-            "jean"
+            "iean"
           ],
           "yearScore": 3
         }
@@ -3064,8 +3061,8 @@
             "printer": "T.W",
             "shelf_mark": "R",
             "ustc_sn": 3062652,
-            "_normTitle": "anima magica abscondita or a discourse of the universall spirit of nature",
-            "_normAuthor": "vaughan thomas"
+            "_normTitle": "anima magica abscondita or a discourse of the uniuersall spirit of nature",
+            "_normAuthor": "uaughan thomas"
           },
           "score": 21,
           "titleShared": [
@@ -3073,12 +3070,12 @@
             "magica",
             "abscondita",
             "discourse",
-            "universall",
+            "uniuersall",
             "spirit",
             "nature"
           ],
           "authorShared": [
-            "vaughan",
+            "uaughan",
             "thomas"
           ],
           "yearScore": 3
@@ -3105,12 +3102,12 @@
             "printer": "T.W",
             "shelf_mark": "R",
             "ustc_sn": 3062287,
-            "_normTitle": "anthroposophia theomagica or a discourse of the nature of man and his state after death",
-            "_normAuthor": "vaughan thomas"
+            "_normTitle": "anthroposofia theomagica or a discourse of the nature of man and his state after death",
+            "_normAuthor": "uaughan thomas"
           },
           "score": 21,
           "titleShared": [
-            "anthroposophia",
+            "anthroposofia",
             "theomagica",
             "discourse",
             "nature",
@@ -3119,7 +3116,7 @@
             "death"
           ],
           "authorShared": [
-            "vaughan",
+            "uaughan",
             "thomas"
           ],
           "yearScore": 3
@@ -3196,15 +3193,15 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "hermetische triumph oder der siegende philosophische stein",
-            "_normAuthor": "limojon de saint didier alexandre toussaint de"
+            "_normTitle": "hermetische triumf oder der siegende filosofische stein",
+            "_normAuthor": "limoion de saint didier alexandre toussaint de"
           },
           "score": 13,
           "titleShared": [
             "hermetische",
-            "triumph",
+            "triumf",
             "siegende",
-            "philosophische",
+            "filosofische",
             "stein"
           ],
           "authorShared": [],
@@ -3232,19 +3229,19 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2132030,
-            "_normTitle": "viatorium spagyricum das ist ein gebenedeyter spagyrischer wegweiser",
-            "_normAuthor": "jamsthaler herbrandt"
+            "_normTitle": "uiatorium spagiricum das ist ein gebenedeiter spagirischer wegweiser",
+            "_normAuthor": "iamsthaler herbrandt"
           },
           "score": 17,
           "titleShared": [
-            "viatorium",
-            "spagyricum",
-            "gebenedeyter",
-            "spagyrischer",
+            "uiatorium",
+            "spagiricum",
+            "gebenedeiter",
+            "spagirischer",
             "wegweiser"
           ],
           "authorShared": [
-            "jamsthaler",
+            "iamsthaler",
             "herbrandt"
           ],
           "yearScore": 3
@@ -3292,7 +3289,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2615387,
             "_normTitle": "tractatus de natura salium oder aussfurliche beschreibung deren bekanten salien de signatura salium",
-            "_normAuthor": "glauber johann rudolph"
+            "_normAuthor": "glauber iohann rudolf"
           },
           "score": 27,
           "titleShared": [
@@ -3308,8 +3305,8 @@
           ],
           "authorShared": [
             "glauber",
-            "johann",
-            "rudolph"
+            "iohann",
+            "rudolf"
           ],
           "yearScore": 3
         },
@@ -3325,7 +3322,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2615387,
             "_normTitle": "tractatus de tribus principiis metallorum",
-            "_normAuthor": "glauber johann rudolph"
+            "_normAuthor": "glauber iohann rudolf"
           },
           "score": 11,
           "titleShared": [
@@ -3334,8 +3331,8 @@
           ],
           "authorShared": [
             "glauber",
-            "johann",
-            "rudolph"
+            "iohann",
+            "rudolf"
           ],
           "yearScore": 1
         },
@@ -3350,8 +3347,8 @@
             "printer": "Gentsch, Jakob",
             "shelf_mark": "A",
             "ustc_sn": 2685201,
-            "_normTitle": "tractatus de vero sale",
-            "_normAuthor": "nuysement jacques de"
+            "_normTitle": "tractatus de uero sale",
+            "_normAuthor": "nuisement iacques de"
           },
           "score": 3,
           "titleShared": [
@@ -3412,12 +3409,12 @@
             "printer": "Bayer, Elias Peter",
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "hermaphroditisches sonn und monds kind",
-            "_normAuthor": "brunnhofer johann augustin"
+            "_normTitle": "hermafroditisches sonn und monds kind",
+            "_normAuthor": "brunnhofer iohann augustin"
           },
           "score": 7,
           "titleShared": [
-            "hermaphroditisches",
+            "hermafroditisches",
             "monds"
           ],
           "authorShared": [],
@@ -3455,8 +3452,8 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2624181,
-            "_normTitle": "miraculi mundi continuatio darinnen die gantze natur entdecket und der weldt nackent und bloss vor augen gelegt",
-            "_normAuthor": "glauber johann rudolph"
+            "_normTitle": "miraculi mundi continuatio darinnen die gantze natur entdecket und der weldt nackent und bloss uor augen gelegt",
+            "_normAuthor": "glauber iohann rudolf"
           },
           "score": 14,
           "titleShared": [
@@ -3466,8 +3463,8 @@
           ],
           "authorShared": [
             "glauber",
-            "johann",
-            "rudolph"
+            "iohann",
+            "rudolf"
           ],
           "yearScore": 2
         }
@@ -3503,7 +3500,7 @@
             "printer": null,
             "shelf_mark": "R",
             "ustc_sn": 2096762,
-            "_normTitle": "prodromus rhodo stauroticus parergi philosophici das ist vortrab und entdeckung derer hocherleuchten gottseligen und weitberuhmten bruderschafft vom rosen creutz",
+            "_normTitle": "prodromus rhodo stauroticus parergi filosofici das ist uortrab und entdeckung derer hocherleuchten gottseligen und weitberuhmten bruderschafft uom rosen creutz",
             "_normAuthor": "mogling daniel"
           },
           "score": 35,
@@ -3512,8 +3509,8 @@
             "rhodo",
             "stauroticus",
             "parergi",
-            "philosophici",
-            "vortrab",
+            "filosofici",
+            "uortrab",
             "entdeckung",
             "derer",
             "hocherleuchten",
@@ -3551,13 +3548,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3574,13 +3571,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3608,13 +3605,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3631,13 +3628,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3665,13 +3662,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3688,13 +3685,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3722,13 +3719,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3745,13 +3742,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "histoire de la philosophie hermetique",
-            "_normAuthor": "lenglet dufresnoy nicolas"
+            "_normTitle": "histoire de la filosofie hermetique",
+            "_normAuthor": "lenglet dufresnoi nicolas"
           },
           "score": 8,
           "titleShared": [
             "histoire",
-            "philosophie",
+            "filosofie",
             "hermetique"
           ],
           "authorShared": [],
@@ -3809,12 +3806,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2536623,
-            "_normTitle": "von hylealischen das ist pri materialischen catholischen oder algemeinem sic naturlichen chaos",
+            "_normTitle": "uon hilealischen das ist pri materialischen catholischen oder algemeinem sic naturlichen chaos",
             "_normAuthor": "khunrath heinrich"
           },
           "score": 19,
           "titleShared": [
-            "hylealischen",
+            "hilealischen",
             "materialischen",
             "catholischen",
             "algemeinem",
@@ -3859,12 +3856,12 @@
             "printer": "[Oporinus, Johannes]",
             "shelf_mark": "H",
             "ustc_sn": 630601,
-            "_normTitle": "nativitate mediatoris ultima",
+            "_normTitle": "natiuitate mediatoris ultima",
             "_normAuthor": "postel guillaume"
           },
           "score": 13,
           "titleShared": [
-            "nativitate",
+            "natiuitate",
             "mediatoris",
             "ultima"
           ],
@@ -3896,14 +3893,14 @@
             "printer": null,
             "shelf_mark": "A folio",
             "ustc_sn": 2106102,
-            "_normTitle": "amphitheatrum sapientiae aeternae",
+            "_normTitle": "amfitheatrum sapientie eterne",
             "_normAuthor": "khunrath heinrich"
           },
           "score": 13,
           "titleShared": [
-            "amphitheatrum",
-            "sapientiae",
-            "aeternae"
+            "amfitheatrum",
+            "sapientie",
+            "eterne"
           ],
           "authorShared": [
             "khunrath",
@@ -3922,14 +3919,14 @@
             "printer": "Antonius, Wilhelm",
             "shelf_mark": "A folio",
             "ustc_sn": 2106102,
-            "_normTitle": "amphitheatrum sapientiae aeternae",
+            "_normTitle": "amfitheatrum sapientie eterne",
             "_normAuthor": "khunrath heinrich"
           },
           "score": 12,
           "titleShared": [
-            "amphitheatrum",
-            "sapientiae",
-            "aeternae"
+            "amfitheatrum",
+            "sapientie",
+            "eterne"
           ],
           "authorShared": [
             "khunrath",
@@ -3948,14 +3945,14 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 6901994,
-            "_normTitle": "amphitheatrum aeternae providentiae divino magicum",
-            "_normAuthor": "vanini giulio cesare"
+            "_normTitle": "amfitheatrum eterne prouidentie diuino magicum",
+            "_normAuthor": "uanini giulio cesare"
           },
           "score": 9,
           "titleShared": [
-            "amphitheatrum",
-            "aeternae",
-            "divino",
+            "amfitheatrum",
+            "eterne",
+            "diuino",
             "magicum"
           ],
           "authorShared": [],
@@ -3984,7 +3981,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2537381,
             "_normTitle": "miraculum mundi oder aussfuhrliche beschreibung der wunderbaren natur",
-            "_normAuthor": "glauber johann rudolph"
+            "_normAuthor": "glauber iohann rudolf"
           },
           "score": 13,
           "titleShared": [
@@ -3993,8 +3990,8 @@
           ],
           "authorShared": [
             "glauber",
-            "johann",
-            "rudolph"
+            "iohann",
+            "rudolf"
           ],
           "yearScore": 3
         }
@@ -4071,7 +4068,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2537381,
             "_normTitle": "miraculum mundi oder aussfuhrliche beschreibung der wunderbaren natur",
-            "_normAuthor": "glauber johann rudolph"
+            "_normAuthor": "glauber iohann rudolf"
           },
           "score": 13,
           "titleShared": [
@@ -4080,8 +4077,8 @@
           ],
           "authorShared": [
             "glauber",
-            "johann",
-            "rudolph"
+            "iohann",
+            "rudolf"
           ],
           "yearScore": 3
         }
@@ -4158,7 +4155,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2082523,
             "_normTitle": "atalanta fugiens",
-            "_normAuthor": "maier michael"
+            "_normAuthor": "maier michel"
           },
           "score": 10,
           "titleShared": [
@@ -4167,7 +4164,7 @@
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 2
         }
@@ -4193,20 +4190,20 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2094778,
-            "_normTitle": "arcana arcanissima hoc est hieroglyphica aegyptio graeca",
-            "_normAuthor": "maier michael"
+            "_normTitle": "arcana arcanissima hoc est hieroglifica egiptio greca",
+            "_normAuthor": "maier michel"
           },
           "score": 17,
           "titleShared": [
             "arcana",
             "arcanissima",
-            "hieroglyphica",
-            "aegyptio",
-            "graeca"
+            "hieroglifica",
+            "egiptio",
+            "greca"
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 3
         }
@@ -4243,7 +4240,7 @@
             "shelf_mark": "R",
             "ustc_sn": 2069254,
             "_normTitle": "lusus serius",
-            "_normAuthor": "maier michael"
+            "_normAuthor": "maier michel"
           },
           "score": 11,
           "titleShared": [
@@ -4252,7 +4249,7 @@
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 3
         },
@@ -4268,7 +4265,7 @@
             "shelf_mark": "R",
             "ustc_sn": 2132303,
             "_normTitle": "lusus serius das ist lustiges doch ernsthafftes spiel",
-            "_normAuthor": "maier michael"
+            "_normAuthor": "maier michel"
           },
           "score": 9,
           "titleShared": [
@@ -4277,7 +4274,7 @@
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 1
         }
@@ -4313,8 +4310,8 @@
             "printer": "Hoffmann, Nikolaus I",
             "shelf_mark": "R",
             "ustc_sn": 2004727,
-            "_normTitle": "themis aurea das ist von den gesetzen und ordnungen der loblichen fraternitet r c",
-            "_normAuthor": "maier michael"
+            "_normTitle": "themis aurea das ist uon den gesetzen und ordnungen der loblichen fraternitet r c",
+            "_normAuthor": "maier michel"
           },
           "score": 19,
           "titleShared": [
@@ -4327,7 +4324,7 @@
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 3
         },
@@ -4343,7 +4340,7 @@
             "shelf_mark": "R",
             "ustc_sn": 2108939,
             "_normTitle": "themis aurea hoc est de legibus fraternitatis r c",
-            "_normAuthor": "maier michael"
+            "_normAuthor": "maier michel"
           },
           "score": 11,
           "titleShared": [
@@ -4352,7 +4349,7 @@
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 3
         },
@@ -4368,7 +4365,7 @@
             "shelf_mark": null,
             "ustc_sn": 2108939,
             "_normTitle": "themis aurea hoc est de legibus fraternitatis r c",
-            "_normAuthor": "maier michael"
+            "_normAuthor": "maier michel"
           },
           "score": 9,
           "titleShared": [
@@ -4377,7 +4374,7 @@
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 1
         }
@@ -4473,13 +4470,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2027415,
-            "_normTitle": "lexicon alchemiae",
+            "_normTitle": "lexicon alchemie",
             "_normAuthor": "ruland sr martin"
           },
           "score": 11,
           "titleShared": [
             "lexicon",
-            "alchemiae"
+            "alchemie"
           ],
           "authorShared": [
             "ruland",
@@ -4509,20 +4506,20 @@
             "printer": "Humm, Anton",
             "shelf_mark": "A",
             "ustc_sn": 2095599,
-            "_normTitle": "symbola aureae mensae duodecim nationum",
-            "_normAuthor": "maier michael"
+            "_normTitle": "simbola auree mense duodecim nationum",
+            "_normAuthor": "maier michel"
           },
           "score": 17,
           "titleShared": [
-            "symbola",
-            "aureae",
-            "mensae",
+            "simbola",
+            "auree",
+            "mense",
             "duodecim",
             "nationum"
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 3
         }
@@ -4598,20 +4595,20 @@
             "printer": "Galler, Hieronymus",
             "shelf_mark": "A",
             "ustc_sn": 2136239,
-            "_normTitle": "circulo physico quadrato hoc est auro eius que virtute medicinali",
-            "_normAuthor": "maier michael"
+            "_normTitle": "circulo fisico quadrato hoc est auro eius que uirtute medicinali",
+            "_normAuthor": "maier michel"
           },
           "score": 17,
           "titleShared": [
             "circulo",
-            "physico",
+            "fisico",
             "quadrato",
-            "virtute",
+            "uirtute",
             "medicinali"
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 3
         },
@@ -4626,18 +4623,18 @@
             "printer": "Galler, Hieronymus",
             "shelf_mark": "A",
             "ustc_sn": 2136239,
-            "_normTitle": "circulo physico quadrato",
-            "_normAuthor": "maier michael"
+            "_normTitle": "circulo fisico quadrato",
+            "_normAuthor": "maier michel"
           },
           "score": 13,
           "titleShared": [
             "circulo",
-            "physico",
+            "fisico",
             "quadrato"
           ],
           "authorShared": [
             "maier",
-            "michael"
+            "michel"
           ],
           "yearScore": 3
         }
@@ -4663,17 +4660,17 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 837068,
-            "_normTitle": "pretiosa margarita novella de thesauro ac pretiosissimo philosophorum lapide",
+            "_normTitle": "pretiosa margarita nouella de thesauro ac pretiosissimo filosoforum lapide",
             "_normAuthor": "bonus petrus"
           },
           "score": 17,
           "titleShared": [
             "pretiosa",
             "margarita",
-            "novella",
+            "nouella",
             "thesauro",
             "pretiosissimo",
-            "philosophorum",
+            "filosoforum",
             "lapide"
           ],
           "authorShared": [],
@@ -4725,7 +4722,7 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6123713,
-            "_normTitle": "lumiere sortant par soy meme des tenebres",
+            "_normTitle": "lumiere sortant par soi meme des tenebres",
             "_normAuthor": "crasselame marc antonio"
           },
           "score": 7,
@@ -4799,7 +4796,7 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6117197,
-            "_normTitle": "codicillus seu vade mecum",
+            "_normTitle": "codicillus seu uade mecum",
             "_normAuthor": "lull ramon"
           },
           "score": 7,
@@ -4892,14 +4889,14 @@
             "printer": "Galler, Hieronymus",
             "shelf_mark": "R",
             "ustc_sn": 2056477,
-            "_normTitle": "tractatus theologo philosophicus",
+            "_normTitle": "tractatus theologo filosoficus",
             "_normAuthor": "fludd robert"
           },
           "score": 13,
           "titleShared": [
             "tractatus",
             "theologo",
-            "philosophicus"
+            "filosoficus"
           ],
           "authorShared": [
             "fludd",
@@ -4939,14 +4936,14 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "eines scharfsinnigen chymici hinterlassene gedanken",
-            "_normAuthor": "anonymous"
+            "_normTitle": "eines scharfsinnigen chimici hinterlassene gedanken",
+            "_normAuthor": "anonimous"
           },
           "score": 13,
           "titleShared": [
             "eines",
             "scharfsinnigen",
-            "chymici",
+            "chimici",
             "hinterlassene",
             "gedanken"
           ],
@@ -4976,7 +4973,7 @@
             "shelf_mark": "A",
             "ustc_sn": 844354,
             "_normTitle": "della tramutatione metallica sogni tre",
-            "_normAuthor": "nazari giovanni battista"
+            "_normAuthor": "nazari giouanni battista"
           },
           "score": 17,
           "titleShared": [
@@ -4987,7 +4984,7 @@
           ],
           "authorShared": [
             "nazari",
-            "giovanni",
+            "giouanni",
             "battista"
           ],
           "yearScore": 3
@@ -5025,7 +5022,7 @@
             "shelf_mark": "A",
             "ustc_sn": 605024,
             "_normTitle": "pandora das ist die edlest gab gottes",
-            "_normAuthor": "reusner hieronymus"
+            "_normAuthor": "reusner hieronimus"
           },
           "score": 13,
           "titleShared": [
@@ -5035,7 +5032,7 @@
           ],
           "authorShared": [
             "reusner",
-            "hieronymus"
+            "hieronimus"
           ],
           "yearScore": 3
         },
@@ -5051,7 +5048,7 @@
             "shelf_mark": "A",
             "ustc_sn": 605023,
             "_normTitle": "pandora das ist die edlest gab gottes",
-            "_normAuthor": "reusner hieronymus"
+            "_normAuthor": "reusner hieronimus"
           },
           "score": 11,
           "titleShared": [
@@ -5061,7 +5058,7 @@
           ],
           "authorShared": [
             "reusner",
-            "hieronymus"
+            "hieronimus"
           ],
           "yearScore": 1
         },
@@ -5077,7 +5074,7 @@
             "shelf_mark": "A",
             "ustc_sn": 605024,
             "_normTitle": "pandora das ist die edleste gab gottes",
-            "_normAuthor": "reusner hieronymus"
+            "_normAuthor": "reusner hieronimus"
           },
           "score": 9,
           "titleShared": [
@@ -5086,7 +5083,7 @@
           ],
           "authorShared": [
             "reusner",
-            "hieronymus"
+            "hieronimus"
           ],
           "yearScore": 1
         }
@@ -5122,13 +5119,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6076475,
-            "_normTitle": "kleinot der philosophie",
+            "_normTitle": "kleinot der filosofie",
             "_normAuthor": "flamel nicolas"
           },
           "score": 7,
           "titleShared": [
             "kleinot",
-            "philosophie"
+            "filosofie"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -5144,13 +5141,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6076475,
-            "_normTitle": "kleinot der philosophie",
+            "_normTitle": "kleinot der filosofie",
             "_normAuthor": "flamel nicolas"
           },
           "score": 5,
           "titleShared": [
             "kleinot",
-            "philosophie"
+            "filosofie"
           ],
           "authorShared": [],
           "yearScore": 1
@@ -5177,19 +5174,19 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "sancta veritas hermetica seu concordantia philosophorum consistens in sale et sole vel mercurio et sulphure das ist die ehemahls excerpirte und darauf mit eigener hand experimentirte sonnen klare wahrheit der philosophischen schrifften",
+            "_normTitle": "sancta ueritas hermetica seu concordantia filosoforum consistens in sale et sole uel mercurio et sulfure das ist die ehemahls excerpirte und darauf mit eigener hand experimentirte sonnen klare wahrheit der filosofischen schrifften",
             "_normAuthor": "naxagoras ehrd de"
           },
           "score": 39,
           "titleShared": [
             "sancta",
-            "veritas",
+            "ueritas",
             "hermetica",
             "concordantia",
-            "philosophorum",
+            "filosoforum",
             "consistens",
             "mercurio",
-            "sulphure",
+            "sulfure",
             "excerpirte",
             "darauf",
             "eigener",
@@ -5237,16 +5234,16 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 846517,
-            "_normTitle": "ars transmutationis metallicae",
-            "_normAuthor": "pantheo giovanni agostino"
+            "_normTitle": "ars transmutationis metallice",
+            "_normAuthor": "pantheo giouanni agostino"
           },
           "score": 10,
           "titleShared": [
             "transmutationis",
-            "metallicae"
+            "metallice"
           ],
           "authorShared": [
-            "giovanni",
+            "giouanni",
             "agostino"
           ],
           "yearScore": 2
@@ -5273,18 +5270,19 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 1510181,
-            "_normTitle": "poeme philosophic de la verite de la phisique mineralle",
-            "_normAuthor": "nuysement jacques de"
+            "_normTitle": "peme filosofic de la uerite de la fisique mineralle",
+            "_normAuthor": "nuisement iacques de"
           },
           "score": 13,
           "titleShared": [
-            "poeme",
-            "philosophic",
-            "verite",
-            "phisique",
+            "filosofic",
+            "uerite",
+            "fisique",
             "mineralle"
           ],
-          "authorShared": [],
+          "authorShared": [
+            "nuisement"
+          ],
           "yearScore": 3
         }
       ]
@@ -5364,16 +5362,17 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 158514,
-            "_normTitle": "oracula metrica jovis apollonis hecates serapidis astrampsychi oneirocriticon",
+            "_normTitle": "oracula metrica iouis apollonis hecates serapidis astrampsichi oneirocriticon",
             "_normAuthor": ""
           },
-          "score": 13,
+          "score": 15,
           "titleShared": [
             "oracula",
             "metrica",
+            "iouis",
             "hecates",
             "serapidis",
-            "astrampsychi"
+            "astrampsichi"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -5410,7 +5409,7 @@
             "printer": null,
             "shelf_mark": "Alch F|V",
             "ustc_sn": null,
-            "_normTitle": "nicholas flammel his exposition of the hieroglyphical figures which he caused to be painted upon an arch in st innocents church yard in paris concerning both the theory and practise of the philosophers stone",
+            "_normTitle": "nicholas flammel his exposition of the hieroglifical figures which he caused to be painted upon an arch in st innocents church iard in paris concerning both the theori and practise of the filosofers stone",
             "_normAuthor": "flamel nicolas"
           },
           "score": 26,
@@ -5426,7 +5425,7 @@
             "church",
             "paris",
             "concerning",
-            "philosophers",
+            "filosofers",
             "stone"
           ],
           "authorShared": [],
@@ -5475,7 +5474,7 @@
             "shelf_mark": "H",
             "ustc_sn": 604886,
             "_normTitle": "erster zehender theil der bucher und schrifften",
-            "_normAuthor": "paracelsus theophrastus"
+            "_normAuthor": "paracelsus theofrastus"
           },
           "score": 13,
           "titleShared": [
@@ -5511,7 +5510,7 @@
             "shelf_mark": "H",
             "ustc_sn": 604886,
             "_normTitle": "erster zehender theil der bucher und schrifften",
-            "_normAuthor": "paracelsus theophrastus"
+            "_normAuthor": "paracelsus theofrastus"
           },
           "score": 13,
           "titleShared": [
@@ -5547,7 +5546,7 @@
             "shelf_mark": "H",
             "ustc_sn": 604886,
             "_normTitle": "erster zehender theil der bucher und schrifften",
-            "_normAuthor": "paracelsus theophrastus"
+            "_normAuthor": "paracelsus theofrastus"
           },
           "score": 13,
           "titleShared": [
@@ -5582,12 +5581,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5606,12 +5605,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5641,12 +5640,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5665,12 +5664,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5700,12 +5699,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5724,12 +5723,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5759,12 +5758,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5783,12 +5782,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5818,12 +5817,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5842,12 +5841,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5877,12 +5876,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5901,12 +5900,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5936,12 +5935,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5960,12 +5959,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -5995,12 +5994,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6019,12 +6018,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6054,12 +6053,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6078,12 +6077,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6113,12 +6112,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6137,12 +6136,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6172,12 +6171,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6196,12 +6195,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6231,12 +6230,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6255,12 +6254,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6290,12 +6289,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6314,12 +6313,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6349,12 +6348,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6373,12 +6372,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6408,12 +6407,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6432,12 +6431,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 10,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -6487,15 +6486,15 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 628686,
-            "_normTitle": "magia de observatione somniorum et de divinatione astrologica libri tres",
+            "_normTitle": "magia de obseruatione somniorum et de diuinatione astrologica libri tres",
             "_normAuthor": "pererius benedictus"
           },
           "score": 15,
           "titleShared": [
             "magia",
-            "observatione",
+            "obseruatione",
             "somniorum",
-            "divinatione",
+            "diuinatione",
             "astrologica",
             "libri"
           ],
@@ -6524,21 +6523,21 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "reconditorium ac reclusorium opulentiae sapientiaeque numinis magni cui deditur in titulum chymica vannus",
-            "_normAuthor": "anonymous"
+            "_normTitle": "reconditorium ac reclusorium opulentie sapientieque numinis magni cui deditur in titulum chimica uannus",
+            "_normAuthor": "anonimous"
           },
           "score": 23,
           "titleShared": [
             "reconditorium",
             "reclusorium",
-            "opulentiae",
-            "sapientiaeque",
+            "opulentie",
+            "sapientieque",
             "numinis",
             "magni",
             "deditur",
             "titulum",
-            "chymica",
-            "vannus"
+            "chimica",
+            "uannus"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -6565,15 +6564,15 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "tripus chimicus sendivogianus dreyfaches chimisches kleinod",
-            "_normAuthor": "sendivogius michael"
+            "_normTitle": "tripus chimicus sendiuogianus dreifaches chimisches kleinod",
+            "_normAuthor": "sendiuogius michel"
           },
           "score": 15,
           "titleShared": [
             "tripus",
             "chimicus",
-            "sendivogianus",
-            "dreyfaches",
+            "sendiuogianus",
+            "dreifaches",
             "chimisches",
             "kleinod"
           ],
@@ -6622,19 +6621,19 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "fables egyptiennes et grecques",
-            "_normAuthor": "pernety antoine joseph"
+            "_normTitle": "fables egiptiennes et grecques",
+            "_normAuthor": "perneti antoine iosef"
           },
           "score": 15,
           "titleShared": [
             "fables",
-            "egyptiennes",
+            "egiptiennes",
             "grecques"
           ],
           "authorShared": [
-            "pernety",
+            "perneti",
             "antoine",
-            "joseph"
+            "iosef"
           ],
           "yearScore": 3
         }
@@ -6660,19 +6659,19 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "dictionnaire mytho hermetique",
-            "_normAuthor": "pernety antoine joseph"
+            "_normTitle": "dictionnaire mitho hermetique",
+            "_normAuthor": "perneti antoine iosef"
           },
           "score": 15,
           "titleShared": [
             "dictionnaire",
-            "mytho",
+            "mitho",
             "hermetique"
           ],
           "authorShared": [
-            "pernety",
+            "perneti",
             "antoine",
-            "joseph"
+            "iosef"
           ],
           "yearScore": 3
         }
@@ -6698,14 +6697,14 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2509219,
-            "_normTitle": "rosarium novum olympicum et benedictum das ist ein newer gebenedeyter philosophischer rosengart",
+            "_normTitle": "rosarium nouum olimpicum et benedictum das ist ein newer gebenedeiter filosofischer rosengart",
             "_normAuthor": "figulus benedictus"
           },
           "score": 15,
           "titleShared": [
             "rosarium",
-            "novum",
-            "olympicum",
+            "nouum",
+            "olimpicum",
             "benedictum"
           ],
           "authorShared": [
@@ -6736,20 +6735,20 @@
             "printer": null,
             "shelf_mark": "M",
             "ustc_sn": 1836250,
-            "_normTitle": "sophia das ist die holdseelige ewige jungfrau der goettlichen weisheit",
-            "_normAuthor": "pordage john"
+            "_normTitle": "sofia das ist die holdseelige ewige iungfrau der gettlichen weisheit",
+            "_normAuthor": "pordage iohn"
           },
           "score": 17,
           "titleShared": [
-            "sophia",
+            "sofia",
             "holdseelige",
             "ewige",
-            "jungfrau",
+            "iungfrau",
             "weisheit"
           ],
           "authorShared": [
             "pordage",
-            "john"
+            "iohn"
           ],
           "yearScore": 3
         }
@@ -6775,8 +6774,8 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 151875,
-            "_normTitle": "opera omnia quae extant",
-            "_normAuthor": "dionysius areopagita"
+            "_normTitle": "opera omnia que extant",
+            "_normAuthor": "dionisius areopagita"
           },
           "score": 7,
           "titleShared": [
@@ -6797,8 +6796,8 @@
             "printer": "Vascosan, Michel de",
             "shelf_mark": "H folio",
             "ustc_sn": 151875,
-            "_normTitle": "opera omnia quae extant",
-            "_normAuthor": "dionysius areopagita"
+            "_normTitle": "opera omnia que extant",
+            "_normAuthor": "dionisius areopagita"
           },
           "score": 6,
           "titleShared": [
@@ -6850,13 +6849,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 831859,
-            "_normTitle": "compendium alchimiae",
-            "_normAuthor": "johannes de garlandia"
+            "_normTitle": "compendium alchimie",
+            "_normAuthor": "iohannes de garlandia"
           },
           "score": 7,
           "titleShared": [
             "compendium",
-            "alchimiae"
+            "alchimie"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -6883,15 +6882,15 @@
             "printer": "Krafft, Johann",
             "shelf_mark": "H",
             "ustc_sn": 622891,
-            "_normTitle": "commentarius de praecipuis generibus divinationum",
+            "_normTitle": "commentarius de precipuis generibus diuinationum",
             "_normAuthor": "peucer caspar"
           },
           "score": 13,
           "titleShared": [
             "commentarius",
-            "praecipuis",
+            "precipuis",
             "generibus",
-            "divinationum"
+            "diuinationum"
           ],
           "authorShared": [
             "peucer"
@@ -7010,13 +7009,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "fables egyptiennes et grecques",
-            "_normAuthor": "pernety antoine joseph"
+            "_normTitle": "fables egiptiennes et grecques",
+            "_normAuthor": "perneti antoine iosef"
           },
           "score": 9,
           "titleShared": [
             "fables",
-            "egyptiennes",
+            "egiptiennes",
             "grecques"
           ],
           "authorShared": [],
@@ -7064,13 +7063,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2045651,
-            "_normTitle": "viridarium chymicum",
-            "_normAuthor": "stoltzius von stoltzenberg daniel"
+            "_normTitle": "uiridarium chimicum",
+            "_normAuthor": "stoltzius uon stoltzenberg daniel"
           },
           "score": 13,
           "titleShared": [
-            "viridarium",
-            "chymicum"
+            "uiridarium",
+            "chimicum"
           ],
           "authorShared": [
             "stoltzius",
@@ -7121,7 +7120,7 @@
             "printer": "Grismond, John",
             "shelf_mark": "A",
             "ustc_sn": 2024727,
-            "_normTitle": "theatrum chemicum britannicum containing severall poeticall pieces of our famous english philosophers",
+            "_normTitle": "theatrum chemicum britannicum containing seuerall peticall pieces of our famous english filosofers",
             "_normAuthor": "ashmole elias"
           },
           "score": 27,
@@ -7130,12 +7129,12 @@
             "chemicum",
             "britannicum",
             "containing",
-            "severall",
-            "poeticall",
+            "seuerall",
+            "peticall",
             "pieces",
             "famous",
             "english",
-            "philosophers"
+            "filosofers"
           ],
           "authorShared": [
             "ashmole",
@@ -7155,7 +7154,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 5,
           "titleShared": [
@@ -7190,15 +7189,17 @@
             "_normTitle": "quinta essentia das ist die hochste subtilitet kraft und wirkung beider der furtrefelichisten und menschlichem gschlecht den nutzlichisten konsten der medicina und alchemia",
             "_normAuthor": "thurneisser zum thurn leonhard"
           },
-          "score": 13,
+          "score": 17,
           "titleShared": [
             "quinta",
             "essentia",
             "hochste",
             "subtilitet",
+            "beider",
             "menschlichem"
           ],
           "authorShared": [
+            "thurneisser",
             "thurn"
           ],
           "yearScore": 1
@@ -7226,7 +7227,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7247,7 +7248,7 @@
             "printer": "Grismond, John",
             "shelf_mark": "A",
             "ustc_sn": 2024727,
-            "_normTitle": "theatrum chemicum britannicum containing severall poeticall pieces of our famous english philosophers",
+            "_normTitle": "theatrum chemicum britannicum containing seuerall peticall pieces of our famous english filosofers",
             "_normAuthor": "ashmole elias"
           },
           "score": 5,
@@ -7281,7 +7282,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7302,7 +7303,7 @@
             "printer": "Grismond, John",
             "shelf_mark": "A",
             "ustc_sn": 2024727,
-            "_normTitle": "theatrum chemicum britannicum containing severall poeticall pieces of our famous english philosophers",
+            "_normTitle": "theatrum chemicum britannicum containing seuerall peticall pieces of our famous english filosofers",
             "_normAuthor": "ashmole elias"
           },
           "score": 5,
@@ -7336,7 +7337,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7357,7 +7358,7 @@
             "printer": "Grismond, John",
             "shelf_mark": "A",
             "ustc_sn": 2024727,
-            "_normTitle": "theatrum chemicum britannicum containing severall poeticall pieces of our famous english philosophers",
+            "_normTitle": "theatrum chemicum britannicum containing seuerall peticall pieces of our famous english filosofers",
             "_normAuthor": "ashmole elias"
           },
           "score": 5,
@@ -7391,7 +7392,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2078431,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7424,7 +7425,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2078431,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7487,7 +7488,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2078431,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7520,7 +7521,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2078431,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7553,7 +7554,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2045257,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7586,7 +7587,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2045257,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7619,7 +7620,7 @@
             "shelf_mark": "A",
             "ustc_sn": 2045257,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7888,7 +7889,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7909,7 +7910,7 @@
             "printer": "Grismond, John",
             "shelf_mark": "A",
             "ustc_sn": 2024727,
-            "_normTitle": "theatrum chemicum britannicum containing severall poeticall pieces of our famous english philosophers",
+            "_normTitle": "theatrum chemicum britannicum containing seuerall peticall pieces of our famous english filosofers",
             "_normAuthor": "ashmole elias"
           },
           "score": 5,
@@ -7943,7 +7944,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -7964,7 +7965,7 @@
             "printer": "Grismond, John",
             "shelf_mark": "A",
             "ustc_sn": 2024727,
-            "_normTitle": "theatrum chemicum britannicum containing severall poeticall pieces of our famous english philosophers",
+            "_normTitle": "theatrum chemicum britannicum containing seuerall peticall pieces of our famous english filosofers",
             "_normAuthor": "ashmole elias"
           },
           "score": 5,
@@ -7998,7 +7999,7 @@
             "shelf_mark": "A",
             "ustc_sn": null,
             "_normTitle": "theatrum chemicum",
-            "_normAuthor": "anonymous"
+            "_normAuthor": "anonimous"
           },
           "score": 7,
           "titleShared": [
@@ -8019,7 +8020,7 @@
             "printer": "Grismond, John",
             "shelf_mark": "A",
             "ustc_sn": 2024727,
-            "_normTitle": "theatrum chemicum britannicum containing severall poeticall pieces of our famous english philosophers",
+            "_normTitle": "theatrum chemicum britannicum containing seuerall peticall pieces of our famous english filosofers",
             "_normAuthor": "ashmole elias"
           },
           "score": 5,
@@ -8082,22 +8083,22 @@
             "printer": null,
             "shelf_mark": "A|geplaatst onder Arnauld",
             "ustc_sn": 6026651,
-            "_normTitle": "trois traitez de la philosophie naturelle de l art occulte figures hierogliphiques le vray livre",
-            "_normAuthor": "artephius flamel nicolas synesius"
+            "_normTitle": "trois traitez de la filosofie naturelle de l art occulte figures hieroglifiques le urai liure",
+            "_normAuthor": "artefius flamel nicolas sinesius"
           },
           "score": 21,
           "titleShared": [
             "trois",
             "traitez",
-            "philosophie",
+            "filosofie",
             "naturelle",
-            "livre",
+            "liure",
             "occulte",
             "figures",
-            "hierogliphiques"
+            "hieroglifiques"
           ],
           "authorShared": [
-            "artephius"
+            "artefius"
           ],
           "yearScore": 3
         },
@@ -8112,21 +8113,21 @@
             "printer": null,
             "shelf_mark": "A|geplaatst onder Arnauld",
             "ustc_sn": 6026651,
-            "_normTitle": "trois traitez de la philosophie naturelle de l art occulte figures hieropliphiques le vray livre",
-            "_normAuthor": "artephius flamel nicolas synesius"
+            "_normTitle": "trois traitez de la filosofie naturelle de l art occulte figures hieroplifiques le urai liure",
+            "_normAuthor": "artefius flamel nicolas sinesius"
           },
           "score": 19,
           "titleShared": [
             "trois",
             "traitez",
-            "philosophie",
+            "filosofie",
             "naturelle",
-            "livre",
+            "liure",
             "occulte",
             "figures"
           ],
           "authorShared": [
-            "artephius"
+            "artefius"
           ],
           "yearScore": 3
         },
@@ -8141,14 +8142,14 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6019840,
-            "_normTitle": "trois traitez de la philosophie naturelle la turbe des philosophes la parole delaissee les douzes portes de l alchimie",
-            "_normAuthor": "anonymous bernhardus trevisanus"
+            "_normTitle": "trois traitez de la filosofie naturelle la turbe des filosofes la parole delaissee les douzes portes de l alchimie",
+            "_normAuthor": "anonimous bernhardus treuisanus"
           },
           "score": 9,
           "titleShared": [
             "trois",
             "traitez",
-            "philosophie",
+            "filosofie",
             "naturelle"
           ],
           "authorShared": [],
@@ -8196,14 +8197,14 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 6087654,
-            "_normTitle": "divers traitez de la philosophie naturelle la turbe des philosophes la parole delaissee les deux traitez le tres ancien duel des chevaliers",
-            "_normAuthor": "bernhardus trevisanus drebbel cornelius"
+            "_normTitle": "diuers traitez de la filosofie naturelle la turbe des filosofes la parole delaissee les deux traitez le tres ancien duel des cheualiers",
+            "_normAuthor": "bernhardus treuisanus drebbel cornelius"
           },
           "score": 11,
           "titleShared": [
-            "divers",
+            "diuers",
             "traitez",
-            "philosophie",
+            "filosofie",
             "naturelle"
           ],
           "authorShared": [],
@@ -8321,19 +8322,19 @@
             "printer": null,
             "shelf_mark": "H",
             "ustc_sn": 6901994,
-            "_normTitle": "amphitheatrum aeternae providentiae divino magicum",
-            "_normAuthor": "vanini giulio cesare"
+            "_normTitle": "amfitheatrum eterne prouidentie diuino magicum",
+            "_normAuthor": "uanini giulio cesare"
           },
           "score": 19,
           "titleShared": [
-            "amphitheatrum",
-            "aeternae",
-            "providentiae",
-            "divino",
+            "amfitheatrum",
+            "eterne",
+            "prouidentie",
+            "diuino",
             "magicum"
           ],
           "authorShared": [
-            "vanini",
+            "uanini",
             "giulio",
             "cesare"
           ],
@@ -8350,13 +8351,13 @@
             "printer": null,
             "shelf_mark": "A folio",
             "ustc_sn": 2106102,
-            "_normTitle": "amphitheatrum sapientiae aeternae",
+            "_normTitle": "amfitheatrum sapientie eterne",
             "_normAuthor": "khunrath heinrich"
           },
           "score": 5,
           "titleShared": [
-            "amphitheatrum",
-            "aeternae"
+            "amfitheatrum",
+            "eterne"
           ],
           "authorShared": [],
           "yearScore": 1
@@ -8372,13 +8373,13 @@
             "printer": "Antonius, Wilhelm",
             "shelf_mark": "A folio",
             "ustc_sn": 2106102,
-            "_normTitle": "amphitheatrum sapientiae aeternae",
+            "_normTitle": "amfitheatrum sapientie eterne",
             "_normAuthor": "khunrath heinrich"
           },
           "score": 5,
           "titleShared": [
-            "amphitheatrum",
-            "aeternae"
+            "amfitheatrum",
+            "eterne"
           ],
           "authorShared": [],
           "yearScore": 1
@@ -8405,13 +8406,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 703334,
-            "_normTitle": "von der hermetischenn philosophia das ist von dem gebenedeiten stain der weisen dicta alani",
-            "_normAuthor": "bernhardus trevisanus alanus de insulis"
+            "_normTitle": "uon der hermetischenn filosofia das ist uon dem gebenedeiten stain der weisen dicta alani",
+            "_normAuthor": "bernhardus treuisanus alanus de insulis"
           },
           "score": 17,
           "titleShared": [
             "hermetischenn",
-            "philosophia",
+            "filosofia",
             "gebenedeiten",
             "stain",
             "weisen",
@@ -8432,13 +8433,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 703334,
-            "_normTitle": "von der hermetischenn philosophia dicta alani",
-            "_normAuthor": "bernhardus trevisanus alanus de insulis"
+            "_normTitle": "uon der hermetischenn filosofia dicta alani",
+            "_normAuthor": "bernhardus treuisanus alanus de insulis"
           },
           "score": 9,
           "titleShared": [
             "hermetischenn",
-            "philosophia",
+            "filosofia",
             "dicta",
             "alani"
           ],
@@ -8467,17 +8468,17 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "wasserstein der weysen via veritatis",
-            "_normAuthor": "siebmacher johann ambrosius meung jean de"
+            "_normTitle": "wasserstein der weisen uia ueritatis",
+            "_normAuthor": "siebmacher iohann ambrosius meung iean de"
           },
           "score": 11,
           "titleShared": [
             "wasserstein",
-            "weysen"
+            "weisen"
           ],
           "authorShared": [
             "siebmacher",
-            "johann"
+            "iohann"
           ],
           "yearScore": 3
         }
@@ -8734,7 +8735,7 @@
             "shelf_mark": "Rv",
             "ustc_sn": null,
             "_normTitle": "recueil precieux de la maconnerie adonhiramite",
-            "_normAuthor": "guillemain de saint victor louis"
+            "_normAuthor": "guillemain de saint uictor louis"
           },
           "score": 19,
           "titleShared": [
@@ -8746,7 +8747,7 @@
           "authorShared": [
             "guillemain",
             "saint",
-            "victor",
+            "uictor",
             "louis"
           ],
           "yearScore": 3
@@ -8763,7 +8764,7 @@
             "shelf_mark": "Rv",
             "ustc_sn": null,
             "_normTitle": "recueil precieux de la maconnerie adonhiramite",
-            "_normAuthor": "guillemain de saint victor louis"
+            "_normAuthor": "guillemain de saint uictor louis"
           },
           "score": 18,
           "titleShared": [
@@ -8775,7 +8776,7 @@
           "authorShared": [
             "guillemain",
             "saint",
-            "victor",
+            "uictor",
             "louis"
           ],
           "yearScore": 2
@@ -8792,7 +8793,7 @@
             "shelf_mark": "Rv",
             "ustc_sn": null,
             "_normTitle": "recueil precieux de la maconnerie adonhiramite",
-            "_normAuthor": "guillemain de saint victor louis"
+            "_normAuthor": "guillemain de saint uictor louis"
           },
           "score": 17,
           "titleShared": [
@@ -8804,7 +8805,7 @@
           "authorShared": [
             "guillemain",
             "saint",
-            "victor",
+            "uictor",
             "louis"
           ],
           "yearScore": 1
@@ -8861,13 +8862,13 @@
             "printer": "Jacob, Cyriacus",
             "shelf_mark": "A",
             "ustc_sn": 800925,
-            "_normTitle": "rosarium philosophorum",
+            "_normTitle": "rosarium filosoforum",
             "_normAuthor": ""
           },
           "score": 7,
           "titleShared": [
             "rosarium",
-            "philosophorum"
+            "filosoforum"
           ],
           "authorShared": [],
           "yearScore": 3
@@ -8904,23 +8905,23 @@
             "printer": null,
             "shelf_mark": "Alch  A|IX",
             "ustc_sn": null,
-            "_normTitle": "suggestive inquiry into the hermetic mystery with a dissertation on the more celebrated of the alchemical philosophers being an attempt towards the recovery of the ancient experiment of nature",
-            "_normAuthor": "atwood mary anne"
+            "_normTitle": "suggestiue inquiri into the hermetic misteri with a dissertation on the more celebrated of the alchemical filosofers being an attempt towards the recoueri of the ancient experiment of nature",
+            "_normAuthor": "atwood mari anne"
           },
           "score": 25,
           "titleShared": [
-            "suggestive",
-            "inquiry",
+            "suggestiue",
+            "inquiri",
             "hermetic",
-            "mystery",
+            "misteri",
             "dissertation",
             "celebrated",
             "alchemical",
-            "philosophers"
+            "filosofers"
           ],
           "authorShared": [
             "atwood",
-            "mary",
+            "mari",
             "anne"
           ],
           "yearScore": 3
@@ -8936,23 +8937,23 @@
             "printer": null,
             "shelf_mark": "Alch A|IX",
             "ustc_sn": null,
-            "_normTitle": "suggestive inquiry into the hermetic mystery with a dissertation on the more celebrated of the alchemical philosophers being an attempt towards the recovery of the ancient experiment of nature",
-            "_normAuthor": "atwood mary anne"
+            "_normTitle": "suggestiue inquiri into the hermetic misteri with a dissertation on the more celebrated of the alchemical filosofers being an attempt towards the recoueri of the ancient experiment of nature",
+            "_normAuthor": "atwood mari anne"
           },
           "score": 24,
           "titleShared": [
-            "suggestive",
-            "inquiry",
+            "suggestiue",
+            "inquiri",
             "hermetic",
-            "mystery",
+            "misteri",
             "dissertation",
             "celebrated",
             "alchemical",
-            "philosophers"
+            "filosofers"
           ],
           "authorShared": [
             "atwood",
-            "mary",
+            "mari",
             "anne"
           ],
           "yearScore": 2
@@ -9049,8 +9050,8 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": null,
-            "_normTitle": "fasciculus unterschiedlicher alten raren und wahren philosophischen schrifften",
-            "_normAuthor": "hellwig christoph von"
+            "_normTitle": "fasciculus unterschiedlicher alten raren und wahren filosofischen schrifften",
+            "_normAuthor": "hellwig christof uon"
           },
           "score": 21,
           "titleShared": [
@@ -9059,12 +9060,12 @@
             "alten",
             "raren",
             "wahren",
-            "philosophischen",
+            "filosofischen",
             "schrifften"
           ],
           "authorShared": [
             "hellwig",
-            "christoph"
+            "christof"
           ],
           "yearScore": 3
         }
@@ -9284,12 +9285,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 11,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -9308,12 +9309,12 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 2566621,
-            "_normTitle": "musaeum hermeticum reformatum et amplificatum",
-            "_normAuthor": "anonymous"
+            "_normTitle": "museum hermeticum reformatum et amplificatum",
+            "_normAuthor": "anonimous"
           },
           "score": 11,
           "titleShared": [
-            "musaeum",
+            "museum",
             "hermeticum",
             "reformatum",
             "amplificatum"
@@ -9343,13 +9344,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 614838,
-            "_normTitle": "aureum vellus oder guldin schatz und kunstkammer",
+            "_normTitle": "aureum uellus oder guldin schatz und kunstkammer",
             "_normAuthor": "trissmosin salomon"
           },
           "score": 15,
           "titleShared": [
             "aureum",
-            "vellus",
+            "uellus",
             "guldin",
             "schatz",
             "kunstkammer"
@@ -9370,13 +9371,13 @@
             "printer": null,
             "shelf_mark": "A",
             "ustc_sn": 614110,
-            "_normTitle": "aureum vellus oder guldin schatz und kunstkammer",
+            "_normTitle": "aureum uellus oder guldin schatz und kunstkammer",
             "_normAuthor": "trissmosin salomon"
           },
           "score": 14,
           "titleShared": [
             "aureum",
-            "vellus",
+            "uellus",
             "guldin",
             "schatz",
             "kunstkammer"

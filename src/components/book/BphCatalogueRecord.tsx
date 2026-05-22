@@ -21,8 +21,10 @@ interface FieldProvenance {
 
 interface BphWorkRow {
   ubn: string;
+  title: string | null;
   parallel_title: string | null;
   uniform_title: string | null;
+  author: string | null;
   variant_author: string | null;
   pseudonym: string | null;
   editor: string | null;
@@ -32,6 +34,7 @@ interface BphWorkRow {
   publisher: string | null;
   variant_printer: string | null;
   variant_publisher: string | null;
+  year: number | null;
   shelf_mark: string | null;
   state_shelf_mark: string | null;
   present_location: string | null;
@@ -56,10 +59,10 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   const { data } = await supabase
     .from('bph_works')
     .select(`
-      ubn, parallel_title, uniform_title,
-      variant_author, pseudonym, editor, variant_editor,
+      ubn, title, parallel_title, uniform_title,
+      author, variant_author, pseudonym, editor, variant_editor,
       place, printer, publisher, variant_printer, variant_publisher,
-      shelf_mark, state_shelf_mark, present_location,
+      year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
       bibliography, remarks, number_of_copies, object_size_cm,
       bibliographic_format, binding, bound_with,
