@@ -25,6 +25,7 @@
  *   node scripts/import-jung-library.mjs --import --dry-run
  *   node scripts/import-jung-library.mjs --set=alch      # alchemy/magic/kabbala subset (289)
  *   node scripts/import-jung-library.mjs --import --limit=10
+ *   node scripts/import-jung-library.mjs --backfill-category   # tag existing books in the set
  *
  * Outputs (timestamped):
  *   .claude/docs/jung-library-crossref-YYYY-MM-DD.json
@@ -45,6 +46,7 @@ const args = Object.fromEntries(
     })
 );
 const DO_IMPORT = 'import' in args;
+const DO_BACKFILL = 'backfill-category' in args;
 const DRY_RUN = 'dry-run' in args;
 const OAI_SET = args.set || 'cgj';
 const LIMIT = parseInt(args.limit) || Infinity;
@@ -386,11 +388,72 @@ async function runImport(newRecords) {
   return out;
 }
 
+// ── Category backfill: tag existing books in the set ────────────────────
+
+const CONTRIBUTING_LIBRARY_VARIANTS = [
+  'Stiftung der Werke von C.G.Jung',           // no space — needs normalization
+  'Stiftung der Werke von C.G. Jung',          // missing (Zürich) — canonical adds it
+];
+
+async function backfillCategory(db, records) {
+  const eraraIds = records.map(r => r.erara_id);
+  const existing = await db.collection('books').find(
+    { erara_id: { $in: eraraIds } },
+    { projection: { id: 1, erara_id: 1, categories: 1, 'image_source.contributing_library': 1 } }
+  ).toArray();
+
+  console.log(`\n=== Category backfill ===`);
+  console.log(`  Looking at ${existing.length} books already in DB`);
+
+  const needsCategory = existing.filter(b =>
+    !Array.isArray(b.categories) || !b.categories.includes(CATEGORY_TAG)
+  );
+  const needsLibFix = existing.filter(b => {
+    const cl = b.image_source?.contributing_library;
+    return cl && cl !== CONTRIBUTING_LIBRARY && CONTRIBUTING_LIBRARY_VARIANTS.some(v => cl === v || cl.startsWith(v));
+  });
+
+  console.log(`  Need category tag: ${needsCategory.length}`);
+  console.log(`  Need contributing_library normalization: ${needsLibFix.length}`);
+
+  if (DRY_RUN) {
+    console.log('\n(DRY RUN — no writes)');
+    return { needsCategory: needsCategory.length, needsLibFix: needsLibFix.length, dryRun: true };
+  }
+
+  if (needsCategory.length === 0 && needsLibFix.length === 0) {
+    console.log('  Nothing to update.');
+    return { categoryUpdated: 0, libUpdated: 0 };
+  }
+
+  const ops = [];
+  for (const b of needsCategory) {
+    ops.push({
+      updateOne: {
+        filter: { id: b.id },
+        update: { $addToSet: { categories: CATEGORY_TAG }, $set: { updated_at: new Date() } },
+      },
+    });
+  }
+  for (const b of needsLibFix) {
+    ops.push({
+      updateOne: {
+        filter: { id: b.id },
+        update: { $set: { 'image_source.contributing_library': CONTRIBUTING_LIBRARY, updated_at: new Date() } },
+      },
+    });
+  }
+
+  const result = await db.collection('books').bulkWrite(ops, { ordered: false });
+  console.log(`  bulkWrite: matched=${result.matchedCount}, modified=${result.modifiedCount}`);
+  return { categoryUpdated: needsCategory.length, libUpdated: needsLibFix.length, modified: result.modifiedCount };
+}
+
 // ── Main ─────────────────────────────────────────────────────────────────
 
 async function main() {
   const t0 = Date.now();
-  console.log(`Jung Library import — set=${OAI_SET}, import=${DO_IMPORT}, dry-run=${DRY_RUN}, limit=${LIMIT === Infinity ? '∞' : LIMIT}`);
+  console.log(`Jung Library — set=${OAI_SET}, import=${DO_IMPORT}, backfill=${DO_BACKFILL}, dry-run=${DRY_RUN}, limit=${LIMIT === Infinity ? '∞' : LIMIT}`);
 
   const records = await harvestSet(OAI_SET);
   if (records.length === 0) {
@@ -414,6 +477,10 @@ async function main() {
 
     writeReports(results, summary);
 
+    if (DO_BACKFILL) {
+      await backfillCategory(db, records);
+    }
+
     if (DO_IMPORT) {
       const newRecords = results.filter(r => r.match_type === 'new');
       if (newRecords.length === 0) {
@@ -430,8 +497,8 @@ async function main() {
         fs.writeFileSync(importLogPath, JSON.stringify(importStats, null, 2));
         console.log(`Wrote ${importLogPath}`);
       }
-    } else {
-      console.log(`\nReport-only mode. Re-run with --import to create the new records.`);
+    } else if (!DO_BACKFILL) {
+      console.log(`\nReport-only mode. Re-run with --import (create new records) or --backfill-category (tag existing).`);
     }
   } finally {
     await client.close();
