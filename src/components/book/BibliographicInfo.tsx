@@ -232,9 +232,9 @@ export default function BibliographicInfo({
               // authority record is actually linked — 99% of books have no
               // entity id and the regular author row stays untouched.
               const canonicalName = book.author_canonical_name;
-              const viafId = book.author_entity_id;
+              const viafId = book.author_viaf_id;
               const wikidataQid = book.author_wikidata_qid;
-              const hasCanonical = !!(viafId || wikidataQid || canonicalName);
+              const hasCanonical = !!(book.author_entity_id || viafId || wikidataQid || canonicalName);
               return (
                 <>
                   {showAuthorRow && (

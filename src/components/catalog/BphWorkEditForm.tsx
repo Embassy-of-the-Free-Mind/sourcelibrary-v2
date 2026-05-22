@@ -58,9 +58,10 @@ const SECTIONS: Array<{
       // VIAF authority fields — driven by the AuthorAuthorityPicker, not a
       // raw text input. Listed here so the change detection + provenance
       // pipeline picks them up. `hidden: true` flips off the visible row.
-      { name: 'author_entity_id', label: 'Canonical author (VIAF)', hidden: true },
+      { name: 'author_entity_id', label: 'Canonical author entity FK', hidden: true },
       { name: 'author_canonical_name', label: 'Canonical name', hidden: true },
       { name: 'author_wikidata_qid', label: 'Wikidata Q', hidden: true },
+      { name: 'author_viaf_id', label: 'VIAF id', hidden: true },
     ],
   },
   {
@@ -284,21 +285,23 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
                   <span className="text-xs text-muted">Canonical author (VIAF)</span>
                   {(changedFields.includes('author_entity_id') ||
                     changedFields.includes('author_canonical_name') ||
-                    changedFields.includes('author_wikidata_qid')) && (
+                    changedFields.includes('author_wikidata_qid') ||
+                    changedFields.includes('author_viaf_id')) && (
                     <span className="text-[10px] uppercase text-accent-rust font-medium">changed</span>
                   )}
                 </label>
                 <AuthorAuthorityPicker
                   authorText={values.author || values.variant_author || ''}
                   current={{
-                    viaf_id: values.author_entity_id || null,
+                    viaf_id: values.author_viaf_id || null,
                     wikidata_qid: values.author_wikidata_qid || null,
                     canonical_name: values.author_canonical_name || null,
                   }}
                   onSelect={(sel: AuthorAuthoritySelection) => {
                     setValues((v) => ({
                       ...v,
-                      author_entity_id: sel.viaf_id,
+                      author_entity_id: sel.entity_id,
+                      author_viaf_id: sel.viaf_id,
                       author_canonical_name: sel.canonical_name,
                       author_wikidata_qid: sel.wikidata_qid || '',
                     }));
@@ -307,6 +310,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
                     setValues((v) => ({
                       ...v,
                       author_entity_id: '',
+                      author_viaf_id: '',
                       author_canonical_name: '',
                       author_wikidata_qid: '',
                     }));

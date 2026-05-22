@@ -20,6 +20,7 @@ interface BookEditModalProps {
     author_entity_id?: string;
     author_canonical_name?: string;
     author_wikidata_qid?: string;
+    author_viaf_id?: string;
   };
   onClose: () => void;
   onSave: () => void;
@@ -60,6 +61,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
   const [authorEntityId, setAuthorEntityId] = useState(book.author_entity_id || '');
   const [authorCanonicalName, setAuthorCanonicalName] = useState(book.author_canonical_name || '');
   const [authorWikidataQid, setAuthorWikidataQid] = useState(book.author_wikidata_qid || '');
+  const [authorViafId, setAuthorViafId] = useState(book.author_viaf_id || '');
 
   // Catalog search (EFM, IA, USTC)
   const [searchQuery, setSearchQuery] = useState('');
@@ -115,6 +117,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
         author_entity_id: authorEntityId || '',
         author_canonical_name: authorCanonicalName || '',
         author_wikidata_qid: authorWikidataQid || '',
+        author_viaf_id: authorViafId || '',
       });
 
       onSave();
@@ -389,12 +392,13 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
               <AuthorAuthorityPicker
                 authorText={author}
                 current={{
-                  viaf_id: authorEntityId || null,
+                  viaf_id: authorViafId || null,
                   wikidata_qid: authorWikidataQid || null,
                   canonical_name: authorCanonicalName || null,
                 }}
                 onSelect={(sel: AuthorAuthoritySelection) => {
-                  setAuthorEntityId(sel.viaf_id);
+                  setAuthorEntityId(sel.entity_id);
+                  setAuthorViafId(sel.viaf_id);
                   setAuthorCanonicalName(sel.canonical_name);
                   setAuthorWikidataQid(sel.wikidata_qid || '');
                   // Don't clobber the free-text "as printed" form — Paul's
@@ -402,6 +406,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 }}
                 onClear={() => {
                   setAuthorEntityId('');
+                  setAuthorViafId('');
                   setAuthorCanonicalName('');
                   setAuthorWikidataQid('');
                 }}

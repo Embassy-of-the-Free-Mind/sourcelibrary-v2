@@ -47,11 +47,14 @@ export const EDITABLE_BPH_FIELDS = [
   'editor',
   'variant_editor',
   // Author authority (#1921 P3) — VIAF id is the canonical anchor; the
-  // sibling display fields are denormalised so the catalog page renders
-  // without an extra join. The whole triple flips together via the picker.
+  // Author authority — entity_id is the FK into the `entities` collection
+  // (string of entity._id), shared with the batch enrichment script. Three
+  // siblings denormalised so the catalog page renders without a join. The
+  // whole quad flips together via the picker.
   'author_entity_id',
   'author_canonical_name',
   'author_wikidata_qid',
+  'author_viaf_id',
   // Imprint
   'place',
   'printer',

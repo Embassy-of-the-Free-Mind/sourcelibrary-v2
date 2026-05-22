@@ -142,6 +142,9 @@ export async function lookupAuthor(
   }
 
   // Enrich top candidates with cluster metadata (dates, Wikidata Q-id).
+  // No DB writes here — entity upsert happens on user selection via
+  // linkAuthorToEntity() / POST /api/authority/author/link. Next's fetch
+  // cache (24h revalidate) keeps repeat searches cheap.
   const top = candidates.slice(0, limit);
   const enriched = await Promise.all(top.map((c) => enrichCluster(c)));
 
@@ -150,6 +153,74 @@ export async function lookupAuthor(
     normalised_query: normalised,
     matches: enriched,
   };
+}
+
+/**
+ * Upsert an entity in the existing `entities` collection shape (matching
+ * `scripts/enrichment/viaf-author-linking.mjs`), returning the entity's
+ * MongoDB `_id` as a string — the value that should be written to
+ * `Book.author_entity_id` / `bph_works.author_entity_id`.
+ *
+ * Looks for an existing entity by viaf_id, wikidata_id, OR exact canonical
+ * name (in that order). Creates a new one if none found. Augments missing
+ * fields on the existing entity if found — never overwrites existing data
+ * (the batch enrichment script may have richer info).
+ *
+ * Called when a librarian picks a VIAF match in the editor — NOT during
+ * search.
+ */
+export async function linkAuthorToEntity(
+  match: AuthorAuthorityMatch,
+): Promise<{ entity_id: string }> {
+  const db = await getDb();
+  const col = db.collection('entities');
+
+  // Find existing — viaf_id is the strongest signal, then wikidata, then
+  // exact canonical name (rare to be useful without an authority ID).
+  const orClauses: Record<string, unknown>[] = [];
+  if (match.viaf_id) orClauses.push({ type: 'person', viaf_id: match.viaf_id });
+  if (match.wikidata_qid) orClauses.push({ type: 'person', wikidata_id: match.wikidata_qid });
+  if (match.canonical_name) orClauses.push({ type: 'person', name: match.canonical_name });
+
+  const existing = orClauses.length > 0
+    ? await col.findOne({ $or: orClauses }, { projection: { _id: 1 } })
+    : null;
+
+  if (existing?._id) {
+    // Augment missing fields only — don't trample existing data.
+    const updateFields: Record<string, unknown> = { updated_at: new Date() };
+    const existingDoc = await col.findOne({ _id: existing._id });
+    if (!existingDoc?.viaf_id && match.viaf_id) updateFields.viaf_id = match.viaf_id;
+    if (!existingDoc?.wikidata_id && match.wikidata_qid) updateFields.wikidata_id = match.wikidata_qid;
+    if (!existingDoc?.canonical_name && match.canonical_name) updateFields.canonical_name = match.canonical_name;
+    if (!existingDoc?.short_name && match.short_name) updateFields.short_name = match.short_name;
+    if (!existingDoc?.wikidata_birth_date && match.birth_year) updateFields.wikidata_birth_date = String(match.birth_year);
+    if (!existingDoc?.wikidata_death_date && match.death_year) updateFields.wikidata_death_date = String(match.death_year);
+    if (!existingDoc?.aliases?.length && match.alternate_names?.length) updateFields.aliases = match.alternate_names;
+    await col.updateOne({ _id: existing._id }, { $set: updateFields });
+    return { entity_id: String(existing._id) };
+  }
+
+  // Create new — match the shape from scripts/enrichment/viaf-author-linking.mjs.
+  const doc: Record<string, unknown> = {
+    name: match.canonical_name || match.short_name || 'Unknown',
+    type: 'person',
+    canonical_name: match.canonical_name || undefined,
+    short_name: match.short_name || undefined,
+    aliases: match.alternate_names?.length ? match.alternate_names : undefined,
+    wikidata_id: match.wikidata_qid || undefined,
+    viaf_id: match.viaf_id || undefined,
+    wikidata_birth_date: match.birth_year ? String(match.birth_year) : undefined,
+    wikidata_death_date: match.death_year ? String(match.death_year) : undefined,
+    books: [],
+    total_mentions: 0,
+    book_count: 0,
+    created_at: new Date(),
+    updated_at: new Date(),
+  };
+  Object.keys(doc).forEach((k) => doc[k] === undefined && delete doc[k]);
+  const inserted = await col.insertOne(doc);
+  return { entity_id: String(inserted.insertedId) };
 }
 
 interface ViafAutoSuggestRaw {
@@ -203,31 +274,16 @@ async function viafAutoSuggest(query: string): Promise<AuthorAuthorityMatch[]> {
 }
 
 /**
- * Pull full cluster metadata (dates, Wikidata link, alt names). Cached in
- * MongoDB `entities` keyed by `viaf:<id>` — first time hits VIAF, repeat
- * calls within the same process or the next deploy hit the cache.
+ * Pull full cluster metadata (dates, Wikidata link, alt names) from VIAF.
+ * Repeat calls are served from Next's fetch cache (24h revalidate) — we
+ * don't write a separate MongoDB cache. Entity upsert happens only when
+ * the user picks a result (see linkAuthorToEntity).
  */
 async function enrichCluster(base: AuthorAuthorityMatch): Promise<AuthorAuthorityMatch> {
-  // 1. Cache lookup.
-  const cached = await readEntityCache(base.viaf_id);
-  if (cached) {
-    return {
-      ...base,
-      canonical_name: cached.canonical_name || base.canonical_name,
-      short_name: cached.short_name || base.short_name,
-      birth_year: cached.birth_year ?? base.birth_year,
-      death_year: cached.death_year ?? base.death_year,
-      wikidata_qid: cached.wikidata_qid || null,
-      alternate_names: cached.alternate_names || [],
-      source_authorities: cached.source_authorities || [],
-    };
-  }
-
-  // 2. VIAF cluster fetch.
   const cluster = await fetchViafCluster(base.viaf_id);
   if (!cluster) return base;
 
-  const merged: AuthorAuthorityMatch = {
+  return {
     ...base,
     canonical_name: cluster.canonical_name || base.canonical_name,
     short_name: cluster.short_name || base.short_name,
@@ -237,13 +293,6 @@ async function enrichCluster(base: AuthorAuthorityMatch): Promise<AuthorAuthorit
     alternate_names: cluster.alternate_names || [],
     source_authorities: cluster.source_authorities || [],
   };
-
-  // 3. Cache write — best effort; cache failures shouldn't break the lookup.
-  writeEntityCache(merged).catch((err) => {
-    console.warn('[author-authority] cache write failed', err);
-  });
-
-  return merged;
 }
 
 interface ViafClusterShape {
@@ -417,71 +466,6 @@ async function wikidataSearchAuthor(query: string): Promise<AuthorAuthorityMatch
       alternate_names: r.aliases || [],
       source_authorities: ['WIKIDATA'],
     } satisfies AuthorAuthorityMatch));
-}
-
-// ---------------- Cache layer ----------------
-
-interface AuthorEntityCacheDoc {
-  _id: string;             // "viaf:<id>" or "wikidata:<Q-id>"
-  type: 'person';
-  viaf_id: string;
-  wikidata_qid: string | null;
-  canonical_name: string;
-  short_name: string;
-  birth_year: number | null;
-  death_year: number | null;
-  alternate_names: string[];
-  source_authorities: string[];
-  cached_at: Date;
-}
-
-async function readEntityCache(viafId: string): Promise<AuthorEntityCacheDoc | null> {
-  if (!viafId) return null;
-  try {
-    const db = await getDb();
-    const doc = await db.collection<AuthorEntityCacheDoc>('entities').findOne({ _id: `viaf:${viafId}` });
-    return doc || null;
-  } catch (err) {
-    console.warn('[author-authority] cache read failed', err);
-    return null;
-  }
-}
-
-async function writeEntityCache(match: AuthorAuthorityMatch): Promise<void> {
-  if (!match.viaf_id) return;
-  try {
-    const db = await getDb();
-    await db.collection<AuthorEntityCacheDoc>('entities').updateOne(
-      { _id: `viaf:${match.viaf_id}` },
-      {
-        $set: {
-          type: 'person',
-          viaf_id: match.viaf_id,
-          wikidata_qid: match.wikidata_qid,
-          canonical_name: match.canonical_name,
-          short_name: match.short_name,
-          birth_year: match.birth_year,
-          death_year: match.death_year,
-          alternate_names: match.alternate_names,
-          source_authorities: match.source_authorities || [],
-          cached_at: new Date(),
-        },
-      },
-      { upsert: true },
-    );
-  } catch (err) {
-    // Re-throw so the caller can warn — entries collection might not exist
-    // in a fresh dev DB.
-    throw err;
-  }
-}
-
-/**
- * Look up a single cached entity by VIAF id (used by display components).
- * Returns null on cache miss — the UI degrades to "Canonical: VIAF <id>".
- */
-export async function getCachedAuthority(viafId: string): Promise<AuthorEntityCacheDoc | null> {
-  return readEntityCache(viafId);
 }
 
 // ---------------- HTTP helper ----------------

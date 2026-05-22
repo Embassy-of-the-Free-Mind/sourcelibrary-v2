@@ -24,6 +24,8 @@ import type { AuthorAuthorityMatch, AuthorAuthorityResult } from '@/lib/author-a
  */
 
 export interface AuthorAuthoritySelection {
+  /** Entity's MongoDB `_id` (string) — the value to write to author_entity_id. */
+  entity_id: string;
   viaf_id: string;
   wikidata_qid: string | null;
   canonical_name: string;
@@ -117,16 +119,36 @@ export default function AuthorAuthorityPicker({
     }, debounceMs);
   }
 
-  function handleSelect(m: AuthorAuthorityMatch) {
-    onSelect({
-      viaf_id: m.viaf_id,
-      wikidata_qid: m.wikidata_qid,
-      canonical_name: m.canonical_name,
-      short_name: m.short_name,
-      birth_year: m.birth_year,
-      death_year: m.death_year,
-    });
-    setOpen(false);
+  async function handleSelect(m: AuthorAuthorityMatch) {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/authority/author/link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ match: m }),
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        setError(body.error || `Link failed (${res.status})`);
+        return;
+      }
+      const { entity_id } = (await res.json()) as { entity_id: string };
+      onSelect({
+        entity_id,
+        viaf_id: m.viaf_id,
+        wikidata_qid: m.wikidata_qid,
+        canonical_name: m.canonical_name,
+        short_name: m.short_name,
+        birth_year: m.birth_year,
+        death_year: m.death_year,
+      });
+      setOpen(false);
+    } catch (err) {
+      setError((err as Error).message || 'Link failed');
+    } finally {
+      setLoading(false);
+    }
   }
 
   // Compact "already linked" view.
