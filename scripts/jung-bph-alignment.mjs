@@ -281,7 +281,37 @@ function writeReport(jung, results) {
   }, null, 2));
   console.log(`Wrote ${jsonPath}`);
 
-  return { matched, notInBph, mdPath, jsonPath };
+  // CSV — flat, spreadsheet-friendly, one row per Jung work. For Jozef/Emiel
+  // to share with scholars. Includes the best BPH match (if any).
+  const csvPath = path.join(baseDir, `jung-bph-alignment-${today}.csv`);
+  const csvRows = [];
+  csvRows.push([
+    'jung_year', 'jung_author', 'jung_title', 'jung_erara_id', 'jung_url',
+    'match_status', 'match_score',
+    'bph_ubn', 'bph_author', 'bph_title', 'bph_year', 'bph_place', 'bph_printer', 'bph_publisher', 'bph_url',
+  ].join(','));
+  const csvEsc = (v) => {
+    if (v === null || v === undefined) return '';
+    const s = String(v);
+    if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+      return `"${s.replace(/"/g, '""')}"`;
+    }
+    return s;
+  };
+  for (const r of results.sort((a, b) => (a.jung.year || 9999) - (b.jung.year || 9999))) {
+    const best = r.matches[0];
+    csvRows.push([
+      r.jung.year, r.jung.author, r.jung.title, r.jung.erara_id, r.jung.source_url,
+      best ? 'in_bph' : 'jung_only', best ? best.score : '',
+      best?.bph.ubn || '', best?.bph.author || '', best?.bph.title || '',
+      best?.bph.year || '', best?.bph.place || '', best?.bph.printer || '', best?.bph.publisher || '',
+      best ? `https://bph.sourcelibrary.org/catalog/${best.bph.ubn}` : '',
+    ].map(csvEsc).join(','));
+  }
+  fs.writeFileSync(csvPath, csvRows.join('\n'));
+  console.log(`Wrote ${csvPath}`);
+
+  return { matched, notInBph, mdPath, jsonPath, csvPath };
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────
