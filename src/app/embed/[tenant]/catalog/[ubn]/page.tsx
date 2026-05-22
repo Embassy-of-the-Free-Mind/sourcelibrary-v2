@@ -271,26 +271,26 @@ function normalizeRoleSafe(role: unknown): Role {
   return 'reader';
 }
 
-async function canEditCatalog(
+async function effectiveCatalogRole(
   email: string | null | undefined,
   platformRole: Role,
   tenantSlug: string,
-): Promise<boolean> {
-  if (!email) return false;
-  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['editor']) return true;
+): Promise<Role> {
+  if (!email) return platformRole;
+  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['editor']) return platformRole;
   try {
     const db = await getDb();
     const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
-    if (!tenant) return false;
+    if (!tenant) return platformRole;
     const membership = await db.collection('memberships').findOne({
       email: email.toLowerCase(),
       tenantId: tenant.id,
       status: 'active',
     });
     const tenantRole = normalizeRoleSafe(membership?.role);
-    return ROLE_LEVEL[tenantRole] >= ROLE_LEVEL['editor'];
+    return ROLE_LEVEL[tenantRole] >= ROLE_LEVEL[platformRole] ? tenantRole : platformRole;
   } catch {
-    return false;
+    return platformRole;
   }
 }
 
@@ -313,7 +313,10 @@ export default async function CatalogEntryPage({ params }: Props) {
   if (!work) notFound();
 
   const platformRole = normalizeRoleSafe((session?.user as { role?: unknown } | undefined)?.role);
-  const showEditButton = await canEditCatalog(session?.user?.email, platformRole, tenant);
+  const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
+  const showEditButton = ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
+  const showReviewLink = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'];
+  const editLabel = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit catalogue entry' : 'Propose a change';
 
   // If the work has no BPH-native digitisation but does have a cross-provider
   // scan recorded, fetch that book so we can offer a "Read at [source]" panel.
@@ -337,13 +340,21 @@ export default async function CatalogEntryPage({ params }: Props) {
     <div className="bg-cream">
       <div className="max-w-2xl mx-auto px-6 py-8">
         {showEditButton && (
-          <div className="flex justify-end mb-2">
+          <div className="flex justify-end gap-2 mb-2">
+            {showReviewLink && (
+              <a
+                href="/catalog/review"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+              >
+                Review queue
+              </a>
+            )}
             <a
               href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
             >
               <Pencil className="w-3.5 h-3.5" />
-              Edit catalogue entry
+              {editLabel}
             </a>
           </div>
         )}
@@ -606,7 +617,7 @@ export default async function CatalogEntryPage({ params }: Props) {
                 href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
                 className="text-accent-rust hover:underline"
               >
-                Edit this entry
+                {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit this entry' : 'Propose a change'}
               </a>
               .
             </>
