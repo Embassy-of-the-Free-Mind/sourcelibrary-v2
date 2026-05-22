@@ -55,6 +55,7 @@ src/data/*
 !src/data/concept-diffusion-research.json
 !src/data/book-constellation.json
 !src/data/image-constellation.json
+!src/data/jung-bph-alignment-2026-05-22.json
 
 # User uploads and test files
 public/uploads/
