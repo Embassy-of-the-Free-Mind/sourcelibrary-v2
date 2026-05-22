@@ -1,11 +1,13 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { BookMarked, ExternalLink, BookOpen } from 'lucide-react';
+import { BookMarked, ExternalLink, BookOpen, Pencil } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import { getReadDb } from '@/lib/mongodb';
+import { getReadDb, getDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPartnerBySlug } from '@/lib/library-partners';
+import { auth } from '@/lib/auth';
+import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 
 // Catalogue entry routing
@@ -255,6 +257,43 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: `${title} - BPH catalogue`, description };
 }
 
+function normalizeRoleSafe(role: unknown): Role {
+  if (
+    role === 'superadmin' ||
+    role === 'admin' ||
+    role === 'editor' ||
+    role === 'contributor' ||
+    role === 'reader'
+  ) {
+    return role;
+  }
+  if (role === 'inner_circle' || role === 'curator') return 'editor';
+  return 'reader';
+}
+
+async function effectiveCatalogRole(
+  email: string | null | undefined,
+  platformRole: Role,
+  tenantSlug: string,
+): Promise<Role> {
+  if (!email) return platformRole;
+  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['editor']) return platformRole;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
+    if (!tenant) return platformRole;
+    const membership = await db.collection('memberships').findOne({
+      email: email.toLowerCase(),
+      tenantId: tenant.id,
+      status: 'active',
+    });
+    const tenantRole = normalizeRoleSafe(membership?.role);
+    return ROLE_LEVEL[tenantRole] >= ROLE_LEVEL[platformRole] ? tenantRole : platformRole;
+  } catch {
+    return platformRole;
+  }
+}
+
 export default async function CatalogEntryPage({ params }: Props) {
   const { tenant, ubn } = await params;
 
@@ -265,12 +304,19 @@ export default async function CatalogEntryPage({ params }: Props) {
     return <GenericCatalogEntry tenant={tenant} catalogId={ubn} partner={partner} />;
   }
 
-  // Fetch BPH catalog row + live SL book in parallel
-  const [work, slBook] = await Promise.all([
+  // Fetch BPH catalog row + live SL book + session in parallel
+  const [work, slBook, session] = await Promise.all([
     fetchWork(ubn),
     fetchSlBook(ubn),
+    auth(),
   ]);
   if (!work) notFound();
+
+  const platformRole = normalizeRoleSafe((session?.user as { role?: unknown } | undefined)?.role);
+  const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
+  const showEditButton = ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
+  const showReviewLink = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'];
+  const editLabel = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit catalogue entry' : 'Propose a change';
 
   // If the work has no BPH-native digitisation but does have a cross-provider
   // scan recorded, fetch that book so we can offer a "Read at [source]" panel.
@@ -293,6 +339,25 @@ export default async function CatalogEntryPage({ params }: Props) {
   return (
     <div className="bg-cream">
       <div className="max-w-2xl mx-auto px-6 py-8">
+        {showEditButton && (
+          <div className="flex justify-end gap-2 mb-2">
+            {showReviewLink && (
+              <a
+                href="/catalog/review"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+              >
+                Review queue
+              </a>
+            )}
+            <a
+              href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+            >
+              <Pencil className="w-3.5 h-3.5" />
+              {editLabel}
+            </a>
+          </div>
+        )}
         {/* Identity */}
         <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
           {displayTitle}
@@ -544,7 +609,19 @@ export default async function CatalogEntryPage({ params }: Props) {
         </Section>
 
         <p className="text-xs text-muted border-t border-border-light pt-4 mt-2">
-          Catalogue data sourced from the Bibliotheca Philosophica Hermetica (UBN {work.ubn}). Corrections should be made in the BPH catalogue and re-imported.
+          Catalogue data sourced from the Bibliotheca Philosophica Hermetica (UBN {work.ubn}).
+          {showEditButton ? (
+            <>
+              {' '}
+              <a
+                href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
+                className="text-accent-rust hover:underline"
+              >
+                {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit this entry' : 'Propose a change'}
+              </a>
+              .
+            </>
+          ) : null}
         </p>
       </div>
     </div>
