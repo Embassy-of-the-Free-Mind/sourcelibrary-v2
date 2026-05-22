@@ -937,7 +937,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
       {(() => {
         return (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="card p-6">
+            {/* data-view-section="ai-summary": the whole "About This Book"
+                card is hidden when the visitor has scholar mode on (see
+                EmbedUserMenu). Categories are AI-assigned, the prose is
+                generated, and the empty states are meta-commentary about
+                the AI pipeline — none of it belongs on a stripped-down
+                bibliographic page. */}
+            <div className="card p-6" data-view-section="ai-summary">
               <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
 
               {/* Categories */}
@@ -957,7 +963,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     ))}
                   </div>
                   {hasTranslations && (
-                    <ExpandableGuide embedPolicy={embedPolicy} bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
+                    <div data-view-section="reading-guide">
+                      <ExpandableGuide embedPolicy={embedPolicy} bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
+                    </div>
                   )}
                 </>
               ) : hasTranslations ? (
