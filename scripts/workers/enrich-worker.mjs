@@ -108,6 +108,29 @@ function rotateKey() {
 // ── Utility ──
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// Per-call timeouts for Gemini. The Google SDK has no built-in request
+// timeout, so a stuck `generateContent()` would otherwise hang until the
+// whole-book 20-minute Promise.race finally trips — which used to cause
+// large books (900+ pages) to time out on a single bad call and waste the
+// remaining ~19 minutes of budget. Wrapping each call here means a single
+// slow call costs at most `ms` (one retry doubles the worst case).
+async function withTimeout(promise, ms, label) {
+  let to;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        to = setTimeout(() => reject(new Error(`${label} timeout after ${Math.round(ms / 1000)}s`)), ms);
+      }),
+    ]);
+  } finally {
+    clearTimeout(to);
+  }
+}
+
+const PER_BATCH_CALL_MS = 90 * 1000;        // 90s per processBatch Gemini call
+const PER_SUMMARY_CALL_MS = 3 * 60 * 1000;  // 3 min for the final book-summary call
+
 function computeCost(model, inputTokens, outputTokens) {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
   return (inputTokens / 1_000_000) * pricing.input + (outputTokens / 1_000_000) * pricing.output;
@@ -375,38 +398,51 @@ CRITICAL for quotes:
 - Include the page number where each quote appears
 - 3-5 quotes per batch`;
 
-  try {
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
-    const usageMetadata = result.response.usageMetadata;
-    const usage = {
-      input_tokens: usageMetadata?.promptTokenCount || 0,
-      output_tokens: usageMetadata?.candidatesTokenCount || 0,
-    };
+  // One retry on timeout/transient error — the second call may rotate to a
+  // healthier key after a 429. Without the per-call timeout, a hung call
+  // would burn the entire 20-min per-book budget; with it, the worst case
+  // for this batch is ~2 × PER_BATCH_CALL_MS.
+  let lastErr = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const result = await withTimeout(
+        model.generateContent(prompt),
+        PER_BATCH_CALL_MS,
+        `processBatch pages ${pageRange.start}-${pageRange.end}`,
+      );
+      const responseText = result.response.text();
+      const usageMetadata = result.response.usageMetadata;
+      const usage = {
+        input_tokens: usageMetadata?.promptTokenCount || 0,
+        output_tokens: usageMetadata?.candidatesTokenCount || 0,
+      };
 
-    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage };
-    }
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage };
+      }
 
-    const parsed = JSON.parse(jsonMatch[0]);
-    return {
-      pageRange,
-      themes: Array.isArray(parsed.themes) ? parsed.themes : [],
-      quotes: Array.isArray(parsed.quotes) ? parsed.quotes : [],
-      people: Array.isArray(parsed.people) ? parsed.people : [],
-      places: Array.isArray(parsed.places) ? parsed.places : [],
-      concepts: Array.isArray(parsed.concepts) ? parsed.concepts : [],
-      summary: typeof parsed.summary === 'string' ? parsed.summary : '',
-      usage,
-    };
-  } catch (e) {
-    if (e.message?.includes('429') || e.message?.includes('RESOURCE_EXHAUSTED')) {
-      rotateKey();
+      const parsed = JSON.parse(jsonMatch[0]);
+      return {
+        pageRange,
+        themes: Array.isArray(parsed.themes) ? parsed.themes : [],
+        quotes: Array.isArray(parsed.quotes) ? parsed.quotes : [],
+        people: Array.isArray(parsed.people) ? parsed.people : [],
+        places: Array.isArray(parsed.places) ? parsed.places : [],
+        concepts: Array.isArray(parsed.concepts) ? parsed.concepts : [],
+        summary: typeof parsed.summary === 'string' ? parsed.summary : '',
+        usage,
+      };
+    } catch (e) {
+      lastErr = e;
+      if (e.message?.includes('429') || e.message?.includes('RESOURCE_EXHAUSTED')) {
+        rotateKey();
+      }
+      if (attempt === 0) continue; // retry once
     }
-    console.error(`  Batch processing error (pages ${pageRange.start}-${pageRange.end}):`, e.message);
-    return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage: null };
   }
+  console.error(`  Batch processing error (pages ${pageRange.start}-${pageRange.end}):`, lastErr?.message);
+  return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage: null };
 }
 
 // ── Batch creation ──
@@ -681,7 +717,11 @@ Output as JSON:
 
 IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
 
-  const result = await model.generateContent(prompt);
+  const result = await withTimeout(
+    model.generateContent(prompt),
+    PER_SUMMARY_CALL_MS,
+    `generateBookSummary "${bookTitle.slice(0, 40)}"`,
+  );
   const responseText = result.response.text();
   const usageMetadata = result.response.usageMetadata;
   const usage = {
