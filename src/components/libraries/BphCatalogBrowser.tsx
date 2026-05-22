@@ -563,8 +563,8 @@ export default function BphCatalogBrowser({
                   onChange={(e) => handleAdvChange('digitized', e.target.value)}
                   className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary"
                 >
-                  <option value="">All</option>
-                  <option value="sl">On Source Library</option>
+                  <option value="">All books</option>
+                  <option value="sl">Digitised on Source Library</option>
                   <option value="true">Digitised anywhere</option>
                   <option value="false">Not digitised</option>
                 </select>
@@ -769,15 +769,27 @@ export default function BphCatalogBrowser({
                         </div>
                       )}
                     </div>
-                    <div className="mt-2 text-sm font-medium text-primary leading-snug line-clamp-2 group-hover:text-accent-rust transition-colors">
-                      {displayTitle}
-                    </div>
+                    {/* Card layout follows librarian convention: author first,
+                        title prominent, then impressum (place, publisher, year)
+                        as a separate line. Paul's feedback (#1921). */}
                     {displayAuthor && (
-                      <div className="text-xs text-muted mt-0.5 line-clamp-1">
+                      <div className="mt-2 text-xs text-muted line-clamp-1">
                         {displayAuthor}
-                        {w.year ? ` · ${w.year}` : ''}
                       </div>
                     )}
+                    <div className={`${displayAuthor ? 'mt-0.5' : 'mt-2'} text-sm font-medium text-primary leading-snug line-clamp-2 group-hover:text-accent-rust transition-colors`}>
+                      {displayTitle}
+                    </div>
+                    {(() => {
+                      const imprint = [w.place, w.publisher || w.printer, w.year]
+                        .filter(Boolean)
+                        .join(', ');
+                      return imprint ? (
+                        <div className="mt-0.5 text-xs text-muted line-clamp-1">
+                          {imprint}
+                        </div>
+                      ) : null;
+                    })()}
                   </a>
                 );
               })}
