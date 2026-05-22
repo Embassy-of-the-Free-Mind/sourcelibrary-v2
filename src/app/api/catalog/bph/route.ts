@@ -202,6 +202,13 @@ export async function GET(req: NextRequest) {
       }
     } else if (digitized === 'sl' && mode === 'new') {
       query = query.not('sl_book_id', 'is', null);
+    } else if (digitized === 'held' && mode === 'new') {
+      // Catalogue entries with a non-null `present_location` are books
+      // physically in the building (Leeszaal, Depot, …). Catalog-only
+      // references and works held elsewhere have null present_location.
+      // Requested by Paul Dijstelberge (BPH) — visitors wanted a way to see
+      // just the volumes they could ask to consult on site.
+      query = query.not('present_location', 'is', null);
     } else if (digitized === 'false') {
       if (mode === 'new') {
         query = query.is('sl_book_id', null).is('ia_identifier', null);

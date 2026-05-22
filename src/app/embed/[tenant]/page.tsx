@@ -57,7 +57,19 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     const language = typeof sp.language === 'string' ? sp.language : '';
     const q = typeof sp.q === 'string' ? sp.q : '';
     const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0', 10) || 0;
-    const rawView = typeof sp.view === 'string' ? sp.view : 'books';
+    // Default landing view for unified-catalogue tenants (BPH, Kloss, …):
+    // show the full library catalogue rather than just the digitised subset.
+    // Per Paul Dijstelberge's BPH feedback — a visitor to a library's home
+    // page expects to see the whole collection, with digitised as a filter
+    // they can opt into. Non-unified tenants keep the legacy 'books' default.
+    //
+    // Exception: when the URL already carries a books-grid search (`?q=…`),
+    // honour that by defaulting to 'books' so the strip-redirect below
+    // doesn't silently drop the query.
+    const tenantIsUnified = tenant === 'bph' || !!getPartnerBySlug(tenant)?.hasUnifiedCatalogue;
+    const hasBooksGridQuery = typeof sp.q === 'string' && sp.q !== '';
+    const defaultView = tenantIsUnified && !hasBooksGridQuery ? 'catalog' : 'books';
+    const rawView = typeof sp.view === 'string' ? sp.view : defaultView;
     const view = rawView === 'catalogue' ? 'catalog' : rawView;
     // Display dimension is independent of the view filter. When unset, default
     // matches what the partner mockup leads with: catalog→list, books→grid.
