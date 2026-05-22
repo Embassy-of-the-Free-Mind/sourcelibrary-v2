@@ -54,6 +54,16 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 
 `node scripts/audit-bph-leaks.mjs` crawls the BPH subdomain, follows internal links to a configurable depth, and exits non-zero if any anchor or one-hop redirect resolves off-subdomain. Run it after touching anything in `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, or any component that builds URLs.
 
+## Authentication across subdomains
+
+The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.
+
+**Identity shares, permissions do not.** Role checks still run via `tenant_memberships` lookups per tenant (`auth-helpers.ts:19-42`). A user signed in on the parent site does not inherit any tenant role just by visiting a subdomain; the `withAuth(handler, { minRole })` / `withBphLibrarianAuth` wrappers continue to enforce per-tenant gates.
+
+**CSRF token stays per-host** (`__Host-` prefix forbids the `domain` attribute, and each subdomain hits its own `/api/auth/*` routes).
+
+Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies.md` for the full rationale and rollback notes.
+
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
 - Production database: `bookstore` (~17K live books, ~24.5K warehouse), NOT `sourcelibrary_research`
