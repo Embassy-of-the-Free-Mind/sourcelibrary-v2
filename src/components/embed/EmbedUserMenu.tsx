@@ -2,9 +2,37 @@
 
 import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
-import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Settings } from 'lucide-react';
+
+// On tenant subdomains, /auth/* and /account are caught by the proxy.ts
+// rewrite (it sends every non-/embed/, non-/api/, non-/_next/ path to
+// /embed/<tenant>), so the link silently lands on the tenant homepage —
+// from the user's POV "nothing happens". Route those off to the main
+// host instead. Cookies are shared on .sourcelibrary.org so the session
+// carries back (see CLAUDE.md "Authentication across subdomains").
+function isTenantSubdomain(host: string): boolean {
+  return host.endsWith('.sourcelibrary.org') && host !== 'sourcelibrary.org';
+}
+
+function navigateToSignIn() {
+  if (typeof window === 'undefined') return;
+  if (isTenantSubdomain(window.location.hostname)) {
+    const callbackUrl = encodeURIComponent(window.location.href);
+    window.location.assign(`https://sourcelibrary.org/auth/signin?callbackUrl=${callbackUrl}`);
+  } else {
+    window.location.assign('/auth/signin');
+  }
+}
+
+function navigateToAccount() {
+  if (typeof window === 'undefined') return;
+  if (isTenantSubdomain(window.location.hostname)) {
+    window.location.assign('https://sourcelibrary.org/account');
+  } else {
+    window.location.assign('/account');
+  }
+}
 
 /**
  * Floating top-right control for embed/tenant pages.
@@ -162,13 +190,16 @@ export default function EmbedUserMenu() {
                 <div className="text-xs text-muted truncate">Signed in as</div>
                 <div className="text-sm font-medium text-primary truncate">{name}</div>
               </div>
-              <Link
-                href="/account"
-                className="block px-3 py-2 text-sm text-secondary hover:bg-cream/60"
-                onClick={() => setIsOpen(false)}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  navigateToAccount();
+                }}
+                className="block w-full text-left px-3 py-2 text-sm text-secondary hover:bg-cream/60"
               >
                 Account
-              </Link>
+              </button>
               <button
                 onClick={() => signOut({ callbackUrl: '/' })}
                 className="block w-full text-left px-3 py-2 text-sm text-secondary hover:bg-cream/60 border-t border-border-light/60"
@@ -177,13 +208,16 @@ export default function EmbedUserMenu() {
               </button>
             </>
           ) : (
-            <Link
-              href="/auth/signin"
-              className="block px-3 py-2 text-sm text-secondary hover:bg-cream/60"
-              onClick={() => setIsOpen(false)}
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                navigateToSignIn();
+              }}
+              className="block w-full text-left px-3 py-2 text-sm text-secondary hover:bg-cream/60"
             >
               Sign in
-            </Link>
+            </button>
           )}
         </div>
       )}
