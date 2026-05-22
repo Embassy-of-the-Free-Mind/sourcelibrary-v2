@@ -7,6 +7,7 @@ import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPartnerBySlug } from '@/lib/library-partners';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
+import BphCatalogueEditButton from '@/components/book/BphCatalogueEditButton';
 
 // Catalogue entry routing
 // - BPH (providerKey === 'bph'): legacy `bph_works` table + bespoke fields
@@ -315,6 +316,13 @@ export default async function CatalogEntryPage({ params }: Props) {
           {work.year && <span className="tabular-nums">{work.year}</span>}
           {work.place && <span>{work.place}</span>}
           {work.language && <span className="text-muted">{work.language}</span>}
+        </div>
+
+        {/* Cataloguer edit affordance — gated by AuthCheck inside the button.
+            Visible only to BPH librarians + global admins. Writes Supabase
+            bph_works directly (see #1921 P2). */}
+        <div className="mb-6">
+          <BphCatalogueEditButton work={work} variant="header" />
         </div>
 
         {/* Source Library digital edition (when available) */}
