@@ -216,11 +216,13 @@ async function jp2ToJpeg(jp2Path) {
  * Handles full-res IIIF URLs by requesting a capped size.
  */
 async function fetchPageImage(photoUrl, iaId) {
-  // For IA IIIF URLs, request a capped size instead of full resolution
-  // Original: /page/n0/full/pct:50/0/default.jpg
-  // Capped:   /page/n0/full/!3000,3000/0/default.jpg
+  // Cap any IIIF URL (IA, NDL, Bodleian, Gallica, MDZ, Vatican, e-rara,
+  // Allard Pierson, etc.) to a sane max dimension. The shared shape is
+  // `…/full/<size>/<rotation>/<quality>.<format>` so a regex on the
+  // `/full/<size>/` segment is portable across providers.
   let url = photoUrl;
-  if (url.includes('archive.org') && url.includes('/page/')) {
+  if (/\/full\/[^/]+\/[0-9]+\/[a-z]+\.(jpe?g|png|tif)/i.test(url) ||
+      (url.includes('archive.org') && url.includes('/page/'))) {
     url = url.replace(/\/full\/[^/]+\//, `/full/!${MAX_DIMENSION},${MAX_DIMENSION}/`);
   }
 
@@ -260,8 +262,12 @@ async function fetchPageImage(photoUrl, iaId) {
  * Correct by construction — no mapping needed.
  */
 async function processBook(book, db) {
-  const iaId = book.ia_identifier || book.image_source?.identifier;
-  if (!iaId) { stats.booksSkipped++; return; }
+  // For provenance/logging only. IIIF books from NDL/Bodleian/etc. won't
+  // have ia_identifier; that's fine — the actual fetch uses each page's
+  // own photo_original URL.
+  const sourceId = book.ia_identifier
+    || book.image_source?.identifier
+    || (book.image_source?.iiif_manifest ? book.image_source.iiif_manifest.split('/').slice(-2, -1)[0] : null);
 
   // Get pages needing archiving for this book
   const pages = await db.collection('pages')
@@ -277,14 +283,17 @@ async function processBook(book, db) {
   const totalPages = book.pages_count || pages.length;
   console.log(`  [IIIF] ${book.title?.slice(0, 50)} — ${pages.length}/${totalPages} pages to archive`);
 
-  // Filter to pages with valid IA IIIF URLs
+  // Accept any IIIF-shaped page URL (any provider) plus IA's /page/ legacy
+  // shape. Reject pages that already point at our own R2 (images.sourcelibrary.org).
   const workItems = pages.filter(p => {
     const url = p.photo_original || p.photo || '';
-    return url.includes('archive.org') || url.includes('/page/');
+    if (!url || url.includes('images.sourcelibrary.org')) return false;
+    return url.includes('/page/')                                  // IA legacy
+      || /\/full\/[^/]+\/[0-9]+\/[a-z]+\.(jpe?g|png|tif)/i.test(url); // IIIF
   });
 
   if (workItems.length === 0) {
-    console.log(`    [SKIP] No IA IIIF URLs found`);
+    console.log(`    [SKIP] No fetchable image URLs found`);
     stats.booksSkipped++;
     return;
   }
@@ -352,14 +361,16 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Find IA books with unarchived pages
-  // Query books collection (indexed, fast) instead of scanning pages
-  const bookQuery = {
-    $or: [
-      { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
-      { 'image_source.provider': 'ia' },
-    ],
-  };
+  // Find books with unarchived pages. By default include any provider
+  // whose pages hotlink to an external IIIF/IA URL. --ia-only restores
+  // the original IA-only behaviour for callers who want it.
+  const IA_ONLY = hasFlag('ia-only');
+  const bookQuery = IA_ONLY
+    ? { $or: [
+        { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
+        { 'image_source.provider': { $in: ['ia', 'internet_archive'] } },
+      ]}
+    : { 'image_source.provider': { $exists: true, $ne: null, $nin: ['wikimedia_commons', 'rijksmuseum', 'met', 'nga'] } };
   if (BOOK_ID) bookQuery._id = BOOK_ID;
 
   const iaBooks = await db.collection('books')
@@ -368,7 +379,7 @@ async function main() {
     .limit(BOOK_LIMIT || 0)
     .toArray();
 
-  console.log(`Found ${iaBooks.length} IA books`);
+  console.log(`Found ${iaBooks.length} candidate books (${IA_ONLY ? 'IA-only' : 'all IIIF providers'})`);
 
   if (DRY_RUN) {
     console.log('Dry run — not processing.');

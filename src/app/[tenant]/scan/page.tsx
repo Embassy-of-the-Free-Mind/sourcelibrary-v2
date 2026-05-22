@@ -763,7 +763,7 @@ export default function ScanPage() {
               {/* Catalog matches */}
               {catalogMatches.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs text-muted font-medium uppercase tracking-wide">Catalog matches</p>
+                  <p className="text-xs text-muted font-medium uppercase tracking-wide">Catalogue matches</p>
                   <div className="space-y-2">
                     {catalogMatches.map((match, i) => (
                       <button

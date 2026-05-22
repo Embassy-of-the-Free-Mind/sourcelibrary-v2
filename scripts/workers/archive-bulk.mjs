@@ -39,6 +39,7 @@ const BOOK_LIMIT = parseInt(getArg('limit') || '20', 10);  // Books per cron run
 const BOOK_CONCURRENCY = parseInt(getArg('concurrency') || '2', 10);
 const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10);
 const DRY_RUN = hasFlag('dry-run');
+const TARGET_BOOK_ID = getArg('book-id') || null;  // one-off: archive a single book, bypassing the queue
 const JPEG_QUALITY = 85;
 const MAX_DIMENSION = 3000;
 const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;  // 6h — older sl-bulk-* dirs are leaked, sweep them
@@ -197,9 +198,12 @@ function extractJp2Zip(zipPath, destDir) {
 async function jp2ToJpeg(jp2Path) {
   // opj_decompress → BMP → sharp → JPEG
   // Sharp's libvips JP2 support is unreliable on some builds, so use opj_decompress
+  // Use -threads 1: PAGE_CONCURRENCY already runs N decodes in parallel; letting
+  // each opj_decompress also try to grab all cores caused load avg 23 on 8 cores
+  // with 0% idle, because parallel decodes were trampling each other.
   const bmpPath = jp2Path + '.out.tif';
   try {
-    await execFileAsync('opj_decompress', ['-i', jp2Path, '-o', bmpPath, '-threads', 'ALL_CPUS'], { timeout: 120000 });
+    await execFileAsync('opj_decompress', ['-i', jp2Path, '-o', bmpPath, '-threads', '1'], { timeout: 120000 });
   } catch (err) {
     if (!fs.existsSync(bmpPath)) throw new Error(`opj_decompress failed: ${err.stderr?.slice(0, 200) || err.message}`);
   }
@@ -268,18 +272,60 @@ async function processBook(book, db) {
 
     const needsArchiveIds = new Set(pages.map(p => (p.id || p._id.toString())));
     const workItems = [];
+    let skippedNoLeaf = 0;
+    let skippedOutOfRange = 0;
+    let skippedMissingFile = 0;
 
     for (const page of allPages) {
       const pageId = page.id || page._id.toString();
       if (!needsArchiveIds.has(pageId)) continue;
       const photoUrl = page.photo_original || page.photo || '';
+      // IA URLs encode the JP2 leaf as /page/nN. If the page has no photo URL
+      // or a non-IA URL, we can't map it to a JP2 file in the zip.
       const leafMatch = photoUrl.match(/\/page\/n(\d+)/);
-      if (!leafMatch) continue;
+      if (!leafMatch) { skippedNoLeaf++; continue; }
       const leafNum = parseInt(leafMatch[1]);
-      if (leafNum >= pageFiles.length) continue;
+      // JP2 zips for partial scans can be sparser than the page count — leaves
+      // past the zip's end have no source file. Count these so the worker
+      // doesn't silently no-op the whole book.
+      if (leafNum >= pageFiles.length) { skippedOutOfRange++; continue; }
       const srcFile = pageFiles[leafNum];
-      if (!fs.existsSync(srcFile)) continue;
+      if (!fs.existsSync(srcFile)) { skippedMissingFile++; continue; }
       workItems.push({ page, srcFile, format: download.format });
+    }
+
+    const totalSkipped = skippedNoLeaf + skippedOutOfRange + skippedMissingFile;
+    if (totalSkipped > 0) {
+      console.log(`    [SKIP-PAGES] ${totalSkipped}/${pages.length}: ${skippedNoLeaf} no-leaf, ${skippedOutOfRange} leaf-out-of-range (zip has ${pageFiles.length}), ${skippedMissingFile} missing-file`);
+    }
+
+    // If JP2 zip is sparser than the candidate pages (or none match), bulk archive
+    // can't recover this book. Mark it bulk_unsuitable so we don't re-download the
+    // JP2 every cron round, and let archive-ocr pick it up via per-page IIIF.
+    if (workItems.length === 0 && pages.length > 0) {
+      const reason = skippedOutOfRange > 0
+        ? `JP2 zip sparser than page count (${pageFiles.length} leaves, ${pages.length} pages unarchived)`
+        : skippedNoLeaf > 0
+        ? `pages have no /page/nN photo URL (${skippedNoLeaf} of ${pages.length})`
+        : 'no work items after filtering';
+      console.log(`    [FAIL-BOOK] ${reason} — marking bulk_unsuitable, routing to archive-ocr`);
+      await db.collection(booksCol).updateOne(
+        { id: book.id },
+        { $set: {
+          'archive_metadata.bulk_unsuitable': true,
+          'archive_metadata.bulk_unsuitable_at': new Date(),
+          'archive_metadata.bulk_unsuitable_reason': reason,
+          updated_at: new Date(),
+        }, $unset: {
+          // Clear stale bulk_failures so the book isn't double-blocked. The
+          // bulk_unsuitable flag is the new source of truth for "skip in bulk".
+          'archive_metadata.bulk_failures': '',
+          'archive_metadata.bulk_last_error': '',
+          'archive_metadata.bulk_last_failed_at': '',
+        }}
+      );
+      stats.booksFailed++;
+      return;
     }
 
     let workIdx = 0;
@@ -363,9 +409,18 @@ async function processBook(book, db) {
         { maxTimeMS: 10000 }
       );
       const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
+      const update = { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() };
+      // Stamp completion time when a book reaches archive_complete. Lets
+      // downstream queries bucket archival throughput by day/week without
+      // scanning the pages collection (which is too large for ad-hoc aggregates).
+      // The worker already filters out books with all pages archived, so this
+      // gets written essentially once per book at first completion.
+      if (archiveStatus === 'archive_complete') {
+        update.archive_completed_at = new Date();
+      }
       await db.collection(booksCol).updateOne(
         { id: book.id },
-        { $set: { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() } }
+        { $set: update }
       );
     }
 
@@ -397,7 +452,7 @@ async function main() {
 
   cleanupStaleTmpDirs();
 
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 10, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
 
@@ -412,17 +467,23 @@ async function main() {
   // Find IA books with pages that may need archiving (regardless of pipeline status).
   // Priority: first translations > non-English > English
   const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
-  const iaBooks = await db.collection('books')
-    .aggregate([
-      { $match: {
+  const matchStage = TARGET_BOOK_ID
+    ? { $match: { id: TARGET_BOOK_ID } }
+    : { $match: {
         pages_count: { $gt: 0 },
         $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
         'archive_metadata.blocked': { $ne: true },
+        // bulk_unsuitable books have IA JP2 zips that don't align with photo URLs
+        // (archive drift, #1504) — leave them to archive-ocr's per-page IIIF path.
+        'archive_metadata.bulk_unsuitable': { $ne: true },
         $or: [
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
         ],
-      }},
+      }};
+  const iaBooks = await db.collection('books')
+    .aggregate([
+      matchStage,
       { $addFields: {
         _priority: {
           $switch: {
@@ -434,19 +495,22 @@ async function main() {
           },
         },
       }},
-      { $sort: { _priority: 1, hidden: 1 } },
+      { $sort: { _priority: 1, hidden: 1, _id: -1 } },
       { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])
     .toArray();
 
-  // Also include warehouse IA books — prioritize likely first translations
-  const warehouseIaBooks = await db.collection('books_warehouse')
+  // Also include warehouse IA books — prioritize likely first translations.
+  // When targeting a single book by --book-id, only the live books collection
+  // is consulted (the live id is the canonical surface).
+  const warehouseIaBooks = TARGET_BOOK_ID ? [] : await db.collection('books_warehouse')
     .aggregate([
       { $match: {
         pages_count: { $gt: 0 },
         $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
         'archive_metadata.blocked': { $ne: true },
+        'archive_metadata.bulk_unsuitable': { $ne: true },
         $or: [
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
@@ -463,7 +527,7 @@ async function main() {
           },
         },
       }},
-      { $sort: { _priority: 1 } },
+      { $sort: { _priority: 1, _id: -1 } },
       { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])

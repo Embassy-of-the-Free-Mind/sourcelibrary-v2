@@ -5,7 +5,7 @@ import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 8 research tools, CLI + MCP server, no API key needed.',
+  description: 'Open API over 12,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. 9 research tools, REST endpoints, CLI.',
   alternates: {
     canonical: '/developers',
   },
@@ -17,16 +17,96 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Search, read, and cite rare historical texts via MCP, CLI, or REST. Sign in for a free API key — generous limits and attributed usage."
+          subtitle="Open API over 12,000+ rare pre-modern texts translated to English. No auth needed to start — sign in for a free key to lift rate limits and help us see what you're building."
         />
       }
     >
-      {/* Get an API Key */}
+      {/* Easiest path — just ask Claude */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">The easiest path: just ask Claude</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          You don&apos;t need to install anything to use this collection with an AI. Open Claude (or any
+          assistant with web access) and ask it to look something up on sourcelibrary.org — it will
+          search, read pages, and quote with citation links. No SDK, no key, no setup.
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-5 space-y-3">
+          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
+            &ldquo;Use sourcelibrary.org to find what Paracelsus says about the spagyric process. Quote a few passages with citation URLs.&rdquo;
+          </p>
+          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
+            &ldquo;Search sourcelibrary.org for early modern texts on the harmony of the spheres &mdash; give me three with page links.&rdquo;
+          </p>
+          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
+            &ldquo;On sourcelibrary.org, read the first 20 pages of Fludd&apos;s Utriusque Cosmi Historia and summarize the cosmological model.&rdquo;
+          </p>
+        </div>
+
+        <p className="text-muted text-sm mt-4 max-w-2xl">
+          For richer, structured access &mdash; semantic search, 50-page bulk reads, image search,
+          DOI-backed citations &mdash; install the MCP server below or call the API directly.
+        </p>
+      </section>
+
+      {/* 30-second start */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">30-second start (API)</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          One endpoint, no key required to begin. It speaks JSON-RPC over HTTP, so anything that can POST JSON can talk to it.
+        </p>
+
+        <div className="space-y-4">
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+              <span className="text-sm font-medium text-stone-700">curl</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`curl -X POST https://sourcelibrary.org/api/mcp \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "jsonrpc": "2.0", "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "search_concept",
+      "arguments": { "query": "prima materia", "limit": 5 }
+    }
+  }'`}
+            </pre>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+              <span className="text-sm font-medium text-stone-700">Browser (fetch)</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`fetch('https://sourcelibrary.org/api/mcp', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    jsonrpc: '2.0', id: 1,
+    method: 'tools/call',
+    params: {
+      name: 'search_concept',
+      arguments: { query: 'prima materia', limit: 5 }
+    }
+  })
+}).then(r => r.json()).then(console.log)`}
+            </pre>
+          </div>
+        </div>
+
+        <p className="text-muted text-sm mt-4 max-w-2xl">
+          CORS is open (<code className="text-accent-rust">Access-Control-Allow-Origin: *</code>) — paste the snippet above into any browser console and it works.
+        </p>
+      </section>
+
+      {/* Free API key — soft CTA */}
       <section className="mb-16">
         <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
-          <h2 className="text-lg font-semibold text-primary mb-2">Get an API Key</h2>
+          <h2 className="text-lg font-semibold text-primary mb-2">Building something? Grab a free key.</h2>
           <p className="text-secondary mb-6">
-            Free for individual use. Higher limits for signed-in callers and partner-tier access available on request.
+            The endpoints work without one — keys lift rate limits, give your traffic attribution, and help us learn what
+            people are building so we can keep this open and free. Takes a minute.
           </p>
           <ApiKeyRequestForm />
         </div>
@@ -56,7 +136,9 @@ export default function DevelopersPage() {
         <h2 className="text-2xl font-semibold text-primary mb-2">MCP Server</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           Gives Claude (and any MCP client) direct access to the full collection &mdash;
-          search, read, quote, and browse 90,000+ illustrations. One command to install.
+          search, read, quote, and browse 90,000+ illustrations. The endpoint is plain JSON-RPC
+          over HTTP, so you can also call it from any HTTP client without an MCP library
+          (see the snippets above). Pick whichever path fits.
         </p>
 
         {/* Remote MCP URL */}
@@ -336,7 +418,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/catalog/csv</td>
-                  <td className="py-2.5 text-secondary">Download the full catalog as CSV</td>
+                  <td className="py-2.5 text-secondary">Download the full catalogue as CSV</td>
                 </tr>
               </tbody>
             </table>
@@ -344,18 +426,13 @@ source-library search "alchemy" --json | jq .results`}
         </div>
       </section>
 
-      {/* Dataset API */}
+      {/* Bulk dataset access */}
       <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-2">Dataset API</h2>
+        <h2 className="text-2xl font-semibold text-primary mb-2">Bulk dataset access</h2>
         <p className="text-secondary mb-6 max-w-2xl">
-          For bulk access to OCR text, translations, and page-level data, request an API key.
-          Keys are reviewed within 24 hours.
+          Pulling OCR text, translations, or page-level data in bulk? That tier is keyed — use the
+          form above to request one, or email us with what you&apos;re building. Reviewed within 24 hours.
         </p>
-
-        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
-          <h3 className="text-lg font-semibold text-primary mb-4">Request an API Key</h3>
-          <ApiKeyRequestForm />
-        </div>
       </section>
 
       {/* Citations */}

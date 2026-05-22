@@ -23,7 +23,15 @@
       "Bash(ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=3 root@46.224.122.120 \"tail -F /var/log/sourcelibrary/hires-backfill.log\")",
       "Bash(grep -E --line-buffered \"Stragglers|Done|FAIL|Error|BPH books|/[0-9]+$\")",
       "Bash(ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=3 root@46.224.122.120 \"tail -F /var/log/sourcelibrary/hires-backfill-retry.log\")",
-      "Bash(ssh -o ServerAliveInterval=30 root@46.224.122.120 \"tail -F /var/log/sourcelibrary/r2-snapshot.log\")"
+      "Bash(ssh -o ServerAliveInterval=30 root@46.224.122.120 \"tail -F /var/log/sourcelibrary/r2-snapshot.log\")",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__navigate_page",
+      "Skill(curator)",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__list_network_requests",
+      "mcp__chrome-devtools__list_console_messages"
     ]
   }
 }

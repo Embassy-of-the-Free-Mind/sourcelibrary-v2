@@ -3,18 +3,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Heart, BookOpen, FileText, Image as ImageIcon, User, TrendingUp } from 'lucide-react';
+import { Heart, BookOpen, FileText, Image as ImageIcon, User, TrendingUp, Palette } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { likes } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
-
-const VISITOR_ID_KEY = 'sl_visitor_id';
-
-function getVisitorId(): string {
-  if (typeof window === 'undefined') return '';
-  return localStorage.getItem(VISITOR_ID_KEY) || '';
-}
+import { useIdentity } from '@/hooks/useIdentity';
 
 interface FeaturedImage {
   url: string;
@@ -34,6 +28,9 @@ interface PopularBook {
   thumbnail_blob?: string;
   featured_images?: FeaturedImage[];
   likeCount: number;
+  // 'artwork' for visual-art records (paintings, prints, etc.), 'book' for
+  // texts. Older API responses may omit this; treat missing as 'book'.
+  contentType?: 'book' | 'artwork';
 }
 
 interface PopularPage {
@@ -63,10 +60,11 @@ interface PopularImage {
   bookYear?: number;
 }
 
-type Tab = 'books' | 'pages' | 'images';
+type Tab = 'books' | 'artwork' | 'pages' | 'images';
 type Mode = 'popular' | 'mine';
 
 export default function FavoritesPage() {
+  const identity = useIdentity();
   const [tab, setTab] = useState<Tab>('books');
   const [mode, setMode] = useState<Mode>('mine');
 
@@ -87,15 +85,21 @@ export default function FavoritesPage() {
   const [loadingMyPages, setLoadingMyPages] = useState(true);
   const [loadingMyImages, setLoadingMyImages] = useState(true);
 
-  // Load my likes on mount
+  // Load my likes once we know who the user is. `useIdentity` returns
+  // session.user.id for authenticated users and a localStorage v_… id for
+  // anonymous visitors. Reading sl_visitor_id directly here used to silently
+  // skip the fetch right after sign-in, because MigrateOnSignIn clears that
+  // key once it has migrated anonymous likes to the account.
   useEffect(() => {
-    const visitorId = getVisitorId();
-    if (!visitorId) {
+    if (identity.loading) return;
+    if (!identity.id) {
       setLoadingMyBooks(false);
       setLoadingMyPages(false);
       setLoadingMyImages(false);
       return;
     }
+
+    const visitorId = identity.id;
 
     likes.getMine<PopularBook>({ type: 'book', visitorId })
       .then(data => setMyBooks(data.items))
@@ -111,7 +115,7 @@ export default function FavoritesPage() {
       .then(data => setMyImages(data.items))
       .catch(console.error)
       .finally(() => setLoadingMyImages(false));
-  }, []);
+  }, [identity.id, identity.loading]);
 
   // Lazy-load popular data only when switching to that mode
   const loadPopular = useCallback(() => {
@@ -142,16 +146,31 @@ export default function FavoritesPage() {
     if (newMode === 'popular') loadPopular();
   };
 
-  const books = mode === 'mine' ? myBooks : popularBooks;
+  // Both books and artwork come from the same API call (target_type=book).
+  // The server tags each one with contentType; we split client-side so we can
+  // render them under distinct tabs without making another round trip.
+  const allBookLikes = mode === 'mine' ? myBooks : popularBooks;
+  const books = allBookLikes.filter(b => b.contentType !== 'artwork');
+  const artwork = allBookLikes.filter(b => b.contentType === 'artwork');
   const pages = mode === 'mine' ? myPages : popularPages;
   const images = mode === 'mine' ? myImages : popularImages;
 
   const loadingBooks = mode === 'mine' ? loadingMyBooks : loadingPopularBooks;
+  // Artwork shares the books-likes fetch — same loading flag.
+  const loadingArtwork = loadingBooks;
   const loadingPages = mode === 'mine' ? loadingMyPages : loadingPopularPages;
   const loadingImages = mode === 'mine' ? loadingMyImages : loadingPopularImages;
 
-  const loading = tab === 'books' ? loadingBooks : tab === 'pages' ? loadingPages : loadingImages;
-  const items = tab === 'books' ? books : tab === 'pages' ? pages : images;
+  const loading =
+    tab === 'books' ? loadingBooks
+    : tab === 'artwork' ? loadingArtwork
+    : tab === 'pages' ? loadingPages
+    : loadingImages;
+  const items =
+    tab === 'books' ? books
+    : tab === 'artwork' ? artwork
+    : tab === 'pages' ? pages
+    : images;
   const isEmpty = items.length === 0;
 
   return (
@@ -164,8 +183,8 @@ export default function FavoritesPage() {
           <h1 className="text-4xl md:text-5xl mb-4">Favorites</h1>
           <p className="text-xl text-stone-300 max-w-2xl">
             {mode === 'mine'
-              ? 'Books, pages, and illustrations you\'ve liked.'
-              : 'The most loved books, pages, and illustrations \u2014 as chosen by readers.'}
+              ? 'Books, artworks, pages, and illustrations you\'ve liked.'
+              : 'The most loved books, artworks, pages, and illustrations \u2014 as chosen by readers.'}
           </p>
 
           {/* Mode toggle */}
@@ -202,6 +221,7 @@ export default function FavoritesPage() {
           <div className="flex gap-1">
             {([
               { key: 'books' as Tab, icon: BookOpen, label: 'Books', count: books.length, isLoading: loadingBooks },
+              { key: 'artwork' as Tab, icon: Palette, label: 'Artwork', count: artwork.length, isLoading: loadingArtwork },
               { key: 'pages' as Tab, icon: FileText, label: 'Pages', count: pages.length, isLoading: loadingPages },
               { key: 'images' as Tab, icon: ImageIcon, label: 'Gallery', count: images.length, isLoading: loadingImages },
             ]).map(({ key, icon: Icon, label, count, isLoading }) => (
@@ -243,30 +263,39 @@ export default function FavoritesPage() {
               {mode === 'mine'
                 ? tab === 'books'
                   ? 'Like books to see them here.'
-                  : tab === 'pages'
-                    ? 'Like pages while reading to see them here.'
-                    : 'Like images in the gallery to see them here.'
+                  : tab === 'artwork'
+                    ? 'Like artworks to see them here.'
+                    : tab === 'pages'
+                      ? 'Like pages while reading to see them here.'
+                      : 'Like images in the gallery to see them here.'
                 : 'No items have been liked yet.'}
             </p>
             <Link
-              href={tab === 'images' ? '/gallery' : '/'}
+              href={
+                tab === 'images' ? '/gallery'
+                : tab === 'artwork' ? '/artwork'
+                : '/'
+              }
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-800 text-white text-sm rounded-lg hover:bg-stone-700 transition-colors"
             >
-              {tab === 'images' ? 'Browse Gallery' : 'Browse Library'}
+              {tab === 'images' ? 'Browse Gallery' : tab === 'artwork' ? 'Browse Artwork' : 'Browse Library'}
             </Link>
           </div>
 
-        ) : tab === 'books' ? (
-          /* Books — collection-style cards with extracted illustrations */
+        ) : tab === 'books' || tab === 'artwork' ? (
+          /* Books + Artwork — same card layout, different link targets */
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
-            {books.map((book, i) => {
+            {(tab === 'books' ? books : artwork).map((book, i) => {
               const imgs = book.featured_images || [];
               const heroUrl = imgs[0]?.url || getBookThumbnailUrl(book);
+              const href = book.contentType === 'artwork'
+                ? `/artwork/${book.slug || book.id}`
+                : `/book/${book.slug || book.id}`;
 
               return (
                 <Link
                   key={book.id}
-                  href={`/book/${book.slug || book.id}`}
+                  href={href}
                   className="group relative block overflow-hidden rounded-lg"
                 >
                   {/* Image mosaic: 1 hero + up to 2 side images */}

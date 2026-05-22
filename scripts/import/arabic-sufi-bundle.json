@@ -1,0 +1,42 @@
+{
+  "bundle_id": "20230305_20230305_1003",
+  "contributing_library": "Internet Archive (user-uploaded Arabic library bundle)",
+  "entries": [
+    {
+      "base_filename": "النفري - الأعمال الصوفية",
+      "title": "Al-Aʿmāl al-Ṣūfīya (Complete Sufi Works: al-Mawāqif and al-Mukhāṭabāt)",
+      "display_title": "الأعمال الصوفية",
+      "author": "Muḥammad ibn ʿAbd al-Jabbār al-Niffarī (d. 965)",
+      "year": 960,
+      "language": "Arabic",
+      "notes": "10th-century Iraqi mystic. Al-Niffari's Mawāqif (Stations) and Mukhāṭabāt (Addresses) are among the most radical Sufi texts — direct address from God to the seeker, foundational for later Sufi metaphysics."
+    },
+    {
+      "base_filename": "السهروردي - نصوص إشراقية، ثلاث رسائل في الرؤية والمجاز",
+      "title": "Nuṣūṣ Ishrāqīya: Three Treatises on Vision and Metaphor",
+      "display_title": "نصوص إشراقية، ثلاث رسائل في الرؤية والمجاز",
+      "author": "Shihāb al-Dīn al-Suhrawardī (d. 1191)",
+      "year": 1190,
+      "language": "Arabic",
+      "notes": "Arabic original of Illuminationist (ishrāqī) texts by Shaykh al-Ishrāq Suhrawardi al-Maqtul. Three treatises on visionary experience and symbolic perception. Library previously only had Urdu edition."
+    },
+    {
+      "base_filename": "التلمساني - شرح فصوص الحكم للشيخ الأكبر ابن عربي",
+      "title": "Sharḥ Fuṣūṣ al-Ḥikam (Commentary on Ibn ʿArabī's Bezels of Wisdom)",
+      "display_title": "شرح فصوص الحكم للشيخ الأكبر ابن عربي",
+      "author": "ʿAfīf al-Dīn al-Tilimsānī (d. 1291)",
+      "year": 1280,
+      "language": "Arabic",
+      "notes": "Major early commentary on Ibn ʿArabī's Fuṣūṣ al-Ḥikam by his disciple-once-removed. Foundational text in the Akbarian tradition."
+    },
+    {
+      "base_filename": "جامي - الدرّة الفاخرة في تحقيق مذهب الصوفية والمتكلمين والحكماء المتقدمين",
+      "title": "Al-Durra al-Fākhira (The Precious Pearl)",
+      "display_title": "الدرّة الفاخرة في تحقيق مذهب الصوفية والمتكلمين والحكماء المتقدمين",
+      "author": "ʿAbd al-Raḥmān Jāmī (d. 1492)",
+      "year": 1480,
+      "language": "Arabic",
+      "notes": "Jāmī's Arabic philosophical treatise comparing the doctrines of Sufis, theologians, and earlier philosophers on key metaphysical questions. The last great Persian Sufi poet writing in Arabic prose."
+    }
+  ]
+}

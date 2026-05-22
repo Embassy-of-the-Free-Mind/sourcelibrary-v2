@@ -16,7 +16,7 @@ export default function Icon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #1c1917 0%, #292524 100%)',
+          background: 'linear-gradient(135deg, #1a1612 0%, #2a2520 100%)',
           borderRadius: 40,
         }}
       >
@@ -30,7 +30,7 @@ export default function Icon() {
             cy="12"
             r="10"
             fill="none"
-            stroke="#a8a29e"
+            stroke="#ffffff"
             strokeWidth="1"
           />
           <circle
@@ -38,7 +38,7 @@ export default function Icon() {
             cy="12"
             r="7"
             fill="none"
-            stroke="#d6d3d1"
+            stroke="#ffffff"
             strokeWidth="1"
           />
           <circle
@@ -46,7 +46,7 @@ export default function Icon() {
             cy="12"
             r="4"
             fill="none"
-            stroke="#fafaf9"
+            stroke="#ffffff"
             strokeWidth="1"
           />
         </svg>

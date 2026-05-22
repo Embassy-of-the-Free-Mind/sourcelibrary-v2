@@ -1,0 +1,155 @@
+[
+  {
+    "ia_identifier": "chineseclassics01legg",
+    "title": "The Chinese Classics, Vol. 1: Confucian Analects, The Great Learning, The Doctrine of the Mean",
+    "author": "James Legge",
+    "year": 1893,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Clarendon Press revised ed. Bilingual Chinese/English."
+  },
+  {
+    "ia_identifier": "chineseclassics02legg",
+    "title": "The Chinese Classics, Vol. 2: The Works of Mencius",
+    "author": "James Legge",
+    "year": 1893,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Clarendon Press revised ed. Bilingual Chinese/English."
+  },
+  {
+    "ia_identifier": "chineseclassics31legg",
+    "title": "The Chinese Classics, Vol. 3, Part 1: The Shoo King (Books of T'ang, Yü, Hëa, Shang)",
+    "author": "James Legge",
+    "year": 1865,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Bilingual Chinese/English. Shujing / Book of Documents."
+  },
+  {
+    "ia_identifier": "chineseclassics32legg",
+    "title": "The Chinese Classics, Vol. 3, Part 2: The Shoo King (Books of Chow)",
+    "author": "James Legge",
+    "year": 1865,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Bilingual Chinese/English. Shujing / Book of Documents."
+  },
+  {
+    "ia_identifier": "chineseclassics41legg",
+    "title": "The Chinese Classics, Vol. 4, Part 1: The She King (Lessons from the States)",
+    "author": "James Legge",
+    "year": 1871,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Bilingual Chinese/English. Shijing / Book of Odes."
+  },
+  {
+    "ia_identifier": "chineseclassics42legg",
+    "title": "The Chinese Classics, Vol. 4, Part 2: The She King",
+    "author": "James Legge",
+    "year": 1871,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Bilingual Chinese/English. Shijing / Book of Odes."
+  },
+  {
+    "ia_identifier": "chineseclassics51legg",
+    "title": "The Chinese Classics, Vol. 5, Part 1: The Ch'un Ts'ew with the Tso Chuen (Dukes Yin–Ch'ing)",
+    "author": "James Legge",
+    "year": 1872,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Bilingual Chinese/English. Chunqiu + Zuozhuan."
+  },
+  {
+    "ia_identifier": "chineseclassics52legg",
+    "title": "The Chinese Classics, Vol. 5, Part 2: The Ch'un Ts'ew with the Tso Chuen (Dukes Seang–Gae)",
+    "author": "James Legge",
+    "year": 1872,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Bilingual Chinese/English. Chunqiu + Zuozhuan."
+  },
+  {
+    "ia_identifier": "sacredbooksofchi00laozuoft",
+    "title": "The Sacred Books of China: The Texts of Taoism, Part 1 (Tao Te Ching; Zhuangzi Books I–XVII)",
+    "author": "Laozi; Zhuangzi; James Legge (trans.)",
+    "year": 1891,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Sacred Books of the East vol. 39. Contains Daodejing + Zhuangzi pt. 1."
+  },
+  {
+    "ia_identifier": "chuangtzumysticm00chua",
+    "title": "Chuang Tzu: Mystic, Moralist, and Social Reformer",
+    "author": "Zhuangzi; Herbert A. Giles (trans.)",
+    "year": 1889,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Giles translation. B. Quaritch, London."
+  },
+  {
+    "ia_identifier": "artofwaroldestmi00suntuoft",
+    "title": "The Art of War: The Oldest Military Treatise in the World",
+    "author": "Sun Tzu; Lionel Giles (trans.)",
+    "year": 1910,
+    "original_language": "Chinese",
+    "language": "Chinese",
+    "notes": "Standard scholarly translation. Luzac, London."
+  },
+  {
+    "ia_identifier": "dhammapadaacoll00mlgoog",
+    "title": "The Dhammapada: A Collection of Verses (Sacred Books of the East, vol. 10)",
+    "author": "F. Max Müller (trans.)",
+    "year": 1881,
+    "original_language": "Pali",
+    "language": "Pali",
+    "notes": "Oxford, Clarendon Press. Google Books scan (dhammapadacollection01ml had intermittent IIIF; this has imagecount:411)."
+  },
+  {
+    "ia_identifier": "upanishads01mluoft",
+    "title": "The Upanishads, Part 1 (Sacred Books of the East, vol. 1)",
+    "author": "F. Max Müller (trans.)",
+    "year": 1879,
+    "original_language": "Sanskrit",
+    "language": "Sanskrit",
+    "notes": "Chandogya, Talavakara, Aitareya, Kaushitaki, Vajasaneyi Upanishads. Oxford, Clarendon Press."
+  },
+  {
+    "ia_identifier": "panchatantra0000arth",
+    "title": "The Panchatantra",
+    "author": "Arthur W. Ryder (trans.)",
+    "year": 1925,
+    "original_language": "Sanskrit",
+    "language": "Sanskrit",
+    "notes": "University of Chicago Press."
+  },
+  {
+    "ia_identifier": "kalidasas-meghaduta-skt-eng-kb-pathak-1916",
+    "title": "Kalidasa's Meghaduta (Sanskrit and English)",
+    "author": "Kalidasa; K.B. Pathak (ed. and trans.)",
+    "year": 1916,
+    "original_language": "Sanskrit",
+    "language": "Sanskrit",
+    "notes": "Bilingual Sanskrit/English scholarly edition."
+  },
+  {
+    "ia_identifier": "KumarasambhavaCantosI-vii-SanskritCommentaryEnglishTranslationNotes",
+    "title": "Kumarasambhava, Cantos I–VII: Sanskrit Commentary, English Translation and Notes",
+    "author": "Kalidasa; M.R. Kale (ed.)",
+    "year": 1917,
+    "original_language": "Sanskrit",
+    "language": "Sanskrit",
+    "notes": "Bilingual Sanskrit/English scholarly edition."
+  },
+  {
+    "ia_identifier": "the-vishnu-purana-complete-6-books-set-horace-hayman-wilson",
+    "title": "The Vishnu Purana: A System of Hindu Mythology and Tradition (Complete)",
+    "author": "H.H. Wilson (trans.)",
+    "year": 1887,
+    "original_language": "Sanskrit",
+    "language": "Sanskrit",
+    "notes": "Complete 6-volume set. Original 1840 Trübner translation."
+  }
+]

@@ -1,5 +1,6 @@
 import { LoadingMetric } from './api-client/types';
 import { analytics } from './api-client';
+import { getTenantSlugFromPathname } from './api-client/client';
 
 /**
  * Loading Analytics - Track and record loading performance metrics
@@ -30,8 +31,11 @@ const config = {
 
 function getTenantSlug(): string {
   if (typeof window === 'undefined') return '';
-  const slug = window.location.pathname.split('/')[1] || '';
-  return /^[a-z0-9-]+$/.test(slug) ? slug : '';
+  // Use the canonical resolver — it excludes root segments like /book and
+  // /gallery that aren't tenants. The previous local version returned 'book'
+  // for /book/... URLs, causing requests to /api/book/analytics/loading
+  // (a route that doesn't exist) and "Tenant not found" 400s.
+  return getTenantSlugFromPathname(window.location.pathname) ?? '';
 }
 
 function getLoadingEndpoint(): string {

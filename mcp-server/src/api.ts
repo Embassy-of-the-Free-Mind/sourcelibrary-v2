@@ -171,23 +171,69 @@ export async function searchPassages(args: {
 
   const passages = (
     result.results as Array<Record<string, unknown>>
-  )?.map((r) => ({
-    book_id: r.book_id,
-    title: r.display_title || r.title,
-    author: r.author,
-    language: r.language,
-    published: r.published,
-    page: r.page_number,
-    snippet: r.snippet,
-    snippet_source: r.snippet_type,
-    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
-  }));
+  )?.map((r) => {
+    const snippetType = r.snippet_type as string | undefined;
+    const snippetLanguage = snippetType === 'ocr' ? r.language : 'English';
+    return {
+      book_id: r.book_id,
+      title: r.display_title || r.title,
+      author: r.author,
+      original_language: r.language,
+      snippet_language: snippetLanguage,
+      published: r.published,
+      page: r.page_number,
+      snippet: r.snippet,
+      snippet_source: snippetType,
+      url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+    };
+  }).filter((p) => !!(p.snippet as string | undefined)?.trim());
 
   return {
     query: result.query,
     total: result.total,
     passages,
     tip: "Use get_book_text with book_id to read the full text around these passages.",
+  };
+}
+
+export async function searchConcept(args: {
+  query: string;
+  language?: string;
+  year_from?: number;
+  year_to?: number;
+  limit?: number;
+}) {
+  const params = new URLSearchParams({
+    q: args.query,
+    level: "page",
+    limit: String(Math.min(args.limit || 15, 50)),
+  });
+  if (args.language) params.set("language", args.language);
+  if (args.year_from) params.set("year_min", String(args.year_from));
+  if (args.year_to) params.set("year_max", String(args.year_to));
+
+  const result = (await apiGet("/search/semantic", params)) as Record<string, unknown>;
+
+  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
+    book_id: r.book_id,
+    title: r.book_title,
+    author: r.book_author,
+    original_language: r.book_language,
+    snippet_language: 'English',
+    published: r.book_year,
+    page: r.page_number,
+    snippet: r.snippet,
+    snippet_type: "translation",
+    similarity: r.score,
+    url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
+  })).filter((p) => !!(p.snippet as string | undefined)?.trim()) || [];
+
+  return {
+    query: result.query,
+    total_matches: passages.length,
+    returned: passages.length,
+    passages,
+    tip: "Results ranked by conceptual similarity (Gemini embeddings). Treat scores below ~0.45 with skepticism.",
   };
 }
 
@@ -325,6 +371,28 @@ export async function getBookText(args: {
   if (pages) {
     for (const page of pages) {
       page.url = `https://sourcelibrary.org/book/${bookSlug}?page=${page.page_number}`;
+    }
+  }
+
+  // Detect truncation: signal clearly when pages_returned < total_pages so LLMs
+  // don't infer "the book ends here" from an incomplete response.
+  const totalPages = Number(result.total_pages || 0);
+  const pagesReturned = Number(result.pages_returned || 0);
+  // Chapter mode returns different shape — only add truncation signal for page-range mode
+  if (args.chapter === undefined && totalPages > 0) {
+    const fromPage = args.from !== undefined ? args.from : 1;
+    const expectedUpTo = args.to !== undefined ? args.to : totalPages;
+    const lastPageReturned = pagesReturned > 0 ? fromPage + pagesReturned - 1 : fromPage - 1;
+    const isTruncated = lastPageReturned < expectedUpTo;
+    (result as Record<string, unknown>).truncated = isTruncated;
+    if (isTruncated) {
+      const nextFrom = lastPageReturned + 1;
+      const nextTo = Math.min(nextFrom + 49, totalPages);
+      (result as Record<string, unknown>).truncation_note =
+        `TRUNCATED — received ${pagesReturned} pages (up to p.${lastPageReturned}) ` +
+        `but requested up to p.${expectedUpTo} of ${totalPages} total. ` +
+        `This is NOT end-of-book — call get_book_text again with from=${nextFrom} to=${nextTo} ` +
+        `to read the next chunk. Repeat until you reach total_pages (${totalPages}).`;
     }
   }
 

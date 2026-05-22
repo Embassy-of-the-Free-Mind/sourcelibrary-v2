@@ -37,6 +37,10 @@
     {
       "path": "/api/cron/sync-bph-sl-book-ids",
       "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/sync-catalog-sl-book-ids",
+      "schedule": "30 */6 * * *"
     }
   ]
 }

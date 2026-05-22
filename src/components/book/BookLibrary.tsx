@@ -875,7 +875,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                             </a>
                           </>
                         ) : (
-                          <span className="text-xs text-stone-400">Catalog entry</span>
+                          <span className="text-xs text-stone-400">Catalogue entry</span>
                         )}
                       </div>
                     </div>

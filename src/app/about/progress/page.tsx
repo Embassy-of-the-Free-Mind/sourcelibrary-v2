@@ -258,7 +258,7 @@ export default async function ProgressPage() {
 
       {/* Hero stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard icon={BookOpen} label="Editions cataloged" value={fmt(data.total_editions)} sub="from the Universal Short Title Catalogue" />
+        <StatCard icon={BookOpen} label="Editions catalogued" value={fmt(data.total_editions)} sub="from the Universal Short Title Catalogue" />
         <StatCard icon={Scan} label="Digitally scanned" value={`${data.pct_scanned.toFixed(1)}%`} sub={`${fmt(data.total_scanned)} editions`} />
         <StatCard icon={Languages} label="Translated" value={`${data.pct_translated.toFixed(1)}%`} sub={`${fmt(data.total_translated)} editions`} />
         <StatCard icon={Globe2} label="In Source Library" value={fmt(data.total_in_sl)} sub="OCR&apos;d and translated" />

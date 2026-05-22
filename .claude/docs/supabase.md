@@ -99,6 +99,55 @@ Supabase (reads)
   └── /api/ustc/search ──reads──→ ustc_editions + ustc_enrichments
 ```
 
+## Sync Points (Complete Map)
+
+Audited 2026-05-14. Every Mongo→Supabase write path in the codebase:
+
+| # | Path | Trigger | Schedule | Fields | Status |
+|---|---|---|---|---|---|
+| 1 | MongoDB books → `books_catalog` | Hetzner `scripts/workers/sync-books-catalog.mjs` | every 5 min, last-10-min window | ~40 fields incl. `thumbnail`, `thumbnail_blob`, title, author, language, pages_count, pages_ocr/translated/blank, categories, collections, cover_image, summary_text, doi, published, place_published, publisher | ⚠️ window-only, no retry; **missing `held_by`, `image_display`, `image_thumb`** |
+| 2 | MongoDB books → `books_catalog` | PATCH `/api/books/[id]` → `mirrorBookToCatalog()` | on curator edit | ~11 fields: title, display_title, author, thumbnail, thumbnail_blob, language, published, categories, publisher, place_published, doi | ⚠️ **only fires from the PATCH route**; direct DB updates from `scripts/` bypass it |
+| 3 | MongoDB books → `bph_works.sl_book_id` | Vercel cron `/api/cron/sync-bph-sl-book-ids` | every 6h | `sl_book_id`, `sl_book_slug` | ✓ Honors `bph_catalog_link: false` opt-out (PR #1752, 2026-05-14) |
+| 4 | MongoDB pages → `pages_images` | Hetzner `scripts/workers/supabase-sync.mjs` | every 5 min, last-10-min window | id, book_id, page_number, archived_photo, display_photo, thumbnail_blob | ⚠️ window-only; no retry/backfill if a sync window misses a row |
+| 5 | MongoDB → 5 analytics tables | Hetzner `scripts/workers/supabase-sync.mjs` | every 5 min | pipeline_snapshots, analytics_pageviews, analytics_events, cron_runs, loading_metrics | ✓ |
+| 6 | MongoDB entities → `entities` | `scripts/workers/sync-entities.mjs` | manual / one-shot | id, name, canonical_name, type, book_count, mentions, aliases, wikidata_id, portrait_url | ⚠️ no recurring trigger; new entities go stale |
+| 7 | MongoDB book.gemini_usage → `gemini_usage` | Synchronous dual-write in `gemini-logger.ts` | per Gemini call | usage rows | ✓ Fire-and-forget (see Gotchas) |
+| 8 | (runtime, no stored sync) `bph_works.sl_cover` | Computed in `/api/catalog/bph` from MongoDB at request time | per request | — | ✓ Always fresh; bottleneck is MongoDB freshness |
+
+## Known Sync Gaps
+
+These have bitten us before and will bite again. Documented so the next debugger doesn't relearn it.
+
+### A. PATCH bypass — scripts that update MongoDB directly never call `mirrorBookToCatalog`
+
+Symptom: a curator clicks "set cover" and the BPH grid updates instantly (PATCH mirrors immediately). But `scripts/migration/foo.mjs` runs `db.books.updateOne(...)` directly — the same field change shows up in `books_catalog` only after the 5-min Hetzner sync, *if* the sync window catches it. If the sync misses it (see B), the BPH grid is stale indefinitely.
+
+Concrete example (2026-05-13/14): I fixed 10 BPH spread-cover URLs via a script that wrote MongoDB directly. 4 made it to Supabase within a sync window; 6 were stranded — the BPH home grid kept showing the old spread covers until I manually `UPDATE`d `books_catalog`.
+
+Mitigations to consider:
+- Extract `mirrorBookToCatalog` to a shared module any maintenance script can import.
+- Or have the Hetzner sync use `supabase_synced_at < mongo updated_at` instead of a fixed 10-min window.
+
+### B. Hetzner sync uses a fixed last-10-min window with no retry
+
+`scripts/workers/sync-books-catalog.mjs` and `supabase-sync.mjs` look at MongoDB documents whose `updated_at > now() - 10 min`. There's no record of which rows have been mirrored — if a tick fails mid-batch, the missed rows are stranded until *another* edit re-bumps `updated_at`. Same shape applies to `pages_images`.
+
+Mitigations to consider:
+- Track `supabase_synced_at` on MongoDB docs and pick the diff each tick.
+- Or run a daily "catch-up" pass with a wider window (last 24h).
+
+### C. `held_by` is in MongoDB but not in `books_catalog`
+
+Flagged in `.claude/handoffs/2026-04-24-bph-full-catalog.md` ("Supabase `books_catalog` sync doesn't include `held_by` yet"). Still open. Catalogue/BPH-filter code has to round-trip MongoDB to filter by holding library; Supabase-only browse pages can't filter.
+
+### D. Entities sync is manual only
+
+`scripts/workers/sync-entities.mjs` was run once during the encyclopedia backfill. There's no cron — new entities added in MongoDB don't reach Supabase unless someone re-runs the script. Low impact today (entities don't change often), but worth a recurring cron if entity edits become common.
+
+### E. No central inventory of sync state
+
+This table is the inventory. Before this section, sync points were scattered across `vercel.json` (Vercel crons), Hetzner crontab (worker scripts), and route file headers. Always update this table when adding or modifying a sync path.
+
 ## pg_cron Jobs
 
 All prefixed `sl-`. Managed inside Supabase (no external cron needed).

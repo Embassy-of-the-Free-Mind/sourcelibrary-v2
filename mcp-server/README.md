@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@source-library%2Fmcp-server.svg)](https://www.npmjs.com/package/@source-library/mcp-server)
 
-Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 9 tools (search, read, cite, feedback), CLI + MCP server, no API key needed.
+Search, read, and cite 22,000+ rare pre-modern texts (alchemy, Hermetica, Kabbalah, theology, early science) with AI-generated English translations. 11 tools (full-text + semantic search, reading, exact quoting, image search, duplicate detection, feedback). CLI + MCP server, no API key needed.
 
 ## Quick Start
 
@@ -49,7 +49,7 @@ npm install && npm run build
 npm start
 ```
 
-## 9 Tools
+## 11 Tools
 
 ### Search & Discovery
 
@@ -80,6 +80,18 @@ Search inside translated text across the entire library. Find what historical au
 | `year_to` | number | No | Publication year end |
 | `book_id` | string | No | Search within a specific book only |
 | `limit` | number | No | Max results (default 20, max 50) |
+
+#### search_concept
+
+Semantic passage search using Gemini embeddings. Finds conceptually related passages even when the modern term won't literally appear — e.g. "distributed cognition" maps to passages about active intellect, art of memory, wax-tablet metaphors. Prefer `search_translations` for literal phrases; use `search_concept` when the concept matters more than the wording.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | Yes | Concept or natural-language description |
+| `language` | string | No | Filter by original language (set explicitly to surface non-Latin/German texts) |
+| `year_from` | number | No | Publication year start |
+| `year_to` | number | No | Publication year end |
+| `limit` | number | No | Max passages (default 15, max 50) |
 
 #### search_within_book
 
@@ -114,34 +126,62 @@ Detailed book metadata: summary, index stats, chapters, edition info, DOI.
 
 #### get_book_text
 
-Read a book. Returns 50+ pages of text in one call, each with a citation URL. OCR, translation, or both.
+Read a book. Prefer `chapter` for chapter-at-a-time reading; falls back to `from`/`to` page ranges. Each response includes a `truncated` flag with a `truncation_note` giving the next `from`/`to` values when content was cut by the page-budget limit — agents must check `truncated` rather than infer end-of-book from `pages_returned`.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `book_id` | string | Yes | Book ID |
+| `chapter` | number | No | Chapter index (0-based); preferred over from/to |
+| `part` | number | No | Part number (1-based) for chapters split across parts |
 | `content` | string | No | ocr, translation, or both (default) |
 | `from` | number | No | Start page (inclusive) |
 | `to` | number | No | End page (inclusive) |
 | `format` | string | No | json (structured) or plain (concatenated text) |
+| `include_metadata` | boolean | No | Include page-level metadata (model, language, etc.) |
+
+#### get_quote
+
+Get the exact translated text of a single page for quoting. Returns the full translation, original OCR, and a formatted citation. Always use this before putting text in quotation marks — never paraphrase from memory.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `book_id` | string | Yes | Book ID or slug |
+| `page` | number | Yes | Page number to quote from |
 
 ### Gallery
 
 #### search_images
 
-Search 50,000+ historical illustrations, emblems, engravings, and diagrams.
+Search the visual collection: 50,000+ illustrations extracted from book pages PLUS 23,000+ standalone artworks (paintings, frescoes, prints, sculptures from Met, Rijksmuseum, Wikimedia, NGA). Each result has a `source` field: `gallery` (book illustration) or `artwork` (standalone work).
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `query` | string | No | Text search across descriptions |
-| `type` | string | No | woodcut, engraving, emblem, diagram, etc. |
+| `query` | string | No | Text search across descriptions, subjects, figures, artists |
+| `source` | string | No | all (default), gallery, or artworks |
+| `type` | string | No | woodcut, engraving, emblem, diagram, painting, fresco, etc. |
 | `subject` | string | No | Subject (alchemy, astronomy, anatomy) |
 | `figure` | string | No | Depicted figure (Mercury, philosopher, king) |
 | `symbol` | string | No | Symbol (ouroboros, caduceus, sun) |
 | `year_from` | number | No | Publication year start |
 | `year_to` | number | No | Publication year end |
-| `book_id` | string | No | Only images from a specific book |
-| `min_quality` | number | No | Min quality score 0-1 (default 0.5) |
+| `book_id` | string | No | Only images from a specific book or artwork id |
+| `min_quality` | number | No | Min gallery quality score 0-1 (default 0.5) |
 | `limit` | number | No | Max results (default 20, max 50) |
+
+### Curation
+
+#### check_duplicate
+
+Check whether a book already exists in Source Library before importing. Uses 4-tier matching (source fingerprint, title+author normalization, keyword search, semantic similarity) and returns a confidence level + suggestion. Use this before every import to avoid duplicates.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `title` | string | Yes | Book title (original or English) |
+| `author` | string | No | Author name (any format) |
+| `year` | string | No | Publication year (optional context) |
+| `language` | string | No | Language hint for semantic search |
+| `ia_id` | string | No | Internet Archive identifier (exact fingerprint match) |
+| `manifest` | string | No | IIIF manifest URL (exact fingerprint match) |
 
 ### Feedback
 
@@ -158,7 +198,7 @@ Submit feedback, bug reports, or feature requests directly to the Source Library
 
 ## CLI
 
-All 9 tools are available as a standalone CLI with colored terminal output.
+Most tools are also available as a standalone CLI with colored terminal output. (`search_concept` and `check_duplicate` are MCP-only for now.)
 
 ```bash
 # Search the collection

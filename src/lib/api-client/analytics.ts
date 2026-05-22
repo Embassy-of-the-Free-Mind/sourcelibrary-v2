@@ -22,7 +22,8 @@ export const analytics = {
    */
   stats: async (book_id?: string): Promise<AnalyticsStats> => {
     const tenant = getTenantSlug();
-    const url = book_id ? `/api/${tenant}/analytics/stats?book_id=${book_id}` : `/api/${tenant}/analytics/stats`;
+    const prefix = tenant ? `/api/${tenant}` : '/api';
+    const url = book_id ? `${prefix}/analytics/stats?book_id=${book_id}` : `${prefix}/analytics/stats`;
     return await apiClient.get(url);
   },
 
@@ -79,7 +80,8 @@ export const analytics = {
     page_id?: string;
   }): Promise<{ success: boolean; deduplicated?: boolean }> => {
     const tenant = getTenantSlug();
-    return await apiClient.post(`/api/${tenant}/analytics/track`, data);
+    const url = tenant ? `/api/${tenant}/analytics/track` : '/api/analytics/track';
+    return await apiClient.post(url, data);
   },
 
   /**

@@ -202,7 +202,7 @@ export default function CatalogCoveragePage() {
     return (
       <div className="min-h-screen bg-[#fdfcf9] p-8">
         <div className="max-w-2xl mx-auto text-center mt-20">
-          <h1 className="font-['Cormorant_Garamond'] text-3xl text-[#1a1612] mb-4">Catalog Coverage</h1>
+          <h1 className="font-['Cormorant_Garamond'] text-3xl text-[#1a1612] mb-4">Catalogue Coverage</h1>
           <p className="text-[#6b6560] mb-6">No data yet. Run the build script:</p>
           <pre className="bg-[#1a1612] text-[#f5f0e8] p-4 rounded-lg text-sm text-left overflow-x-auto">
 {`set -a; source .env.production.local; set +a
@@ -222,7 +222,7 @@ node scripts/catalog-coverage/build.mjs`}
       <div className="border-b border-[#e8e4dc] px-6 py-6">
         <div className="max-w-5xl mx-auto">
           <Link href="/admin" className="text-sm text-[#6b6560] hover:text-[#9e4a3a] mb-2 inline-block">&larr; Admin</Link>
-          <h1 className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#1a1612]">Catalog Coverage</h1>
+          <h1 className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#1a1612]">Catalogue Coverage</h1>
           <p className="text-[#6b6560] mt-1">
             Every edition printed in Europe, 1450{'\u2013'}1700. What has been scanned, what has been translated.
             {summary?.built_at && <span className="text-[#a09a92]"> {'\u00B7'} Built {new Date(summary.built_at).toLocaleDateString()}</span>}

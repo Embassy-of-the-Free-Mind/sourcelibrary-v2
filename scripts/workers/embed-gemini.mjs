@@ -14,6 +14,7 @@
  * Modes:
  *   --full        Process all pages with OCR or translation
  *   --incremental Process pages newer than latest in Supabase (default)
+ *   --missing-only Process only books that have pages with embedding IS NULL (~3-4h vs 85h for --full)
  *   --book ID     Process a single book
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
@@ -43,9 +44,12 @@ if (!MONGODB_URI || !SUPABASE_KEY || !GEMINI_KEY) {
 
 const args = process.argv.slice(2);
 const FULL_MODE = args.includes('--full');
+const MISSING_ONLY = args.includes('--missing-only');
 const DRY_RUN = args.includes('--dry-run');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
+const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
+const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
 
 const EMBED_BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
 const UPSERT_BATCH_SIZE = 10; // Small batches for Supabase — HNSW index updates are expensive
@@ -147,7 +151,7 @@ async function getLastSyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : MISSING_ONLY ? 'missing-only' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
@@ -164,6 +168,38 @@ const pageQuery = {
 if (BOOK_ID) {
   pageQuery.book_id = BOOK_ID;
   console.log(`Processing book: ${BOOK_ID}`);
+} else if (MISSING_ONLY) {
+  // Fetch (book_id, page_id) pairs where embedding IS NULL via direct PG.
+  // We limit MongoDB by book_id ($in) to keep the stream small, then filter
+  // in JS by page_id so we ONLY embed pages that actually need it — not all
+  // pages of any book that has at least one missing embedding.
+  console.log('Fetching page_ids with missing embeddings via direct PG...');
+  const pg = await getPgClient();
+  if (!pg) {
+    console.error('SUPABASE_DB_URL required for --missing-only (REST pagination is too slow on 4M rows)');
+    process.exit(1);
+  }
+  const { rows } = await pg.query(
+    'SELECT book_id, page_id FROM page_translations WHERE embedding IS NULL'
+  );
+  if (rows.length === 0) {
+    console.log('No pages with missing embeddings found. All caught up.');
+    await mongoClient.close();
+    process.exit(0);
+  }
+  // Partition books across workers when parallelizing. Each worker owns a
+  // disjoint slice of book_ids — no coordination needed at runtime.
+  const allBookIds = [...new Set(rows.map(r => r.book_id))].sort();
+  let myBookIds = allBookIds;
+  if (WORKER_COUNT > 1) {
+    myBookIds = allBookIds.filter((_, i) => i % WORKER_COUNT === WORKER_ID);
+    console.log(`Worker ${WORKER_ID}/${WORKER_COUNT}: ${myBookIds.length.toLocaleString()}/${allBookIds.length.toLocaleString()} books`);
+  }
+  const myBookSet = new Set(myBookIds);
+  const myRows = rows.filter(r => myBookSet.has(r.book_id));
+  globalThis.MISSING_PAGE_IDS = new Set(myRows.map(r => r.page_id));
+  pageQuery.book_id = { $in: myBookIds };
+  console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
 } else if (!FULL_MODE) {
   const lastSync = await getLastSyncTime();
   if (lastSync) {
@@ -239,6 +275,15 @@ let supabaseBackoff = 0;
 
 for await (const page of cursor) {
   if (LIMIT && processed >= LIMIT) break;
+
+  // In --missing-only mode, only embed pages that actually lack an embedding
+  // (the MongoDB query is scoped to candidate books, but most of their pages
+  // already have valid embeddings — skip those)
+  if (MISSING_ONLY && !globalThis.MISSING_PAGE_IDS.has(page.id)) {
+    skipped++;
+    processed++;
+    continue;
+  }
 
   const ocrText = cleanText(page.ocr?.data);
   const translationText = cleanText(page.translation?.data);

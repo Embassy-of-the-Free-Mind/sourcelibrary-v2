@@ -1326,6 +1326,7 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
   const pages = await db.collection('pages')
     .find({
       book_id: book.id,
+      'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
       $or: [
         { 'ocr.data': { $exists: false } },
         { 'ocr.data': null },
@@ -1656,6 +1657,7 @@ async function submitCrossBookOcrBatches(db, books) {
     const pages = await db.collection('pages')
       .find({
         book_id: book.id,
+        'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
         $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
         $and: [{
           $or: [
@@ -2848,6 +2850,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': true,
           'pipeline_auto.preview_ocr_done': { $ne: true },
+          'pipeline_auto.recitation_retry': { $ne: true },
+          'pipeline_auto.recitation_blocked': { $ne: true },
         })
         .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
         .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
@@ -3493,6 +3497,7 @@ Rules:
               'pipeline_auto.status': 'archive_complete',
               'pipeline_auto.split_checked': true,
               'pipeline_auto.recitation_blocked': { $ne: true },
+              'pipeline_auto.recitation_retry': { $ne: true }, // Recitation books go to Pass 2 w/ fallback model
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
             }},
             { $addFields: {
@@ -3585,14 +3590,18 @@ Rules:
         }
       }
 
-      // --- Pass 2: Full OCR for books that already have some OCR (preview done, or partial) ---
+      // --- Pass 2: Full OCR for books that already have some OCR (preview done, or partial),
+      //            AND for books that hit RECITATION on a previous attempt (retried with fallback model) ---
       let readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .aggregate([
           { $match: {
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
             'pipeline_auto.recitation_blocked': { $ne: true },
-            pages_ocr: { $gt: 0 }, // Already has some OCR (preview pass done)
+            $or: [
+              { pages_ocr: { $gt: 0 } }, // Already has some OCR (preview pass done)
+              { 'pipeline_auto.recitation_retry': true }, // All pages were RECITATION-blocked — retry with fallback model regardless of pages_ocr
+            ],
           }},
           { $addFields: {
             _priority: {

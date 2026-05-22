@@ -20,6 +20,7 @@ export default function BlogTableOfContents() {
   const [entries, setEntries] = useState<TocEntry[]>([]);
   const [activeId, setActiveId] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -60,6 +61,26 @@ export default function BlogTableOfContents() {
     return () => observerRef.current?.disconnect();
   }, []);
 
+  // Show the TOC once the reader has scrolled past the hero/header area.
+  // This prevents the sidebar from sitting on top of the full-bleed header image.
+  useEffect(() => {
+    if (entries.length === 0) return;
+
+    const firstHeading = document.querySelector('article h2');
+    const threshold = (() => {
+      if (firstHeading) {
+        const rect = firstHeading.getBoundingClientRect();
+        return Math.max(0, rect.top + window.scrollY - 200);
+      }
+      return 500;
+    })();
+
+    const onScroll = () => setVisible(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [entries.length]);
+
   if (entries.length === 0) return null;
 
   const handleClick = (id: string) => {
@@ -73,7 +94,13 @@ export default function BlogTableOfContents() {
   return (
     <>
       {/* Desktop: sticky sidebar */}
-      <nav className="hidden xl:block fixed top-32 w-52 max-h-[calc(100vh-10rem)] overflow-y-auto" style={{ right: 'max(1.5rem, calc((100vw - 1024px) / 2 - 15rem))' }}>
+      <nav
+        aria-label="Table of contents"
+        className={`hidden xl:block fixed top-32 w-56 max-h-[calc(100vh-10rem)] overflow-y-auto rounded-xl border border-border-light bg-cream/85 backdrop-blur-sm shadow-sm px-4 py-3 transition-opacity duration-300 ${
+          visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        style={{ right: 'max(1.5rem, calc((100vw - 1024px) / 2 - 16rem))' }}
+      >
         <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Contents</p>
         <ul className="space-y-1.5 border-l border-border-light pl-3">
           {entries.map((e) => (

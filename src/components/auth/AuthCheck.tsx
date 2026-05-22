@@ -9,13 +9,28 @@ interface AuthCheckProps {
   role?: 'admin' | 'inner_circle' | 'reader';
 }
 
+// Mirrors ROLE_LEVEL in src/lib/auth.ts, with legacy aliases (inner_circle, curator)
+// kept so older sessions/tokens still resolve.
+const ROLE_LEVEL: Record<string, number> = {
+  reader: 1,
+  inner_circle: 2,
+  curator: 2,
+  editor: 2,
+  admin: 3,
+  superadmin: 4,
+};
+
 /**
  * Client component that conditionally renders children based on auth status and role.
  *
+ * Effective role = max(global session role, tenant membership role). This lets a
+ * user who is only a `reader` globally but an `editor` on the BPH tenant see
+ * editor-gated UI when browsing under that tenant.
+ *
  * @example
  * <AuthCheck>                      // Any logged-in user
- * <AuthCheck role="inner_circle">  // Admin or inner circle
- * <AuthCheck role="admin">         // Admin-only (whitelist)
+ * <AuthCheck role="inner_circle">  // Editor or above (globally or on the current tenant)
+ * <AuthCheck role="admin">         // Admin or above
  */
 export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
   const { data: session, status } = useStableSession();
@@ -31,15 +46,16 @@ export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
     return <>{fallback}</>;
   }
 
-  const userRole = (session.user as any).role;
-  const ROLE_LEVEL: Record<string, number> = { reader: 1, inner_circle: 2, editor: 2, admin: 3, superadmin: 4 };
-  const level = ROLE_LEVEL[userRole] ?? 0;
+  const user = session.user as any;
+  const globalLevel = ROLE_LEVEL[user.role] ?? 0;
+  const tenantLevel = ROLE_LEVEL[user.tenantRole] ?? 0;
+  const level = Math.max(globalLevel, tenantLevel);
 
-  if (role === 'admin' && level < 3) {
+  if (role === 'admin' && level < ROLE_LEVEL.admin) {
     return <>{fallback}</>;
   }
 
-  if (role === 'inner_circle' && level < 2) {
+  if (role === 'inner_circle' && level < ROLE_LEVEL.editor) {
     return <>{fallback}</>;
   }
 

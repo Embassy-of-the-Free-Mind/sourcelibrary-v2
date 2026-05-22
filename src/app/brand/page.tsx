@@ -17,11 +17,12 @@ function getAssets() {
   return { svgs, pngs };
 }
 
-type Config = 'logo-full' | 'logo-compact' | 'icon-only' | 'wordmark-only' | 'logo-stacked';
+type Config = 'logo-full' | 'logo-full-beta' | 'logo-compact' | 'icon-only' | 'wordmark-only' | 'logo-stacked';
 type Scheme = 'white-on-dark' | 'black-on-white' | 'white-on-transparent' | 'black-on-transparent';
 
 const CONFIG_LABELS: Record<Config, string> = {
   'logo-full': 'Full Logo',
+  'logo-full-beta': 'Full Logo + Beta',
   'logo-compact': 'Compact Logo',
   'icon-only': 'Icon Only',
   'wordmark-only': 'Wordmark Only',
@@ -197,15 +198,16 @@ export default function BrandPage() {
             <h1 className="text-3xl font-light tracking-wide">Brand Kit & Color System</h1>
           </div>
           <p className="text-stone-400 max-w-2xl text-lg">
-            Logos, color system, typography, and design decisions for Source Library.
-            This page documents the current state, open questions, and proposed alignment.
+            Logos, color system, typography, and design tokens for Source Library.
+            A reference for anyone building UI or producing assets for the project.
           </p>
           <nav className="flex flex-wrap gap-4 mt-8 text-sm">
             <a href="#logos" className="text-stone-400 hover:text-white transition-colors">Logos</a>
             <a href="#color-system" className="text-stone-400 hover:text-white transition-colors">Color System</a>
-            <a href="#decisions" className="text-stone-400 hover:text-white transition-colors">Decisions</a>
+            <a href="#decisions" className="text-stone-400 hover:text-white transition-colors">Open Questions</a>
             <a href="#typography" className="text-stone-400 hover:text-white transition-colors">Typography</a>
             <a href="#usage" className="text-stone-400 hover:text-white transition-colors">Usage</a>
+            <a href="#social" className="text-stone-400 hover:text-white transition-colors">Social & Identity</a>
           </nav>
         </div>
       </header>
@@ -231,6 +233,7 @@ export default function BrandPage() {
                   </h3>
                   <p className="text-stone-500 mb-4 text-sm">
                     {config === 'logo-full' && 'The primary logo. Use this wherever space allows.'}
+                    {config === 'logo-full-beta' && 'Full logo with a Beta superscript. Matches the live site header during the public-beta period.'}
                     {config === 'logo-compact' && 'Smaller variant for tight spaces, navigation bars, and mobile.'}
                     {config === 'icon-only' && 'The concentric circles mark. Use for favicons, app icons, and avatars.'}
                     {config === 'wordmark-only' && 'Text-only mark. Use when the icon is already present or for inline references.'}
@@ -317,7 +320,7 @@ export default function BrandPage() {
           <h2 className="text-2xl font-semibold text-stone-800 mb-2">Color System</h2>
           <p className="text-stone-500 mb-10 max-w-3xl">
             Two color systems coexist: CSS design tokens (used in ~35 files) and raw Tailwind utilities
-            (used in ~117 files). This section documents both, proposes alignment, and flags decisions needed.
+            (used in ~117 files). Both are documented below.
           </p>
 
           {/* Brand Accent Colors */}
@@ -387,7 +390,6 @@ export default function BrandPage() {
             <p className="text-sm text-stone-600">
               These serve different roles. Amber is saturated and high-energy &mdash; used for clickable actions.
               Gold is muted and warm &mdash; used for decorative/ornamental purposes (search highlight backgrounds, flame accents).
-              See decision below.
             </p>
           </div>
 
@@ -410,33 +412,6 @@ export default function BrandPage() {
               <GradientSwatch from="#f6f3ee" to="#f3ede6" label="Section backgrounds" />
               <GradientSwatch from="#1a1612" to="#2a2520" label="Dark header gradient" />
             </div>
-          </div>
-
-          {/* Dark color inconsistency */}
-          <div className="mb-12 bg-stone-100 border border-stone-200 rounded-lg p-5">
-            <h4 className="font-medium text-stone-800 mb-2">Dark color inconsistency</h4>
-            <div className="flex items-center gap-6 mb-3">
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-stone-300" style={{ backgroundColor: '#1a1612' }} />
-                <p className="text-xs text-stone-600 mt-1 font-medium">CSS token</p>
-                <p className="text-[10px] text-stone-400 font-mono">#1a1612 (warm)</p>
-              </div>
-              <div className="text-stone-300 text-2xl">vs</div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-stone-300" style={{ backgroundColor: '#1a1a1a' }} />
-                <p className="text-xs text-stone-600 mt-1 font-medium">Brand assets</p>
-                <p className="text-[10px] text-stone-400 font-mono">#1a1a1a (neutral)</p>
-              </div>
-              <div className="text-stone-300 text-2xl">vs</div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-stone-300" style={{ backgroundColor: '#000000' }} />
-                <p className="text-xs text-stone-600 mt-1 font-medium">Hero overlay</p>
-                <p className="text-[10px] text-stone-400 font-mono">#000000 (pure)</p>
-              </div>
-            </div>
-            <p className="text-sm text-stone-600">
-              Three different &ldquo;dark&rdquo; values used across the site. See decision below.
-            </p>
           </div>
 
           {/* Text Hierarchy */}
@@ -562,10 +537,10 @@ export default function BrandPage() {
 
         {/* ─── DECISIONS ─── */}
         <section id="decisions" className="border-t border-stone-200 pt-12">
-          <h2 className="text-2xl font-semibold text-stone-800 mb-2">Decisions & Proposals</h2>
+          <h2 className="text-2xl font-semibold text-stone-800 mb-2">Open Questions</h2>
           <p className="text-stone-500 mb-8 max-w-3xl">
-            The color system works but has inconsistencies. Below are the open questions
-            with proposed resolutions based on actual codebase usage data.
+            A few unresolved questions about the color system, with proposed resolutions
+            based on actual codebase usage data.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -578,15 +553,7 @@ export default function BrandPage() {
             />
 
             <DecisionCard
-              title="2. Dark background: which black?"
-              status="proposal"
-              problem="Three 'dark' values: #1a1612 (warm brown-black, CSS token), #1a1a1a (neutral, brand assets), #000000 (pure black, hero overlay). These are visually similar but inconsistent."
-              proposal="Standardize on #1a1612 (the warm brown-black). It matches the warm paper aesthetic of the entire site. Regenerate brand assets with this value. Pure black can stay for overlay gradients where it fades to transparent."
-              evidence="--bg-dark: #1a1612 is the intentional design token. #1a1a1a was a shorthand that crept into the brand kit. The warm tone is consistent with cream/warm backgrounds."
-            />
-
-            <DecisionCard
-              title="3. Remove --accent-slate?"
+              title="2. Remove --accent-slate?"
               status="proposal"
               problem="--accent-slate (#546b8a) is defined in globals.css but never used in any component, page, or stylesheet."
               proposal="Remove it. Zero usage means it's dead code. If a blue-slate accent is ever needed, it can be re-added with actual usage."
@@ -594,23 +561,7 @@ export default function BrandPage() {
             />
 
             <DecisionCard
-              title="4. Warm gradients in brand guidelines?"
-              status="proposal"
-              problem="The warm cream gradients (#fdfcf9 to #f5f0e8, #f6f3ee to #f3ede6) are a distinctive visual signature but aren't documented anywhere."
-              proposal="Yes, include them. They're as much the brand as the logo. Document the 3 signature gradients: page fade (cream to warm), section backgrounds, and dark header."
-              evidence="The paper-like warmth is what distinguishes Source Library from generic websites. Every reader page, search result, and book card uses these tones."
-            />
-
-            <DecisionCard
-              title="5. Scope of this page"
-              status="proposal"
-              problem="Should the brand page be a minimal logo kit, or a fuller design system reference?"
-              proposal="This page: logos + full color palette + typography + key visual patterns. Not a component library. Enough that a designer or second developer can build consistent UI without reverse-engineering globals.css."
-              evidence="The codebase already has a collaborative dev (per CLAUDE.md). This reference prevents color drift and documents the intent behind each token."
-            />
-
-            <DecisionCard
-              title="6. Two color systems: consolidate?"
+              title="3. Two color systems: consolidate?"
               status="open"
               problem="CSS vars (--accent-rust, etc.) are used in ~35 files. Raw Tailwind (amber-*, stone-*) in ~117 files. They overlap — stone-900 and --text-primary are nearly the same color."
               proposal="Don't consolidate now — the cost is too high (touching 117+ files) for minimal benefit. The @theme inline bridge already makes CSS vars available as Tailwind classes. Instead, prefer design tokens for new code and let raw Tailwind usage naturally decrease over time."
@@ -633,10 +584,12 @@ export default function BrandPage() {
                 <p><strong>&ldquo;LIBRARY&rdquo;:</strong> Light (300)</p>
                 <p><strong>Case:</strong> Uppercase</p>
                 <p><strong>Tracking:</strong> 0.05em</p>
+                <p><strong>&ldquo;Beta&rdquo; sup:</strong> 0.6em, weight 300, normal case, tracking-normal, ml 0.25em, opacity 0.8, offset &minus;0.5em</p>
               </div>
               <div className="mt-4 bg-[#1a1612] text-white p-6 rounded-lg inline-block">
                 <span className="font-sans text-2xl uppercase tracking-wider">
                   <span className="font-semibold">Source</span><span className="font-light">Library</span>
+                  <sup className="text-[0.6em] font-light tracking-normal normal-case ml-1 opacity-80 relative -top-[0.5em]">Beta</sup>
                 </span>
               </div>
             </div>
@@ -706,6 +659,144 @@ export default function BrandPage() {
           </div>
         </section>
 
+        {/* ─── SOCIAL & IDENTITY ─── */}
+        <section id="social" className="border-t border-stone-200 pt-12">
+          <h2 className="text-2xl font-semibold text-stone-800 mb-2">Social & Identity Assets</h2>
+          <p className="text-stone-500 mb-8 max-w-3xl">
+            Share cards, browser identity (favicon, Apple touch icon), and the platforms where Source Library shows up.
+          </p>
+
+          {/* Open Graph share cards */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-stone-800 mb-1">Open Graph share cards</h3>
+            <p className="text-sm text-stone-500 mb-4">
+              The image that appears when a Source Library link is shared on Twitter/X, LinkedIn, Slack, iMessage, Facebook, Discord, etc.
+              Configured in <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">src/app/layout.tsx</code> (<code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">openGraph.images</code> and <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">twitter.images</code>).
+              Dimensions: 1200&times;630 (the OG / Twitter <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">summary_large_image</code> standard).
+              Four variants share the same headline and typography; the background is drawn from a different scene of the hero video each time.
+              The canonical URL <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">/og-image.jpg</code> rotates daily through the four variants (day-of-year mod 4), so the share card stays fresh as people post links across the week, while remaining deterministic within a single calendar day to keep crawler caches consistent.
+            </p>
+            <div className="grid md:grid-cols-2 gap-6 mb-4">
+              {[
+                { file: 'og-image-cosmological.jpg', label: 'Cosmological diagram', desc: 'Concentric planetary rings with geometric letter labels' },
+                { file: 'og-image-zodiac.jpg', label: 'Astrolabe / zodiac wheel', desc: 'Sun in center, zodiac signs around' },
+                { file: 'og-image-illuminated.jpg', label: 'Illuminated cross & rose', desc: 'Rosicrucian iconography on deep-blue manuscript page' },
+                { file: 'og-image-arcani.jpg', label: 'Arcani Consilii Apparatio', desc: 'Renaissance illustrated double-page, classical architecture' },
+              ].map(v => (
+                <div key={v.file}>
+                  <div className="rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`/${v.file}`} alt={`Source Library OG share card — ${v.label}`} className="w-full block" />
+                  </div>
+                  <div className="mt-2 flex items-center justify-between text-sm">
+                    <div>
+                      <p className="text-stone-700 font-medium">{v.label}</p>
+                      <p className="text-xs text-stone-500">{v.desc}</p>
+                    </div>
+                    <a href={`/${v.file}`} download className="text-xs text-stone-400 hover:text-accent-rust shrink-0 ml-3">Download</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="bg-stone-100 border border-stone-200 rounded-lg p-4 text-sm text-stone-600 space-y-1.5">
+              <p><strong className="text-stone-800">Daily rotation:</strong> a middleware rewrite in <code className="text-xs bg-white px-1 rounded">src/proxy.ts</code> maps <code className="text-xs bg-white px-1 rounded">/og-image.jpg</code> to one of the four named variants based on day-of-year. Adjust the rotation by editing <code className="text-xs bg-white px-1 rounded">OG_VARIANTS</code> in the proxy.</p>
+              <p><strong className="text-stone-800">Regenerating:</strong> the four variants are produced by <code className="text-xs bg-white px-1 rounded">scripts/one-off/generate-og-images.mjs</code>, which composites the Source Library wordmark + Beta sup, Playfair Display headline, Newsreader subhead, and Inter footer URL over each hero-video frame.</p>
+              <p>Per-section OG cards for collections and topics are generated dynamically at request time via Next.js <code className="text-xs bg-white px-1 rounded">opengraph-image.tsx</code> route handlers.</p>
+            </div>
+          </div>
+
+          {/* Browser identity */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-stone-800 mb-1">Browser & app identity</h3>
+            <p className="text-sm text-stone-500 mb-4">
+              The marks that appear in browser tabs, bookmarks, the iOS home screen, and the Windows Start menu tile.
+              All use the brand dark <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">#1a1612</code>.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div>
+                <div className="rounded-lg border border-stone-200 bg-white p-6 flex items-center justify-center min-h-[140px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/icon.svg" alt="Favicon" className="w-16 h-16" />
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Favicon</p>
+                <p className="text-xs text-stone-500">SVG, browser tabs &amp; bookmarks</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">src/app/icon.svg</p>
+              </div>
+              <div>
+                <div className="rounded-lg border border-stone-200 bg-white p-6 flex items-center justify-center min-h-[140px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/apple-icon" alt="Apple touch icon" className="w-20 h-20 rounded-2xl" />
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Apple touch icon</p>
+                <p className="text-xs text-stone-500">180&times;180, iOS home screen</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">src/app/apple-icon.tsx</p>
+              </div>
+              <div>
+                <div className="rounded-lg border border-stone-200 p-6 flex items-center justify-center min-h-[140px]" style={{ background: '#1a1612' }}>
+                  <svg viewBox="0 0 24 24" className="w-16 h-16">
+                    <circle cx="12" cy="12" r="10" fill="none" stroke="#ffffff" strokeWidth="1" />
+                    <circle cx="12" cy="12" r="7" fill="none" stroke="#ffffff" strokeWidth="1" />
+                    <circle cx="12" cy="12" r="4" fill="none" stroke="#ffffff" strokeWidth="1" />
+                  </svg>
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Windows tile</p>
+                <p className="text-xs text-stone-500">msapplication-TileColor &middot; #1a1612</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">layout.tsx metadata</p>
+              </div>
+              <div>
+                <div className="rounded-lg border border-stone-200 bg-[#1a1612] p-6 flex items-center justify-center min-h-[140px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/brand/svg/icon-only--white-on-dark.svg" alt="Avatar / app icon" className="w-16 h-16" />
+                </div>
+                <p className="text-sm font-medium text-stone-700 mt-2">Social avatar</p>
+                <p className="text-xs text-stone-500">Profile picture on social platforms</p>
+                <p className="text-[10px] text-stone-400 font-mono mt-1">brand/png/icon-only--white-on-dark--512h.png</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Where we appear */}
+          <div className="mb-12">
+            <h3 className="text-lg font-semibold text-stone-800 mb-1">Where we appear</h3>
+            <p className="text-sm text-stone-500 mb-4">
+              Canonical handles and profile URLs. Use these in copy and reference materials.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+              <div className="border border-stone-200 rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-stone-400 mb-1">Twitter / X</p>
+                <p className="font-mono text-stone-700">@SourceLibrary_</p>
+                <p className="text-xs text-stone-500 mt-1">Configured as <code className="bg-stone-100 px-1 rounded">twitter.site</code> in layout.tsx</p>
+              </div>
+              <div className="border border-stone-200 rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-stone-400 mb-1">Primary domain</p>
+                <p className="font-mono text-stone-700">sourcelibrary.org</p>
+                <p className="text-xs text-stone-500 mt-1">Canonical URL for all sharing</p>
+              </div>
+              <div className="border border-stone-200 rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-stone-400 mb-1">Email</p>
+                <p className="font-mono text-stone-700">derek@playpowerlabs.com</p>
+                <p className="text-xs text-stone-500 mt-1">Contact for press, partnerships, donor inquiries</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick share-card recipe */}
+          <div className="bg-stone-100 border border-stone-200 rounded-lg p-5">
+            <h4 className="font-medium text-stone-800 mb-2">Building a new share card</h4>
+            <p className="text-sm text-stone-600 mb-3">
+              For a one-off card (announcement, blog post, etc.) follow the OG card&apos;s layout:
+            </p>
+            <ul className="text-sm text-stone-600 space-y-1.5 list-disc pl-5">
+              <li>1200&times;630 canvas, dark background or a manuscript photograph at low brightness</li>
+              <li>White full logo (use <code className="text-xs bg-white px-1 rounded">brand/svg/logo-full--white-on-dark.svg</code>), top-left, ~60px tall</li>
+              <li>Headline in Playfair Display (display), centered or left-aligned, white</li>
+              <li>Subhead in Newsreader (body) at ~24px, muted white (#d6d3d1)</li>
+              <li>Footer URL: <code className="text-xs bg-white px-1 rounded">sourcelibrary.org</code> in Inter, bottom-left</li>
+              <li>Keep ample dark margin; the card needs to read at 600&times;315 thumbnail size</li>
+            </ul>
+          </div>
+        </section>
+
         {/* ─── TECHNICAL REFERENCE ─── */}
         <section className="border-t border-stone-200 pt-12 pb-8">
           <h2 className="text-2xl font-semibold text-stone-800 mb-6">Technical Reference</h2>
@@ -753,7 +844,7 @@ export default function BrandPage() {
 
           <div className="mt-8 text-sm text-stone-500">
             <p>
-              Brand kit generated by <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">scripts/generate-brand-kit.mjs</code>.
+              Brand kit generated by <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">scripts/one-off/generate-brand-kit.mjs</code>.
               Re-run to regenerate all assets.
               SVGs are potrace-traced outlines with no font dependencies.
             </p>

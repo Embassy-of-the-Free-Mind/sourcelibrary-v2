@@ -20,10 +20,6 @@ export async function POST(request: NextRequest) {
     const ids: string[] = body.ids;
     const { id: tenantId } = getTenantContextFromRequest(request);
 
-    if (!tenantId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
     if (!Array.isArray(ids) || ids.length === 0) {
       return NextResponse.json({ error: 'ids array is required' }, { status: 400 });
     }
@@ -31,9 +27,16 @@ export async function POST(request: NextRequest) {
     // Cap at 20 pages per request
     const limitedIds = ids.slice(0, 20);
 
+    // Tenant subdomains and /[tenant]/... paths get tenantId injected by the
+    // proxy and stay tenant-scoped. Calls from the global main domain arrive
+    // with no tenantId — those are allowed to read globally (same semantics
+    // as the unscoped GET /api/pages/[id] route).
+    const filter: Record<string, unknown> = { id: { $in: limitedIds } };
+    if (tenantId) filter.tenantId = tenantId;
+
     const db = await getDb();
     const pages = await db.collection('pages').find(
-      { id: { $in: limitedIds }, tenantId },
+      filter,
       { projection: { detected_images: 0 } }
     ).toArray();
 

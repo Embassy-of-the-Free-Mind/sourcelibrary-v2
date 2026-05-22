@@ -39,7 +39,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
-import { formatAuthor } from '@/lib/utils';
+import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -621,8 +621,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
               <CoverImagePicker
                 bookId={book.id}
-                currentThumbnail={book.thumbnail}
-                currentThumbnailBlob={book.thumbnail_blob}
+                currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
+                currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
                 bookTitle={book.title}
                 pages={pages}
               />
@@ -720,7 +720,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 </div>
                 {embedPolicy.showGalleryImages && imageCount > 0 && (
                   <Link
-                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                    href={`/gallery?bookId=${book.id}`}
                     className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
                     title="View identified images in gallery"
                   >
@@ -1014,7 +1014,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
                   </h2>
                   <Link
-                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                    href={`/gallery?bookId=${book.id}`}
                     className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
                   >
                     View All &rarr;
@@ -1027,7 +1027,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     return (
                       <Link
                         key={img.id}
-                        href={`/${tenantSlug}/gallery/image/${img.id}`}
+                        href={`/gallery/image/${img.id}`}
                         className="flex-shrink-0 group"
                       >
                         <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
@@ -1048,24 +1048,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               </div>
             )}
 
-            {/* Collections — hidden in embed/tenant views since these would jump to the full Source Library */}
-            {embedPolicy.enableBookCollectionNavigation && bookCollections.length > 0 && (
-              <div>
-                <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>Collections</h3>
-                <div className="flex flex-wrap gap-2">
-                  {bookCollections.map(col => (
-                    <Link
-                      key={col.slug}
-                      href={`/collections/${col.slug}`}
-                      className="text-xs px-2.5 py-1 rounded-full transition-colors"
-                      style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-tertiary)' }}
-                    >
-                      {col.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Collections — removed pending redesign; see #1910 */}
 
             {/* Related Books — pre-computed, zero extra queries */}
             {embedPolicy.showBookRelatedBooks && book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
@@ -1077,13 +1060,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
       {/* Stats + Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        {/* Section header with Overview link */}
+        {/* Overview link — Pages heading is rendered by PagesGrid */}
         {pages.length > 0 && (
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-              <FileText className="w-4 h-4 inline-block mr-2 -mt-0.5 opacity-60" />
-              Pages
-            </h2>
+          <div className="flex items-center justify-end">
             <Link
               href={`/book/${book.slug || book.id}/overview`}
               className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"

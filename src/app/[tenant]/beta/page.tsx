@@ -180,7 +180,7 @@ export default function BetaLandingPage() {
             <span className="hidden md:inline text-white/30">|</span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.sourcelibrary.org/assets/embassy-of-the-free-mind-logo.png"
+              src="/partners/efm-white.png"
               alt="Embassy of the Free Mind"
               className="hidden md:block h-8 w-auto opacity-80"
             />

@@ -6,11 +6,20 @@ import {
     fetchTenantBphDigitizedMap,
     fetchTenantBphCatalogTotal,
     fetchTenantBphCataloguedBookIds,
+    fetchTenantCatalogDigitizedMap,
+    fetchTenantCatalogTotal,
 } from '@/lib/tenant-library-loaders';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
+
+// Cold-start with several BPH-only Supabase/Mongo loaders can exceed the
+// Vercel default function budget (10s) under Atlas load, surfacing as
+// "Something went wrong" inside EFM's iframe at /digital-collection-search.
+// Loader-level caching/timeouts in tenant-library-loaders.ts should keep us
+// well under this; the bump is a safety net for cold lambdas.
+export const maxDuration = 30;
 
 interface Props {
     params: Promise<{ tenant: string }>;
@@ -86,14 +95,27 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     // resolves only after the main loaders run; for parallelism we fall back
     // to the tenant slug here, which matches the current BPH tenant 1:1.
     const probablyBph = tenant === 'bph';
+    // Tenants opted into the generic unified-catalogue path (Phase 2/3 of
+    // Kloss BPH-parity work). Mirrors the BPH fast path: pre-resolve via slug
+    // so loaders can run in parallel.
+    const knownPartnerEarly = getPartnerBySlug(tenant);
+    const probablyHasUnified = !probablyBph && !!knownPartnerEarly?.hasUnifiedCatalogue;
 
-    // The BPH catalogue + books views render only <BphUnifiedCatalogue>,
-    // which sources its own data via /api/catalog/bph. The hero, gallery,
+    // The unified-catalogue views render only <UnifiedCatalogue> /
+    // <BphUnifiedCatalogue>, which source their own data. The hero, gallery,
     // Selected Books row, and contributing-libraries panel are all hidden,
     // so the heavy upstream loaders (Mongo + Supabase) are pure dead weight
     // on those URLs — and `view=catalog&display=list` was timing out in the
     // browser before render finished. Skip them and pass empty placeholders.
-    const skipHeavyLoaders = probablyBph && (view === 'catalog' || view === 'books');
+    const skipHeavyLoaders = (probablyBph || probablyHasUnified) && (view === 'catalog' || view === 'books');
+
+    // dominantProvider is only consulted as a fallback when the tenant slug
+    // doesn't map to a known partner — for known slugs (bph, ficino, bhutan,
+    // …) `getPartnerBySlug` already wins. For BPH specifically this
+    // aggregation is a `$group` over ~17K books and was the 4–8s warm SSR
+    // bottleneck on cold lambdas (cache is per-instance and misses often).
+    // Skip the query when we already know the partner from the slug.
+    const knownPartner = getPartnerBySlug(tenant);
 
     const [libraryData, dominantProvider, cataloguedBookIds] = await Promise.all([
         skipHeavyLoaders
@@ -106,7 +128,7 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
                 contributingLibraries: [],
             } as Awaited<ReturnType<typeof fetchTenantLibraryData>>)
             : fetchTenantLibraryData(tenantId, sort, language, offset, q || undefined),
-        getTenantDominantProvider(tenantId),
+        knownPartner ? Promise.resolve(null) : getTenantDominantProvider(tenantId),
         probablyBph && !skipHeavyLoaders ? fetchTenantBphCataloguedBookIds() : Promise.resolve(null),
     ]);
 
@@ -119,7 +141,7 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         : libraryData.topBooks;
     const { books, total, languages, galleryImages, contributingLibraries } = libraryData;
 
-    const canonicalPartner = getPartnerBySlug(tenant) || (dominantProvider ? getPartnerByProvider(dominantProvider) : undefined);
+    const canonicalPartner = knownPartner || (dominantProvider ? getPartnerByProvider(dominantProvider) : undefined);
     const tenantRecord = tenantDoc as Record<string, unknown>;
     const tenantExternalUrl =
         getOptionalStringField(tenantRecord.url) ||
@@ -128,12 +150,18 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         '';
 
     const isBph = canonicalPartner?.providerKey === 'bph' || dominantProvider === 'bph';
+    const hasUnifiedCatalogue = !isBph && !!canonicalPartner?.hasUnifiedCatalogue;
     const [digitizedUbns, catalogTotal] = isBph
         ? await Promise.all([
             fetchTenantBphDigitizedMap(tenantId),
             fetchTenantBphCatalogTotal(tenantId),
         ])
-        : [{} as Record<string, { id: string; slug: string }>, 0];
+        : hasUnifiedCatalogue
+            ? await Promise.all([
+                fetchTenantCatalogDigitizedMap(tenantId, canonicalPartner!.providerKey),
+                fetchTenantCatalogTotal(tenant),
+            ])
+            : [{} as Record<string, { id: string; slug: string }>, 0];
 
     const basePath = `/embed/${tenant}`;
 
@@ -159,6 +187,7 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         view,
         display,
         isBph,
+        hasUnifiedCatalogue,
         digitizedUbns,
         catalogTotal,
         tenantSlug: tenant,

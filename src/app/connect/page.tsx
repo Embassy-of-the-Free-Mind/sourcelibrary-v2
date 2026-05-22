@@ -7,7 +7,7 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Connect Source Library to Claude',
-  description: 'Give Claude access to 22,000+ rare historical texts in 30 seconds. Search, read, and cite alchemical, Hermetic, and early scientific works directly in your conversation.',
+  description: 'Give Claude access to 12,000+ rare pre-modern texts in 30 seconds — theology, philosophy, history, science, mysticism, literature. Search, read, and cite primary sources directly in your conversation.',
   alternates: { canonical: '/connect' },
 };
 
@@ -17,7 +17,7 @@ export default function ConnectPage() {
       header={
         <ContentHeader
           title="Connect Source Library to Claude"
-          subtitle="Search, read, and cite 22,000+ rare historical texts — directly in your conversation."
+          subtitle="Search, read, and cite 12,000+ rare pre-modern texts in English — directly in your conversation."
         />
       }
     >
@@ -149,25 +149,26 @@ export default function ConnectPage() {
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-4">What&apos;s in the collection?</h2>
         <p className="text-secondary mb-6 max-w-2xl">
-          Source Library is the largest AI-ready corpus of pre-modern esoteric and scientific texts.
-          Most have been translated into English for the first time.
+          Theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica,
+          medicine, mathematics, astronomy — the full breadth of pre-modern intellectual history,
+          mostly translated into English for the first time.
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">22,000+</p>
-            <p className="text-sm text-muted mt-1">books</p>
+            <p className="text-2xl font-bold text-accent-rust">12,000+</p>
+            <p className="text-sm text-muted mt-1">translated books</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">90,000+</p>
-            <p className="text-sm text-muted mt-1">illustrations</p>
+            <p className="text-2xl font-bold text-accent-rust">3.9M</p>
+            <p className="text-sm text-muted mt-1">page embeddings</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">30+</p>
-            <p className="text-sm text-muted mt-1">languages</p>
+            <p className="text-2xl font-bold text-accent-rust">15+</p>
+            <p className="text-sm text-muted mt-1">source languages</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">1450&ndash;1800</p>
+            <p className="text-2xl font-bold text-accent-rust">Sumerian&ndash;1900</p>
             <p className="text-sm text-muted mt-1">date range</p>
           </div>
         </div>

@@ -15,7 +15,7 @@ Read these files before proceeding with pipeline work:
 
 ## Critical Rules
 
-- ALWAYS use `gemini-3-flash-preview` for all AI tasks
+- Model selection: prefer `getModelForBook(book)` from `src/lib/types/ai-models.ts` over hardcoding. It routes BPH books and non-Latin-script languages to `gemini-3-flash-preview` (full quality) and everything else to `gemini-3.1-flash-lite-preview` (50% cheaper, comparable quality on Latin-script). Enrich-worker uses `gemini-3.1-flash-lite-preview` for all phases (summary+index, chapters, quality scoring, collection assignment). Never use anything below Gemini v3 — `gemini-2.x` is deprecated.
 - NEVER use Gemini Batch API for translation — use Lambda workers (SQS FIFO)
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision()` first
 - MongoDB Atlas saturates at ~40 concurrent Lambda jobs — global backpressure limit

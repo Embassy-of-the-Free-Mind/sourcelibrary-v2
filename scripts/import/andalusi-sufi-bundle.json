@@ -1,0 +1,51 @@
+{
+  "bundle_id": "20230305_20230305_1003",
+  "contributing_library": "Internet Archive (user-uploaded Arabic library bundle)",
+  "entries": [
+    {
+      "base_filename": "ابن باجة - رسائل جديدة - ط مدريد",
+      "title": "Rasāʾil jadīda li-Ibn Bājja (New Treatises of Avempace)",
+      "display_title": "رسائل جديدة لابن باجة",
+      "author": "Ibn Bājja (Avempace, d. 1138)",
+      "year": 1130,
+      "language": "Arabic",
+      "notes": "Andalusi Aristotelian philosopher; Ibn Rushd's predecessor. Madrid edition of newly-published treatises. Bridges Ibn Sina and Averroist tradition."
+    },
+    {
+      "base_filename": "ابن سبعين - الإحاطة",
+      "title": "Al-Iḥāṭa (The Comprehensive Treatise)",
+      "display_title": "الإحاطة",
+      "author": "Ibn Sabʿīn (d. 1271)",
+      "year": 1265,
+      "language": "Arabic",
+      "notes": "Andalusi Sufi philosopher; author of the answers to Frederick II's questions. Held a radical waḥdat al-wujūd position. Al-Iḥāṭa surveys the metaphysics of unity."
+    },
+    {
+      "base_filename": "ابن قسي - خلع النعلين واقتباس النور من موضع القدمين",
+      "title": "Khalʿ al-Naʿlayn wa-Iqtibās al-Nūr min Mawḍiʿ al-Qadamayn (Removing the Two Sandals)",
+      "display_title": "خلع النعلين واقتباس النور من موضع القدمين",
+      "author": "Ibn Qasī (d. 1151)",
+      "year": 1145,
+      "language": "Arabic",
+      "notes": "Foundational early Andalusi Sufi text. Ibn ʿArabī wrote a commentary on it. The 'removing the sandals' refers to Moses at the burning bush — symbol of approaching divine presence."
+    },
+    {
+      "base_filename": "ابن عربي - أجوبة ابن عربي على أسئلة الحكيم الترمذي",
+      "title": "Ajwibat Ibn ʿArabī ʿalā Asʾilat al-Ḥakīm al-Tirmidhī (Ibn ʿArabī's Answers to al-Tirmidhī's Questions)",
+      "display_title": "أجوبة ابن عربي على أسئلة الحكيم الترمذي",
+      "author": "Muḥyī al-Dīn Ibn ʿArabī (d. 1240)",
+      "year": 1220,
+      "language": "Arabic",
+      "notes": "Ibn ʿArabī's responses to 157 questions posed by the 9th-c. Sufi al-Ḥakīm al-Tirmidhī about sainthood (walāya). Central source for Akbarian doctrine of the saints."
+    },
+    {
+      "base_filename": "ابن عربي - نص لم يسبق نشره حول الولاية والنبوة",
+      "title": "Previously Unpublished Text on Walāya and Nubuwwa",
+      "display_title": "نص لم يسبق نشره حول الولاية والنبوة",
+      "author": "Muḥyī al-Dīn Ibn ʿArabī (d. 1240)",
+      "year": 1220,
+      "language": "Arabic",
+      "notes": "Previously unpublished Ibn ʿArabī text on the relationship between sainthood and prophecy. Continues themes from the Ajwiba and the Fuṣūṣ."
+    }
+  ]
+}

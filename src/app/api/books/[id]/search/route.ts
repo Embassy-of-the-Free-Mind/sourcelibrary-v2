@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { buildPageSearchStage } from '@/lib/atlas-search';
+import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { semanticPageSearchScoped } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
@@ -101,6 +101,7 @@ export async function GET(
         try {
           pages = await db.collection('pages').aggregate([
             buildPageSearchStage(trimmedQuery, bookId),
+            { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
             { $sort: { page_number: 1 } },
             { $limit: 50 },
             {
@@ -119,6 +120,7 @@ export async function GET(
           const regex = new RegExp(escapeRegex(matchQuery), 'i');
           const regexFilter: Record<string, unknown> = {
             book_id: bookId,
+            page_type: { $nin: NON_CONTENT_PAGE_TYPES },
             $or: [
               { 'ocr.data': { $regex: regex } },
               { 'translation.data': { $regex: regex } }
@@ -188,8 +190,21 @@ export async function GET(
       (async (): Promise<SearchResult[]> => {
         try {
           const pages = await semanticPageSearchScoped(trimmedQuery, [bookId], 10);
-          return pages
-            .filter(p => p.snippet && p.snippet.length > 20)
+          const filtered = pages.filter(p => p.snippet && p.snippet.length > 20);
+          if (filtered.length === 0) return [];
+          // Look up page_type to drop boilerplate (title-page, blank, illustration, etc.)
+          // — these have embeddings in Supabase but aren't real book content.
+          const pageIds = filtered.map(p => p.page_id);
+          const pageTypeDocs = await db.collection('pages')
+            .find({ id: { $in: pageIds } }, { projection: { id: 1, page_type: 1 } })
+            .toArray();
+          const badIds = new Set(
+            pageTypeDocs
+              .filter(d => (NON_CONTENT_PAGE_TYPES as readonly string[]).includes(d.page_type as string))
+              .map(d => d.id as string),
+          );
+          return filtered
+            .filter(p => !badIds.has(p.page_id))
             .map(p => ({
               pageId: p.page_id,
               pageNumber: p.page_number,

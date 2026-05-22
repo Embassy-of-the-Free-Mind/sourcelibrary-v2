@@ -15,6 +15,7 @@ import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import BphUnifiedCatalogue from '@/components/libraries/BphUnifiedCatalogue';
+import UnifiedCatalogue from '@/components/libraries/UnifiedCatalogue';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { getEmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
@@ -95,6 +96,11 @@ export interface SharedLibraryViewProps {
   /** Display dimension on the BPH unified catalogue. Independent of `view`. */
   display?: 'list' | 'grid';
   isBph: boolean;
+  /** True for tenants with a BPH-parity Books|Catalogue structure that is
+   *  NOT BPH itself (currently: kloss-collection). Reads `library_catalog_records`
+   *  via /api/catalog/[tenant]. Mutually exclusive with isBph for now — BPH
+   *  still uses its bespoke bph_works pipeline. */
+  hasUnifiedCatalogue?: boolean;
   digitizedUbns?: Record<string, { id: string; slug: string }>;
   catalogTotal?: number;
   /** Optional tenant slug to pass to nested components */
@@ -119,6 +125,7 @@ export default function SharedLibraryView({
   view,
   display,
   isBph,
+  hasUnifiedCatalogue = false,
   digitizedUbns = {},
   catalogTotal = 0,
   tenantSlug,
@@ -140,15 +147,23 @@ export default function SharedLibraryView({
   // clicking the list/grid icons changes display only; the Show all / Show
   // digitised toggle changes view only. Default landing (no view) keeps the
   // legacy Selected Books + Catalog combo.
+  //
+  // `hasUnifiedCatalogue` (kloss-collection and future tenants) opts into the
+  // same shell but reads from the generic library_catalog_records table via
+  // /api/catalog/[tenant]. BPH stays on its own bph_works pipeline for now.
+  const usesUnifiedCatalogue = isBph || hasUnifiedCatalogue;
   const showSelectedBooksRow = isBph && view !== 'books' && view !== 'catalog';
-  const showUnifiedCatalogue = isBph && (view === 'books' || view === 'catalog');
+  const showUnifiedCatalogue = usesUnifiedCatalogue && (view === 'books' || view === 'catalog');
   const catalogueMode = view === 'books' ? 'digitized' : 'all';
   const effectiveDisplay: 'list' | 'grid' =
     display ?? (catalogueMode === 'digitized' ? 'grid' : 'list');
-  // Render the books grid for non-BPH tenants always. BPH grid view is
-  // rendered inside BphUnifiedCatalogue/BphCatalogBrowser using the Supabase
-  // data source (so search + Advanced filter the covers live).
-  const showBooksGrid = !isBph;
+  // BPH renders covers inside its unified shell on every view, so the
+  // generic grid is always hidden there. Other unified-catalogue tenants
+  // (kloss) only swap to the unified shell when the user explicitly picks
+  // ?view=books|catalog (e.g. via the subdomain proxy's /catalogue rewrite);
+  // the default landing keeps the standard books grid so the main-domain
+  // /{tenant} path still has something to render.
+  const showBooksGrid = !isBph && !showUnifiedCatalogue;
 
   return (
     <div className="min-h-screen bg-cream">
@@ -183,7 +198,7 @@ export default function SharedLibraryView({
           {tenantSlug && (
             <div className="max-w-2xl mb-5">
               <UnifiedSearch dropdownPosition="bottom" />
-              {isBph && catalogTotal > 0 ? (
+              {usesUnifiedCatalogue && catalogTotal > 0 ? (
                 <Link
                   href={forceEmbedded ? '/catalogue' : `${basePath}/catalogue`}
                   className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mt-3"
@@ -204,7 +219,7 @@ export default function SharedLibraryView({
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            {isBph && catalogTotal > 0 ? (
+            {usesUnifiedCatalogue && catalogTotal > 0 ? (
               <>
                 <span>{catalogTotal.toLocaleString('en-US')} works in catalogue</span>
                 <span className="w-px h-4 bg-white/20" />
@@ -297,8 +312,12 @@ export default function SharedLibraryView({
         </div>
       )}
 
-      {/* Contributing Libraries (for IA and similar aggregators — hide for BPH since it IS the library) */}
-      {contributingLibraries.length > 0 && !isBph && (
+      {/* Contributing Libraries — only meaningful for aggregator tenants
+          (Internet Archive, Gallica, etc). Single-institution tenants (BPH,
+          Kloss, future partners) get an "Institution + Unknown" pair that
+          adds noise without insight. Show only when there are >=3 distinct
+          contributors. */}
+      {contributingLibraries.length >= 3 && !usesUnifiedCatalogue && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex items-center gap-2 mb-4">
@@ -331,14 +350,27 @@ export default function SharedLibraryView({
 
       <div className="max-w-7xl mx-auto px-6 py-10">
         {showUnifiedCatalogue && (
-          <BphUnifiedCatalogue
-            mode={catalogueMode}
-            display={effectiveDisplay}
-            catalogTotal={catalogTotal}
-            basePath={basePath}
-            digitizedUbns={digitizedUbns}
-            tenantSlug={tenantSlug ?? undefined}
-          />
+          isBph ? (
+            <BphUnifiedCatalogue
+              mode={catalogueMode}
+              display={effectiveDisplay}
+              catalogTotal={catalogTotal}
+              basePath={basePath}
+              digitizedUbns={digitizedUbns}
+              tenantSlug={tenantSlug ?? undefined}
+            />
+          ) : (
+            <UnifiedCatalogue
+              tenant={partner.slug}
+              mode={catalogueMode}
+              display={effectiveDisplay}
+              catalogTotal={catalogTotal}
+              basePath={basePath}
+              digitizedIds={digitizedUbns}
+              tenantSlug={tenantSlug ?? undefined}
+              libraryName={partner.name}
+            />
+          )
         )}
         {showBooksGrid ? (
           <>
@@ -395,7 +427,6 @@ export default function SharedLibraryView({
                       : 0,
                   }}
                   priority={i < 10}
-                  bookUrlPrefix={basePath !== '/' ? basePath : undefined}
                 />
               ))}
             </div>
@@ -482,7 +513,6 @@ export default function SharedLibraryView({
                           : 0,
                       }}
                       priority={i < 5}
-                      bookUrlPrefix={basePath !== '/' ? basePath : undefined}
                     />
                   ))}
                   <Link

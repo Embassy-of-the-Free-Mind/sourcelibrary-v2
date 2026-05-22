@@ -53,6 +53,8 @@ interface GalleryClientProps {
     coverImage: { url: string; description: string } | null;
   }>;
   bookCollections?: BookCollectionOption[];
+  /** bookId the SSR payload was pre-filtered on (if any). Used to skip the initial client refetch when the URL filter already matches the SSR result. */
+  initialBookId?: string;
 }
 
 /** Downsize a IIIF URL for gallery thumbnails (400px wide instead of full) */
@@ -85,7 +87,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export default function GalleryClient({ initialData, initialCollections, bookCollections = [] }: GalleryClientProps) {
+export default function GalleryClient({ initialData, initialCollections, bookCollections = [], initialBookId = '' }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -95,8 +97,12 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // shell renders its own chrome.
   const { isEmbedded } = useEmbedContext();
 
-  const pathParts = pathname.split('/').filter(Boolean);
-  const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
+  // Path-tenants (e.g. /internet-archive/gallery) should never propagate
+  // into book/page links — those URLs are canonical at /book/{id}. The
+  // pathname is intentionally unused; tenant subdomain rendering is handled
+  // upstream via proxy.ts rewrites.
+  void pathname;
+  const tenantPrefix = '';
 
   // Render the server-provided order on first paint (matches SSR HTML so we
   // don't trip React error #418 hydration mismatch), then shuffle once we're
@@ -162,10 +168,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     router.push(`${tenantPrefix}/gallery?${params.toString()}`);
   }, [searchParams, router, tenantPrefix]);
 
-  // Fetch gallery data when filters change (resets items) — skip on initial load if no URL filters
+  // Fetch gallery data when filters change (resets items).
+  // Skip on initial load when the SSR payload already matches the URL: no URL
+  // filters at all, OR the URL's bookId equals what the server pre-filtered on
+  // and no other filters are present.
   useEffect(() => {
-    const hasUrlFilters = bookId || collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
-    if (isInitialLoad && !hasUrlFilters) {
+    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId) {
       setIsInitialLoad(false);
       return;
     }
@@ -744,8 +753,12 @@ function GalleryCard({ item, priority = false, tenantPrefix = '' }: { item: Gall
 
 function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
   const pathname = usePathname();
-  const pathParts = pathname.split('/').filter(Boolean);
-  const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
+  // Path-tenants (e.g. /internet-archive/gallery) should never propagate
+  // into book/page links — those URLs are canonical at /book/{id}. The
+  // pathname is intentionally unused; tenant subdomain rendering is handled
+  // upstream via proxy.ts rewrites.
+  void pathname;
+  const tenantPrefix = '';
   const [extracting, setExtracting] = useState(false);
 
   const handleExtract = async () => {

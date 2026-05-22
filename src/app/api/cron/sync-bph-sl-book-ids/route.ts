@@ -78,6 +78,8 @@ export async function GET(request: NextRequest) {
 
   // Read all BPH books with a dc_identifier and project just the fields we need.
   // `bph_catalog_link: false` opts a book out of the sync (see header comment).
+  // `visible: { $ne: false }` excludes hidden duplicates — otherwise dedupe
+  // hides bounce back within 6h as the cron re-PATCHes their sl_book_id.
   const docs = await db
     .collection('books')
     .find(
@@ -85,6 +87,7 @@ export async function GET(request: NextRequest) {
         'image_source.provider': 'bph',
         'dublin_core.dc_identifier': { $exists: true, $ne: '' },
         bph_catalog_link: { $ne: false },
+        visible: { $ne: false },
       },
       { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 30_000 },
     )

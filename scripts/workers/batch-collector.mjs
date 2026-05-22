@@ -281,6 +281,7 @@ async function processOneJob(db, job) {
     const pageResults = [];
 
     let recitationCount = 0;
+    const recitationPageIds = []; // Track page IDs for per-page recitation stamping (single-page path only)
 
     if (isMultiPage && job.type === 'ocr') {
       for (const r of responses) {
@@ -307,7 +308,12 @@ async function processOneJob(db, job) {
           continue;
         }
         const candidate = r.response?.candidates?.[0];
-        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
+        if (candidate?.finishReason === 'RECITATION') {
+          recitationCount++;
+          failCount++;
+          if (job.type === 'ocr') recitationPageIds.push(pageId); // Stamp page-level tracking
+          continue;
+        }
         const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         pageResults.push({ pageId, text, usage: r.response?.usageMetadata });
@@ -316,6 +322,40 @@ async function processOneJob(db, job) {
 
     if (recitationCount > 0) {
       console.log(`  RECITATION: ${recitationCount}/${responses.length} responses blocked (book: ${job.book_id})`);
+    }
+
+    // ── Per-page RECITATION tracking (single-page OCR path only, where we have pageId) ──
+    // Mirrors the archive_metadata.failure_count pattern: stamp count + timestamp, and after
+    // N=3 consecutive blocks mark ocr.recitation_blocked: true to skip future submissions.
+    if (recitationPageIds.length > 0) {
+      const RECITATION_BLOCK_THRESHOLD = 3;
+      const recitationNow = new Date();
+      // Use $inc + $set so we don't need to read each page before writing
+      const recitationOps = recitationPageIds.map(pageId => ({
+        updateOne: {
+          filter: { id: pageId },
+          update: [
+            // Ensure ocr subdocument exists
+            { $set: { ocr: { $cond: { if: { $eq: ['$ocr', null] }, then: {}, else: '$ocr' } } } },
+            {
+              $set: {
+                'ocr.recitation_count': { $add: [{ $ifNull: ['$ocr.recitation_count', 0] }, 1] },
+                'ocr.last_recitation_at': recitationNow,
+                // Mark as blocked after threshold so the page-selection query can skip it
+                'ocr.recitation_blocked': {
+                  $gte: [{ $add: [{ $ifNull: ['$ocr.recitation_count', 0] }, 1] }, RECITATION_BLOCK_THRESHOLD],
+                },
+              },
+            },
+          ],
+        },
+      }));
+      try {
+        await db.collection('pages').bulkWrite(recitationOps, { ordered: false });
+        console.log(`  Stamped recitation tracking on ${recitationPageIds.length} pages`);
+      } catch (recErr) {
+        console.error(`  Failed to stamp recitation tracking: ${recErr.message}`);
+      }
     }
 
     // First pass: fix null ocr/translation subdocuments (skip for image_extraction)
@@ -1157,25 +1197,51 @@ async function run() {
 
   // RECITATION recovery: mark affected books for retry with a different model.
   // The batch API with gemini-3-flash-preview triggers RECITATION on some historical
-  // texts. Lambda workers have a fallback chain (2.5-flash → 2.0-flash → 1.5-flash).
-  // Reset to archive_complete with recitation_retry flag so the orchestrator can
-  // route these through Lambda or use a different batch model.
+  // texts. Orchestrator retries these with gemini-2.5-flash (modelOverride).
+  // If a book that already had recitation_retry=true fails RECITATION again,
+  // it means even the fallback model can't handle this content — mark as
+  // pipeline_auto.recitation_blocked=true so both Pass 1 and Pass 2 permanently skip it.
   if (recitationBooks.size > 0) {
     console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
     for (const bookId of recitationBooks) {
       try {
-        await db.collection('books').updateOne(
-          { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
-          {
-            $set: {
-              'pipeline_auto.status': 'archive_complete',
-              'pipeline_auto.last_updated': new Date(),
-              'pipeline_auto.recitation_retry': true,
-              updated_at: new Date(),
-            },
-          }
+        const book = await db.collection('books').findOne(
+          { id: bookId },
+          { projection: { 'pipeline_auto.recitation_retry': 1 } }
         );
-        console.log(`  Reset ${bookId} -> archive_complete (recitation_retry)`);
+        const alreadyRetried = book?.pipeline_auto?.recitation_retry === true;
+
+        if (alreadyRetried) {
+          // Second RECITATION failure: fallback model also blocked. Permanently skip.
+          await db.collection('books').updateOne(
+            { id: bookId },
+            {
+              $set: {
+                'pipeline_auto.status': 'needs_attention',
+                'pipeline_auto.last_updated': new Date(),
+                'pipeline_auto.recitation_blocked': true,
+                'pipeline_auto.recitation_blocked_at': new Date(),
+                updated_at: new Date(),
+              },
+              $unset: { 'pipeline_auto.recitation_retry': '' },
+            }
+          );
+          console.log(`  RECITATION permanently blocked ${bookId} -> needs_attention (both models failed)`);
+        } else {
+          // First RECITATION failure: reset to archive_complete for retry with fallback model.
+          await db.collection('books').updateOne(
+            { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
+            {
+              $set: {
+                'pipeline_auto.status': 'archive_complete',
+                'pipeline_auto.last_updated': new Date(),
+                'pipeline_auto.recitation_retry': true,
+                updated_at: new Date(),
+              },
+            }
+          );
+          console.log(`  Reset ${bookId} -> archive_complete (recitation_retry)`);
+        }
       } catch (e) { console.error(`  RECITATION reset error ${bookId}: ${e.message}`); }
     }
   }

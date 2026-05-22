@@ -1,0 +1,274 @@
+{
+  "note": "SHWEP curator pass — early printed editions (1590s–1700s quartos & folios) of Jonson, Shakespeare, Marlowe + Bidez CMAG VI. Triggered by SHWEP ep 216 (Merianos on East Roman Alchemy Pt II) which cited Jonson's Alchemist; expanded to all three Renaissance dramatists per user request. CCAG VII (Boll 1908) is on HathiTrust (mdp.39015033004238) but blocked by anti-bot; see import-queue doc for follow-up.",
+  "shwep_episode_links": {
+    "216": ["Ben Jonson (all)", "CMAG VI"],
+    "217": []
+  },
+  "entries": [
+    {
+      "source": "ia",
+      "ia_identifier": "mrvvilliamshakes00shak",
+      "title": "Mr. William Shakespeares Comedies, Histories, & Tragedies (First Folio)",
+      "display_title": "Mr. William Shakespeares Comedies, Histories, & Tragedies",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1623,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "mrwilliamshakesp00shak_8",
+      "title": "Mr. William Shakespeares Comedies, Histories, and Tragedies (Second Folio)",
+      "display_title": "Comedies, Histories, and Tragedies (Second Folio)",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1632,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "mrwilliamshakesp00shak_4",
+      "title": "Mr. William Shakespeares Comedies, Histories, and Tragedies (Third Folio)",
+      "display_title": "Comedies, Histories, and Tragedies (Third Folio)",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1663,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "mrwilliamshakesp00shak_7",
+      "title": "Mr. William Shakespear's Comedies, Histories, and Tragedies (Fourth Folio)",
+      "display_title": "Comedies, Histories, and Tragedies (Fourth Folio)",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1685,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_an-excellent-conceited-t_shakespeare-william_1597",
+      "title": "An Excellent Conceited Tragedie of Romeo and Juliet (Q1)",
+      "display_title": "An Excellent Conceited Tragedie of Romeo and Juliet (Q1)",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1597,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "shakespeareromeoandjulietQ2",
+      "title": "The Most Excellent and Lamentable Tragedie, of Romeo and Juliet (Q2)",
+      "display_title": "Romeo and Juliet (Q2)",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1599,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "chroniclehistory00shak_1",
+      "title": "The Chronicle History of Henry the Fift, vvith his Battell Fought at Agin Court",
+      "display_title": "The Chronicle History of Henry the Fift",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1619,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "tragedyofhamletp00shak_1",
+      "title": "The Tragedy of Hamlet Prince of Denmarke",
+      "display_title": "The Tragedy of Hamlet, Prince of Denmarke",
+      "author": "William Shakespeare",
+      "language": "English",
+      "year": 1625,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "workesofbenjamin01jons",
+      "title": "The Workes of Benjamin Jonson (First Folio)",
+      "display_title": "The Workes of Benjamin Jonson (First Folio)",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1616,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_the-workes-of-benjamin-j_jonson-benjamin_1640",
+      "title": "The Workes of Benjamin Jonson (1640 Second Folio, Vol. 1)",
+      "display_title": "The Workes of Benjamin Jonson (Second Folio, Vol. 1)",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1640,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_the-workes-of-benjamin-j_jonson-benjamin_1640_2",
+      "title": "The Workes of Benjamin Jonson (1640 Second Folio, Vol. 2)",
+      "display_title": "The Workes of Benjamin Jonson (Second Folio, Vol. 2)",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1640,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "jonsonalchemist",
+      "title": "The Alchemist (1612 First Quarto, Scolar Press facsimile)",
+      "display_title": "The Alchemist (1612 First Quarto)",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1612,
+      "categories": ["drama", "renaissance-literature", "alchemy"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "jonsonvolpone",
+      "title": "Ben: Ionson His Volpone or The Foxe",
+      "display_title": "Volpone, or The Foxe",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1607,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_seianus-his-fall_jonson-benjamin_1605",
+      "title": "Seianus his Fall",
+      "display_title": "Sejanus his Fall",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1605,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_catiline-his-conspiracy_jonson-benjamin_1611",
+      "title": "Catiline, his Conspiracy",
+      "display_title": "Catiline, his Conspiracy",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1611,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "jonsonbartholomewfair",
+      "title": "Bartholmevv Fayre: a Comedie, acted in the yeare, 1614",
+      "display_title": "Bartholomew Fair",
+      "author": "Ben Jonson",
+      "language": "English",
+      "year": 1631,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "marlowetamburlaine",
+      "title": "Tamburlaine the Great, Parts I & II",
+      "display_title": "Tamburlaine the Great",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1592,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_the-tragicall-history-of_marlowe-christopher_1616",
+      "title": "The Tragicall History of the Life and Death of Doctor Faustus (B-text)",
+      "display_title": "Doctor Faustus (1616, B-text)",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1616,
+      "categories": ["drama", "renaissance-literature", "alchemy", "ritual-magic"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_the-tragicall-history-of_marlowe-christopher_1620",
+      "title": "The Tragicall History of the Life and Death of Doctor Faustus (1620)",
+      "display_title": "Doctor Faustus (1620)",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1620,
+      "categories": ["drama", "renaissance-literature", "alchemy", "ritual-magic"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "marlowedoctorfaustus1631",
+      "title": "The Tragicall Historie of the Life and Death of Doctor Faustus (1631)",
+      "display_title": "Doctor Faustus (1631)",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1631,
+      "categories": ["drama", "renaissance-literature", "alchemy", "ritual-magic"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_the-famous-tragedy-of-th_marlowe-christopher_1633",
+      "title": "The Famous Tragedy of the Rich Jew of Malta",
+      "display_title": "The Jew of Malta",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1633,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "marloweedwardthesecond",
+      "title": "The Troublesome Raigne and Lamentable Death of Edward the Second",
+      "display_title": "Edward II",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1594,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "case_3a_631",
+      "title": "The Massacre at Paris",
+      "display_title": "The Massacre at Paris",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1594,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "bim_early-english-books-1475-1640_hero-and-leander_marlowe-christopher_1637",
+      "title": "Hero and Leander",
+      "display_title": "Hero and Leander",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1637,
+      "categories": ["poetry", "renaissance-literature"]
+    },
+    {
+      "source": "ia",
+      "ia_identifier": "isbn_9781110840175",
+      "title": "Dido, Queen of Carthage",
+      "display_title": "Dido, Queen of Carthage",
+      "author": "Christopher Marlowe",
+      "language": "English",
+      "year": 1594,
+      "categories": ["drama", "renaissance-literature"]
+    },
+    {
+      "source": "ia_bundle",
+      "bundle_id": "CatMssAlchGr",
+      "base_filename": "CMAG-6-Psellus-Proclus",
+      "page_count": 257,
+      "title": "Catalogue des manuscrits alchimiques grecs, Vol. VI: Michel Psellus, Opuscules et Extraits",
+      "display_title": "Catalogue des manuscrits alchimiques grecs, Vol. VI (Psellos + Proclus)",
+      "author": "Joseph Bidez (ed.)",
+      "language": "Greek",
+      "original_language": "Greek",
+      "year": 1928,
+      "place_published": "Brussels",
+      "publisher": "Maurice Lamertin",
+      "categories": ["alchemy", "byzantine-studies", "manuscript-studies"]
+    }
+  ]
+}

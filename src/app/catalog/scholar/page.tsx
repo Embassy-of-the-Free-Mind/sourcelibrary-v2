@@ -7,8 +7,8 @@ export const revalidate = 86400;
 export const maxDuration = 30;
 
 export const metadata: Metadata = {
-  title: 'Scholar Catalog - Source Library',
-  description: 'Browse the Source Library catalog in a clean bibliographic format designed for researchers and librarians.',
+  title: 'Scholar Catalogue - Source Library',
+  description: 'Browse the Source Library catalogue in a clean bibliographic format designed for researchers and librarians.',
   alternates: { canonical: '/catalog/scholar' },
 };
 

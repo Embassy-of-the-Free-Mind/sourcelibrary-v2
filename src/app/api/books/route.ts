@@ -10,6 +10,14 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 500);
     const offset = Math.max(parseInt(searchParams.get('offset') || '0', 10), 0);
+    const iaIdentifier = searchParams.get('ia_identifier');
+    const bookId = searchParams.get('id');
+    // pages_count is a cache populated by sync-page-counts cron every ~6h, so
+    // freshly imported books are invisible by default. Opt-in for audit tools.
+    const includeUnindexed = searchParams.get('include_unindexed') === '1';
+    // Imports start with visible:null/false and stay hidden until promoted.
+    // Audit tools need to see them too.
+    const includeHidden = searchParams.get('include_hidden') === '1';
     const tenantContext = getTenantContextFromRequest(request.headers);
 
     if (tenantContext.slug && !tenantContext.id) {
@@ -21,9 +29,21 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getDb();
-    const query: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
+    const query: Record<string, unknown> = {};
+    if (!includeHidden) {
+      query.visible = true;
+    }
+    if (!includeUnindexed) {
+      query.pages_count = { $gt: 0 };
+    }
     if (tenantContext.id) {
       query.tenantId = tenantContext.id;
+    }
+    if (iaIdentifier) {
+      query.ia_identifier = iaIdentifier;
+    }
+    if (bookId) {
+      query.id = bookId;
     }
 
     // pages_count is already cached on each book by the sync-page-counts cron.

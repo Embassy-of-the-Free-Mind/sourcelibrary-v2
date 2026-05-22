@@ -23,7 +23,7 @@ const NAV_LINKS: NavLink[] = [
     activePrefix: '/browse',
     children: [
       { label: 'Browse', href: '/browse' },
-      { label: 'Catalog', href: '/catalog' },
+      { label: 'Catalogue', href: '/catalog' },
     ],
   },
   { label: 'Explore', href: '/explore/map', activePrefix: '/explore' },

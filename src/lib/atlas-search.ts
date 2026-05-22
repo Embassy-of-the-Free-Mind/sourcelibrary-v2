@@ -6,6 +6,8 @@ export const PAGE_SEARCH_INDEX = 'pages_search';
 export interface BookSearchFilters {
   tenantId?: string;
   language?: string;
+  languages?: string[];
+  excludeLanguages?: string[];
   category?: string;
   yearExact?: number;
   yearFrom?: number;
@@ -59,8 +61,13 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
   // Exclude empty shell books (0 pages from failed imports)
   filter.push({ range: { path: 'pages_count', gt: 0 } });
 
-  if (filters.language) {
+  if (filters.languages && filters.languages.length > 0) {
+    filter.push({ in: { path: 'language', value: filters.languages } });
+  } else if (filters.language) {
     filter.push({ equals: { path: 'language', value: filters.language } });
+  }
+  if (filters.excludeLanguages && filters.excludeLanguages.length > 0) {
+    mustNot.push({ in: { path: 'language', value: filters.excludeLanguages } });
   }
   if (filters.category) {
     filter.push({ equals: { path: 'categories', value: filters.category } });
@@ -147,3 +154,23 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
     },
   };
 }
+
+/**
+ * Non-content `page_type` values that should never surface in search results.
+ * These pages typically carry library-scanner boilerplate (e.g. "Für weitere
+ * Informationen siehe auch [Link]"), title-page metadata, or are blank — they
+ * have OCR + embeddings but aren't part of the work itself, and pollute
+ * conceptual search results.
+ *
+ * Use as a `$match` filter after `$search` (cheaper than re-indexing page_type
+ * into the Atlas Search schema) or as a JS-side post-filter on semantic
+ * results.
+ */
+export const NON_CONTENT_PAGE_TYPES = [
+  'blank',
+  'illustration',
+  'title-page',
+  'colophon',
+  'frontispiece',
+  'digitizer-insert',
+] as const;

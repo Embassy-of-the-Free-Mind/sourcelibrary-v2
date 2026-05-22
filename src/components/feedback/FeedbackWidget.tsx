@@ -120,14 +120,14 @@ export default function FeedbackWidget({ className, style, initialMessage, label
               />
             )}
 
-            <div className="flex items-center justify-between mt-4">
-              <p className="text-xs text-stone-400">
+            <div className="flex items-center justify-between gap-3 mt-4">
+              <p className="text-xs text-stone-400 truncate min-w-0 flex-1">
                 Sent from {typeof window !== 'undefined' ? window.location.pathname : '/'}
               </p>
               <button
                 onClick={submit}
                 disabled={!message.trim() || status === 'sending' || needsEmailForVolunteer}
-                className="px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
+                className="flex-shrink-0 px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
               >
                 {status === 'sending' ? 'Sending...' : status === 'error' ? 'Try again' : 'Send'}
               </button>

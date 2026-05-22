@@ -15,9 +15,70 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { nanoid } from 'nanoid';
+import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+
+// Structured-output schema. Forces scan_quality to be present as an object with the
+// required fields populated; extracted_images is left loosely shaped because its
+// per-item structure is bigger than we want to constrain at the schema layer
+// (the prompt + downstream parser handle that).
+const RESPONSE_SCHEMA = {
+  type: SchemaType.OBJECT,
+  properties: {
+    scan_quality: {
+      type: SchemaType.OBJECT,
+      properties: {
+        scan_score: { type: SchemaType.INTEGER },
+        scan_class: { type: SchemaType.STRING },
+        readable_text: { type: SchemaType.BOOLEAN },
+        illustration_fidelity: { type: SchemaType.STRING },
+        page_completeness: { type: SchemaType.STRING },
+        concerns: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+        reasoning: { type: SchemaType.STRING },
+      },
+      required: ['scan_score', 'scan_class', 'readable_text', 'page_completeness', 'concerns', 'reasoning'],
+    },
+    extracted_images: {
+      type: SchemaType.ARRAY,
+      items: {
+        type: SchemaType.OBJECT,
+        properties: {
+          description: { type: SchemaType.STRING },
+          type: { type: SchemaType.STRING },
+          bbox: {
+            type: SchemaType.OBJECT,
+            properties: {
+              x: { type: SchemaType.NUMBER },
+              y: { type: SchemaType.NUMBER },
+              width: { type: SchemaType.NUMBER },
+              height: { type: SchemaType.NUMBER },
+            },
+          },
+          confidence: { type: SchemaType.NUMBER },
+          gallery_quality: { type: SchemaType.NUMBER },
+          gallery_rationale: { type: SchemaType.STRING },
+          metadata: {
+            type: SchemaType.OBJECT,
+            properties: {
+              subjects: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+              figures: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+              symbols: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+              style: { type: SchemaType.STRING },
+              technique: { type: SchemaType.STRING },
+            },
+          },
+          museum_description: { type: SchemaType.STRING },
+        },
+      },
+    },
+  },
+  required: ['scan_quality', 'extracted_images'],
+};
+
+const SCAN_QUALITY_VERSION = 2;
+sharp.concurrency(1);
 
 // ── Config ──
 const CONCURRENCY = 25;           // Books processed simultaneously
@@ -71,6 +132,13 @@ IMAGE TYPES (use these exactly):
 - symbol: Alchemical, astrological symbols
 - map: Geographic representation
 
+GRID LAYOUTS — IMPORTANT:
+If the page contains a grid or matrix of small images, symbols, or sigils (e.g. a wall of
+24 Goetia seals in 6×4 cells, a table of alchemical glyphs, a plate of musical fragments),
+extract THE ENTIRE GRID as a single illustration (one bbox covering the whole matrix).
+Do NOT skip a page just because no element is individually large. Type these as
+diagram, symbol, or emblem depending on content.
+
 SKIP these — do NOT include them:
 - Page ornaments, borders, decorative initials, printer's devices
 - Marbled papers, blank frames, ruled lines
@@ -102,7 +170,117 @@ GALLERY QUALITY (0.0-1.0):
 
 MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer sees and its significance.
 
-Return ONLY a valid JSON array. If no significant illustrations, return: []`;
+────────────────────────────────────────────────────────────────────────────────
+PAGE-LEVEL SCAN QUALITY (technical, not curatorial)
+────────────────────────────────────────────────────────────────────────────────
+Independently of the illustrations above, assess the TECHNICAL DIGITIZATION QUALITY
+of the page itself. This is about HOW the page was scanned/photographed, not
+whether the content is important.
+
+scan_score (0-100):
+  90-100 = pristine, sharp, full tonal range, faithful to original
+  70-89  = solid working scan, minor artifacts
+  50-69  = noticeable degradation but content preserved
+  30-49  = severe degradation, content partially lost
+  0-29   = unusable (blank, corrupt, fragment)
+
+scan_class — use exactly one:
+  color_photo       — full-color photograph of original (modern archival)
+  color_print       — color scan of a color print
+  grayscale_photo   — high-bit grayscale photo of original (manuscripts often)
+  grayscale_print   — grayscale scan of printed page
+  bitonal_clean     — pure black/white, sharp. DEFAULT for any bitonal page where strokes
+                      are continuous and edges are clean — includes woodcuts, engravings,
+                      letterpress text, and modern OCR-ready bitonal scans, REGARDLESS of
+                      age. A 1500 woodcut is bitonal_clean. A 1900 letterpress page is
+                      bitonal_clean.
+  bitonal_microfilm — bitonal page reproduced via microfilm or scan-of-scan. Use this
+                      class if you see ANY of these signatures (one is enough):
+                        (a) UNIFORM GRAY background instead of white — the page background
+                            is grey or yellow-gray rather than paper-white. This is the
+                            single most reliable signal: a real book page on a flatbed
+                            scanner produces a near-white background; a microfilm frame
+                            produces uniform gray from the reader's illumination.
+                        (b) visible high-frequency speckling ("pepper noise") in flat areas
+                        (c) jagged or broken edges around characters and dark shapes
+                        (d) "Digitized by Google" or similar Google Books footer on an
+                            older monochrome scan (these were almost all microfilm-sourced)
+                      A microfilm scan can be high-resolution and still microfilm —
+                      megapixel count is not a defense against this class. Modern OCR-ready
+                      scans of CLEAN bitonal originals have white (not gray) backgrounds
+                      and crisp edges; those are bitonal_clean.
+  microfiche        — bitonal_microfilm + visible mottling, dark patches, or uneven
+                      illumination across the page caused by the microfilm reader
+  scanner_metadata  — the page is NOT a book page at all — it is a calibration target,
+                      color reference card, ruler, scanner-bed test pattern, or other
+                      digitization-process artifact accidentally captured as a page.
+                      Score these in the 5-25 range; they are not "broken scans" but
+                      they are not content either.
+  blank             — page is empty or near-empty (no usable content)
+  corrupt           — broken file, partial capture due to scan failure, or shows the
+                      scanner bed/background instead of a placed page
+
+Distinguishing bitonal_clean from bitonal_microfilm is the MOST IMPORTANT classification
+call. The decisive question: is the page background WHITE (clean) or GRAY (microfilm)?
+A 1500 woodcut on white paper photographed by a flatbed scanner is bitonal_clean.
+A 1500 woodcut photographed onto microfilm and then digitized off the microfilm reader
+is bitonal_microfilm — even if the woodcut itself looks sharp. The background tells you.
+
+page_completeness:
+  full_page          — single page captured fully
+  partial_capture    — page clearly cropped/cut off
+  two_pages_one_image — facing pages captured as one image (folio scan defect)
+  fragment           — only a small portion of any page is captured
+  blank              — captured but page is empty
+
+illustration_fidelity (assess only if illustrations are present):
+  pristine | good | degraded | destroyed | no_illustration
+
+concerns: list any of these that apply, exact strings only:
+  bleed_through, gutter_shadow, page_skew, fold_distortion, low_resolution,
+  scan_of_scan, pepper_noise, faded_text, faded_color, water_damage, yellow_tone,
+  out_of_focus, uneven_illumination, wrong_orientation, partial_capture,
+  blank_page, scanner_bed_visible, two_pages_captured, compression_artifacts, color_cast
+
+────────────────────────────────────────────────────────────────────────────────
+OUTPUT FORMAT
+────────────────────────────────────────────────────────────────────────────────
+Return ONLY a single valid JSON object with this exact shape — scan_quality FIRST,
+extracted_images SECOND:
+
+{
+  "scan_quality": {
+    "scan_score": <int>,
+    "scan_class": "<one of the values above>",
+    "readable_text": <true|false>,
+    "illustration_fidelity": "<one of the values above>",
+    "page_completeness": "<one of the values above>",
+    "concerns": [ "...", "..." ],
+    "reasoning": "<1-2 sentence justification>"
+  },
+  "extracted_images": [ /* array of illustration objects as specified above; [] if none */ ]
+}
+
+CRITICAL: scan_quality MUST be present in every response, with all six fields populated.
+This is true even when:
+  - the page is blank → scan_class: blank, score: 0, extracted_images: []
+  - the page is a scanner calibration card → scan_class: scanner_metadata
+  - the page is pure text with no illustrations → scan_class: <whatever fits>, extracted_images: []
+  - the page is corrupt → scan_class: corrupt, extracted_images: []
+Never omit scan_quality. Never return only extracted_images.
+
+INTERNAL CONSISTENCY RULES — your response must satisfy ALL of these:
+  1. If "concerns" contains "pepper_noise", "scan_of_scan", or "compression_artifacts",
+     scan_class MUST be "bitonal_microfilm" or "microfiche" — never "bitonal_clean".
+     These concerns are themselves evidence of microfilm origin; classifying as clean
+     while flagging them is contradictory.
+  2. If "page_completeness" is "partial_capture" or "fragment", scan_class should be
+     "corrupt" (use blank only if the captured fragment is also blank).
+  3. If "page_completeness" is "blank", scan_class MUST be "blank" and scan_score MUST be 0-10.
+  4. If scan_class is "blank" or "scanner_metadata", readable_text MUST be false.
+
+Re-read your scan_quality block before finalizing. If any of these rules is violated,
+fix the scan_class to match the evidence in concerns/completeness, not the other way around.`;
 
 // ── Helpers ──
 function getPageImageUrl(page) {
@@ -111,14 +289,16 @@ function getPageImageUrl(page) {
   return page.photo_original || page.photo || null;
 }
 
-async function fetchImageBase64(url) {
+async function fetchImage(url) {
   try {
     const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
     if (!response.ok) return null;
-    const buffer = await response.arrayBuffer();
+    const arrayBuf = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuf);
     const contentType = response.headers.get('content-type') || 'image/jpeg';
     return {
-      data: Buffer.from(buffer).toString('base64'),
+      buffer,
+      data: buffer.toString('base64'),
       mimeType: contentType.split(';')[0].trim(),
     };
   } catch {
@@ -126,17 +306,182 @@ async function fetchImageBase64(url) {
   }
 }
 
-function parseImageExtractionResponse(text) {
-  if (!text || typeof text !== 'string') return [];
-  const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
-  const jsonMatch = cleaned.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) return [];
+// Layer 1 deterministic characteristics — sharp pixel-stats + Laplacian variance,
+// histogram entropy, bimodality, chroma spread. Returns null on decode failure.
+async function computeImageCharacteristics(buffer) {
   try {
-    const parsed = JSON.parse(jsonMatch[0]);
-    return Array.isArray(parsed) ? parsed : [];
+    const [meta, stats] = await Promise.all([
+      sharp(buffer).metadata(),
+      sharp(buffer).stats(),
+    ]);
+    const ch = stats.channels;
+    if (!ch || ch.length === 0) return null;
+
+    const numChannels = ch.length;
+    const meanBrightness = ch.reduce((s, c) => s + c.mean, 0) / numChannels;
+    const meanStdev = ch.reduce((s, c) => s + c.stdev, 0) / numChannels;
+    const dynamicRange = Math.max(...ch.map(c => c.max - c.min));
+    const chromaSpread = numChannels >= 3
+      ? Math.max(
+          Math.abs(ch[0].mean - ch[1].mean),
+          Math.abs(ch[1].mean - ch[2].mean),
+          Math.abs(ch[0].mean - ch[2].mean),
+        )
+      : 0;
+
+    // Downsample once to grayscale for Laplacian + entropy + bimodality.
+    const small = await sharp(buffer)
+      .resize(512, null, { fit: 'inside' })
+      .greyscale()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const { data, info } = small;
+    const w = info.width;
+    const h = info.height;
+
+    let lapSum = 0, lapSumSq = 0, lapN = 0;
+    for (let y = 1; y < h - 1; y++) {
+      for (let x = 1; x < w - 1; x++) {
+        const i = y * w + x;
+        const lap = -4 * data[i] + data[i - 1] + data[i + 1] + data[i - w] + data[i + w];
+        lapSum += lap;
+        lapSumSq += lap * lap;
+        lapN++;
+      }
+    }
+    const lapMean = lapN ? lapSum / lapN : 0;
+    const sharpnessVar = lapN ? lapSumSq / lapN - lapMean * lapMean : 0;
+
+    const hist = new Array(256).fill(0);
+    for (let i = 0; i < data.length; i++) hist[data[i]]++;
+    let entropy = 0;
+    for (const c of hist) {
+      if (c) {
+        const p = c / data.length;
+        entropy -= p * Math.log2(p);
+      }
+    }
+    const sortedHist = [...hist].sort((a, b) => b - a);
+    const bimodality = (sortedHist[0] + sortedHist[1]) / data.length;
+
+    const pixels = (meta.width || 1) * (meta.height || 1);
+    const bytesPerPixel = buffer.length / pixels;
+    const megapixels = pixels / 1_000_000;
+
+    const flags = {
+      is_blank: dynamicRange < 5 && sharpnessVar < 10,
+      is_monochrome: chromaSpread < 5,
+      is_bitonal: bimodality > 0.5 && entropy < 4,
+      is_over_compressed: bytesPerPixel < 0.015,
+      is_low_resolution: megapixels < 1,
+    };
+
+    return {
+      width: meta.width,
+      height: meta.height,
+      megapixels: Math.round(megapixels * 100) / 100,
+      bytes_per_pixel: Math.round(bytesPerPixel * 1000) / 1000,
+      mean_brightness: Math.round(meanBrightness * 10) / 10,
+      mean_stdev: Math.round(meanStdev * 10) / 10,
+      dynamic_range: dynamicRange,
+      chroma_spread: Math.round(chromaSpread * 10) / 10,
+      sharpness_var: Math.round(sharpnessVar),
+      histogram_entropy: Math.round(entropy * 100) / 100,
+      bimodality: Math.round(bimodality * 1000) / 1000,
+      flags,
+      version: SCAN_QUALITY_VERSION,
+    };
   } catch {
-    return [];
+    return null;
   }
+}
+
+const VALID_SCAN_CLASSES = new Set([
+  'color_photo', 'color_print', 'grayscale_photo', 'grayscale_print',
+  'bitonal_clean', 'bitonal_microfilm', 'microfiche',
+  'scanner_metadata', 'blank', 'corrupt',
+]);
+const VALID_FIDELITY = new Set([
+  'pristine', 'good', 'degraded', 'destroyed', 'no_illustration',
+]);
+const VALID_COMPLETENESS = new Set([
+  'full_page', 'partial_capture', 'two_pages_one_image', 'fragment', 'blank',
+]);
+
+// Concerns that are themselves microfilm-origin evidence. If Gemini lists any of these
+// AND classifies bitonal_clean, the response is internally contradictory — the concerns
+// are the more trustworthy signal (the model saw the artifact), so we downgrade the class.
+const MICROFILM_CONCERNS = new Set(['pepper_noise', 'scan_of_scan', 'compression_artifacts']);
+
+function normalizeScanQuality(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const score = Math.max(0, Math.min(100, parseInt(raw.scan_score, 10) || 0));
+  let cls = VALID_SCAN_CLASSES.has(raw.scan_class) ? raw.scan_class : null;
+  const fidelity = VALID_FIDELITY.has(raw.illustration_fidelity) ? raw.illustration_fidelity : null;
+  const completeness = VALID_COMPLETENESS.has(raw.page_completeness) ? raw.page_completeness : null;
+  const concerns = Array.isArray(raw.concerns)
+    ? raw.concerns.filter(c => typeof c === 'string').slice(0, 20)
+    : [];
+
+  // Backstop enforcement of the cross-field consistency rules from the prompt.
+  // Gemini occasionally still produces contradictory output (microfilm concerns
+  // listed alongside bitonal_clean class); when it does, fix the class to match.
+  const microfilmEvidence = concerns.some(c => MICROFILM_CONCERNS.has(c));
+  let corrected = null;
+  if (cls === 'bitonal_clean' && microfilmEvidence) {
+    cls = 'bitonal_microfilm';
+    corrected = 'bitonal_clean_with_microfilm_concerns';
+  }
+  if ((completeness === 'partial_capture' || completeness === 'fragment')
+      && cls && !['corrupt', 'blank', 'scanner_metadata'].includes(cls)) {
+    cls = 'corrupt';
+    corrected = (corrected ? corrected + '+' : '') + 'incomplete_with_content_class';
+  }
+  if (completeness === 'blank' && cls !== 'blank' && cls !== 'scanner_metadata') {
+    cls = 'blank';
+    corrected = (corrected ? corrected + '+' : '') + 'blank_completeness_with_content_class';
+  }
+
+  return {
+    scan_score: score,
+    scan_class: cls,
+    readable_text: raw.readable_text === true,
+    illustration_fidelity: fidelity,
+    page_completeness: completeness,
+    concerns,
+    reasoning: typeof raw.reasoning === 'string' ? raw.reasoning.slice(0, 600) : '',
+    ...(corrected ? { class_corrected: corrected } : {}),
+  };
+}
+
+// Backwards-compatible parser: accepts the new {extracted_images, scan_quality}
+// object form, and falls back to bare-array form if the model regresses.
+function parseImageExtractionResponse(text) {
+  const empty = { extracted_images: [], scan_quality: null };
+  if (!text || typeof text !== 'string') return empty;
+  const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
+  // Try object form first
+  const objMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (objMatch) {
+    try {
+      const parsed = JSON.parse(objMatch[0]);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        return {
+          extracted_images: Array.isArray(parsed.extracted_images) ? parsed.extracted_images : [],
+          scan_quality: normalizeScanQuality(parsed.scan_quality),
+        };
+      }
+    } catch { /* fall through to array form */ }
+  }
+  // Fallback: legacy array-only response
+  const arrMatch = cleaned.match(/\[[\s\S]*\]/);
+  if (arrMatch) {
+    try {
+      const parsed = JSON.parse(arrMatch[0]);
+      return { extracted_images: Array.isArray(parsed) ? parsed : [], scan_quality: null };
+    } catch { /* nope */ }
+  }
+  return empty;
 }
 
 function normalizeBbox(raw) {
@@ -154,6 +499,127 @@ function normalizeBbox(raw) {
     };
   }
   return { x, y, width, height };
+}
+
+// ── Phase 2: book-level scan_quality rollup ──
+// Aggregates pages.scan_quality (v2) into a book-level summary that downstream
+// use cases (dedupe tiebreaker, re-source queue, provider dashboards) can query
+// directly. Preserves legacy { score, classification } fields for backwards
+// compat with enhance-scan-quality.mjs.
+
+const CONTENT_SCAN_CLASSES = new Set([
+  'color_photo', 'color_print',
+  'grayscale_photo', 'grayscale_print',
+  'bitonal_clean', 'bitonal_microfilm', 'microfiche',
+]);
+
+function legacyClassificationFor(dominantClass) {
+  if (['bitonal_clean', 'bitonal_microfilm', 'microfiche'].includes(dominantClass)) return 'bw';
+  if (['grayscale_photo', 'grayscale_print'].includes(dominantClass)) return 'grayscale';
+  if (['color_photo', 'color_print'].includes(dominantClass)) return 'color';
+  return null;
+}
+
+async function computeBookScanQualityRollup(db, bookId) {
+  const pages = await db.collection('pages').find(
+    { book_id: bookId, 'scan_quality.version': 2 },
+    {
+      projection: {
+        id: 1, page_number: 1,
+        'scan_quality.scan_score': 1,
+        'scan_quality.scan_class': 1,
+        'scan_quality.page_completeness': 1,
+        'scan_quality.concerns': 1,
+        'scan_quality.illustration_fidelity': 1,
+        'scan_quality.class_corrected': 1,
+        'image_characteristics.megapixels': 1,
+        'image_characteristics.sharpness_var': 1,
+        'image_characteristics.flags': 1,
+      },
+    },
+  ).toArray();
+
+  if (pages.length === 0) return null;
+
+  const scores = pages
+    .map(p => p.scan_quality?.scan_score)
+    .filter(s => typeof s === 'number')
+    .sort((a, b) => a - b);
+  if (scores.length === 0) return null;
+
+  const median = scores[Math.floor(scores.length / 2)];
+  const min = scores[0];
+  const max = scores[scores.length - 1];
+
+  const classCounts = {};
+  const concernCounts = {};
+  let classCorrectedCount = 0;
+  let completenessIssues = 0;
+
+  for (const p of pages) {
+    const sq = p.scan_quality;
+    if (!sq) continue;
+    if (sq.scan_class) classCounts[sq.scan_class] = (classCounts[sq.scan_class] || 0) + 1;
+    for (const c of (sq.concerns || [])) {
+      concernCounts[c] = (concernCounts[c] || 0) + 1;
+    }
+    if (sq.class_corrected) classCorrectedCount++;
+    if (sq.page_completeness && sq.page_completeness !== 'full_page') completenessIssues++;
+  }
+
+  // Dominant class — most-frequent across all v2 pages
+  const classEntries = Object.entries(classCounts).sort((a, b) => b[1] - a[1]);
+  const dominantClass = classEntries[0]?.[0] || null;
+
+  // Content-page pointers (ignore blank / scanner_metadata / corrupt for worst/best — those
+  // are noise pages, not content quality signals)
+  const contentPages = pages
+    .filter(p => CONTENT_SCAN_CLASSES.has(p.scan_quality?.scan_class))
+    .filter(p => typeof p.scan_quality?.scan_score === 'number')
+    .sort((a, b) => a.scan_quality.scan_score - b.scan_quality.scan_score);
+  const worstImage = contentPages[0]
+    ? {
+        page_id: contentPages[0].id,
+        page_number: contentPages[0].page_number,
+        scan_score: contentPages[0].scan_quality.scan_score,
+        scan_class: contentPages[0].scan_quality.scan_class,
+        concerns: contentPages[0].scan_quality.concerns || [],
+      }
+    : null;
+  const bestImage = contentPages.length
+    ? {
+        page_id: contentPages[contentPages.length - 1].id,
+        page_number: contentPages[contentPages.length - 1].page_number,
+        scan_score: contentPages[contentPages.length - 1].scan_quality.scan_score,
+        scan_class: contentPages[contentPages.length - 1].scan_quality.scan_class,
+      }
+    : null;
+
+  return {
+    // ── legacy fields for backwards compat (enhance-scan-quality.mjs, audit-scan-quality.mjs) ──
+    score: median,
+    classification: legacyClassificationFor(dominantClass),
+
+    // ── v2 rollup fields ──
+    median_score: median,
+    min_score: min,
+    max_score: max,
+    pages_assessed: pages.length,
+    content_pages_assessed: contentPages.length,
+    dominant_scan_class: dominantClass,
+    class_distribution: classCounts,
+    concerns_distribution: concernCounts,
+    has_microfilm_pages: !!(classCounts.bitonal_microfilm || classCounts.microfiche),
+    has_blank_pages: !!classCounts.blank,
+    has_scanner_metadata_pages: !!classCounts.scanner_metadata,
+    has_corrupt_pages: !!classCounts.corrupt,
+    completeness_issues_count: completenessIssues,
+    class_corrected_count: classCorrectedCount,
+    worst_image: worstImage,
+    best_image: bestImage,
+    rollup_at: new Date(),
+    version: SCAN_QUALITY_VERSION,
+  };
 }
 
 async function setPipelineStatus(db, bookId, status, extra = {}) {
@@ -181,8 +647,12 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
   const url = getPageImageUrl(page);
   if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
 
-  const image = await fetchImageBase64(url);
+  const image = await fetchImage(url);
   if (!image) return null;
+
+  // Layer 1 — deterministic characteristics from the raw buffer.
+  // Run in parallel with the Gemini call to keep latency flat.
+  const characteristicsPromise = computeImageCharacteristics(image.buffer);
 
   const model = getClient().getGenerativeModel({
     model: MODEL,
@@ -195,7 +665,9 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
     ],
     generationConfig: {
       temperature: 0.1,
-      maxOutputTokens: 2048,
+      maxOutputTokens: 4096,
+      responseMimeType: 'application/json',
+      responseSchema: RESPONSE_SCHEMA,
     },
   });
 
@@ -207,10 +679,12 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
   const response = result.response;
   const text = response.text();
   const usage = response.usageMetadata || {};
+  const characteristics = await characteristicsPromise;
 
   return {
     pageId: page.id,
     text,
+    characteristics,
     inputTokens: usage.promptTokenCount || 0,
     outputTokens: usage.candidatesTokenCount || 0,
   };
@@ -269,14 +743,33 @@ async function processBook(db, book) {
         continue;
       }
 
-      const { pageId, text, inputTokens, outputTokens } = settled.value;
+      const { pageId, text, characteristics, inputTokens, outputTokens } = settled.value;
       totalInputTokens += inputTokens;
       totalOutputTokens += outputTokens;
       pagesProcessed++;
 
-      const parsed = parseImageExtractionResponse(text);
-      if (parsed.length > 0) {
-        const detectedImages = parsed.map(img => ({
+      const { extracted_images: extractedRaw, scan_quality: scanQualityRaw } = parseImageExtractionResponse(text);
+
+      // Build the page-level scan_quality object that will land on `pages` and
+      // be inherited by each gallery_image extracted from this page.
+      const pageScanQuality = scanQualityRaw
+        ? {
+            ...scanQualityRaw,
+            model: MODEL,
+            version: SCAN_QUALITY_VERSION,
+            assessed_at: now,
+          }
+        : null;
+
+      const pageSet = {
+        image_extraction_updated_at: now,
+        updated_at: now,
+      };
+      if (characteristics) pageSet.image_characteristics = characteristics;
+      if (pageScanQuality) pageSet.scan_quality = pageScanQuality;
+
+      if (extractedRaw.length > 0) {
+        const detectedImages = extractedRaw.map(img => ({
           description: img.description || '',
           type: img.type || 'unknown',
           bbox: img.bbox ? normalizeBbox(img.bbox) : undefined,
@@ -291,17 +784,11 @@ async function processBook(db, book) {
         }));
 
         totalImages += detectedImages.length;
-
-        bulkOps.push({
-          updateOne: {
-            filter: { id: pageId },
-            update: { $set: { detected_images: detectedImages, image_extraction_updated_at: now, updated_at: now } },
-          },
-        });
+        pageSet.detected_images = detectedImages;
 
         for (let di = 0; di < detectedImages.length; di++) {
           const img = detectedImages[di];
-          galleryDocs.push({
+          const galleryDoc = {
             id: `${pageId}-${di}`,
             page_id: pageId,
             book_id: book.id,
@@ -317,16 +804,39 @@ async function processBook(db, book) {
             detection_source: 'vision_model',
             model: MODEL,
             updated_at: now,
-          });
+          };
+          // Inherit page-level scan quality so the gallery_image carries it standalone.
+          // Per-crop sharpness can be added later in a separate pass on extracted_url.
+          if (pageScanQuality) {
+            galleryDoc.scan_quality = {
+              score: pageScanQuality.scan_score,
+              scan_class: pageScanQuality.scan_class,
+              illustration_fidelity: pageScanQuality.illustration_fidelity,
+              page_completeness: pageScanQuality.page_completeness,
+              concerns: pageScanQuality.concerns,
+              source: 'page_inherited',
+              version: SCAN_QUALITY_VERSION,
+              assessed_at: now,
+            };
+          }
+          if (characteristics) {
+            galleryDoc.page_image_characteristics = {
+              megapixels: characteristics.megapixels,
+              sharpness_var: characteristics.sharpness_var,
+              chroma_spread: characteristics.chroma_spread,
+              flags: characteristics.flags,
+            };
+          }
+          galleryDocs.push(galleryDoc);
         }
-      } else {
-        bulkOps.push({
-          updateOne: {
-            filter: { id: pageId },
-            update: { $set: { image_extraction_updated_at: now, updated_at: now } },
-          },
-        });
       }
+
+      bulkOps.push({
+        updateOne: {
+          filter: { id: pageId },
+          update: { $set: pageSet },
+        },
+      });
     }
   }
 
@@ -357,9 +867,21 @@ async function processBook(db, book) {
     book_id: book.id,
     'detected_images.0': { $exists: true },
   });
+  const bookUpdate = { detected_images_count: imgCount, updated_at: now };
+
+  // Phase 2: roll up page-level scan_quality (v2) into book.scan_quality so downstream
+  // use cases (dedupe, re-source queue, dashboards) don't have to aggregate on the fly.
+  // Best-effort: any error here doesn't fail the book or block pipeline advance.
+  try {
+    const rollup = await computeBookScanQualityRollup(db, book.id);
+    if (rollup) bookUpdate.scan_quality = rollup;
+  } catch (err) {
+    console.error(`  scan_quality rollup failed for ${book.id}: ${err.message}`);
+  }
+
   await db.collection('books').updateOne(
     { id: book.id },
-    { $set: { detected_images_count: imgCount, updated_at: now } },
+    { $set: bookUpdate },
   );
 
   // Advance pipeline

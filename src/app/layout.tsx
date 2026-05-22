@@ -48,13 +48,14 @@ export const metadata: Metadata = {
     ],
   },
   other: {
-    'msapplication-TileColor': '#1c1917',
+    'msapplication-TileColor': '#1a1612',
     'pinterest-rich-pin': 'true',
   },
   openGraph: {
     siteName: "Source Library",
     locale: "en_US",
     type: "website",
+    url: "https://sourcelibrary.org/",
     images: [{
       url: '/og-image.jpg',
       width: 1200,

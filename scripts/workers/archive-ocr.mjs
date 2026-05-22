@@ -96,12 +96,20 @@ const r2 = new S3Client({
 const BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary-images';
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 
+// Many archives (e-rara, some Bodleian endpoints, Wellcome, Vatican) reject
+// requests without a User-Agent — Node's default UA gets blocked. Match the
+// UA the IA bulk archiver uses so per-provider policies are consistent.
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+
 async function downloadImage(url, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
     try {
-      const res = await fetch(url, { signal: controller.signal });
+      const res = await fetch(url, {
+        signal: controller.signal,
+        headers: { 'User-Agent': USER_AGENT, Accept: 'image/jpeg,image/png,image/*;q=0.9,*/*;q=0.1' },
+      });
       if (res.status === 429 || res.status === 503) {
         clearTimeout(timeout);
         if (attempt < retries) {
@@ -190,13 +198,30 @@ async function archivePage(page, db) {
     );
     return { ok: true, bytes: buffer.byteLength, domain };
   } catch (err) {
+    // Record the failure on the page document so future cron runs have
+    // visibility into why the page is stuck (previously the worker returned
+    // silently and left `archive_metadata` empty, producing infinite-retry
+    // loops with no diagnostic trace — see MDZ 915-book stall, 2026-05-16).
+    try {
+      await db.collection(pagesCol).updateOne(
+        { _id: page._id },
+        {
+          $set: {
+            'archive_metadata.last_failure_at': new Date(),
+            'archive_metadata.last_failure_reason': String(err.message || err).slice(0, 200),
+            'archive_metadata.last_failure_source_url': sourceUrl,
+          },
+          $inc: { 'archive_metadata.failure_count': 1 },
+        }
+      );
+    } catch {/* swallow — diagnostic write must not poison the result */}
     return { ok: false, error: err.message, domain };
   }
 }
 
 async function main() {
   const start = Date.now();
-  const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 5 });
+  const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 10 });
   const db = client.db('bookstore');
 
   // Check processing_control pause
@@ -224,12 +249,18 @@ async function main() {
   // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
   // Prioritize providers that are NOT yet fully archived (IIIF, Cambridge, etc.)
   const PRIORITY_PROVIDERS = ['iiif', 'bsb', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl', 'eap', 'met', 'ndl', 'getty', 'stanford', 'darmstadt'];
+  // Candidate queries filter pages_archived < pages_count: without this they're
+  // dominated by fully-archived books and the per-book inner query returns 0
+  // unarchived pages for nearly every book. Symptom is "Found 6 pages across
+  // 3423 books" while the library has hundreds of thousands of unarchived pages.
+  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] } };
   const priorityBooks = await db.collection('books')
     .find(
       {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $in: PRIORITY_PROVIDERS },
+        ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
@@ -246,6 +277,7 @@ async function main() {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', ...PRIORITY_PROVIDERS] },
+        ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
@@ -263,11 +295,33 @@ async function main() {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $in: HETZNER_SAFE_PROVIDERS },
+        ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1, language: 1, is_first_translation: 1 } }
     )
     .limit(2000)
     .maxTimeMS(60_000)
+    .toArray()
+    .catch(() => []);
+
+  // Bulk-unsuitable IA fallback. archive-bulk marks books bulk_unsuitable when
+  // the JP2 zip doesn't align with the IIIF-derived photo URLs (archive drift,
+  // #1504). Those books can't be archived by bulk; route them here so their
+  // per-page photo URLs get fetched directly. archive.org rate limit (15 req/s)
+  // is in the per-domain table.
+  const bulkUnsuitableIa = await db.collection('books')
+    .find(
+      {
+        pages_count: { $gt: 0 },
+        'archive_metadata.blocked': { $ne: true },
+        'archive_metadata.bulk_unsuitable': true,
+        'image_source.provider': 'internet_archive',
+        ...NEEDS_ARCHIVE_EXPR,
+      },
+      { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
+    )
+    .limit(500)
+    .maxTimeMS(30_000)
     .toArray()
     .catch(() => []);
 
@@ -285,8 +339,8 @@ async function main() {
   // Tag warehouse books so we know which collections to query
   warehouseBooks.forEach(b => { b._warehouse = true; });
 
-  const books = [...priorityBooks, ...otherBooks, ...warehouseBooks];
-  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${otherBooks.length} other + ${warehouseBooks.length} warehouse books`);
+  const books = [...priorityBooks, ...bulkUnsuitableIa, ...otherBooks, ...warehouseBooks];
+  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${bulkUnsuitableIa.length} bulk-unsuitable IA + ${otherBooks.length} other + ${warehouseBooks.length} warehouse books`);
 
   if (books.length === 0) {
     console.log(`[archive-ocr] No books with pages found`);
@@ -305,11 +359,22 @@ async function main() {
         {
           book_id: book.id,
           photo: { $exists: true, $nin: [null, ''] },
+          'archive_metadata.blocked': { $ne: true }, // Skip pages marked dead by cleanup-dead-pages.mjs
           $or: [
             { archived_photo: { $exists: false } },
             { archived_photo: null },
             { archived_photo: '' },
           ],
+          // Skip pages that have failed 3+ times — they have permanently broken
+          // source URLs (e.g. malformed IIIF templates from old imports). They
+          // poison every run by tripping the per-domain circuit breaker (5 fails
+          // with 0 oks). Re-archiving these requires fixing the photo URL first.
+          $and: [{
+            $or: [
+              { 'archive_metadata.failure_count': { $exists: false } },
+              { 'archive_metadata.failure_count': { $lt: 3 } },
+            ],
+          }],
         },
         { projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 } }
       )
@@ -333,9 +398,14 @@ async function main() {
   // Group by domain with per-domain cap
   // Skip Gallica pages — handled locally by archive-gallica.mjs (Hetzner gets 429)
   const byDomain = {};
+  // Skip domains that block Hetzner egress IPs outright — they're handled by
+  // launchd-driven local workers on Mac (archive-gallica, archive-erara).
+  // Including them here just trips the 5-fail-0-ok circuit breaker and burns
+  // failure_count budget on pages that have no chance of succeeding here.
+  const HETZNER_BLOCKED_DOMAINS = new Set(['gallica.bnf.fr', 'e-rara.ch']);
   for (const page of pages) {
     const domain = getDomain(page.photo);
-    if (domain === 'gallica.bnf.fr') continue;
+    if (HETZNER_BLOCKED_DOMAINS.has(domain)) continue;
     if (!byDomain[domain]) byDomain[domain] = [];
     if (byDomain[domain].length < MAX_PAGES_PER_DOMAIN) {
       byDomain[domain].push(page);
@@ -346,7 +416,7 @@ async function main() {
 
   // Process all domains in parallel — each domain runs multiple concurrent workers.
   // The token bucket ensures we stay within rate limits even with concurrency.
-  const DOMAIN_CONCURRENCY = 5; // Workers per domain (token bucket throttles them)
+  const DOMAIN_CONCURRENCY = 8; // Workers per domain (token bucket throttles them)
   let circuitBroken = new Set(); // Domains that hit circuit breaker
 
   const domainWorkers = Object.entries(byDomain).map(async ([domain, domainPages]) => {
@@ -416,9 +486,24 @@ async function main() {
         { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
         { maxTimeMS: 10000 }
       );
+      // Look up pages_count for the status flip (the IA bulk worker has this
+      // in its book projection; here we don't, so look it up).
+      const bookDoc = await db.collection(booksCol).findOne(
+        { id: bookId },
+        { projection: { pages_count: 1 } },
+      );
+      const isComplete = bookDoc && archivedCount >= (bookDoc.pages_count || 0);
+      const update = {
+        pages_archived: archivedCount,
+        archive_status: isComplete ? 'archive_complete' : 'archive_partial',
+        updated_at: new Date(),
+      };
+      // See archive-bulk.mjs for the same pattern — stamp completion time
+      // so weekly-throughput queries don't have to scan pages.
+      if (isComplete) update.archive_completed_at = new Date();
       await db.collection(booksCol).updateOne(
         { id: bookId },
-        { $set: { pages_archived: archivedCount, updated_at: new Date() } }
+        { $set: update }
       );
       synced++;
     }

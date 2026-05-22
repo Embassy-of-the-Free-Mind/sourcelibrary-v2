@@ -5,6 +5,16 @@ import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
+import { getPartnerBySlug } from '@/lib/library-partners';
+import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
+
+// Catalogue entry routing
+// - BPH (providerKey === 'bph'): legacy `bph_works` table + bespoke fields
+//   like `bibliographic_format` and `field_provenance`. Logic stays in this
+//   file because it predates the unified table.
+// - Other unified-catalogue tenants (kloss-collection, …): read
+//   `library_catalog_records` via GenericCatalogEntry. Selected by partner
+//   metadata (`hasUnifiedCatalogue: true` in library-partners.ts).
 
 interface Props {
   params: Promise<{ tenant: string; ubn: string }>;
@@ -51,6 +61,13 @@ interface BphWorkRow {
   ustc_sn: string | null;
   sl_book_id: string | null;
   sl_book_slug: string | null;
+  // Cross-provider link (see add-bph-external-links.sql): work is BPH-held but
+  // the scan lives at another archive (IA / CMC Kloss / MDZ / etc.). Surfaced
+  // as a secondary "Read at [source]" panel only when there's no BPH-native
+  // sl_book_id — when both exist, the BPH-native digitisation takes priority.
+  sl_external_book_id: string | null;
+  sl_external_slug: string | null;
+  sl_external_source: string | null;
   field_provenance: Record<string, FieldProvenance> | null;
 }
 
@@ -79,9 +96,10 @@ interface SlBook {
 }
 
 async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
-  const { data } = await supabase
-    .from('bph_works')
-    .select(`
+  // Try with the external-link columns first; if the column doesn't exist yet
+  // (migration not applied on this environment), retry without them so the
+  // page still renders.
+  const select = `
       ubn, title, parallel_title, uniform_title,
       author, variant_author, pseudonym, editor, variant_editor,
       place, printer, publisher, variant_printer, variant_publisher,
@@ -90,11 +108,90 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       bibliography, remarks, number_of_copies, object_size_cm, bibliographic_format,
       binding, bound_with,
       provenance, ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
+      sl_external_book_id, sl_external_slug, sl_external_source,
       field_provenance
-    `)
-    .eq('ubn', ubn)
-    .maybeSingle();
-  return (data as BphWorkRow | null) ?? null;
+    `;
+  const fallbackSelect = select.replace(
+    'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
+    '',
+  );
+  const first = await supabase.from('bph_works').select(select).eq('ubn', ubn).maybeSingle();
+  if (first.error) {
+    const msg = (first.error.message || '').toLowerCase();
+    if (msg.includes('does not exist') || msg.includes('could not find')) {
+      const retry = await supabase.from('bph_works').select(fallbackSelect).eq('ubn', ubn).maybeSingle();
+      return (retry.data as BphWorkRow | null) ?? null;
+    }
+    return null;
+  }
+  return (first.data as BphWorkRow | null) ?? null;
+}
+
+/** Look up a Source Library book by Mongo id — used for cross-provider
+    scans where the catalogue row points at a non-BPH-hosted book. */
+async function fetchExternalBook(id: string): Promise<SlBook | null> {
+  try {
+    const db = await getReadDb();
+    const book = await db.collection('books').findOne(
+      { id },
+      {
+        projection: {
+          id: 1, slug: 1, title: 1, display_title: 1, english_title: 1,
+          author: 1, language: 1, published: 1, place_published: 1, publisher: 1,
+          pages_count: 1, pages_ocr: 1, pages_translated: 1,
+          categories: 1, is_first_translation: 1, doi: 1,
+          'reading_summary.overview': 1,
+          image_display: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1,
+        },
+        maxTimeMS: 8_000,
+      },
+    );
+    if (!book) return null;
+    return {
+      id: book.id as string,
+      slug: (book.slug as string) || (book.id as string),
+      title: book.title as string | undefined,
+      display_title: book.display_title as string | undefined,
+      english_title: book.english_title as string | undefined,
+      author: book.author as string | undefined,
+      language: book.language as string | undefined,
+      published: book.published as string | undefined,
+      place_published: book.place_published as string | undefined,
+      publisher: book.publisher as string | undefined,
+      pages_count: book.pages_count as number | undefined,
+      pages_ocr: book.pages_ocr as number | undefined,
+      pages_translated: book.pages_translated as number | undefined,
+      categories: book.categories as string[] | undefined,
+      is_first_translation: book.is_first_translation as boolean | undefined,
+      doi: book.doi as string | undefined,
+      reading_summary: book.reading_summary as { overview?: string } | undefined,
+      image_display: book.image_display as string | null | undefined,
+      image_thumb: book.image_thumb as string | null | undefined,
+      thumbnail: book.thumbnail as string | null | undefined,
+      thumbnail_blob: book.thumbnail_blob as string | null | undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function externalSourceLabel(source: string | null | undefined): string {
+  if (!source) return 'another archive';
+  const map: Record<string, string> = {
+    internet_archive: 'Internet Archive',
+    cmc_kloss: 'CMC (Kloss collection)',
+    mdz: 'MDZ',
+    gallica: 'Gallica',
+    'e-rara': 'e-rara',
+    google_books: 'Google Books',
+    allard_pierson: 'Allard Pierson',
+    bodleian: 'Bodleian',
+    vatican: 'Vatican',
+    cambridge: 'Cambridge',
+    laurenziana: 'Laurenziana',
+  };
+  if (map[source]) return map[source];
+  return source.replace(/[_-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 /** Look up the live Source Library book matching this UBN, if any. */
@@ -145,7 +242,11 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { ubn } = await params;
+  const { tenant, ubn } = await params;
+  const partner = getPartnerBySlug(tenant);
+  if (partner && partner.providerKey !== 'bph' && partner.hasUnifiedCatalogue) {
+    return generateGenericMetadata(tenant, ubn, partner) as Promise<Metadata>;
+  }
   const work = await fetchWork(ubn);
   if (!work) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
   const title = work.title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
@@ -157,6 +258,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CatalogEntryPage({ params }: Props) {
   const { tenant, ubn } = await params;
 
+  // Generic unified-catalogue tenants (kloss-collection, …) — render via the
+  // shared component that reads library_catalog_records. BPH falls through.
+  const partner = getPartnerBySlug(tenant);
+  if (partner && partner.providerKey !== 'bph' && partner.hasUnifiedCatalogue) {
+    return <GenericCatalogEntry tenant={tenant} catalogId={ubn} partner={partner} />;
+  }
+
   // Fetch BPH catalog row + live SL book in parallel
   const [work, slBook] = await Promise.all([
     fetchWork(ubn),
@@ -164,9 +272,19 @@ export default async function CatalogEntryPage({ params }: Props) {
   ]);
   if (!work) notFound();
 
+  // If the work has no BPH-native digitisation but does have a cross-provider
+  // scan recorded, fetch that book so we can offer a "Read at [source]" panel.
+  const externalBook = !slBook && work.sl_external_book_id
+    ? await fetchExternalBook(work.sl_external_book_id)
+    : null;
+
   const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
   const slBookHref = slBook ? tenantBookUrl({ id: slBook.id, slug: slBook.slug }, tenant) : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
+  const externalBookHref = externalBook
+    ? tenantBookUrl({ id: externalBook.id, slug: externalBook.slug }, tenant)
+    : null;
+  const externalCoverUrl = externalBook ? getBookThumbnailUrl(externalBook, 'display') : null;
   const canonicalAuthor = slBook?.author ? formatAuthor(slBook.author).name : null;
   const translationPct = slBook && slBook.pages_translated && slBook.pages_ocr
     ? Math.round((slBook.pages_translated / Math.max(slBook.pages_ocr, 1)) * 100)
@@ -288,6 +406,64 @@ export default async function CatalogEntryPage({ params }: Props) {
           </section>
         )}
 
+        {/* Cross-provider scan — BPH holds the work, but the digitisation
+            lives at another archive. Visually distinct from the BPH-native
+            panel above so users (and EFM) can see at a glance which scan
+            they're looking at. Only renders when the row has no BPH-native
+            link AND we successfully resolved the external book. */}
+        {externalBook && externalBookHref && (
+          <section className="mb-8 p-5 rounded-lg border border-border-light bg-white">
+            <div className="flex items-center gap-2 mb-3">
+              <BookMarked className="w-4 h-4 text-secondary" />
+              <h2 className="text-sm font-medium text-secondary uppercase tracking-wide">
+                Scan via {externalSourceLabel(work.sl_external_source)}
+              </h2>
+            </div>
+            <p className="text-xs text-muted mb-3 leading-relaxed">
+              BPH holds this work; the digitisation shown here was produced by{' '}
+              {externalSourceLabel(work.sl_external_source)} and is read through Source Library.
+            </p>
+            <div className="flex gap-4">
+              {externalCoverUrl && (
+                <a href={externalBookHref} className="shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={externalCoverUrl}
+                    alt={externalBook.display_title || externalBook.title || displayTitle}
+                    className="w-28 sm:w-32 rounded shadow-sm border border-border-light bg-cream object-cover"
+                    loading="lazy"
+                  />
+                </a>
+              )}
+              <div className="flex-1 min-w-0">
+                {externalBook.display_title && externalBook.display_title !== work.title && (
+                  <p className="text-lg text-primary font-display leading-snug mb-1">
+                    {externalBook.display_title}
+                  </p>
+                )}
+                <dl className="space-y-1.5 text-sm mb-4">
+                  {externalBook.author && (
+                    <Field label="Author" value={externalBook.author} />
+                  )}
+                  {externalBook.published && (
+                    <Field label="Published" value={externalBook.published} />
+                  )}
+                  {externalBook.pages_count != null && (
+                    <Field label="Pages" value={String(externalBook.pages_count)} />
+                  )}
+                </dl>
+                <a
+                  href={externalBookHref}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-secondary/40 text-secondary hover:bg-warm transition-colors"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Read the {externalSourceLabel(work.sl_external_source)} scan
+                </a>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Catalogue metadata — every public field, single column */}
         <Section title="Title">
           <Field label="Short title" value={work.title} />
@@ -340,7 +516,7 @@ export default async function CatalogEntryPage({ params }: Props) {
         <Section title="Location at the BPH">
           <Field label="Present location" value={work.present_location} />
           <Field label="Shelf mark" value={work.shelf_mark} mono />
-          <Field label="State Collection shelf mark" value={work.state_shelf_mark} mono />
+          <Field label="State Collection shelf mark" value={work.state_shelf_mark?.trim().toLowerCase() === 'neen' ? null : work.state_shelf_mark} mono />
           <Field label="Provenance / collection" value={work.provenance} />
         </Section>
 

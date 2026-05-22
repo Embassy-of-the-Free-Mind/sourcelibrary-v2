@@ -94,7 +94,7 @@ Supabase serves derived reads for performance-critical paths. MongoDB remains so
 | `ustc_editions` / `ustc_enrichments` | USTC catalog | Direct import |
 | `contributing_library` | Library pages (was 5s timeout) | Materialized view |
 
-Key: `src/lib/supabase.ts` (client), `.claude/docs/supabase.md` (full reference)
+Key: `src/lib/supabase.ts` (client), `.claude/docs/supabase.md` (full reference — see **Sync Points (Complete Map)** for every Mongo→Supabase write path and **Known Sync Gaps** for documented edge cases like the PATCH-bypass)
 
 ## Author Pages (added 2026-03-30+)
 

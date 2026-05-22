@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
-import { buildPageSearchStage } from '@/lib/atlas-search';
+import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
+import { expandLanguages } from '@/lib/language-utils';
+import { logSearchQuery } from '@/lib/search-log';
 
 export const preferredRegion = 'fra1';
 
@@ -43,11 +45,16 @@ function extractSnippet(text: string, query: string, contextChars = 150): string
 }
 
 // GET /api/search - Search across books and translations
-export const GET = withApiAuth(async (request: NextRequest) => {
+export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
+  const _searchStart = Date.now();
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
     const language = searchParams.get('language');
+    const languagesParam = searchParams.get('languages');
+    const excludeLanguagesParam = searchParams.get('exclude_languages');
+    const languages = expandLanguages(languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
+    const excludeLanguages = expandLanguages(excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
     const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');
@@ -91,7 +98,9 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     function buildBookFilters(): Record<string, unknown> {
       const filters: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
       if (tenantId) filters.tenantId = tenantId;
-      if (language) filters.language = language;
+      if (languages.length > 0) filters.language = { $in: languages };
+      else if (excludeLanguages.length > 0) filters.language = { $nin: excludeLanguages };
+      else if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
         filters.published = {};
@@ -155,58 +164,74 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     }
 
     // Run book search and page content search in parallel
-    const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
+    const hasBookLevelFilters = !!(language || languages.length > 0 || excludeLanguages.length > 0 || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
-    const [bookDocs, pageDocs, semanticDocs, semanticPageDocs] = await Promise.all([
+    // Per-stage timing so we can see which lane is dragging the total wall-clock.
+    // Total latency = max(stages) since they run in parallel; recording each
+    // individually tells us where to optimize.
+    async function timed<T>(fn: () => Promise<T>): Promise<{ value: T; ms: number }> {
+      const start = Date.now();
+      const value = await fn();
+      return { value, ms: Date.now() - start };
+    }
+
+    const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
-      (async () => {
+      timed(async () => {
         if (bookId || pagesOnly) return [];
-        const matchingIds = await searchBookIds(query, { limit: limit * 2 });
-        const bookFilters = buildBookFilters();
-        const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
+        try {
+          const matchingIds = await searchBookIds(query, { limit: limit * 2 });
+          const bookFilters = buildBookFilters();
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
 
-        let books: any[] = [];
-        if (matchingIds.length > 0) {
-          books = await db.collection('books')
-            .find({ id: { $in: matchingIds }, ...bookFilters })
-            .project(bookProjection)
-            .limit(limit)
-            .maxTimeMS(5000)
-            .toArray();
-        }
-
-        // Metadata fallback: search categories/subject_keywords/language in MongoDB
-        // Only fires when Supabase found nothing (avoids slow regex on common queries)
-        if (books.length === 0) {
-          const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-          const words = matchQuery.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
-          if (words.length >= 2) {
-            const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+          let books: any[] = [];
+          if (matchingIds.length > 0) {
             books = await db.collection('books')
-              .find({
-                $and: wordRegexes.map(rx => ({
-                  $or: [
-                    { categories: rx },
-                    { subject_keywords: rx },
-                    { language: rx },
-                    { title: rx },
-                    { display_title: rx },
-                  ],
-                })),
-                ...bookFilters,
-              })
+              .find({ id: { $in: matchingIds }, ...bookFilters })
               .project(bookProjection)
               .limit(limit)
-              .maxTimeMS(3000)
+              .maxTimeMS(5000)
               .toArray();
           }
+
+          // Metadata fallback: search categories/subject_keywords/language in MongoDB
+          // Only fires when Supabase found nothing (avoids slow regex on common queries)
+          if (books.length === 0) {
+            const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
+            const words = matchQuery.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
+            if (words.length >= 2) {
+              const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+              books = await db.collection('books')
+                .find({
+                  $and: wordRegexes.map(rx => ({
+                    $or: [
+                      { categories: rx },
+                      { subject_keywords: rx },
+                      { language: rx },
+                      { title: rx },
+                      { display_title: rx },
+                    ],
+                  })),
+                  ...bookFilters,
+                })
+                .project(bookProjection)
+                .limit(limit)
+                .maxTimeMS(3000)
+                .toArray();
+            }
+          }
+          return books;
+        } catch (err) {
+          // Fail-soft: a Supabase trigram timeout or MongoDB error should not 500 the whole route.
+          // The other 3 lanes (Atlas Search, semantic books, semantic pages) can still produce results.
+          console.warn('[search] Book lane failed:', err instanceof Error ? err.message : String(err));
+          return [];
         }
-        return books;
-      })(),
+      }),
 
       // --- Page content search (aggregation pipeline truncates text for snippets) ---
       // Wrapped in a timeout race to prevent Atlas Search from blocking the response
-      (async () => {
+      timed(async () => {
         if (!searchContent && !pagesOnly) return [];
 
         const pageSearchPromise = (async () => {
@@ -216,7 +241,9 @@ export const GET = withApiAuth(async (request: NextRequest) => {
           } else if (hasBookLevelFilters) {
             const bookIdFilter: Record<string, unknown> = { visible: true };
             if (tenantId) bookIdFilter.tenantId = tenantId;
-            if (language) bookIdFilter.language = language;
+            if (languages.length > 0) bookIdFilter.language = { $in: languages };
+            else if (excludeLanguages.length > 0) bookIdFilter.language = { $nin: excludeLanguages };
+            else if (language) bookIdFilter.language = language;
             if (category) bookIdFilter.categories = category;
             if (dateFrom || dateTo) {
               bookIdFilter.published = {};
@@ -249,7 +276,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
 
           return await db.collection('pages').aggregate([
             buildPageSearchStage(query, filteredBookIds),
-            { $match: { page_number: { $gt: 0 } } },
+            { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
             { $limit: pageLimit },
             {
               $project: {
@@ -272,10 +299,10 @@ export const GET = withApiAuth(async (request: NextRequest) => {
             resolve([]);
           }, 8000)),
         ]).catch(() => []);
-      })(),
+      }),
 
       // --- Semantic book search (finds conceptually related books) ---
-      (async () => {
+      timed(async () => {
         if (bookId || !searchContent) return [];
         try {
           const books = await semanticBookSearch(matchQuery, MAX_PAGE_RESULTS, {
@@ -296,20 +323,46 @@ export const GET = withApiAuth(async (request: NextRequest) => {
         } catch {
           return [];
         }
-      })(),
+      }),
 
-      // --- Semantic page search (finds specific passages across all 2.6M pages) ---
+      // --- Semantic page search (finds specific passages across all 3.9M pages) ---
       // Catches passages buried inside large works that book-level search misses
       // (e.g. Martial's "masturbator" epigram, Diogenes's public acts in Laertius)
-      (async () => {
+      timed(async () => {
         if (bookId || !searchContent) return [];
         try {
-          return await semanticPageSearchGlobal(matchQuery, 15, tenantId || undefined);
+          const pages = await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
+          if (pages.length === 0) return pages;
+          // Drop semantic matches on non-content pages (cover/blank/illustration/etc.).
+          // The Supabase embedding table has these — they pollute conceptual queries.
+          const ids = pages.map(p => p.page_id);
+          const typeDocs = await db.collection('pages')
+            .find({ id: { $in: ids } }, { projection: { id: 1, page_type: 1 } })
+            .toArray();
+          const badIds = new Set(
+            typeDocs
+              .filter(d => (NON_CONTENT_PAGE_TYPES as readonly string[]).includes(d.page_type as string))
+              .map(d => d.id as string),
+          );
+          return pages.filter(p => !badIds.has(p.page_id));
         } catch {
           return [];
         }
-      })(),
+      }),
     ]);
+
+    const bookDocs = bookResult.value;
+    const pageDocs = pageResult.value;
+    const semanticDocs = semanticResult.value;
+    const semanticPageDocs = semanticPageResult.value;
+    const stageMs = {
+      book: bookResult.ms,
+      page: pageResult.ms,
+      semantic_book: semanticResult.ms,
+      semantic_page: semanticPageResult.ms,
+    };
+    // Surface if the page lane hit its 8s ceiling — likely degraded results.
+    const pageSearchHitTimeout = pageResult.ms >= 8000 && pageDocs.length === 0;
 
     // Process book results
     for (const book of bookDocs) {
@@ -405,7 +458,11 @@ export const GET = withApiAuth(async (request: NextRequest) => {
       if (semanticBookIds.length > 0) {
         const semBooks = await db.collection('books')
           .find(
-            { id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 } },
+            {
+              id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(languages.length > 0 ? { language: { $in: languages } } : {}),
+              ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
+            },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
           )
           .maxTimeMS(3000)
@@ -469,7 +526,11 @@ export const GET = withApiAuth(async (request: NextRequest) => {
       if (pageBookIds.length > 0) {
         const semPageBooks = await db.collection('books')
           .find(
-            { id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 } },
+            {
+              id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(languages.length > 0 ? { language: { $in: languages } } : {}),
+              ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
+            },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
           )
           .maxTimeMS(3000)
@@ -640,6 +701,18 @@ export const GET = withApiAuth(async (request: NextRequest) => {
       created_at: new Date(),
     }).catch(() => {});
 
+    logSearchQuery({
+      request, identity, route: 'search', query,
+      total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
+      stage_ms: stageMs,
+      page_search_timed_out: pageSearchHitTimeout,
+      filters: {
+        language, category, year, year_from: yearFrom, year_to: yearTo,
+        languages, exclude_languages: excludeLanguages,
+        has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
+        pages_only: pagesOnly, sort: sortBy,
+      },
+    });
     return NextResponse.json({
       query,
       total: dedupedResults.length,
@@ -673,6 +746,11 @@ export const GET = withApiAuth(async (request: NextRequest) => {
     });
   } catch (error) {
     console.error('Search error:', error);
+    logSearchQuery({
+      request, identity, route: 'search',
+      query: new URL(request.url).searchParams.get('q') || '',
+      ms: Date.now() - _searchStart, ok: false,
+    });
     return NextResponse.json({
       error: 'Search failed',
       message: error instanceof Error ? error.message : String(error),
