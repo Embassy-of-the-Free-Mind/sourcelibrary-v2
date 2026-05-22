@@ -325,6 +325,13 @@ function writeReport(jung, results) {
   for (const r of results.sort((a, b) => (a.jung.year || 9999) - (b.jung.year || 9999))) {
     const best = r.matches[0];
     const ustcSn = best?.bph.ustc_sn || '';
+    // Status precedence today: USTC match > fuzzy work-level match > jung only.
+    //
+    // Future (#1921 P3 follow-up): once both sides carry author_entity_id
+    // (VIAF cluster), add `in_bph_viaf_author` between `in_bph_ustc` and
+    // `in_bph_fuzzy`. A VIAF-grade author identity is stronger than fuzzy
+    // token overlap but weaker than a confirmed USTC edition match. The
+    // resolver lives at src/lib/author-authority.ts.
     const status = best ? (ustcSn ? 'in_bph_ustc' : 'in_bph_fuzzy') : 'jung_only';
     csvRows.push([
       r.jung.year, r.jung.author, r.jung.title, r.jung.erara_id, r.jung.source_url,

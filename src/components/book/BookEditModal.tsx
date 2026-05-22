@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { X, Save, Loader2, Search, ExternalLink, Languages, Sparkles } from 'lucide-react';
 import { utils, books, catalog } from '@/lib/api-client';
 import type { CatalogMatch } from '@/lib/api-client/types/books';
+import AuthorAuthorityPicker, { type AuthorAuthoritySelection } from '@/components/catalog/AuthorAuthorityPicker';
 
 interface BookEditModalProps {
   book: {
@@ -16,6 +17,9 @@ interface BookEditModalProps {
     place_published?: string;
     publisher?: string;
     ustc_id?: string;
+    author_entity_id?: string;
+    author_canonical_name?: string;
+    author_wikidata_qid?: string;
   };
   onClose: () => void;
   onSave: () => void;
@@ -51,6 +55,11 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
   const [placePublished, setPlacePublished] = useState(book.place_published || '');
   const [publisher, setPublisher] = useState(book.publisher || '');
   const [ustcId, setUstcId] = useState(book.ustc_id || '');
+  // Authority record state (#1921 P3) — VIAF id is the canonical anchor;
+  // canonical_name + wikidata_qid are denormalised for display.
+  const [authorEntityId, setAuthorEntityId] = useState(book.author_entity_id || '');
+  const [authorCanonicalName, setAuthorCanonicalName] = useState(book.author_canonical_name || '');
+  const [authorWikidataQid, setAuthorWikidataQid] = useState(book.author_wikidata_qid || '');
 
   // Catalog search (EFM, IA, USTC)
   const [searchQuery, setSearchQuery] = useState('');
@@ -99,6 +108,13 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
         place_published: placePublished || undefined,
         publisher: publisher || undefined,
         ustc_id: ustcId || undefined,
+        // Authority record — passes through when set; clearing the picker
+        // writes empty strings which the PATCH route treats as a real value.
+        // Empty string is the intentional "unlinked" marker so editors can
+        // unlink without a dedicated DELETE.
+        author_entity_id: authorEntityId || '',
+        author_canonical_name: authorCanonicalName || '',
+        author_wikidata_qid: authorWikidataQid || '',
       });
 
       onSave();
@@ -362,13 +378,33 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
               </div>
             </div>
 
-            <div>
+            <div className="col-span-2">
               <label className="block text-sm font-medium text-stone-700 mb-1">Author</label>
               <input
                 type="text"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
+              />
+              <AuthorAuthorityPicker
+                authorText={author}
+                current={{
+                  viaf_id: authorEntityId || null,
+                  wikidata_qid: authorWikidataQid || null,
+                  canonical_name: authorCanonicalName || null,
+                }}
+                onSelect={(sel: AuthorAuthoritySelection) => {
+                  setAuthorEntityId(sel.viaf_id);
+                  setAuthorCanonicalName(sel.canonical_name);
+                  setAuthorWikidataQid(sel.wikidata_qid || '');
+                  // Don't clobber the free-text "as printed" form — Paul's
+                  // workflow keeps title-page spelling alongside the canonical.
+                }}
+                onClear={() => {
+                  setAuthorEntityId('');
+                  setAuthorCanonicalName('');
+                  setAuthorWikidataQid('');
+                }}
               />
             </div>
 

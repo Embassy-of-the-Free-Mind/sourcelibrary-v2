@@ -38,6 +38,12 @@ interface BphWorkRow {
   pseudonym: string | null;
   editor: string | null;
   variant_editor: string | null;
+  // Author authority columns (#1921 P3) — present after migration
+  // 20260522000000_bph_works_author_authority.sql is applied. The fetchWork
+  // fallback below drops these if the columns aren't there yet.
+  author_entity_id: string | null;
+  author_canonical_name: string | null;
+  author_wikidata_qid: string | null;
   place: string | null;
   printer: string | null;
   publisher: string | null;
@@ -104,6 +110,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   const select = `
       ubn, title, parallel_title, uniform_title,
       author, variant_author, pseudonym, editor, variant_editor,
+      author_entity_id, author_canonical_name, author_wikidata_qid,
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
@@ -113,8 +120,15 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       sl_external_book_id, sl_external_slug, sl_external_source,
       field_provenance
     `;
+  // Two stacked fallbacks: drop external-link columns if not migrated, then
+  // drop author-authority columns. Each migration runs independently in
+  // different environments — the page renders if either is missing.
   const fallbackSelect = select.replace(
     'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
+    '',
+  );
+  const fallbackNoAuthority = fallbackSelect.replace(
+    'author_entity_id, author_canonical_name, author_wikidata_qid,\n      ',
     '',
   );
   const first = await supabase.from('bph_works').select(select).eq('ubn', ubn).maybeSingle();
@@ -122,6 +136,14 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
     const msg = (first.error.message || '').toLowerCase();
     if (msg.includes('does not exist') || msg.includes('could not find')) {
       const retry = await supabase.from('bph_works').select(fallbackSelect).eq('ubn', ubn).maybeSingle();
+      if (retry.error) {
+        const retryMsg = (retry.error.message || '').toLowerCase();
+        if (retryMsg.includes('does not exist') || retryMsg.includes('could not find')) {
+          const retry2 = await supabase.from('bph_works').select(fallbackNoAuthority).eq('ubn', ubn).maybeSingle();
+          return (retry2.data as BphWorkRow | null) ?? null;
+        }
+        return null;
+      }
       return (retry.data as BphWorkRow | null) ?? null;
     }
     return null;
@@ -558,6 +580,37 @@ export default async function CatalogEntryPage({ params }: Props) {
           <Field label="Pseudonym" value={work.pseudonym} />
           <Field label="Editor / translator" value={work.editor} />
           <Field label="Editor (as on title page)" value={work.variant_editor} />
+          {/* Author authority (#1921 P3) — only render when an identifier is
+              actually linked. The label uses "Canonical (VIAF)" to mirror the
+              terminology in the editor's picker, so cataloguers see the same
+              wording on read and write. */}
+          {(work.author_canonical_name || work.author_entity_id || work.author_wikidata_qid) && (
+            <FieldRaw label="Canonical (VIAF)">
+              <span className="flex flex-wrap items-baseline gap-x-2 text-primary">
+                {work.author_canonical_name && <span>{work.author_canonical_name}</span>}
+                {work.author_entity_id && (
+                  <a
+                    href={`https://viaf.org/viaf/${work.author_entity_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary hover:underline text-xs"
+                  >
+                    VIAF {work.author_entity_id}
+                  </a>
+                )}
+                {work.author_wikidata_qid && (
+                  <a
+                    href={`https://www.wikidata.org/wiki/${work.author_wikidata_qid}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary hover:underline text-xs"
+                  >
+                    {work.author_wikidata_qid}
+                  </a>
+                )}
+              </span>
+            </FieldRaw>
+          )}
         </Section>
 
         <Section title="Imprint">

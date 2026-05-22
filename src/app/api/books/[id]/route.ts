@@ -250,6 +250,12 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
       'ustc_id', 'place_published', 'publisher', 'format',
       // Image source and licensing
       'image_source', 'license', 'doi',
+      // Authority records (#1921 P3) — canonical author identity via VIAF.
+      // The picker UI writes both the VIAF id (author_entity_id) and the
+      // sibling display fields (author_canonical_name, author_wikidata_qid)
+      // so the book detail page can render the canonical form without a
+      // separate entity lookup.
+      'author_entity_id', 'author_canonical_name', 'author_wikidata_qid',
     ];
 
     const updates: Record<string, unknown> = { updated_at: new Date() };

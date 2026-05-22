@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import AuthorAuthorityPicker, { type AuthorAuthoritySelection } from '@/components/catalog/AuthorAuthorityPicker';
 
 /**
  * BPH catalogue entry edit form. Renders every whitelisted editable field
@@ -27,10 +28,6 @@ interface Props {
   tenant: string;
   initial: Record<string, unknown>;
   editorEmail: string;
-  /** 'editor' → Save applies directly via applyWorkRevision.
-   *  'contributor' → Save queues a row in bph_works_pending_changes for
-   *  editor review. The form UI changes copy but is otherwise identical. */
-  mode: 'editor' | 'contributor';
 }
 
 // Mirrors EDITABLE_BPH_FIELDS in src/lib/bph-catalog.ts, organised into the
@@ -38,7 +35,7 @@ interface Props {
 // can map their mental model 1:1.
 const SECTIONS: Array<{
   title: string;
-  fields: Array<{ name: string; label: string; type?: 'text' | 'number' | 'textarea' }>;
+  fields: Array<{ name: string; label: string; type?: 'text' | 'number' | 'textarea'; hidden?: boolean }>;
 }> = [
   {
     title: 'Title',
@@ -58,6 +55,12 @@ const SECTIONS: Array<{
       { name: 'pseudonym', label: 'Pseudonym' },
       { name: 'editor', label: 'Editor / translator' },
       { name: 'variant_editor', label: 'Editor (as on title page)' },
+      // VIAF authority fields — driven by the AuthorAuthorityPicker, not a
+      // raw text input. Listed here so the change detection + provenance
+      // pipeline picks them up. `hidden: true` flips off the visible row.
+      { name: 'author_entity_id', label: 'Canonical author (VIAF)', hidden: true },
+      { name: 'author_canonical_name', label: 'Canonical name', hidden: true },
+      { name: 'author_wikidata_qid', label: 'Wikidata Q', hidden: true },
     ],
   },
   {
@@ -140,7 +143,7 @@ function isUnchanged(orig: unknown, next: unknown): boolean {
   return false;
 }
 
-export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _editorEmail, mode }: Props) {
+export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _editorEmail }: Props) {
   const router = useRouter();
 
   // Form state — one entry per editable field, all strings (number-typed
@@ -161,7 +164,6 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
   const [note, setNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [submittedPendingId, setSubmittedPendingId] = useState<string | null>(null);
 
   const changedFields = useMemo(() => {
     const changed: string[] = [];
@@ -220,19 +222,8 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         setSubmitting(false);
         return;
       }
-      const body = (await res.json()) as { mode?: 'applied' | 'queued'; pendingId?: string };
-      if (body.mode === 'queued' && body.pendingId) {
-        // Contributor flow: hold on the form, show a clear success banner,
-        // and let the user navigate back when they're ready. Redirecting to
-        // the detail page would land them on the unchanged record with no
-        // signal that their work landed somewhere.
-        setSubmittedPendingId(body.pendingId);
-        setSubmitting(false);
-        return;
-      }
-      // Editor flow: changes are live. Bounce back to the detail page so the
-      // updated values are visible immediately (router.refresh forces a
-      // fresh server-side fetch).
+      // Redirect back to the detail page. The catalog row is cached by
+      // Next.js; pushing the same route forces a fresh fetch.
       router.push(`/catalog/${encodeURIComponent(ubn)}`);
       router.refresh();
     } catch (err) {
@@ -241,46 +232,8 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
     }
   };
 
-  if (submittedPendingId) {
-    return (
-      <div className="p-6 rounded-lg border border-accent-gold/50 bg-accent-gold/10">
-        <h2 className="text-lg font-medium text-primary mb-2">Submitted for review</h2>
-        <p className="text-sm text-secondary mb-4">
-          An editor will look at your proposed change and either apply it or leave a note explaining why not. The change isn&rsquo;t live yet — the catalogue entry is unchanged until the editor approves.
-        </p>
-        <p className="text-xs text-muted mb-4 font-mono">Submission ID: {submittedPendingId}</p>
-        <div className="flex flex-wrap gap-2">
-          <a
-            href={`/catalog/${encodeURIComponent(ubn)}`}
-            className="px-3 py-1.5 text-sm rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
-          >
-            Back to catalogue entry
-          </a>
-          <a
-            href={`/catalog/${encodeURIComponent(ubn)}/edit`}
-            className="px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-          >
-            Propose another change
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Mode banner — clarifies what Save will do. Contributor edits queue
-          for editor review; editor edits apply immediately. Both write to
-          the same revision history once approved. */}
-      {mode === 'contributor' && (
-        <div className="p-3 rounded-lg border border-accent-gold/50 bg-accent-gold/10 text-sm text-primary">
-          <p className="font-medium mb-0.5">Your changes will be sent for review</p>
-          <p className="text-xs text-secondary">
-            An editor (Jose or Paul) will see your proposed changes and either apply them or leave a note. You&rsquo;ll be able to track the status from this work&rsquo;s page.
-          </p>
-        </div>
-      )}
-
       {/* Source citation — required, applies to every changed field. */}
       <div className="p-4 bg-white border border-border-light rounded-lg">
         <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-3">Source for this change</h2>
@@ -319,7 +272,49 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         <section key={section.title}>
           <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-2">{section.title}</h2>
           <div className="space-y-3 p-4 bg-white border border-border-light rounded-lg">
-            {section.fields.map((field) => {
+            {/* Author authority picker rendered inline within the Authorship
+                section so cataloguers can canonicalise the author in the same
+                visual block where they edit the title-page form. The picker
+                writes to three "hidden" virtual fields (author_entity_id +
+                siblings) which flow through the regular change-detection /
+                provenance pipeline like any other edit. */}
+            {section.title === 'Authorship' && (
+              <div className="pb-2 border-b border-stone-100">
+                <label className="flex items-baseline gap-2 mb-1">
+                  <span className="text-xs text-muted">Canonical author (VIAF)</span>
+                  {(changedFields.includes('author_entity_id') ||
+                    changedFields.includes('author_canonical_name') ||
+                    changedFields.includes('author_wikidata_qid')) && (
+                    <span className="text-[10px] uppercase text-accent-rust font-medium">changed</span>
+                  )}
+                </label>
+                <AuthorAuthorityPicker
+                  authorText={values.author || values.variant_author || ''}
+                  current={{
+                    viaf_id: values.author_entity_id || null,
+                    wikidata_qid: values.author_wikidata_qid || null,
+                    canonical_name: values.author_canonical_name || null,
+                  }}
+                  onSelect={(sel: AuthorAuthoritySelection) => {
+                    setValues((v) => ({
+                      ...v,
+                      author_entity_id: sel.viaf_id,
+                      author_canonical_name: sel.canonical_name,
+                      author_wikidata_qid: sel.wikidata_qid || '',
+                    }));
+                  }}
+                  onClear={() => {
+                    setValues((v) => ({
+                      ...v,
+                      author_entity_id: '',
+                      author_canonical_name: '',
+                      author_wikidata_qid: '',
+                    }));
+                  }}
+                />
+              </div>
+            )}
+            {section.fields.filter((f) => !f.hidden).map((field) => {
               const provenance =
                 (initial.field_provenance as Record<string, { source?: string; edited_by?: string; edited_at?: string }> | null)?.[field.name];
               const isChanged = changedFields.includes(field.name);
@@ -383,9 +378,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
             disabled={submitting || changedFields.length === 0}
             className="px-4 py-1.5 text-sm rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {submitting
-              ? mode === 'contributor' ? 'Submitting…' : 'Saving…'
-              : mode === 'contributor' ? 'Submit for review' : 'Save changes'}
+            {submitting ? 'Saving…' : 'Save changes'}
           </button>
         </div>
       </div>
