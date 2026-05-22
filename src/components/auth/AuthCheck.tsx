@@ -10,11 +10,8 @@ interface AuthCheckProps {
    * - 'admin'         — admin or superadmin (global only)
    * - 'inner_circle'  — editor-equivalent (global OR tenant membership)
    * - 'reader'        — any authenticated user
-   * - 'bph_librarian' — editor on the BPH tenant OR global admin. Used to gate
-   *   the BPH cataloguer panel. The underlying check is tenant-scoped (not a
-   *   new global role) but the name makes the intent obvious at the callsite.
    */
-  role?: 'admin' | 'inner_circle' | 'reader' | 'bph_librarian';
+  role?: 'admin' | 'inner_circle' | 'reader';
 }
 
 // Mirrors ROLE_LEVEL in src/lib/auth.ts, with legacy aliases (inner_circle, curator)
@@ -65,18 +62,6 @@ export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
 
   if (role === 'inner_circle' && level < ROLE_LEVEL.editor) {
     return <>{fallback}</>;
-  }
-
-  // BPH cataloguer panel: tenant-scoped editor on BPH, OR global admin/superadmin.
-  // We check tenantSlug explicitly because a `tenantRole = 'editor'` set on a
-  // different tenant must not unlock BPH writes.
-  if (role === 'bph_librarian') {
-    const tenantSlug = user.tenantSlug;
-    const isBphEditor = tenantSlug === 'bph' && (ROLE_LEVEL[user.tenantRole] ?? 0) >= ROLE_LEVEL.editor;
-    const isGlobalAdmin = globalLevel >= ROLE_LEVEL.admin;
-    if (!isBphEditor && !isGlobalAdmin) {
-      return <>{fallback}</>;
-    }
   }
 
   return <>{children}</>;
