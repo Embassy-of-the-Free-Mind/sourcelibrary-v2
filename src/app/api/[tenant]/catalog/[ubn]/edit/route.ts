@@ -6,25 +6,31 @@ import {
   BphCatalogError,
   type FieldChangeMap,
 } from '@/lib/bph-catalog';
+import { ROLE_LEVEL, type Role } from '@/lib/auth';
+import { getDb } from '@/lib/mongodb';
+import { supabaseAdmin } from '@/lib/supabase';
 
 /**
  * POST /api/[tenant]/catalog/[ubn]/edit
  *
- * Editor-only mutation endpoint for BPH catalogue entries. Body shape:
+ * Catalog mutation endpoint. Role-branched at runtime:
+ *
+ *   editor+      → apply directly via applyWorkRevision (writes the revision
+ *                  row + updates bph_works + best-effort Atlas mirror).
+ *   contributor  → queue a row in bph_works_pending_changes for editor review.
+ *                  bph_works is untouched; response carries the pending_id.
+ *
+ * Body shape (identical in both modes):
  *
  *   {
  *     fieldChanges: { <field>: { to: <value>, source?: string, evidence?: string }, … },
  *     note?: string
  *   }
  *
- * Calls applyWorkRevision (src/lib/bph-catalog.ts), which writes the revision
- * row first, then updates bph_works in one statement, then best-effort mirrors
- * the curated subset to Atlas books. Returns the revisionId so the client can
- * link to the history entry if needed.
+ * Both flows store the same field_changes JSONB so the review UI renders
+ * the same diff regardless of which mode produced the record.
  *
- * Phase 1 is editor-only. PR-D extends the same endpoint to contributors
- * by routing them through the pending-changes flow instead of applying
- * directly — see issue #1877.
+ * Phase 1 — issue #1877.
  */
 
 const EDITABLE_SET = new Set<string>(EDITABLE_BPH_FIELDS);
@@ -32,6 +38,39 @@ const EDITABLE_SET = new Set<string>(EDITABLE_BPH_FIELDS);
 interface EditPayload {
   fieldChanges?: Record<string, { to: unknown; source?: string; evidence?: string; from?: unknown }>;
   note?: string;
+}
+
+function normalizeRole(role: unknown): Role {
+  if (
+    role === 'superadmin' ||
+    role === 'admin' ||
+    role === 'editor' ||
+    role === 'contributor' ||
+    role === 'reader'
+  ) {
+    return role;
+  }
+  if (role === 'inner_circle' || role === 'curator') return 'editor';
+  return 'reader';
+}
+
+async function effectiveRole(email: string | null | undefined, platformRole: Role, tenantSlug: string): Promise<Role> {
+  if (!email) return platformRole;
+  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['editor']) return platformRole;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
+    if (!tenant) return platformRole;
+    const m = await db.collection('memberships').findOne({
+      email: email.toLowerCase(),
+      tenantId: tenant.id,
+      status: 'active',
+    });
+    const r = normalizeRole(m?.role);
+    return ROLE_LEVEL[r] >= ROLE_LEVEL[platformRole] ? r : platformRole;
+  } catch {
+    return platformRole;
+  }
 }
 
 export const POST = withAuth(
@@ -49,10 +88,11 @@ export const POST = withAuth(
       return NextResponse.json({ error: 'Missing UBN' }, { status: 400 });
     }
 
-    const editorEmail = session.user?.email;
-    if (!editorEmail) {
+    const userEmail = session.user?.email;
+    if (!userEmail) {
       return NextResponse.json({ error: 'Session is missing an email — re-sign in' }, { status: 400 });
     }
+    const userId = (session.user as { id?: string }).id ?? null;
 
     let payload: EditPayload;
     try {
@@ -96,30 +136,69 @@ export const POST = withAuth(
       };
     }
 
-    try {
-      const result = await applyWorkRevision({
-        ubn,
-        changeType: 'edit',
-        fieldChanges,
-        editorEmail,
-        note: typeof payload.note === 'string' ? payload.note : null,
-      });
-      return NextResponse.json({ ok: true, ...result });
-    } catch (err) {
-      if (err instanceof BphCatalogError) {
-        // Field whitelist / not-found / empty changes — surface as 400.
-        // Mid-flight failures (revision written but update failed) also
-        // throw — surface as 500 so monitoring picks them up.
-        const msg = err.message;
-        const status =
-          msg.includes('not editable') || msg.includes('not found') || msg.includes('empty')
-            ? 400
-            : 500;
-        return NextResponse.json({ error: msg }, { status });
+    // Decide whether to apply directly or queue for review.
+    const platformRole = normalizeRole((session.user as { role?: unknown }).role);
+    const role = await effectiveRole(userEmail, platformRole, tenant);
+
+    if (ROLE_LEVEL[role] >= ROLE_LEVEL['editor']) {
+      try {
+        const result = await applyWorkRevision({
+          ubn,
+          changeType: 'edit',
+          fieldChanges,
+          editorEmail: userEmail,
+          note: typeof payload.note === 'string' ? payload.note : null,
+        });
+        return NextResponse.json({ ok: true, mode: 'applied', ...result });
+      } catch (err) {
+        if (err instanceof BphCatalogError) {
+          const msg = err.message;
+          const status =
+            msg.includes('not editable') || msg.includes('not found') || msg.includes('empty')
+              ? 400
+              : 500;
+          return NextResponse.json({ error: msg }, { status });
+        }
+        console.error('[catalog/edit] unexpected error:', err);
+        return NextResponse.json({ error: 'Internal error' }, { status: 500 });
       }
-      console.error('[catalog/edit] unexpected error:', err);
-      return NextResponse.json({ error: 'Internal error' }, { status: 500 });
     }
+
+    // Contributor path: queue a pending row. bph_works is untouched.
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { error: 'supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing' },
+        { status: 500 },
+      );
+    }
+    const { data: inserted, error: insertErr } = await supabaseAdmin
+      .from('bph_works_pending_changes')
+      .insert({
+        ubn,
+        change_type: 'edit',
+        proposer_email: userEmail,
+        proposer_user_id: userId,
+        field_changes: fieldChanges,
+        note: typeof payload.note === 'string' ? payload.note : null,
+        status: 'pending',
+      })
+      .select('id, created_at')
+      .single();
+
+    if (insertErr || !inserted) {
+      console.error('[catalog/edit] pending insert failed:', insertErr);
+      return NextResponse.json(
+        { error: insertErr?.message || 'Failed to queue change for review' },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({
+      ok: true,
+      mode: 'queued',
+      pendingId: (inserted as { id: string }).id,
+      createdAt: (inserted as { created_at: string }).created_at,
+    });
   },
-  { minRole: 'editor' },
+  { minRole: 'contributor' },
 );
