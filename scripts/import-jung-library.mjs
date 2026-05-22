@@ -393,6 +393,7 @@ async function runImport(newRecords) {
 const CONTRIBUTING_LIBRARY_VARIANTS = [
   'Stiftung der Werke von C.G.Jung',           // no space — needs normalization
   'Stiftung der Werke von C.G. Jung',          // missing (Zürich) — canonical adds it
+  'e-rara (Swiss libraries)',                  // generic pre-enrichment label
 ];
 
 async function backfillCategory(db, records) {
@@ -408,9 +409,14 @@ async function backfillCategory(db, records) {
   const needsCategory = existing.filter(b =>
     !Array.isArray(b.categories) || !b.categories.includes(CATEGORY_TAG)
   );
+  // Every Jung Küsnacht book should carry the canonical Stiftung label.
+  // Fix when missing entirely, or when it's one of the known variants we
+  // want to normalize away from.
   const needsLibFix = existing.filter(b => {
     const cl = b.image_source?.contributing_library;
-    return cl && cl !== CONTRIBUTING_LIBRARY && CONTRIBUTING_LIBRARY_VARIANTS.some(v => cl === v || cl.startsWith(v));
+    if (!cl) return true;                                  // null/missing
+    if (cl === CONTRIBUTING_LIBRARY) return false;         // already canonical
+    return CONTRIBUTING_LIBRARY_VARIANTS.some(v => cl === v || cl.startsWith(v));
   });
 
   console.log(`  Need category tag: ${needsCategory.length}`);
