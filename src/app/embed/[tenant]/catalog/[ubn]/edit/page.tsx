@@ -81,26 +81,39 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   const tenantRole = await effectiveTenantRole(session.user.email, tenant);
   const effectiveRole = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
 
-  // Contributor and above can reach this page. The API routes Save through
-  // applyWorkRevision for editor+ (direct apply) and into bph_works_pending_changes
-  // for contributor (queued for editor review). The form learns its mode
-  // from the `mode` prop below.
-  if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['contributor']) {
+  // PR-C ships editor mode only. PR-D will loosen this to contributor and
+  // route the form's Save through the pending-changes flow instead.
+  if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['editor']) {
     const h = await headers();
     const referer = h.get('referer') || `/catalog/${encodeURIComponent(ubn)}`;
     redirect(referer);
   }
-  const formMode: 'editor' | 'contributor' = ROLE_LEVEL[effectiveRole] >= ROLE_LEVEL['editor'] ? 'editor' : 'contributor';
 
   // Fetch the current row using exactly the whitelisted editable columns.
   // The detail page exists at /catalog/[ubn] — if we can't find the row,
   // surface the same notFound() rather than a partial form.
+  //
+  // If the author-authority columns haven't been added yet (migration
+  // 20260522000000 not run on this environment), retry without them. The
+  // form silently shows empty author-authority fields, and the picker still
+  // works — the save would fail at write time with the same error, which
+  // is the right behaviour (don't pretend to save what we can't write).
   const cols = ['ubn', ...EDITABLE_BPH_FIELDS, 'field_provenance', 'sl_book_id'].join(', ');
-  const { data, error } = await supabase
+  const authorityCols = ['author_entity_id', 'author_canonical_name', 'author_wikidata_qid'];
+  const fallbackCols = ['ubn', ...EDITABLE_BPH_FIELDS.filter((c) => !authorityCols.includes(c)), 'field_provenance', 'sl_book_id'].join(', ');
+  let { data, error } = await supabase
     .from('bph_works')
     .select(cols)
     .eq('ubn', ubn)
     .maybeSingle();
+  if (error) {
+    const msg = (error.message || '').toLowerCase();
+    if (msg.includes('does not exist') || msg.includes('could not find')) {
+      const retry = await supabase.from('bph_works').select(fallbackCols).eq('ubn', ubn).maybeSingle();
+      data = retry.data;
+      error = retry.error;
+    }
+  }
 
   if (error || !data) notFound();
 
@@ -127,7 +140,6 @@ export default async function EditCatalogEntryPage({ params }: Props) {
           tenant={tenant}
           initial={work}
           editorEmail={session.user.email || ''}
-          mode={formMode}
         />
       </div>
     </div>
