@@ -1,6 +1,5 @@
 import { supabase } from '@/lib/supabase';
 import { ExternalLink } from 'lucide-react';
-import BphCatalogueEditButton from './BphCatalogueEditButton';
 
 /**
  * Inline display of a book's BPH catalogue record, side-loaded from Supabase
@@ -122,13 +121,6 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
       </summary>
 
       <div className="mt-3 p-4 bg-stone-800/50 rounded-lg border border-stone-700 space-y-4">
-        {/* Cataloguer edit affordance — only renders for BPH librarians /
-            global admins via AuthCheck inside the button. Keeps the BPH
-            partner panel where the data lives. */}
-        <div className="flex justify-end -mb-2">
-          <BphCatalogueEditButton work={work} variant="inline" />
-        </div>
-
         {(work.parallel_title || work.uniform_title || work.series_title || work.volume_title) && (
           <Section title="Title">
             <Field label="Full title (transcription)" value={work.parallel_title} />
