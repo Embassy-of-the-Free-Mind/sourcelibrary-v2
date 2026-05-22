@@ -495,7 +495,7 @@ async function main() {
           },
         },
       }},
-      { $sort: { _priority: 1, hidden: 1 } },
+      { $sort: { _priority: 1, hidden: 1, _id: -1 } },
       { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])
@@ -527,7 +527,7 @@ async function main() {
           },
         },
       }},
-      { $sort: { _priority: 1 } },
+      { $sort: { _priority: 1, _id: -1 } },
       { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])
