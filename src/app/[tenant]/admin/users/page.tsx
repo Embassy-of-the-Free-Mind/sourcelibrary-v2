@@ -82,22 +82,24 @@ function downloadCsv(rows: UserRow[]) {
   URL.revokeObjectURL(url);
 }
 
-const cellStyle: React.CSSProperties = { padding: '8px 12px', fontSize: 13, color: '#c9d1d9', verticalAlign: 'middle' };
-const headStyle: React.CSSProperties = {
-  padding: '8px 12px', fontSize: 11, fontWeight: 600, textTransform: 'uppercase',
-  letterSpacing: 0.5, color: '#8b949e', textAlign: 'left', cursor: 'pointer',
-  borderBottom: '1px solid #30363d', whiteSpace: 'nowrap',
-  position: 'sticky', top: 0, background: '#0d1117',
-};
-
-function StatCard({ label, value, color }: { label: string; value: number; color?: string }) {
+function StatCard({
+  label, value, accent,
+}: {
+  label: string;
+  value: number;
+  accent?: 'rust' | 'gold' | 'sage' | 'violet' | 'default';
+}) {
+  const accentClass = {
+    rust: 'text-accent-rust',
+    gold: 'text-accent-gold-dark',
+    sage: 'text-accent-sage-dark',
+    violet: 'text-accent-violet',
+    default: 'text-stone-900',
+  }[accent || 'default'];
   return (
-    <div style={{
-      background: '#0d1117', border: '1px solid #30363d', borderRadius: 10,
-      padding: '14px 18px', minWidth: 120,
-    }}>
-      <div style={{ fontSize: 11, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 0.5 }}>{label}</div>
-      <div style={{ fontSize: 24, fontWeight: 700, color: color || '#f0f6fc', marginTop: 4 }}>{value}</div>
+    <div className="bg-white border border-stone-200 rounded-xl px-5 py-4 min-w-[140px] shadow-sm">
+      <div className="text-[11px] uppercase tracking-wider text-stone-500 font-sans">{label}</div>
+      <div className={`text-3xl font-light mt-1 ${accentClass} font-display`}>{value.toLocaleString()}</div>
     </div>
   );
 }
@@ -170,164 +172,158 @@ export default function AdminUsersPage() {
 
   const arrow = (key: SortKey) => sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : '';
 
+  const headBase = 'px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-stone-500 text-left cursor-pointer select-none whitespace-nowrap sticky top-0 bg-stone-50/95 backdrop-blur-sm border-b border-stone-200 hover:text-accent-rust transition-colors';
+  const cellBase = 'px-3 py-2.5 text-sm text-stone-700 align-middle';
+
   return (
-    <div style={{ padding: '24px 32px', color: '#c9d1d9' }}>
-      <div style={{ marginBottom: 20 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 600, color: '#f0f6fc', marginBottom: 4 }}>
-          Users
-        </h1>
-        <p style={{ fontSize: 13, color: '#8b949e' }}>
-          Everyone who has signed up or subscribed to Source Library — with their reading activity.
+    <div className="min-h-screen bg-[#fdfcf9]">
+      <div className="max-w-[1400px] mx-auto px-8 py-8">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-3xl text-stone-900 mb-1 font-display font-normal">Users</h1>
+          <p className="text-sm text-stone-600 font-sans">
+            Everyone who has signed up or subscribed to Source Library — with their reading activity.
+          </p>
+        </div>
+
+        {error && (
+          <div className="bg-accent-rust/8 border border-accent-rust/20 rounded-lg px-4 py-2.5 mb-4 text-accent-rust text-sm font-sans">
+            {error}
+          </div>
+        )}
+
+        {/* Stat cards */}
+        {totals && (
+          <div className="flex flex-wrap gap-3 mb-6">
+            <StatCard label="Total" value={totals.users + totals.subscribers_only} accent="rust" />
+            <StatCard label="OAuth Users" value={totals.users} />
+            <StatCard label="Email-only" value={totals.subscribers_only} />
+            <StatCard label="Active Readers" value={totals.active_readers} accent="sage" />
+            <StatCard label="EFM Opt-in" value={totals.efm_opt_in} accent="violet" />
+          </div>
+        )}
+
+        {/* Toolbar */}
+        <div className="flex flex-wrap items-center gap-3 mb-4">
+          <input
+            type="search"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search name, email, country, source…"
+            className="flex-1 min-w-[220px] max-w-md px-4 py-2 text-sm bg-white border border-stone-300 rounded-lg text-stone-900 placeholder-stone-400 focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/30 outline-none font-sans transition-colors"
+          />
+          <select
+            value={filter}
+            onChange={e => setFilter(e.target.value as typeof filter)}
+            className="px-3 py-2 text-sm bg-white border border-stone-300 rounded-lg text-stone-900 cursor-pointer hover:border-stone-400 focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/30 outline-none font-sans transition-colors"
+          >
+            <option value="all">All</option>
+            <option value="active">Active readers</option>
+            <option value="efm">EFM opt-in</option>
+            <option value="subscribers">Email-only</option>
+          </select>
+          <button
+            onClick={() => downloadCsv(filtered)}
+            disabled={!filtered.length}
+            className="px-4 py-2 text-sm font-medium bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 disabled:bg-stone-300 disabled:cursor-not-allowed transition-colors font-sans"
+          >
+            Export CSV ({filtered.length})
+          </button>
+        </div>
+
+        {/* Table */}
+        <div className="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
+          <div className="max-h-[70vh] overflow-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th className={headBase} onClick={() => toggleSort('name')}>Name{arrow('name')}</th>
+                  <th className={headBase} onClick={() => toggleSort('email')}>Email{arrow('email')}</th>
+                  <th className={headBase} onClick={() => toggleSort('source')}>Source{arrow('source')}</th>
+                  <th className={headBase} onClick={() => toggleSort('country')}>Country{arrow('country')}</th>
+                  <th className={headBase} onClick={() => toggleSort('created_at')}>Signed up{arrow('created_at')}</th>
+                  <th className={headBase} onClick={() => toggleSort('last_active')}>Last active{arrow('last_active')}</th>
+                  <th className={`${headBase} !text-right`} onClick={() => toggleSort('book_count')}>Books{arrow('book_count')}</th>
+                  <th className={`${headBase} !text-right`} onClick={() => toggleSort('pages_viewed')}>Pages{arrow('pages_viewed')}</th>
+                  <th className={headBase}>EFM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows === null && !error && (
+                  <tr>
+                    <td colSpan={9} className="text-center text-stone-500 py-12 font-sans text-sm">
+                      Loading…
+                    </td>
+                  </tr>
+                )}
+                {rows !== null && filtered.length === 0 && (
+                  <tr>
+                    <td colSpan={9} className="text-center text-stone-500 py-12 font-sans text-sm">
+                      No matches
+                    </td>
+                  </tr>
+                )}
+                {filtered.map(r => (
+                  <tr key={r.id} className="border-b border-stone-100 hover:bg-accent-gold/5 transition-colors">
+                    <td className={cellBase}>
+                      <div className="flex items-center gap-2.5">
+                        {r.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={r.image} alt="" width={26} height={26} className="rounded-full ring-1 ring-stone-200" />
+                        ) : (
+                          <div className="w-[26px] h-[26px] rounded-full bg-stone-100 text-stone-500 text-xs flex items-center justify-center ring-1 ring-stone-200">
+                            {r.email?.[0]?.toUpperCase() || '?'}
+                          </div>
+                        )}
+                        <span className="text-stone-900 font-medium">{r.name || <span className="text-stone-400 font-normal">—</span>}</span>
+                      </div>
+                    </td>
+                    <td className={`${cellBase} font-mono text-xs text-stone-600`}>
+                      {r.email || '—'}
+                    </td>
+                    <td className={cellBase}>
+                      <span className="text-stone-500 text-xs">{r.source?.replace(/_/g, ' ') || '—'}</span>
+                    </td>
+                    <td className={cellBase}>
+                      <span className="text-stone-600 text-xs">{r.country || '—'}</span>
+                    </td>
+                    <td className={`${cellBase} text-stone-600 text-xs`} title={r.created_at || ''}>{fmtDate(r.created_at)}</td>
+                    <td className={`${cellBase} text-stone-600 text-xs`} title={r.last_active || ''}>{fmtAgo(r.last_active)}</td>
+                    <td className={`${cellBase} text-right tabular-nums ${r.book_count > 0 ? 'text-accent-sage-dark font-medium' : 'text-stone-400'}`}>
+                      {r.book_count}
+                    </td>
+                    <td className={`${cellBase} text-right tabular-nums ${r.pages_viewed > 0 ? 'text-stone-800' : 'text-stone-400'}`}>
+                      {r.pages_viewed.toLocaleString()}
+                    </td>
+                    <td className={cellBase}>
+                      {r.efm_newsletter_opt_in ? (
+                        <span
+                          className="inline-block text-[10px] font-semibold tracking-wide uppercase px-1.5 py-0.5 rounded bg-accent-violet/10 text-accent-violet"
+                          title="Opted into EFM newsletter"
+                        >
+                          EFM
+                        </span>
+                      ) : (
+                        <span className="text-stone-300">—</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p className="text-xs text-stone-500 mt-3 font-sans">
+          Sources:{' '}
+          <code className="px-1 py-0.5 rounded bg-stone-100 text-stone-700 font-mono text-[11px]">users</code>{' '}
+          (OAuth),{' '}
+          <code className="px-1 py-0.5 rounded bg-stone-100 text-stone-700 font-mono text-[11px]">beta_subscribers</code>{' '}
+          (email-only); joined to{' '}
+          <code className="px-1 py-0.5 rounded bg-stone-100 text-stone-700 font-mono text-[11px]">reading_history</code>{' '}
+          for activity.
         </p>
       </div>
-
-      {error && (
-        <div style={{
-          background: '#3d1518', border: '1px solid #8b3a3f', borderRadius: 8,
-          padding: '10px 14px', marginBottom: 16, color: '#ffb4b4', fontSize: 13,
-        }}>
-          {error}
-        </div>
-      )}
-
-      {totals && (
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
-          <StatCard label="Total" value={totals.users + totals.subscribers_only} color="#58a6ff" />
-          <StatCard label="OAuth Users" value={totals.users} />
-          <StatCard label="Email-only" value={totals.subscribers_only} />
-          <StatCard label="Active Readers" value={totals.active_readers} color="#3fb950" />
-          <StatCard label="EFM Opt-in" value={totals.efm_opt_in} color="#d2a8ff" />
-        </div>
-      )}
-
-      <div style={{
-        display: 'flex', gap: 12, marginBottom: 16, alignItems: 'center', flexWrap: 'wrap',
-      }}>
-        <input
-          type="search"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search name, email, country, source…"
-          style={{
-            flex: '1 1 260px', minWidth: 220, maxWidth: 400,
-            padding: '8px 12px', fontSize: 13,
-            background: '#0d1117', border: '1px solid #30363d', borderRadius: 6,
-            color: '#c9d1d9', outline: 'none',
-          }}
-        />
-        <select
-          value={filter}
-          onChange={e => setFilter(e.target.value as typeof filter)}
-          style={{
-            padding: '8px 10px', fontSize: 13,
-            background: '#0d1117', border: '1px solid #30363d', borderRadius: 6,
-            color: '#c9d1d9', cursor: 'pointer',
-          }}
-        >
-          <option value="all">All</option>
-          <option value="active">Active readers</option>
-          <option value="efm">EFM opt-in</option>
-          <option value="subscribers">Email-only</option>
-        </select>
-        <button
-          onClick={() => downloadCsv(filtered)}
-          disabled={!filtered.length}
-          style={{
-            padding: '8px 14px', fontSize: 13, fontWeight: 500,
-            background: '#1f6feb', border: '1px solid #388bfd', borderRadius: 6,
-            color: '#f0f6fc', cursor: filtered.length ? 'pointer' : 'not-allowed',
-            opacity: filtered.length ? 1 : 0.5,
-          }}
-        >
-          Export CSV ({filtered.length})
-        </button>
-      </div>
-
-      <div style={{
-        background: '#0d1117', border: '1px solid #30363d', borderRadius: 10,
-        overflow: 'hidden',
-      }}>
-        <div style={{ maxHeight: '70vh', overflow: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr>
-                <th style={headStyle} onClick={() => toggleSort('name')}>Name{arrow('name')}</th>
-                <th style={headStyle} onClick={() => toggleSort('email')}>Email{arrow('email')}</th>
-                <th style={headStyle} onClick={() => toggleSort('source')}>Source{arrow('source')}</th>
-                <th style={headStyle} onClick={() => toggleSort('country')}>Country{arrow('country')}</th>
-                <th style={headStyle} onClick={() => toggleSort('created_at')}>Signed up{arrow('created_at')}</th>
-                <th style={headStyle} onClick={() => toggleSort('last_active')}>Last active{arrow('last_active')}</th>
-                <th style={{ ...headStyle, textAlign: 'right' }} onClick={() => toggleSort('book_count')}>Books{arrow('book_count')}</th>
-                <th style={{ ...headStyle, textAlign: 'right' }} onClick={() => toggleSort('pages_viewed')}>Pages{arrow('pages_viewed')}</th>
-                <th style={headStyle}>EFM</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows === null && !error && (
-                <tr>
-                  <td colSpan={9} style={{ ...cellStyle, textAlign: 'center', color: '#8b949e', padding: '40px 0' }}>
-                    Loading…
-                  </td>
-                </tr>
-              )}
-              {rows !== null && filtered.length === 0 && (
-                <tr>
-                  <td colSpan={9} style={{ ...cellStyle, textAlign: 'center', color: '#8b949e', padding: '40px 0' }}>
-                    No matches
-                  </td>
-                </tr>
-              )}
-              {filtered.map(r => (
-                <tr key={r.id} style={{ borderBottom: '1px solid #21262d' }}>
-                  <td style={cellStyle}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      {r.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={r.image} alt="" width={22} height={22} style={{ borderRadius: '50%' }} />
-                      ) : (
-                        <div style={{
-                          width: 22, height: 22, borderRadius: '50%',
-                          background: '#21262d', color: '#8b949e',
-                          fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        }}>
-                          {r.email?.[0]?.toUpperCase() || '?'}
-                        </div>
-                      )}
-                      <span>{r.name || '—'}</span>
-                    </div>
-                  </td>
-                  <td style={{ ...cellStyle, fontFamily: 'ui-monospace, SFMono-Regular, monospace', fontSize: 12 }}>
-                    {r.email || '—'}
-                  </td>
-                  <td style={cellStyle}>
-                    <span style={{ color: '#8b949e' }}>{r.source?.replace(/_/g, ' ') || '—'}</span>
-                  </td>
-                  <td style={cellStyle}>{r.country || '—'}</td>
-                  <td style={cellStyle} title={r.created_at || ''}>{fmtDate(r.created_at)}</td>
-                  <td style={cellStyle} title={r.last_active || ''}>{fmtAgo(r.last_active)}</td>
-                  <td style={{ ...cellStyle, textAlign: 'right', color: r.book_count > 0 ? '#3fb950' : '#8b949e' }}>
-                    {r.book_count}
-                  </td>
-                  <td style={{ ...cellStyle, textAlign: 'right', color: r.pages_viewed > 0 ? '#c9d1d9' : '#8b949e' }}>
-                    {r.pages_viewed.toLocaleString()}
-                  </td>
-                  <td style={cellStyle}>
-                    {r.efm_newsletter_opt_in ? (
-                      <span style={{ color: '#d2a8ff', fontWeight: 600 }} title="Opted into EFM newsletter">EFM</span>
-                    ) : (
-                      <span style={{ color: '#30363d' }}>—</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p style={{ fontSize: 11, color: '#8b949e', marginTop: 12 }}>
-        Sources: <code style={{ color: '#c9d1d9' }}>users</code> (OAuth), <code style={{ color: '#c9d1d9' }}>beta_subscribers</code> (email-only); joined to <code style={{ color: '#c9d1d9' }}>reading_history</code> for activity.
-      </p>
     </div>
   );
 }
