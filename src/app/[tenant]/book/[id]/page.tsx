@@ -31,6 +31,7 @@ import DublinCoreMeta from '@/components/seo/DublinCoreMeta';
 import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ExpandableGuide from '@/components/book/ExpandableGuide';
+import { AISection } from '@/components/embed/AISection';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
@@ -937,13 +938,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
       {(() => {
         return (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            {/* data-view-section="ai-summary": the whole "About This Book"
-                card is hidden when the visitor has scholar mode on (see
-                EmbedUserMenu). Categories are AI-assigned, the prose is
-                generated, and the empty states are meta-commentary about
-                the AI pipeline — none of it belongs on a stripped-down
-                bibliographic page. */}
-            <div className="card p-6" data-view-section="ai-summary">
+            {/* The whole "About This Book" card is hidden when the visitor
+                has scholar mode on (see EmbedUserMenu). Categories are
+                AI-assigned, the prose is generated, and the empty states
+                are meta-commentary about the AI pipeline — none of it
+                belongs on a stripped-down bibliographic page. */}
+            <AISection className="card p-6">
               <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
 
               {/* Categories */}
@@ -963,9 +963,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     ))}
                   </div>
                   {hasTranslations && (
-                    <div data-view-section="reading-guide">
+                    <AISection kind="reading-guide">
                       <ExpandableGuide embedPolicy={embedPolicy} bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
-                    </div>
+                    </AISection>
                   )}
                 </>
               ) : hasTranslations ? (
@@ -987,7 +987,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   />
                 </p>
               )}
-            </div>
+            </AISection>
 
             {/* Chapters & Sections */}
             {book.chapters?.length ? (

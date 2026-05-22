@@ -11,6 +11,7 @@ import CategorySchema from '@/components/seo/CategorySchema';
 import { tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { AISection } from '@/components/embed/AISection';
 
 interface Book {
   id: string;
@@ -192,9 +193,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                       {book.published && <span>{book.published}</span>}
                     </div>
                     {summaryText && (
-                      <p className="text-sm text-stone-600 mt-3 line-clamp-2">
-                        {summaryText}
-                      </p>
+                      <AISection>
+                        <p className="text-sm text-stone-600 mt-3 line-clamp-2">
+                          {summaryText}
+                        </p>
+                      </AISection>
                     )}
                   </div>
                 </Link>

@@ -8,6 +8,7 @@ import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPartnerBySlug } from '@/lib/library-partners';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
+import { AISection } from '@/components/embed/AISection';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 
 // Catalogue entry routing
@@ -488,11 +489,13 @@ export default async function CatalogEntryPage({ params }: Props) {
             </dl>
 
             {slBook.reading_summary?.overview && (
-              <p className="text-sm text-secondary leading-relaxed mb-4 italic">
-                {slBook.reading_summary.overview.length > 380
-                  ? slBook.reading_summary.overview.slice(0, 380) + '…'
-                  : slBook.reading_summary.overview}
-              </p>
+              <AISection>
+                <p className="text-sm text-secondary leading-relaxed mb-4 italic">
+                  {slBook.reading_summary.overview.length > 380
+                    ? slBook.reading_summary.overview.slice(0, 380) + '…'
+                    : slBook.reading_summary.overview}
+                </p>
+              </AISection>
             )}
 
             <a
