@@ -5,7 +5,12 @@ import { useStableSession } from '@/hooks/useStableSession';
 interface AuthCheckProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;
-  /** Require a specific role. 'admin' = admin only. 'inner_circle' = admin or inner_circle. Default: any authenticated user. */
+  /**
+   * Require a specific role.
+   * - 'admin'         — admin or superadmin (global only)
+   * - 'inner_circle'  — editor-equivalent (global OR tenant membership)
+   * - 'reader'        — any authenticated user
+   */
   role?: 'admin' | 'inner_circle' | 'reader';
 }
 

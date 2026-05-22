@@ -37,8 +37,26 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // ── Normalization (consistent across both sides) ─────────────────────────
 
+/**
+ * Orthographic equivalences common in early modern Latin / German / French
+ * print culture. Applied AFTER diacritic stripping and lowercasing. These let
+ * "Iohannes" and "Johannes", "vellus" and "uellus", "philosophia" and
+ * "filosofia", "chymie" and "chimie" hit the same normalized form.
+ *
+ * Order matters — ligatures expand first, then character-class folds.
+ */
+function latinize(s) {
+  return s
+    .replace(/æ/g, 'ae').replace(/œ/g, 'oe').replace(/ß/g, 'ss')
+    .replace(/[ij]/g, 'i')           // Iohannes ↔ Johannes
+    .replace(/[uv]/g, 'u')           // medieval u/v alternation
+    .replace(/ae/g, 'e').replace(/oe/g, 'e')  // diphthong collapse
+    .replace(/ph/g, 'f')             // philosophia ↔ filosofia
+    .replace(/y/g, 'i');             // chymia ↔ chimia
+}
+
 function normalize(s) {
-  return (s || '')
+  const stripped = (s || '')
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
@@ -47,6 +65,7 @@ function normalize(s) {
     .replace(/[^\w\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+  return latinize(stripped);
 }
 
 // Surname-extracting normalizer: "Boccalini, Trajano" -> "boccalini"
@@ -228,17 +247,21 @@ function writeReport(jung, results) {
   lines.push(`Coverage: **${(matched.length / jung.length * 100).toFixed(1)}%** of Jung's Küsnacht library is also bibliographically represented in BPH.`);
   lines.push('');
 
+  const ustcCount = matched.filter(r => r.matches[0]?.bph.ustc_sn).length;
   lines.push(`## Works present in both libraries (${matched.length})`);
   lines.push('');
-  lines.push('| Year | Author | Jung title (Küsnacht) | BPH match (UBN / title) | Score |');
-  lines.push('|---|---|---|---|--:|');
+  lines.push(`USTC anchor: **${ustcCount}** of these ${matched.length} matches carry a USTC SN on the BPH side — those are identity-grade (USTC = Universal Short Title Catalogue, which only covers pre-1651 imprints, so coverage is limited to early matches).`);
+  lines.push('');
+  lines.push('| Year | Author | Jung title (Küsnacht) | BPH match (UBN / title) | USTC | Score |');
+  lines.push('|---|---|---|---|---|--:|');
   for (const r of matched.sort((a, b) => (a.jung.year || 9999) - (b.jung.year || 9999))) {
     const best = r.matches[0];
     const t = (r.jung.title || '').slice(0, 60).replace(/\|/g, '\\|');
     const a = (r.jung.author || '').slice(0, 30).replace(/\|/g, '\\|');
     const bphT = (best.bph.title || '').slice(0, 50).replace(/\|/g, '\\|');
     const ubn = best.bph.ubn || '';
-    lines.push(`| ${r.jung.year || '–'} | ${a} | ${t} | [${ubn}](https://bph.sourcelibrary.org/catalog/${ubn}) ${bphT} | ${best.score} |`);
+    const ustc = best.bph.ustc_sn ? `[${best.bph.ustc_sn}](https://www.ustc.ac.uk/editions/${best.bph.ustc_sn})` : '–';
+    lines.push(`| ${r.jung.year || '–'} | ${a} | ${t} | [${ubn}](https://bph.sourcelibrary.org/catalog/${ubn}) ${bphT} | ${ustc} | ${best.score} |`);
   }
   lines.push('');
 
@@ -281,7 +304,41 @@ function writeReport(jung, results) {
   }, null, 2));
   console.log(`Wrote ${jsonPath}`);
 
-  return { matched, notInBph, mdPath, jsonPath };
+  // CSV — flat, spreadsheet-friendly, one row per Jung work. For Jozef/Emiel
+  // to share with scholars. Includes the best BPH match (if any).
+  const csvPath = path.join(baseDir, `jung-bph-alignment-${today}.csv`);
+  const csvRows = [];
+  csvRows.push([
+    'jung_year', 'jung_author', 'jung_title', 'jung_erara_id', 'jung_url',
+    'match_status', 'match_score',
+    'bph_ubn', 'bph_author', 'bph_title', 'bph_year', 'bph_place', 'bph_printer', 'bph_publisher', 'bph_url',
+    'bph_ustc_sn', 'ustc_url',
+  ].join(','));
+  const csvEsc = (v) => {
+    if (v === null || v === undefined) return '';
+    const s = String(v);
+    if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+      return `"${s.replace(/"/g, '""')}"`;
+    }
+    return s;
+  };
+  for (const r of results.sort((a, b) => (a.jung.year || 9999) - (b.jung.year || 9999))) {
+    const best = r.matches[0];
+    const ustcSn = best?.bph.ustc_sn || '';
+    const status = best ? (ustcSn ? 'in_bph_ustc' : 'in_bph_fuzzy') : 'jung_only';
+    csvRows.push([
+      r.jung.year, r.jung.author, r.jung.title, r.jung.erara_id, r.jung.source_url,
+      status, best ? best.score : '',
+      best?.bph.ubn || '', best?.bph.author || '', best?.bph.title || '',
+      best?.bph.year || '', best?.bph.place || '', best?.bph.printer || '', best?.bph.publisher || '',
+      best ? `https://bph.sourcelibrary.org/catalog/${best.bph.ubn}` : '',
+      ustcSn, ustcSn ? `https://www.ustc.ac.uk/editions/${ustcSn}` : '',
+    ].map(csvEsc).join(','));
+  }
+  fs.writeFileSync(csvPath, csvRows.join('\n'));
+  console.log(`Wrote ${csvPath}`);
+
+  return { matched, notInBph, mdPath, jsonPath, csvPath };
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────

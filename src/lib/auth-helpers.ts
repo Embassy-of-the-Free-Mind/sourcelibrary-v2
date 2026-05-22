@@ -266,3 +266,4 @@ export const withInnerCircleAuth = (h: (request: NextRequest, session: Session, 
 // TODO: Remove withCuratorAuth — mapped to 'editor'. Verify each callsite matches
 // this permission level before removing.
 export const withCuratorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
+
