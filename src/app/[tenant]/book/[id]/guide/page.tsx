@@ -443,11 +443,14 @@ export default function GuidePage({ params }: GuidePageProps) {
                   const imageId = `${item.pageId}-${item.detectionIndex}`;
                   // Use pre-cropped URL if available, fall back to original
                   const displayUrl = item.extractedUrl || item.thumbnailUrl || item.imageUrl;
+                  const pageHref = book
+                    ? `/book/${book.slug || bookId}/page/${item.pageId}`
+                    : `/gallery/image/${imageId}`;
 
                   return (
                     <Link
                       key={imageId}
-                      href={`/gallery/image/${imageId}`}
+                      href={pageHref}
                       className="group relative aspect-square rounded-lg overflow-hidden transition-all hover:shadow-md"
                       style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                     >

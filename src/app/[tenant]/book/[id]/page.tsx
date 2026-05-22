@@ -1043,10 +1043,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   {galleryImages.map((img) => {
                     const src = img.extracted_url || img.thumbnail_url || img.image_url;
                     if (!src) return null;
+                    const pageId = img.id.match(/^(.+)[:\-]\d+$/)?.[1];
+                    const href = pageId
+                      ? `/book/${book.slug || book.id}/page/${pageId}`
+                      : `/gallery/image/${img.id}`;
                     return (
                       <Link
                         key={img.id}
-                        href={`/gallery/image/${img.id}`}
+                        href={href}
                         className="flex-shrink-0 group"
                       >
                         <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
