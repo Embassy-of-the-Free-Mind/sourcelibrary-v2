@@ -1,7 +1,7 @@
 import { Db } from 'mongodb';
 import { Resend } from 'resend';
 
-export type MembershipRole = 'superadmin' | 'admin' | 'editor' | 'reader';
+export type MembershipRole = 'superadmin' | 'admin' | 'editor' | 'contributor' | 'reader';
 
 export interface InviteMemberParams {
   db: Db;
