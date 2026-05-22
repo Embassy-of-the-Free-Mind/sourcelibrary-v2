@@ -260,7 +260,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
+interface AuthorEntityPreview {
+  name?: string;
+  canonical_name?: string;
+  aliases?: string[];
+  viaf_id?: string;
+  wikidata_id?: string;
+  lcnaf_id?: string;
+  gnd_id?: string;
+  wikipedia_url?: string;
+  wikidata_birth_date?: string;
+  wikidata_death_date?: string;
+}
+
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
