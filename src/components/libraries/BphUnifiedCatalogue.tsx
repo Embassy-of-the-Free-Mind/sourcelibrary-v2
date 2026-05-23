@@ -79,30 +79,15 @@ export default function BphUnifiedCatalogue({
   // toggle still routes to list view (allHref forces display=list).
   const effectiveLockDigitized = mode === 'digitized' || display === 'grid';
 
-  // Virtual-collection affordances shown in the catalogue header. Currently
-  // a single link to Jung Resonances; structured as an array so future
-  // resonance views (Kloss, USTC overlaps, etc.) slot in without reflowing.
-  const jungResonancesHref = embedHref(`${basePath}/collections/jung-resonances`);
-
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h2 className="text-2xl sm:text-3xl text-primary font-display">
-            Library Catalogue
-          </h2>
-          <p className="text-sm text-muted mt-1">
-            Complete catalogue of the Bibliotheca Philosophica Hermetica.
-          </p>
-        </div>
-        <Link
-          href={jungResonancesHref}
-          className="shrink-0 inline-flex items-center gap-1.5 text-sm text-secondary hover:text-accent-rust transition-colors mt-1 whitespace-nowrap"
-          title="Books in both BPH and Jung's personal library at Küsnacht"
-        >
-          <span aria-hidden="true">↳</span>
-          Jung Resonances
-        </Link>
+      <div className="mb-6">
+        <h2 className="text-2xl sm:text-3xl text-primary font-display">
+          Library Catalogue
+        </h2>
+        <p className="text-sm text-muted mt-1">
+          Complete catalogue of the Bibliotheca Philosophica Hermetica.
+        </p>
       </div>
 
       <BphCatalogBrowser
