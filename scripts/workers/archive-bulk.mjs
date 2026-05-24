@@ -437,18 +437,39 @@ async function processBook(book, db) {
     console.log(`  [ERROR] ${book.title?.slice(0, 50)}: ${err.message?.slice(0, 100)}`);
     stats.booksFailed++;
 
-    // Mark 401/403 books so we don't retry them every 10 minutes
-    if (err.message?.includes('HTTP 401') || err.message?.includes('HTTP 403')) {
+    const msg = err.message || '';
+    // 401/403: auth at source — can't be fixed by retry, block immediately.
+    // ETIMEDOUT / spawnSync timeouts: opj_decompress hangs on a malformed JP2
+    //   leaf. The whole zip can't be processed by bulk, but archive-ocr can
+    //   still fetch the pages one at a time over HTTP. Same routing as the
+    //   sparse-JP2 case in processBook.
+    // Everything else: transient — record a strike and try again next round.
+    if (msg.includes('HTTP 401') || msg.includes('HTTP 403')) {
       await db.collection(booksCol).updateOne(
         { id: book.id },
         { $set: {
           'archive_metadata.blocked': true,
           'archive_metadata.blocked_at': new Date(),
-          'archive_metadata.blocked_reason': err.message.slice(0, 200),
+          'archive_metadata.blocked_reason': msg.slice(0, 200),
+        }}
+      );
+    } else if (msg.includes('ETIMEDOUT') || msg.includes('spawnSync')) {
+      console.log(`    [FAIL-BOOK] opj_decompress timeout — marking bulk_unsuitable, routing to archive-ocr`);
+      await db.collection(booksCol).updateOne(
+        { id: book.id },
+        { $set: {
+          'archive_metadata.bulk_unsuitable': true,
+          'archive_metadata.bulk_unsuitable_at': new Date(),
+          'archive_metadata.bulk_unsuitable_reason': `opj_decompress timeout: ${msg.slice(0, 160)}`,
+          updated_at: new Date(),
+        }, $unset: {
+          'archive_metadata.bulk_failures': '',
+          'archive_metadata.bulk_last_error': '',
+          'archive_metadata.bulk_last_failed_at': '',
         }}
       );
     } else {
-      await recordBulkFailure(db, book, err.message);
+      await recordBulkFailure(db, book, msg);
     }
   } finally {
     try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}

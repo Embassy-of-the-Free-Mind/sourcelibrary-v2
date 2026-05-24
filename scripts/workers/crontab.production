@@ -24,6 +24,12 @@
 # Pipeline health alert (read-only, lightweight)
 0 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 
+# R2 coverage snapshot (every 6h — updates the doc /admin/r2-coverage reads)
+30 */6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
+
+# Archive auto-unblock (daily — retry books blocked >14d ago with transient failure reasons; leaves 401/403 auth blocks alone)
+0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-unblock.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-auto-unblock.mjs" >> /var/log/sourcelibrary/archive-auto-unblock.log 2>&1
+
 # ISR cache warming (HTTP revalidation, no DB)
 0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
