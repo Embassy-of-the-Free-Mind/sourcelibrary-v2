@@ -247,6 +247,34 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
 ];
 
+// ── Tenant Visibility ─────────────────────────────────────────────────
+
+/**
+ * Books carry `tenant_id` that scopes them to a particular tenant face.
+ * `default` (and books with no tenant_id) belong to the main library;
+ * other values like `bhutan` belong to partner subdomains. The librarian
+ * runs in main-site context today, so it must filter to tenant_id values
+ * that the main site is allowed to surface.
+ *
+ * Background: the AI librarian leaked a Bhutanese book to main-site users
+ * because Atlas + semantic search returned every tenant's books indiscriminately
+ * (the embedding RPC's tenant filter was explicitly dropped in PR #1780).
+ * See .claude/docs/tenant-architecture-audit-2026-05-23.md.
+ */
+const MAIN_SITE_TENANT_IDS: Array<string | null> = ['default', null];
+
+function tenantVisibilityFilter(allowedTenantIds: Array<string | null> = MAIN_SITE_TENANT_IDS) {
+  const hasNull = allowedTenantIds.includes(null);
+  const slugs = allowedTenantIds.filter((t): t is string => t !== null);
+  const clauses: Record<string, unknown>[] = [];
+  if (slugs.length > 0) clauses.push({ tenant_id: { $in: slugs } });
+  if (hasNull) clauses.push({ tenant_id: { $in: [null, undefined] } });
+  return {
+    hidden: { $ne: true },
+    ...(clauses.length === 1 ? clauses[0] : { $or: clauses }),
+  };
+}
+
 // ── Tool Execution ────────────────────────────────────────────────────
 
 async function executeSearchCollection(query: string, searchBooks = true): Promise<{
@@ -254,32 +282,39 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
   books: Array<{ id: string; title: string; author?: string; year?: number; slug?: string }>;
 }> {
   const db = await getDb();
+  const visibilityFilter = tenantVisibilityFilter();
 
   const searchStage = buildPageSearchStage(query);
+  // Over-fetch so post-filtering for tenant scope still yields enough passages.
   const pages = await db.collection('pages')
     .aggregate([
       searchStage,
-      { $limit: 16 },
+      { $limit: 48 },
       { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
     ])
     .toArray();
 
-  const perBook = new Map<string, number>();
-  const deduped = pages.filter(p => {
-    const count = perBook.get(p.book_id) || 0;
-    if (count >= 2) return false;
-    perBook.set(p.book_id, count + 1);
-    return true;
-  }).slice(0, 8);
-
-  const bookIds = [...new Set(deduped.map(p => p.book_id))];
-  const bookDocs = bookIds.length > 0
+  // Look up the books referenced by page hits and drop any pages whose book
+  // is hidden or belongs to another tenant.
+  const pageBookIds = [...new Set(pages.map(p => p.book_id))];
+  const visibleBookDocs = pageBookIds.length > 0
     ? await db.collection('books')
-        .find({ id: { $in: bookIds } })
+        .find({ id: { $in: pageBookIds }, ...visibilityFilter })
         .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 })
         .toArray()
     : [];
-  const bookMap = new Map(bookDocs.map(b => [b.id, b]));
+  const bookMap = new Map(visibleBookDocs.map(b => [b.id, b]));
+
+  const perBook = new Map<string, number>();
+  const deduped = pages
+    .filter(p => bookMap.has(p.book_id))
+    .filter(p => {
+      const count = perBook.get(p.book_id) || 0;
+      if (count >= 2) return false;
+      perBook.set(p.book_id, count + 1);
+      return true;
+    })
+    .slice(0, 8);
 
   const passages = deduped.map(page => {
     const book = bookMap.get(page.book_id);
@@ -304,7 +339,12 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
   if (searchBooks) {
     const bookSearchStage = buildBookSearchStage(query, { hasTranslation: true }, { fuzzy: true });
     const bookResults = await db.collection('books')
-      .aggregate([bookSearchStage, { $limit: 5 }, { $project: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 } }])
+      .aggregate([
+        bookSearchStage,
+        { $match: visibilityFilter },
+        { $limit: 5 },
+        { $project: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 } },
+      ])
       .toArray();
     books = bookResults.map(b => ({ id: b.id, title: b.display_title || b.title, author: b.author, year: b.year, slug: b.slug }));
   }
@@ -318,45 +358,51 @@ async function executeSearchSemantic(query: string): Promise<
   // Two-step search (issue #1158):
   // Step 1: book discovery via book_embeddings (HNSW, ~17K vectors, instant)
   // Step 2: page drill-down via match_pages_in_books (scoped to found books)
+  // Tenant filtering happens post-search via the visibility map below — the
+  // Supabase RPCs don't carry tenant filters (see audit doc).
   const { semanticBookSearch, semanticPageSearchScoped } = await import('@/lib/semantic-search');
   try {
-    const books = await semanticBookSearch(query, 8);
+    // Over-fetch to absorb tenant filtering without starving the result set.
+    const books = await semanticBookSearch(query, 24);
     if (books.length === 0) return [];
 
-    // Step 2: get best page citations from top books
     const bookIds = books.map(b => b.book_id);
-    const pages = await semanticPageSearchScoped(query, bookIds, 8);
 
-    // Build a map of best page per book
+    // Resolve which of those book IDs belong to the main-site tenant scope
+    // AND aren't hidden. This drops Bhutan/BPH/etc. books that the embedding
+    // RPC happily returned without any tenant awareness.
+    const db = await getDb();
+    const visibleDocs = await db.collection('books')
+      .find({ id: { $in: bookIds }, ...tenantVisibilityFilter() })
+      .project({ id: 1, slug: 1 })
+      .toArray();
+    const visibleMap = new Map(visibleDocs.map(d => [d.id, d.slug]));
+    const visibleBookIds = bookIds.filter(id => visibleMap.has(id));
+    if (visibleBookIds.length === 0) return [];
+
+    const pages = await semanticPageSearchScoped(query, visibleBookIds, 8);
+
     const bestPageByBook = new Map<string, typeof pages[0]>();
     for (const p of pages) {
       const existing = bestPageByBook.get(p.book_id);
       if (!existing || p.score > existing.score) bestPageByBook.set(p.book_id, p);
     }
 
-    // Look up slugs from MongoDB for proper linking
-    const db = await getDb();
-    const slugDocs = bookIds.length > 0
-      ? await db.collection('books')
-          .find({ id: { $in: bookIds } })
-          .project({ id: 1, slug: 1 })
-          .toArray()
-      : [];
-    const slugMap = new Map(slugDocs.map(d => [d.id, d.slug]));
-
-    // Return book results, enriched with page citations where available
-    return books.map(b => {
-      const page = bestPageByBook.get(b.book_id);
-      return {
-        book_id: b.book_id,
-        bookTitle: b.title || 'Unknown',
-        bookAuthor: b.author || 'Unknown',
-        bookSlug: slugMap.get(b.book_id),
-        page_number: page?.page_number || 0,
-        snippet: page?.snippet || (b.summary_text || '').slice(0, 500),
-        score: b.similarity,
-      };
-    });
+    return books
+      .filter(b => visibleMap.has(b.book_id))
+      .slice(0, 8)
+      .map(b => {
+        const page = bestPageByBook.get(b.book_id);
+        return {
+          book_id: b.book_id,
+          bookTitle: b.title || 'Unknown',
+          bookAuthor: b.author || 'Unknown',
+          bookSlug: visibleMap.get(b.book_id),
+          page_number: page?.page_number || 0,
+          snippet: page?.snippet || (b.summary_text || '').slice(0, 500),
+          score: b.similarity,
+        };
+      });
   } catch {
     return [];
   }

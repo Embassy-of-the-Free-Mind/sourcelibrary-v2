@@ -185,6 +185,7 @@ function logBotAccess(request: NextRequest, action: string) {
 const TENANT_SUBDOMAINS: Record<string, string> = {
   'bph.sourcelibrary.org': 'bph',
   'kloss.sourcelibrary.org': 'kloss-collection',
+  'bhutan.sourcelibrary.org': 'bhutan',
   // 'ritman.sourcelibrary.org': 'ritman',
 };
 

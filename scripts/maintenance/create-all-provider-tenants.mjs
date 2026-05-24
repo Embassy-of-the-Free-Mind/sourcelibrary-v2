@@ -161,6 +161,9 @@ async function main() {
     slug,
     name,
     status: 'active',
+    // Provider entries are NOT subdomain tenants — they're metadata about
+    // contributing libraries. See scripts/migration/add-tenant-kind-field.mjs.
+    kind: 'provider',
     createdAt: now,
     createdBy,
     settings: {

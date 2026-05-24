@@ -1181,6 +1181,17 @@ export default async function BookDetailPage({ params, isEmbedded = false }: Pag
   const tenantId = await getCachedTenantId(tenant);
   const tenantSlug = tenant;
 
+  // Existence + tenant-match check BEFORE streaming. notFound() called from
+  // inside the Suspense boundary below renders the not-found UI but leaves the
+  // response status at 200 because headers were already flushed. Doing the
+  // check up here lets Next.js return a real 404 status. Both calls go through
+  // getCachedBookLookup so this is "free" — the streaming child reuses the
+  // cached result.
+  const earlyBook = await getBookForMetadata(id, tenantId, tenantSlug).catch(() => null);
+  if (!earlyBook) {
+    notFound();
+  }
+
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
       {!isEmbedded && <ConditionalSiteHeader variant="light" />}
