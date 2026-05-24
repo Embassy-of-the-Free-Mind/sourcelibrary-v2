@@ -61,6 +61,10 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
   // Exclude empty shell books (0 pages from failed imports)
   filter.push({ range: { path: 'pages_count', gt: 0 } });
 
+  // Tenant scoping is NOT in the Atlas Search index (see .claude/docs/search.md).
+  // Callers must post-filter results through the books collection — see
+  // applyTenantVisibility() consumers in src/lib/embassy/librarian.ts.
+
   if (filters.languages && filters.languages.length > 0) {
     filter.push({ in: { path: 'language', value: filters.languages } });
   } else if (filters.language) {
