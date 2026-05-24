@@ -104,9 +104,15 @@ async function main() {
 
   // Step 3 — DNS reminder
   console.log('\n--- DNS REQUIRED (Derek action) ---');
-  console.log('Add bhutan.sourcelibrary.org as a domain in Vercel project:');
-  console.log('  vercel domains add bhutan.sourcelibrary.org');
-  console.log('Then verify the proxy mapping in src/proxy.ts:185 already routes it.');
+  console.log('sourcelibrary.org runs on Cloudflare DNS in front of Vercel, so both sides need an update:');
+  console.log('  1. Cloudflare → add DNS record:');
+  console.log('       Type:  CNAME');
+  console.log('       Name:  bhutan');
+  console.log('       Target: cname.vercel-dns.com');
+  console.log('       Proxy:  DNS only (gray cloud — orange breaks Vercel SSL)');
+  console.log('  2. Vercel → claim the hostname so Vercel serves it + issues SSL:');
+  console.log('       vercel domains add bhutan.sourcelibrary.org');
+  console.log('Proxy mapping in src/proxy.ts already routes bhutan.sourcelibrary.org → /embed/bhutan/*.');
 
   if (!apply) console.log('\nDRY RUN — pass --apply to write.');
   await client.close();
