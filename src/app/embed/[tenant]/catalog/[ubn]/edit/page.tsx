@@ -81,13 +81,17 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   const tenantRole = await effectiveTenantRole(session.user.email, tenant);
   const effectiveRole = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
 
-  // PR-C ships editor mode only. PR-D will loosen this to contributor and
-  // route the form's Save through the pending-changes flow instead.
-  if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['editor']) {
+  // Contributor and above can reach this page. The API routes Save through
+  // applyWorkRevision for editor+ (direct apply) and into
+  // bph_works_pending_changes for contributor (queued for editor review).
+  // The form learns its mode from the `mode` prop below.
+  if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['contributor']) {
     const h = await headers();
     const referer = h.get('referer') || `/catalog/${encodeURIComponent(ubn)}`;
     redirect(referer);
   }
+  const formMode: 'editor' | 'contributor' =
+    ROLE_LEVEL[effectiveRole] >= ROLE_LEVEL['editor'] ? 'editor' : 'contributor';
 
   // Fetch the current row using exactly the whitelisted editable columns.
   // The detail page exists at /catalog/[ubn] — if we can't find the row,
@@ -140,6 +144,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
           tenant={tenant}
           initial={work}
           editorEmail={session.user.email || ''}
+          mode={formMode}
         />
       </div>
     </div>
