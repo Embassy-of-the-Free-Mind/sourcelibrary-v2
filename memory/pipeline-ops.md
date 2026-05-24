@@ -2,7 +2,7 @@
 
 Operational reference for pipeline monitoring, debugging, and processing. For full architecture details, see `.claude/docs/pipeline-architecture.md`.
 
-## Where Everything Runs (March 2026)
+## Where Everything Runs (snapshot 2026-05 — verify if older than ~30 days)
 
 | Component | Where | How |
 |-----------|-------|-----|
@@ -28,7 +28,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | OCR (batch) | `gemini-3-flash-preview` | `gemini-3.1-flash-lite-preview` |
 | Translation | `gemini-3-flash-preview` | `gemini-3.1-flash-lite-preview` |
 | Transliteration | `gemini-3.1-flash-lite-preview` | `gemini-3.1-flash-lite-preview` |
-| Summary/Index | `gemini-3-flash-preview` | `gemini-3-flash-preview` |
+| Summary/Index/Chapters | `gemini-3.1-flash-lite-preview` | `gemini-3.1-flash-lite-preview` |
 
 ## Emergency Controls
 
@@ -53,7 +53,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first
 - **Never patch Hetzner directly without committing to git.** Local-only patches cause drift that's invisible to other devs and future sessions. Apply fixes in git first, then `git pull` on Hetzner.
 - **Health grading uses DB latency only** (findMs, countMs), not job count. Job count stopped correlating with DB load when translation moved to Hetzner. See lesson 2026-03-30.
-- Summary/Index generation: ALWAYS use `gemini-3-flash-preview` (per CLAUDE.md)
+- Summary/Index/Chapters generation: enrich-worker uses `gemini-3.1-flash-lite-preview` for ALL phases (per CLAUDE.md, verified in `scripts/workers/enrich-worker.mjs`).
 - Stale Vercel connection pools after DB recovery → redeploy to reset
 
 ## Lessons Learned

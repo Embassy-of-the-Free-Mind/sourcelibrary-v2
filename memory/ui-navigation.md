@@ -23,9 +23,11 @@ Operational reference for frontend work. For design tokens, see `.claude/docs/st
 - `/{tenant}/book/[slug]` — Primary book detail route (root `/book/[slug]` is legacy-redirected by middleware)
 - `/collections/[slug]` — Global collection detail route (shared across all tenants, contains cross-tenant books)
 - `/{tenant}/gallery/image/[id]` — Primary gallery image route (root `/gallery/image/[id]` is legacy-redirected)
-- `/about/*` — Content pages (research, faq, sources, standards, progress)
-- `/admin/*` — Admin dashboard (auth-gated)
-- `/artwork` — Visual art wing (admin-only for now)
+- `/browse`, `/catalog`, `/explore`, `/search` — Discovery surfaces (all global / non-tenant per the 2026-04-29 lesson below)
+- `/librarian`, `/podcast`, `/blog`, `/artwork` — Reading-room features
+- `/about/*` — Content pages (`faq`, `sources`, `research`, `progress`, `by-the-numbers`, `processing`)
+- `/admin/*` — Admin dashboard (auth-gated). Includes `/admin/system-map` for the interactive architecture diagram.
+- `/developers`, `/for-libraries`, `/for-researchers`, `/founding-donors`, `/ficino-society` — Partner / outreach pages
 
 ## Lessons Learned
 

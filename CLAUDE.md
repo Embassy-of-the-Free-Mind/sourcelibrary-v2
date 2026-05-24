@@ -79,16 +79,14 @@ Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies
 - **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`), not dead code.
 
 ## Domain Context
-Memory is organized hierarchically: `MEMORY.md` (top-level, always loaded) → `_index-*.md` section indexes → individual topic files. Load the relevant section index for your task — don't read all of them.
 
 Detect the work domain from the user's prompt and load the right context automatically:
 - **System overview / "where does X live?":** read `.claude/docs/system-map.md`
-- **Pipeline/cron/Lambda/OCR/translation:** read `memory/_index-pipeline.md` + `memory/_index-safety.md` (or `/pipeline-context`)
-- **UI/frontend/navigation:** read `memory/_index-product.md` (or `/ui-context`)
-- **Data fixes/maintenance/stuck books:** read `memory/_index-safety.md` + `memory/_index-content.md` (or `/maintenance`)
-- **Search/embeddings:** read `memory/_index-search.md`
-- **Import/curation:** read `memory/_index-content.md` (or `/curator`, `/library-curator`)
-- **Deploy/infra:** read `memory/_index-infrastructure.md`
+- **Pipeline/cron/Lambda/OCR/translation:** read `memory/pipeline-ops.md` (or `/pipeline-context`)
+- **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
+- **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
+- **MCP server/CLI:** read `memory/mcp-server.md`
+- **Book acquisition / curation:** `/curator` or `/library-curator`
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
 - **Handoffs:** `.claude/handoffs/` (read by date/topic)
@@ -98,7 +96,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
 - When reading memory files, flag anything that contradicts the current codebase and fix it.
 - Memory entries with dates >14 days old: verify before trusting stats/counts.
-- **When adding new memory files**, add them to the appropriate `_index-*.md` section index (not directly to MEMORY.md). Keep MEMORY.md under 100 lines.
+- **Two memory systems:** `<repo>/memory/` (committed, team-shared, flat files listed above) is loaded by skills like `/pipeline-context`. Claude Code auto-memory (per-machine, gitignored, lives in `~/.claude/projects/<project>/memory/`) is managed by Claude across sessions and has its own `MEMORY.md` + `_index-*.md` hierarchy. The `/lesson` workflow writes to repo memory.
 
 ## Compaction Instructions
 When compacting (`/compact`), ALWAYS preserve:
