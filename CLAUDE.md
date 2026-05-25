@@ -1,5 +1,10 @@
 # Claude Code Guidelines for Source Library
 
+## Mission
+Source Library is a digital library of historical primary sources — alchemy, Hermetica, Kabbalah, Rosicrucianism, early modern science, and adjacent traditions — with AI-aided OCR, translation, and curation that make these texts readable and citable. The core experience is *reading and quoting* originals (`/book/...`, shortlinks, DOIs via Zenodo); curation surfaces them through collections, galleries, and editorial pages. Tenant subdomains (BPH/EFM, etc.) host curated subsets as standalone reading rooms for partner institutions.
+
+When making product decisions, lead with: who reads this, what experience are they having, and does this serve the goal of putting primary sources into people's hands. Technical choices flow from that. The CRITICAL sections below are scar tissue from real incidents — read them, but don't mistake them for the point of the project.
+
 ## Development Workflow — CRITICAL
 - **Feature branches off `main`.** One branch per feature/task: `feat/ai-search`, `fix/cover-thumbnails`, etc. No long-running dev branches.
 - **Create a branch via worktree:** Use `EnterWorktree` at session start — it creates an isolated checkout with its own branch. Do NOT `git checkout -b` in the main directory (see Multi-Session Awareness above).
@@ -58,7 +63,7 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 
 The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.
 
-**Identity shares, permissions do not.** Role checks still run via `memberships` collection lookups per tenant (`auth-helpers.ts:25-50`). A user signed in on the parent site does not inherit any tenant role just by visiting a subdomain; the `withAuth(handler, { minRole })` wrapper (and role-specific shorthands like `withEditorAuth`, `withAdminAuth`) continues to enforce per-tenant gates.
+**Identity shares, permissions do not.** Role checks still run via `memberships` collection lookups per tenant (`getTenantMembershipRole` in `src/lib/auth-helpers.ts`). A user signed in on the parent site does not inherit any tenant role just by visiting a subdomain; the `withAuth(handler, { minRole })` wrapper (and role-specific shorthands like `withEditorAuth`, `withAdminAuth`) continues to enforce per-tenant gates.
 
 **CSRF token stays per-host** (`__Host-` prefix forbids the `domain` attribute, and each subdomain hits its own `/api/auth/*` routes).
 
@@ -96,7 +101,8 @@ Detect the work domain from the user's prompt and load the right context automat
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
 - When reading memory files, flag anything that contradicts the current codebase and fix it.
 - Memory entries with dates >14 days old: verify before trusting stats/counts.
-- **Two memory systems:** `<repo>/memory/` (committed, team-shared, flat files listed above) is loaded by skills like `/pipeline-context`. Claude Code auto-memory (per-machine, gitignored, lives in `~/.claude/projects/<project>/memory/`) is managed by Claude across sessions and has its own `MEMORY.md` + `_index-*.md` hierarchy. The `/lesson` workflow writes to repo memory.
+- **Two memory systems, in plain terms:** repo memory = *team facts* (committed, shared with collaborators). Auto-memory = *Claude's per-machine notes* about the user (gitignored, private). The `/lesson` workflow writes to repo memory. Locations: `<repo>/memory/` (loaded by skills like `/pipeline-context`); `~/.claude/projects/<project>/memory/` (managed by Claude across sessions, has its own `MEMORY.md` + `_index-*.md` hierarchy).
+- **Every incident handoff ends with a CLAUDE.md check.** When writing a handoff in `.claude/handoffs/`, the last step is: "does CLAUDE.md need a new invariant?" If yes, PR the doc change the same session. Otherwise the lesson lives only in the handoff and decays. Both big CRITICAL sections in this file were written this way.
 
 ## Compaction Instructions
 When compacting (`/compact`), ALWAYS preserve:
