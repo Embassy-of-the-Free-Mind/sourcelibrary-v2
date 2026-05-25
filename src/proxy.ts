@@ -384,11 +384,21 @@ export async function proxy(request: NextRequest) {
         url.pathname = `/embed/${tenant}${pathname}`;
       }
     } else if (pathname === '/catalogue' || pathname === '/catalog') {
-      // Catalogue page on tenant subdomain — show the full library catalogue
-      // (e.g. all 28k BPH works). `/catalog` kept as legacy alias for any
-      // bookmarks or backlinks; canonical public URL is `/catalogue`.
-      url.pathname = `/embed/${tenant}`;
-      url.searchParams.set('view', 'catalog');
+      // Catalogue page on tenant subdomain.
+      //
+      // Tenants that opt into the dedicated catalogue route (manuscript
+      // collections like bhutan) are routed to `/embed/<tenant>/catalogue`.
+      // Tenants still on the BPH-style `?view=catalog` query param flow
+      // (BPH, kloss, etc.) keep the existing landing-page rewrite — they
+      // render `<UnifiedCatalogue>` / `<BphUnifiedCatalogue>` inside the
+      // landing page based on the query param.
+      const usesDedicatedCatalogue = tenant === 'bhutan';
+      if (usesDedicatedCatalogue) {
+        url.pathname = `/embed/${tenant}/catalogue`;
+      } else {
+        url.pathname = `/embed/${tenant}`;
+        url.searchParams.set('view', 'catalog');
+      }
     } else if (pathname.startsWith('/catalogue/') || pathname.startsWith('/catalog/')) {
       // Catalogue entry detail (e.g. /catalogue/12345 for UBN-keyed BPH works).
       // Both spellings forwarded to the existing `/catalog/[ubn]` route folder.
