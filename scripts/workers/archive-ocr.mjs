@@ -17,7 +17,12 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { upgradeToFullRes } from '../lib/iiif-utils.mjs';
 
 const MAX_PAGES = 10_000;
-const MAX_PAGES_PER_DOMAIN = 5000;  // Prevent one domain from crowding out others
+// MAX_PAGES_PER_DOMAIN caps how many pages from a single source make it into one
+// run. Was 5000; bumped to 8000 because MDZ (Munich, 337K-page backlog at 2 req/s)
+// was hitting the cap before saturating its token bucket — 2 req/s × ~70 min run
+// = ~8400 requests, so 8000 lets it pull a full run's worth without crowding
+// other domains (each capped at its own token bucket rate anyway).
+const MAX_PAGES_PER_DOMAIN = 8000;
 
 // Per-domain rate limits (requests per second) — be a good citizen
 const DOMAIN_RATE_LIMITS = {
