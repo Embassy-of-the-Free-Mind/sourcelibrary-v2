@@ -5,6 +5,7 @@
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/build-lamejs-bundle.js",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
