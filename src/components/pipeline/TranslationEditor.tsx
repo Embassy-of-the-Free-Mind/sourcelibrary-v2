@@ -22,7 +22,9 @@ import {
   Search,
   Info,
   Type,
-  BookOpen
+  BookOpen,
+  Save,
+  AlertCircle,
 } from 'lucide-react';
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
@@ -442,6 +444,17 @@ export default function TranslationEditor({
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
+  // Save state for the inline page editor. The previous design auto-saved on
+  // blur with no UI feedback — editors (Paul Dijstelberge, May 2026) reported
+  // edits "disappearing" because silent save failures were invisible. We now
+  // track dirty state explicitly, show a Save button, and toast on error.
+  type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
+  const lastSavedRef = useRef({
+    ocr: page.ocr?.data || '',
+    translation: page.translation?.data || '',
+    summary: page.summary?.data || '',
+  });
   const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize } = useReaderPreferences();
 
   // Modernized text toggle
@@ -789,10 +802,15 @@ export default function TranslationEditor({
 
   // Update state when page changes
   useEffect(() => {
-    setOcrText(page.ocr?.data || '');
-    setTranslationText(page.translation?.data || '');
-    setSummaryText(page.summary?.data || '');
+    const ocr = page.ocr?.data || '';
+    const translation = page.translation?.data || '';
+    const summary = page.summary?.data || '';
+    setOcrText(ocr);
+    setTranslationText(translation);
+    setSummaryText(summary);
     setModernizedText(page.modernized?.data || null);
+    lastSavedRef.current = { ocr, translation, summary };
+    setSaveStatus('idle');
     // Reset scroll on all content panels and the outer panel container (mobile stacked layout)
     document.querySelectorAll('[data-reader-panel]').forEach(el => {
       el.scrollTop = 0;
@@ -855,17 +873,78 @@ export default function TranslationEditor({
     }
   };
 
+  const isDirty =
+    ocrText !== lastSavedRef.current.ocr ||
+    translationText !== lastSavedRef.current.translation ||
+    summaryText !== lastSavedRef.current.summary;
+
   const handleSave = async () => {
+    if (!isDirty) return;
+    // Clicking the Save button blurs the textarea first — guard against the
+    // resulting double-save (blur → save, then click → save) clobbering the
+    // in-flight request.
+    if (saveStatus === 'saving') return;
+    setSaveStatus('saving');
     try {
       await onSave({
         ocr: ocrText,
         translation: translationText,
-        summary: summaryText
+        summary: summaryText,
       });
+      lastSavedRef.current = {
+        ocr: ocrText,
+        translation: translationText,
+        summary: summaryText,
+      };
+      setSaveStatus('saved');
     } catch (error) {
       console.error('Save error:', error);
+      setSaveStatus('error');
+      const msg = error instanceof Error ? error.message : 'Save failed';
+      toast.error(`Could not save your edit: ${msg}`);
     }
   };
+
+  // After a successful save, fade the "Saved" badge back to idle so the
+  // header doesn't stay green forever.
+  useEffect(() => {
+    if (saveStatus !== 'saved') return;
+    const t = setTimeout(() => {
+      setSaveStatus((s) => (s === 'saved' ? 'idle' : s));
+    }, 2500);
+    return () => clearTimeout(t);
+  }, [saveStatus]);
+
+  const renderSaveControls = () => (
+    <div className="flex items-center gap-2">
+      {saveStatus === 'saving' && (
+        <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-muted)' }}>
+          <Loader2 className="w-3 h-3 animate-spin" /> Saving…
+        </span>
+      )}
+      {saveStatus === 'saved' && (
+        <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
+          <Check className="w-3 h-3" /> Saved
+        </span>
+      )}
+      {saveStatus === 'error' && (
+        <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-rust)' }}>
+          <AlertCircle className="w-3 h-3" /> Save failed
+        </span>
+      )}
+      <button
+        type="button"
+        onClick={handleSave}
+        disabled={!isDirty || saveStatus === 'saving'}
+        className="btn-primary flex items-center justify-center gap-1.5"
+        style={{ padding: '4px 10px', fontSize: '12px' }}
+        title={isDirty ? 'Save your changes' : 'No unsaved changes'}
+      >
+        <Save className="w-3.5 h-3.5" />
+        <span>{isDirty ? 'Save' : 'Saved'}</span>
+      </button>
+    </div>
+  );
 
   const copyToClipboard = async (text: string) => {
     await navigator.clipboard.writeText(text);
@@ -2040,9 +2119,12 @@ export default function TranslationEditor({
               </div>
             </div>
 
-            <div className="px-3 sm:px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>OCR Text</span>
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{ocrText.length} chars</span>
+            <div className="px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>OCR Text</span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{ocrText.length} chars</span>
+              </div>
+              {renderSaveControls()}
             </div>
 
             <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>
@@ -2127,14 +2209,15 @@ export default function TranslationEditor({
               </div>
             </div>
 
-            <div className="px-3 sm:px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+            <div className="px-3 sm:px-4 py-2 flex items-center justify-between gap-3" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Translation</span>
                 <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}>
                   English
                 </span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
               </div>
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
+              {renderSaveControls()}
             </div>
 
             <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>

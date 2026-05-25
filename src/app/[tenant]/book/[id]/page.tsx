@@ -1,5 +1,6 @@
 import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
+import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -31,6 +32,8 @@ import DublinCoreMeta from '@/components/seo/DublinCoreMeta';
 import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ExpandableGuide from '@/components/book/ExpandableGuide';
+import { AISection } from '@/components/embed/AISection';
+import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
@@ -257,7 +260,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
+interface AuthorEntityPreview {
+  name?: string;
+  canonical_name?: string;
+  aliases?: string[];
+  viaf_id?: string;
+  wikidata_id?: string;
+  lcnaf_id?: string;
+  gnd_id?: string;
+  wikipedia_url?: string;
+  wikidata_birth_date?: string;
+  wikidata_death_date?: string;
+}
+
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -379,11 +395,37 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   // Fall back to the catalog book (Supabase) if Atlas fetch failed
   const book = fullBookResult?.book ?? quickBook;
 
-  // Fetch full index data from dedicated collection (keeps book docs small)
-  const bookIndexDoc = await db.collection('book_indexes').findOne(
-    { book_id: bookId },
-    { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-  ).catch(() => null);
+  // Author authority record (variants / VIAF / Wikidata) — only when the
+  // book has been linked to an entity. Loaded in parallel with the index
+  // doc; failures are non-fatal (the AuthorAuthority component just doesn't
+  // render). See scripts/enrichment/viaf-author-linking.mjs for how the
+  // link gets set.
+  const authorEntityIdRaw = (book as { author_entity_id?: string }).author_entity_id;
+  const authorEntityId = typeof authorEntityIdRaw === 'string' && ObjectId.isValid(authorEntityIdRaw)
+    ? authorEntityIdRaw
+    : null;
+
+  const [bookIndexDoc, authorEntity] = await Promise.all([
+    db.collection('book_indexes').findOne(
+      { book_id: bookId },
+      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+    ).catch(() => null),
+    authorEntityId
+      ? db.collection('entities').findOne(
+          { _id: new ObjectId(authorEntityId) },
+          {
+            projection: {
+              _id: 0,
+              name: 1, canonical_name: 1, aliases: 1,
+              viaf_id: 1, wikidata_id: 1, lcnaf_id: 1, gnd_id: 1,
+              wikipedia_url: 1,
+              wikidata_birth_date: 1, wikidata_death_date: 1,
+            },
+            maxTimeMS: 3000,
+          }
+        ).catch(() => null)
+      : Promise.resolve(null),
+  ]);
 
   // Merge index data back onto book for rendering (if found in dedicated collection)
   if (bookIndexDoc) {
@@ -427,7 +469,9 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   const galleryImages = deduplicateByDHash(galleryImagesParsed).slice(0, 8) as GalleryImagePreview[];
   const bookCollections = JSON.parse(JSON.stringify(bookCollectionsRaw)) as BookCollectionPreview[];
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug };
+  const serializedEntity = authorEntity ? JSON.parse(JSON.stringify(authorEntity)) : null;
+
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity };
 }
 
 // Skeleton for book info while loading
@@ -490,7 +534,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
   // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
@@ -630,20 +674,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
             {/* Details */}
             <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
-              {book.display_title && book.title !== book.display_title && (
-                <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
-              )}
-              {/* Byline: prefer author; fall back to "edited by {editor}" for
-                  magazines / edited volumes / anthologies where the catalogue
-                  has no single author. When both fields are present, show
-                  author with the editor as a secondary credit. See
-                  src/lib/byline.ts for the case-insensitive "Unknown"
-                  placeholder rules shared with cards and citations. */}
+              {/* Bibliographic citation order (Paul Dijstelberge, BPH feedback):
+                  author leads, then title, then impressum. The h1 stays on
+                  title for SEO and visual hierarchy; author renders as the
+                  eyebrow above it. See src/lib/byline.ts for "Unknown" rules. */}
               {(() => {
                 const heroByline = getEffectiveByline(book);
                 return (
-                  <p className="text-lg sm:text-xl text-stone-300 mt-2">
+                  <p className="text-base sm:text-lg text-stone-300 mb-1">
                     {heroByline.role === 'author' ? (
                       embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
                         <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
@@ -654,9 +692,30 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                       <span>edited by <AuthorName author={heroByline.editor} /></span>
                     ) : <AuthorName author={book.author} />}
                     {heroByline.role === 'author' && heroByline.editor && (
-                      <span className="text-stone-400 text-base"> · edited by <AuthorName author={heroByline.editor} /></span>
+                      <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} /></span>
                     )}
                   </p>
+                );
+              })()}
+              {authorEntity && (
+                <AuthorAuthority entity={authorEntity} bookAuthor={book.author} />
+              )}
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
+              {book.display_title && book.title !== book.display_title && (
+                <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
+              )}
+              {/* Impressum: "Place: Publisher, Year" — same library-card
+                  format as BphCatalogBrowser.formatImpressum so the book page
+                  and catalogue rows line up. */}
+              {(() => {
+                const place = book.place_published?.trim();
+                const publisher = book.publisher?.trim();
+                const year = book.published ? String(book.published).trim() : '';
+                const placePub = [place, publisher].filter(Boolean).join(': ');
+                const impressum = [placePub, year].filter(Boolean).join(', ');
+                if (!impressum) return null;
+                return (
+                  <p className="text-stone-300 mt-2 text-sm sm:text-base">{impressum}</p>
                 );
               })()}
 
@@ -693,30 +752,38 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     ))}
                   </div>
                 )}
-                {(book.published || book.source_work_dates?.length) && (
+                {/* Calendar chip carries composition / translation dates that
+                    enrich the plain print year shown in the impressum line above.
+                    Skip the chip when there's no source_work_dates to add — the
+                    print year alone is already in the impressum. */}
+                {book.source_work_dates?.length ? (
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    {book.source_work_dates?.length ? (
-                      <span>
-                        {book.source_work_dates.find(l => l.type === 'composition')
-                          ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${book.source_work_dates.find(l => l.type === 'composition')!.date_display}`.trim()
-                          : ''}
-                        {book.source_work_dates.find(l => l.type === 'composition') && book.published
-                          ? <span className="text-stone-500"> · published {book.published}</span>
-                          : ''}
-                        {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
-                          ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} trans. ${book.source_work_dates.find(l => l.type === 'translation')!.date_display}`.trim()
-                          : ''}
-                        {!book.source_work_dates.find(l => l.type === 'composition') && !book.source_work_dates.find(l => l.type === 'translation') && book.published
-                          ? book.published
-                          : ''}
-                      </span>
-                    ) : book.published}
+                    <span>
+                      {book.source_work_dates.find(l => l.type === 'composition')
+                        ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${book.source_work_dates.find(l => l.type === 'composition')!.date_display}`.trim()
+                        : ''}
+                      {book.source_work_dates.find(l => l.type === 'composition') && book.published
+                        ? <span className="text-stone-500"> · published {book.published}</span>
+                        : ''}
+                      {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
+                        ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} trans. ${book.source_work_dates.find(l => l.type === 'translation')!.date_display}`.trim()
+                        : ''}
+                    </span>
                   </div>
-                )}
-                <div className="flex items-center gap-2">
+                ) : null}
+                {/* "scans" rather than "pages": the count is of scanned
+                    images (IIIF canvases — covers, blanks, endpapers
+                    included). Bibliographic pagination ("[8] 240 [12] pp.")
+                    will live in a separate field once curators capture it
+                    per book. Paul Dijstelberge (BPH) flagged this — none
+                    of the displayed page counts matched the real book. */}
+                <div
+                  className="flex items-center gap-2"
+                  title="Scanned images, including covers and blanks. Bibliographic pagination may differ."
+                >
                   <FileText className="w-4 h-4" />
-                  {totalPages} pages
+                  {totalPages} scans
                 </div>
                 {embedPolicy.showGalleryImages && imageCount > 0 && (
                   <Link
@@ -926,7 +993,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
       {(() => {
         return (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="card p-6">
+            {/* The whole "About This Book" card is hidden when the visitor
+                has scholar mode on (see EmbedUserMenu). Categories are
+                AI-assigned, the prose is generated, and the empty states
+                are meta-commentary about the AI pipeline — none of it
+                belongs on a stripped-down bibliographic page. */}
+            <AISection className="card p-6">
               <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
 
               {/* Categories */}
@@ -946,7 +1018,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     ))}
                   </div>
                   {hasTranslations && (
-                    <ExpandableGuide embedPolicy={embedPolicy} bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
+                    <AISection kind="reading-guide">
+                      <ExpandableGuide embedPolicy={embedPolicy} bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
+                    </AISection>
                   )}
                 </>
               ) : hasTranslations ? (
@@ -968,7 +1042,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   />
                 </p>
               )}
-            </div>
+            </AISection>
 
             {/* Chapters & Sections */}
             {book.chapters?.length ? (
@@ -1024,10 +1098,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   {galleryImages.map((img) => {
                     const src = img.extracted_url || img.thumbnail_url || img.image_url;
                     if (!src) return null;
+                    const pageId = img.id.match(/^(.+)[:\-]\d+$/)?.[1];
+                    const href = pageId
+                      ? `/book/${book.slug || book.id}/page/${pageId}`
+                      : `/gallery/image/${img.id}`;
                     return (
                       <Link
                         key={img.id}
-                        href={`/gallery/image/${img.id}`}
+                        href={href}
                         className="flex-shrink-0 group"
                       >
                         <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
@@ -1102,6 +1180,17 @@ export default async function BookDetailPage({ params, isEmbedded = false }: Pag
   // Use cached tenant lookup instead of headers() to preserve ISR
   const tenantId = await getCachedTenantId(tenant);
   const tenantSlug = tenant;
+
+  // Existence + tenant-match check BEFORE streaming. notFound() called from
+  // inside the Suspense boundary below renders the not-found UI but leaves the
+  // response status at 200 because headers were already flushed. Doing the
+  // check up here lets Next.js return a real 404 status. Both calls go through
+  // getCachedBookLookup so this is "free" — the streaming child reuses the
+  // cached result.
+  const earlyBook = await getBookForMetadata(id, tenantId, tenantSlug).catch(() => null);
+  if (!earlyBook) {
+    notFound();
+  }
 
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>

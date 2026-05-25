@@ -54,6 +54,16 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 
 `node scripts/audit-bph-leaks.mjs` crawls the BPH subdomain, follows internal links to a configurable depth, and exits non-zero if any anchor or one-hop redirect resolves off-subdomain. Run it after touching anything in `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, or any component that builds URLs.
 
+## Authentication across subdomains
+
+The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.
+
+**Identity shares, permissions do not.** Role checks still run via `tenant_memberships` lookups per tenant (`auth-helpers.ts:19-42`). A user signed in on the parent site does not inherit any tenant role just by visiting a subdomain; the `withAuth(handler, { minRole })` / `withBphLibrarianAuth` wrappers continue to enforce per-tenant gates.
+
+**CSRF token stays per-host** (`__Host-` prefix forbids the `domain` attribute, and each subdomain hits its own `/api/auth/*` routes).
+
+Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies.md` for the full rationale and rollback notes.
+
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
 - Production database: `bookstore` (~17K live books, ~24.5K warehouse), NOT `sourcelibrary_research`
@@ -69,16 +79,14 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 - **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`), not dead code.
 
 ## Domain Context
-Memory is organized hierarchically: `MEMORY.md` (top-level, always loaded) → `_index-*.md` section indexes → individual topic files. Load the relevant section index for your task — don't read all of them.
 
 Detect the work domain from the user's prompt and load the right context automatically:
 - **System overview / "where does X live?":** read `.claude/docs/system-map.md`
-- **Pipeline/cron/Lambda/OCR/translation:** read `memory/_index-pipeline.md` + `memory/_index-safety.md` (or `/pipeline-context`)
-- **UI/frontend/navigation:** read `memory/_index-product.md` (or `/ui-context`)
-- **Data fixes/maintenance/stuck books:** read `memory/_index-safety.md` + `memory/_index-content.md` (or `/maintenance`)
-- **Search/embeddings:** read `memory/_index-search.md`
-- **Import/curation:** read `memory/_index-content.md` (or `/curator`, `/library-curator`)
-- **Deploy/infra:** read `memory/_index-infrastructure.md`
+- **Pipeline/cron/Lambda/OCR/translation:** read `memory/pipeline-ops.md` (or `/pipeline-context`)
+- **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
+- **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
+- **MCP server/CLI:** read `memory/mcp-server.md`
+- **Book acquisition / curation:** `/curator` or `/library-curator`
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
 - **Handoffs:** `.claude/handoffs/` (read by date/topic)
@@ -88,7 +96,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
 - When reading memory files, flag anything that contradicts the current codebase and fix it.
 - Memory entries with dates >14 days old: verify before trusting stats/counts.
-- **When adding new memory files**, add them to the appropriate `_index-*.md` section index (not directly to MEMORY.md). Keep MEMORY.md under 100 lines.
+- **Two memory systems:** `<repo>/memory/` (committed, team-shared, flat files listed above) is loaded by skills like `/pipeline-context`. Claude Code auto-memory (per-machine, gitignored, lives in `~/.claude/projects/<project>/memory/`) is managed by Claude across sessions and has its own `MEMORY.md` + `_index-*.md` hierarchy. The `/lesson` workflow writes to repo memory.
 
 ## Compaction Instructions
 When compacting (`/compact`), ALWAYS preserve:

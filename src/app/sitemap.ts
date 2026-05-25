@@ -52,9 +52,25 @@ export async function generateSitemaps() {
   return ids;
 }
 
-export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
-  // Chunk 0: Static pages + blog + categories
-  if (id === 0) {
+export default async function sitemap({
+  id,
+}: {
+  id: Promise<number | string> | number | string;
+}): Promise<MetadataRoute.Sitemap> {
+  // Next.js 16 made dynamic route params async: `id` arrives as a
+  // `Promise<number | string>` and must be awaited before use. The
+  // original code wrote `if (id === 0)` and `getBooks(id - 2)`, both of
+  // which silently saw a pending Promise object and fell through to
+  // `getBooks(NaN)`. Mongo's negative-skip clamp then meant every
+  // /sitemap/{n}.xml URL returned the same first 5000 books regardless
+  // of which chunk Google asked for.
+  //
+  // The same fix covers the legacy direct-number case used at build
+  // time (`generateSitemaps()` returns plain `{ id: number }`).
+  const rawId = await Promise.resolve(id);
+  const chunkId = typeof rawId === 'string' ? parseInt(rawId, 10) : rawId;
+
+  if (chunkId === 0) {
     return [
       ...staticPages(),
       ...blogPosts(),
@@ -62,8 +78,7 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
     ];
   }
 
-  // Chunk 1: Collections, libraries, languages, works
-  if (id === 1) {
+  if (chunkId === 1) {
     const [collectionPages, libraryPages, languagePages, workPages] = await Promise.all([
       getCollections(),
       getLibraries(),
@@ -74,7 +89,8 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
   }
 
   // Chunk 2+: Books (paginated)
-  const bookChunkIndex = id - 2;
+  const bookChunkIndex = (chunkId ?? -1) - 2;
+  if (!Number.isFinite(bookChunkIndex) || bookChunkIndex < 0) return [];
   return getBooks(bookChunkIndex);
 }
 

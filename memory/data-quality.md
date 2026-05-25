@@ -2,12 +2,11 @@
 
 Known data issues, maintenance patterns, and quality rules. For thumbnail fixes, see `.claude/docs/thumbnails.md`.
 
-## Active Issues
+## Current Issues
 
-- **Orphaned pages (2026-03-16):** ~58K pages with ~164 book_ids that don't match any book. Issue #215.
-- **False-positive page splits (2026-03-14):** 123K sliver pages across 657 books. Issue #182 (closed, tracked under #264).
-- **Gallery images missing thumbnails (2026-03-10):** 48.5% of gallery images lack thumbnail/extracted URLs. Issue #148.
-- **Cover quality (2026-03-18):** Digitizer inserts, bad covers, unarchived books. Issue #251.
+For current data-quality issues, run `gh issue list --label data-quality --state open` — pinning specific issue numbers here goes stale fast (the four originally listed here — #215, #182, #148, #251 — are all closed as of April 2026).
+
+Tracked under the auto-memory entry [[project-stale-bph-issues-2026-05]] (snapshot 2026-05-15): seven BPH-specific issues where PRs shipped partial fixes but issue bodies read as done — verify residual work before closing.
 
 ## id vs _id Distinction (CRITICAL)
 
@@ -15,7 +14,7 @@ App uses `book.id` (not `_id`) for all lookups. Pages' `book_id` matches `book.i
 
 ## Page Count Caches
 
-`pages_count`, `pages_ocr`, `pages_translated` on books are performance caches synced by the `sync-page-counts` cron (6h). Source of truth: `pages` collection. `translation_percent` is never stored — computed at read time.
+`pages_count`, `pages_ocr`, `pages_translated` on books are performance caches. Source of truth: `pages` collection. `translation_percent` is never stored — computed at read time. The old `sync-page-counts` cron has been archived; the endpoint now lives at `/api/admin/sync-page-counts` for manual reruns. Counter sync is the responsibility of any worker that writes to `pages` (see pipeline-ops.md "Critical Rules" — Hetzner workers must call counter sync helpers).
 
 ## Data Provenance Rule
 

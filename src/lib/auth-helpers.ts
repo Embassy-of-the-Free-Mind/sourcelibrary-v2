@@ -7,7 +7,13 @@ import { headers } from 'next/headers';
 import { getDb } from '@/lib/mongodb';
 
 function normalizeRole(role: unknown): Role {
-  if (role === 'superadmin' || role === 'admin' || role === 'editor' || role === 'reader') {
+  if (
+    role === 'superadmin' ||
+    role === 'admin' ||
+    role === 'editor' ||
+    role === 'contributor' ||
+    role === 'reader'
+  ) {
     return role;
   }
   // Backward compatibility with older role labels.
@@ -93,6 +99,7 @@ export async function requireRole(minRole: Role, loginPath = '/auth/signin'): Pr
 export const requireSuperAdmin = () => requireRole('superadmin', '/platform/login');
 export const requireAdmin = () => requireRole('admin'); // TODO (Phase 1): pass /${tenantSlug}/login
 export const requireEditor = () => requireRole('editor'); // TODO (Phase 1): pass /${tenantSlug}/login
+export const requireContributor = () => requireRole('contributor'); // TODO (Phase 1): pass /${tenantSlug}/login
 
 /**
  * Check if current user is a superadmin
@@ -247,6 +254,11 @@ export const withSuperadminAuth = (h: (request: NextRequest, session: Session, c
 // TODO: Remove withEditorAuth once all callsites use withAuth({ minRole: 'editor' })
 export const withEditorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
 
+// Contributor-or-above gate. Used by the catalog edit submission route — a
+// contributor can submit a pending change; an editor/admin hitting the same
+// route applies it directly via applyWorkRevision.
+export const withContributorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'contributor' });
+
 // TODO: Remove withInnerCircleAuth — mapped to 'editor'. Verify each callsite matches
 // this permission level before removing.
 export const withInnerCircleAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
@@ -254,3 +266,4 @@ export const withInnerCircleAuth = (h: (request: NextRequest, session: Session, 
 // TODO: Remove withCuratorAuth — mapped to 'editor'. Verify each callsite matches
 // this permission level before removing.
 export const withCuratorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
+

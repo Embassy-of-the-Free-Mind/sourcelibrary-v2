@@ -192,7 +192,7 @@ const WORKERS = [
     lock: '/tmp/sl-archive-ocr.lock',
     connections: 5,
     tier: 4,
-    interval: 1800,     // every 30 min
+    interval: 600,     // every 10 min — runs take ~70 min so flock skips most ticks. Was 1800 (30 min); shorter interval drops worst-case idle gap from 30 min → 10 min between runs (~20% throughput lift). The lock-held no-op is essentially free; the scheduler logs "skipped" and exits in <100ms.
     healthMin: 'degraded',
     log: '/var/log/sourcelibrary/archive-ocr.log',
   },
@@ -202,7 +202,7 @@ const WORKERS = [
     lock: '/tmp/sl-archive-bulk.lock',
     connections: 5,
     tier: 4,
-    interval: 1200,     // every 20 min — throttled 2026-05-15 after bulk import caused 8s search latency (Atlas write saturation from concurrent JP2 decompression + page inserts). Concurrency bumped back to 2 on 2026-05-17 after #1829 thread fix dropped per-book CPU contention (load 23 → 4) and #1819 raised Mongo pool 5 → 10; with 82% idle CPU at concurrency=1 and ~3 Mongo writes/sec, doubling should fill local headroom without re-saturating Atlas. Watch search latency after deploy and revert to =1 if it spikes.
+    interval: 600,     // every 10 min. Was 1200 — bulk has essentially no IA backlog left (8 broken-source candidates per run, all skipped in 3s) so the shorter interval is harmless. Concurrency=2 kept per the 2026-05-17 #1834/#1829 tune: with 82% idle CPU at conc=1 and ~3 Mongo writes/sec, doubling fills local headroom without re-saturating Atlas. Watch search latency and revert to =1 if it spikes.
     healthMin: 'degraded',
     log: '/var/log/sourcelibrary/archive-bulk.log',
   },

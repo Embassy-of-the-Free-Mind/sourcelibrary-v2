@@ -644,3 +644,13 @@ body:has(.embed-mode) [data-site-mode-indicator] {
 body:has(.embed-mode) {
   background: #fafaf8;
 }
+
+/* Scholar view options — toggled from EmbedUserMenu. Cookies are read by an
+   inline script in the embed layout that sets data attributes on <html>
+   before any rendering, so the gated sections never paint when hidden.
+   Apply outside .embed-mode too — root-domain book pages should respect
+   the same preferences. */
+html[data-sl-hide-ai="1"] [data-view-section="ai-summary"],
+html[data-sl-hide-guide="1"] [data-view-section="reading-guide"] {
+  display: none !important;
+}

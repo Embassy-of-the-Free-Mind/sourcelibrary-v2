@@ -5,6 +5,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import type { LibraryPartner } from '@/lib/library-partners';
+import { AISection } from '@/components/embed/AISection';
 
 // Generic catalogue detail renderer for tenants whose bibliographic data
 // lives in `library_catalog_records` (set `hasUnifiedCatalogue: true` on
@@ -300,11 +301,13 @@ export default async function GenericCatalogEntry({
                 </dl>
 
                 {slBook.reading_summary?.overview && (
-                  <p className="text-sm text-secondary leading-relaxed mb-4 italic">
-                    {slBook.reading_summary.overview.length > 380
-                      ? slBook.reading_summary.overview.slice(0, 380) + '…'
-                      : slBook.reading_summary.overview}
-                  </p>
+                  <AISection>
+                    <p className="text-sm text-secondary leading-relaxed mb-4 italic">
+                      {slBook.reading_summary.overview.length > 380
+                        ? slBook.reading_summary.overview.slice(0, 380) + '…'
+                        : slBook.reading_summary.overview}
+                    </p>
+                  </AISection>
                 )}
 
                 <a

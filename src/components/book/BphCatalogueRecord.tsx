@@ -21,17 +21,24 @@ interface FieldProvenance {
 
 interface BphWorkRow {
   ubn: string;
+  title: string | null;
   parallel_title: string | null;
   uniform_title: string | null;
+  author: string | null;
   variant_author: string | null;
   pseudonym: string | null;
   editor: string | null;
   variant_editor: string | null;
+  author_entity_id: string | null;
+  author_canonical_name: string | null;
+  author_wikidata_qid: string | null;
+  author_viaf_id: string | null;
   place: string | null;
   printer: string | null;
   publisher: string | null;
   variant_printer: string | null;
   variant_publisher: string | null;
+  year: number | null;
   shelf_mark: string | null;
   state_shelf_mark: string | null;
   present_location: string | null;
@@ -53,21 +60,34 @@ interface BphWorkRow {
 }
 
 async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
-  const { data } = await supabase
-    .from('bph_works')
-    .select(`
-      ubn, parallel_title, uniform_title,
-      variant_author, pseudonym, editor, variant_editor,
+  // Two-pass fetch: try with the author-authority columns (added by migration
+  // 20260522000000_bph_works_author_authority.sql); fall back to the legacy
+  // set if those columns aren't there yet on this environment.
+  const fullSelect = `
+      ubn, title, parallel_title, uniform_title,
+      author, variant_author, pseudonym, editor, variant_editor,
+      author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,
       place, printer, publisher, variant_printer, variant_publisher,
-      shelf_mark, state_shelf_mark, present_location,
+      year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
       bibliography, remarks, number_of_copies, object_size_cm,
       bibliographic_format, binding, bound_with,
       provenance, ia_identifier, ustc_sn, field_provenance
-    `)
-    .eq('ubn', ubn)
-    .maybeSingle();
-  return (data as BphWorkRow | null) ?? null;
+    `;
+  const legacySelect = fullSelect.replace(
+    'author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,\n      ',
+    '',
+  );
+  const first = await supabase.from('bph_works').select(fullSelect).eq('ubn', ubn).maybeSingle();
+  if (first.error) {
+    const msg = (first.error.message || '').toLowerCase();
+    if (msg.includes('does not exist') || msg.includes('could not find')) {
+      const retry = await supabase.from('bph_works').select(legacySelect).eq('ubn', ubn).maybeSingle();
+      return (retry.data as BphWorkRow | null) ?? null;
+    }
+    return null;
+  }
+  return (first.data as BphWorkRow | null) ?? null;
 }
 
 /** Returns true when at least one displayable field is set. */
@@ -75,6 +95,7 @@ function hasRenderableContent(w: BphWorkRow): boolean {
   return !!(
     w.parallel_title || w.uniform_title ||
     w.variant_author || w.pseudonym || w.editor || w.variant_editor ||
+    w.author_entity_id || w.author_canonical_name || w.author_wikidata_qid || w.author_viaf_id ||
     w.place || w.printer || w.publisher || w.variant_printer || w.variant_publisher ||
     w.shelf_mark || w.state_shelf_mark || w.present_location ||
     w.keywords || w.language || w.series_title || w.volume_title ||
@@ -127,12 +148,44 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
           </Section>
         )}
 
-        {(work.variant_author || work.pseudonym || work.editor || work.variant_editor) && (
+        {(work.variant_author || work.pseudonym || work.editor || work.variant_editor ||
+          work.author_entity_id || work.author_canonical_name || work.author_wikidata_qid || work.author_viaf_id) && (
           <Section title="Authorship">
             <Field label="Author (as on title page)" value={work.variant_author} />
             <Field label="Pseudonym" value={work.pseudonym} />
             <Field label="Editor / translator" value={work.editor} />
             <Field label="Editor (as on title page)" value={work.variant_editor} />
+            {(work.author_canonical_name || work.author_viaf_id || work.author_wikidata_qid) && (
+              <FieldRaw label="Canonical (VIAF)">
+                <span className="flex flex-wrap items-baseline gap-x-2">
+                  {work.author_canonical_name && (
+                    <span>{work.author_canonical_name}</span>
+                  )}
+                  {work.author_viaf_id && (
+                    <a
+                      href={`https://viaf.org/viaf/${work.author_viaf_id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-0.5"
+                    >
+                      VIAF {work.author_viaf_id}
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </a>
+                  )}
+                  {work.author_wikidata_qid && (
+                    <a
+                      href={`https://www.wikidata.org/wiki/${work.author_wikidata_qid}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-0.5"
+                    >
+                      {work.author_wikidata_qid}
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </a>
+                  )}
+                </span>
+              </FieldRaw>
+            )}
           </Section>
         )}
 

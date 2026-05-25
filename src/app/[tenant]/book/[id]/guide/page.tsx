@@ -9,6 +9,7 @@ import SectionsNav from '@/components/layout/SectionsNav';
 import { BookLoader } from '@/components/ui/BookLoader';
 import LikeButton from '@/components/ui/LikeButton';
 import { books, gallery } from '@/lib/api-client';
+import { AISection } from '@/components/embed/AISection';
 
 interface SectionSummary {
   title: string;
@@ -268,13 +269,15 @@ export default function GuidePage({ params }: GuidePageProps) {
 
               {/* Brief Abstract */}
               {(book.index?.bookSummary?.brief || book.reading_summary?.overview) && (
-                <p
-                  className="mt-5 text-lg leading-relaxed"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {book.index?.bookSummary?.brief ||
-                   (book.reading_summary?.overview && book.reading_summary.overview.split('\n\n')[0]?.slice(0, 300) + (book.reading_summary.overview.length > 300 ? '...' : ''))}
-                </p>
+                <AISection>
+                  <p
+                    className="mt-5 text-lg leading-relaxed"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    {book.index?.bookSummary?.brief ||
+                     (book.reading_summary?.overview && book.reading_summary.overview.split('\n\n')[0]?.slice(0, 300) + (book.reading_summary.overview.length > 300 ? '...' : ''))}
+                  </p>
+                </AISection>
               )}
 
               {/* Link to Book */}
@@ -443,11 +446,14 @@ export default function GuidePage({ params }: GuidePageProps) {
                   const imageId = `${item.pageId}-${item.detectionIndex}`;
                   // Use pre-cropped URL if available, fall back to original
                   const displayUrl = item.extractedUrl || item.thumbnailUrl || item.imageUrl;
+                  const pageHref = book
+                    ? `/book/${book.slug || bookId}/page/${item.pageId}`
+                    : `/gallery/image/${imageId}`;
 
                   return (
                     <Link
                       key={imageId}
-                      href={`/gallery/image/${imageId}`}
+                      href={pageHref}
                       className="group relative aspect-square rounded-lg overflow-hidden transition-all hover:shadow-md"
                       style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                     >

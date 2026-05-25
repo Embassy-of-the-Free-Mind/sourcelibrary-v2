@@ -10,16 +10,18 @@ const dbName = process.env.MONGODB_DB || 'bookstore';
 
 // --- Role system ---
 // Replaces the old admin | curator | inner_circle | reader system.
-// superadmin: platform owner, cross-tenant (tenantId: null in memberships)
-// admin:      tenant-scoped, manages users + settings
-// editor:     tenant-scoped, manages content + triggers pipeline
-// reader:     authenticated, read + personal data
-export type Role = 'superadmin' | 'admin' | 'editor' | 'reader';
+// superadmin:  platform owner, cross-tenant (tenantId: null in memberships)
+// admin:       tenant-scoped, manages users + settings
+// editor:      tenant-scoped, manages content + triggers pipeline + applies edits
+// contributor: tenant-scoped, *proposes* catalog edits (gated by editor review)
+// reader:      authenticated, read + personal data
+export type Role = 'superadmin' | 'admin' | 'editor' | 'contributor' | 'reader';
 export const ROLE_LEVEL: Record<Role, number> = {
   reader: 1,
-  editor: 2,
-  admin: 3,
-  superadmin: 4,
+  contributor: 2,
+  editor: 3,
+  admin: 4,
+  superadmin: 5,
 };
 
 // TODO: Remove getUserRole — replaced by memberships collection + ROLE_LEVEL system.
@@ -141,6 +143,17 @@ if (process.env.RESEND_API_KEY) {
   }));
 }
 
+// Share the session cookie across every *.sourcelibrary.org subdomain
+// (production only — Vercel previews stay host-scoped because they live on
+// *.vercel.app, and localhost dev needs host-only too). Without this each
+// subdomain (sourcelibrary.org, bph.sourcelibrary.org, future kloss/jung
+// tenants) holds its own session and users have to sign in N times.
+// Roles still gate per-tenant via tenant_memberships — sharing identity does
+// not share permissions.
+const SHARE_SUBDOMAIN_COOKIE = process.env.VERCEL_ENV === 'production';
+const SECURE_COOKIE = process.env.NODE_ENV === 'production';
+const SHARED_COOKIE_DOMAIN = '.sourcelibrary.org';
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers,
   adapter: MongoDBAdapter(clientPromise, { databaseName: dbName }),
@@ -148,6 +161,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: 'jwt',
   },
+  cookies: SHARE_SUBDOMAIN_COOKIE ? {
+    sessionToken: {
+      name: '__Secure-authjs.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        domain: SHARED_COOKIE_DOMAIN,
+      },
+    },
+    callbackUrl: {
+      name: '__Secure-authjs.callback-url',
+      options: {
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        domain: SHARED_COOKIE_DOMAIN,
+      },
+    },
+    // csrfToken keeps its NextAuth default: the `__Host-` prefix forbids
+    // a `domain` attribute, and each subdomain hits its own /api/auth/*
+    // routes, so a per-host CSRF cookie is fine.
+  } : undefined,
+  // Silences a warning about not detecting an explicit secure-flag setting
+  // when running behind Vercel's proxy.
+  useSecureCookies: SECURE_COOKIE,
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error',

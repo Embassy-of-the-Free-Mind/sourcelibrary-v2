@@ -92,6 +92,7 @@ export async function POST(request: NextRequest) {
     const email = body.email;
     const source = body.source;
     const comment = body.comment;
+    const efmNewsletter = body.efmNewsletter === true;
 
     if (!email || typeof email !== 'string') {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
@@ -111,6 +112,14 @@ export async function POST(request: NextRequest) {
     // Check for existing subscriber
     const existing = await collection.findOne({ email: normalizedEmail });
     if (existing) {
+      // If they're newly opting into the EFM newsletter, record it without
+      // overwriting a prior opt-in.
+      if (efmNewsletter && !existing.efm_newsletter_opt_in) {
+        await collection.updateOne(
+          { _id: existing._id },
+          { $set: { efm_newsletter_opt_in: true, efm_newsletter_opt_in_at: new Date() } },
+        );
+      }
       return NextResponse.json({ message: 'Already subscribed!', alreadySubscribed: true });
     }
 
@@ -131,7 +140,11 @@ export async function POST(request: NextRequest) {
         : 'beta_landing',
       subscribed_at: new Date(),
       notified: false,
+      efm_newsletter_opt_in: efmNewsletter,
     };
+    if (efmNewsletter) {
+      doc.efm_newsletter_opt_in_at = new Date();
+    }
     if (comment && typeof comment === 'string' && comment.trim()) {
       doc.comment = comment.trim().slice(0, 1000);
     }

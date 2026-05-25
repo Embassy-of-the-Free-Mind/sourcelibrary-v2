@@ -228,12 +228,51 @@ export default function BibliographicInfo({
             {(() => {
               const bib = getEffectiveByline(book);
               const showAuthorRow = bib.role === 'author' || !bib.editor;
+              // Canonical author from VIAF (#1921 P3). Only render when an
+              // authority record is actually linked — 99% of books have no
+              // entity id and the regular author row stays untouched.
+              const canonicalName = book.author_canonical_name;
+              const viafId = book.author_viaf_id;
+              const wikidataQid = book.author_wikidata_qid;
+              const hasCanonical = !!(book.author_entity_id || viafId || wikidataQid || canonicalName);
               return (
                 <>
                   {showAuthorRow && (
                     <div className="flex gap-2">
-                      <span className="text-stone-500 w-24 flex-shrink-0">Author:</span>
+                      <span className="text-stone-500 w-24 flex-shrink-0">
+                        {hasCanonical ? 'As printed:' : 'Author:'}
+                      </span>
                       <span className="text-stone-200">{bib.role === 'author' ? bib.author : book.author}</span>
+                    </div>
+                  )}
+                  {hasCanonical && (
+                    <div className="flex gap-2">
+                      <span className="text-stone-500 w-24 flex-shrink-0">Canonical:</span>
+                      <span className="text-stone-200 flex flex-wrap items-baseline gap-x-2">
+                        {canonicalName || `VIAF ${viafId}`}
+                        {viafId && (
+                          <a
+                            href={`https://viaf.org/viaf/${viafId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-0.5"
+                          >
+                            VIAF {viafId}
+                            <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        )}
+                        {wikidataQid && (
+                          <a
+                            href={`https://www.wikidata.org/wiki/${wikidataQid}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-0.5"
+                          >
+                            {wikidataQid}
+                            <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        )}
+                      </span>
                     </div>
                   )}
                   {bib.editor && (

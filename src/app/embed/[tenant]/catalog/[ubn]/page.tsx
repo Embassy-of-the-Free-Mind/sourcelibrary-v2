@@ -1,11 +1,14 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { BookMarked, ExternalLink, BookOpen } from 'lucide-react';
+import { BookMarked, ExternalLink, BookOpen, Pencil } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import { getReadDb } from '@/lib/mongodb';
+import { getReadDb, getDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPartnerBySlug } from '@/lib/library-partners';
+import { auth } from '@/lib/auth';
+import { ROLE_LEVEL, type Role } from '@/lib/auth';
+import { AISection } from '@/components/embed/AISection';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 
 // Catalogue entry routing
@@ -36,6 +39,12 @@ interface BphWorkRow {
   pseudonym: string | null;
   editor: string | null;
   variant_editor: string | null;
+  // Author authority columns (#1921 P3) — present after migration
+  // 20260522000000_bph_works_author_authority.sql is applied. The fetchWork
+  // fallback below drops these if the columns aren't there yet.
+  author_entity_id: string | null;
+  author_canonical_name: string | null;
+  author_wikidata_qid: string | null;
   place: string | null;
   printer: string | null;
   publisher: string | null;
@@ -102,6 +111,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   const select = `
       ubn, title, parallel_title, uniform_title,
       author, variant_author, pseudonym, editor, variant_editor,
+      author_entity_id, author_canonical_name, author_wikidata_qid,
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
@@ -111,8 +121,15 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       sl_external_book_id, sl_external_slug, sl_external_source,
       field_provenance
     `;
+  // Two stacked fallbacks: drop external-link columns if not migrated, then
+  // drop author-authority columns. Each migration runs independently in
+  // different environments — the page renders if either is missing.
   const fallbackSelect = select.replace(
     'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
+    '',
+  );
+  const fallbackNoAuthority = fallbackSelect.replace(
+    'author_entity_id, author_canonical_name, author_wikidata_qid,\n      ',
     '',
   );
   const first = await supabase.from('bph_works').select(select).eq('ubn', ubn).maybeSingle();
@@ -120,6 +137,14 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
     const msg = (first.error.message || '').toLowerCase();
     if (msg.includes('does not exist') || msg.includes('could not find')) {
       const retry = await supabase.from('bph_works').select(fallbackSelect).eq('ubn', ubn).maybeSingle();
+      if (retry.error) {
+        const retryMsg = (retry.error.message || '').toLowerCase();
+        if (retryMsg.includes('does not exist') || retryMsg.includes('could not find')) {
+          const retry2 = await supabase.from('bph_works').select(fallbackNoAuthority).eq('ubn', ubn).maybeSingle();
+          return (retry2.data as BphWorkRow | null) ?? null;
+        }
+        return null;
+      }
       return (retry.data as BphWorkRow | null) ?? null;
     }
     return null;
@@ -255,6 +280,43 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: `${title} - BPH catalogue`, description };
 }
 
+function normalizeRoleSafe(role: unknown): Role {
+  if (
+    role === 'superadmin' ||
+    role === 'admin' ||
+    role === 'editor' ||
+    role === 'contributor' ||
+    role === 'reader'
+  ) {
+    return role;
+  }
+  if (role === 'inner_circle' || role === 'curator') return 'editor';
+  return 'reader';
+}
+
+async function effectiveCatalogRole(
+  email: string | null | undefined,
+  platformRole: Role,
+  tenantSlug: string,
+): Promise<Role> {
+  if (!email) return platformRole;
+  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['editor']) return platformRole;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
+    if (!tenant) return platformRole;
+    const membership = await db.collection('memberships').findOne({
+      email: email.toLowerCase(),
+      tenantId: tenant.id,
+      status: 'active',
+    });
+    const tenantRole = normalizeRoleSafe(membership?.role);
+    return ROLE_LEVEL[tenantRole] >= ROLE_LEVEL[platformRole] ? tenantRole : platformRole;
+  } catch {
+    return platformRole;
+  }
+}
+
 export default async function CatalogEntryPage({ params }: Props) {
   const { tenant, ubn } = await params;
 
@@ -265,12 +327,19 @@ export default async function CatalogEntryPage({ params }: Props) {
     return <GenericCatalogEntry tenant={tenant} catalogId={ubn} partner={partner} />;
   }
 
-  // Fetch BPH catalog row + live SL book in parallel
-  const [work, slBook] = await Promise.all([
+  // Fetch BPH catalog row + live SL book + session in parallel
+  const [work, slBook, session] = await Promise.all([
     fetchWork(ubn),
     fetchSlBook(ubn),
+    auth(),
   ]);
   if (!work) notFound();
+
+  const platformRole = normalizeRoleSafe((session?.user as { role?: unknown } | undefined)?.role);
+  const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
+  const showEditButton = ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
+  const showReviewLink = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'];
+  const editLabel = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit catalogue entry' : 'Propose a change';
 
   // If the work has no BPH-native digitisation but does have a cross-provider
   // scan recorded, fetch that book so we can offer a "Read at [source]" panel.
@@ -293,6 +362,39 @@ export default async function CatalogEntryPage({ params }: Props) {
   return (
     <div className="bg-cream">
       <div className="max-w-2xl mx-auto px-6 py-8">
+        {showEditButton && (
+          <div className="flex justify-end flex-wrap gap-2 mb-2">
+            <a
+              href={`/catalog/${encodeURIComponent(work.ubn)}/history`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+            >
+              History
+            </a>
+            {showReviewLink && (
+              <>
+                <a
+                  href="/catalog/review"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+                >
+                  Review queue
+                </a>
+                <a
+                  href="/catalog/team"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+                >
+                  Team
+                </a>
+              </>
+            )}
+            <a
+              href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+            >
+              <Pencil className="w-3.5 h-3.5" />
+              {editLabel}
+            </a>
+          </div>
+        )}
         {/* Identity */}
         <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
           {displayTitle}
@@ -387,11 +489,13 @@ export default async function CatalogEntryPage({ params }: Props) {
             </dl>
 
             {slBook.reading_summary?.overview && (
-              <p className="text-sm text-secondary leading-relaxed mb-4 italic">
-                {slBook.reading_summary.overview.length > 380
-                  ? slBook.reading_summary.overview.slice(0, 380) + '…'
-                  : slBook.reading_summary.overview}
-              </p>
+              <AISection>
+                <p className="text-sm text-secondary leading-relaxed mb-4 italic">
+                  {slBook.reading_summary.overview.length > 380
+                    ? slBook.reading_summary.overview.slice(0, 380) + '…'
+                    : slBook.reading_summary.overview}
+                </p>
+              </AISection>
             )}
 
             <a
@@ -479,6 +583,37 @@ export default async function CatalogEntryPage({ params }: Props) {
           <Field label="Pseudonym" value={work.pseudonym} />
           <Field label="Editor / translator" value={work.editor} />
           <Field label="Editor (as on title page)" value={work.variant_editor} />
+          {/* Author authority (#1921 P3) — only render when an identifier is
+              actually linked. The label uses "Canonical (VIAF)" to mirror the
+              terminology in the editor's picker, so cataloguers see the same
+              wording on read and write. */}
+          {(work.author_canonical_name || work.author_entity_id || work.author_wikidata_qid) && (
+            <FieldRaw label="Canonical (VIAF)">
+              <span className="flex flex-wrap items-baseline gap-x-2 text-primary">
+                {work.author_canonical_name && <span>{work.author_canonical_name}</span>}
+                {work.author_entity_id && (
+                  <a
+                    href={`https://viaf.org/viaf/${work.author_entity_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary hover:underline text-xs"
+                  >
+                    VIAF {work.author_entity_id}
+                  </a>
+                )}
+                {work.author_wikidata_qid && (
+                  <a
+                    href={`https://www.wikidata.org/wiki/${work.author_wikidata_qid}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary hover:underline text-xs"
+                  >
+                    {work.author_wikidata_qid}
+                  </a>
+                )}
+              </span>
+            </FieldRaw>
+          )}
         </Section>
 
         <Section title="Imprint">
@@ -544,7 +679,19 @@ export default async function CatalogEntryPage({ params }: Props) {
         </Section>
 
         <p className="text-xs text-muted border-t border-border-light pt-4 mt-2">
-          Catalogue data sourced from the Bibliotheca Philosophica Hermetica (UBN {work.ubn}). Corrections should be made in the BPH catalogue and re-imported.
+          Catalogue data sourced from the Bibliotheca Philosophica Hermetica (UBN {work.ubn}).
+          {showEditButton ? (
+            <>
+              {' '}
+              <a
+                href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
+                className="text-accent-rust hover:underline"
+              >
+                {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit this entry' : 'Propose a change'}
+              </a>
+              .
+            </>
+          ) : null}
         </p>
       </div>
     </div>

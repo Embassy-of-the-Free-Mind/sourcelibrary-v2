@@ -56,6 +56,17 @@ interface BphWork {
 
 /** Human-readable label for an external scan source. Defaults to a Title-Cased
     fallback when we don't have a curated label for a provider yet. */
+/** Library-card-style impressum: "Place: Printer, Year". Picks publisher if no
+    printer; collapses gracefully when fields are null. Matches the order Paul
+    asked for in issue #1921 (author, title, impressum on the short card). */
+function formatImpressum(w: { place?: string | null; printer?: string | null; publisher?: string | null; year?: number | null }): string {
+  const place = w.place?.trim();
+  const agent = w.printer?.trim() || w.publisher?.trim();
+  const year = w.year ? String(w.year) : '';
+  const placeAgent = [place, agent].filter(Boolean).join(': ');
+  return [placeAgent, year].filter(Boolean).join(', ');
+}
+
 function externalSourceLabel(source: string | null | undefined): string {
   if (!source) return 'another archive';
   const map: Record<string, string> = {
@@ -86,7 +97,7 @@ interface AdvancedFilters {
   language: string;
   yearFrom: string;
   yearTo: string;
-  digitized: '' | 'true' | 'sl' | 'false';
+  digitized: '' | 'true' | 'sl' | 'false' | 'held';
 }
 
 const EMPTY_ADV: AdvancedFilters = {
@@ -563,10 +574,11 @@ export default function BphCatalogBrowser({
                   onChange={(e) => handleAdvChange('digitized', e.target.value)}
                   className="w-full text-sm border border-border-light rounded-md px-2.5 py-1.5 bg-white text-primary"
                 >
-                  <option value="">All</option>
-                  <option value="sl">On Source Library</option>
+                  <option value="">All books in the library</option>
+                  <option value="held">Physically held at BPH</option>
+                  <option value="sl">Digitised on Source Library</option>
                   <option value="true">Digitised anywhere</option>
-                  <option value="false">Not digitised</option>
+                  <option value="false">Not yet digitised</option>
                 </select>
               </div>
             )}
@@ -668,13 +680,16 @@ export default function BphCatalogBrowser({
                           Read at {externalSourceLabel(external.source)}
                         </a>
                       )}
-                      {/* Mobile: show author + place inline */}
+                      {/* Mobile: show author inline (author column is hidden < sm) */}
                       <div className="text-xs text-muted sm:hidden mt-0.5">
-                        {displayAuthor}{w.place ? ` · ${w.place}` : ''}
+                        {displayAuthor}
                       </div>
-                      {w.printer && (
-                        <div className="text-[11px] text-muted mt-0.5 hidden md:block">
-                          {w.printer}{w.publisher && w.publisher !== w.printer ? ` / ${w.publisher}` : ''}
+                      {/* Impressum line — place, printer/publisher, year — in
+                          the order librarians expect on a short bibliographic
+                          card. Falls back gracefully when fields are missing. */}
+                      {(w.place || w.printer || w.publisher) && (
+                        <div className="text-[11px] text-muted mt-0.5 italic">
+                          {formatImpressum(w)}
                         </div>
                       )}
                     </td>
