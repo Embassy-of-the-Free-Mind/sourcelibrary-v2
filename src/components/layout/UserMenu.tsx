@@ -48,8 +48,12 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     );
   }
 
-  // Authenticated user: show avatar + dropdown
-  const isAdmin = (session.user as any)?.role === 'admin';
+  // Authenticated user: show avatar + dropdown.
+  // Accept admin OR superadmin — auth.ts assigns 'superadmin' to anyone in
+  // PLATFORM_ADMIN_EMAILS, so a `role === 'admin'` check was hiding the
+  // admin links from the very people who own the platform.
+  const role = (session.user as { role?: string } | undefined)?.role;
+  const isAdmin = role === 'admin' || role === 'superadmin';
   const isMember = (session.user as any)?.membership != null;
 
   const initials = session.user?.name
