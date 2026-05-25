@@ -31,10 +31,15 @@ export const GET = withApiAuth(async (
     // Use secondary reads for public GETs; admin full-view still reads primary for freshness
     const db = includeFull ? await getDb() : await getReadDb();
 
-    // Book projection: nav mode only needs fields the reader uses
+    // Book projection: nav mode keeps it light but still includes the
+    // small fields the MCP get_book tool exposes (summary, page counts,
+    // categories, year) — without these, MCP returns a book card with
+    // null pages and no summary.
     const bookProjection = pagesMode === 'nav' ? {
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-      published: 1, language: 1, doi: 1,
+      published: 1, year: 1, language: 1, doi: 1,
+      pages_count: 1, pages_translated: 1,
+      categories: 1, reading_summary: 1,
       chapters: 1,
     } : undefined;
 
