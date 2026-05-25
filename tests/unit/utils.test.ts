@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeText, isUsableImageUrl, isArchiveFailed, getPageImageUrl, getBookThumbnailUrl } from '@/lib/utils';
+import { normalizeText, isUsableImageUrl, isArchiveFailed, getPageImageUrl, getBookThumbnailUrl, getCoverImageCandidates } from '@/lib/utils';
 
 describe('normalizeText', () => {
   it('lowercases text', () => {
@@ -195,5 +195,28 @@ describe('getBookThumbnailUrl', () => {
   it('returns null when no thumbnail', () => {
     expect(getBookThumbnailUrl({}, 'display')).toBeNull();
     expect(getBookThumbnailUrl({ thumbnail: null, thumbnail_blob: null }, 'thumb')).toBeNull();
+  });
+});
+
+describe('getCoverImageCandidates', () => {
+  it('rewrites book thumbnail then adds page fallbacks', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/archived/abc123/1.jpg',
+      thumbnail_blob: null as string | null,
+    };
+    const pages = [
+      { photo: 'https://images.sourcelibrary.org/pages/abc123/0002.jpg' },
+    ];
+    const c = getCoverImageCandidates(book, pages);
+    expect(c[0]).toContain('/pages/abc123/0001.jpg');
+    expect(c.some((u) => u.includes('0002'))).toBe(true);
+  });
+
+  it('uses first page when book has no thumbnails', () => {
+    const book = {};
+    const pages = [{ photo: 'https://images.sourcelibrary.org/pages/xyz/0001.jpg' }];
+    const c = getCoverImageCandidates(book, pages);
+    expect(c.length).toBeGreaterThanOrEqual(1);
+    expect(c[0]).toContain('-thumb.jpg');
   });
 });
