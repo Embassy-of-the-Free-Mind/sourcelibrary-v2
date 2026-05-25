@@ -7,7 +7,7 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Connect Source Library to Claude',
-  description: 'Give Claude access to 12,000+ rare pre-modern texts in 30 seconds — theology, philosophy, history, science, mysticism, literature. Search, read, and cite primary sources directly in your conversation.',
+  description: 'Give Claude access to 15,000+ rare pre-modern texts in 30 seconds — theology, philosophy, history, science, mysticism, literature. Search, read, and cite primary sources directly in your conversation.',
   alternates: { canonical: '/connect' },
 };
 
@@ -17,7 +17,7 @@ export default function ConnectPage() {
       header={
         <ContentHeader
           title="Connect Source Library to Claude"
-          subtitle="Search, read, and cite 12,000+ rare pre-modern texts in English — directly in your conversation."
+          subtitle="Search, read, and cite 15,000+ rare pre-modern texts in English — directly in your conversation."
         />
       }
     >
@@ -133,7 +133,7 @@ export default function ConnectPage() {
             <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-3 mb-3">
               &ldquo;Find all alchemical emblems depicting the ouroboros. What texts are they from?&rdquo;
             </p>
-            <p className="text-muted text-xs">Searches 90,000+ cataloged historical illustrations by symbol, subject, or figure</p>
+            <p className="text-muted text-xs">Searches 110,000+ cataloged historical illustrations by symbol, subject, or figure</p>
           </div>
 
           <div className="bg-white rounded-xl border border-border-light p-5">
@@ -156,11 +156,11 @@ export default function ConnectPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">12,000+</p>
+            <p className="text-2xl font-bold text-accent-rust">15,000+</p>
             <p className="text-sm text-muted mt-1">translated books</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">3.9M</p>
+            <p className="text-2xl font-bold text-accent-rust">4M</p>
             <p className="text-sm text-muted mt-1">page embeddings</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">

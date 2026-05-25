@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Embassy-of-the-Free-Mind/sourcelibrary",
   "title": "Source Library",
-  "description": "Search 12K rare pre-modern texts translated to English: philosophy, religion, science, literature.",
-  "version": "4.3.1",
+  "description": "Search 15K rare pre-modern texts translated to English: philosophy, religion, science, literature.",
+  "version": "4.3.2",
   "repository": {
     "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2",
     "source": "github"
