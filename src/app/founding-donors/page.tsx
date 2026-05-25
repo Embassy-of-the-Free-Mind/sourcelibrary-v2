@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import InputWidget from '@/components/InputWidget';
 
 export const metadata: Metadata = {
   title: 'Founding Donors - Source Library',
@@ -332,9 +331,6 @@ export default function FoundingDonorsPage() {
           Bibliotheca Philosophica Hermetica since 1957.
         </p>
       </section>
-
-      {/* Page-scoped review widget. Activates on any URL with ?getinput. */}
-      <InputWidget allowedHosts={["localhost", "vercel.app"]} />
 
     </ContentPageLayout>
   );
