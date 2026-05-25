@@ -58,7 +58,7 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 
 The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.
 
-**Identity shares, permissions do not.** Role checks still run via `tenant_memberships` lookups per tenant (`auth-helpers.ts:19-42`). A user signed in on the parent site does not inherit any tenant role just by visiting a subdomain; the `withAuth(handler, { minRole })` / `withBphLibrarianAuth` wrappers continue to enforce per-tenant gates.
+**Identity shares, permissions do not.** Role checks still run via `memberships` collection lookups per tenant (`auth-helpers.ts:25-50`). A user signed in on the parent site does not inherit any tenant role just by visiting a subdomain; the `withAuth(handler, { minRole })` wrapper (and role-specific shorthands like `withEditorAuth`, `withAdminAuth`) continues to enforce per-tenant gates.
 
 **CSRF token stays per-host** (`__Host-` prefix forbids the `domain` attribute, and each subdomain hits its own `/api/auth/*` routes).
 
@@ -74,9 +74,9 @@ Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
 ## System Map
-- **Interactive diagram:** https://sourcelibrary.org/admin/system-map — click any node for details, key files, collections, gotchas
+- **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
-- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`), not dead code.
+- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/[tenant]/rithmomachia`), not dead code.
 
 ## Domain Context
 
