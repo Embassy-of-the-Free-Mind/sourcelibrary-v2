@@ -19,7 +19,7 @@
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { uploadPageVariants } from './lib/display-image.mjs';
+import sharp from 'sharp';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -253,19 +253,28 @@ async function main() {
       const { page, buffer, url } = item;
 
       try {
-        const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
+        // Archive-only: upload the full-res original to R2 and write archived_photo.
+        // display_photo and thumbnail_blob are intentionally NOT written here — the
+        // Hetzner-side display-backfill cron (scripts/migration/backfill-display-images.mjs,
+        // runs every 30 min) detects pages with archived_photo set and no display_photo,
+        // and generates the 1200px + 150px variants from R2. Skipping the variants here
+        // cuts each page's R2 upload bytes ~3× (full only, no display+thumb), which on
+        // residential upstream is the dominant cost.
+        const archivedKey = `archived/${page.book_id}/${page.page_number}.jpg`;
+        const [archivedUrl, meta] = await Promise.all([
+          uploadToR2(archivedKey, buffer, 'image/jpeg'),
+          sharp(buffer).metadata().catch(() => ({})),
+        ]);
 
         const dimFields = {};
-        if (urls.width) dimFields.image_width = urls.width;
-        if (urls.height) dimFields.image_height = urls.height;
+        if (meta.width) dimFields.image_width = meta.width;
+        if (meta.height) dimFields.image_height = meta.height;
 
         await db.collection('pages').updateOne(
           { _id: page._id },
           {
             $set: {
-              archived_photo: urls.archived,
-              display_photo: urls.display,
-              thumbnail_blob: urls.thumb,
+              archived_photo: archivedUrl,
               ...dimFields,
               'archive_metadata.archived_at': new Date(),
               'archive_metadata.source_url': url,
