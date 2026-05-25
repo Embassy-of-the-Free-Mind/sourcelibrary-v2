@@ -280,7 +280,6 @@ function parseFiles(body) {
   const filesMatch = body.match(/<files>([\s\S]*?)<\/files>/);
   if (!filesMatch) return [];
   const filesBlock = filesMatch[1];
-  const fileRe = /<file([^>]*)\/?>([\s\S]*?)(?:<\/file>|(?=<file)|$)/g;
   const out = [];
   const attrRe = /<file\s+([^>]+?)\/?>/g;
   let m;
@@ -522,7 +521,8 @@ async function step2_backfillRaw() {
 async function step3_fieldUpdates() {
   console.log('\n=== Step 3: Apply field-level updates (~105 rows) ===');
   await verifySchema();
-  const DB_COLS = ['uuid', ...Object.values(PRINTED_FIELDS).filter(c => !NEVER_OVERWRITE.has(c))];
+  const compareCols = Object.values(PRINTED_FIELDS).filter(c => !NEVER_OVERWRITE.has(c));
+  const DB_COLS = ['uuid', 'ubn', 'year', ...compareCols];
   const dbRows = await pageAll('bph_works', DB_COLS.join(','), '&record_type=eq.printed&uuid=not.is.null');
   const dbByUuid = new Map(dbRows.map(r => [r.uuid, r]));
   const records = readRecords(join(XML_DIR, XML_FILES.printed), 'BPH printed');
@@ -531,25 +531,31 @@ async function step3_fieldUpdates() {
   for (const r of records) {
     const db = dbByUuid.get(r.uuid);
     if (!db) continue;
-    const xmlCols = recordToColumns(r, PRINTED_FIELDS);
-    if (!xmlCols) continue;
     const diff = {};
-    for (const [col, xv] of Object.entries(xmlCols)) {
-      let dv = db[col];
-      // Normalize comparison: NULL/empty equivalence for text; coerce booleans.
-      if (BOOLEAN_COLUMNS.has(col)) {
+    // Compare every mapped column — including cases where XML clears a value
+    // that the DB still has. Matches the original _tmp-bph-field-diff.mjs
+    // logic that produced the 105 figure in the plan.
+    for (const [xmlField, dbCol] of Object.entries(PRINTED_FIELDS)) {
+      if (NEVER_OVERWRITE.has(dbCol)) continue;
+      const rawXml = r.fields[xmlField];
+      let xv, dv = db[dbCol];
+      if (BOOLEAN_COLUMNS.has(dbCol)) {
+        xv = rawXml === '1';
         dv = !!dv;
-        if (xv !== dv) diff[col] = xv;
+        if (xv !== dv) diff[dbCol] = xv;
       } else {
-        const dvNorm = dv === null || dv === undefined ? null : String(dv);
-        const xvNorm = xv === null || xv === undefined ? null : String(xv);
-        if (dvNorm !== xvNorm) diff[col] = xv;
+        xv = (rawXml === undefined || rawXml === '') ? null : normalizeText(rawXml);
+        const dvNorm = dv === null || dv === undefined || dv === '' ? null : String(dv);
+        const xvNorm = xv === null ? null : String(xv);
+        if (dvNorm !== xvNorm) diff[dbCol] = xv;
       }
     }
-    // Derived year follows year_raw if year_raw changed.
+    if (diff.number_of_copies !== undefined && diff.number_of_copies !== null) {
+      diff.number_of_copies = parseIntOrNull(diff.number_of_copies);
+    }
     if (diff.year_raw !== undefined) {
       const y = parseYearFromRaw(diff.year_raw);
-      if (y !== null && y !== db.year) diff.year = y;
+      if (y !== db.year) diff.year = y;
     }
     if (Object.keys(diff).length) updates.push({ uuid: r.uuid, ubn: db.ubn, diff });
   }
