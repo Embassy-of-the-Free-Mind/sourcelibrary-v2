@@ -15,6 +15,17 @@ When making product decisions, lead with: who reads this, what experience are th
 - **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
 - The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
 
+## PR Conventions
+Lessons from PR #1980 (see `.claude/handoffs/2026-05-25-pr1980-split.md`). Apply to all contributors — internal, external, and AI-assisted.
+
+- **One concern per PR.** Don't bundle dead-code removal with tooling adoption, or refactors with feature work. The two halves of #1980 had very different risk profiles; bundled, they couldn't be reviewed cleanly. If the diff has more than one "why," split it.
+- **Verify before deleting.** Static analysis (graph audits, IDE "find unused") can confidently miss dynamic requires, framework conventions (Next.js routing, cron triggers, server actions), and recent additions. Always `grep -rn '<name>' src/` for every deletion. `InputWidget.tsx` in #1980 was flagged dead but actively imported by `/founding-donors` — one grep would have caught it.
+- **Run `npx tsc --noEmit` locally before opening a PR that touches dependencies.** It's the #1 source of wasted deploy cycles.
+- **Tooling additions need provenance + opt-in + install docs.** A PR that adds a third-party CLI, MCP server, or `*ToolUse` hook must include: source link, install command, what network/telemetry access it has, an opt-out path. The default must be "if not installed, repo still works."
+- **Doctrine lives in `CLAUDE.md`, not six files.** No appending the same instructions to `AGENTS.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.kiro/steering/`, etc. One source of truth; cross-tool agents can read `CLAUDE.md` directly.
+- **Never replace a CRITICAL hook silently.** The `PreToolUse` branch-safety hook in `.claude/settings.json` is load-bearing (see Multi-Session Awareness). New hooks go alongside, not in place of, existing ones. Hooks that run on every tool call need explicit review — they tax every Bash and Edit.
+- **PR description should state what's in scope AND what's out of scope.** "I considered X but kept it for a separate PR because Y" is more valuable than a feature list. Reviewers need to know what was deliberately left undone.
+
 ## Multi-Session Awareness — CRITICAL
 Derek runs ~10 Claude Code terminals simultaneously, all sharing the main working directory. Branch switches in one terminal silently break all others.
 
