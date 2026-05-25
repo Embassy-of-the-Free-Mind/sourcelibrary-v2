@@ -251,3 +251,27 @@ export function getPageThumbUrl(page: Record<string, any>): string | null {
   if (!baseUrl || isArchiveFailed(baseUrl)) return null;
   return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
 }
+
+/**
+ * Ordered URLs to try for the book detail cover (hero) image.
+ * Matches browse/cards: book-level thumbnails via {@link getBookThumbnailUrl}, then
+ * per-page thumbs so the cover still loads when the book document has no thumbnail fields
+ * or stored URLs are stale/broken.
+ */
+export function getCoverImageCandidates(
+  book: { thumbnail?: string | null; thumbnail_blob?: string | null },
+  pages: ReadonlyArray<Record<string, unknown>>,
+  maxPageFallbacks = 24,
+): string[] {
+  const out: string[] = [];
+  const push = (u: string | null) => {
+    if (u && !out.includes(u)) out.push(u);
+  };
+  push(getBookThumbnailUrl(book, 'display'));
+  push(getBookThumbnailUrl(book, 'thumb'));
+  const n = Math.min(pages.length, maxPageFallbacks);
+  for (let i = 0; i < n; i++) {
+    push(getPageThumbUrl(pages[i]!));
+  }
+  return out;
+}
