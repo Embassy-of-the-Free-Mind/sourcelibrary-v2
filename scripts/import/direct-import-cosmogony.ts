@@ -92,8 +92,6 @@ async function importBook(client: MongoClient, book: typeof COSMOGONY_TEXTS[0]) 
     pages_count: book.page_count,
     pages_ocr: 0,
     pages_translated: 0,
-    ocr_status: 'pending',
-    translation_status: 'not_started',
     created_at: now,
     updated_at: now,
     curator_notes: book.notes
