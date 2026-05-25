@@ -34,7 +34,10 @@ function parsePage(raw: string | undefined): number {
 // computed percentages — close enough for sort intent and avoids a generated
 // column. `shelfmark` orders by source_url which mirrors the EAP shelfmark
 // embedded in the URL (EAP039-1-2-1 sorts naturally).
-function applySort(query: ReturnType<typeof supabase.from>, sort: CatalogueSort) {
+// Matches the type-loose pattern in src/lib/books-catalog.ts:applySort —
+// PostgrestFilterBuilder's generics make a precise signature impractical here.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function applySort(query: any, sort: CatalogueSort): any {
   switch (sort) {
     case 'title':           return query.order('sort_title', { ascending: true });
     case 'title_desc':      return query.order('sort_title', { ascending: false });
