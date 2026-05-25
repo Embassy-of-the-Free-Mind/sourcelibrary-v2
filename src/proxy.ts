@@ -598,8 +598,19 @@ export async function proxy(request: NextRequest) {
       !firstSegment.includes('.') &&
       /^[a-z0-9-]+$/.test(firstSegment)
     ) {
-      // Unknown slug — redirect to home
-      return NextResponse.redirect(new URL('/', request.url));
+      // Unknown slug — return 404. Previously we redirected to home, which
+      // Google logs as "Soft 404" / "Page with redirect" and keeps trying.
+      // 404 tells Google the URL never existed so it drops the entry. This
+      // matters at scale: spam-scraper backlinks point thousands of bogus
+      // URLs (/tag/phpmyadmin/, /walking-with-confidence/, etc.) at the
+      // domain, all of which were piling up in GSC.
+      return new NextResponse('Not Found', {
+        status: 404,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+        },
+      });
     }
   }
 
