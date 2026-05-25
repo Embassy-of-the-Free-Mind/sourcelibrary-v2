@@ -252,6 +252,7 @@ async function main() {
   // Books move through pipeline stages even if archiving isn't complete.
   // Exclude e-rara (blocked on Hetzner IPs, archived locally via launchd on Mac).
   // Exclude Gallica (429s from Hetzner, archived locally via archive-gallica.mjs on Mac).
+  // Exclude Harvard (mps.lib.harvard.edu blocks Hetzner IPs at the AWS ELB, archive-harvard.mjs on Mac).
   // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
   // Prioritize providers that are NOT yet fully archived (IIIF, Cambridge, etc.)
   const PRIORITY_PROVIDERS = ['iiif', 'bsb', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl', 'eap', 'met', 'ndl', 'getty', 'stanford', 'darmstadt'];
@@ -282,7 +283,10 @@ async function main() {
       {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
-        'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', ...PRIORITY_PROVIDERS] },
+        // 'harvard' excluded: mps.lib.harvard.edu HTTP 429s every request from Hetzner
+        // IPs (verified 2026-05-25 at AWS ELB layer, both v4 and v6, all UAs, all paces).
+        // Routed to Mac-side via scripts/workers/archive-harvard.mjs.
+        'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', 'harvard', ...PRIORITY_PROVIDERS] },
         ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
