@@ -1,0 +1,544 @@
+{
+  "generatedAt": "2026-05-19T10:38:57.937Z",
+  "source": "Memorix Archive 2.zip",
+  "joinKey": "record.uuid (Memorix) ↔ bph_works.uuid",
+  "alignmentCheck": {
+    "bph": {
+      "label": "BPH printed",
+      "xmlTotal": 28170,
+      "inDb": 27703,
+      "sample": [
+        {
+          "uuid": "0000ed10-f6c5-1b49-33aa-007a527e5002",
+          "xmlTitle": "Das grüne Gesicht. Ein Roman",
+          "dbTitle": "Das grüne Gesicht. Ein Roman"
+        },
+        {
+          "uuid": "000103e8-9287-6d15-fe44-5d068882ae57",
+          "xmlTitle": "Die Wolke über dem Heiligtum",
+          "dbTitle": "Die Wolke über dem Heiligtum"
+        },
+        {
+          "uuid": "000e928a-814f-a3f3-c3a0-4ac894a6838e",
+          "xmlTitle": "Ramon Llull's new rhetoric. Text and translation of Llull's Rethorica nova",
+          "dbTitle": "Ramon Llull's new rhetoric. Text and translation of Llull's Rethorica nova"
+        },
+        {
+          "uuid": "001c1c46-b859-b68f-5898-b948a602c2c0",
+          "xmlTitle": "Théologie",
+          "dbTitle": "Théologie"
+        },
+        {
+          "uuid": "0020fe2d-bd63-e53a-e42c-06e3f8efc13e",
+          "xmlTitle": "Das Leben der",
+          "dbTitle": "Das Leben der"
+        }
+      ]
+    },
+    "mss": {
+      "label": "Handschriften",
+      "xmlTotal": 812,
+      "inDb": 0,
+      "sample": []
+    },
+    "fot": {
+      "label": "Fotocopieen",
+      "xmlTotal": 959,
+      "inDb": 0,
+      "sample": []
+    }
+  },
+  "bph": {
+    "xmlTotal": 28170,
+    "inBoth": 27703,
+    "onlyXml": 467,
+    "onlyDbAcrossAllExports": 105,
+    "barcodeChanged": 0,
+    "samples": {
+      "onlyXml": [
+        {
+          "uuid": "009fd353-195f-fb4d-9ea4-5b5a219ec521",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Die Zauberflöte. Een alchemistische allegorie",
+          "author": "Berk, M.F.M. van den",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:06:01.082233"
+        },
+        {
+          "uuid": "00b451ed-bc16-d8bf-f764-0ba259938077",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Sprekende stilte. Leven en leer van Sri Ramana Maharshi",
+          "author": "Boogaard, Han van den",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2023-03-02 16:35:06.723284"
+        },
+        {
+          "uuid": "0108fe3b-bb6a-90f8-9793-63a0a5ea7d68",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Die Philosophie der Freiheit. Grundzüge einer modernen Weltanschauung",
+          "author": "Steiner, Rudolf",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:09:34.549805"
+        },
+        {
+          "uuid": "0191adab-6977-ece5-048d-2515b1860e6f",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Il Golem",
+          "author": "Meyrink, Gustav",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:19:16.568978"
+        },
+        {
+          "uuid": "01cbc43f-9cb5-d669-3d2e-31c07ad77f0b",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Goethes geheime Offenbarung",
+          "author": "Steiner, Rudolf",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2022-09-14 15:55:28.077497"
+        },
+        {
+          "uuid": "021e7934-4e56-5d3c-0f7b-6738ceb0296f",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Aquarius-nieuws",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2023-01-19 12:13:04.451709"
+        },
+        {
+          "uuid": "027f6191-0df5-f0f8-4689-e9df02131ff4",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Spinoza-plaatsen. Over tekst en context van brief 76",
+          "author": "Steenbakkers, Piet",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2022-07-07 15:21:46.97325"
+        },
+        {
+          "uuid": "03033655-d35d-b761-1dc9-66f90750e12d",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Allgemeine und General Reformation der gantzen weiten Welt. Beneben der Fama fraternitatis",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2023-11-22 14:12:36.459822"
+        },
+        {
+          "uuid": "0307c571-7cb2-0be8-4da0-9eb17fa3e245",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2023-04-06 14:59:19.770907"
+        },
+        {
+          "uuid": "0338144a-d721-bedb-eaf2-3f3e0f8354af",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Lexikon chinesischer Symbole. Geheime Sinnbilder in Kunst und Literatur, Leben und Denken der Chinesen",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2023-04-21 12:23:14.724219"
+        },
+        {
+          "uuid": "03684be4-e5ba-2971-dccb-59fcf99cea8c",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2018-06-07 11:49:32.890015"
+        },
+        {
+          "uuid": "04878e9b-5a35-5eb3-85ee-9029b533a040",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Integral psychology. Consciousness, spirit, psychology, therapy",
+          "author": "Wilber, Ken",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2026-03-12 17:18:06.234341"
+        },
+        {
+          "uuid": "04b3cb88-60bd-056b-72df-f0436dcc65bb",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2019-06-20 11:43:23.20972"
+        },
+        {
+          "uuid": "04b581f9-d478-7a26-56a1-90f0d6c119f2",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2020-12-09 12:21:14.78871"
+        },
+        {
+          "uuid": "04c867fb-ed44-b762-d4f3-e2af01112e44",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2018-08-02 11:05:15.883935"
+        },
+        {
+          "uuid": "0606b267-7fa5-5c74-fcb5-6689d323eb03",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Copye van een missive den ii. aprilis 1619",
+          "author": "Uytenbogaert, Johannes",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2024-11-14 15:54:38.046265"
+        },
+        {
+          "uuid": "0663852a-f3e8-ce73-88e7-2b6b98a0d87d",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Bhagavad Gita",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:23:35.950025"
+        },
+        {
+          "uuid": "06a71d30-8bdc-7464-0f35-7485293af4b9",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2018-04-12 15:07:01.384741"
+        },
+        {
+          "uuid": "06c0b280-0cbd-68e8-44bf-eac2fde55c74",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Der brennende Busch. Der entschleierte Weg der Mystik",
+          "author": "Weinfurter, Karl",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:19:17.352904"
+        },
+        {
+          "uuid": "06c1ce06-3766-aebf-11c1-afd2c9606dcf",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Von der Menschwerdung Jesu Christi",
+          "author": "Böhme, Jacob",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 14:57:23.26354"
+        },
+        {
+          "uuid": "075faa6a-d30b-6913-7c5d-ff8c1842b1e9",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Aus meiner Malerwerkstatt",
+          "author": "Schneiderfranken, Joseph Anton",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:19:17.419805"
+        },
+        {
+          "uuid": "0765e693-f39a-93d9-60c9-59a823692508",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "Raum, Zeit und Erkenntnis. Aufbruch zu neuen Dimensionen der Erfahrung von Welt und Wirklichkeit",
+          "author": "Tulku, Tarthang",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:19:17.434864"
+        },
+        {
+          "uuid": "0772ae96-9cee-fa10-9c16-ff2ba46475ee",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "De psychologie van C.G.Jung. Een inleiding tot zijn werk",
+          "author": "Jacobi, Jolande",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-10-21 15:06:01.637132"
+        },
+        {
+          "uuid": "07a530fa-f00c-75b2-8145-bc6808615b99",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2018-04-19 11:42:18.734418"
+        },
+        {
+          "uuid": "086288a0-916d-aac4-50d8-a7a7eaed877e",
+          "barcode": "",
+          "shelfMark": "",
+          "title": "",
+          "author": "",
+          "year": "",
+          "fileCount": 0,
+          "publishScan": false,
+          "fullyApproved": false,
+          "modifiedTime": "2021-05-05 09:25:11.469703"
+        }
+      ],
+      "onlyDb": [
+        {
+          "uuid": "3b5847fd-fc71-419a-213e-5e103413ea26",
+          "title": "Rudolf Steiner in Selbstzeugnissen und Bilddokumenten",
+          "ubn": "12507",
+          "sl_book_id": null
+        },
+        {
+          "uuid": "b58aa3ad-21bc-38af-ffac-61773cdd4174",
+          "title": "Renati des Cartes principiorum philosophiae",
+          "ubn": "12204",
+          "sl_book_id": null
+        },
+        {
+          "uuid": null,
+          "title": "Rosicrucian Text (PH313)",
+          "ubn": "PH313",
+          "sl_book_id": "69b418dc2b0edf3eaa2de112"
+        },
+        {
+          "uuid": null,
+          "title": "Processo del cavalier Francesco Giuseppe Borri (PH280)",
+          "ubn": "PH280",
+          "sl_book_id": "69b419242b0edf3eaa2dedbf"
+        },
+        {
+          "uuid": null,
+          "title": "Rosaire des Philosophes — Rosarium Philosophorum (PH333)",
+          "ubn": "PH333",
+          "sl_book_id": "69b4195acea21ec2e5d0e168"
+        },
+        {
+          "uuid": null,
+          "title": "Collection of Alchemical and Mystical Drawings (PH434)",
+          "ubn": "PH434",
+          "sl_book_id": "69b4188b2b0edf3eaa2dd387"
+        },
+        {
+          "uuid": null,
+          "title": "Copy of a Letter — Carl Joseph von Campagne (PH455C)",
+          "ubn": "PH455C",
+          "sl_book_id": "69b41950ddff1f043992a1c6"
+        },
+        {
+          "uuid": null,
+          "title": "Four Leaves from an Islamic Alchemical Text (PH412)",
+          "ubn": "PH412",
+          "sl_book_id": "69b41952ddff1f043992a1d4"
+        },
+        {
+          "uuid": null,
+          "title": "Figures d'Abraham le Juif (PH403)",
+          "ubn": "PH403",
+          "sl_book_id": "69b418f22b0edf3eaa2de61f"
+        },
+        {
+          "uuid": null,
+          "title": "Letter to the Rosicrucian Brotherhood (PH422)",
+          "ubn": "PH422",
+          "sl_book_id": "69b418d62b0edf3eaa2de08d"
+        },
+        {
+          "uuid": null,
+          "title": "Das Buch der Warheitt und der Philosophen (PH293)",
+          "ubn": "PH293",
+          "sl_book_id": "69b418902b0edf3eaa2dd408"
+        },
+        {
+          "uuid": null,
+          "title": "De Misterio Magno — Jakob Böhme (PH354)",
+          "ubn": "PH354",
+          "sl_book_id": "69b418c72b0edf3eaa2ddcf7"
+        },
+        {
+          "uuid": null,
+          "title": "Collection of Alchemical Works (PH346)",
+          "ubn": "PH346",
+          "sl_book_id": "69b4187ef1200e2ab53cfa5c"
+        },
+        {
+          "uuid": null,
+          "title": "Collection of Alchemical Texts (PH338)",
+          "ubn": "PH338",
+          "sl_book_id": "69b41881f1200e2ab53cfb8d"
+        },
+        {
+          "uuid": null,
+          "title": "Alchemical Texts — Hollandus, Llull, Ashmole, Ripley (PH435)",
+          "ubn": "PH435",
+          "sl_book_id": "69b418ee2b0edf3eaa2de472"
+        },
+        {
+          "uuid": null,
+          "title": "Unterricht von Bereitung des Stains der Weisen — Basilius Valentinus (PH187)",
+          "ubn": "PH187",
+          "sl_book_id": "69b418e92b0edf3eaa2de2c3"
+        },
+        {
+          "uuid": null,
+          "title": "Cabala Chymica. Concordantia Chymica (PH248)",
+          "ubn": "PH248",
+          "sl_book_id": "69b418a92b0edf3eaa2dd84a"
+        },
+        {
+          "uuid": null,
+          "title": "Bibliothèque des Sages — Basil Valentine, Khunrath, Hollandus et al. (PH243)",
+          "ubn": "PH243",
+          "sl_book_id": "69b4190d2b0edf3eaa2dea16"
+        },
+        {
+          "uuid": null,
+          "title": "Arbor Philosophiae Desideratae — Ramon Llull (PH332)",
+          "ubn": "PH332",
+          "sl_book_id": "69b418e32b0edf3eaa2de1be"
+        },
+        {
+          "uuid": null,
+          "title": "Palladis Chymicae Arcana Detecta — Marengus (PH292)",
+          "ubn": "PH292",
+          "sl_book_id": "69b4193a2b0edf3eaa2df0d7"
+        },
+        {
+          "uuid": null,
+          "title": "Corpus Hermeticum (PH460)",
+          "ubn": "PH460",
+          "sl_book_id": "69b418962b0edf3eaa2dd656"
+        },
+        {
+          "uuid": null,
+          "title": "Palladis Chymicae Arcana Detecta — Marengus (PH165)",
+          "ubn": "PH165",
+          "sl_book_id": "69b419382b0edf3eaa2df003"
+        },
+        {
+          "uuid": null,
+          "title": "Hermetis philosophi de revolutionibus nativitatum (PH216)",
+          "ubn": "PH216",
+          "sl_book_id": "69b418932b0edf3eaa2dd59a"
+        },
+        {
+          "uuid": null,
+          "title": "Pandora — Hieronymus Reusner (PH190)",
+          "ubn": "PH190",
+          "sl_book_id": "69b4193d2b0edf3eaa2df1bc"
+        },
+        {
+          "uuid": null,
+          "title": "Amphitheatrum Sapientiae Aeternae — Heinrich Khunrath (PH355)",
+          "ubn": "PH355",
+          "sl_book_id": "69b4190a2b0edf3eaa2de972"
+        }
+      ],
+      "barcodeChanged": []
+    }
+  },
+  "handschriften": {
+    "xmlTotal": 812,
+    "uuidsInDb": 0,
+    "barcodesInDb": 2,
+    "barcodeMatchSamples": [
+      {
+        "xmlUuid": "8aa695c2-28bf-4eb3-3794-2e633bb59fb5",
+        "barcode": "RIT001000026",
+        "xmlTitle": "Reverendo in Christo[?] patri ac domino domino Raymunda divina providentia (2r); Incipit libellus qui dicitur manipulus curatorum (3r). Incipit prologus libri qui intitulatur Horologium sapientie",
+        "dbUuid": "25974bc9-96a9-b790-5c19-3b9d865a8e27",
+        "dbUbn": "199",
+        "dbTitle": "Der äussere und innere güldene Augen-Spiegel",
+        "dbSlBookId": "6970e35b9b09d309d780a256"
+      },
+      {
+        "xmlUuid": "8cc9a6c1-e4a1-caab-3aae-54cf8e40f099",
+        "barcode": "RIT001000028",
+        "xmlTitle": "Sanctus Johannes ewangelista sach",
+        "dbUuid": "2a1ceb4c-ef06-4a4c-2e77-7116f0fa4457",
+        "dbUbn": "207",
+        "dbTitle": "Aglais",
+        "dbSlBookId": "6970e35c9b09d309d780a25a"
+      }
+    ]
+  },
+  "fotocopieen": {
+    "xmlTotal": 959,
+    "uuidsInDb": 0
+  }
+}
