@@ -26,7 +26,11 @@ const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[
 const hasFlag = (name) => args.includes(`--${name}`);
 
 const PAGE_LIMIT = parseInt(getArg('limit') || '2000', 10);
-const CONCURRENCY = parseInt(getArg('concurrency') || '2', 10);
+// Process workers are CPU+R2-upload bound; download workers are Harvard-rate-limit bound.
+// Decoupling them keeps the Harvard token bucket fully utilised while sharp+R2 happens in parallel.
+const PROCESS_CONCURRENCY = parseInt(getArg('concurrency') || '6', 10);
+const DOWNLOAD_CONCURRENCY = parseInt(getArg('download-concurrency') || '3', 10);
+const QUEUE_MAX = parseInt(getArg('queue-size') || '50', 10);
 const RATE_PER_SEC = parseFloat(getArg('rate') || '1');
 const DRY_RUN = hasFlag('dry-run');
 
@@ -106,7 +110,7 @@ async function downloadImage(url, maxRetries = 4) {
 
 async function main() {
   const start = Date.now();
-  console.log(`[archive-harvard] Local Harvard archiver — ${PAGE_LIMIT} pages max, ${CONCURRENCY} workers, ${RATE_PER_SEC} req/s`);
+  console.log(`[archive-harvard] Local Harvard archiver — ${PAGE_LIMIT} pages max, ${DOWNLOAD_CONCURRENCY}d/${PROCESS_CONCURRENCY}p workers, ${RATE_PER_SEC} req/s, queue ${QUEUE_MAX}`);
 
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
   await client.connect();
@@ -179,36 +183,76 @@ async function main() {
     return;
   }
 
-  // Process pages
-  let idx = 0;
+  // Two-stage pipeline: download workers fill a bounded queue; process workers
+  // drain it. Download is gated by the Harvard token bucket (~1 req/s);
+  // processing (sharp resize + R2 upload + Mongo) is CPU/network bound and
+  // runs unrestricted in parallel. Decoupling them keeps the Harvard bucket
+  // continuously full instead of one-page-at-a-time waiting on local upload.
+  let dlIdx = 0;
   let archived = 0;
   let failed = 0;
   let totalBytes = 0;
   let consecutiveFails = 0;
+  let downloadFailures = 0;
+  const queue = [];                         // [{ page, buffer }, ...]
   const touchedBookIds = new Set();
+  let allDownloadsDone = false;
 
-  async function worker() {
-    while (idx < allPages.length) {
-      // Harvard blocks Hetzner IPs entirely — if we see 20 consecutive failures
-      // from Mac we're probably either offline or Harvard escalated their block.
-      // Better to stop than to burn the failure_count budget on every page.
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+  async function downloadWorker() {
+    while (dlIdx < allPages.length) {
       if (consecutiveFails >= 20) {
-        console.log(`  [CIRCUIT BREAKER] 20 consecutive failures — Harvard may be blocking. Stopping.`);
+        console.log(`  [CIRCUIT BREAKER] 20 consecutive download failures — Harvard may be blocking. Stopping downloads.`);
         break;
       }
+      // Backpressure: if process workers are behind, slow down downloads so
+      // queue doesn't grow unbounded.
+      while (queue.length >= QUEUE_MAX) await sleep(100);
 
-      const i = idx++;
+      const i = dlIdx++;
       if (i >= allPages.length) break;
       const page = allPages[i];
 
       await waitForToken();
-
-      // Use the photo URL as-is (already at /full/2000,/). Do NOT upgrade to
-      // /full/full/ — Harvard rate-limits the full-res endpoint aggressively.
-      const url = page.photo;
+      const url = page.photo; // already at /full/2000,/; no upgrade
 
       try {
         const buffer = await downloadImage(url);
+        queue.push({ page, buffer, url });
+        totalBytes += buffer.byteLength;
+        consecutiveFails = 0;
+      } catch (err) {
+        downloadFailures++;
+        consecutiveFails++;
+        if (downloadFailures <= 5) console.log(`  DL-FAIL ${page.book_id}/${page.page_number}: ${err.message?.slice(0, 80)}`);
+        await db.collection('pages').updateOne(
+          { _id: page._id },
+          {
+            $set: {
+              'archive_metadata.last_failure_at': new Date(),
+              'archive_metadata.last_failure_reason': String(err.message || err).slice(0, 200),
+              'archive_metadata.last_failure_source_url': url,
+            },
+            $inc: { 'archive_metadata.failure_count': 1 },
+          }
+        ).catch(() => {});
+      }
+    }
+  }
+
+  async function processWorker() {
+    while (true) {
+      if (queue.length === 0) {
+        if (allDownloadsDone) break;
+        await sleep(100);
+        continue;
+      }
+      const item = queue.shift();
+      if (!item) continue;
+      const { page, buffer, url } = item;
+
+      try {
         const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
 
         const dimFields = {};
@@ -238,39 +282,29 @@ async function main() {
         );
 
         archived++;
-        totalBytes += buffer.byteLength;
         touchedBookIds.add(page.book_id);
-        consecutiveFails = 0;
       } catch (err) {
         failed++;
-        consecutiveFails++;
-        if (failed <= 5) console.log(`  FAIL page ${page.book_id}/${page.page_number}: ${err.message?.slice(0, 80)}`);
-
-        // Record failure on the page so it eventually circuit-breaks if permanently broken
-        await db.collection('pages').updateOne(
-          { _id: page._id },
-          {
-            $set: {
-              'archive_metadata.last_failure_at': new Date(),
-              'archive_metadata.last_failure_reason': String(err.message || err).slice(0, 200),
-              'archive_metadata.last_failure_source_url': url,
-            },
-            $inc: { 'archive_metadata.failure_count': 1 },
-          }
-        ).catch(() => {});
+        if (failed <= 5) console.log(`  PROC-FAIL ${page.book_id}/${page.page_number}: ${err.message?.slice(0, 80)}`);
       }
 
       const total = archived + failed;
-      if (total % 50 === 0) {
+      if (total % 50 === 0 && total > 0) {
         const elapsed = ((Date.now() - start) / 1000).toFixed(0);
         const mb = (totalBytes / (1024 * 1024)).toFixed(1);
         const rate = (archived / ((Date.now() - start) / 1000)).toFixed(2);
-        console.log(`  ${total}/${allPages.length} processed, ${archived} archived (${mb} MB), ${failed} failed (${elapsed}s, ${rate}/s)`);
+        console.log(`  ${total}/${allPages.length} processed, ${archived} archived (${mb} MB), ${failed + downloadFailures} failed, queue=${queue.length} (${elapsed}s, ${rate}/s)`);
       }
     }
   }
 
-  await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
+  // Run downloads and processing in parallel pools. Downloads finish first
+  // (gated by Harvard rate); processing winds down draining the queue.
+  const downloadPool = Promise.all(Array.from({ length: DOWNLOAD_CONCURRENCY }, () => downloadWorker()))
+    .then(() => { allDownloadsDone = true; });
+  const processPool = Promise.all(Array.from({ length: PROCESS_CONCURRENCY }, () => processWorker()));
+  await Promise.all([downloadPool, processPool]);
+  failed += downloadFailures;
 
   const duration = ((Date.now() - start) / 1000).toFixed(1);
   const mb = (totalBytes / (1024 * 1024)).toFixed(1);
