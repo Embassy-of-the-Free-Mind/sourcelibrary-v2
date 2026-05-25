@@ -398,12 +398,29 @@ async function supabaseFetch(path, init = {}) {
     'Content-Type': 'application/json',
     ...(init.headers || {}),
   };
-  const res = await fetch(url, { ...init, headers });
-  if (!res.ok) {
-    const txt = await res.text();
-    throw new Error(`Supabase ${init.method || 'GET'} ${path} → ${res.status}: ${txt.slice(0, 500)}`);
+  // Retry on transient network errors and 5xx + 429. Step 2's 27k+ sequential
+  // calls hit network blips occasionally; without retry a single drop aborts
+  // the whole run. Up to 4 attempts with exponential backoff (0.5/1/2/4s).
+  let lastErr;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const res = await fetch(url, { ...init, headers });
+      if (res.ok) return res;
+      const retriable = res.status === 429 || res.status >= 500;
+      const txt = await res.text();
+      const err = new Error(`Supabase ${init.method || 'GET'} ${path} → ${res.status}: ${txt.slice(0, 300)}`);
+      if (!retriable || attempt === 3) throw err;
+      lastErr = err;
+    } catch (e) {
+      // fetch() throws TypeError on DNS/connection failure — treat as retriable.
+      if (attempt === 3) throw e;
+      lastErr = e;
+    }
+    const wait = 500 * Math.pow(2, attempt);
+    process.stderr.write(`\n  retry ${attempt + 1}/3 after ${wait}ms (${lastErr?.message?.slice(0, 80) || 'unknown'})\n`);
+    await new Promise(r => setTimeout(r, wait));
   }
-  return res;
+  throw lastErr;
 }
 
 async function pageAll(table, select, filter = '') {
@@ -514,19 +531,39 @@ async function step0_backup() {
 async function step2_backfillRaw() {
   console.log('\n=== Step 2: Backfill memorix_raw/files/counters for in-both printed rows ===');
   await verifySchema();
-  const dbRows = await pageAll('bph_works', 'uuid', '&record_type=eq.printed&uuid=not.is.null');
+  // Only target rows that don't yet have memorix_raw set. Makes the step
+  // resumable after a partial failure — a re-run picks up only what's left.
+  const dbRows = await pageAll('bph_works', 'uuid',
+    '&record_type=eq.printed&uuid=not.is.null&memorix_raw=is.null');
   const dbUuids = new Set(dbRows.map(r => r.uuid));
   const records = readRecords(join(XML_DIR, XML_FILES.printed), 'BPH printed');
 
-  let toUpdate = 0, skipped = 0;
+  let toUpdate = 0, skippedNew = 0, alreadyDone = 0;
   const sample = [];
   for (const r of records) {
-    if (!dbUuids.has(r.uuid)) { skipped++; continue; }
-    toUpdate++;
-    if (sample.length < 3) sample.push({ uuid: r.uuid, fileCount: r.files.length, totalBytes: r.files.reduce((s, f) => s + (f.filesize || 0), 0) });
+    if (dbUuids.has(r.uuid)) {
+      toUpdate++;
+      if (sample.length < 3) sample.push({ uuid: r.uuid, fileCount: r.files.length, totalBytes: r.files.reduce((s, f) => s + (f.filesize || 0), 0) });
+    } else {
+      // Either new-in-XML (Step 4 handles) or already-backfilled (skip).
+      // Disambiguate cheaply: if uuid appears in dbUuidsAll, it's already done.
+      // Otherwise it's new-in-XML.
+      // (We don't need to be precise here — counts only.)
+    }
   }
+  // Quick second probe to disambiguate skip reasons for the summary line.
+  const allPrinted = await pageAll('bph_works', 'uuid',
+    '&record_type=eq.printed&uuid=not.is.null');
+  const allUuids = new Set(allPrinted.map(r => r.uuid));
+  for (const r of records) {
+    if (dbUuids.has(r.uuid)) continue;
+    if (allUuids.has(r.uuid)) alreadyDone++;
+    else skippedNew++;
+  }
+
   console.log(`  Will UPDATE: ${toUpdate}`);
-  console.log(`  Skipped (new-in-XML, handled in Step 4): ${skipped}`);
+  console.log(`  Already backfilled (memorix_raw not null, resume case): ${alreadyDone}`);
+  console.log(`  Skipped (new-in-XML, Step 4 handles): ${skippedNew}`);
   console.log(`  Sample: ${JSON.stringify(sample, null, 2)}`);
 
   if (!APPLY) {
