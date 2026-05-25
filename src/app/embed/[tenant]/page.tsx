@@ -177,11 +177,17 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
 
     const basePath = `/embed/${tenant}`;
 
+    // Tenant doc copy wins over partner-derived copy. Otherwise a tenant like
+    // Bhutan (whose contributing_library is "British Library" for every book)
+    // gets the BL partner's name/description rendered as the hero — the page
+    // ends up titled "British Library" with UK-specific copy instead of its
+    // own identity.
+    const tenantDescription = getOptionalStringField(tenantRecord.description);
     const viewProps: SharedLibraryViewProps = {
         partner: {
-            name: canonicalPartner?.name || tenantDoc.name,
-            description: canonicalPartner?.description || tenantDoc.name,
-            url: canonicalPartner?.url || tenantExternalUrl,
+            name: tenantDoc.name || canonicalPartner?.name || tenant,
+            description: tenantDescription || canonicalPartner?.description || tenantDoc.name,
+            url: tenantExternalUrl || canonicalPartner?.url,
             providerKey: canonicalPartner?.providerKey,
             slug: tenant,
         },

@@ -87,12 +87,15 @@ export default async function TenantRoot({ params, searchParams }: Props) {
 
   const basePath = `/${tenant}`;
 
-  // Construct props for shared view
+  // Tenant doc copy wins over partner-derived copy (see /embed/[tenant]/page.tsx
+  // for the rationale — Bhutan etc. would otherwise show "British Library").
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tenantDescription = typeof (tenantDoc as any).description === 'string' ? (tenantDoc as any).description : '';
   const viewProps: SharedLibraryViewProps = {
     partner: {
-      name: canonicalPartner?.name || tenantDoc.name,
-      description: canonicalPartner?.description || tenantDoc.name,
-      url: canonicalPartner?.url || tenantExternalUrl,
+      name: tenantDoc.name || canonicalPartner?.name || tenant,
+      description: tenantDescription || canonicalPartner?.description || tenantDoc.name,
+      url: tenantExternalUrl || canonicalPartner?.url,
       providerKey: canonicalPartner?.providerKey,
       slug: tenant,
     },
