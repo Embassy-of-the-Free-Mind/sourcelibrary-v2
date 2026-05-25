@@ -14,6 +14,10 @@ export default function robots(): MetadataRoute.Robots {
           '/book/*/capture',
           '/book/*/qa',
           '/book/*/split',
+          // Redirect-only URL. Every hit 308s to /book/{slug}/page/{pageId};
+          // letting Google crawl this burns budget on tens of thousands of
+          // redirects (showed up as "Blocked 403" / "Page with redirect" in GSC).
+          '/book/*/page-number/',
           '/api/',
           '/admin/',
           '/analytics',

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
@@ -7,6 +8,14 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
 export const revalidate = 86400;
+
+// Per-page URLs are thin content (one scanned page) and outnumber book URLs
+// 100:1. Keeping them out of the index concentrates Google's attention on the
+// book-level URL (richer metadata, title, description) and avoids soft-404 /
+// duplicate-canonical noise in GSC. They remain crawlable and follow links.
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
 
 interface PageProps {
   params: Promise<{ tenant: string; id: string; pageId: string }>;
