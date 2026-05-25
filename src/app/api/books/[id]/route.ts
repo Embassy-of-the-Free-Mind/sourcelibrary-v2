@@ -24,9 +24,9 @@ export const GET = withApiAuth(async (
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
     const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(request);
 
-    if (!tenantId) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
-    }
+    // No tenant header → main-site request → serve from the global catalog
+    // (findBookByIdOrSlug skips the tenant filter when tenantId is undefined).
+    // Tenant header present → /api/[tenant]/books/[id] semantics → tenant-scoped lookup.
 
     // Use secondary reads for public GETs; admin full-view still reads primary for freshness
     const db = includeFull ? await getDb() : await getReadDb();
@@ -38,7 +38,7 @@ export const GET = withApiAuth(async (
       chapters: 1,
     } : undefined;
 
-    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId, tenantSlug ?? undefined);
+    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId ?? undefined, tenantSlug ?? undefined);
     if (!result) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
@@ -77,8 +77,10 @@ export const GET = withApiAuth(async (
     const bookId = (book.id || book._id?.toString()) as string;
     const pageOffset = parseInt(searchParams.get('pageOffset') || '0');
     const pageLimit = parseInt(searchParams.get('pageLimit') || '0'); // 0 = all (backwards-compat)
+    const pageFilter: Record<string, unknown> = { book_id: bookId, page_number: { $gte: 0 } };
+    if (tenantId) pageFilter.tenantId = tenantId;
     let cursor = db.collection('pages')
-      .find({ book_id: bookId, tenantId, page_number: { $gte: 0 } })
+      .find(pageFilter)
       .project(projection)
       .sort({ page_number: 1 });
     if (pageOffset > 0) cursor = cursor.skip(pageOffset);
