@@ -97,6 +97,10 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Handoffs:** `.claude/handoffs/` (read by date/topic)
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 
+### Optional: code-review-graph
+
+If `code-review-graph` is installed (per-machine, see `.claude/docs/code-review-graph.md`), prefer it for **structural** queries: callers, callees, impact radius, test coverage. Memory files still win for *why* questions (decisions, incidents, domain invariants). The graph is static-analysis only — it misses tenant routing, Atlas/Supabase collection scoping, dynamic requires, and cron triggers. Always verify with grep before any destructive action the graph informed.
+
 ## Knowledge Maintenance
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
 - When reading memory files, flag anything that contradicts the current codebase and fix it.
