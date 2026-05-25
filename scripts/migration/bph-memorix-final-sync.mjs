@@ -468,15 +468,17 @@ async function step0_backup() {
     const PAGE = 1000;
     let offset = 0;
     while (true) {
-      const res = await supabaseFetch(`/bph_works?select=*&order=id.asc`, {
-        headers: { Range: `${offset}-${offset + PAGE - 1}`, 'Range-Unit': 'items' },
-      });
+      const res = await supabaseFetch(
+        `/bph_works?select=*&order=id.asc`,
+        { headers: { Range: `${offset}-${offset + PAGE - 1}`, 'Range-Unit': 'items' } },
+      );
       const rows = await res.json();
       for (const r of rows) yield JSON.stringify(r) + '\n';
       if (rows.length < PAGE) break;
       offset += PAGE;
       process.stderr.write(`  backed up ${offset}…\r`);
     }
+    process.stderr.write('\n');
   }
   await pipeline(Readable.from(lines()), createGzip(), createWriteStream(out));
   console.log(`  ✓ Backup complete: ${out}`);
@@ -771,23 +773,28 @@ async function step8_deletes() {
     }
   }
 
-  // Third: NULL UBN + NULL uuid (the orphan row from the diff).
-  // Look it up to confirm before deleting.
-  const res = await supabaseFetch(`/bph_works?ubn=is.null&uuid=is.null&select=id,ubn,title,sl_book_id,picturae_barcode`);
+  // Third: the null-UBN orphan. Plan says exactly one such row; uuid may or
+  // may not be null. Cross-reference against the diff to find which one is
+  // the documented orphan (only Memorix uuid NOT present in any XML export
+  // = truly-removed orphan).
+  const res = await supabaseFetch(`/bph_works?ubn=is.null&select=id,uuid,ubn,title,sl_book_id,picturae_barcode`);
   const orphans = await res.json();
   if (orphans.length === 0) {
-    console.log(`  Null-UBN/null-uuid orphan: not found (already deleted?)`);
+    console.log(`  Null-UBN orphan: not found (already deleted?)`);
   } else if (orphans.length > 1) {
-    console.log(`  ⚠ Found ${orphans.length} null-UBN/null-uuid rows; the plan expected exactly 1. Aborting Step 8 — investigate manually.`);
-    return;
+    console.log(`  ⚠ Found ${orphans.length} null-UBN rows; the plan expected exactly 1. Listing them — investigate manually before applying Step 8.`);
+    for (const r of orphans) {
+      console.log(`    id=${r.id} uuid=${r.uuid || 'null'} sl=${r.sl_book_id || '-'} barcode=${r.picturae_barcode || '-'} title=${(r.title || '').slice(0, 60)}`);
+    }
   } else {
     const r = orphans[0];
     if (r.sl_book_id) {
       console.log(`  ⚠ null-UBN orphan has sl_book_id=${r.sl_book_id} — REFUSING to delete. Skipping.`);
     } else {
-      console.log(`  Will DELETE: id=${r.id} barcode=${r.picturae_barcode || '-'} title=${(r.title || '').slice(0, 60)}`);
+      console.log(`  Will DELETE: id=${r.id} uuid=${r.uuid || 'null'} barcode=${r.picturae_barcode || '-'} title=${(r.title || '').slice(0, 60)}`);
       if (APPLY) {
-        await supabaseFetch(`/bph_works?ubn=is.null&uuid=is.null&id=eq.${r.id}`, {
+        // id is the PK — narrow to exactly one row.
+        await supabaseFetch(`/bph_works?id=eq.${r.id}`, {
           method: 'DELETE',
           headers: { Prefer: 'return=minimal' },
         });
