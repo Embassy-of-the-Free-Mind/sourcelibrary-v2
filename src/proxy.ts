@@ -629,17 +629,31 @@ export async function proxy(request: NextRequest) {
       }
     }
 
-    // Fallback to referer tenant path: /{tenant}/...
+    // Fallback to referer tenant path: /{tenant}/... or /book/{id}
     if (!tenantId) {
       const referer = request.headers.get('referer');
       if (referer) {
         try {
           const refererUrl = new URL(referer);
-          const [, refererFirstSegment] = refererUrl.pathname.split('/');
-          const refTenant = await resolveActiveTenant(refererFirstSegment || '');
+          const refererSegments = refererUrl.pathname.split('/').filter(Boolean);
+          const refererFirstSegment = refererSegments[0] || '';
+          const refTenant = await resolveActiveTenant(refererFirstSegment);
           if (refTenant) {
             tenantId = refTenant.id;
             tenantSlug = refTenant.slug;
+          } else if (refererFirstSegment === 'book' && refererSegments[1]) {
+            // /book/{id} URLs are rewritten internally to /{tenant}/book/{id}
+            // (see the /book/ rewrite block above). API calls fired from those
+            // pages keep /book/{id} as the referer, so resolve the tenant the
+            // same way the page route does — via the book's tenantId.
+            const bookTenantSlug = await resolveTenantForBookSegment(refererSegments[1]);
+            if (bookTenantSlug) {
+              const resolved = await resolveTenantByExactSlug(bookTenantSlug);
+              if (resolved) {
+                tenantId = resolved.id;
+                tenantSlug = resolved.slug;
+              }
+            }
           }
         } catch {
           // Ignore malformed referer
