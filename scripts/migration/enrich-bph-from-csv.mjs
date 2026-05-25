@@ -1,5 +1,23 @@
 #!/usr/bin/env node
 /**
+ * ⚠️ DEPRECATED — kept for historical reference only.
+ *
+ * Superseded by scripts/migration/bph-memorix-final-sync.mjs (PR #1975,
+ * applied 2026-05-25). The CSV "ScannedBooks" path used to enrich BPH
+ * books pre-#1881; Memorix is no longer the upstream and the canonical
+ * enrichment flow is now Step 2 of bph-memorix-final-sync (memorix_raw
+ * JSONB + promoted columns from the XML export).
+ *
+ * Mongo-side fields written by this script (image_source.source_id,
+ * dublin_core.dc_identifier) remain in production data, but no new
+ * enrichment should be applied this way.
+ *
+ * Provenance / decision log: .claude/handoffs/2026-05-25-bph-memorix-sync-apply.md
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * (Original docstring follows.)
+ *
  * Enrich BPH books with Vitec Memorix catalog metadata from ScannedBooks.csv.
  *
  * Two matching strategies:

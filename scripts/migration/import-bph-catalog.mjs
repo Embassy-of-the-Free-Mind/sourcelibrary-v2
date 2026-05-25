@@ -1,5 +1,21 @@
 #!/usr/bin/env node
 /**
+ * ⚠️ DEPRECATED — kept for historical reference only.
+ *
+ * Superseded by scripts/migration/bph-memorix-final-sync.mjs (PR #1975,
+ * applied 2026-05-25). After that sync, bph_works is the authoritative
+ * BPH catalog and Memorix is no longer pulled. There is no reason to
+ * run this CSV importer against production again.
+ *
+ * If a future librarian needs to re-import from a fresh Memorix export,
+ * use bph-memorix-final-sync.mjs (XML-based) — not this CSV path.
+ *
+ * Provenance / decision log: .claude/handoffs/2026-05-25-bph-memorix-sync-apply.md
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * (Original docstring follows.)
+ *
  * Import the full BPH catalog (Vitec Memorix export) into Supabase bph_works.
  *
  * Source: ~/Downloads/BibliotheekExportTest.csv (~28,813 rows, 49 columns).

@@ -749,8 +749,16 @@ async function step3_fieldUpdates() {
   // efficiency, but we record a single system revision per row so the audit
   // trail still captures this migration. The revision_email is
   // 'system:bph-memorix-final-sync-2026-05-19' so future audits can find it.
+  // Capture pre-update values keyed by uuid so field_changes records both
+  // sides of every change ({from: <pre-DB value>, to: <Memorix value>}).
+  // First pass through the 2026-05-25 production apply wrote from: null on
+  // all 105 revision rows (provenance gap noted in handoff). This commit
+  // closes it for any future re-use.
+  const preStateByUuid = new Map(dbRows.map(r => [r.uuid, r]));
+
   let done = 0;
   for (const u of safeUpdates) {
+    const pre = preStateByUuid.get(u.uuid) || {};
     await updateByUuid(u.uuid, u.diff);
     await supabaseFetch(`/bph_works_revisions`, {
       method: 'POST',
@@ -759,7 +767,10 @@ async function step3_fieldUpdates() {
         ubn: u.ubn,
         change_type: 'edit',
         field_changes: Object.fromEntries(
-          Object.entries(u.diff).map(([col, to]) => [col, { from: null, to, source: 'memorix-2026-05-19' }])
+          Object.entries(u.diff).map(([col, to]) => [
+            col,
+            { from: pre[col] ?? null, to, source: 'memorix-2026-05-19' },
+          ])
         ),
         editor_email: 'system:bph-memorix-final-sync-2026-05-19',
         note: 'Step 3 of final Memorix sync — see PR #1975 / issue #1881',
