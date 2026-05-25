@@ -40,19 +40,38 @@ export async function POST(
 
   const revalidated = [`/book/${slug}`, `/book/${id}`];
 
-  // Also revalidate tenant-scoped paths if book belongs to a tenant
-  if (book.tenantId) {
+  // Also revalidate tenant-scoped paths if book belongs to a tenant.
+  // Books carry either `tenantId` (camelCase UUID) or `tenant_id` (snake_case slug).
+  const bookTenantUuid = book.tenantId as string | undefined;
+  const bookTenantSlug = book.tenant_id as string | undefined;
+  let tenantSlug: string | null = null;
+  if (bookTenantUuid) {
     const tenant = await db.collection('tenants').findOne(
-      { id: book.tenantId },
+      { id: bookTenantUuid },
       { projection: { slug: 1 } }
     );
-    if (tenant?.slug) {
-      revalidatePath(`/${tenant.slug}/book/${slug}`);
-      revalidatePath(`/${tenant.slug}/book/${slug}/search`);
-      revalidatePath(`/${tenant.slug}/book/${slug}`, 'layout');
-      revalidatePath(`/${tenant.slug}/book/${id}`);
-      revalidated.push(`/${tenant.slug}/book/${slug}`, `/${tenant.slug}/book/${id}`);
-    }
+    tenantSlug = (tenant?.slug as string) || null;
+  } else if (bookTenantSlug && bookTenantSlug !== 'default') {
+    tenantSlug = bookTenantSlug;
+  }
+  if (tenantSlug) {
+    // Regular tenant route
+    revalidatePath(`/${tenantSlug}/book/${slug}`);
+    revalidatePath(`/${tenantSlug}/book/${slug}/search`);
+    revalidatePath(`/${tenantSlug}/book/${slug}`, 'layout');
+    revalidatePath(`/${tenantSlug}/book/${id}`);
+    // Tenant subdomains route to /embed/[tenant]/book/[slug] via proxy.ts.
+    // Without this, Vercel's edge cache happily keeps serving the stale 404
+    // after a visibility flip — that's how the Bhutan promotion bit us.
+    revalidatePath(`/embed/${tenantSlug}/book/${slug}`);
+    revalidatePath(`/embed/${tenantSlug}/book/${slug}`, 'layout');
+    revalidatePath(`/embed/${tenantSlug}/book/${id}`);
+    revalidated.push(
+      `/${tenantSlug}/book/${slug}`,
+      `/${tenantSlug}/book/${id}`,
+      `/embed/${tenantSlug}/book/${slug}`,
+      `/embed/${tenantSlug}/book/${id}`,
+    );
   }
 
   // Purge Cloudflare edge cache for these paths too
