@@ -110,7 +110,7 @@ Detect the work domain from the user's prompt and load the right context automat
 
 ### Optional: code-review-graph
 
-If `code-review-graph` is installed (per-machine, see `.claude/docs/code-review-graph.md`), prefer it for **structural** queries: callers, callees, impact radius, test coverage. Memory files still win for *why* questions (decisions, incidents, domain invariants). The graph is static-analysis only — it misses tenant routing, Atlas/Supabase collection scoping, dynamic requires, and cron triggers. Always verify with grep before any destructive action the graph informed.
+If `code-review-graph` is installed (per-machine, see `.claude/docs/code-review-graph.md`), use it for **impact-radius** and **execution-flow** queries — those are real wins grep can't match. For "who calls X?" with a known symbol, grep is faster and more compact. **Never trust `refactor_tool(mode="dead_code")` output as a deletion list** — measured on this repo it produced 2,509 "dead" functions including active Next.js `GET` route handlers (validated 2026-05-25, see doc). Memory files win for *why* questions (decisions, incidents, domain invariants). Always grep-verify before any destructive action the graph informed.
 
 ## Knowledge Maintenance
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
