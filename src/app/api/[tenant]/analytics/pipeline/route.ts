@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { withAuth } from '@/lib/auth-helpers';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export const maxDuration = 30;
 
@@ -24,6 +24,12 @@ const CACHE_TTL_MS = 60 * 1000;
  */
 export const GET = withAuth(async (request: NextRequest, session, context) => {
   try {
+    // Uses supabaseAdmin because gemini_usage and pipeline_snapshots are
+    // RLS-locked to service_role only (operational telemetry; see #1981 +
+    // rls-lockdown-phase2-telemetry.sql). Caller already passed withAuth.
+    if (!supabaseAdmin) {
+      return NextResponse.json({ error: 'supabaseAdmin not configured' }, { status: 500 });
+    }
     const { searchParams } = new URL(request.url);
     const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 720); // max 30 days
     const { tenant } = await context.params;
@@ -46,7 +52,7 @@ export const GET = withAuth(async (request: NextRequest, session, context) => {
     const [snapshots, cronRuns, needsAttention, recentErrors, recentDecisions, velocityRows] = await Promise.all([
       // 1. Pipeline snapshots from Supabase (fast time-series query)
       // Filter out zero-page snapshots (caused by warehouse migration or orchestrator restarts)
-      supabase
+      supabaseAdmin
         .from('pipeline_snapshots')
         .select('timestamp, funnel, pages, books, active_batch')
         .gte('timestamp', cutoff.toISOString())
@@ -55,7 +61,7 @@ export const GET = withAuth(async (request: NextRequest, session, context) => {
         .then(({ data }) => data || []),
 
       // 2. Recent cron runs from Supabase
-      supabase
+      supabaseAdmin
         .from('cron_runs')
         .select('cron, timestamp, duration_ms, actions, errors, error_count, status')
         .gte('timestamp', cutoff.toISOString())
@@ -78,7 +84,7 @@ export const GET = withAuth(async (request: NextRequest, session, context) => {
         .toArray(),
 
       // 4. Recent errors from Supabase gemini_usage (last 6h)
-      supabase
+      supabaseAdmin
         .from('gemini_usage')
         .select('type, error_category, error_message, timestamp')
         .eq('status', 'failed')
@@ -108,7 +114,7 @@ export const GET = withAuth(async (request: NextRequest, session, context) => {
         }),
 
       // 5. Recent decisions from Supabase cron_runs
-      supabase
+      supabaseAdmin
         .from('cron_runs')
         .select('cron, timestamp, decisions')
         .gte('timestamp', cutoff.toISOString())
@@ -131,7 +137,7 @@ export const GET = withAuth(async (request: NextRequest, session, context) => {
         }),
 
       // 6. Pipeline velocity from materialized view (pre-computed hourly rates)
-      supabase
+      supabaseAdmin
         .from('pipeline_velocity')
         .select('hour, books_complete, pages_translated, pages_ocr, pages_total')
         .gte('hour', cutoff.toISOString())

@@ -24,7 +24,7 @@
  *   - `audit_log` and `book_metadata_changelog` writers do not stamp `tenantId`.
  */
 import type { Db } from 'mongodb';
-import { supabase, supabaseAdmin } from './supabase';
+import { supabaseAdmin } from './supabase';
 
 export interface HistoryEvent {
   type:
@@ -209,7 +209,11 @@ const SOURCE_LABELS: Record<string, string> = {
 };
 
 async function fetchSupabaseUsage(bookId: string): Promise<UsageRow[]> {
-  const client = supabaseAdmin || supabase;
+  // gemini_usage is RLS-locked to service_role (see #1981); no anon fallback.
+  if (!supabaseAdmin) {
+    throw new Error('supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing');
+  }
+  const client = supabaseAdmin;
   // Read selected columns; `triggered_by` is optional in case the column hasn't shipped yet.
   const { data, error } = await client
     .from('gemini_usage')
