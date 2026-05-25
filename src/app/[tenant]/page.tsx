@@ -95,7 +95,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
     partner: {
       name: tenantDoc.name || canonicalPartner?.name || tenant,
       description: tenantDescription || canonicalPartner?.description || tenantDoc.name,
-      url: tenantExternalUrl || canonicalPartner?.url,
+      url: tenantExternalUrl || canonicalPartner?.url || '',
       providerKey: canonicalPartner?.providerKey,
       slug: tenant,
     },
