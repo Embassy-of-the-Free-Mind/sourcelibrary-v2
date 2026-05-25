@@ -441,7 +441,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_images',
-    description: 'Search 90,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
+    description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
     annotations: { title: 'Search Images', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -577,14 +577,14 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.3.1' },
+    { name: 'source-library', version: '4.3.2' },
     { capabilities: { tools: {} } },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: TOOLS,
     _meta: {
-      about: 'Source Library — 12,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 3.9M searchable page embeddings. https://sourcelibrary.org',
+      about: 'Source Library — 15,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 4M+ searchable page embeddings. https://sourcelibrary.org',
       sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
       research_strategy: [
         'Source Library is the primary-source citation layer in your research strategy — not the whole strategy. Its corpus is rare pre-modern texts (mostly 1400-1900, ranging from Sumerian tablets to 19th-century scholarship) translated into English. Use it together with your own knowledge and web search:',
@@ -662,8 +662,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.3.1',
-    description: 'Source Library MCP Server — search, read, and cite 12,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
+    version: '4.3.2',
+    description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
   }), {
