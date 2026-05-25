@@ -318,7 +318,6 @@ scripts/                    # Operational scripts
 - `/testloader` — debug page, should not be public
 - `/scan/auto`, `/scan/opencv` — experimental scanning tools
 - `/fulldata` — bulk data export, should be admin-only
-- `/_archived/highlights` — deprecated, still accessible
 
 ## Key Architectural Patterns
 
@@ -334,24 +333,25 @@ scripts/                    # Operational scripts
 
 ## Known Dead Code & Duplicates
 
-### Confirmed Dead Components (verified 2026-04-01, zero imports)
+### Confirmed Dead Components (last audit 2026-05-25, zero imports)
 Issue #258 closed. These remain with no imports anywhere:
 
 | Component | Path | Notes |
 |-----------|------|-------|
 | `BookEditModal.tsx` | `components/book/` | Orphaned |
-| `BookPagesActions.tsx` | `components/book/` | Orphaned |
-| `BookPagesStats.tsx` | `components/book/` | Orphaned |
 | `JobStatusBanner.tsx` | `components/book/` | Orphaned |
 | `PagesGrid.tsx` | `components/book/` | Orphaned |
 | `ProcessingPanel.tsx` | `components/book/` | Orphaned |
-| `ReorderModePanel.tsx` | `components/book/` | Orphaned |
 | `EntityMap.tsx` | `components/explore/` | Orphaned |
 | `MapSidebar.tsx` | `components/explore/` | Orphaned |
 | `PipelineStageCard.tsx` | `components/pipeline/` | Orphaned |
 | `PageTracker.tsx` | `components/reader/` | Orphaned |
 | `SessionCard.tsx` | `components/research/` | Orphaned |
 | Camera components (6) | `components/camera/` | Mobile scanning — unused, ask before deleting |
+
+**Deleted in #1986** (no longer in this table): `BookPagesActions.tsx`, `BookPagesStats.tsx`, `ReorderModePanel.tsx`, `SparkLine.tsx`, `HideWhenEmbedded.tsx`, `InputWidget.tsx`, plus `_archived/` batch panels and api-client files. See `.claude/handoffs/2026-05-25-pr1980-split.md` for the audit + verification process.
+
+**Before deleting any row above:** grep-verify zero imports across the repo. Static analysis (graph tools) can miss dynamic requires, framework conventions, and recent additions — see `.claude/docs/code-review-graph.md` "Staleness — the main failure mode."
 
 Note: Rithmomachia is a **live feature** (`/rithmomachia`, guide, scenarios, blog post) — NOT dead code.
 
