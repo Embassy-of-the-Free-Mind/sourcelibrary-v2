@@ -12,10 +12,23 @@ Upstream: https://github.com/tirth8205/code-review-graph
 
 The graph is a faster grep **for structural questions**:
 
-- Who calls function X? (`query_graph(pattern="callers_of", ...)`)
-- What's the blast radius if I change this file? (`get_impact_radius`)
-- Which functions have no tests? (`query_graph(pattern="tests_for", ...)`)
-- High-level architecture overview (`get_architecture_overview`)
+- **Pre-review a change set.** `detect_changes_tool` (auto-detects git diff)
+  returns a risk-scored summary, lists changed functions, and flags test
+  gaps. Useful at PR-open time.
+- **Generate review context for an LLM.** `get_review_context_tool`
+  produces a structured "here's what's impacted and what to look at"
+  message with explicit warnings ("Wide blast radius: 500 nodes impacted",
+  "Consider splitting into smaller PRs"). Real prompt-engineering value.
+- **Impact radius of a change.** `get_impact_radius_tool(changed_files=[...])`
+  returns direct + transitive impact within N hops. Spot-checked against
+  grep ground truth: 48 graph-reported files vs. 46 from grep on
+  `src/lib/auth.ts` — close enough to trust the shape, useful for "what
+  could this break?"
+- **Callers of a known symbol.** `query_graph(pattern="callers_of", target="X")`
+  with a known function name returns a structured caller list with
+  file/line/kind. More compact than grep when there are many call sites.
+- **High-level architecture overview.** `get_architecture_overview`,
+  `list_communities`, `list_flows` answer questions grep can't.
 
 ## When NOT to use
 
@@ -28,8 +41,16 @@ The graph is static-analysis only. It will **miss or mislead** for:
 - **Atlas vs. Supabase queries.** Collections are runtime strings; the graph
   can't tell you that `held_by` defaults to GLOBAL or that tenant filtering
   is required. Use `memory/data-quality.md` and the tenant invariants.
-- **Dynamic require/import.** e.g. `src/lib/embassy/podcast.ts` does
-  `require('../vendor/lamejs-bundle')` — graph won't link that.
+- **Bundled or IIFE-style code.** `src/lib/vendor/lamejs-bundle.js`
+  defines `Mp3Encoder` inside a closure returned from an IIFE. Tree-sitter
+  parses the file but doesn't extract `Mp3Encoder` as a callable node, so
+  `semantic_search "Mp3Encoder"` returns 0 results even with the bundle on
+  disk. Same issue affects any minified/transpiled/concatenated source.
+  Use grep on the actual file.
+- **Dynamic require/import.** Computed-path `require()` calls aren't
+  followed: `require('../vendor/lamejs-bundle')` in `podcast.ts` doesn't
+  produce an edge into the bundle. (This compounds with the IIFE issue
+  above on the lamejs case specifically.)
 - **Cron triggers, Lambda handlers, worker scripts.** The trigger lives
   outside the import graph.
 - **"Why" questions.** The graph encodes structure, not intent. For
@@ -138,7 +159,7 @@ compact and faster.
 
 | Question | Graph result | Reality |
 |----------|--------------|---------|
-| Who uses `Mp3Encoder` (dynamic require)? | 0 results | `src/lib/embassy/podcast.ts:370` calls it via `require('../vendor/lamejs-bundle')`. Tree-sitter doesn't link computed-path requires. |
+| Who uses `Mp3Encoder` (IIFE-bundled, called via dynamic require)? | 0 results, even after the bundle was generated and the graph re-indexed | Tree-sitter doesn't extract the `Mp3Encoder` symbol from the bundle's IIFE closure structure, AND doesn't follow the computed-path `require()` in `podcast.ts:370`. Two failure modes compounding. |
 | Where is `bph.sourcelibrary.org/book/X` served from? | Found the file `src/app/embed/[tenant]/book/[slug]/page.tsx`, but no link from the BPH host to that path | The link lives in `src/proxy.ts` host-rewrite logic, invisible to a static import graph. |
 | What triggers `enrich-worker`? | Found enrich-named symbols; no cron link | Vercel Cron declared in `vercel.json` (1-line `cat vercel.json \| jq .crons` answers it). |
 | Where is `tenant_memberships` scoped per tenant? | Found the SQL table node | The runtime-string collection name appears in ~30 route handlers; graph sees the schema, not the access pattern. |
@@ -149,52 +170,75 @@ silence as a real "no," you'll be wrong.
 
 ### Set C — dead-code detection (the dangerous one)
 
-Ran `refactor_tool(mode="dead_code", kind="Function", file_pattern="src/")`.
+Ran `refactor_tool(mode="dead_code", kind="Function")` scoped to `src/app/api/`
+for a clean breakdown: **840 "dead" functions reported**, categorized:
 
-- **2,509 "dead" functions reported** in `src/` alone (4,192 across the
-  whole repo including SQL migrations)
-- **Top false-positive categories:**
-  - Next.js route exports — `GET`, `POST`, `PATCH`, `DELETE` in *active*
-    route files flagged as dead. The framework calls them by HTTP method,
-    not by an import — graph-blind.
-  - Single-letter arrow-function parameters — `(s) => s.toLowerCase()`,
-    `(v) => v.id`. Tree-sitter indexes these as Function nodes; they have
-    no external "callers" so they look orphaned.
-  - Internal helper functions in active files — used inside their own
-    module but not exported, so the import graph sees no callers.
-- **Sampled 20 random "dead" findings; 0 were actually unreferenced** in
-  the way a human reviewer would mean by "dead code."
+| Category | Count | Real? |
+|----------|-------|-------|
+| In `_archived/` directories | 68 (8%) | Plausibly dead (directory naming says so) |
+| Next.js route exports (`GET`, `POST`, `PATCH`, `DELETE`) | 278 (33%) | **Active** — framework dispatches by HTTP method, not import |
+| Single-letter names (closure parameters indexed as Function nodes) | 437 (52%) | Not functions in any meaningful sense |
+| Other (named local helpers) | 57 (7%) | Mostly local variable destructures (`word`, `page`, `msg`, `block`, `entry`) miscategorized |
 
-**Concretely on this repo, the dead-code mode would have you delete:**
-- Active OAuth route at `src/app/oauth/authorize/route.ts` (`GET` flagged)
-- Active cron warm endpoint at `src/app/api/cron/warm/route.ts`
-- 17 helpers in `src/components/book/BookPagesSection.tsx` (a live component)
-- 17 helpers in `src/lib/embassy/librarian.ts` (the librarian assistant)
+Verified examples of *active* code flagged as dead:
+- `GET` in `src/app/.well-known/oauth-authorization-server/route.ts`
+- `GET` in `src/app/.well-known/oauth-protected-resource/route.ts`
+- `GET` in `src/app/oauth/authorize/route.ts`
+- `POST` in `src/app/oauth/token/route.ts`
 
-**Do not use the `refactor_tool(mode="dead_code")` output as a deletion list.**
-At best, treat it as a list of *symbols with no external import-graph
-callers* — which on a Next.js app is enormous because of framework
-conventions and intentional internal helpers. This is the same failure
-class that flagged `InputWidget.tsx` in PR #1980.
+Across `src/` as a whole the same shape holds — **2,509 "dead" functions
+reported**, dominated by Next.js route conventions and closure params.
+
+**Do not use the `refactor_tool(mode="dead_code")` output as a deletion
+list.** At best, treat it as "symbols with no external import-graph
+callers" — which on a Next.js app is dominated by framework conventions
+(route exports the framework calls without an import) and noise (closure
+params that Tree-sitter indexes as Functions). This is the same failure
+class that flagged `InputWidget.tsx` in PR #1980. If you want to find
+genuinely-orphaned components, grep is more reliable: `grep -rl
+'<ComponentName' src` will catch JSX usage that the import graph misses.
 
 ### Bottom line
 
-- **Use it for:** impact radius, execution-flow discovery, exact-symbol
-  caller lookup when grep would be noisy.
-- **Don't use it for:** dead-code detection on Next.js apps, anything
-  routed via host headers, anything triggered by cron/Lambda, anything
-  reached via dynamic `require()`, natural-language search (unless you
-  installed the embeddings extra and verified non-keyword mode).
-- **Token-reduction claim:** upstream advertises 6.8×–49×. On the queries
-  I measured, grep matched or beat the graph for simple "who uses X?"
-  questions; the graph only beats grep when the question is structurally
-  beyond grep's reach (impact radius, flows). On dead-code mode it
-  produces 4,000+ false positives — far more tokens than grep, and worse,
-  *wrong* tokens that could lead to deletions.
+- **Use it for:**
+  - `detect_changes_tool` + `get_review_context_tool` at PR-open time —
+    risk-scored summary, test-gap detection, "wide blast radius, consider
+    splitting" warnings. The flagship feature, missed in the first pass
+    of this benchmark.
+  - `get_impact_radius_tool` for "what does changing this file affect?"
+  - `query_graph(callers_of=X)` when grep would be noisy on a common name.
+  - `list_flows` / `get_architecture_overview` for orientation.
+- **Don't use it for:**
+  - Dead-code detection on Next.js apps. >90% noise (route exports +
+    closure params); the interesting 7% is still mostly mis-categorized
+    local variables.
+  - Host-rewrite routing (BPH and other tenant subdomains).
+  - Cron/Lambda/worker triggers (lives in `vercel.json`, not the graph).
+  - Bundled or IIFE-style code (e.g. `src/lib/vendor/lamejs-bundle.js`)
+    and the dynamic requires that reach into them.
+  - Natural-language search without the `[embeddings]` extra (silently
+    falls back to keyword-only).
+- **Token-reduction claim:** upstream advertises 6.8×–49×. On simple
+  "who uses X?" queries with a known symbol, grep matched or beat the
+  graph. The graph wins clearly only when the question is structurally
+  beyond grep's reach (impact radius, flows, code-review context).
+  On dead-code mode it produces 2,000+ false positives — far more tokens
+  than grep, and worse, *wrong* tokens that could lead to deletions.
 
-The graph is a real tool with real wins, but the wins are narrower than
-the upstream marketing implies. Treat it as a power tool with sharp
-edges, not a default replacement for grep.
+The graph is a real tool with real wins, especially `detect_changes` /
+`get_review_context` for PR review. The wins are narrower than the
+upstream marketing implies. Treat it as a power tool with sharp edges,
+not a default replacement for grep.
+
+### What we didn't test
+
+- The same benchmark with `[embeddings]` installed and a real embedding
+  model. The semantic search may close the natural-language gap.
+- `code-review-graph watch` mode — auto-updates the index on file save.
+  Could change the freshness/staleness tradeoffs.
+- The MCP server inside an actual interactive Claude Code session
+  (we tested via direct HTTP MCP calls). Tool-routing behavior with
+  real LLM agency may differ.
 
 Benchmark scripts and full raw output: `/tmp/crg_bench2.py`,
 `/tmp/crg_bench2_results.json`, `/tmp/crg_dead_analysis.py`,
