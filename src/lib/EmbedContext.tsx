@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
+import { usePathname } from 'next/navigation';
 
 /**
  * EmbedContext indicates whether the page is being displayed in embedded mode.
@@ -30,10 +31,16 @@ function withEmbedNamespace(href: string): string {
 }
 
 export function useEmbedHref(): (href: string) => string {
-    const embed = useEmbed();
+    // Only prefix when the URL bar already shows /embed/ (iframe / direct
+    // /embed/ route). On tenant subdomains (bhutan.sourcelibrary.org/...)
+    // the proxy hides /embed/<tenant> from the URL bar and handles the
+    // rewrite server-side, so prefixing here produces /embed/book/<slug>
+    // — which the proxy skips and no route serves, returning 404.
+    const pathname = usePathname();
+    const onEmbedRoute = pathname?.startsWith('/embed/') ?? false;
 
     return (href: string) => {
-        if (!embed) return href;
+        if (!onEmbedRoute) return href;
         return withEmbedNamespace(href);
     };
 }

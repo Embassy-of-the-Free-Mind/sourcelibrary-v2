@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
           contents: [{
             role: 'user',
             parts: [{
-              text: `You are a search guide for Source Library (10K+ books, 18K+ artworks).
+              text: `You are a search guide for Source Library (15K+ books, 24K+ artworks).
 
 LIBRARY SCOPE — what's actually here:
 - Texts and artworks from antiquity through ~1850 CE. Sparse coverage 1850–1920; almost nothing after 1920.

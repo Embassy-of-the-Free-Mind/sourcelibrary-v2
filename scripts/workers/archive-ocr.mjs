@@ -50,6 +50,7 @@ const DOMAIN_RATE_LIMITS = {
   'media.getty.edu':           4,    // Getty Museum IIIF — open access
   'stacks.stanford.edu':       4,   // Stanford Libraries — open access
   'rmda.kulib.kyoto-u.ac.jp':  2,   // Kyoto University — conservative
+  'mps.lib.harvard.edu':       1,   // Harvard MPS — 429s at 2/s on /full/full/ upgrades. 294 books with 882 pages got 3-strike-blocked at 2/s in May 2026 before this entry was added.
   _default:                   2,    // Unknown domains: 2 req/s
 };
 
