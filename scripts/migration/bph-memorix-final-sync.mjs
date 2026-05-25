@@ -247,6 +247,23 @@ function normalizeText(v) {
   return s;
 }
 
+// Stricter "comparable form" used only inside Step 3's diff so XML and DB
+// values are normalized identically. Matches the _tmp-bph-field-diff.mjs
+// logic that produced the plan's 105 figure: entity decode, trim, collapse
+// whitespace, and normalize pipe-joined multi-values (trim each element).
+function compareForm(v) {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'boolean') return v ? '1' : '0';
+  let s = String(v).trim();
+  if (!s) return '';
+  s = decodeEntities(s);
+  if (s.includes('|')) {
+    s = s.split('|').map(x => x.trim()).filter(Boolean).join('|');
+  }
+  s = s.replace(/\s+/g, ' ');
+  return s;
+}
+
 function parseYearFromRaw(raw) {
   if (!raw) return null;
   const m = String(raw).match(/(\d{4})/);
@@ -547,16 +564,19 @@ async function step3_fieldUpdates() {
     for (const [xmlField, dbCol] of Object.entries(PRINTED_FIELDS)) {
       if (NEVER_OVERWRITE.has(dbCol)) continue;
       const rawXml = r.fields[xmlField];
-      let xv, dv = db[dbCol];
+      const dv = db[dbCol];
       if (BOOLEAN_COLUMNS.has(dbCol)) {
-        xv = rawXml === '1';
-        dv = !!dv;
-        if (xv !== dv) diff[dbCol] = xv;
+        const xvBool = rawXml === '1';
+        if (xvBool !== !!dv) diff[dbCol] = xvBool;
       } else {
-        xv = (rawXml === undefined || rawXml === '') ? null : normalizeText(rawXml);
-        const dvNorm = dv === null || dv === undefined || dv === '' ? null : String(dv);
-        const xvNorm = xv === null ? null : String(xv);
-        if (dvNorm !== xvNorm) diff[dbCol] = xv;
+        // Compare on equal footing: same normalization on both sides.
+        const xvCmp = compareForm(rawXml);
+        const dvCmp = compareForm(dv);
+        if (xvCmp !== dvCmp) {
+          // Store the normalized XML value (or null if XML clears the field),
+          // not the raw, so the write matches what was compared.
+          diff[dbCol] = xvCmp === '' ? null : normalizeText(rawXml);
+        }
       }
     }
     if (diff.number_of_copies !== undefined && diff.number_of_copies !== null) {
