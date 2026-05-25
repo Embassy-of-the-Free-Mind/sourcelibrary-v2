@@ -773,26 +773,56 @@ async function step3_fieldUpdates() {
 // ---------- Step 4: Insert new printed rows ----------
 
 async function step4_newPrinted() {
-  console.log('\n=== Step 4: Insert 467 new printed rows ===');
+  console.log('\n=== Step 4: Insert new printed rows ===');
   await verifySchema();
-  const dbRows = await pageAll('bph_works', 'uuid', '&uuid=not.is.null');
+  // Need both uuid (for dedupe vs existing DB rows) and ubn (for UBN-collision
+  // check). bph_works.ubn has a UNIQUE constraint (required by the FK from
+  // bph_works_revisions), but Memorix's XML allows duplicate UBNs because their
+  // own PK is uuid. We skip records whose UBN already exists in DB under a
+  // different uuid — the existing row stays as-is, the Memorix record is
+  // logged for later manual reconciliation.
+  const dbRows = await pageAll('bph_works', 'uuid,ubn', '&uuid=not.is.null');
   const dbUuids = new Set(dbRows.map(r => r.uuid));
+  const dbByUbn = new Map(dbRows.filter(r => r.ubn).map(r => [r.ubn, r.uuid]));
   const records = readRecords(join(XML_DIR, XML_FILES.printed), 'BPH printed');
 
-  const newRows = [];
+  const toInsert = [];
+  const ubnCollisions = [];
   for (const r of records) {
     if (dbUuids.has(r.uuid)) continue;
     const cols = recordToColumns(r, PRINTED_FIELDS) || {};
-    newRows.push({
+    if (cols.ubn && dbByUbn.has(cols.ubn)) {
+      ubnCollisions.push({
+        xmlUuid: r.uuid,
+        ubn: cols.ubn,
+        title: (cols.title || '').slice(0, 80),
+        existingDbUuid: dbByUbn.get(cols.ubn),
+      });
+      continue;
+    }
+    toInsert.push({
       uuid: r.uuid,
       record_type: 'printed',
       ...cols,
       ...buildMemorixRaw(r),
     });
   }
-  console.log(`  Will INSERT: ${newRows.length}`);
-  console.log(`  First 3 (truncated):`);
-  for (const row of newRows.slice(0, 3)) {
+  console.log(`  Will INSERT: ${toInsert.length}`);
+  console.log(`  Skipped (UBN already in DB under different uuid): ${ubnCollisions.length}`);
+  if (ubnCollisions.length) {
+    console.log(`  First 5 collisions (logged in full to .claude/docs/bph-memorix-step4-ubn-collisions-2026-05-19.json):`);
+    for (const c of ubnCollisions.slice(0, 5)) {
+      console.log(`    UBN ${c.ubn}: skip new ${c.xmlUuid.slice(0, 8)}… (existing DB row ${c.existingDbUuid.slice(0, 8)}…)`);
+    }
+    if (APPLY) {
+      writeFileSync(
+        '.claude/docs/bph-memorix-step4-ubn-collisions-2026-05-19.json',
+        JSON.stringify({ generated: new Date().toISOString(), count: ubnCollisions.length, collisions: ubnCollisions }, null, 2),
+      );
+    }
+  }
+  console.log(`  First 3 to insert:`);
+  for (const row of toInsert.slice(0, 3)) {
     console.log(`    uuid=${row.uuid.slice(0, 8)}… ubn=${row.ubn || '-'} title=${(row.title || '').slice(0, 60)}`);
   }
 
@@ -802,10 +832,10 @@ async function step4_newPrinted() {
   }
   const BATCH = 200;
   let done = 0;
-  for (let i = 0; i < newRows.length; i += BATCH) {
-    await insertBatch(newRows.slice(i, i + BATCH));
-    done += Math.min(BATCH, newRows.length - i);
-    process.stderr.write(`  inserted ${done}/${newRows.length}…\r`);
+  for (let i = 0; i < toInsert.length; i += BATCH) {
+    await insertBatch(toInsert.slice(i, i + BATCH));
+    done += Math.min(BATCH, toInsert.length - i);
+    process.stderr.write(`  inserted ${done}/${toInsert.length}…\r`);
   }
   console.log(`  ✓ Inserted ${done} new printed rows.`);
 }

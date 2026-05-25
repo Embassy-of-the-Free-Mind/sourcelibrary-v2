@@ -98,3 +98,4 @@ supabase/.temp/
 .claude/docs/dedup-proposals-staging/
 .claude/docs/dedup-review-queue/
 .claude/docs/dedup-review-queue-resolved/
+backups/
