@@ -108,6 +108,13 @@ export async function rateLimitedFetch(url, opts = {}) {
 export function upgradeToFullRes(url) {
   if (!url || typeof url !== 'string') return url;
   try {
+    // Harvard MPS rate-limits /full/full/ much more aggressively than /full/2000,/
+    // — at 1 req/s the full-res endpoint still 429s out (5 cold-start fails =
+    // circuit breaker, 0 successes). The existing 2000px variant in the photo
+    // field is plenty for archive. Skip the upgrade entirely.
+    if (url.includes('mps.lib.harvard.edu')) {
+      return url;
+    }
     if (url.includes('archive.org') && url.includes('/full/pct:')) {
       return url.replace(/\/full\/pct:\d+\//, '/full/full/');
     }
