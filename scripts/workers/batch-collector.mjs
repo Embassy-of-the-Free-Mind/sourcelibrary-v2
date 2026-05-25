@@ -449,10 +449,20 @@ async function processOneJob(db, job) {
             },
           });
 
-          // Queue gallery_images docs for bulk insert after the loop
+          // Queue gallery_images docs for bulk insert after the loop.
+          // Filter matches src/workers/image-extraction-processor-logic.ts (SQS path):
+          //  - bbox required (skips malformed responses / zombie rows)
+          //  - gallery_quality must be present and >= QUALITY_THRESHOLD
+          //  - detection_source already known ('vision_model' here), no need to gate
+          // Threshold is under review; coordinate any change with the SQS path
+          // and scripts/workers/image-extract-worker.mjs.
+          const QUALITY_THRESHOLD = 0.5;
           if (!galleryDocs) galleryDocs = [];
           for (let di = 0; di < detectedImages.length; di++) {
             const img = detectedImages[di];
+            if (!img.bbox) continue;
+            if (typeof img.gallery_quality !== 'number') continue;
+            if (img.gallery_quality < QUALITY_THRESHOLD) continue;
             galleryDocs.push({
               id: `${pageId}-${di}`,
               page_id: pageId,

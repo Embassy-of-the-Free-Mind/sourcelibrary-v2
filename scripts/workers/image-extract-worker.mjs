@@ -786,8 +786,17 @@ async function processBook(db, book) {
         totalImages += detectedImages.length;
         pageSet.detected_images = detectedImages;
 
+        // Filter matches src/workers/image-extraction-processor-logic.ts (SQS path):
+        //  - bbox required (skips malformed responses / zombie rows)
+        //  - gallery_quality must be present and >= QUALITY_THRESHOLD
+        // Threshold is under review; coordinate any change with the SQS path
+        // and scripts/workers/batch-collector.mjs.
+        const QUALITY_THRESHOLD = 0.5;
         for (let di = 0; di < detectedImages.length; di++) {
           const img = detectedImages[di];
+          if (!img.bbox) continue;
+          if (typeof img.gallery_quality !== 'number') continue;
+          if (img.gallery_quality < QUALITY_THRESHOLD) continue;
           const galleryDoc = {
             id: `${pageId}-${di}`,
             page_id: pageId,
