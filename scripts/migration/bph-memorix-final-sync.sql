@@ -123,6 +123,40 @@ CREATE INDEX IF NOT EXISTS idx_bph_work_files_unreceived
   ON bph_work_files (received_at)
   WHERE received_at IS NULL;
 
+-- RLS for bph_work_files: same model as bph_works_revisions.
+-- Service role: full access (sync scripts + future R2 ingest cron).
+-- Authenticated: read-only (catalog UI for signed-in users).
+-- Anon: read-only too — BPH catalog at bph.sourcelibrary.org is public-facing.
+-- Mutations always go through the service role (no end-user writes).
+ALTER TABLE bph_work_files ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS bph_work_files_service_all ON bph_work_files;
+CREATE POLICY bph_work_files_service_all
+  ON bph_work_files
+  FOR ALL
+  TO service_role
+  USING (true)
+  WITH CHECK (true);
+
+DROP POLICY IF EXISTS bph_work_files_auth_select ON bph_work_files;
+CREATE POLICY bph_work_files_auth_select
+  ON bph_work_files
+  FOR SELECT
+  TO authenticated
+  USING (true);
+
+DROP POLICY IF EXISTS bph_work_files_anon_select ON bph_work_files;
+CREATE POLICY bph_work_files_anon_select
+  ON bph_work_files
+  FOR SELECT
+  TO anon
+  USING (true);
+
+-- Belt-and-braces: end-user roles must never INSERT/UPDATE/DELETE.
+REVOKE INSERT, UPDATE, DELETE ON bph_work_files FROM PUBLIC;
+REVOKE INSERT, UPDATE, DELETE ON bph_work_files FROM authenticated;
+REVOKE INSERT, UPDATE, DELETE ON bph_work_files FROM anon;
+
 COMMIT;
 
 -- Post-flight verification (run separately, not in the same transaction):
