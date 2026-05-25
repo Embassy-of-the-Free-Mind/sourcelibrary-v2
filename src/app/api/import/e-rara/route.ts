@@ -7,6 +7,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { normalizeMarcAuthor } from '@/lib/marc-utils';
 
 export const maxDuration = 300;
 
@@ -168,9 +169,12 @@ export const POST = withCuratorAuth(async (request, session) => {
       );
     }
 
-    // Extract metadata
+    // Extract metadata. `author` is null when the source records the MARC
+    // "sine nomine" sigil — we store null in the DB and pass a stable fallback
+    // string to helpers that require a non-null author (slug, normalize, dedup).
     const title = titleOverride || metadata.title || manifest.label || 'Untitled';
-    const author = authorOverride || metadata.creator || 'Unknown';
+    const author = normalizeMarcAuthor(authorOverride) ?? normalizeMarcAuthor(metadata.creator);
+    const authorForLookup = author ?? 'Unknown';
     const published = publishedOverride || metadata.date || 'Unknown';
     const language = languageOverride || metadata.language || 'Unknown';
 
@@ -187,7 +191,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author,
+      title, author: authorForLookup,
       image_source: { provider: 'e-rara', identifier: numericId, iiif_manifest: manifestUrl },
     });
     if (dedupResult.isDuplicate) {
@@ -234,7 +238,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       ? `https://www.e-rara.ch/doi/${doi}`
       : `https://www.e-rara.ch/content/titleinfo/${numericId}`;
 
-    const slug = await generateUniqueBookSlug(db, title, author);
+    const slug = await generateUniqueBookSlug(db, title, authorForLookup);
 
     const bookDoc = {
       _id: bookId,
@@ -273,7 +277,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ image_source: { provider: 'e-rara', identifier: numericId, iiif_manifest: manifestUrl } }),
       normalized_title: normalizeTitle(title),
-      normalized_author: normalizeAuthor(author),
+      normalized_author: normalizeAuthor(authorForLookup),
       created_at: new Date(),
       updated_at: new Date()
     };
