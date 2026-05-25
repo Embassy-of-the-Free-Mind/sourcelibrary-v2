@@ -82,38 +82,51 @@ async function main() {
     }
   }
 
-  // Step 2 — make bhutan books visible.
+  // Step 2 — make bhutan books reachable from the tenant subdomain.
   //
-  // The book model has TWO visibility fields that are NOT kept in sync:
-  //   - `hidden: true/false` — used by /[tenant]/book/[id] (the main book route)
-  //   - `visible: true/false` — used by /embed/[tenant]/book/[slug] (embed route)
-  // Tenant subdomains route through /embed/[tenant]/* via proxy.ts, so they
-  // must satisfy BOTH filters or the page renders the not-found fallback under
-  // a Suspense skeleton (status 200, but visibly broken).
+  // Books have THREE fields that all gate visibility in different parts of
+  // the code:
+  //   - `hidden: false`            → /[tenant]/book/[id] uses this
+  //   - `visible: true`            → /embed/[tenant]/book/[slug] uses this
+  //   - `tenantId: <UUID>`         → browseTenantBooks() / landing grid uses
+  //                                  this (NOT the `tenant_id` slug)
   //
-  // First run of this script only flipped `hidden`; that left 408 books still
-  // returning the embed 404 fallback even though /book/* worked from the main
-  // host. Fixed by also setting `visible: true` here.
+  // Bhutan books were imported with only `tenant_id: 'bhutan'` (snake_case
+  // slug) and no `tenantId` UUID, so the landing grid silently returned
+  // empty even after fixing hidden/visible. Resolve the UUID from the
+  // tenants row and backfill it here.
+  const tenantsRow = await db.collection('tenants').findOne({ slug: 'bhutan' }, { projection: { id: 1 } });
+  const tenantUuid = tenantsRow?.id;
+  if (!tenantUuid) throw new Error('tenants row for bhutan missing — Step 1 must run first');
+
   const needsUpdate = await db.collection('books').countDocuments({
     tenant_id: 'bhutan',
-    $or: [{ hidden: true }, { visible: { $ne: true } }],
+    $or: [
+      { hidden: true },
+      { visible: { $ne: true } },
+      { tenantId: { $ne: tenantUuid } },
+    ],
   });
-  console.log(`\nBhutan books needing hidden:false + visible:true → ${needsUpdate}`);
+  console.log(`\nBhutan books needing hidden:false + visible:true + tenantId:${tenantUuid} → ${needsUpdate}`);
   if (apply && needsUpdate > 0) {
     const res = await db.collection('books').updateMany(
-      { tenant_id: 'bhutan', $or: [{ hidden: true }, { visible: { $ne: true } }] },
-      { $set: { hidden: false, visible: true, updated_at: new Date() } },
+      { tenant_id: 'bhutan', $or: [
+        { hidden: true },
+        { visible: { $ne: true } },
+        { tenantId: { $ne: tenantUuid } },
+      ]},
+      { $set: { hidden: false, visible: true, tenantId: tenantUuid, updated_at: new Date() } },
     );
     console.log(`  Updated ${res.modifiedCount} books.`);
   }
 
-  const visibleCount = await db.collection('books').countDocuments({
-    tenant_id: 'bhutan',
+  const reachable = await db.collection('books').countDocuments({
+    tenantId: tenantUuid,
     hidden: { $ne: true },
     visible: true,
     pages_count: { $gt: 0 },
   });
-  console.log(`Bhutan books reachable via embed route (after this run): ${visibleCount + (apply ? 0 : needsUpdate)}`);
+  console.log(`Bhutan books reachable via embed route + landing grid (after this run): ${reachable + (apply ? 0 : needsUpdate)}`);
 
   // Step 3 — DNS reminder
   console.log('\n--- DNS REQUIRED (Derek action) ---');
