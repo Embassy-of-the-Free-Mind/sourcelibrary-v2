@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAuth } from '@/lib/auth-helpers';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 
 // In-memory cache (10 minutes — traffic data changes slowly)
 let cache: { data: unknown; ts: number } | null = null;
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
-/** Fetch all pageviews from Supabase, paginating through 1000-row pages. */
+/** Fetch all pageviews from Supabase, paginating through 1000-row pages.
+ *  Uses the service-role client because analytics_pageviews is RLS-locked
+ *  to service_role only (visitor PII; see issue #1981 + the
+ *  rls-lockdown-phase1-pii.sql migration). End-user access is gated at
+ *  the app layer via withAuth above. */
 async function fetchAllPageviews(since: string) {
+  if (!supabaseAdmin) throw new Error('supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing');
   const rows: any[] = [];
   let offset = 0;
   while (true) {
-    const { data } = await supabase
+    const { data } = await supabaseAdmin
       .from('analytics_pageviews')
       .select('path, referrer, country, ip, timestamp')
       .gte('timestamp', since)
