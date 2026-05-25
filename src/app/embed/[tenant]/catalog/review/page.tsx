@@ -1,6 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
@@ -92,7 +92,15 @@ export default async function CatalogReviewPage({ params }: Props) {
   // Fetch pending rows + titles for each UBN in one go. The bph_works
   // join via Supabase's PostgREST `select` keeps this to a single round trip
   // even though pending rows can include creates with no UBN yet.
-  const { data, error } = await supabase
+  //
+  // Uses supabaseAdmin (service role) because bph_works_pending_changes is
+  // RLS-locked to service_role only (contributor PII; see issue #1981 +
+  // rls-lockdown-phase1-pii.sql). Access on this page is gated above by
+  // session + tenant-role checks.
+  if (!supabaseAdmin) {
+    throw new Error('supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing');
+  }
+  const { data, error } = await supabaseAdmin
     .from('bph_works_pending_changes')
     .select('id, ubn, change_type, proposer_email, field_changes, note, status, created_at')
     .eq('status', 'pending')
@@ -126,7 +134,7 @@ export default async function CatalogReviewPage({ params }: Props) {
   const ubns = Array.from(new Set(rows.map(r => r.ubn).filter((u): u is string => !!u)));
   const titlesByUbn = new Map<string, string>();
   if (ubns.length > 0) {
-    const { data: works } = await supabase
+    const { data: works } = await supabaseAdmin
       .from('bph_works')
       .select('ubn, title, parallel_title, uniform_title')
       .in('ubn', ubns);
