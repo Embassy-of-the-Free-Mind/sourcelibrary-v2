@@ -199,6 +199,13 @@ const NEVER_OVERWRITE = new Set([
 // Identified by UBN; one has NULL UBN and is matched by uuid being NULL too (handled in Step 8).
 const DELETE_TARGETS_BY_UBN = ['12507', '12204'];
 
+// The exact moment the Memorix XML was exported. Step 3 uses this as the
+// boundary for the "librarian-edit guard": any bph_works_revisions row applied
+// after this moment is treated as authoritative over the Memorix version,
+// because BPH librarians have been editing our DB directly since #1877
+// shipped. We never want to revert their work.
+const MEMORIX_SNAPSHOT_AT = '2026-05-19T10:23:00Z';
+
 // The 2 sammelband cross-listings (RIT001000026, RIT001000028).
 // Each entry: printed bph_works.uuid (existing in DB) ↔ manuscript bph_works.uuid (to insert in Step 5).
 const SAMMELBAND_PAIRS = [
@@ -561,17 +568,81 @@ async function step3_fieldUpdates() {
     }
     if (Object.keys(diff).length) updates.push({ uuid: r.uuid, ubn: db.ubn, diff });
   }
-  console.log(`  Rows with field updates: ${updates.length}`);
+  console.log(`  Rows with field updates (raw diff): ${updates.length}`);
+
+  // ── Librarian-edit guard ──────────────────────────────────────────────
+  // BPH librarians have been editing bph_works directly via the
+  // contributor flow (#1877) since before the Memorix snapshot. Any
+  // bph_works_revisions row applied after MEMORIX_SNAPSHOT_AT wins over
+  // Memorix on the same (ubn, column) pair — otherwise this step would
+  // silently revert their work.
+  const ubnsToCheck = updates.map(u => u.ubn).filter(Boolean);
+  const recentEditsByUbn = new Map();
+  const editorsByUbn = new Map();
+  if (ubnsToCheck.length) {
+    const CHUNK = 200;
+    for (let i = 0; i < ubnsToCheck.length; i += CHUNK) {
+      const slice = ubnsToCheck.slice(i, i + CHUNK).map(encodeURIComponent).join(',');
+      const res = await supabaseFetch(
+        `/bph_works_revisions?ubn=in.(${slice})&applied_at=gte.${encodeURIComponent(MEMORIX_SNAPSHOT_AT)}&select=ubn,field_changes,editor_email,applied_at`
+      );
+      const rows = await res.json();
+      for (const r of rows) {
+        if (!recentEditsByUbn.has(r.ubn)) recentEditsByUbn.set(r.ubn, new Set());
+        for (const col of Object.keys(r.field_changes || {})) {
+          recentEditsByUbn.get(r.ubn).add(col);
+        }
+        if (!editorsByUbn.has(r.ubn)) editorsByUbn.set(r.ubn, new Set());
+        editorsByUbn.get(r.ubn).add(r.editor_email);
+      }
+    }
+  }
+
+  const conflicts = [];
+  for (const u of updates) {
+    const edited = recentEditsByUbn.get(u.ubn);
+    if (!edited || edited.size === 0) continue;
+    const skipped = [];
+    for (const col of Object.keys(u.diff)) {
+      if (edited.has(col)) {
+        delete u.diff[col];
+        skipped.push(col);
+      }
+    }
+    if (skipped.length) {
+      conflicts.push({
+        ubn: u.ubn,
+        uuid: u.uuid,
+        skippedCols: skipped,
+        editors: [...(editorsByUbn.get(u.ubn) || [])],
+      });
+    }
+  }
+  const safeUpdates = updates.filter(u => Object.keys(u.diff).length > 0);
+  const rowsFullySkipped = updates.length - safeUpdates.length;
+  if (conflicts.length) {
+    console.log(`\n  ⚠ Librarian-edit guard: ${conflicts.length} rows have local edits since ${MEMORIX_SNAPSHOT_AT}`);
+    console.log(`     Preserved librarian columns; Memorix values for those columns dropped from this run.`);
+    console.log(`     Rows now fully skipped (every diff column was librarian-edited): ${rowsFullySkipped}`);
+    for (const c of conflicts.slice(0, 10)) {
+      console.log(`       UBN ${c.ubn}: skipped ${c.skippedCols.join(', ')} (editors: ${c.editors.join(', ')})`);
+    }
+    if (conflicts.length > 10) console.log(`       … and ${conflicts.length - 10} more (full list in --apply mode logs)`);
+  } else {
+    console.log(`  Librarian-edit guard: no conflicts (no bph_works_revisions on these UBNs since ${MEMORIX_SNAPSHOT_AT}).`);
+  }
+
+  console.log(`\n  Rows that WILL update after guard: ${safeUpdates.length}`);
 
   // Per-column change tallies (sanity check vs the plan's 105 figure).
   const colCounts = {};
-  for (const u of updates) for (const c of Object.keys(u.diff)) colCounts[c] = (colCounts[c] || 0) + 1;
+  for (const u of safeUpdates) for (const c of Object.keys(u.diff)) colCounts[c] = (colCounts[c] || 0) + 1;
   console.log('  Changes by column:');
   for (const [c, n] of Object.entries(colCounts).sort((a, b) => b[1] - a[1])) {
     console.log(`    ${c}: ${n}`);
   }
   console.log('  First 5 updates:');
-  for (const u of updates.slice(0, 5)) {
+  for (const u of safeUpdates.slice(0, 5)) {
     const small = Object.fromEntries(Object.entries(u.diff).map(([k, v]) => [k, typeof v === 'string' && v.length > 60 ? v.slice(0, 60) + '…' : v]));
     console.log(`    UBN ${u.ubn} uuid=${u.uuid.slice(0, 8)}…: ${JSON.stringify(small)}`);
   }
@@ -580,12 +651,30 @@ async function step3_fieldUpdates() {
     console.log('  [DRY-RUN] No writes performed.');
     return;
   }
+  // The application writes through applyWorkRevision (src/lib/bph-catalog.ts),
+  // which appends to bph_works_revisions. We're bypassing that for bulk
+  // efficiency, but we record a single system revision per row so the audit
+  // trail still captures this migration. The revision_email is
+  // 'system:bph-memorix-final-sync-2026-05-19' so future audits can find it.
   let done = 0;
-  for (const u of updates) {
+  for (const u of safeUpdates) {
     await updateByUuid(u.uuid, u.diff);
-    if (++done % 25 === 0) process.stderr.write(`  applied ${done}/${updates.length}…\r`);
+    await supabaseFetch(`/bph_works_revisions`, {
+      method: 'POST',
+      headers: { Prefer: 'return=minimal' },
+      body: JSON.stringify({
+        ubn: u.ubn,
+        change_type: 'edit',
+        field_changes: Object.fromEntries(
+          Object.entries(u.diff).map(([col, to]) => [col, { from: null, to, source: 'memorix-2026-05-19' }])
+        ),
+        editor_email: 'system:bph-memorix-final-sync-2026-05-19',
+        note: 'Step 3 of final Memorix sync — see PR #1975 / issue #1881',
+      }),
+    });
+    if (++done % 25 === 0) process.stderr.write(`  applied ${done}/${safeUpdates.length}…\r`);
   }
-  console.log(`  ✓ Applied ${done} field-level updates.`);
+  console.log(`  ✓ Applied ${done} field-level updates (each logged to bph_works_revisions).`);
 }
 
 // ---------- Step 4: Insert new printed rows ----------
