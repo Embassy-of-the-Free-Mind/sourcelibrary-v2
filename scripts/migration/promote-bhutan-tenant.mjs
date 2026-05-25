@@ -82,25 +82,38 @@ async function main() {
     }
   }
 
-  // Step 2 — unhide bhutan books
-  const hiddenCount = await db.collection('books').countDocuments({
+  // Step 2 — make bhutan books visible.
+  //
+  // The book model has TWO visibility fields that are NOT kept in sync:
+  //   - `hidden: true/false` — used by /[tenant]/book/[id] (the main book route)
+  //   - `visible: true/false` — used by /embed/[tenant]/book/[slug] (embed route)
+  // Tenant subdomains route through /embed/[tenant]/* via proxy.ts, so they
+  // must satisfy BOTH filters or the page renders the not-found fallback under
+  // a Suspense skeleton (status 200, but visibly broken).
+  //
+  // First run of this script only flipped `hidden`; that left 408 books still
+  // returning the embed 404 fallback even though /book/* worked from the main
+  // host. Fixed by also setting `visible: true` here.
+  const needsUpdate = await db.collection('books').countDocuments({
     tenant_id: 'bhutan',
-    hidden: true,
+    $or: [{ hidden: true }, { visible: { $ne: true } }],
   });
-  console.log(`\nBhutan books currently hidden: ${hiddenCount}`);
-  if (apply && hiddenCount > 0) {
+  console.log(`\nBhutan books needing hidden:false + visible:true → ${needsUpdate}`);
+  if (apply && needsUpdate > 0) {
     const res = await db.collection('books').updateMany(
-      { tenant_id: 'bhutan', hidden: true },
-      { $set: { hidden: false, updated_at: new Date() } },
+      { tenant_id: 'bhutan', $or: [{ hidden: true }, { visible: { $ne: true } }] },
+      { $set: { hidden: false, visible: true, updated_at: new Date() } },
     );
-    console.log(`  Unhid ${res.modifiedCount} books.`);
+    console.log(`  Updated ${res.modifiedCount} books.`);
   }
 
   const visibleCount = await db.collection('books').countDocuments({
     tenant_id: 'bhutan',
     hidden: { $ne: true },
+    visible: true,
+    pages_count: { $gt: 0 },
   });
-  console.log(`Bhutan books visible (after this run): ${visibleCount + (apply ? 0 : hiddenCount)}`);
+  console.log(`Bhutan books reachable via embed route (after this run): ${visibleCount + (apply ? 0 : needsUpdate)}`);
 
   // Step 3 — DNS reminder
   console.log('\n--- DNS REQUIRED (Derek action) ---');
