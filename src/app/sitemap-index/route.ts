@@ -3,8 +3,14 @@ import { getReadDb } from '@/lib/mongodb';
 
 // Next.js 16's generateSitemaps() (in src/app/sitemap.ts) produces chunks at
 // /sitemap/{id}.xml but does NOT serve a sitemap-index at /sitemap.xml — so
-// robots.txt (which points to /sitemap.xml) ends up 404, and Google never
-// discovers the chunks. This route fills that gap.
+// robots.txt (which points to /sitemap.xml) was returning 404 and the 17K
+// book URLs in the chunks were undiscoverable.
+//
+// Lives at /sitemap-index (not /sitemap.xml/) because Next's metadata route
+// for sitemap.ts uses /sitemap/[__metadata_id__], which collides with a
+// sibling /sitemap.xml/ directory and breaks `Collecting page data` at build
+// time. next.config.ts rewrites /sitemap.xml → /sitemap-index so external
+// crawlers see the canonical path.
 
 const BASE_URL = 'https://sourcelibrary.org';
 const BOOKS_PER_CHUNK = 5000;
@@ -20,7 +26,7 @@ export async function GET() {
       { maxTimeMS: 10000 }
     );
   } catch (error) {
-    console.error('sitemap.xml index: book count failed', error);
+    console.error('sitemap-index: book count failed', error);
     bookCount = 20000;
   }
 

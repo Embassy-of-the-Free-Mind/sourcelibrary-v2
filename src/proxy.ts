@@ -28,6 +28,8 @@ const NON_TENANT_PATHS = new Set([
   'welcome', 'welcome-preview',
   // Shortlinks — /q/[code] must pass through to src/app/q/[code]/route.ts
   'q',
+  // SEO — sitemap-index route, reachable as /sitemap.xml via next.config rewrite
+  'sitemap-index',
 ]);
 
 // Domains that enable the Ficino Society social layer
