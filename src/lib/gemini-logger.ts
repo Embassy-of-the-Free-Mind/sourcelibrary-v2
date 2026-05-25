@@ -55,7 +55,7 @@
  */
 
 import { getDb } from './mongodb';
-import { supabaseAdmin, supabase } from './supabase';
+import { supabaseAdmin } from './supabase';
 
 // Pricing per 1M tokens (as of Jan 2025)
 const MODEL_PRICING: Record<string, { input: number; output: number }> = {
@@ -357,7 +357,11 @@ export async function getUsageSummary(params: {
   by_type: Record<string, { calls: number; cost: number }>;
   by_model: Record<string, { calls: number; cost: number }>;
 }> {
-  const client = supabaseAdmin || supabase;
+  // gemini_usage is RLS-locked to service_role (see #1981); no anon fallback.
+  if (!supabaseAdmin) {
+    throw new Error('supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing');
+  }
+  const client = supabaseAdmin;
 
   // Note: PostgREST defaults to 1000 rows. For book-scoped queries this is fine.
   // For time-range queries across all books, use dashboard_usage view instead.
