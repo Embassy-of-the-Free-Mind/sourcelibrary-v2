@@ -129,15 +129,15 @@ The failure at ~7k requests in two consecutive runs was systematic, not transien
 
 ---
 
-## Step 3 — Field updates (NOT YET APPLIED)
+## Step 3 — Field updates (applied 2026-05-25 13:49–13:50 UTC)
 
-**Target:** ≤ 105 rows where the 2026-05-19 Memorix XML differs from current DB on at least one of the 36 mapped columns. Per-row distinct payloads.
+**Target:** 105 rows where the 2026-05-19 Memorix XML differs from current DB on at least one of the 36 mapped columns. Per-row distinct payloads.
 
-**Librarian-edit guard:** before applying, queries `bph_works_revisions` for every target UBN with `applied_at >= 2026-05-19T10:23:00Z`. Any column edited by a librarian since the Memorix snapshot is dropped from this run's diff, preserving the librarian's value. Dry-run at 2026-05-25 reports: zero conflicts (no librarian edits on the 105 target UBNs since the snapshot).
+**Librarian-edit guard:** queried `bph_works_revisions` for every target UBN with `applied_at >= 2026-05-19T10:23:00Z`. Result: **zero conflicts** — no librarian had edited any of the 105 target UBNs since the Memorix snapshot. No diff columns were dropped.
 
-**Audit trail:** every applied update writes a `bph_works_revisions` row with `editor_email='system:bph-memorix-final-sync-2026-05-19'`, `change_type='edit'`, and full `field_changes` JSONB.
+**Audit trail:** every applied update wrote a `bph_works_revisions` row with `editor_email='system:bph-memorix-final-sync-2026-05-19'`, `change_type='edit'`, and `field_changes` JSONB capturing every (column, to-value, source) triple.
 
-**Dry-run summary (2026-05-25):**
+**Per-column tally (matches plan exactly where plan enumerated):**
 
 | Column | Count | Plan expected |
 |---|---|---|
@@ -167,29 +167,198 @@ The failure at ~7k requests in two consecutive runs was systematic, not transien
 | title | 1 | — |
 | **Total rows touched** | **105** | **~105** ✓ |
 
-(Plan enumerated only the top categories; the per-column tally above is the precise breakdown.)
+**Wall time:** 64 s for 210 API calls (105 PATCH + 105 INSERT), no retries.
+
+**Spot check — UBN 23380 (the Plantin Press fix from the plan):**
+
+| Field | Pre-Step 3 (from .jsonl.gz backup) | Post-Step 3 (DB) |
+|---|---|---|
+| year_raw | `[ca. 1660]` (incorrect upstream value) | `[ca 1581]` ✓ |
+| year | (was null) | `1581` ✓ (derived from year_raw) |
+| printer | (null) | `[Plantin, Christophe]` ✓ |
+| place | (null) | `[Antwerp]` ✓ |
+| internal_remarks | (null) | `bij JRR` (← Joost R. Ritman) ✓ |
+| bibliography | (null) | `Voet, Plantin Press 627` ✓ |
+
+The bph_works_revisions row for UBN 23380 captured all 7 changes (printer, publisher, place, year_raw, year, internal_remarks, bibliography) with `source='memorix-2026-05-19'`.
+
+**Verification queries:**
+
+```sql
+-- All revisions written by this sync (expect 105)
+SELECT COUNT(*) FROM bph_works_revisions
+WHERE editor_email = 'system:bph-memorix-final-sync-2026-05-19';
+
+-- Per-column change tally (matches the table above)
+SELECT jsonb_object_keys(field_changes) AS col, COUNT(*) AS n
+FROM bph_works_revisions
+WHERE editor_email = 'system:bph-memorix-final-sync-2026-05-19'
+GROUP BY 1 ORDER BY n DESC;
+
+-- Sample a specific revision in detail
+SELECT ubn, applied_at, field_changes
+FROM bph_works_revisions
+WHERE editor_email = 'system:bph-memorix-final-sync-2026-05-19'
+  AND ubn = '23380';
+```
+
+### Known provenance gap — `from: null` in field_changes
+
+The script wrote `field_changes[col].from = null` for every entry instead of the pre-update DB value. The revisions table therefore captures **what Memorix set** but not **what was there before**. The pre-state for those 105 rows is recoverable from the Step 0 backup file (`backups/bph_works-pre-memorix-sync-2026-05-25T11-21-33-738Z.jsonl.gz`) but it's not co-located with the "to" values.
+
+To reconstruct full before-and-after for a UBN that this sync touched:
+
+```bash
+# Pre-state from the backup
+gunzip -c backups/bph_works-pre-memorix-sync-2026-05-25T11-21-33-738Z.jsonl.gz \
+  | jq 'select(.ubn=="23380") | {ubn, year_raw, year, printer, place, internal_remarks, bibliography}'
+
+# Post-state from DB + change set from revisions table
+psql -c "SELECT field_changes FROM bph_works_revisions WHERE ubn='23380' AND editor_email='system:bph-memorix-final-sync-2026-05-19'"
+```
+
+The code fix (capture `from: db[col]` instead of `from: null`) is a one-line change in `step3_fieldUpdates`. The 105 already-written rows can't be patched because `bph_works_revisions` is append-only by design. Left as-is for this migration since the backup file makes pre-state recoverable; will fix the code for any future re-use of this script.
 
 ---
 
-## Step 4 — Insert 467 new printed rows (NOT YET APPLIED)
+## Order applied — not 4→8
 
-…(reserved for post-apply)
+The original plan assumed Steps run in numeric order. Reality: Step 4 hit a UBN-collision class the plan didn't enumerate (see Step 4 notes), so we ran in this order: **0 → 2 → 3 → 8 → 4 → 5 → 6 → 7**. Each is independent except 7 (needs 5 for the manuscript side to exist) and the special case that 8 frees UBN 12204 for Step 4 to insert the new record under that UBN cleanly.
 
-## Step 5 — Insert 812 manuscript rows (NOT YET APPLIED)
+## Step 8 — Delete 3 truly-removed rows (applied 2026-05-25 ~16:35 UTC)
 
-…(reserved)
+**Targets:** UBN 12507, UBN 12204, and the null-UBN orphan. All three had `sl_book_id IS NULL` (no live SL book link), confirmed in pre-flight.
 
-## Step 6 — Insert 959 photocopy rows (NOT YET APPLIED)
+**Visual confirmation of the null-UBN orphan before delete:**
 
-…(reserved)
+```json
+{
+  "id": "45d593ab-0446-3589-c5ce-d9e5b6ad2f1f",
+  "uuid": null,
+  "ubn": null,
+  "picturae_barcode": null,
+  "title": "Tussen heks en heilige. Het vrouwbeeld op de drempel van de moderne tijd, 15de/16de eeuw",
+  "author": "Bange, Petty | Brandenbarg, Ton | Dresen, Grietje | Dresen-Coenders, Lène | Muller, Ellen | Noël, Jeanne Marie | Pigeaud, Renée",
+  "year_raw": "1985",
+  "sl_book_id": null,
+  "memorix_raw": null,
+  "created_at": "2025-12-07T09:46:56.321643+00:00"
+}
+```
 
-## Step 7 — Set sammelband cross-listings (NOT YET APPLIED)
+A 1985 academic anthology on 15-16th c. women's roles. No UUID, no UBN, no barcode, no scan, no Memorix backfill from Step 2 (confirms absence from XML). An orphaned record from a prior data load. Recoverable from the Step 0 backup if ever needed.
 
-…(reserved)
+**Side effect:** deleting UBN 12204 (uuid `b58aa3ad…`) freed the UBN for the Memorix record with new uuid `6e80cbce…` — which then inserted cleanly in Step 4.
 
-## Step 8 — Delete 3 truly-removed rows (NOT YET APPLIED)
+**Final state:** 27,805 rows (was 27,808). No FK errors from `bph_works_revisions` because none of the 3 deleted rows had any revisions logged.
 
-…(reserved)
+## Step 4 — Insert new printed rows (applied 2026-05-25 ~16:47 UTC)
+
+**Plan said:** 467 new printed rows.
+**Actually inserted:** **300** rows.
+**Skipped (UBN collision):** 167 rows, logged in `.claude/docs/bph-memorix-step4-ubn-collisions-2026-05-19.json`.
+
+### The plan didn't enumerate this case
+
+Memorix's XML itself contains **163 duplicate UBNs** — the same UBN appears under two different UUIDs. Their model treats UUID as the PK and UBN as a label; ours has `UNIQUE(ubn)` on `bph_works` (required by the FK from `bph_works_revisions.ubn`). So 168 of the 467 "new in XML" records would have hit a unique-constraint violation on insert.
+
+Investigation:
+- 167 of the 168 colliding cases: the old DB UUID is still alive in Memorix under a *different* UBN — Memorix has effectively split or duplicated these records upstream.
+- 1 case (UBN 12204): the old DB UUID is abandoned by Memorix entirely; this was already in our Step 8 delete list. Running Step 8 first freed UBN 12204, letting Step 4 pick up the new uuid `6e80cbce…` under that UBN.
+
+### Decision
+
+Per user direction: **skip the 168 collisions, insert only the 299 truly-new** (now 300 after Step 8 freed UBN 12204). The colliding records stay in our DB as the existing row (same UBN, our old UUID). The skipped 167 are logged in full for later manual reconciliation — librarians can decide per-record whether to merge, replace, or leave them split.
+
+Tradeoffs:
+- ✓ No data corruption from forcing inserts past the unique constraint.
+- ✓ No loss of existing librarian-relevant data (we never overwrite our `sl_book_id`, `ia_*`, `*_norm` etc. anyway).
+- ✗ 167 Memorix records aren't in our catalog (yet) — recoverable from the JSON log when triaged.
+
+### Final state
+
+| Metric | Value |
+|---|---|
+| Rows inserted | 300 |
+| Total `bph_works` | 28,105 (was 27,805) |
+| `sl_book_id` count | 2,247 (unchanged) |
+| `record_type='printed'` | 28,105 |
+| UBN 12204 verification | `{"uuid":"6e80cbce-…","ubn":"12204","title":"Renati des Cartes principiorum philosophiae"}` (new Memorix record now linked to UBN 12204) |
+
+### How to re-import the 167 later
+
+The JSON log has every skipped record's XML UUID, UBN, title, and the conflicting DB UUID. Once a triage decision exists per UBN, options are:
+
+- **Merge:** `UPDATE bph_works SET uuid = '<new>' WHERE uuid = '<old>'` (replaces old with new, keeps existing UBN row).
+- **Replace:** delete the old DB row first, then run `--step 4` again (the collision will be gone, the new record gets inserted).
+- **Split (schema change):** drop the `UNIQUE(ubn)` constraint and accept duplicate UBNs in our model. Would need a corresponding `bph_works_revisions` FK rework.
+
+## Step 5 — Insert 812 manuscript rows (applied 2026-05-25 ~16:48 UTC)
+
+**Rows inserted:** 812. **Wall time:** 24 s. **Method:** bulk POST (5 batches of 200). **Zero retries.**
+
+All 812 inserted with `record_type='manuscript'` and `ubn=null` (Memorix Handschriften records don't have UBNs assigned — that's slated for #1878 Phase 3 once we build the UBN minting flow).
+
+Sample rows:
+- `M 362` — uuid `0024efc6…`, no full_title (untitled bequest item)
+- `T 5` — uuid `01163e58…`, full_title "Het evangelie van de heilige twaalven"
+- `M 276` — uuid `021a09c0…`
+
+Counts: total `bph_works` = 28,917; `record_type='manuscript'` = 812.
+
+## Step 6 — Insert 959 photocopy rows (applied 2026-05-25 ~16:50 UTC)
+
+**Rows inserted:** 959. **Wall time:** 14 s. **Method:** bulk POST (5 batches of 200). **Zero retries.**
+
+All 959 inserted with `record_type='photocopy'` and `ubn=null` (same rationale as manuscripts).
+
+Sample rows:
+- `[Buch der Heiligen Dreifaltigkeit]` — alchemy treatise photocopy
+- `Allgemeine Reformation der gantzen Welt` — Rosicrucian fragment
+- `The Rose Croix` in journal `Freemasonry today` — example of populated `journal_title` and source attribution
+
+Counts: total `bph_works` = 29,876; `record_type='photocopy'` = 959.
+
+## Step 7 — Sammelband cross-listings (applied 2026-05-25 ~16:51 UTC)
+
+**Updates:** 4 (the 2 sammelband pairs × 2 directions each).
+
+| Barcode | Printed side | Manuscript side |
+|---|---|---|
+| RIT001000026 | UBN 199 — "Der äussere und innere güldene Augen-Spiegel" (1713) | "Reverendo in Christo[?] patri ac domino domino Ray…" (Guido de Monte Rochen + Suso codex) |
+| RIT001000028 | UBN 207 — "Aglais" (1787) | "Sanctus Johannes ewangelista sach" (Otto von Passau, 14th c) |
+
+`cross_listed_with_uuid` is set bidirectionally on each pair so catalog detail can render "This volume also catalogued as: [other side link]". The printed side retains the `sl_book_id` link (the manuscript records have none).
+
+---
+
+## Final post-flight (2026-05-25 ~16:51 UTC)
+
+| Metric | Plan | Actual | Notes |
+|---|---|---|---|
+| Total `bph_works` | ~29,941 | **29,876** | -65 from 167 skipped UBN collisions (+UBN 12204 picked up = -167+1 from 467 → 300 inserted in Step 4) |
+| `record_type='printed'` | ~28,167 | **28,105** | -62 net (same reason) |
+| `record_type='manuscript'` | 812 | **812** | ✓ exact |
+| `record_type='photocopy'` | 959 | **959** | ✓ exact |
+| `cross_listed_with_uuid NOT NULL` | 4 | **4** | ✓ exact |
+| `uuid IS NULL` (Allard-Pierson) | 102 | **102** | ✓ untouched throughout |
+| `sl_book_id NOT NULL` (live SL links) | 2,247 (= pre-flight) | **2,247** | ✓ **zero broken** |
+| `memorix_raw NOT NULL` | 29,774 (= total − 102 AP) | **29,774** | ✓ exact |
+| Step 3 revisions logged | 105 | **105** | ✓ exact |
+
+**Memorix is now decommissioned as the authoritative source for the BPH catalog.** Source Library's `bph_works` table holds the system of record.
+
+## Outstanding follow-ups
+
+1. **Upload Step 0 backup to R2** — `aws s3 cp backups/bph_works-pre-memorix-sync-2026-05-25T11-21-33-738Z.jsonl.gz s3://bph-backups/` (or wrangler r2 equivalent).
+2. **Triage the 167 UBN-collision records** in `.claude/docs/bph-memorix-step4-ubn-collisions-2026-05-19.json` — librarian decision required per UBN.
+3. **Mark legacy import scripts deprecated** with header notes:
+   - `scripts/migration/import-bph-catalog.mjs`
+   - `scripts/migration/enrich-bph-from-csv.mjs`
+4. **Step 9 (scans XML → `bph_work_files`)** — separate follow-up PR once Picturae delivers the scans XML.
+5. **DCO sign-off rebase** on `worktree-bph-memorix-sync` so PR #1975 can merge.
+6. **Convert PR #1975 from draft → ready for review.**
+7. **Fix the `from: null` provenance gap** in step3_fieldUpdates for any future re-use (one-line change).
 
 ---
 

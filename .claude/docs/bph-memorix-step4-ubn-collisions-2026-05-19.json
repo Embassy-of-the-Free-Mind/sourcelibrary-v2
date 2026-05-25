@@ -1,0 +1,1008 @@
+{
+  "generated": "2026-05-25T14:47:53.811Z",
+  "count": 167,
+  "collisions": [
+    {
+      "xmlUuid": "009fd353-195f-fb4d-9ea4-5b5a219ec521",
+      "ubn": "22220",
+      "title": "Die Zauberflöte. Een alchemistische allegorie",
+      "existingDbUuid": "d80a4e3c-1231-43ce-b63a-b36e8d94b886"
+    },
+    {
+      "xmlUuid": "00b451ed-bc16-d8bf-f764-0ba259938077",
+      "ubn": "26016",
+      "title": "Sprekende stilte. Leven en leer van Sri Ramana Maharshi",
+      "existingDbUuid": "639fa9d9-b9e7-92f2-bcab-dd09305d0bb2"
+    },
+    {
+      "xmlUuid": "0108fe3b-bb6a-90f8-9793-63a0a5ea7d68",
+      "ubn": "24420",
+      "title": "Die Philosophie der Freiheit. Grundzüge einer modernen Weltanschauung",
+      "existingDbUuid": "8d18c22b-bbdb-89db-2eeb-acaf5deadc05"
+    },
+    {
+      "xmlUuid": "0191adab-6977-ece5-048d-2515b1860e6f",
+      "ubn": "25644",
+      "title": "Il Golem",
+      "existingDbUuid": "0965870b-a392-f4ea-5a13-0c2b35b709c2"
+    },
+    {
+      "xmlUuid": "01cbc43f-9cb5-d669-3d2e-31c07ad77f0b",
+      "ubn": "18124",
+      "title": "Goethes geheime Offenbarung",
+      "existingDbUuid": "1e83acc7-2719-3b29-a46c-f357dc126579"
+    },
+    {
+      "xmlUuid": "021e7934-4e56-5d3c-0f7b-6738ceb0296f",
+      "ubn": "18815",
+      "title": "Aquarius-nieuws",
+      "existingDbUuid": "a2e8b9c9-e3d4-4bee-ba70-b2559ae13c93"
+    },
+    {
+      "xmlUuid": "027f6191-0df5-f0f8-4689-e9df02131ff4",
+      "ubn": "23000",
+      "title": "Spinoza-plaatsen. Over tekst en context van brief 76",
+      "existingDbUuid": "d6045c6c-f6ca-398f-4108-74e9d1c146b6"
+    },
+    {
+      "xmlUuid": "03033655-d35d-b761-1dc9-66f90750e12d",
+      "ubn": "17110",
+      "title": "Allgemeine und General Reformation der gantzen weiten Welt. Beneben der Fama fra",
+      "existingDbUuid": "460ea73b-5e03-7182-1f46-042247fbfdd7"
+    },
+    {
+      "xmlUuid": "0338144a-d721-bedb-eaf2-3f3e0f8354af",
+      "ubn": "26623",
+      "title": "Lexikon chinesischer Symbole. Geheime Sinnbilder in Kunst und Literatur, Leben u",
+      "existingDbUuid": "2269bedf-fd95-7d26-0bcd-9c5abf08618e"
+    },
+    {
+      "xmlUuid": "0606b267-7fa5-5c74-fcb5-6689d323eb03",
+      "ubn": "32025",
+      "title": "Copye van een missive den ii. aprilis 1619",
+      "existingDbUuid": "2e278792-9c62-d5c2-2cc1-6254a69a7b45"
+    },
+    {
+      "xmlUuid": "0663852a-f3e8-ce73-88e7-2b6b98a0d87d",
+      "ubn": "20394",
+      "title": "Bhagavad Gita",
+      "existingDbUuid": "c9d8e970-a06f-beff-9e0a-e64a99cefabc"
+    },
+    {
+      "xmlUuid": "06c0b280-0cbd-68e8-44bf-eac2fde55c74",
+      "ubn": "22086",
+      "title": "Der brennende Busch. Der entschleierte Weg der Mystik",
+      "existingDbUuid": "292f0eb9-5987-aa43-8520-e0227d1dd67b"
+    },
+    {
+      "xmlUuid": "06c1ce06-3766-aebf-11c1-afd2c9606dcf",
+      "ubn": "9139",
+      "title": "Von der Menschwerdung Jesu Christi",
+      "existingDbUuid": "96d5011b-0f0f-5ecc-c48a-7d7dc0bee656"
+    },
+    {
+      "xmlUuid": "075faa6a-d30b-6913-7c5d-ff8c1842b1e9",
+      "ubn": "22465",
+      "title": "Aus meiner Malerwerkstatt",
+      "existingDbUuid": "ae568b96-c0ee-3907-319f-f7e2714ef369"
+    },
+    {
+      "xmlUuid": "0765e693-f39a-93d9-60c9-59a823692508",
+      "ubn": "1368",
+      "title": "Raum, Zeit und Erkenntnis. Aufbruch zu neuen Dimensionen der Erfahrung von Welt ",
+      "existingDbUuid": "d2ef2798-7b96-4b48-984c-2394869bc484"
+    },
+    {
+      "xmlUuid": "0772ae96-9cee-fa10-9c16-ff2ba46475ee",
+      "ubn": "27110",
+      "title": "De psychologie van C.G.Jung. Een inleiding tot zijn werk",
+      "existingDbUuid": "460f6747-b331-8021-0398-605c543ef56c"
+    },
+    {
+      "xmlUuid": "09065ae1-9c82-151f-8e1a-5906cb88a1fb",
+      "ubn": "27302",
+      "title": "Kerstspelen. Achtergrond en betekenis van de kerstspelen uit Oberufer",
+      "existingDbUuid": "0bde25b4-9554-6397-d035-82f85f89695b"
+    },
+    {
+      "xmlUuid": "09ddd728-1b37-d969-88dd-9c1312665463",
+      "ubn": "19052",
+      "title": "The gift of the spirit. A selection from the essays of Prentice Mulford",
+      "existingDbUuid": "b1ee80d5-e914-dc65-00e8-7e487c4d917e"
+    },
+    {
+      "xmlUuid": "0b35b007-ab50-8d5e-9a37-60c3a2d289a6",
+      "ubn": "26415",
+      "title": "Rubaiyat of Omar Khayyam. The first and fourth renderings in english verse by Ed",
+      "existingDbUuid": "d338c744-268d-9a4b-830e-a6c37f7c9a63"
+    },
+    {
+      "xmlUuid": "0b95c1c9-1ed1-8aea-ff03-e15b658b80eb",
+      "ubn": "26290",
+      "title": "De draagbare I Tjing. Werken met het klassieke Chinese Boek der Veranderingen",
+      "existingDbUuid": "d53a21a8-6a93-868d-fb92-0b3f96b04bc0"
+    },
+    {
+      "xmlUuid": "0d216fea-6ad1-5af0-20d8-8e21b61d431c",
+      "ubn": "26532",
+      "title": "Bhagavadgita. Gesang des Erhabenen",
+      "existingDbUuid": "862ea47d-ec21-a292-ae3f-60c64275a78a"
+    },
+    {
+      "xmlUuid": "0d3cb630-f3be-3889-5a88-25acf2273194",
+      "ubn": "2839",
+      "title": "Clefs majeures et clavicules de Salomon",
+      "existingDbUuid": "c2fe94df-bd63-41ca-2029-a8c96067f36a"
+    },
+    {
+      "xmlUuid": "0d61df2e-0758-cd86-1a66-cdf191bccd0f",
+      "ubn": "27370",
+      "title": "De evolutie vanuit een waarachtig perspektief. Een wezenlijke benadering van de ",
+      "existingDbUuid": "98f910c8-8483-13d1-83c4-b70e295e56af"
+    },
+    {
+      "xmlUuid": "0f6ec58d-dae9-1284-cb3b-f4ff2713244d",
+      "ubn": "28035",
+      "title": "Bron van het Occultisme. Een moderne presentatie van de oude universele wijsheid",
+      "existingDbUuid": "b8f15fe1-3a94-ebe8-13db-7cded32ce8ac"
+    },
+    {
+      "xmlUuid": "1119b67d-7162-5ec4-fa56-7501d0239c10",
+      "ubn": "25178",
+      "title": "In harmonie met het Oneindige",
+      "existingDbUuid": "55467874-d344-2503-39d2-1ccd0186ab76"
+    },
+    {
+      "xmlUuid": "112afd3c-166f-3bbe-fb95-c7558737391e",
+      "ubn": "4995",
+      "title": "Fragmenten uit de Mashnawi",
+      "existingDbUuid": "fb061653-e613-f16f-caf8-2291ca335171"
+    },
+    {
+      "xmlUuid": "11ac63e5-caa9-75fe-87a7-7900df746b19",
+      "ubn": "26187",
+      "title": "Tau Teh Tsing",
+      "existingDbUuid": "c2515312-8717-4e24-f6ec-b31bc02dd2aa"
+    },
+    {
+      "xmlUuid": "1347b3eb-c327-4e3d-0e14-abef12a26405",
+      "ubn": "26644",
+      "title": "Rebel with a cause. Gesellschaftliche Reform und radikale religiöse Aufklärung b",
+      "existingDbUuid": "b559ee6a-f7cc-5026-5c96-f450c5505139"
+    },
+    {
+      "xmlUuid": "150370a4-951a-69c4-cd35-404331c63a98",
+      "ubn": "27537",
+      "title": "Geschichtsimpulse des Rosenkreuzertums",
+      "existingDbUuid": "7179a5db-96fd-cc4a-fb07-21fa796ac561"
+    },
+    {
+      "xmlUuid": "1855193f-e2df-ea64-862c-60a8552eec3e",
+      "ubn": "25459",
+      "title": "Meister Eckeharts Weg zum kosmischen Bewusstsein",
+      "existingDbUuid": "8d6db818-4cc8-e846-dda4-d7eb37bb2a9c"
+    },
+    {
+      "xmlUuid": "1870d085-0f0b-b0c0-d6d1-b92ffd67ab0c",
+      "ubn": "30034",
+      "title": "Les états multiples de l'être",
+      "existingDbUuid": "505f17ff-e050-bd36-f515-2b8384f525ee"
+    },
+    {
+      "xmlUuid": "18a9fad5-3d0d-d4e5-55a0-0e96befc37e4",
+      "ubn": "8014",
+      "title": "Het labyrint der wereld en het paradijs des harten",
+      "existingDbUuid": "22e94fcb-b297-dbfa-479b-887a58862846"
+    },
+    {
+      "xmlUuid": "19a557eb-5de6-676d-e4a8-edf89791e4c3",
+      "ubn": "26011",
+      "title": "From intellect to intelligence. Talks International Camp 1974 at Huizen - Hollan",
+      "existingDbUuid": "883e66d3-5146-7cc7-eadf-cf2fc969dae6"
+    },
+    {
+      "xmlUuid": "1a283c47-ebb0-c62f-cf5e-e6750525970b",
+      "ubn": "2337",
+      "title": "Certamen philosophicum propugnatae veritatis divinae ac naturalis adversus Joh. ",
+      "existingDbUuid": "804aa9b1-c360-02fa-1402-88e8ff1e7d5e"
+    },
+    {
+      "xmlUuid": "1b87b4c4-fd91-d01e-caff-cefc5f311c49",
+      "ubn": "23989",
+      "title": "Die geistigen Hintergründe der menschlichen Geschichte",
+      "existingDbUuid": "1db8ad65-7b04-9db3-4d5f-d68df822d3ef"
+    },
+    {
+      "xmlUuid": "1c2f09fd-2bb6-7116-5ef9-4156dd5061b7",
+      "ubn": "26665",
+      "title": "Apocriefe handelingen van de apostelen. Buitenbijbelseverhalen in de vroege kerk",
+      "existingDbUuid": "5ccd4184-0a16-8574-ec31-11708ea19552"
+    },
+    {
+      "xmlUuid": "1c695f52-b8cd-3c39-824f-c27ef3afe354",
+      "ubn": "24686",
+      "title": "Über dem Alltag",
+      "existingDbUuid": "f9d46186-ccbd-8a4f-c605-80b00ad0a132"
+    },
+    {
+      "xmlUuid": "1cf7d10f-9a21-750c-eff4-5e283deebef0",
+      "ubn": "25265",
+      "title": "Pythagoras und Orpheus. Präludien zu einer zukünftigen Geschuchte der Orphik und",
+      "existingDbUuid": "f1b65fdf-e1b2-b964-304d-9de3f5495624"
+    },
+    {
+      "xmlUuid": "1df38e8f-b4e5-c4a2-8bc9-127dfce32a60",
+      "ubn": "22474",
+      "title": "Die Weisheit des Johannes",
+      "existingDbUuid": "c12a2de0-0462-9442-6bc7-853385afe271"
+    },
+    {
+      "xmlUuid": "1e42aea4-0cd6-dd64-9700-3ed6b5f33acd",
+      "ubn": "8275",
+      "title": "Het leven in vrijheid",
+      "existingDbUuid": "82932d77-6292-3723-9429-5133749da8dd"
+    },
+    {
+      "xmlUuid": "1edf57bf-442f-498d-3fdf-0da77b216ff4",
+      "ubn": "15553",
+      "title": "La voie de la science divine",
+      "existingDbUuid": "e4145463-76d2-e4c8-bfbd-cc1cc8a17c2c"
+    },
+    {
+      "xmlUuid": "1eeeb77e-c4cd-082c-7c0f-62da2df36efb",
+      "ubn": "27696",
+      "title": "Debarim attikim II",
+      "existingDbUuid": "8707c4ca-6378-a648-405a-74b336e975fa"
+    },
+    {
+      "xmlUuid": "1fcd105e-c8a0-944f-5475-9ba5f8486fa7",
+      "ubn": "23934",
+      "title": "Brieven aan de leden van de anthroposofische vereniging",
+      "existingDbUuid": "322cdeef-21fe-a7e7-a2cd-8e4c0c861278"
+    },
+    {
+      "xmlUuid": "22bc7660-636e-79cf-5154-d7514dd67d30",
+      "ubn": "19110",
+      "title": "The wisdom of Sufism. Sacred readings from the Gathas",
+      "existingDbUuid": "2f134164-cc28-b44e-3d5c-5a477d004a15"
+    },
+    {
+      "xmlUuid": "22db0c28-7eb3-c5d1-5e75-8a9c22029912",
+      "ubn": "11562",
+      "title": "Prakticka astrologie",
+      "existingDbUuid": "dc6667d1-75e1-4920-ee0a-80bba3ea2e2d"
+    },
+    {
+      "xmlUuid": "22fdf4aa-7e84-eb59-3e40-42764511f5be",
+      "ubn": "20946",
+      "title": "Anno Domini. The origins of the Christian era",
+      "existingDbUuid": "453ae3af-0340-896f-fa86-fb3944cf8ca0"
+    },
+    {
+      "xmlUuid": "2359c816-8929-14b4-dd86-710dfedd68a4",
+      "ubn": "26352",
+      "title": "Gedichten",
+      "existingDbUuid": "38075b1e-9065-54fb-00bc-225a10ef226a"
+    },
+    {
+      "xmlUuid": "24c807cb-6683-5d6b-03c3-d1910ccfbacb",
+      "ubn": "26470",
+      "title": "Geheimtaal en decodering. wiskundigen, spionnen en hackers",
+      "existingDbUuid": "cf8d823b-1743-bcfe-3652-f34f45b67b75"
+    },
+    {
+      "xmlUuid": "25f7ea93-50e0-34a0-8e79-90110ec01996",
+      "ubn": "26743",
+      "title": "Veljeysaate ja pahantekijat",
+      "existingDbUuid": "73d232f0-3137-5fdb-2496-fb0dd49d5d06"
+    },
+    {
+      "xmlUuid": "2790d282-a358-d8bc-5931-7149d677d863",
+      "ubn": "31023",
+      "title": "Janua rerum sive Totius pansophiae seminarium – Pansophiae Christianae liber III",
+      "existingDbUuid": "c8e673ad-4c4a-cc8a-ff0f-14c11c3d93e1"
+    },
+    {
+      "xmlUuid": "2db837d8-bd36-6048-7314-505fca28cdbc",
+      "ubn": "25079",
+      "title": "Weshalb Bô Yin Râ?",
+      "existingDbUuid": "fe7a55a2-21fc-baad-21f4-719a6ec79a1a"
+    },
+    {
+      "xmlUuid": "2e10bee1-98e8-7a38-90f4-a0219a0d8476",
+      "ubn": "4291",
+      "title": "Les enseignements secrets de Martinès de Pasqually",
+      "existingDbUuid": "9afa0b9a-876b-acc9-1203-f2bd46afeddb"
+    },
+    {
+      "xmlUuid": "2e955816-660c-3c69-597a-b3a1e24b75c9",
+      "ubn": "19106",
+      "title": "Spiritual liberty",
+      "existingDbUuid": "c4b90698-e245-e954-2ce3-75987f82a4ce"
+    },
+    {
+      "xmlUuid": "2f77a849-00a0-edd9-0ca0-ac7ba5edc43d",
+      "ubn": "26605",
+      "title": "Das Lexikon des Taoismus. Grundbegriffe und Lehrsysteme, Meister und Schulen, Li",
+      "existingDbUuid": "6b1dd502-1192-0459-be6d-c4a5f479a013"
+    },
+    {
+      "xmlUuid": "300643b1-646f-d428-04b4-386246a1d843",
+      "ubn": "214",
+      "title": "Aion. Untersuchungen zur Symbolgeschichte",
+      "existingDbUuid": "c9f36fb8-2b73-fa8d-774d-cc15e33b7f97"
+    },
+    {
+      "xmlUuid": "312f02c3-4b86-7dc6-72f5-366aed129c8a",
+      "ubn": "27260",
+      "title": "Astro-Diagnose. Ein Führer zur Heilung. Eine Abhandlung über medizinische Astrol",
+      "existingDbUuid": "6d8498e0-1f8d-2c48-c405-7e63c3cdbc34"
+    },
+    {
+      "xmlUuid": "31f57379-5c48-d677-3b66-70167e8cf0ef",
+      "ubn": "23185",
+      "title": "Wie schreef de bijbel? De ontstaansgeschiedenis van het oude testament",
+      "existingDbUuid": "564b0c90-a906-59d6-4772-e5b25676136d"
+    },
+    {
+      "xmlUuid": "32f650a0-4d55-fd1d-faa4-bdb6771fc04d",
+      "ubn": "24448",
+      "title": "Tau-Te Tsjing. Het boek van weg en deugd.",
+      "existingDbUuid": "d54eb829-e454-65aa-f4ec-58973ccbd6ce"
+    },
+    {
+      "xmlUuid": "36be3ed5-b51b-dd46-c6fc-af5b5fa4a848",
+      "ubn": "30959",
+      "title": "Die uralte Weisheit. Eine kurzgefasste Darstellung der Lehren der Theosophie",
+      "existingDbUuid": "83dc64ce-0f62-be0d-2fb6-ba28a6399892"
+    },
+    {
+      "xmlUuid": "38a416a6-71d2-3379-99c9-09f7e3052b0b",
+      "ubn": "19597",
+      "title": "De wereldbeschouwing der Rozekruisers of mystiek christendom. Een elementaire ve",
+      "existingDbUuid": "c71cc54c-48ae-b323-d85f-837088667d59"
+    },
+    {
+      "xmlUuid": "3ad3f7f4-2382-0164-bbf3-7a81a254fe05",
+      "ubn": "20470",
+      "title": "Catalogue raisonnée de la collection de livres de M. Pierre Antoine Crevenna",
+      "existingDbUuid": "009badb9-7113-c0e5-35f5-5ee05f96ef8a"
+    },
+    {
+      "xmlUuid": "3bf494f5-c82b-42ae-b204-db8cbe99013c",
+      "ubn": "27025",
+      "title": "Voorbij de woorden... kennismaking met Jan van Ruusbroec",
+      "existingDbUuid": "4b9cc84a-3ce3-8707-90b2-9ec842ba8def"
+    },
+    {
+      "xmlUuid": "3d728f49-8cb7-718a-030d-49602c0d2aef",
+      "ubn": "26494",
+      "title": "Chinesische Lebensweisheit",
+      "existingDbUuid": "220b2746-f291-267a-066b-6ed82ea54007"
+    },
+    {
+      "xmlUuid": "3f0d7ba9-77d4-b2b5-5aa2-eb990416a2be",
+      "ubn": "32051",
+      "title": "The rosicrucian revolution. Tradition and renewal",
+      "existingDbUuid": "4cd599f6-4e6a-25c9-814d-30e49135a0da"
+    },
+    {
+      "xmlUuid": "3fb46336-b0ee-0726-105e-730c35ec3820",
+      "ubn": "23899",
+      "title": "Tao Te King",
+      "existingDbUuid": "b21e2530-c7ec-c43c-84dd-75ff48abe1d5"
+    },
+    {
+      "xmlUuid": "3fd4bee4-090b-1940-502a-7fcd934fd5f6",
+      "ubn": "31168",
+      "title": "Alchemy",
+      "existingDbUuid": "f3e3712e-a558-87cb-ad46-fa0bfbdd13e9"
+    },
+    {
+      "xmlUuid": "40742c22-67f6-7ecb-64c2-a01e8a913601",
+      "ubn": "20208",
+      "title": "Deerste twaelf boecken Odysseae",
+      "existingDbUuid": "45952c99-1762-3738-338f-7bc30f89dea8"
+    },
+    {
+      "xmlUuid": "42cdf0dd-85c3-2879-238d-a96315ef0fdc",
+      "ubn": "12991",
+      "title": "Das Seelenleben in der Gottesliebe. Nach dem \"Theotimus\" des Hl. Franz von Sales",
+      "existingDbUuid": "f9bc8e1f-17b3-8937-924e-8f573e8276ca"
+    },
+    {
+      "xmlUuid": "44c8927c-2276-6c32-ea9e-49547cdba735",
+      "ubn": "3776",
+      "title": "The Divine Pymander of Hermes Trismegistus. An endeavour to systematise and eluc",
+      "existingDbUuid": "e7ae5802-6bba-9c2a-e1c2-586bb4fc8fa7"
+    },
+    {
+      "xmlUuid": "47287ab2-3ecf-0dfc-dec7-2bb398251bc0",
+      "ubn": "26380",
+      "title": "Bhagavad Gita. Het lied van de alvervulde",
+      "existingDbUuid": "8960118c-ed97-57ad-8ce0-741c53dd01a8"
+    },
+    {
+      "xmlUuid": "48454789-45d2-c83a-13a0-2d946127033c",
+      "ubn": "25245",
+      "title": "Le premier Livre des Géorgiques Poème Pythagoricien",
+      "existingDbUuid": "d70f05f3-a1a5-629f-9d5b-82d5a561d0a0"
+    },
+    {
+      "xmlUuid": "48586324-d4cc-6995-1f06-3aea023a353c",
+      "ubn": "8924",
+      "title": "Le matin des magiciens. Introduction au réalisme fantastique",
+      "existingDbUuid": "e0d05fd6-6e0b-4f4a-465e-bec395c4118b"
+    },
+    {
+      "xmlUuid": "4b742b1d-d2f9-010c-b702-6f2907a14021",
+      "ubn": "22475",
+      "title": "Wegweiser",
+      "existingDbUuid": "b311783d-8b0c-6d61-7e26-b384c2413f51"
+    },
+    {
+      "xmlUuid": "4bb77d73-ac26-ed3e-6551-76fbfc5fee89",
+      "ubn": "25688",
+      "title": "Jezus zien. Hoe Jezus is overgeleverd aan andere culturen",
+      "existingDbUuid": "ad34b92b-22e6-f611-a659-1bb52830f3ed"
+    },
+    {
+      "xmlUuid": "4ca458c0-6e59-eb5d-04cb-26f2a702a853",
+      "ubn": "27232",
+      "title": "Der Orient im Lichte des Okzidents. Die Kinder des Luzifer und Briüder Christi",
+      "existingDbUuid": "f2904a72-b78e-2cd7-0e80-57e6ade37265"
+    },
+    {
+      "xmlUuid": "4ea9eeda-deb2-711a-d91c-14e5f5c9137d",
+      "ubn": "26",
+      "title": "[Cyrillic: 500 years of gnosis in Europa. Conference proceedings 26-27 March1993",
+      "existingDbUuid": "325bdcc2-07a0-3271-6300-a6bee0a9de0d"
+    },
+    {
+      "xmlUuid": "504b11ad-43fa-09ef-f5c4-4bf89fe6f145",
+      "ubn": "26448",
+      "title": "Giardini e delizie. Segretti, allegorie, metafore e antichi simbolismi",
+      "existingDbUuid": "7493fcb4-e427-fae6-1a3d-6613533f4c8a"
+    },
+    {
+      "xmlUuid": "521617fe-af16-0aeb-c312-4f79c22a1f9a",
+      "ubn": "23401",
+      "title": "The wonders of God's creation in the variety of eight worlds",
+      "existingDbUuid": "813dc765-2648-a0be-70b4-cca67493b98b"
+    },
+    {
+      "xmlUuid": "545c867a-916c-463e-a3d5-941e4680efaa",
+      "ubn": "23818",
+      "title": "Gestalten uit de Perzische Mystiek",
+      "existingDbUuid": "bec0adc4-a314-1efc-1a60-6cda0029fe33"
+    },
+    {
+      "xmlUuid": "55e47d9b-5251-fd88-88f7-78f4aeea88d1",
+      "ubn": "26229",
+      "title": "Hua Hu Tsjing. Uitspraken van Lao Tze volgend op de Tau Te Tsjing",
+      "existingDbUuid": "bbf1a588-d2ee-9329-780c-eaed844e4994"
+    },
+    {
+      "xmlUuid": "562258fa-351f-bb94-3ce0-d30d0e169f8a",
+      "ubn": "25683",
+      "title": "Edgar Cayce, the sleeping Prophet. The life, the Prophecies and Readings of Amer",
+      "existingDbUuid": "6feac850-fa9a-bb29-4bb8-e48e40f57ab2"
+    },
+    {
+      "xmlUuid": "57236efb-ef66-2f97-adca-6c12b4817b38",
+      "ubn": "25492",
+      "title": "",
+      "existingDbUuid": "10dfd64f-9bbd-2ec4-9fa1-2c18fd0bc0a5"
+    },
+    {
+      "xmlUuid": "5805116c-89df-eb2b-90ce-7e6854d18fcf",
+      "ubn": "26128",
+      "title": "Lied van de Eenheid. Een onderzoek naar de bijbelse intertekstualiteit van het s",
+      "existingDbUuid": "0b7ccdf6-2b3b-38b3-3d77-4e09f0475556"
+    },
+    {
+      "xmlUuid": "5bbe82c0-0df0-b322-0365-f705da20c871",
+      "ubn": "27600",
+      "title": "The drunken universe. An anthology of Persian sufi poetry",
+      "existingDbUuid": "b3ee53ba-1eaa-5d8d-c4d7-5a43928b5b7e"
+    },
+    {
+      "xmlUuid": "5d7015a1-bec4-fbb0-9b0c-e4bc9f43c7fe",
+      "ubn": "27150",
+      "title": "A companion to Ramon Llull and Lullism",
+      "existingDbUuid": "0a8d66f1-cb27-1570-6bab-460d4df623dc"
+    },
+    {
+      "xmlUuid": "5f7d5bda-c85a-79e1-b11c-e915388d5fc1",
+      "ubn": "9844",
+      "title": "De nagelate schriften",
+      "existingDbUuid": "c3b49bc7-2069-fce4-eec8-72805dd23980"
+    },
+    {
+      "xmlUuid": "63f84302-085d-5464-f4ef-c56e15b5f0cf",
+      "ubn": "17493",
+      "title": "De Philonische geheime leer. De kabbala van Philo van Alexandrië",
+      "existingDbUuid": "558930b0-2eea-e4a4-d66c-b34a6c570c01"
+    },
+    {
+      "xmlUuid": "648a6e85-564a-9293-da89-673621f9f5e3",
+      "ubn": "23399",
+      "title": "Sendschreiben der königlichen Majestat zu Frankreich ... an die Chur und Fürsten",
+      "existingDbUuid": "9541487b-42a9-348c-8e44-b634c6c54267"
+    },
+    {
+      "xmlUuid": "664c850b-865b-5f64-abe0-5b24f66f34b6",
+      "ubn": "5492",
+      "title": "Geschichte des Illuminaten-Ordens. Ein Beitrag zur Geschichte Bayerns",
+      "existingDbUuid": "ac7622c2-d365-de41-1fe4-7e9b6ec6b3df"
+    },
+    {
+      "xmlUuid": "69457199-ea0d-7876-6513-bb4431dd9877",
+      "ubn": "31024",
+      "title": "Artificii legendi et scribendi tirocinium – Vestibuli et Januae lingvarum lucida",
+      "existingDbUuid": "84cdeda8-6a76-0a0d-9528-b94818d50655"
+    },
+    {
+      "xmlUuid": "696f4e9d-a2f2-8b4c-3604-08e2f5015a36",
+      "ubn": "20357",
+      "title": "Wie zijn de Rozekruisers? De alchemie der Rozekruisers. Het mysterie van de ziel",
+      "existingDbUuid": "b88d39db-c855-7bd3-9a5f-fb7d1636272a"
+    },
+    {
+      "xmlUuid": "699c732d-a929-ed42-66f3-51818478709e",
+      "ubn": "23403",
+      "title": "La voie de la science divine",
+      "existingDbUuid": "e2718306-0bab-eafa-824f-e9defce8aebb"
+    },
+    {
+      "xmlUuid": "6a2a9fc3-66bc-5582-39df-af41384fa34d",
+      "ubn": "24096",
+      "title": "Vier Mysteriendramen",
+      "existingDbUuid": "3199d971-87b3-bbc6-2600-8c83f91be7b3"
+    },
+    {
+      "xmlUuid": "6a5ad194-f03f-b1d1-d152-dfb770890574",
+      "ubn": "28022",
+      "title": "Tau Teh Tsjing (Tau Teh King). Ingeleid en vertaald door ir J.A. Blok",
+      "existingDbUuid": "e65235e5-8304-17d3-f79b-6249816286a1"
+    },
+    {
+      "xmlUuid": "6baff381-5fb5-d9d5-19b5-47518d9e1843",
+      "ubn": "26230",
+      "title": "The Tao Te Ching. A new translation with commentary",
+      "existingDbUuid": "ec1dda77-5aab-8b50-d734-7cf27e9dac47"
+    },
+    {
+      "xmlUuid": "6bb1d240-ba00-4974-342f-b33bb91d14e3",
+      "ubn": "26710",
+      "title": "Luettelo Perka Evarst in kirjoista",
+      "existingDbUuid": "3e073614-c30b-8929-ed64-a3d190a13828"
+    },
+    {
+      "xmlUuid": "6cb887f5-365c-ac16-3bf9-998931bebf2f",
+      "ubn": "26667",
+      "title": "Morgenlicht op het geestelijk pad",
+      "existingDbUuid": "20300307-577a-c8f8-2b62-a4198a65c426"
+    },
+    {
+      "xmlUuid": "6db9f810-a3d1-4497-9e98-c105da6f2b9d",
+      "ubn": "30499",
+      "title": "Clavicula Salomonis. La clavicule de Salomon roi des Hébreux",
+      "existingDbUuid": "72eee426-3505-d972-231b-66e1d783a28c"
+    },
+    {
+      "xmlUuid": "723fa57a-fae9-d0ca-9f46-48d76e4ccf87",
+      "ubn": "7704",
+      "title": "Die Katharer",
+      "existingDbUuid": "eabc87cb-33f9-97e0-b2cc-0c2bf29b3905"
+    },
+    {
+      "xmlUuid": "7667948c-4f7f-46c2-b6ec-a8a1f7bb5e4a",
+      "ubn": "24042",
+      "title": "Meditatie",
+      "existingDbUuid": "e7a4cde7-4be2-8c9c-7c5d-959f63aa7ada"
+    },
+    {
+      "xmlUuid": "786cf903-d3dd-8232-8312-e3695b00b8b0",
+      "ubn": "11722",
+      "title": "Der Prophet Jakob Lorber verkündet bevorstehende Katastropehn und das wahre Chri",
+      "existingDbUuid": "e0ea5b75-30bb-6af2-61cb-4ec5357febff"
+    },
+    {
+      "xmlUuid": "7890e8b7-3dc6-05df-f594-144bafb2bfe0",
+      "ubn": "27228",
+      "title": "Innerlijke ontwikkeling door anthroposofie. Een cyclus van tien voordrachten geh",
+      "existingDbUuid": "b1e0c3be-e207-d4a3-d068-910df3503f5a"
+    },
+    {
+      "xmlUuid": "7acc7e8b-7164-2d3e-9b61-504e83aa1c60",
+      "ubn": "18837",
+      "title": "Nature spirits and nature forces",
+      "existingDbUuid": "f98cc0dc-a21a-894d-3206-1b0bf9cd4ce7"
+    },
+    {
+      "xmlUuid": "7d1d385c-ad0e-884d-446e-69891ad351ca",
+      "ubn": "14961",
+      "title": "Unicité de l'existence et création perpétuelle en mystique islamique",
+      "existingDbUuid": "eaab8057-1099-eecc-ee14-bc2a156376c3"
+    },
+    {
+      "xmlUuid": "7e64e40e-6fac-6c45-79f2-5f2106090c64",
+      "ubn": "30680",
+      "title": "Aux membres et associés de la S[ocieté] T[héosophique] Hermes. Affaire Papus",
+      "existingDbUuid": "ebd5cb67-770d-467a-883e-ad55e7529712"
+    },
+    {
+      "xmlUuid": "80e29c0e-f042-f23b-99d0-c344924d6d38",
+      "ubn": "26285",
+      "title": "The Zen teching of Huang Po. On the transmission of the mind. Translated by John",
+      "existingDbUuid": "b16f6c0c-9cde-6881-98b4-161d790de0f4"
+    },
+    {
+      "xmlUuid": "83b8bcd8-7955-1423-1d02-a227e14d65e0",
+      "ubn": "22174",
+      "title": "Die literarische Welt. Erinnerungen",
+      "existingDbUuid": "c1a2c287-fd9c-ffac-92b2-c6366cfaa811"
+    },
+    {
+      "xmlUuid": "84160c8c-b8b3-6607-6061-5422becfadfe",
+      "ubn": "30754",
+      "title": "Corpus Hermeticum durch Marsilius Ficinus aus dem Griechischen ins Lateinische u",
+      "existingDbUuid": "a54b54ad-03b0-5dfa-d95b-0559ab3260a2"
+    },
+    {
+      "xmlUuid": "8608ebae-e697-4537-cca4-a0ae81728343",
+      "ubn": "25558",
+      "title": "De wedergeboorte van de natuur",
+      "existingDbUuid": "8e7648e2-2ab4-cf68-f5c6-008f08f1ed2c"
+    },
+    {
+      "xmlUuid": "866881da-3313-6e1f-d530-ecbf6fcb7d25",
+      "ubn": "27693",
+      "title": "Moses Ben Schem-Tob de Leon und sein Verhältnis zum Sohar. Eine historisch-kriti",
+      "existingDbUuid": "4d4e62cf-69a1-1574-8c5f-8acabd5bdb42"
+    },
+    {
+      "xmlUuid": "86f5ac41-b449-55b0-32e3-1a3d1ea94343",
+      "ubn": "23899",
+      "title": "Tao Te King",
+      "existingDbUuid": "b21e2530-c7ec-c43c-84dd-75ff48abe1d5"
+    },
+    {
+      "xmlUuid": "87839996-5dec-90a9-34e3-049ed916dc05",
+      "ubn": "15188",
+      "title": "Verandering en duur. De wijsheid van de I Tjing",
+      "existingDbUuid": "44aaea47-1554-8101-e0a2-43ca0074ae6f"
+    },
+    {
+      "xmlUuid": "89d35655-f54e-5aca-52ab-60ac53a8c8e8",
+      "ubn": "627",
+      "title": "Angelus Silesius der Sänger der mystischen Weisheit",
+      "existingDbUuid": "76bb41b2-53d2-4ab9-4f1e-888f5526f181"
+    },
+    {
+      "xmlUuid": "8d1edc09-ef55-70c3-c529-b9b0a1f17add",
+      "ubn": "24686",
+      "title": "Über dem Alltag",
+      "existingDbUuid": "f9d46186-ccbd-8a4f-c605-80b00ad0a132"
+    },
+    {
+      "xmlUuid": "8fef1307-b411-bcb3-adfe-588c1e33a25c",
+      "ubn": "22466",
+      "title": "Auferstehung",
+      "existingDbUuid": "4fd272ea-1378-6ae3-8970-347bf0eda6f9"
+    },
+    {
+      "xmlUuid": "90109612-47f7-6858-c430-b771823d152a",
+      "ubn": "26283",
+      "title": "So spricht Lao Tse. Tao te King",
+      "existingDbUuid": "98140a54-be86-71c4-66ee-98261e0d97d7"
+    },
+    {
+      "xmlUuid": "905bb310-eb6d-23a0-d160-22cbed3c8517",
+      "ubn": "28013",
+      "title": "Tao Te King. Nederlands van Saint-Remy",
+      "existingDbUuid": "f49315dc-20e3-1a41-9182-bd53bbadecd8"
+    },
+    {
+      "xmlUuid": "92362b2e-a62d-60b5-bef3-fe447ebb55f6",
+      "ubn": "396",
+      "title": "\"Alchimie & spagyrie\". Du Grand Oeuvre à la médecine de Paracelse",
+      "existingDbUuid": "f93e0c13-6f3c-bfef-a582-879ac00b45b3"
+    },
+    {
+      "xmlUuid": "928e2e35-52aa-bbb1-c8a1-adc0b56da860",
+      "ubn": "26655",
+      "title": "Rumi the persian: rebirth in creativity and love. With preface by Erich Fromm",
+      "existingDbUuid": "12f05e0b-7128-d5b2-036e-5f42fb08f4fe"
+    },
+    {
+      "xmlUuid": "9305cfd4-4bad-f125-fef3-d7c505b3aed1",
+      "ubn": "26168",
+      "title": "Tao Teh Ching. Translated by C.H. Wu",
+      "existingDbUuid": "ae939f28-cb58-df12-f447-08f5c314b46e"
+    },
+    {
+      "xmlUuid": "97c5c1f9-7832-ea8b-07e6-e2f3715ebb8f",
+      "ubn": "27310",
+      "title": "Ouderdom een vruchtbaar perspectief",
+      "existingDbUuid": "d0731482-da5d-fb06-46e5-d12aed68e7e7"
+    },
+    {
+      "xmlUuid": "98c7eaf0-81e7-24c3-1dfb-a4eb0a117996",
+      "ubn": "9420",
+      "title": "Mosaical philosophy grounded upon the essential truth or eternal sapience",
+      "existingDbUuid": "9d756bee-a706-d323-97f2-9d9306ec5c66"
+    },
+    {
+      "xmlUuid": "9a5bba7c-6423-2290-3d2c-72097108b931",
+      "ubn": "27514",
+      "title": "Elias oder die Zielsetzung der Erde",
+      "existingDbUuid": "de8b83b6-27aa-9a3d-4d3b-842da66f5ae6"
+    },
+    {
+      "xmlUuid": "9b135ab2-3616-4671-b506-566f78568ff8",
+      "ubn": "22486",
+      "title": "Ursein, Urlicht, Urwort. Die Überlieferung der religiösen \"Urquelle\" nach Joseph",
+      "existingDbUuid": "fcac2832-4154-d23c-d232-9e99799c4d3d"
+    },
+    {
+      "xmlUuid": "9c09a09b-a956-7e21-344e-00e9400e201e",
+      "ubn": "25017",
+      "title": "Das Buch der Gespräche",
+      "existingDbUuid": "f323a715-31a7-965a-613d-f534c14709b0"
+    },
+    {
+      "xmlUuid": "9ce703e6-a400-58cb-90cf-1057b8cf5079",
+      "ubn": "30679",
+      "title": "The story of Atlantis and the lost Lemuria",
+      "existingDbUuid": "c00802c1-c776-00f3-d12f-9a10549c435a"
+    },
+    {
+      "xmlUuid": "9d10e9e5-183a-93b0-d65c-fee8d9eb6106",
+      "ubn": "890",
+      "title": "Aquarius",
+      "existingDbUuid": "d0597518-42d8-bf72-0617-4b0250629ac7"
+    },
+    {
+      "xmlUuid": "9e6a4c48-47f7-f613-432c-305816ce3d56",
+      "ubn": "8503",
+      "title": "Lives of alchemystical philosophers. Based on materials collected in 1815 and su",
+      "existingDbUuid": "b1276026-5f2e-7f60-fbb6-38d1eec522f0"
+    },
+    {
+      "xmlUuid": "9e8147af-09a9-38ff-ef29-6924d8446468",
+      "ubn": "26504",
+      "title": "Bij Lao Tsé op de thee. Filosofische verhalen uit het Oosten",
+      "existingDbUuid": "fa38d45b-3757-99e5-945f-c5d6e71b943e"
+    },
+    {
+      "xmlUuid": "a0ed088a-9fc4-d49b-f9da-f29e99873dcc",
+      "ubn": "252",
+      "title": "Alchemical death & resurrection. The significance of alchemy in the age of Newto",
+      "existingDbUuid": "04f48cfb-478a-b66d-25e5-ddc7ba05d2f3"
+    },
+    {
+      "xmlUuid": "a18cb55a-6813-8691-db4e-d4987e5acb7c",
+      "ubn": "27695",
+      "title": "Nachträge zu meinem Sefat Chachamim I",
+      "existingDbUuid": "ab3e9741-e2e6-518d-dfba-54022656387e"
+    },
+    {
+      "xmlUuid": "a9e8674d-3905-addd-4e26-04ecacf30a87",
+      "ubn": "25276",
+      "title": "Cyril SCott and A hidden School: towards the peeling of an Onion",
+      "existingDbUuid": "3168a206-8322-3b45-f97d-d8ded0900aee"
+    },
+    {
+      "xmlUuid": "abb3aa4d-d36d-ca34-77ad-d5df6e10bd04",
+      "ubn": "27647",
+      "title": "The alchemy of happiness",
+      "existingDbUuid": "5589555d-43e5-31c4-1baf-c8f3da1b3bcb"
+    },
+    {
+      "xmlUuid": "b31f939d-7110-de4c-2ed2-b9788e90c9a7",
+      "ubn": "26773",
+      "title": "Hiljaisuuden Aani",
+      "existingDbUuid": "dc179d04-14aa-de34-f607-a3539270d3e6"
+    },
+    {
+      "xmlUuid": "b47a8bdf-d5e4-52df-f8a5-9ac4039517bd",
+      "ubn": "19695",
+      "title": "The inner government of the world. Lectures delivered at the North Indian Conven",
+      "existingDbUuid": "95f4a193-64ec-3a64-6a62-81e808f0e2e9"
+    },
+    {
+      "xmlUuid": "b5b156ba-a2a3-24a1-6669-ac7d3b80fe14",
+      "ubn": "25007",
+      "title": "Das Mysterium von Golgotha",
+      "existingDbUuid": "c790e72a-22d1-66f0-aba6-070066afc8df"
+    },
+    {
+      "xmlUuid": "b789ac99-8a8e-279b-c2ab-da1a3dd280ba",
+      "ubn": "8696",
+      "title": "Magiae naturalis libri viginti",
+      "existingDbUuid": "e98f0732-84e4-1cac-40fb-0c1a3e8f0e0b"
+    },
+    {
+      "xmlUuid": "ba097f21-17f4-b2a3-624b-66c7bcbc6155",
+      "ubn": "29067",
+      "title": "In harmonie met het Oneindige",
+      "existingDbUuid": "e31a0444-8b6d-3e62-e32d-7e481886138f"
+    },
+    {
+      "xmlUuid": "bd078008-54b1-af6b-4081-08d1faa5510e",
+      "ubn": "25976",
+      "title": "Het e",
+      "existingDbUuid": "e0a64f84-3327-77d1-3121-bc7461199f79"
+    },
+    {
+      "xmlUuid": "be64c9d9-3869-7d7d-b543-62b23687c080",
+      "ubn": "26380",
+      "title": "Das Rufen des Zarathushtra (die Gathas des Awesta). Ein Versuch ihren Sinn zu ge",
+      "existingDbUuid": "8960118c-ed97-57ad-8ce0-741c53dd01a8"
+    },
+    {
+      "xmlUuid": "c01dc75f-4359-3928-3cf2-135f4051066e",
+      "ubn": "26647",
+      "title": "Edgar Cayce's story of karma",
+      "existingDbUuid": "b1e07f10-77f8-bd44-e3c3-e419515b2de2"
+    },
+    {
+      "xmlUuid": "c051572d-0927-4d28-0949-f9879cf279ac",
+      "ubn": "20915",
+      "title": "Velos de luz y sombras",
+      "existingDbUuid": "d4c271dc-4154-27d7-ecc4-9e4ec2b30b6a"
+    },
+    {
+      "xmlUuid": "c12e2e78-09d6-4ba7-d5b0-72eb8b7d0e96",
+      "ubn": "26721",
+      "title": "Eversti Ansamaa",
+      "existingDbUuid": "ee622021-14f8-f436-28b7-d18b7e5d65ef"
+    },
+    {
+      "xmlUuid": "c3d70501-cecd-5527-b2e5-1dcdac6d3de2",
+      "ubn": "30589",
+      "title": "Gnostiques et gnosticisme. Étude critique des documents du gnosticisme chrétien ",
+      "existingDbUuid": "1e3e0fe2-24a4-7a17-5a21-fdd397fbea9f"
+    },
+    {
+      "xmlUuid": "ca1250aa-f1ac-9789-839e-b91598f24045",
+      "ubn": "8503",
+      "title": "Lives of alchemystical philosophers. Based on materials collected in 1815 and su",
+      "existingDbUuid": "b1276026-5f2e-7f60-fbb6-38d1eec522f0"
+    },
+    {
+      "xmlUuid": "cbc87b29-6a52-82aa-9d18-1424f8ebb870",
+      "ubn": "22446",
+      "title": "Nachlese. Gesammelte Prosa und Gedichte aus Zeitschriften",
+      "existingDbUuid": "f834b4d9-7e3a-5979-0b40-256109b8841e"
+    },
+    {
+      "xmlUuid": "cbf9063a-10f4-a0cb-bd53-de6b0f723f6a",
+      "ubn": "26362",
+      "title": "Inleiding tot het Zen-Boeddhisme. Met een voorwoord van C.G. Jung",
+      "existingDbUuid": "d035decd-7afb-2015-c574-202a90700276"
+    },
+    {
+      "xmlUuid": "ce770682-8964-7046-2dd9-b26fc9d1d40b",
+      "ubn": "27231",
+      "title": "Vrijmetselarij, een intellectueel spel of meer",
+      "existingDbUuid": "234323cb-0889-3a95-a461-fd354a18017c"
+    },
+    {
+      "xmlUuid": "d2050ebd-0bdc-0cbc-0503-cb17af5dcc5f",
+      "ubn": "26518",
+      "title": "Zen and the mind. Scientific apporoach to Zen practice",
+      "existingDbUuid": "a13c04cd-f861-4c9e-c97c-b7bc7301c3ce"
+    },
+    {
+      "xmlUuid": "d58ca5dc-03d6-fb3e-5c1f-332f927e2f98",
+      "ubn": "25371",
+      "title": "De Pentateuch met haftaroth. Deel II. Vajikrah, Bemidbar, Dewariem",
+      "existingDbUuid": "f90882de-e5fa-9616-a72f-2d44bf745d9d"
+    },
+    {
+      "xmlUuid": "da0476c1-2a29-9ea8-c547-7ca54d2e1599",
+      "ubn": "25354",
+      "title": "De mystieke Kabbala. Een sleutel tot de kennis der wetten van geest, ziel en lic",
+      "existingDbUuid": "a856186d-ca5f-dd57-1b67-31e4e5714f31"
+    },
+    {
+      "xmlUuid": "dd24a1a1-d0c0-18d5-cd46-010609b684b2",
+      "ubn": "23791",
+      "title": "Vadan. De goddelijke symfonie",
+      "existingDbUuid": "fbb88e07-40de-5f1a-84a6-980a64143952"
+    },
+    {
+      "xmlUuid": "e0926979-55ab-29eb-a3de-9976af6cb26e",
+      "ubn": "30035",
+      "title": "De tabernakel, of breedvoerige beschyving van de tente der t'zamenkomste",
+      "existingDbUuid": "e0c0cd16-acf3-ca32-7e56-8271e3ca7666"
+    },
+    {
+      "xmlUuid": "e2a97cb6-cbaa-be5f-0a2e-777cc098432d",
+      "ubn": "12428",
+      "title": "Rosenkreuzer-Mysterien. Ein Grundriss ihrer Philosophie",
+      "existingDbUuid": "0a86f1ea-38a6-73ce-323e-3acdc1df165f"
+    },
+    {
+      "xmlUuid": "e31ccc5e-4b9b-5c81-da56-c4cec34319c3",
+      "ubn": "26505",
+      "title": "Tao Te King. Die Seidentexte vom Mawangdui 500 Jahre älter als andere Ausgaben",
+      "existingDbUuid": "ea43785a-a1a7-0c02-02ac-ff30d688f7f6"
+    },
+    {
+      "xmlUuid": "e415989e-14d7-c2cb-26dc-5abaf89bc78b",
+      "ubn": "25236",
+      "title": "De strikte observantie. Ritualen, legenden, en verklaringen",
+      "existingDbUuid": "48594023-4ea9-df41-8746-ad1b442bf89c"
+    },
+    {
+      "xmlUuid": "e9b3d300-5ed9-34c7-8bfc-ccee5328031d",
+      "ubn": "404",
+      "title": "L'alchimie spirituelle. La voie intérieure",
+      "existingDbUuid": "0053d87e-220e-70bd-5edd-c087aac7c25c"
+    },
+    {
+      "xmlUuid": "eadd599c-66dc-0a75-e6f8-7da9530ff752",
+      "ubn": "30813",
+      "title": "Opera omnia",
+      "existingDbUuid": "09b56948-dd8a-b4c1-80c0-ecba93d0f416"
+    },
+    {
+      "xmlUuid": "eb1ad585-756f-71c5-811a-5bc2a97ec509",
+      "ubn": "22441",
+      "title": "Bô Yin Râ. Leben und Werk",
+      "existingDbUuid": "b27af6e9-e098-e6e5-3ef3-c0fb746f04b6"
+    },
+    {
+      "xmlUuid": "eb8d6a21-b837-c0f9-1c60-399ddc4972bc",
+      "ubn": "26200",
+      "title": "The gate of all marvelous things. A guide to reading the Tao Te Ching. Translate",
+      "existingDbUuid": "9b4fa49c-35f3-bf83-bb94-e047fc4cafde"
+    },
+    {
+      "xmlUuid": "ed3fd1d9-1d18-d333-292d-56f4247272ed",
+      "ubn": "1389",
+      "title": "Beginselen der beeldende wiskunde",
+      "existingDbUuid": "ff72d076-656e-004c-e4b1-e5735be89efa"
+    },
+    {
+      "xmlUuid": "ed5cfd27-df00-b160-df17-19567066419e",
+      "ubn": "26562",
+      "title": "De Toortsdrager waarin opgenomen het tijdschrift ' Nieuwe banen'",
+      "existingDbUuid": "2fd67701-6d90-7ae7-dfcf-8f7bac8de11d"
+    },
+    {
+      "xmlUuid": "f4e083ec-18a5-e6f8-4aa7-c23976ce3745",
+      "ubn": "27691",
+      "title": "Beiträge zur Geschichte der Kabbala. Zweites Heft",
+      "existingDbUuid": "df8fa5ca-9254-3834-1b92-451b1e579f8b"
+    },
+    {
+      "xmlUuid": "f9ee12ee-4aeb-ffcb-7679-538f1ea7234b",
+      "ubn": "27143",
+      "title": "Het testament van de stervende moeder, de Broedergemeente. Hertaling, annotaties",
+      "existingDbUuid": "0de452fa-a4c4-d358-f82f-130ec9795e3f"
+    },
+    {
+      "xmlUuid": "fd231379-efe8-1f5a-3fc6-cd87adc52f09",
+      "ubn": "16913",
+      "title": "Adam l'homme rouge. Enrichi d'une réception de cet ouvrage par Emmanuel Dufour-K",
+      "existingDbUuid": "4a0a67e4-c8bb-0b9e-0a2f-74576a0b5ed2"
+    },
+    {
+      "xmlUuid": "fe05770e-96fd-147c-cf63-29a86db4f853",
+      "ubn": "2373",
+      "title": "Der Chassidismus. Mysterium und spirituelle Lebenspraxis",
+      "existingDbUuid": "a3d85f5c-99c4-6a3c-e611-4f15f2a874dc"
+    },
+    {
+      "xmlUuid": "ff1446fe-3ccd-9502-8c98-027f17b45cff",
+      "ubn": "569",
+      "title": "Der Amunhymnus des Papyrus Leiden I 344, verso",
+      "existingDbUuid": "33d90c9d-9b0d-122c-194b-f4576e3cb0d4"
+    }
+  ]
+}
