@@ -398,26 +398,30 @@ async function supabaseFetch(path, init = {}) {
     'Content-Type': 'application/json',
     ...(init.headers || {}),
   };
-  // Retry on transient network errors and 5xx + 429. Step 2's 27k+ sequential
-  // calls hit network blips occasionally; without retry a single drop aborts
-  // the whole run. Up to 4 attempts with exponential backoff (0.5/1/2/4s).
+  // Retry on transient network errors, 5xx, and 429. 4xx (non-429) should
+  // fail-fast — they're caller bugs, not transient. Up to 4 attempts with
+  // exponential backoff (0.5/1/2/4s).
   let lastErr;
   for (let attempt = 0; attempt < 4; attempt++) {
+    let res, fetchThrew = false;
     try {
-      const res = await fetch(url, { ...init, headers });
-      if (res.ok) return res;
-      const retriable = res.status === 429 || res.status >= 500;
-      const txt = await res.text();
-      const err = new Error(`Supabase ${init.method || 'GET'} ${path} → ${res.status}: ${txt.slice(0, 300)}`);
-      if (!retriable || attempt === 3) throw err;
-      lastErr = err;
+      res = await fetch(url, { ...init, headers });
     } catch (e) {
-      // fetch() throws TypeError on DNS/connection failure — treat as retriable.
-      if (attempt === 3) throw e;
+      // fetch() throws TypeError on DNS/connection failure — always retriable.
+      fetchThrew = true;
       lastErr = e;
     }
+    if (res && res.ok) return res;
+    if (res && !fetchThrew) {
+      const retriable = res.status === 429 || res.status >= 500;
+      const txt = await res.text();
+      const err = new Error(`Supabase ${init.method || 'GET'} ${path} → ${res.status}: ${txt.slice(0, 2000)}`);
+      if (!retriable) throw err;  // fail-fast on 4xx (except 429)
+      lastErr = err;
+    }
+    if (attempt === 3) throw lastErr;
     const wait = 500 * Math.pow(2, attempt);
-    process.stderr.write(`\n  retry ${attempt + 1}/3 after ${wait}ms (${lastErr?.message?.slice(0, 80) || 'unknown'})\n`);
+    process.stderr.write(`\n  retry ${attempt + 1}/3 after ${wait}ms (${lastErr?.message?.slice(0, 120) || 'unknown'})\n`);
     await new Promise(r => setTimeout(r, wait));
   }
   throw lastErr;
@@ -455,11 +459,48 @@ async function updateByUuid(uuid, body) {
 
 async function insertBatch(rows) {
   if (!rows.length) return;
+  // PostgREST requires all rows in a single POST array to share the same key
+  // set (PGRST102: "All object keys must match"). recordToColumns only emits
+  // columns with non-empty XML values, so different records have different
+  // shapes. Normalize by taking the union of all keys and defaulting missing
+  // values to null.
+  const allKeys = new Set();
+  for (const r of rows) for (const k of Object.keys(r)) allKeys.add(k);
+  const shaped = rows.map(r => {
+    const out = {};
+    for (const k of allKeys) out[k] = k in r ? r[k] : null;
+    return out;
+  });
   await supabaseFetch(`/bph_works`, {
     method: 'POST',
-    body: JSON.stringify(rows),
+    body: JSON.stringify(shaped),
     headers: { Prefer: 'return=minimal' },
   });
+}
+
+// Bulk upsert by primary key (`id`). Each row must include `id` plus the
+// columns to update. PostgREST translates this into INSERT ... ON CONFLICT
+// (id) DO UPDATE SET <provided columns>. Reserved for rows we know exist:
+// the script pre-validates membership before calling so we never accidentally
+// INSERT a half-row. ~30 bulk calls instead of ~30k per-row PATCHes —
+// dramatically more reliable on Supabase's per-IP request budget.
+async function bulkUpsert(rows, batchSize = 500) {
+  if (!rows.length) return 0;
+  let done = 0;
+  for (let i = 0; i < rows.length; i += batchSize) {
+    const batch = rows.slice(i, i + batchSize);
+    await supabaseFetch(`/bph_works`, {
+      method: 'POST',
+      body: JSON.stringify(batch),
+      headers: {
+        Prefer: 'return=minimal,resolution=merge-duplicates',
+      },
+    });
+    done += batch.length;
+    process.stderr.write(`  bulk-upserted ${done}/${rows.length}…\r`);
+  }
+  process.stderr.write('\n');
+  return done;
 }
 
 async function deleteByUuid(uuid) {
@@ -531,37 +572,37 @@ async function step0_backup() {
 async function step2_backfillRaw() {
   console.log('\n=== Step 2: Backfill memorix_raw/files/counters for in-both printed rows ===');
   await verifySchema();
-  // Only target rows that don't yet have memorix_raw set. Makes the step
-  // resumable after a partial failure — a re-run picks up only what's left.
-  const dbRows = await pageAll('bph_works', 'uuid',
+  // Pull (id, uuid) for all printed rows that still need backfilling. We need
+  // `id` because bulkUpsert keys on the PK (uuid is TEXT and has 103 NULLs,
+  // so it's not a reliable upsert target).
+  const dbRows = await pageAll('bph_works', 'id,uuid',
     '&record_type=eq.printed&uuid=not.is.null&memorix_raw=is.null');
-  const dbUuids = new Set(dbRows.map(r => r.uuid));
+  const dbIdByUuid = new Map(dbRows.map(r => [r.uuid, r.id]));
   const records = readRecords(join(XML_DIR, XML_FILES.printed), 'BPH printed');
 
-  let toUpdate = 0, skippedNew = 0, alreadyDone = 0;
+  // Build the payload array up front so dry-run can show real counts and
+  // apply-mode can stream it through bulkUpsert.
+  const payload = [];
   const sample = [];
   for (const r of records) {
-    if (dbUuids.has(r.uuid)) {
-      toUpdate++;
-      if (sample.length < 3) sample.push({ uuid: r.uuid, fileCount: r.files.length, totalBytes: r.files.reduce((s, f) => s + (f.filesize || 0), 0) });
-    } else {
-      // Either new-in-XML (Step 4 handles) or already-backfilled (skip).
-      // Disambiguate cheaply: if uuid appears in dbUuidsAll, it's already done.
-      // Otherwise it's new-in-XML.
-      // (We don't need to be precise here — counts only.)
-    }
+    const id = dbIdByUuid.get(r.uuid);
+    if (!id) continue;
+    payload.push({ id, ...buildMemorixRaw(r) });
+    if (sample.length < 3) sample.push({ uuid: r.uuid, fileCount: r.files.length, totalBytes: r.files.reduce((s, f) => s + (f.filesize || 0), 0) });
   }
-  // Quick second probe to disambiguate skip reasons for the summary line.
+
+  // For the resume-case summary line we still want the alreadyDone count.
   const allPrinted = await pageAll('bph_works', 'uuid',
     '&record_type=eq.printed&uuid=not.is.null');
   const allUuids = new Set(allPrinted.map(r => r.uuid));
+  let skippedNew = 0, alreadyDone = 0;
   for (const r of records) {
-    if (dbUuids.has(r.uuid)) continue;
+    if (dbIdByUuid.has(r.uuid)) continue;
     if (allUuids.has(r.uuid)) alreadyDone++;
     else skippedNew++;
   }
 
-  console.log(`  Will UPDATE: ${toUpdate}`);
+  console.log(`  Will UPDATE: ${payload.length}`);
   console.log(`  Already backfilled (memorix_raw not null, resume case): ${alreadyDone}`);
   console.log(`  Skipped (new-in-XML, Step 4 handles): ${skippedNew}`);
   console.log(`  Sample: ${JSON.stringify(sample, null, 2)}`);
@@ -570,13 +611,8 @@ async function step2_backfillRaw() {
     console.log('  [DRY-RUN] No writes performed.');
     return;
   }
-  let done = 0;
-  for (const r of records) {
-    if (!dbUuids.has(r.uuid)) continue;
-    await updateByUuid(r.uuid, buildMemorixRaw(r));
-    if (++done % 200 === 0) process.stderr.write(`  updated ${done}/${toUpdate}…\r`);
-  }
-  console.log(`  ✓ Updated ${done} rows.`);
+  const written = await bulkUpsert(payload, 500);
+  console.log(`  ✓ Updated ${written} rows via bulk upsert.`);
 }
 
 // ---------- Step 3: Apply field-level updates ----------
