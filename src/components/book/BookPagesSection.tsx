@@ -7,7 +7,7 @@ import type { JobType, Job } from '@/lib/types/job';
 import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
-import { getPageThumbUrl } from '@/lib/utils';
+import { getPageGridUrl } from '@/lib/utils';
 import { buildCoverUpdate } from '@/lib/cover-fields';
 import JobStatusBanner from './JobStatusBanner';
 import PagesGrid from './PagesGrid';
@@ -479,7 +479,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     }
   };
 
-  const getImageUrl = (page: Page) => getPageThumbUrl(page);
+  const getImageUrl = (page: Page) => getPageGridUrl(page);
 
   return (
     <div className="space-y-6">

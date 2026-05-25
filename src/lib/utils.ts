@@ -217,6 +217,26 @@ export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quali
 }
 
 /**
+ * Pick a grid thumbnail URL appropriate to the page's aspect ratio.
+ * Landscape pages (e.g. Bhutanese pecha folios at 1200x800) blur when
+ * forced into a portrait cell with `object-cover` — the 150px thumb
+ * gets upscaled to fit the cell's height before being cropped to width.
+ * For those pages we serve a 400px variant through the /api/image proxy
+ * (Cloudflare-cached); portrait pages keep the existing 150px thumb.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPageGridUrl(page: Record<string, any>): string | null {
+  const w = page.image_width;
+  const h = page.image_height;
+  const isLandscape = typeof w === 'number' && typeof h === 'number' && h > 0 && w / h > 1.2;
+  if (!isLandscape) return getPageThumbUrl(page);
+
+  const baseUrl = page.archived_photo || page.photo_original || page.photo;
+  if (!baseUrl || isArchiveFailed(baseUrl)) return getPageThumbUrl(page);
+  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=70`;
+}
+
+/**
  * Get the best thumbnail (150px) URL for a page.
  * Prefers pre-rendered thumbnail from R2 CDN.
  */
