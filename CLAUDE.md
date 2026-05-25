@@ -82,7 +82,7 @@ Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies
 
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore` (~17K live books, ~24.5K warehouse), NOT `sourcelibrary_research`
+- Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-05-26: ~46K total docs, ~29K `visible: true` (publicly shown), ~15K with `pages_count > 0` (actually processed), ~14K with any OCR. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking, seeded by `scripts/tmp-write-highlighted-books.mjs`); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite-preview` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.

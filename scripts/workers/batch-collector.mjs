@@ -600,13 +600,16 @@ async function processOneJob(db, job) {
       }
     );
 
-    // Log to Supabase gemini_usage (non-blocking)
+    // Log to Supabase gemini_usage (non-blocking).
+    // page_count: prefer the batch's own page_count (always populated on batch_jobs).
+    // successCount tracks DB matchedCount which is 0 for re-collected batches.
     logUsageAsync({
       type: job.type || 'ocr',
       mode: 'batch',
       model: job.model,
       book_id: job.book_id,
-      page_count: successCount,
+      page_ids: job.page_ids,
+      page_count: job.page_count || job.page_ids?.length || successCount,
       input_tokens: totalInputTokens,
       output_tokens: totalOutputTokens,
       cost_usd: costUsd,
