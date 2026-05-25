@@ -93,9 +93,25 @@ function extractTitleKeywords(title) {
     .filter(w => w.length > 2);
 }
 
+// Strip parenthetical fragments (volume markers, editorial notes), volume
+// markers, and collapse punctuation so library search APIs treat the title as
+// a clean phrase. OL in particular returns zero hits when the title contains
+// "(Vol. 1)" or trailing punctuation.
+function cleanTitleForSearch(title) {
+  if (!title) return '';
+  return title
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/\b(vol(ume)?|tom(us|e)|tomus|book|part|pt|bk)\.?\s*[ivxlcdm\d]+\b/gi, ' ')
+    .replace(/[:;.,/]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 async function searchOpenLibrary(title, author) {
   const params = new URLSearchParams();
-  if (title) params.set('title', title);
+  const cleanTitle = cleanTitleForSearch(title);
+  if (cleanTitle) params.set('title', cleanTitle);
   if (author) params.set('author', author);
   params.set('language', 'eng');
   params.set('limit', '5');
@@ -103,7 +119,10 @@ async function searchOpenLibrary(title, author) {
   const url = `https://openlibrary.org/search.json?${params}`;
   try {
     const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!resp.ok) return [];
+    if (!resp.ok) {
+      if (resp.status === 429) console.warn(`  [OL] rate-limited`);
+      return [];
+    }
     const data = await resp.json();
     return (data.docs || []).slice(0, 5).map(doc => ({
       source: 'open_library',
@@ -122,11 +141,17 @@ async function searchOpenLibrary(title, author) {
 }
 
 async function searchGoogleBooks(title, author) {
-  const q = [title, author].filter(Boolean).join(' ');
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&langRestrict=en&maxResults=5`;
+  const q = [cleanTitleForSearch(title), author].filter(Boolean).join(' ');
+  const apiKey = env.GOOGLE_BOOKS_API_KEY || env.GOOGLE_API_KEY || '';
+  const keyParam = apiKey ? `&key=${encodeURIComponent(apiKey)}` : '';
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&langRestrict=en&maxResults=5${keyParam}`;
   try {
     const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!resp.ok) return [];
+    if (!resp.ok) {
+      if (resp.status === 429) console.warn(`  [GB] rate-limited (${apiKey ? 'with' : 'no'} API key)`);
+      else if (resp.status === 403) console.warn(`  [GB] forbidden (status 403)`);
+      return [];
+    }
     const data = await resp.json();
     return (data.items || []).slice(0, 5).map(item => {
       const info = item.volumeInfo || {};
@@ -151,11 +176,13 @@ async function searchInternetArchive(title, author) {
   const authorSurname = extractSurname(author);
   const titleKw = extractTitleKeywords(title).slice(0, 3).join(' ');
 
-  // IA advanced search — search by creator + language:English
+  // IA advanced search — no language filter at the catalog layer. Bilingual
+  // critical editions (e.g. "Latin text and English translation") are tagged
+  // `language: ["eng","lat"]` and `language:(English)` excludes them. The LLM
+  // synthesis prompt already filters language semantically.
   const query = [
     authorSurname ? `creator:(${authorSurname})` : '',
     titleKw ? `title:(${titleKw})` : '',
-    'language:(English)',
   ].filter(Boolean).join(' AND ');
 
   const params = new URLSearchParams({
@@ -168,7 +195,10 @@ async function searchInternetArchive(title, author) {
   const url = `https://archive.org/advancedsearch.php?${params}`;
   try {
     const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!resp.ok) return [];
+    if (!resp.ok) {
+      if (resp.status === 429) console.warn(`  [IA] rate-limited`);
+      return [];
+    }
     const data = await resp.json();
     return (data.response?.docs || []).slice(0, 5).map(doc => ({
       source: 'internet_archive',
