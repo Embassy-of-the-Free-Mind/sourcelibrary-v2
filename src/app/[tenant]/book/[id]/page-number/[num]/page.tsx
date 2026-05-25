@@ -1,4 +1,4 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
 
@@ -35,5 +35,5 @@ export default async function PageNumberRedirect({ params }: Props) {
   }
 
   const pageId = page.id || page._id?.toString();
-  redirect(`/book/${bookSlug}/page/${pageId}`);
+  permanentRedirect(`/book/${bookSlug}/page/${pageId}`);
 }

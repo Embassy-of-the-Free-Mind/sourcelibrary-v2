@@ -205,6 +205,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      // robots.txt points to /sitemap.xml. Next.js 16's generateSitemaps()
+      // serves chunks at /sitemap/{id}.xml but doesn't auto-create the index
+      // at /sitemap.xml. We can't put a route at app/sitemap.xml/route.ts
+      // because that directory name collides with Next's internal
+      // /sitemap/[__metadata_id__] route and breaks the build, so the
+      // index lives at /sitemap-index and we rewrite from /sitemap.xml.
+      { source: '/sitemap.xml', destination: '/sitemap-index' },
+    ];
+  },
   async redirects() {
     return [
       {
