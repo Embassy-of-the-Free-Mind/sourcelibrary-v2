@@ -1,0 +1,37 @@
+{
+  "purpose": "Token flow data for Claude Code (Anthropic Opus) — shows how 280K turns produce 45B prompt-side tokens, and how cache mechanics transform that into modest energy use.",
+  "last_updated": "2026-05-24",
+  "source": "Sampling of ~/.claude/projects/-Users-dereklomas-sourcelibrary/ JSONL session logs (11.9% by bytes, extrapolated)",
+  "totals": {
+    "turns_estimate": 280000,
+    "output_tokens": 138702028,
+    "cache_read_tokens": 43515829041,
+    "cache_create_tokens": 1602566493,
+    "fresh_input_tokens": 10540005
+  },
+  "per_token_J": {
+    "output": 5.93,
+    "fresh_input": 0.079,
+    "cache_create": 0.079,
+    "cache_read": 0.008,
+    "_note": "From the v4 bottom-up model. Real values likely 2-3× higher per production-overhead corrections."
+  },
+  "energy_contributions_kWh": {
+    "output": 228.6,
+    "fresh_input": 0.23,
+    "cache_create": 35.2,
+    "cache_read": 96.7
+  },
+  "co2_contributions_kg": {
+    "output": 57.2,
+    "fresh_input": 0.06,
+    "cache_create": 8.8,
+    "cache_read": 24.2
+  },
+  "notes": [
+    "Output tokens are 0.3% of the token count but ~60% of the energy.",
+    "Cache reads are 96% of the token count but only ~25% of the energy.",
+    "Cache reads cost ~10% of fresh input per token because the KV cache skips most of the compute (no MLP forward pass).",
+    "If we had no caching and every token were 'fresh', the same dev work would consume roughly 30-50× more energy."
+  ]
+}

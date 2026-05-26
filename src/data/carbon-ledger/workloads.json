@@ -1,0 +1,94 @@
+{
+  "purpose": "Breakdown of the 8M Gemini API calls and ~$19.6K spend by workload type (OCR, translation, etc). Source: gemini_usage_daily aggregation.",
+  "last_updated": "2026-05-26",
+  "window": "2026-01-02 to 2026-05-25 (144 tracked days)",
+  "totals": {
+    "calls": 8032886,
+    "input_tokens": 23644100054,
+    "output_tokens": 6921374368,
+    "pages_processed": 22599950,
+    "cost_usd": 19588.33
+  },
+  "workloads": [
+    {
+      "type": "translation",
+      "label": "Translation",
+      "calls": 1463927,
+      "pages": 2678516,
+      "input_tokens": 4359775460,
+      "output_tokens": 2258031419,
+      "cost_usd": 6569.32,
+      "description": "Long-form passage translation. Source language → English. Page-credit accounting backfilled May 2026 (PR #2006); now 1.83 pages/call avg."
+    },
+    {
+      "type": "ocr",
+      "label": "OCR",
+      "calls": 2514210,
+      "pages": 7368708,
+      "input_tokens": 8277885523,
+      "output_tokens": 3612130881,
+      "cost_usd": 6079.70,
+      "description": "Image-to-text transcription. Multimodal: image input, structured text output. Some pages get multiple OCR passes (drift-fallback, quality retries)."
+    },
+    {
+      "type": "extract_images",
+      "label": "Image extraction",
+      "calls": 3176498,
+      "pages": 3176475,
+      "input_tokens": 5603213850,
+      "output_tokens": 183613139,
+      "cost_usd": 3338.41,
+      "description": "Detecting illustrations, plates, diagrams in scanned pages and extracting bounding boxes + captions."
+    },
+    {
+      "type": "index",
+      "label": "Index",
+      "calls": 338685,
+      "pages": 5039470,
+      "input_tokens": 3916432254,
+      "output_tokens": 335887525,
+      "cost_usd": 2181.25,
+      "description": "Extracting concepts, names, topics for book indexes. Operates over whole books."
+    },
+    {
+      "type": "translate",
+      "label": "Per-page translate",
+      "calls": 249691,
+      "pages": 379194,
+      "input_tokens": 489655586,
+      "output_tokens": 239083575,
+      "cost_usd": 914.39,
+      "description": "Single-page translation, lighter context than long-form. Mostly used for shorter pieces and incremental work."
+    },
+    {
+      "type": "transliterate",
+      "label": "Transliteration",
+      "calls": 204209,
+      "pages": 204209,
+      "input_tokens": 330630727,
+      "output_tokens": 234876812,
+      "cost_usd": 156.72,
+      "description": "Script-to-script conversion (e.g., Hebrew → Latin transliteration, Greek → Latin transliteration)."
+    },
+    {
+      "type": "extract_chapters",
+      "label": "Chapters",
+      "calls": 12873,
+      "pages": 3374720,
+      "input_tokens": 170604203,
+      "output_tokens": 16028954,
+      "cost_usd": 122.72,
+      "description": "Detecting chapter boundaries across long books."
+    },
+    {
+      "type": "other",
+      "label": "Other",
+      "calls": 72843,
+      "pages": 378658,
+      "input_tokens": 461930023,
+      "output_tokens": 35726833,
+      "cost_usd": 225.78,
+      "description": "ft_verification, summary, image_extraction, metadata_enrichment, quality-scoring, summarize, collection-assignment, entity_enrichment."
+    }
+  ]
+}

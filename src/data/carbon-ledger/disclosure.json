@@ -1,0 +1,121 @@
+{
+  "purpose": "Scoreboard of what major AI providers have publicly disclosed about the environmental impact of their models. Updated 2026-05-24.",
+  "last_updated": "2026-05-24",
+  "criteria": [
+    {
+      "id": "per_query_energy",
+      "label": "Per-query energy",
+      "description": "Wh per typical prompt, with methodology"
+    },
+    {
+      "id": "per_token_energy",
+      "label": "Per-token energy",
+      "description": "J/tok at production batch sizes"
+    },
+    {
+      "id": "training_emissions",
+      "label": "Training emissions",
+      "description": "Total kg CO₂e for the most recent flagship model's training run"
+    },
+    {
+      "id": "scope_123",
+      "label": "Scope 1/2/3 corporate emissions",
+      "description": "Annual GHG inventory following GHG Protocol"
+    },
+    {
+      "id": "lifecycle_lca",
+      "label": "Full lifecycle LCA",
+      "description": "Cradle-to-grave incl. hardware embodied + decommission"
+    },
+    {
+      "id": "grid_intensity",
+      "label": "Grid intensity by region",
+      "description": "Effective g CO₂e/kWh of the regions actually serving inference"
+    }
+  ],
+  "providers": [
+    {
+      "id": "google",
+      "name": "Google / DeepMind",
+      "products": "Gemini",
+      "status": {
+        "per_query_energy": { "score": "yes", "note": "0.24 Wh / median Gemini Apps prompt", "source": "Elsworth et al. 2025", "url": "https://services.google.com/fh/files/misc/measuring_the_environmental_impact_of_delivering_ai_at_google_scale.pdf" },
+        "per_token_energy": { "score": "partial", "note": "Derivable from per-query but not separately published" },
+        "training_emissions": { "score": "no", "note": "Not disclosed for Gemini 3" },
+        "scope_123": { "score": "yes", "note": "Annual environmental report covers Alphabet-wide", "url": "https://sustainability.google/reports/" },
+        "lifecycle_lca": { "score": "partial", "note": "Schneider et al. 2025 covers hardware lifecycle", "url": "https://arxiv.org/abs/2502.01671" },
+        "grid_intensity": { "score": "yes", "note": "Market-based 94 g/kWh (2024)", "source": "Google environmental report 2025" }
+      }
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "products": "Mistral Large 2, Le Chat",
+      "status": {
+        "per_query_energy": { "score": "yes", "note": "Derivable from LCA: ~14 Wh per 400-token response" },
+        "per_token_energy": { "score": "yes", "note": "2.85 mg CO₂e per token (full LCA, training included)", "url": "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai" },
+        "training_emissions": { "score": "partial", "note": "Bundled with inference in 20.4 ktCO₂e total for Large 2 lifetime" },
+        "scope_123": { "score": "no", "note": "Not as a standalone company report" },
+        "lifecycle_lca": { "score": "yes", "note": "Peer-reviewed cradle-to-grave LCA with ADEME + Carbone 4", "url": "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai" },
+        "grid_intensity": { "score": "partial", "note": "French grid stated (~80 g/kWh); regional inference mix not detailed" }
+      }
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "products": "Claude Opus, Sonnet, Haiku",
+      "status": {
+        "per_query_energy": { "score": "no", "note": "Not disclosed" },
+        "per_token_energy": { "score": "no", "note": "Not disclosed" },
+        "training_emissions": { "score": "no", "note": "Not disclosed for any Claude model" },
+        "scope_123": { "score": "no", "note": "Required to start reporting in 2026 under CA SB 253" },
+        "lifecycle_lca": { "score": "no", "note": "Not disclosed" },
+        "grid_intensity": { "score": "no", "note": "Trainium2 / Project Rainier locations known; per-region intensity not published" }
+      }
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "products": "GPT-5.x, ChatGPT, etc.",
+      "status": {
+        "per_query_energy": { "score": "partial", "note": "Sam Altman blog post: 0.34 Wh / ChatGPT query; no methodology", "url": "https://blog.samaltman.com/the-gentle-singularity" },
+        "per_token_energy": { "score": "no", "note": "Not disclosed" },
+        "training_emissions": { "score": "no", "note": "Not disclosed for any GPT model" },
+        "scope_123": { "score": "no", "note": "Will be required under CA SB 253 starting 2026" },
+        "lifecycle_lca": { "score": "no", "note": "Not disclosed" },
+        "grid_intensity": { "score": "no", "note": "Azure regions known; per-region intensity not published" }
+      }
+    },
+    {
+      "id": "meta",
+      "name": "Meta",
+      "products": "Llama 3/4",
+      "status": {
+        "per_query_energy": { "score": "no", "note": "Not disclosed for hosted Meta AI" },
+        "per_token_energy": { "score": "partial", "note": "Llama family is open-weights — anyone can measure (e.g. MLPerf, TokenPowerBench)" },
+        "training_emissions": { "score": "partial", "note": "Llama 3 paper disclosed training compute hours and emissions for some configs", "url": "https://arxiv.org/abs/2407.21783" },
+        "scope_123": { "score": "yes", "note": "Annual Meta sustainability report covers parent company" },
+        "lifecycle_lca": { "score": "no", "note": "Not published per-model" },
+        "grid_intensity": { "score": "partial", "note": "Reports company-wide; not per-region for inference" }
+      }
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "products": "Grok",
+      "status": {
+        "per_query_energy": { "score": "no", "note": "Not disclosed" },
+        "per_token_energy": { "score": "no", "note": "Not disclosed" },
+        "training_emissions": { "score": "no", "note": "Not disclosed" },
+        "scope_123": { "score": "no", "note": "Not disclosed; Memphis facility on natural gas raised concerns" },
+        "lifecycle_lca": { "score": "no", "note": "Not disclosed" },
+        "grid_intensity": { "score": "no", "note": "Not disclosed; Memphis cluster runs partly off-grid natural gas turbines" }
+      }
+    }
+  ],
+  "score_levels": {
+    "yes": { "label": "Disclosed", "color": "emerald" },
+    "partial": { "label": "Partial", "color": "amber" },
+    "no": { "label": "Not disclosed", "color": "stone" }
+  }
+}

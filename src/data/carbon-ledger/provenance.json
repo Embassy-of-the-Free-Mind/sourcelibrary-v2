@@ -1,0 +1,127 @@
+{
+  "purpose": "Master catalog of every data source used by the blog post. Every interactive must reference at least one entry here. Every claim in the prose must reference at least one entry here (inline as [n]).",
+  "last_updated": "2026-05-24",
+  "footnotes": [
+    {
+      "id": 1,
+      "type": "measured",
+      "claim": "8.0 million Gemini API calls, 30.6 billion tokens, $19,588 spend, 22.6 million page-credits processed",
+      "source": "gemini_usage_daily MongoDB collection, aggregated 2026-01-02 to 2026-05-23. page_count backfilled 2026-05-25 for ~748K legacy records (PR #2006 + #2009) that were missing the field due to pre-April 2026 direct-Mongo writers; translation page-credits ratio went from 0.45 to 1.83 pages/call after the fix. Token and cost totals were unaffected by the bug — only the per-call page-count attribution.",
+      "reproducible_via": "scripts/gemini-usage-aggregate.mjs",
+      "confidence": "Recorded per-call by application middleware. ±5% (any logging gaps). Token + cost totals are high-confidence; page-credit attribution by workload type was repaired in May 2026."
+    },
+    {
+      "id": 2,
+      "type": "measured",
+      "claim": "Claude Code: 139M output tokens, 43.5B cache-read tokens, 1.6B cache-create tokens",
+      "source": "~/.claude/projects/-Users-dereklomas-sourcelibrary/ session JSONL files; 11.9% byte-sample extrapolated to full corpus",
+      "reproducible_via": "scripts/sample_tokens.py",
+      "confidence": "±20% (sampling). Full-corpus scan attempted; IO-bound on disk."
+    },
+    {
+      "id": 3,
+      "type": "cited",
+      "claim": "Median Gemini Apps prompt: 0.24 Wh energy, 0.03 g CO2e",
+      "source": "Elsworth et al. (Aug 2025), 'Measuring the environmental impact of delivering AI at Google scale'",
+      "url": "https://services.google.com/fh/files/misc/measuring_the_environmental_impact_of_delivering_ai_at_google_scale.pdf",
+      "verification": "Primary production-fleet measurement from Google. Comprehensive Approach boundary. Training excluded.",
+      "key_quote": "We find the median Gemini Apps text prompt in May 2025 is 0.24 Wh, ... emits 0.03 gCO2e"
+    },
+    {
+      "id": 4,
+      "type": "cited",
+      "claim": "Mistral Large 2: 1.14 g CO2e per 400-token response (2.85 mg/token full LCA)",
+      "source": "Mistral AI (Jul 2025), 'Our contribution to a global environmental standard for AI'",
+      "url": "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai",
+      "verification": "Peer-reviewed LCA conducted with ADEME (French Environment Agency) + Carbone 4 consultancy. Cradle-to-grave including training."
+    },
+    {
+      "id": 5,
+      "type": "cited",
+      "claim": "Llama 3.1-70B on 8×H200 = 31,391 tok/s offline = 0.18 J/output-tok",
+      "source": "MLPerf Inference v5.1 results (Sep 2025)",
+      "url": "https://mlcommons.org/2025/09/mlperf-inference-v5-1-results/",
+      "verification": "Industry-standard benchmark; multiple vendors submit. Used to calibrate our bottom-up model (MLPerf correction factor 1.56×)."
+    },
+    {
+      "id": 6,
+      "type": "cited",
+      "claim": "Decode is memory-bandwidth-bound; prefill is compute-bound",
+      "source": "Roofline analysis of transformer inference; arXiv 2507.14397 'Efficient LLM Inference'",
+      "url": "https://towardsdatascience.com/prefill-is-compute-bound-decode-is-memory-bound-why-your-gpu-shouldnt-do-both/",
+      "verification": "Established result in production LLM serving. Confirmed by TokenPowerBench Dec 2025 (arXiv 2512.03024)."
+    },
+    {
+      "id": 7,
+      "type": "cited",
+      "claim": "Cache hits use ~90% less energy than full inference",
+      "source": "Li et al. (2024), 'A Survey on Large Language Model Acceleration based on KV Cache Management'",
+      "url": "https://arxiv.org/abs/2412.19442",
+      "verification": "KV cache hits skip MLP layers entirely; only attention against cached KV remains."
+    },
+    {
+      "id": 8,
+      "type": "cited",
+      "claim": "Claude Opus runs on AWS Trainium2 (Project Rainier, ~500K chips)",
+      "source": "Data Center Dynamics (Oct 2025), 'AWS activates Project Rainier cluster'",
+      "url": "https://www.datacenterdynamics.com/en/news/aws-activates-project-rainier-cluster-of-nearly-500000-trainium2-chips/",
+      "verification": "Multi-source confirmed: also covered by Anthropic, AWS, TheNewStack."
+    },
+    {
+      "id": 9,
+      "type": "cited",
+      "claim": "Anthropic has not disclosed Scope 1, 2, or 3 emissions",
+      "source": "Stanford CRFM Foundation Model Transparency Index (Dec 2025)",
+      "url": "https://crfm.stanford.edu/fmti/December-2025/company-reports/Anthropic_FinalReport_FMTI2025.html",
+      "verification": "Will be required under California SB 253 starting 2026 for companies >$1B revenue."
+    },
+    {
+      "id": 10,
+      "type": "computed",
+      "claim": "Geometric mean of six estimation methods: ~1,800 kg CO2e total",
+      "source": "Computation across all six methods (see lines 1-6 in /methodology)",
+      "reproducible_via": "scripts/co2-estimation-lines.py",
+      "confidence": "Single-number summary of multiple methods that disagree by ~50×. Use as headline, but always pair with the range."
+    },
+    {
+      "id": 11,
+      "type": "cited",
+      "claim": "Beef: 60 kg CO2e per kg (global LCA median)",
+      "source": "Poore & Nemecek (2018), Science",
+      "url": "https://www.science.org/doi/10.1126/science.aaq0216",
+      "verification": "LCA across 38,700 farms globally. Most-cited beef footprint reference."
+    },
+    {
+      "id": 12,
+      "type": "cited",
+      "claim": "EU passenger car fleet average: ~180 g CO2/km well-to-wheel",
+      "source": "European Environment Agency, CO2 performance of new passenger cars (2024)",
+      "url": "https://www.eea.europa.eu/en/analysis/indicators/co2-performance-of-new-passenger",
+      "verification": "Official EU statistics. New car average lower (108 g/km WLTP); fleet in-use average ~180 g/km."
+    },
+    {
+      "id": 13,
+      "type": "cited",
+      "claim": "AMS-LHR economy RT: ~245 kg CO2e with radiative forcing factor",
+      "source": "atmosfair flight calculator + DEFRA 2024 conversion factors",
+      "url": "https://www.atmosfair.de/en/offset/flight/",
+      "verification": "Two independent calculators agree to within 10%. Without RFI (ICAO methodology) the number is ~125 kg RT."
+    },
+    {
+      "id": 14,
+      "type": "cited",
+      "claim": "AMS-NYC economy RT: ~2,950 kg CO2e with radiative forcing factor",
+      "source": "atmosfair flight calculator + DEFRA 2024 long-haul factor (0.149 kg/passenger-km)",
+      "url": "https://www.atmosfair.de/en/offset/flight/",
+      "verification": "DEFRA computation: 5,860 km × 2 × 0.149 × 1.9 RFI = 3,320 kg. atmosfair gives 2,950. Range 1,700-3,500 covers both methodologies."
+    },
+    {
+      "id": 15,
+      "type": "cited",
+      "claim": "Dutch per-capita emissions: ~8.4 t CO2e/year",
+      "source": "CBS (Centraal Bureau voor de Statistiek), 2024",
+      "url": "https://www.cbs.nl/en-gb/figures/detail/85217ENG",
+      "verification": "Official statistics including imports."
+    }
+  ]
+}

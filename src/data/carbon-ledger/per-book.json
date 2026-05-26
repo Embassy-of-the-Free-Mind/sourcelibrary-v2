@@ -1,0 +1,122 @@
+{
+  "purpose": "Per-book CO2 estimates across model tiers + serving modes. Computed by scripts/co2-per-book-comparison.py in the sourcelibrary repo.",
+  "last_updated": "2026-05-24",
+  "book_token_budget": {
+    "input_tokens": 1677582,
+    "output_tokens": 496773,
+    "avg_pages_per_book": 298,
+    "source": "Average across books with index/summary generated in tracking window (2026-01-02 to 2026-05-23). Computed as total Gemini tokens / books with summary or index generated in window.",
+    "denominator_note": "Per-book numbers in this file use a 13,145-book denominator captured 2026-05-24. As of 2026-05-26 the same query returns 14,295 (the window kept accumulating new books). Per-book CO₂ figures derived from this file are ~8% high relative to the current denominator; will be re-derived on next pipeline data refresh."
+  },
+  "models": [
+    {
+      "id": "flash-lite",
+      "name": "Gemini 3.1 Flash-Lite",
+      "active_params_estimate": "4-8B (MoE, ~4B central)",
+      "params_source": "Google undisclosed; estimate from pricing ratio vs Flash and pricing/compute heuristic",
+      "hardware": "Google TPU Trillium",
+      "api_price_per_mtok": { "input": 0.10, "output": 0.40 },
+      "used_for_in_source_library": "Latin-script European languages (French, German, Italian, Dutch, Polish, etc.) per src/lib/types/ai-models.ts",
+      "modes": {
+        "real_time": {
+          "co2_g_per_book_bottomup": 1.3,
+          "co2_g_per_book_lca_scaled": 202,
+          "books_per_burger_bu": 4573
+        },
+        "batch_api": {
+          "co2_g_per_book_bottomup": 0.86,
+          "co2_g_per_book_lca_scaled": 101,
+          "books_per_burger_bu": 6997
+        }
+      }
+    },
+    {
+      "id": "flash",
+      "name": "Gemini 3.x Flash",
+      "active_params_estimate": "5-30B (MoE, ~15B central)",
+      "params_source": "Google undisclosed; 3rd-party MoE analysis (bdtechtalks)",
+      "hardware": "Google TPU Trillium",
+      "api_price_per_mtok": { "input": 0.30, "output": 2.50 },
+      "used_for_in_source_library": "BPH manuscripts + non-Latin scripts (Hebrew, Arabic, Tibetan, Greek, CJK, Cyrillic). Higher-quality OCR path.",
+      "modes": {
+        "real_time": {
+          "co2_g_per_book_bottomup": 6.1,
+          "co2_g_per_book_lca_scaled": 756,
+          "books_per_burger_bu": 991
+        },
+        "batch_api": {
+          "co2_g_per_book_bottomup": 3.5,
+          "co2_g_per_book_lca_scaled": 378,
+          "books_per_burger_bu": 1714
+        }
+      }
+    },
+    {
+      "id": "pro",
+      "name": "Gemini 3.1 Pro",
+      "active_params_estimate": "~80B (dense per Google docs)",
+      "params_source": "Google publishes 'dense' architecture; exact size undisclosed. Pricing implies ~5× Flash compute. ±50% uncertainty.",
+      "hardware": "Google TPU Trillium",
+      "api_price_per_mtok": { "input": 1.25, "output": 10.0 },
+      "used_for_in_source_library": "Not used. Listed for comparison.",
+      "modes": {
+        "real_time": {
+          "co2_g_per_book_bottomup": 50.5,
+          "co2_g_per_book_lca_scaled": 4030,
+          "books_per_burger_bu": 119
+        },
+        "batch_api": {
+          "co2_g_per_book_bottomup": 23.2,
+          "co2_g_per_book_lca_scaled": 2020,
+          "books_per_burger_bu": 259
+        }
+      }
+    },
+    {
+      "id": "opus",
+      "name": "Claude Opus 4.7",
+      "active_params_estimate": "~110B (FP8 active)",
+      "params_source": "Anthropic undisclosed; reverse-engineering from FP8 inference benchmarks (unexcitedneurons.substack.com, third-party) gives 93-154B range. ±30% uncertainty.",
+      "hardware": "AWS Trainium2 (Project Rainier cluster)",
+      "api_price_per_mtok": { "input": 15.0, "output": 75.0 },
+      "used_for_in_source_library": "Not used for pipeline. Used by Derek via Claude Code for development work (~280K turns over 5.5 months). Listed for comparison.",
+      "modes": {
+        "real_time": {
+          "co2_g_per_book_bottomup": 207,
+          "co2_g_per_book_lca_scaled": 5540,
+          "books_per_burger_bu": 29
+        },
+        "batch_api": {
+          "co2_g_per_book_bottomup": 64.5,
+          "co2_g_per_book_lca_scaled": 2770,
+          "books_per_burger_bu": 93
+        }
+      }
+    }
+  ],
+  "uncertainty_notes": [
+    "Bottom-up (BU) values are theoretical floors. They assume optimal batching, peak utilization, and apply MLPerf + stack overhead correction factors. Cross-checked against MLPerf v5.1 within ~36%.",
+    "LCA-scaled values are theoretical ceilings. They scale Mistral Large 2's published 2.85 mg CO2/token (full cradle-to-grave LCA) by active param ratio.",
+    "Truth is somewhere between. Production overhead beyond MLPerf benchmark conditions adds 2-5× to bottom-up; training/embodied amortization in actual deployment is less than Mistral's single-model LCA implies.",
+    "All Pro and Opus numbers depend on undisclosed active parameter counts. ±50% on params translates to ±50% on per-token energy."
+  ],
+  "computed_by": "scripts/co2-per-book-comparison.py",
+  "primary_sources": [
+    {
+      "name": "Google AI environmental impact paper",
+      "url": "https://services.google.com/fh/files/misc/measuring_the_environmental_impact_of_delivering_ai_at_google_scale.pdf"
+    },
+    {
+      "name": "Mistral Large 2 LCA",
+      "url": "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai"
+    },
+    {
+      "name": "MLPerf Inference v5.1",
+      "url": "https://mlcommons.org/2025/09/mlperf-inference-v5-1-results/"
+    },
+    {
+      "name": "Source Library pipeline routing logic",
+      "url": "https://github.com/sourcelibrary/sourcelibrary/blob/main/src/lib/types/ai-models.ts"
+    }
+  ]
+}

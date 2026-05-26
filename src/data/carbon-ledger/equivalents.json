@@ -1,0 +1,134 @@
+{
+  "purpose": "Conversion factors for translating kg CO2e into human-scale equivalents. Every factor is sourced; provenance is in this file so that the blog post never displays an equivalent without being able to link to its origin.",
+  "last_updated": "2026-05-24",
+  "equivalents": [
+    {
+      "id": "burger",
+      "name": "Quarter-pound beef burger",
+      "short_name": "burger",
+      "kg_co2e_per_unit": 6.0,
+      "concrete_reference": "Equivalent to a McDonald's Quarter Pounder with Cheese or a Burger King Whopper Jr. (by beef mass)",
+      "unit_description": "One quarter-pound burger — 113 g cooked patty (from ~150 g raw beef), with bun, cheese, condiments",
+      "range_low": 3.0,
+      "range_high": 8.0,
+      "range_reason": "LCA estimates vary by ~3× depending on cattle system (feedlot vs pasture), region, and what's included (bun, cheese, transport). 6 kg is the midpoint of commonly cited values.",
+      "primary_source": {
+        "title": "Reducing food's environmental impacts through producers and consumers",
+        "authors": "Poore, J. & Nemecek, T.",
+        "year": 2018,
+        "publication": "Science 360 (6392): 987-992",
+        "url": "https://www.science.org/doi/10.1126/science.aaq0216",
+        "key_finding": "Median 60 kg CO2e per kg beef (global LCA across 38,700 farms)"
+      },
+      "additional_sources": [
+        {
+          "title": "Climate change food calculator",
+          "publication": "BBC",
+          "url": "https://www.bbc.co.uk/news/science-environment-46459714",
+          "key_finding": "1 beef burger (~150g cooked from 250g raw) = ~3.0 kg CO2e"
+        },
+        {
+          "title": "Environmental Impacts of Food Production",
+          "publication": "Our World in Data",
+          "url": "https://ourworldindata.org/environmental-impacts-of-food",
+          "key_finding": "Cites Poore & Nemecek; provides per-100g and per-burger conversions"
+        }
+      ],
+      "methodology_notes": "Source Library uses 6 kg CO2e per burger as the central. This captures the raw beef LCA (15 kg/kg × 0.25 kg = 3.75 kg) plus bun, cheese, cooking, and waste. The 3-8 kg range covers nearly all defensible LCA results.",
+      "icon": "🍔"
+    },
+    {
+      "id": "petrol_car_km",
+      "name": "Average European petrol car, per km",
+      "short_name": "km driving",
+      "kg_co2e_per_unit": 0.180,
+      "concrete_reference": "EU passenger-car fleet average in 2024 — roughly a mid-size petrol hatchback like a VW Golf, Renault Clio, or Toyota Corolla (real-world fuel use, well-to-wheel emissions including fuel production). An EV on the average European grid would be ~60-100 g/km.",
+      "unit_description": "One kilometre driven by an average petrol passenger car in the EU fleet (well-to-wheel)",
+      "range_low": 0.140,
+      "range_high": 0.220,
+      "range_reason": "New cars hit ~110 g CO2/km tank-to-wheel (WLTP); fleet average for in-use cars is ~165-200 g CO2/km well-to-wheel including fuel production. 180 g/km is the central figure for EU fleet average in 2024.",
+      "primary_source": {
+        "title": "CO₂ performance of new passenger cars in Europe (2024 reporting cycle)",
+        "publisher": "European Environment Agency",
+        "year": 2024,
+        "url": "https://www.eea.europa.eu/en/analysis/indicators/co2-performance-of-new-passenger",
+        "key_finding": "New EU cars average 108 g CO2/km (WLTP, manufacturer-declared). Real-world tank-to-wheel ~125 g/km. Well-to-wheel including fuel ~165-200 g/km depending on fuel mix."
+      },
+      "additional_sources": [
+        {
+          "title": "Average CO2 emissions per km from new passenger cars",
+          "publisher": "European Environment Agency dashboard",
+          "url": "https://www.eea.europa.eu/en/datahub"
+        }
+      ],
+      "methodology_notes": "180 g CO2/km used as central. This is the in-use fleet average for passenger petrol cars in Europe, well-to-wheel. EVs would be much lower (60-120 g/km depending on grid).",
+      "icon": "🚗"
+    },
+    {
+      "id": "ams_lhr_rt",
+      "name": "AMS ↔ LHR round-trip flight (economy)",
+      "short_name": "RT to London",
+      "kg_co2e_per_unit": 245,
+      "concrete_reference": "One passenger, economy seat, Amsterdam Schiphol to London Heathrow and back. Short-haul flight (~370 km each way), heavily emission-loaded per km due to takeoff/landing energy.",
+      "unit_description": "One passenger, economy class, round-trip Amsterdam Schiphol (AMS) to London Heathrow (LHR), with radiative forcing factor included",
+      "range_low": 130,
+      "range_high": 310,
+      "range_reason": "Short-haul flight emissions are dominated by takeoff/landing. Without radiative forcing factor (RFI) the number is ~130 kg; with RFI ≈ 1.9 (commonly used multiplier for high-altitude effects) it rises to ~245 kg. ICAO's methodology omits RFI; atmosfair and DEFRA include it.",
+      "primary_source": {
+        "title": "atmosfair flight calculator",
+        "publisher": "atmosfair gGmbH",
+        "url": "https://www.atmosfair.de/en/offset/flight/",
+        "key_finding": "AMS → LHR economy one-way ≈ 123 kg CO2e (RFI included). RT ≈ 245 kg."
+      },
+      "additional_sources": [
+        {
+          "title": "UK government GHG conversion factors 2024",
+          "publisher": "DEFRA",
+          "year": 2024,
+          "key_finding": "Short-haul economy class: 0.158 kg CO2e per passenger-km (with RFI). AMS-LHR ~370 km × 2 × 0.158 ≈ 117 kg RT without RFI; 245 kg with."
+        },
+        {
+          "title": "ICAO Carbon Emissions Calculator",
+          "url": "https://applications.icao.int/icec",
+          "key_finding": "Excludes RFI. AMS-LHR RT ≈ 110-130 kg CO2e."
+        }
+      ],
+      "methodology_notes": "Central 245 kg uses atmosfair (with RFI ≈ 1.9). Range 130-310 covers ICAO low (no RFI) to atmosfair high (premium economy / business adjustments).",
+      "icon": "✈️"
+    },
+    {
+      "id": "ams_nyc_rt",
+      "name": "AMS ↔ NYC round-trip flight (economy)",
+      "short_name": "RT to NYC",
+      "kg_co2e_per_unit": 2950,
+      "concrete_reference": "One passenger, economy seat, Amsterdam to New York JFK and back. Long-haul (~5,860 km each way), more efficient per km than short-haul but the distance dominates.",
+      "unit_description": "One passenger, economy class, round-trip Amsterdam (AMS) to New York JFK, with radiative forcing factor included",
+      "range_low": 1700,
+      "range_high": 3500,
+      "range_reason": "Long-haul flights are more efficient per km than short-haul, but the distance is much larger. ~5,860 km one-way × 2 × 0.149 kg/passenger-km (long-haul economy DEFRA) × ~1.9 RFI ≈ 3,320 kg. Without RFI ~1,750 kg.",
+      "primary_source": {
+        "title": "atmosfair flight calculator",
+        "publisher": "atmosfair gGmbH",
+        "url": "https://www.atmosfair.de/en/offset/flight/",
+        "key_finding": "AMS → JFK economy one-way ≈ 1,475 kg CO2e (RFI included). RT ≈ 2,950 kg."
+      },
+      "additional_sources": [
+        {
+          "title": "UK government GHG conversion factors 2024",
+          "publisher": "DEFRA",
+          "year": 2024,
+          "key_finding": "Long-haul economy: 0.149 kg CO2e per passenger-km (with RFI). AMS-JFK ~5,860 km × 2 × 0.149 ≈ 1,746 kg RT without RFI; ~3,320 kg with."
+        }
+      ],
+      "methodology_notes": "Central 2,950 kg uses atmosfair (with RFI ≈ 1.9). Business/first class would be 2-3× higher.",
+      "icon": "✈️"
+    }
+  ],
+  "global_methodology_notes": [
+    "All flight numbers include Radiative Forcing Index (RFI) at ≈1.9× the direct CO2 emissions. RFI captures non-CO2 climate impacts at altitude (NOx, contrails, water vapor). ICAO's official methodology excludes RFI; atmosfair and DEFRA include it. We use the with-RFI numbers because peer-reviewed climate science supports it, and most public-facing carbon offset calculators use it.",
+    "All numbers are 'per unit' — one burger, one km, one round-trip ticket per passenger.",
+    "Uncertainty ranges given are LCA-defensible bounds. Burgers vary most (factor ~3) due to cattle system differences; flights vary mainly by RFI inclusion (factor ~2).",
+    "We deliberately exclude offsets, carbon credits, or 'net' figures. All emissions are gross."
+  ],
+  "how_to_use": "When displaying a CO2 number X kg in the blog, divide X by each equivalent's kg_co2e_per_unit to get the count. Show the range (X / high_range to X / low_range) where space allows. Always provide an inline citation [n] to this provenance file."
+}
