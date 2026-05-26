@@ -364,7 +364,7 @@ async function getCollectionShowcase() {
 }
 
 // Last refreshed from production 2026-05-26. Only used if Mongo + Supabase are both unreachable.
-const FALLBACK_COUNTS = { totalBooks: 15097, translatedToEnglish: 13924, firstTranslationCount: 6414, authorCount: 5562, languageCount: 170, artworkCount: 5159, illustrationCount: 121292 };
+const FALLBACK_COUNTS = { totalBooks: 13869, translatedToEnglish: 13534, firstTranslationCount: 6911, authorCount: 5523, languageCount: 170, artworkCount: 13743, illustrationCount: 122550 };
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number; illustrationCount: number }> {
   // 1. MongoDB system_config cache (refreshed daily by scripts/maintenance/prewarm-browse.mjs;

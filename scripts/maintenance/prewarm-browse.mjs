@@ -65,7 +65,8 @@ if (process.env.MONGODB_URI) {
       ...translatedFilter,
       $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
     };
-    const artworkFilter = { visible: true, resource_type: { $in: ['drawing', 'fresco', 'object', 'painting', 'print'] } };
+    // Artworks: single-object entries (content_type:'artwork') — see update-homepage-stats.mjs for rationale.
+    const artworkFilter = { visible: true, content_type: 'artwork' };
 
     const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount] = await Promise.all([
       books.countDocuments(filter),
