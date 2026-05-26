@@ -1856,6 +1856,8 @@ SKIP these — do NOT include them:
 - Marbled papers, blank frames, ruled lines
 - Any element that is purely decorative with no intellectual content
 
+If the page contains no significant illustrations, return \`[]\` — an empty array. Do NOT return placeholder objects with missing or null fields. Either fill in every field (description, type, bbox, confidence, gallery_quality, gallery_rationale) for an illustration, or omit it entirely.
+
 For each significant illustration return:
 {
   "description": "Brief factual description",
