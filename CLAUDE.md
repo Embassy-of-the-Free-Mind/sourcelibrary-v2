@@ -89,6 +89,15 @@ Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies
 - OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite-preview` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
+## Quality systems — two distinct scores
+Image extraction emits two separate quality signals in the **same Gemini call**. They answer different questions and get stored in different places — don't conflate them.
+
+- **`gallery_quality`** (per detected illustration, range 0.0–1.0) — *Is this image worth showing in the curated gallery?* Lives on `pages.detected_images[].gallery_quality` (source of truth) and `gallery_images.gallery_quality` (materialized view). Current rubric is 4-tier (0.4–0.6 musical scores / 0.6–0.8 non-figural illustrations / 0.8–0.9 figural / 0.9–1.0 exceptional). The gallery materialization threshold is **0.5** — anything below is filtered out before write. **Rubric drift watch:** the archived prompt at `prompts/image-extraction/image-extraction-v0.md` shows the *old* 6-tier rubric; the live prompt is inline in `scripts/workers/image-extract-worker.mjs`, `scripts/workers/pipeline-orchestrator.mjs`, and `src/lib/image-extraction.ts`. PR #450 (2026-03-27) made the change.
+
+- **`scan_quality`** (per page, range 0–100 score + class enum) — *How cleanly was this page digitized?* Classes include `color_photo`, `bitonal_clean`, `bitonal_microfilm`, `microfiche`, `scanner_metadata`, `blank`, `corrupt`. Lives on `pages.scan_quality` (per page) + `books.scan_quality` (book rollup with `dominant_scan_class`, `median_score`, `has_microfilm_pages`, etc). **Currently only ~0.2% of pages have it** — scan_quality only fires when image extraction fires, and image extraction only fires on illustration-candidate pages. Design rationale + extension plan in `.claude/docs/automated-image-quality-system.md`.
+
+A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine or microfilmed; the same diagram on microfilm has `scan_quality.scan_class: bitonal_microfilm` regardless of how gallery-worthy it is. See `/blog/what-makes-a-good-scan` for the user-facing version.
+
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list

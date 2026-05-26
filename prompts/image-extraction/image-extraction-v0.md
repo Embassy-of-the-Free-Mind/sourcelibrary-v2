@@ -4,8 +4,20 @@ type: pipeline
 version: 0
 source: src/lib/image-extraction.ts
 date: 2026-03-25
+status: ARCHIVED
 description: "Museum curator analyzing page scans — bbox, gallery quality, subjects, symbols, museum descriptions"
 ---
+
+> **⚠ ARCHIVED — not the live prompt.**
+>
+> This is a snapshot from 2026-03-25 and the rubric has drifted from production. The 6-tier `GALLERY QUALITY` rubric below is **out of date**: PR #450 (2026-03-27) replaced it with a 4-tier rubric and added explicit "SKIP decoratives" guidance. PR #2015 (2026-05-25) tightened the response schema to require `bbox`, `description`, `type`, `gallery_quality`, `gallery_rationale` on each item.
+>
+> **For the live prompt and rubric, read:**
+> - `scripts/workers/image-extract-worker.mjs` — `IMAGE_EXTRACTION_PROMPT` constant (Hetzner image-extract worker)
+> - `scripts/workers/pipeline-orchestrator.mjs` — `IMAGE_EXTRACTION_PROMPT` constant (batch path)
+> - `src/lib/image-extraction.ts` — `EXTRACTION_PROMPT` constant (SQS path, with iconclass extension)
+>
+> For the design rationale (gallery_quality vs scan_quality, three-layer architecture), see `.claude/docs/automated-image-quality-system.md`.
 
 You are a museum curator analyzing a historical book page scan. Create rich metadata for each illustration.
 
