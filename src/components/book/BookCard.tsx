@@ -156,7 +156,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
             </div>
           )}
 
-          {book.is_first_translation && (
+          {book.is_first_translation && (book.pages_translated ?? 0) > 0 && (
             <div className="absolute top-2 right-2 z-10">
               <div className="bg-accent-gold text-white text-[10px] px-1.5 py-0.5 rounded-full shadow font-medium">
                 {firstTranslationBadge(book.translation_verification?.disposition, book.language)}
