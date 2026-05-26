@@ -70,6 +70,39 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 
 `node scripts/audit-bph-leaks.mjs` crawls the BPH subdomain, follows internal links to a configurable depth, and exits non-zero if any anchor or one-hop redirect resolves off-subdomain. Run it after touching anything in `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, or any component that builds URLs.
 
+## Source Library is the destination — content URLs & library pages
+Content lives on Source Library. We re-host books from many digital libraries
+(Internet Archive, Gallica, Bodleian, Wellcome, …) and we credit them, but a
+reader who landed on a book here never has to leave to read it. The URL shape
+encodes that:
+
+1. **Books, pages, gallery, collections live at tenant-agnostic URLs.**
+   `/book/<slug>`, `/book/<slug>/page/<n>`, `/gallery`, `/gallery/image/<id>`,
+   `/collections/<slug>`. Never `/internet-archive/book/foo`,
+   `/gallica/gallery`, or any other `/<provider-slug>/*` prefix for content.
+   This was patched in two waves: PR #1918 dropped the tenant prefix from
+   book-page gallery links; PR #2025 added a proxy-level strip for any
+   `kind:'provider'` first segment so every provider-prefixed URL 308s to its
+   global equivalent. Don't reintroduce provider-prefixed content paths.
+2. **Each contributing library has its own page on Source Library at
+   `/libraries/<slug>`.** The page credits the institution (name, description,
+   hero image), shows the books we have from them, and may link out to the
+   institution's own site. The `LIBRARY_PARTNERS` lookup in
+   `src/lib/library-partners.ts` is the source of truth for this metadata —
+   adding a new library is an edit to that file, not a DB change.
+3. **Bibliographic data on a specific book may link out.** The
+   `book.image_source.source_url` link in `BibliographicInfo.tsx` (and the
+   IIIF manifest link beside it) point at the original record for citation
+   and scholarly accountability. Keep these — they're per-book provenance,
+   not "leave Source Library" prompts.
+4. **The `tenants` Mongo collection is for subdomain partners, not for
+   contributing libraries.** Subdomain tenants (`bph`, `kloss-collection`,
+   `bhutan`) have their own scoped UI under a partner subdomain. The 29
+   provider rows that also live there are legacy from when routing tried to
+   double as an attribution registry — they're no longer used for routing
+   after PR #2025 and are candidates for deletion. New contributing libraries
+   go in `LIBRARY_PARTNERS`, not in the `tenants` collection.
+
 ## Authentication across subdomains
 
 The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.
