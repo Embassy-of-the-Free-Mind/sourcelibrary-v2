@@ -112,19 +112,6 @@ cat >> /tmp/crontab_clean <<CRON
 
 # Sync worker: refresh page counts and gallery images every 2 hours
 0 */2 * * * cd ${INSTALL_DIR} && flock -n /tmp/sl-sync.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/sync-worker.mjs' >> ${LOG_DIR}/sync.log 2>&1
-
-# Source Library HTTP cron triggers (replaces vercel.json crons to stay under Vercel's plan limit).
-# Each route reads CRON_SECRET via verifyCronAuth — same secret Hetzner already has in .env.production.local.
-# CURL_OPTS: -f (fail on HTTP error so cron logs the failure), -sS (silent but show errors), -L (follow redirects).
-
-# Auth health probe every 10 min — checks Google OAuth + Resend keys
-*/10 * * * * curl -fsSL -X GET -H "Authorization: Bearer \$(grep '^CRON_SECRET=' ${ENV_FILE} | cut -d= -f2- | tr -d '\"')" https://sourcelibrary.org/api/health/auth >> ${LOG_DIR}/http-crons.log 2>&1
-
-# DB + zombie-job health check hourly
-0 * * * * curl -fsSL -X GET -H "Authorization: Bearer \$(grep '^CRON_SECRET=' ${ENV_FILE} | cut -d= -f2- | tr -d '\"')" https://sourcelibrary.org/api/cron/health-check >> ${LOG_DIR}/http-crons.log 2>&1
-
-# Latency trend aggregator hourly (consumes cron_runs left by health-check)
-5 * * * * curl -fsSL -X GET -H "Authorization: Bearer \$(grep '^CRON_SECRET=' ${ENV_FILE} | cut -d= -f2- | tr -d '\"')" https://sourcelibrary.org/api/cron/latency-trend >> ${LOG_DIR}/http-crons.log 2>&1
 CRON
 
 crontab /tmp/crontab_clean
@@ -137,11 +124,6 @@ echo "Workers installed:"
 echo "  */5  min  - pipeline-orchestrator.mjs  -> ${LOG_DIR}/pipeline.log"
 echo "  */10 min  - batch-collector.mjs        -> ${LOG_DIR}/collector.log"
 echo "  every 2h  - sync-worker.mjs            -> ${LOG_DIR}/sync.log"
-echo ""
-echo "HTTP crons installed (replaces removed vercel.json entries):"
-echo "  */10 min  - GET /api/health/auth        -> ${LOG_DIR}/http-crons.log"
-echo "  hourly    - GET /api/cron/health-check  -> ${LOG_DIR}/http-crons.log"
-echo "  hourly @5 - GET /api/cron/latency-trend -> ${LOG_DIR}/http-crons.log"
 echo ""
 echo "Monitoring:"
 echo "  tail -f ${LOG_DIR}/pipeline.log"
