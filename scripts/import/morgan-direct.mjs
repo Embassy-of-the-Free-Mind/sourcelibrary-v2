@@ -230,17 +230,46 @@ async function fetchIcaDescriptions(rec) {
   return out;
 }
 
+// Extract the set of {folio,side} tokens (e.g. "1r", "2v") referenced by a label.
+// Handles labels like:
+//   "fol. 1r"                  → {1r}
+//   "fols. 1v–2r"              → {1v, 2r}      (opening: two folios in one viewer page)
+//   "p. [iii]v–fol. 1r"        → {1r}          (front-matter to first folio transition)
+//   "front cover"              → {}            (no folio reference)
+function extractFolioSides(label) {
+  if (!label) return new Set();
+  const out = new Set();
+  // Plain "fol. Nr" or "fol. Nv" — N is a number
+  for (const m of label.matchAll(/\bfols?\.?\s+(\d+)([rv])\b/gi)) {
+    out.add(`${m[1]}${m[2].toLowerCase()}`);
+  }
+  // Range "fols. Av–Br" or "fols. Av-Br" (en-dash or hyphen)
+  for (const m of label.matchAll(/\bfols?\.?\s+(\d+)([rv])\s*[–-]\s*(\d+)([rv])/gi)) {
+    out.add(`${m[1]}${m[2].toLowerCase()}`);
+    out.add(`${m[3]}${m[4].toLowerCase()}`);
+  }
+  return out;
+}
+
 // Map ICA folio_label ("MS M.785 fol. 4r") to our viewer page number.
-// Heuristic: parse folio number + r/v, find page whose label starts with "fol. <N>r" or "fol. <N>v".
+// Looks for the viewer page whose label includes the same folio+side token.
+// Works for both per-folio viewers (M.785, M.422) and opening viewers (M.133).
 function buildIcaPageMap(icaRecs, pageLabels) {
   const map = new Map();
+  // Pre-compute folio→vp index from the page labels
+  const folioToVp = new Map();
+  for (let i = 0; i < pageLabels.length; i++) {
+    for (const side of extractFolioSides(pageLabels[i])) {
+      if (!folioToVp.has(side)) folioToVp.set(side, i + 1);
+    }
+  }
   for (const r of icaRecs) {
     if (!r.folio_label) continue;
-    const m = r.folio_label.match(/fol\.?\s+(\d+)(r|v)/i);
+    const m = r.folio_label.match(/fols?\.?\s+(\d+)([rv])/i);
     if (!m) continue;
-    const target = `fol. ${m[1]}${m[2].toLowerCase()}`;
-    const idx = pageLabels.findIndex(l => l === target);
-    if (idx >= 0) map.set(idx + 1, r); // viewer pages are 1-indexed
+    const token = `${m[1]}${m[2].toLowerCase()}`;
+    const vp = folioToVp.get(token);
+    if (vp && !map.has(vp)) map.set(vp, r);
   }
   return map;
 }
