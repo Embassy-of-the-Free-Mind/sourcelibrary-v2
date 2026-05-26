@@ -11,7 +11,7 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const PRICING = {
   'gemini-3-flash-preview':       { input: 0.50, output: 3.00 },
-  'gemini-3.1-flash-lite-preview': { input: 0.075, output: 0.30 },
+  'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
   'gemini-3.1-pro-preview':       { input: 2.50, output: 15.00 },
   'gemini-2.5-flash':             { input: 0.15, output: 0.60 },
   'claude-opus-4-6':              { input: 15.00, output: 75.00 },
@@ -203,8 +203,8 @@ export async function runClaude(model, imageBuffer, prompt, opts = {}) {
 
 const MODEL_ALIASES = {
   'flash': 'gemini-3-flash-preview',
-  'flash-lite': 'gemini-3.1-flash-lite-preview',
-  'lite': 'gemini-3.1-flash-lite-preview',
+  'flash-lite': 'gemini-3.1-flash-lite',
+  'lite': 'gemini-3.1-flash-lite',
   'pro': 'gemini-3.1-pro-preview',
   'opus': 'claude-opus-4-6',
   'sonnet': 'claude-sonnet-4-6',

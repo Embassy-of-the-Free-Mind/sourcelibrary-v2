@@ -16,7 +16,7 @@ import { GoogleGenAI } from '@google/genai';
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '100000');
 const CONCURRENCY = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--concurrency') || '10');
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const PAGE_SIZE = 500; // Fetch more, skip already-tagged in app code
 
 const PROMPT = `Classify this illustration from a historical book using Iconclass codes (iconclass.org). Return 2-5 codes, most specific first.

@@ -10,7 +10,7 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
-const GEMINI_MODEL = 'gemini-3.1-flash-lite-preview';
+const GEMINI_MODEL = 'gemini-3.1-flash-lite';
 
 const client = new MongoClient(process.env.MONGODB_URI);
 

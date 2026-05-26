@@ -37,7 +37,7 @@ let query;
 if (BOOK_ID) {
   query = { book_id: BOOK_ID, created_at: { $gte: new Date('2026-04-03') } };
 } else {
-  query = { created_at: { $gte: new Date('2026-04-03') }, job_name: /^batches\//, model: 'gemini-3.1-flash-lite-preview' };
+  query = { created_at: { $gte: new Date('2026-04-03') }, job_name: /^batches\//, model: 'gemini-3.1-flash-lite' };
 }
 
 const jobs = await db.collection('batch_jobs').find(query).toArray();

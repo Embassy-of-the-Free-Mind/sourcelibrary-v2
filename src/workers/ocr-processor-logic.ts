@@ -251,7 +251,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
     // RECITATION errors: Retry with fallback model
     if (classified.category === 'safety_filter' && error instanceof Error && error.message.includes('RECITATION')) {
-      const fallbackModels = ['gemini-3-flash-preview', 'gemini-3.1-flash-lite-preview'];
+      const fallbackModels = ['gemini-3-flash-preview', 'gemini-3.1-flash-lite'];
       const currentModelIndex = fallbackModels.indexOf(modelId);
       const nextModel = fallbackModels[currentModelIndex + 1];
 

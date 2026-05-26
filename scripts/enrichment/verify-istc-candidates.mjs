@@ -260,7 +260,7 @@ async function runTier3(db, candidates) {
 
   // Dynamic import of the TS verification function via tsx
   // We call the Gemini API directly instead to avoid tsx dependency in scripts
-  const MODEL = 'gemini-3.1-flash-lite-preview';
+  const MODEL = 'gemini-3.1-flash-lite';
   const TEMPERATURE = 0.1;
   const MAX_ROUNDS = 10;
 

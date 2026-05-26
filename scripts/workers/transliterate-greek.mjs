@@ -21,7 +21,7 @@ const DRY_RUN = args.includes('--dry-run');
 const LIMIT = parseInt(args.find((_, i) => args[i - 1] === '--limit') || '0') || Infinity;
 const CONCURRENCY = parseInt(args.find((_, i) => args[i - 1] === '--concurrency') || '3');
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
 
 Rules:

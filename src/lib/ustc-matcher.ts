@@ -20,7 +20,7 @@ import { Db } from 'mongodb';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
 import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const MAX_ROUNDS = 5;
 const TEMPERATURE = 0.1;
 

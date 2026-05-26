@@ -15,7 +15,7 @@ import { GoogleGenAI } from '@google/genai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '7000');
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 
 const PROMPT = `Classify this artwork using Iconclass codes (iconclass.org). Return 2-5 codes, most specific first.
 

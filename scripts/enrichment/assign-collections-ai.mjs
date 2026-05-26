@@ -181,7 +181,7 @@ function buildCollectionSummary(collections) {
 
 // ── Gemini Classification ─────────────────────────────────────────────────────
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 
 function buildSystemPrompt(collections) {
   const summary = buildCollectionSummary(collections);

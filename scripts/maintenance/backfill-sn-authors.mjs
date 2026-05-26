@@ -15,7 +15,7 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { MongoClient, ObjectId } from 'mongodb';
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const APPLY = process.argv.includes('--apply');
 const LIMIT = (() => {
   const i = process.argv.indexOf('--limit');

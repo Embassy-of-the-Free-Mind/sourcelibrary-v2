@@ -25,7 +25,7 @@
  *      (c) leading-word of title + year window
  *      Union+dedupe ≈ 15-30 candidates per book.
  *
- *   2. Gemini — `gemini-3.1-flash-lite-preview` per CLAUDE.md, with two
+ *   2. Gemini — `gemini-3.1-flash-lite` per CLAUDE.md, with two
  *      function-calling tools:
  *
  *      - search_catalogue({ title?, author?, year_from?, year_to?,
@@ -67,7 +67,7 @@ import fs from 'fs';
 
 // ── Config ───────────────────────────────────────────────────────────
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const CONCURRENCY = 6;
 const DELAY_BETWEEN_BATCHES_MS = 200;
 const PREFILTER_PER_QUERY = 15;

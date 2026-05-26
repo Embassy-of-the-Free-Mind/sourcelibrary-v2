@@ -35,7 +35,7 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import fs from 'fs';
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 const MONGODB_URI = process.env.MONGODB_URI;

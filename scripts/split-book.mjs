@@ -167,7 +167,7 @@ let ocrPromptText = null;
 async function initGemini() {
   const { GoogleGenerativeAI } = await import('@google/generative-ai');
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  geminiModel = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
+  geminiModel = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
   const ocrDoc = await db.collection('prompts').findOne({ type: 'ocr', is_default: true });
   const spreadPrefix = `**TWO-PAGE SPREAD HANDLING:**
 This image is a two-page spread (open book scan). Process BOTH pages separately.
@@ -499,7 +499,7 @@ console.log();
 // --- Step 6: Delete old pages, insert new ones ---
 console.log('\n--- Step 6: Delete old pages, insert new ones ---');
 
-const ocrModel = WITH_OCR ? 'gemini-3.1-flash-lite-preview' : (existingPages[0]?.ocr?.model || 'gemini-3.1-flash-lite-preview');
+const ocrModel = WITH_OCR ? 'gemini-3.1-flash-lite' : (existingPages[0]?.ocr?.model || 'gemini-3.1-flash-lite');
 const promptVersion = WITH_OCR ? `spread-v2+ocr-v${ocrVersion}` : (existingPages[0]?.ocr?.prompt_version || 'spread-v2+ocr-v10');
 
 // Find best cover

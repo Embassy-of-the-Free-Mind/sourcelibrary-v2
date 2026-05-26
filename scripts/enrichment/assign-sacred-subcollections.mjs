@@ -81,7 +81,7 @@ async function classifyBatch(ai, books, batchIndex) {
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const response = await ai.models.generateContent({
-        model: 'gemini-3.1-flash-lite-preview',
+        model: 'gemini-3.1-flash-lite',
         contents: prompt,
         config: {
           systemInstruction: SYSTEM_PROMPT,

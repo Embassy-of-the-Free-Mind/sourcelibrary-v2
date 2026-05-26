@@ -20,7 +20,7 @@ const KEYS = [
   process.env.GEMINI_API_KEY,
 ].filter(Boolean);
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const CONCURRENCY = 5;
 const DRY_RUN = process.argv.includes('--dry-run');
 const maxGapArg = process.argv.indexOf('--max-gap');

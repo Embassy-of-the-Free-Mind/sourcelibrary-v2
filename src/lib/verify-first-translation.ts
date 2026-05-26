@@ -24,7 +24,7 @@ import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
 import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 import { logMetadataChange } from './book-changelog';
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const MAX_ROUNDS = 10; // Max Gemini round-trips (tool calls + responses)
 const TEMPERATURE = 0.1;
 

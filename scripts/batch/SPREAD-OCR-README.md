@@ -49,7 +49,7 @@ After OCR results are collected, this script:
 ## Pipeline flow
 
 **IMPORTANT**: The Vercel `batch-ocr-async` route uses INLINE submission for books <20 pages.
-Inline does NOT work with `gemini-3.1-flash-lite-preview` (jobs stuck PENDING forever).
+Inline does NOT work with `gemini-3.1-flash-lite` (jobs stuck PENDING forever).
 The Hetzner `pipeline-orchestrator.mjs` uses FILE-BASED submission which works.
 See `.claude/docs/spread-splitting.md` "Batch Submission — Critical Details" for full explanation.
 
@@ -106,7 +106,7 @@ safety settings, and file cleanup — all already working at scale.
 ### 6. Model pricing confusion
 **Issue**: Pricing varies significantly between models and between realtime/batch.
 **Actual pricing (from Gemini docs, 2026-04-01)**:
-- `gemini-3.1-flash-lite-preview` batch: input $0.125/1M, output $0.75/1M
+- `gemini-3.1-flash-lite` batch: input $0.125/1M, output $0.75/1M
 - `gemini-3-flash-preview` batch: input $0.25/1M, output $1.50/1M
 - Per spread page: ~2,400 input + ~900 output tokens
 - 184K pages with Lite batch: **~$45**

@@ -2,7 +2,7 @@
   "corpus": "tibetan",
   "models": [
     "gemini-3-flash-preview",
-    "gemini-3.1-flash-lite-preview"
+    "gemini-3.1-flash-lite"
   ],
   "temperatures": [
     0,
@@ -100,8 +100,8 @@
             31
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0,
           "mcr": {
             "rate": 1,
@@ -142,8 +142,8 @@
             31
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0.3": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0.3": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0.3,
           "mcr": {
             "rate": 1,
@@ -264,8 +264,8 @@
             32
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0,
           "mcr": {
             "rate": 1,
@@ -306,8 +306,8 @@
             16
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0.3": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0.3": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0.3,
           "mcr": {
             "rate": 1,
@@ -440,8 +440,8 @@
             19
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0,
           "mcr": {
             "rate": 1,
@@ -482,8 +482,8 @@
             14
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0.3": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0.3": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0.3,
           "mcr": {
             "rate": 1,
@@ -545,16 +545,16 @@
         "avgCharSim": 1,
         "avgSylSim": 1
       },
-      "gemini-3.1-flash-lite-preview@t0": {
-        "model": "gemini-3.1-flash-lite-preview",
+      "gemini-3.1-flash-lite@t0": {
+        "model": "gemini-3.1-flash-lite",
         "temp": 0,
         "pages": 3,
         "avgMcr": 1,
         "avgCharSim": 1,
         "avgSylSim": 1
       },
-      "gemini-3.1-flash-lite-preview@t0.3": {
-        "model": "gemini-3.1-flash-lite-preview",
+      "gemini-3.1-flash-lite@t0.3": {
+        "model": "gemini-3.1-flash-lite",
         "temp": 0.3,
         "pages": 3,
         "avgMcr": 1,
@@ -565,7 +565,7 @@
     "crossModel": [
       {
         "modelA": "gemini-3-flash-preview@t0",
-        "modelB": "gemini-3.1-flash-lite-preview@t0",
+        "modelB": "gemini-3.1-flash-lite@t0",
         "charSimilarity": 0.7387096774193548,
         "syllableSimilarity": 0.6022727272727273,
         "pages": 3
@@ -580,8 +580,8 @@
     "costByModel": {
       "gemini-3-flash-preview@t0": 0.018951000000000003,
       "gemini-3-flash-preview@t0.3": 0.017213000000000003,
-      "gemini-3.1-flash-lite-preview@t0": 0.0021478499999999998,
-      "gemini-3.1-flash-lite-preview@t0.3": 0.00214905
+      "gemini-3.1-flash-lite@t0": 0.0021478499999999998,
+      "gemini-3.1-flash-lite@t0.3": 0.00214905
     }
   }
 }
