@@ -31,6 +31,11 @@ export const DOMAIN_LIMITS = {
   'images.uba.uva.nl': 3,
   'cdm21059.contentdm.oclc.org': 3,
   'dl.ndl.go.jp': 3,
+  // BL/EAP runs behind CloudFront with no observed throttling; raised from
+  // default (5) to support the corpus-wide tile-stitch re-archive job
+  // (~240k pages × 9 tiles = ~2.16M requests). Stays well below the rate
+  // CloudFront serves for cached resources.
+  'images.eap.bl.uk': 15,
 };
 
 const DEFAULT_LIMIT = 5;
@@ -167,7 +172,7 @@ export function getIiifSizeCap(url) {
  * Fetch a IIIF info.json for a given image URL.
  * Strips the trailing `/full/.../...jpg` segment to derive the base.
  *
- * @returns {Promise<{width:number,height:number,sizes?:Array,maxArea?:number}|null>}
+ * @returns {Promise<{width:number,height:number,sizes?:Array,tiles?:Array,maxArea?:number,maxWidth?:number,profileSupports?:string[],serviceBase?:string,raw?:object}|null>}
  */
 export async function fetchIiifInfo(url, opts = {}) {
   if (!isIiifUrl(url)) return null;
@@ -177,13 +182,150 @@ export async function fetchIiifInfo(url, opts = {}) {
   try {
     const buf = await rateLimitedFetch(`${base}/info.json`, opts);
     const json = JSON.parse(buf.toString('utf8'));
+    const profileObj = Array.isArray(json.profile) ? json.profile.find(p => typeof p === 'object') : null;
     return {
       width: json.width,
       height: json.height,
       sizes: json.sizes,
-      maxArea: json.profile?.[1]?.maxArea,
+      tiles: json.tiles,
+      maxArea: profileObj?.maxArea,
+      maxWidth: profileObj?.maxWidth,
+      maxHeight: profileObj?.maxHeight,
+      profileSupports: profileObj?.supports || [],
+      serviceBase: base,
+      raw: json,
     };
   } catch {
     return null;
   }
+}
+
+/**
+ * Fetch a single IIIF tile (region at native scale).
+ *
+ * Some IIIF servers (notably the British Library's EAP service) silently
+ * cap any /full/ request at a per-request output size (e.g. 1200 px),
+ * even when info.json advertises a much larger master. Tile requests at
+ * native scale are not subject to that cap, so we reconstruct the master
+ * by stitching ≤MAX_TILE-pixel chunks.
+ */
+async function fetchIiifTile(serviceBase, x, y, w, h, opts) {
+  const url = `${serviceBase}/${x},${y},${w},${h}/${w},/0/default.jpg`;
+  return rateLimitedFetch(url, opts);
+}
+
+/**
+ * Fetch a IIIF image at native pixel resolution, stitching tiles when the
+ * server caps single-request output below the master dimensions.
+ *
+ * Strategy:
+ *  1. Fetch info.json to learn the true master size.
+ *  2. Pick a per-request chunk size: min(1024, info.maxWidth ?? 1024, info.maxHeight ?? 1024).
+ *     (1024 is the empirically-largest output that BL/EAP returns at native pixel density.)
+ *  3. Tile across (cols × rows), fetch each chunk, composite with sharp.
+ *
+ * If the server already serves /full/full/ at native, this still works
+ * (it'd be 1 tile of size = master). Callers that know native is reachable
+ * can skip this and use the simpler path.
+ *
+ * Throws on failure of any tile fetch.
+ *
+ * @param {string} photoUrl   A IIIF Image API URL anywhere in the service
+ *                            (used to derive the service base).
+ * @param {object} [opts]
+ * @param {object} [opts.info] Pre-fetched info.json (avoids a roundtrip).
+ * @param {number} [opts.maxChunk=1024] Max per-request chunk dimension.
+ * @param {Function} [opts.onProgress] (done, total) callback.
+ * @returns {Promise<{buffer: Buffer, width: number, height: number, tiles: number}>}
+ */
+export async function fetchIiifNativeRes(photoUrl, opts = {}) {
+  const sharp = (await import('sharp')).default;
+  const info = opts.info || await fetchIiifInfo(photoUrl, opts);
+  if (!info || !info.width || !info.height) {
+    throw new Error('no info.json — cannot determine native dimensions');
+  }
+  const serviceBase = info.serviceBase || photoUrl.replace(/\/full\/[^\/]+\/[^\/]+\/[^\/]+$/, '');
+  const W = info.width;
+  const H = info.height;
+
+  // Cap chunk by server-advertised maxWidth/maxHeight (some IIIF v3 servers do
+  // honor sizeByConfinedWh and announce a higher cap).
+  let chunk = opts.maxChunk ?? 1024;
+  if (info.maxWidth) chunk = Math.min(chunk, info.maxWidth);
+  if (info.maxHeight) chunk = Math.min(chunk, info.maxHeight);
+  if (chunk < 256) chunk = 256;
+
+  const cols = Math.ceil(W / chunk);
+  const rows = Math.ceil(H / chunk);
+  const totalTiles = cols * rows;
+
+  // Fetch all tiles. Per-domain rate limiting in rateLimitedFetch keeps us polite.
+  const composites = [];
+  let done = 0;
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const x = col * chunk;
+      const y = row * chunk;
+      const w = Math.min(chunk, W - x);
+      const h = Math.min(chunk, H - y);
+      const buf = await fetchIiifTile(serviceBase, x, y, w, h, opts);
+      composites.push({ input: buf, left: x, top: y });
+      done++;
+      if (opts.onProgress) opts.onProgress(done, totalTiles);
+    }
+  }
+
+  // Composite onto a blank canvas at native dimensions.
+  const stitched = await sharp({
+    create: {
+      width: W,
+      height: H,
+      channels: 3,
+      background: { r: 255, g: 255, b: 255 },
+    },
+  })
+    .composite(composites)
+    .jpeg({ quality: 92, mozjpeg: true })
+    .toBuffer();
+
+  return { buffer: stitched, width: W, height: H, tiles: totalTiles };
+}
+
+/**
+ * Hosts known to silently cap /full/ output below their advertised master
+ * dimensions. Their info.json typically claims to support `sizeAboveFull`
+ * and `sizeByWh` (a IIIF Image API 2.x compliance lie), but a request like
+ * /full/3000,/ returns 1200 px regardless. The only path to native pixel
+ * density on these hosts is tile requests at scaleFactor 1.
+ *
+ * Each entry is a substring matched against the service URL hostname.
+ * Sourced from scripts/_tmp-iiif-cap-audit.mjs (audit 2026-05-26).
+ */
+export const SILENT_CAP_HOSTS = [
+  'images.eap.bl.uk',                            // British Library / EAP — caps at 1200 px
+  'image.digitalcollections.manchester.ac.uk',    // Manchester — 3.25× loss in audit
+  'www.e-rara.ch',                               // e-rara — 1.67× loss
+  'collecties.tudelft.nl',                       // TU Delft — 5.92× loss
+  'rmda.kulib.kyoto-u.ac.jp',                    // Kyoto RMDA — 8.69× loss
+  'iiif.irht.cnrs.fr',                           // IRHT — 1.81× loss
+  'iiif.hab.de',                                 // HAB — 1.16× loss
+];
+
+/**
+ * Decide whether `/full/full/` is sufficient for native res, or whether we
+ * need to tile-stitch.
+ *
+ * Conservative order:
+ *  1. Known-bad host → tile.
+ *  2. Profile or info.json explicitly caps output below native → tile.
+ *  3. Otherwise → trust /full/ (most well-behaved IIIF hosts honor it).
+ */
+export function shouldTileStitch(info, photoUrl) {
+  if (!info?.width || !info?.height) return false;
+  if (photoUrl && SILENT_CAP_HOSTS.some(h => photoUrl.includes(h))) return true;
+  if (info.serviceBase && SILENT_CAP_HOSTS.some(h => info.serviceBase.includes(h))) return true;
+  if (info.maxWidth && info.maxWidth < info.width) return true;
+  if (info.maxHeight && info.maxHeight < info.height) return true;
+  if (info.maxArea && info.maxArea < info.width * info.height) return true;
+  return false;
 }
