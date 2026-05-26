@@ -29,7 +29,6 @@ import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
 import DublinCoreMeta from '@/components/seo/DublinCoreMeta';
-import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { AISection } from '@/components/embed/AISection';
@@ -1025,13 +1024,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
             <AISection className="card p-6">
               <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
 
-              {/* Categories */}
-              <div className="mb-4 pb-4 border-b border-stone-100">
-                <CategoryPicker
-                  bookId={book.id}
-                  currentCategories={book.categories || []}
-                />
-              </div>
               {hasSummary ? (
                 <>
                   <div className="prose-content max-w-none">
