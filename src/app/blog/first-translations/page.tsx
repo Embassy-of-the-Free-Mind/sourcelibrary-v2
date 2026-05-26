@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogComments from '@/components/blog/BlogComments';
+import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const metadata: Metadata = {
   title: 'First English Translations - Research Notes - Source Library',
@@ -18,6 +19,15 @@ export const metadata: Metadata = {
 
 export default function FirstTranslationsPage() {
   return (
+    <>
+      <BlogPostSchema
+        slug="first-translations"
+        title="First English Translations"
+        description="Nearly 2,000 books in Source Library are first-ever English translations — over 900 now fully translated."
+        datePublished="2026-02-20"
+        dateModified="2026-03-08"
+        image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
+      />
     <ContentPageLayout
       header={
         <ContentHeader
@@ -448,5 +458,6 @@ export default function FirstTranslationsPage() {
 
       <BlogComments slug="first-translations" />
     </ContentPageLayout>
+    </>
   );
 }

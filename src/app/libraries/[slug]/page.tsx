@@ -5,6 +5,7 @@ import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
 import SharedLibraryView, { PER_PAGE, type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
+import LibrarySchema from '@/components/seo/LibrarySchema';
 
 const PER_PAGE_LOCAL = PER_PAGE;
 
@@ -244,5 +245,16 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
     catalogTotal,
   };
 
-  return <SharedLibraryView {...viewProps} />;
+  return (
+    <>
+      <LibrarySchema
+        slug={slug}
+        name={partner.name}
+        description={partner.description}
+        url={partner.url}
+        bookCount={total}
+      />
+      <SharedLibraryView {...viewProps} />
+    </>
+  );
 }

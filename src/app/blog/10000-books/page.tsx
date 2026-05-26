@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogComments from '@/components/blog/BlogComments';
+import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const revalidate = 86400;
 
@@ -28,6 +29,14 @@ export const metadata: Metadata = {
 
 export default function TenThousandBooksPage() {
   return (
+    <>
+      <BlogPostSchema
+        slug="10000-books"
+        title="10,000 Books"
+        description="Source Library passed 10,000 books. The 10,000th: Champier's Four Volumes of Divine and Human Marvels (1517), a Renaissance encyclopedia never before translated into English."
+        datePublished="2026-04-13"
+        image="https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg"
+      />
     <ContentPageLayout
       header={
         <ContentHeader
@@ -385,5 +394,6 @@ export default function TenThousandBooksPage() {
 
       <BlogComments slug="10000-books" />
     </ContentPageLayout>
+    </>
   );
 }
