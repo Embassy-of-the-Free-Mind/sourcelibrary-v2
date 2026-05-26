@@ -53,6 +53,7 @@ export type ImageSourceProvider =
   | 'tu_darmstadt'   // Technische Universität Darmstadt (ULB)
   | 'contentdm'      // OCLC CONTENTdm
   | 'ia'             // Internet Archive (alternate key)
+  | 'morgan'         // The Morgan Library & Museum, New York
   | 'library'
   | 'user_upload'
   | 'other';

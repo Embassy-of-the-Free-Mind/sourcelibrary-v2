@@ -453,6 +453,15 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     color: 'rust',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69e1582bec0a328a49d0a24c/0003.jpg',
   },
+  'morgan': {
+    slug: 'morgan',
+    name: 'The Morgan Library & Museum',
+    shortName: 'Morgan',
+    providerKey: 'morgan',
+    url: 'https://www.themorgan.org',
+    description: 'The Morgan Library & Museum in New York preserves the personal library of J. Pierpont Morgan, including outstanding holdings of Medieval and Renaissance illuminated manuscripts, music manuscripts, drawings, and rare books. Source Library re-publishes selected Morgan manuscripts as faithful reproductions of works in the public domain.',
+    color: 'violet',
+  },
 };
 
 /**
