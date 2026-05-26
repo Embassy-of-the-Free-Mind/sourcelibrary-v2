@@ -103,3 +103,6 @@ src/lib/vendor/lamejs-bundle.js
 .claude/docs/dedup-review-queue/
 .claude/docs/dedup-review-queue-resolved/
 backups/
+
+# Book ingestion staging (PDFs, page images, metadata waiting to be processed)
+incoming/
