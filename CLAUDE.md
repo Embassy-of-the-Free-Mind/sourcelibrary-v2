@@ -55,6 +55,17 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - **NEVER** embed secrets in code — use `process.env.VAR` with no fallback
 - Review scripts for hardcoded credentials before committing
 
+## Visibility & Stats Invariants
+Lessons from PR #2055 (see `.claude/handoffs/`). The homepage and most public surfaces filter on `visible: true`, but `hidden: true` exists as a parallel flag. When the two disagree, books leak into public counts.
+
+- **`visible` and `hidden` must be opposites.** Every writer that sets `hidden: true` must also set `visible: false` (and vice versa for un-hide). Don't write one without the other. Active writers: `scripts/maintenance/hide-{unarchived,efm-duplicates}.mjs`, `scripts/maintenance/set-launch-books.mjs`, `scripts/workers/pipeline-orchestrator.mjs`, `src/app/api/admin/duplicates/route.ts`, `src/app/api/books/[id]/visibility/route.ts`. Historical drift cleaned up by `scripts/maintenance/fix-conflicting-visibility.mjs` — re-run if `db.books.countDocuments({ visible: true, hidden: true })` ever climbs above zero again.
+- **Homepage stats live in `system_config.homepage_stats`** (Mongo). Refreshed daily at 05:00 by `scripts/maintenance/prewarm-browse.mjs`, also writable on demand by `scripts/maintenance/update-homepage-stats.mjs`. Both scripts now share the same canonical filters — keep them in sync if you touch either. The canonical filters are:
+  - `totalBooks` / `authorCount` / `languageCount`: `visible: true && pages_count > 0` (plus `pages_translated > 0` for authors/languages)
+  - `translatedToEnglish`: ≥90% "readable" — `pages_translated >= 0.9 * (pages_ocr - pages_blank)`
+  - `artworkCount`: `visible: true && resource_type ∈ {drawing, fresco, object, painting, print}`
+  - `illustrationCount`: `gallery_images.countDocuments({})`
+- **`is_first_translation: true` ≠ "we have it in English."** It's a bibliographic claim that gets set by batch-flag scripts (e.g. `scripts/maintenance/bulk-flag-tibetan-ft.mjs`) before translation completes. Render gates that show the "First Translation" badge must require `pages_translated > 0` — otherwise readers see a badge on a book they can't read. Pattern: `book.is_first_translation && (book.pages_translated ?? 0) > 0`.
+
 ## Tenant Subdomain Lockdown — CRITICAL
 Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visitors must never be able to land on, follow a link to, or be redirected to non-tenant content. EFM and other partners use these subdomains as their public face — leaks break the trust model.
 

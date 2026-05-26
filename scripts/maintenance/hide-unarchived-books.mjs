@@ -93,7 +93,7 @@ async function main() {
     // Batch update
     const result = await db.collection('books').updateMany(
       { id: { $in: bookIds } },
-      { $set: { hidden: true, hidden_reason: 'unarchived', updated_at: new Date() } }
+      { $set: { hidden: true, visible: false, hidden_reason: 'unarchived', updated_at: new Date() } }
     );
     console.log(`Updated: ${result.modifiedCount} books`);
 

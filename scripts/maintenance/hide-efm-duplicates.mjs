@@ -162,7 +162,7 @@ async function main() {
     if (ids.length > 0) {
       const result = await books.updateMany(
         { id: { $in: ids } },
-        { $set: { hidden: true, hidden_reason: 'efm_duplicate' } }
+        { $set: { hidden: true, visible: false, hidden_reason: 'efm_duplicate' } }
       );
       console.log(`\nHid ${result.modifiedCount} non-EFM duplicate books.`);
     } else {
