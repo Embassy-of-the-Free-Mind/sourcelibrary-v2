@@ -86,8 +86,10 @@ MongoDB (writes)
   │                                      └── Hetzner cron syncs → Supabase
   ├── track/route.ts ──writes──→ MongoDB analytics_pageviews
   │                                └── Hetzner cron syncs → Supabase
-  └── books collection ──sync──→ Supabase books_catalog
-                                   └── Hetzner cron (sync-books-catalog.mjs)
+  ├── books collection ──sync──→ Supabase books_catalog
+  │                                └── Hetzner cron (sync-books-catalog.mjs)
+  └── pages collection ──sync──→ Supabase pages
+                                   └── Hetzner cron (sync-pages-content.mjs)
 
 Supabase (reads)
   ├── /browse/titles,authors,years ──reads──→ books_catalog
@@ -109,6 +111,7 @@ Audited 2026-05-14. Every Mongo→Supabase write path in the codebase:
 | 2 | MongoDB books → `books_catalog` | PATCH `/api/books/[id]` → `mirrorBookToCatalog()` | on curator edit | ~11 fields: title, display_title, author, thumbnail, thumbnail_blob, language, published, categories, publisher, place_published, doi | ⚠️ **only fires from the PATCH route**; direct DB updates from `scripts/` bypass it |
 | 3 | MongoDB books → `bph_works.sl_book_id` | Vercel cron `/api/cron/sync-bph-sl-book-ids` | every 6h | `sl_book_id`, `sl_book_slug` | ✓ Honors `bph_catalog_link: false` opt-out (PR #1752, 2026-05-14) |
 | 4 | MongoDB pages → `pages_images` | Hetzner `scripts/workers/supabase-sync.mjs` | every 5 min, last-10-min window | id, book_id, page_number, archived_photo, display_photo, thumbnail_blob | ⚠️ window-only; no retry/backfill if a sync window misses a row |
+| 4b | MongoDB pages → `pages` (content + OCR/translation) | Hetzner `scripts/workers/sync-pages-content.mjs` | every 5 min, last-15-min window | id, book_id, page_number, photo*, ocr.*, translation.*, page_type, columns, script_type, detected_images, image_extraction_updated_at | ✓ Queries via `pages_ocr_updated_idx` and `pages_translation_updated_idx` with explicit `.hint()` (planner picks coll-scan otherwise). Idempotent upsert. Backfill: `--since=ISO` or `--book=ID`. Closed gap #2020. |
 | 5 | MongoDB → 5 analytics tables | Hetzner `scripts/workers/supabase-sync.mjs` | every 5 min | pipeline_snapshots, analytics_pageviews, analytics_events, cron_runs, loading_metrics | ✓ |
 | 6 | MongoDB entities → `entities` | `scripts/workers/sync-entities.mjs` | manual / one-shot | id, name, canonical_name, type, book_count, mentions, aliases, wikidata_id, portrait_url | ⚠️ no recurring trigger; new entities go stale |
 | 7 | MongoDB book.gemini_usage → `gemini_usage` | Synchronous dual-write in `gemini-logger.ts` | per Gemini call | usage rows | ✓ Fire-and-forget (see Gotchas) |
@@ -164,9 +167,12 @@ All prefixed `sl-`. Managed inside Supabase (no external cron needed).
 
 ```
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-supabase-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/supabase-sync.mjs" >> /var/log/sourcelibrary/supabase-sync.log 2>&1
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync-pages-content.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-pages-content.mjs" >> /var/log/sourcelibrary/sync-pages-content.log 2>&1
 ```
 
-Syncs the 5 non-dual-write collections incrementally. Typical run: ~300 rows in ~3 seconds.
+`supabase-sync.mjs` syncs the 5 non-dual-write analytics collections incrementally — typical run ~300 rows in ~3 seconds.
+
+`sync-pages-content.mjs` syncs Mongo pages → Supabase `pages` table (OCR + translation columns) — typical 15-min window covers ~2K pages in <15s. Backfill mode: `--since=2026-05-22T00:00:00Z` or `--book=BOOK_ID` for one-off catch-up.
 
 ## Embedding Server (Hetzner)
 
