@@ -1,0 +1,89 @@
+{
+  "window": "2025-12-12 to 2026-05-25 (165 days)",
+  "measured": {
+    "gemini_tokens_in": 23644100054,
+    "gemini_tokens_out": 6921374368,
+    "gemini_api_calls": 8032886,
+    "gemini_spend_usd": 19588.33,
+    "claude_output_tok": 138702028,
+    "claude_cache_read": 43515829041,
+    "claude_cache_create": 1602566493
+  },
+  "lines": [
+    {
+      "id": 1,
+      "name": "Pure roofline (peak optimum)",
+      "short": "Roofline",
+      "low_kg": 63.2,
+      "central_kg": 97.7,
+      "high_kg": 195.3,
+      "includes": "Active accelerator power \u00d7 FLOPs \u00f7 throughput. Peak batch, peak utilization, no overhead.",
+      "excludes": "Excludes datacenter PUE, idle machines, host CPU/DRAM, training amortization, embodied carbon, real-world overhead.",
+      "verdict": "Theoretical floor \u2014 real production is always higher."
+    },
+    {
+      "id": 2,
+      "name": "Roofline + comprehensive stack overhead",
+      "short": "+Stack",
+      "low_kg": 108.7,
+      "central_kg": 168.0,
+      "high_kg": 336.0,
+      "includes": "Add Google's measured 1.72\u00d7 factor for host CPU+DRAM, provisioned idle machines, datacenter PUE.",
+      "excludes": "Still excludes training amortization, embodied carbon, production-fleet inefficiencies.",
+      "verdict": "Matches Google's published 'comprehensive' measurement boundary."
+    },
+    {
+      "id": 3,
+      "name": "+ MLPerf calibration + training + embodied",
+      "short": "v4 model",
+      "low_kg": 219.8,
+      "central_kg": 339.7,
+      "high_kg": 679.3,
+      "includes": "Add MLPerf v5.1 calibration (\u00d71.56), training amortization (\u00d71.20), embodied carbon (\u00d71.08). Total bridge 3.48\u00d7.",
+      "excludes": "Does not include production overhead beyond MLPerf benchmark conditions.",
+      "verdict": "Our v4 bottom-up. Probably still too low for long-context production."
+    },
+    {
+      "id": 4,
+      "name": "Google fleet measurement, decomposed by prompt",
+      "short": "Google scaled",
+      "low_kg": 3561.7,
+      "central_kg": 5461.0,
+      "high_kg": 8191.6,
+      "includes": "Take Google's 0.24 Wh/median prompt. Split into fixed-per-prompt and per-token marginal cost. Apply to our prompt count and token count, scaled by model size ratio.",
+      "excludes": "Assumes our long-context workload follows the same per-token marginal as Google's short-prompt median. Could over-scale for long prompts.",
+      "verdict": "Most direct extrapolation from a published production measurement."
+    },
+    {
+      "id": 5,
+      "name": "Mistral LCA scaled by params",
+      "short": "Mistral LCA",
+      "low_kg": 12498.6,
+      "central_kg": 20831.0,
+      "high_kg": 41662.0,
+      "includes": "Mistral Large 2 published LCA (Jul 2025, ADEME-audited): 2.85 mg CO2/token. Scale linearly by active params. Adjust for training amortization base size.",
+      "excludes": "Mistral's number includes a single model's training amortized over only 18 months. Anthropic/Google have larger amortization bases \u2192 lower training share per token.",
+      "verdict": "Only published LCA for a frontier model. Upper-bound flavor."
+    },
+    {
+      "id": 6,
+      "name": "API spend \u00d7 electricity share",
+      "short": "$ proxy",
+      "low_kg": 8516.8,
+      "central_kg": 54440.9,
+      "high_kg": 262852.3,
+      "includes": "Industry heuristic: electricity is 3-20% of provider cost. Real Gemini spend ($17,668) \u00d7 elec share \u00f7 enterprise rate ($0.04-0.08/kWh). For Claude, use list-price equivalent (~$105K) \u00d7 cost-to-list ratio (~30%).",
+      "excludes": "Sensitive to electricity-share assumption (5\u00d7 swing between 3% and 20%). Provider margins on inference are debated.",
+      "verdict": "Market-based sanity check. Wide range because variables are not well-known."
+    }
+  ],
+  "summary": {
+    "geometric_mean_kg": 1805,
+    "convergence_low_kg": 98,
+    "convergence_high_kg": 340,
+    "convergence_center_kg": 182,
+    "min_kg": 98,
+    "max_kg": 54441,
+    "spread_factor": 557
+  }
+}

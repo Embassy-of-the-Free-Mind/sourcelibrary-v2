@@ -56,6 +56,8 @@ src/data/*
 !src/data/book-constellation.json
 !src/data/image-constellation.json
 !src/data/jung-bph-alignment-2026-05-22.json
+!src/data/carbon-ledger/
+!src/data/carbon-ledger/*.json
 
 # User uploads and test files
 public/uploads/

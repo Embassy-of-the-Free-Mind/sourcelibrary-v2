@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'carbon-ledger',
+    title: 'The Carbon Ledger of a Digital Library',
+    subtitle: "Source Library has OCR'd 4.1M pages and translated almost all of them using AI. We logged every API call. ~1.8 tonnes CO₂e — about seven round-trip flights AMS↔London. Six independent estimation methods, full data + sources.",
+    date: '26 May 2026',
+    readTime: '10 min read',
+    tag: 'Research',
+    tagColor: 'bg-amber-50 text-amber-800',
+    image: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg',
+    imageAlt: "Frontispiece of Athanasius Kircher's Ars Magna Lucis et Umbrae (1671)",
+  },
+  {
     slug: 'did-the-ai-read-this',
     title: 'Did the AI Read This?',
     subtitle: 'A Bayesian survey of which books in our 16,871-volume OCR\'d corpus are already in frontier-model training data. About 43% are confidently new to AI; about 21% are confidently in training.',

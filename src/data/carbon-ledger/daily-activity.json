@@ -1,0 +1,806 @@
+{
+  "purpose": "Daily Gemini pipeline activity, exported from gemini_usage_daily collection",
+  "last_updated": "2026-05-25",
+  "source": "MongoDB gemini_usage_daily collection",
+  "reproducible_via": "scripts/_tmp-export-daily.mjs",
+  "days": [
+    {
+      "date": "2026-01-02",
+      "calls": 38,
+      "input_tokens": 364321,
+      "output_tokens": 30742,
+      "cost_usd": 0.27
+    },
+    {
+      "date": "2026-01-03",
+      "calls": 797,
+      "input_tokens": 20789313,
+      "output_tokens": 12138573,
+      "cost_usd": 5.2
+    },
+    {
+      "date": "2026-01-04",
+      "calls": 740,
+      "input_tokens": 9254159,
+      "output_tokens": 9167350,
+      "cost_usd": 3.99
+    },
+    {
+      "date": "2026-01-05",
+      "calls": 9,
+      "input_tokens": 69099,
+      "output_tokens": 7213,
+      "cost_usd": 0.06
+    },
+    {
+      "date": "2026-01-16",
+      "calls": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": 0
+    },
+    {
+      "date": "2026-01-28",
+      "calls": 4,
+      "input_tokens": 19252,
+      "output_tokens": 3382,
+      "cost_usd": 0.02
+    },
+    {
+      "date": "2026-01-30",
+      "calls": 2,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": 0
+    },
+    {
+      "date": "2026-01-31",
+      "calls": 65,
+      "input_tokens": 656065,
+      "output_tokens": 302958,
+      "cost_usd": 1.08
+    },
+    {
+      "date": "2026-02-02",
+      "calls": 4,
+      "input_tokens": 3826,
+      "output_tokens": 4134,
+      "cost_usd": 0.01
+    },
+    {
+      "date": "2026-02-09",
+      "calls": 47786,
+      "input_tokens": 66027155,
+      "output_tokens": 26382030,
+      "cost_usd": 112.16
+    },
+    {
+      "date": "2026-02-10",
+      "calls": 56504,
+      "input_tokens": 103425662,
+      "output_tokens": 48179347,
+      "cost_usd": 196.17
+    },
+    {
+      "date": "2026-02-11",
+      "calls": 564,
+      "input_tokens": 1679101,
+      "output_tokens": 1619687,
+      "cost_usd": 2.47
+    },
+    {
+      "date": "2026-02-12",
+      "calls": 10,
+      "input_tokens": 59034,
+      "output_tokens": 33570,
+      "cost_usd": 0.07
+    },
+    {
+      "date": "2026-02-13",
+      "calls": 2,
+      "input_tokens": 6612,
+      "output_tokens": 1022,
+      "cost_usd": 0
+    },
+    {
+      "date": "2026-02-14",
+      "calls": 95766,
+      "input_tokens": 183126787,
+      "output_tokens": 45918438,
+      "cost_usd": 229.25
+    },
+    {
+      "date": "2026-02-15",
+      "calls": 109542,
+      "input_tokens": 386474974,
+      "output_tokens": 110480113,
+      "cost_usd": 331.61
+    },
+    {
+      "date": "2026-02-16",
+      "calls": 239914,
+      "input_tokens": 327629243,
+      "output_tokens": 125787753,
+      "cost_usd": 387.69
+    },
+    {
+      "date": "2026-02-17",
+      "calls": 233715,
+      "input_tokens": 191866851,
+      "output_tokens": 54506126,
+      "cost_usd": 133.09
+    },
+    {
+      "date": "2026-02-18",
+      "calls": 223723,
+      "input_tokens": 99017237,
+      "output_tokens": 11418927,
+      "cost_usd": 65.01
+    },
+    {
+      "date": "2026-02-19",
+      "calls": 295064,
+      "input_tokens": 369966337,
+      "output_tokens": 181314335,
+      "cost_usd": 657.9
+    },
+    {
+      "date": "2026-02-20",
+      "calls": 181399,
+      "input_tokens": 437300452,
+      "output_tokens": 195125075,
+      "cost_usd": 534.84
+    },
+    {
+      "date": "2026-02-21",
+      "calls": 163466,
+      "input_tokens": 369883666,
+      "output_tokens": 90167765,
+      "cost_usd": 325.29
+    },
+    {
+      "date": "2026-02-22",
+      "calls": 4095,
+      "input_tokens": 10522356,
+      "output_tokens": 3081464,
+      "cost_usd": 8.56
+    },
+    {
+      "date": "2026-02-23",
+      "calls": 62884,
+      "input_tokens": 182825229,
+      "output_tokens": 21477532,
+      "cost_usd": 115.16
+    },
+    {
+      "date": "2026-02-24",
+      "calls": 12919,
+      "input_tokens": 21009377,
+      "output_tokens": 996790,
+      "cost_usd": 13.13
+    },
+    {
+      "date": "2026-02-25",
+      "calls": 331319,
+      "input_tokens": 578042292,
+      "output_tokens": 102193985,
+      "cost_usd": 591.95
+    },
+    {
+      "date": "2026-02-26",
+      "calls": 421905,
+      "input_tokens": 782825827,
+      "output_tokens": 304388736,
+      "cost_usd": 1296.15
+    },
+    {
+      "date": "2026-02-27",
+      "calls": 124666,
+      "input_tokens": 261994577,
+      "output_tokens": 90050967,
+      "cost_usd": 400.41
+    },
+    {
+      "date": "2026-02-28",
+      "calls": 112397,
+      "input_tokens": 264591742,
+      "output_tokens": 104601121,
+      "cost_usd": 445.01
+    },
+    {
+      "date": "2026-03-01",
+      "calls": 65071,
+      "input_tokens": 98694290,
+      "output_tokens": 47426816,
+      "cost_usd": 190.63
+    },
+    {
+      "date": "2026-03-02",
+      "calls": 43167,
+      "input_tokens": 70460202,
+      "output_tokens": 31588684,
+      "cost_usd": 129.12
+    },
+    {
+      "date": "2026-03-03",
+      "calls": 57312,
+      "input_tokens": 105081799,
+      "output_tokens": 44222600,
+      "cost_usd": 183.76
+    },
+    {
+      "date": "2026-03-04",
+      "calls": 178465,
+      "input_tokens": 430674369,
+      "output_tokens": 84182497,
+      "cost_usd": 467.76
+    },
+    {
+      "date": "2026-03-05",
+      "calls": 276380,
+      "input_tokens": 1149430040,
+      "output_tokens": 193472575,
+      "cost_usd": 1103.78
+    },
+    {
+      "date": "2026-03-06",
+      "calls": 96881,
+      "input_tokens": 341116256,
+      "output_tokens": 94138009,
+      "cost_usd": 425.37
+    },
+    {
+      "date": "2026-03-07",
+      "calls": 106596,
+      "input_tokens": 369715922,
+      "output_tokens": 101589386,
+      "cost_usd": 484.98
+    },
+    {
+      "date": "2026-03-08",
+      "calls": 118470,
+      "input_tokens": 384483585,
+      "output_tokens": 90645713,
+      "cost_usd": 448.15
+    },
+    {
+      "date": "2026-03-09",
+      "calls": 95137,
+      "input_tokens": 287295275,
+      "output_tokens": 79082957,
+      "cost_usd": 379.09
+    },
+    {
+      "date": "2026-03-10",
+      "calls": 77586,
+      "input_tokens": 457884912,
+      "output_tokens": 58259860,
+      "cost_usd": 403.53
+    },
+    {
+      "date": "2026-03-11",
+      "calls": 9484,
+      "input_tokens": 21007035,
+      "output_tokens": 4327530,
+      "cost_usd": 23.47
+    },
+    {
+      "date": "2026-03-12",
+      "calls": 50782,
+      "input_tokens": 137838203,
+      "output_tokens": 42477946,
+      "cost_usd": 195.45
+    },
+    {
+      "date": "2026-03-13",
+      "calls": 27818,
+      "input_tokens": 65342004,
+      "output_tokens": 20881836,
+      "cost_usd": 94.99
+    },
+    {
+      "date": "2026-03-14",
+      "calls": 34664,
+      "input_tokens": 69453171,
+      "output_tokens": 19330389,
+      "cost_usd": 92.58
+    },
+    {
+      "date": "2026-03-15",
+      "calls": 35211,
+      "input_tokens": 70012617,
+      "output_tokens": 21221925,
+      "cost_usd": 96.48
+    },
+    {
+      "date": "2026-03-16",
+      "calls": 33013,
+      "input_tokens": 112619150,
+      "output_tokens": 51335737,
+      "cost_usd": 128.71
+    },
+    {
+      "date": "2026-03-17",
+      "calls": 59748,
+      "input_tokens": 172738501,
+      "output_tokens": 86360104,
+      "cost_usd": 159
+    },
+    {
+      "date": "2026-03-18",
+      "calls": 81502,
+      "input_tokens": 178232364,
+      "output_tokens": 70243684,
+      "cost_usd": 267.69
+    },
+    {
+      "date": "2026-03-19",
+      "calls": 110315,
+      "input_tokens": 200043515,
+      "output_tokens": 95615319,
+      "cost_usd": 276.33
+    },
+    {
+      "date": "2026-03-20",
+      "calls": 72092,
+      "input_tokens": 199894686,
+      "output_tokens": 85123697,
+      "cost_usd": 227.2
+    },
+    {
+      "date": "2026-03-21",
+      "calls": 13113,
+      "input_tokens": 500567451,
+      "output_tokens": 245637385,
+      "cost_usd": 30.4
+    },
+    {
+      "date": "2026-03-22",
+      "calls": 20046,
+      "input_tokens": 632995757,
+      "output_tokens": 304293686,
+      "cost_usd": 56.18
+    },
+    {
+      "date": "2026-03-23",
+      "calls": 43785,
+      "input_tokens": 773268151,
+      "output_tokens": 381591228,
+      "cost_usd": 103.38
+    },
+    {
+      "date": "2026-03-24",
+      "calls": 74306,
+      "input_tokens": 681291589,
+      "output_tokens": 308293385,
+      "cost_usd": 187.3
+    },
+    {
+      "date": "2026-03-25",
+      "calls": 87744,
+      "input_tokens": 600466671,
+      "output_tokens": 239258830,
+      "cost_usd": 224.75
+    },
+    {
+      "date": "2026-03-26",
+      "calls": 63832,
+      "input_tokens": 126447074,
+      "output_tokens": 52054750,
+      "cost_usd": 199.55
+    },
+    {
+      "date": "2026-03-27",
+      "calls": 92563,
+      "input_tokens": 617863192,
+      "output_tokens": 293807778,
+      "cost_usd": 206.32
+    },
+    {
+      "date": "2026-03-28",
+      "calls": 24600,
+      "input_tokens": 203237430,
+      "output_tokens": 80301890,
+      "cost_usd": 102.83
+    },
+    {
+      "date": "2026-03-29",
+      "calls": 33827,
+      "input_tokens": 305225962,
+      "output_tokens": 89208519,
+      "cost_usd": 169.19
+    },
+    {
+      "date": "2026-03-30",
+      "calls": 16441,
+      "input_tokens": 188114113,
+      "output_tokens": 45710452,
+      "cost_usd": 99.83
+    },
+    {
+      "date": "2026-03-31",
+      "calls": 32506,
+      "input_tokens": 199540834,
+      "output_tokens": 69149868,
+      "cost_usd": 149.99
+    },
+    {
+      "date": "2026-04-01",
+      "calls": 79391,
+      "input_tokens": 473769747,
+      "output_tokens": 182534348,
+      "cost_usd": 398.96
+    },
+    {
+      "date": "2026-04-02",
+      "calls": 66141,
+      "input_tokens": 371228469,
+      "output_tokens": 207124436,
+      "cost_usd": 389.81
+    },
+    {
+      "date": "2026-04-03",
+      "calls": 71652,
+      "input_tokens": 402266989,
+      "output_tokens": 194672319,
+      "cost_usd": 409.38
+    },
+    {
+      "date": "2026-04-04",
+      "calls": 69915,
+      "input_tokens": 509080503,
+      "output_tokens": 190928980,
+      "cost_usd": 288.05
+    },
+    {
+      "date": "2026-04-05",
+      "calls": 30761,
+      "input_tokens": 374252831,
+      "output_tokens": 150024237,
+      "cost_usd": 270.65
+    },
+    {
+      "date": "2026-04-06",
+      "calls": 49149,
+      "input_tokens": 590900689,
+      "output_tokens": 241208330,
+      "cost_usd": 448.08
+    },
+    {
+      "date": "2026-04-07",
+      "calls": 32025,
+      "input_tokens": 395686327,
+      "output_tokens": 153152634,
+      "cost_usd": 357.69
+    },
+    {
+      "date": "2026-04-08",
+      "calls": 62526,
+      "input_tokens": 426769378,
+      "output_tokens": 189190700,
+      "cost_usd": 390.17
+    },
+    {
+      "date": "2026-04-09",
+      "calls": 26098,
+      "input_tokens": 333401647,
+      "output_tokens": 127086706,
+      "cost_usd": 239.23
+    },
+    {
+      "date": "2026-04-10",
+      "calls": 20823,
+      "input_tokens": 197794059,
+      "output_tokens": 86456844,
+      "cost_usd": 183.21
+    },
+    {
+      "date": "2026-04-11",
+      "calls": 503,
+      "input_tokens": 2167921,
+      "output_tokens": 438260,
+      "cost_usd": 0.53
+    },
+    {
+      "date": "2026-04-12",
+      "calls": 15925,
+      "input_tokens": 80787991,
+      "output_tokens": 5326181,
+      "cost_usd": 21.7
+    },
+    {
+      "date": "2026-04-13",
+      "calls": 20446,
+      "input_tokens": 55228577,
+      "output_tokens": 4577700,
+      "cost_usd": 29.26
+    },
+    {
+      "date": "2026-04-14",
+      "calls": 29451,
+      "input_tokens": 72460830,
+      "output_tokens": 9096761,
+      "cost_usd": 46.85
+    },
+    {
+      "date": "2026-04-15",
+      "calls": 4431,
+      "input_tokens": 10032487,
+      "output_tokens": 700256,
+      "cost_usd": 5.8
+    },
+    {
+      "date": "2026-04-17",
+      "calls": 7875,
+      "input_tokens": 14558600,
+      "output_tokens": 1618538,
+      "cost_usd": 11.33
+    },
+    {
+      "date": "2026-04-18",
+      "calls": 14718,
+      "input_tokens": 31647163,
+      "output_tokens": 3474632,
+      "cost_usd": 22.35
+    },
+    {
+      "date": "2026-04-19",
+      "calls": 17044,
+      "input_tokens": 44030178,
+      "output_tokens": 3631975,
+      "cost_usd": 23.19
+    },
+    {
+      "date": "2026-04-20",
+      "calls": 52420,
+      "input_tokens": 96090124,
+      "output_tokens": 3030638,
+      "cost_usd": 56.19
+    },
+    {
+      "date": "2026-04-21",
+      "calls": 132913,
+      "input_tokens": 259079931,
+      "output_tokens": 39677242,
+      "cost_usd": 246.36
+    },
+    {
+      "date": "2026-04-22",
+      "calls": 90046,
+      "input_tokens": 191640148,
+      "output_tokens": 22915635,
+      "cost_usd": 151.93
+    },
+    {
+      "date": "2026-04-23",
+      "calls": 73353,
+      "input_tokens": 152500432,
+      "output_tokens": 5901226,
+      "cost_usd": 82.23
+    },
+    {
+      "date": "2026-04-24",
+      "calls": 63497,
+      "input_tokens": 131374369,
+      "output_tokens": 5945130,
+      "cost_usd": 72.08
+    },
+    {
+      "date": "2026-04-25",
+      "calls": 106529,
+      "input_tokens": 200732136,
+      "output_tokens": 8018675,
+      "cost_usd": 118.85
+    },
+    {
+      "date": "2026-04-26",
+      "calls": 115306,
+      "input_tokens": 221547014,
+      "output_tokens": 9349367,
+      "cost_usd": 127.59
+    },
+    {
+      "date": "2026-04-27",
+      "calls": 93853,
+      "input_tokens": 175602060,
+      "output_tokens": 6672814,
+      "cost_usd": 104.69
+    },
+    {
+      "date": "2026-04-28",
+      "calls": 85429,
+      "input_tokens": 159649913,
+      "output_tokens": 5850255,
+      "cost_usd": 94.28
+    },
+    {
+      "date": "2026-04-29",
+      "calls": 60203,
+      "input_tokens": 114243046,
+      "output_tokens": 4908781,
+      "cost_usd": 67.74
+    },
+    {
+      "date": "2026-04-30",
+      "calls": 73349,
+      "input_tokens": 105223105,
+      "output_tokens": 3488170,
+      "cost_usd": 60.02
+    },
+    {
+      "date": "2026-05-01",
+      "calls": 62515,
+      "input_tokens": 116741918,
+      "output_tokens": 2459032,
+      "cost_usd": 63.65
+    },
+    {
+      "date": "2026-05-02",
+      "calls": 91914,
+      "input_tokens": 172083074,
+      "output_tokens": 2541968,
+      "cost_usd": 90.38
+    },
+    {
+      "date": "2026-05-03",
+      "calls": 23800,
+      "input_tokens": 58048616,
+      "output_tokens": 2063462,
+      "cost_usd": 26.28
+    },
+    {
+      "date": "2026-05-04",
+      "calls": 7513,
+      "input_tokens": 22459680,
+      "output_tokens": 1005390,
+      "cost_usd": 8.52
+    },
+    {
+      "date": "2026-05-05",
+      "calls": 11855,
+      "input_tokens": 31411865,
+      "output_tokens": 3232231,
+      "cost_usd": 15.31
+    },
+    {
+      "date": "2026-05-06",
+      "calls": 4467,
+      "input_tokens": 19872280,
+      "output_tokens": 644324,
+      "cost_usd": 5.28
+    },
+    {
+      "date": "2026-05-07",
+      "calls": 8167,
+      "input_tokens": 17311894,
+      "output_tokens": 556915,
+      "cost_usd": 8.7
+    },
+    {
+      "date": "2026-05-08",
+      "calls": 3362,
+      "input_tokens": 7034246,
+      "output_tokens": 93913,
+      "cost_usd": 3.19
+    },
+    {
+      "date": "2026-05-09",
+      "calls": 143537,
+      "input_tokens": 260712639,
+      "output_tokens": 6578773,
+      "cost_usd": 148.58
+    },
+    {
+      "date": "2026-05-10",
+      "calls": 151491,
+      "input_tokens": 272476798,
+      "output_tokens": 6328567,
+      "cost_usd": 155.24
+    },
+    {
+      "date": "2026-05-11",
+      "calls": 105599,
+      "input_tokens": 190570900,
+      "output_tokens": 4518499,
+      "cost_usd": 108.34
+    },
+    {
+      "date": "2026-05-12",
+      "calls": 133296,
+      "input_tokens": 243496222,
+      "output_tokens": 5409323,
+      "cost_usd": 135.67
+    },
+    {
+      "date": "2026-05-13",
+      "calls": 142077,
+      "input_tokens": 257294965,
+      "output_tokens": 5062635,
+      "cost_usd": 143.07
+    },
+    {
+      "date": "2026-05-14",
+      "calls": 149599,
+      "input_tokens": 272994960,
+      "output_tokens": 5350769,
+      "cost_usd": 150.75
+    },
+    {
+      "date": "2026-05-15",
+      "calls": 153733,
+      "input_tokens": 286676118,
+      "output_tokens": 5687395,
+      "cost_usd": 159.13
+    },
+    {
+      "date": "2026-05-16",
+      "calls": 59735,
+      "input_tokens": 114656508,
+      "output_tokens": 4659009,
+      "cost_usd": 70.91
+    },
+    {
+      "date": "2026-05-17",
+      "calls": 71245,
+      "input_tokens": 138494738,
+      "output_tokens": 4495348,
+      "cost_usd": 78.99
+    },
+    {
+      "date": "2026-05-18",
+      "calls": 146566,
+      "input_tokens": 269539623,
+      "output_tokens": 14912676,
+      "cost_usd": 176.29
+    },
+    {
+      "date": "2026-05-19",
+      "calls": 98758,
+      "input_tokens": 181366323,
+      "output_tokens": 5057605,
+      "cost_usd": 105
+    },
+    {
+      "date": "2026-05-20",
+      "calls": 2527,
+      "input_tokens": 8069522,
+      "output_tokens": 251082,
+      "cost_usd": 2.62
+    },
+    {
+      "date": "2026-05-21",
+      "calls": 3453,
+      "input_tokens": 7733134,
+      "output_tokens": 553071,
+      "cost_usd": 5
+    },
+    {
+      "date": "2026-05-22",
+      "calls": 3715,
+      "input_tokens": 8054199,
+      "output_tokens": 757030,
+      "cost_usd": 6.28
+    },
+    {
+      "date": "2026-05-23",
+      "calls": 2520,
+      "input_tokens": 4539108,
+      "output_tokens": 3182,
+      "cost_usd": 2.28
+    },
+    {
+      "date": "2026-05-24",
+      "calls": 2400,
+      "input_tokens": 4321159,
+      "output_tokens": 2716,
+      "cost_usd": 2.17
+    },
+    {
+      "date": "2026-05-25",
+      "calls": 31513,
+      "input_tokens": 63926235,
+      "output_tokens": 1933513,
+      "cost_usd": 34.19
+    }
+  ]
+}
