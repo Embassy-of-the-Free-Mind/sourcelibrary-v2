@@ -286,7 +286,9 @@ async function main() {
         // 'harvard' excluded: mps.lib.harvard.edu HTTP 429s every request from Hetzner
         // IPs (verified 2026-05-25 at AWS ELB layer, both v4 and v6, all UAs, all paces).
         // Routed to Mac-side via scripts/workers/archive-harvard.mjs.
-        'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', 'harvard', ...PRIORITY_PROVIDERS] },
+        // 'morgan' excluded: handled by scripts/import/morgan-direct.mjs which pulls
+        // higher-res ZIF master pyramids (5000x7200) instead of the 1736x2500 public JPEG.
+        'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', 'harvard', 'morgan', ...PRIORITY_PROVIDERS] },
         ...NEEDS_ARCHIVE_EXPR,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }

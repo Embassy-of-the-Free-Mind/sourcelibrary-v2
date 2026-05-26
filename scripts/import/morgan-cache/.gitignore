@@ -1,0 +1,5 @@
+# Per-MS gather artifacts (manifest.json, probes.json, ica.json) regenerate
+# from the importer's --gather phase. Manifests at the cache root (e.g.
+# m785-test-manifest.json, morgan-20-highlights.json) are intentional inputs
+# and ARE committed.
+[0-9]*/

@@ -1,0 +1,20 @@
+{
+  "bibId": "144038",
+  "accession": "MS M.785",
+  "accession_slug": "m785",
+  "title": "Astrological treatises (MS M.785)",
+  "display_title": "Astrological Treatises of Abū Maʻshar",
+  "author": "Abū Maʻshar al-Balkhī (Albumazar); Latin abridgement by Georgius Zothorus Zaparus Fendulus",
+  "place": "Bruges, Belgium",
+  "date": "1403",
+  "language": "Latin",
+  "categories": ["astrology", "hermetica", "medieval-manuscripts", "illuminated-manuscripts"],
+  "page_count": 120,
+  "image_offset": 25,
+  "filename_prefix": "144038v",
+  "ica_thumbs_url": "http://ica.themorgan.org/manuscript/thumbs/144038",
+  "ica_page_count": 78,
+  "record_url": "https://www.themorgan.org/manuscript/144038",
+  "iiif_manifest_url": null,
+  "notes": "Test manifest — book already inserted by the legacy morgan-m785-direct.mjs. Use this to validate the generic importer's --gather, --insert (enrich), and --archive phases end-to-end."
+}
