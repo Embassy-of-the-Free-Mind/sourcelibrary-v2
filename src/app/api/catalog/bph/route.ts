@@ -47,34 +47,11 @@ const FIELDS_LEGACY = 'ubn, title, author, year, shelf_mark, keywords, ia_identi
 
 // Cache the schema mode for the lifetime of the runtime.
 let schemaMode: 'new' | 'legacy' | null = null;
-// Cache the global set of `is_first_translation: true` book ids from Atlas.
-// The filter joins the BPH catalogue (Supabase) to this set via
-// `bph_works.sl_book_id.in.(…)`, so we only need the universe of candidate
-// ids — the rest of the filter chain (search, year range, …) is applied by
-// Supabase. Refetched per TTL to pick up new verifications without a deploy.
-let firstTranslationCache: { ids: string[]; expires: number } | null = null;
-const FIRST_TRANSLATION_TTL_MS = 5 * 60 * 1000; // 5 minutes
-async function getFirstTranslationBookIds(): Promise<string[]> {
-  if (firstTranslationCache && firstTranslationCache.expires > Date.now()) {
-    return firstTranslationCache.ids;
-  }
-  try {
-    const db = await getReadDb();
-    const rows = await db.collection('books').find(
-      { is_first_translation: true, hidden: { $ne: true } },
-      { projection: { _id: 0, id: 1 }, maxTimeMS: 8_000 },
-    ).toArray();
-    const ids = (rows as unknown as Array<{ id?: string }>)
-      .map(r => r.id)
-      .filter((id): id is string => typeof id === 'string' && id.length > 0);
-    firstTranslationCache = { ids, expires: Date.now() + FIRST_TRANSLATION_TTL_MS };
-    return ids;
-  } catch {
-    // On Atlas failure, return an empty set so the filter yields zero results
-    // rather than silently degrading to "all books".
-    return [];
-  }
-}
+// Tracks whether the denormalised `is_first_translation` column from
+// add-bph-first-translation.sql has been applied. Auto-detected on first
+// error so a runtime that boots before the migration runs degrades to
+// "filter returns nothing" rather than erroring the whole catalogue query.
+let hasFirstTranslationColumn: boolean | null = null;
 // Tracks whether the `*_norm` diacritic-insensitive columns from
 // add-bph-diacritic-normalization.sql have been applied. Auto-detected on
 // the first query that uses them; falls back to plain ilike on the original
@@ -120,12 +97,11 @@ export async function GET(req: NextRequest) {
 
   const digitized = sp.get('digitized'); // 'true' | 'false' | 'sl' | null
 
-  // First-translation join: BPH catalogue (Supabase) → Atlas `books.is_first_translation`.
-  // Implicitly digitised-on-SL (the join key is `sl_book_id`, which is only
-  // populated for catalogue rows linked to a Source Library book). Pre-fetch
-  // the universe from Atlas, cached for 5 minutes.
+  // First-translation filter: denormalised onto `bph_works.is_first_translation`
+  // by the sync-bph-sl-book-ids cron (and one-shot backfill at
+  // scripts/migration/backfill-bph-first-translation.mjs). Implicitly digitised-on-SL —
+  // only rows with a non-null sl_book_id can carry the flag.
   const firstTranslation = sp.get('first_translation') === '1';
-  const firstTranslationIds = firstTranslation ? await getFirstTranslationBookIds() : null;
 
   const sort = sp.get('sort') || 'title';
   const offset = Math.max(0, parseInt(sp.get('offset') || '0', 10) || 0);
@@ -253,16 +229,16 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    // First-translation filter — restrict to BPH rows whose linked SL book has
-    // `is_first_translation: true`. The legacy schema has no sl_book_id column,
-    // so the filter is a no-op there (returns zero rows by design).
+    // First-translation filter — denormalised column on bph_works. Falls back
+    // to "return nothing" on the legacy schema or runtimes that booted before
+    // the migration ran (auto-detected via the retry path below).
     if (firstTranslation) {
-      if (mode === 'new' && firstTranslationIds && firstTranslationIds.length > 0) {
-        query = query.in('sl_book_id', firstTranslationIds);
+      if (mode === 'new' && hasFirstTranslationColumn !== false) {
+        query = query.eq('is_first_translation', true);
       } else {
-        // No first-translation ids known (or legacy schema) → return nothing.
-        // PostgREST doesn't have a clean "always false" predicate; use an empty
-        // `in` with a sentinel that can't appear in sl_book_id.
+        // No column → return nothing. PostgREST doesn't have a clean
+        // "always false" predicate; use a sentinel that can't appear
+        // in sl_book_id.
         query = query.eq('sl_book_id', '__no_first_translations__');
       }
     }
@@ -288,9 +264,20 @@ export async function GET(req: NextRequest) {
   }
 
   // Try the cached mode; on missing-column error, retry — first by
-  // disabling the external-link columns (the most recent addition), then
-  // the diacritic-norm columns, then by falling back to the legacy schema.
+  // disabling the first-translation column (newest addition), then the
+  // external-link columns, then the diacritic-norm columns, then by
+  // falling back to the legacy schema.
   let result = await runQuery(schemaMode || 'new');
+  if (
+    result.error &&
+    isMissingColumnError(result.error) &&
+    (schemaMode || 'new') === 'new' &&
+    firstTranslation &&
+    hasFirstTranslationColumn !== false
+  ) {
+    hasFirstTranslationColumn = false;
+    result = await runQuery('new');
+  }
   if (
     result.error &&
     isMissingColumnError(result.error) &&
@@ -318,6 +305,7 @@ export async function GET(req: NextRequest) {
     schemaMode = 'new';
     if (hasNormalizedColumns === null) hasNormalizedColumns = true;
     if (hasExternalLinks === null) hasExternalLinks = true;
+    if (hasFirstTranslationColumn === null) hasFirstTranslationColumn = true;
   }
 
   if (result.error) {
