@@ -49,11 +49,16 @@ export async function getSupabaseSyncHealth(): Promise<SyncHealthResult> {
     lag.gemini_usage = Math.round((now - new Date(result.gemini_usage.latest_at).getTime()) / 60000);
   }
 
-  // Status: warning if any table hasn't been updated in 60+ minutes,
-  // critical if 6+ hours (likely sync is broken)
-  const maxLag = Math.max(...Object.values(lag).filter((v): v is number => v !== null));
-  const status = maxLag > 360 ? 'critical'
-    : maxLag > 60 ? 'warning'
+  // Status: only `gemini_usage` represents a live-written, no-known-gap table —
+  // its lag is the one that actually indicates a sync outage.
+  //   - `pages`: no INSERT path from the live pipeline (#2020). Lag floor is the
+  //     timestamp of the last PATCH against pre-migration rows.
+  //   - `entities`: manual-only sync (.claude/docs/supabase.md Gap D). Lag accrues
+  //     by design between hand-runs of sync-entities.mjs.
+  // Both are still reported in `lag_minutes` for visibility but don't drive status.
+  const liveLag = lag.gemini_usage ?? 0;
+  const status = liveLag > 360 ? 'critical'
+    : liveLag > 60 ? 'warning'
     : 'ok';
 
   return {
@@ -103,10 +108,9 @@ async function getFallbackHealth(): Promise<SyncHealthResult> {
     lag.pages = null; // timed out — index not yet created
   }
 
-  const maxLag = Math.max(...Object.values(lag).filter((v): v is number => v !== null), 0);
-  const status = maxLag > 360 ? 'critical'
-    : maxLag > 60 ? 'warning'
-    : 'ok';
+  // Fallback path can't see gemini_usage; without the live signal we can't tell
+  // a sync outage apart from documented gaps, so don't escalate to critical.
+  const status: 'ok' | 'warning' = 'warning';
 
   return {
     status,
