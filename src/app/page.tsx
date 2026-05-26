@@ -363,10 +363,12 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 10675, translatedToEnglish: 10293, firstTranslationCount: 5607, authorCount: 4718, languageCount: 138, artworkCount: 14249, illustrationCount: 94811 };
+// Last refreshed from production 2026-05-26. Only used if Mongo + Supabase are both unreachable.
+const FALLBACK_COUNTS = { totalBooks: 15097, translatedToEnglish: 13924, firstTranslationCount: 6414, authorCount: 5562, languageCount: 170, artworkCount: 5159, illustrationCount: 121292 };
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number; illustrationCount: number }> {
-  // 1. MongoDB system_config cache (updated by update-homepage-stats.mjs cron)
+  // 1. MongoDB system_config cache (refreshed daily by scripts/maintenance/prewarm-browse.mjs;
+  // also writable on demand via scripts/maintenance/update-homepage-stats.mjs).
   // Preferred over Supabase because it uses the >=90% "readable" threshold which
   // Supabase books_catalog cannot compute (no column-to-column comparison in PostgREST).
   try {
