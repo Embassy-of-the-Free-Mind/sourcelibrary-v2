@@ -48,11 +48,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { tenant, id } = await params;
   const db = await getReadDb();
   const result = await findTenantBookByIdOrSlug(db, tenant, id, { _id: 0, title: 1, display_title: 1 });
-  if (!result) return { title: 'Book Not Found - Source Library' };
+  if (!result) return {
+    title: 'Book Not Found - Source Library',
+    robots: { index: false, follow: true },
+    alternates: { canonical: `/book/${id}/overview` },
+  };
   const title = result.book.display_title || result.book.title;
   return {
     title: `Overview — ${title} - Source Library`,
     robots: { index: false, follow: true },
+    alternates: { canonical: `/book/${id}/overview` },
   };
 }
 
