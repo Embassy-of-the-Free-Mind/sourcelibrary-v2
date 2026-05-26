@@ -237,13 +237,24 @@ export default function CollectionAllBooks({
             <h2 className="text-2xl sm:text-3xl text-primary font-display">
               All {isArt ? 'Works' : 'Books'}
             </h2>
-            <Link
-              href={isArt ? '/artwork' : '/catalog'}
-              className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
-            >
-              {isArt ? 'All Art Collections' : 'Browse Full Catalog'}
-              <span>&rarr;</span>
-            </Link>
+            {isArt ? (
+              <Link
+                href="/artwork"
+                className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
+              >
+                All Art Collections
+                <span>&rarr;</span>
+              </Link>
+            ) : !expanded ? (
+              <button
+                type="button"
+                onClick={() => { setExpanded(true); handleViewToggle('list'); }}
+                className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors cursor-pointer"
+              >
+                Browse Catalog
+                <span>&rarr;</span>
+              </button>
+            ) : null}
           </div>
           <p className="text-sm text-muted mt-1">
             {expanded ? (
