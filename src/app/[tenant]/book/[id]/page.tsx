@@ -236,11 +236,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (book.doi) scholarMeta['citation_doi'] = book.doi;
 
   // Don't index books with no meaningful content for search engines:
-  // - No OCR at all, or
+  // - 0 OCR pages, or
   // - Very thin (1-3 OCR pages) with no translation
-  const pagesOcr = book.pages_ocr ?? 0;
-  const pagesTranslated = book.pages_translated ?? 0;
-  const shouldIndex = pagesOcr > 3 || (pagesOcr > 0 && pagesTranslated > 0);
+  //
+  // Default to indexable when pages_ocr is null/undefined: the Supabase
+  // catalog mirror doesn't have OCR counts for some external-source imports
+  // (ETCSL, CDLI, etc.), and `null ?? 0` falsely flagged them as 0-page
+  // shells. Only noindex when we *know* the book is thin.
+  const pagesOcr = book.pages_ocr;
+  const pagesTranslated = book.pages_translated;
+  const shouldIndex = pagesOcr == null
+    || pagesOcr > 3
+    || (pagesOcr > 0 && (pagesTranslated ?? 0) > 0);
 
   return {
     title: `${title} - Source Library`,
