@@ -42,6 +42,7 @@ interface LinkableRow {
   ubn: string;
   id: string;
   slug: string;
+  is_first_translation: boolean;
 }
 
 function extractUbn(dcIdentifier: unknown): string | null {
@@ -89,7 +90,7 @@ export async function GET(request: NextRequest) {
         bph_catalog_link: { $ne: false },
         visible: { $ne: false },
       },
-      { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 30_000 },
+      { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1, is_first_translation: 1 }, maxTimeMS: 30_000 },
     )
     .toArray();
 
@@ -103,7 +104,12 @@ export async function GET(request: NextRequest) {
     }
     const id = (d as { id?: string; _id?: unknown }).id;
     if (!id) continue;
-    linkable.push({ ubn, id, slug: ((d as { slug?: string }).slug) || id });
+    linkable.push({
+      ubn,
+      id,
+      slug: ((d as { slug?: string }).slug) || id,
+      is_first_translation: (d as { is_first_translation?: boolean }).is_first_translation === true,
+    });
   }
 
   let updated = 0;
@@ -126,7 +132,11 @@ export async function GET(request: NextRequest) {
         const res = await fetch(url, {
           method: 'PATCH',
           headers,
-          body: JSON.stringify({ sl_book_id: row.id, sl_book_slug: row.slug }),
+          body: JSON.stringify({
+            sl_book_id: row.id,
+            sl_book_slug: row.slug,
+            is_first_translation: row.is_first_translation,
+          }),
           signal: AbortSignal.timeout(15_000),
         });
         if (!res.ok) {
