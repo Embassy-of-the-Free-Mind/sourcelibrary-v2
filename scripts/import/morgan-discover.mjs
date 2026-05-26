@@ -56,9 +56,32 @@ async function discover(bibId) {
     }
     if (!recordHtml) throw new Error('no record page found');
 
-    // Extract collection slug from any link of form /collection/<slug>/thumbs or .../<bibId>
-    const slugMatch = recordHtml.match(/\/collection\/([^"'\/]+)\/thumbs/);
-    rec.collection_slug = slugMatch ? slugMatch[1] : null;
+    // Find collection slug: three patterns observed on Morgan record pages.
+    // Skip generic Morgan-wide collection links that aren't per-MS viewers.
+    const SKIP_SLUGS = new Set([
+      'curatorial-departments','medieval-and-renaissance-manuscripts','coptic-manuscripts',
+      'coptic-bindings','indian-miniatures','the-morgan-library-museum',
+      'collection-highlights',
+    ]);
+    let slug = null;
+    const patterns = [
+      new RegExp(`/collection/([^"'/]+)/${bibId}`),
+      /\/collection\/([^"'/]+)\/thumbs/,
+      /\/collection\/([^"'/?]+)["?]/g,
+    ];
+    for (const re of patterns) {
+      if (re.global) {
+        let m;
+        while ((m = re.exec(recordHtml)) !== null) {
+          if (!SKIP_SLUGS.has(m[1])) { slug = m[1]; break; }
+        }
+      } else {
+        const m = recordHtml.match(re);
+        if (m && !SKIP_SLUGS.has(m[1])) slug = m[1];
+      }
+      if (slug) break;
+    }
+    rec.collection_slug = slug;
 
     // Extract bibliographic fields by scanning labeled sections in the rendered text
     const text = stripTags(recordHtml)
@@ -80,35 +103,56 @@ async function discover(bibId) {
     rec.provenance = valueAfter('Provenance');
     rec.notes_block = valueAfter('Notes');
 
-    // 2. Fetch /collection/<slug>/thumbs and parse all filenames
+    // 2. Fetch all paginated thumbs pages and aggregate filenames in order
     if (rec.collection_slug) {
-      const thumbsUrl = `https://www.themorgan.org/collection/${rec.collection_slug}/thumbs`;
-      rec.thumbs_url = thumbsUrl;
-      const thumbsHtml = await fetchText(thumbsUrl);
-      const filenameRe = new RegExp(`/facsimile/${bibId}/([^"'?\\s]+\\.jpg)`, 'g');
-      const seen = new Set();
-      const fnames = [];
-      let m;
-      while ((m = filenameRe.exec(thumbsHtml)) !== null) {
-        if (!seen.has(m[1])) { seen.add(m[1]); fnames.push(m[1]); }
+      // Try both URL conventions; whichever returns a non-empty page wins
+      let thumbsBase = null;
+      for (const url of [
+        `https://www.themorgan.org/collection/${rec.collection_slug}/${bibId}/thumbs`,
+        `https://www.themorgan.org/collection/${rec.collection_slug}/thumbs`,
+      ]) {
+        try {
+          const html = await fetchText(url);
+          if (html.length > 1000) { thumbsBase = url; break; }
+        } catch {}
       }
-      rec.page_filenames = fnames;
-      rec.page_count = fnames.length;
-
-      // Also try alternative directory IDs in case files live elsewhere
-      if (fnames.length === 0) {
-        const altRe = /\/facsimile\/(\d+(?:\.\d+)?)\/([^"'?\s]+\.jpg)/g;
-        const dirs = new Map();
-        while ((m = altRe.exec(thumbsHtml)) !== null) {
-          if (!dirs.has(m[1])) dirs.set(m[1], []);
-          if (!dirs.get(m[1]).includes(m[2])) dirs.get(m[1]).push(m[2]);
+      if (!thumbsBase) {
+        rec.error = 'collection slug found but /thumbs returned empty';
+      } else {
+        rec.thumbs_url = thumbsBase;
+        const seen = new Set();
+        const fnames = [];
+        const filenameRe = new RegExp(`/facsimile/${bibId}/([^"'?\\s]+\\.jpg)`, 'g');
+        for (let p = 0; p < 200; p++) {
+          let html;
+          try { html = await fetchText(`${thumbsBase}?page=${p}`); } catch { break; }
+          let before = fnames.length;
+          let m;
+          while ((m = filenameRe.exec(html)) !== null) {
+            if (!seen.has(m[1])) { seen.add(m[1]); fnames.push(m[1]); }
+          }
+          if (fnames.length === before) break; // no new filenames on this page
         }
-        if (dirs.size > 0) {
-          // Pick the dir with the most filenames
-          const [bestDir, bestFiles] = [...dirs.entries()].sort((a, b) => b[1].length - a[1].length)[0];
-          rec.image_dir_override = bestDir;
-          rec.page_filenames = bestFiles;
-          rec.page_count = bestFiles.length;
+        rec.page_filenames = fnames;
+        rec.page_count = fnames.length;
+
+        // If no filenames matched the bibId-based path, try alternate dirs.
+        // Re-scan page 0 looking for any /facsimile/<dir>/<file>.jpg paths.
+        if (fnames.length === 0) {
+          const html0 = await fetchText(`${thumbsBase}?page=0`).catch(() => '');
+          const altRe = /\/facsimile\/([\d.]+)\/([^"'?\s]+\.jpg)/g;
+          const dirs = new Map();
+          let am;
+          while ((am = altRe.exec(html0)) !== null) {
+            if (!dirs.has(am[1])) dirs.set(am[1], []);
+            if (!dirs.get(am[1]).includes(am[2])) dirs.get(am[1]).push(am[2]);
+          }
+          if (dirs.size > 0) {
+            const [bestDir, bestFiles] = [...dirs.entries()].sort((a, b) => b[1].length - a[1].length)[0];
+            rec.image_dir_override = bestDir;
+            rec.page_filenames = bestFiles;
+            rec.page_count = bestFiles.length;
+          }
         }
       }
     } else {

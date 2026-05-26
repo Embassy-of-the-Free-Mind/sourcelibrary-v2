@@ -574,6 +574,11 @@ async function phaseInsert(rec, db) {
     status: 'draft',
     hidden: true,
     visible: false,
+    // Blocks the catch-all archive-ocr.mjs worker from picking the book up before
+    // morgan-direct.mjs --archive has had a chance to run. Cron'd worker only
+    // skips on `archive_metadata.blocked: true` (NEEDS_ARCHIVE_EXPR also gates on
+    // pages_archived < pages_count, so this becomes redundant once we finish).
+    archive_metadata: { blocked: true, source: 'morgan_zif_pending' },
     source_fingerprint: fingerprint,
     normalized_title: slugify(rec.title).replace(/-/g, ' '),
     normalized_author: rec.author ? slugify(rec.author).replace(/-/g, ' ') : null,
