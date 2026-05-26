@@ -1,4 +1,4 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import {
     fetchTenantLibraryData,
@@ -29,19 +29,6 @@ interface Props {
 function getOptionalStringField(value: unknown): string {
     return typeof value === 'string' ? value : '';
 }
-
-// Catalog browser owns these (`c`-prefixed) param keys. They're meaningless on
-// any other view and only serve to confuse users when they leak through
-// navigation, so strip them server-side before render.
-const CATALOG_PARAM_KEYS = [
-    'cq', 'csort', 'ckeyword', 'coffset',
-    'cauthor', 'ctitle', 'ceditor', 'cplace', 'cprinter', 'cpublisher',
-    'cshelf', 'clang', 'cyfrom', 'cyto', 'cdig', 'cft',
-];
-
-// Books-grid owns these. Catalog view ignores them; strip on /catalog so the
-// URL bar doesn't look filtered when it isn't.
-const BOOKS_PARAM_KEYS = ['q', 'sort', 'language', 'offset'];
 
 export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     const { tenant } = await params;
@@ -79,23 +66,14 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         ? displayParam
         : (view === 'catalog' ? 'list' : 'grid');
 
-    // Strip the inactive display's params so a user landing here from a
-    // previous list/grid choice doesn't see a URL that looks filtered when
-    // nothing is being applied. The list view (BphCatalogBrowser) owns the
-    // c-prefixed keys; the grid view (CollectionFilters/books grid) owns
-    // q/sort/language/offset. Stripping is keyed off the active display, not
-    // the view filter, since either filter can be paired with either display.
-    const stripKeys = display === 'list' ? BOOKS_PARAM_KEYS : CATALOG_PARAM_KEYS;
-    const orphans = stripKeys.filter(k => typeof sp[k] === 'string' && sp[k] !== '');
-    if (orphans.length > 0) {
-        const next = new URLSearchParams();
-        for (const [k, v] of Object.entries(sp)) {
-            if (orphans.includes(k)) continue;
-            if (typeof v === 'string' && v !== '') next.set(k, v);
-        }
-        const qs = next.toString();
-        redirect(`/embed/${tenant}${qs ? `?${qs}` : ''}`);
-    }
+    // Don't strip inactive-view params here. The embed mirrors the iframe URL
+    // to the parent host (embed/v1.js → sl-navigate → replaceState), so any
+    // server-side redirect that drops params kills external deep links —
+    // ?view=books&display=grid&cq=jacob&cdig=sl on a partner site briefly
+    // loads and then gets scrubbed to ?view=books&display=grid. The active
+    // view ignores inactive params functionally; the toggle hrefs in
+    // UnifiedCatalogue emit clean per-view URLs, so stale params don't
+    // accumulate from in-app navigation either.
 
     const db = await getDb();
     const tenantDoc = await db.collection('tenants').findOne({ id: tenantId });
