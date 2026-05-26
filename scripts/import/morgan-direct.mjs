@@ -114,18 +114,60 @@ const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientw
 const HOST_REFERER = (slug) => `https://host.themorgan.org/facsimile/${slug}/`;
 
 // ───────────────────────── URL builders ─────────────────────────
+//
+// Filename patterns (set via rec.filename_pattern):
+//
+//   numeric_4d (default)  <prefix>_NNNN.jpg where NNNN = image_offset + vp - 1, 4-digit
+//                         e.g. 144038v_0026.jpg, 77327v_0001.jpg
+//   recto_verso           <prefix>NNNr.jpg or NNNv.jpg, folio = ceil((image_offset + vp - 1)/2), 3-digit
+//                         e.g. ma3900_001r.jpg, ma3900_001v.jpg, M1044_002r.jpg
+//   simple_numeric        <prefix>N.jpg where N = image_offset + vp - 1, no padding
+//                         e.g. anne_m50f1.jpg, anne_m50f23.jpg
+//   custom                exact filenames in rec.page_filenames[vp-1]
+//                         e.g. m630_15.jpg for Visconti-Sforza
+//
+// image_offset semantic: the NNNN value that corresponds to viewer page 1.
+// e.g. M.785 vp1 → 144038v_0026.jpg, so image_offset = 26.
 function imageFileName(rec, viewerPage) {
-  const idx = viewerPage + rec.image_offset;
-  return `${rec.filename_prefix}_${String(idx).padStart(4, '0')}.jpg`;
+  const pattern = rec.filename_pattern || 'numeric_4d';
+  switch (pattern) {
+    case 'numeric_4d': {
+      const idx = rec.image_offset + viewerPage - 1;
+      return `${rec.filename_prefix}_${String(idx).padStart(4, '0')}.jpg`;
+    }
+    case 'simple_numeric': {
+      const idx = rec.image_offset + viewerPage - 1;
+      return `${rec.filename_prefix}${idx}.jpg`;
+    }
+    case 'recto_verso': {
+      // (image_offset, vp) — image_offset is the folio number of vp 1 recto.
+      // Each folio = 2 viewer pages (recto, verso). For offset=1: vp1→001r, vp2→001v, vp3→002r, ...
+      const sequencePos = viewerPage - 1; // 0-based
+      const folioNum = rec.image_offset + Math.floor(sequencePos / 2);
+      const side = sequencePos % 2 === 0 ? 'r' : 'v';
+      return `${rec.filename_prefix}${String(folioNum).padStart(3, '0')}${side}.jpg`;
+    }
+    case 'custom': {
+      if (!rec.page_filenames || !rec.page_filenames[viewerPage - 1]) {
+        throw new Error(`custom pattern requires page_filenames[${viewerPage - 1}] for vp ${viewerPage}`);
+      }
+      return rec.page_filenames[viewerPage - 1];
+    }
+    default:
+      throw new Error(`Unknown filename_pattern: ${pattern}`);
+  }
 }
 function zifFileName(rec, viewerPage) {
   return imageFileName(rec, viewerPage).replace(/\.jpg$/, '.zif');
 }
+function imageDir(rec) {
+  return rec.image_dir_override || rec.bibId;
+}
 function publicJpegUrl(rec, viewerPage) {
-  return `https://www.themorgan.org/sites/default/files/facsimile/${rec.bibId}/${imageFileName(rec, viewerPage)}`;
+  return `https://www.themorgan.org/sites/default/files/facsimile/${imageDir(rec)}/${imageFileName(rec, viewerPage)}`;
 }
 function publicThumbUrl(rec, viewerPage) {
-  return `https://www.themorgan.org/sites/default/files/styles/largest_800_x_800_/public/facsimile/${rec.bibId}/${imageFileName(rec, viewerPage)}`;
+  return `https://www.themorgan.org/sites/default/files/styles/largest_800_x_800_/public/facsimile/${imageDir(rec)}/${imageFileName(rec, viewerPage)}`;
 }
 function zifUrl(rec, viewerPage) {
   return `https://host.themorgan.org/facsimile/images/${rec.accession_slug}/${zifFileName(rec, viewerPage)}`;
@@ -268,7 +310,21 @@ async function phaseGather(rec) {
     probes.push({ viewerPage: vp, public: pubR, zif: zifR, pubUrl, zifUrl: zifUrlVal });
     console.log(`  vp ${String(vp).padStart(3)}  public:${pubR.status} ${pubR.contentLength||'-'}b   zif:${zifR.status} ${zifR.contentLength||'-'}b`);
     if (!pubR.ok) console.warn(`    ! public URL not OK`);
-    if (!zifR.ok) console.warn(`    ! ZIF URL not OK — masters unavailable for this MS`);
+    if (!zifR.ok && pubR.ok) console.warn(`    ! ZIF URL not OK — masters unavailable for this MS`);
+  }
+
+  // If the last sample 404'd but vp 1 worked, binary-search for the real page count.
+  let detectedPageCount = rec.page_count;
+  if (probes[2].public && !probes[2].public.ok && probes[0].public && probes[0].public.ok) {
+    console.log(`  last page 404 → binary-searching for true page count...`);
+    let lo = 1, hi = rec.page_count;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      const r = await headCheck(publicJpegUrl(rec, mid));
+      if (r.ok) lo = mid; else hi = mid - 1;
+    }
+    detectedPageCount = lo;
+    console.log(`  detected page count: ${detectedPageCount} (manifest said ${rec.page_count})`);
   }
 
   // Fetch ICA descriptions (if any)
@@ -279,7 +335,7 @@ async function phaseGather(rec) {
     console.log(`  got ${ica.filter(r => r.body).length}/${ica.length} ICA descriptions`);
   }
 
-  fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify(rec, null, 2));
+  fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify({ ...rec, detected_page_count: detectedPageCount }, null, 2));
   fs.writeFileSync(path.join(dir, 'probes.json'), JSON.stringify(probes, null, 2));
   fs.writeFileSync(path.join(dir, 'ica.json'), JSON.stringify(ica, null, 2));
   console.log(`  cache written: ${dir}`);
@@ -599,7 +655,13 @@ async function phaseArchive(rec, db, bookInfo) {
   }
 
   for (const rec of targets) {
-    if (DO_GATHER) await phaseGather(rec);
+    try {
+      if (DO_GATHER) await phaseGather(rec);
+    } catch (e) {
+      console.error(`[${rec.bibId}] GATHER FAILED: ${e.message}`);
+      if (targets.length === 1) throw e; // single-target: bubble up
+      continue; // multi-target: keep going
+    }
     let bookInfo = null;
     if (DO_INSERT) bookInfo = await phaseInsert(rec, db);
     if (DO_ARCHIVE) {
