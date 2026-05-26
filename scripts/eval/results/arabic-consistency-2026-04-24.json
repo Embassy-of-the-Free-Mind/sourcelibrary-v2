@@ -3,7 +3,7 @@
   "models": [
     "gemini-3.1-pro-preview",
     "gemini-3-flash-preview",
-    "gemini-3.1-flash-lite-preview"
+    "gemini-3.1-flash-lite"
   ],
   "temperatures": [
     0
@@ -101,8 +101,8 @@
             829
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0,
           "mcr": {
             "rate": 1,
@@ -235,8 +235,8 @@
             1396
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0,
           "mcr": {
             "rate": 0.6666666666666666,
@@ -369,8 +369,8 @@
             2533
           ]
         },
-        "gemini-3.1-flash-lite-preview@t0": {
-          "model": "gemini-3.1-flash-lite-preview",
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
           "temperature": 0,
           "mcr": {
             "rate": 0.6666666666666666,
@@ -432,8 +432,8 @@
         "avgCharSim": 0.9155733980979988,
         "avgSylSim": 0.8744222855333966
       },
-      "gemini-3.1-flash-lite-preview@t0": {
-        "model": "gemini-3.1-flash-lite-preview",
+      "gemini-3.1-flash-lite@t0": {
+        "model": "gemini-3.1-flash-lite",
         "temp": 0,
         "pages": 3,
         "avgMcr": 0.7777777777777777,
@@ -451,14 +451,14 @@
       },
       {
         "modelA": "gemini-3.1-pro-preview@t0",
-        "modelB": "gemini-3.1-flash-lite-preview@t0",
+        "modelB": "gemini-3.1-flash-lite@t0",
         "charSimilarity": 0.5776488890047262,
         "syllableSimilarity": 0.022851695843155443,
         "pages": 3
       },
       {
         "modelA": "gemini-3-flash-preview@t0",
-        "modelB": "gemini-3.1-flash-lite-preview@t0",
+        "modelB": "gemini-3.1-flash-lite@t0",
         "charSimilarity": 0.600980553648591,
         "syllableSimilarity": 0.04176094907802225,
         "pages": 3
@@ -473,7 +473,7 @@
     "costByModel": {
       "gemini-3.1-pro-preview@t0": 0.10561499999999999,
       "gemini-3-flash-preview@t0": 0.020721,
-      "gemini-3.1-flash-lite-preview@t0": 0.0031855499999999997
+      "gemini-3.1-flash-lite@t0": 0.0031855499999999997
     }
   }
 }

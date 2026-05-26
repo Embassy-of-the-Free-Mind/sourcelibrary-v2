@@ -23,7 +23,7 @@
  *   --key=N|auto    API key index (0=TIER3, 1=KEY_2, 2=primary, auto=round-robin)
  *   --book-id=X     Submit a specific book
  *   --dry-run       List candidates without submitting
- *   --model=X       Override model (default: gemini-3.1-flash-lite-preview)
+ *   --model=X       Override model (default: gemini-3.1-flash-lite)
  *
  * Prerequisites:
  *   - MONGODB_URI, CRON_SECRET set in env
@@ -34,7 +34,7 @@
  *   2. API key quota: route rotates keys on 429. --key=auto distributes across keys.
  *   3. UvA IIIF timeouts: route has per-image timeout. Failed images are skipped, not fatal.
  *   4. Safety blocks: ~2-5% of pages blocked by Gemini. Collector handles partial results.
- *   5. Model support: gemini-3.1-flash-lite-preview confirmed working via file-based batch
+ *   5. Model support: gemini-3.1-flash-lite confirmed working via file-based batch
  *      (431 completed + 1564 saved in DB). Our earlier failure was inline submission.
  */
 
@@ -55,7 +55,7 @@ const MAX_PAGES = parseInt(getArg('max-pages') || '500', 10);
 const DELAY_SEC = parseInt(getArg('delay') || '3', 10);
 const DRY_RUN = hasFlag('dry-run');
 const BOOK_ID = getArg('book-id');
-const MODEL = getArg('model') || 'gemini-3.1-flash-lite-preview';
+const MODEL = getArg('model') || 'gemini-3.1-flash-lite';
 const KEY_ARG = getArg('key');
 
 const uniqueKeys = [...new Set([

@@ -25,7 +25,7 @@ import path from 'path';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY_3 || process.env.GEMINI_API_KEY;
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 const args = process.argv.slice(2);

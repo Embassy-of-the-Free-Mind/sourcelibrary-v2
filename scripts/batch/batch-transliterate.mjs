@@ -13,7 +13,7 @@
  *   node scripts/batch/batch-transliterate.mjs --language greek
  *   node scripts/batch/batch-transliterate.mjs --concurrency 20
  *
- * Cost: ~$0.0001/page using gemini-3.1-flash-lite-preview (text-only).
+ * Cost: ~$0.0001/page using gemini-3.1-flash-lite (text-only).
  * ~$19 total for all 190k non-Latin OCR'd pages.
  */
 
@@ -27,7 +27,7 @@ if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 if (!GEMINI_API_KEY) { console.error('No GEMINI_API_KEY found'); process.exit(1); }
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
 // Model pricing per 1M tokens (USD) — default for unknown models

@@ -21,7 +21,7 @@ const SLUG_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--slug') || nul
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
+const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 
 // Visual art collections that artworks can be assigned to
 const VISUAL_ART_COLLECTIONS = [
@@ -296,7 +296,7 @@ async function main() {
         const now = new Date();
         const provenanceEntry = {
           source: 'ai_enrichment',
-          model: 'gemini-3.1-flash-lite-preview',
+          model: 'gemini-3.1-flash-lite',
           date: now,
           script: 'artwork-enrichment.mjs',
         };
@@ -324,7 +324,7 @@ async function main() {
             period: enrichment.period || null,
             culture: enrichment.culture || null,
             museum_description: enrichment.museum_description || null,
-            model: 'gemini-3.1-flash-lite-preview',
+            model: 'gemini-3.1-flash-lite',
             enriched_at: now,
           },
           updated_at: now,

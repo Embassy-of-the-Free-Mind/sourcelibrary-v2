@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       try {
         const client = getGeminiClient();
         // flash-lite follows structured format reliably and is 50% cheaper
-        const model = client.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
+        const model = client.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 
         const result = await model.generateContentStream({
           contents: [{

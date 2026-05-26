@@ -78,7 +78,7 @@ async function saveRevisionBeforeOverwrite(db, pageId, field) {
 }
 
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
-const OCR_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+const OCR_MODEL_LITE = 'gemini-3.1-flash-lite';
 
 // Latin-script languages safe for flash-lite. Anything else (Tibetan, Arabic,
 // Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) routes to flash because
@@ -479,14 +479,14 @@ function hashString(str) {
 }
 
 const TRANSLATE_MODEL_FLASH = 'gemini-3-flash-preview';
-const TRANSLATE_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+const TRANSLATE_MODEL_LITE = 'gemini-3.1-flash-lite';
 function getTranslateModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return TRANSLATE_MODEL_FLASH;
   return TRANSLATE_MODEL_LITE;
 }
 const TRANSLATE_MODEL = TRANSLATE_MODEL_FLASH; // Legacy fallback
 const TRANSLATE_PROMPT_VERSION = 'v10';
-const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
+const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite';
 const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
 
 CRITICAL RULES:
@@ -2766,7 +2766,7 @@ async function run() {
             const base64 = resized.toString('base64');
 
             const SPLIT_CONFIRM_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
-            const SPLIT_CONFIRM_MODEL = 'gemini-3.1-flash-lite-preview';
+            const SPLIT_CONFIRM_MODEL = 'gemini-3.1-flash-lite';
             const geminiUrl = `${GEMINI_API_BASE}/models/${SPLIT_CONFIRM_MODEL}:generateContent?key=${SPLIT_CONFIRM_KEY}`;
             const geminiRes = await fetch(geminiUrl, {
               method: 'POST',

@@ -15,7 +15,7 @@ await client.connect();
 const db = client.db('bookstore');
 
 const genAI = new GoogleGenerativeAI(geminiKey);
-const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
+const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 
 // Get distinct titles (many are multi-volume with same base title)
 const books = await db.collection('books').find({

@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
 
     // Run Gemini vision + CLIP visual search in parallel
     const apiKey = getNextApiKey();
-    const model = 'gemini-3.1-flash-lite-preview';
+    const model = 'gemini-3.1-flash-lite';
 
     // Promise 1: Gemini structured identification
     const geminiPromise = fetch(

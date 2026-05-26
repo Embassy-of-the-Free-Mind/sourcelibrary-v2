@@ -95,7 +95,7 @@ async function processBatch(
   bookLanguage?: string
 ): Promise<BatchExtraction> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-3.1-flash-lite-preview',
+    model: 'gemini-3.1-flash-lite',
     generationConfig: {
       temperature: 0.2, // Low temperature for consistent extraction
       maxOutputTokens: 2000,
@@ -171,7 +171,7 @@ CRITICAL for quotes:
     logGeminiCall({
       type: 'index',
       mode: 'realtime',
-      model: 'gemini-3.1-flash-lite-preview',
+      model: 'gemini-3.1-flash-lite',
       book_id: bookId,
       page_count: pages.length,
       input_tokens: usageMetadata?.promptTokenCount || 0,
@@ -640,7 +640,7 @@ async function generateBookSummary(
   researchContext?: string,
   chapters?: ChapterInfo[]
 ): Promise<GeneratedSummary> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 
   // If no batch extractions, fall back to research-only summary
   if (batchExtractions.length === 0) {
@@ -762,7 +762,7 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
   logGeminiCall({
     type: 'summary',
     mode: 'realtime',
-    model: 'gemini-3.1-flash-lite-preview',
+    model: 'gemini-3.1-flash-lite',
     book_id: bookId,
     page_count: batchExtractions.length, // Number of batch sections processed
     input_tokens: usageMetadata?.promptTokenCount || 0,
@@ -1294,7 +1294,7 @@ export async function GET(
         data: bookSummary.brief,
         generated_at: new Date(),
         page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
-        model: 'gemini-3.1-flash-lite-preview',
+        model: 'gemini-3.1-flash-lite',
         prompt_version: INDEX_PROMPT_VERSION,
         source: 'ai',
       };
@@ -1305,7 +1305,7 @@ export async function GET(
         themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
         quotes: groundedBatchQuotes.slice(0, 15),
         generated_at: new Date(),
-        model: 'gemini-3.1-flash-lite-preview',
+        model: 'gemini-3.1-flash-lite',
         prompt_version: INDEX_PROMPT_VERSION,
         source: 'ai',
       };

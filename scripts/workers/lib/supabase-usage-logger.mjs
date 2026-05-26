@@ -13,7 +13,7 @@ const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Model pricing per 1M tokens
 const MODEL_PRICING = {
-  'gemini-3.1-flash-lite-preview': { input: 0.25, output: 1.50 },
+  'gemini-3.1-flash-lite': { input: 0.25, output: 1.50 },
   'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
   'gemini-3-pro-preview': { input: 2.50, output: 10.00 },
   'gemini-2.5-flash': { input: 0.15, output: 0.60 },

@@ -44,7 +44,7 @@ const BAD_OPENERS = [
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
-  model: 'gemini-3.1-flash-lite-preview',
+  model: 'gemini-3.1-flash-lite',
   generationConfig: { temperature: 0.3, maxOutputTokens: 2000 }
 });
 

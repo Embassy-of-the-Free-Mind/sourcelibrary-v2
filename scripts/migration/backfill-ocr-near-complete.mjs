@@ -26,7 +26,7 @@ const OCR_FILE_BATCH_SIZE = 150;
 
 // Models
 const MODEL_FLASH = 'gemini-3-flash-preview';
-const MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+const MODEL_LITE = 'gemini-3.1-flash-lite';
 
 // ── CLI args ──
 const args = process.argv.slice(2);

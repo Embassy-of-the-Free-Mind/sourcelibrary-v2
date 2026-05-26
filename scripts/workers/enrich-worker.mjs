@@ -52,14 +52,14 @@ async function revalidateBookPage(bookId) {
 // ── Config ──
 const MONGODB_URI = process.env.MONGODB_URI;
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
-const LITE_MODEL = 'gemini-3.1-flash-lite-preview';
+const LITE_MODEL = 'gemini-3.1-flash-lite';
 const TARGET_BATCH_CHARS = 50000;
 const MAX_RETRIES = 3;
 
 // Model pricing per 1M tokens (USD)
 const MODEL_PRICING = {
   'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
-  'gemini-3.1-flash-lite-preview': { input: 0.075, output: 0.30 },
+  'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
   'default': { input: 0.10, output: 0.40 },
 };
 

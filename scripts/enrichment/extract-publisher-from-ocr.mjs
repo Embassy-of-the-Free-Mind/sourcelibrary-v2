@@ -22,7 +22,7 @@ const LIMIT = LIMIT_ARG > -1 ? parseInt(process.argv[LIMIT_ARG + 1]) : 50;
 const AUTHOR_ARG = process.argv.indexOf('--author');
 const AUTHOR_FILTER = AUTHOR_ARG > -1 ? process.argv[AUTHOR_ARG + 1] : null;
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 
 const PROMPT = `Extract the publisher/printer and place of publication from this historical book title page.
 

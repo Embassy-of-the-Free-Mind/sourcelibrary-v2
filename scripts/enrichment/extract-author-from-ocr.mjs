@@ -41,7 +41,7 @@ import path from 'path';
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const MODEL = 'gemini-3.1-flash-lite-preview';
+const MODEL = 'gemini-3.1-flash-lite';
 const PAGES_PER_BOOK = 10; // title page lives in the first ~3-5 pages, 10 is safe
 const PAGE_OCR_TRUNCATE = 2500; // per-page char cap — title pages are short
 const CONCURRENCY = 8;
@@ -209,7 +209,7 @@ async function extractAuthor(book, ocrSamples) {
 // ── Cost ─────────────────────────────────────────────────────────────
 
 function calculateCost(usage) {
-  // gemini-3.1-flash-lite-preview pricing — matches enrich-metadata-text.mjs
+  // gemini-3.1-flash-lite pricing — matches enrich-metadata-text.mjs
   const inputCostPer1M = 0.15;
   const outputCostPer1M = 0.60;
   return (

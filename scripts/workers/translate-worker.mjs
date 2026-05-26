@@ -37,7 +37,7 @@ const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size=')
 const SINGLE_PAGE = process.argv.includes('--single-page');
 const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce batch size
 const MODEL_FLASH = 'gemini-3-flash-preview';
-const MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+const MODEL_LITE = 'gemini-3.1-flash-lite';
 
 // Latin-script languages safe for flash-lite translation. Non-Latin scripts
 // (Tibetan, Arabic, Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) route to flash.
@@ -236,7 +236,7 @@ function contentHash(text) {
 
 // ── Cost calculation ──
 const MODEL_PRICING = {
-  'gemini-3.1-flash-lite-preview': { input: 0.25, output: 1.50 },
+  'gemini-3.1-flash-lite': { input: 0.25, output: 1.50 },
   'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
 };
 function calculateCost(inputTokens, outputTokens, model) {

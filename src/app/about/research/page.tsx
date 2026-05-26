@@ -215,7 +215,7 @@ export default function ResearchPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-primary">All Other Sources</h3>
-                <p className="text-xs font-mono text-muted">gemini-3.1-flash-lite-preview</p>
+                <p className="text-xs font-mono text-muted">gemini-3.1-flash-lite</p>
               </div>
             </div>
             <p className="text-secondary text-[15px] leading-relaxed">

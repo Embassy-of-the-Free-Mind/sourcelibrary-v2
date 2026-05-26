@@ -88,7 +88,7 @@ console.log(`[batch-collector] Keys: ${ALL_KEYS.length} | Concurrency: ${CONCURR
 // ── Cost calculation (mirrors gemini-logger.ts) ──
 
 const MODEL_PRICING = {
-  'gemini-3.1-flash-lite-preview': { input: 0.25, output: 1.50 },
+  'gemini-3.1-flash-lite': { input: 0.25, output: 1.50 },
   'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
   'gemini-3-pro-preview': { input: 2.50, output: 10.00 },
   'gemini-2.5-flash': { input: 0.15, output: 0.60 },
