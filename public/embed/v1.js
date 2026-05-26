@@ -86,8 +86,65 @@
     catch (e) { return null; }
   }
 
-  function makeNavKey(book, page) {
-    return (book || '') + '::' + (page || '');
+  // Iframe URL params that we mirror onto the parent (Webflow) URL so the
+  // visitor's current filter/sort/view/pagination state is shareable and
+  // bookmarkable. host_path / _r are internal embed plumbing and excluded.
+  // Listed both books-grid keys and catalogue (c-prefixed) keys; the iframe
+  // only ever uses one set at a time.
+  var SYNCED_PARAMS = [
+    // shared
+    'view', 'display',
+    // books grid
+    'q', 'sort', 'language', 'offset',
+    // catalogue list (BphCatalogBrowser)
+    'cq', 'csort', 'clang', 'coffset', 'cauthor', 'ctitle', 'ceditor',
+    'cplace', 'cprinter', 'cpublisher', 'cshelf', 'cyfrom', 'cyto',
+    'cdig', 'ckeyword'
+  ];
+
+  function getParentFilters() {
+    try {
+      var sp = new URL(window.location.href).searchParams;
+      var out = {};
+      for (var i = 0; i < SYNCED_PARAMS.length; i++) {
+        var v = sp.get(SYNCED_PARAMS[i]);
+        if (v) out[SYNCED_PARAMS[i]] = v;
+      }
+      return out;
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function filtersToQuery(filters) {
+    var parts = [];
+    if (!filters) return '';
+    for (var k in filters) {
+      if (Object.prototype.hasOwnProperty.call(filters, k) && filters[k]) {
+        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(filters[k]));
+      }
+    }
+    return parts.join('&');
+  }
+
+  // Deterministic key for dedupe: sort keys so {q:'x',sort:'y'} matches
+  // {sort:'y',q:'x'}.
+  function filtersKey(filters) {
+    var keys = [];
+    if (!filters) return '';
+    for (var k in filters) {
+      if (Object.prototype.hasOwnProperty.call(filters, k) && filters[k]) keys.push(k);
+    }
+    keys.sort();
+    var pairs = [];
+    for (var i = 0; i < keys.length; i++) {
+      pairs.push(keys[i] + '=' + filters[keys[i]]);
+    }
+    return pairs.join('&');
+  }
+
+  function makeNavKey(book, page, filters) {
+    return (book || '') + '::' + (page || '') + '::' + filtersKey(filters);
   }
 
   function getHostPathname() {
@@ -132,7 +189,7 @@
     return parts.join('&');
   }
 
-  function buildIframeSrc(book, page) {
+  function buildIframeSrc(book, page, filters) {
     var base = BASE_URL + '/';
     if (book && page) {
       return withEmbedContext(base + 'embed/' + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page));
@@ -143,8 +200,12 @@
     if (COLLECTION) {
       return withEmbedContext(base + 'embed/' + TENANT + '/collections/' + encodeURIComponent(COLLECTION));
     }
-    var initial = buildInitialQuery();
-    return withEmbedContext(base + 'embed/' + TENANT + (initial ? '?' + initial : ''));
+    // Parent-URL filter state (mirrored from a previous iframe interaction or
+    // a shared/bookmarked link) takes precedence over the data-* initial
+    // config. The data-* attributes are defaults for the first visit only.
+    var hasParentFilters = filters && filtersKey(filters) !== '';
+    var query = hasParentFilters ? filtersToQuery(filters) : buildInitialQuery();
+    return withEmbedContext(base + 'embed/' + TENANT + (query ? '?' + query : ''));
   }
 
   // --- CSS ---
@@ -200,7 +261,7 @@
 
     var iframe = document.createElement('iframe');
     iframe.id = 'sl-embed-iframe';
-    iframe.src = buildIframeSrc(getParam('book'), getParam('page'));
+    iframe.src = buildIframeSrc(getParam('book'), getParam('page'), getParentFilters());
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('title', 'Source Library');
 
@@ -215,11 +276,16 @@
 
     // --- State ---
     // What the host URL currently has (from browser perspective)
-    var hostNavKey = makeNavKey(getParam('book'), getParam('page'));
+    var hostNavKey = makeNavKey(getParam('book'), getParam('page'), getParentFilters());
     // What the iframe is currently showing (tracked via sl-navigate)
     var frameNavKey = hostNavKey;
     // Guard: true while handling popstate to prevent sl-navigate from pushing
     var isPopstateNav = false;
+    // True until the iframe's first sl-navigate. If the server strip-redirects
+    // orphaned filter params on initial load, the first sl-navigate will
+    // disagree with our parent-URL-derived hostNavKey — replace, don't push,
+    // so visitors don't have to hit back twice to leave the page.
+    var isInitialNav = true;
     // For forced reloads when client nav fails
     var reloadCounter = 0;
     // Track expected history length to detect iframe full navigations
@@ -268,8 +334,11 @@
       // Navigation report from iframe
       if (data.type !== 'sl-navigate') return;
 
-      var newNavKey = makeNavKey(data.book, data.page);
+      var iframeFilters = data.filters || {};
+      var newNavKey = makeNavKey(data.book, data.page, iframeFilters);
       var historyGrewUnexpectedly = history.length > expectedHistoryLength;
+      var wasInitialNav = isInitialNav;
+      isInitialNav = false;
 
       // Update frame tracking
       frameNavKey = newNavKey;
@@ -289,20 +358,38 @@
       // Scroll to top on navigation
       scrollToTop();
 
-      // Build the new URL
+      // Build the new URL. book/page are always synced. Filter params are
+      // only mirrored when the iframe is on a listing (no book) — when
+      // entering a book detail we want to preserve whatever filter state the
+      // visitor had so back-button restores it.
       var url = new URL(window.location.href);
       url.searchParams.delete('book');
       url.searchParams.delete('page');
       if (data.book) url.searchParams.set('book', data.book);
       if (data.page) url.searchParams.set('page', data.page);
+      if (!data.book) {
+        for (var i = 0; i < SYNCED_PARAMS.length; i++) url.searchParams.delete(SYNCED_PARAMS[i]);
+        for (var fk in iframeFilters) {
+          if (Object.prototype.hasOwnProperty.call(iframeFilters, fk) && iframeFilters[fk]) {
+            url.searchParams.set(fk, iframeFilters[fk]);
+          }
+        }
+      }
 
-      // If history grew unexpectedly (iframe did full navigation), use replaceState
-      // instead of pushState to avoid duplicate entries
-      if (historyGrewUnexpectedly) {
-        window.history.replaceState({ book: data.book || null, page: data.page || null }, '', url.toString());
+      var stateObj = {
+        book: data.book || null,
+        page: data.page || null,
+        filters: data.book ? null : iframeFilters
+      };
+
+      // Replace (not push) when history grew unexpectedly OR when this is
+      // the iframe's first nav after init — both cases would otherwise leave
+      // a phantom history entry that the back button has to step over.
+      if (historyGrewUnexpectedly || wasInitialNav) {
+        window.history.replaceState(stateObj, '', url.toString());
         hostNavKey = newNavKey;
       } else {
-        window.history.pushState({ book: data.book || null, page: data.page || null }, '', url.toString());
+        window.history.pushState(stateObj, '', url.toString());
         hostNavKey = newNavKey;
         expectedHistoryLength = history.length;
       }
@@ -312,7 +399,8 @@
     window.addEventListener('popstate', function () {
       var book = getParam('book');
       var page = getParam('page');
-      var targetNavKey = makeNavKey(book, page);
+      var filters = getParentFilters();
+      var targetNavKey = makeNavKey(book, page, filters);
 
       // Update host tracking
       hostNavKey = targetNavKey;
@@ -331,7 +419,7 @@
       scrollToTop();
 
       // Try fast client-side navigation first
-      var src = buildIframeSrc(book, page);
+      var src = buildIframeSrc(book, page, filters);
 
       try {
         iframe.contentWindow.postMessage({
@@ -339,6 +427,7 @@
           tenant: TENANT,
           book: book || null,
           page: page || null,
+          filters: filters
         }, BASE_URL);
       } catch (e) { /* cross-origin, fallback handles it */ }
 

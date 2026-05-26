@@ -8,11 +8,20 @@ interface HostNavigateData {
     tenant?: string | null;
     book?: string | null;
     page?: string | null;
+    filters?: Record<string, string>;
 }
+
+// Internal iframe-only params we never compare against host-driven targets
+// (host_path is appended by embed/v1.js; _r is the reload cache-buster).
+const INTERNAL_PARAMS = new Set(['host_path', '_r']);
 
 /**
  * Listens for host-driven navigation commands from embed v1.js and
  * performs client-side route transitions inside the iframe for faster UX.
+ *
+ * Host can send a book/page deep-link OR a filter snapshot (when the
+ * visitor hits back/forward on a URL whose filter state differs from the
+ * iframe's current view).
  */
 export default function EmbedHostNavigationListener() {
     const router = useRouter();
@@ -36,10 +45,23 @@ export default function EmbedHostNavigationListener() {
             } else if (book) {
                 target = '/embed/' + tenant + '/book/' + book;
             } else {
-                target = '/embed/' + tenant;
+                const qs = new URLSearchParams();
+                const filters = data.filters || {};
+                for (const [k, v] of Object.entries(filters)) {
+                    if (v) qs.set(k, v);
+                }
+                const query = qs.toString();
+                target = '/embed/' + tenant + (query ? '?' + query : '');
             }
 
-            const current = window.location.pathname + window.location.search;
+            // Normalise the current URL (strip internal iframe-only params) so
+            // the equality check actually fires when nothing has changed —
+            // otherwise the leftover host_path param makes every popstate
+            // trigger a wasted route.replace + nav-start flash.
+            const currentSp = new URLSearchParams(window.location.search);
+            INTERNAL_PARAMS.forEach((k) => currentSp.delete(k));
+            const currentSearch = currentSp.toString();
+            const current = window.location.pathname + (currentSearch ? '?' + currentSearch : '');
             if (current === target) return;
 
             // Show the loader before kicking off the route transition so it
