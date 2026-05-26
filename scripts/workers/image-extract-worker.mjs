@@ -55,6 +55,7 @@ const RESPONSE_SCHEMA = {
               width: { type: SchemaType.NUMBER },
               height: { type: SchemaType.NUMBER },
             },
+            required: ['x', 'y', 'width', 'height'],
           },
           confidence: { type: SchemaType.NUMBER },
           gallery_quality: { type: SchemaType.NUMBER },
@@ -71,6 +72,12 @@ const RESPONSE_SCHEMA = {
           },
           museum_description: { type: SchemaType.STRING },
         },
+        // Mark the load-bearing fields required so the model can't emit
+        // placeholder items with all-null fields. Without this, Gemini
+        // occasionally returned `extracted_images: [{}, {}, {}]` on pages
+        // it couldn't analyze, which our parser then defaulted to empty
+        // strings and `'unknown'` — the "zombie row" symptom (PR #2014).
+        required: ['description', 'type', 'bbox', 'gallery_quality', 'gallery_rationale'],
       },
     },
   },
@@ -143,6 +150,8 @@ SKIP these — do NOT include them:
 - Page ornaments, borders, decorative initials, printer's devices
 - Marbled papers, blank frames, ruled lines
 - Any element that is purely decorative with no intellectual content
+
+If the page contains no significant illustrations, return \`extracted_images: []\` — an empty array. Do NOT return placeholder objects with missing or null fields. Either fill in every field (description, type, bbox, confidence, gallery_quality, gallery_rationale) for an illustration, or omit it entirely.
 
 For each significant illustration return:
 {
