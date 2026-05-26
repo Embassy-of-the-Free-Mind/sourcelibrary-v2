@@ -113,6 +113,9 @@ export interface SemanticArtworkResult {
 /**
  * Full-dimensional query embedding (3072) for artwork_embeddings table.
  * Book embeddings truncate to 768 via outputDimensionality; artworks use full 3072.
+ * Stored as halfvec(3072) on Supabase so HNSW indexing works (vector_cosine_ops
+ * caps at 2000 dims; halfvec_cosine_ops supports up to 4000). The RPC parameter
+ * is declared halfvec; pg auto-parses the JSON.stringify'd array on the wire.
  */
 async function getQueryEmbeddingFull(query: string): Promise<number[] | null> {
   const geminiKey = process.env.GEMINI_API_KEY;
