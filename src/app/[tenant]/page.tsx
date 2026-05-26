@@ -67,10 +67,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // bph subdomain to the main site — a tenant-lockdown leak (CLAUDE.md
   // invariant #5: "Share/quote URLs use the request host"). On
   // bph.sourcelibrary.org the canonical resolves to https://bph.sourcelibrary.org/;
-  // on path-based access (sourcelibrary.org/bph) it stays on the main host.
+  // on path-based access (sourcelibrary.org/bph) or preview deploys
+  // (sourcelibrary-v2-git-*.vercel.app/bph) it stays at /bph on that host.
+  //
+  // Detection is "does the leftmost label of the host equal the tenant slug?"
+  // — anything else (main host, preview host, IP) is path-based.
   const host = getRequestBaseUrl(h);
-  const isSubdomainHost = !host.endsWith('//sourcelibrary.org');
-  const canonical = isSubdomainHost ? `${host}/` : `${host}/${tenant}`;
+  const hostname = host.replace(/^https?:\/\//, '').split('/')[0].split(':')[0];
+  const leftmostLabel = hostname.split('.')[0];
+  const isTenantSubdomain = leftmostLabel === tenant;
+  const canonical = isTenantSubdomain ? `${host}/` : `${host}/${tenant}`;
 
   return {
     title,
