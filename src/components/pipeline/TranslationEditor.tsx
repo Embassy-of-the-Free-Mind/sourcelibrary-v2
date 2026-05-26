@@ -763,6 +763,10 @@ export default function TranslationEditor({
     const target = e.target as HTMLElement;
     if (target.closest('textarea, input, button, a, [data-no-swipe]')) return;
 
+    // Don't start a swipe while the user is extending a text selection — the
+    // drag handle a finger uses to grow a highlight reads as a swipe otherwise.
+    if (typeof window !== 'undefined' && window.getSelection()?.toString().length) return;
+
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
   };
@@ -783,9 +787,14 @@ export default function TranslationEditor({
   };
 
   const handleTouchEnd = () => {
+    // If a selection is active at lift-off, the gesture was a highlight, not
+    // a swipe — bail before navigation but still reset transient state.
+    const hasSelection =
+      typeof window !== 'undefined' && !!window.getSelection()?.toString().length;
+
     const deltaX = swipeOffset * 2; // Reverse the 0.5 multiplier
 
-    if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+    if (!hasSelection && Math.abs(deltaX) > SWIPE_THRESHOLD) {
       if (deltaX > 0 && previousPage) {
         onNavigate(previousPage.id);
       } else if (deltaX < 0 && nextPage) {
