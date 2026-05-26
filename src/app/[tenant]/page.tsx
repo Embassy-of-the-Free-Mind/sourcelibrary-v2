@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
+import type { Metadata } from 'next';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import {
@@ -13,10 +14,84 @@ import {
 import { getDb } from '@/lib/mongodb';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
+import { getRequestBaseUrl } from '@/lib/shortlinks';
 
 interface Props {
   params: Promise<{ tenant: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { tenant } = await params;
+  const h = await headers();
+  const { id: tenantId } = getTenantContextFromRequest(h);
+
+  // Default-tenant root (sourcelibrary.org) is handled by src/app/page.tsx, but
+  // ISR-safety / route precedence means this generateMetadata may also fire for
+  // it. Fall back to the root layout's metadata in that case.
+  if (!tenantId || tenant === 'default') {
+    return {};
+  }
+
+  let tenantName = tenant;
+  let tenantDescription = '';
+  try {
+    const db = await getDb();
+    const tenantDoc = await db.collection('tenants').findOne(
+      { id: tenantId },
+      { projection: { _id: 0, name: 1, description: 1 } }
+    );
+    if (tenantDoc) {
+      if (typeof tenantDoc.name === 'string' && tenantDoc.name) tenantName = tenantDoc.name;
+      if (typeof tenantDoc.description === 'string') tenantDescription = tenantDoc.description;
+    }
+  } catch {
+    // Fall through with slug-based fallback if Mongo is unreachable.
+  }
+
+  const canonicalPartner = getPartnerBySlug(tenant);
+  if (!tenantDescription && canonicalPartner?.description) {
+    tenantDescription = canonicalPartner.description;
+  }
+  if (!tenantDescription) {
+    tenantDescription = `Browse the ${tenantName} reading room on Source Library — digitized, OCR'd, and translated rare texts curated for this collection.`;
+  }
+  if (tenantDescription.length > 200) {
+    tenantDescription = tenantDescription.slice(0, 197) + '...';
+  }
+
+  const title = `${tenantName} — Source Library`;
+
+  // Canonical must be absolute and host-aware. metadataBase is fixed to
+  // https://sourcelibrary.org, so a relative '/bph' would 308-canonical the
+  // bph subdomain to the main site — a tenant-lockdown leak (CLAUDE.md
+  // invariant #5: "Share/quote URLs use the request host"). On
+  // bph.sourcelibrary.org the canonical resolves to https://bph.sourcelibrary.org/;
+  // on path-based access (sourcelibrary.org/bph) it stays on the main host.
+  const host = getRequestBaseUrl(h);
+  const isSubdomainHost = !host.endsWith('//sourcelibrary.org');
+  const canonical = isSubdomainHost ? `${host}/` : `${host}/${tenant}`;
+
+  return {
+    title,
+    description: tenantDescription,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description: tenantDescription,
+      type: 'website',
+      siteName: 'Source Library',
+      locale: 'en_US',
+      url: canonical,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: tenantDescription,
+    },
+  };
 }
 
 export default async function TenantRoot({ params, searchParams }: Props) {

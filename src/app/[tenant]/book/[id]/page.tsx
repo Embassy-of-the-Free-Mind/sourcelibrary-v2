@@ -174,7 +174,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   if (!book) {
-    return { title: 'Book Not Found - Source Library', robots: { index: false, follow: false } };
+    // Self-referential canonical (not the inherited root '/') so Google doesn't
+    // see this as a duplicate of the homepage while it's still 200/noindex.
+    return {
+      title: 'Book Not Found - Source Library',
+      robots: { index: false, follow: false },
+      alternates: { canonical: `/book/${id}` },
+    };
   }
 
   // Wrong tenant — suppress metadata entirely so the 404 isn't indexed.
@@ -186,7 +192,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
     (bookTenantSlug && tenant && bookTenantSlug === tenant);
   if (hasTenantField && !matchesTenant) {
-    return { title: 'Not Found - Source Library', robots: { index: false, follow: false } };
+    return {
+      title: 'Not Found - Source Library',
+      robots: { index: false, follow: false },
+      alternates: { canonical: `/book/${id}` },
+    };
   }
 
   const title = book.display_title || book.title;

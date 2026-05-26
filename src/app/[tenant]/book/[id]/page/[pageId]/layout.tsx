@@ -49,8 +49,12 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   const { book, page } = await getPageData(tenant, id, pageId);
 
   if (!book || !page) {
+    // Self-referential canonical so this URL isn't seen as a duplicate of '/'
+    // (inherited root canonical). Per-page URLs are already noindex via the
+    // page-level metadata export.
     return {
       title: 'Page Not Found - Source Library',
+      alternates: { canonical: `/book/${id}/page/${pageId}` },
     };
   }
 

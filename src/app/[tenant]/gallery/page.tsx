@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { headers } from 'next/headers';
 import GalleryClient from '@/components/gallery/GalleryClient';
@@ -6,6 +7,30 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
 
 export const revalidate = 3600; // ISR: rebuild every hour (unfiltered landing only)
+
+const GALLERY_TITLE = 'Image Gallery — Source Library';
+const GALLERY_DESCRIPTION = 'Browse illustrations, engravings, woodcuts, alchemical emblems, and diagrams extracted from rare historical texts — searchable by subject, technique, and period.';
+
+export const metadata: Metadata = {
+  title: GALLERY_TITLE,
+  description: GALLERY_DESCRIPTION,
+  alternates: {
+    canonical: '/gallery',
+  },
+  openGraph: {
+    title: GALLERY_TITLE,
+    description: GALLERY_DESCRIPTION,
+    type: 'website',
+    siteName: 'Source Library',
+    locale: 'en_US',
+    url: '/gallery',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: GALLERY_TITLE,
+    description: GALLERY_DESCRIPTION,
+  },
+};
 
 interface GalleryPageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
