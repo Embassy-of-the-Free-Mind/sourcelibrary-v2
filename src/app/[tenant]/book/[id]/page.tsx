@@ -808,7 +808,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   <FileText className="w-4 h-4" />
                   {totalPages} scans
                 </div>
-                {embedPolicy.showGalleryImages && imageCount > 0 && (
+                {imageCount > 0 && (
                   <Link
                     href={`/gallery?bookId=${book.id}`}
                     className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
@@ -1035,7 +1035,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   </div>
                   {hasTranslations && (
                     <AISection kind="reading-guide">
-                      <ExpandableGuide embedPolicy={embedPolicy} bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
+                      <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
                     </AISection>
                   )}
                 </>
@@ -1095,8 +1095,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               );
             })()}
 
-            {/* Gallery Images Preview */}
-            {embedPolicy.showGalleryImages && galleryImages.length > 0 && (
+            {/* Gallery Images Preview — per-book strip is safe in embed mode
+                (every row is filtered by book_id, so tenant books only surface
+                their own images). The cross-book tenant-home gallery on
+                SharedLibraryView still respects showGalleryImages. */}
+            {galleryImages.length > 0 && (
               <div className="card p-6 mt-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
