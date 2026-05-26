@@ -1,0 +1,54 @@
+[
+  {
+    "bibId": "77327",
+    "accession": "MS M.422",
+    "accession_slug": "m422",
+    "title": "Fables and other poems",
+    "display_title": "Fables and Other Poems",
+    "author": "Pierre Sala",
+    "place": "France (text), Southern France (commission)",
+    "date": "ca. 1515",
+    "language": "French",
+    "categories": [
+      "medieval-manuscripts",
+      "illuminated-manuscripts",
+      "fables",
+      "literature"
+    ],
+    "page_count": 60,
+    "filename_pattern": "numeric_4d",
+    "image_offset": 1,
+    "filename_prefix": "77327v",
+    "ica_thumbs_url": "http://ica.themorgan.org/manuscript/thumbs/77327",
+    "ica_page_count": 37,
+    "record_url": "https://www.themorgan.org/manuscript/77327",
+    "iiif_manifest_url": null,
+    "notes": "Illustrated by the Master of the Chronique scandaleuse for Pierre Sala — a courtly miscellany of fables and chivalric poems."
+  },
+  {
+    "bibId": "77302",
+    "accession": "MS M.383",
+    "accession_slug": "m383",
+    "title": "Il fior di battaglia",
+    "display_title": "Il Fior di Battaglia (Flos duellatorum)",
+    "author": "Fiore dei Liberi",
+    "place": "Italy (Venice or Padua)",
+    "date": "ca. 1410-1420",
+    "language": "Italian, Latin",
+    "categories": [
+      "medieval-manuscripts",
+      "illuminated-manuscripts",
+      "fighting-manuals",
+      "martial-arts"
+    ],
+    "page_count": 37,
+    "filename_pattern": "numeric_4d",
+    "image_offset": 2,
+    "filename_prefix": "77302v",
+    "ica_thumbs_url": "http://ica.themorgan.org/manuscript/thumbs/77302",
+    "ica_page_count": 35,
+    "record_url": "https://www.themorgan.org/manuscript/77302",
+    "iiif_manifest_url": null,
+    "notes": "124 pen drawings of fighting techniques."
+  }
+]

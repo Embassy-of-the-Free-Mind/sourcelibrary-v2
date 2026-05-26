@@ -1,0 +1,119 @@
+[
+  {
+    "bibId": "110814",
+    "error": "no /collection/<slug>/thumbs link found on record page",
+    "partial_data": {
+      "bibId": "110814",
+      "record_url": "https://www.themorgan.org/manuscript/110814",
+      "record_root": "/manuscript",
+      "collection_slug": null,
+      "accession": "MS M.524",
+      "object_title": "Morgan apocalypse (MS M.524).",
+      "created": "London, England and France, between 1255 and 1260.",
+      "binding": "When the manuscript was acquired in 1908 it was in a one volume binding of brown morocco by Belz-Niedrée (Jean-Philippe Belz). In 1922 the manuscript was rebound into two volumes, separating pictures and commentary, by Marguerite Duprez Lahey: Volume I in full niger, Volume II in three-quarters niger morocco, in red morocco slipcase.",
+      "credit_line": "Purchased by J. Pierpont Morgan (1837-1913) in 1908.",
+      "description": "2 volumes (21, 56 leaves) (v. 2 has 2 columns, 30-44 lines), bound : vellum, ill. ; 272 x 195 mm",
+      "script": "textura",
+      "language": "v. 1 - Latin; v. 2 - Old French",
+      "century": "13th century",
+      "provenance": "Vicomte Blin de Bourdon (in his possession ca. 1901 when it was examined by Delisle and Meyer); purchased by J. Pierpont Morgan (1837-1913) from Brauer in May 1908; J.P. Morgan (1867-1943).",
+      "notes_block": "Ms. apocalypse picture book and commentary in two volumes; v. I, the picture volume, was written and illuminated in London, England, probably at Westminster Abbey, ca. 1255-1260; v. II, the commentary volume, was written ca. 1400, by a North French author, perhaps in France.",
+      "error": "no /collection/<slug>/thumbs link found on record page",
+      "ica_page_count": 0
+    }
+  },
+  {
+    "bibId": "77153",
+    "error": "no /collection/<slug>/thumbs link found on record page",
+    "partial_data": {
+      "bibId": "77153",
+      "record_url": "https://www.themorgan.org/manuscript/77153",
+      "record_root": "/manuscript",
+      "collection_slug": null,
+      "accession": "MS B.27",
+      "object_title": "Medical and astronomical texts (MS B.27).",
+      "created": "Germany, between 1450 and 1475.",
+      "binding": "Original blind-tooled quarter pigskin over wooden boards.",
+      "credit_line": "Bequest of Curt F. Bühler; 1985.",
+      "description": "139 leaves (1 column, varying number of lines), bound : paper, ill. ; 207 x 145 mm.",
+      "script": "Gothic cursive",
+      "language": "Latin and German",
+      "century": "15th century",
+      "provenance": "Purchased by Curt F. Bühler in Feb. 1959 from William H. Schab, New York (Cat. 25, no. 152).",
+      "notes_block": "Ms. medical and astronomical handbook; written and decorated in Germany in the third quarter of the 15th century.",
+      "error": "no /collection/<slug>/thumbs link found on record page",
+      "ica_page_count": 0
+    }
+  },
+  {
+    "bibId": "110800",
+    "error": "no /collection/<slug>/thumbs link found on record page",
+    "partial_data": {
+      "bibId": "110800",
+      "record_url": "https://www.themorgan.org/manuscript/110800",
+      "record_root": "/manuscript",
+      "collection_slug": null,
+      "accession": "MS M.484",
+      "object_title": "Apocalypse of Margaret of York.",
+      "created": "Ghent, Belgium, ca. 1475",
+      "binding": "English 19th-century light brown morocco gilt, bound for Rev. Theodore Williams by Charles Lewis.",
+      "credit_line": "Purchased by J. Pierpont Morgan (1837-1913), 1911.",
+      "description": "121 leaves (2 columns, 28 lines), bound : vellum, ill. ; 362 x 265 mm",
+      "script": "bastarda",
+      "language": "Middle French",
+      "century": "15th century",
+      "provenance": "Made for Margaret of York (1446-1503), wife (1468) of Charles the Bold, duc de Bourgogne; Prince Michel Petrovitch Galitzin (1764-ca. 1835) (catalogue, 1816, p. 9-10; sale, Paris, Mar. 3, 1825, lot 8) to Payne and Foss; sold by Longman to Rev. Theodore Williams (1785-1875); his sale (London, Stewart, Wheatley &amp; Adlard, Piccadilly, Apr. 5, 1827, no. 114) to Philip Hurd (d. ca. 1832); his sale (London, R.H. Evans, Mar. 29, 1832, no. 170) to Payne; Philip Augustus Hanrott sale (London, R.H. Evans, July 15, 1833, I, no. 214) to John Wilks (1765?-1854); his sale (London, Sotheby's, Mar. 12, 1847, no. 417) to Joseph Lilly; Manuel John Johnson (1805-1859); his sale (London, Sotheby's, May 27, 1862, no. 29) to Joseph Lilly; Henry Huth Collection (1815-1878); (catalogue, 1880, p. 40-41); Alfred Henry Huth (1850-1910) sale (London, Sotheby's, Nov. 16, 1911, I, no. 232) to Quaritch; purchased by J. Pierpont Morgan (1837-1913) from Quaritch in 1911; J.P. Morgan (1867-1943).",
+      "notes_block": "Ms. written and illuminated in Ghent, Belgium, ca. 1475.",
+      "error": "no /collection/<slug>/thumbs link found on record page",
+      "ica_page_count": 0
+    }
+  },
+  {
+    "bibId": "77026",
+    "accession": "MS M.133",
+    "accession_slug": "m133",
+    "title": "Berry Apocalypse",
+    "display_title": "Berry Apocalypse.",
+    "author": null,
+    "place": "Paris, France, ca. 1415.",
+    "date": "Paris, France, ca. 1415.",
+    "language": "French",
+    "categories": [
+      "medieval-manuscripts",
+      "illuminated-manuscripts"
+    ],
+    "page_count": 12,
+    "filename_pattern": "custom",
+    "page_filenames": [
+      "77026v_0003.jpg",
+      "77026v_0004-0005.jpg",
+      "77026v_0006-0007.jpg",
+      "77026v_0008-0009.jpg",
+      "77026v_0010-0011.jpg",
+      "77026v_0012-0013.jpg",
+      "77026v_0014-0015.jpg",
+      "77026v_0016-0017.jpg",
+      "77026v_0018-0019.jpg",
+      "77026v_0020-0021.jpg",
+      "77026v_0022-0023.jpg",
+      "77026v_0024-0025.jpg"
+    ],
+    "image_dir_override": null,
+    "filename_prefix": null,
+    "image_offset": null,
+    "ica_thumbs_url": null,
+    "ica_page_count": 0,
+    "record_url": "https://www.themorgan.org/manuscript/77026",
+    "collection_slug": "berry-apocalypse",
+    "iiif_manifest_url": null,
+    "_raw": {
+      "binding": "Formerly in black morocco, now in 19th-century orange velvet with chased silver corners and clasp, probably English, in green morocco case.",
+      "credit_line": "Purchased by J. Pierpont Morgan (1837-1913) in 1910.",
+      "description": "87 leaves (2 columns, 29-30 lines), bound : vellum, ill. ; 302 x 208 mm",
+      "script": "bastarda",
+      "century": "15th century",
+      "provenance": "Made for Jean, Duc de Berry, ca. 1415 (his erased ownership inscription; not in Berry inventories); owned in the 16th century by a member of the Mauvoisin (Malvoisin) family of Berry (inscriptions on fol. 86v and 87); long preserved in the family of the comtes de La Tour Du Pin; comte de N... (Nadaillac) sale (Paris, Apr. 7, 1879, no. 2787); sold (Sept. 1881) by Ellis and White to Theodore Irwin (Catalogue, 1887, p. 7 no. 40); purchased by J. Pierpont Morgan (1837-1913) with the Irwin Collection in 1900; J.P. Morgan (1867-1943).",
+      "notes_block": "Ms. Apocalypse; written and illuminated in Paris, France, ca. 1415."
+    }
+  }
+]

@@ -245,11 +245,101 @@ function buildIcaPageMap(icaRecs, pageLabels) {
   return map;
 }
 
-// ───────────────────────── page label generator ─────────────────────────
-// Per-MS overrides could go here; default models a typical Morgan single-volume
-// codex: front cover + endleaves + foliation + endleaves + back cover.
-// For now we generate generic "page N" labels; per-MS overrides can be added
-// in the manifest as `page_labels: ["front cover", "fol. 1r", ...]`.
+// ───────────────────────── page label fetcher ─────────────────────────
+// Morgan's online viewer's /thumbs page lists every viewer page's image with a
+// label like "007. MS M.422, fol. 1r". We scrape these to use as proper page
+// labels (so ICA folio_label matches work, and so the reader sees "fol. 1r"
+// not "page 7"). Tries both URL conventions: /collection/<slug>/<bibId>/thumbs
+// (new pattern) and /collection/<slug>/thumbs (older pattern).
+async function fetchPageLabelsFromThumbs(rec) {
+  if (Array.isArray(rec.page_labels) && rec.page_labels.length === rec.page_count) {
+    return rec.page_labels;
+  }
+
+  // Find the canonical /collection/<slug>/... URL from the record page
+  let recordHtml;
+  for (const root of [rec.record_root || '/manuscript', '/manuscript', '/incunables', '/drawings/item']) {
+    try {
+      recordHtml = await fetchBuffer(`https://www.themorgan.org${root}/${rec.bibId}`).then(b => b.toString('utf-8'));
+      break;
+    } catch {}
+  }
+  if (!recordHtml) return null;
+
+  // The record page links to one of three slug patterns:
+  //   /collection/<slug>/<bibId>      (newer pattern, M.422 → fables-poems)
+  //   /collection/<slug>/thumbs       (older pattern, Worksop)
+  //   /collection/<slug>"             (terse pattern, M.383 → renaissance-fighting-manual)
+  // Skip the generic Morgan-wide links (/collection/coptic-manuscripts, etc).
+  const SKIP_SLUGS = new Set([
+    'curatorial-departments','medieval-and-renaissance-manuscripts','coptic-manuscripts',
+    'coptic-bindings','indian-miniatures','the-morgan-library-museum',
+  ]);
+  let slug = null;
+  const slugPatterns = [
+    new RegExp(`/collection/([^"'/]+)/${rec.bibId}`),
+    new RegExp(`/collection/([^"'/]+)/thumbs`),
+    /\/collection\/([^"'/?]+)["?]/g,
+  ];
+  for (const re of slugPatterns) {
+    if (re.global) {
+      let m;
+      while ((m = re.exec(recordHtml)) !== null) {
+        if (!SKIP_SLUGS.has(m[1])) { slug = m[1]; break; }
+      }
+    } else {
+      const m = recordHtml.match(re);
+      if (m && !SKIP_SLUGS.has(m[1])) { slug = m[1]; }
+    }
+    if (slug) break;
+  }
+  if (!slug) return null;
+
+  // Determine which URL prefix worked (with or without bibId), then paginate through
+  // all thumbs pages (Morgan paginates 12 thumbs per page).
+  let thumbsBase = null;
+  for (const url of [
+    `https://www.themorgan.org/collection/${slug}/${rec.bibId}/thumbs`,
+    `https://www.themorgan.org/collection/${slug}/thumbs`,
+  ]) {
+    try {
+      const html = await fetchBuffer(url).then(b => b.toString('utf-8'));
+      if (html.length > 1000) { thumbsBase = url; break; }
+    } catch {}
+  }
+  if (!thumbsBase) return null;
+
+  // Labels live in <span class="field-content small">NNN. <hdr> <label></span>.
+  // Strip the bibliographic header — common forms: "MS X.Y," / "MS X.Y" / "PML 1.1-2" / "MA 3900"
+  const HEADER_RE = /^(?:MS|PML|MA|Ms\.?)\s*[\w.-]*,?\s*/;
+  const allEntries = new Map();
+  const PER_PAGE = 12;
+  const maxPage = Math.ceil(rec.page_count / PER_PAGE) + 2;
+  for (let p = 0; p < maxPage; p++) {
+    const url = `${thumbsBase}?page=${p}`;
+    let html;
+    try { html = await fetchBuffer(url).then(b => b.toString('utf-8')); } catch { break; }
+    const re = /<span\s+class="field-content small">\s*(\d{3})\.\s+(.+?)\s*<\/span>/g;
+    let m, found = 0;
+    while ((m = re.exec(html)) !== null) {
+      const vp = parseInt(m[1], 10);
+      if (vp < 1 || vp > rec.page_count || allEntries.has(vp)) continue;
+      let label = m[2].replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+      label = label.replace(HEADER_RE, '').trim();
+      if (label && label.length <= 200) {
+        allEntries.set(vp, label);
+        found++;
+      }
+    }
+    if (found === 0) break;
+  }
+
+  if (allEntries.size === 0) return null;
+  const labels = new Array(rec.page_count).fill(null);
+  for (const [vp, l] of allEntries) labels[vp - 1] = l;
+  return labels;
+}
+
 function defaultPageLabels(rec) {
   if (Array.isArray(rec.page_labels) && rec.page_labels.length === rec.page_count) {
     return rec.page_labels;
@@ -373,39 +463,68 @@ async function phaseInsert(rec, db) {
   // Load ICA descriptions if cached
   const icaPath = path.join(CACHE_DIR, rec.bibId, 'ica.json');
   const ica = fs.existsSync(icaPath) ? JSON.parse(fs.readFileSync(icaPath, 'utf-8')) : [];
-  const labels = defaultPageLabels(rec);
+
+  // Try to fetch real per-vp labels from the Morgan /thumbs viewer page
+  console.log(`  fetching per-page labels from Morgan /thumbs viewer...`);
+  const fetchedLabels = await fetchPageLabelsFromThumbs(rec);
+  const labels = fetchedLabels || defaultPageLabels(rec);
+  console.log(`  ${fetchedLabels ? 'fetched' : 'using default'} labels for ${labels.length} pages`);
   const icaMap = buildIcaPageMap(ica, labels);
 
   if (existing) {
     console.log(`  book exists: ${existing._id} (slug=${existing.slug})`);
-    if (ica.length > 0) {
-      // Use ACTUAL page labels from DB (the existing book may have richer labels than defaults)
+
+    // If we fetched fresh labels, update page docs that have generic ones
+    if (fetchedLabels) {
       const existingPages = await db.collection('pages')
         .find({ book_id: existing._id.toString() })
         .project({ page_number: 1, label: 1 })
-        .sort({ page_number: 1 })
         .toArray();
-      const labelArr = Array.from({ length: rec.page_count }, () => null);
-      for (const p of existingPages) labelArr[p.page_number - 1] = p.label || null;
-      const dbIcaMap = buildIcaPageMap(ica, labelArr);
-
-      if (dbIcaMap.size === 0) {
-        console.log(`  no ICA descriptions matched existing page labels — skipping enrichment`);
-      } else {
-        const bulk = db.collection('pages').initializeUnorderedBulkOp();
-        for (const [vp, icaRec] of dbIcaMap) {
-          bulk.find({ book_id: existing._id.toString(), page_number: vp }).updateOne({
-            $set: {
-              iconographic_description: icaRec.body,
-              ica_folio_label: icaRec.folio_label,
-              ica_source_url: `http://ica.themorgan.org/manuscript/page/${icaRec.ica_page}/${rec.bibId}`,
-              updated_at: new Date(),
-            },
-          });
+      const bulk = db.collection('pages').initializeUnorderedBulkOp();
+      let toUpdate = 0;
+      for (const p of existingPages) {
+        const newLabel = fetchedLabels[p.page_number - 1];
+        if (newLabel && newLabel !== p.label) {
+          bulk.find({ _id: p._id }).updateOne({ $set: { label: newLabel, updated_at: new Date() } });
+          toUpdate++;
         }
-        const res = await bulk.execute();
-        console.log(`  enriched ${res.modifiedCount}/${dbIcaMap.size} pages with ICA descriptions`);
       }
+      if (toUpdate > 0) {
+        const res = await bulk.execute();
+        console.log(`  refreshed ${res.modifiedCount}/${toUpdate} page labels`);
+      }
+    }
+
+    if (ica.length > 0 && icaMap.size > 0) {
+      const bulk = db.collection('pages').initializeUnorderedBulkOp();
+      for (const [vp, icaRec] of icaMap) {
+        bulk.find({ book_id: existing._id.toString(), page_number: vp }).updateOne({
+          $set: {
+            iconographic_description: icaRec.body,
+            ica_folio_label: icaRec.folio_label,
+            ica_source_url: `http://ica.themorgan.org/manuscript/page/${icaRec.ica_page}/${rec.bibId}`,
+            updated_at: new Date(),
+          },
+        });
+      }
+      const res = await bulk.execute();
+      console.log(`  enriched ${res.modifiedCount}/${icaMap.size} pages with ICA descriptions`);
+    } else if (ica.length > 0) {
+      console.log(`  no ICA descriptions matched page labels (have ${ica.length} ICA records but 0 matched)`);
+    }
+
+    // Always store ICA records on the book doc as a fallback (searchable, no data loss)
+    if (ica.length > 0) {
+      await db.collection('books').updateOne(
+        { _id: existing._id },
+        { $set: {
+          ica_records: ica.filter(r => r.body).map(r => ({
+            folio_label: r.folio_label, body: r.body, ica_page: r.ica_page,
+            ica_source_url: `http://ica.themorgan.org/manuscript/page/${r.ica_page}/${rec.bibId}`,
+          })),
+          updated_at: new Date(),
+        } }
+      );
     }
     return { _id: existing._id, slug: existing.slug, isNew: false };
   }
@@ -458,6 +577,10 @@ async function phaseInsert(rec, db) {
     source_fingerprint: fingerprint,
     normalized_title: slugify(rec.title).replace(/-/g, ' '),
     normalized_author: rec.author ? slugify(rec.author).replace(/-/g, ' ') : null,
+    ica_records: ica.length > 0 ? ica.filter(r => r.body).map(r => ({
+      folio_label: r.folio_label, body: r.body, ica_page: r.ica_page,
+      ica_source_url: `http://ica.themorgan.org/manuscript/page/${r.ica_page}/${rec.bibId}`,
+    })) : undefined,
     created_at: new Date(),
     updated_at: new Date(),
   };
