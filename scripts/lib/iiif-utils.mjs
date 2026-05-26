@@ -59,10 +59,15 @@ export function getDomainLimit(url) {
  * @param {object} [opts]
  * @param {number} [opts.timeout=30000]
  * @param {string} [opts.userAgent]
+ * @param {number} [opts.retries=3]  Retry count for transient network errors.
  * @returns {Promise<Buffer>}
  */
 export async function rateLimitedFetch(url, opts = {}) {
-  const { timeout = 30000, userAgent = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)' } = opts;
+  const {
+    timeout = 30000,
+    userAgent = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)',
+    retries = 3,
+  } = opts;
 
   let host;
   try { host = new URL(url).hostname; } catch { host = 'unknown'; }
@@ -71,30 +76,48 @@ export async function rateLimitedFetch(url, opts = {}) {
   if (!_domainBuckets.has(host)) _domainBuckets.set(host, { last: 0, count: 0 });
   const bucket = _domainBuckets.get(host);
 
-  const now = Date.now();
-  if (now - bucket.last > 1000) { bucket.count = 0; bucket.last = now; }
-  if (bucket.count >= limit) {
-    const wait = 1000 - (now - bucket.last);
-    if (wait > 0) await new Promise(r => setTimeout(r, wait));
-    bucket.count = 0;
-    bucket.last = Date.now();
-  }
-  bucket.count++;
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    // Rate-limit gate, evaluated per attempt so retries also yield to the bucket.
+    const now = Date.now();
+    if (now - bucket.last > 1000) { bucket.count = 0; bucket.last = now; }
+    if (bucket.count >= limit) {
+      const wait = 1000 - (now - bucket.last);
+      if (wait > 0) await new Promise(r => setTimeout(r, wait));
+      bucket.count = 0;
+      bucket.last = Date.now();
+    }
+    bucket.count++;
 
-  const controller = new AbortController();
-  const t = setTimeout(() => controller.abort(), timeout);
-  try {
-    const res = await fetch(url, {
-      signal: controller.signal,
-      headers: { 'User-Agent': userAgent },
-    });
-    clearTimeout(t);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return Buffer.from(await res.arrayBuffer());
-  } catch (e) {
-    clearTimeout(t);
-    throw e;
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), timeout);
+    try {
+      const res = await fetch(url, {
+        signal: controller.signal,
+        headers: { 'User-Agent': userAgent },
+      });
+      clearTimeout(t);
+      if (!res.ok) {
+        // 4xx is unlikely to recover; bail without retrying. 5xx and 429 are
+        // worth retrying with backoff.
+        if (res.status >= 400 && res.status < 500 && res.status !== 429) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        lastErr = new Error(`HTTP ${res.status}`);
+      } else {
+        return Buffer.from(await res.arrayBuffer());
+      }
+    } catch (e) {
+      clearTimeout(t);
+      lastErr = e;
+      // Abort, ECONNRESET, ETIMEDOUT, "fetch failed" — all transient, retry.
+    }
+    if (attempt < retries) {
+      const backoff = 500 * Math.pow(2, attempt); // 500ms, 1s, 2s
+      await new Promise(r => setTimeout(r, backoff));
+    }
   }
+  throw lastErr || new Error('rateLimitedFetch exhausted retries');
 }
 
 // ── IIIF URL transforms ──
