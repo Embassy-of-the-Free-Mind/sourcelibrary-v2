@@ -300,12 +300,15 @@ export default function ImageDetailPage({
   const saveTitle = async () => {
     if (!data) return;
     setSaving(true);
+    setError(null);
     try {
       await gallery.update(data.id, { description: titleValue });
+      prefetchCache.delete(getCacheKey(data.id, tenant));
       setData({ ...data, description: titleValue });
       setEditingTitle(false);
     } catch (e) {
       console.error('Failed to save title:', e);
+      setError(e instanceof Error ? `Save failed: ${e.message}` : 'Save failed');
     } finally {
       setSaving(false);
     }
@@ -314,12 +317,17 @@ export default function ImageDetailPage({
   const saveQuality = async (newQuality: number) => {
     if (!data) return;
     setSaving(true);
+    setError(null);
     try {
       await gallery.update(data.id, { galleryQuality: newQuality });
+      // Invalidate the prefetch cache for this image so a soft-nav back
+      // doesn't resolve to the pre-edit promise.
+      prefetchCache.delete(getCacheKey(data.id, tenant));
       setData({ ...data, galleryQuality: newQuality });
       setEditingQuality(false);
     } catch (e) {
       console.error('Failed to save quality:', e);
+      setError(e instanceof Error ? `Save failed: ${e.message}` : 'Save failed');
     } finally {
       setSaving(false);
     }
@@ -328,12 +336,15 @@ export default function ImageDetailPage({
   const saveMuseumDescription = async () => {
     if (!data) return;
     setSaving(true);
+    setError(null);
     try {
       await gallery.update(data.id, { museumDescription: museumDescValue });
+      prefetchCache.delete(getCacheKey(data.id, tenant));
       setData({ ...data, museumDescription: museumDescValue });
       setEditingDescription(false);
     } catch (e) {
       console.error('Failed to save description:', e);
+      setError(e instanceof Error ? `Save failed: ${e.message}` : 'Save failed');
     } finally {
       setSaving(false);
     }
@@ -342,12 +353,15 @@ export default function ImageDetailPage({
   const saveMetadata = async () => {
     if (!data) return;
     setSaving(true);
+    setError(null);
     try {
       await gallery.update(data.id, { metadata: metadataValues });
+      prefetchCache.delete(getCacheKey(data.id, tenant));
       setData({ ...data, metadata: metadataValues });
       setEditingMetadata(false);
     } catch (e) {
       console.error('Failed to save metadata:', e);
+      setError(e instanceof Error ? `Save failed: ${e.message}` : 'Save failed');
     } finally {
       setSaving(false);
     }
@@ -356,8 +370,10 @@ export default function ImageDetailPage({
   const saveBbox = async () => {
     if (!data) return;
     setSaving(true);
+    setError(null);
     try {
       const result = await gallery.update(data.id, { bbox: bboxValues });
+      prefetchCache.delete(getCacheKey(data.id, tenant));
       if (result.extractedUrl) {
         setData({
           ...data,
@@ -381,6 +397,7 @@ export default function ImageDetailPage({
       setEditingBbox(false);
     } catch (e) {
       console.error('Failed to save bbox:', e);
+      setError(e instanceof Error ? `Save failed: ${e.message}` : 'Save failed');
     } finally {
       setSaving(false);
     }
@@ -390,8 +407,10 @@ export default function ImageDetailPage({
     if (!data) return;
     setRotation(newRotation);
     setSavingRotation(true);
+    setError(null);
     try {
       const result = await gallery.update(data.id, { rotation: newRotation });
+      prefetchCache.delete(getCacheKey(data.id, tenant));
       if (result.extractedUrl) {
         setData({ ...data, rotation: newRotation, imageUrl: result.extractedUrl, extractedUrl: result.extractedUrl, thumbnailUrl: result.thumbnailUrl });
       } else {
@@ -399,6 +418,7 @@ export default function ImageDetailPage({
       }
     } catch (e) {
       console.error('Failed to save rotation:', e);
+      setError(e instanceof Error ? `Save failed: ${e.message}` : 'Save failed');
       setRotation(data.rotation ?? 0);
     } finally {
       setSavingRotation(false);
