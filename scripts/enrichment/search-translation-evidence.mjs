@@ -19,6 +19,10 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 
 // ── Config ──────────────────────────────────────────────────────────
+// NOTE: `gemini-3.1-flash-lite-preview` is listed by the discovery API but its
+// generateContent endpoint returns 404 for all 4 of our project API keys as of
+// 2026-05-26. Stable `gemini-3.1-flash-lite` works. Do not revert without
+// re-testing the preview alias against a real generateContent call.
 const MODEL = 'gemini-3.1-flash-lite';
 const CONCURRENCY = 3;
 const API_DELAY_MS = 400;
@@ -410,6 +414,10 @@ async function main() {
   const offset = args.includes('--offset') ? parseInt(args[args.indexOf('--offset') + 1]) : 0;
   const bookId = args.includes('--book-id') ? args[args.indexOf('--book-id') + 1] : null;
   const allBooks = args.includes('--all-books');
+  const unflagged = args.includes('--unflagged');
+  const excludeLanguages = args.includes('--exclude-languages')
+    ? args[args.indexOf('--exclude-languages') + 1].split(',').map(s => s.trim()).filter(Boolean)
+    : [];
 
   console.log(`=== Stage 1: Search Translation Evidence ===`);
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'APPLYING'}`);
@@ -417,6 +425,8 @@ async function main() {
   console.log(`Limit: ${limit} | Offset: ${offset}`);
   if (bookId) console.log(`Book: ${bookId}`);
   if (allBooks) console.log(`Scope: ALL BOOKS (not just is_first_translation)`);
+  if (unflagged) console.log(`Scope: UNFLAGGED — OCR'd non-English books where is_first_translation is not set`);
+  if (excludeLanguages.length) console.log(`Excluding languages: ${excludeLanguages.join(', ')}`);
   console.log();
 
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 3, serverSelectionTimeoutMS: 10000 });
@@ -427,6 +437,21 @@ async function main() {
   let query;
   if (bookId) {
     query = { id: bookId };
+  } else if (unflagged) {
+    // OCR'd, non-English, never assessed for is_first_translation, never catalog-searched
+    query = {
+      hidden: { $ne: true },
+      pages_ocr: { $gt: 0 },
+      language: { $not: /^english$/i },
+      is_first_translation: { $exists: false },
+      $or: [
+        { 'translation_verification.source': { $ne: 'catalog_search' } },
+        { 'translation_verification': { $exists: false } },
+      ],
+    };
+    if (excludeLanguages.length > 0) {
+      query.language = { $not: /^english$/i, $nin: excludeLanguages };
+    }
   } else if (allBooks) {
     // All non-hidden, non-English books with pages, not yet searched
     query = {
