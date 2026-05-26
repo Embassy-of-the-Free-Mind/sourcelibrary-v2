@@ -2,6 +2,33 @@
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true
   },
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(curl *)",
+      "Bash(git add *)",
+      "Bash(git fetch *)",
+      "Bash(vercel ls)",
+      "Bash(vercel ls *)",
+      "Bash(vercel list)",
+      "Bash(vercel list *)",
+      "Bash(vercel inspect *)",
+      "Bash(open *)",
+      "mcp__claude_ai_Gmail__search_threads",
+      "mcp__claude_ai_Gmail__get_thread",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__resize_page",
+      "mcp__claude_ai_Google_Drive__read_file_content",
+      "mcp__claude_ai_Google_Drive__search_files",
+      "mcp__claude-conversation-search__search_conversations",
+      "mcp__claude_ai_Source_Library__search_library",
+      "mcp__claude_ai_Source_Library__get_book",
+      "mcp__claude_ai_Source_Library__get_book_text"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
