@@ -515,7 +515,8 @@ export async function PATCH(
                 }
               }
             );
-            // Sync to gallery_images
+            // Sync to gallery_images (upsert so an earlier delete from low-quality
+            // doesn't permanently strand the row out of sync with pages.detected_images)
             try {
               const galleryImageId = `${pageId}-${detectionIndex}`;
               const gallerySync: Record<string, unknown> = {
@@ -529,8 +530,17 @@ export async function PATCH(
               if (typeof body.galleryQuality === 'number') gallerySync.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
               if (typeof body.rotation === 'number') gallerySync.rotation = body.rotation;
               if (body.bbox) gallerySync.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
-              await db.collection('gallery_images').updateOne({ id: galleryImageId, ...tenantGalleryFilter }, { $set: gallerySync });
-            } catch { /* non-fatal */ }
+              await db.collection('gallery_images').updateOne(
+                { id: galleryImageId, ...tenantGalleryFilter },
+                {
+                  $set: gallerySync,
+                  $setOnInsert: { id: galleryImageId, page_id: pageId, detection_index: detectionIndex },
+                },
+                { upsert: true },
+              );
+            } catch (e) {
+              console.error('Gallery images sync (bbox/rotation path) failed:', e);
+            }
 
             return NextResponse.json({
               success: true,
@@ -547,12 +557,14 @@ export async function PATCH(
     }
 
     // Sync changes to materialized gallery_images collection
+    let gallerySyncStatus: 'ok' | 'removed_low_quality' | 'no_change' | { error: string } = 'no_change';
     try {
       const galleryImageId = `${pageId}-${detectionIndex}`;
 
       // If quality dropped below materialization threshold, remove from gallery
       if (typeof body.galleryQuality === 'number' && body.galleryQuality < 0.5) {
         await db.collection('gallery_images').deleteOne({ id: galleryImageId, ...tenantGalleryFilter });
+        gallerySyncStatus = 'removed_low_quality';
       } else {
         const galleryUpdate: Record<string, unknown> = {};
         if (typeof body.galleryQuality === 'number') {
@@ -567,17 +579,31 @@ export async function PATCH(
 
         if (Object.keys(galleryUpdate).length > 0) {
           galleryUpdate.updated_at = new Date();
-          await db.collection('gallery_images').updateOne(
+          // Upsert: if a prior edit dropped quality < 0.5 the row was deleted
+          // (line above). Without upsert, raising quality back ≥ 0.5 would leave
+          // the gallery list view permanently out of sync with pages.detected_images.
+          // On insert, also write the foreign-key fields needed for queries.
+          const result = await db.collection('gallery_images').updateOne(
             { id: galleryImageId, ...tenantGalleryFilter },
-            { $set: galleryUpdate }
+            {
+              $set: galleryUpdate,
+              $setOnInsert: {
+                id: galleryImageId,
+                page_id: pageId,
+                detection_index: detectionIndex,
+              },
+            },
+            { upsert: true },
           );
+          gallerySyncStatus = result.upsertedCount > 0 || result.modifiedCount > 0 ? 'ok' : 'no_change';
         }
       }
     } catch (syncErr) {
-      console.warn('Gallery images sync failed (non-fatal):', syncErr);
+      console.error('Gallery images sync failed:', syncErr);
+      gallerySyncStatus = { error: syncErr instanceof Error ? syncErr.message : 'unknown' };
     }
 
-    return NextResponse.json({ success: true, updated: updateFields });
+    return NextResponse.json({ success: true, updated: updateFields, gallerySync: gallerySyncStatus });
   } catch (error) {
     console.error('Gallery image update error:', error);
     return NextResponse.json(
