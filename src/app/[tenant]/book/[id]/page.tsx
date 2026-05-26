@@ -127,22 +127,39 @@ function getBookTenantId(book: Record<string, unknown> | Book): string | undefin
 // Lightweight book fetch for metadata — reuses cached lookup
 async function getBookForMetadata(id: string, tenantId?: string | null, tenantSlug?: string): Promise<Book | null> {
   const result = await getCachedBookLookup(id);
-  if (result && tenantId) {
-    const db = await getReadDb();
-    const scoped = await findBookByIdOrSlug(db, id, {
-      reading_sections: 0,
-      pipeline: 0,
-      pipeline_auto: 0,
-      split_check: 0,
-      'index.sectionSummaries': 0,
-      'index.people': 0,
-      'index.places': 0,
-      'index.concepts': 0,
-      'index.keyTerms': 0,
-    }, tenantId, tenantSlug);
-    return scoped ? (scoped.book as unknown as Book) : null;
+  if (!result) return null;
+  if (!tenantId) return result.book as unknown as Book;
+
+  const db = await getReadDb();
+  const scoped = await findBookByIdOrSlug(db, id, {
+    reading_sections: 0,
+    pipeline: 0,
+    pipeline_auto: 0,
+    split_check: 0,
+    'index.sectionSummaries': 0,
+    'index.people': 0,
+    'index.places': 0,
+    'index.concepts': 0,
+    'index.keyTerms': 0,
+  }, tenantId, tenantSlug);
+  if (scoped) return scoped.book as unknown as Book;
+
+  // Default tenant is the global namespace. Legacy + corpus-source books
+  // (ETCSL, CDLI, etc.) have no `tenantId`/`tenant_id` field at all; the
+  // strict scoped lookup excludes them, which caused generateMetadata() to
+  // emit "Book Not Found" + noindex even though the page body renders fine
+  // via the unscoped fetch. 1.52K books were being silently delisted in GSC.
+  //
+  // Tenant subdomains (bph/, etc.) keep the strict filter so the lockdown
+  // invariant (CLAUDE.md "Tenant Subdomain Lockdown") still holds: only
+  // books explicitly assigned to that tenant are visible there.
+  if (tenantSlug === 'default') {
+    const book = result.book as Record<string, unknown>;
+    if (!book.tenantId && !book.tenant_id) {
+      return book as unknown as Book;
+    }
   }
-  return result ? (result.book as unknown as Book) : null;
+  return null;
 }
 
 
