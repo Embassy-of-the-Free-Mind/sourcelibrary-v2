@@ -1,35 +1,75 @@
-0 */4 * * * /root/moltbook-heartbeat.sh
-*/5 * * * * /root/oura/healthcheck.sh
-0 8 * * * /usr/local/bin/oura-digest >> /var/log/oura-digest.log 2>&1
-0 8 * * * /root/moltbook-poster.sh
+
+0 0 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-reset" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 0 14 * * * /root/moltbook-poster.sh
 0 20 * * * /root/moltbook-poster.sh
-
-
-
-
-# ── Source Library: Unified Scheduler (issue #646) ──
-# Single coordinator that checks DB health, enforces connection budget (~40),
-# and spawns pipeline workers in priority order. Replaces 15+ independent crons.
-*/2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
-
-# ── Non-Atlas workers (HTTP-only, keep separate) ──
-# Social posting
+0 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/sync-worker.mjs' >> /var/log/sourcelibrary/sync.log 2>&1
+0 3 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-books-catalog-full.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-books-catalog.mjs --full" >> /var/log/sourcelibrary/books-catalog-sync.log 2>&1
+0 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-hires-gallery.lock bash -c "set -a; source .env.production.local; set +a; node --import tsx scripts/workers/backfill-hires-gallery.mjs --batch=2000 --concurrency=3" >> /var/log/sourcelibrary/hires-gallery.log 2>&1
 0 */3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-social-post.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-post" >> /var/log/sourcelibrary/cron-caller.log 2>&1
-0 0 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-reset" >> /var/log/sourcelibrary/cron-caller.log 2>&1
-
-# Daily pipeline report
+0 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-thumb-regen.lock bash -c "set -a; source .env.production.local; set +a; node scripts/tmp-regen-page-thumbs.mjs --limit=200" >> /var/log/sourcelibrary/thumb-regen.log 2>&1
+0 */4 * * * /root/moltbook-heartbeat.sh
+0 4 * * * /root/sourcelibrary/scripts/workers/backup-books.sh >> /var/log/sourcelibrary/backup-books.log 2>&1
+0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
 0 6 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs daily-pipeline-report" >> /var/log/sourcelibrary/cron-caller.log 2>&1
-
-# Pipeline health alert (read-only, lightweight)
 0 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
+0 8 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/daily-health-snapshot.mjs" >> /var/log/sourcelibrary/daily-snapshot.log 2>&1
+0 8 * * * /root/moltbook-poster.sh
+0 8 * * * /usr/local/bin/oura-digest >> /var/log/oura-digest.log 2>&1
+15 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrichment-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrichment-snapshot.mjs" >> /var/log/sourcelibrary/enrichment-snapshot.log 2>&1
+15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
+*/2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
+30 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-entity-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-entities.mjs" >> /var/log/sourcelibrary/entity-sync.log 2>&1
+30 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-embed-gemini.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=$GEMINI_API_KEY_TIER3 && node scripts/workers/embed-gemini.mjs --incremental" >> /var/log/sourcelibrary/embed-gemini.log 2>&1
+30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/snapshot-stats.mjs" >> /var/log/sourcelibrary/snapshot.log 2>&1
+30 5 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; curl -s -X POST https://sourcelibrary.org/api/admin/cache-probe -H "Authorization: Bearer $CRON_SECRET"" >> /var/log/sourcelibrary/cache-probe.log 2>&1
+45 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-books-catalog-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-books-catalog.mjs" >> /var/log/sourcelibrary/books-catalog-sync.log 2>&1
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-uptime.lock bash -c "set -a; source .env.production.local; set +a; node scripts/uptime-monitor.mjs" >> /var/log/sourcelibrary/uptime-monitor.log 2>&1
+*/5 * * * * echo "$(date -u +'\%Y-\%m-\%dT\%H:\%M:\%SZ') $(uptime | sed 's/.*load average: //')" >> /var/log/sourcelibrary/cpu-load.log
+*/5 * * * * /root/oura/healthcheck.sh
+# All pipeline workers managed by unified scheduler (issue #646)
+# ── Daily maintenance (early morning, staggered) ──
+# Heavy jobs staggered across 2-hour windows to avoid Atlas contention
+# ── Heavy periodic jobs (staggered across 2h windows) ──
+# ── HTTP-only / monitoring (no Atlas load) ──
+# Installed: 2026-04-10
+# ── Non-Source Library ──
+# Runs every 2 min, health-gated, connection-budgeted
+# ── Semantic embeddings (Gemini, Supabase only, no Atlas load) ──
+# === Source Library Crontab ===
+# These run infrequently but are expensive — never overlap them
+# ── Unified Scheduler (manages all pipeline workers) ──
+# Weekly full books_catalog sync (catches books missed by incremental)
+
+# Weekly: clear image_thumb fields on books whose /pages/-thumb URL 404s (#1945)
+0 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-thumb-sweep.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/fix-broken-image-thumb.mjs --apply" >> /var/log/sourcelibrary/thumb-sweep.log 2>&1
 
 # R2 coverage snapshot (every 6h — updates the doc /admin/r2-coverage reads)
 30 */6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
 
-# Archive auto-unblock (daily — retry books blocked >14d ago with transient failure reasons; leaves 401/403 auth blocks alone)
+# Archive auto-unblock (daily — retry books blocked >14d ago with transient failure reasons)
 0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-unblock.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-auto-unblock.mjs" >> /var/log/sourcelibrary/archive-auto-unblock.log 2>&1
 
-# ISR cache warming (HTTP revalidation, no DB)
-0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
-15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
+# First Translation verification pipeline (Stage 1 catalog search + Stage 2 disposition)
+30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-search.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/search-translation-evidence.mjs --apply --limit 500" >> /var/log/sourcelibrary/ft-search.log 2>&1
+15 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-validate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/validate-translation-evidence.mjs --apply --limit 1000" >> /var/log/sourcelibrary/ft-validate.log 2>&1
+
+# Supabase pages-content sync (PR #2026 / issue #2020)
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync-pages-content.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-pages-content.mjs" >> /var/log/sourcelibrary/sync-pages-content.log 2>&1
+
+# ── Source Library HTTP crons moved from Vercel (PR #2031) ──
+# Triggered via scripts/workers/cron-caller.mjs which sets Authorization: Bearer $CRON_SECRET.
+# Routes accept the same secret Vercel auto-injects, so existing Vercel crons keep working
+# during the transition (they got removed from vercel.json in the same PR).
+
+# Auth provider health probe — Google OAuth, Resend, NextAuth session, DB
+*/10 * * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs /api/health/auth" >> /var/log/sourcelibrary/cron-caller.log 2>&1
+
+# DB + zombie-job health check
+0 * * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs health-check" >> /var/log/sourcelibrary/cron-caller.log 2>&1
+
+# Latency trend (consumes cron_runs left by health-check; 5min offset gives it a head start)
+5 * * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs latency-trend" >> /var/log/sourcelibrary/cron-caller.log 2>&1
+
+# Image-side embeddings — artwork_embeddings, gallery_text_embeddings, clip_embeddings (issue #2021)
+# These tables had no recurring writer; froze for 35+ days. Uses TIER3 paid key for data-rights.
+0 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-image-embeddings.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=$GEMINI_API_KEY_TIER3; node scripts/workers/image-embeddings-cron.mjs" >> /var/log/sourcelibrary/image-embeddings.log 2>&1
