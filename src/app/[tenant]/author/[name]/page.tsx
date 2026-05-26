@@ -10,6 +10,7 @@ import AuthorBibliography from '@/components/browse/AuthorBibliography';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import AuthorSchema from '@/components/seo/AuthorSchema';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -339,6 +340,25 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
+      <AuthorSchema
+        authorName={authorName}
+        authorSlug={name}
+        description={entity?.description}
+        aliases={entity?.aliases}
+        birthDate={entity?.wikidata_birth_date}
+        deathDate={entity?.wikidata_death_date}
+        wikipediaUrl={wikipediaUrl}
+        wikidataId={entity?.wikidata_id}
+        viafId={entity?.viaf_id}
+        portraitUrl={portraitUrl}
+        workCount={works.length + artworks.length}
+        sampleWorks={works.slice(0, 10).map(w => ({
+          id: w.id,
+          slug: w.slug,
+          title: w.title,
+          published: w.published,
+        }))}
+      />
       <SiteHeader variant="light" />
 
       {/* Hero */}
