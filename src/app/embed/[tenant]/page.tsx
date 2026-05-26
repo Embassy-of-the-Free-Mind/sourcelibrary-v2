@@ -1,4 +1,6 @@
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
+import type { Metadata } from 'next';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import {
     fetchTenantLibraryData,
@@ -13,6 +15,7 @@ import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
+import { getRequestBaseUrl } from '@/lib/shortlinks';
 
 // Cold-start with several BPH-only Supabase/Mongo loaders can exceed the
 // Vercel default function budget (10s) under Atlas load, surfacing as
@@ -24,6 +27,79 @@ export const maxDuration = 30;
 interface Props {
     params: Promise<{ tenant: string }>;
     searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+// Tenant subdomain home (e.g. bph.sourcelibrary.org/) is rewritten by
+// src/proxy.ts to /embed/<tenant>, so SEO metadata for the subdomain root
+// must live here — not on src/app/[tenant]/page.tsx, which never renders
+// for subdomain hosts. Without this, the subdomain home inherits the root
+// layout's title and canonical='/', and Google treats it as a duplicate of
+// the main site (a tenant-lockdown leak per CLAUDE.md invariant #5).
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { tenant } = await params;
+    const h = await headers();
+
+    let tenantName = tenant;
+    let tenantDescription = '';
+    try {
+        const tenantId = await resolveTenantId(tenant);
+        if (tenantId) {
+            const db = await getDb();
+            const tenantDoc = await db.collection('tenants').findOne(
+                { id: tenantId },
+                { projection: { _id: 0, name: 1, description: 1 } }
+            );
+            if (tenantDoc) {
+                if (typeof tenantDoc.name === 'string' && tenantDoc.name) tenantName = tenantDoc.name;
+                if (typeof tenantDoc.description === 'string') tenantDescription = tenantDoc.description;
+            }
+        }
+    } catch {
+        // Fall through with slug-based fallback if Mongo is unreachable.
+    }
+
+    const canonicalPartner = getPartnerBySlug(tenant);
+    if (!tenantDescription && canonicalPartner?.description) {
+        tenantDescription = canonicalPartner.description;
+    }
+    if (!tenantDescription) {
+        tenantDescription = `Browse the ${tenantName} reading room on Source Library — digitized, OCR'd, and translated rare texts curated for this collection.`;
+    }
+    if (tenantDescription.length > 200) {
+        tenantDescription = tenantDescription.slice(0, 197) + '...';
+    }
+
+    const title = `${tenantName} — Source Library`;
+
+    // Detection mirrors src/app/[tenant]/page.tsx: leftmost DNS label equals
+    // the tenant slug → subdomain host → canonical=`${host}/`. Anything else
+    // (path-based access via /embed/<tenant>) → canonical=`${host}/${tenant}`.
+    const host = getRequestBaseUrl(h);
+    const hostname = host.replace(/^https?:\/\//, '').split('/')[0].split(':')[0];
+    const leftmostLabel = hostname.split('.')[0];
+    const isTenantSubdomain = leftmostLabel === tenant;
+    const canonical = isTenantSubdomain ? `${host}/` : `${host}/${tenant}`;
+
+    return {
+        title,
+        description: tenantDescription,
+        alternates: {
+            canonical,
+        },
+        openGraph: {
+            title,
+            description: tenantDescription,
+            type: 'website',
+            siteName: 'Source Library',
+            locale: 'en_US',
+            url: canonical,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description: tenantDescription,
+        },
+    };
 }
 
 function getOptionalStringField(value: unknown): string {
