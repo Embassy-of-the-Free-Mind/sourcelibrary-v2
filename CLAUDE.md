@@ -155,6 +155,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
 - **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
 - **MCP server/CLI:** read `memory/mcp-server.md`
+- **Embeddings / semantic search:** read `.claude/docs/embeddings.md` — five Supabase tables (`page_translations`, `book_embeddings`, `artwork_embeddings`, `gallery_text_embeddings`, `clip_embeddings`), three workers, five RPCs.
 - **Book acquisition / curation:** `/curator` or `/library-curator`
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
