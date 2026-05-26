@@ -307,27 +307,6 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  async function resolveTenantForGalleryImagePath(path: string): Promise<string | null> {
-    const match = path.match(/^\/gallery\/image\/([^/]+)$/);
-    if (!match) return null;
-
-    const imageId = match[1];
-    const idMatch = imageId.match(/^(.+)[:\-](\d+)$/);
-    const pageId = idMatch ? idMatch[1] : null;
-    if (!pageId) return null;
-
-    try {
-      const db = await getDbCached();
-      const page = await db.collection('pages').findOne(
-        { id: pageId },
-        { projection: { tenantId: 1 } }
-      );
-      return page?.tenantId ? await resolveTenantSlugById(page.tenantId as string) : null;
-    } catch {
-      return null;
-    }
-  }
-
   // --- Embed CORS: allow partner Webflow sites to call collection/book APIs ---
   const isEmbedRoute =
     pathname.startsWith('/api/collections') || pathname.startsWith('/api/books');
@@ -469,16 +448,16 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (pathname.startsWith('/gallery/image/')) {
-    const tenantSlug = await resolveTenantForGalleryImagePath(pathname)
-      || (await resolveTenantByExactSlug('default'))?.slug
-      || null;
-    if (tenantSlug) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/${tenantSlug}${pathname}`;
-      return NextResponse.redirect(url, 308);
-    }
-  }
+  // Gallery image URLs are tenant-agnostic, matching the book-URL doctrine
+  // (see PR #2025, CLAUDE.md "Source Library is the destination"). A previous
+  // block here redirected `/gallery/image/<id>` to
+  // `/<tenant>/gallery/image/<id>` based on the image's owning tenant, but
+  // when that tenant resolved to a *provider*-kind row (e-codices, Internet
+  // Archive, etc.) the provider-strip rule above immediately stripped the
+  // prefix back off, producing an infinite 308 loop and making most gallery
+  // image pages unreachable. The clean URL is served by
+  // src/app/gallery/image/[id]/page.tsx (which re-exports the tenant page)
+  // plus a matching root layout that supplies the metadata + JSON-LD.
 
   // Collections are global routes. Canonicalize legacy tenant-scoped collection
   // paths (e.g. /bph/collections/astrology) to /collections/astrology.
