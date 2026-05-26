@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb, forceReconnect } from '@/lib/mongodb';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 15;
@@ -18,7 +19,10 @@ interface AuthCheck {
  * Tests the actual OAuth/email flows would succeed, not just that env vars exist.
  * Called by Hetzner cron every 10 minutes. Alerts via Resend on failure.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const checks: AuthCheck[] = [];
 
   // 1. Google OAuth — test that OIDC discovery + client config works
