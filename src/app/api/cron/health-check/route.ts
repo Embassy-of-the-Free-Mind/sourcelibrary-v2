@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 30;
 export const preferredRegion = 'fra1';
@@ -21,7 +22,10 @@ interface HealthIssue {
   severity: 'warning' | 'critical';
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const issues: HealthIssue[] = [];
   const latencies: Record<string, number> = {};
   const t0 = Date.now();

@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -16,7 +17,10 @@ const CONSECUTIVE_CHECKS_FOR_ALERT = 2;
  * Computes averages, trend direction, and sends alerts if latency is degrading.
  * Stores results in system_config.latency_trend.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const db = await getDb();
 
   // Fetch health-check cron runs from the last 24 hours

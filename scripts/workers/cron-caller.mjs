@@ -1,13 +1,16 @@
 #!/usr/bin/env node
-// Hetzner cron caller — triggers Vercel API cron endpoints via HTTP.
+// Hetzner cron caller — triggers Source Library API cron endpoints via HTTP.
 //
-// Usage: node cron-caller.mjs <cron-name>
-// Examples: archive-ocr, social-post, social-reset, daily-pipeline-report
+// Usage:
+//   node cron-caller.mjs <cron-name>      # → POST/GET /api/cron/<cron-name>
+//   node cron-caller.mjs /api/health/auth # → POST/GET <full path verbatim>
+//
+// Examples: archive-ocr, social-post, daily-pipeline-report, /api/health/auth
 // Requires env vars: BASE_URL, CRON_SECRET
 
-const cronName = process.argv[2];
-if (!cronName) {
-  console.error('Usage: node cron-caller.mjs <cron-name>');
+const arg = process.argv[2];
+if (!arg) {
+  console.error('Usage: node cron-caller.mjs <cron-name | /full/path>');
   process.exit(1);
 }
 
@@ -19,7 +22,12 @@ if (!CRON_SECRET) {
   process.exit(1);
 }
 
-const url = `${BASE_URL}/api/cron/${cronName}`;
+// Argument can be either a short cron name (prepended with /api/cron/) or an
+// absolute path starting with `/` (used verbatim). The latter is for routes
+// that don't live under /api/cron/* — e.g. /api/health/auth.
+const path = arg.startsWith('/') ? arg : `/api/cron/${arg}`;
+const label = arg.startsWith('/') ? arg : arg;
+const url = `${BASE_URL}${path}`;
 const timestamp = new Date().toISOString();
 
 console.log(`[${timestamp}] Calling ${url}`);
@@ -42,12 +50,12 @@ try {
   try { parsed = JSON.parse(body); } catch { parsed = body; }
 
   if (res.ok) {
-    console.log(`[${timestamp}] ${cronName} OK (${res.status}):`, JSON.stringify(parsed).substring(0, 500));
+    console.log(`[${timestamp}] ${label} OK (${res.status}):`, JSON.stringify(parsed).substring(0, 500));
   } else {
-    console.error(`[${timestamp}] ${cronName} FAILED (${res.status}):`, JSON.stringify(parsed).substring(0, 500));
+    console.error(`[${timestamp}] ${label} FAILED (${res.status}):`, JSON.stringify(parsed).substring(0, 500));
     process.exit(1);
   }
 } catch (err) {
-  console.error(`[${timestamp}] ${cronName} ERROR:`, err.message);
+  console.error(`[${timestamp}] ${label} ERROR:`, err.message);
   process.exit(1);
 }
