@@ -28,6 +28,16 @@
  *   data-top-offset  — top offset for fixed host nav (default: 0px)
  *   data-scroll-mode — "page" (default, footer reachable) or "iframe" (locked host scroll)
  *   data-base-url    — override API/page base URL (default: https://sourcelibrary.org)
+ *   data-view        — initial view: "grid" | "list" | "catalogue" (alias "catalog")
+ *                      grid/list show the books grid in that display mode;
+ *                      catalogue shows the full bibliographic catalogue
+ *   data-sort        — initial sort: "title" | "author" | "year_asc" | "year_desc"
+ *                      | "shelfmark"; books-grid also supports "popular" and "recent"
+ *   data-q           — initial search query
+ *   data-language    — initial language filter (ISO code, e.g. "lat", "deu")
+ *
+ * data-view, data-sort, data-q, data-language only apply to the tenant root
+ * (no data-collection, and no ?book= deep-link on the host URL).
  *
  * At least one of data-collection or data-library is required.
  */
@@ -61,6 +71,10 @@
   var TARGET_ID = script.getAttribute('data-target') || 'sl-embed';
   var TOP_OFFSET = script.getAttribute('data-top-offset') || '0px';
   var SCROLL_MODE = (script.getAttribute('data-scroll-mode') || 'page').toLowerCase();
+  var INITIAL_VIEW = (script.getAttribute('data-view') || '').toLowerCase();
+  var INITIAL_SORT = script.getAttribute('data-sort') || '';
+  var INITIAL_Q = script.getAttribute('data-q') || '';
+  var INITIAL_LANGUAGE = script.getAttribute('data-language') || '';
   if (!TENANT) {
     console.error('[SourceLibrary] data-library is required on the embed script tag.');
     return;
@@ -86,8 +100,36 @@
   }
 
   function withEmbedContext(src) {
-    var sep = src.indexOf('?') === -1 ? '?' : '&';    
+    var sep = src.indexOf('?') === -1 ? '?' : '&';
     return src + sep + 'host_path=' + encodeURIComponent(getHostPathname());
+  }
+
+  // Translates the simple data-view alias into the server's two-axis model
+  // (view = books|catalog, display = grid|list). Webflow embedders shouldn't
+  // need to know about that split — "grid" / "list" / "catalogue" is enough.
+  function buildInitialQuery() {
+    var parts = [];
+    var isCatalogue = INITIAL_VIEW === 'catalogue' || INITIAL_VIEW === 'catalog';
+    if (INITIAL_VIEW === 'grid') {
+      parts.push('view=books', 'display=grid');
+    } else if (INITIAL_VIEW === 'list') {
+      parts.push('view=books', 'display=list');
+    } else if (isCatalogue) {
+      parts.push('view=catalog', 'display=list');
+    }
+    // Sort param name differs by view: 'sort' for books grid, 'csort' for catalogue.
+    // Server-side strip-redirect (see src/app/embed/[tenant]/page.tsx) cleans
+    // up the inactive one, so the user only thinks in terms of "data-sort".
+    if (INITIAL_SORT) {
+      parts.push((isCatalogue ? 'csort=' : 'sort=') + encodeURIComponent(INITIAL_SORT));
+    }
+    if (INITIAL_Q) {
+      parts.push((isCatalogue ? 'cq=' : 'q=') + encodeURIComponent(INITIAL_Q));
+    }
+    if (INITIAL_LANGUAGE) {
+      parts.push((isCatalogue ? 'clang=' : 'language=') + encodeURIComponent(INITIAL_LANGUAGE));
+    }
+    return parts.join('&');
   }
 
   function buildIframeSrc(book, page) {
@@ -101,7 +143,8 @@
     if (COLLECTION) {
       return withEmbedContext(base + 'embed/' + TENANT + '/collections/' + encodeURIComponent(COLLECTION));
     }
-    return withEmbedContext(base + 'embed/' + TENANT);
+    var initial = buildInitialQuery();
+    return withEmbedContext(base + 'embed/' + TENANT + (initial ? '?' + initial : ''));
   }
 
   // --- CSS ---
