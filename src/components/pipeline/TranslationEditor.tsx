@@ -1321,10 +1321,29 @@ export default function TranslationEditor({
                     {/* Image metadata + download */}
                     {pageDisplayUrl && (page.image_width || page.archived_photo) && (
                       <div className="mt-2 px-1 flex items-center justify-between text-xs" style={{ color: 'var(--text-faint)' }}>
-                        <span>
+                        <span className="inline-flex items-center gap-1">
                           {page.image_width && page.image_height
-                            ? `${page.image_width} × ${page.image_height}px`
+                            ? `${page.image_width.toLocaleString()} × ${page.image_height.toLocaleString()} px`
                             : ''}
+                          {book.image_source?.provider_name && (
+                            <>
+                              <span aria-hidden="true">·</span>
+                              {book.image_source.source_url ? (
+                                <a
+                                  href={book.image_source.source_url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hover:underline"
+                                  title={`View at ${book.image_source.provider_name}`}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {book.image_source.provider_name}
+                                </a>
+                              ) : (
+                                <span>{book.image_source.provider_name}</span>
+                              )}
+                            </>
+                          )}
                         </span>
                         {pageNativeUrl && (
                           <a
