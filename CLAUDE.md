@@ -62,7 +62,7 @@ Lessons from PR #2055 (see `.claude/handoffs/`). The homepage and most public su
 - **Homepage stats live in `system_config.homepage_stats`** (Mongo). Refreshed daily at 05:00 by `scripts/maintenance/prewarm-browse.mjs`, also writable on demand by `scripts/maintenance/update-homepage-stats.mjs`. Both scripts now share the same canonical filters — keep them in sync if you touch either. The canonical filters are:
   - `totalBooks` / `authorCount` / `languageCount`: `visible: true && pages_count > 0` (plus `pages_translated > 0` for authors/languages)
   - `translatedToEnglish`: ≥90% "readable" — `pages_translated >= 0.9 * (pages_ocr - pages_blank)`
-  - `artworkCount`: `visible: true && resource_type ∈ {drawing, fresco, object, painting, print}`
+  - `artworkCount`: `visible: true && content_type: 'artwork'` — single-object entries (paintings, prints, sculptures, etc.), distinguished from books by being non-sequential. They typically have `pages_count: 0` (image + metadata only) or a handful of non-sequential images of the same object. Don't filter on `resource_type` here — it's a finer-grained sub-category (sculpture, religious, allegory, manuscript-illumination…) that under-counts if used alone.
   - `illustrationCount`: `gallery_images.countDocuments({})`
 - **`is_first_translation: true` ≠ "we have it in English."** It's a bibliographic claim that gets set by batch-flag scripts (e.g. `scripts/maintenance/bulk-flag-tibetan-ft.mjs`) before translation completes. Render gates that show the "First Translation" badge must require `pages_translated > 0` — otherwise readers see a badge on a book they can't read. Pattern: `book.is_first_translation && (book.pages_translated ?? 0) > 0`.
 

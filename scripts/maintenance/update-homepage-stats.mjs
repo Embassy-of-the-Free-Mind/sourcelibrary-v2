@@ -25,8 +25,11 @@ const readableFilter = {
   $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
 };
 
-// Visual artworks (standalone art entries with resource_type like print, painting, etc.)
-const artworkFilter = { visible: true, resource_type: { $in: ['drawing', 'fresco', 'object', 'painting', 'print'] } };
+// Visual artworks: single-object entries (paintings, prints, sculptures, etc.).
+// Tagged content_type:'artwork' at import. They have 0 pages (image + metadata)
+// or a few non-sequential images of the same object — not read like books.
+// resource_type is too narrow: it omits sculpture, religious art, allegory, etc.
+const artworkFilter = { visible: true, content_type: 'artwork' };
 
 const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount] = await Promise.all([
   books.countDocuments(filter),
