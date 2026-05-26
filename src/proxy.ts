@@ -240,7 +240,7 @@ export async function proxy(request: NextRequest) {
     return cachedDbPromise;
   }
 
-  async function resolveActiveTenant(slug: string): Promise<{ id: string; slug: string } | null> {
+  async function resolveActiveTenant(slug: string): Promise<{ id: string; slug: string; kind: string | null } | null> {
     if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
       return null;
     }
@@ -255,7 +255,11 @@ export async function proxy(request: NextRequest) {
         status: { $ne: 'deleted' },
       });
       if (!tenant) return null;
-      return { id: tenant.id as string, slug: tenant.slug as string };
+      return {
+        id: tenant.id as string,
+        slug: tenant.slug as string,
+        kind: (tenant.kind as string | undefined) ?? null,
+      };
     } catch {
       return null;
     }
@@ -423,6 +427,31 @@ export async function proxy(request: NextRequest) {
     subdomainHeaders.set('x-tenant-slug', tenant);
     if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
     return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
+  }
+
+  // --- Source-provider URL strip ---
+  // Source providers (Internet Archive, Gallica, Bodleian, …) live in the
+  // `tenants` Mongo collection so book metadata can credit them and queries
+  // can filter by `image_source.provider`, but they are NOT tenants in the
+  // routing sense — no partner subdomain, no scoped UI. Treating their slugs
+  // as URL prefixes (`/internet-archive/gallery`, `/gallica/book/...`)
+  // accidentally scopes the [tenant]/* routes by tenantId and hides content
+  // that the provider re-hosts but doesn't carry a tenantId for (most of
+  // gallery_images, related books, etc.). Strip the provider prefix and
+  // 308-redirect to the global equivalent so providers never claim URL space.
+  // Subdomain-kind tenants (bph, kloss-collection, bhutan) and `default`/`meta`
+  // are untouched here — their existing per-route canonicalizations below
+  // continue to apply when visited from the main host.
+  const providerStripMatch = pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/);
+  if (providerStripMatch) {
+    const seg = providerStripMatch[1];
+    const rest = providerStripMatch[2] || '';
+    const providerCandidate = await resolveActiveTenant(seg);
+    if (providerCandidate?.kind === 'provider') {
+      const url = request.nextUrl.clone();
+      url.pathname = rest || '/';
+      return NextResponse.redirect(url, 308);
+    }
   }
 
   // --- Canonical book URLs ---
