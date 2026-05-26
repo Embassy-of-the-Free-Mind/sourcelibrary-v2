@@ -36,7 +36,7 @@ function getOptionalStringField(value: unknown): string {
 const CATALOG_PARAM_KEYS = [
     'cq', 'csort', 'ckeyword', 'coffset',
     'cauthor', 'ctitle', 'ceditor', 'cplace', 'cprinter', 'cpublisher',
-    'cshelf', 'clang', 'cyfrom', 'cyto', 'cdig',
+    'cshelf', 'clang', 'cyfrom', 'cyto', 'cdig', 'cft',
 ];
 
 // Books-grid owns these. Catalog view ignores them; strip on /catalog so the

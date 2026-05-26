@@ -98,12 +98,24 @@ interface AdvancedFilters {
   yearFrom: string;
   yearTo: string;
   digitized: '' | 'true' | 'sl' | 'false' | 'held';
+  /** First English translation on Source Library. Implicitly digitised
+      (joins to Atlas `books.is_first_translation` via sl_book_id). */
+  firstTranslation: boolean;
 }
 
 const EMPTY_ADV: AdvancedFilters = {
   author: '', title: '', editor: '', place: '', printer: '', publisher: '',
   shelf_mark: '', language: '', yearFrom: '', yearTo: '', digitized: '',
+  firstTranslation: false,
 };
+
+/** A filter is "applied" when its value is non-empty (or true for the
+    boolean flags). Helper so all the `Object.entries(adv)…` call sites
+    agree on the shape and don't trip over `false !== ''`. */
+function isAdvFilterApplied(key: string, value: string | boolean, lockDigitized: boolean): boolean {
+  if (typeof value === 'boolean') return value;
+  return value !== '' && !(lockDigitized && key === 'digitized');
+}
 
 const PER_PAGE = 50;
 
@@ -213,6 +225,7 @@ export default function BphCatalogBrowser({
     yearFrom: searchParams.get('cyfrom') || '',
     yearTo: searchParams.get('cyto') || '',
     digitized: lockDigitized ? 'sl' : ((searchParams.get('cdig') || '') as AdvancedFilters['digitized']),
+    firstTranslation: searchParams.get('cft') === '1',
   };
   // "Has a user-applied advanced filter?" — drives whether the Advanced
   // panel is open on mount. Exclude the digitised filter when it's forced
@@ -220,7 +233,7 @@ export default function BphCatalogBrowser({
   // so the panel doesn't auto-open just because the user picked a top-level
   // view. Same exclusion rule as `advCount` below.
   const hasAnyAdv = Object.entries(initialAdv).some(
-    ([k, v]) => v !== '' && !(lockDigitized && k === 'digitized')
+    ([k, v]) => isAdvFilterApplied(k, v as string | boolean, lockDigitized)
   );
   // The unified catalogue's grid view links here with `?cadv=1` so the
   // Advanced panel auto-opens on arrival — partner-requested affordance so
@@ -256,6 +269,7 @@ export default function BphCatalogBrowser({
     if (a.yearFrom) params.set('yearFrom', a.yearFrom);
     if (a.yearTo) params.set('yearTo', a.yearTo);
     if (a.digitized) params.set('digitized', a.digitized);
+    if (a.firstTranslation) params.set('first_translation', '1');
     return params;
   }, []);
 
@@ -273,7 +287,7 @@ export default function BphCatalogBrowser({
     // (e.g. the BPH digitised baseline lives upstream in MongoDB, not in the
     // Supabase query result this component sees).
     const isFiltered = !!q || !!kw || Object.entries(a).some(
-      ([k, v]) => v !== '' && !(lockDigitized && k === 'digitized')
+      ([k, v]) => isAdvFilterApplied(k, v as string | boolean, lockDigitized)
     );
 
     setLoading(true);
@@ -322,6 +336,7 @@ export default function BphCatalogBrowser({
     setOrDel('cyfrom', a.yearFrom);
     setOrDel('cyto', a.yearTo);
     setOrDel('cdig', a.digitized);
+    setOrDel('cft', a.firstTranslation ? '1' : '');
     const qs = params.toString();
     const path = window.location.pathname;
     window.history.replaceState(null, '', qs ? `${path}?${qs}` : path);
@@ -372,10 +387,18 @@ export default function BphCatalogBrowser({
     applyAdvanced(nextAdv);
   }, 300);
 
-  const handleAdvChange = (key: keyof AdvancedFilters, value: string) => {
+  const handleAdvChange = (key: keyof AdvancedFilters, value: string | boolean) => {
     const next = { ...adv, [key]: value } as AdvancedFilters;
     setAdv(next);
     debouncedApplyAdvanced(next);
+  };
+
+  // Toggle-style controls apply immediately (no typing debounce) — saves the
+  // user 300 ms of staring at a stale list after a single click.
+  const handleAdvToggle = (key: keyof AdvancedFilters, value: boolean) => {
+    const next = { ...adv, [key]: value } as AdvancedFilters;
+    setAdv(next);
+    applyAdvanced(next);
   };
 
   const clearAll = () => {
@@ -391,7 +414,9 @@ export default function BphCatalogBrowser({
   // When the digitised filter is locked by the parent (Show digitised list view),
   // don't count it as a user-applied filter — it's part of the view, not a chip.
   const advCount = useMemo(
-    () => Object.entries(adv).filter(([k, v]) => v !== '' && !(lockDigitized && k === 'digitized')).length,
+    () => Object.entries(adv).filter(
+      ([k, v]) => isAdvFilterApplied(k, v as string | boolean, lockDigitized)
+    ).length,
     [adv, lockDigitized]
   );
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
@@ -582,6 +607,18 @@ export default function BphCatalogBrowser({
                 </select>
               </div>
             )}
+            <div>
+              <label className="block text-xs text-muted mb-1">Translation</label>
+              <label className="inline-flex items-center gap-2 text-sm text-primary cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={adv.firstTranslation}
+                  onChange={(e) => handleAdvToggle('firstTranslation', e.target.checked)}
+                  className="rounded border-border-light text-accent-rust focus:ring-accent-rust/30"
+                />
+                First English translation
+              </label>
+            </div>
           </div>
           <div className="flex items-center gap-2 mt-4">
             <button
