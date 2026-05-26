@@ -49,7 +49,9 @@ for (let i = 0; i < urls.length; i += 5) {
 
 console.log(`Done: ${ok} OK, ${fail} failed (${new Date().toISOString()})`);
 
-// Optionally refresh homepage stats
+// Optionally refresh homepage stats. Filter logic must stay in sync with
+// scripts/maintenance/update-homepage-stats.mjs — homepage reads the same
+// system_config doc and expects all 7 fields (incl. artwork + illustration counts).
 if (process.env.MONGODB_URI) {
   try {
     const { MongoClient } = await import('mongodb');
@@ -57,18 +59,25 @@ if (process.env.MONGODB_URI) {
     const db = client.db('bookstore');
     const books = db.collection('books');
 
-    const filter = { hidden: { $ne: true }, pages_count: { $gt: 0 } };
+    const filter = { visible: true, pages_count: { $gt: 0 } };
     const translatedFilter = { ...filter, pages_translated: { $gt: 0 } };
+    const readableFilter = {
+      ...translatedFilter,
+      $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
+    };
+    const artworkFilter = { visible: true, resource_type: { $in: ['drawing', 'fresco', 'object', 'painting', 'print'] } };
 
-    const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount] = await Promise.all([
+    const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount] = await Promise.all([
       books.countDocuments(filter),
-      books.countDocuments(translatedFilter),
+      books.countDocuments(readableFilter),
       books.countDocuments({ ...translatedFilter, is_first_translation: true }),
       books.distinct('author', translatedFilter).then(a => a.length),
       books.distinct('language', translatedFilter).then(l => l.filter(x => x && !x.includes(',') && !x.includes(' and ')).length),
+      books.countDocuments(artworkFilter),
+      db.collection('gallery_images').countDocuments({}),
     ]);
 
-    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, updatedAt: new Date() };
+    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount, updatedAt: new Date() };
     await db.collection('system_config').updateOne(
       { _id: 'homepage_stats' },
       { $set: stats },
