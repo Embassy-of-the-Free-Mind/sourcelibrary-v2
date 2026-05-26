@@ -3,18 +3,6 @@
   "ignoreCommand": "git diff HEAD^ HEAD --quiet -- src/ public/ next.config.ts vercel.json package.json package-lock.json",
   "crons": [
     {
-      "path": "/api/cron/social-post",
-      "schedule": "0 */3 * * *"
-    },
-    {
-      "path": "/api/cron/social-reset",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/cron/daily-pipeline-report",
-      "schedule": "0 6 * * *"
-    },
-    {
       "path": "/api/cron/warm",
       "schedule": "0 4 * * *"
     },
