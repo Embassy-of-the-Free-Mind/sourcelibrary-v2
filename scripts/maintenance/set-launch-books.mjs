@@ -145,6 +145,7 @@ async function main() {
     {
       $set: {
         hidden: true,
+        visible: false,
         hidden_reason: 'launch_curation',
       },
     }
@@ -163,7 +164,7 @@ async function main() {
       ],
     },
     {
-      $set: { hidden: false },
+      $set: { hidden: false, visible: true },
       $unset: { hidden_reason: '' },
     }
   );
