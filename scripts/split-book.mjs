@@ -516,7 +516,7 @@ for (let i = 0; i < newPages.length; i++) {
   const doc = {
     _id: new ObjectId(id),
     id,
-    tenant_id: 'default',
+    ...(book.tenantId ? { tenantId: book.tenantId } : {}),
     book_id: book.id,
     page_number: pageNum,
     photo: p._photo,
