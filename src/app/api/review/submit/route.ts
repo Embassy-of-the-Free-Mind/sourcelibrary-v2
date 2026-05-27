@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
+import { isValidRating, QUEUE_KEYS } from '@/lib/review-queue';
 
 export const maxDuration = 5;
 
-const ALLOWED_QUEUES = new Set(['hallucination']);
-const ALLOWED_RATINGS_HALLUCINATION = new Set(['matches', 'partial', 'hallucination', 'unclear']);
+const ALLOWED_QUEUES = new Set<string>(QUEUE_KEYS);
 
 /**
  * POST /api/review/submit
@@ -35,8 +35,8 @@ export async function POST(request: NextRequest) {
   if (!itemId || itemId.length > 200) {
     return NextResponse.json({ error: 'invalid item_id' }, { status: 400 });
   }
-  if (queue === 'hallucination' && !ALLOWED_RATINGS_HALLUCINATION.has(rating)) {
-    return NextResponse.json({ error: 'invalid rating' }, { status: 400 });
+  if (!isValidRating(queue, rating)) {
+    return NextResponse.json({ error: 'invalid rating for this queue' }, { status: 400 });
   }
   if (!/^[0-9a-f-]{36}$/i.test(volunteerId)) {
     return NextResponse.json({ error: 'invalid volunteer_id' }, { status: 400 });

@@ -9,25 +9,43 @@ export const metadata: Metadata = {
 
 const QUEUES = [
   {
+    slug: 'gallery-quality',
+    title: 'Gallery quality',
+    blurb:
+      "We extract thousands of illustrations from historical books. " +
+      "Which of them actually belong in a curated gallery? Your judgment calibrates our quality threshold.",
+    status: 'live',
+    timePerItem: '~5 seconds',
+  },
+  {
+    slug: 'scan-quality',
+    title: 'Scan quality',
+    blurb:
+      "Pristine color scan? Bitonal microfilm? Blurry mess? Classifying the digitization quality of a page " +
+      "gives us training data for the rest of the library.",
+    status: 'live',
+    timePerItem: '~5 seconds',
+  },
+  {
     slug: 'hallucination',
     title: 'OCR hallucination check',
     blurb:
-      'Our OCR sometimes invents illustrations on stained or blank pages. ' +
-      'Compare the description to the page image — does it match?',
+      "Our OCR sometimes invents illustrations on stained or blank pages. " +
+      "Compare the AI's description to the page image — does it match?",
     status: 'live',
     timePerItem: '~10 seconds',
   },
   {
-    slug: 'page-type',
-    title: 'Page-type check',
-    blurb: 'Did the AI correctly identify a page as a frontispiece, title page, illustration, or blank?',
+    slug: 'duplicates',
+    title: 'Duplicate detection',
+    blurb: "Two engravings, one book vs another: same plate or different printings? Helps us tune deduplication.",
     status: 'coming-soon',
     timePerItem: '~5 seconds',
   },
   {
-    slug: 'gallery-quality',
-    title: 'Gallery quality',
-    blurb: 'Would this image belong in a curated gallery? Helps us calibrate quality thresholds.',
+    slug: 'page-type',
+    title: 'Page type',
+    blurb: "Is this page really a frontispiece? A title page? Decorative? Helps our page-classifier learn.",
     status: 'coming-soon',
     timePerItem: '~5 seconds',
   },
@@ -78,10 +96,10 @@ export default function ReviewLandingPage() {
       <div className="mt-12 text-sm text-stone-600 leading-relaxed border-t border-stone-200 pt-6">
         <p className="mb-2">
           <b>What we do with your ratings:</b> when several people agree on a judgment, it becomes part of
-          our filter rules. Your specific ratings are anonymized and stored only as a per-browser ID.
+          our filter rules and quality signals. Your ratings are stored only as a per-browser ID — no PII.
         </p>
         <p>
-          Built as an experiment in collaborative curation. Want to give feedback?{' '}
+          Built as an experiment in collaborative curation. Feedback?{' '}
           <a href="mailto:derek@playpowerlabs.com" className="text-accent-rust hover:underline">
             Email Derek
           </a>
