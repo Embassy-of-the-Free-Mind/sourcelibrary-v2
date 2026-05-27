@@ -99,3 +99,54 @@ export function deduplicateByDHash<T extends { book_id: string; dhash?: string |
 
   return [...kept, ...withoutHash];
 }
+
+/**
+ * Fallback dedup for images that don't have a dhash yet. Groups within the
+ * same book by a normalized description prefix — empirically, the image
+ * extractor produces near-identical AI descriptions for repeats of the same
+ * illustration (e.g., 10 frontispieces with prefix "A group of ethereal,
+ * dancing figures, likely representing fa..."). Keeps the highest
+ * gallery_quality from each group.
+ *
+ * Conservative on purpose: only collapses when the prefix matches exactly
+ * within a single book_id. Different books, different prefixes, or any
+ * image already covered by [[deduplicateByDHash]] are untouched.
+ */
+export function deduplicateByDescription<T extends { book_id: string; description?: string | null; gallery_quality: number }>(
+  images: T[],
+  prefixLen = 50
+): T[] {
+  if (images.length === 0) return images;
+  const seen = new Map<string, T>();
+  const kept: T[] = [];
+  for (const img of images) {
+    const desc = (img.description || '').trim().toLowerCase().slice(0, prefixLen);
+    if (!desc) { kept.push(img); continue; }
+    const key = `${img.book_id}::${desc}`;
+    const prev = seen.get(key);
+    if (!prev) {
+      seen.set(key, img);
+      kept.push(img);
+    } else if (img.gallery_quality > prev.gallery_quality) {
+      // Replace the lower-quality entry in-place
+      const idx = kept.indexOf(prev);
+      if (idx >= 0) kept[idx] = img;
+      seen.set(key, img);
+    }
+  }
+  return kept;
+}
+
+/**
+ * Combined dedup: dhash-based clustering for images that have hashes,
+ * description-based fallback for the rest. Pre-sort by `gallery_quality`
+ * descending before calling so the best copy wins each cluster.
+ */
+export function deduplicateGalleryImages<
+  T extends { book_id: string; dhash?: string | null; description?: string | null; gallery_quality: number }
+>(images: T[], opts: { dhashThreshold?: number; descPrefixLen?: number } = {}): T[] {
+  return deduplicateByDescription(
+    deduplicateByDHash(images, opts.dhashThreshold ?? 5),
+    opts.descPrefixLen ?? 50
+  );
+}

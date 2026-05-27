@@ -325,7 +325,7 @@ function summarize(results) {
   return { total, broken, byPattern };
 }
 
-function formatReport(summary, started) {
+function formatReport(summary, started, orphanCheck) {
   const { total, broken, byPattern } = summary;
   const lines = [];
   lines.push(`Soft-404 audit — ${BASE_URL}`);
@@ -348,14 +348,63 @@ function formatReport(summary, started) {
       }
     }
   }
+  if (orphanCheck) {
+    const tag = orphanCheck.orphanCount === 0 ? '   ok' : 'broken';
+    lines.push('');
+    lines.push('Data-integrity checks:');
+    lines.push(`  [${tag}] orphan gallery_images   ${orphanCheck.orphanCount} rows across ${orphanCheck.affectedBooks} books`);
+    if (orphanCheck.orphanCount > 0) {
+      lines.push(`         → run scripts/maintenance/cleanup-orphan-gallery-images.mjs`);
+    }
+  }
   return lines.join('\n');
+}
+
+// ---------------------------------------------------------------------------
+// DB-level data-integrity checks
+// ---------------------------------------------------------------------------
+
+/**
+ * Orphan gallery_images: rows whose `page_id` doesn't resolve in `pages`.
+ *
+ * Each orphan = one dead /gallery/image/<id> link AND one dead
+ * /book/<book_id>/page/<page_id> link. Sampling-based HTTP probes catch this
+ * statistically; this aggregation catches all of them in one query, so the
+ * audit reports an exact count instead of an estimate. Cleanup lives in
+ * scripts/maintenance/cleanup-orphan-gallery-images.mjs.
+ */
+async function countOrphanGalleryImages(db) {
+  const result = await db.collection('gallery_images').aggregate(
+    [
+      {
+        $lookup: {
+          from: 'pages',
+          localField: 'page_id',
+          foreignField: 'id',
+          as: 'page',
+          pipeline: [{ $project: { _id: 1 } }, { $limit: 1 }],
+        },
+      },
+      { $match: { page: { $size: 0 } } },
+      {
+        $group: {
+          _id: null,
+          orphans: { $sum: 1 },
+          books: { $addToSet: '$book_id' },
+        },
+      },
+    ],
+    { allowDiskUse: true, maxTimeMS: 120_000 }
+  ).toArray();
+  const row = result[0] || { orphans: 0, books: [] };
+  return { orphanCount: row.orphans, affectedBooks: row.books.length };
 }
 
 // ---------------------------------------------------------------------------
 // Sinks
 // ---------------------------------------------------------------------------
 
-async function writeSnapshot(db, summary, started) {
+async function writeSnapshot(db, summary, started, orphanCheck) {
   const doc = {
     started_at: started,
     finished_at: new Date(),
@@ -366,9 +415,10 @@ async function writeSnapshot(db, summary, started) {
     by_pattern: Object.fromEntries(
       [...summary.byPattern].map(([k, v]) => [k, { n: v.n, broken: v.broken, examples: v.examples }])
     ),
+    data_integrity: orphanCheck || null,
   };
   await db.collection('soft_404_audits').insertOne(doc);
-  console.log(`[snapshot] wrote soft_404_audits doc (broken=${summary.broken}/${summary.total})`);
+  console.log(`[snapshot] wrote soft_404_audits doc (broken=${summary.broken}/${summary.total}, orphans=${orphanCheck?.orphanCount ?? 'n/a'})`);
 }
 
 async function sendAlert(summary, body) {
@@ -429,13 +479,26 @@ async function main() {
 
     const results = await probeAll(probes, CONCURRENCY);
     const summary = summarize(results);
-    const report = formatReport(summary, started);
+
+    // Orphan gallery_images is a slow aggregation (~30s) but cheap to run
+    // alongside the HTTP probes; it gives an exact-count signal where the
+    // sampling probe only gives a statistical one.
+    let orphanCheck = null;
+    try {
+      orphanCheck = await countOrphanGalleryImages(db);
+    } catch (err) {
+      console.warn('[orphan-check] failed:', err.message);
+    }
+
+    const report = formatReport(summary, started, orphanCheck);
     console.log(report);
 
-    if (WRITE_SNAPSHOT) await writeSnapshot(db, summary, started);
-    if (SEND_ALERT && summary.broken > 0) await sendAlert(summary, report);
+    if (WRITE_SNAPSHOT) await writeSnapshot(db, summary, started, orphanCheck);
 
-    process.exit(summary.broken > 0 ? 1 : 0);
+    const anyBreakage = summary.broken > 0 || (orphanCheck && orphanCheck.orphanCount > 0);
+    if (SEND_ALERT && anyBreakage) await sendAlert(summary, report);
+
+    process.exit(anyBreakage ? 1 : 0);
   } finally {
     await client.close();
   }
