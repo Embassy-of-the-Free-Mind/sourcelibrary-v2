@@ -45,7 +45,7 @@ Run `scripts/maintenance/delete-stale-embeddings.mjs` periodically. It cross-ref
 
 Baseline at 2026-05-26 (after first cleanup pass): 338 truly orphaned rows total across `book_embeddings`, `artwork_embeddings`, and `clip_embeddings`. `gallery_text_embeddings` was already clean. The numbers should stay small as long as the script runs occasionally; deletions in Mongo are rare (CRITICAL data protection rules forbid bulk deletes).
 
-`page_translations` (~3.9M rows) is too big for REST paging — the script prints a SQL one-liner to run in the Supabase editor when needed. The DELETE there uses `WHERE NOT EXISTS (SELECT 1 FROM book_embeddings …)` as a proxy for "book still exists" — works because `book_embeddings` has one row per book and the cleanup runs on it first.
+`page_translations` (~3.9M rows) is **not cleaned** by the maintenance script. The table holds the actual translation text (column `translation`, Gemini Batch output) — deleting from it destroys readable content, unlike the embedding-only tables above. The script prints a COUNT query for visibility but no DELETE. If orphans there ever need cleaning, treat it as a deliberate one-off: derive the live set from `bookstore.books` (NOT `book_embeddings`, which only covers embedded books), cross-check `bookstore.deleted_books`, sample-inspect, archive before DELETE.
 
 ### Re-embedding
 - Page-level: `node scripts/workers/embed-gemini.mjs --book <id>` re-embeds a specific book.
