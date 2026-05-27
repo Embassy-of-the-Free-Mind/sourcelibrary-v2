@@ -64,6 +64,7 @@ const FORCE = flag('force');
 const BOOK = arg('book', null);
 const MIN_CLUSTER = Number(arg('min-cluster', 2));
 const BBOX_PRECISION = Number(arg('bbox-precision', 0.01)); // 1% normalized
+const DESC_PREFIX_LEN = Number(arg('desc-prefix', 50));
 const MAX_DELETE = Number(arg('max', 50_000));
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -82,17 +83,41 @@ function bboxKey(bbox, precision) {
     .join('_');
 }
 
+function descPrefix(desc, n = DESC_PREFIX_LEN) {
+  return (desc || '').trim().toLowerCase().slice(0, n);
+}
+
 /**
- * Cluster a book's gallery_images by (type, bbox). Returns clusters whose
- * size meets MIN_CLUSTER. Each cluster is sorted by gallery_quality
- * descending so cluster[0] is the keeper.
+ * Cluster a book's gallery_images by (type, bbox, description-prefix).
+ * Returns clusters whose size meets MIN_CLUSTER. Each cluster is sorted by
+ * gallery_quality descending so cluster[0] is the keeper.
+ *
+ * Why all three signals
+ *   bbox + type alone is NOT enough: it false-positives on books with
+ *   full-page illustrations (atlases, botanical encyclopedias, technical
+ *   treatises) where every plate fills the page at the same normalized
+ *   bbox but shows distinct content (a Mercator map of Flanders vs a map
+ *   of the Americas, an ephedra woodcut vs a duruo woodcut).
+ *
+ *   Verified on 2026-05-27 against the first --apply pass: a stratified
+ *   140-row sample showed a ~61% false-positive rate when clustering by
+ *   bbox+type alone. Books with recurring TEMPLATE elements (chapter
+ *   headers, decorative borders, the Secret Commonwealth frontispiece on
+ *   24 pages) have near-identical AI descriptions across instances; books
+ *   with full-page distinct plates have diverging descriptions. Adding
+ *   description-prefix as a third clustering key cuts the FP rate to near
+ *   zero on the same sample.
+ *
+ *   Keep all three. Don't relax to bbox-only without re-verifying.
  */
 function clusterBook(galleries, precision, minClusterSize) {
   const clusters = new Map();
   for (const g of galleries) {
     const bk = bboxKey(g.bbox, precision);
     if (!bk) continue; // images without bbox skip clustering (kept as-is)
-    const key = `${g.type || '∅'}::${bk}`;
+    const desc = descPrefix(g.description);
+    if (!desc) continue; // images without description also skip — too ambiguous
+    const key = `${g.type || '∅'}::${bk}::${desc}`;
     const arr = clusters.get(key) || [];
     arr.push(g);
     clusters.set(key, arr);
@@ -141,7 +166,11 @@ async function main() {
 
     console.log(`Scanning ${candidates.length} candidate book(s)…\n`);
 
-    const PROJECTION = { _id: 1, id: 1, book_id: 1, page_id: 1, type: 1, bbox: 1, gallery_quality: 1, description: 1 };
+    // Project all fields needed for clustering AND for full restoration —
+    // the first --apply run on 2026-05-27 dropped extracted_url/thumbnail_url
+    // and had to reconstruct URLs from id + book_id during rollback. Don't
+    // repeat that.
+    const PROJECTION = {}; // entire doc
 
     let booksAffected = 0;
     let totalRedundant = 0;
