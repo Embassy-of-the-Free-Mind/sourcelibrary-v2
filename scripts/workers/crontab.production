@@ -56,6 +56,11 @@
 # Supabase pages-content sync (PR #2026 / issue #2020)
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync-pages-content.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-pages-content.mjs" >> /var/log/sourcelibrary/sync-pages-content.log 2>&1
 
+# Auto-pull origin/main hourly so worker code fixes don't sit unused for hours
+# (motivating incident: PR #2065 — the #2042 model rename was committed at 11:27 UTC
+# but Hetzner kept submitting the deprecated alias for another 10h)
+17 * * * * flock -n /tmp/sl-auto-pull.lock /root/sourcelibrary/scripts/workers/auto-pull.sh >> /var/log/sourcelibrary/auto-pull.log 2>&1
+
 # ── Source Library HTTP crons moved from Vercel (PR #2031) ──
 # Triggered via scripts/workers/cron-caller.mjs which sets Authorization: Bearer $CRON_SECRET.
 # Routes accept the same secret Vercel auto-injects, so existing Vercel crons keep working

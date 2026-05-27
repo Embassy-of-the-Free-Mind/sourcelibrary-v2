@@ -80,6 +80,26 @@ async function saveRevisionBeforeOverwrite(db, pageId, field) {
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
 const OCR_MODEL_LITE = 'gemini-3.1-flash-lite';
 
+// Known-broken Gemini model aliases. The discovery API lists these as
+// available but generateContent / batch execution returns FAILED_PRECONDITION
+// for every page (verified 2026-05-26: 82/82 batches using gemini-3.1-flash-lite-preview
+// in 24h returned 0 saved / 100% failed). Add entries as Google retires more aliases.
+// The assertion runs from main() so it sees all module-level model constants.
+const KNOWN_BROKEN_MODEL_ALIASES = new Set([
+  'gemini-3.1-flash-lite-preview', // alias; stable is `gemini-3.1-flash-lite`
+]);
+function assertModelsAreNotBroken(constants) {
+  const bad = Object.entries(constants).filter(([_, v]) => KNOWN_BROKEN_MODEL_ALIASES.has(v));
+  if (bad.length) {
+    const detail = bad.map(([k, v]) => `  ${k} = "${v}"`).join('\n');
+    throw new Error(
+      `Refusing to start: one or more model constants are deprecated Gemini aliases:\n${detail}\n` +
+      `These accept batches but execute to "All N pages failed". Update to the stable variant ` +
+      `(e.g. drop -preview suffix) before re-running. See PR #2065.`
+    );
+  }
+}
+
 // Latin-script languages safe for flash-lite. Anything else (Tibetan, Arabic,
 // Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) routes to flash because
 // flash-lite hallucinates on low-resource scripts — it over-relies on
@@ -2311,6 +2331,11 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
 async function run() {
   const startTime = Date.now();
+  assertModelsAreNotBroken({
+    OCR_MODEL_FLASH, OCR_MODEL_LITE,
+    TRANSLATE_MODEL_FLASH, TRANSLATE_MODEL_LITE,
+    TRANSLITERATION_MODEL, IMAGE_EXTRACTION_MODEL,
+  });
   cleanupStaleJsonlFiles();
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 30000 });
   await client.connect();
