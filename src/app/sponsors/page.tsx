@@ -17,11 +17,10 @@ const PARTNERSHIP_EMAIL = 'derek@sourcelibrary.org';
 const PARTNERSHIP_SUBJECT = 'Corporate%20partnership%20inquiry%20%E2%80%94%20Source%20Library';
 
 const MEMBERSHIP_INCLUDES = [
-  'Explicit perpetual licence covering current and future translations for commercial model training, with attribution',
+  'Explicit licence covering current translations for commercial model training, with attribution',
   'Quarterly briefings on the translation roadmap; nominate priority authors, traditions, or manuscripts',
   'Named recognition as a Member on the library and in published volumes',
   'Annual convening at the Bibliotheca Philosophica Hermetica in Amsterdam with project leadership and scholarly advisors',
-  'Co-authorship and citation on dataset and methodology publications',
 ];
 
 const SPONSORSHIP_EXAMPLES = [
@@ -201,7 +200,7 @@ export default async function SponsorsPage() {
                 <div className="font-display text-2xl text-stone-900 mb-3">By arrangement</div>
                 <p className="text-sm text-stone-600 leading-relaxed mb-6">
                   Annual recurring. Multi-year terms preferred. Set in conversation against the
-                  scope you need — the value is the relationship, not the price tag.
+                  scope you need.
                 </p>
                 <a
                   href={mailto}
