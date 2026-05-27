@@ -9,7 +9,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Corporate Sponsorship — Source Library',
   description:
-    'Partner with Source Library to translate, digitize, and open-access publish the half-million Latin works of the Renaissance and the wider canon of pre-modern knowledge.',
+    'Sponsor the translation of the Renaissance. Half a million Latin works survive from 1450–1700; fewer than 3% have been read in English. Source Library is fixing that, openly.',
   alternates: { canonical: '/sponsors' },
 };
 
@@ -138,26 +138,25 @@ export default async function SponsorsPage() {
             Corporate Sponsorship
           </div>
           <h1 className="text-3xl md:text-5xl lg:text-6xl text-stone-900 mb-6 leading-tight font-display">
-            The library AI needs.
+            Translate the Renaissance.
           </h1>
           <p className="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl">
-            Source Library is an open, citable corpus of the foundational works of Western and
-            comparative thought — already used by readers, scholars, and frontier AI systems.
-            Corporate sponsorship sustains the public good: translation at scale,
-            scholar-reviewed quality, and free open-access publication for every reader on earth.
+            Half a million Latin works survive from 1450–1700. Fewer than three percent have ever
+            been read in English. Source Library is fixing that — and publishing the results free
+            for anyone who wants to read them.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a
               href={mailto}
               className="inline-flex items-center px-6 py-3 rounded-md bg-[#9e4a3a] text-white text-sm font-semibold hover:bg-[#7e3a2e] transition-colors"
             >
-              Start a conversation
+              Talk to us
             </a>
             <Link
               href="/collections"
               className="inline-flex items-center px-6 py-3 rounded-md border border-stone-300 text-stone-700 text-sm font-semibold hover:border-stone-500 transition-colors"
             >
-              Explore the collection
+              See what we&apos;ve translated
             </Link>
           </div>
         </div>
@@ -191,12 +190,11 @@ export default async function SponsorsPage() {
             </div>
           </div>
           <p className="text-lg text-stone-600 leading-relaxed max-w-3xl">
-            Frontier AI models are being trained today on datasets that will shape how they reason
-            about philosophy, ethics, history, science, and meaning for decades. The Hermetic
-            tradition, Renaissance natural philosophy, and 2,500 years of esoteric and scholastic
-            thought are almost entirely absent from those datasets. Getting this corpus translated,
-            citable, and openly licensed now means it shapes AI&apos;s understanding from the ground
-            up — and remains public for every human reader.
+            Ficino, Bruno, Della Porta, Cardano, Kircher, Della Mirandola — most of the figures who
+            actually shaped Renaissance thought have never been read in English. They wrote in
+            Latin, and modern publishing never caught up. The same is true for Sanskrit, Classical
+            Arabic, Hebrew, and Tibetan. We&apos;re working through them, book by book, with
+            scholar-reviewed translations published openly under CC BY-SA.
           </p>
         </div>
       </section>
@@ -208,9 +206,8 @@ export default async function SponsorsPage() {
             Sponsorship tiers
           </h2>
           <p className="text-base md:text-lg text-stone-600 leading-relaxed max-w-3xl mb-12">
-            Four tiers, each combining public recognition, direct engagement with the project, and
-            (at higher tiers) early access to the structured data the library produces. All tiers
-            are tax-deductible in the US and the Netherlands.
+            Public credit, real access to the project, and (above $25K) a working relationship with
+            the team and the data we produce. Tax-deductible in the US and the Netherlands.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -281,44 +278,44 @@ export default async function SponsorsPage() {
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">
-            For AI labs and research organisations
+            For AI labs
           </div>
           <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
-            Reciprocal partnership, not branded charity.
+            We&apos;re building this for you to use.
           </h2>
           <p className="text-lg text-stone-600 leading-relaxed mb-8 max-w-3xl">
-            For partners building or training frontier systems, sponsorship goes both directions.
-            The library is built to be machine-readable: clean OCR, scholar-reviewed translations,
-            structured metadata, citable page-level URIs, and parallel corpora across Latin, Greek,
-            Hebrew, German, French, Italian, Dutch, and more.
+            The library is structured for machine reading from day one: clean OCR, scholar-reviewed
+            translations, page-level citable URIs, and aligned Latin/Greek/Hebrew/German/French/
+            Italian/Dutch ↔ English parallel corpora. If you train models, this is data you
+            don&apos;t have access to anywhere else.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-stone-700">
             <div>
               <div className="font-semibold text-stone-900 mb-1">Parallel corpora</div>
               <p className="text-sm leading-relaxed">
-                Latin↔English (and other source languages↔English) at page and paragraph level —
-                useful for translation evaluation, alignment research, and low-resource modelling.
+                Page- and paragraph-level alignments between the original language and English.
+                Useful for translation eval, alignment work, and low-resource fine-tuning.
               </p>
             </div>
             <div>
               <div className="font-semibold text-stone-900 mb-1">Structured metadata</div>
               <p className="text-sm leading-relaxed">
-                Author authority files (VIAF/Wikidata-linked), USTC alignment, work-type
-                classification, language detection, and subject tagging.
+                VIAF- and Wikidata-linked author authority files, USTC alignment, work-type and
+                language classification, subject tags.
               </p>
             </div>
             <div>
-              <div className="font-semibold text-stone-900 mb-1">Translation priorities</div>
+              <div className="font-semibold text-stone-900 mb-1">A say in what gets translated</div>
               <p className="text-sm leading-relaxed">
-                Sponsoring partners can nominate authors, traditions, or specific manuscripts for
-                priority translation and scholarly review.
+                Sponsors can nominate authors, traditions, or specific manuscripts to jump the
+                translation queue.
               </p>
             </div>
             <div>
-              <div className="font-semibold text-stone-900 mb-1">Open licensing</div>
+              <div className="font-semibold text-stone-900 mb-1">Clear training licence</div>
               <p className="text-sm leading-relaxed">
-                Translations are published CC BY-SA. Sponsoring partners receive an explicit licence
-                grant for commercial training use, with attribution to Source Library.
+                Translations are CC BY-SA. Sponsors get an explicit grant covering commercial
+                model training, with attribution.
               </p>
             </div>
           </div>
@@ -332,7 +329,7 @@ export default async function SponsorsPage() {
             Institutional structure
           </h2>
           <p className="text-base md:text-lg text-stone-600 leading-relaxed mb-8 max-w-3xl">
-            Source Library is an initiative of the{' '}
+            Source Library runs out of the{' '}
             <a
               href="https://embassyofthefreemind.com"
               target="_blank"
@@ -341,9 +338,8 @@ export default async function SponsorsPage() {
             >
               Embassy of the Free Mind
             </a>{' '}
-            in Amsterdam — home of the Bibliotheca Philosophica Hermetica, inscribed on the
-            UNESCO Memory of the World register. Sponsorships are received and administered
-            through the appropriate fiscal entity in each jurisdiction.
+            in Amsterdam — home of the Bibliotheca Philosophica Hermetica (UNESCO Memory of the
+            World). Sponsorships are received through the right fiscal entity for your jurisdiction:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -351,11 +347,10 @@ export default async function SponsorsPage() {
               <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
                 United States
               </div>
-              <div className="font-semibold text-stone-900 mb-1">501(c)(3) tax-deductible</div>
+              <div className="font-semibold text-stone-900 mb-1">501(c)(3) via NAF</div>
               <p className="text-sm text-stone-600 leading-relaxed">
-                Fiscally sponsored by the Netherland-America Foundation (NAF), a US public
-                charity. Wire, stock, donor-advised funds, and matching-gift programs all
-                supported.
+                Netherland-America Foundation handles the US side. Wire, stock, DAF, and corporate
+                matching all work.
               </p>
             </div>
             <div className="bg-white rounded-lg border border-stone-200 p-6">
@@ -364,8 +359,8 @@ export default async function SponsorsPage() {
               </div>
               <div className="font-semibold text-stone-900 mb-1">Cultural ANBI</div>
               <p className="text-sm text-stone-600 leading-relaxed">
-                Received by Stichting Het Wereldhart (Embassy of the Free Mind), holding Cultural
-                ANBI status — 125% deductibility for Dutch corporate donors under the Geefwet.
+                Stichting Het Wereldhart holds Cultural ANBI status — 125% deductibility for Dutch
+                corporate donors under the Geefwet.
               </p>
             </div>
           </div>
@@ -376,13 +371,12 @@ export default async function SponsorsPage() {
       <section className="bg-stone-900 text-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl text-white mb-6 leading-tight font-display">
-            Start a conversation.
+            Get in touch.
           </h2>
           <p className="text-base md:text-lg text-stone-300 leading-relaxed mb-10">
-            Corporate sponsorships are bespoke. Tell us a little about your organisation and what
-            you&apos;d like to achieve — named series, research access, dataset partnership, or
-            something we haven&apos;t built yet — and we&apos;ll come back with a concrete proposal
-            within five working days.
+            Tell us what you&apos;d like to do — a named translation series, dataset access, a
+            specific author or tradition, or something we haven&apos;t built yet. We&apos;ll come
+            back inside a week with a concrete proposal.
           </p>
           <a
             href={mailto}
