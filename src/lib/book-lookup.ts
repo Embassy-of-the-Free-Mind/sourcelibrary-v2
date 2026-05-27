@@ -28,8 +28,7 @@ export async function findBookByIdOrSlug(
   db: Db,
   idOrSlug: string,
   projection?: Document,
-  tenantId?: string,
-  tenantSlug?: string
+  tenantId?: string
 ): Promise<BookLookupResult | null> {
   const opts = projection ? { projection } : undefined;
 
@@ -48,15 +47,7 @@ export async function findBookByIdOrSlug(
   }
 
   const query: Document = { $or: orConditions };
-  if (tenantId) {
-    // Books use both `tenantId` (camelCase, UUID) and `tenant_id` (snake_case, slug).
-    // Match either field with either value format.
-    const tenantValues = [tenantId];
-    if (tenantSlug && tenantSlug !== tenantId) tenantValues.push(tenantSlug);
-    query.$and = [
-      { $or: [{ tenantId: { $in: tenantValues } }, { tenant_id: { $in: tenantValues } }] }
-    ];
-  }
+  if (tenantId) query.tenantId = tenantId;
 
   const book = await db.collection('books').findOne(query, opts);
   if (!book) return null;

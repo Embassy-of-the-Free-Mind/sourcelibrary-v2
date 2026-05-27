@@ -250,28 +250,19 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
 // ── Tenant Visibility ─────────────────────────────────────────────────
 
 /**
- * Books carry `tenant_id` that scopes them to a particular tenant face.
- * `default` (and books with no tenant_id) belong to the main library;
- * other values like `bhutan` belong to partner subdomains. The librarian
- * runs in main-site context today, so it must filter to tenant_id values
- * that the main site is allowed to surface.
+ * Main-site library = books with no `tenantId`. Books tagged with a subdomain
+ * tenant UUID (bph / kloss-collection / bhutan) belong to a partner reading
+ * room and must NOT leak into the main-site librarian's results.
  *
  * Background: the AI librarian leaked a Bhutanese book to main-site users
  * because Atlas + semantic search returned every tenant's books indiscriminately
  * (the embedding RPC's tenant filter was explicitly dropped in PR #1780).
  * See .claude/docs/tenant-architecture-audit-2026-05-23.md.
  */
-const MAIN_SITE_TENANT_IDS: Array<string | null> = ['default', null];
-
-function tenantVisibilityFilter(allowedTenantIds: Array<string | null> = MAIN_SITE_TENANT_IDS) {
-  const hasNull = allowedTenantIds.includes(null);
-  const slugs = allowedTenantIds.filter((t): t is string => t !== null);
-  const clauses: Record<string, unknown>[] = [];
-  if (slugs.length > 0) clauses.push({ tenant_id: { $in: slugs } });
-  if (hasNull) clauses.push({ tenant_id: { $in: [null, undefined] } });
+function tenantVisibilityFilter() {
   return {
     hidden: { $ne: true },
-    ...(clauses.length === 1 ? clauses[0] : { $or: clauses }),
+    tenantId: { $in: [null, undefined] },
   };
 }
 

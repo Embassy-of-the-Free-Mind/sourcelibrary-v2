@@ -160,7 +160,6 @@ export const POST = withAuth(async (request, session, context) => {
         pageDocs.push({
           _id: pageId,
           id: pageId.toHexString(),
-          tenant_id: 'default',
           book_id: bookId,
           page_number: i + 1,
           photo: getPageImageUrl(i),

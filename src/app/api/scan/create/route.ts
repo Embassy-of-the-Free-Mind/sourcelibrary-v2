@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
       _id: bookId,
       id: bookIdStr,
       slug,
-      tenant_id: 'default',
       title,
       author: author || 'Unknown',
       language: language || 'Unknown',

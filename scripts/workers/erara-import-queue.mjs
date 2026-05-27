@@ -144,7 +144,6 @@ async function importBook(db, entry) {
     _id: bookId,
     id: bookIdStr,
     slug,
-    tenant_id: 'default',
     title,
     display_title: null,
     author,
@@ -187,7 +186,6 @@ async function importBook(db, entry) {
     return {
       _id: pageId,
       id: pageId.toHexString(),
-      tenant_id: 'default',
       book_id: bookIdStr,
       page_number: i + 1,
       photo: getImageUrl(canvas, 1000),

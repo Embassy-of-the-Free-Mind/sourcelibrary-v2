@@ -41,9 +41,7 @@ export async function POST(
   const revalidated = [`/book/${slug}`, `/book/${id}`];
 
   // Also revalidate tenant-scoped paths if book belongs to a tenant.
-  // Books carry either `tenantId` (camelCase UUID) or `tenant_id` (snake_case slug).
   const bookTenantUuid = book.tenantId as string | undefined;
-  const bookTenantSlug = book.tenant_id as string | undefined;
   let tenantSlug: string | null = null;
   if (bookTenantUuid) {
     const tenant = await db.collection('tenants').findOne(
@@ -51,8 +49,6 @@ export async function POST(
       { projection: { slug: 1 } }
     );
     tenantSlug = (tenant?.slug as string) || null;
-  } else if (bookTenantSlug && bookTenantSlug !== 'default') {
-    tenantSlug = bookTenantSlug;
   }
   if (tenantSlug) {
     // Regular tenant route

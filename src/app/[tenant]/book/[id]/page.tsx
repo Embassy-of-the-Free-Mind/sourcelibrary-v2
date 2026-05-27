@@ -121,7 +121,7 @@ const getCachedBookLookup = cache(async (id: string): Promise<{
 });
 
 function getBookTenantId(book: Record<string, unknown> | Book): string | undefined {
-  return (book as any).tenantId || (book as any).tenant_id;
+  return (book as any).tenantId;
 }
 
 // Lightweight book fetch for metadata — reuses cached lookup
@@ -141,21 +141,21 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
     'index.places': 0,
     'index.concepts': 0,
     'index.keyTerms': 0,
-  }, tenantId, tenantSlug);
+  }, tenantId);
   if (scoped) return scoped.book as unknown as Book;
 
-  // Default tenant is the global namespace. Legacy + corpus-source books
-  // (ETCSL, CDLI, etc.) have no `tenantId`/`tenant_id` field at all; the
-  // strict scoped lookup excludes them, which caused generateMetadata() to
-  // emit "Book Not Found" + noindex even though the page body renders fine
-  // via the unscoped fetch. 1.52K books were being silently delisted in GSC.
+  // Default tenant is the global namespace — legacy + corpus-source books
+  // (ETCSL, CDLI, etc.) have no `tenantId` at all and the strict scoped
+  // lookup excludes them. That caused generateMetadata() to emit
+  // "Book Not Found" + noindex even though the page body renders fine via
+  // the unscoped fetch — 1.52K books were silently delisted in GSC.
   //
   // Tenant subdomains (bph/, etc.) keep the strict filter so the lockdown
   // invariant (CLAUDE.md "Tenant Subdomain Lockdown") still holds: only
   // books explicitly assigned to that tenant are visible there.
   if (tenantSlug === 'default') {
     const book = result.book as Record<string, unknown>;
-    if (!book.tenantId && !book.tenant_id) {
+    if (!book.tenantId) {
       return book as unknown as Book;
     }
   }
@@ -185,14 +185,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Wrong tenant — suppress metadata entirely so the 404 isn't indexed.
-  // Match either UUID (tenantId) or slug (tenant_id) — legacy docs may have only one set.
   const bookTenantUuid = (book as any).tenantId as string | undefined;
-  const bookTenantSlug = (book as any).tenant_id as string | undefined;
-  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
-  const matchesTenant =
-    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
-    (bookTenantSlug && tenant && bookTenantSlug === tenant);
-  if (hasTenantField && !matchesTenant) {
+  const matchesTenant = !!(bookTenantUuid && tenantId && bookTenantUuid === tenantId);
+  if (bookTenantUuid && !matchesTenant) {
     return {
       title: 'Not Found - Source Library',
       robots: { index: false, follow: false },
@@ -307,7 +302,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
+async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -329,7 +324,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }, tenantId, tenantSlug);
+    }, tenantId);
     if (!scoped) return null;
     effectiveResult = {
       book: scoped.book as Record<string, unknown>,
@@ -549,7 +544,7 @@ function PagesGridSkeleton() {
 async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy }) {
   let data;
   try {
-    data = await getBook(id, tenantId, tenantSlug);
+    data = await getBook(id, tenantId);
   } catch (err) {
     console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
     // Return a friendly message instead of crashing the Suspense boundary
@@ -571,15 +566,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
-  // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
-  // Match against whichever form is present so legacy artwork docs (slug-only) don't 404.
   const bookTenantUuid = (book as any).tenantId as string | undefined;
-  const bookTenantSlug = (book as any).tenant_id as string | undefined;
-  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
-  const matchesTenant =
-    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
-    (bookTenantSlug && tenantSlug && bookTenantSlug === tenantSlug);
-  if (hasTenantField && !matchesTenant) {
+  const matchesTenant = !!(bookTenantUuid && tenantId && bookTenantUuid === tenantId);
+  if (bookTenantUuid && !matchesTenant) {
     notFound();
   }
 

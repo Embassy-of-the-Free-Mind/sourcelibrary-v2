@@ -403,7 +403,6 @@ async function recoverOne(book) {
         return {
           _id: newId,
           id: newId.toHexString(),
-          tenant_id: 'default',
           book_id: book.id,
           page_number: newPageNum,
           photo: r.url,
