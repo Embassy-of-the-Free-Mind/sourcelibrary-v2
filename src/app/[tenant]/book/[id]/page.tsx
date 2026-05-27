@@ -314,7 +314,7 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
   if (!result) return null;
   let effectiveResult = result;
   if (tenantId) {
-    const scoped = await findBookByIdOrSlug(db, id, {
+    const projection = {
       reading_sections: 0,
       pipeline: 0,
       pipeline_auto: 0,
@@ -324,7 +324,18 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }, tenantId);
+    };
+    let scoped = await findBookByIdOrSlug(db, id, projection, tenantId);
+    if (!scoped && tenantSlug === 'default') {
+      // Main-site fallback: after the tenantId-pollution cleanup (PR #2085)
+      // ~11K books that were falsely tagged with a provider tenantId are now
+      // untagged. The strict scoped lookup misses them; allow through if the
+      // book has no tenantId at all. Subdomain lockdown stays strict.
+      const unscoped = await findBookByIdOrSlug(db, id, projection);
+      if (unscoped && !(unscoped.book as Record<string, unknown>).tenantId) {
+        scoped = unscoped;
+      }
+    }
     if (!scoped) return null;
     effectiveResult = {
       book: scoped.book as Record<string, unknown>,
