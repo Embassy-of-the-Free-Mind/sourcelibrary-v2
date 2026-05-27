@@ -19,6 +19,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import { browseBooks } from '@/lib/books-catalog';
 
 // ISR: rebuild at most once per day
@@ -111,6 +112,7 @@ interface CuratedHighlight {
   thumbnail?: string;
   thumbnail_blob?: string;
   is_first_translation?: boolean;
+  pages_translated?: number;
   ft_disposition?: string;
   language?: string;
   id: string;
@@ -487,6 +489,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
         slug: book.slug as string | undefined,
         thumbnail: sanitizeThumbnail(book.thumbnail_blob as string) || sanitizeThumbnail(book.thumbnail as string),
         is_first_translation: book.is_first_translation as boolean | undefined,
+        pages_translated: book.pages_translated as number | undefined,
         ft_disposition: (book.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
         language: book.language as string | undefined,
         id: h.book_id,
@@ -537,7 +540,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       const exBooks = await withTimeout(
         db.collection('books').find(
           { id: { $in: [...allBookIds] }, visible: true },
-          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
+          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, pages_translated: 1, 'translation_verification.disposition': 1 } },
         ).toArray(),
         8000, [],
       );
@@ -917,7 +920,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   </h2>
                   <p className="text-base text-muted mb-3">
                     {featured.author}{featured.year ? `, ${featured.year}` : ''}
-                    {featured.is_first_translation && (
+                    {isPublishedFirstTranslation(featured) && (
                       <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
                         {firstTranslationBadge(featured.ft_disposition, featured.language)}
                       </span>
@@ -1091,7 +1094,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         </h3>
                         <p className="text-sm text-muted mb-2">
                           {h.author}{h.year ? `, ${h.year}` : ''}
-                          {h.is_first_translation && (
+                          {isPublishedFirstTranslation(h) && (
                             <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
                               {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
@@ -1144,7 +1147,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         </h3>
                         <p className="text-xs text-muted mb-1">
                           {h.author}{h.year ? `, ${h.year}` : ''}
-                          {h.is_first_translation && (
+                          {isPublishedFirstTranslation(h) && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
                               {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
@@ -1196,7 +1199,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         </h4>
                         <p className="text-xs text-muted truncate">
                           {h.author}{h.year ? `, ${h.year}` : ''}
-                          {h.is_first_translation && (
+                          {isPublishedFirstTranslation(h) && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
                               {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>

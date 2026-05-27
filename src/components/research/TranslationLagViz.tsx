@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { linearScale, niceTicks } from '@/components/analytics/charts/chart-utils';
+import { isPublishedFirstTranslation } from '@/lib/book';
 
 interface DataPoint {
   title: string;
@@ -13,6 +14,7 @@ interface DataPoint {
   composed_display: string;
   lag: number;
   is_first_translation: boolean;
+  pages_translated: number;
   categories: string[];
 }
 
@@ -291,7 +293,7 @@ export default function TranslationLagViz({ data }: { data: DataPoint[] }) {
           <div className="text-xs font-medium mt-1" style={{ color: 'var(--accent-rust)' }}>
             {tooltip.point.lag.toLocaleString('en-US')} year lag
           </div>
-          {tooltip.point.is_first_translation && (
+          {isPublishedFirstTranslation(tooltip.point) && (
             <div className="text-xs text-[var(--accent-gold-dark)] mt-0.5">First English translation</div>
           )}
         </div>

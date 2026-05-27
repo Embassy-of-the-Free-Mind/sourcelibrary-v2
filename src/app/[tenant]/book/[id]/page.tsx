@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
@@ -830,7 +831,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 )}
               </div>
 
-              {book.is_first_translation && (
+              {isPublishedFirstTranslation(book) && (
                 <div className="mt-3">
                   <details className="group">
                     <summary className="inline-flex px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
