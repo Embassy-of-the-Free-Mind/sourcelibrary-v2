@@ -9,51 +9,7 @@ import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
-
-/**
- * Post-process Gemini output: convert bare sourcelibrary URLs to markdown links.
- * Gemini often outputs `https://sourcelibrary.org/book/slug?page=5` as plain text
- * instead of wrapping it in `[text](url)`. This catches those and linkifies them.
- */
-function linkifySourceUrls(text: string): string {
-  // Don't linkify URLs that are already inside markdown link syntax [text](url)
-  let result = text.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, _slug, page) => {
-      const label = page ? `View source (p. ${page})` : 'View in collection';
-      return `[${label}](${match})`;
-    },
-  );
-  // Linkify bare author URLs
-  result = result.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/author\/([^\s)]+)/g,
-    (match, name) => {
-      const label = decodeURIComponent(name);
-      return `[${label}](${match})`;
-    },
-  );
-  return result;
-}
-
-/**
- * Ensure proper markdown paragraph breaks.
- * Gemini often outputs single \n between paragraphs, but standard markdown
- * needs \n\n for a visible paragraph break. Simple approach: double ALL
- * single newlines, then collapse any runs of 3+ newlines back to 2.
- * Only exception: code blocks are left untouched.
- */
-function ensureParagraphBreaks(text: string): string {
-  // Split on code fences, process only non-code sections
-  const parts = text.split(/(```[\s\S]*?```)/);
-  return parts.map((part, i) => {
-    // Odd indices are code blocks — leave them alone
-    if (i % 2 === 1) return part;
-    // Replace single \n with \n\n, then collapse triples back to doubles
-    return part
-      .replace(/([^\n])\n(?!\n)/g, '$1\n\n')
-      .replace(/\n{3,}/g, '\n\n');
-  }).join('');
-}
+import { ensureParagraphBreaks, linkifySourceUrls } from './_lib/markdownPrep';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -452,7 +408,9 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
         }
       }
     } catch (err) {
-      if ((err as Error).name !== 'AbortError') {
+      const e = err as Error;
+      if (e.name !== 'AbortError') {
+        console.error('[Librarian] request failed:', e.name, e.message, e);
         updateLastAssistant(m => ({
           ...m,
           content: 'The Librarian seems to be away. Please try again in a moment.',
@@ -691,7 +649,18 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                                     img: ({ src, alt }) => (
                                       <a href={src as string} target="_blank" rel="noopener noreferrer">
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-4" loading="lazy" />
+                                        <img
+                                          src={src as string}
+                                          alt={(alt as string) || ''}
+                                          className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-4"
+                                          loading="lazy"
+                                          onError={(e) => {
+                                            const img = e.currentTarget;
+                                            const wrapper = img.closest('a');
+                                            if (wrapper) wrapper.style.display = 'none';
+                                            else img.style.display = 'none';
+                                          }}
+                                        />
                                       </a>
                                     ),
                                   }}
