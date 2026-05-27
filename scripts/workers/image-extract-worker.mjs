@@ -939,6 +939,20 @@ async function main() {
     return;
   }
 
+  // CLI override: --book-ids=id1,id2,... lets a human scope the run to a known
+  // set of books (e.g. backfilling a new import without waiting for the cron
+  // priority queue). Bypasses both the chapters_complete query and catch-up.
+  const bookIdsArg = process.argv.find(a => a.startsWith('--book-ids='));
+  if (bookIdsArg) {
+    const wantIds = bookIdsArg.split('=')[1].split(',').filter(Boolean);
+    const books = await db.collection('books')
+      .find({ id: { $in: wantIds } })
+      .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
+      .toArray();
+    console.log(`[IMAGE-EXTRACT] CLI book-ids: ${books.length}/${wantIds.length} found`);
+    return await runOverBooks(db, books, startTime, client);
+  }
+
   // Find books ready for image extraction
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'chapters_complete' })
@@ -968,6 +982,10 @@ async function main() {
     }
   }
 
+  await runOverBooks(db, books, startTime, client);
+}
+
+async function runOverBooks(db, books, startTime, client) {
   console.log(`[IMAGE-EXTRACT] Books to process: ${books.length}`);
 
   if (books.length === 0) {
@@ -976,7 +994,6 @@ async function main() {
     return;
   }
 
-  // Process with concurrency pool
   const queue = [...books];
   let processed = 0;
   let totalImages = 0;
