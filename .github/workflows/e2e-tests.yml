@@ -60,7 +60,10 @@ jobs:
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const date = new Date().toISOString().split('T')[0];
 
-            // Don't create duplicate issues — check for an existing open one
+            // Don't create duplicate issues — check for an existing open one.
+            // If one exists, we DO NOT comment: daily "still failing" comments add noise
+            // that nobody reads. The artifact is still uploaded to the run page; anyone
+            // investigating can find it via the workflow's run history.
             const { data: existing } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -69,13 +72,6 @@ jobs:
               per_page: 1,
             });
             if (existing.length > 0) {
-              // Add a comment to the existing issue instead
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: existing[0].number,
-                body: `Still failing as of ${date}.\n**Run:** ${runUrl}`,
-              });
               return;
             }
 
