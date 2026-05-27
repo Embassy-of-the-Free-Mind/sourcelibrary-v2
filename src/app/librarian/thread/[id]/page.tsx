@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ensureParagraphBreaks, linkifySourceUrls } from '../../_lib/markdownPrep';
+import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
 
 interface ThreadMessage {
   id: string;
