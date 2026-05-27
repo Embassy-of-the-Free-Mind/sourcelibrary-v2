@@ -845,9 +845,10 @@ async function phaseArchive(rec, db, bookInfo) {
     try {
       if (DO_GATHER) await phaseGather(rec);
     } catch (e) {
-      console.error(`[${rec.bibId}] GATHER FAILED: ${e.message}`);
-      if (targets.length === 1) throw e; // single-target: bubble up
-      continue; // multi-target: keep going
+      // Gather is best-effort (caches probes + ICA descriptions). Failure is
+      // non-fatal — insert/archive can still run using whatever's already
+      // cached or empty defaults. Log and proceed.
+      console.error(`[${rec.bibId}] GATHER FAILED: ${e.message} — continuing with insert/archive`);
     }
     let bookInfo = null;
     if (DO_INSERT) bookInfo = await phaseInsert(rec, db);
