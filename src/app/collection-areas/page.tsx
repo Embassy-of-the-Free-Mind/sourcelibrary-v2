@@ -11,7 +11,6 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { headers } from 'next/headers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
-import { notFound } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'Collection Areas - Source Library',
@@ -26,11 +25,13 @@ interface AreaWithCount {
     count: number;
 }
 
-async function getAreaCounts(tenantId: string): Promise<AreaWithCount[]> {
+async function getAreaCounts(tenantId: string | null): Promise<AreaWithCount[]> {
     try {
         const db = await getReadDb();
+        const match: Record<string, unknown> = { visible: true, pages_translated: { $gt: 0 } };
+        if (tenantId) match.tenantId = tenantId;
         const counts = await db.collection('books').aggregate([
-            { $match: { tenantId, visible: true, pages_translated: { $gt: 0 } } },
+            { $match: match },
             { $unwind: '$categories' },
             { $group: { _id: '$categories', count: { $sum: 1 } } },
             { $project: { _id: 0, category: '$_id', count: 1 } },
@@ -53,10 +54,6 @@ async function getAreaCounts(tenantId: string): Promise<AreaWithCount[]> {
 
 export default async function CollectionAreasPage() {
     const { id: tenantId } = getTenantContextFromRequest(await headers());
-
-    if (!tenantId) {
-        notFound();
-    }
 
     const areas = await getAreaCounts(tenantId);
     const areasWithBooks = areas.filter(a => a.count > 0);

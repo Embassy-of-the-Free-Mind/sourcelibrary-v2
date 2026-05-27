@@ -20,7 +20,7 @@ export interface TenantContext {
   source: TenantSource | null;
 }
 
-export type TenantSource = 'subdomain' | 'path' | 'header' | 'query' | 'api-segment' | 'referer';
+export type TenantSource = 'subdomain' | 'path' | 'header' | 'query' | 'api-segment' | 'referer' | 'embed-path';
 
 /**
  * Read the tenant ID injected by the proxy middleware.

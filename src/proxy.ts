@@ -3,43 +3,13 @@ import { getDb } from '@/lib/mongodb';
 
 // --- Tenant routing ---
 
-// Paths that live at the root and are never treated as tenant slugs.
-// After the tenant-as-filter migration (see .claude/docs/tenant-architecture-migration.md),
-// every globalized route lives here. The Phase Final goal is to invert this
-// into TENANT_ROOT_PATHS containing only the 3 real tenant slugs.
-const NON_TENANT_PATHS = new Set([
-  'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
-  'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
-  'support', 'unauthorized', 'design-options', 'experiments',
-  'ficino-society', 'contribute', 'census', 'oauth', 'developers',
-  'founding-donors', 'libraries', 'blog', '_archived', '.well-known', 'encyclopedia',
-  // Global navigation roots
-  'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
-  // User pages (standalone, not tenant-scoped)
-  'favorites', 'reading-history', 'timeline', 'topics', 'languages',
-  'categories', 'catalog', 'catalogue', 'artwork', 'artist',
-  // Short share links — redirected to /explore/* in next.config.ts redirects()
-  'map', 'constellation',
-  // Book + collection routes are global (Phase 3e/3f)
-  'book', 'collections',
-  // Phase 3e routes
-  'curated', 'collection-areas',
-  // Phase 3g routes globalized off [tenant]
-  'learn', 'qa', 'rithmomachia', 'hieroglyphs', 'reading-room',
-  'dataset', 'fulldata', 'taxonomy', 'analytics', 'tablets', 'scan',
-  'upload', 'jobs', 'login', 'processing', 'beta',
-  // Other root pages
-  'admin', 'author', 'work', 'connect', 'data', 'read',
-  'research', 'embed', 'shwep', 'for-researchers', 'for-libraries', 'identify',
-  // Legal / policy
-  'dmca',
-  // Welcome flow (post-signup interstitial + temporary preview route)
-  'welcome', 'welcome-preview',
-  // Shortlinks — /q/[code] must pass through to src/app/q/[code]/route.ts
-  'q',
-  // SEO — sitemap-index route, reachable as /sitemap.xml via next.config rewrite
-  'sitemap-index',
-]);
+// First-segment slugs that map to a subdomain tenant via path-based access
+// (e.g. sourcelibrary.org/bph). After the tenant-as-filter migration (see
+// .claude/docs/tenant-architecture-migration.md), every other route is a
+// global root — tenant context is supplied by the proxy via x-tenant-* headers
+// when a subdomain or this set matches, and the dynamic [tenant] segment
+// rejects everything else.
+const TENANT_ROOT_PATHS = new Set(['bph', 'kloss-collection', 'bhutan']);
 
 // Domains that enable the Ficino Society social layer
 const SOCIETY_DOMAINS = [
@@ -209,9 +179,12 @@ const TENANT_SUBDOMAINS: Record<string, string> = {
 async function resolveActiveTenant(
   slug: string
 ): Promise<{ id: string; slug: string; kind: string | null } | null> {
-  if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
-    return null;
-  }
+  // TENANT_ROOT_PATHS gates the path-based fast path so unknown slugs don't
+  // hit Mongo. The DB lookup stays as the authoritative source — aliases
+  // (`slug_aliases`) still resolve, but only when their canonical slug is in
+  // the set above.
+  if (!slug || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) return null;
+  if (!TENANT_ROOT_PATHS.has(slug)) return null;
   try {
     const db = await getDb();
     const tenant = await db.collection('tenants').findOne({
@@ -228,6 +201,27 @@ async function resolveActiveTenant(
       slug: tenant.slug as string,
       kind: (tenant.kind as string | undefined) ?? null,
     };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Look up a `kind:'provider'` row by slug. Used only by the provider-strip
+ * 308 safety net below — we don't filter by TENANT_ROOT_PATHS here because
+ * provider slugs (internet-archive, gallica, …) are deliberately outside it.
+ */
+async function resolveProviderTenant(slug: string): Promise<{ kind: string | null } | null> {
+  if (!slug || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) return null;
+  if (TENANT_ROOT_PATHS.has(slug)) return null;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne(
+      { slug, kind: 'provider', status: { $ne: 'deleted' } },
+      { projection: { kind: 1 } }
+    );
+    if (!tenant) return null;
+    return { kind: (tenant.kind as string | undefined) ?? null };
   } catch {
     return null;
   }
@@ -285,7 +279,7 @@ export interface ResolvedTenant {
   id: string;
   slug: string;
   kind: string | null;
-  source: 'subdomain' | 'path' | 'api-segment' | 'referer';
+  source: 'subdomain' | 'path' | 'api-segment' | 'referer' | 'embed-path';
   /**
    * The URL segment that matched, if resolution was path-based. Middleware
    * uses this to issue a 308 to the canonical slug when the segment was an
@@ -323,8 +317,27 @@ export async function resolveTenantFromRequest(
     }
   }
 
-  // 2. Path-based (/bph/... → bph). NON_TENANT_PATHS gating lives inside
-  // resolveActiveTenant, so this naturally skips global root paths.
+  // 1b. /embed/<tenant>/... — partner Webflow sites embed Source Library via
+  // public/embed/v1.js, which loads iframes at sourcelibrary.org/embed/<tenant>/…
+  // Resolve the tenant explicitly here so the wrappers' downstream global
+  // pages see x-tenant-* headers and `isEmbedded = true`.
+  if (pathname.startsWith('/embed/')) {
+    const [, , embedTenantSlug] = pathname.split('/');
+    if (embedTenantSlug) {
+      const resolved = await resolveTenantByExactSlug(embedTenantSlug);
+      if (resolved) {
+        return {
+          id: resolved.id,
+          slug: resolved.slug,
+          kind: resolved.kind,
+          source: 'embed-path',
+        };
+      }
+    }
+  }
+
+  // 2. Path-based (/bph/... → bph). resolveActiveTenant gates on
+  // TENANT_ROOT_PATHS so unknown first segments naturally return null.
   const [, firstSegment] = pathname.split('/');
   if (firstSegment) {
     const direct = await resolveActiveTenant(firstSegment);
@@ -475,51 +488,26 @@ export async function proxy(request: NextRequest) {
 
   // --- Tenant subdomain rewrite ---
   //
-  // Interim Phase 3 state (see .claude/docs/tenant-architecture-migration.md):
-  // The route implementations under [tenant]/* have been globalized into
-  // src/app/*. The thin wrappers under src/app/embed/[tenant]/{book,gallery,
-  // search,collections,catalog,catalogue}/ now just re-export the global
-  // pages — they're kept around so this rewrite chain (and the embed chrome
-  // expectations in layout/page) continue to work without a flag-day. The
-  // global page reads tenant context from the x-tenant-* headers this branch
-  // injects (see the Headers block below).
-  //
-  // Phase Final will collapse this chain to a single header-injecting
-  // pass-through and delete the wrappers. Don't add new path branches here;
-  // any new globalized route should just flow through with x-tenant-*
-  // headers set.
-  //
-  // Rewrites all paths on tenant subdomains to the filtered embed routes.
-  // e.g. bph.sourcelibrary.org/book/aurora → internally serves /embed/bph/book/aurora
+  // Only a handful of tenant-specific routes still live under /embed/<tenant>/:
+  // the partner landing page (`page.tsx`) and the bibliographic catalogue
+  // routes (kind:'subdomain' tenants opt in via library-partners.ts). Every
+  // other path on the subdomain flows through to its global counterpart —
+  // tenant context travels via the x-tenant-* headers stamped by the
+  // resolution block lower in this file.
   const tenant = TENANT_SUBDOMAINS[host.toLowerCase()];
   if (tenant && !pathname.startsWith('/embed/') && !pathname.startsWith('/_next/') && !pathname.startsWith('/api/')) {
     const url = request.nextUrl.clone();
-    // Map common paths to embed equivalents
+    let needsRewrite = false;
+
     if (pathname === '/') {
       url.pathname = `/embed/${tenant}`;
-    } else if (pathname === '/search' || pathname.startsWith('/search/')) {
-      // Dedicated search results page — keep traffic in embed namespace.
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else if (pathname.startsWith('/book/') && (pathname.includes('/page/') || pathname.includes('/page-number/'))) {
-      // Page reader + page-number: keep traffic in embed namespace
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else if (pathname.startsWith('/book/')) {
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else if (pathname.startsWith('/collections')) {
-      if (pathname === '/collections') {
-        url.pathname = `/embed/${tenant}`;
-      } else {
-        url.pathname = `/embed/${tenant}${pathname}`;
-      }
+      needsRewrite = true;
     } else if (pathname === '/catalogue' || pathname === '/catalog') {
-      // Catalogue page on tenant subdomain.
-      //
       // Tenants that opt into the dedicated catalogue route (manuscript
       // collections like bhutan) are routed to `/embed/<tenant>/catalogue`.
       // Tenants still on the BPH-style `?view=catalog` query param flow
-      // (BPH, kloss, etc.) keep the existing landing-page rewrite — they
-      // render `<UnifiedCatalogue>` / `<BphUnifiedCatalogue>` inside the
-      // landing page based on the query param.
+      // (BPH, kloss, etc.) render `<UnifiedCatalogue>` /
+      // `<BphUnifiedCatalogue>` inside the landing page based on the param.
       const usesDedicatedCatalogue = tenant === 'bhutan';
       if (usesDedicatedCatalogue) {
         url.pathname = `/embed/${tenant}/catalogue`;
@@ -527,6 +515,7 @@ export async function proxy(request: NextRequest) {
         url.pathname = `/embed/${tenant}`;
         url.searchParams.set('view', 'catalog');
       }
+      needsRewrite = true;
     } else if (pathname.startsWith('/catalogue/') || pathname.startsWith('/catalog/')) {
       // Catalogue entry detail (e.g. /catalogue/12345 for UBN-keyed BPH works).
       // Both spellings forwarded to the existing `/catalog/[ubn]` route folder.
@@ -534,46 +523,35 @@ export async function proxy(request: NextRequest) {
         ? pathname.slice('/catalogue/'.length)
         : pathname.slice('/catalog/'.length);
       url.pathname = `/embed/${tenant}/catalog/${tail}`;
-    } else if (pathname.startsWith('/gallery')) {
-      // Keep gallery traffic inside the tenant subdomain — never redirect out
-      // to sourcelibrary.org (BPH lockdown invariant).
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else {
-      // All other paths on tenant subdomain → embed root (filtered search)
-      url.pathname = `/embed/${tenant}`;
+      needsRewrite = true;
     }
-    // Resolve and forward the tenant id so embed pages that read tenant context
-    // from headers (e.g. /[tenant]/gallery/page.tsx, re-exported under
-    // /embed/[tenant]/gallery) see the tenant. Pages that already read the
-    // tenant slug from URL params are unaffected.
-    const subdomainTenant = await resolveTenantByExactSlug(tenant);
-    const subdomainHeaders = new Headers(request.headers);
-    subdomainHeaders.set('x-tenant-slug', tenant);
-    subdomainHeaders.set('x-tenant-source', 'subdomain');
-    subdomainHeaders.set('x-tenant-embedded', '1');
-    if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
-    if (subdomainTenant?.kind) subdomainHeaders.set('x-tenant-kind', subdomainTenant.kind);
-    return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
+
+    if (needsRewrite) {
+      const subdomainTenant = await resolveTenantByExactSlug(tenant);
+      const subdomainHeaders = new Headers(request.headers);
+      subdomainHeaders.set('x-tenant-slug', tenant);
+      subdomainHeaders.set('x-tenant-source', 'subdomain');
+      subdomainHeaders.set('x-tenant-embedded', '1');
+      if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
+      if (subdomainTenant?.kind) subdomainHeaders.set('x-tenant-kind', subdomainTenant.kind);
+      return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
+    }
+    // Fall through — the resolution block below picks up the subdomain
+    // tenant and stamps x-tenant-* headers on the global route.
   }
 
   // --- Source-provider URL strip ---
   // Source providers (Internet Archive, Gallica, Bodleian, …) live in the
-  // `tenants` Mongo collection so book metadata can credit them and queries
-  // can filter by `image_source.provider`, but they are NOT tenants in the
-  // routing sense — no partner subdomain, no scoped UI. Treating their slugs
-  // as URL prefixes (`/internet-archive/gallery`, `/gallica/book/...`)
-  // accidentally scopes the [tenant]/* routes by tenantId and hides content
-  // that the provider re-hosts but doesn't carry a tenantId for (most of
-  // gallery_images, related books, etc.). Strip the provider prefix and
-  // 308-redirect to the global equivalent so providers never claim URL space.
-  // Subdomain-kind tenants (bph, kloss-collection, bhutan) and `default`/`meta`
-  // are untouched here — their existing per-route canonicalizations below
-  // continue to apply when visited from the main host.
+  // `tenants` Mongo collection as `kind:'provider'` rows so book metadata can
+  // credit them, but they are NOT tenants in the routing sense — no partner
+  // subdomain, no scoped UI. Strip a leading provider slug and 308 to the
+  // global equivalent so providers never claim URL space. Kept as a safety
+  // net for old indexed links (see PR #2025).
   const providerStripMatch = pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/);
   if (providerStripMatch) {
     const seg = providerStripMatch[1];
     const rest = providerStripMatch[2] || '';
-    const providerCandidate = await resolveActiveTenant(seg);
+    const providerCandidate = await resolveProviderTenant(seg);
     if (providerCandidate?.kind === 'provider') {
       const url = request.nextUrl.clone();
       url.pathname = rest || '/';
@@ -581,59 +559,13 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // --- Canonical book URLs ---
-  // Book URLs are tenant-agnostic: always /book/{slug} (no tenant prefix).
-  // Strip any leading /{tenant} from book paths so old links canonicalize.
-  const tenantBookMatch = pathname.match(/^\/([^/]+)(\/book(?:\/.*)?)$/);
-  if (tenantBookMatch) {
-    const tenantSegment = tenantBookMatch[1];
-    const bookSuffix = tenantBookMatch[2];
-    const directTenant = await resolveActiveTenant(tenantSegment);
-    if (directTenant) {
-      const url = request.nextUrl.clone();
-      url.pathname = bookSuffix;
-      return NextResponse.redirect(url, 308);
-    }
-  }
-
-  // Gallery image URLs are tenant-agnostic, matching the book-URL doctrine
-  // (see PR #2025, CLAUDE.md "Source Library is the destination"). A previous
-  // block here redirected `/gallery/image/<id>` to
-  // `/<tenant>/gallery/image/<id>` based on the image's owning tenant, but
-  // when that tenant resolved to a *provider*-kind row (e-codices, Internet
-  // Archive, etc.) the provider-strip rule above immediately stripped the
-  // prefix back off, producing an infinite 308 loop and making most gallery
-  // image pages unreachable. The clean URL is served by
-  // src/app/gallery/image/[id]/page.tsx (which re-exports the tenant page)
-  // plus a matching root layout that supplies the metadata + JSON-LD.
-
-  // Collections are global routes. Canonicalize legacy tenant-scoped collection
-  // paths (e.g. /bph/collections/astrology) to /collections/astrology.
-  const tenantCollectionMatch = pathname.match(/^\/([^/]+)\/collections(\/.*)?$/);
-  if (tenantCollectionMatch) {
-    const tenantSegment = tenantCollectionMatch[1];
-    const collectionsSuffix = tenantCollectionMatch[2] || '';
-    const directTenant = await resolveActiveTenant(tenantSegment);
-    if (directTenant) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/collections${collectionsSuffix}`;
-      return NextResponse.redirect(url, 308);
-    }
-  }
-
-  // Explore is global-only. Canonicalize tenant-scoped explore paths
-  // (e.g. /bph/explore/map) to /explore/map.
-  const tenantExploreMatch = pathname.match(/^\/([^/]+)\/explore(\/.*)?$/);
-  if (tenantExploreMatch) {
-    const tenantSegment = tenantExploreMatch[1];
-    const exploreSuffix = tenantExploreMatch[2] || '';
-    const directTenant = await resolveActiveTenant(tenantSegment);
-    if (directTenant) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/explore${exploreSuffix}`;
-      return NextResponse.redirect(url, 308);
-    }
-  }
+  // Tenant-prefix canonicalizers (/{tenant}/book → /book, /{tenant}/collections
+  // → /collections, /{tenant}/explore → /explore) used to live here. After
+  // Phase Final book/collections/gallery/explore are all global routes, and
+  // the `/{tenant}/*` namespace only resolves at the [tenant] dynamic root —
+  // any other suffix there 404s through Next.js. The canonicalizers are no
+  // longer load-bearing; old links that still hit `/bph/book/x` get a 404
+  // (and Google drops them) rather than a 308.
 
   // --- Bot enforcement (before any other logic) ---
   const ua = request.headers.get('user-agent') || '';
@@ -743,29 +675,10 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (!resolved) {
-    const [, firstSegment] = pathname.split('/');
-    if (
-      firstSegment &&
-      !NON_TENANT_PATHS.has(firstSegment) &&
-      !firstSegment.includes('.') &&
-      /^[a-z0-9-]+$/.test(firstSegment)
-    ) {
-      // Unknown slug — return 404. Previously we redirected to home, which
-      // Google logs as "Soft 404" / "Page with redirect" and keeps trying.
-      // 404 tells Google the URL never existed so it drops the entry. This
-      // matters at scale: spam-scraper backlinks point thousands of bogus
-      // URLs (/tag/phpmyadmin/, /walking-with-confidence/, etc.) at the
-      // domain, all of which were piling up in GSC.
-      return new NextResponse('Not Found', {
-        status: 404,
-        headers: {
-          'Content-Type': 'text/plain; charset=utf-8',
-          'X-Robots-Tag': 'noindex, nofollow',
-        },
-      });
-    }
-  }
+  // Unknown-slug 404s used to live here, gated on NON_TENANT_PATHS. After
+  // Phase Final the [tenant] dynamic root calls notFound() when no tenant
+  // resolves from headers, which yields the same 404 status — see
+  // src/app/[tenant]/page.tsx.
 
   const tenantId = resolved?.id ?? null;
   const tenantSlug = resolved?.slug ?? null;
@@ -777,10 +690,15 @@ export async function proxy(request: NextRequest) {
   if (tenantSlug) requestHeaders.set('x-tenant-slug', tenantSlug);
   if (resolved?.kind) requestHeaders.set('x-tenant-kind', resolved.kind);
   if (resolved?.source) requestHeaders.set('x-tenant-source', resolved.source);
-  // Embed state: subdomain rewrite branch handles its own header injection
-  // above. Here we never reach the embed namespace, so isEmbedded is false.
-  // (Direct visits to /embed/* are middleware-rewrite targets, not initial
-  // requests, so we don't need to mark them embedded from this branch.)
+  // Mark embedded so getTenantContext() / getEmbedUiPolicy() apply lockdown UI:
+  //   - 'subdomain': subdomain requests that fell through the rewrite block
+  //     above (everything except `/`, /catalog, /catalogue) render the global
+  //     route under tenant chrome.
+  //   - 'embed-path': partner iframes loaded directly at /embed/<tenant>/…
+  //     via public/embed/v1.js.
+  if (resolved?.source === 'subdomain' || resolved?.source === 'embed-path') {
+    requestHeaders.set('x-tenant-embedded', '1');
+  }
 
   // Pass the modified headers to the request
   const response = NextResponse.next({

@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import PageEditorPage from '@/app/book/[id]/page/[pageId]/page';
 
+// Iframe-target wrapper for the page reader. See sibling page.tsx for the
+// embed-v1.js coupling rationale.
+
 export const revalidate = 86400;
 
 // Same rationale as the non-embed per-page route: thin content, outnumbers
@@ -14,6 +17,6 @@ export default async function EmbedReaderPage({
 }: {
     params: Promise<{ tenant: string; slug: string; pageId: string }>;
 }) {
-    const { tenant, slug, pageId } = await params;
-    return <PageEditorPage params={Promise.resolve({ tenant, id: slug, pageId })} />;
+    const { slug, pageId } = await params;
+    return <PageEditorPage params={Promise.resolve({ id: slug, pageId })} />;
 }

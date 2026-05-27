@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowLeft, ExternalLink, BookMarked } from 'lucide-react';
-import { resolveTenantId } from '@/lib/tenant-context';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import alignmentData from '@/data/jung-bph-alignment-2026-05-22.json';
 
 // Static virtual collection — built from a JSON artefact. Defer revalidation
@@ -16,8 +17,6 @@ export const metadata: Metadata = {
         "Books from C.G. Jung's personal library at Küsnacht that are also held in the Bibliotheca Philosophica Hermetica. 151 bibliographic resonances between two of the most significant private libraries of Western esoteric thought.",
     robots: { index: true, follow: true },
 };
-
-/* ── Types matching the JSON artefact shape ── */
 
 interface JungWork {
     erara_id: string;
@@ -65,8 +64,6 @@ interface AlignmentData {
 
 const DATA = alignmentData as unknown as AlignmentData;
 
-/* ── Helpers ── */
-
 interface FlatMatch {
     jung: JungWork;
     bph: BphWork;
@@ -74,11 +71,6 @@ interface FlatMatch {
     yearScore: number;
 }
 
-/** Filter to records that have at least one match, take the best match,
- *  and sort the whole list by BPH year (then by score desc as tiebreak).
- *  Multi-match Jung records collapse to their highest-scoring BPH candidate —
- *  showing every candidate would create visual duplicates that don't
- *  help a reader scanning the resonances. */
 function buildMatchedList(data: AlignmentData): FlatMatch[] {
     const matched = data.results.filter(r => r.matches && r.matches.length > 0);
     const flat: FlatMatch[] = matched.map(r => {
@@ -112,22 +104,14 @@ function imprintLine(bph: BphWork): string {
     return parts.join(' · ');
 }
 
-/* ── Page ── */
-
-interface Props {
-    params: Promise<{ tenant: string }>;
-}
-
-export default async function JungResonancesPage({ params }: Props) {
-    const { tenant } = await params;
-
-    // Tenant lockdown — this page is BPH-scoped content. Refuse to render
-    // under any other tenant slug, even though the route folder lives under
-    // [tenant]. The data references BPH UBNs, so showing it elsewhere would
-    // produce broken links and violate the closed-system invariant.
-    const tenantId = await resolveTenantId(tenant);
-    if (!tenantId) notFound();
-    if (tenant !== 'bph') notFound();
+export default async function JungResonancesPage() {
+    // BPH-tenant-gated. The data references BPH UBNs and the in-page links
+    // (`/catalog/{ubn}`) only resolve under the BPH subdomain rewrite, so
+    // rendering this page off-BPH would produce broken links and violate the
+    // tenant-lockdown invariant. After Phase Final the route is global, but the
+    // gate stays.
+    const { slug: tenantSlug } = getTenantContextFromRequest(await headers());
+    if (tenantSlug !== 'bph') notFound();
 
     const matched = buildMatchedList(DATA);
     const ustcCount = matched.filter(m => !!m.bph.ustc_sn).length;
@@ -263,8 +247,6 @@ export default async function JungResonancesPage({ params }: Props) {
     );
 }
 
-/* ── Card component ── */
-
 function ResonanceCard({ match }: { match: FlatMatch }) {
     const { jung, bph, score } = match;
     const bphTitle = bph.title || '(untitled)';
@@ -278,7 +260,6 @@ function ResonanceCard({ match }: { match: FlatMatch }) {
         <li className="bg-white rounded-lg border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all">
             <div className="p-5 sm:p-6 grid sm:grid-cols-[1fr_auto] gap-4">
                 <div className="min-w-0">
-                    {/* Year + identity pills */}
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                         {bph.year != null && (
                             <span className="text-xs font-mono text-muted tabular-nums">
@@ -297,7 +278,6 @@ function ResonanceCard({ match }: { match: FlatMatch }) {
                         )}
                     </div>
 
-                    {/* BPH side */}
                     <h2 className="text-lg sm:text-xl text-primary font-display leading-snug mb-1">
                         <Link
                             href={`/catalog/${bph.ubn}`}
@@ -323,7 +303,6 @@ function ResonanceCard({ match }: { match: FlatMatch }) {
                         </p>
                     )}
 
-                    {/* Jung side-link */}
                     <div className="mt-4 pt-3 border-t border-border-light/60">
                         <a
                             href={jung.source_url}
@@ -345,7 +324,6 @@ function ResonanceCard({ match }: { match: FlatMatch }) {
                     </div>
                 </div>
 
-                {/* Catalogue link on the right */}
                 <div className="hidden sm:flex flex-col items-end justify-start text-xs text-muted">
                     <Link
                         href={`/catalog/${bph.ubn}`}

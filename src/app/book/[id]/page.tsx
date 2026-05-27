@@ -180,13 +180,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Wrong tenant — suppress metadata entirely so the 404 isn't indexed.
   // Match either UUID (tenantId) or slug (tenant_id) — legacy docs may have only one set.
+  // Only enforce when this request actually has a tenant context (subdomain or
+  // path-resolved); on the global site every book stays visible.
   const bookTenantUuid = (book as any).tenantId as string | undefined;
   const bookTenantSlug = (book as any).tenant_id as string | undefined;
   const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
+  const hasTenantContext = !!(tenantId || tenant);
   const matchesTenant =
     (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
     (bookTenantSlug && tenant && bookTenantSlug === tenant);
-  if (hasTenantField && !matchesTenant) {
+  if (hasTenantContext && hasTenantField && !matchesTenant) {
     return {
       title: 'Not Found - Source Library',
       robots: { index: false, follow: false },
@@ -567,13 +570,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   // Enforce tenant isolation: book must belong to the tenant in the URL.
   // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
   // Match against whichever form is present so legacy artwork docs (slug-only) don't 404.
+  // After the Phase 3 globalization, /book/[id] is reachable without a tenant
+  // context (sourcelibrary.org/book/X). Only enforce isolation when this
+  // request actually carries a tenant (subdomain or path-resolved); otherwise
+  // every book stays visible globally — that's the whole point of the
+  // tenant-as-filter overlay model.
   const bookTenantUuid = (book as any).tenantId as string | undefined;
   const bookTenantSlug = (book as any).tenant_id as string | undefined;
   const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
+  const hasTenantContext = !!(tenantId || tenantSlug);
   const matchesTenant =
     (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
     (bookTenantSlug && tenantSlug && bookTenantSlug === tenantSlug);
-  if (hasTenantField && !matchesTenant) {
+  if (hasTenantContext && hasTenantField && !matchesTenant) {
     notFound();
   }
 
