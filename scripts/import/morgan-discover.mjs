@@ -116,43 +116,83 @@ async function discover(bibId) {
           if (html.length > 1000) { thumbsBase = url; break; }
         } catch {}
       }
-      if (!thumbsBase) {
-        rec.error = 'collection slug found but /thumbs returned empty';
-      } else {
+      // Try /thumbs first (fast path: 12 filenames per HTTP fetch, 20 pages max)
+      let fnames = [];
+      if (thumbsBase) {
         rec.thumbs_url = thumbsBase;
         const seen = new Set();
-        const fnames = [];
         const filenameRe = new RegExp(`/facsimile/${bibId}/([^"'?\\s]+\\.jpg)`, 'g');
         for (let p = 0; p < 200; p++) {
           let html;
           try { html = await fetchText(`${thumbsBase}?page=${p}`); } catch { break; }
-          let before = fnames.length;
+          const before = fnames.length;
           let m;
           while ((m = filenameRe.exec(html)) !== null) {
             if (!seen.has(m[1])) { seen.add(m[1]); fnames.push(m[1]); }
           }
-          if (fnames.length === before) break; // no new filenames on this page
+          if (fnames.length === before) break;
         }
         rec.page_filenames = fnames;
         rec.page_count = fnames.length;
+        rec.discovery_method = 'thumbs';
+      }
 
-        // If no filenames matched the bibId-based path, try alternate dirs.
-        // Re-scan page 0 looking for any /facsimile/<dir>/<file>.jpg paths.
-        if (fnames.length === 0) {
-          const html0 = await fetchText(`${thumbsBase}?page=0`).catch(() => '');
-          const altRe = /\/facsimile\/([\d.]+)\/([^"'?\s]+\.jpg)/g;
-          const dirs = new Map();
-          let am;
-          while ((am = altRe.exec(html0)) !== null) {
-            if (!dirs.has(am[1])) dirs.set(am[1], []);
-            if (!dirs.get(am[1]).includes(am[2])) dirs.get(am[1]).push(am[2]);
+      // Fallback: walk individual viewer pages /collection/<slug>/<bibId>/<N>.
+      // Used for MSS with no /thumbs page (e.g. M.788 Felicity, M.890 Fountains).
+      // Slow (one HTTP fetch per page) but reliable. Concurrency=8.
+      if (fnames.length === 0) {
+        console.error(`  ${bibId}: /thumbs unavailable — walking viewer pages /collection/${rec.collection_slug}/${bibId}/N...`);
+        const walked = [];
+        const CONCURRENCY = 8;
+        let cursor = 1, consecutiveMisses = 0, stopped = false;
+        const HARD_MAX = 2000;
+        async function worker() {
+          while (!stopped) {
+            const vp = cursor++;
+            if (vp > HARD_MAX) return;
+            const vurl = `https://www.themorgan.org/collection/${rec.collection_slug}/${bibId}/${vp}`;
+            let vhtml;
+            try { vhtml = await fetchText(vurl); }
+            catch { consecutiveMisses++; if (consecutiveMisses >= 8) stopped = true; continue; }
+            const dirRe = new RegExp(`/sites/default/files/facsimile/([\\d.]+)/([^"?\\s]+\\.jpg)`);
+            const fm = vhtml.match(dirRe);
+            if (fm) {
+              consecutiveMisses = 0;
+              walked.push({ vp, file: fm[2], dir: fm[1] });
+              if (!rec.image_dir_override && fm[1] !== bibId) rec.image_dir_override = fm[1];
+            } else {
+              consecutiveMisses++;
+              if (consecutiveMisses >= 8) stopped = true;
+            }
           }
-          if (dirs.size > 0) {
-            const [bestDir, bestFiles] = [...dirs.entries()].sort((a, b) => b[1].length - a[1].length)[0];
-            rec.image_dir_override = bestDir;
-            rec.page_filenames = bestFiles;
-            rec.page_count = bestFiles.length;
-          }
+        }
+        await Promise.all(Array(CONCURRENCY).fill(0).map(worker));
+        walked.sort((a, b) => a.vp - b.vp);
+        if (walked.length > 0) {
+          rec.page_filenames = walked.map(w => w.file);
+          rec.page_count = walked.length;
+          rec.discovery_method = 'walked_viewer_pages';
+          fnames = rec.page_filenames;
+        } else if (!rec.error) {
+          rec.error = 'no viewer pages responded';
+        }
+      }
+
+      // Last-ditch: scan /thumbs for any other facsimile directory.
+      if (fnames.length === 0 && thumbsBase) {
+        const html0 = await fetchText(`${thumbsBase}?page=0`).catch(() => '');
+        const altRe = /\/facsimile\/([\d.]+)\/([^"'?\s]+\.jpg)/g;
+        const dirs = new Map();
+        let am;
+        while ((am = altRe.exec(html0)) !== null) {
+          if (!dirs.has(am[1])) dirs.set(am[1], []);
+          if (!dirs.get(am[1]).includes(am[2])) dirs.get(am[1]).push(am[2]);
+        }
+        if (dirs.size > 0) {
+          const [bestDir, bestFiles] = [...dirs.entries()].sort((a, b) => b[1].length - a[1].length)[0];
+          rec.image_dir_override = bestDir;
+          rec.page_filenames = bestFiles;
+          rec.page_count = bestFiles.length;
         }
       }
     } else {
