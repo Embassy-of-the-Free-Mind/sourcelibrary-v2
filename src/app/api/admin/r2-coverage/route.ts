@@ -87,6 +87,7 @@ export const GET = withAdminAuth(async () => {
       no_r2_books_count: snapshot.no_r2_books_count,
       partial_books_top200: snapshot.partial_books_top200,
       no_r2_books_top200: snapshot.no_r2_books_top200,
+      variant_coverage: snapshot.variant_coverage ?? null,
     } : null,
     stuck: {
       summary: stuckTotals,

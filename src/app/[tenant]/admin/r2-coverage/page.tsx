@@ -41,6 +41,33 @@ interface NoR2Book {
   pages: number;
 }
 
+interface VariantGapBook {
+  id: string;
+  title: string;
+  language: string;
+  provider: string;
+  pages: number;
+  samples: number;
+  display_pct: number | null;
+  thumb_pct: number | null;
+  full_pct: number | null;
+  missing: ('display' | 'thumb' | 'full')[];
+}
+
+interface VariantCoverage {
+  probed_books: number;
+  samples_per_book: number;
+  probe_ms: number;
+  probes_attempted: number;
+  probes_resolved: number;
+  probes_unresolved: number;
+  books_with_any_unresolved: number;
+  library: { display_pct: number | null; thumb_pct: number | null; full_pct: number | null };
+  by_provider: Record<string, { books: number; display_pct: number | null; thumb_pct: number | null; full_pct: number | null }>;
+  gap_books_count: number;
+  gap_books_top200: VariantGapBook[];
+}
+
 interface SnapshotData {
   computed_at: string;
   computation_ms: number;
@@ -51,6 +78,7 @@ interface SnapshotData {
   no_r2_books_count: number;
   partial_books_top200: PartialBook[];
   no_r2_books_top200: NoR2Book[];
+  variant_coverage: VariantCoverage | null;
 }
 
 interface Coverage {
@@ -63,7 +91,7 @@ interface Coverage {
   };
 }
 
-type Tab = 'stuck' | 'partial' | 'no_r2';
+type Tab = 'stuck' | 'partial' | 'no_r2' | 'variant_gap';
 
 export default function R2CoveragePage() {
   const [data, setData] = useState<Coverage | null>(null);
@@ -91,6 +119,8 @@ export default function R2CoveragePage() {
   const filteredStuck = stuck?.books.filter(b => filterBook(filter, b.title, b.author, b.provider)) || [];
   const filteredPartial = snap?.partial_books_top200.filter(b => filterBook(filter, b.title, b.provider)) || [];
   const filteredNoR2 = snap?.no_r2_books_top200.filter(b => filterBook(filter, b.title, b.provider)) || [];
+  const variantCov = snap?.variant_coverage ?? null;
+  const filteredVariantGap = variantCov?.gap_books_top200.filter(b => filterBook(filter, b.title, b.provider)) || [];
 
   return (
     <div style={{ padding: 24, color: '#c9d1d9', background: '#0d1117', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
@@ -117,6 +147,28 @@ export default function R2CoveragePage() {
               <p style={{ fontSize: 11, color: '#8b949e', marginTop: 0, marginBottom: 24 }}>
                 Snapshot computed {new Date(snap.computed_at).toLocaleString('en-US')} in {(snap.computation_ms / 1000).toFixed(1)}s. Refresh: <code style={{ background: '#161b22', padding: '1px 5px', borderRadius: 3 }}>node scripts/workers/r2-coverage-snapshot.mjs</code>
               </p>
+
+              {variantCov ? (
+                <>
+                  <h2 style={{ fontSize: 16, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 0.5, marginTop: 24, marginBottom: 4 }}>Variant coverage on R2</h2>
+                  <p style={{ fontSize: 11, color: '#8b949e', marginTop: 0, marginBottom: 8 }}>
+                    Sampled HEAD probes — verifies the file actually exists at the R2 URL, per variant. {variantCov.samples_per_book} pages × {variantCov.probed_books.toLocaleString('en-US')} books × 3 variants = {variantCov.probes_attempted.toLocaleString('en-US')} probes ({(variantCov.probe_ms / 1000).toFixed(1)}s).
+                    {variantCov.probes_unresolved > 0 && (
+                      <> Unresolved (network/timeout) excluded from %: {variantCov.probes_unresolved.toLocaleString('en-US')} probes across {variantCov.books_with_any_unresolved.toLocaleString('en-US')} books.</>
+                    )}
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+                    <Card label="Display .jpg" value={variantCov.library.display_pct !== null ? `${variantCov.library.display_pct}%` : '—'} hint="1200px, browser reader" {...(variantCov.library.display_pct !== null && variantCov.library.display_pct < 99 ? { warn: true } : {})} />
+                    <Card label="Thumbnail -thumb.jpg" value={variantCov.library.thumb_pct !== null ? `${variantCov.library.thumb_pct}%` : '—'} hint="150px, grids & search" {...(variantCov.library.thumb_pct !== null && variantCov.library.thumb_pct < 99 ? { warn: true } : {})} />
+                    <Card label="Full-res -full.jpg" value={variantCov.library.full_pct !== null ? `${variantCov.library.full_pct}%` : '—'} hint="source resolution, OCR & zoom" {...(variantCov.library.full_pct !== null && variantCov.library.full_pct < 99 ? { warn: true } : {})} />
+                    <Card label="Books with gaps" value={variantCov.gap_books_count.toLocaleString('en-US')} hint="≥1 variant missing in samples" {...(variantCov.gap_books_count > 0 ? { warn: true } : {})} />
+                  </div>
+                </>
+              ) : (
+                <div style={{ background: '#1c2128', border: '1px solid #30363d', borderRadius: 8, padding: 12, marginBottom: 16, fontSize: 13, color: '#8b949e' }}>
+                  Variant probe disabled in last snapshot. Re-run worker without <code style={{ background: '#0d1117', padding: '1px 5px', borderRadius: 3 }}>--no-variant-probe</code> to populate per-variant coverage.
+                </div>
+              )}
             </>
           ) : (
             <div style={{ background: '#1c2128', border: '1px solid #9e6a03', borderRadius: 8, padding: 12, marginBottom: 16, fontSize: 13 }}>
@@ -146,6 +198,7 @@ export default function R2CoveragePage() {
             <TabBtn active={tab === 'stuck'} onClick={() => setTab('stuck')}>Stuck (errored) · {stuck?.summary.books ?? 0}</TabBtn>
             <TabBtn active={tab === 'partial'} onClick={() => setTab('partial')}>Partial R2 · {snap?.partial_books_count ?? 0}</TabBtn>
             <TabBtn active={tab === 'no_r2'} onClick={() => setTab('no_r2')}>Zero R2 · {snap?.no_r2_books_count ?? 0}</TabBtn>
+            {variantCov && <TabBtn active={tab === 'variant_gap'} onClick={() => setTab('variant_gap')}>Variant gap · {variantCov.gap_books_count}</TabBtn>}
           </div>
 
           <input
@@ -159,6 +212,7 @@ export default function R2CoveragePage() {
           {tab === 'stuck' && stuck && <StuckTable rows={filteredStuck} />}
           {tab === 'partial' && snap && <PartialTable rows={filteredPartial} totalAvailable={snap.partial_books_count} showing={snap.partial_books_top200.length} />}
           {tab === 'no_r2' && snap && <NoR2Table rows={filteredNoR2} totalAvailable={snap.no_r2_books_count} showing={snap.no_r2_books_top200.length} />}
+          {tab === 'variant_gap' && variantCov && <VariantGapTable rows={filteredVariantGap} totalAvailable={variantCov.gap_books_count} showing={variantCov.gap_books_top200.length} />}
         </>
       )}
     </div>
@@ -295,6 +349,53 @@ function NoR2Table({ rows, totalAvailable, showing }: { rows: NoR2Book[]; totalA
                 <Td>{b.provider}</Td>
                 <Td>{b.status || '—'}</Td>
                 <Td align="right" warn>{b.pages.toLocaleString('en-US')}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
+function VariantGapTable({ rows, totalAvailable, showing }: { rows: VariantGapBook[]; totalAvailable: number; showing: number }) {
+  return (
+    <>
+      {totalAvailable > showing && (
+        <p style={{ fontSize: 12, color: '#8b949e', margin: '0 0 8px' }}>Showing top {showing} of {totalAvailable.toLocaleString('en-US')} variant-gap books (ranked by estimated missing pages across sampled variants).</p>
+      )}
+      <p style={{ fontSize: 11, color: '#8b949e', margin: '0 0 8px' }}>
+        Each row reflects a sample of {rows[0]?.samples ?? 3} pages probed against R2. <strong style={{ color: '#e3b341' }}>Yellow</strong> means at least one sample of that variant returned 404.
+      </p>
+      <div style={{ overflowX: 'auto', background: '#161b22', border: '1px solid #30363d', borderRadius: 8 }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <thead>
+            <tr style={{ background: '#1c2128', color: '#8b949e' }}>
+              <Th>Book</Th>
+              <Th>Lang</Th>
+              <Th>Provider</Th>
+              <Th align="right">Pages</Th>
+              <Th align="right">Display</Th>
+              <Th align="right">Thumb</Th>
+              <Th align="right">Full</Th>
+              <Th>Missing</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(b => (
+              <tr key={b.id} style={{ borderTop: '1px solid #30363d' }}>
+                <Td>
+                  <Link href={`/book/${b.id}`} target="_blank" style={{ color: '#58a6ff', textDecoration: 'none' }}>
+                    {b.title?.slice(0, 80)}
+                  </Link>
+                </Td>
+                <Td>{b.language}</Td>
+                <Td>{b.provider}</Td>
+                <Td align="right">{b.pages.toLocaleString('en-US')}</Td>
+                <Td align="right" warn={b.display_pct !== null && b.display_pct < 100}>{b.display_pct === null ? '—' : `${b.display_pct}%`}</Td>
+                <Td align="right" warn={b.thumb_pct !== null && b.thumb_pct < 100}>{b.thumb_pct === null ? '—' : `${b.thumb_pct}%`}</Td>
+                <Td align="right" warn={b.full_pct !== null && b.full_pct < 100}>{b.full_pct === null ? '—' : `${b.full_pct}%`}</Td>
+                <Td>{b.missing.join(', ')}</Td>
               </tr>
             ))}
           </tbody>
