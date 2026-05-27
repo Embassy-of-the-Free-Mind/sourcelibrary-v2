@@ -44,12 +44,20 @@ const TEXT_ONLY_PROVIDERS = new Set(['etcsl', 'tu_darmstadt']);
 
 const VARIANTS = ['display', 'thumb', 'full'];
 
-function variantUrl(bookId, pageNumber, variant) {
-  const num = String(pageNumber).padStart(4, '0');
-  const base = `https://images.sourcelibrary.org/pages/${bookId}/${num}`;
-  if (variant === 'thumb') return `${base}-thumb.jpg`;
-  if (variant === 'full') return `${base}-full.jpg`;
-  return `${base}.jpg`;
+// Full-res storage migrated convention partway through the library's history.
+// New imports use /pages/<id>/<NNNN>-full.jpg; older imports kept the source
+// at /archived/<id>/<N>.jpg (unpadded, no -full suffix). Both paths are still
+// in production. A page that hits EITHER is considered to have full-res
+// available.
+function variantUrls(bookId, pageNumber, variant) {
+  const padded = String(pageNumber).padStart(4, '0');
+  const base = `https://images.sourcelibrary.org/pages/${bookId}/${padded}`;
+  if (variant === 'thumb') return [`${base}-thumb.jpg`];
+  if (variant === 'full') return [
+    `${base}-full.jpg`,
+    `https://images.sourcelibrary.org/archived/${bookId}/${pageNumber}.jpg`,
+  ];
+  return [`${base}.jpg`];
 }
 
 function pickSampleNumbers(total, n) {
@@ -236,14 +244,23 @@ async function run() {
       const samples = pickSampleNumbers(s.total, VARIANT_SAMPLES);
       const provider = b.image_source?.provider || 'unknown';
 
-      // Build the flat list of (sample, variant) tuples for this book
-      const probes = [];
+      // Per (page, variant): probe all candidate URLs in parallel; the variant
+      // is "present" if any of them returns 200, "missing" if all return 404,
+      // and "unresolved" if every URL came back as null (network/timeout).
+      const probeTasks = [];
       for (const pageNum of samples) {
         for (const variant of VARIANTS) {
-          probes.push({ pageNum, variant, url: variantUrl(b.id, pageNum, variant) });
+          const urls = variantUrls(b.id, pageNum, variant);
+          probeTasks.push((async () => {
+            const oks = await Promise.all(urls.map(u => headOk(u)));
+            // null < false < true, prefer most-definite
+            if (oks.some(o => o === true)) return { variant, ok: true };
+            if (oks.every(o => o === null)) return { variant, ok: null };
+            return { variant, ok: false };
+          })());
         }
       }
-      const results = await Promise.all(probes.map(p => headOk(p.url).then(ok => ({ ...p, ok }))));
+      const results = await Promise.all(probeTasks);
 
       const perVariant = { display: { ok: 0, total: 0 }, thumb: { ok: 0, total: 0 }, full: { ok: 0, total: 0 } };
       let bookUnresolved = 0;
