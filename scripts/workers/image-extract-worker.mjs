@@ -701,20 +701,28 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
 
 // ── Process one book ──
 async function processBook(db, book) {
-  // Find candidate pages
+  // Find candidate pages. Default filter requires OCR (page_type or ocr.data).
+  // With --all-pages (or IMAGE_EXTRACT_ALL_PAGES=1), bypass the filter and run
+  // Gemini vision on every page — useful for backfilling books whose OCR
+  // pipeline hasn't run yet. Costs ~$0.002/page extra for skipped non-illustration
+  // pages but unlocks image extraction independently of OCR.
+  const allPages = process.argv.includes('--all-pages') || process.env.IMAGE_EXTRACT_ALL_PAGES === '1';
+  const filter = allPages
+    ? { book_id: book.id }
+    : {
+        book_id: book.id,
+        $or: [
+          { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
+          { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+        ],
+      };
   const candidatePages = await db.collection('pages')
-    .find({
-      book_id: book.id,
-      $or: [
-        { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-        { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
-      ],
-    }, { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 } })
+    .find(filter, { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 } })
     .toArray();
 
   if (candidatePages.length === 0) {
     await setPipelineStatus(db, book.id, 'images_complete');
-    return { title: book.title, pages: 0, images: 0, skipped: true };
+    return { title: book.title, pages: 0, images: 0, skipped: true, candidates: 0 };
   }
 
   // Build prompt with book context
@@ -732,6 +740,8 @@ async function processBook(db, book) {
   const now = new Date();
   let totalImages = 0;
   let pagesProcessed = 0;
+  let pageRejections = 0;
+  const rejectionSamples = []; // up to 3 sample errors for the per-book log
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
   const galleryDocs = [];
@@ -746,6 +756,10 @@ async function processBook(db, book) {
 
     for (const settled of results) {
       if (settled.status !== 'fulfilled' || !settled.value) {
+        pageRejections++;
+        if (rejectionSamples.length < 3) {
+          rejectionSamples.push(settled.reason?.message || settled.status);
+        }
         if (settled.reason?.message?.includes('429') || settled.reason?.message?.includes('RESOURCE_EXHAUSTED')) {
           rotateKey();
         }
@@ -915,7 +929,15 @@ async function processBook(db, book) {
     endpoint: 'hetzner/image-extract-worker',
   }, db).catch(() => {});
 
-  return { title: book.title, pages: pagesProcessed, images: totalImages, skipped: false };
+  return {
+    title: book.title,
+    pages: pagesProcessed,
+    images: totalImages,
+    skipped: false,
+    candidates: candidatePages.length,
+    rejections: pageRejections,
+    rejectionSamples,
+  };
 }
 
 // ── Main ──
@@ -1011,8 +1033,12 @@ async function runOverBooks(db, books, startTime, client) {
         totalPages += result.pages;
         if (result.skipped) {
           console.log(`  [skip] ${result.title} — no candidates`);
+        } else if (result.rejections > 0 && result.pages === 0) {
+          // All candidates rejected — looks identical to "no candidates" otherwise.
+          console.warn(`  [fail] ${result.title} — ${result.candidates} candidates, 0 processed, ${result.rejections} rejections (e.g. ${result.rejectionSamples?.[0] || 'unknown'})`);
         } else {
-          console.log(`  [done] ${result.title} — ${result.pages}pp, ${result.images} images`);
+          const rej = result.rejections > 0 ? ` (${result.rejections} rejections)` : '';
+          console.log(`  [done] ${result.title} — ${result.pages}/${result.candidates} pages, ${result.images} images${rej}`);
         }
       } catch (err) {
         errors++;
