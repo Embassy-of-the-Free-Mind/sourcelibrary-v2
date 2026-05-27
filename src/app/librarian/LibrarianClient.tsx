@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
-import { ensureParagraphBreaks, linkifySourceUrls } from './_lib/markdownPrep';
+import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
 
 // ── Types ─────────────────────────────────────────────────────────────
 

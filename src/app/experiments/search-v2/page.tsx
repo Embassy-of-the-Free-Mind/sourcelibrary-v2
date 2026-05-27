@@ -16,36 +16,7 @@ import { bookUrl } from '@/lib/slugify';
 import HighlightedText from '@/components/search/HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import SiteHeader from '@/components/layout/SiteHeader';
-
-// ── Helpers (same as LibrarianClient) ────────────────────────────────
-
-function linkifySourceUrls(text: string): string {
-  return text.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, _slug, page) => {
-      const label = page ? `View source (p. ${page})` : 'View in collection';
-      return `[${label}](${match})`;
-    },
-  );
-}
-
-function ensureParagraphBreaks(text: string): string {
-  const lines = text.split('\n');
-  const result: string[] = [];
-  let inCodeBlock = false;
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
-    result.push(line);
-    if (inCodeBlock || i === lines.length - 1) continue;
-    const next = lines[i + 1];
-    if (line === '' || next === '') continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
-    result.push('');
-  }
-  return result.join('\n');
-}
+import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
 
 const TOOL_LABELS: Record<string, string> = {
   search_collection: 'Searching the collection',
@@ -418,7 +389,18 @@ export default function SearchV2Page() {
                         img: ({ src, alt }) => (
                           <a href={src as string} target="_blank" rel="noopener noreferrer">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow" loading="lazy" />
+                            <img
+                              src={src as string}
+                              alt={(alt as string) || ''}
+                              className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow"
+                              loading="lazy"
+                              onError={(e) => {
+                                const img = e.currentTarget;
+                                const wrapper = img.closest('a');
+                                if (wrapper) wrapper.style.display = 'none';
+                                else img.style.display = 'none';
+                              }}
+                            />
                           </a>
                         ),
                       }}
