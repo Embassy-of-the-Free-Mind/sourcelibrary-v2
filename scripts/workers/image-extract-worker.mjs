@@ -88,9 +88,9 @@ const SCAN_QUALITY_VERSION = 2;
 sharp.concurrency(1);
 
 // ── Config ──
-const CONCURRENCY = 25;           // Books processed simultaneously
-const PAGE_CONCURRENCY = 10;      // Pages per book processed simultaneously
-const IMAGE_DOWNLOAD_CONCURRENCY = 40;
+const CONCURRENCY = parseInt(process.env.IMAGE_EXTRACT_CONCURRENCY || '25', 10);     // Books processed simultaneously
+const PAGE_CONCURRENCY = parseInt(process.env.IMAGE_EXTRACT_PAGE_CONCURRENCY || '10', 10);
+const IMAGE_DOWNLOAD_CONCURRENCY = parseInt(process.env.IMAGE_EXTRACT_DOWNLOAD_CONCURRENCY || '40', 10);
 const BOOKS_PER_RUN = 250;
 const RUN_DEADLINE_MS = 25 * 60 * 1000; // 25 min deadline (scheduler runs every 2 min)
 const MODEL = 'gemini-3-flash-preview'; // Vision task needs accuracy
