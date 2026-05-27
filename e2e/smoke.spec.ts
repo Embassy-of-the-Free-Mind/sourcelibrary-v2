@@ -20,8 +20,16 @@ const FAST_PAGES = [
   '/libraries',
   '/timeline',
   '/search?q=Ficino',
+  // Global routes that live under [tenant]/* and are rewritten on apex.
+  // If any of these 404 in production, look at GLOBAL_TENANT_ROUTES in proxy.ts.
   '/encyclopedia',
   '/encyclopedia/Archimedes',
+  '/shwep',
+  '/rithmomachia',
+  '/taxonomy',
+  '/learn',
+  '/dataset',
+  '/beta',
 ];
 
 // Collection and book pages hit Atlas directly and can be slow on ISR cache miss
