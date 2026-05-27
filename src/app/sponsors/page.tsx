@@ -172,10 +172,14 @@ export default async function SponsorsPage() {
           <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
             Annual Stewardship Membership.
           </h2>
-          <p className="text-lg text-stone-600 leading-relaxed mb-10 max-w-3xl">
+          <p className="text-lg text-stone-600 leading-relaxed mb-4 max-w-3xl">
             One ongoing relationship covering training-data licence, translation priorities, and a
             permanent named seat on the project. Suited to model providers, infrastructure
             companies, and labs that depend on high-quality scholarly text data.
+          </p>
+          <p className="text-lg text-stone-700 leading-relaxed mb-10 max-w-3xl font-semibold">
+            Sourcing scholarly training data the right way is now a board-level concern, not a
+            research preference. Stewardship Members get on that side of the line.
           </p>
 
           <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
@@ -192,15 +196,23 @@ export default async function SponsorsPage() {
                     </li>
                   ))}
                 </ul>
+                <div className="mt-6 pt-5 border-t border-stone-100 text-xs text-stone-500 leading-relaxed">
+                  <span className="font-semibold text-stone-600">Scope:</span> first-ever English
+                  translations with the original-language source aligned at the page level — see
+                  the live count in the stats above. Languages with working translation pipelines:
+                  Latin, Greek, Hebrew, German, French, Italian, Dutch. Sanskrit, Classical
+                  Arabic, and Tibetan in progress.
+                </div>
               </div>
               <div className="p-6 md:p-10 bg-[#faf8f5]">
                 <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
                   Commitment
                 </div>
-                <div className="font-display text-2xl text-stone-900 mb-3">By arrangement</div>
+                <div className="font-display text-2xl text-stone-900 mb-1">From $250K / yr</div>
+                <div className="text-xs text-stone-500 mb-3">Multi-year preferred</div>
                 <p className="text-sm text-stone-600 leading-relaxed mb-6">
-                  Annual recurring. Multi-year terms preferred. Set in conversation against the
-                  scope you need.
+                  Scope set in conversation. Wire, stock, DAF, or annual invoice — whatever your
+                  procurement team prefers.
                 </p>
                 <a
                   href={mailto}
@@ -212,8 +224,47 @@ export default async function SponsorsPage() {
             </div>
           </div>
 
+          {/* Founding Steward */}
+          <div className="mt-6 bg-stone-900 text-white rounded-xl overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-3">
+              <div className="lg:col-span-2 p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-stone-800">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-xs uppercase tracking-[0.2em] text-[#c9a86c]">
+                    Founding Steward
+                  </span>
+                  <span className="text-[10px] uppercase tracking-wider text-stone-400 border border-stone-700 px-2 py-0.5 rounded-full">
+                    2 seats only
+                  </span>
+                </div>
+                <h3 className="font-display text-2xl md:text-3xl mb-4 leading-snug">
+                  The first two labs to commit at $1M / yr take a permanent named seat in the
+                  project&apos;s origin.
+                </h3>
+                <p className="text-sm text-stone-300 leading-relaxed">
+                  Founding Stewards are named in every published volume, on the library, and in
+                  the project&apos;s history — not just for the term of their membership, but
+                  permanently. Once two are named, the door closes; no third Founding Steward,
+                  ever. After that, the regular Stewardship Membership is the way in.
+                </p>
+              </div>
+              <div className="p-6 md:p-10 bg-stone-950 flex flex-col justify-center">
+                <div className="text-xs uppercase tracking-wider text-stone-400 mb-2">
+                  Commitment
+                </div>
+                <div className="font-display text-2xl text-[#c9a86c] mb-1">$1M / yr</div>
+                <div className="text-xs text-stone-400 mb-6">Multi-year, by arrangement</div>
+                <a
+                  href={mailto}
+                  className="inline-flex items-center px-5 py-3 rounded-md bg-[#c9a86c] text-stone-900 text-sm font-semibold hover:bg-[#b8975b] transition-colors"
+                >
+                  Be the first
+                </a>
+              </div>
+            </div>
+          </div>
+
           <p className="text-sm text-stone-500 leading-relaxed mt-6 max-w-3xl">
-            Translations are published under CC BY-SA. The membership doesn&apos;t buy exclusivity —
+            Translations are published under CC BY-SA. Membership doesn&apos;t buy exclusivity —
             it buys an explicit grant for commercial use, a working channel into translation
             priorities, and permanent recognition for the company that helped pay to bring the
             corpus into the open.
