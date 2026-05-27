@@ -151,7 +151,13 @@ function imageFileName(rec, viewerPage) {
       if (!rec.page_filenames || !rec.page_filenames[viewerPage - 1]) {
         throw new Error(`custom pattern requires page_filenames[${viewerPage - 1}] for vp ${viewerPage}`);
       }
-      return rec.page_filenames[viewerPage - 1];
+      // Entries may include a dir prefix like "318716/142017v_0001.jpg" for MSS
+      // (M.386 Persian Album, MA 1139 Codex Huygens) where every page lives in
+      // its own bibId folder. We strip the dir part here and recover it via
+      // imageDir() — see imageDir comments.
+      const entry = rec.page_filenames[viewerPage - 1];
+      const slash = entry.indexOf('/');
+      return slash >= 0 ? entry.slice(slash + 1) : entry;
     }
     default:
       throw new Error(`Unknown filename_pattern: ${pattern}`);
@@ -160,14 +166,26 @@ function imageFileName(rec, viewerPage) {
 function zifFileName(rec, viewerPage) {
   return imageFileName(rec, viewerPage).replace(/\.jpg$/, '.zif');
 }
-function imageDir(rec) {
+// Per-MS image dir. Default = bibId. May be overridden globally via
+// image_dir_override, or per-page if rec.filename_pattern === 'custom' and the
+// page_filenames entry begins with "<dir>/<file>" (e.g. M.386 Persian Album
+// is bound from multiple manuscript fragments — each viewer page references
+// its own bibId folder; MA 1139 Codex Huygens has 124+ separate dirs).
+function imageDir(rec, viewerPage) {
+  if (viewerPage != null && (rec.filename_pattern || 'numeric_4d') === 'custom') {
+    const entry = rec.page_filenames?.[viewerPage - 1];
+    if (entry) {
+      const slash = entry.indexOf('/');
+      if (slash >= 0) return entry.slice(0, slash);
+    }
+  }
   return rec.image_dir_override || rec.bibId;
 }
 function publicJpegUrl(rec, viewerPage) {
-  return `https://www.themorgan.org/sites/default/files/facsimile/${imageDir(rec)}/${imageFileName(rec, viewerPage)}`;
+  return `https://www.themorgan.org/sites/default/files/facsimile/${imageDir(rec, viewerPage)}/${imageFileName(rec, viewerPage)}`;
 }
 function publicThumbUrl(rec, viewerPage) {
-  return `https://www.themorgan.org/sites/default/files/styles/largest_800_x_800_/public/facsimile/${imageDir(rec)}/${imageFileName(rec, viewerPage)}`;
+  return `https://www.themorgan.org/sites/default/files/styles/largest_800_x_800_/public/facsimile/${imageDir(rec, viewerPage)}/${imageFileName(rec, viewerPage)}`;
 }
 function zifUrl(rec, viewerPage) {
   return `https://host.themorgan.org/facsimile/images/${rec.accession_slug}/${zifFileName(rec, viewerPage)}`;
@@ -688,24 +706,25 @@ async function phaseArchive(rec, db, bookInfo) {
       const displayKey = `pages/${bookId}/${num}.jpg`;
       const thumbKey = `pages/${bookId}/${num}-thumb.jpg`;
 
-      // Idempotent: skip if all 4 keys exist
+      // Idempotent: skip if master + display + thumb already in R2 (ZIF optional —
+      // public-JPEG-only books don't have one). If they exist, refresh the page
+      // doc URLs in case an older importer left them pointing at themorgan.org.
       try {
-        const [a, b, c, d] = await Promise.all([
+        const [zifEx, masterEx, displayEx, thumbEx] = await Promise.all([
           r2KeyExists(zifKey), r2KeyExists(masterKey),
           r2KeyExists(displayKey), r2KeyExists(thumbKey),
         ]);
-        if (a && b && c && d) {
-          // Make sure the page doc actually points at R2 — older imports may have public URLs
+        if (masterEx && displayEx && thumbEx) {
           await db.collection('pages').updateOne(
             { _id: page._id },
             { $set: {
               archived_photo: `${R2_PUBLIC_URL}/${masterKey}`,
               display_photo: `${R2_PUBLIC_URL}/${displayKey}`,
               thumbnail_blob: `${R2_PUBLIC_URL}/${thumbKey}`,
-              zif_archive: `${R2_PUBLIC_URL}/${zifKey}`,
+              ...(zifEx ? { zif_archive: `${R2_PUBLIC_URL}/${zifKey}` } : {}),
               photo: `${R2_PUBLIC_URL}/${displayKey}`,
               thumbnail: `${R2_PUBLIC_URL}/${thumbKey}`,
-              'archive_metadata.source': 'morgan_zif',
+              'archive_metadata.source': zifEx ? 'morgan_zif' : 'morgan_public_jpeg',
               'archive_metadata.archived_at': new Date(),
               updated_at: new Date(),
             } }
@@ -720,44 +739,54 @@ async function phaseArchive(rec, db, bookInfo) {
 
       const t0 = Date.now();
       try {
-        // 1. Download ZIF
-        const zifBuffer = await fetchBuffer(zifUrl(rec, viewerPage), {
-          headers: { Referer: HOST_REFERER(rec.accession_slug) },
-        });
-
-        // 2. Extract master JPEG from ZIF
-        const masterBuffer = await extractMasterFromZif(zifBuffer);
+        // 1. Try ZIF (high-res master pyramid). Fall back to the public JPEG
+        // when no ZIF is published for this MS (Mellon, Drake, Huygens, etc.).
+        let zifBuffer = null, masterBuffer = null, sourceKind = 'morgan_zif';
+        try {
+          zifBuffer = await fetchBuffer(zifUrl(rec, viewerPage), {
+            headers: { Referer: HOST_REFERER(rec.accession_slug) },
+          });
+          masterBuffer = await extractMasterFromZif(zifBuffer);
+        } catch (zifErr) {
+          // Public JPEG fallback. The ~1.3 MB Morgan download is itself a
+          // ~2500-wide JPEG — usable as master though smaller than ZIF.
+          sourceKind = 'morgan_public_jpeg';
+          masterBuffer = await fetchBuffer(publicJpegUrl(rec, viewerPage));
+        }
 
         if (DRY_RUN) {
-          console.log(`  [w${workerId}] vp ${viewerPage}: DRY-RUN zif=${zifBuffer.length}b master=${masterBuffer.length}b`);
+          console.log(`  [w${workerId}] vp ${viewerPage}: DRY-RUN ${sourceKind} master=${masterBuffer.length}b`);
           processed++;
           continue;
         }
 
-        // 3. Upload ZIF preservation copy
-        const zifUrlR2 = await uploadToR2(zifKey, zifBuffer, 'image/tiff', 'public, max-age=2592000, s-maxage=2592000');
+        // 2. Upload ZIF preservation copy (only if we have one)
+        let zifUrlR2 = null;
+        if (zifBuffer) {
+          zifUrlR2 = await uploadToR2(zifKey, zifBuffer, 'image/tiff', 'public, max-age=2592000, s-maxage=2592000');
+        }
 
-        // 4. Upload master + display + thumb via shared helper (helper uploads master at archived/<bookId>/<pageNumber>.jpg, plus display/thumb)
+        // 3. Upload master + display + thumb (uploadPageVariants writes archived/<bookId>/<N>.jpg + display + thumb)
         const variants = await uploadPageVariants(masterBuffer, bookId, viewerPage, uploadToR2);
 
-        // 5. Update page doc
+        // 4. Update page doc
         await db.collection('pages').updateOne(
           { _id: page._id },
           { $set: {
             archived_photo: variants.archived,
             display_photo: variants.display,
             thumbnail_blob: variants.thumb,
-            zif_archive: zifUrlR2,
+            ...(zifUrlR2 ? { zif_archive: zifUrlR2 } : {}),
             photo: variants.display,
             thumbnail: variants.thumb,
             image_width: variants.width,
             image_height: variants.height,
             archive_metadata: {
-              source: 'morgan_zif',
-              source_url: zifUrl(rec, viewerPage),
+              source: sourceKind,
+              source_url: zifBuffer ? zifUrl(rec, viewerPage) : publicJpegUrl(rec, viewerPage),
               original_url: publicJpegUrl(rec, viewerPage),
               archived_at: new Date(),
-              zif_bytes: zifBuffer.length,
+              ...(zifBuffer ? { zif_bytes: zifBuffer.length } : {}),
               master_bytes: masterBuffer.length,
               master_width: variants.width,
               master_height: variants.height,
@@ -767,7 +796,8 @@ async function phaseArchive(rec, db, bookInfo) {
         );
         processed++;
         const ms = Date.now() - t0;
-        console.log(`  [w${workerId}] vp ${String(viewerPage).padStart(3)}: ${(zifBuffer.length/1e6).toFixed(1)}MB zif → ${variants.width}x${variants.height} master (${ms}ms)`);
+        const srcDesc = zifBuffer ? `${(zifBuffer.length/1e6).toFixed(1)}MB zif` : `${(masterBuffer.length/1e6).toFixed(1)}MB public-jpeg`;
+        console.log(`  [w${workerId}] vp ${String(viewerPage).padStart(3)}: ${srcDesc} → ${variants.width}x${variants.height} master (${ms}ms)`);
       } catch (e) {
         failed++;
         console.error(`  [w${workerId}] vp ${viewerPage}: FAILED ${e.message}`);
