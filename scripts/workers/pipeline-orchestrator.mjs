@@ -169,6 +169,36 @@ const SPLIT_DISPLAY_QUALITY = 85;
 const SPLIT_THUMB_WIDTH = 150;
 const SPLIT_THUMB_QUALITY = 60;
 
+// Image-extraction pre-filter: skip pages where OCR has already labelled every
+// <image-desc> as trivial (drop caps, library stamps, printer's marks, etc.).
+// Mirrors logic in image-extract-worker.mjs — keep the two in sync.
+const SKIP_MARKUP_RULES = [
+  { type: 'symbol', significance: '*' },
+  { type: 'stamp', significance: '*' },
+  { type: 'ornament', significance: '*' },
+  { type: 'blank', significance: '*' },
+  { type: 'decorative', significance: 'low' },
+  { type: "printer's mark", significance: 'low' },
+  { type: 'photograph', significance: 'low' },
+  { type: 'photographic', significance: 'low' },
+];
+
+function shouldSkipPageByMarkup(ocrData) {
+  if (!ocrData) return false;
+  if (ocrData.includes('<detected-images>')) return false;
+  const tags = [...ocrData.matchAll(/<image-desc([^>]*)>/g)];
+  if (tags.length === 0) return false;
+  for (const m of tags) {
+    const type = (m[1].match(/type="([^"]+)"/) || [])[1];
+    const sig = (m[1].match(/significance="([^"]+)"/) || [])[1];
+    const matched = SKIP_MARKUP_RULES.find(r =>
+      r.type === type && (r.significance === '*' || r.significance === sig)
+    );
+    if (!matched) return false;
+  }
+  return true;
+}
+
 function getR2Client() {
   const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
   if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
@@ -4521,15 +4551,27 @@ Rules:
 
           for (const book of readyForImages) {
             try {
-              const bookPages = await db.collection('pages')
+              const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
                   ],
-                }, { projection: { id: 1 } })
+                }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } })
                 .toArray();
+
+              // Pre-filter: drop pages with only trivial OCR markup (drop caps,
+              // stamps, ornaments). Skip filter does NOT apply to pages typed
+              // as illustration/frontispiece/etc.
+              const bookPages = rawPages.filter(p => {
+                if (IMAGE_CANDIDATE_PAGE_TYPES.includes(p.page_type)) return true;
+                return !shouldSkipPageByMarkup(p.ocr?.data);
+              }).map(p => ({ id: p.id }));
+              const skippedTrivial = rawPages.length - bookPages.length;
+              if (skippedTrivial > 0) {
+                console.log(`  ${book.title?.slice(0, 50)}: skipped ${skippedTrivial} trivial-markup pages`);
+              }
 
               if (bookPages.length === 0) {
                 if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
@@ -4645,15 +4687,24 @@ Rules:
 
           for (const book of readyForImages) {
             try {
-              const bookPages = await db.collection('pages')
+              const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
                   ],
-                }, { projection: { id: 1 } })
+                }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } })
                 .toArray();
+
+              const bookPages = rawPages.filter(p => {
+                if (IMAGE_CANDIDATE_PAGE_TYPES.includes(p.page_type)) return true;
+                return !shouldSkipPageByMarkup(p.ocr?.data);
+              }).map(p => ({ id: p.id }));
+              const skippedTrivial = rawPages.length - bookPages.length;
+              if (skippedTrivial > 0) {
+                console.log(`  ${book.title?.slice(0, 50)}: skipped ${skippedTrivial} trivial-markup pages`);
+              }
 
               if (bookPages.length === 0) {
                 if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
