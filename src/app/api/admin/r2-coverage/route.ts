@@ -11,6 +11,11 @@ export const GET = withAdminAuth(async () => {
   // Library-wide snapshot, computed by scripts/workers/r2-coverage-snapshot.mjs
   const snapshot = await db.collection('system_config').findOne({ _id: 'r2_coverage_snapshot' as unknown as never });
 
+  // Gallery_images CDN coverage — separate pipeline from pages.archived_photo,
+  // separate snapshot worker (scripts/workers/gallery-coverage-snapshot.mjs).
+  // Surfaced here because reviewers expect both signals on one dashboard.
+  const gallerySnapshot = await db.collection('system_config').findOne({ _id: 'gallery_coverage_snapshot' as unknown as never });
+
   // Live: stuck books explicitly errored on image downloads (always fresh — narrow query)
   const stuckBooks = await db.collection('books').find({
     'pipeline_auto.status': 'needs_attention',
@@ -87,6 +92,18 @@ export const GET = withAdminAuth(async () => {
       no_r2_books_count: snapshot.no_r2_books_count,
       partial_books_top200: snapshot.partial_books_top200,
       no_r2_books_top200: snapshot.no_r2_books_top200,
+    } : null,
+    gallery: gallerySnapshot ? {
+      computed_at: gallerySnapshot.computed_at,
+      computation_ms: gallerySnapshot.computation_ms,
+      settings: gallerySnapshot.settings,
+      library: gallerySnapshot.library,
+      coverage_buckets: gallerySnapshot.coverage_buckets,
+      by_provider: gallerySnapshot.by_provider,
+      no_coverage_books_count: gallerySnapshot.no_coverage_books_count,
+      partial_books_count: gallerySnapshot.partial_books_count,
+      no_coverage_books_top200: gallerySnapshot.no_coverage_books_top200,
+      partial_books_top200: gallerySnapshot.partial_books_top200,
     } : null,
     stuck: {
       summary: stuckTotals,
