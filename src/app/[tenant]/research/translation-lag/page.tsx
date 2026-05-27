@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import TranslationLagViz from '@/components/research/TranslationLagViz';
+import { isPublishedFirstTranslation } from '@/lib/book';
 
 export const revalidate = 60;
 
@@ -22,6 +23,7 @@ interface LagDataPoint {
   composed_display: string;
   lag: number;
   is_first_translation: boolean;
+  pages_translated: number;
   categories: string[];
 }
 
@@ -37,7 +39,7 @@ async function fetchLagData(): Promise<LagDataPoint[]> {
     {
       projection: {
         title: 1, display_title: 1, year: 1, language: 1, slug: 1,
-        source_work_dates: 1, author: 1, categories: 1, is_first_translation: 1,
+        source_work_dates: 1, author: 1, categories: 1, is_first_translation: 1, pages_translated: 1,
       },
       maxTimeMS: 30000,
     },
@@ -70,6 +72,7 @@ async function fetchLagData(): Promise<LagDataPoint[]> {
       composed_display: comp.date_display || String(compDate),
       lag,
       is_first_translation: b.is_first_translation || false,
+      pages_translated: b.pages_translated || 0,
       categories: b.categories || [],
     });
   }
@@ -194,7 +197,7 @@ export default async function TranslationLagPage() {
                     <a href={`/book/${d.slug}`} className="text-[var(--accent-rust)] hover:underline">
                       {d.title}
                     </a>
-                    {d.is_first_translation && (
+                    {isPublishedFirstTranslation(d) && (
                       <span className="ml-2 text-xs bg-[var(--accent-gold)]/15 text-[var(--accent-gold-dark)] px-1.5 py-0.5 rounded">
                         First translation
                       </span>

@@ -8,6 +8,7 @@ import type { Book } from '@/lib/types';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import { getEffectiveByline } from '@/lib/byline';
@@ -156,7 +157,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
             </div>
           )}
 
-          {book.is_first_translation && (book.pages_translated ?? 0) > 0 && (
+          {isPublishedFirstTranslation(book) && (
             <div className="absolute top-2 right-2 z-10">
               <div className="bg-accent-gold text-white text-[10px] px-1.5 py-0.5 rounded-full shadow font-medium">
                 {firstTranslationBadge(book.translation_verification?.disposition, book.language)}

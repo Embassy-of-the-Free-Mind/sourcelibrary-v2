@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import { getPartnerBySlug } from '@/lib/library-partners';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
@@ -469,7 +470,7 @@ export default async function CatalogEntryPage({ params }: Props) {
               {translationPct != null && (
                 <Field label="Translation" value={`${translationPct}% translated to English`} />
               )}
-              {slBook.is_first_translation && (
+              {isPublishedFirstTranslation(slBook) && (
                 <FieldRaw label="Status">
                   <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-accent-rust/10 text-accent-rust border border-accent-rust/30">
                     First English translation

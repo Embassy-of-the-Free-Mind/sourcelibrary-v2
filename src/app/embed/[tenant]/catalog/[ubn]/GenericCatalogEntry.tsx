@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
 import { tenantBookUrl } from '@/lib/slugify';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import type { LibraryPartner } from '@/lib/library-partners';
 import { AISection } from '@/components/embed/AISection';
 
@@ -281,7 +282,7 @@ export default async function GenericCatalogEntry({
                   {translationPct != null && (
                     <Field label="Translation" value={`${translationPct}% translated to English`} />
                   )}
-                  {slBook.is_first_translation && (
+                  {isPublishedFirstTranslation(slBook) && (
                     <FieldRaw label="Status">
                       <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-accent-rust/10 text-accent-rust border border-accent-rust/30">
                         First English translation
