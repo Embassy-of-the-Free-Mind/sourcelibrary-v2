@@ -70,8 +70,11 @@ function cosineSimilarity(a: number[], b: number[]): number {
  * are structural annotations that pollute the semantic signal.
  * On the flagged Theatrum Chemicum page, 64% of text was tags — stripping
  * them turned a false positive (0.68) into correct alignment.
+ *
+ * Also used to clean snippets shown to end users (e.g. Librarian source cards),
+ * where raw "<header>" markup leaks into the UI otherwise.
  */
-function stripAnnotations(text: string): string {
+export function stripAnnotations(text: string): string {
   return text
     // Remove full XML tag pairs and their content for meta/structural tags
     .replace(/<(?:meta|language|page-type|page-num|header|sig|folio|warning)>[^]*?<\/(?:meta|language|page-type|page-num|header|sig|folio|warning)>/g, '')

@@ -3,6 +3,7 @@ import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
 import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
 import { supabase } from '@/lib/supabase';
 import { ObjectId } from 'mongodb';
+import { stripAnnotations } from '@/lib/semantic-alignment';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -390,7 +391,7 @@ async function executeSearchSemantic(query: string): Promise<
           bookAuthor: b.author || 'Unknown',
           bookSlug: visibleMap.get(b.book_id),
           page_number: page?.page_number || 0,
-          snippet: page?.snippet || (b.summary_text || '').slice(0, 500),
+          snippet: stripAnnotations(page?.snippet || (b.summary_text || '').slice(0, 500)),
           score: b.similarity,
         };
       });
@@ -572,7 +573,7 @@ async function executeTool(
 
       const sources: SourceCard[] = data.passages.map(p => ({
         book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
-        pageNumber: p.page_number, snippet: p.text.slice(0, 200), inCollection: true,
+        pageNumber: p.page_number, snippet: stripAnnotations(p.text).slice(0, 200), inCollection: true,
       }));
 
       return {
@@ -596,7 +597,7 @@ async function executeTool(
 
       const sources: SourceCard[] = results.map(r => ({
         book_id: r.book_id, bookTitle: r.bookTitle, bookAuthor: r.bookAuthor, bookSlug: r.bookSlug,
-        pageNumber: r.page_number, snippet: r.snippet.slice(0, 200), inCollection: true,
+        pageNumber: r.page_number, snippet: stripAnnotations(r.snippet).slice(0, 200), inCollection: true,
       }));
 
       return {
