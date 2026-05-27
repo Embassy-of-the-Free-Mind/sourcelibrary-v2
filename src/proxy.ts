@@ -7,7 +7,7 @@ import { getDb } from '@/lib/mongodb';
 const NON_TENANT_PATHS = new Set([
   'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
   'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
-  'support', 'unauthorized', 'design-options', 'experiments',
+  'support', 'sponsors', 'unauthorized', 'design-options', 'experiments',
   'ficino-society', 'contribute', 'census', 'oauth', 'developers',
   'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
   // Global navigation roots
