@@ -94,7 +94,7 @@ const IMAGE_DOWNLOAD_CONCURRENCY = 40;
 const BOOKS_PER_RUN = 250;
 const RUN_DEADLINE_MS = 25 * 60 * 1000; // 25 min deadline (scheduler runs every 2 min)
 const MODEL = 'gemini-3-flash-preview'; // Vision task needs accuracy
-const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
 
 // ── API Keys (exclude free tier KEY_4) ──
 const API_KEYS = [
@@ -707,7 +707,7 @@ async function processBook(db, book) {
       book_id: book.id,
       $or: [
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-        { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+        { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
       ],
     }, { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 } })
     .toArray();

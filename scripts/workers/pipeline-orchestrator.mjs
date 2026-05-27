@@ -4480,7 +4480,7 @@ Rules:
         console.log(`  Active batch image jobs: ${activeBatchImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
 
         if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
-          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
 
           let readyForImages = await db.collection('books')
             .find({ 'pipeline_auto.status': 'chapters_complete' })
@@ -4608,7 +4608,7 @@ Rules:
         if (!SQS_IMAGE_EXTRACTION_QUEUE_URL) {
           console.log('  SKIP: SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL not configured');
         } else if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
-          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
           const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
           let readyForImages = await db.collection('books')
