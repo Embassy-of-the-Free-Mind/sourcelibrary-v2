@@ -1,11 +1,10 @@
-// Standalone page — cannot re-export from [tenant] due to tenant layout 404
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
-import CollectionImageCard, { CollectionImageProps } from '@/app/[tenant]/gallery/collections/[slug]/CollectionImageCard';
+import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
 
 export const revalidate = 86400;
 
@@ -49,6 +48,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: data.description,
     alternates: { canonical: `/gallery/collections/${slug}` },
     openGraph: {
+      title: `${data.title} | Source Library Gallery`,
+      description: data.description,
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: `${data.title} | Source Library Gallery`,
       description: data.description,
     },
@@ -104,10 +108,12 @@ export default async function CollectionDetailPage({ params }: PageProps) {
       <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Collection description */}
         <div className="mb-8">
           <p className="text-stone-600 max-w-3xl">{data.description}</p>
         </div>
 
+        {/* Image grid */}
         {data.items.length === 0 ? (
           <div className="text-center py-20">
             <ImageIcon className="w-16 h-16 text-stone-300 mx-auto mb-4" />

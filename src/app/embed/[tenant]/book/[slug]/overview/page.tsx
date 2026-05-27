@@ -1,4 +1,4 @@
-import BookOverviewPage from '@/app/[tenant]/book/[id]/overview/page';
+import BookOverviewPage from '@/app/book/[id]/overview/page';
 
 export const revalidate = 86400;
 

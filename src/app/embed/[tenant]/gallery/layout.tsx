@@ -1,1 +1,1 @@
-export { default, metadata } from '@/app/[tenant]/gallery/layout';
+export { default, metadata } from '@/app/gallery/layout';

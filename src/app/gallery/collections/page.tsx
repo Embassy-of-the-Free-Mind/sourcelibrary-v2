@@ -1,5 +1,3 @@
-// Standalone re-export — cannot import from [tenant] due to layout conflicts
-// The [tenant] layout 404s when slug doesn't resolve as a tenant
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,7 +9,16 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Curated Collections | Gallery | Source Library',
-  description: 'Thematic collections of illustrations from rare historical manuscripts: woodcuts, engravings, emblems, and diagrams spanning five centuries.',
+  description: 'Thematic collections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts: woodcuts, engravings, emblems, and diagrams spanning five centuries.',
+  openGraph: {
+    title: 'Curated Image Collections | Source Library',
+    description: 'Thematic collections of illustrations from rare historical manuscripts.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Curated Image Collections | Source Library',
+    description: 'Thematic collections of illustrations from rare historical manuscripts.',
+  },
 };
 
 interface CollectionListItem {
@@ -34,6 +41,7 @@ async function getCollections(): Promise<CollectionListItem[]> {
       .sort({ sort_order: 1, created_at: -1 })
       .toArray();
 
+    // Collect all candidate image IDs: cover_image_id + first image_id as fallback
     const allCandidateIds = new Set<string>();
     for (const c of collections) {
       if (c.cover_image_id) allCandidateIds.add(c.cover_image_id as string);
@@ -59,6 +67,7 @@ async function getCollections(): Promise<CollectionListItem[]> {
       };
     });
   } catch {
+    // DB unavailable (e.g. build time) — return empty list
     return [];
   }
 }
@@ -66,18 +75,25 @@ async function getCollections(): Promise<CollectionListItem[]> {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function resolveCoverImages(db: any, imageIds: string[]) {
   if (imageIds.length === 0) return new Map<string, { url: string; description: string }>();
+
+  // Resolve from gallery_images (always populated, unlike pages.detected_images)
   const docs = await db
     .collection('gallery_images')
-    .find({ id: { $in: imageIds } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
+    .find(
+      { id: { $in: imageIds } },
+      { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } }
+    )
     .toArray();
+
   const result = new Map<string, { url: string; description: string }>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   for (const doc of docs as any[]) {
     result.set(doc.id, {
-      url: doc.thumbnail_url || doc.extracted_url || '',
+      url: doc.extracted_url || doc.thumbnail_url || '',
       description: doc.description || '',
     });
   }
+
   return result;
 }
 
@@ -89,10 +105,11 @@ export default async function CollectionsPage() {
       <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Intro */}
         <div className="text-center mb-10">
           <h2 className="text-2xl font-serif text-stone-800 mb-2">Curated Image Collections</h2>
           <p className="text-stone-500 max-w-2xl mx-auto">
-            Thematic collections of illustrations drawn from rare historical manuscripts.
+            Thematic collections of illustrations drawn from rare alchemical, Hermetic, and philosophical manuscripts.
           </p>
         </div>
 

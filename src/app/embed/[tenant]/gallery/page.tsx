@@ -6,5 +6,5 @@
 // `export { revalidate } from '...'` fails the static-parse check at
 // build time. Declare `revalidate` inline; keep the value in sync with
 // the source page (src/app/[tenant]/gallery/page.tsx).
-export { default } from '@/app/[tenant]/gallery/page';
+export { default } from '@/app/gallery/page';
 export const revalidate = 3600;

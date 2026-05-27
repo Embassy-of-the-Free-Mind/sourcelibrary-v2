@@ -1,4 +1,4 @@
-import GuidePage from '@/app/[tenant]/book/[id]/guide/page';
+import GuidePage from '@/app/book/[id]/guide/page';
 
 export const revalidate = 86400;
 

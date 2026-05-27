@@ -3,7 +3,10 @@ import { getDb } from '@/lib/mongodb';
 
 // --- Tenant routing ---
 
-// Paths that live at the root and are never treated as tenant slugs
+// Paths that live at the root and are never treated as tenant slugs.
+// After the tenant-as-filter migration (see .claude/docs/tenant-architecture-migration.md),
+// every globalized route lives here. The Phase Final goal is to invert this
+// into TENANT_ROOT_PATHS containing only the 3 real tenant slugs.
 const NON_TENANT_PATHS = new Set([
   'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
   'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
@@ -17,8 +20,14 @@ const NON_TENANT_PATHS = new Set([
   'categories', 'catalog', 'catalogue', 'artwork', 'artist',
   // Short share links — redirected to /explore/* in next.config.ts redirects()
   'map', 'constellation',
-  // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
+  // Book + collection routes are global (Phase 3e/3f)
   'book', 'collections',
+  // Phase 3e routes
+  'curated', 'collection-areas',
+  // Phase 3g routes globalized off [tenant]
+  'learn', 'qa', 'rithmomachia', 'hieroglyphs', 'reading-room',
+  'dataset', 'fulldata', 'taxonomy', 'analytics', 'tablets', 'scan',
+  'upload', 'jobs', 'login', 'processing', 'beta',
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
   'research', 'embed', 'shwep', 'for-researchers', 'for-libraries', 'identify',
@@ -465,6 +474,21 @@ export async function proxy(request: NextRequest) {
   }
 
   // --- Tenant subdomain rewrite ---
+  //
+  // Interim Phase 3 state (see .claude/docs/tenant-architecture-migration.md):
+  // The route implementations under [tenant]/* have been globalized into
+  // src/app/*. The thin wrappers under src/app/embed/[tenant]/{book,gallery,
+  // search,collections,catalog,catalogue}/ now just re-export the global
+  // pages — they're kept around so this rewrite chain (and the embed chrome
+  // expectations in layout/page) continue to work without a flag-day. The
+  // global page reads tenant context from the x-tenant-* headers this branch
+  // injects (see the Headers block below).
+  //
+  // Phase Final will collapse this chain to a single header-injecting
+  // pass-through and delete the wrappers. Don't add new path branches here;
+  // any new globalized route should just flow through with x-tenant-*
+  // headers set.
+  //
   // Rewrites all paths on tenant subdomains to the filtered embed routes.
   // e.g. bph.sourcelibrary.org/book/aurora → internally serves /embed/bph/book/aurora
   const tenant = TENANT_SUBDOMAINS[host.toLowerCase()];
@@ -652,22 +676,6 @@ export async function proxy(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
       url.searchParams.set('id', segment);
-      return NextResponse.rewrite(url);
-    }
-  }
-
-  // Internal tenant routing for /book/...:
-  // The route lives at [tenant]/book/[id] (3+ segments), but the public URL is
-  // /book/{id}. Rewrite (don't redirect) so the URL stays clean — no tenant
-  // prefix ever appears in the address bar.
-  if (pathname.startsWith('/book/')) {
-    const segment = pathname.split('/')[2] || '';
-    const tenantSlug = await resolveTenantForBookSegment(segment)
-      || (await resolveTenantByExactSlug('default'))?.slug
-      || null;
-    if (tenantSlug) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/${tenantSlug}${pathname}`;
       return NextResponse.rewrite(url);
     }
   }

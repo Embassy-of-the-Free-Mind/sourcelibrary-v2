@@ -5,7 +5,7 @@
 // invisible), so useEmbed() can't auto-detect embed mode. Pass forceEmbedded
 // explicitly so the page hides global chrome (SiteHeader) and cross-tenant
 // filters (Library partner selector).
-import SearchPage from '@/app/[tenant]/search/page';
+import SearchPage from '@/app/search/page';
 
 export default function EmbedTenantSearchPage() {
   return <SearchPage forceEmbedded />;

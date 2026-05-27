@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PageEditorPage from '@/app/[tenant]/book/[id]/page/[pageId]/page';
+import PageEditorPage from '@/app/book/[id]/page/[pageId]/page';
 
 export const revalidate = 86400;
 
