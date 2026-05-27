@@ -46,7 +46,7 @@ import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { resolveTenantId } from '@/lib/tenant-context';
-import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
+import { getEmbedUiPolicy, embeddedContext, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 
 // Cached tenant ID lookup - avoids headers() which would disable ISR
 const getCachedTenantId = cache(async (slug: string): Promise<string | undefined> => {
@@ -1205,7 +1205,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
 export default async function BookDetailPage({ params, isEmbedded = false }: PageProps) {
   const { id, tenant } = await params;
-  const embedPolicy = getEmbedUiPolicy(isEmbedded);
+  const embedPolicy = getEmbedUiPolicy(embeddedContext(isEmbedded));
   // Use cached tenant lookup instead of headers() to preserve ISR
   const tenantId = await getCachedTenantId(tenant);
   const tenantSlug = tenant;

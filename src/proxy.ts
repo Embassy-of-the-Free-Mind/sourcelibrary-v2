@@ -9,7 +9,7 @@ const NON_TENANT_PATHS = new Set([
   'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
   'support', 'unauthorized', 'design-options', 'experiments',
   'ficino-society', 'contribute', 'census', 'oauth', 'developers',
-  'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
+  'founding-donors', 'libraries', 'blog', '_archived', '.well-known', 'encyclopedia',
   // Global navigation roots
   'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
   // User pages (standalone, not tenant-scoped)
@@ -191,6 +191,201 @@ const TENANT_SUBDOMAINS: Record<string, string> = {
   // 'ritman.sourcelibrary.org': 'ritman',
 };
 
+// --- Tenant resolution helpers (module-level) ---
+// Pulled out of proxy() so they can be reused by resolveTenantFromRequest and
+// by route handlers that bypass middleware. They each call getDb() directly —
+// the underlying mongo client is a singleton (see src/lib/mongodb.ts), so per-
+// request micro-caching here would be redundant.
+
+async function resolveActiveTenant(
+  slug: string
+): Promise<{ id: string; slug: string; kind: string | null } | null> {
+  if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
+    return null;
+  }
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne({
+      $or: [
+        { slug },
+        { aliases: slug },
+        { slug_aliases: slug },
+      ],
+      status: { $ne: 'deleted' },
+    });
+    if (!tenant) return null;
+    return {
+      id: tenant.id as string,
+      slug: tenant.slug as string,
+      kind: (tenant.kind as string | undefined) ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function resolveTenantSlugById(tenantId: string): Promise<string | null> {
+  if (!tenantId) return null;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne(
+      { id: tenantId, status: { $ne: 'deleted' } },
+      { projection: { slug: 1 } }
+    );
+    return (tenant?.slug as string) || null;
+  } catch {
+    return null;
+  }
+}
+
+async function resolveTenantByExactSlug(
+  slug: string
+): Promise<{ id: string; slug: string; kind: string | null } | null> {
+  if (!slug) return null;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne(
+      { slug, status: { $ne: 'deleted' } },
+      { projection: { id: 1, slug: 1, kind: 1 } }
+    );
+    if (!tenant) return null;
+    return {
+      id: tenant.id as string,
+      slug: tenant.slug as string,
+      kind: (tenant.kind as string | undefined) ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function resolveTenantForBookSegment(segment: string): Promise<string | null> {
+  try {
+    const db = await getDb();
+    const book = await db.collection('books').findOne(
+      { $or: [{ slug: segment }, { id: segment }] },
+      { projection: { tenantId: 1 } }
+    );
+    return book?.tenantId ? await resolveTenantSlugById(book.tenantId as string) : null;
+  } catch {
+    return null;
+  }
+}
+
+export interface ResolvedTenant {
+  id: string;
+  slug: string;
+  kind: string | null;
+  source: 'subdomain' | 'path' | 'api-segment' | 'referer';
+  /**
+   * The URL segment that matched, if resolution was path-based. Middleware
+   * uses this to issue a 308 to the canonical slug when the segment was an
+   * alias (e.g. `/bph-rare-books/...` → `/bph/...`).
+   */
+  originalSegment?: string;
+}
+
+/**
+ * Resolve the tenant context for an arbitrary request — subdomain → path →
+ * `/api/{tenant}/...` segment → referer fallback. Returns null when the
+ * request is global.
+ *
+ * Exported for route handlers that bypass the middleware (e.g. ones invoked
+ * via internal rewrites). The middleware itself uses this same resolver and
+ * adds its own control-flow on top (alias 308s, unknown-slug 404s).
+ */
+export async function resolveTenantFromRequest(
+  request: NextRequest
+): Promise<ResolvedTenant | null> {
+  const host = (request.headers.get('host') || '').toLowerCase();
+  const { pathname } = request.nextUrl;
+
+  // 1. Subdomain (bph.sourcelibrary.org → bph)
+  const subdomainSlug = TENANT_SUBDOMAINS[host];
+  if (subdomainSlug) {
+    const resolved = await resolveTenantByExactSlug(subdomainSlug);
+    if (resolved) {
+      return {
+        id: resolved.id,
+        slug: resolved.slug,
+        kind: resolved.kind,
+        source: 'subdomain',
+      };
+    }
+  }
+
+  // 2. Path-based (/bph/... → bph). NON_TENANT_PATHS gating lives inside
+  // resolveActiveTenant, so this naturally skips global root paths.
+  const [, firstSegment] = pathname.split('/');
+  if (firstSegment) {
+    const direct = await resolveActiveTenant(firstSegment);
+    if (direct) {
+      return {
+        id: direct.id,
+        slug: direct.slug,
+        kind: direct.kind,
+        source: 'path',
+        originalSegment: firstSegment,
+      };
+    }
+  }
+
+  // 3. /api/{tenant}/... explicit segment
+  if (pathname.startsWith('/api/')) {
+    const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+    if (apiPrefix === 'api' && apiTenantSegment) {
+      const pathTenant = await resolveActiveTenant(apiTenantSegment);
+      if (pathTenant) {
+        return {
+          id: pathTenant.id,
+          slug: pathTenant.slug,
+          kind: pathTenant.kind,
+          source: 'api-segment',
+        };
+      }
+    }
+
+    // 4. Referer fallback — root /api/* calls fired from a tenant page keep
+    // the page URL as the referer; mine it for tenant context so legacy root
+    // APIs stay tenant-safe.
+    const referer = request.headers.get('referer');
+    if (referer) {
+      try {
+        const refererUrl = new URL(referer);
+        const refererSegments = refererUrl.pathname.split('/').filter(Boolean);
+        const refererFirstSegment = refererSegments[0] || '';
+        const refTenant = await resolveActiveTenant(refererFirstSegment);
+        if (refTenant) {
+          return {
+            id: refTenant.id,
+            slug: refTenant.slug,
+            kind: refTenant.kind,
+            source: 'referer',
+          };
+        }
+        if (refererFirstSegment === 'book' && refererSegments[1]) {
+          const bookTenantSlug = await resolveTenantForBookSegment(refererSegments[1]);
+          if (bookTenantSlug) {
+            const resolved = await resolveTenantByExactSlug(bookTenantSlug);
+            if (resolved) {
+              return {
+                id: resolved.id,
+                slug: resolved.slug,
+                kind: resolved.kind,
+                source: 'referer',
+              };
+            }
+          }
+        }
+      } catch {
+        // Ignore malformed referer
+      }
+    }
+  }
+
+  return null;
+}
+
 // --- Embed CORS allowlist ---
 // Domains allowed to call /api/collections/* and /api/books/* cross-origin
 // (used by the public embed.js script on partner Webflow sites).
@@ -231,80 +426,6 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = `/og-image-${pickOgVariantForToday()}.jpg`;
     return NextResponse.rewrite(url);
-  }
-
-  let cachedDbPromise: ReturnType<typeof getDb> | null = null;
-
-  function getDbCached() {
-    if (!cachedDbPromise) cachedDbPromise = getDb();
-    return cachedDbPromise;
-  }
-
-  async function resolveActiveTenant(slug: string): Promise<{ id: string; slug: string; kind: string | null } | null> {
-    if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
-      return null;
-    }
-    try {
-      const db = await getDb();
-      const tenant = await db.collection('tenants').findOne({
-        $or: [
-          { slug },
-          { aliases: slug },
-          { slug_aliases: slug },
-        ],
-        status: { $ne: 'deleted' },
-      });
-      if (!tenant) return null;
-      return {
-        id: tenant.id as string,
-        slug: tenant.slug as string,
-        kind: (tenant.kind as string | undefined) ?? null,
-      };
-    } catch {
-      return null;
-    }
-  }
-
-  async function resolveTenantSlugById(tenantId: string): Promise<string | null> {
-    if (!tenantId) return null;
-    try {
-      const db = await getDbCached();
-      const tenant = await db.collection('tenants').findOne(
-        { id: tenantId, status: { $ne: 'deleted' } },
-        { projection: { slug: 1 } }
-      );
-      return (tenant?.slug as string) || null;
-    } catch {
-      return null;
-    }
-  }
-
-  async function resolveTenantByExactSlug(slug: string): Promise<{ id: string; slug: string } | null> {
-    if (!slug) return null;
-    try {
-      const db = await getDbCached();
-      const tenant = await db.collection('tenants').findOne(
-        { slug, status: { $ne: 'deleted' } },
-        { projection: { id: 1, slug: 1 } }
-      );
-      if (!tenant) return null;
-      return { id: tenant.id as string, slug: tenant.slug as string };
-    } catch {
-      return null;
-    }
-  }
-
-  async function resolveTenantForBookSegment(segment: string): Promise<string | null> {
-    try {
-      const db = await getDbCached();
-      const book = await db.collection('books').findOne(
-        { $or: [{ slug: segment }, { id: segment }] },
-        { projection: { tenantId: 1 } }
-      );
-      return book?.tenantId ? await resolveTenantSlugById(book.tenantId as string) : null;
-    } catch {
-      return null;
-    }
   }
 
   // --- Embed CORS: allow partner Webflow sites to call collection/book APIs ---
@@ -404,7 +525,10 @@ export async function proxy(request: NextRequest) {
     const subdomainTenant = await resolveTenantByExactSlug(tenant);
     const subdomainHeaders = new Headers(request.headers);
     subdomainHeaders.set('x-tenant-slug', tenant);
+    subdomainHeaders.set('x-tenant-source', 'subdomain');
+    subdomainHeaders.set('x-tenant-embedded', '1');
     if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
+    if (subdomainTenant?.kind) subdomainHeaders.set('x-tenant-kind', subdomainTenant.kind);
     return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
   }
 
@@ -595,23 +719,26 @@ export async function proxy(request: NextRequest) {
   }
 
   // --- Tenant slug resolution ---
-  let tenantId: string | null = null;
-  let tenantSlug: string | null = null;
+  // resolveTenantFromRequest handles the multi-source lookup (subdomain → path
+  // → /api/{tenant}/... → referer). Two pieces of middleware-specific control
+  // flow stay here: redirecting alias slugs to canonical, and 404'ing unknown
+  // tenant-shaped segments.
+  const resolved = await resolveTenantFromRequest(request);
 
-  const [, firstSegment] = pathname.split('/');
-  if (firstSegment) {
-    const directTenant = await resolveActiveTenant(firstSegment);
-    if (directTenant) {
-      if (!pathname.startsWith('/api/') && firstSegment !== directTenant.slug) {
-        const url = request.nextUrl.clone();
-        const pathWithoutLeadingSlash = pathname.slice(1);
-        const [, ...restSegments] = pathWithoutLeadingSlash.split('/');
-        url.pathname = `/${[directTenant.slug, ...restSegments].filter(Boolean).join('/')}`;
-        return NextResponse.redirect(url, 308);
-      }
-      tenantId = directTenant.id;
-      tenantSlug = directTenant.slug;
-    } else if (
+  if (resolved?.source === 'path' && resolved.originalSegment) {
+    if (!pathname.startsWith('/api/') && resolved.originalSegment !== resolved.slug) {
+      const url = request.nextUrl.clone();
+      const pathWithoutLeadingSlash = pathname.slice(1);
+      const [, ...restSegments] = pathWithoutLeadingSlash.split('/');
+      url.pathname = `/${[resolved.slug, ...restSegments].filter(Boolean).join('/')}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
+  if (!resolved) {
+    const [, firstSegment] = pathname.split('/');
+    if (
+      firstSegment &&
       !NON_TENANT_PATHS.has(firstSegment) &&
       !firstSegment.includes('.') &&
       /^[a-z0-9-]+$/.test(firstSegment)
@@ -632,72 +759,20 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Root /api/* calls from tenant pages do not include the tenant segment in the pathname.
-  // Infer tenant from host (subdomain), then path, then referer so legacy root
-  // APIs remain tenant-safe.
-  if (!tenantId && pathname.startsWith('/api/')) {
-    // Tenant subdomain (e.g. bph.sourcelibrary.org/api/search) — map host to
-    // tenant. Without this, client-side fetches from tenant subdomains would
-    // hit global APIs unfiltered and leak cross-tenant content.
-    if (tenant) {
-      const subdomainTenant = await resolveTenantByExactSlug(tenant);
-      if (subdomainTenant?.id) {
-        tenantId = subdomainTenant.id;
-        tenantSlug = tenant;
-      }
-    }
-
-    if (!tenantId) {
-      const [, apiPrefix, apiTenantSegment] = pathname.split('/');
-
-      // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
-      if (apiPrefix === 'api' && apiTenantSegment) {
-        const pathTenant = await resolveActiveTenant(apiTenantSegment);
-        if (pathTenant) {
-          tenantId = pathTenant.id;
-          tenantSlug = pathTenant.slug;
-        }
-      }
-    }
-
-    // Fallback to referer tenant path: /{tenant}/... or /book/{id}
-    if (!tenantId) {
-      const referer = request.headers.get('referer');
-      if (referer) {
-        try {
-          const refererUrl = new URL(referer);
-          const refererSegments = refererUrl.pathname.split('/').filter(Boolean);
-          const refererFirstSegment = refererSegments[0] || '';
-          const refTenant = await resolveActiveTenant(refererFirstSegment);
-          if (refTenant) {
-            tenantId = refTenant.id;
-            tenantSlug = refTenant.slug;
-          } else if (refererFirstSegment === 'book' && refererSegments[1]) {
-            // /book/{id} URLs are rewritten internally to /{tenant}/book/{id}
-            // (see the /book/ rewrite block above). API calls fired from those
-            // pages keep /book/{id} as the referer, so resolve the tenant the
-            // same way the page route does — via the book's tenantId.
-            const bookTenantSlug = await resolveTenantForBookSegment(refererSegments[1]);
-            if (bookTenantSlug) {
-              const resolved = await resolveTenantByExactSlug(bookTenantSlug);
-              if (resolved) {
-                tenantId = resolved.id;
-                tenantSlug = resolved.slug;
-              }
-            }
-          }
-        } catch {
-          // Ignore malformed referer
-        }
-      }
-    }
-  }
+  const tenantId = resolved?.id ?? null;
+  const tenantSlug = resolved?.slug ?? null;
 
   // Clone the request headers and add our custom headers
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');
   if (tenantId) requestHeaders.set('x-tenant-id', tenantId);
   if (tenantSlug) requestHeaders.set('x-tenant-slug', tenantSlug);
+  if (resolved?.kind) requestHeaders.set('x-tenant-kind', resolved.kind);
+  if (resolved?.source) requestHeaders.set('x-tenant-source', resolved.source);
+  // Embed state: subdomain rewrite branch handles its own header injection
+  // above. Here we never reach the embed namespace, so isEmbedded is false.
+  // (Direct visits to /embed/* are middleware-rewrite targets, not initial
+  // requests, so we don't need to mark them embedded from this branch.)
 
   // Pass the modified headers to the request
   const response = NextResponse.next({

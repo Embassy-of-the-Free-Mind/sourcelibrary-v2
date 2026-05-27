@@ -1,3 +1,23 @@
+import type { TenantContext } from './tenant-context';
+
+/**
+ * Single source of truth for UI variations between the global Source Library
+ * and tenant-embedded views (partner subdomains, `/embed/*` routes).
+ *
+ * The platform used to scatter `if (isEmbedded)` checks across components.
+ * Each new BPH-lockdown invariant (no external links, no cross-tenant gallery
+ * leaks, no related-edition lookups across the global library) required
+ * patching multiple files. This policy file collapses those decisions into
+ * one boolean table indexed by `TenantContext` — every component reads its
+ * flag from here, never from raw context fields.
+ *
+ * Why some flags hide ostensibly-useful UI (related editions, author cross-
+ * references): those widgets render data that the proxy does not
+ * tenant-filter. They are pre-computed across the whole library and would
+ * leak non-tenant content into an embed if rendered. Hiding them is the
+ * simplest way to honor the Tenant Subdomain Lockdown invariant — see
+ * CLAUDE.md "Tenant Subdomain Lockdown".
+ */
 export interface EmbedUiPolicy {
   showTenantHeroExternalLink: boolean;
   enableBookCollectionNavigation: boolean;
@@ -13,9 +33,15 @@ export interface EmbedUiPolicy {
   // them in embed mode is the simplest way to guarantee no non-tenant content leaks.
   showRelatedEditions: boolean;
   showAuthorCrossReference: boolean;
+  // Gallery rendering pulls images keyed off `held_by` / provider, not the
+  // active tenant. Disabling cross-tenant images keeps embed gallery views
+  // strictly within the tenant's holdings.
+  showGalleryCrossTenantImages: boolean;
 }
 
-export function getEmbedUiPolicy(isEmbedded: boolean): EmbedUiPolicy {
+export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
+  const isEmbedded = ctx?.isEmbedded ?? false;
+
   if (!isEmbedded) {
     return {
       showTenantHeroExternalLink: true,
@@ -28,6 +54,7 @@ export function getEmbedUiPolicy(isEmbedded: boolean): EmbedUiPolicy {
       showGalleryImages: true,
       showRelatedEditions: true,
       showAuthorCrossReference: true,
+      showGalleryCrossTenantImages: true,
     };
   }
 
@@ -42,5 +69,15 @@ export function getEmbedUiPolicy(isEmbedded: boolean): EmbedUiPolicy {
     showGalleryImages: false,
     showRelatedEditions: false,
     showAuthorCrossReference: false,
+    showGalleryCrossTenantImages: false,
   };
+}
+
+/**
+ * Construct a minimal TenantContext for callers that only know whether they
+ * are embedded but don't yet have a full context. Migration aid — once a
+ * callsite has access to `getTenantContext()`, pass that directly.
+ */
+export function embeddedContext(isEmbedded: boolean): TenantContext {
+  return { id: null, slug: null, kind: null, isEmbedded, source: null };
 }

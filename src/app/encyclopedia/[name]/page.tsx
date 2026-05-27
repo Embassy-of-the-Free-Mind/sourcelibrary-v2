@@ -47,6 +47,20 @@ export default async function EntityDetailPage({
     notFound();
   }
 
+  // Deduplicate books by book_id and merge page arrays
+  const booksMap = new Map<string, typeof entity.books[0]>();
+  for (const book of entity.books) {
+    if (booksMap.has(book.book_id)) {
+      const existing = booksMap.get(book.book_id)!;
+      // Merge page arrays (deduplicate page numbers too)
+      const mergedPages = Array.from(new Set([...existing.pages, ...book.pages])).sort((a, b) => a - b);
+      booksMap.set(book.book_id, { ...existing, pages: mergedPages });
+    } else {
+      booksMap.set(book.book_id, book);
+    }
+  }
+  const deduplicatedBooks = Array.from(booksMap.values());
+
   const Icon = TYPE_ICONS[entity.type];
   const connections = await getSharedBooks(decodedName);
 
@@ -185,10 +199,10 @@ export default async function EntityDetailPage({
         {/* Appearances */}
         <div className="bg-white rounded-lg border border-stone-200 p-6">
           <h2 className="text-lg font-semibold text-stone-900 mb-4">
-            Appears in {entity.books.length} Book{entity.books.length !== 1 ? 's' : ''}
+            Appears in {deduplicatedBooks.length} Book{deduplicatedBooks.length !== 1 ? 's' : ''}
           </h2>
           <div className="space-y-4">
-            {entity.books.map((book) => (
+            {deduplicatedBooks.map((book) => (
               <div
                 key={book.book_id}
                 className="border-l-2 border-accent-gold/30 pl-4 py-2"
