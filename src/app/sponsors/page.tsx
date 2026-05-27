@@ -16,73 +16,38 @@ export const metadata: Metadata = {
 const PARTNERSHIP_EMAIL = 'derek@sourcelibrary.org';
 const PARTNERSHIP_SUBJECT = 'Corporate%20partnership%20inquiry%20%E2%80%94%20Source%20Library';
 
-const TIERS = [
+const MEMBERSHIP_INCLUDES = [
+  'Explicit perpetual licence covering current and future translations for commercial model training, with attribution',
+  'Quarterly briefings on the translation roadmap; nominate priority authors, traditions, or manuscripts',
+  'Named recognition as a Member on the library and in published volumes',
+  'Annual convening at the Bibliotheca Philosophica Hermetica in Amsterdam with project leadership and scholarly advisors',
+  'Co-authorship and citation on dataset and methodology publications',
+];
+
+const SPONSORSHIP_EXAMPLES = [
   {
-    name: 'Patron of the Renaissance',
-    amount: '$100,000+',
-    accent: 'border-t-4 border-t-amber-700',
-    recognition: [
-      'Named translation series ("The [Company] Renaissance Library")',
-      'Logo on all campaign materials and on sourcelibrary.org',
-      'Recognition in press releases',
-      'Permanent acknowledgment in published translations',
-    ],
-    engagement: [
-      'Private tour of the Bibliotheca Philosophica Hermetica for up to 20 guests',
-      'Exclusive preview of translations before public release',
-      'Keynote speaking opportunity at the annual event',
-      'Quarterly briefings with project leadership',
-    ],
-    reciprocity: [
-      'Early API access to parallel corpora and structured metadata',
-      'Collaboration on dataset and research initiatives',
-      'Input on translation priorities',
-    ],
+    label: 'Named collection',
+    range: '$25K – $50K',
+    description:
+      'Permanent attribution on a thematic collection — e.g. "The [Company] Alchemy Library," "The [Company] Tibetan Manuscripts." Includes a launch and a co-written introduction.',
   },
   {
-    name: 'Keeper of Knowledge',
-    amount: '$50,000 – $99,999',
-    accent: 'border-t-4 border-t-[#9e4a3a]',
-    recognition: [
-      'Sponsored translation volume',
-      'Logo on the sponsors page at sourcelibrary.org',
-      'Recognition in the annual report',
-    ],
-    engagement: [
-      'Private BPH tour for up to 10 guests',
-      'VIP access to launch and partner events',
-      'Bi-annual briefings',
-    ],
-    reciprocity: ['Early access to datasets and research previews'],
+    label: 'Annual gathering at the BPH',
+    range: '$10K – $25K',
+    description:
+      'Sponsor a scholar convening, lecture series, or launch event in Amsterdam. Branding on materials, speaking opportunity, recorded session published openly.',
   },
   {
-    name: 'Guardian of Wisdom',
-    amount: '$25,000 – $49,999',
-    accent: 'border-t-4 border-t-stone-600',
-    recognition: [
-      'Logo on the sponsors page (partner tier)',
-      'Recognition in the annual report',
-    ],
-    engagement: [
-      'Private BPH tour for up to 5 guests',
-      'Invitation to the annual event',
-      'Annual briefing',
-    ],
-    reciprocity: [],
+    label: 'Digitisation expedition',
+    range: '$50K+',
+    description:
+      'Fund the digitisation of a specific archive or partner library. Permanent attribution on every page produced from that source.',
   },
   {
-    name: 'Friend of Source Library',
-    amount: '$10,000 – $24,999',
-    accent: 'border-t-4 border-t-stone-400',
-    recognition: [
-      'Name listed on the sponsors page (supporter tier)',
-      'Recognition in the annual report',
-    ],
-    engagement: [
-      'Group tour of the Bibliotheca',
-      'Invitation to public events',
-    ],
-    reciprocity: [],
+    label: 'Podcast season or research publication',
+    range: '$10K – $25K',
+    description:
+      'Sponsor a season of the Source Library podcast, a public-facing research essay, or a dataset publication. Attribution on the produced work.',
   },
 ];
 
@@ -194,130 +159,98 @@ export default async function SponsorsPage() {
             actually shaped Renaissance thought have never been read in English. They wrote in
             Latin, and modern publishing never caught up. The same is true for Sanskrit, Classical
             Arabic, Hebrew, and Tibetan. We&apos;re working through them, book by book, with
-            scholar-reviewed translations published openly under CC BY-SA.
+            AI-assisted translation and scholarly review, all published openly under CC BY-SA.
           </p>
         </div>
       </section>
 
-      {/* Tier table */}
+      {/* Annual Stewardship Membership */}
       <section className="bg-[#faf8f5] py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
-            Sponsorship tiers
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">
+            For AI labs and model providers
+          </div>
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+            Annual Stewardship Membership.
           </h2>
-          <p className="text-base md:text-lg text-stone-600 leading-relaxed max-w-3xl mb-12">
-            Public credit, real access to the project, and (above $25K) a working relationship with
-            the team and the data we produce. Tax-deductible in the US and the Netherlands.
+          <p className="text-lg text-stone-600 leading-relaxed mb-10 max-w-3xl">
+            One ongoing relationship covering training-data licence, translation priorities, and a
+            permanent named seat on the project. Suited to model providers, infrastructure
+            companies, and labs that depend on high-quality scholarly text data.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {TIERS.map((tier) => (
-              <div
-                key={tier.name}
-                className={`bg-white rounded-xl border border-stone-200 p-6 md:p-8 ${tier.accent}`}
-              >
-                <div className="mb-5">
-                  <h3 className="text-xl md:text-2xl font-display text-stone-900 mb-1">
-                    {tier.name}
-                  </h3>
-                  <div className="text-sm font-semibold text-[#9e4a3a]">{tier.amount}</div>
+          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-3">
+              <div className="lg:col-span-2 p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-stone-200">
+                <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
+                  What you get
                 </div>
-
-                <div className="space-y-5 text-sm">
-                  <div>
-                    <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
-                      Recognition
-                    </div>
-                    <ul className="space-y-1.5 text-stone-700 leading-relaxed">
-                      {tier.recognition.map((line) => (
-                        <li key={line} className="flex gap-2">
-                          <span className="text-stone-400">&middot;</span>
-                          <span>{line}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
-                      Engagement
-                    </div>
-                    <ul className="space-y-1.5 text-stone-700 leading-relaxed">
-                      {tier.engagement.map((line) => (
-                        <li key={line} className="flex gap-2">
-                          <span className="text-stone-400">&middot;</span>
-                          <span>{line}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {tier.reciprocity.length > 0 && (
-                    <div>
-                      <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
-                        Data &amp; research access
-                      </div>
-                      <ul className="space-y-1.5 text-stone-700 leading-relaxed">
-                        {tier.reciprocity.map((line) => (
-                          <li key={line} className="flex gap-2">
-                            <span className="text-stone-400">&middot;</span>
-                            <span>{line}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
+                <ul className="space-y-3 text-stone-700 leading-relaxed">
+                  {MEMBERSHIP_INCLUDES.map((line) => (
+                    <li key={line} className="flex gap-3">
+                      <span className="text-[#9e4a3a] mt-1.5 shrink-0">▸</span>
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
+              <div className="p-6 md:p-10 bg-[#faf8f5]">
+                <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
+                  Commitment
+                </div>
+                <div className="font-display text-2xl text-stone-900 mb-3">By arrangement</div>
+                <p className="text-sm text-stone-600 leading-relaxed mb-6">
+                  Annual recurring. Multi-year terms preferred. Set in conversation against the
+                  scope you need — the value is the relationship, not the price tag.
+                </p>
+                <a
+                  href={mailto}
+                  className="inline-flex items-center px-5 py-3 rounded-md bg-[#9e4a3a] text-white text-sm font-semibold hover:bg-[#7e3a2e] transition-colors"
+                >
+                  Open a conversation
+                </a>
+              </div>
+            </div>
           </div>
+
+          <p className="text-sm text-stone-500 leading-relaxed mt-6 max-w-3xl">
+            Translations are published under CC BY-SA. The membership doesn&apos;t buy exclusivity —
+            it buys an explicit grant for commercial use, a working channel into translation
+            priorities, and permanent recognition for the company that helped pay to bring the
+            corpus into the open.
+          </p>
         </div>
       </section>
 
-      {/* AI-lab reciprocity */}
+      {/* Event & Collection Sponsorship */}
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">
-            For AI labs
+            For one-off support
           </div>
           <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
-            We&apos;re building this for you to use.
+            Sponsor an event or a collection.
           </h2>
-          <p className="text-lg text-stone-600 leading-relaxed mb-8 max-w-3xl">
-            The library is structured for machine reading from day one: clean OCR, scholar-reviewed
-            translations, page-level citable URIs, and aligned Latin/Greek/Hebrew/German/French/
-            Italian/Dutch ↔ English parallel corpora. If you train models, this is data you
-            don&apos;t have access to anywhere else.
+          <p className="text-lg text-stone-600 leading-relaxed mb-10 max-w-3xl">
+            For companies that want concrete attribution on a specific deliverable, not a recurring
+            commitment. Pick something we&apos;re already doing or propose your own.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-stone-700">
-            <div>
-              <div className="font-semibold text-stone-900 mb-1">Parallel corpora</div>
-              <p className="text-sm leading-relaxed">
-                Page- and paragraph-level alignments between the original language and English.
-                Useful for translation eval, alignment work, and low-resource fine-tuning.
-              </p>
-            </div>
-            <div>
-              <div className="font-semibold text-stone-900 mb-1">Structured metadata</div>
-              <p className="text-sm leading-relaxed">
-                VIAF- and Wikidata-linked author authority files, USTC alignment, work-type and
-                language classification, subject tags.
-              </p>
-            </div>
-            <div>
-              <div className="font-semibold text-stone-900 mb-1">A say in what gets translated</div>
-              <p className="text-sm leading-relaxed">
-                Sponsors can nominate authors, traditions, or specific manuscripts to jump the
-                translation queue.
-              </p>
-            </div>
-            <div>
-              <div className="font-semibold text-stone-900 mb-1">Clear training licence</div>
-              <p className="text-sm leading-relaxed">
-                Translations are CC BY-SA. Sponsors get an explicit grant covering commercial
-                model training, with attribution.
-              </p>
-            </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {SPONSORSHIP_EXAMPLES.map((ex) => (
+              <div
+                key={ex.label}
+                className="bg-[#faf8f5] rounded-lg border border-stone-200 p-6"
+              >
+                <div className="flex items-baseline justify-between gap-4 mb-2">
+                  <div className="font-semibold text-stone-900">{ex.label}</div>
+                  <div className="text-xs font-semibold text-[#9e4a3a] whitespace-nowrap">
+                    {ex.range}
+                  </div>
+                </div>
+                <p className="text-sm text-stone-600 leading-relaxed">{ex.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -374,9 +307,9 @@ export default async function SponsorsPage() {
             Get in touch.
           </h2>
           <p className="text-base md:text-lg text-stone-300 leading-relaxed mb-10">
-            Tell us what you&apos;d like to do — a named translation series, dataset access, a
-            specific author or tradition, or something we haven&apos;t built yet. We&apos;ll come
-            back inside a week with a concrete proposal.
+            Tell us what you&apos;d like to do — annual membership, a named collection, an
+            expedition, or something we haven&apos;t built yet. We&apos;ll come back inside a week
+            with a concrete proposal.
           </p>
           <a
             href={mailto}
