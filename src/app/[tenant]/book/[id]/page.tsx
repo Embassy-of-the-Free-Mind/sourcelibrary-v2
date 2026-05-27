@@ -302,7 +302,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -555,7 +555,7 @@ function PagesGridSkeleton() {
 async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy }) {
   let data;
   try {
-    data = await getBook(id, tenantId);
+    data = await getBook(id, tenantId, tenantSlug);
   } catch (err) {
     console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
     // Return a friendly message instead of crashing the Suspense boundary
