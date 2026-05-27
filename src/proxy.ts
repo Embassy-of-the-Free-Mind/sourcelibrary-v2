@@ -19,6 +19,10 @@ const NON_TENANT_PATHS = new Set([
   'map', 'constellation',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
+  // Global encyclopedia (entities) — lives under /[tenant]/encyclopedia in
+  // the file tree, exposed at /encyclopedia/* on the apex via the rewrite
+  // block below. Listed here so the apex first-segment branch will not 404.
+  'encyclopedia',
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
   'research', 'embed', 'shwep', 'for-researchers', 'for-libraries', 'identify',
@@ -544,6 +548,22 @@ export async function proxy(request: NextRequest) {
     if (tenantSlug) {
       const url = request.nextUrl.clone();
       url.pathname = `/${tenantSlug}${pathname}`;
+      return NextResponse.rewrite(url);
+    }
+  }
+
+  // Internal tenant routing for /encyclopedia and /encyclopedia/{name}:
+  // The route lives at [tenant]/encyclopedia/* but entities are global — there
+  // is no per-tenant scoping. The apex URL stays clean (/encyclopedia/...)
+  // and we rewrite under the default tenant so the [tenant] segment resolves.
+  // Without this block the apex first-segment branch 404s the URL because
+  // 'encyclopedia' isn't a real tenant slug. ~873K entities and 1.24K GSC
+  // soft-404s depended on this fix (#2019).
+  if (pathname === '/encyclopedia' || pathname.startsWith('/encyclopedia/')) {
+    const defaultTenantSlug = (await resolveTenantByExactSlug('default'))?.slug;
+    if (defaultTenantSlug) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${defaultTenantSlug}${pathname}`;
       return NextResponse.rewrite(url);
     }
   }

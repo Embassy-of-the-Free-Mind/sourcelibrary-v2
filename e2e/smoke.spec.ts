@@ -20,6 +20,8 @@ const FAST_PAGES = [
   '/libraries',
   '/timeline',
   '/search?q=Ficino',
+  '/encyclopedia',
+  '/encyclopedia/Archimedes',
 ];
 
 // Collection and book pages hit Atlas directly and can be slow on ISR cache miss
