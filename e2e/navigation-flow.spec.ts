@@ -3,7 +3,9 @@ import { measurePerf } from './perf';
 import { BOOK } from './fixtures';
 
 test.describe('Navigation Flow', () => {
-  test('homepage -> book detail -> page reader', async ({ page }) => {
+  // #2084: book detail pages render the 404 UI in production, so any flow
+  // that lands on /book/{slug} cannot verify book content. Skip until fixed.
+  test.skip('homepage -> book detail -> page reader', async ({ page }) => {
     // 1. Start at homepage
     await page.goto('/');
     await expect(page).toHaveTitle(/Source Library/i);

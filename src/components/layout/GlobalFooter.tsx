@@ -39,6 +39,7 @@ const NAV_COLUMNS = [
       { label: 'Libraries', href: '/libraries' },
       { label: 'Contribute', href: '/contribute' },
       { label: 'Support', href: '/support' },
+      { label: 'Corporate Sponsorship', href: '/sponsors' },
       { label: 'Developers', href: '/developers' },
     ],
   },

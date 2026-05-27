@@ -24,14 +24,18 @@ const BPH_HEADING = 'Library Catalogue';
 
 test.describe('BPH iframe — digital collection (/embed/bph)', () => {
   test('page renders the unified catalogue with cards', async ({ page }) => {
-    await page.goto('/embed/bph');
+    // Since #1947 the default view at /embed/bph is `view=catalog` (the full
+    // bibliographic catalogue). The digitised+translated grid lives at
+    // ?view=books — pin it explicitly here so this test exercises the cards
+    // surface regardless of which mode is currently the default.
+    await page.goto('/embed/bph?view=books');
 
     // Hero (and its h1) is suppressed on the unified catalogue views (#1653)
     // so partners can wrap the iframe with their own page chrome. The
     // "Library Catalogue" h2 is the top-of-page anchor for both modes.
     await expect(page.locator('h2', { hasText: BPH_HEADING }).first()).toBeVisible({ timeout: 15_000 });
 
-    // Default mode renders the digitised+translated grid → book cards
+    // books view renders the digitised+translated grid → book cards
     const bookCards = page.locator('a[href*="/book/"]');
     await expect(bookCards.first()).toBeVisible({ timeout: 15_000 });
     expect(await bookCards.count()).toBeGreaterThan(10);
@@ -39,14 +43,20 @@ test.describe('BPH iframe — digital collection (/embed/bph)', () => {
     await measurePerf(page, 'bph collection: renders');
   });
 
-  test('"Search within" filter updates URL with q= and stays on /embed/bph', async ({ page }) => {
-    await page.goto('/embed/bph');
+  test('search-within input updates URL and stays on /embed/bph', async ({ page }) => {
+    await page.goto('/embed/bph?view=books');
     await expect(page.locator('h2', { hasText: BPH_HEADING }).first()).toBeVisible({ timeout: 15_000 });
 
-    const input = page.getByPlaceholder(/Search within/i);
+    // The unified search input ("Search across all fields…") sets `cq=`
+    // even on the books view — `cq` is the catalogue-level query that
+    // narrows both the catalog rows and the digitised subset (`cdig=sl`).
+    const input = page.getByPlaceholder(/search/i).first();
     await input.fill('boehme');
 
-    await expect(page).toHaveURL(/\/embed\/bph\?(.*&)?q=boehme/, { timeout: 5_000 });
+    // Match either q= (books view's own filter, if ever added) or cq= (the
+    // current unified catalogue query). The invariant is that the URL stays
+    // on /embed/bph and reflects the search.
+    await expect(page).toHaveURL(/\/embed\/bph\?(.*&)?c?q=boehme/, { timeout: 5_000 });
     expect(page.url()).not.toContain('/bph/search');
     // /bph without the /embed/ prefix would be a leak (the URL-prefix routing
     // exists for non-tenant-subdomain consumers and would render with the full
@@ -63,10 +73,13 @@ test.describe('BPH iframe — catalog mode (/embed/bph?view=catalog)', () => {
 
     await expect(page.locator('h2', { hasText: BPH_HEADING })).toBeVisible({ timeout: 15_000 });
 
-    // "all" mode shows the catalogue browser table
+    // "all" mode shows the catalogue browser table. The table renders rows
+    // incrementally — SSR shows a small first batch, then SWR fills in to
+    // the page size (~50). Poll instead of single-shot so we don't race the
+    // hydration.
     const rows = page.locator('table tbody tr');
     await expect(rows.first()).toBeVisible({ timeout: 15_000 });
-    expect(await rows.count()).toBeGreaterThan(10);
+    await expect.poll(() => rows.count(), { timeout: 15_000 }).toBeGreaterThan(10);
 
     await measurePerf(page, 'bph catalog: table renders');
   });
@@ -76,9 +89,11 @@ test.describe('BPH iframe — catalog mode (/embed/bph?view=catalog)', () => {
 
     await expect(page.locator('h2', { hasText: BPH_HEADING })).toBeVisible({ timeout: 15_000 });
 
-    // Catalogue browser header reports "{N} works" once filtered
+    // Catalogue browser header reports "{N} works" once filtered. The badge
+    // appears after the deferred catalog fetch resolves — under parallel load
+    // this has been observed to take ~12s, so give it 20s.
     const countBadge = page.locator('text=/\\d+ works/').first();
-    await expect(countBadge).toBeVisible({ timeout: 10_000 });
+    await expect(countBadge).toBeVisible({ timeout: 20_000 });
 
     // URL preserves both view and cq, no orphan q
     expect(page.url()).toContain('view=catalog');
@@ -129,8 +144,10 @@ test.describe('BPH iframe — search (/embed/bph/search)', () => {
     const catalogBadge = page.locator('text=/CATALOG ONLY/i').first();
     await expect(catalogBadge).toBeVisible({ timeout: 10_000 });
 
-    // "Open all N catalog matches" link present and stays in-tenant
-    const openAll = page.locator('a', { hasText: /catalog matches/i }).first();
+    // "Open all N catalogue matches" link present and stays in-tenant.
+    // The button text uses "catalogue" (en-GB) — match both spellings since
+    // the copy has flipped before.
+    const openAll = page.locator('a', { hasText: /catalogue? matches/i }).first();
     await expect(openAll).toBeVisible();
     const href = await openAll.getAttribute('href');
     expect(href).toMatch(/^\/catalog\?cq=/);
@@ -175,28 +192,29 @@ test.describe('BPH iframe — search (/embed/bph/search)', () => {
   });
 });
 
-test.describe('BPH iframe — orphan param strip', () => {
-  // Server-side redirect: visiting /embed/bph?cq=stale (a catalog filter on the
-  // books view) must redirect to clean URL. Otherwise the URL bar shows a
-  // filter that the visible page is silently ignoring.
-  test('cq= on books view is stripped via redirect', async ({ page }) => {
+test.describe('BPH iframe — cross-mode params preserved on deep links', () => {
+  // Behaviour changed in PR #2043: filter params (`cq=` for the catalogue
+  // view, `q=` for the books view) are now PRESERVED across mode toggles
+  // so the partner's Webflow URL can deep-link into either mode with its
+  // filter intact (Laura's ask). The previous orphan-strip behaviour would
+  // discard cross-mode params on first paint and break the deep link.
+  // These tests assert the new contract: the param round-trips and the
+  // page still renders.
+  test('cq= on books view is preserved', async ({ page }) => {
     const response = await page.goto('/embed/bph?cq=stale');
 
-    // Final URL has no cq=
-    expect(page.url()).not.toContain('cq=stale');
+    expect(page.url()).toContain('cq=stale');
     expect(page.url()).toMatch(/\/embed\/bph(\?|$)/);
 
-    // Page still rendered
     await expect(page.locator('h2', { hasText: BPH_HEADING }).first()).toBeVisible({ timeout: 15_000 });
 
-    // 307 (or 200 after follow) — Playwright follows redirects, so just sanity-check status
-    expect([200, 307, 308]).toContain(response?.status() || 0);
+    expect(response?.status() || 0).toBe(200);
   });
 
-  test('q= on catalog view is stripped via redirect', async ({ page }) => {
+  test('q= on catalog view is preserved', async ({ page }) => {
     await page.goto('/embed/bph?view=catalog&q=stale');
 
-    expect(page.url()).not.toContain('q=stale');
+    expect(page.url()).toContain('q=stale');
     expect(page.url()).toContain('view=catalog');
 
     await expect(page.locator('h2', { hasText: BPH_HEADING })).toBeVisible({ timeout: 15_000 });
