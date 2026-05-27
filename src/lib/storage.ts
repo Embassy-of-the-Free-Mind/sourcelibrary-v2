@@ -92,8 +92,19 @@ export async function storagePut(
 }
 
 // --- Path helpers ---
-// Standard R2 path convention. All image storage should use these.
-// Given bookId + pageNumber, URLs are fully predictable without DB lookups.
+// Canonical R2 path convention. All NEW image storage must use these.
+//
+// Reality check: the corpus has accumulated six URL conventions across
+// different eras. The canonical `pages/{bookId}/{NNNN}` shape below covers
+// only ~7% of existing pages. The other 93% are still at legacy paths —
+// dominantly `archived/{bookId}/{N}.jpg` (77%). Reader code in utils.ts
+// rewrites those legacy URLs to the canonical shape at render time, but
+// the rewrite is aspirational: it assumes the file exists at the canonical
+// path, and for ~20% of pages it doesn't.
+//
+// See .claude/docs/r2-storage.md for the full path inventory, per-provider
+// distribution, and link to the /admin/r2-coverage dashboard which measures
+// the gap between record-level and file-level coverage.
 
 /** Page image paths — pages/{bookId}/{0001}.jpg, pages/{bookId}/{0001}-full.jpg, etc. */
 export function pagePaths(bookId: string, pageNumber: number) {

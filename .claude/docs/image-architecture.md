@@ -9,7 +9,8 @@ images.sourcelibrary.org/
 ├── pages/{book_id}/{0001}.jpg            # 1200px page display images
 ├── pages/{book_id}/{0001}-thumb.jpg      # 150px page thumbnails
 ├── pages/{book_id}/{0001}-full.jpg       # Full-res original (OCR, zoom, download)
-├── archived/{book_id}/{page}.jpg         # Legacy archived pages (rewritten to /pages/ at read time)
+├── archived/{book_id}/{page}.jpg         # Legacy archived pages (77% of corpus; rewritten to /pages/ at read time — see caveat)
+├── books/{book_id}/pages/{NNNN}.jpg      # Kloss/IDP/CCAG/PDF imports — single file, no variants
 ├── gallery/{book_id}/{page}-{idx}.jpg    # 1200px extracted illustrations
 ├── gallery/{book_id}/{page}-{idx}-thumb.jpg  # 150px illustration thumbnails
 ├── gallery/{book_id}/{page}-{idx}-full.jpg   # Full-res illustration
@@ -17,10 +18,14 @@ images.sourcelibrary.org/
 ├── artwork/{slug}.jpg                    # 1200px display variant (some artworks)
 ├── artwork/{slug}-thumb.jpg              # 150px artwork thumbnail
 ├── covers/{book_id}.jpg                  # Book cover images
-└── thumbnails/{book_id}/{page}.jpg       # Legacy path (rewritten to /pages/ at read time)
+├── cropped/{book_id}/{objectId}.jpg      # Split-page crops (objectId filenames)
+├── uploads/{book_id}/{objectId}.jpg      # Raw user uploads (objectId filenames)
+└── thumbnails/{book_id}/{page}.jpg       # Oldest path (rewritten to /pages/ at read time)
 ```
 
-Path helpers: `src/lib/storage.ts` — `pagePaths()`, `galleryPaths()`, `coverPath()`, `r2Url()`.
+Path helpers: `src/lib/storage.ts` — `pagePaths()`, `galleryPaths()`, `coverPath()`, `r2Url()`. The canonical pattern matrix, by-provider distribution, and current measured coverage live in [r2-storage.md](./r2-storage.md).
+
+**Caveat — URL rewrites are aspirational, not validated.** `utils.ts` rewrites `archived/.../{N}.jpg` → `pages/.../{NNNN}.jpg` (or `-thumb.jpg`) at read time, assuming the target file exists. For ~20% of pages it doesn't — the archive worker wrote the legacy path but the canonical variants were never generated. Those pages render broken icons unless a component-level fallback kicks in. The gap is measured live at `/admin/r2-coverage`.
 
 ## Progressive Loading Chain
 
