@@ -19,10 +19,12 @@ const NON_TENANT_PATHS = new Set([
   'map', 'constellation',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
-  // Global encyclopedia (entities) — lives under /[tenant]/encyclopedia in
-  // the file tree, exposed at /encyclopedia/* on the apex via the rewrite
-  // block below. Listed here so the apex first-segment branch will not 404.
-  'encyclopedia',
+  // Global routes that live under /[tenant]/* but have no per-X tenant
+  // scoping. Exposed on the apex via the GLOBAL_TENANT_ROUTES rewrite
+  // block below. Listed here so the apex first-segment branch will not
+  // 404 them and we skip the per-request tenant DB lookup.
+  'encyclopedia', 'rithmomachia', 'hieroglyphs', 'tablets', 'taxonomy',
+  'learn', 'dataset', 'beta',
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
   'research', 'embed', 'shwep', 'for-researchers', 'for-libraries', 'identify',
@@ -34,6 +36,15 @@ const NON_TENANT_PATHS = new Set([
   'q',
   // SEO — sitemap-index route, reachable as /sitemap.xml via next.config rewrite
   'sitemap-index',
+]);
+
+// Global routes that live under [tenant]/* in the file tree but are exposed
+// on the apex (sourcelibrary.org). Keep in sync with the matching block in
+// NON_TENANT_PATHS — that allowlists the slug so the apex first-segment
+// branch skips them, and this set drives the rewrite to /{default}/<slug>/...
+const GLOBAL_TENANT_ROUTES = new Set([
+  'encyclopedia', 'artist', 'shwep', 'beta', 'rithmomachia',
+  'hieroglyphs', 'tablets', 'taxonomy', 'learn', 'dataset',
 ]);
 
 // Domains that enable the Ficino Society social layer
@@ -552,14 +563,16 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Internal tenant routing for /encyclopedia and /encyclopedia/{name}:
-  // The route lives at [tenant]/encyclopedia/* but entities are global — there
-  // is no per-tenant scoping. The apex URL stays clean (/encyclopedia/...)
-  // and we rewrite under the default tenant so the [tenant] segment resolves.
-  // Without this block the apex first-segment branch 404s the URL because
-  // 'encyclopedia' isn't a real tenant slug. ~873K entities and 1.24K GSC
-  // soft-404s depended on this fix (#2019).
-  if (pathname === '/encyclopedia' || pathname.startsWith('/encyclopedia/')) {
+  // Internal tenant routing for global content routes:
+  // These pages live under [tenant]/* in the file tree but the data is global
+  // (no per-X tenant scoping). The apex URL stays clean (/encyclopedia/...,
+  // /artist/..., /shwep/..., etc.) and we rewrite under the default tenant so
+  // the [tenant] segment resolves to the page handler. Without this block the
+  // apex first-segment branch 404s these URLs because the slugs are not real
+  // tenants. Encyclopedia alone accounted for 873K silently-invisible entity
+  // pages + 1.24K GSC soft-404s before the initial fix (#2019, #2075).
+  const firstGlobalSeg = pathname.match(/^\/([^/]+)/)?.[1];
+  if (firstGlobalSeg && GLOBAL_TENANT_ROUTES.has(firstGlobalSeg)) {
     const defaultTenantSlug = (await resolveTenantByExactSlug('default'))?.slug;
     if (defaultTenantSlug) {
       const url = request.nextUrl.clone();
