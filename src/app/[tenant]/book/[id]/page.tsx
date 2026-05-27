@@ -301,7 +301,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -313,7 +313,7 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
   if (!result) return null;
   let effectiveResult = result;
   if (tenantId) {
-    const scoped = await findBookByIdOrSlug(db, id, {
+    const projection = {
       reading_sections: 0,
       pipeline: 0,
       pipeline_auto: 0,
@@ -323,7 +323,18 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }, tenantId);
+    };
+    let scoped = await findBookByIdOrSlug(db, id, projection, tenantId);
+    if (!scoped && tenantSlug === 'default') {
+      // Main-site fallback: after the tenantId-pollution cleanup (PR #2085)
+      // ~11K books that were falsely tagged with a provider tenantId are now
+      // untagged. The strict scoped lookup misses them; allow through if the
+      // book has no tenantId at all. Subdomain lockdown stays strict.
+      const unscoped = await findBookByIdOrSlug(db, id, projection);
+      if (unscoped && !(unscoped.book as Record<string, unknown>).tenantId) {
+        scoped = unscoped;
+      }
+    }
     if (!scoped) return null;
     effectiveResult = {
       book: scoped.book as Record<string, unknown>,
@@ -543,7 +554,7 @@ function PagesGridSkeleton() {
 async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy }) {
   let data;
   try {
-    data = await getBook(id, tenantId);
+    data = await getBook(id, tenantId, tenantSlug);
   } catch (err) {
     console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
     // Return a friendly message instead of crashing the Suspense boundary
