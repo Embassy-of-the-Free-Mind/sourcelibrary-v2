@@ -16,7 +16,7 @@ test.describe('Catalog', () => {
     // Just verify the page renders with book count from server props.
     await page.goto('/catalog');
 
-    const countText = page.locator('#main-content text=/\\d[\\d,]+ books/').first();
+    const countText = page.locator('#main-content').getByText(/\d[\d,]+ books/).first();
     await expect(countText).toBeVisible({ timeout: 15_000 });
 
     // Verify reasonable book count (should be thousands)
@@ -28,7 +28,7 @@ test.describe('Catalog', () => {
 
   test('list view renders book rows', async ({ page }) => {
     await page.goto('/catalog');
-    await expect(page.locator('#main-content text=/\\d[\\d,]+ books/').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
 
     // Default is list view — should have table rows
     const rows = page.locator('table tbody tr');
@@ -38,7 +38,7 @@ test.describe('Catalog', () => {
 
   test('search filters results', async ({ page }) => {
     await page.goto('/catalog');
-    await expect(page.locator('#main-content text=/\\d[\\d,]+ books/').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
 
     await page.fill('input[placeholder*="Search"]', 'Agrippa');
     // Should show filtered count ("N of M books")
@@ -47,7 +47,7 @@ test.describe('Catalog', () => {
 
   test('sort changes order', async ({ page }) => {
     await page.goto('/catalog');
-    await expect(page.locator('#main-content text=/\\d[\\d,]+ books/').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
 
     await page.selectOption('select', { value: 'title' });
     await expect(page).toHaveURL(/sort=title/);
@@ -55,7 +55,7 @@ test.describe('Catalog', () => {
 
   test('pagination works', async ({ page }) => {
     await page.goto('/catalog');
-    await expect(page.locator('#main-content text=/\\d[\\d,]+ books/').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
 
     const page2Button = page.locator('button', { hasText: '2' }).first();
     await expect(page2Button).toBeVisible({ timeout: 5_000 });
@@ -66,7 +66,7 @@ test.describe('Catalog', () => {
   test('time to interactive under 8s', async ({ page }) => {
     const start = Date.now();
     await page.goto('/catalog');
-    await expect(page.locator('#main-content text=/\\d[\\d,]+ books/').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
     const rows = page.locator('table tbody tr');
     await expect(rows.first()).toBeVisible({ timeout: 5_000 });
     const tti = Date.now() - start;
