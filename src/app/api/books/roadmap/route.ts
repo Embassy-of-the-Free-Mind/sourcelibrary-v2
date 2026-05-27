@@ -1020,7 +1020,6 @@ export async function POST() {
         const bookDoc = {
           _id: bookId,
           id: bookIdStr,
-          tenant_id: 'default',
           title: book.title,
           display_title: book.display_title,
           author: book.author,

@@ -3,6 +3,7 @@ import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
 import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
 import { supabase } from '@/lib/supabase';
 import { ObjectId } from 'mongodb';
+import { stripAnnotations } from '@/lib/semantic-alignment';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -250,28 +251,19 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
 // ── Tenant Visibility ─────────────────────────────────────────────────
 
 /**
- * Books carry `tenant_id` that scopes them to a particular tenant face.
- * `default` (and books with no tenant_id) belong to the main library;
- * other values like `bhutan` belong to partner subdomains. The librarian
- * runs in main-site context today, so it must filter to tenant_id values
- * that the main site is allowed to surface.
+ * Main-site library = books with no `tenantId`. Books tagged with a subdomain
+ * tenant UUID (bph / kloss-collection / bhutan) belong to a partner reading
+ * room and must NOT leak into the main-site librarian's results.
  *
  * Background: the AI librarian leaked a Bhutanese book to main-site users
  * because Atlas + semantic search returned every tenant's books indiscriminately
  * (the embedding RPC's tenant filter was explicitly dropped in PR #1780).
  * See .claude/docs/tenant-architecture-audit-2026-05-23.md.
  */
-const MAIN_SITE_TENANT_IDS: Array<string | null> = ['default', null];
-
-function tenantVisibilityFilter(allowedTenantIds: Array<string | null> = MAIN_SITE_TENANT_IDS) {
-  const hasNull = allowedTenantIds.includes(null);
-  const slugs = allowedTenantIds.filter((t): t is string => t !== null);
-  const clauses: Record<string, unknown>[] = [];
-  if (slugs.length > 0) clauses.push({ tenant_id: { $in: slugs } });
-  if (hasNull) clauses.push({ tenant_id: { $in: [null, undefined] } });
+function tenantVisibilityFilter() {
   return {
     hidden: { $ne: true },
-    ...(clauses.length === 1 ? clauses[0] : { $or: clauses }),
+    tenantId: { $in: [null, undefined] },
   };
 }
 
@@ -399,7 +391,7 @@ async function executeSearchSemantic(query: string): Promise<
           bookAuthor: b.author || 'Unknown',
           bookSlug: visibleMap.get(b.book_id),
           page_number: page?.page_number || 0,
-          snippet: page?.snippet || (b.summary_text || '').slice(0, 500),
+          snippet: stripAnnotations(page?.snippet || (b.summary_text || '').slice(0, 500)),
           score: b.similarity,
         };
       });
@@ -581,7 +573,7 @@ async function executeTool(
 
       const sources: SourceCard[] = data.passages.map(p => ({
         book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
-        pageNumber: p.page_number, snippet: p.text.slice(0, 200), inCollection: true,
+        pageNumber: p.page_number, snippet: stripAnnotations(p.text).slice(0, 200), inCollection: true,
       }));
 
       return {
@@ -605,7 +597,7 @@ async function executeTool(
 
       const sources: SourceCard[] = results.map(r => ({
         book_id: r.book_id, bookTitle: r.bookTitle, bookAuthor: r.bookAuthor, bookSlug: r.bookSlug,
-        pageNumber: r.page_number, snippet: r.snippet.slice(0, 200), inCollection: true,
+        pageNumber: r.page_number, snippet: stripAnnotations(r.snippet).slice(0, 200), inCollection: true,
       }));
 
       return {
@@ -821,7 +813,7 @@ Every mention of a book should link to it. Every mention of an author should lin
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
 
 **Step 6: Show images and suggest next steps.**
-When search_images returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. After answering, suggest what to explore next.
+When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — fabricated URLs render as broken thumbnails for the user. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all. After answering, suggest what to explore next.
 
 Be honest about gaps — if a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
 

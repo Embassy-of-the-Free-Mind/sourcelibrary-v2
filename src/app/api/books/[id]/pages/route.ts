@@ -26,7 +26,6 @@ export const POST = withAuth(async (request, session, context) => {
       return {
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookId,
         page_number: pageData.page_number,
         photo: pageData.photo,

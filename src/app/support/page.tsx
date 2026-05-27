@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/support' },
 };
 
-const MOLLIE_URL = 'https://payment-links.mollie.com/en/payment/ug24y6U3mtCvzCwUhfPHD/details';
+const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
 const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
 const CONTACT_EMAIL = 'derek@sourcelibrary.org';
 
@@ -273,7 +273,7 @@ export default async function SupportPage() {
                   <span className="block text-xs text-stone-500 mt-1">501(c)(3)</span>
                 </a>
                 <a
-                  href={MOLLIE_URL}
+                  href={EFM_STRIPE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block text-center"

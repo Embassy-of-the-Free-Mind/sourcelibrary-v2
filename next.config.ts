@@ -291,6 +291,33 @@ const nextConfig: NextConfig = {
         destination: '/librarian/voice',
         permanent: true,
       },
+      // Bare list-roots that users hit without a slug — send them somewhere useful
+      // instead of 404. Tracked from `not_found_reports`: each gets 10+ distinct
+      // IPs per week. `/book` was previously kept as a deliberate 404 (legacy
+      // listing route), but `/search` is the closest match to user intent.
+      {
+        source: '/book',
+        destination: '/search',
+        permanent: false,
+      },
+      {
+        source: '/author',
+        destination: '/search',
+        permanent: false,
+      },
+      {
+        source: '/q',
+        destination: '/',
+        permanent: false,
+      },
+      // Library-scoped gallery URLs don't exist as routes — gallery is global
+      // per the "Source Library is the destination" URL doctrine. Strip the
+      // library prefix so external links resolve.
+      {
+        source: '/libraries/:slug/gallery/:path*',
+        destination: '/gallery/:path*',
+        permanent: true,
+      },
       // Short share links for explore pages
       {
         source: '/map',

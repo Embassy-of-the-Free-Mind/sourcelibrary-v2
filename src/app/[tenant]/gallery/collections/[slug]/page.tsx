@@ -4,7 +4,8 @@ import { cache } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
-import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
+import { resolveGalleryCollectionImages } from '@/lib/gallery-collection-resolver';
+import CollectionImageCard from './CollectionImageCard';
 
 export const revalidate = 86400;
 
@@ -22,7 +23,7 @@ const getCollectionData = cache(async (slug: string) => {
     if (!collection) return null;
 
     const imageIds = (collection.image_ids as string[]) || [];
-    const items = await resolveImages(db, imageIds);
+    const items = await resolveGalleryCollectionImages(db, imageIds);
 
     return {
       title: collection.title as string,
@@ -57,42 +58,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: data.description,
     },
   };
-}
-
-const IMAGE_PROJECTION = {
-  id: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1,
-  book_title: 1, description: 1, type: 1, gallery_quality: 1,
-  _id: 0,
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function resolveImages(db: any, imageIds: string[]): Promise<CollectionImageProps[]> {
-  if (imageIds.length === 0) return [];
-
-  const docs = await db
-    .collection('gallery_images')
-    .find({ id: { $in: imageIds } }, { projection: IMAGE_PROJECTION })
-    .toArray();
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const docMap = new Map<string, any>(docs.map((d: any) => [d.id, d]));
-
-  const results: CollectionImageProps[] = [];
-  for (const id of imageIds) {
-    const doc = docMap.get(id);
-    if (!doc) continue;
-    results.push({
-      id: doc.id,
-      imageUrl: doc.thumbnail_url || doc.extracted_url || doc.image_url,
-      bookTitle: doc.book_title || 'Unknown',
-      description: doc.description || '',
-      type: doc.type,
-      thumbnailUrl: doc.thumbnail_url,
-      extractedUrl: doc.extracted_url,
-      galleryQuality: doc.gallery_quality,
-    });
-  }
-  return results;
 }
 
 export default async function CollectionDetailPage({ params }: PageProps) {

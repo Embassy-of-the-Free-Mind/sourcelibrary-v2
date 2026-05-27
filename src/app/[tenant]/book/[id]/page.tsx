@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
@@ -120,7 +121,7 @@ const getCachedBookLookup = cache(async (id: string): Promise<{
 });
 
 function getBookTenantId(book: Record<string, unknown> | Book): string | undefined {
-  return (book as any).tenantId || (book as any).tenant_id;
+  return (book as any).tenantId;
 }
 
 // Lightweight book fetch for metadata — reuses cached lookup
@@ -140,21 +141,21 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
     'index.places': 0,
     'index.concepts': 0,
     'index.keyTerms': 0,
-  }, tenantId, tenantSlug);
+  }, tenantId);
   if (scoped) return scoped.book as unknown as Book;
 
-  // Default tenant is the global namespace. Legacy + corpus-source books
-  // (ETCSL, CDLI, etc.) have no `tenantId`/`tenant_id` field at all; the
-  // strict scoped lookup excludes them, which caused generateMetadata() to
-  // emit "Book Not Found" + noindex even though the page body renders fine
-  // via the unscoped fetch. 1.52K books were being silently delisted in GSC.
+  // Default tenant is the global namespace — legacy + corpus-source books
+  // (ETCSL, CDLI, etc.) have no `tenantId` at all and the strict scoped
+  // lookup excludes them. That caused generateMetadata() to emit
+  // "Book Not Found" + noindex even though the page body renders fine via
+  // the unscoped fetch — 1.52K books were silently delisted in GSC.
   //
   // Tenant subdomains (bph/, etc.) keep the strict filter so the lockdown
   // invariant (CLAUDE.md "Tenant Subdomain Lockdown") still holds: only
   // books explicitly assigned to that tenant are visible there.
   if (tenantSlug === 'default') {
     const book = result.book as Record<string, unknown>;
-    if (!book.tenantId && !book.tenant_id) {
+    if (!book.tenantId) {
       return book as unknown as Book;
     }
   }
@@ -184,14 +185,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Wrong tenant — suppress metadata entirely so the 404 isn't indexed.
-  // Match either UUID (tenantId) or slug (tenant_id) — legacy docs may have only one set.
   const bookTenantUuid = (book as any).tenantId as string | undefined;
-  const bookTenantSlug = (book as any).tenant_id as string | undefined;
-  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
-  const matchesTenant =
-    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
-    (bookTenantSlug && tenant && bookTenantSlug === tenant);
-  if (hasTenantField && !matchesTenant) {
+  const matchesTenant = !!(bookTenantUuid && tenantId && bookTenantUuid === tenantId);
+  if (bookTenantUuid && !matchesTenant) {
     return {
       title: 'Not Found - Source Library',
       robots: { index: false, follow: false },
@@ -318,7 +314,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   if (!result) return null;
   let effectiveResult = result;
   if (tenantId) {
-    const scoped = await findBookByIdOrSlug(db, id, {
+    const projection = {
       reading_sections: 0,
       pipeline: 0,
       pipeline_auto: 0,
@@ -328,7 +324,18 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }, tenantId, tenantSlug);
+    };
+    let scoped = await findBookByIdOrSlug(db, id, projection, tenantId);
+    if (!scoped && tenantSlug === 'default') {
+      // Main-site fallback: after the tenantId-pollution cleanup (PR #2085)
+      // ~11K books that were falsely tagged with a provider tenantId are now
+      // untagged. The strict scoped lookup misses them; allow through if the
+      // book has no tenantId at all. Subdomain lockdown stays strict.
+      const unscoped = await findBookByIdOrSlug(db, id, projection);
+      if (unscoped && !(unscoped.book as Record<string, unknown>).tenantId) {
+        scoped = unscoped;
+      }
+    }
     if (!scoped) return null;
     effectiveResult = {
       book: scoped.book as Record<string, unknown>,
@@ -570,15 +577,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
-  // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
-  // Match against whichever form is present so legacy artwork docs (slug-only) don't 404.
   const bookTenantUuid = (book as any).tenantId as string | undefined;
-  const bookTenantSlug = (book as any).tenant_id as string | undefined;
-  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
-  const matchesTenant =
-    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
-    (bookTenantSlug && tenantSlug && bookTenantSlug === tenantSlug);
-  if (hasTenantField && !matchesTenant) {
+  const matchesTenant = !!(bookTenantUuid && tenantId && bookTenantUuid === tenantId);
+  if (bookTenantUuid && !matchesTenant) {
     notFound();
   }
 
@@ -830,7 +831,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 )}
               </div>
 
-              {book.is_first_translation && (
+              {isPublishedFirstTranslation(book) && (
                 <div className="mt-3">
                   <details className="group">
                     <summary className="inline-flex px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">

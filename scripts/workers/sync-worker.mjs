@@ -244,7 +244,10 @@ async function syncGalleryImages(db) {
         book_id: '$book_id',
         page_number: '$page_number',
         detection_index: '$detection_index',
-        image_url: { $ifNull: ['$cropped_photo', { $ifNull: ['$archived_photo', { $ifNull: ['$photo_original', '$photo'] }] }] },
+        // Prefer the CDN-served crop. Pages without cropped_photo/archived_photo
+        // would otherwise fall through to upstream IIIF URLs (gallica, BSB, …),
+        // leaking those into collection-page HTML and adding 1–3s per image.
+        image_url: { $ifNull: ['$detected_images.extracted_url', { $ifNull: ['$cropped_photo', { $ifNull: ['$archived_photo', { $ifNull: ['$photo_original', '$photo'] }] }] }] },
         thumbnail_url: '$detected_images.thumbnail_url',
         extracted_url: '$detected_images.extracted_url',
         description: { $ifNull: ['$detected_images.description', ''] },

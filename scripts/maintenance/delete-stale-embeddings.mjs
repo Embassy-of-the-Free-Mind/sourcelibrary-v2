@@ -4,12 +4,17 @@
  * These are orphaned — the source book was deleted (or never imported) and the
  * embedding is unreachable through any UI / RPC.
  *
+ * SCOPE: pure vector embedding tables only — book_embeddings, artwork_embeddings,
+ * gallery_text_embeddings, clip_embeddings. Deletes are recoverable by re-running
+ * the embed worker (free Tier).
+ *
+ * NOT in scope: `page_translations`. That table holds the **translation text
+ * itself** (column `translation`, the Gemini Batch API output), not just an
+ * embedding. Deleting from it destroys readable content. See the page_translations
+ * section below — it intentionally does NOT emit any DELETE SQL.
+ *
  * We do NOT delete embeddings for hidden books — visibility toggles and
  * re-embedding (especially page-level) is expensive.
- *
- * The four small tables are paged-and-deleted via the Supabase REST client.
- * `page_translations` (~3.9M rows) is too big for REST; the script emits a
- * SQL one-liner to run in the Supabase SQL editor.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
@@ -81,27 +86,30 @@ for (const t of SMALL_TABLES) {
   console.log(`${t.name.padEnd(28)} DELETED ${deleted} rows.`);
 }
 
-// page_translations is too big to page via REST. Emit a SQL one-liner.
+// page_translations is intentionally NOT cleaned by this script. The table
+// holds the **translation text itself** (column `translation`, Gemini Batch
+// API output), so a DELETE there destroys readable content — not just a
+// re-derivable vector. Counting orphans is fine; deleting them needs a
+// separate, much-more-careful workflow (cross-check against bookstore.books
+// AND deleted_books, sample inspect, ideally archive before delete).
 console.log(`
-─── page_translations cleanup ─────────────────────────────────
-Too large for REST paging (~3.9M rows). Run in Supabase SQL editor:
+─── page_translations: NOT cleaned by this script ─────────────
+page_translations.translation holds Gemini-translated text — deleting
+rows there is destructive in a way these embedding tables are not.
 
-  -- One-shot cleanup. Replace the literal array with the current
-  -- valid book_id list, or load into a temp table first if it's huge.
-  -- Quick check:
+Counting orphans (read-only, safe):
   SELECT COUNT(*) FROM page_translations p
    WHERE NOT EXISTS (
      SELECT 1 FROM book_embeddings b WHERE b.book_id::text = p.book_id::text
    );
-  -- (Using book_embeddings as the implicit "live book" set after this
-  -- script cleans it. Once book_embeddings is orphan-free, every
-  -- page_translations row whose book_id isn't there is also orphaned.)
 
-  -- Delete (run after the COUNT looks reasonable):
-  DELETE FROM page_translations p
-   WHERE NOT EXISTS (
-     SELECT 1 FROM book_embeddings b WHERE b.book_id::text = p.book_id::text
-   );
+If you find orphans worth removing, write a deliberate script that:
+  1. Builds the live-book set from bookstore.books (NOT book_embeddings —
+     books with translations may not yet have an embedding row).
+  2. Cross-checks candidate book_ids against bookstore.deleted_books so
+     restorable books are spared.
+  3. Samples 10–20 of the resulting "true orphans" and inspects them.
+  4. Archives the rows (or at least the translation text) before DELETE.
 ───────────────────────────────────────────────────────────────`);
 
 if (!APPLY) console.log('\nDry-run only. Re-run with --apply to delete from the four small tables.');

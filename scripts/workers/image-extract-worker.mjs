@@ -94,7 +94,42 @@ const IMAGE_DOWNLOAD_CONCURRENCY = 40;
 const BOOKS_PER_RUN = 250;
 const RUN_DEADLINE_MS = 25 * 60 * 1000; // 25 min deadline (scheduler runs every 2 min)
 const MODEL = 'gemini-3-flash-preview'; // Vision task needs accuracy
-const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
+
+// Pages whose <image-desc> tags are ALL one of these (type, significance) combos
+// can be skipped — OCR has already classified them as trivial (drop caps, library
+// stamps, printer's marks, blank-page framing, decorative initials). Spot-checked
+// on 8,033 never-extracted visible books — these categories never contain real
+// gallery-worthy illustrations. Saves ~60% of the vision-call budget.
+//
+// Rules with `*` match any significance value.
+const SKIP_MARKUP_RULES = [
+  { type: 'symbol', significance: '*' },          // yig-mgo marks, library stamps
+  { type: 'stamp', significance: '*' },
+  { type: 'ornament', significance: '*' },        // printer's ornaments, tailpieces
+  { type: 'blank', significance: '*' },
+  { type: 'decorative', significance: 'low' },    // drop caps, framing rules
+  { type: "printer's mark", significance: 'low' },
+  { type: 'photograph', significance: 'low' },    // binding/fore-edge photos
+  { type: 'photographic', significance: 'low' },
+];
+
+function shouldSkipPageByMarkup(ocrData) {
+  if (!ocrData) return false;
+  // If the page has <detected-images> JSON, never skip (we want to parse it).
+  if (ocrData.includes('<detected-images>')) return false;
+  const tags = [...ocrData.matchAll(/<image-desc([^>]*)>/g)];
+  if (tags.length === 0) return false; // no markup to judge by — extract
+  for (const m of tags) {
+    const type = (m[1].match(/type="([^"]+)"/) || [])[1];
+    const sig = (m[1].match(/significance="([^"]+)"/) || [])[1];
+    const matchedRule = SKIP_MARKUP_RULES.find(r =>
+      r.type === type && (r.significance === '*' || r.significance === sig)
+    );
+    if (!matchedRule) return false; // at least one tag is non-trivial — extract
+  }
+  return true; // every tag matched a skip rule
+}
 
 // ── API Keys (exclude free tier KEY_4) ──
 const API_KEYS = [
@@ -702,15 +737,34 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
 // ── Process one book ──
 async function processBook(db, book) {
   // Find candidate pages
-  const candidatePages = await db.collection('pages')
+  const rawCandidates = await db.collection('pages')
     .find({
       book_id: book.id,
       $or: [
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-        { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+        { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
       ],
-    }, { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 } })
+    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, 'ocr.data': 1 } })
     .toArray();
+
+  // Pre-filter: drop pages where OCR has already classified all illustrations
+  // as trivial (drop caps, library stamps, etc.) — saves the vision call.
+  // Only apply to pages outside the IMAGE_CANDIDATE_PAGE_TYPES list, since
+  // a page typed `illustration`/`frontispiece`/etc. is the page-typer's
+  // affirmative judgment.
+  let skippedTrivial = 0;
+  const candidatePages = rawCandidates.filter(p => {
+    const inCandidateType = IMAGE_CANDIDATE_PAGE_TYPES.includes(p.page_type);
+    if (inCandidateType) return true;
+    if (shouldSkipPageByMarkup(p.ocr?.data)) {
+      skippedTrivial++;
+      return false;
+    }
+    return true;
+  });
+  if (skippedTrivial > 0) {
+    console.log(`  [${book.title?.slice(0, 50)}] skipped ${skippedTrivial} trivial-markup pages`);
+  }
 
   if (candidatePages.length === 0) {
     await setPipelineStatus(db, book.id, 'images_complete');

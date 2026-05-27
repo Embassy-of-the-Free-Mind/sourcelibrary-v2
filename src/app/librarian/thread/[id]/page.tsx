@@ -7,26 +7,7 @@ import { useRouter } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
-function linkifySourceUrls(text: string): string {
-  return text.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, _slug, page) => {
-      const label = page ? `View source (p. ${page})` : 'View in collection';
-      return `[${label}](${match})`;
-    },
-  );
-}
-
-function ensureParagraphBreaks(text: string): string {
-  const parts = text.split(/(```[\s\S]*?```)/);
-  return parts.map((part, i) => {
-    if (i % 2 === 1) return part;
-    return part
-      .replace(/([^\n])\n(?!\n)/g, '$1\n\n')
-      .replace(/\n{3,}/g, '\n\n');
-  }).join('');
-}
+import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
 
 interface ThreadMessage {
   id: string;
@@ -873,7 +854,18 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
                         img: ({ src, alt }) => (
                           <a href={src as string} target="_blank" rel="noopener noreferrer">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[400px] w-auto" loading="lazy" />
+                            <img
+                              src={src as string}
+                              alt={(alt as string) || ''}
+                              className="rounded-lg shadow-md max-h-[400px] w-auto"
+                              loading="lazy"
+                              onError={(e) => {
+                                const img = e.currentTarget;
+                                const wrapper = img.closest('a');
+                                if (wrapper) wrapper.style.display = 'none';
+                                else img.style.display = 'none';
+                              }}
+                            />
                           </a>
                         ),
                       }}

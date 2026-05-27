@@ -5,20 +5,7 @@ import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
-function linkifySourceUrls(text: string): string {
-  return text.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, _slug, page) => {
-      const label = page ? `View source (p. ${page})` : 'View in collection';
-      return `[${label}](${match})`;
-    },
-  );
-}
-
-function ensureParagraphBreaks(text: string): string {
-  return text.replace(/([^\n])\n(?!\n)(?![-*>|`\d])/g, '$1\n\n');
-}
+import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
 
 interface ThreadMessage {
   id: string;
