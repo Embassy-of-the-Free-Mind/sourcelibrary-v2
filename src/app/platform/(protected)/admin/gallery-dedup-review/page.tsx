@@ -13,6 +13,8 @@
 import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
+// Oversample × HEAD probe in parallel can take 5-10s on a cold cache.
+export const maxDuration = 30;
 
 interface Pair {
   id: string;
@@ -38,6 +40,16 @@ function reconstructUrl(book_id: string, id: string): string {
   return `https://images.sourcelibrary.org/gallery/${book_id}/${id}.jpg`;
 }
 
+async function urlOk(url: string | undefined): Promise<boolean> {
+  if (!url) return false;
+  try {
+    const r = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(6000) });
+    return r.ok;
+  } catch {
+    return false;
+  }
+}
+
 export default async function GalleryDedupReview({ searchParams }: { searchParams: Promise<{ size?: string; book?: string }> }) {
   const params = await searchParams;
   const size = Math.min(Math.max(Number(params.size) || 24, 4), 60);
@@ -51,9 +63,14 @@ export default async function GalleryDedupReview({ searchParams }: { searchParam
   };
   if (bookFilter) matchStage.book_id = bookFilter;
 
+  // Over-sample because ~8% of catalog gallery_images have URLs that 404 on
+  // the CDN (missing-CDN-coverage data integrity issue, separate from this
+  // dedup work). We filter unreachable pairs at request time so the reviewer
+  // never burns a slot on a broken image.
+  const oversample = size * 3;
   const pipeline = [
     { $match: matchStage },
-    { $sample: { size } },
+    { $sample: { size: oversample } },
     {
       $lookup: {
         from: 'gallery_images',
@@ -77,25 +94,41 @@ export default async function GalleryDedupReview({ searchParams }: { searchParam
 
   const docs = await db.collection('deleted_gallery_images').aggregate(pipeline, { allowDiskUse: true }).toArray();
 
-  const pairs: Pair[] = docs.map((d) => ({
-    id: d.id,
-    kept_id: d.kept_id,
-    book_id: d.book_id,
-    description: d.description,
-    type: d.type,
-    bbox: d.bbox,
-    gallery_quality: d.gallery_quality,
-    archived_url: d.extracted_url || reconstructUrl(d.book_id, d.id),
-    keeper: {
-      id: d.keeper[0].id,
-      extracted_url: d.keeper[0].extracted_url,
-      thumbnail_url: d.keeper[0].thumbnail_url,
-      description: d.keeper[0].description,
-      type: d.keeper[0].type,
-      gallery_quality: d.keeper[0].gallery_quality,
-    },
-    book: d.book[0] || { id: d.book_id },
-  }));
+  // HEAD-probe each pair's image URLs in parallel; keep only pairs where both
+  // images return 200. Caps at `size` good pairs so we don't render dozens of
+  // broken-image cards.
+  const probed = await Promise.all(
+    docs.map(async (d) => {
+      const archived_url = d.extracted_url || reconstructUrl(d.book_id, d.id);
+      const keeper_url = d.keeper[0].extracted_url || reconstructUrl(d.book_id, d.keeper[0].id);
+      const [archOk, keepOk] = await Promise.all([urlOk(archived_url), urlOk(keeper_url)]);
+      return archOk && keepOk ? { d, archived_url, keeper_url } : null;
+    })
+  );
+
+  const pairs: Pair[] = probed
+    .filter((x): x is NonNullable<typeof x> => x !== null)
+    .slice(0, size)
+    .map(({ d, archived_url, keeper_url }) => ({
+      id: d.id,
+      kept_id: d.kept_id,
+      book_id: d.book_id,
+      description: d.description,
+      type: d.type,
+      bbox: d.bbox,
+      gallery_quality: d.gallery_quality,
+      archived_url,
+      keeper: {
+        id: d.keeper[0].id,
+        extracted_url: keeper_url,
+        thumbnail_url: d.keeper[0].thumbnail_url,
+        description: d.keeper[0].description,
+        type: d.keeper[0].type,
+        gallery_quality: d.keeper[0].gallery_quality,
+      },
+      book: d.book[0] || { id: d.book_id },
+    }));
+  const skippedBroken = docs.length - pairs.length;
 
   // Stats banner: total archived this round, books affected
   const [archivedCount, booksAgg] = await Promise.all([
@@ -116,8 +149,13 @@ export default async function GalleryDedupReview({ searchParams }: { searchParam
         <code style={{ background: '#161b22', padding: '2px 6px', borderRadius: 3 }}>
           scripts/maintenance/dedup-book-gallery-images.mjs
         </code>
-        . Showing a random sample of {pairs.length}. Left = archived (treated as a dupe of right = keeper).{' '}
-        <a href="?" style={{ color: '#58a6ff' }}>Reshuffle</a>{' '}
+        . Showing {pairs.length} random pair(s) with reachable images. Left = archived (treated as a dupe of right = keeper).
+        {skippedBroken > 0 && (
+          <>
+            {' '}<span style={{ color: '#f0883e' }}>Skipped {skippedBroken} pair(s) where one or both images 404 on CDN — a separate data-integrity issue, not a dedup mistake.</span>
+          </>
+        )}
+        {' '}<a href="?" style={{ color: '#58a6ff' }}>Reshuffle</a>{' '}
         ·{' '}
         <a href="?size=48" style={{ color: '#58a6ff' }}>48 pairs</a>
         {bookFilter && (
