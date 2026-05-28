@@ -334,27 +334,28 @@ scripts/                    # Operational scripts
 
 ## Known Dead Code & Duplicates
 
-### Confirmed Dead Components (last audit 2026-05-25, zero imports)
-Issue #258 closed. These remain with no imports anywhere:
+### Stale audit warning (2026-05-28)
 
-| Component | Path | Notes |
-|-----------|------|-------|
-| `BookEditModal.tsx` | `components/book/` | Orphaned |
-| `JobStatusBanner.tsx` | `components/book/` | Orphaned |
-| `PagesGrid.tsx` | `components/book/` | Orphaned |
-| `ProcessingPanel.tsx` | `components/book/` | Orphaned |
-| `EntityMap.tsx` | `components/explore/` | Orphaned |
-| `MapSidebar.tsx` | `components/explore/` | Orphaned |
-| `PipelineStageCard.tsx` | `components/pipeline/` | Orphaned |
-| `PageTracker.tsx` | `components/reader/` | Orphaned |
-| `SessionCard.tsx` | `components/research/` | Orphaned |
-| Camera components (6) | `components/camera/` | Mobile scanning — unused, ask before deleting |
+The table below from 2026-05-25 listed many components as "orphaned" that are **live** (`BookEditModal`, `PagesGrid`, `JobStatusBanner`, `PageTracker`, `SessionCard`, camera stack on `/book/[id]/capture`). Do not delete from this section without a fresh `grep -rn` pass. See `.claude/docs/code-review-graph.md` for the InputWidget near-miss.
 
-**Deleted in #1986** (no longer in this table): `BookPagesActions.tsx`, `BookPagesStats.tsx`, `ReorderModePanel.tsx`, `SparkLine.tsx`, `HideWhenEmbedded.tsx`, `InputWidget.tsx`, plus `_archived/` batch panels and api-client files. See `.claude/handoffs/2026-05-25-pr1980-split.md` for the audit + verification process.
+### Partial dead / refactor candidates (grep before touching)
 
-**Before deleting any row above:** grep-verify zero imports across the repo. Static analysis (graph tools) can miss dynamic requires, framework conventions, and recent additions — see `.claude/docs/code-review-graph.md` "Staleness — the main failure mode."
+| Item | Path | Status |
+|------|------|--------|
+| `ProcessingPanel` default export | `components/book/ProcessingPanel.tsx` | Only `ActionType` imported by `BookPagesSection`; UI component unused |
+| `PipelineStageCard` default export | `components/pipeline/PipelineStageCard.tsx` | `STAGE_DETAILS` used by `PipelineDiagram`; default export unused |
 
-Note: Rithmomachia is a **live feature** (`/rithmomachia`, guide, scenarios, blog post) — NOT dead code.
+### Deleted in code-cleanup-2 (grep-verified, branch `code-cleanup-2`)
+
+`EntityMap.tsx`, `EntityMapLoader.tsx`, `EraHighlights.tsx`, `MapSidebar.tsx`, `CanonTab.tsx`, `SourceCitation.tsx` (rithmomachia), `usePageProcessing.ts`, `usePrompts.ts`, `ocr-normalize.ts`, `jobs/stats-cards.tsx`, `lib/types/collection.ts`, `blog/2000-first-translations/ConceptGraph.tsx`, `api/_archived/cron/submit-ocr/route-v2.ts`, `jobs/_archived/batch-job-card.tsx`, `app/_archived/highlights/page.tsx` (broken imports to removed api-client).
+
+**Reorganized (not deleted):** `gallery/collections/[slug]/page.tsx` now calls `resolveGalleryCollectionImages` in `lib/gallery-collection-resolver.ts` (dedup + per-book cap).
+
+**Deleted in #1986** (see `.claude/handoffs/2026-05-25-pr1980-split.md`): `BookPagesActions.tsx`, `BookPagesStats.tsx`, `ReorderModePanel.tsx`, `SparkLine.tsx`, `HideWhenEmbedded.tsx`, `InputWidget.tsx`, book `_archived/` batch panels, api-client `_archived/` files.
+
+**Before any deletion:** grep-verify zero imports. Run `npx tsc --noEmit`. Do not remove `@types/archiver` or `@types/three` without proof they are unused.
+
+Note: Rithmomachia is a **live feature** (`/rithmomachia`, guide, scenarios, blog post). `src/app/api/_archived/**` and `src/**/_archived` pages are excluded from `tsc` but kept as rollback — do not bulk-delete without explicit approval.
 
 `Footer.tsx` was previously listed but no longer exists (already deleted).
 

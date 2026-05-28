@@ -1,8 +1,8 @@
 /**
  * Shared resolver for /gallery/collections/[slug] pages.
  *
- * Both the apex route (src/app/gallery/collections/[slug]/page.tsx) and the
- * tenant route (src/app/[tenant]/gallery/collections/[slug]/page.tsx) need to
+ * Used by src/app/gallery/collections/[slug]/page.tsx. Tenant gallery collection
+ * routes may be added later; this module exists so those pages would
  * (a) fetch gallery_images by id list, (b) dedup near-identical entries that
  * came from image extraction repeating the same illustration across many
  * pages, and (c) cap any single book's share of the rendered grid. Same code,

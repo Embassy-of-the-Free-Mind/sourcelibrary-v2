@@ -19,6 +19,7 @@ import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-uti
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
+import { galleryImagesForClient, toClientJson, type ClientGalleryImage } from '@/lib/serialize-client';
 
 // ISR: rebuild at most once per day
 export const revalidate = 86400;
@@ -541,7 +542,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
         ).toArray(),
         8000, [],
       );
-      exhibitionBooks = exBooks.map(b => ({
+      exhibitionBooks = exBooks.map(({ _id: _ignored, ...b }) => ({
         ...b,
         thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string),
         ft_disposition: (b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
@@ -555,14 +556,13 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     books: sanitizeBookThumbs(books) as unknown as BookItem[],
     highlights: mergedHighlights,
     total,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    galleryImages: galleryImages as any[],
+    galleryImages: galleryImagesForClient(galleryImages as Record<string, unknown>[]),
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
     parentCollection,
     galleryCollectionSlug,
     galleryTotalCount,
-    exhibition: curationDraft?.curation || null,
-    exhibitionBooks,
+    exhibition: toClientJson(curationDraft?.curation || null),
+    exhibitionBooks: toClientJson(exhibitionBooks),
     childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
@@ -605,7 +605,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   for (const img of galleryImages) {
     const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
     if (!thumb) continue;
-    const bid = img.book_id || img.bookId;
+    const bid = String(img.book_id ?? img.bookId ?? '');
+    if (!bid) continue;
     const count = bookImageCounts.get(bid) || 0;
     if (count >= 2) continue;
     bookImageCounts.set(bid, count + 1);
