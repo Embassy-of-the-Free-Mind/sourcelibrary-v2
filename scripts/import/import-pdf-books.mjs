@@ -337,7 +337,18 @@ async function importBook(db, entry) {
       status: MAX_PAGES ? 'pilot' : 'imported',
       hidden: true, visible: false,
       archive_status: 'complete', archive_completed_at: now,
-      // NOTE: deliberately NO pipeline_auto — keeps it out of the auto OCR pipeline pre-benchmark.
+      // The pipeline cron auto-enrolls any imageful book that LACKS pipeline_auto
+      // (source:'cron'), so omitting it does NOT keep a book out of OCR. To keep a
+      // book image-only, set a TERMINAL pipeline_auto at insert (wins the race) so
+      // the cron sees it as already done. Books without image_only intentionally get
+      // no pipeline_auto and flow into OCR/translate via the cron.
+      ...(entry.image_only ? { pipeline_auto: {
+        status: 'complete',
+        ocr_deferred: true,
+        ocr_deferred_reason: entry.ocr_deferred_reason || 'OCR deferred — image-only import',
+        source: 'image-only-import',
+        queued_at: now, last_updated: now, retry_count: 0,
+      } } : {}),
       thumbnail: (validPages.find(p => p.page_number === 1) || validPages[0])?.photo,
       created_at: now, updated_at: now,
     };

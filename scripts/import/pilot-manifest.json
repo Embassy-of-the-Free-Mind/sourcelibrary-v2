@@ -19,7 +19,9 @@
     "license": "public-domain",
     "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
     "attribution": "Koninklijke Bibliotheek, via B-NICE Pustaka Nusantara",
-    "collections": ["javanese-kraton"],
+    "collections": [
+      "javanese-kraton"
+    ],
     "categories": [],
     "dc_type": "Text",
     "dc_language": "nl",
@@ -45,7 +47,9 @@
     "license": "public-domain",
     "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
     "attribution": "Koninklijke Bibliotheek, via B-NICE Pustaka Nusantara",
-    "collections": ["javanese-kraton"],
+    "collections": [
+      "javanese-kraton"
+    ],
     "categories": [],
     "dc_type": "Text",
     "dc_language": "nl",
@@ -72,14 +76,20 @@
     "license": "cc0",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "attribution": "British Library (Add MS 12330), CC0 via Wikimedia Commons",
-    "collections": ["javanese-kraton"],
-    "categories": ["manuscripts"],
+    "collections": [
+      "javanese-kraton"
+    ],
+    "categories": [
+      "manuscripts"
+    ],
     "dc_type": "Manuscript",
     "dc_language": "jav",
     "page_image_url": "https://commons.wikimedia.org/w/thumb.php?f=Add._12330_Babad_bedhah_ing_Ngayogyakarta%2C_by_Pangeran_Arya_Panular%2C_1815.pdf&w={w}&page={page}",
     "page_count": 433,
     "page_image_width": 4000,
-    "archive_master": false
+    "archive_master": false,
+    "image_only": true,
+    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144."
   },
   {
     "fingerprint": "british-library:mss-jav-28-serat-selarasa",
@@ -102,13 +112,19 @@
     "license": "public-domain",
     "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
     "attribution": "British Library (MSS Jav 28), Public Domain via Wikimedia Commons",
-    "collections": ["javanese-kraton"],
-    "categories": ["manuscripts"],
+    "collections": [
+      "javanese-kraton"
+    ],
+    "categories": [
+      "manuscripts"
+    ],
     "dc_type": "Manuscript",
     "dc_language": "jav",
     "page_image_url": "https://commons.wikimedia.org/w/thumb.php?f=Serat_Selarasa_%281804%29_-_BL_MSS_Jav_28.pdf&w={w}&page={page}",
     "page_count": 296,
     "page_image_width": 4000,
-    "archive_master": false
+    "archive_master": false,
+    "image_only": true,
+    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144."
   }
 ]
