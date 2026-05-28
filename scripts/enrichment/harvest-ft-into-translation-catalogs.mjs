@@ -7,21 +7,23 @@
  * Sources harvested (each gets its own source label so downstream callers can
  * weight by confidence):
  *   - translation_verification.translations[]             → sl_ft_catalog_verified
- *     (Stage 1 catalog hit; Stage 2 may or may not have verified the ID)
  *   - translation_verification.validated_translations[]   → sl_ft_catalog_verified
- *     (Stage 2 Path A — Stage 1 found it AND Stage 2 confirmed catalog ID)
  *   - translation_verification.llm_knowledge_translations[] → sl_ft_llm_claim
- *     (Stage 2 Path B — LLM said yes, no catalog corroboration; ~15-20% hallucination)
  *
- * Idempotency: relies on the UNIQUE constraint added by
- * 20260528000000_translation_catalogs_dedup_key.sql. Without that migration,
- * this script will create duplicates — RUN THE MIGRATION FIRST.
+ * Dedup-on-write: BEFORE inserting each row we query for an existing match
+ * on (author_surname, english_title, translator, pub_year). If a row already
+ * exists, we skip the insert (regardless of source — we never downgrade).
  *
- * Dedup ratchet: if a row already exists with a higher-confidence source,
- * the existing row is preserved (no downgrade). Implemented via
- * `Prefer: resolution=merge-duplicates` + a server-side trigger or, simpler,
- * by ordering inserts highest-confidence-first so the constraint rejects
- * subsequent lower-confidence dups.
+ * Why dedup-on-write rather than a UNIQUE constraint:
+ *   - translation_catalogs has many rows where canonical_work is empty and
+ *     english_title contains series names ("Ante-Nicene Christian Library")
+ *     shared across 30+ distinct volumes. A blanket UNIQUE constraint on
+ *     (author, work, translator, year) would over-collapse — measured
+ *     5,085-6,330 rows lost including 1,652-2,851 distinct titles. Per-row
+ *     check is slower but doesn't risk data loss.
+ *
+ * Cost: ~3,928 inserts × 1 SELECT + maybe 1 INSERT each = ~8K PostgREST calls,
+ * ~1-2 minutes wall time, $0 LLM spend.
  *
  * Usage:
  *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs           # dry-run
@@ -61,6 +63,10 @@ if (!MONGODB_URI || !SUPABASE_URL || !SUPABASE_KEY) {
 
 // ── Helpers ─────────────────────────────────────────────────────────
 
+function normalize(s) {
+  return (s || '').toLowerCase().trim();
+}
+
 function extractSurname(authorStr) {
   if (!authorStr) return '';
   const cleaned = authorStr.split(/[;|]/)[0].trim();
@@ -77,8 +83,6 @@ function canonicalAuthor(authorStr) {
 }
 
 function canonicalWork(book) {
-  // Prefer the book's display_title (curator-set) over raw title; fall back to title.
-  // Strip trailing volume / edition markers.
   const raw = (book.display_title || book.title || '').trim();
   return raw
     .replace(/\s*[(\[][^\)\]]*[)\]]\s*$/g, '')
@@ -105,33 +109,57 @@ function buildRow(book, trans, source) {
     publisher: trans.publisher || null,
     series: trans.series || null,
     completeness: trans.completeness || 'unknown',
-    // _lower columns are STORED generated — Postgres fills them automatically
   };
 }
 
-// ── Supabase upsert ─────────────────────────────────────────────────
+// ── Supabase ────────────────────────────────────────────────────────
 
-async function upsertBatch(rows) {
-  // Use PostgREST's merge-duplicates resolution. Server-side trigger or
-  // application-side ordering handles the confidence-ratchet (we send
-  // highest-confidence sources first so subsequent dup-key inserts are
-  // discarded by the UNIQUE constraint).
-  if (!rows.length) return { inserted: 0, errored: 0 };
+async function existingRowId(row) {
+  // Match on (author_surname_lower, english_title_lower, lower(translator), pub_year).
+  // english_title is the most stable identifier; canonical_work is too often empty
+  // / contains series names. Using PostgREST .eq syntax with NULL handled via is.null.
+  const params = new URLSearchParams();
+  params.set('select', 'id,source');
+  params.set('limit', '1');
+  if (row.author_surname) params.set('author_surname_lower', `eq.${row.author_surname.toLowerCase()}`);
+  // Use ilike for case-insensitive english_title match
+  if (row.english_title) params.set('english_title_lower', `eq.${row.english_title.toLowerCase()}`);
+  if (row.translator) params.set('translator', `eq.${row.translator}`);
+  else params.set('translator', 'is.null');
+  if (row.pub_year) params.set('pub_year', `eq.${row.pub_year}`);
+  else params.set('pub_year', 'is.null');
+
+  const resp = await fetch(`${SUPABASE_URL}/rest/v1/translation_catalogs?${params}`, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
+  });
+  if (!resp.ok) return null;
+  const matches = await resp.json();
+  return matches.length ? matches[0] : null;
+}
+
+async function insertRow(row) {
   const resp = await fetch(`${SUPABASE_URL}/rest/v1/translation_catalogs`, {
     method: 'POST',
     headers: {
       apikey: SUPABASE_KEY,
       Authorization: `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json',
-      Prefer: 'resolution=ignore-duplicates,return=minimal',
+      Prefer: 'return=minimal',
     },
-    body: JSON.stringify(rows),
+    body: JSON.stringify(row),
   });
   if (!resp.ok) {
     const body = await resp.text();
-    return { inserted: 0, errored: rows.length, error: `${resp.status}: ${body.slice(0, 300)}` };
+    return { ok: false, error: `${resp.status}: ${body.slice(0, 200)}` };
   }
-  return { inserted: rows.length, errored: 0 };
+  return { ok: true };
+}
+
+async function processRow(row) {
+  const existing = await existingRowId(row);
+  if (existing) return { result: 'skipped_existing', existing_source: existing.source };
+  const res = await insertRow(row);
+  return res.ok ? { result: 'inserted' } : { result: 'error', error: res.error };
 }
 
 // ── Main ────────────────────────────────────────────────────────────
@@ -143,14 +171,15 @@ async function main() {
 
   console.log('=== Harvest FT findings → translation_catalogs ===');
   console.log('Mode:', dryRun ? 'DRY RUN' : 'APPLYING');
-  if (limit) console.log('Per-source limit:', limit);
+  console.log('Dedup strategy: per-row SELECT before INSERT');
+  if (limit) console.log('Per-pass limit:', limit);
   console.log();
 
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 3, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db(MONGODB_DB);
 
-  // ── Pass 1: catalog-verified (highest sl_ft_* tier — write first) ──
+  // Pass 1: catalog-verified (highest sl_ft_* tier)
   const tier1Books = await db.collection('books').find({
     $or: [
       { 'translation_verification.validated_translations.0': { $exists: true } },
@@ -165,14 +194,18 @@ async function main() {
   const tier1Rows = [];
   for (const b of tier1Books) {
     const v = b.translation_verification || {};
+    const seenEnTitles = new Set();
     const sources = [...(v.validated_translations || []), ...(v.translations || [])];
     for (const t of sources) {
+      const key = normalize(t.english_title);
+      if (!key || seenEnTitles.has(key)) continue;  // skip in-book duplicates
+      seenEnTitles.add(key);
       const row = buildRow(b, t, 'sl_ft_catalog_verified');
       if (row) tier1Rows.push(row);
     }
   }
 
-  // ── Pass 2: LLM claims (lower tier — written after) ──
+  // Pass 2: LLM claims
   const tier2Books = await db.collection('books').find({
     'translation_verification.llm_knowledge_translations.0': { $exists: true },
   }).project({
@@ -182,7 +215,11 @@ async function main() {
 
   const tier2Rows = [];
   for (const b of tier2Books) {
+    const seenEnTitles = new Set();
     for (const t of (b.translation_verification?.llm_knowledge_translations || [])) {
+      const key = normalize(t.english_title);
+      if (!key || seenEnTitles.has(key)) continue;
+      seenEnTitles.add(key);
       const row = buildRow(b, t, 'sl_ft_llm_claim');
       if (row) tier2Rows.push(row);
     }
@@ -192,23 +229,19 @@ async function main() {
 
   console.log(`Pass 1 (sl_ft_catalog_verified): ${tier1Rows.length} rows from ${tier1Books.length} books`);
   console.log(`Pass 2 (sl_ft_llm_claim):        ${tier2Rows.length} rows from ${tier2Books.length} books`);
-
   if (limit) {
     tier1Rows.splice(limit);
     tier2Rows.splice(limit);
     console.log(`  (capped to first ${limit} of each tier)`);
   }
 
-  // Sample what we'd insert
-  console.log('\nSample Pass 1 rows (first 3):');
+  console.log('\nSample Pass 1 (first 3):');
   for (const r of tier1Rows.slice(0, 3)) {
-    console.log(`  [${r.source}] ${r.canonical_author} / ${r.canonical_work}`);
-    console.log(`              "${r.english_title}" by ${r.translator || '?'} (${r.pub_year || '?'})`);
+    console.log(`  ${r.canonical_author} / "${r.english_title?.slice(0, 60)}" by ${r.translator || '?'} (${r.pub_year || '?'})`);
   }
-  console.log('\nSample Pass 2 rows (first 3):');
+  console.log('\nSample Pass 2 (first 3):');
   for (const r of tier2Rows.slice(0, 3)) {
-    console.log(`  [${r.source}] ${r.canonical_author} / ${r.canonical_work}`);
-    console.log(`              "${r.english_title}" by ${r.translator || '?'} (${r.pub_year || '?'})`);
+    console.log(`  ${r.canonical_author} / "${r.english_title?.slice(0, 60)}" by ${r.translator || '?'} (${r.pub_year || '?'})`);
   }
 
   if (dryRun) {
@@ -216,32 +249,37 @@ async function main() {
     return;
   }
 
-  // Insert in batches of 500. Pass 1 first (so higher-confidence rows win
-  // when later Pass 2 rows hit the dup key).
-  const BATCH = 500;
-  let p1Inserted = 0, p1Err = 0;
-  for (let i = 0; i < tier1Rows.length; i += BATCH) {
-    const r = await upsertBatch(tier1Rows.slice(i, i + BATCH));
-    p1Inserted += r.inserted;
-    p1Err += r.errored;
-    if (r.error) console.log(`  Pass 1 batch ${i / BATCH + 1} ERR: ${r.error}`);
-    if ((i / BATCH) % 10 === 0) console.log(`  Pass 1 progress: ${i + BATCH}/${tier1Rows.length}`);
-  }
+  // Pass 1 first so highest-confidence rows are present before Pass 2 tries
+  // to insert. Pass 2 will skip-existing on any (author, title, translator,
+  // year) tuple already in Pass 1.
+  const processList = async (label, rows) => {
+    const counts = { inserted: 0, skipped_existing: 0, error: 0 };
+    const errorSamples = [];
+    for (let i = 0; i < rows.length; i++) {
+      const r = await processRow(rows[i]);
+      counts[r.result]++;
+      if (r.result === 'error' && errorSamples.length < 5) errorSamples.push(r.error);
+      if ((i + 1) % 200 === 0) {
+        console.log(`  ${label}: ${i + 1}/${rows.length} (ins=${counts.inserted} skip=${counts.skipped_existing} err=${counts.error})`);
+      }
+    }
+    return { counts, errorSamples };
+  };
 
-  let p2Inserted = 0, p2Err = 0;
-  for (let i = 0; i < tier2Rows.length; i += BATCH) {
-    const r = await upsertBatch(tier2Rows.slice(i, i + BATCH));
-    p2Inserted += r.inserted;
-    p2Err += r.errored;
-    if (r.error) console.log(`  Pass 2 batch ${i / BATCH + 1} ERR: ${r.error}`);
-    if ((i / BATCH) % 10 === 0) console.log(`  Pass 2 progress: ${i + BATCH}/${tier2Rows.length}`);
-  }
+  console.log('\n→ Pass 1 (catalog_verified) ...');
+  const p1 = await processList('P1', tier1Rows);
+  console.log(`  Pass 1 final: inserted=${p1.counts.inserted}, skipped_existing=${p1.counts.skipped_existing}, errors=${p1.counts.error}`);
+  if (p1.errorSamples.length) console.log('  Error samples:\n   ' + p1.errorSamples.join('\n   '));
 
-  console.log(`\nDone.`);
-  console.log(`  Pass 1: attempted ${tier1Rows.length}, accepted ~${p1Inserted}, errored ${p1Err}`);
-  console.log(`  Pass 2: attempted ${tier2Rows.length}, accepted ~${p2Inserted}, errored ${p2Err}`);
-  console.log(`  (Dup-key rejections show as accepted by PostgREST when Prefer:resolution=ignore-duplicates;`);
-  console.log(`   actual net insert count visible by re-running the COUNT in task #12.)`);
+  console.log('\n→ Pass 2 (llm_claim) ...');
+  const p2 = await processList('P2', tier2Rows);
+  console.log(`  Pass 2 final: inserted=${p2.counts.inserted}, skipped_existing=${p2.counts.skipped_existing}, errors=${p2.counts.error}`);
+  if (p2.errorSamples.length) console.log('  Error samples:\n   ' + p2.errorSamples.join('\n   '));
+
+  console.log('\nDone.');
+  console.log(`  Total inserted:        ${p1.counts.inserted + p2.counts.inserted}`);
+  console.log(`  Total skipped (dup):   ${p1.counts.skipped_existing + p2.counts.skipped_existing}`);
+  console.log(`  Total errors:          ${p1.counts.error + p2.counts.error}`);
 }
 
 main().catch(err => { console.error('FATAL:', err); process.exit(1); });
