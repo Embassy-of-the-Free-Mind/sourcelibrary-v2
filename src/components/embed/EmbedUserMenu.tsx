@@ -58,19 +58,37 @@ const COOKIE_HIDE_AI = 'sl_hide_ai';
 const COOKIE_HIDE_GUIDE = 'sl_hide_guide';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
+// BPH leads without AI prose by default; other tenants/the main site show it.
+// Must mirror the detection in embed/layout.tsx's VIEW_MODE_INIT_SCRIPT.
+function isBphSurface(): boolean {
+  if (typeof window === 'undefined') return false;
+  return /^bph\./.test(window.location.hostname)
+    || /^\/embed\/bph(\/|$)/.test(window.location.pathname);
+}
+
 function readCookie(name: string): boolean {
   if (typeof document === 'undefined') return false;
   const row = document.cookie.split('; ').find(r => r.startsWith(name + '='));
   return row?.split('=')[1] === '1';
 }
 
+// Effective "hide AI summaries" state. The cookie is tri-state: '1' hide,
+// '0' show, absent = default (BPH hides, everyone else shows).
+function readHideAi(): boolean {
+  if (typeof document === 'undefined') return false;
+  const row = document.cookie.split('; ').find(r => r.startsWith(COOKIE_HIDE_AI + '='));
+  const val = row?.split('=')[1];
+  if (val === '1') return true;
+  if (val === '0') return false;
+  return isBphSurface();
+}
+
+// Persist an explicit choice. We always write '0'/'1' (never delete) so an
+// opt-in-to-show on BPH survives reload instead of falling back to the
+// default-hidden state.
 function writeCookie(name: string, on: boolean) {
   if (typeof document === 'undefined') return;
-  if (on) {
-    document.cookie = `${name}=1; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
-  } else {
-    document.cookie = `${name}=; path=/; max-age=0; samesite=lax`;
-  }
+  document.cookie = `${name}=${on ? '1' : '0'}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
 }
 
 export default function EmbedUserMenu() {
@@ -86,7 +104,7 @@ export default function EmbedUserMenu() {
   // rendered the book page using whatever the cookie said at request time;
   // this just keeps the checkbox UI in sync.
   useEffect(() => {
-    setHideAi(readCookie(COOKIE_HIDE_AI));
+    setHideAi(readHideAi());
     setHideGuide(readCookie(COOKIE_HIDE_GUIDE));
   }, []);
 

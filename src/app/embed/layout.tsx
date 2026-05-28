@@ -13,7 +13,15 @@ export const metadata: Metadata = {
 // flash of unstyled content. The CSS rules in globals.css consume the
 // data attributes set here. Kept inline + minified so it ships in the
 // initial HTML payload without needing a separate script request.
-const VIEW_MODE_INIT_SCRIPT = `(function(){var c=document.cookie;if(/(?:^|; )sl_hide_ai=1/.test(c))document.documentElement.dataset.slHideAi='1';if(/(?:^|; )sl_hide_guide=1/.test(c))document.documentElement.dataset.slHideGuide='1';})();`;
+//
+// AI summaries / introductions default to HIDDEN on the BPH reading room
+// (host bph.* or path /embed/bph/*) — BPH scholars distrust AI-written prose
+// over primary sources, so the partner surface leads without it. A visitor
+// can still opt in via the gear menu, which persists sl_hide_ai=0 (show).
+// The cookie is tri-state: '1'=hide, '0'=show, absent=default (BPH hides,
+// other tenants show). The reading-guide toggle is unchanged (default show,
+// hide only on explicit sl_hide_guide=1). Must mirror EmbedUserMenu.tsx.
+const VIEW_MODE_INIT_SCRIPT = `(function(){var d=document,c=d.cookie,h=location.hostname,p=location.pathname;var bph=/^bph\\./.test(h)||/^\\/embed\\/bph(\\/|$)/.test(p);var m=c.match(/(?:^|; )sl_hide_ai=([01])/);if(m?m[1]==='1':bph)d.documentElement.dataset.slHideAi='1';if(/(?:^|; )sl_hide_guide=1/.test(c))d.documentElement.dataset.slHideGuide='1';})();`;
 
 /**
  * Layout for embed routes. Adds data-embed attribute to hide
