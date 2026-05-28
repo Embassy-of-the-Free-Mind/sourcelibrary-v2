@@ -25,10 +25,10 @@ const MEMBERSHIP_INCLUDES = [
 
 const SPONSORSHIP_EXAMPLES = [
   {
-    label: 'Named collection',
-    range: '$25K – $50K',
+    label: 'Scholar-in-Residence',
+    range: '$25K – $75K',
     description:
-      'Permanent attribution on a thematic collection — e.g. "The [Company] Alchemy Library," "The [Company] Tibetan Manuscripts." Includes a launch and a co-written introduction.',
+      'Fund a year of work by a named expert on a specific collection — vetting translations, writing critical apparatus, contributing a foreword and launch lecture. Both the scholar’s name and yours appear on the collection. Concrete deliverable, real scholarship — not just a name on a page.',
   },
   {
     label: 'Annual gathering at the BPH',
@@ -357,9 +357,9 @@ export default async function SponsorsPage() {
             Get in touch.
           </h2>
           <p className="text-base md:text-lg text-stone-300 leading-relaxed mb-10">
-            Tell us what you&apos;d like to do — annual membership, a named collection, an
-            expedition, or something we haven&apos;t built yet. We&apos;ll come back inside a week
-            with a concrete proposal.
+            Tell us what you&apos;d like to do — annual membership, funding a Scholar-in-Residence on
+            a collection you care about, an expedition, or something we haven&apos;t built yet.
+            We&apos;ll come back inside a week with a concrete proposal.
           </p>
           <a
             href={mailto}
