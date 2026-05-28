@@ -44,13 +44,15 @@ SELECT
   (array_agg(sl_book_slug ORDER BY
      CASE match_confidence WHEN 'high' THEN 3 WHEN 'medium' THEN 2 WHEN 'low' THEN 1 ELSE 0 END DESC,
      id) FILTER (WHERE sl_book_slug IS NOT NULL))[1] AS sl_book_slug,
+  array_agg(id ORDER BY id) AS entry_ids,
+  array_agg(DISTINCT source_book_slug ORDER BY source_book_slug) FILTER (WHERE source_book_slug IS NOT NULL) AS source_book_slugs,
   -- author-held: same for all entries with the same author_normalized,
-  -- so max() collapses to that one value (NULL if never computed)
+  -- so max() collapses to that one value (NULL if never computed).
+  -- Appended at the end so CREATE OR REPLACE VIEW accepts the addition
+  -- (PG only allows adding columns at the tail of an existing view).
   max(author_held_count) AS author_held_count,
   (array_agg(author_held_sample_slug ORDER BY id) FILTER (WHERE author_held_sample_slug IS NOT NULL))[1] AS author_held_sample_slug,
-  (array_agg(author_held_sample_id   ORDER BY id) FILTER (WHERE author_held_sample_id   IS NOT NULL))[1] AS author_held_sample_id,
-  array_agg(id ORDER BY id) AS entry_ids,
-  array_agg(DISTINCT source_book_slug ORDER BY source_book_slug) FILTER (WHERE source_book_slug IS NOT NULL) AS source_book_slugs
+  (array_agg(author_held_sample_id   ORDER BY id) FILTER (WHERE author_held_sample_id   IS NOT NULL))[1] AS author_held_sample_id
 FROM dedup
 GROUP BY work_key, author_normalized;
 
