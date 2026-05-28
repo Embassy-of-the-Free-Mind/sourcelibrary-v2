@@ -232,7 +232,10 @@ function composeBookEmbeddingText(book, indexData) {
 async function upsertBookEmbedding(book, indexData) {
   if (!supabaseClient) return;
 
-  const geminiKey = API_KEYS[0];
+  // Prefer paid Tier 3 for content-bearing embeddings (no training opt-in);
+  // fall back to first available key. Cron explicitly exports TIER3 too —
+  // this is belt-and-suspenders for ad-hoc / single-book runs.
+  const geminiKey = process.env.GEMINI_API_KEY_TIER3 || API_KEYS[0];
   if (!geminiKey) return;
 
   const text = composeBookEmbeddingText(book, indexData);
@@ -273,6 +276,7 @@ async function upsertBookEmbedding(book, indexData) {
       language: book.language || null,
       summary_text: text,
       embedding: JSON.stringify(embedding),
+      embedding_model: EMBED_MODEL,
       metadata: {
         has_index: true,
         categories: book.categories || [],

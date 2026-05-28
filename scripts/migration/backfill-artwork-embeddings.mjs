@@ -147,15 +147,17 @@ async function main() {
         await pgClient.query(`
           INSERT INTO artwork_embeddings (book_id, title, display_title, author, summary_text,
             subjects, figures, symbols, iconclass, technique, material, style, period, culture,
-            genre, ulan_artist, collections, embedding, resource_type, thumbnail_url, updated_at)
-          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,now())
+            genre, ulan_artist, collections, embedding, resource_type, thumbnail_url, updated_at,
+            embedding_model)
+          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,now(),$21)
           ON CONFLICT (book_id) DO UPDATE SET
             summary_text=EXCLUDED.summary_text, embedding=EXCLUDED.embedding,
             subjects=EXCLUDED.subjects, figures=EXCLUDED.figures, symbols=EXCLUDED.symbols,
             iconclass=EXCLUDED.iconclass, technique=EXCLUDED.technique, material=EXCLUDED.material,
             style=EXCLUDED.style, period=EXCLUDED.period, culture=EXCLUDED.culture,
             genre=EXCLUDED.genre, ulan_artist=EXCLUDED.ulan_artist, collections=EXCLUDED.collections,
-            display_title=EXCLUDED.display_title, thumbnail_url=EXCLUDED.thumbnail_url, updated_at=now()
+            display_title=EXCLUDED.display_title, thumbnail_url=EXCLUDED.thumbnail_url,
+            embedding_model=EXCLUDED.embedding_model, updated_at=now()
         `, [
           art.id, art.title, art.display_title || art.title, art.author, texts[idx],
           e.figures_depicted || [], e.figures_depicted || [], e.symbols || [],
@@ -165,6 +167,7 @@ async function main() {
           art.wikidata_artist?.ulan_id ? parseInt(art.wikidata_artist.ulan_id) : (e.ulan_artist || null),
           art.collections || [], JSON.stringify(embeddings[idx]),
           art.resource_type || null, art.thumbnail_blob || art.thumbnail || null,
+          'gemini-embedding-2-preview',
         ]);
       }
       embedded += batch.length;
