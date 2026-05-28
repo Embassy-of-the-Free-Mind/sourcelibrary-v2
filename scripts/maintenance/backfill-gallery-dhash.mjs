@@ -43,8 +43,15 @@ async function fetchImage(url) {
 }
 
 async function processOne(gi) {
-  const url = gi.extracted_url || gi.thumbnail_url;
-  if (!url) return { id: gi.id, error: 'no url' };
+  // Accept thumbnail_url as a fallback only if extracted_url is empty/missing.
+  // Empty strings are common (~1.5% of rows) and would otherwise cycle forever
+  // through the find().limit() loop because the row keeps matching the
+  // dhash-unset filter — see the sentinel-write logic below.
+  const url =
+    (typeof gi.extracted_url === 'string' && gi.extracted_url) ||
+    (typeof gi.thumbnail_url === 'string' && gi.thumbnail_url) ||
+    null;
+  if (!url) return { id: gi.id, error: 'no-source' };
   try {
     const buf = await fetchImage(url);
     const dhash = await computeDHash(buf);
@@ -73,6 +80,10 @@ async function main() {
   const db = client.db('bookstore');
   const coll = db.collection('gallery_images');
 
+  // Filter: rows missing a dhash field altogether. Errored runs write
+  // `dhash: null` as a sentinel so failed rows don't reappear in subsequent
+  // find().limit() iterations — without that, every empty-URL row would cycle
+  // forever, blocking real candidates from being seen.
   const filter = {
     dhash: { $exists: false },
     extracted_url: { $exists: true, $ne: null },
@@ -110,8 +121,24 @@ async function main() {
     if (!DRY_RUN) {
       const ops = [];
       for (const r of results) {
-        if (r.error) continue;
-        ops.push({ updateOne: { filter: { id: r.id }, update: { $set: { dhash: r.dhash } } } });
+        if (r.error) {
+          // Write a sentinel so this row stops matching the `dhash: { $exists: false }`
+          // filter on the next iteration. Without this, errored rows cycle forever and
+          // the script never advances to other candidates.
+          ops.push({
+            updateOne: {
+              filter: { id: r.id },
+              update: { $set: { dhash: null, dhash_error: r.error.slice(0, 120) } },
+            },
+          });
+          continue;
+        }
+        ops.push({
+          updateOne: {
+            filter: { id: r.id },
+            update: { $set: { dhash: r.dhash }, $unset: { dhash_error: '' } },
+          },
+        });
       }
       if (ops.length) await coll.bulkWrite(ops, { ordered: false });
     }
