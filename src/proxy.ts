@@ -852,11 +852,17 @@ export async function proxy(request: NextRequest) {
   if (isEmbeddablePath) {
     const frameOrigin = request.headers.get('origin') ||
       (request.headers.get('referer') || '').replace(/^(https?:\/\/[^/]+).*/, '$1');
-    const frameHost = frameOrigin.replace(/^https?:\/\//, '').split('/')[0].toLowerCase();
+    const frameHost = frameOrigin 
+      ? frameOrigin.replace(/^https?:\/\//, '').split('/')[0].toLowerCase()
+      : '';
     const requestHost = (request.headers.get('host') || '').toLowerCase();
+    
+    // Allow if: origin is in allowlist, OR it's same-origin from iframe perspective,
+    // OR headers are missing (same-origin internal navigation)
     const isAllowed =
-      getAllowedEmbedOrigins().has(frameHost) ||
-      frameHost === requestHost; // in-iframe nav (SL → SL same-origin referer)
+      (frameHost && getAllowedEmbedOrigins().has(frameHost)) ||
+      frameHost === requestHost ||
+      (!frameOrigin && requestHost); // same-origin nav without headers
 
     if (!isAllowed) {
       response.headers.set('X-Frame-Options', 'DENY');

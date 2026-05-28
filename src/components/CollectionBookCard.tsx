@@ -58,8 +58,8 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
   const slug = book.slug || book.id || book.bookId;
 
-  const bookHref = embedHref(`${bookUrlPrefix || ''}/book/${book.slug || book.id || book.bookId}`);
-  const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${slug}`);
+  const bookHref = embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(book.slug || book.id || book.bookId)}`);
+  const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);
 
   return (
     <Link
