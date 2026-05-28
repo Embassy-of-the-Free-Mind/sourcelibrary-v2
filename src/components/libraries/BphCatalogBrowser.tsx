@@ -640,165 +640,165 @@ export default function BphCatalogBrowser({
           above is identical in both modes so the top of the page doesn't
           shift between displays. */}
       {display === 'list' ? (
-      <div className="border border-border-light rounded-lg overflow-hidden bg-white">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border-light bg-warm">
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">
-                  <button
-                    type="button"
-                    onClick={() => handleSortChange(nextSort('author', sort))}
-                    className="inline-flex items-center hover:text-primary transition-colors"
-                  >
-                    Author<SortArrow direction={arrowFor('author', sort)} />
-                  </button>
-                </th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary">
-                  <button
-                    type="button"
-                    onClick={() => handleSortChange(nextSort('title', sort))}
-                    className="inline-flex items-center hover:text-primary transition-colors"
-                  >
-                    Title<SortArrow direction={arrowFor('title', sort)} />
-                  </button>
-                </th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">
-                  <button
-                    type="button"
-                    onClick={() => handleSortChange(nextSort('year', sort))}
-                    className="inline-flex items-center hover:text-primary transition-colors"
-                  >
-                    Year<SortArrow direction={arrowFor('year', sort)} />
-                  </button>
-                </th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">
-                  <button
-                    type="button"
-                    onClick={() => handleSortChange(nextSort('shelfmark', sort))}
-                    className="inline-flex items-center hover:text-primary transition-colors"
-                  >
-                    Shelfmark<SortArrow direction={arrowFor('shelfmark', sort)} />
-                  </button>
-                </th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
-              </tr>
-            </thead>
-            <tbody className={loading ? 'opacity-50' : ''}>
-              {/* Skeleton rows while the initial fetch is in flight. Without
+        <div className="border border-border-light rounded-lg overflow-hidden bg-white">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border-light bg-warm">
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('author', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Author<SortArrow direction={arrowFor('author', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('title', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Title<SortArrow direction={arrowFor('title', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('year', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Year<SortArrow direction={arrowFor('year', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('shelfmark', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Shelfmark<SortArrow direction={arrowFor('shelfmark', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
+                </tr>
+              </thead>
+              <tbody className={loading ? 'opacity-50' : ''}>
+                {/* Skeleton rows while the initial fetch is in flight. Without
                   these the table renders as column-headers-only, which read
                   as broken-empty (B15). One row per expected result up to a
                   reasonable cap. */}
-              {loading && works.length === 0 && (
-                Array.from({ length: 8 }, (_, i) => (
-                  <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
-                    <td className="px-3 py-3 align-top hidden sm:table-cell">
-                      <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top">
-                      <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden md:table-cell">
-                      <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top tabular-nums">
-                      <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden md:table-cell">
-                      <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden lg:table-cell">
-                      <div className="h-5 w-20 bg-border-light/40 rounded-full animate-pulse" />
-                    </td>
-                  </tr>
-                ))
-              )}
-              {works.map((w) => {
-                const digitized = resolveDigitized(w);
-                const external = resolveExternal(w, !!digitized);
-                const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
-                const displayAuthor = w.author || w.variant_author || w.pseudonym;
-                return (
-                  <tr
-                    key={w.ubn}
-                    className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
-                  >
-                    <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                      {displayAuthor || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top">
-                      <div className="font-medium text-primary leading-snug">
-                        <a
-                          href={detailUrl(w.ubn)}
-                          className="hover:text-accent-rust transition-colors"
-                        >
-                          {displayTitle}
-                        </a>
-                      </div>
-                      {digitized && (
-                        <a
-                          href={bookUrl({ id: digitized.id, slug: digitized.slug })}
-                          className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
-                        >
-                          <BookMarked className="w-3 h-3" />
-                          Digitised copy
-                        </a>
-                      )}
-                      {external && (
-                        <a
-                          href={bookUrl({ id: external.id, slug: external.slug })}
-                          className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
-                        >
-                          <BookMarked className="w-3 h-3 opacity-60" />
-                          Read at {externalSourceLabel(external.source)}
-                        </a>
-                      )}
-                      {/* Mobile: show author inline (author column is hidden < sm) */}
-                      <div className="text-xs text-muted sm:hidden mt-0.5">
-                        {displayAuthor}
-                      </div>
-                      {/* Impressum line — place, printer/publisher, year — in
+                {loading && works.length === 0 && (
+                  Array.from({ length: 8 }, (_, i) => (
+                    <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
+                      <td className="px-3 py-3 align-top hidden sm:table-cell">
+                        <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top">
+                        <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden md:table-cell">
+                        <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top tabular-nums">
+                        <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden md:table-cell">
+                        <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden lg:table-cell">
+                        <div className="h-5 w-20 bg-border-light/40 rounded-full animate-pulse" />
+                      </td>
+                    </tr>
+                  ))
+                )}
+                {works.map((w) => {
+                  const digitized = resolveDigitized(w);
+                  const external = resolveExternal(w, !!digitized);
+                  const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
+                  const displayAuthor = w.author || w.variant_author || w.pseudonym;
+                  return (
+                    <tr
+                      key={w.ubn}
+                      className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
+                    >
+                      <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
+                        {displayAuthor || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top">
+                        <div className="font-medium text-primary leading-snug">
+                          <a
+                            href={detailUrl(w.ubn)}
+                            className="hover:text-accent-rust transition-colors"
+                          >
+                            {displayTitle}
+                          </a>
+                        </div>
+                        {digitized && (
+                          <a
+                            href={bookUrl({ id: digitized.id, slug: digitized.slug })}
+                            className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
+                          >
+                            <BookMarked className="w-3 h-3" />
+                            Digitised copy
+                          </a>
+                        )}
+                        {external && (
+                          <a
+                            href={bookUrl({ id: external.id, slug: external.slug })}
+                            className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
+                          >
+                            <BookMarked className="w-3 h-3 opacity-60" />
+                            Read at {externalSourceLabel(external.source)}
+                          </a>
+                        )}
+                        {/* Mobile: show author inline (author column is hidden < sm) */}
+                        <div className="text-xs text-muted sm:hidden mt-0.5">
+                          {displayAuthor}
+                        </div>
+                        {/* Impressum line — place, printer/publisher, year — in
                           the order librarians expect on a short bibliographic
                           card. Falls back gracefully when fields are missing. */}
-                      {(w.place || w.printer || w.publisher) && (
-                        <div className="text-[11px] text-muted mt-0.5 italic">
-                          {formatImpressum(w)}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                      {w.place || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary tabular-nums">
-                      {w.year || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
-                      {w.shelf_mark || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top hidden lg:table-cell">
-                      {w.keywords ? (
-                        <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
-                          {w.keywords}
-                        </span>
-                      ) : (
-                        <span className="text-muted">—</span>
-                      )}
+                        {(w.place || w.printer || w.publisher) && (
+                          <div className="text-[11px] text-muted mt-0.5 italic">
+                            {formatImpressum(w)}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
+                        {w.place || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary tabular-nums">
+                        {w.year || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
+                        {w.shelf_mark || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top hidden lg:table-cell">
+                        {w.keywords ? (
+                          <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
+                            {w.keywords}
+                          </span>
+                        ) : (
+                          <span className="text-muted">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+                {!loading && works.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-3 py-12 text-center text-muted">
+                      No works found matching your search.
                     </td>
                   </tr>
-                );
-              })}
-              {!loading && works.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="px-3 py-12 text-center text-muted">
-                    No works found matching your search.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
       ) : (
         // Grid view: covers for the same filtered + sorted page. Every row
         // has a sl_book_id (lockDigitized='sl' enforces it), so detailUrl

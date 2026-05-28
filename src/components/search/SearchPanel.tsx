@@ -5,6 +5,7 @@ import { Search, X, FileText, Languages, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import HighlightedText from './HighlightedText';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -33,6 +34,7 @@ interface SearchPanelProps {
 
 export default function SearchPanel({ bookId, className = '' }: SearchPanelProps) {
   const router = useRouter();
+  const embedHref = useEmbedHref();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -213,7 +215,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
                 {results.map((result) => (
                   <Link
                     key={result.pageId}
-                    href={`/book/${bookId}/page/${result.pageId}?highlight=${encodeURIComponent(query.trim())}`}
+                    href={embedHref(`/book/${bookId}/page/${result.pageId}?highlight=${encodeURIComponent(query.trim())}`)}
                     onClick={() => {
                       setIsOpen(false);
                       setQuery('');
@@ -245,7 +247,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
                 ))}
               </div>
               <Link
-                href={`/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`}
+                href={embedHref(`/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`)}
                 onClick={() => {
                   setIsOpen(false);
                   setQuery('');

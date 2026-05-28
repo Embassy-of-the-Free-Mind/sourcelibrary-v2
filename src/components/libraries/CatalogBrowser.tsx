@@ -520,127 +520,127 @@ export default function CatalogBrowser({
       )}
 
       {display === 'list' ? (
-      <div className="border border-border-light rounded-lg overflow-hidden bg-white">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border-light bg-warm">
-                <th className="text-left px-3 py-2.5 font-medium text-secondary">Title</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">Author</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">Year</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Shelfmark</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
-              </tr>
-            </thead>
-            <tbody className={loading ? 'opacity-50' : ''}>
-              {loading && works.length === 0 && (
-                Array.from({ length: 8 }, (_, i) => (
-                  <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
-                    <td className="px-3 py-3 align-top">
-                      <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden sm:table-cell">
-                      <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top tabular-nums">
-                      <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden md:table-cell">
-                      <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden md:table-cell">
-                      <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden lg:table-cell">
-                      <div className="h-5 w-20 bg-border-light/40 rounded-full animate-pulse" />
-                    </td>
-                  </tr>
-                ))
-              )}
-              {works.map((w) => {
-                const digitized = resolveDigitized(w);
-                const external = resolveExternal(w, !!digitized);
-                const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
-                const displayAuthor = w.author || w.variant_author || w.pseudonym;
-                // Title always links to the catalogue detail page. Direct
-                // book-reader access is via the "Digitised copy" / "Read at
-                // [source]" sublinks below — partner-requested separation so
-                // bibliographic context isn't bypassed.
-                const titleHref = detailUrl(w.catalog_id);
-                return (
-                  <tr
-                    key={w.catalog_id}
-                    className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
-                  >
-                    <td className="px-3 py-2 align-top">
-                      <div className="font-medium text-primary leading-snug">
-                        <a href={titleHref} className="hover:text-accent-rust transition-colors">
-                          {displayTitle}
-                        </a>
-                      </div>
-                      {digitized && (
-                        <a
-                          href={bookUrl({ id: digitized.id, slug: digitized.slug })}
-                          className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
-                        >
-                          <BookMarked className="w-3 h-3" />
-                          Digitised copy
-                        </a>
-                      )}
-                      {external && (
-                        <a
-                          href={bookUrl({ id: external.id, slug: external.slug })}
-                          className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
-                        >
-                          <BookMarked className="w-3 h-3 opacity-60" />
-                          Read at {externalSourceLabel(external.source)}
-                        </a>
-                      )}
-                      <div className="text-xs text-muted sm:hidden mt-0.5">
-                        {displayAuthor}{w.place ? ` · ${w.place}` : ''}
-                      </div>
-                      {w.printer && (
-                        <div className="text-[11px] text-muted mt-0.5 hidden md:block">
-                          {w.printer}{w.publisher && w.publisher !== w.printer ? ` / ${w.publisher}` : ''}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                      {displayAuthor || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary tabular-nums">
-                      {yearDisplay(w) || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                      {w.place || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
-                      {w.shelf_mark || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top hidden lg:table-cell">
-                      {w.keywords ? (
-                        <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
-                          {w.keywords}
-                        </span>
-                      ) : (
-                        <span className="text-muted">—</span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-              {!loading && works.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="px-3 py-12 text-center text-muted">
-                    No works found matching your search.
-                  </td>
+        <div className="border border-border-light rounded-lg overflow-hidden bg-white">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border-light bg-warm">
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary">Title</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">Author</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">Year</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Shelfmark</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className={loading ? 'opacity-50' : ''}>
+                {loading && works.length === 0 && (
+                  Array.from({ length: 8 }, (_, i) => (
+                    <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
+                      <td className="px-3 py-3 align-top">
+                        <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden sm:table-cell">
+                        <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top tabular-nums">
+                        <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden md:table-cell">
+                        <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden md:table-cell">
+                        <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden lg:table-cell">
+                        <div className="h-5 w-20 bg-border-light/40 rounded-full animate-pulse" />
+                      </td>
+                    </tr>
+                  ))
+                )}
+                {works.map((w) => {
+                  const digitized = resolveDigitized(w);
+                  const external = resolveExternal(w, !!digitized);
+                  const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
+                  const displayAuthor = w.author || w.variant_author || w.pseudonym;
+                  // Title always links to the catalogue detail page. Direct
+                  // book-reader access is via the "Digitised copy" / "Read at
+                  // [source]" sublinks below — partner-requested separation so
+                  // bibliographic context isn't bypassed.
+                  const titleHref = detailUrl(w.catalog_id);
+                  return (
+                    <tr
+                      key={w.catalog_id}
+                      className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
+                    >
+                      <td className="px-3 py-2 align-top">
+                        <div className="font-medium text-primary leading-snug">
+                          <a href={titleHref} className="hover:text-accent-rust transition-colors">
+                            {displayTitle}
+                          </a>
+                        </div>
+                        {digitized && (
+                          <a
+                            href={bookUrl({ id: digitized.id, slug: digitized.slug })}
+                            className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
+                          >
+                            <BookMarked className="w-3 h-3" />
+                            Digitised copy
+                          </a>
+                        )}
+                        {external && (
+                          <a
+                            href={bookUrl({ id: external.id, slug: external.slug })}
+                            className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
+                          >
+                            <BookMarked className="w-3 h-3 opacity-60" />
+                            Read at {externalSourceLabel(external.source)}
+                          </a>
+                        )}
+                        <div className="text-xs text-muted sm:hidden mt-0.5">
+                          {displayAuthor}{w.place ? ` · ${w.place}` : ''}
+                        </div>
+                        {w.printer && (
+                          <div className="text-[11px] text-muted mt-0.5 hidden md:block">
+                            {w.printer}{w.publisher && w.publisher !== w.printer ? ` / ${w.publisher}` : ''}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
+                        {displayAuthor || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary tabular-nums">
+                        {yearDisplay(w) || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
+                        {w.place || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
+                        {w.shelf_mark || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top hidden lg:table-cell">
+                        {w.keywords ? (
+                          <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
+                            {w.keywords}
+                          </span>
+                        ) : (
+                          <span className="text-muted">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+                {!loading && works.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-3 py-12 text-center text-muted">
+                      No works found matching your search.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
       ) : (
         <div className={loading ? 'opacity-50' : ''}>
           {loading && works.length === 0 ? (
