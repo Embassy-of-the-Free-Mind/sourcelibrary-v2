@@ -257,6 +257,52 @@ export async function rrfVariant(query, ctx, limit = 8) {
   return rrfMerge([kw, btp, gp], 60, limit);
 }
 
+// Tuned RRF — k=20 (closer to 1/rank than 1/(60+rank)) weights top-of-source
+// hits more strongly. Hypothesis: with only 3 sources, k=60 over-smooths and
+// the strong rank-1 hit from one source loses to mediocre rank-1 hits from
+// the other two. Lower k should preserve "this source loves this hit" signal.
+export async function rrfTunedVariant(query, ctx, limit = 8) {
+  const [kw, btp, gp] = await Promise.all([
+    keywordVariant(query, ctx, 20),
+    bookThenPageVariant(query, ctx, 20),
+    globalPageVariant(query, ctx, 20),
+  ]);
+  return rrfMerge([kw, btp, gp], 20, limit);
+}
+
+// Hybrid with auto-fallback floor: take RRF top-N. If R@5 would be 0 because
+// the merged top has no strong signal, fall back to the source that had the
+// strongest rank-1 candidate. This is the "graceful degradation" path —
+// don't return a confidently-wrong result when no source agrees.
+export async function rrfWithFloorVariant(query, ctx, limit = 8) {
+  const [kw, btp, gp] = await Promise.all([
+    keywordVariant(query, ctx, 20),
+    bookThenPageVariant(query, ctx, 20),
+    globalPageVariant(query, ctx, 20),
+  ]);
+  const merged = rrfMerge([kw, btp, gp], 20, limit);
+  // If RRF produced very few results, supplement with the strongest single source.
+  if (merged.length >= 3) return merged;
+  const sources = [
+    { name: 'btp', list: btp },
+    { name: 'kw', list: kw },
+    { name: 'gp', list: gp },
+  ];
+  const strongest = sources.reduce((best, s) => {
+    const topScore = s.list[0]?.score ?? 0;
+    return topScore > (best.list[0]?.score ?? 0) ? s : best;
+  }, sources[0]);
+  const seen = new Set(merged.map(h => `${h.book_id}:${h.page_number}`));
+  for (const h of strongest.list) {
+    const key = `${h.book_id}:${h.page_number}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push({ ...h, source: `${h.source} (floor:${strongest.name})` });
+    if (merged.length >= limit) break;
+  }
+  return merged;
+}
+
 // ── Variant registry ──────────────────────────────────────────────────
 
 export const VARIANTS = {
@@ -277,7 +323,15 @@ export const VARIANTS = {
     fn: autoFallbackVariant,
   },
   'rrf': {
-    description: 'Reciprocal Rank Fusion of keyword + book-then-page + global-page',
+    description: 'Reciprocal Rank Fusion of keyword + book-then-page + global-page (k=60)',
     fn: rrfVariant,
+  },
+  'rrf-tuned': {
+    description: 'RRF with k=20 — weights top-of-source hits more strongly',
+    fn: rrfTunedVariant,
+  },
+  'rrf-floor': {
+    description: 'RRF k=20 with graceful fallback to strongest single source',
+    fn: rrfWithFloorVariant,
   },
 };
