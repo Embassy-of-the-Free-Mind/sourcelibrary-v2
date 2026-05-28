@@ -1,0 +1,789 @@
+{
+  "corpus": "javanese-dutch",
+  "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+  ],
+  "temperatures": [
+    0
+  ],
+  "thinking": false,
+  "runsPerCombo": 3,
+  "pages": [
+    {
+      "bookId": "6a18a93a8d0f8e28b34c51bd",
+      "bookTitle": "Baraboedoer",
+      "pageNumber": 2,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "KONINKLIJKE BIBLIOTHEEK\n1599 0416",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.001827,
+          "durationMs": 11952,
+          "outputLengths": [
+            33,
+            33,
+            33
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "KONINKLIJKE BIBLIOTHEEK\n1599 0416",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.00026504999999999996,
+          "durationMs": 2728,
+          "outputLengths": [
+            33,
+            33,
+            33
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a18a93a8d0f8e28b34c51bd",
+      "bookTitle": "Baraboedoer",
+      "pageNumber": 14,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "10 BARABOEDOER\n\nworden ad infinitum en deze kringloop des be-\nstaans is dan de befaamde samsâra. Het geloof\ndaaraan, en aan het feit dat de handelingen van\nhet individu zijn lot in het hiernamaals en in vol-\ngende levens beheerschen, de Wet van het Kar-\nman, is algemeen-Indisch.\nZij geeft ons de verklaring van de schrille tegen-\nstellingen in den toestand der leden van de Indische\nmaatschappij: dat is geen onrechtvaardigheid of\nwillekeur of toeval, maar eigen schuld. Intusschen,\ndat is nog geen reden om er zich bij neer te leggen.\nEr is voor het âtman een mogelijkheid om er aan\nte ontkomen en tot zijn oorspronkelijke reinheid\nterug te keeren, en wel door de oorzaken van de\nbezoedeling te niet te doen. Dat zal kunnen geschie-\nden, wanneer het âtman zich bewust is van zijn\neigen natuur en van wat belemmerend daarop in-\nwerkt, met andere woorden, als het zichzelf heeft\nleeren kennen. De verlossing, des menschen hoog-\nste doel, is afhankelijk van het inzicht in het we-\nzen van het âtman.\nNu kan men zich die verlossing verschillend\nvoorstellen, van af een uitblussching der",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.004548,
+          "durationMs": 98588,
+          "outputLengths": [
+            1084,
+            1084,
+            1084
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "10 BARABOEDOER\nworden ad infinitum en deze kringloop des bestaans is dan de befaamde samsâra. Het geloof daaraan, en aan het feit dat de handelingen van het individu zijn lot in het hiernamaals en in volgende levens beheerschen, de Wet van het Karman, is algemeen-Indisch.\nZij geeft ons de verklaring van de schrille tegenstellingen in den toestand der leden van de Indische maatschappij: dat is geen onrechtvaardigheid of willekeur of toeval, maar eigen schuld. Intusschen, dat is nog geen reden om er zich bij neer te leggen. Er is voor het âtman een mogelijkheid om er aan te ontkomen en tot zijn oorspronkelijke reinheid terug te keeren, en wel door de oorzaken van de bezoedeling te niet te doen. Dat zal kunnen geschieden, wanneer het âtman zich bewust is van zijn eigen natuur en van wat belemmerend daarop inwerkt, met andere woorden, als het zichzelf heeft leeren kennen. De verlossing, des menschen hoogste doel, is afhankelijk van het inzicht in het wezen van het âtman.\nNu kan men zich die verlossing verschillend voorstellen, van af een uitblussching der geheele individualiteit tot een opgaan daarvan in den Algeest. Ook kan men verschillen van inzicht in den weg, waarlangs men het doel zal kunnen bereiken. Op tallooze manieren en met allerlei practijken van wereldverzaking, ascese, meditatie en extase hebben, de eeuwen door, de Indische heiligen trachten te ontkomen aan den kringloop des bestaans.",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0005895,
+          "durationMs": 6343,
+          "outputLengths": [
+            1417,
+            1417,
+            1417
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a18a93a8d0f8e28b34c51bd",
+      "bookTitle": "Baraboedoer",
+      "pageNumber": 26,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "II\nDE STICHTING VAN BARABOEDOER\nBij onze schets van het Boeddhisme, dat wij moe-\nten kennen om iets van Baraboedoer te begrijpen,\nhebben wij ons geheel aan het Boeddhisme van\nVoor-Indië kunnen houden, en daarbij wel ge-\nconstateerd, dat Java zijn deel had aan de stroo-\nmingen, die de groote Boeddhistische wereld be-\nroerden, maar niet behoeven opmerkzaam te ma-\nken op speciaal Javaansche eigenaardigheden. Inder-\ndaad is het een feit, dat het Boeddhisme, zooals\nhet in den Archipel voorkomt, zich vrij heeft ge-\nhouden van plaatselijke invloeden, een feit, dat\nbijvoorbeeld ook door de Chineesche Boeddhis-\ntische pelgrims, die op hun tochten naar het heilige\nland aan den Ganges deze eilanden passeerden,\nmet ingenomenheid wordt vastgesteld. Het ver-\nverschijnsel is opmerkelijk, omdat het Boeddhisme\nhier leefde onder een bevolking en in een maat-\nschappij, welke in allerlei opzichten van die in het\nvaderland van dezen godsdienst verschilde.\nIn den Archipel immers was de geheele Indische\nbeschaving en gedachtenwereld iets, dat er van",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9980842911877394,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9952015355086372,
+                "syllableSimilarity": 0.9938650306748467
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9971264367816092,
+                "syllableSimilarity": 0.9938650306748467
+              }
+            ],
+            "avgCharSimilarity": 0.9968040878259953,
+            "avgSyllableSimilarity": 0.9959100204498977
+          },
+          "costUsd": 0.0044399999999999995,
+          "durationMs": 48520,
+          "outputLengths": [
+            1042,
+            1044,
+            1041
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "II\n\nDE STICHTING VAN BARABOEDOER\n\nBij onze schets van het Boeddhisme, dat wij moeten kennen om iets van Baraboedoer te begrijpen, hebben wij ons geheel aan het Boeddhisme van Voor-Indië kunnen houden, en daarbij wel geconstateerd, dat Java zijn deel had aan de stroomingen, die de groote Boeddhistische wereld beroerden, maar niet behoeven opmerkzaam te maken op speciaal Javaansche eigenaardigheden. Inderdaad is het een feit, dat het Boeddhisme, zooals het in den Archipel voorkomt, zich vrij heeft gehouden van plaatselijke invloeden, een feit, dat bijvoorbeeld ook door de Chineesche Boeddhistische pelgrims, die op hun tochten naar het heilige land aan den Ganges deze eilanden passeerden, met ingenomenheid wordt vastgesteld. Het verschijnsel is opmerkelijk, omdat het Boeddhisme hier leefde onder een bevolking en in een maatschappij, welke in allerlei opzichten van die in het vaderland van dezen godsdienst verschilde.\nIn den Archipel immers was de geheele Indische beschaving en gedachtenwereld iets, dat er van",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0004923,
+          "durationMs": 4365,
+          "outputLengths": [
+            1021,
+            1021,
+            1021
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a18a93a8d0f8e28b34c51bd",
+      "bookTitle": "Baraboedoer",
+      "pageNumber": 38,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "34 BARABOEDOER\nin een rechte lijn een tweetal andere heiligdommen,\ndie ongetwijfeld in samenhang met Baraboedoer\nontworpen zijn en dus ook een korte vermelding\nbehoeven; volgens de omwonende inlanders waren\nzij eertijds door een met kapelletjes versierden\nweg met den stoepa verbonden. De eerste, een\nkleine 3 K.M. van Baraboedoer verwijderd, is de\nTjandi Mendoet — tjandi is de gewone benaming\nvoor een Oud-Javaansch tempelgebouw —, zich\nin zijn ornamentatie nauw bij den stoepa aanslui-\ntend, terwijl een bewaard gebleven fragment van\nde Boeddhistische geloofsbelijdenis, die zich boven\nden ingang heeft bevonden, hetzelfde schrift ver-\ntoont als dat, hetwelk aan den voet van den stoepa\nwordt aangetroffen. Tjandi Mendoet (plaat 2) is\neen in vergelijking met andere tempels groot ge-\nbouw; het rust op een forsch soubasement, en ver-\ntoont aan de buitenzijden van het vierkante tem-\npellichaam in relief voorstellingen van verschillende\nhoogere wezens van het Boeddhisme, o.a. de acht\nGroote Bodhisattwa's. Het in verdiepingen opge-\ntrokken dak is in het rond versierd met klokvor-\nmige ornamentmotieven, als kleine stôepa's, en\nwerd door een soortgelijk motief bekroond.\nHet merkwaardigste van Mendoet is, dat dit\nheiligdom behouden heeft wat de meeste Javaan-\nsche t mpels missen, de beelden, die er oudtijds\nvereering vonden. Treedt men de tempelkamer\nbinnen, dan staat men in het schemerduister tegen-\nover drie kolossale beelden, zittend op hun troon;",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9993145990404386,
+                "syllableSimilarity": 0.8654708520179372
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9993145990404386,
+                "syllableSimilarity": 0.8654708520179372
+              }
+            ],
+            "avgCharSimilarity": 0.9995430660269591,
+            "avgSyllableSimilarity": 0.9103139013452916
+          },
+          "costUsd": 0.005733,
+          "durationMs": 63306,
+          "outputLengths": [
+            1459,
+            1459,
+            1459
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "34 BARABOEDOER\nin een rechte lijn een tweetal andere heiligdommen,\ndie ongetwijfeld in samenhang met Baraboedoer\nontworpen zijn en dus ook een korte vermelding\nbehoeven; volgens de omwonende inlanders waren\nzij eertijds door een met kapelletjes versierden\nweg met den stoepa verbonden. De eerste, een\nkleine 3 K.M. van Baraboedoer verwijderd, is de\nTjandi Mendoet — tjandi is de gewone benaming\nvoor een Oud-Javaansch tempelgebouw —, zich\nin zijn ornamentatie nauw bij den stoepa aanslui-\ntend, terwijl een bewaard gebleven fragment van\nde Boeddhistische geloofsbelijdenis, die zich boven\nden ingang heeft bevonden, hetzelfde schrift ver-\ntoont als dat, hetwelk aan den voet van den stoepa\nwordt aangetroffen. Tjandi Mendoet (plaat 2) is\neen in vergelijking met andere tempels groot ge-\nbouw; het rust op een forsch soubasement, en ver-\ntoont aan de buitenzijden van het vierkante tem-\npellichaam in relief voorstellingen van verschillende\nhoogere wezens van het Boeddhisme, o.a. de acht\nGroote Bodhisattwa's. Het in verdiepingen opge-\ntrokken dak is in het rond versierd met klokvor-\nmige ornamentmotieven, als kleine stôepa's, en\nwerd door een soortgelijk motief bekroond.\nHet merkwaardigste van Mendoet is, dat dit\nheiligdom behouden heeft wat de meeste Javaan-\nsche t mpels missen, de beelden, die er oudtijds\nvereering vonden. Treedt men de tempelkamer\nbinnen, dan staat men in het schemerduister tegen-\nover drie kolossale beelden, zittend op hun troon;",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0006569999999999999,
+          "durationMs": 6126,
+          "outputLengths": [
+            1459,
+            1459,
+            1459
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a18a9428d0f8e28b34c520e",
+      "bookTitle": "Hindoe-Javaansche geschiedenis",
+      "pageNumber": 2,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "1e druk 1926.",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0017895,
+          "durationMs": 7652,
+          "outputLengths": [
+            13,
+            13,
+            13
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "1e druk 1926.",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.000264375,
+          "durationMs": 4318,
+          "outputLengths": [
+            13,
+            13,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a18a9428d0f8e28b34c520e",
+      "bookTitle": "Hindoe-Javaansche geschiedenis",
+      "pageNumber": 14,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "el gebruikelijke Çaka-jaartelling in jaren A, D. gemakshalve overal 78 is\nbijgeteld, zonder dat rekening is gehouden met de maanden verschil tusschen den aanvang\nvan het Çaka-jaar en het jaar A. D. Van een groot aantal dateeringen toch zijn de\nmaanden niet bekend, zoodat het nu eens wel en dan weer niet in aanmerking nemen van\nhet aanvangsverschil der jaren tot willekeur en verwarring zou leiden.\n\nWait, I made a typo in \"Archipel\" in my draft. Fixed it.\nAlso, \"A, D.\" - I'll use a comma as it looks like one.\nActually, looking at the footnote 2 again, \"Archipel\" is spelled correctly.\n\"den Archipel gebruikelijke\" - yes.\n\nOne more check on the superscript 1 in the text.\n\"aanneemt ¹).\"\nIs it a closing parenthesis or just a very curved 1?\nLooking at the footnote \"¹) \", it's definitely a superscript 1 followed by a closing parenthesis.\nSo in the text it's also superscript 1 followed by a closing parenthesis.\n\nOkay, ready.4                                                              DE INSCRIPTIES.\n\nopgesteld en het resultaat dus een falsificaat is, althans voor ons, want voor\nde vervaardigers kan gelden (naast de gevallen waarin welbewust valsche\nbewijsstukken zijn",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.21506410256410258,
+                "syllableSimilarity": 0.002074688796680498
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.21506410256410258,
+                "syllableSimilarity": 0.002074688796680498
+              }
+            ],
+            "avgCharSimilarity": 0.4767094017094016,
+            "avgSyllableSimilarity": 0.334716459197787
+          },
+          "costUsd": 0.006182999999999999,
+          "durationMs": 91272,
+          "outputLengths": [
+            1177,
+            3120,
+            1177
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "4 DE INSCRIPTIES.\n\nopgesteld en het resultaat dus een falsificaat is, althans voor ons, want voor de vervaardigers kan gelden (naast de gevallen waarin welbewust valsche bewijsstukken zijn gefabriceerd), dat zij wellicht zonder iemand te willen misleiden hebben getracht een verloren gegane acte naar beste weten te herstellen. Het ongeluk heeft gewild, dat een paar van deze soort oorkonden tot de eerste behoord hebben, die aan het Westersch onderzoek bekend werden, vóór men zich aan de hand van echte stukken een denkbeeld van den waren aard eener Oud-Javaansche oorkonde had kunnen vormen. Het gevolg is geweest, dat ze lang voor echt zijn gehouden, veel onheil hebben gesticht door de eruit gemaakte gevolgtrekkingen, en de scherpzinnigheid van Brandes noodig is geweest om van een der allerergste exemplaren (de zoogenaamde inscriptie van 840, behandeld in zijn Pararaton-editie) de onechtheid overtuigend aan te toonen. Onzes inziens zal een voortgezet systematisch onderzoek kopieën doen herkennen in nog veel meer oorkonden, in het bijzonder koperplaten, dan waarvan men dat op het oogenblik aanneemt 1).\n\nDe steen-inscripties zijn voor een klein deel tegen rotswanden of op rotsblokken gehouwen, grootendeels heeft men ze gebeiteld in expresselijk daarvoor gemaakte steenen, en wel in enkele gevallen kleine lingga-vormige zuiltjes, maar overigens bijna steeds langwerpige, platte stukken, zorgvuldig behouwen, en rechtop gezet, al dan niet in een afzonderlijk voetstuk; men gebruikte de platte vóór- en zoo noodig achterzijde, later ook de zijkanten voor de inscriptie. Voor nadere bijzonderheden moge verwezen worden naar Brandes' hieronder aangehaalde studie. De koperplaten zijn rechthoekig en dun; de inscriptie staat er in de lengte op voor- en achterkant ingegrift, en zoo zij meerdere platen beslaat, worden deze aan een band door een gat in het midden der platen samengehouden en ook te zamen in een daarvoor bestemde doos geborgen.\n\nDe oudste inscripties van den Archipel zijn op steen; zij dragen geen jaartallen, doch kunnen op grond van de schriftsoort in de vierde en vijfde eeuw gesteld worden. Hun taal is het Sanskrit. Jaartallen en een andere taal worden het vroegst buiten Java aangetroffen: de Oud-Maleische oorkonden van Palembang en Bangka uit 683 en volgende jaren 2). Op Java is de oudste gedateerde inscriptie die van Tjanggal (Kědoe) uit 732, nog steeds in het Sanskrit; terwijl voor deze en alle voorafgaande opschriften het Pallawa-karakter is gebezigd, verschijnt in 760 op de oorkonde, eveneens in Sanskrit,\n\n1) Zje hierover ook in Hoofdstuk VII.\n2) De aandacht worde er hier op gevestigd, dat bij het omzetten van de jaren der in den Archipel gebruikelijke Çaka-jaartelling in jaren A. D. gemakshalve overal 78 is bijgeteld, zonder dat rekening is gehouden met de maanden verschil tusschen den aanvang van het Çaka-jaar en het jaar A. D. Van een groot aantal dateeringen toch zijn de maanden niet bekend, zoodat het nu eens wel en dan weer niet in aanmerking nemen van het aanvangsverschil der jaren tot willekeur en verwarring zou leiden.",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.00099855,
+          "durationMs": 9575,
+          "outputLengths": [
+            3081,
+            3081,
+            3081
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a18a9428d0f8e28b34c520e",
+      "bookTitle": "Hindoe-Javaansche geschiedenis",
+      "pageNumber": 26,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "16                                     DE NAGARAKRTAGAMA.\n\nplechtigheden en de oprichting van haar graftempel, waarbij aanleiding is de\nmet die plek verband houdende verdeeling van Java in het ver verleden tijdens\nAirlangga te gedenken. Met den dood van 's konings vertrouwden rijks-\nbestierder Gajah Mada en de maatregelen om dien onvervangbare te vervangen\nis de auteur genaderd tot het eigen tijdstip, waarop hij het gedicht samenstelt.\n  Het laatste vierdedeel van het werk is dan ook niet meer aan voorafgegane\ngebeurtenissen, doch aan toestanden en gewoonten van het oogenblik gewijd.\nVooreerst krijgt men een opsomming der 27 koningsheiligdommen, en dan\nverder van alle godsdienstige stichtingen, vrijgebieden, stiften enz. der ver-\nschillende gezindten. Na een bericht over de opname van desa's en families\nworden de stichtingen (alleen Buddhistisch) op Bali vermeld; de bemoeienis\nvan den koning en zijn familieleden wordt nader omschreven, de hooge gees-\ntelijkheid geroemd, het verkeer met het buitenland geprezen. De dichter gaat\ndan over tot den jaarlijkschen grooten optocht en ommegang ter eere van\nkoning en",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.3516963385959019,
+                "syllableSimilarity": 0.36283185840707965
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.3516963385959019,
+                "syllableSimilarity": 0.36283185840707965
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9989922741014444,
+                "syllableSimilarity": 0.9977876106194691
+              }
+            ],
+            "avgCharSimilarity": 0.5674616504310827,
+            "avgSyllableSimilarity": 0.5744837758112095
+          },
+          "costUsd": 0.008179500000000001,
+          "durationMs": 66051,
+          "outputLengths": [
+            1123,
+            2977,
+            2977
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "16 DE NAGARAKRTAGAMA.\n\nplechtigheden en de oprichting van haar graftempel, waarbij aanleiding is de\nmet die plek verband houdende verdeeling van Java in het ver verleden tijdens\nAirlangga te gedenken. Met den dood van 's konings vertrouwden rijks-\nbestierder Gajah Mada en de maatregelen om dien onvervangbare te vervangen\nis de auteur genaderd tot het eigen tijdstip, waarop hij het gedicht samenstelt.\n\nHet laatste vierdedeel van het werk is dan ook niet meer aan voorafgegane\ngebeurtenissen, doch aan toestanden en gewoonten van het oogenblik gewijd.\nVooreerst krijgt men een opsomming der 27 koningsheiligdommen, en dan\nverder van alle godsdienstige stichtingen, vrijgebieden, stiften enz. der ver-\nschillende gezindten. Na een bericht over de opname van desa's en families\nworden de stichtingen (alleen Buddhistisch) op Bali vermeld; de bemoeienis\nvan den koning en zijn familieleden wordt nader omschreven, de hooge gees-\ntelijkheid geroemd, het verkeer met het buitenland geprezen. De dichter gaat\ndan over tot den jaarlijkschen grooten optocht en ommegang ter eere van\nkoning en rijk, de jaarlijksche legervergadering, de feestelijke wedstrijden.\nEen plechtige audiëntie, waarbij verschillende regelingen op agrarisch en\nander gebied aan een tweetal prinsen en den koning zelf in den mond gelegd\nworden, vormt de inleiding tot de levendige beschrijving van het op die\naudiëntie volgend hoffeest, een luisterrijken maaltijd, opgevroolijkt door\nzangers en clowns, terwijl tot slot een maskerspel wordt opgevoerd, waarin\nde koning zelf optreedt. Een nieuwe verheerlijking van 's vorsten voortref-\nfelijkheid en de vermelding van een tweetal buitenlandsche (Voor-Indische)\nlofdichters doet dan den auteur over zijn eigen werk en persoon, en de\nbeëindiging van het gedicht in 1365 spreken. Dat is een goed slot; de vier\nzangen, die nog volgen, en die op zeer verwarde en gekunstelde wijze nog\niets over den schrijver schijnen mede te deelen, vallen geheel uit den toon en\nzijn wellicht een later toevoegsel 1).\n\nDe Nāgarakṛtāgama is naar het eenige handschrift (in 1894 bij de Lombok-\nexpeditie uit de poeri van Tjakranagara buitgemaakt) uitgegeven in Balische\nkarakters, zonder eenige verdere poging tot verklaring of verbetering, door\nBrandes in Verhand. Bat. Gen. 54, 1ste stuk, 1902. Het is Kern, die van 1905\ntot 1914 het gedicht bij gedeelten heeft vertaald en verklaard in Bijdr. Kon.\nInst. 58—69, welke artikelen tot één geheel zijn vereenigd in Verspr. Geschr.\nVII (1917) en VIII (1918). Dit geheel werd in 1919 nog eens afzonderlijk\nuitgegeven met aanteekeningen van schrijver dezes. Sindsdien zijn er talrijke\nstudies aan verschillende onderdeelen van het werk gewijd, hetwelk nog eens\nin zijn geheel aan een nieuw onderzoek is onderworpen door Poerbatjaraka,\nAanteekeningen op de Nāgarakṛtāgama, Bijdr. Kon. Inst. 80 (1924) p.\n219—286.\n\nBovenstaande inhoudsopgave, hoe beknopt ook, kan toch reeds hebben\n\n1) Poerbatjaraka in Bijdr. Kon. Inst. 78 (1922) p. 452—459.",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.001086075,
+          "durationMs": 10727,
+          "outputLengths": [
+            2979,
+            2979,
+            2979
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a18a9428d0f8e28b34c520e",
+      "bookTitle": "Hindoe-Javaansche geschiedenis",
+      "pageNumber": 38,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "28\nCHINEESCHE BERICHTEN.\n\nDe berichten van de eerste soort verdienen volkomen vertrouwen. Hier zijn nuchtere ooggetuigen aan het woord, die feitelijke toestanden opteekenen, zonder daarbij eenige reden tot fantaseeren te hebben. Een waarschuwing is alleen op haar plaats ten opzichte van de „producten\", die voor verschillende landen opgegeven worden. Die berichten zijn in zoover juist, dat inderdaad de Chineezen de opgesomde zaken in het land hebben aangetroffen, ze voor uitvoer gereed zagen liggen, mogelijk zelf hebben ingeladen. Doch of de zaken nu ook oorspronkelijk uit het land in kwestie kwamen, dan wel van elders door inlandsche handelaars waren aangebracht, wordt volstrekt niet in aanmerking genomen. Men kan altijd veilig aannemen, dat de opgegeven „producten\" in het land aanwezig waren, maar niet dat het werkelijk ook producten des lands waren.\nOp diezelfde manier nu is het klaarblijkelijk ook in andere gevallen gegaan, waar de Chineezen, om een populaire uitdrukking te bezigen, niet verder zagen dan hun neus lang was. Ze hebben daardoor verklaringen aanvaard, waarvan de ongerijmdheid in het oog springt; zij hebben zich ook omtrent dingen, die elders of in het binnenland voorkwamen, bijzonderheden laten vertellen en zonder kritiek overgenomen, op een wijze, die weinig in overeenstemming lijkt met hun scherpen blik en nauwkeurige waarneming ten opzichte van de door hen zelf aanschouwde feiten. Het is echter niet onze zaak, daarvoor een verklaring te zoeken; wij kunnen ons gelukkig achten, dat de aanteekeningen der Chineezen ons zooveel kostbaar materiaal bewaard hebben, en moeten de tweedehandsche berichten dan maar met de noodige omzichtigheid bejegenen.\nReeds werd de naam van W. P. Groeneveldt genoemd als van dengene, die het eerst de voornaamste Chineesche gegevens heeft verzameld en in vertaling gepubliceerd. Hij deed dit in 1876, in Verh. Bat. Gen. 39, 1ste stuk, onder den titel „Notes on the Malay Archipelago and Malacca, compiled from Chinese sources\"; een tweede druk verscheen in de Miscellaneous papers relating to Indo-China and the Indian Archipelago, 2nd series, vol. I, 1887, terwijl de auteur nog eenige aanvullingen als „Supplementary jottings\" in den T'oung Pao 7 (1896), p. 113—134, plaatste.\nOnder de werken, waarvan uittreksels door Groeneveldt zijn vertaald, is het voornaamste de z.g.n. „Vier-en-twintig geschiedschrijvers\", ook wel „Dynastieke geschiedenissen\", waarin elke dynastie afzonderlijk is behandeld en wel kort na haar val, doorgaans onder den onmiddellijken opvolger. Er is daarbij geput uit de rijksarchieven en de litteratuur van het beschreven tijdperk zelf (althans wat de vreemde landen aangaat), ook in de gevallen dat de publicatie eerst geruimen tijd later plaats vond. Vooral komen in aanmerking de geschiedenis van de Liang-dynastie (502—556), de T'ang-dynastie (618—906), de Sung-dynastie (960—1279), de Yuen-dynastie (1280—1367) en de Ming-dynastie (1368—1643).\nDe tweede bron van bijzondere beteekenis — de overige zullen wij niet",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9996685449121644,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9867593512082092,
+                "syllableSimilarity": 0.43333333333333335
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9870903674280039,
+                "syllableSimilarity": 0.43333333333333335
+              }
+            ],
+            "avgCharSimilarity": 0.9911727545161259,
+            "avgSyllableSimilarity": 0.6222222222222222
+          },
+          "costUsd": 0.0094455,
+          "durationMs": 51520,
+          "outputLengths": [
+            3017,
+            3017,
+            3021
+          ]
+        },
+        "gemini-3.1-flash-lite@t0": {
+          "model": "gemini-3.1-flash-lite",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "28 CHINEESCHE BERICHTEN.\n\nDe berichten van de eerste soort verdienen volkomen vertrouwen. Hier zijn nuchtere ooggetuigen aan het woord, die feitelijke toestanden opteekenen, zonder daarbij eenige reden tot fantaseeren te hebben. Een waarschuwing is alleen op haar plaats ten opzichte van de ,,producten\", die voor verschillende landen opgegeven worden. Die berichten zijn in zoover juist, dat inderdaad de Chineezen de opgesomde zaken in het land hebben aangetroffen, ze voor uitvoer gereed zagen liggen, mogelijk zelf hebben ingeladen. Doch of die zaken nu ook oorspronkelijk uit het land in kwestie kwamen, dan wel van elders door inlandsche handelaars waren aangebracht, wordt volstrekt niet in aanmerking genomen. Men kan altijd veilig aannemen, dat de opgegeven ,,producten\" in het land aanwezig waren, maar niet dat het werkelijk ook producten des lands waren.\n\nOp diezelfde manier nu is het klaarblijkelijk ook in andere gevallen gegaan, waar de Chineezen, om een populaire uitdrukking te bezigen, niet verder zagen dan hun neus lang was. Ze hebben daardoor verklaringen aanvaard, waarvan de ongerijmdheid in het oog springt; zij hebben zich ook omtrent dingen, die elders of in het binnenland voorkwamen, bijzonderheden laten vertellen en zonder kritiek overgenomen, op een wijze, die weinig in overeenstemming lijkt met hun scherpen blik en nauwkeurige waarneming ten opzichte van de door hen zelf aanschouwde feiten. Het is echter niet onze zaak, daarvoor een verklaring te zoeken; wij kunnen ons gelukkig achten, dat de aanteekeningen der Chineezen ons zooveel kostbaar materiaal bewaard hebben, en moeten de tweedehandsche berichten dan maar met de noodige omzichtigheid bejegenen.\n\nReeds werd de naam van W. P. Groeneveldt genoemd als van dengene, die het eerst de voornaamste Chineesche gegevens heeft verzameld en in vertaling gepubliceerd. Hij deed dit in 1876, in Verh. Bat. Gen. 39, 1ste stuk, onder den titel ,,Notes on the Malay Archipelago and Malacca, compiled from Chinese sources\"; een tweede druk verscheen in de Miscellaneous papers relating to Indo-China and the Indian Archipelago, 2nd series, vol. I, 1887, terwijl de auteur nog eenige aanvullingen als ,,Supplementary jottings\" in den T'oung Pao 7 (1896), p. 113—134, plaatste.\n\nOnder de werken, waarvan uittreksels door Groeneveldt zijn vertaald, is het voornaamste de z.g.n. ,,Vier-en-twintig geschiedschrijvers\", ook wel ,,Dynastieke geschiedenissen\", waarin elke dynastie afzonderlijk is behandeld en wel kort na haar val, doorgaans onder den onmiddellijken opvolger. Er is daarbij geput uit de rijksarchieven en de litteratuur van het beschreven tijdperk zelf (althans wat de vreemde landen aangaat), ook in de gevallen dat de publicatie eerst geruimen tijd later plaats vond. Vooral komen in aanmerking de geschiedenis van de Liang-dynastie (502—556), de T'ang-dynastie (618—906), de Sung-dynastie (960—1279), de Yuen-dynastie (1280—1367) en de Ming-dynastie (1368—1643).\n\nDe tweede bron van bijzondere beteekenis — de overige zullen wij niet",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0010140749999999997,
+          "durationMs": 9284,
+          "outputLengths": [
+            3028,
+            3028,
+            3028
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "byCombo": {
+      "gemini-3-flash-preview@t0": {
+        "model": "gemini-3-flash-preview",
+        "temp": 0,
+        "pages": 8,
+        "avgMcr": 0.6666666666666666,
+        "avgCharSim": 0.8789613700636956,
+        "avgSylSim": 0.804705797378301
+      },
+      "gemini-3.1-flash-lite@t0": {
+        "model": "gemini-3.1-flash-lite",
+        "temp": 0,
+        "pages": 8,
+        "avgMcr": 1,
+        "avgCharSim": 1,
+        "avgSylSim": 1
+      }
+    },
+    "crossModel": [
+      {
+        "modelA": "gemini-3-flash-preview@t0",
+        "modelB": "gemini-3.1-flash-lite@t0",
+        "charSimilarity": 0.7830644365782874,
+        "syllableSimilarity": 0.5608706845722844,
+        "pages": 8
+      }
+    ]
+  },
+  "meta": {
+    "date": "2026-05-28",
+    "totalCalls": 48,
+    "totalCostUsd": 0.047512425,
+    "totalDurationMs": 492327,
+    "costByModel": {
+      "gemini-3-flash-preview@t0": 0.0421455,
+      "gemini-3.1-flash-lite@t0": 0.005366924999999999
+    }
+  }
+}
