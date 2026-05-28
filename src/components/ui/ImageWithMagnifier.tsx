@@ -18,9 +18,11 @@ interface ImageWithMagnifierProps {
   imgClassName?: string; // Override default img sizing classes (replaces h-full object-contain)
 }
 
-// Magnifier component for zooming into the source image
-// Desktop: hover to show magnifier lens, click HD button for fullscreen
-// Mobile/Touch: native browser pinch-zoom + tap to open fullscreen viewer
+// Magnifier component for zooming into the source image.
+// Desktop: hover to show magnifier lens, click to open in-app fullscreen viewer.
+// Mobile/Touch: tap opens the raw high-res image in a new tab so the browser's
+// native pinch-zoom can take over (the in-app viewer caps at 5x, which isn't
+// enough for high-DPI scans — see PR #1873 for the prior escape-hatch button).
 export default function ImageWithMagnifier({
   src,
   thumbnail,
@@ -229,11 +231,17 @@ export default function ImageWithMagnifier({
     }
   };
 
-  // Tap/click to open fullscreen
+  // Tap/click to open fullscreen.
+  // On touch devices, skip the in-app viewer (capped at 5x) and open the
+  // highest-resolution image in a new tab so the browser's native pinch-zoom
+  // can take over. Desktop keeps the in-app viewer where the magnifier lives.
   const handleClick = () => {
-    if (isLoaded) {
-      setShowFullscreen(true);
+    if (!isLoaded) return;
+    if (isTouchDevice) {
+      window.open(highResSrc || src, '_blank', 'noopener,noreferrer');
+      return;
     }
+    setShowFullscreen(true);
   };
 
   return (
