@@ -32,6 +32,7 @@ interface Work {
  *   editions        — comma-separated list of index_ids to filter by
  *   filter_mode     — 'any' (default) or 'all'
  *   filter          — 'held' (only SL-linked) | 'unheld' (acquisition gaps) | 'author_held' (we hold author, not exact work) | 'all'
+ *   scope           — 'opera_omnia' | 'expurgated' | 'banned' (= not expurgated) | 'all' (default)
  *   sort            — 'author' (default) | 'first_year' | 'edition_count' (desc)
  *   page, page_size — pagination
  */
@@ -42,6 +43,7 @@ export async function GET(req: Request) {
   const editionsParam = (url.searchParams.get('editions') || '').trim();
   const filterMode = url.searchParams.get('filter_mode') === 'all' ? 'all' : 'any';
   const filter = url.searchParams.get('filter') || 'all';
+  const scopeFilter = url.searchParams.get('scope') || 'all';
   const sort = url.searchParams.get('sort') || 'author';
   const page = Math.max(1, parseInt(url.searchParams.get('page') || '1'));
   const pageSize = Math.min(200, Math.max(1, parseInt(url.searchParams.get('page_size') || '50')));
@@ -86,6 +88,15 @@ export async function GET(req: Request) {
   if (filter === 'held') query = query.not('sl_book_id', 'is', null);
   else if (filter === 'unheld') query = query.is('sl_book_id', null).or('author_held_count.is.null,author_held_count.eq.0');
   else if (filter === 'author_held') query = query.is('sl_book_id', null).gt('author_held_count', 0);
+
+  // Scope filter — separate from SL filter. The Spanish Indices are ~90%
+  // expurgations (passages censored inside an otherwise-permitted book),
+  // which are NOT the same acquisition signal as outright bans. Letting
+  // users separate the two avoids reading the full unheld pile as
+  // "books to acquire."
+  if (scopeFilter === 'opera_omnia') query = query.eq('scope', 'opera_omnia');
+  else if (scopeFilter === 'expurgated') query = query.eq('scope', 'expurgated');
+  else if (scopeFilter === 'banned') query = query.neq('scope', 'expurgated');
 
   // Sort
   if (sort === 'first_year') query = query.order('first_year', { ascending: true, nullsFirst: false });

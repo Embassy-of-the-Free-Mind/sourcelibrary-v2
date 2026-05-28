@@ -35,6 +35,7 @@ interface Props {
 }
 
 type Filter = 'all' | 'held' | 'author_held' | 'unheld';
+type ScopeFilter = 'all' | 'banned' | 'opera_omnia' | 'expurgated';
 type Sort = 'author' | 'first_year' | 'edition_count';
 type Mode = 'any' | 'all';
 
@@ -56,6 +57,7 @@ export default function IndexCatalogWorksTable({ collectionSlug, catalogs }: Pro
   const [selectedEditions, setSelectedEditions] = useState<Set<string>>(new Set());
   const [mode, setMode] = useState<Mode>('any');
   const [filter, setFilter] = useState<Filter>('all');
+  const [scopeFilter, setScopeFilter] = useState<ScopeFilter>('all');
   const [sort, setSort] = useState<Sort>('edition_count');
   const [page, setPage] = useState(1);
 
@@ -74,6 +76,7 @@ export default function IndexCatalogWorksTable({ collectionSlug, catalogs }: Pro
         filter_mode: mode,
         sort,
       });
+      if (scopeFilter !== 'all') params.set('scope', scopeFilter);
       if (q.trim().length >= 2) params.set('q', q.trim());
       if (selectedEditions.size > 0) params.set('editions', [...selectedEditions].join(','));
       const r = await fetch(`/api/catalogs/works?${params}`, { signal });
@@ -87,7 +90,7 @@ export default function IndexCatalogWorksTable({ collectionSlug, catalogs }: Pro
     } finally {
       setLoading(false);
     }
-  }, [collectionSlug, page, filter, mode, sort, q, selectedEditions]);
+  }, [collectionSlug, page, filter, scopeFilter, mode, sort, q, selectedEditions]);
 
   useEffect(() => {
     const ctrl = new AbortController();
@@ -156,6 +159,18 @@ export default function IndexCatalogWorksTable({ collectionSlug, catalogs }: Pro
             </button>
           ))}
         </div>
+
+        <select
+          value={scopeFilter}
+          onChange={e => { setPage(1); setScopeFilter(e.target.value as ScopeFilter); }}
+          className="px-3 py-1.5 border border-stone-300 rounded bg-white"
+          title="Distinguish outright bans from in-text expurgations (a censored passage, not the whole work)"
+        >
+          <option value="all">All scopes</option>
+          <option value="banned">Bans only (no expurgations)</option>
+          <option value="opera_omnia">Opera omnia bans</option>
+          <option value="expurgated">Expurgations only</option>
+        </select>
 
         <select
           value={sort}
