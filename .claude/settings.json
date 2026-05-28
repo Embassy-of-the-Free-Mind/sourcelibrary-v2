@@ -13,6 +13,12 @@
       "Bash(vercel list)",
       "Bash(vercel list *)",
       "Bash(vercel inspect *)",
+      "Bash(vercel logs *)",
+      "Bash(vercel domains ls)",
+      "Bash(vercel domains ls *)",
+      "Bash(vercel domains inspect *)",
+      "Bash(dig *)",
+      "Bash(lpstat *)",
       "Bash(open *)",
       "mcp__claude_ai_Gmail__search_threads",
       "mcp__claude_ai_Gmail__get_thread",
@@ -21,12 +27,14 @@
       "mcp__chrome-devtools__navigate_page",
       "mcp__chrome-devtools__take_screenshot",
       "mcp__chrome-devtools__resize_page",
+      "mcp__chrome-devtools__wait_for",
       "mcp__claude_ai_Google_Drive__read_file_content",
       "mcp__claude_ai_Google_Drive__search_files",
       "mcp__claude-conversation-search__search_conversations",
       "mcp__claude_ai_Source_Library__search_library",
       "mcp__claude_ai_Source_Library__get_book",
-      "mcp__claude_ai_Source_Library__get_book_text"
+      "mcp__claude_ai_Source_Library__get_book_text",
+      "mcp__claude_ai_Source_Library__get_quote"
     ]
   },
   "hooks": {
@@ -36,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "BRANCH=$(git -C /Users/dereklomas/sourcelibrary rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$BRANCH\" != \"main\" ] && [ -n \"$BRANCH\" ] && [ \"$PWD\" = \"/Users/dereklomas/sourcelibrary\" ]; then echo \"WARNING: Main directory is on branch '$BRANCH', not 'main'. Another session may have switched it. Use a worktree for feature branch work.\" >&2; fi; exit 0"
+            "command": "bash /Users/dereklomas/sourcelibrary/.claude/hooks/branch-guard.sh"
           }
         ]
       }
