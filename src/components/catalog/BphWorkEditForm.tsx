@@ -54,7 +54,7 @@ const SECTIONS: Array<{
   {
     title: 'Authorship',
     fields: [
-      { name: 'author', label: 'Author (canonical)' },
+      { name: 'author', label: 'Author (standard name)' },
       { name: 'variant_author', label: 'Author (as on title page)' },
       { name: 'pseudonym', label: 'Pseudonym' },
       { name: 'editor', label: 'Editor / translator' },
@@ -336,7 +336,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
             {section.title === 'Authorship' && (
               <div className="pb-2 border-b border-stone-100">
                 <label className="flex items-baseline gap-2 mb-1">
-                  <span className="text-xs text-muted">Canonical author (VIAF)</span>
+                  <span className="text-xs text-muted">Standard name (VIAF)</span>
                   {(changedFields.includes('author_entity_id') ||
                     changedFields.includes('author_canonical_name') ||
                     changedFields.includes('author_wikidata_qid') ||

@@ -268,7 +268,7 @@ export default async function GenericCatalogEntry({
 
                 <dl className="space-y-1.5 text-sm mb-4">
                   {canonicalAuthor && canonicalAuthor !== row.author && (
-                    <Field label="Canonical author" value={canonicalAuthor} />
+                    <Field label="Standard name" value={canonicalAuthor} />
                   )}
                   {slBook.published && slBook.published !== String(row.year || '') && (
                     <Field label="Published" value={slBook.published} />

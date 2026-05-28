@@ -156,7 +156,7 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
             <Field label="Editor / translator" value={work.editor} />
             <Field label="Editor (as on title page)" value={work.variant_editor} />
             {(work.author_canonical_name || work.author_viaf_id || work.author_wikidata_qid) && (
-              <FieldRaw label="Canonical (VIAF)">
+              <FieldRaw label="Standard name (VIAF)">
                 <span className="flex flex-wrap items-baseline gap-x-2">
                   {work.author_canonical_name && (
                     <span>{work.author_canonical_name}</span>
