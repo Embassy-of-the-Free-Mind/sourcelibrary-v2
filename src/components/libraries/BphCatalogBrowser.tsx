@@ -737,14 +737,22 @@ export default function BphCatalogBrowser({
                     </tr>
                   ))
                 )}
-                {works.map((w) => {
+                {works.map((w, idx) => {
                   const digitized = resolveDigitized(w);
                   const external = resolveExternal(w, !!digitized);
                   const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
                   const displayAuthor = w.author || w.variant_author || w.pseudonym;
                   return (
                     <tr
-                      key={w.ubn}
+                      // 2,012 of 29,876 catalog rows have ubn:null (legacy
+                      // pre-Memorix entries). With reactCompiler:true, multiple
+                      // siblings sharing key={null} collide in the per-key
+                      // memoization cache and previous-search rows persist in
+                      // the DOM after works[] shrinks — e.g. searching
+                      // "Helicone" returned 2 rows but rendered 4. Offset the
+                      // fallback key with the row index so each null-ubn row
+                      // is unique within the current results page.
+                      key={w.ubn ?? `null-ubn-${idx}`}
                       className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
                     >
                       <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
@@ -846,7 +854,7 @@ export default function BphCatalogBrowser({
             </div>
           ) : works.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {works.map((w) => {
+              {works.map((w, idx) => {
                 const digitized = resolveDigitized(w);
                 const external = resolveExternal(w, !!digitized);
                 const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
@@ -859,7 +867,10 @@ export default function BphCatalogBrowser({
                 const Wrapper: React.ElementType = href ? 'a' : 'div';
                 return (
                   <Wrapper
-                    key={w.ubn}
+                    // Same null-ubn fallback as the list view above — see
+                    // comment at the table render for the reactCompiler /
+                    // duplicate-key collision rationale.
+                    key={w.ubn ?? `null-ubn-${idx}`}
                     {...(href ? { href } : {})}
                     className="group flex flex-col text-left"
                   >
