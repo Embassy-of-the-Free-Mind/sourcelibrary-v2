@@ -281,7 +281,7 @@ interface TenantContentRouteConfig {
 const TENANT_CONTENT_ROUTES: TenantContentRouteConfig[] = [
   { prefix: 'book',          collection: 'books',          tenantIdField: 'tenantId' },
   { prefix: 'collections',   collection: 'collections',    tenantIdField: 'tenantId' },
-  { prefix: 'gallery/image', collection: 'gallery_images', tenantIdField: 'tenantId' },
+  { prefix: 'gallery', collection: 'gallery_images', tenantIdField: 'tenantId' },
   // Add new tenant-protected content types here.
 ];
 
@@ -813,10 +813,10 @@ export async function proxy(request: NextRequest) {
     const guard = await guardTenantContentAccess(pathname, tenantSlug, tenantId, resolved.source);
     if (guard.matched) {
       if (!guard.allow) {
-        return new NextResponse('Not Found', {
-          status: 404,
-          headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
-        });
+        const url = request.nextUrl.clone();
+        url.pathname = '/';
+        url.search = '';
+        return NextResponse.redirect(url, 307);
       }
       if (guard.rewritePath) {
         // Path-based: internally rewrite to global route, tenant headers already set above.
