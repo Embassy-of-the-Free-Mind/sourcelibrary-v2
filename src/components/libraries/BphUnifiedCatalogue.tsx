@@ -145,27 +145,32 @@ function ViewIcons({
   listHref: string;
   gridHref: string;
 }) {
+  // Labeled segmented control rather than icon-only buttons. Icon-only
+  // toggles read as decoration to readers who aren't already looking for
+  // a view switcher, so we pair each icon with its label.
   const base =
-    'inline-flex items-center justify-center w-9 h-9 transition-colors border border-border-light';
+    'inline-flex items-center gap-1.5 px-3 h-9 text-sm transition-colors border border-border-light';
   const active = 'bg-primary text-white border-primary';
   const inactive = 'bg-white text-muted hover:text-primary hover:bg-warm';
   return (
-    <div className="inline-flex">
+    <div className="inline-flex" role="group" aria-label="Display mode">
       <Link
         href={listHref}
-        title="List view"
         aria-label="List view"
+        aria-current={display === 'list' ? 'page' : undefined}
         className={`${base} rounded-l-md ${display === 'list' ? active : inactive}`}
       >
         <List className="w-4 h-4" />
+        <span>List</span>
       </Link>
       <Link
         href={gridHref}
-        title="Grid view"
-        aria-label="Grid view"
+        aria-label="Covers view"
+        aria-current={display === 'grid' ? 'page' : undefined}
         className={`${base} rounded-r-md -ml-px ${display === 'grid' ? active : inactive}`}
       >
         <LayoutGrid className="w-4 h-4" />
+        <span>Covers</span>
       </Link>
     </div>
   );
