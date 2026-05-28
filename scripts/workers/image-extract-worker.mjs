@@ -294,6 +294,11 @@ fix the scan_class to match the evidence in concerns/completeness, not the other
 // ── Helpers ──
 function getPageImageUrl(page) {
   if (page.crop && page.cropped_photo) return page.cropped_photo;
+  // Prefer the 1200px display variant for vision — Gemini's accuracy plateaus
+  // well below master resolution and the time/bandwidth cost of large masters
+  // (11-18 MB for Morgan ZIFs vs ~200 KB display) was causing rejection
+  // cascades in --all-pages backfills.
+  if (page.display_photo) return page.display_photo;
   if (page.archived_photo && !page.archived_photo.startsWith('failed:')) return page.archived_photo;
   return page.photo_original || page.photo || null;
 }
