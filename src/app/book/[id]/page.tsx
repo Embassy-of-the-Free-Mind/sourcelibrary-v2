@@ -115,7 +115,24 @@ const getCachedBookLookup = cache(async (id: string): Promise<{
 
 // Lightweight book fetch for metadata — reuses cached lookup
 async function getBookForMetadata(id: string, tenantId?: string | null, tenantSlug?: string): Promise<Book | null> {
-  const result = await getCachedBookLookup(id);
+  // Resilient lookup: retry once on transient Atlas errors. Without this,
+  // a single network blip during the lookup turns into a hard notFound()
+  // at the caller (because the .catch(() => null) there can't tell "book
+  // doesn't exist" from "fetch failed"). 222 of 320 not_found_reports in
+  // the 48h window of 2026-05-26→28 fired during a 12-13h UTC cluster
+  // that correlated with deploy/revalidate events — exactly the
+  // "ISR-rebuild meets Atlas hiccup" pattern. Retries here eat the blip.
+  async function lookup(): Promise<typeof result | null> {
+    const result = await getCachedBookLookup(id);
+    return result;
+  }
+  let result;
+  try {
+    result = await lookup();
+  } catch (err) {
+    await new Promise(r => setTimeout(r, 200 + Math.random() * 300));
+    result = await lookup();
+  }
   if (!result) return null;
   if (!tenantId) return result.book as unknown as Book;
 
@@ -1197,7 +1214,13 @@ export default async function BookDetailPage({ params, tenantContext }: PageProp
   // check up here lets Next.js return a real 404 status. Both calls go through
   // getCachedBookLookup so this is "free" — the streaming child reuses the
   // cached result.
-  const earlyBook = await getBookForMetadata(id, tenantId, tenantSlug).catch(() => null);
+  //
+  // Distinguish "book doesn't exist" (null → notFound()) from "fetch failed"
+  // (throw → bubble to error.tsx, status 500, friendly retry UI). The earlier
+  // .catch(() => null) lumped both into 404, which logged transient Atlas
+  // blips as permanent not_found_reports. getBookForMetadata already retries
+  // once internally on transient errors.
+  const earlyBook = await getBookForMetadata(id, tenantId, tenantSlug);
   if (!earlyBook) {
     notFound();
   }
