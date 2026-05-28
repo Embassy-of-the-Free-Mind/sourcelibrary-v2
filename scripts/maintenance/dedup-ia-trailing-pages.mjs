@@ -50,15 +50,16 @@ const APPLY = process.argv.includes('--apply');
 const BOOK_ID = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
 const PROVIDER = process.argv.find(a => a.startsWith('--provider='))?.split('=')[1]; // optional filter
 const BOOK_LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
-// Default window 1000 — the largest book in our sample (Secret Doctrine) had
-// trailing dupes spanning >233 pages, and other books may go deeper.
-const WINDOW = parseInt(process.argv.find(a => a.startsWith('--window='))?.split('=')[1] || '1000', 10);
+// Initial probe size — start small so books WITHOUT dupes return fast (the
+// common case). The auto-expand loop doubles the lookback each time the run
+// covers the whole probed batch, so Secret Doctrine's 200+ dupe block is
+// still fully caught — just iteratively. At INITIAL=30 with MAX_EXPANSIONS=8,
+// max coverage = 30 × 2^8 = 7680 pages, plenty for any plausible book.
+const WINDOW = parseInt(process.argv.find(a => a.startsWith('--window='))?.split('=')[1] || '30', 10);
 const MIN_RUN_LEN = parseInt(process.argv.find(a => a.startsWith('--min-run='))?.split('=')[1] || '5', 10);
 const MIN_BOOK_PAGES = parseInt(process.argv.find(a => a.startsWith('--min-pages='))?.split('=')[1] || '50', 10);
 const HEAD_CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--head-concurrency='))?.split('=')[1] || '20', 10);
-// If a trailing run hits the window edge, expand and rescan up to N times.
-// Each expansion doubles the lookback. 5 expansions = up to 32x WINDOW.
-const MAX_EXPANSIONS = parseInt(process.argv.find(a => a.startsWith('--max-expansions='))?.split('=')[1] || '5', 10);
+const MAX_EXPANSIONS = parseInt(process.argv.find(a => a.startsWith('--max-expansions='))?.split('=')[1] || '8', 10);
 
 // Returns the R2 ETag (MD5 of file content) — the only stable identity signal.
 // `content-length` is NOT reliable: Cloudflare's edge serves different values
