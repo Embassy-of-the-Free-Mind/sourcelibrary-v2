@@ -63,10 +63,13 @@ export async function GET(request: NextRequest) {
     // Sort
     switch (sort) {
       case 'title-asc':
-        query = query.order('sort_title', { ascending: true });
+        query = query.order('sort_title', { ascending: true, nullsFirst: false });
         break;
       case 'title-desc':
-        query = query.order('sort_title', { ascending: false });
+        // nullsFirst:false matches the asc case — Supabase otherwise puts
+        // NULL sort_title ahead of real ones for descending sorts. Same
+        // class of bug as the BPH title_desc fix in #2132.
+        query = query.order('sort_title', { ascending: false, nullsFirst: false });
         break;
       case 'date_asc':
         query = query.order('year', { ascending: true, nullsFirst: false });

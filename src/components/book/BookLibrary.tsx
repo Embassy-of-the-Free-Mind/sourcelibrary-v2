@@ -174,6 +174,11 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
 
+      // Drop the result if a newer fetch superseded us — abort() doesn't
+      // stop res.json() once await fetch already resolved. Same race as
+      // fixed in BphCatalogBrowser (#2132).
+      if (abortRef.current !== controller) return;
+
       if (append) {
         setApiBooks(prev => [...(prev ?? initialBooks), ...data.books]);
       } else {
@@ -184,7 +189,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       if (error instanceof Error && error.name === 'AbortError') return;
       console.error('Failed to fetch books:', error);
     } finally {
-      if (!controller.signal.aborted) {
+      if (abortRef.current === controller && !controller.signal.aborted) {
         setLoading(false);
         setLoadingMore(false);
       }
