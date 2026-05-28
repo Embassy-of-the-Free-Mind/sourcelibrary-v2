@@ -4,18 +4,16 @@ import { getDb } from '@/lib/mongodb';
 /**
  * Resolved tenant context for a request.
  *
- * `id` + `slug` come from the `tenants` Mongo collection. `kind` distinguishes
- * subdomain tenants (`bph`, `kloss-collection`, `bhutan`) from legacy provider
- * rows. `isEmbedded` is true when the request is served under `/embed/*` or
- * via a tenant subdomain rewrite. `source` records which resolution branch
- * fired so debugging cross-tenant leaks isn't a guessing game.
+ * `id` + `slug` come from the `tenants` Mongo collection. `isEmbedded` is true
+ * when the request is served under `/embed/*` or via a tenant subdomain
+ * rewrite. `source` records which resolution branch fired so debugging
+ * cross-tenant leaks isn't a guessing game.
  *
  * A null context means the request is global (no tenant-filter overlay).
  */
 export interface TenantContext {
   slug: string | null;
   id: string | null;
-  kind: string | null;
   isEmbedded: boolean;
   source: TenantSource | null;
 }
@@ -88,7 +86,7 @@ export function getTenantContextFromRequest(
 
   if (typeof headersObj?.get !== 'function') {
     // Return empty context if headers are invalid (e.g. from test mocks)
-    return { slug: null, id: null, kind: null, isEmbedded: false, source: null };
+    return { slug: null, id: null, isEmbedded: false, source: null };
   }
 
   return readHeadersObject(headersObj);
@@ -102,10 +100,9 @@ function readTenantContextFromHeaders(h: Headers): TenantContext | null {
 function readHeadersObject(headersObj: { get: (name: string) => string | null }): TenantContext {
   const slug = headersObj.get('x-tenant-slug');
   const id = headersObj.get('x-tenant-id');
-  const kind = headersObj.get('x-tenant-kind');
   const isEmbedded = headersObj.get('x-tenant-embedded') === '1';
   const source = (headersObj.get('x-tenant-source') as TenantSource | null) ?? null;
-  return { slug, id, kind, isEmbedded, source };
+  return { slug, id, isEmbedded, source };
 }
 
 /**

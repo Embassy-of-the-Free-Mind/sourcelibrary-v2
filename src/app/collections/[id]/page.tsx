@@ -22,6 +22,7 @@ import { browseBooks } from '@/lib/books-catalog';
 
 // ISR: rebuild at most once per day
 export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export const maxDuration = 60;
 export async function generateStaticParams() {

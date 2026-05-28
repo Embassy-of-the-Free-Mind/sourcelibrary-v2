@@ -79,5 +79,5 @@ export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
  * callsite has access to `getTenantContext()`, pass that directly.
  */
 export function embeddedContext(isEmbedded: boolean): TenantContext {
-  return { id: null, slug: null, kind: null, isEmbedded, source: null };
+  return { id: null, slug: null, isEmbedded, source: null };
 }

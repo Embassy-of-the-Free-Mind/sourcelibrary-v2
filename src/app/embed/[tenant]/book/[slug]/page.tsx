@@ -28,7 +28,7 @@ export default async function EmbedBookPage({ params }: { params: Promise<{ tena
     return (
         <BookDetailPage
             params={Promise.resolve({ id: slug })}
-            tenantContext={{ id: tenantId, slug: tenant, kind: 'subdomain', isEmbedded: true, source: 'embed-path' }}
+            tenantContext={{ id: tenantId, slug: tenant, isEmbedded: true, source: 'embed-path' }}
         />
     );
 }

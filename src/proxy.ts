@@ -178,7 +178,7 @@ const TENANT_SUBDOMAINS: Record<string, string> = {
 
 async function resolveActiveTenant(
   slug: string
-): Promise<{ id: string; slug: string; kind: string | null } | null> {
+): Promise<{ id: string; slug: string } | null> {
   // TENANT_ROOT_PATHS gates the path-based fast path so unknown slugs don't
   // hit Mongo. The DB lookup stays as the authoritative source — aliases
   // (`slug_aliases`) still resolve, but only when their canonical slug is in
@@ -187,41 +187,18 @@ async function resolveActiveTenant(
   if (!TENANT_ROOT_PATHS.has(slug)) return null;
   try {
     const db = await getDb();
-    const tenant = await db.collection('tenants').findOne({
-      $or: [
-        { slug },
-        { aliases: slug },
-        { slug_aliases: slug },
-      ],
-      status: { $ne: 'deleted' },
-    });
+    const tenant = await db.collection('tenants').findOne(
+      {
+        $or: [{ slug }, { aliases: slug }, { slug_aliases: slug }],
+        status: { $ne: 'deleted' },
+      },
+      { projection: { id: 1, slug: 1 } }
+    );
     if (!tenant) return null;
     return {
       id: tenant.id as string,
       slug: tenant.slug as string,
-      kind: (tenant.kind as string | undefined) ?? null,
     };
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Look up a `kind:'provider'` row by slug. Used only by the provider-strip
- * 308 safety net below — we don't filter by TENANT_ROOT_PATHS here because
- * provider slugs (internet-archive, gallica, …) are deliberately outside it.
- */
-async function resolveProviderTenant(slug: string): Promise<{ kind: string | null } | null> {
-  if (!slug || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) return null;
-  if (TENANT_ROOT_PATHS.has(slug)) return null;
-  try {
-    const db = await getDb();
-    const tenant = await db.collection('tenants').findOne(
-      { slug, kind: 'provider', status: { $ne: 'deleted' } },
-      { projection: { kind: 1 } }
-    );
-    if (!tenant) return null;
-    return { kind: (tenant.kind as string | undefined) ?? null };
   } catch {
     return null;
   }
@@ -243,19 +220,18 @@ async function resolveTenantSlugById(tenantId: string): Promise<string | null> {
 
 async function resolveTenantByExactSlug(
   slug: string
-): Promise<{ id: string; slug: string; kind: string | null } | null> {
+): Promise<{ id: string; slug: string } | null> {
   if (!slug) return null;
   try {
     const db = await getDb();
     const tenant = await db.collection('tenants').findOne(
       { slug, status: { $ne: 'deleted' } },
-      { projection: { id: 1, slug: 1, kind: 1 } }
+      { projection: { id: 1, slug: 1 } }
     );
     if (!tenant) return null;
     return {
       id: tenant.id as string,
       slug: tenant.slug as string,
-      kind: (tenant.kind as string | undefined) ?? null,
     };
   } catch {
     return null;
@@ -384,7 +360,6 @@ async function resolveTenantForBookSegment(segment: string): Promise<string | nu
 export interface ResolvedTenant {
   id: string;
   slug: string;
-  kind: string | null;
   source: 'subdomain' | 'path' | 'api-segment' | 'referer' | 'embed-path';
   /**
    * The URL segment that matched, if resolution was path-based. Middleware
@@ -417,7 +392,6 @@ export async function resolveTenantFromRequest(
       return {
         id: resolved.id,
         slug: resolved.slug,
-        kind: resolved.kind,
         source: 'subdomain',
       };
     }
@@ -435,7 +409,6 @@ export async function resolveTenantFromRequest(
         return {
           id: resolved.id,
           slug: resolved.slug,
-          kind: resolved.kind,
           source: 'embed-path',
         };
       }
@@ -451,7 +424,6 @@ export async function resolveTenantFromRequest(
       return {
         id: direct.id,
         slug: direct.slug,
-        kind: direct.kind,
         source: 'path',
         originalSegment: firstSegment,
       };
@@ -467,7 +439,6 @@ export async function resolveTenantFromRequest(
         return {
           id: pathTenant.id,
           slug: pathTenant.slug,
-          kind: pathTenant.kind,
           source: 'api-segment',
         };
       }
@@ -487,7 +458,6 @@ export async function resolveTenantFromRequest(
           return {
             id: refTenant.id,
             slug: refTenant.slug,
-            kind: refTenant.kind,
             source: 'referer',
           };
         }
@@ -499,7 +469,6 @@ export async function resolveTenantFromRequest(
               return {
                 id: resolved.id,
                 slug: resolved.slug,
-                kind: resolved.kind,
                 source: 'referer',
               };
             }
@@ -639,30 +608,10 @@ export async function proxy(request: NextRequest) {
       subdomainHeaders.set('x-tenant-source', 'subdomain');
       subdomainHeaders.set('x-tenant-embedded', '1');
       if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
-      if (subdomainTenant?.kind) subdomainHeaders.set('x-tenant-kind', subdomainTenant.kind);
       return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
     }
     // Fall through — the resolution block below picks up the subdomain
     // tenant and stamps x-tenant-* headers on the global route.
-  }
-
-  // --- Source-provider URL strip ---
-  // Source providers (Internet Archive, Gallica, Bodleian, …) live in the
-  // `tenants` Mongo collection as `kind:'provider'` rows so book metadata can
-  // credit them, but they are NOT tenants in the routing sense — no partner
-  // subdomain, no scoped UI. Strip a leading provider slug and 308 to the
-  // global equivalent so providers never claim URL space. Kept as a safety
-  // net for old indexed links (see PR #2025).
-  const providerStripMatch = pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/);
-  if (providerStripMatch) {
-    const seg = providerStripMatch[1];
-    const rest = providerStripMatch[2] || '';
-    const providerCandidate = await resolveProviderTenant(seg);
-    if (providerCandidate?.kind === 'provider') {
-      const url = request.nextUrl.clone();
-      url.pathname = rest || '/';
-      return NextResponse.redirect(url, 308);
-    }
   }
 
   // Tenant-prefix canonicalizers (/{tenant}/book → /book, /{tenant}/collections
@@ -794,7 +743,6 @@ export async function proxy(request: NextRequest) {
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');
   if (tenantId) requestHeaders.set('x-tenant-id', tenantId);
   if (tenantSlug) requestHeaders.set('x-tenant-slug', tenantSlug);
-  if (resolved?.kind) requestHeaders.set('x-tenant-kind', resolved.kind);
   if (resolved?.source) requestHeaders.set('x-tenant-source', resolved.source);
   // Mark embedded so getTenantContext() / getEmbedUiPolicy() apply lockdown UI:
   //   - 'subdomain': subdomain requests that fell through the rewrite block
