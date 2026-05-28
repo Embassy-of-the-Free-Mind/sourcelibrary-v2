@@ -57,7 +57,7 @@ export interface SemanticBookResult {
 export async function semanticBookSearch(
   query: string,
   limit: number = 20,
-  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number; tenantId?: string }
+  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number; tenantId?: string | null }
 ): Promise<SemanticBookResult[]> {
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
@@ -66,6 +66,11 @@ export async function semanticBookSearch(
     query_embedding: JSON.stringify(queryEmbedding),
     match_threshold: opts?.threshold ?? 0.3,
     match_count: limit,
+    // tenantId === undefined → callers default to main-site (NULL); pass
+    // explicit null to make the intent visible in the RPC signature.
+    // tenantId === null is the same as undefined here (both → main-site).
+    // tenantId === '<uuid>' → that tenant only.
+    filter_tenant_id: opts?.tenantId ?? null,
     filter_language: opts?.language ?? null,
     filter_year_min: opts?.yearMin ?? null,
     filter_year_max: opts?.yearMax ?? null,
@@ -153,7 +158,7 @@ async function getQueryEmbeddingFull(query: string): Promise<number[] | null> {
 export async function semanticArtworkSearch(
   query: string,
   limit: number = 20,
-  opts?: { genre?: string; period?: string; culture?: string; collection?: string; threshold?: number }
+  opts?: { genre?: string; period?: string; culture?: string; collection?: string; threshold?: number; tenantId?: string | null }
 ): Promise<SemanticArtworkResult[]> {
   const queryEmbedding = await getQueryEmbeddingFull(query);
   if (!queryEmbedding) return [];
@@ -162,6 +167,7 @@ export async function semanticArtworkSearch(
     query_embedding: JSON.stringify(queryEmbedding),
     match_threshold: opts?.threshold ?? 0.3,
     match_count: limit,
+    filter_tenant_id: opts?.tenantId ?? null,
     filter_genre: opts?.genre ?? null,
     filter_period: opts?.period ?? null,
     filter_culture: opts?.culture ?? null,
@@ -342,6 +348,7 @@ export async function semanticPageSearchScoped(
   query: string,
   bookIds: string[],
   limit: number = 10,
+  opts?: { tenantId?: string | null },
 ): Promise<SemanticPageResult[]> {
   if (bookIds.length === 0) return [];
 
@@ -353,6 +360,9 @@ export async function semanticPageSearchScoped(
     book_ids: bookIds,
     match_threshold: 0.3,
     match_count: limit,
+    // Defense-in-depth: caller already filtered books by tenant, but pass
+    // the same scope to the RPC so a stray book_id can't leak.
+    filter_tenant_id: opts?.tenantId ?? null,
   });
 
   if (error) {

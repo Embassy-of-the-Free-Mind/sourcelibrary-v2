@@ -159,11 +159,14 @@ export async function POST(request: NextRequest) {
         const { embedding } = await clipResp.json();
         if (!embedding) return [];
 
-        // Search Supabase for visual matches
+        // Search Supabase for visual matches. /identify is a main-site
+        // surface; pass NULL to scope to non-tenant rows. If this is ever
+        // exposed under a tenant subdomain, plumb tenant context through.
         const { data, error } = await supabase.rpc('match_clip_images', {
           query_embedding: embedding,
           match_threshold: 0.25,
           match_count: 20,
+          filter_tenant_id: null,
         });
         if (error) {
           console.error('[identify] CLIP search error:', error.message);

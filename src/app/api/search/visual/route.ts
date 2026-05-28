@@ -58,17 +58,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Search Supabase for visually matching images. The CLIP RPC has no
-    // tenant column, so when a tenant filter is active we post-filter the
-    // matches in MongoDB below — oversample here so enough survive the
-    // filter (top-N globally would otherwise leave only a handful for niche
-    // tenant queries). Until the RPC gains a tenant column, this is the
-    // pragmatic fix.
+    // Tenant filtering happens at the RPC layer (filter_tenant_id) — the
+    // CLIP table now carries tenant_id. The Mongo post-filter below stays
+    // as defense-in-depth + to apply visible/hidden rules the RPC doesn't
+    // know about. The 10x oversample for tenant queries is no longer
+    // needed because the RPC pre-filters in SQL.
     const baseCount = offset + limit + 10;
     const { data, error } = await supabase.rpc('match_clip_text', {
       query_embedding: embedding,
       match_threshold: threshold,
-      match_count: tenantId ? Math.min(baseCount * 10, 1000) : baseCount,
+      match_count: baseCount,
+      filter_tenant_id: tenantId ?? null,
     });
 
     if (error) {

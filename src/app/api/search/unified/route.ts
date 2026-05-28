@@ -180,7 +180,7 @@ export async function GET(request: NextRequest) {
         emptyIndex, 'index',
       ),
       withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined), emptyGallery, 'gallery'),
-      withTimeout(searchVisual(matchQuery, galleryLimit), emptyGallery, 'visual', 5000),
+      withTimeout(searchVisual(matchQuery, galleryLimit, tenantContext.id || null), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
         semanticBookSearch(matchQuery, 12, { tenantId: tenantContext.id || undefined })
@@ -712,7 +712,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
  * CLIP visual search: encode text query via CLIP, search against image embeddings.
  * Finds images by what they look like, not just their metadata.
  */
-async function searchVisual(query: string, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchVisual(query: string, limit: number, tenantId: string | null = null): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     // Encode text via CLIP text encoder
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
@@ -730,6 +730,7 @@ async function searchVisual(query: string, limit: number): Promise<{ results: Ga
       query_embedding: embedding,
       match_threshold: 0.22,
       match_count: limit * 2,
+      filter_tenant_id: tenantId,
     });
     if (error || !data) return { results: [], total: 0 };
 

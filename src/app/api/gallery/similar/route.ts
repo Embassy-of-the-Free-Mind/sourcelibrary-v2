@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     const db = await getDb();
 
     // Strategy 1: CLIP visual similarity via Supabase pgvector
-    const clipResults = await clipSimilarity(id, limit);
+    const clipResults = await clipSimilarity(id, limit, tenantId || undefined);
     if (clipResults && clipResults.length > 0) {
       const resolved = await resolveGalleryItems(
         db,
@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
  * CLIP visual similarity via Supabase pgvector.
  * Finds the target image's CLIP embedding, then queries for nearest neighbors.
  */
-async function clipSimilarity(galleryId: string, limit: number) {
+async function clipSimilarity(galleryId: string, limit: number, tenantId?: string) {
   try {
     // Look up the target image's CLIP embedding
     const { data: target } = await supabase
@@ -109,6 +109,7 @@ async function clipSimilarity(galleryId: string, limit: number) {
       query_embedding: target.embedding,
       match_threshold: 0.2,
       match_count: limit * 3, // fetch extra for diversity filtering
+      filter_tenant_id: tenantId ?? null,
     });
 
     if (!matches || matches.length === 0) return null;
@@ -156,6 +157,7 @@ async function embeddingSimilarity(
       match_threshold: 0.2,
       match_count: limit * 3,
       exclude_book_id: targetEmb.book_id,
+      filter_tenant_id: tenantId ?? null,
     });
 
     if (!error && matches && matches.length > 0) {

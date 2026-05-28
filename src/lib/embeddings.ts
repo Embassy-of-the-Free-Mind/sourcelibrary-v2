@@ -153,6 +153,9 @@ export interface SimilarImageOptions {
   minQuality?: number;
   candidateLimit?: number; // Max candidates to fetch (default 500)
   limit?: number; // Final results (default 12)
+  // Tenant scope: undefined or null → main-site only (rows with tenant_id IS NULL).
+  // Pass a tenant UUID to scope to that tenant only.
+  tenantId?: string | null;
 }
 
 export interface SimilarImageResult {
@@ -177,6 +180,7 @@ export async function findSimilarImages(
     excludeBookId,
     excludeId,
     limit = 12,
+    tenantId,
   } = options;
 
   // Try Supabase pgvector first
@@ -185,6 +189,7 @@ export async function findSimilarImages(
       query_embedding: JSON.stringify(targetEmbedding),
       match_threshold: 0.2,
       match_count: limit * 3, // fetch extra for diversity filtering
+      filter_tenant_id: tenantId ?? null,
       exclude_book_id: excludeBookId || null,
     });
 

@@ -14,7 +14,7 @@ export const maxDuration = 30;
  * Returns gallery_image IDs with visual similarity scores.
  * Fails silently — CLIP search is a boost, not required.
  */
-async function clipTextSearch(query: string, limit: number): Promise<Map<string, number>> {
+async function clipTextSearch(query: string, limit: number, tenantId: string | null): Promise<Map<string, number>> {
   const results = new Map<string, number>();
   try {
     // Encode query text via CLIP server
@@ -33,6 +33,7 @@ async function clipTextSearch(query: string, limit: number): Promise<Map<string,
       query_embedding: embedding,
       match_threshold: 0.20,
       match_count: limit,
+      filter_tenant_id: tenantId,
     });
     if (error || !data) return results;
 
@@ -108,10 +109,10 @@ export async function GET(request: NextRequest) {
     const searchQuery = searchParams.get('q');
 
     if (visual && searchQuery) {
-      return NextResponse.json(await clipGallerySearch(searchParams, searchQuery));
+      return NextResponse.json(await clipGallerySearch(searchParams, searchQuery, tenantId ?? null));
     }
     if (semantic && searchQuery) {
-      return NextResponse.json(await semanticGallerySearch(searchParams, searchQuery));
+      return NextResponse.json(await semanticGallerySearch(searchParams, searchQuery, tenantId ?? null));
     }
 
     const bookId = searchParams.get('bookId') || searchParams.get('book');
@@ -209,9 +210,11 @@ export async function GET(request: NextRequest) {
     // Shuffle is handled client-side — server-side $sample/$skip both timeout on Atlas
     // with broad filters (minQuality=0.5, maxPerBook=999). The shuffle param is ignored.
 
-    // Fire CLIP visual search in parallel with text search
+    // Fire CLIP visual search in parallel with text search.
+    // Pass the resolved tenant scope — if no tenant context, tenantId is null
+    // which means "main-site only" at the RPC layer (rows with tenant_id IS NULL).
     const clipPromise = searchQuery
-      ? clipTextSearch(searchQuery, Math.max(limit * 2, 60))
+      ? clipTextSearch(searchQuery, Math.max(limit * 2, 60), tenantId ?? null)
       : Promise.resolve(new Map<string, number>());
 
     let textItems: any[] = [];
@@ -548,7 +551,7 @@ async function getBookInfo(db: Awaited<ReturnType<typeof getReadDb>>, bookId: st
  * Semantic gallery search: embed query, then find similar via Supabase pgvector.
  * Falls back to MongoDB brute-force cosine if Supabase is unavailable.
  */
-async function semanticGallerySearch(searchParams: URLSearchParams, query: string) {
+async function semanticGallerySearch(searchParams: URLSearchParams, query: string, tenantId: string | null) {
   const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
   const imageType = searchParams.get('type');
@@ -564,6 +567,7 @@ async function semanticGallerySearch(searchParams: URLSearchParams, query: strin
       query_embedding: JSON.stringify(queryEmbedding),
       match_threshold: 0.15,
       match_count: offset + limit + 50, // fetch enough for pagination + filtering
+      filter_tenant_id: tenantId,
     });
 
     if (!error && matches && matches.length > 0) {
@@ -849,7 +853,7 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getReadDb>>, sea
  * search against CLIP image embeddings in Supabase.
  * Returns gallery items ranked by visual similarity.
  */
-async function clipGallerySearch(searchParams: URLSearchParams, query: string) {
+async function clipGallerySearch(searchParams: URLSearchParams, query: string, tenantId: string | null) {
   const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
 
@@ -872,7 +876,7 @@ async function clipGallerySearch(searchParams: URLSearchParams, query: string) {
 
   if (!embedding) {
     // Fall back to text-embedding semantic search
-    return semanticGallerySearch(searchParams, query);
+    return semanticGallerySearch(searchParams, query, tenantId);
   }
 
   // Search Supabase CLIP embeddings
@@ -880,6 +884,7 @@ async function clipGallerySearch(searchParams: URLSearchParams, query: string) {
     query_embedding: embedding,
     match_threshold: 0.18,
     match_count: offset + limit + 20,
+    filter_tenant_id: tenantId,
   });
 
   if (error || !matches || matches.length === 0) {
