@@ -94,17 +94,44 @@ async function main() {
   if (apply) {
     const authThr = loose ? 0.80 : 0.85;
     const titThr  = loose ? 0.65 : 0.85;
-    console.log(`\n→ Calling align_translations_to_ustc_auto(author=${authThr}, title=${titThr}) ...`);
+    const CHUNK = 2000; // translations per RPC call — small enough to stay under statement_timeout
+
+    // Find max id so we know how many chunks we need
+    const maxIdResp = await callRpc('translation_catalogs_max_id', {});
+    const maxId = maxIdResp ?? 30000;
+    const totalChunks = Math.ceil(maxId / CHUNK);
+    console.log(`\n→ Chunked alignment: ${totalChunks} chunks of ${CHUNK} ids each (max_id=${maxId}, thresholds: author=${authThr}, title=${titThr})`);
+
+    let totalIns = 0;
+    let totalProcessed = 0;
     const t0 = Date.now();
-    const result = await callRpc('align_translations_to_ustc_auto', {
-      author_threshold: authThr,
-      title_threshold: titThr,
-    });
+    for (let start = 0; start < maxId; start += CHUNK) {
+      const end = start + CHUNK;
+      const ct0 = Date.now();
+      try {
+        const result = await callRpc('align_translations_to_ustc_auto', {
+          author_threshold: authThr,
+          title_threshold: titThr,
+          id_start: start,
+          id_end: end,
+        });
+        const r = Array.isArray(result) ? result[0] : result;
+        const ins = parseInt(r?.inserted_links || 0);
+        const proc = parseInt(r?.processed_translations || 0);
+        totalIns += ins;
+        totalProcessed += proc;
+        const cdur = ((Date.now() - ct0) / 1000).toFixed(1);
+        console.log(`  chunk [${start}-${end}): processed=${proc} inserted=${ins} (${cdur}s)`);
+      } catch (e) {
+        console.error(`  chunk [${start}-${end}) FAILED: ${e.message}`);
+      }
+    }
     const dur = ((Date.now() - t0) / 1000).toFixed(1);
-    console.log(`Done in ${dur}s.`);
-    console.log('Result:', JSON.stringify(result, null, 2));
+    console.log(`\nDone in ${dur}s.`);
+    console.log(`Total translations processed: ${totalProcessed.toLocaleString()}`);
+    console.log(`Total links inserted: ${totalIns.toLocaleString()}`);
     const after = await countLinks();
-    console.log(`Total link rows: ${after.toLocaleString()} (+${(after - before).toLocaleString()})`);
+    console.log(`Link rows in table: ${after.toLocaleString()} (+${(after - before).toLocaleString()})`);
   } else {
     console.log('(Dry-run mode: re-run with --apply to insert high-confidence links.)');
   }
