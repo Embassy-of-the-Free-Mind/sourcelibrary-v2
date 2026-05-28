@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { BookMarked, ExternalLink, Search, BookOpen } from 'lucide-react';
+import { BookMarked, ExternalLink, Search, BookOpen, User } from 'lucide-react';
 
 interface CatalogEntry {
   id: number;
@@ -19,6 +19,8 @@ interface CatalogEntry {
   sl_book_slug: string | null;
   source_book_slug?: string | null;
   source_page?: number | null;
+  author_held_count?: number | null;
+  author_held_sample_slug?: string | null;
 }
 
 interface Catalog {
@@ -33,7 +35,7 @@ interface Props {
   catalogs: Catalog[];
 }
 
-type Filter = 'all' | 'held' | 'unheld';
+type Filter = 'all' | 'held' | 'author_held' | 'unheld';
 type Sort = 'author' | 'year' | 'condemned';
 
 const PAGE_SIZE = 50;
@@ -150,13 +152,22 @@ export default function IndexCatalogSection({ catalogs }: Props) {
         </div>
 
         <div className="flex gap-1 border border-stone-300 rounded overflow-hidden">
-          {(['all', 'held', 'unheld'] as Filter[]).map(f => (
+          {(['all', 'held', 'author_held', 'unheld'] as Filter[]).map(f => (
             <button
               key={f}
               onClick={() => { setPage(1); setFilter(f); }}
               className={`px-3 py-1.5 ${filter === f ? 'bg-stone-800 text-white' : 'bg-white text-stone-700 hover:bg-stone-100'}`}
+              title={
+                f === 'held' ? 'This exact work is in the library' :
+                f === 'author_held' ? 'We hold writings by this author, though not this specific work' :
+                f === 'unheld' ? 'Neither the work nor the author is in the library' :
+                undefined
+              }
             >
-              {f === 'all' ? 'All' : f === 'held' ? 'In library' : 'Not held'}
+              {f === 'all' ? 'All' :
+               f === 'held' ? 'Work in library' :
+               f === 'author_held' ? 'Author in library' :
+               'Not held'}
             </button>
           ))}
         </div>
@@ -226,6 +237,15 @@ export default function IndexCatalogSection({ catalogs }: Props) {
                     >
                       <BookOpen className="w-3.5 h-3.5" />
                       Read at Source Library
+                    </Link>
+                  ) : e.author_held_count && e.author_held_count > 0 && e.author_held_sample_slug ? (
+                    <Link
+                      href={`/book/${e.author_held_sample_slug}`}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-900 border border-amber-300 rounded hover:bg-amber-200"
+                      title={`Source Library holds ${e.author_held_count} book${e.author_held_count === 1 ? '' : 's'} by this author, but not this specific work`}
+                    >
+                      <User className="w-3.5 h-3.5" />
+                      {e.author_held_count} {e.author_held_count === 1 ? 'book' : 'books'} by author
                     </Link>
                   ) : e.ustc_sn ? (
                     <a

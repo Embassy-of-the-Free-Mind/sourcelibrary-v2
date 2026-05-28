@@ -17,6 +17,9 @@ interface Work {
   ustc_sn: number | null;
   sl_book_id: string | null;
   sl_book_slug: string | null;
+  author_held_count: number | null;
+  author_held_sample_slug: string | null;
+  author_held_sample_id: string | null;
 }
 
 /**
@@ -28,7 +31,7 @@ interface Work {
  *   q               — title or author search (>= 2 chars)
  *   editions        — comma-separated list of index_ids to filter by
  *   filter_mode     — 'any' (default) or 'all'
- *   filter          — 'held' (only SL-linked) | 'unheld' (acquisition gaps) | 'all'
+ *   filter          — 'held' (only SL-linked) | 'unheld' (acquisition gaps) | 'author_held' (we hold author, not exact work) | 'all'
  *   sort            — 'author' (default) | 'first_year' | 'edition_count' (desc)
  *   page, page_size — pagination
  */
@@ -81,7 +84,8 @@ export async function GET(req: Request) {
 
   // SL filter
   if (filter === 'held') query = query.not('sl_book_id', 'is', null);
-  else if (filter === 'unheld') query = query.is('sl_book_id', null);
+  else if (filter === 'unheld') query = query.is('sl_book_id', null).or('author_held_count.is.null,author_held_count.eq.0');
+  else if (filter === 'author_held') query = query.is('sl_book_id', null).gt('author_held_count', 0);
 
   // Sort
   if (sort === 'first_year') query = query.order('first_year', { ascending: true, nullsFirst: false });

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { BookMarked, ExternalLink, Search, BookOpen } from 'lucide-react';
+import { BookMarked, ExternalLink, Search, BookOpen, User } from 'lucide-react';
 
 interface Work {
   work_key: string;
@@ -16,6 +16,9 @@ interface Work {
   ustc_sn: number | null;
   sl_book_id: string | null;
   sl_book_slug: string | null;
+  author_held_count: number | null;
+  author_held_sample_slug: string | null;
+  author_held_sample_id: string | null;
 }
 
 interface Catalog {
@@ -31,7 +34,7 @@ interface Props {
   catalogs: Catalog[];
 }
 
-type Filter = 'all' | 'held' | 'unheld';
+type Filter = 'all' | 'held' | 'author_held' | 'unheld';
 type Sort = 'author' | 'first_year' | 'edition_count';
 type Mode = 'any' | 'all';
 
@@ -134,13 +137,22 @@ export default function IndexCatalogWorksTable({ collectionSlug, catalogs }: Pro
         </div>
 
         <div className="flex gap-1 border border-stone-300 rounded overflow-hidden">
-          {(['all', 'held', 'unheld'] as Filter[]).map(f => (
+          {(['all', 'held', 'author_held', 'unheld'] as Filter[]).map(f => (
             <button
               key={f}
               onClick={() => { setPage(1); setFilter(f); }}
               className={`px-3 py-1.5 ${filter === f ? 'bg-stone-800 text-white' : 'bg-white text-stone-700 hover:bg-stone-100'}`}
+              title={
+                f === 'held' ? 'This exact work is in the library' :
+                f === 'author_held' ? 'We hold writings by this author, though not this specific work' :
+                f === 'unheld' ? 'Neither the work nor the author is in the library' :
+                undefined
+              }
             >
-              {f === 'all' ? 'All' : f === 'held' ? 'In library' : 'Not held'}
+              {f === 'all' ? 'All' :
+               f === 'held' ? 'Work in library' :
+               f === 'author_held' ? 'Author in library' :
+               'Not held'}
             </button>
           ))}
         </div>
@@ -246,6 +258,14 @@ export default function IndexCatalogWorksTable({ collectionSlug, catalogs }: Pro
                     {w.sl_book_slug ? (
                       <Link href={`/book/${w.sl_book_slug}`} className="inline-flex items-center gap-1 text-xs bg-stone-800 text-white px-2 py-1 rounded hover:bg-stone-900">
                         <BookOpen className="w-3 h-3" />Read
+                      </Link>
+                    ) : w.author_held_count && w.author_held_count > 0 && w.author_held_sample_slug ? (
+                      <Link
+                        href={`/book/${w.author_held_sample_slug}`}
+                        className="inline-flex items-center gap-1 text-xs bg-amber-100 text-amber-900 px-2 py-1 rounded hover:bg-amber-200 border border-amber-300"
+                        title={`Source Library holds ${w.author_held_count} book${w.author_held_count === 1 ? '' : 's'} by this author, but not this specific work`}
+                      >
+                        <User className="w-3 h-3" />{w.author_held_count} by author
                       </Link>
                     ) : w.ustc_sn ? (
                       <a href={`https://www.ustc.ac.uk/editions/${w.ustc_sn}`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-stone-600 hover:text-stone-900">
