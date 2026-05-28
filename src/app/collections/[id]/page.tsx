@@ -8,7 +8,6 @@ import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
-import { unstable_noStore } from 'next/cache';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
@@ -580,11 +579,11 @@ export default async function CollectionDetailPage({ params, provider }: Props &
     data = await fetchCollectionData(id, tenantId, provider);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
-    // Opt out of ISR caching for this response so the error isn't persisted.
-    // Without this, notFound() gets cached as a permanent 404 for up to 10 min,
-    // breaking collection pages that have transient DB timeouts.
-    unstable_noStore();
-    notFound();
+    // Preserve ISR/static behavior: dynamic APIs like unstable_noStore() inside
+    // this path trigger DYNAMIC_SERVER_USAGE in production renders.
+    // Re-throw so Next can serve a 500 for transient backend issues instead of
+    // incorrectly caching a notFound() response.
+    throw err;
   }
   if (!data) notFound();
 
