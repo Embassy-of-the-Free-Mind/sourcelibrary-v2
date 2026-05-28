@@ -184,16 +184,29 @@ async function main() {
   let consecutiveFails = 0;
   const touchedBookIds = new Set();
 
+  // Per-book 404 counters. When a book hits BOOK_404_THRESHOLD consecutive
+  // 404s we assume the source has fewer pages than our DB stub claims
+  // (Mutus Liber case: 100 pages in DB, 45 on gallica), bulk-mark the
+  // remaining pages as failed:source-not-found, and skip past them.
+  // Without this a single bad book exhausts the global circuit breaker
+  // and halts ALL gallica archiving.
+  const BOOK_404_THRESHOLD = 5;
+  const bookFails = new Map();          // book_id -> consecutive 404 count
+  const skippedBooks = new Set();       // book_id -> already bulk-failed
+
   async function worker() {
     while (idx < allPages.length) {
       if (consecutiveFails >= 20) {
-        console.log(`  [CIRCUIT BREAKER] 20 consecutive failures — Gallica may be blocking. Stopping.`);
+        console.log(`  [CIRCUIT BREAKER] 20 cross-book consecutive failures — Gallica may be blocking. Stopping.`);
         break;
       }
 
       const i = idx++;
       if (i >= allPages.length) break;
       const page = allPages[i];
+
+      // Skip pages from books we've already determined are over-stubbed
+      if (skippedBooks.has(page.book_id)) continue;
 
       await waitForToken();
 
@@ -240,10 +253,27 @@ async function main() {
         totalBytes += buffer.byteLength;
         touchedBookIds.add(page.book_id);
         consecutiveFails = 0;
+        bookFails.delete(page.book_id); // reset per-book on success
       } catch (err) {
         failed++;
         consecutiveFails++;
         if (failed <= 5) console.log(`  FAIL page ${page.book_id}/${page.page_number}: ${err.message?.slice(0, 80)}`);
+
+        // Only count 404s toward the per-book bad-stub threshold. Transient
+        // errors (5xx, network, timeout) shouldn't permanently mark pages.
+        if (err.message?.includes('HTTP 404')) {
+          const n = (bookFails.get(page.book_id) || 0) + 1;
+          bookFails.set(page.book_id, n);
+          if (n >= BOOK_404_THRESHOLD && !skippedBooks.has(page.book_id)) {
+            skippedBooks.add(page.book_id);
+            const skipReason = `failed:source-not-found (${BOOK_404_THRESHOLD}+ consecutive 404s — gallica has fewer pages than DB stub)`;
+            const res = await db.collection('pages').updateMany(
+              { book_id: page.book_id, archived_photo: { $exists: false } },
+              { $set: { archived_photo: skipReason, updated_at: new Date() } }
+            );
+            console.log(`  [BOOK-SKIP] ${page.book_id}: marked ${res.modifiedCount} pages source-not-found`);
+          }
+        }
       }
 
       const total = archived + failed;
