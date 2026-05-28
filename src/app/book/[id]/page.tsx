@@ -130,7 +130,7 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
     'index.places': 0,
     'index.concepts': 0,
     'index.keyTerms': 0,
-  }, tenantId, tenantSlug);
+  }, tenantId);
   if (scoped) return scoped.book as unknown as Book;
 
   // Default tenant is the global namespace. Legacy + corpus-source books
@@ -302,7 +302,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }, tenantId, tenantSlug);
+    }, tenantId);
     if (!scoped) return null;
     effectiveResult = {
       book: scoped.book as Record<string, unknown>,
