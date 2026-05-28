@@ -487,7 +487,14 @@ export default function BphCatalogBrowser({
   // /libraries/{slug}. The bph subdomain proxy doesn't rewrite /embed/...
   // paths, so the URL bar will read /embed/bph/catalog/{ubn} there — uglier
   // than the legacy /catalog/{ubn} but functional in every context.
-  const detailUrl = (ubn: string) => {
+  //
+  // Returns null if ubn is missing. Callers must render plain text instead
+  // of a link in that case — without this guard, `encodeURIComponent(null)`
+  // produces the string "null" and the link points at /catalog/null, which
+  // 404s as a soft 404 ("Catalogue entry not found"). Observed in
+  // not_found_reports 2026-05-26 to 2026-05-28.
+  const detailUrl = (ubn: string | null | undefined): string | null => {
+    if (!ubn) return null;
     return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(ubn)}`;
   };
 
@@ -745,12 +752,16 @@ export default function BphCatalogBrowser({
                       </td>
                       <td className="px-3 py-2 align-top">
                         <div className="font-medium text-primary leading-snug">
-                          <a
-                            href={detailUrl(w.ubn)}
-                            className="hover:text-accent-rust transition-colors"
-                          >
-                            {displayTitle}
-                          </a>
+                          {detailUrl(w.ubn) ? (
+                            <a
+                              href={detailUrl(w.ubn)!}
+                              className="hover:text-accent-rust transition-colors"
+                            >
+                              {displayTitle}
+                            </a>
+                          ) : (
+                            <span>{displayTitle}</span>
+                          )}
                         </div>
                         {digitized && (
                           <a
@@ -845,10 +856,11 @@ export default function BphCatalogBrowser({
                   : external
                     ? bookUrl({ id: external.id, slug: external.slug })
                     : detailUrl(w.ubn);
+                const Wrapper: React.ElementType = href ? 'a' : 'div';
                 return (
-                  <a
+                  <Wrapper
                     key={w.ubn}
-                    href={href}
+                    {...(href ? { href } : {})}
                     className="group flex flex-col text-left"
                   >
                     <div className="relative aspect-[2/3] bg-warm rounded-md overflow-hidden border border-border-light group-hover:border-accent-rust/40 transition-colors">
@@ -880,7 +892,7 @@ export default function BphCatalogBrowser({
                         {w.year ? ` · ${w.year}` : ''}
                       </div>
                     )}
-                  </a>
+                  </Wrapper>
                 );
               })}
             </div>
