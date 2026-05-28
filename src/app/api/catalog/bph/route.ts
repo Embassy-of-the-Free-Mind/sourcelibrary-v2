@@ -257,7 +257,10 @@ export async function GET(req: NextRequest) {
         query = query.order('author', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
         break;
       case 'title_desc':
-        query = query.order('title', { ascending: false });
+        // nullsFirst:false matches every other sort — Supabase otherwise puts
+        // null titles ahead of real ones for descending sorts, which renders
+        // five "None" rows at the top of an unfiltered desc listing.
+        query = query.order('title', { ascending: false, nullsFirst: false });
         break;
       case 'shelfmark':
         query = query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });

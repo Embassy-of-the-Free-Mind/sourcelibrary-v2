@@ -321,16 +321,27 @@ export default function BphCatalogBrowser({
       const params = buildParams(q, s, kw, off, a);
       const res = await fetch(`/api/catalog/bph?${params}`, { signal: controller.signal });
       const data = await res.json();
+      // Drop the result if a newer fetch superseded us. `AbortController.abort()`
+      // only rejects the fetch promise itself; if our `await fetch()` already
+      // resolved before the next call fired abort, `res.json()` keeps streaming
+      // the body and we'd `setWorks` with a stale page after the latest result
+      // already landed. Source of the "3 of 29,876 — but 5 rows shown" first-
+      // paint race when the user types fast enough to fire several debounced
+      // searches in a row.
+      if (abortRef.current !== controller) return;
       setWorks(data.works || []);
       setTotal(data.total || 0);
       onTotalChange?.(data.total || 0, isFiltered);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return; // superseded by a newer query
+      if (abortRef.current !== controller) return;
       setWorks([]);
       setTotal(0);
       onTotalChange?.(0, isFiltered);
     } finally {
-      if (!controller.signal.aborted) setLoading(false);
+      if (abortRef.current === controller && !controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   }, [buildParams, onTotalChange, lockDigitized]);
 
@@ -553,6 +564,11 @@ export default function BphCatalogBrowser({
           <span className="text-sm text-muted">
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
+            {display === 'grid' && (
+              <span className="ml-2 text-xs">
+                · Covers view shows only digitised works
+              </span>
+            )}
           </span>
           <div className="flex items-center gap-3 ml-auto">
             {resultsHeaderSlot}
