@@ -426,6 +426,7 @@ export default function SharedLibraryView({
                       ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                       : 0,
                   }}
+                  bookUrlPrefix={basePath}
                   priority={i < 10}
                 />
               ))}
@@ -512,6 +513,7 @@ export default function SharedLibraryView({
                           ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                           : 0,
                       }}
+                      bookUrlPrefix={basePath}
                       priority={i < 5}
                     />
                   ))}
