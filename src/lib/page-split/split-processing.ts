@@ -259,7 +259,6 @@ export async function processSingleImage(
   const pageId = new ObjectId().toHexString();
   const page: Page = {
     id: pageId,
-    tenant_id: 'default',
     book_id: bookId,
     page_number: pageNumber,
     photo: originalImageUrl,
@@ -310,7 +309,6 @@ export async function processSplitImage(
   // Create left page
   const leftPage: Page = {
     id: leftPageId,
-    tenant_id: 'default',
     book_id: bookId,
     page_number: startPageNumber,
     photo: leftResult.url,
@@ -338,7 +336,6 @@ export async function processSplitImage(
   // Create right page
   const rightPage: Page = {
     id: rightPageId,
-    tenant_id: 'default',
     book_id: bookId,
     page_number: startPageNumber + 1,
     photo: rightResult.url,

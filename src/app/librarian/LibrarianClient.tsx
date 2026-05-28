@@ -9,51 +9,7 @@ import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
-
-/**
- * Post-process Gemini output: convert bare sourcelibrary URLs to markdown links.
- * Gemini often outputs `https://sourcelibrary.org/book/slug?page=5` as plain text
- * instead of wrapping it in `[text](url)`. This catches those and linkifies them.
- */
-function linkifySourceUrls(text: string): string {
-  // Don't linkify URLs that are already inside markdown link syntax [text](url)
-  let result = text.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, _slug, page) => {
-      const label = page ? `View source (p. ${page})` : 'View in collection';
-      return `[${label}](${match})`;
-    },
-  );
-  // Linkify bare author URLs
-  result = result.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/author\/([^\s)]+)/g,
-    (match, name) => {
-      const label = decodeURIComponent(name);
-      return `[${label}](${match})`;
-    },
-  );
-  return result;
-}
-
-/**
- * Ensure proper markdown paragraph breaks.
- * Gemini often outputs single \n between paragraphs, but standard markdown
- * needs \n\n for a visible paragraph break. Simple approach: double ALL
- * single newlines, then collapse any runs of 3+ newlines back to 2.
- * Only exception: code blocks are left untouched.
- */
-function ensureParagraphBreaks(text: string): string {
-  // Split on code fences, process only non-code sections
-  const parts = text.split(/(```[\s\S]*?```)/);
-  return parts.map((part, i) => {
-    // Odd indices are code blocks — leave them alone
-    if (i % 2 === 1) return part;
-    // Replace single \n with \n\n, then collapse triples back to doubles
-    return part
-      .replace(/([^\n])\n(?!\n)/g, '$1\n\n')
-      .replace(/\n{3,}/g, '\n\n');
-  }).join('');
-}
+import LibrarianMessageBody from './_components/MessageBody';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -250,7 +206,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     if (status === 'authenticated') setSidebarTab('mine');
   }, [status]);
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
-  const [showThinking, setShowThinking] = useState(false);
+  const [showThinking, setShowThinking] = useState(true);
   const [visibleThreads, setVisibleThreads] = useState(5);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -452,7 +408,9 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
         }
       }
     } catch (err) {
-      if ((err as Error).name !== 'AbortError') {
+      const e = err as Error;
+      if (e.name !== 'AbortError') {
+        console.error('[Librarian] request failed:', e.name, e.message, e);
         updateLastAssistant(m => ({
           ...m,
           content: 'The Librarian seems to be away. Please try again in a moment.',
@@ -658,46 +616,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
                           {/* Response text */}
                           {assistant.content && (
-                            <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
-                              <div className="max-w-none font-body text-[15px] leading-relaxed text-[#1a1612]">
-                                <ReactMarkdown
-                                  remarkPlugins={[remarkGfm]}
-                                  components={{
-                                    p: ({ children }) => (
-                                      <p className="mb-4 mt-0">{children}</p>
-                                    ),
-                                    h2: ({ children }) => (
-                                      <h2 className="text-xl font-serif mt-6 mb-3 text-[#1a1612]" style={{ fontWeight: 400 }}>{children}</h2>
-                                    ),
-                                    h3: ({ children }) => (
-                                      <h3 className="text-lg font-serif mt-5 mb-2 text-[#1a1612]" style={{ fontWeight: 400 }}>{children}</h3>
-                                    ),
-                                    a: ({ href, children }) => (
-                                      <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#9e4a3a] underline underline-offset-2 decoration-[#9e4a3a]/30 hover:decoration-[#9e4a3a]">{children}</a>
-                                    ),
-                                    blockquote: ({ children }) => (
-                                      <blockquote className="border-l-2 border-[#c9a86c] pl-4 my-4 italic text-[#444]">{children}</blockquote>
-                                    ),
-                                    ul: ({ children }) => (
-                                      <ul className="my-3 ml-4 list-disc">{children}</ul>
-                                    ),
-                                    ol: ({ children }) => (
-                                      <ol className="my-3 ml-4 list-decimal">{children}</ol>
-                                    ),
-                                    li: ({ children }) => (
-                                      <li className="my-1">{children}</li>
-                                    ),
-                                    hr: () => <hr className="my-4 border-[#e8e4dc]" />,
-                                    img: ({ src, alt }) => (
-                                      <a href={src as string} target="_blank" rel="noopener noreferrer">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-4" loading="lazy" />
-                                      </a>
-                                    ),
-                                  }}
-                                >{ensureParagraphBreaks(linkifySourceUrls(assistant.content))}</ReactMarkdown>
-                              </div>
-                            </div>
+                            <LibrarianMessageBody content={assistant.content} variant="chat-bubble" />
                           )}
 
                           {/* Research direction choices */}

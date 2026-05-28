@@ -236,7 +236,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       _id: bookId,
       id: bookIdStr,
       slug,
-      tenant_id: 'default',
       title: bookTitle,
       display_title: display_title || null,
       author: bookAuthor,
@@ -290,7 +289,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       pageDocs.push({
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookIdStr,
         page_number: i + 1,
         photo: selectedPages[i].photo,

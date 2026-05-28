@@ -22,7 +22,7 @@ export const GET = withApiAuth(async (
     const { searchParams } = new URL(request.url);
     const includeFull = searchParams.get('full') === 'true';
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
-    const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(request);
+    const { id: tenantId } = getTenantContextFromRequest(request);
 
     // No tenant header → main-site request → serve from the global catalog
     // (findBookByIdOrSlug skips the tenant filter when tenantId is undefined).
@@ -43,7 +43,7 @@ export const GET = withApiAuth(async (
       chapters: 1,
     } : undefined;
 
-    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId ?? undefined, tenantSlug ?? undefined);
+    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId ?? undefined);
     if (!result) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }

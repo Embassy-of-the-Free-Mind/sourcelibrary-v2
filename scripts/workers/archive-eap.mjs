@@ -101,11 +101,12 @@ async function main() {
   // Find books. In upgrade mode, target every book with EAP imagery (any
   // tenant). In default mode, keep the existing Bhutan-tenant filter for
   // backwards compatibility with the unarchived-pages backlog.
+  const BHUTAN_TENANT_ID = 'fd1907e5-5965-4bea-a978-77be3dff08a8';
   const bookQuery = BOOK_ID
     ? { id: BOOK_ID }
     : UPGRADE
       ? { 'image_source.provider': 'bl', pages_count: { $gt: 0 } }
-      : { tenant_id: 'bhutan', pages_count: { $gt: 0 } };
+      : { tenantId: BHUTAN_TENANT_ID, pages_count: { $gt: 0 } };
 
   const eapBooks = await db.collection('books')
     .find(bookQuery, { projection: { id: 1, title: 1, pages_count: 1 } })

@@ -181,17 +181,41 @@ export async function POST(request: NextRequest) {
   const send = (event: Record<string, unknown>) =>
     writer.write(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
 
+  const startedAt = Date.now();
+  // Track the last step so the watchdog can record where we stalled if
+  // Vercel kills the function before the catch block runs.
+  let lastStepType: string = 'init';
+  let toolCallCount = 0;
+
+  // Watchdog: fires ~10s before maxDuration to leave a breadcrumb in
+  // embassy_errors when a request is about to be killed. Without this,
+  // a timeout produces zero server-side trace because the function dies
+  // before the catch block.
+  const watchdog = setTimeout(async () => {
+    try {
+      await db.collection('embassy_errors').insertOne({
+        kind: 'timeout_warning',
+        threadId: activeThreadId,
+        message: message.slice(0, 500),
+        error: `Approaching maxDuration (${maxDuration}s). Last step: ${lastStepType}. Tool calls so far: ${toolCallCount}. Elapsed: ${Math.round((Date.now() - startedAt) / 1000)}s.`,
+        createdAt: new Date(),
+      });
+    } catch { /* best effort */ }
+  }, (maxDuration - 10) * 1000);
+
   const pipePromise = (async () => {
     try {
       await send({ type: 'threadId', threadId: activeThreadId });
 
       for await (const step of streamAgenticResponse(message, history, activeThreadId)) {
+        lastStepType = step.type;
         switch (step.type) {
           case 'thinking':
             await send({ type: 'thinking', text: step.text });
             break;
 
           case 'tool_call':
+            toolCallCount++;
             await send({ type: 'tool_call', name: step.name, query: step.query });
             break;
 
@@ -225,17 +249,23 @@ export async function POST(request: NextRequest) {
         }
       }
 
+      clearTimeout(watchdog);
       await send({ type: 'done' });
       await writer.close();
     } catch (err) {
+      clearTimeout(watchdog);
       const errMsg = err instanceof Error ? `${err.message}\n${err.stack}` : String(err);
       console.error('[Embassy] Agentic stream error:', errMsg);
       // Log to DB for easier debugging
       try {
         await db.collection('embassy_errors').insertOne({
+          kind: 'agent_error',
           threadId: activeThreadId,
           message: message.slice(0, 500),
           error: errMsg.slice(0, 5000),
+          lastStepType,
+          toolCallCount,
+          elapsedMs: Date.now() - startedAt,
           createdAt: new Date(),
         });
       } catch { /* best effort */ }

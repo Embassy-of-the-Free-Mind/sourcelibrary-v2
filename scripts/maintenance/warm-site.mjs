@@ -48,14 +48,18 @@ async function warmBatch(urls, concurrency) {
 async function fetchSitemapUrls() {
   // Sitemap uses Next.js chunked format: /sitemap/0.xml, /sitemap/1.xml, ...
   // /sitemap.xml is the index pointing to each chunk.
+  // Chunk 0 is just the static-page entries (76 URLs today); books live in
+  // chunks 1+. Stop only on 404 or empty body — never short-circuit on a
+  // small chunk, or we miss ~13K book URLs whenever chunk 0 happens to be
+  // below an arbitrary threshold (which it always is).
   const allUrls = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 50; i++) {
     const res = await fetch(`${BASE}/sitemap/${i}.xml`, { signal: AbortSignal.timeout(30_000) });
     if (!res.ok) break;
     const xml = await res.text();
     const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+    if (urls.length === 0) break;
     allUrls.push(...urls);
-    if (urls.length < 100) break; // last chunk is smaller
   }
   return allUrls;
 }

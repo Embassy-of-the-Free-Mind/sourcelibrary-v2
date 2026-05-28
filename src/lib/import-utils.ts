@@ -362,7 +362,6 @@ export async function importBookFromIIIF(
     _id: bookId,
     id: bookIdStr,
     slug,
-    tenant_id: 'default',
     title: config.title,
     display_title: config.display_title || manifestLabel || null,
     author: config.author,
@@ -430,7 +429,6 @@ export async function importBookFromIIIF(
     pageDocs.push({
       _id: pageId,
       id: pageId.toHexString(),
-      tenant_id: 'default',
       book_id: bookIdStr,
       page_number: i + 1,
       photo: pageImages[i]?.photo || '',

@@ -80,6 +80,26 @@ async function saveRevisionBeforeOverwrite(db, pageId, field) {
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
 const OCR_MODEL_LITE = 'gemini-3.1-flash-lite';
 
+// Known-broken Gemini model aliases. The discovery API lists these as
+// available but generateContent / batch execution returns FAILED_PRECONDITION
+// for every page (verified 2026-05-26: 82/82 batches using gemini-3.1-flash-lite-preview
+// in 24h returned 0 saved / 100% failed). Add entries as Google retires more aliases.
+// The assertion runs from main() so it sees all module-level model constants.
+const KNOWN_BROKEN_MODEL_ALIASES = new Set([
+  'gemini-3.1-flash-lite-preview', // alias; stable is `gemini-3.1-flash-lite`
+]);
+function assertModelsAreNotBroken(constants) {
+  const bad = Object.entries(constants).filter(([_, v]) => KNOWN_BROKEN_MODEL_ALIASES.has(v));
+  if (bad.length) {
+    const detail = bad.map(([k, v]) => `  ${k} = "${v}"`).join('\n');
+    throw new Error(
+      `Refusing to start: one or more model constants are deprecated Gemini aliases:\n${detail}\n` +
+      `These accept batches but execute to "All N pages failed". Update to the stable variant ` +
+      `(e.g. drop -preview suffix) before re-running. See PR #2065.`
+    );
+  }
+}
+
 // Latin-script languages safe for flash-lite. Anything else (Tibetan, Arabic,
 // Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) routes to flash because
 // flash-lite hallucinates on low-resource scripts — it over-relies on
@@ -148,6 +168,36 @@ const SPLIT_DISPLAY_WIDTH = 1200;
 const SPLIT_DISPLAY_QUALITY = 85;
 const SPLIT_THUMB_WIDTH = 150;
 const SPLIT_THUMB_QUALITY = 60;
+
+// Image-extraction pre-filter: skip pages where OCR has already labelled every
+// <image-desc> as trivial (drop caps, library stamps, printer's marks, etc.).
+// Mirrors logic in image-extract-worker.mjs — keep the two in sync.
+const SKIP_MARKUP_RULES = [
+  { type: 'symbol', significance: '*' },
+  { type: 'stamp', significance: '*' },
+  { type: 'ornament', significance: '*' },
+  { type: 'blank', significance: '*' },
+  { type: 'decorative', significance: 'low' },
+  { type: "printer's mark", significance: 'low' },
+  { type: 'photograph', significance: 'low' },
+  { type: 'photographic', significance: 'low' },
+];
+
+function shouldSkipPageByMarkup(ocrData) {
+  if (!ocrData) return false;
+  if (ocrData.includes('<detected-images>')) return false;
+  const tags = [...ocrData.matchAll(/<image-desc([^>]*)>/g)];
+  if (tags.length === 0) return false;
+  for (const m of tags) {
+    const type = (m[1].match(/type="([^"]+)"/) || [])[1];
+    const sig = (m[1].match(/significance="([^"]+)"/) || [])[1];
+    const matched = SKIP_MARKUP_RULES.find(r =>
+      r.type === type && (r.significance === '*' || r.significance === sig)
+    );
+    if (!matched) return false;
+  }
+  return true;
+}
 
 function getR2Client() {
   const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
@@ -2311,6 +2361,11 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
 async function run() {
   const startTime = Date.now();
+  assertModelsAreNotBroken({
+    OCR_MODEL_FLASH, OCR_MODEL_LITE,
+    TRANSLATE_MODEL_FLASH, TRANSLATE_MODEL_LITE,
+    TRANSLITERATION_MODEL, IMAGE_EXTRACTION_MODEL,
+  });
   cleanupStaleJsonlFiles();
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 30000 });
   await client.connect();
@@ -4455,7 +4510,7 @@ Rules:
         console.log(`  Active batch image jobs: ${activeBatchImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
 
         if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
-          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
 
           let readyForImages = await db.collection('books')
             .find({ 'pipeline_auto.status': 'chapters_complete' })
@@ -4496,15 +4551,27 @@ Rules:
 
           for (const book of readyForImages) {
             try {
-              const bookPages = await db.collection('pages')
+              const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
                   ],
-                }, { projection: { id: 1 } })
+                }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } })
                 .toArray();
+
+              // Pre-filter: drop pages with only trivial OCR markup (drop caps,
+              // stamps, ornaments). Skip filter does NOT apply to pages typed
+              // as illustration/frontispiece/etc.
+              const bookPages = rawPages.filter(p => {
+                if (IMAGE_CANDIDATE_PAGE_TYPES.includes(p.page_type)) return true;
+                return !shouldSkipPageByMarkup(p.ocr?.data);
+              }).map(p => ({ id: p.id }));
+              const skippedTrivial = rawPages.length - bookPages.length;
+              if (skippedTrivial > 0) {
+                console.log(`  ${book.title?.slice(0, 50)}: skipped ${skippedTrivial} trivial-markup pages`);
+              }
 
               if (bookPages.length === 0) {
                 if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
@@ -4583,7 +4650,7 @@ Rules:
         if (!SQS_IMAGE_EXTRACTION_QUEUE_URL) {
           console.log('  SKIP: SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL not configured');
         } else if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
-          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
           const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
           let readyForImages = await db.collection('books')
@@ -4620,15 +4687,24 @@ Rules:
 
           for (const book of readyForImages) {
             try {
-              const bookPages = await db.collection('pages')
+              const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
                   ],
-                }, { projection: { id: 1 } })
+                }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } })
                 .toArray();
+
+              const bookPages = rawPages.filter(p => {
+                if (IMAGE_CANDIDATE_PAGE_TYPES.includes(p.page_type)) return true;
+                return !shouldSkipPageByMarkup(p.ocr?.data);
+              }).map(p => ({ id: p.id }));
+              const skippedTrivial = rawPages.length - bookPages.length;
+              if (skippedTrivial > 0) {
+                console.log(`  ${book.title?.slice(0, 50)}: skipped ${skippedTrivial} trivial-markup pages`);
+              }
 
               if (bookPages.length === 0) {
                 if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');

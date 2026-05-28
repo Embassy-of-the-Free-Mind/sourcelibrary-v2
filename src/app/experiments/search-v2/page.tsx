@@ -16,36 +16,7 @@ import { bookUrl } from '@/lib/slugify';
 import HighlightedText from '@/components/search/HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import SiteHeader from '@/components/layout/SiteHeader';
-
-// ── Helpers (same as LibrarianClient) ────────────────────────────────
-
-function linkifySourceUrls(text: string): string {
-  return text.replace(
-    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, _slug, page) => {
-      const label = page ? `View source (p. ${page})` : 'View in collection';
-      return `[${label}](${match})`;
-    },
-  );
-}
-
-function ensureParagraphBreaks(text: string): string {
-  const lines = text.split('\n');
-  const result: string[] = [];
-  let inCodeBlock = false;
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
-    result.push(line);
-    if (inCodeBlock || i === lines.length - 1) continue;
-    const next = lines[i + 1];
-    if (line === '' || next === '') continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
-    result.push('');
-  }
-  return result.join('\n');
-}
+import LibrarianMessageBody from '@/app/librarian/_components/MessageBody';
 
 const TOOL_LABELS: Record<string, string> = {
   search_collection: 'Searching the collection',
@@ -408,25 +379,10 @@ export default function SearchV2Page() {
               {/* Response bubble */}
               {librarianContent && (
                 <div className="bg-white text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3 border border-[#e8e4dc]">
-                  <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-[#1a1612] prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-[#1a1612] prose-hr:my-4 prose-img:rounded-lg prose-img:shadow-md prose-img:my-4 prose-img:max-h-[300px] prose-img:w-auto">
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        a: ({ href, children }) => (
-                          <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
-                        ),
-                        img: ({ src, alt }) => (
-                          <a href={src as string} target="_blank" rel="noopener noreferrer">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow" loading="lazy" />
-                          </a>
-                        ),
-                      }}
-                    >{ensureParagraphBreaks(linkifySourceUrls(librarianContent))}</ReactMarkdown>
-                    {librarianStreaming && (
-                      <span className="inline-block w-1.5 h-4 bg-[#c9a86c] animate-pulse ml-0.5 align-text-bottom" />
-                    )}
-                  </div>
+                  <LibrarianMessageBody content={librarianContent} variant="thread" />
+                  {librarianStreaming && (
+                    <span className="inline-block w-1.5 h-4 bg-[#c9a86c] animate-pulse ml-0.5 align-text-bottom" />
+                  )}
                 </div>
               )}
 

@@ -46,6 +46,11 @@
 # R2 coverage snapshot (every 6h — updates the doc /admin/r2-coverage reads)
 30 */6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
 
+# Gallery_images CDN coverage snapshot (every 12h, offset 3h from the page-side
+# snapshot so they don't compete for the undici connection pool). ~90s on
+# the full catalog. Surfaced on the same /admin/r2-coverage page.
+45 3,15 * * * cd /root/sourcelibrary && flock -n /tmp/sl-gallery-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/gallery-coverage-snapshot.mjs" >> /var/log/sourcelibrary/gallery-coverage.log 2>&1
+
 # Archive auto-unblock (daily — retry books blocked >14d ago with transient failure reasons)
 0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-unblock.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-auto-unblock.mjs" >> /var/log/sourcelibrary/archive-auto-unblock.log 2>&1
 
@@ -55,6 +60,11 @@
 
 # Supabase pages-content sync (PR #2026 / issue #2020)
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync-pages-content.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-pages-content.mjs" >> /var/log/sourcelibrary/sync-pages-content.log 2>&1
+
+# Auto-pull origin/main hourly so worker code fixes don't sit unused for hours
+# (motivating incident: PR #2065 — the #2042 model rename was committed at 11:27 UTC
+# but Hetzner kept submitting the deprecated alias for another 10h)
+17 * * * * flock -n /tmp/sl-auto-pull.lock /root/sourcelibrary/scripts/workers/auto-pull.sh >> /var/log/sourcelibrary/auto-pull.log 2>&1
 
 # ── Source Library HTTP crons moved from Vercel (PR #2031) ──
 # Triggered via scripts/workers/cron-caller.mjs which sets Authorization: Bearer $CRON_SECRET.

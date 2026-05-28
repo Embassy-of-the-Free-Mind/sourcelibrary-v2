@@ -2,7 +2,7 @@ import { PromptReference } from "./prompt";
 
 export interface Page {
   id: string;
-  tenant_id: string;
+  tenantId?: string;
   book_id: string;
   page_number: number;
   photo: string;

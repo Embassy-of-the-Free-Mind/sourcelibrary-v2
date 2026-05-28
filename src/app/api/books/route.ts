@@ -95,7 +95,7 @@ export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const tenantContext = getTenantContextFromRequest(request.headers);
-    const tenantId = tenantContext.id || (session.user as any).tenantId || 'default';
+    const tenantId: string | undefined = tenantContext.id || (session.user as any).tenantId || undefined;
     const {
       title,
       display_title,
@@ -118,8 +118,7 @@ export const POST = withAuth(async (request, session) => {
 
     const book: Book = {
       id: bookId,
-      tenant_id: tenantId,
-      tenantId,
+      ...(tenantId ? { tenantId } : {}),
       title,
       display_title: display_title || null,
       author: author || 'Unknown',
