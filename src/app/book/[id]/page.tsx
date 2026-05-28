@@ -45,7 +45,7 @@ import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
-import { getTenantContext } from '@/lib/tenant-context';
+import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 
 // ISR: serve cached HTML, revalidate in background every 24h.
@@ -64,6 +64,7 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  tenantContext?: TenantContext | null;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -112,10 +113,6 @@ const getCachedBookLookup = cache(async (id: string): Promise<{
   return { book: result.book as Record<string, unknown>, matchedBySlug: result.matchedBySlug, fromCatalog: false };
 });
 
-function getBookTenantId(book: Record<string, unknown> | Book): string | undefined {
-  return (book as any).tenantId || (book as any).tenant_id;
-}
-
 // Lightweight book fetch for metadata — reuses cached lookup
 async function getBookForMetadata(id: string, tenantId?: string | null, tenantSlug?: string): Promise<Book | null> {
   const result = await getCachedBookLookup(id);
@@ -158,12 +155,10 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const ctx = await getTenantContext();
-  const tenantId = ctx?.id ?? undefined;
-  const tenant = ctx?.slug ?? undefined;
   let book: Book | null;
   try {
-    book = await getBookForMetadata(id, tenantId, tenant);
+    // Metadata stays global/ISR-safe; tenant-scoped denial is enforced in proxy.
+    book = await getBookForMetadata(id);
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
@@ -173,25 +168,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // see this as a duplicate of the homepage while it's still 200/noindex.
     return {
       title: 'Book Not Found - Source Library',
-      robots: { index: false, follow: false },
-      alternates: { canonical: `/book/${id}` },
-    };
-  }
-
-  // Wrong tenant — suppress metadata entirely so the 404 isn't indexed.
-  // Match either UUID (tenantId) or slug (tenant_id) — legacy docs may have only one set.
-  // Only enforce when this request actually has a tenant context (subdomain or
-  // path-resolved); on the global site every book stays visible.
-  const bookTenantUuid = (book as any).tenantId as string | undefined;
-  const bookTenantSlug = (book as any).tenant_id as string | undefined;
-  const hasTenantField = !!(bookTenantUuid || bookTenantSlug);
-  const hasTenantContext = !!(tenantId || tenant);
-  const matchesTenant =
-    (bookTenantUuid && tenantId && bookTenantUuid === tenantId) ||
-    (bookTenantSlug && tenant && bookTenantSlug === tenant);
-  if (hasTenantContext && hasTenantField && !matchesTenant) {
-    return {
-      title: 'Not Found - Source Library',
       robots: { index: false, follow: false },
       alternates: { canonical: `/book/${id}` },
     };
@@ -443,18 +419,18 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
     ).catch(() => null),
     authorEntityId
       ? db.collection('entities').findOne(
-          { _id: new ObjectId(authorEntityId) },
-          {
-            projection: {
-              _id: 0,
-              name: 1, canonical_name: 1, aliases: 1,
-              viaf_id: 1, wikidata_id: 1, lcnaf_id: 1, gnd_id: 1,
-              wikipedia_url: 1,
-              wikidata_birth_date: 1, wikidata_death_date: 1,
-            },
-            maxTimeMS: 3000,
-          }
-        ).catch(() => null)
+        { _id: new ObjectId(authorEntityId) },
+        {
+          projection: {
+            _id: 0,
+            name: 1, canonical_name: 1, aliases: 1,
+            viaf_id: 1, wikidata_id: 1, lcnaf_id: 1, gnd_id: 1,
+            wikipedia_url: 1,
+            wikidata_birth_date: 1, wikidata_death_date: 1,
+          },
+          maxTimeMS: 3000,
+        }
+      ).catch(() => null)
       : Promise.resolve(null),
   ]);
 
@@ -1207,9 +1183,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   );
 }
 
-export default async function BookDetailPage({ params }: PageProps) {
+export default async function BookDetailPage({ params, tenantContext }: PageProps) {
   const { id } = await params;
-  const ctx = await getTenantContext();
+  const ctx = tenantContext ?? null;
   const embedPolicy = getEmbedUiPolicy(ctx);
   const isEmbedded = ctx?.isEmbedded ?? false;
   const tenantId = ctx?.id ?? undefined;

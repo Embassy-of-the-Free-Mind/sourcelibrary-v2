@@ -262,6 +262,112 @@ async function resolveTenantByExactSlug(
   }
 }
 
+// ---------------------------------------------------------------------------
+// Tenant content guard — data-driven RLS for tenant-scoped content routes.
+//
+// To protect a new content type: add one entry to TENANT_CONTENT_ROUTES.
+// No other changes to proxy.ts needed.
+// ---------------------------------------------------------------------------
+interface TenantContentRouteConfig {
+  /** URL path prefix WITHOUT leading slash, e.g. 'book'. Matched against the
+   *  content path after any /{tenant} prefix is stripped. */
+  prefix: string;
+  /** MongoDB collection name. */
+  collection: string;
+  /** Document field holding the owning tenant's UUID. */
+  tenantIdField: string;
+}
+
+const TENANT_CONTENT_ROUTES: TenantContentRouteConfig[] = [
+  { prefix: 'book',          collection: 'books',          tenantIdField: 'tenantId' },
+  { prefix: 'collections',   collection: 'collections',    tenantIdField: 'tenantId' },
+  { prefix: 'gallery/image', collection: 'gallery_images', tenantIdField: 'tenantId' },
+  // Add new tenant-protected content types here.
+];
+
+type GuardResult =
+  | { matched: false }
+  | { matched: true; allow: false }
+  | { matched: true; allow: true; rewritePath: string | null };
+
+async function resolveResourceOwnerTenantId(
+  segment: string,
+  route: TenantContentRouteConfig,
+): Promise<string | null> {
+  try {
+    const db = await getDb();
+    const doc = await db.collection(route.collection).findOne(
+      { $or: [{ slug: segment }, { id: segment }] },
+      { projection: { [route.tenantIdField]: 1 } }
+    );
+    return (doc?.[route.tenantIdField] as string | undefined) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Generic tenant RLS guard for registered content routes.
+ *
+ * - Path-based  (/{tenant}/book/x):    checks ownership, returns rewritePath=/book/x.
+ * - Subdomain   (bph.sl.org/book/x):   checks ownership, no rewrite needed.
+ * - Unregistered paths:                matched:false — proxy proceeds normally.
+ * - Global content (no tenantId on doc): always allowed.
+ */
+async function guardTenantContentAccess(
+  pathname: string,
+  tenantSlug: string,
+  tenantId: string,
+  source: string,
+): Promise<GuardResult> {
+  let contentPath: string;
+  let needsRewrite: boolean;
+
+  if (source === 'path') {
+    const tenantPrefix = `/${tenantSlug}`;
+    if (!pathname.startsWith(tenantPrefix + '/') && pathname !== tenantPrefix) {
+      return { matched: false };
+    }
+    contentPath = pathname.slice(tenantPrefix.length) || '/';
+    needsRewrite = true;
+  } else {
+    // subdomain / embed-path: URL is already the content path
+    contentPath = pathname;
+    needsRewrite = false;
+  }
+
+  const stripped = contentPath.startsWith('/') ? contentPath.slice(1) : contentPath;
+  const route = TENANT_CONTENT_ROUTES.find(
+    r => stripped === r.prefix || stripped.startsWith(r.prefix + '/')
+  );
+  if (!route) return { matched: false };
+
+  // First segment after the route prefix is the resource slug.
+  const afterPrefix = stripped.slice(route.prefix.length);
+  const resourceSlug = afterPrefix.startsWith('/') ? afterPrefix.slice(1).split('/')[0] : null;
+
+  if (!resourceSlug) {
+    // Bare prefix root (e.g. /book with no slug) — no ownership check needed.
+    return { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null };
+  }
+
+  const ownerTenantId = await resolveResourceOwnerTenantId(resourceSlug, route);
+
+  // No tenantId on document = global/untenanted content — allow from any tenant context.
+  if (!ownerTenantId) {
+    return { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null };
+  }
+
+  if (ownerTenantId !== tenantId) {
+    return { matched: true, allow: false };
+  }
+
+  return { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null };
+}
+
+// resolveTenantForBookSegment is kept solely for the /api referer fallback in
+// resolveTenantFromRequest; it resolves a book slug → tenant slug for inferring
+// context from the Referer header on API calls.
 async function resolveTenantForBookSegment(segment: string): Promise<string | null> {
   try {
     const db = await getDb();
@@ -698,6 +804,27 @@ export async function proxy(request: NextRequest) {
   //     via public/embed/v1.js.
   if (resolved?.source === 'subdomain' || resolved?.source === 'embed-path') {
     requestHeaders.set('x-tenant-embedded', '1');
+  }
+
+  // Tenant RLS for registered content routes (books, collections, gallery images, …).
+  // The guard checks resource ownership and returns a rewrite path for path-based
+  // tenant access, or denies cross-tenant access with a 404.
+  if (tenantId && tenantSlug && (resolved?.source === 'path' || resolved?.source === 'subdomain')) {
+    const guard = await guardTenantContentAccess(pathname, tenantSlug, tenantId, resolved.source);
+    if (guard.matched) {
+      if (!guard.allow) {
+        return new NextResponse('Not Found', {
+          status: 404,
+          headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
+        });
+      }
+      if (guard.rewritePath) {
+        // Path-based: internally rewrite to global route, tenant headers already set above.
+        const url = request.nextUrl.clone();
+        url.pathname = guard.rewritePath;
+        return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
+      }
+    }
   }
 
   // Pass the modified headers to the request

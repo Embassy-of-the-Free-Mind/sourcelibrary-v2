@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getReadDb } from '@/lib/mongodb';
+import { resolveTenantId } from '@/lib/tenant-context';
 import BookDetailPage, { generateMetadata as parentGenerateMetadata } from '@/app/book/[id]/page';
 
 // Iframe-target wrapper. Partner Webflow sites embed Source Library via
@@ -11,8 +11,8 @@ import BookDetailPage, { generateMetadata as parentGenerateMetadata } from '@/ap
 // BookDetailPage downstream sees `isEmbedded` and applies the lockdown UI.
 
 export async function generateMetadata({ params }: { params: Promise<{ tenant: string; slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  return parentGenerateMetadata({ params: Promise.resolve({ id: slug }) });
+    const { slug } = await params;
+    return parentGenerateMetadata({ params: Promise.resolve({ id: slug }) });
 }
 
 export const preferredRegion = 'fra1';
@@ -20,16 +20,15 @@ export const dynamicParams = true;
 export async function generateStaticParams() { return []; }
 
 export default async function EmbedBookPage({ params }: { params: Promise<{ tenant: string; slug: string }> }) {
-    const { slug } = await params;
+    const { tenant, slug } = await params;
+    const tenantId = await resolveTenantId(tenant);
 
-    const db = await getReadDb();
-    const book = await db.collection('books').findOne(
-        { $or: [{ slug }, { id: slug }], visible: true, pages_count: { $gt: 0 } },
-        { projection: { _id: 1, id: 1 } }
+    if (!tenantId) notFound();
+
+    return (
+        <BookDetailPage
+            params={Promise.resolve({ id: slug })}
+            tenantContext={{ id: tenantId, slug: tenant, kind: 'subdomain', isEmbedded: true, source: 'embed-path' }}
+        />
     );
-
-    if (!book) notFound();
-
-    const bookId = (book as { id?: string }).id || slug;
-    return <BookDetailPage params={Promise.resolve({ id: bookId })} />;
 }
