@@ -248,6 +248,7 @@ export default async function WikipediaContributePage() {
     } : null;
 
     return {
+      slug: config.slug,
       title: config.wikiTitle.replace(/\s*\(\d{4}.*?\)\s*$/, ''),
       author: (book.author as string) || 'Unknown',
       talkPageUrl: config.talkPageUrl,
