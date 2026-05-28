@@ -11,13 +11,13 @@ export const size = {
 };
 export const contentType = 'image/png';
 
-async function getBookForOG(id: string, tenantId?: string, tenantSlug?: string): Promise<Book | null> {
+async function getBookForOG(id: string, tenantId?: string): Promise<Book | null> {
   try {
     const db = await getReadDb();
     const result = await findBookByIdOrSlug(db, id, {
       _id: 0, id: 1, title: 1, display_title: 1, author: 1,
       published: 1, language: 1, thumbnail: 1, image_display: 1, slug: 1,
-    }, tenantId, tenantSlug);
+    }, tenantId);
     return result ? (result.book as unknown as Book) : null;
   } catch {
     return null;
@@ -27,7 +27,7 @@ async function getBookForOG(id: string, tenantId?: string, tenantSlug?: string):
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const ctx = await getTenantContext();
-  const book = await getBookForOG(id, ctx?.id ?? undefined, ctx?.slug ?? undefined);
+  const book = await getBookForOG(id, ctx?.id ?? undefined);
 
   const title = book?.display_title || book?.title || 'Unknown Title';
   const author = book?.author || 'Unknown Author';

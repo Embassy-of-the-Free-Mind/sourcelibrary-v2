@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params;
   const ctx = await getTenantContext();
   const db = await getReadDb();
-  const result = await findBookByIdOrSlug(db, id, { _id: 0, title: 1, display_title: 1 }, ctx?.id ?? undefined, ctx?.slug ?? undefined);
+  const result = await findBookByIdOrSlug(db, id, { _id: 0, title: 1, display_title: 1 }, ctx?.id ?? undefined);
   if (!result) return {
     title: 'Book Not Found - Source Library',
     robots: { index: false, follow: true },
@@ -72,7 +72,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
     new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
   ]);
 
-  const bookResult = await findBookByIdOrSlug(db, id, BOOK_PROJECTION, ctx?.id ?? undefined, ctx?.slug ?? undefined);
+  const bookResult = await findBookByIdOrSlug(db, id, BOOK_PROJECTION, ctx?.id ?? undefined);
   if (!bookResult) notFound();
 
   const book = bookResult.book;

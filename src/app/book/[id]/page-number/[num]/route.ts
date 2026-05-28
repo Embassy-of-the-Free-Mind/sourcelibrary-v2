@@ -18,7 +18,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
   const db = await getReadDb();
   const ctx = getTenantContextFromRequest(request);
 
-  const result = await findBookByIdOrSlug(db, id, { id: 1, slug: 1 }, ctx.id ?? undefined, ctx.slug ?? undefined);
+  const result = await findBookByIdOrSlug(db, id, { id: 1, slug: 1 }, ctx.id ?? undefined);
   if (!result) {
     return new NextResponse('Not Found', { status: 404 });
   }

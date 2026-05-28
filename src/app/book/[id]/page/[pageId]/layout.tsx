@@ -20,11 +20,11 @@ const PAGE_META_PROJECTION = {
   'translation.data': 1, 'ocr.data': 1,
 };
 
-async function getPageData(bookId: string, pageId: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book | null; page: Page | null }> {
+async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getReadDb();
     const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION, tenantId, tenantSlug),
+      findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION, tenantId),
       db.collection('pages').findOne({ id: pageId }, { projection: PAGE_META_PROJECTION }),
     ]);
 
@@ -48,7 +48,7 @@ async function getPageData(bookId: string, pageId: string, tenantId?: string, te
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
-  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined, ctx?.slug ?? undefined);
+  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
 
   if (!book || !page) {
     // Self-referential canonical so this URL isn't seen as a duplicate of '/'

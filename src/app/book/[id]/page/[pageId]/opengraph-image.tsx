@@ -19,12 +19,12 @@ const OG_PAGE_PROJECTION = {
   cropped_photo: 1, crop: 1, 'translation.data': 1, 'ocr.data': 1,
 };
 
-async function getPageData(bookId: string, pageId: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book | null; page: Page | null }> {
+async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getReadDb();
 
     const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, OG_BOOK_PROJECTION, tenantId, tenantSlug),
+      findBookByIdOrSlug(db, bookId, OG_BOOK_PROJECTION, tenantId),
       db.collection('pages').findOne({ id: pageId }, { projection: OG_PAGE_PROJECTION }),
     ]);
 
@@ -48,7 +48,7 @@ async function getPageData(bookId: string, pageId: string, tenantId?: string, te
 export default async function Image({ params }: { params: Promise<{ id: string; pageId: string }> }) {
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
-  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined, ctx?.slug ?? undefined);
+  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
 
   const title = book?.display_title || book?.title || 'Unknown Title';
   const author = book?.author || 'Unknown Author';

@@ -46,7 +46,7 @@ export default async function PageEditorPage({ params }: PageProps) {
 
   // Step 2: Book lookup + nav pages in parallel (both can start now)
   const [bookResult, navPages] = await Promise.all([
-    findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined, ctx?.slug ?? undefined),
+    findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })
