@@ -643,10 +643,10 @@ export default function BphCatalogBrowser({
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border-light bg-warm">
-                <th className="text-left px-3 py-2.5 font-medium text-secondary">Title</th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">Author</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">Year</th>
+                <th className="text-left px-3 py-2.5 font-medium text-secondary">Title</th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
+                <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">Year</th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Shelfmark</th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
               </tr>
@@ -659,17 +659,17 @@ export default function BphCatalogBrowser({
               {loading && works.length === 0 && (
                 Array.from({ length: 8 }, (_, i) => (
                   <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
-                    <td className="px-3 py-3 align-top">
-                      <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
-                    </td>
                     <td className="px-3 py-3 align-top hidden sm:table-cell">
                       <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
                     </td>
-                    <td className="px-3 py-3 align-top tabular-nums">
-                      <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
+                    <td className="px-3 py-3 align-top">
+                      <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
                     </td>
                     <td className="px-3 py-3 align-top hidden md:table-cell">
                       <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
+                    </td>
+                    <td className="px-3 py-3 align-top tabular-nums">
+                      <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
                     </td>
                     <td className="px-3 py-3 align-top hidden md:table-cell">
                       <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
@@ -690,6 +690,9 @@ export default function BphCatalogBrowser({
                     key={w.ubn}
                     className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
                   >
+                    <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
+                      {displayAuthor || <span className="text-muted">—</span>}
+                    </td>
                     <td className="px-3 py-2 align-top">
                       <div className="font-medium text-primary leading-snug">
                         <a
@@ -730,14 +733,11 @@ export default function BphCatalogBrowser({
                         </div>
                       )}
                     </td>
-                    <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                      {displayAuthor || <span className="text-muted">—</span>}
+                    <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
+                      {w.place || <span className="text-muted">—</span>}
                     </td>
                     <td className="px-3 py-2 align-top text-secondary tabular-nums">
                       {w.year || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                      {w.place || <span className="text-muted">—</span>}
                     </td>
                     <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
                       {w.shelf_mark || <span className="text-muted">—</span>}
