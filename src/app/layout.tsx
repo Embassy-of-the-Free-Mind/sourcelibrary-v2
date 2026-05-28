@@ -14,6 +14,25 @@ import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
 
 
 
+// Synchronous, host-aware view-mode init. Runs during HTML parsing before
+// any content paints, so gated sections never flash. Kept inline + minified
+// so it ships in the initial HTML and needs no separate request.
+//
+// AI summaries / introductions default to HIDDEN on the BPH reading room
+// (host bph.* or path /embed/bph/*) — BPH scholars distrust AI-written prose
+// over primary sources, so the partner surface leads without it. A visitor
+// can still opt in via the gear menu (sl_hide_ai=0). The cookie is tri-state:
+// '1'=hide, '0'=show, absent=default (BPH hides; main site + other tenants
+// show). Reading-guide toggle is unchanged (default show, hide only on
+// explicit sl_hide_guide=1). The CSS rules in globals.css consume the data
+// attributes set here. Must live in the ROOT layout (not embed/layout): the
+// real BPH subdomain serves the global /book/[id] route directly (proxy adds
+// x-tenant-* headers, no /embed rewrite), so the embed layout never wraps it.
+// Detection is client-side by hostname to stay ISR-safe — the HTML is
+// host-agnostic and cached; this script self-determines at runtime.
+// Must mirror the detection in EmbedUserMenu.tsx.
+const VIEW_MODE_INIT_SCRIPT = `(function(){var d=document,c=d.cookie,h=location.hostname,p=location.pathname;var bph=/^bph\\./.test(h)||/^\\/embed\\/bph(\\/|$)/.test(p);var m=c.match(/(?:^|; )sl_hide_ai=([01])/);if(m?m[1]==='1':bph)d.documentElement.dataset.slHideAi='1';if(/(?:^|; )sl_hide_guide=1/.test(c))d.documentElement.dataset.slHideGuide='1';})();`;
+
 export const metadata: Metadata = {
   title: "Source Library — Ancient Texts Translated to English",
   description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
@@ -87,6 +106,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: VIEW_MODE_INIT_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

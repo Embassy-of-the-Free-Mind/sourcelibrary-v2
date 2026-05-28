@@ -59,7 +59,8 @@ const COOKIE_HIDE_GUIDE = 'sl_hide_guide';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 // BPH leads without AI prose by default; other tenants/the main site show it.
-// Must mirror the detection in embed/layout.tsx's VIEW_MODE_INIT_SCRIPT.
+// Must mirror the detection in the root layout's VIEW_MODE_INIT_SCRIPT
+// (src/app/layout.tsx).
 function isBphSurface(): boolean {
   if (typeof window === 'undefined') return false;
   return /^bph\./.test(window.location.hostname)
