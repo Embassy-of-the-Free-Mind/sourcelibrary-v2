@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
-import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
+import LibrarianMessageBody from '@/app/librarian/_components/MessageBody';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -206,7 +206,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     if (status === 'authenticated') setSidebarTab('mine');
   }, [status]);
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
-  const [showThinking, setShowThinking] = useState(false);
+  const [showThinking, setShowThinking] = useState(true);
   const [visibleThreads, setVisibleThreads] = useState(5);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -614,57 +614,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
                           {/* Response text */}
                           {assistant.content && (
-                            <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
-                              <div className="max-w-none font-body text-[15px] leading-relaxed text-[#1a1612]">
-                                <ReactMarkdown
-                                  remarkPlugins={[remarkGfm]}
-                                  components={{
-                                    p: ({ children }) => (
-                                      <p className="mb-4 mt-0">{children}</p>
-                                    ),
-                                    h2: ({ children }) => (
-                                      <h2 className="text-xl font-serif mt-6 mb-3 text-[#1a1612]" style={{ fontWeight: 400 }}>{children}</h2>
-                                    ),
-                                    h3: ({ children }) => (
-                                      <h3 className="text-lg font-serif mt-5 mb-2 text-[#1a1612]" style={{ fontWeight: 400 }}>{children}</h3>
-                                    ),
-                                    a: ({ href, children }) => (
-                                      <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#9e4a3a] underline underline-offset-2 decoration-[#9e4a3a]/30 hover:decoration-[#9e4a3a]">{children}</a>
-                                    ),
-                                    blockquote: ({ children }) => (
-                                      <blockquote className="border-l-2 border-[#c9a86c] pl-4 my-4 italic text-[#444]">{children}</blockquote>
-                                    ),
-                                    ul: ({ children }) => (
-                                      <ul className="my-3 ml-4 list-disc">{children}</ul>
-                                    ),
-                                    ol: ({ children }) => (
-                                      <ol className="my-3 ml-4 list-decimal">{children}</ol>
-                                    ),
-                                    li: ({ children }) => (
-                                      <li className="my-1">{children}</li>
-                                    ),
-                                    hr: () => <hr className="my-4 border-[#e8e4dc]" />,
-                                    img: ({ src, alt }) => (
-                                      <a href={src as string} target="_blank" rel="noopener noreferrer">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                          src={src as string}
-                                          alt={(alt as string) || ''}
-                                          className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-4"
-                                          loading="lazy"
-                                          onError={(e) => {
-                                            const img = e.currentTarget;
-                                            const wrapper = img.closest('a');
-                                            if (wrapper) wrapper.style.display = 'none';
-                                            else img.style.display = 'none';
-                                          }}
-                                        />
-                                      </a>
-                                    ),
-                                  }}
-                                >{ensureParagraphBreaks(linkifySourceUrls(assistant.content))}</ReactMarkdown>
-                              </div>
-                            </div>
+                            <LibrarianMessageBody content={assistant.content} variant="chat-bubble" />
                           )}
 
                           {/* Research direction choices */}
