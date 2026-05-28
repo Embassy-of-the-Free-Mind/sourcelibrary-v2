@@ -3,9 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
+import LibrarianMessageBody from '@/app/librarian/_components/MessageBody';
 
 interface ThreadMessage {
   id: string;
@@ -127,22 +125,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
                   {msg.authorName}
                 </p>
                 {msg.authorType === 'ai' ? (
-                  <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed text-[#1a1612] prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-[#1a1612] prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-[#1a1612] prose-hr:my-4 prose-img:rounded-lg prose-img:shadow-md prose-img:my-4 prose-img:max-h-[400px] prose-img:w-auto">
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        a: ({ href, children }) => (
-                          <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
-                        ),
-                        img: ({ src, alt }) => (
-                          <a href={src as string} target="_blank" rel="noopener noreferrer">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[400px] w-auto" loading="lazy" />
-                          </a>
-                        ),
-                      }}
-                    >{ensureParagraphBreaks(linkifySourceUrls(msg.content))}</ReactMarkdown>
-                  </div>
+                  <LibrarianMessageBody content={msg.content} variant="thread" />
                 ) : (
                   <p className="text-[15px] font-body leading-relaxed text-[#1a1612] whitespace-pre-wrap">
                     {msg.content}
