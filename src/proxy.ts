@@ -3,50 +3,13 @@ import { getDb } from '@/lib/mongodb';
 
 // --- Tenant routing ---
 
-// Paths that live at the root and are never treated as tenant slugs
-const NON_TENANT_PATHS = new Set([
-  'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
-  'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
-  'support', 'sponsors', 'unauthorized', 'design-options', 'experiments',
-  'ficino-society', 'contribute', 'census', 'oauth', 'developers',
-  'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
-  // Global navigation roots
-  'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
-  // User pages (standalone, not tenant-scoped)
-  'favorites', 'reading-history', 'timeline', 'topics', 'languages',
-  'categories', 'catalog', 'catalogue', 'artwork', 'artist',
-  // Short share links — redirected to /explore/* in next.config.ts redirects()
-  'map', 'constellation',
-  // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
-  'book', 'collections',
-  // Global routes that live under /[tenant]/* but have no per-X tenant
-  // scoping. Exposed on the apex via the GLOBAL_TENANT_ROUTES rewrite
-  // block below. Listed here so the apex first-segment branch will not
-  // 404 them and we skip the per-request tenant DB lookup.
-  'encyclopedia', 'rithmomachia', 'hieroglyphs', 'tablets', 'taxonomy',
-  'learn', 'dataset', 'beta',
-  // Other root pages
-  'admin', 'author', 'work', 'connect', 'data', 'read',
-  'research', 'embed', 'shwep', 'for-researchers', 'for-libraries', 'identify',
-  'review', 'volunteers',
-  // Legal / policy
-  'dmca',
-  // Welcome flow (post-signup interstitial + temporary preview route)
-  'welcome', 'welcome-preview',
-  // Shortlinks — /q/[code] must pass through to src/app/q/[code]/route.ts
-  'q',
-  // SEO — sitemap-index route, reachable as /sitemap.xml via next.config rewrite
-  'sitemap-index',
-]);
-
-// Global routes that live under [tenant]/* in the file tree but are exposed
-// on the apex (sourcelibrary.org). Keep in sync with the matching block in
-// NON_TENANT_PATHS — that allowlists the slug so the apex first-segment
-// branch skips them, and this set drives the rewrite to /{default}/<slug>/...
-const GLOBAL_TENANT_ROUTES = new Set([
-  'encyclopedia', 'artist', 'shwep', 'beta', 'rithmomachia',
-  'hieroglyphs', 'tablets', 'taxonomy', 'learn', 'dataset',
-]);
+// First-segment slugs that map to a subdomain tenant via path-based access
+// (e.g. sourcelibrary.org/bph). After the tenant-as-filter migration (see
+// .claude/docs/tenant-architecture-migration.md), every other route is a
+// global root — tenant context is supplied by the proxy via x-tenant-* headers
+// when a subdomain or this set matches, and the dynamic [tenant] segment
+// rejects everything else.
+const TENANT_ROOT_PATHS = new Set(['bph', 'kloss-collection', 'bhutan']);
 
 // Domains that enable the Ficino Society social layer
 const SOCIETY_DOMAINS = [
@@ -207,6 +170,350 @@ const TENANT_SUBDOMAINS: Record<string, string> = {
   // 'ritman.sourcelibrary.org': 'ritman',
 };
 
+// --- Tenant resolution helpers (module-level) ---
+// Pulled out of proxy() so they can be reused by resolveTenantFromRequest and
+// by route handlers that bypass middleware. They each call getDb() directly —
+// the underlying mongo client is a singleton (see src/lib/mongodb.ts), so per-
+// request micro-caching here would be redundant.
+
+async function resolveActiveTenant(
+  slug: string
+): Promise<{ id: string; slug: string; kind: string | null } | null> {
+  // TENANT_ROOT_PATHS gates the path-based fast path so unknown slugs don't
+  // hit Mongo. The DB lookup stays as the authoritative source — aliases
+  // (`slug_aliases`) still resolve, but only when their canonical slug is in
+  // the set above.
+  if (!slug || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) return null;
+  if (!TENANT_ROOT_PATHS.has(slug)) return null;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne({
+      $or: [
+        { slug },
+        { aliases: slug },
+        { slug_aliases: slug },
+      ],
+      status: { $ne: 'deleted' },
+    });
+    if (!tenant) return null;
+    return {
+      id: tenant.id as string,
+      slug: tenant.slug as string,
+      kind: (tenant.kind as string | undefined) ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Look up a `kind:'provider'` row by slug. Used only by the provider-strip
+ * 308 safety net below — we don't filter by TENANT_ROOT_PATHS here because
+ * provider slugs (internet-archive, gallica, …) are deliberately outside it.
+ */
+async function resolveProviderTenant(slug: string): Promise<{ kind: string | null } | null> {
+  if (!slug || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) return null;
+  if (TENANT_ROOT_PATHS.has(slug)) return null;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne(
+      { slug, kind: 'provider', status: { $ne: 'deleted' } },
+      { projection: { kind: 1 } }
+    );
+    if (!tenant) return null;
+    return { kind: (tenant.kind as string | undefined) ?? null };
+  } catch {
+    return null;
+  }
+}
+
+async function resolveTenantSlugById(tenantId: string): Promise<string | null> {
+  if (!tenantId) return null;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne(
+      { id: tenantId, status: { $ne: 'deleted' } },
+      { projection: { slug: 1 } }
+    );
+    return (tenant?.slug as string) || null;
+  } catch {
+    return null;
+  }
+}
+
+async function resolveTenantByExactSlug(
+  slug: string
+): Promise<{ id: string; slug: string; kind: string | null } | null> {
+  if (!slug) return null;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne(
+      { slug, status: { $ne: 'deleted' } },
+      { projection: { id: 1, slug: 1, kind: 1 } }
+    );
+    if (!tenant) return null;
+    return {
+      id: tenant.id as string,
+      slug: tenant.slug as string,
+      kind: (tenant.kind as string | undefined) ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tenant content guard — data-driven RLS for tenant-scoped content routes.
+//
+// To protect a new content type: add one entry to TENANT_CONTENT_ROUTES.
+// No other changes to proxy.ts needed.
+// ---------------------------------------------------------------------------
+interface TenantContentRouteConfig {
+  /** URL path prefix WITHOUT leading slash, e.g. 'book'. Matched against the
+   *  content path after any /{tenant} prefix is stripped. */
+  prefix: string;
+  /** MongoDB collection name. */
+  collection: string;
+  /** Document field holding the owning tenant's UUID. */
+  tenantIdField: string;
+}
+
+const TENANT_CONTENT_ROUTES: TenantContentRouteConfig[] = [
+  { prefix: 'book',          collection: 'books',          tenantIdField: 'tenantId' },
+  { prefix: 'collections',   collection: 'collections',    tenantIdField: 'tenantId' },
+  { prefix: 'gallery', collection: 'gallery_images', tenantIdField: 'tenantId' },
+  // Add new tenant-protected content types here.
+];
+
+type GuardResult =
+  | { matched: false }
+  | { matched: true; allow: false }
+  | { matched: true; allow: true; rewritePath: string | null };
+
+async function resolveResourceOwnerTenantId(
+  segment: string,
+  route: TenantContentRouteConfig,
+): Promise<string | null> {
+  try {
+    const db = await getDb();
+    const doc = await db.collection(route.collection).findOne(
+      { $or: [{ slug: segment }, { id: segment }] },
+      { projection: { [route.tenantIdField]: 1 } }
+    );
+    return (doc?.[route.tenantIdField] as string | undefined) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Generic tenant RLS guard for registered content routes.
+ *
+ * - Path-based  (/{tenant}/book/x):    checks ownership, returns rewritePath=/book/x.
+ * - Subdomain   (bph.sl.org/book/x):   checks ownership, no rewrite needed.
+ * - Unregistered paths:                matched:false — proxy proceeds normally.
+ * - Global content (no tenantId on doc): always allowed.
+ */
+async function guardTenantContentAccess(
+  pathname: string,
+  tenantSlug: string,
+  tenantId: string,
+  source: string,
+): Promise<GuardResult> {
+  let contentPath: string;
+  let needsRewrite: boolean;
+
+  if (source === 'path') {
+    const tenantPrefix = `/${tenantSlug}`;
+    if (!pathname.startsWith(tenantPrefix + '/') && pathname !== tenantPrefix) {
+      return { matched: false };
+    }
+    contentPath = pathname.slice(tenantPrefix.length) || '/';
+    needsRewrite = true;
+  } else {
+    // subdomain / embed-path: URL is already the content path
+    contentPath = pathname;
+    needsRewrite = false;
+  }
+
+  const stripped = contentPath.startsWith('/') ? contentPath.slice(1) : contentPath;
+  const route = TENANT_CONTENT_ROUTES.find(
+    r => stripped === r.prefix || stripped.startsWith(r.prefix + '/')
+  );
+  if (!route) return { matched: false };
+
+  // First segment after the route prefix is the resource slug.
+  const afterPrefix = stripped.slice(route.prefix.length);
+  const resourceSlug = afterPrefix.startsWith('/') ? afterPrefix.slice(1).split('/')[0] : null;
+
+  if (!resourceSlug) {
+    // Bare prefix root (e.g. /book with no slug) — no ownership check needed.
+    return { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null };
+  }
+
+  const ownerTenantId = await resolveResourceOwnerTenantId(resourceSlug, route);
+
+  // No tenantId on document = global/untenanted content — allow from any tenant context.
+  if (!ownerTenantId) {
+    return { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null };
+  }
+
+  if (ownerTenantId !== tenantId) {
+    return { matched: true, allow: false };
+  }
+
+  return { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null };
+}
+
+// resolveTenantForBookSegment is kept solely for the /api referer fallback in
+// resolveTenantFromRequest; it resolves a book slug → tenant slug for inferring
+// context from the Referer header on API calls.
+async function resolveTenantForBookSegment(segment: string): Promise<string | null> {
+  try {
+    const db = await getDb();
+    const book = await db.collection('books').findOne(
+      { $or: [{ slug: segment }, { id: segment }] },
+      { projection: { tenantId: 1 } }
+    );
+    return book?.tenantId ? await resolveTenantSlugById(book.tenantId as string) : null;
+  } catch {
+    return null;
+  }
+}
+
+export interface ResolvedTenant {
+  id: string;
+  slug: string;
+  kind: string | null;
+  source: 'subdomain' | 'path' | 'api-segment' | 'referer' | 'embed-path';
+  /**
+   * The URL segment that matched, if resolution was path-based. Middleware
+   * uses this to issue a 308 to the canonical slug when the segment was an
+   * alias (e.g. `/bph-rare-books/...` → `/bph/...`).
+   */
+  originalSegment?: string;
+}
+
+/**
+ * Resolve the tenant context for an arbitrary request — subdomain → path →
+ * `/api/{tenant}/...` segment → referer fallback. Returns null when the
+ * request is global.
+ *
+ * Exported for route handlers that bypass the middleware (e.g. ones invoked
+ * via internal rewrites). The middleware itself uses this same resolver and
+ * adds its own control-flow on top (alias 308s, unknown-slug 404s).
+ */
+export async function resolveTenantFromRequest(
+  request: NextRequest
+): Promise<ResolvedTenant | null> {
+  const host = (request.headers.get('host') || '').toLowerCase();
+  const { pathname } = request.nextUrl;
+
+  // 1. Subdomain (bph.sourcelibrary.org → bph)
+  const subdomainSlug = TENANT_SUBDOMAINS[host];
+  if (subdomainSlug) {
+    const resolved = await resolveTenantByExactSlug(subdomainSlug);
+    if (resolved) {
+      return {
+        id: resolved.id,
+        slug: resolved.slug,
+        kind: resolved.kind,
+        source: 'subdomain',
+      };
+    }
+  }
+
+  // 1b. /embed/<tenant>/... — partner Webflow sites embed Source Library via
+  // public/embed/v1.js, which loads iframes at sourcelibrary.org/embed/<tenant>/…
+  // Resolve the tenant explicitly here so the wrappers' downstream global
+  // pages see x-tenant-* headers and `isEmbedded = true`.
+  if (pathname.startsWith('/embed/')) {
+    const [, , embedTenantSlug] = pathname.split('/');
+    if (embedTenantSlug) {
+      const resolved = await resolveTenantByExactSlug(embedTenantSlug);
+      if (resolved) {
+        return {
+          id: resolved.id,
+          slug: resolved.slug,
+          kind: resolved.kind,
+          source: 'embed-path',
+        };
+      }
+    }
+  }
+
+  // 2. Path-based (/bph/... → bph). resolveActiveTenant gates on
+  // TENANT_ROOT_PATHS so unknown first segments naturally return null.
+  const [, firstSegment] = pathname.split('/');
+  if (firstSegment) {
+    const direct = await resolveActiveTenant(firstSegment);
+    if (direct) {
+      return {
+        id: direct.id,
+        slug: direct.slug,
+        kind: direct.kind,
+        source: 'path',
+        originalSegment: firstSegment,
+      };
+    }
+  }
+
+  // 3. /api/{tenant}/... explicit segment
+  if (pathname.startsWith('/api/')) {
+    const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+    if (apiPrefix === 'api' && apiTenantSegment) {
+      const pathTenant = await resolveActiveTenant(apiTenantSegment);
+      if (pathTenant) {
+        return {
+          id: pathTenant.id,
+          slug: pathTenant.slug,
+          kind: pathTenant.kind,
+          source: 'api-segment',
+        };
+      }
+    }
+
+    // 4. Referer fallback — root /api/* calls fired from a tenant page keep
+    // the page URL as the referer; mine it for tenant context so legacy root
+    // APIs stay tenant-safe.
+    const referer = request.headers.get('referer');
+    if (referer) {
+      try {
+        const refererUrl = new URL(referer);
+        const refererSegments = refererUrl.pathname.split('/').filter(Boolean);
+        const refererFirstSegment = refererSegments[0] || '';
+        const refTenant = await resolveActiveTenant(refererFirstSegment);
+        if (refTenant) {
+          return {
+            id: refTenant.id,
+            slug: refTenant.slug,
+            kind: refTenant.kind,
+            source: 'referer',
+          };
+        }
+        if (refererFirstSegment === 'book' && refererSegments[1]) {
+          const bookTenantSlug = await resolveTenantForBookSegment(refererSegments[1]);
+          if (bookTenantSlug) {
+            const resolved = await resolveTenantByExactSlug(bookTenantSlug);
+            if (resolved) {
+              return {
+                id: resolved.id,
+                slug: resolved.slug,
+                kind: resolved.kind,
+                source: 'referer',
+              };
+            }
+          }
+        }
+      } catch {
+        // Ignore malformed referer
+      }
+    }
+  }
+
+  return null;
+}
+
 // --- Embed CORS allowlist ---
 // Domains allowed to call /api/collections/* and /api/books/* cross-origin
 // (used by the public embed.js script on partner Webflow sites).
@@ -249,80 +556,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  let cachedDbPromise: ReturnType<typeof getDb> | null = null;
-
-  function getDbCached() {
-    if (!cachedDbPromise) cachedDbPromise = getDb();
-    return cachedDbPromise;
-  }
-
-  async function resolveActiveTenant(slug: string): Promise<{ id: string; slug: string; kind: string | null } | null> {
-    if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
-      return null;
-    }
-    try {
-      const db = await getDb();
-      const tenant = await db.collection('tenants').findOne({
-        $or: [
-          { slug },
-          { aliases: slug },
-          { slug_aliases: slug },
-        ],
-        status: { $ne: 'deleted' },
-      });
-      if (!tenant) return null;
-      return {
-        id: tenant.id as string,
-        slug: tenant.slug as string,
-        kind: (tenant.kind as string | undefined) ?? null,
-      };
-    } catch {
-      return null;
-    }
-  }
-
-  async function resolveTenantSlugById(tenantId: string): Promise<string | null> {
-    if (!tenantId) return null;
-    try {
-      const db = await getDbCached();
-      const tenant = await db.collection('tenants').findOne(
-        { id: tenantId, status: { $ne: 'deleted' } },
-        { projection: { slug: 1 } }
-      );
-      return (tenant?.slug as string) || null;
-    } catch {
-      return null;
-    }
-  }
-
-  async function resolveTenantByExactSlug(slug: string): Promise<{ id: string; slug: string } | null> {
-    if (!slug) return null;
-    try {
-      const db = await getDbCached();
-      const tenant = await db.collection('tenants').findOne(
-        { slug, status: { $ne: 'deleted' } },
-        { projection: { id: 1, slug: 1 } }
-      );
-      if (!tenant) return null;
-      return { id: tenant.id as string, slug: tenant.slug as string };
-    } catch {
-      return null;
-    }
-  }
-
-  async function resolveTenantForBookSegment(segment: string): Promise<string | null> {
-    try {
-      const db = await getDbCached();
-      const book = await db.collection('books').findOne(
-        { $or: [{ slug: segment }, { id: segment }] },
-        { projection: { tenantId: 1 } }
-      );
-      return book?.tenantId ? await resolveTenantSlugById(book.tenantId as string) : null;
-    } catch {
-      return null;
-    }
-  }
-
   // --- Embed CORS: allow partner Webflow sites to call collection/book APIs ---
   const isEmbedRoute =
     pathname.startsWith('/api/collections') || pathname.startsWith('/api/books');
@@ -360,37 +593,27 @@ export async function proxy(request: NextRequest) {
   }
 
   // --- Tenant subdomain rewrite ---
-  // Rewrites all paths on tenant subdomains to the filtered embed routes.
-  // e.g. bph.sourcelibrary.org/book/aurora → internally serves /embed/bph/book/aurora
+  //
+  // Only a handful of tenant-specific routes still live under /embed/<tenant>/:
+  // the partner landing page (`page.tsx`) and the bibliographic catalogue
+  // routes (kind:'subdomain' tenants opt in via library-partners.ts). Every
+  // other path on the subdomain flows through to its global counterpart —
+  // tenant context travels via the x-tenant-* headers stamped by the
+  // resolution block lower in this file.
   const tenant = TENANT_SUBDOMAINS[host.toLowerCase()];
   if (tenant && !pathname.startsWith('/embed/') && !pathname.startsWith('/_next/') && !pathname.startsWith('/api/')) {
     const url = request.nextUrl.clone();
-    // Map common paths to embed equivalents
+    let needsRewrite = false;
+
     if (pathname === '/') {
       url.pathname = `/embed/${tenant}`;
-    } else if (pathname === '/search' || pathname.startsWith('/search/')) {
-      // Dedicated search results page — keep traffic in embed namespace.
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else if (pathname.startsWith('/book/') && (pathname.includes('/page/') || pathname.includes('/page-number/'))) {
-      // Page reader + page-number: keep traffic in embed namespace
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else if (pathname.startsWith('/book/')) {
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else if (pathname.startsWith('/collections')) {
-      if (pathname === '/collections') {
-        url.pathname = `/embed/${tenant}`;
-      } else {
-        url.pathname = `/embed/${tenant}${pathname}`;
-      }
+      needsRewrite = true;
     } else if (pathname === '/catalogue' || pathname === '/catalog') {
-      // Catalogue page on tenant subdomain.
-      //
       // Tenants that opt into the dedicated catalogue route (manuscript
       // collections like bhutan) are routed to `/embed/<tenant>/catalogue`.
       // Tenants still on the BPH-style `?view=catalog` query param flow
-      // (BPH, kloss, etc.) keep the existing landing-page rewrite — they
-      // render `<UnifiedCatalogue>` / `<BphUnifiedCatalogue>` inside the
-      // landing page based on the query param.
+      // (BPH, kloss, etc.) render `<UnifiedCatalogue>` /
+      // `<BphUnifiedCatalogue>` inside the landing page based on the param.
       const usesDedicatedCatalogue = tenant === 'bhutan';
       if (usesDedicatedCatalogue) {
         url.pathname = `/embed/${tenant}/catalogue`;
@@ -398,6 +621,7 @@ export async function proxy(request: NextRequest) {
         url.pathname = `/embed/${tenant}`;
         url.searchParams.set('view', 'catalog');
       }
+      needsRewrite = true;
     } else if (pathname.startsWith('/catalogue/') || pathname.startsWith('/catalog/')) {
       // Catalogue entry detail (e.g. /catalogue/12345 for UBN-keyed BPH works).
       // Both spellings forwarded to the existing `/catalog/[ubn]` route folder.
@@ -405,43 +629,35 @@ export async function proxy(request: NextRequest) {
         ? pathname.slice('/catalogue/'.length)
         : pathname.slice('/catalog/'.length);
       url.pathname = `/embed/${tenant}/catalog/${tail}`;
-    } else if (pathname.startsWith('/gallery')) {
-      // Keep gallery traffic inside the tenant subdomain — never redirect out
-      // to sourcelibrary.org (BPH lockdown invariant).
-      url.pathname = `/embed/${tenant}${pathname}`;
-    } else {
-      // All other paths on tenant subdomain → embed root (filtered search)
-      url.pathname = `/embed/${tenant}`;
+      needsRewrite = true;
     }
-    // Resolve and forward the tenant id so embed pages that read tenant context
-    // from headers (e.g. /[tenant]/gallery/page.tsx, re-exported under
-    // /embed/[tenant]/gallery) see the tenant. Pages that already read the
-    // tenant slug from URL params are unaffected.
-    const subdomainTenant = await resolveTenantByExactSlug(tenant);
-    const subdomainHeaders = new Headers(request.headers);
-    subdomainHeaders.set('x-tenant-slug', tenant);
-    if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
-    return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
+
+    if (needsRewrite) {
+      const subdomainTenant = await resolveTenantByExactSlug(tenant);
+      const subdomainHeaders = new Headers(request.headers);
+      subdomainHeaders.set('x-tenant-slug', tenant);
+      subdomainHeaders.set('x-tenant-source', 'subdomain');
+      subdomainHeaders.set('x-tenant-embedded', '1');
+      if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
+      if (subdomainTenant?.kind) subdomainHeaders.set('x-tenant-kind', subdomainTenant.kind);
+      return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
+    }
+    // Fall through — the resolution block below picks up the subdomain
+    // tenant and stamps x-tenant-* headers on the global route.
   }
 
   // --- Source-provider URL strip ---
   // Source providers (Internet Archive, Gallica, Bodleian, …) live in the
-  // `tenants` Mongo collection so book metadata can credit them and queries
-  // can filter by `image_source.provider`, but they are NOT tenants in the
-  // routing sense — no partner subdomain, no scoped UI. Treating their slugs
-  // as URL prefixes (`/internet-archive/gallery`, `/gallica/book/...`)
-  // accidentally scopes the [tenant]/* routes by tenantId and hides content
-  // that the provider re-hosts but doesn't carry a tenantId for (most of
-  // gallery_images, related books, etc.). Strip the provider prefix and
-  // 308-redirect to the global equivalent so providers never claim URL space.
-  // Subdomain-kind tenants (bph, kloss-collection, bhutan) and `default`/`meta`
-  // are untouched here — their existing per-route canonicalizations below
-  // continue to apply when visited from the main host.
+  // `tenants` Mongo collection as `kind:'provider'` rows so book metadata can
+  // credit them, but they are NOT tenants in the routing sense — no partner
+  // subdomain, no scoped UI. Strip a leading provider slug and 308 to the
+  // global equivalent so providers never claim URL space. Kept as a safety
+  // net for old indexed links (see PR #2025).
   const providerStripMatch = pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/);
   if (providerStripMatch) {
     const seg = providerStripMatch[1];
     const rest = providerStripMatch[2] || '';
-    const providerCandidate = await resolveActiveTenant(seg);
+    const providerCandidate = await resolveProviderTenant(seg);
     if (providerCandidate?.kind === 'provider') {
       const url = request.nextUrl.clone();
       url.pathname = rest || '/';
@@ -449,59 +665,13 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // --- Canonical book URLs ---
-  // Book URLs are tenant-agnostic: always /book/{slug} (no tenant prefix).
-  // Strip any leading /{tenant} from book paths so old links canonicalize.
-  const tenantBookMatch = pathname.match(/^\/([^/]+)(\/book(?:\/.*)?)$/);
-  if (tenantBookMatch) {
-    const tenantSegment = tenantBookMatch[1];
-    const bookSuffix = tenantBookMatch[2];
-    const directTenant = await resolveActiveTenant(tenantSegment);
-    if (directTenant) {
-      const url = request.nextUrl.clone();
-      url.pathname = bookSuffix;
-      return NextResponse.redirect(url, 308);
-    }
-  }
-
-  // Gallery image URLs are tenant-agnostic, matching the book-URL doctrine
-  // (see PR #2025, CLAUDE.md "Source Library is the destination"). A previous
-  // block here redirected `/gallery/image/<id>` to
-  // `/<tenant>/gallery/image/<id>` based on the image's owning tenant, but
-  // when that tenant resolved to a *provider*-kind row (e-codices, Internet
-  // Archive, etc.) the provider-strip rule above immediately stripped the
-  // prefix back off, producing an infinite 308 loop and making most gallery
-  // image pages unreachable. The clean URL is served by
-  // src/app/gallery/image/[id]/page.tsx (which re-exports the tenant page)
-  // plus a matching root layout that supplies the metadata + JSON-LD.
-
-  // Collections are global routes. Canonicalize legacy tenant-scoped collection
-  // paths (e.g. /bph/collections/astrology) to /collections/astrology.
-  const tenantCollectionMatch = pathname.match(/^\/([^/]+)\/collections(\/.*)?$/);
-  if (tenantCollectionMatch) {
-    const tenantSegment = tenantCollectionMatch[1];
-    const collectionsSuffix = tenantCollectionMatch[2] || '';
-    const directTenant = await resolveActiveTenant(tenantSegment);
-    if (directTenant) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/collections${collectionsSuffix}`;
-      return NextResponse.redirect(url, 308);
-    }
-  }
-
-  // Explore is global-only. Canonicalize tenant-scoped explore paths
-  // (e.g. /bph/explore/map) to /explore/map.
-  const tenantExploreMatch = pathname.match(/^\/([^/]+)\/explore(\/.*)?$/);
-  if (tenantExploreMatch) {
-    const tenantSegment = tenantExploreMatch[1];
-    const exploreSuffix = tenantExploreMatch[2] || '';
-    const directTenant = await resolveActiveTenant(tenantSegment);
-    if (directTenant) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/explore${exploreSuffix}`;
-      return NextResponse.redirect(url, 308);
-    }
-  }
+  // Tenant-prefix canonicalizers (/{tenant}/book → /book, /{tenant}/collections
+  // → /collections, /{tenant}/explore → /explore) used to live here. After
+  // Phase Final book/collections/gallery/explore are all global routes, and
+  // the `/{tenant}/*` namespace only resolves at the [tenant] dynamic root —
+  // any other suffix there 404s through Next.js. The canonicalizers are no
+  // longer load-bearing; old links that still hit `/bph/book/x` get a 404
+  // (and Google drops them) rather than a 308.
 
   // --- Bot enforcement (before any other logic) ---
   const ua = request.headers.get('user-agent') || '';
@@ -544,40 +714,6 @@ export async function proxy(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
       url.searchParams.set('id', segment);
-      return NextResponse.rewrite(url);
-    }
-  }
-
-  // Internal tenant routing for /book/...:
-  // The route lives at [tenant]/book/[id] (3+ segments), but the public URL is
-  // /book/{id}. Rewrite (don't redirect) so the URL stays clean — no tenant
-  // prefix ever appears in the address bar.
-  if (pathname.startsWith('/book/')) {
-    const segment = pathname.split('/')[2] || '';
-    const tenantSlug = await resolveTenantForBookSegment(segment)
-      || (await resolveTenantByExactSlug('default'))?.slug
-      || null;
-    if (tenantSlug) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/${tenantSlug}${pathname}`;
-      return NextResponse.rewrite(url);
-    }
-  }
-
-  // Internal tenant routing for global content routes:
-  // These pages live under [tenant]/* in the file tree but the data is global
-  // (no per-X tenant scoping). The apex URL stays clean (/encyclopedia/...,
-  // /artist/..., /shwep/..., etc.) and we rewrite under the default tenant so
-  // the [tenant] segment resolves to the page handler. Without this block the
-  // apex first-segment branch 404s these URLs because the slugs are not real
-  // tenants. Encyclopedia alone accounted for 873K silently-invisible entity
-  // pages + 1.24K GSC soft-404s before the initial fix (#2019, #2075).
-  const firstGlobalSeg = pathname.match(/^\/([^/]+)/)?.[1];
-  if (firstGlobalSeg && GLOBAL_TENANT_ROUTES.has(firstGlobalSeg)) {
-    const defaultTenantSlug = (await resolveTenantByExactSlug('default'))?.slug;
-    if (defaultTenantSlug) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/${defaultTenantSlug}${pathname}`;
       return NextResponse.rewrite(url);
     }
   }
@@ -629,109 +765,67 @@ export async function proxy(request: NextRequest) {
   }
 
   // --- Tenant slug resolution ---
-  let tenantId: string | null = null;
-  let tenantSlug: string | null = null;
+  // resolveTenantFromRequest handles the multi-source lookup (subdomain → path
+  // → /api/{tenant}/... → referer). Two pieces of middleware-specific control
+  // flow stay here: redirecting alias slugs to canonical, and 404'ing unknown
+  // tenant-shaped segments.
+  const resolved = await resolveTenantFromRequest(request);
 
-  const [, firstSegment] = pathname.split('/');
-  if (firstSegment) {
-    const directTenant = await resolveActiveTenant(firstSegment);
-    if (directTenant) {
-      if (!pathname.startsWith('/api/') && firstSegment !== directTenant.slug) {
-        const url = request.nextUrl.clone();
-        const pathWithoutLeadingSlash = pathname.slice(1);
-        const [, ...restSegments] = pathWithoutLeadingSlash.split('/');
-        url.pathname = `/${[directTenant.slug, ...restSegments].filter(Boolean).join('/')}`;
-        return NextResponse.redirect(url, 308);
-      }
-      tenantId = directTenant.id;
-      tenantSlug = directTenant.slug;
-    } else if (
-      !NON_TENANT_PATHS.has(firstSegment) &&
-      !firstSegment.includes('.') &&
-      /^[a-z0-9-]+$/.test(firstSegment)
-    ) {
-      // Unknown slug — return 404. Previously we redirected to home, which
-      // Google logs as "Soft 404" / "Page with redirect" and keeps trying.
-      // 404 tells Google the URL never existed so it drops the entry. This
-      // matters at scale: spam-scraper backlinks point thousands of bogus
-      // URLs (/tag/phpmyadmin/, /walking-with-confidence/, etc.) at the
-      // domain, all of which were piling up in GSC.
-      return new NextResponse('Not Found', {
-        status: 404,
-        headers: {
-          'Content-Type': 'text/plain; charset=utf-8',
-          'X-Robots-Tag': 'noindex, nofollow',
-        },
-      });
+  if (resolved?.source === 'path' && resolved.originalSegment) {
+    if (!pathname.startsWith('/api/') && resolved.originalSegment !== resolved.slug) {
+      const url = request.nextUrl.clone();
+      const pathWithoutLeadingSlash = pathname.slice(1);
+      const [, ...restSegments] = pathWithoutLeadingSlash.split('/');
+      url.pathname = `/${[resolved.slug, ...restSegments].filter(Boolean).join('/')}`;
+      return NextResponse.redirect(url, 308);
     }
   }
 
-  // Root /api/* calls from tenant pages do not include the tenant segment in the pathname.
-  // Infer tenant from host (subdomain), then path, then referer so legacy root
-  // APIs remain tenant-safe.
-  if (!tenantId && pathname.startsWith('/api/')) {
-    // Tenant subdomain (e.g. bph.sourcelibrary.org/api/search) — map host to
-    // tenant. Without this, client-side fetches from tenant subdomains would
-    // hit global APIs unfiltered and leak cross-tenant content.
-    if (tenant) {
-      const subdomainTenant = await resolveTenantByExactSlug(tenant);
-      if (subdomainTenant?.id) {
-        tenantId = subdomainTenant.id;
-        tenantSlug = tenant;
-      }
-    }
+  // Unknown-slug 404s used to live here, gated on NON_TENANT_PATHS. After
+  // Phase Final the [tenant] dynamic root calls notFound() when no tenant
+  // resolves from headers, which yields the same 404 status — see
+  // src/app/[tenant]/page.tsx.
 
-    if (!tenantId) {
-      const [, apiPrefix, apiTenantSegment] = pathname.split('/');
-
-      // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
-      if (apiPrefix === 'api' && apiTenantSegment) {
-        const pathTenant = await resolveActiveTenant(apiTenantSegment);
-        if (pathTenant) {
-          tenantId = pathTenant.id;
-          tenantSlug = pathTenant.slug;
-        }
-      }
-    }
-
-    // Fallback to referer tenant path: /{tenant}/... or /book/{id}
-    if (!tenantId) {
-      const referer = request.headers.get('referer');
-      if (referer) {
-        try {
-          const refererUrl = new URL(referer);
-          const refererSegments = refererUrl.pathname.split('/').filter(Boolean);
-          const refererFirstSegment = refererSegments[0] || '';
-          const refTenant = await resolveActiveTenant(refererFirstSegment);
-          if (refTenant) {
-            tenantId = refTenant.id;
-            tenantSlug = refTenant.slug;
-          } else if (refererFirstSegment === 'book' && refererSegments[1]) {
-            // /book/{id} URLs are rewritten internally to /{tenant}/book/{id}
-            // (see the /book/ rewrite block above). API calls fired from those
-            // pages keep /book/{id} as the referer, so resolve the tenant the
-            // same way the page route does — via the book's tenantId.
-            const bookTenantSlug = await resolveTenantForBookSegment(refererSegments[1]);
-            if (bookTenantSlug) {
-              const resolved = await resolveTenantByExactSlug(bookTenantSlug);
-              if (resolved) {
-                tenantId = resolved.id;
-                tenantSlug = resolved.slug;
-              }
-            }
-          }
-        } catch {
-          // Ignore malformed referer
-        }
-      }
-    }
-  }
+  const tenantId = resolved?.id ?? null;
+  const tenantSlug = resolved?.slug ?? null;
 
   // Clone the request headers and add our custom headers
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');
   if (tenantId) requestHeaders.set('x-tenant-id', tenantId);
   if (tenantSlug) requestHeaders.set('x-tenant-slug', tenantSlug);
+  if (resolved?.kind) requestHeaders.set('x-tenant-kind', resolved.kind);
+  if (resolved?.source) requestHeaders.set('x-tenant-source', resolved.source);
+  // Mark embedded so getTenantContext() / getEmbedUiPolicy() apply lockdown UI:
+  //   - 'subdomain': subdomain requests that fell through the rewrite block
+  //     above (everything except `/`, /catalog, /catalogue) render the global
+  //     route under tenant chrome.
+  //   - 'embed-path': partner iframes loaded directly at /embed/<tenant>/…
+  //     via public/embed/v1.js.
+  if (resolved?.source === 'subdomain' || resolved?.source === 'embed-path') {
+    requestHeaders.set('x-tenant-embedded', '1');
+  }
+
+  // Tenant RLS for registered content routes (books, collections, gallery images, …).
+  // The guard checks resource ownership and returns a rewrite path for path-based
+  // tenant access, or denies cross-tenant access with a 404.
+  if (tenantId && tenantSlug && (resolved?.source === 'path' || resolved?.source === 'subdomain')) {
+    const guard = await guardTenantContentAccess(pathname, tenantSlug, tenantId, resolved.source);
+    if (guard.matched) {
+      if (!guard.allow) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/';
+        url.search = '';
+        return NextResponse.redirect(url, 307);
+      }
+      if (guard.rewritePath) {
+        // Path-based: internally rewrite to global route, tenant headers already set above.
+        const url = request.nextUrl.clone();
+        url.pathname = guard.rewritePath;
+        return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
+      }
+    }
+  }
 
   // Pass the modified headers to the request
   const response = NextResponse.next({

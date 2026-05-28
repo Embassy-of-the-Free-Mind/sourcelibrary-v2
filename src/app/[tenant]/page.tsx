@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
@@ -104,9 +104,12 @@ export default async function TenantRoot({ params, searchParams }: Props) {
   const { tenant } = await params;
   const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
 
-  // Validate tenant exists and we have proper context
+  // After Phase Final, the proxy resolves tenant context from subdomain or
+  // first-segment match against TENANT_ROOT_PATHS. Anything else lands here
+  // with no headers — return a real 404 (Google reads it as "URL never
+  // existed" and drops the entry, vs. the soft-404 a redirect to / triggers).
   if (!tenantId || !tenantSlug) {
-    redirect('/');
+    notFound();
   }
 
   // Resolve search parameters
@@ -126,7 +129,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
   const tenantDoc = await db.collection('tenants').findOne({ id: tenantId });
 
   if (!tenantDoc) {
-    redirect('/');
+    notFound();
   }
 
   // Fetch library data for this tenant

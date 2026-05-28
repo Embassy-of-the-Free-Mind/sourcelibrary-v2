@@ -7,20 +7,18 @@ import { headers } from 'next/headers';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
-import { supabase } from '@/lib/supabase';
-import IndexCatalogWorksTable from '@/components/collections/IndexCatalogWorksTable';
 import { notFound } from 'next/navigation';
 import { unstable_noStore } from 'next/cache';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { tenantBookUrl } from '@/lib/slugify';
+import { bookUrl, tenantBookUrl } from '@/lib/slugify';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
-import { bookTitle, sanitizeThumbnail, withTimeout, collectionCountLabel, ART_EXCLUDED_RESOURCE_TYPES } from '@/lib/collections-utils';
+import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
-import { isPublishedFirstTranslation } from '@/lib/book';
 import { browseBooks } from '@/lib/books-catalog';
 
 // ISR: rebuild at most once per day
@@ -113,7 +111,6 @@ interface CuratedHighlight {
   thumbnail?: string;
   thumbnail_blob?: string;
   is_first_translation?: boolean;
-  pages_translated?: number;
   ft_disposition?: string;
   language?: string;
   id: string;
@@ -125,6 +122,7 @@ function linkBookTitles(
   text: string,
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
+  tenantSlug?: string | null,
 ): React.ReactNode {
   const matches: { start: number; end: number; title: string; id: string }[] = [];
   const usedRanges: [number, number][] = [];
@@ -183,7 +181,7 @@ function linkBookTitles(
   for (const m of matches) {
     if (m.start > lastIdx) parts.push(text.slice(lastIdx, m.start));
     parts.push(
-      <Link key={m.id + '-' + m.start} href={tenantBookUrl({ id: m.id })} className="text-accent-rust hover:underline italic">
+      <Link key={m.id + '-' + m.start} href={tenantBookUrl({ id: m.id }, tenantSlug)} className="text-accent-rust hover:underline italic">
         {m.title}
       </Link>
     );
@@ -201,14 +199,24 @@ const COMPACT_LIMIT = 14;
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
 
-async function fetchCollectionData(id: string, provider?: string) {
+async function fetchCollectionData(id: string, tenantId: string | null, provider?: string) {
   // Wrap getReadDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
   const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
   if (!db) throw new Error('DB connection timeout');
 
   const collection = await withTimeout(
-    db.collection('collections').findOne({ slug: id }),
+    db.collection('collections').findOne(
+      tenantId
+        ? {
+          slug: id,
+          $or: [
+            { tenantId },
+            { tenantId: { $exists: false } },
+          ],
+        }
+        : { slug: id }
+    ),
     8000, null,
   );
   if (!collection) return null;
@@ -218,28 +226,22 @@ async function fetchCollectionData(id: string, provider?: string) {
   const filter: Record<string, unknown> = isArtCollection
     ? {
       collections: id,
-      resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
-      hidden: { $ne: true },
+      resource_type: { $exists: true },
+      ...(tenantId ? { tenantId } : {}),
     }
     : {
       collections: id,
+      ...(tenantId ? { tenantId } : {}),
       $or: [
         { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
-        { resource_type: { $exists: true }, hidden: { $ne: true } },
+        { resource_type: { $exists: true } },
       ],
     };
   // Provider filter — restrict to a specific library's books.
-  // Used by tenant subdomains (e.g. bph.sourcelibrary.org) to scope every
-  // book listing on the page to that library. The same clause is reused below
-  // for all secondary lookups (highlights, mentions, exhibition, artworks)
-  // so a single page never mixes content from multiple libraries.
-  const providerClause = provider
-    ? { $or: [{ held_by: provider }, { 'image_source.provider': provider }] }
-    : null;
-  if (providerClause) {
+  if (provider) {
     filter.$and = [
       ...(filter.$and as unknown[] || []),
-      providerClause,
+      { $or: [{ held_by: provider }, { 'image_source.provider': provider }] },
     ];
   }
 
@@ -259,9 +261,9 @@ async function fetchCollectionData(id: string, provider?: string) {
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
-  // For book collections, use cached book_count (sync-page-counts cron, 6h).
-  // For art collections, count artworks matching the art filter (excludes photos etc).
-  let total = collection.book_count || 0;
+  // Use cached book_count — sync-page-counts cron updates this every 6h
+  // to reflect only translated books (pages_translated > 0).
+  const total = collection.book_count || 0;
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;
@@ -274,12 +276,7 @@ async function fetchCollectionData(id: string, provider?: string) {
     ? withTimeout(
       db.collection('books')
         .find(
-          {
-            collections: id,
-            resource_type: { $exists: true },
-            hidden: { $ne: true },
-            ...(providerClause ? { $and: [providerClause] } : {}),
-          },
+          { collections: id, resource_type: { $exists: true } },
           {
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
@@ -303,70 +300,67 @@ async function fetchCollectionData(id: string, provider?: string) {
     // Art collections: use MongoDB directly to sort by image resolution.
     // Exclude photographs, modern reproductions, and museum object photos.
     if (isArtCollection) {
+      const EXCLUDED_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
       const artFilter = {
         collections: id,
-        resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
-        hidden: { $ne: true },
+        resource_type: { $exists: true, $nin: EXCLUDED_TYPES },
       };
-      const [docs, artCount] = await Promise.all([
-        withTimeout(
-          db.collection('books')
-            .find(artFilter, { projection, maxTimeMS: 8000 })
-            .sort({ [`art_collection_rank.${id}`]: -1, commons_width: -1 })
-            .limit(COMPACT_LIMIT)
-            .toArray(),
-          15000, [],
-        ),
-        withTimeout(
-          db.collection('books').countDocuments(artFilter, { maxTimeMS: 8000 }),
-          8000, 0,
-        ),
-      ]);
-      // Override cached book_count with actual artwork count
-      total = artCount || docs.length;
-      return docs;
-    }
-
-    // Use MongoDB with collection-specific ranking for the initial display.
-    // book_collection_rank combines relevance, quality, completeness, and engagement.
-    // Falls back to Supabase popular sort if MongoDB fails.
-    try {
       const docs = await withTimeout(
         db.collection('books')
-          .find(filter, { projection, maxTimeMS: 8000 })
-          .sort({ [`book_collection_rank.${id}`]: -1, read_count: -1, title: 1 })
+          .find(artFilter, { projection, maxTimeMS: 8000 })
+          .sort({ commons_width: -1 })
           .limit(COMPACT_LIMIT)
           .toArray(),
         15000, [],
       );
-      if (docs.length > 0) return docs;
-    } catch {
-      // Fall through to Supabase
+      return docs;
     }
 
     try {
-      const { books: sbBooks } = await browseBooks({
-        collection: id,
-        sort: 'popular',
-        limit: COMPACT_LIMIT,
-        skipCount: true,
-        hasPages: isArtCollection ? false : undefined,
-        hasResourceType: isArtCollection || undefined,
-        provider: provider || undefined,
-      });
-      return sbBooks.map(b => ({
-        id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
-        author: b.author, year: b.year, language: b.language,
-        pages_count: b.pages_count, pages_ocr: b.pages_ocr,
-        pages_translated: b.pages_translated, pages_blank: b.pages_blank,
-        photo: b.photo, thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
-        published: b.published, read_count: b.read_count,
-        is_first_translation: b.is_first_translation,
-        categories: b.categories,
-        resource_type: b.resource_type,
-      }));
+      if (!tenantId) {
+        const { books: sbBooks } = await browseBooks({
+          collection: id,
+          sort: 'popular',
+          limit: COMPACT_LIMIT,
+          skipCount: true, // collection.book_count is cached — skip expensive Supabase count
+          hasPages: isArtCollection ? false : undefined,
+          hasResourceType: isArtCollection || undefined,
+          provider: provider || undefined,
+        });
+        return sbBooks.map(b => ({
+          id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
+          author: b.author, year: b.year, language: b.language,
+          pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+          pages_translated: b.pages_translated, pages_blank: b.pages_blank,
+          photo: b.photo, thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+          published: b.published, read_count: b.read_count,
+          is_first_translation: b.is_first_translation,
+          categories: b.categories,
+          resource_type: b.resource_type,
+        }));
+      }
+
+      const docs = await withTimeout(
+        db.collection('books')
+          .find(filter, { projection, maxTimeMS: 8000 })
+          .sort({ read_count: -1, title: 1 })
+          .limit(COMPACT_LIMIT)
+          .toArray(),
+        15000, [],
+      );
+      return docs;
     } catch {
-      return [];
+      // MongoDB fallback — if Supabase is down
+      console.warn(`[Collection ${id}] Supabase books query failed, falling back to MongoDB`);
+      const docs = await withTimeout(
+        db.collection('books')
+          .find(filter, { projection, maxTimeMS: 8000 })
+          .sort({ read_count: -1, title: 1 })
+          .limit(COMPACT_LIMIT)
+          .toArray(),
+        15000, [],
+      );
+      return docs;
     }
   }
 
@@ -376,11 +370,7 @@ async function fetchCollectionData(id: string, provider?: string) {
       ? withTimeout(
         db.collection('books')
           .find(
-            {
-              id: { $in: curatedBookIds },
-              visible: true,
-              ...(providerClause ? { $and: [providerClause] } : {}),
-            },
+            { id: { $in: curatedBookIds }, visible: true },
             { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
           )
           .toArray(),
@@ -409,11 +399,7 @@ async function fetchCollectionData(id: string, provider?: string) {
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
             .find(
-              {
-                collections: id,
-                visible: true,
-                ...(providerClause ? { $and: [providerClause] } : {}),
-              },
+              { collections: id, visible: true, ...(tenantId ? { tenantId } : {}) },
               { projection: { id: 1 }, maxTimeMS: 5000 }
             )
             .toArray();
@@ -424,7 +410,6 @@ async function fetchCollectionData(id: string, provider?: string) {
               book_id: { $in: bookIds.slice(0, 200) },
               gallery_quality: { $gte: 0.8 },
               type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-              archive_status: { $ne: 'source_blocked' },
             }, { maxTimeMS: 3000 })
             .sort({ gallery_quality: -1 })
             .limit(60)
@@ -436,11 +421,7 @@ async function fetchCollectionData(id: string, provider?: string) {
       ? withTimeout(
         db.collection('books')
           .find(
-            {
-              id: { $in: mentionedBookIds },
-              pages_translated: { $gt: 0 },
-              ...(providerClause ? { $and: [providerClause] } : {}),
-            },
+            { id: { $in: mentionedBookIds }, pages_translated: { $gt: 0 }, ...(tenantId ? { tenantId } : {}) },
             { projection }
           )
           .toArray(),
@@ -456,7 +437,15 @@ async function fetchCollectionData(id: string, provider?: string) {
   if (collection.parent) {
     const parentDoc = await withTimeout(
       db.collection('collections').findOne(
-        { slug: collection.parent },
+        tenantId
+          ? {
+            slug: collection.parent,
+            $or: [
+              { tenantId },
+              { tenantId: { $exists: false } },
+            ],
+          }
+          : { slug: collection.parent },
         { projection: { slug: 1, name: 1 } },
       ),
       5000, null,
@@ -469,9 +458,9 @@ async function fetchCollectionData(id: string, provider?: string) {
   // Fetch child collections if this is a parent collection
   const childCollections = await withTimeout(
     db.collection('collections')
-      .find({ parent: id, visible: true })
+      .find({ parent: id, visible: true, ...(tenantId ? { tenantId } : {}) })
       .sort({ book_count: -1 })
-      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, artwork_count: 1, featured_images: 1 })
+      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1 })
       .toArray(),
     8000, [],
   );
@@ -498,7 +487,6 @@ async function fetchCollectionData(id: string, provider?: string) {
         slug: book.slug as string | undefined,
         thumbnail: sanitizeThumbnail(book.thumbnail_blob as string) || sanitizeThumbnail(book.thumbnail as string),
         is_first_translation: book.is_first_translation as boolean | undefined,
-        pages_translated: book.pages_translated as number | undefined,
         ft_disposition: (book.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
         language: book.language as string | undefined,
         id: h.book_id,
@@ -548,12 +536,8 @@ async function fetchCollectionData(id: string, provider?: string) {
     if (allBookIds.size > 0) {
       const exBooks = await withTimeout(
         db.collection('books').find(
-          {
-            id: { $in: [...allBookIds] },
-            visible: true,
-            ...(providerClause ? { $and: [providerClause] } : {}),
-          },
-          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, pages_translated: 1, 'translation_verification.disposition': 1 } },
+          { id: { $in: [...allBookIds] }, visible: true },
+          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
         ).toArray(),
         8000, [],
       );
@@ -563,38 +547,6 @@ async function fetchCollectionData(id: string, provider?: string) {
         ft_disposition: (b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
       })) as unknown as BookItem[];
     }
-  }
-
-  // Reference catalog lookup — every index_catalogs row pointing at this
-  // collection_slug becomes a tab in the catalog section. For the IPL this is
-  // 7 editions (1564, 1569, 1596, 1607, 1620, 1664, 1704). Silent on Supabase
-  // errors; the section just doesn't render.
-  let catalogMeta: { indexId: string; indexName: string; startYear: number | null; totalEntries: number; heldCount: number }[] | null = null;
-  try {
-    const { data: catalogRows } = await supabase
-      .from('index_catalogs')
-      .select('id, name, entry_count, start_year')
-      .eq('collection_slug', id)
-      .order('start_year', { ascending: true });
-    if (catalogRows && catalogRows.length > 0) {
-      const heldCounts = await Promise.all(catalogRows.map(async row => {
-        const { count } = await supabase
-          .from('index_catalog_entries')
-          .select('id', { count: 'exact', head: true })
-          .eq('index_id', row.id)
-          .not('sl_book_id', 'is', null);
-        return count ?? 0;
-      }));
-      catalogMeta = catalogRows.map((row, i) => ({
-        indexId: row.id,
-        indexName: row.name,
-        startYear: row.start_year,
-        totalEntries: row.entry_count || 0,
-        heldCount: heldCounts[i],
-      }));
-    }
-  } catch (e) {
-    console.warn('IndexCatalog meta lookup failed:', e);
   }
 
   return {
@@ -611,10 +563,9 @@ async function fetchCollectionData(id: string, provider?: string) {
     galleryTotalCount,
     exhibition: curationDraft?.curation || null,
     exhibitionBooks,
-    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; artwork_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
+    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
-    catalogMeta,
   };
 }
 
@@ -622,10 +573,11 @@ async function fetchCollectionData(id: string, provider?: string) {
 
 export default async function CollectionDetailPage({ params, provider }: Props & { provider?: string }) {
   const { id } = await params;
+  const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(await headers());
 
   let data;
   try {
-    data = await fetchCollectionData(id, provider);
+    data = await fetchCollectionData(id, tenantId, provider);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
     // Opt out of ISR caching for this response so the error isn't persisted.
@@ -636,12 +588,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, catalogMeta } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const isArtCollection = collection.collection_type === 'visual_art';
-  const artworkCount = collection.artwork_count || artworks.length || 0;
-  const bookCount = isArtCollection ? 0 : total;
-  const countLabel = collectionCountLabel(bookCount, artworkCount);
   const itemLabel = isArtCollection ? 'works' : 'books';
 
   // Group curated highlights by tier — cap each to avoid heavy pages crashing mobile Safari
@@ -650,15 +599,11 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   const tier3 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 3).slice(0, 8);
   const hasCuratedHighlights = curatedHighlightsData.length > 0;
 
-  // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display.
-  // Only accept records that actually have an extracted/uploaded image — the legacy `image_url`
-  // field can point to an unarchived AIC asset (archive_status: 'source_blocked') whose target
-  // /pages/{book_id}/0000.jpg never got uploaded, producing broken thumbnails on the page.
+  // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display
   const imagePool: typeof galleryImages = [];
   const bookImageCounts = new Map<string, number>();
   for (const img of galleryImages) {
-    if (img.archive_status === 'source_blocked') continue;
-    const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl;
+    const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
     if (!thumb) continue;
     const bid = img.book_id || img.bookId;
     const count = bookImageCounts.get(bid) || 0;
@@ -736,19 +681,14 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
-        {collection.hero_image ? (
-          <div className="absolute inset-0 opacity-50">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={collection.hero_image as string} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 30%' }} />
-          </div>
-        ) : heroImages.length > 0 ? (
+        {heroImages.length > 0 ? (
           <div className={`absolute inset-0 grid opacity-30 ${heroImages.length <= 2 ? 'grid-cols-2' :
             heroImages.length <= 3 ? 'grid-cols-3' :
               heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
                 'grid-cols-3 sm:grid-cols-6'
             }`}>
-            {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string }) => {
-              const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl;
+            {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
+              const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
               if (!src) return null;
               return (
@@ -762,7 +702,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         ) : artworkPreviewImages.length > 0 ? (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
             {artworkPreviewImages.slice(0, 6).map((art) => {
-              const src = getBookThumbnailUrl(art);
+              const src = getBookThumbnailUrl(art, 'thumb');
               if (!src) return null;
               return (
                 <div key={art.id} className="relative overflow-hidden">
@@ -783,7 +723,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
 
         <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <Link
-            href={parentCollection ? `/collections/${parentCollection.slug}` : isArtCollection ? '/artwork' : '/#library'}
+            href={parentCollection ? (tenantSlug ? `/${tenantSlug}/collections/${parentCollection.slug}` : `/collections/${parentCollection.slug}`) : isArtCollection ? '/artwork' : '/#library'}
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -807,7 +747,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               href="#collection-all-books"
               className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
             >
-              {countLabel || `${total.toLocaleString('en-US')} ${itemLabel}`}
+              {total.toLocaleString('en-US')} {itemLabel}
             </a>
             {languages.length > 0 && (
               <>
@@ -842,7 +782,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 return (
                   <Link
                     key={child.slug}
-                    href={`/collections/${child.slug}`}
+                    href={tenantSlug ? `/${tenantSlug}/collections/${child.slug}` : `/collections/${child.slug}`}
                     className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
                   >
                     {heroUrl ? (
@@ -852,16 +792,15 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         fill
                         sizes="(max-width: 640px) 50vw, 25vw"
                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                        unoptimized={heroUrl.includes('images.sourcelibrary.org')}
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-[#3d3529] to-[#2a2318]" />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                      {(child.book_count || child.artwork_count) ? (
+                      {child.book_count ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {collectionCountLabel(child.book_count, child.artwork_count)}
+                          {child.book_count.toLocaleString('en-US')} {itemLabel}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
@@ -885,15 +824,15 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 Illustrations
               </h2>
               <Link
-                href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}` : `/gallery?collection=${id}`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors"
               >
                 Browse all {galleryTotalImages.toLocaleString('en-US')}
               </Link>
             </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 mt-5">
-              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
-                const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl;
+              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
+                const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
                 const pageId = img.pageId || img.page_id;
                 const bookId = img.bookId || img.book_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;
@@ -902,7 +841,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 return (
                   <Link
                     key={galleryId}
-                    href={`/book/${bookId}/page/${pageId}`}
+                    href={tenantBookUrl({ id: String(bookId) }, tenantSlug) + `/page/${pageId}`}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                     title={label}
                   >
@@ -913,7 +852,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
-                        unoptimized={thumb.includes('images.sourcelibrary.org')}
+                        unoptimized
                       />
                     )}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -931,7 +870,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               })}
               {galleryTotalImages > diverseGalleryImages.length && (
                 <Link
-                  href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                  href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}` : `/gallery?collection=${id}`)}
                   className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
                 >
                   <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
@@ -951,7 +890,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
           <div className="bg-warm border-b border-border-light">
             <div className="max-w-7xl mx-auto px-6 py-8">
               <Link
-                href={tenantBookUrl({ id: featured.id, slug: featured.slug })}
+                href={tenantBookUrl({ id: featured.id, slug: featured.slug }, tenantSlug)}
                 className="group flex flex-col sm:flex-row gap-6 sm:gap-8"
               >
                 <div className="w-40 sm:w-48 flex-shrink-0 mx-auto sm:mx-0">
@@ -978,7 +917,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   </h2>
                   <p className="text-base text-muted mb-3">
                     {featured.author}{featured.year ? `, ${featured.year}` : ''}
-                    {isPublishedFirstTranslation(featured) && (
+                    {featured.is_first_translation && (
                       <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
                         {firstTranslationBadge(featured.ft_disposition, featured.language)}
                       </span>
@@ -994,46 +933,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         );
       })()}
 
-      {/* Overview description — always shown so visitors know what this collection is */}
-      {(collection.expanded_description || collection.description) && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="max-w-4xl">
-              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions)}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Hero illustration — visible version of the hero background image with caption and link */}
-      {collection.hero_image && collection.hero_image_attribution && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <Link
-              href={tenantBookUrl({ id: (collection.hero_image_attribution as { book_id?: string }).book_id || '', slug: undefined })}
-              className="group block max-w-4xl"
-            >
-              <div className="rounded-lg overflow-hidden border border-border-light group-hover:border-accent-rust/40 transition-all group-hover:shadow-lg">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={collection.hero_image as string}
-                  alt={(collection.hero_image_attribution as { title?: string }).title || ''}
-                  className="w-full group-hover:scale-[1.02] transition-transform duration-500"
-                />
-              </div>
-              <p className="mt-3 text-sm text-muted group-hover:text-accent-rust transition-colors">
-                {(collection.hero_image_attribution as { title?: string }).title}
-              </p>
-            </Link>
-          </div>
-        </div>
-      )}
-
-      {/* Exhibition Layout */}
+      {/* Exhibition Layout — renders curated components ABOVE gallery when available */}
       {exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-10">
@@ -1072,7 +972,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {artworks.slice(0, 15).map((art: { id: string; slug?: string; title: string; display_title?: string; author?: string; published?: string; resource_type?: string; medium?: string; thumbnail?: string; thumbnail_blob?: string; enrichment?: { subject?: string; genre?: string }; commons_width?: number; commons_height?: number }) => {
-                const thumb = getBookThumbnailUrl(art, 'thumb');
+                const thumb = getBookThumbnailUrl(art);
                 const isPortrait = (art.commons_height || 0) > (art.commons_width || 0);
                 return (
                   <Link
@@ -1121,7 +1021,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               })}
               {artworks.length > 15 && (
                 <Link
-                  href={`/search?collection=${id}`}
+                  href={tenantSlug ? `/${tenantSlug}/search?collection=${id}` : `/search?collection=${id}`}
                   className="flex items-center justify-center rounded-lg border border-dashed border-border-light hover:border-accent-rust/40 hover:bg-warm transition-all aspect-[4/3] text-sm text-muted hover:text-accent-rust"
                 >
                   +{artworks.length - 15} more works
@@ -1132,7 +1032,20 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      {/* Overview description moved above exhibition layout */}
+      {/* Overview description */}
+      {!exhibition?.layout && (collection.expanded_description || collection.description) && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="max-w-4xl">
+              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug)}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
 
@@ -1152,7 +1065,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   {tier1.slice(1).map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={tenantBookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug }, tenantSlug)}
                       className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                     >
                       <div className="w-20 sm:w-24 flex-shrink-0">
@@ -1178,7 +1091,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         </h3>
                         <p className="text-sm text-muted mb-2">
                           {h.author}{h.year ? `, ${h.year}` : ''}
-                          {isPublishedFirstTranslation(h) && (
+                          {h.is_first_translation && (
                             <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
                               {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
@@ -1205,7 +1118,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   {tier2.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={tenantBookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug }, tenantSlug)}
                       className="group flex gap-3 p-3 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                     >
                       <div className="w-14 flex-shrink-0">
@@ -1231,7 +1144,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         </h3>
                         <p className="text-xs text-muted mb-1">
                           {h.author}{h.year ? `, ${h.year}` : ''}
-                          {isPublishedFirstTranslation(h) && (
+                          {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
                               {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
@@ -1257,7 +1170,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   {tier3.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={tenantBookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug }, tenantSlug)}
                       className="group flex items-center gap-3 p-2.5 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all"
                     >
                       <div className="w-10 flex-shrink-0">
@@ -1283,7 +1196,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         </h4>
                         <p className="text-xs text-muted truncate">
                           {h.author}{h.year ? `, ${h.year}` : ''}
-                          {isPublishedFirstTranslation(h) && (
+                          {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
                               {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
@@ -1307,12 +1220,6 @@ export default async function CollectionDetailPage({ params, provider }: Props &
           collectionType={collection.collection_type}
           provider={provider}
         />
-
-        {/* Reference catalog (issue #1851) — deduped works table with one
-            row per banned work and a clickable column per Index edition. */}
-        {catalogMeta && catalogMeta.length > 0 && (
-          <IndexCatalogWorksTable collectionSlug={id} catalogs={catalogMeta} />
-        )}
       </div>
       <SignUpCTA />
     </div>

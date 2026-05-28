@@ -43,8 +43,8 @@ const PROVIDER_URLS: Record<string, string> = {
 
 /* ── helpers ── */
 
-function formatNumber(n: number | undefined | null): string {
-  return (n ?? 0).toLocaleString('en-US');
+function formatNumber(n: number): string {
+  return n.toLocaleString('en-US');
 }
 
 function pct(part: number, whole: number): string {
@@ -176,21 +176,21 @@ export default async function DataPage({
 
   const stats = showAdmin
     ? [
-      { value: formatNumber(data.totalBooks), label: 'Total books', sub: `${formatNumber(data.hiddenCount ?? 0)} hidden` },
-      { value: formatNumber(data.totalPages), label: 'Total pages' },
-      { value: formatNumber(data.totalOcr ?? 0), label: 'Pages with OCR', sub: pct(data.totalOcr ?? 0, data.totalPages) },
-      { value: formatNumber(data.totalTranslated), label: 'Pages translated', sub: pct(data.totalTranslated, data.totalPages) },
-      { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
-      { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
-    ]
+        { value: formatNumber(data.totalBooks), label: 'Total books', sub: `${formatNumber(data.hiddenCount ?? 0)} hidden` },
+        { value: formatNumber(data.totalPages), label: 'Total pages' },
+        { value: formatNumber(data.totalOcr ?? 0), label: 'Pages with OCR', sub: pct(data.totalOcr ?? 0, data.totalPages) },
+        { value: formatNumber(data.totalTranslated), label: 'Pages translated', sub: pct(data.totalTranslated, data.totalPages) },
+        { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
+        { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
+      ]
     : [
-      { value: formatNumber(data.totalBooks), label: 'Rare books' },
-      { value: formatNumber(data.totalPages), label: 'Digitised pages' },
-      { value: formatNumber(data.totalTranslated), label: 'Pages translated' },
-      { value: String(uniqueLanguages), label: 'Languages' },
-      { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
-      { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
-    ];
+        { value: formatNumber(data.totalBooks), label: 'Rare books' },
+        { value: formatNumber(data.totalPages), label: 'Digitised pages' },
+        { value: formatNumber(data.totalTranslated), label: 'Pages translated' },
+        { value: String(uniqueLanguages), label: 'Languages' },
+        { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
+        { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
+      ];
 
   const TIER_COLORS = ['var(--status-error)', 'var(--status-warning)', 'var(--accent-gold)', 'var(--status-success)'];
 
