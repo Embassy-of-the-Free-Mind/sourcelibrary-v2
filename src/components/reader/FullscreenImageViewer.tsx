@@ -18,6 +18,13 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  // Dynamic ceiling: lets pinch reach native pixel resolution + a bit of
+  // headroom for inspecting scan texture. Computed on image load.
+  const [maxScale, setMaxScale] = useState(5);
+  // Tracks whether any fingers are currently down — used to kill the
+  // 200ms ease-out transition during pinch so the image tracks fingers
+  // in real time instead of playing catch-up animations every frame.
+  const [hasActiveTouches, setHasActiveTouches] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -34,6 +41,8 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
   const mousePosStart = useRef({ x: 0, y: 0 });
   const touchDragStart = useRef({ x: 0, y: 0 });
   const touchPosStart = useRef({ x: 0, y: 0 });
+  const maxScaleRef = useRef(5);
+  const touchCountRef = useRef(0);
 
   useEffect(() => { scaleRef.current = scale; }, [scale]);
   useEffect(() => { positionRef.current = position; }, [position]);
@@ -54,8 +63,12 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
       setPosition({ x: 0, y: 0 });
       setIsLoaded(false);
       setHasError(false);
+      setMaxScale(5);
+      setHasActiveTouches(false);
       scaleRef.current = 1;
       positionRef.current = { x: 0, y: 0 };
+      maxScaleRef.current = 5;
+      touchCountRef.current = 0;
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -87,6 +100,8 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
     };
 
     const onTouchStart = (e: TouchEvent) => {
+      touchCountRef.current = e.touches.length;
+      setHasActiveTouches(true);
       if (e.touches.length === 2) {
         lastTouchDistance.current = getTouchDist(e.touches);
       } else if (e.touches.length === 1 && scaleRef.current > 1) {
@@ -102,7 +117,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
         e.preventDefault();
         const newDist = getTouchDist(e.touches);
         if (lastTouchDistance.current > 0) {
-          const newScale = Math.min(Math.max(scaleRef.current * (newDist / lastTouchDistance.current), 1), 5);
+          const newScale = Math.min(Math.max(scaleRef.current * (newDist / lastTouchDistance.current), 1), maxScaleRef.current);
           const rect = container.getBoundingClientRect();
           const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left - rect.width / 2;
           const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top - rect.height / 2;
@@ -129,6 +144,8 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
     };
 
     const onTouchEnd = (e: TouchEvent) => {
+      touchCountRef.current = e.touches.length;
+      if (touchCountRef.current === 0) setHasActiveTouches(false);
       lastTouchDistance.current = 0;
       isDraggingRef.current = false;
       setIsDragging(false);
@@ -230,7 +247,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
   // ── Button controls ───────────────────────────────────────────────────────
 
   const zoomIn = () => {
-    const s = Math.min(scaleRef.current * 1.5, 5);
+    const s = Math.min(scaleRef.current * 1.5, maxScaleRef.current);
     scaleRef.current = s;
     setScale(s);
   };
@@ -281,7 +298,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
           </span>
           <button
             onClick={zoomIn}
-            disabled={scale >= 5}
+            disabled={scale >= maxScale}
             className="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 transition-all"
           >
             <ZoomIn className="w-5 h-5 text-white" />
@@ -351,10 +368,19 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
             className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             style={{
               transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-              transition: isDragging ? 'none' : 'transform 0.2s ease-out',
+              transition: (isDragging || hasActiveTouches) ? 'none' : 'transform 0.2s ease-out',
               cursor: isDragging ? 'grabbing' : scale > 1 ? 'grab' : 'default',
             }}
-            onLoad={() => setIsLoaded(true)}
+            onLoad={() => {
+              setIsLoaded(true);
+              const img = imageRef.current;
+              if (img && img.naturalWidth && img.offsetWidth) {
+                // Allow zoom to native pixel resolution + 50% inspection headroom
+                const newMax = Math.max(5, (img.naturalWidth / img.offsetWidth) * 1.5);
+                maxScaleRef.current = newMax;
+                setMaxScale(newMax);
+              }
+            }}
             onError={() => setHasError(true)}
             draggable={false}
           />
