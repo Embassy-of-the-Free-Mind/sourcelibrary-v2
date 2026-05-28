@@ -24,10 +24,10 @@ export function withQueryParam(href: string, key: string, value: string): string
     return hash ? `${withQuery}#${hash}` : withQuery;
 }
 
-function withEmbedNamespace(href: string): string {
+function withEmbedNamespace(href: string, embedPrefix: string): string {
     if (!href || /^https?:\/\//i.test(href) || href.startsWith('/embed/')) return href;
     if (!href.startsWith('/')) return href;
-    return `/embed${href}`;
+    return `${embedPrefix}${href}`;
 }
 
 export function useEmbedHref(): (href: string) => string {
@@ -38,9 +38,19 @@ export function useEmbedHref(): (href: string) => string {
     // — which the proxy skips and no route serves, returning 404.
     const pathname = usePathname();
     const onEmbedRoute = pathname?.startsWith('/embed/') ?? false;
+    
+    // Extract the embed prefix including tenant: /embed/bph from /embed/bph/book/...
+    let embedPrefix = '/embed';
+    if (onEmbedRoute && pathname) {
+        const parts = pathname.split('/');
+        // parts: ['', 'embed', 'bph', 'book', ...]
+        if (parts.length >= 3 && parts[2]) {
+            embedPrefix = `/embed/${parts[2]}`;
+        }
+    }
 
     return (href: string) => {
         if (!onEmbedRoute) return href;
-        return withEmbedNamespace(href);
+        return withEmbedNamespace(href, embedPrefix);
     };
 }

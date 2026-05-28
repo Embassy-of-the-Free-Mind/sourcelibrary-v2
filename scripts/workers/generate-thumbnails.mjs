@@ -21,6 +21,7 @@
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { computeDHash } from '../lib/dhash.mjs';
 
 // ── Config ──
 
@@ -133,6 +134,10 @@ async function generateThumbnails(sourceUrl, bbox, rotation, bookId, pageId, det
     .jpeg({ quality: 70 })
     .toBuffer();
 
+  // Compute dhash on the cropped image — same buffer the dedup logic will
+  // see at render time (src/lib/dhash.ts). Cheap; runs alongside the upload.
+  const dhash = await computeDHash(extractedBuffer);
+
   // Upload to R2
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
   const [extractedBlob, thumbnailBlob] = await Promise.all([
@@ -144,6 +149,7 @@ async function generateThumbnails(sourceUrl, bbox, rotation, bookId, pageId, det
   return {
     extractedUrl: extractedBlob.url + cacheBust,
     thumbnailUrl: thumbnailBlob.url + cacheBust,
+    dhash,
   };
 }
 
@@ -280,6 +286,7 @@ async function main() {
         $set: {
           [`detected_images.${detectionIndex}.extracted_url`]: urls.extractedUrl,
           [`detected_images.${detectionIndex}.thumbnail_url`]: urls.thumbnailUrl,
+          [`detected_images.${detectionIndex}.dhash`]: urls.dhash,
         },
       }
     );
@@ -292,6 +299,7 @@ async function main() {
         $set: {
           extracted_url: urls.extractedUrl,
           thumbnail_url: urls.thumbnailUrl,
+          dhash: urls.dhash,
           updated_at: new Date(),
         },
       }

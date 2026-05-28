@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, List } from 'lucide-react';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 interface Chapter {
   title: string;
@@ -13,6 +14,7 @@ interface Chapter {
 
 export default function ChaptersDropdown({ chapters, bookSlug }: { chapters: Chapter[]; bookSlug: string }) {
   const [open, setOpen] = useState(false);
+  const embedHref = useEmbedHref();
 
   return (
     <div className="card mt-6 overflow-hidden">
@@ -32,7 +34,7 @@ export default function ChaptersDropdown({ chapters, bookSlug }: { chapters: Cha
             {chapters.map((ch, i) => (
               <Link
                 key={i}
-                href={`/book/${bookSlug}/page-number/${ch.pageNumber}`}
+                href={embedHref(`/book/${bookSlug}/page-number/${ch.pageNumber}`)}
                 className="flex items-baseline gap-2 py-1.5 px-2 -mx-2 rounded hover:bg-stone-100 dark:hover:bg-stone-800/50 transition-colors group"
                 style={{ paddingLeft: `${(ch.level - 1) * 1.25 + 0.5}rem` }}
               >

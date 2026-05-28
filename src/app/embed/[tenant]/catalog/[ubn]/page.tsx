@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { BookMarked, ExternalLink, BookOpen, Pencil } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
-import { tenantBookUrl } from '@/lib/slugify';
+// tenantBookUrl removed - using inline URL construction with embed path
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import { getPartnerBySlug } from '@/lib/library-partners';
@@ -349,10 +349,10 @@ export default async function CatalogEntryPage({ params }: Props) {
     : null;
 
   const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
-  const slBookHref = slBook ? tenantBookUrl({ id: slBook.id, slug: slBook.slug }, tenant) : null;
+  const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook
-    ? tenantBookUrl({ id: externalBook.id, slug: externalBook.slug }, tenant)
+    ? `/embed/${tenant}/book/${encodeURIComponent(externalBook.slug || externalBook.id)}`
     : null;
   const externalCoverUrl = externalBook ? getBookThumbnailUrl(externalBook, 'display') : null;
   const canonicalAuthor = slBook?.author ? formatAuthor(slBook.author).name : null;
@@ -442,70 +442,70 @@ export default async function CatalogEntryPage({ params }: Props) {
               )}
               <div className="flex-1 min-w-0">
 
-            {slBook.display_title && slBook.display_title !== work.title && (
-              <p className="text-lg text-primary font-display leading-snug mb-1">
-                {slBook.display_title}
-              </p>
-            )}
-            {slBook.english_title && slBook.english_title !== slBook.display_title && (
-              <p className="text-sm text-secondary mb-1">
-                <span className="text-xs uppercase tracking-wide mr-2 text-muted">English</span>
-                {slBook.english_title}
-              </p>
-            )}
+                {slBook.display_title && slBook.display_title !== work.title && (
+                  <p className="text-lg text-primary font-display leading-snug mb-1">
+                    {slBook.display_title}
+                  </p>
+                )}
+                {slBook.english_title && slBook.english_title !== slBook.display_title && (
+                  <p className="text-sm text-secondary mb-1">
+                    <span className="text-xs uppercase tracking-wide mr-2 text-muted">English</span>
+                    {slBook.english_title}
+                  </p>
+                )}
 
-            <dl className="space-y-1.5 text-sm mb-4">
-              {canonicalAuthor && canonicalAuthor !== work.author && (
-                <Field label="Canonical author" value={canonicalAuthor} />
-              )}
-              {slBook.published && slBook.published !== String(work.year || '') && (
-                <Field label="Published" value={slBook.published} />
-              )}
-              {slBook.language && (
-                <Field label="Original language" value={slBook.language} />
-              )}
-              {slBook.pages_count != null && (
-                <Field label="Pages" value={String(slBook.pages_count)} />
-              )}
-              {translationPct != null && (
-                <Field label="Translation" value={`${translationPct}% translated to English`} />
-              )}
-              {isPublishedFirstTranslation(slBook) && (
-                <FieldRaw label="Status">
-                  <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-accent-rust/10 text-accent-rust border border-accent-rust/30">
-                    First English translation
-                  </span>
-                </FieldRaw>
-              )}
-              {slBook.categories && slBook.categories.length > 0 && (
-                <Field label="Categories" value={slBook.categories.join(', ')} />
-              )}
-              {slBook.doi && (
-                <FieldRaw label="DOI">
-                  <a href={`https://doi.org/${slBook.doi}`} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline inline-flex items-center gap-1">
-                    {slBook.doi} <ExternalLink className="w-3 h-3" />
-                  </a>
-                </FieldRaw>
-              )}
-            </dl>
+                <dl className="space-y-1.5 text-sm mb-4">
+                  {canonicalAuthor && canonicalAuthor !== work.author && (
+                    <Field label="Canonical author" value={canonicalAuthor} />
+                  )}
+                  {slBook.published && slBook.published !== String(work.year || '') && (
+                    <Field label="Published" value={slBook.published} />
+                  )}
+                  {slBook.language && (
+                    <Field label="Original language" value={slBook.language} />
+                  )}
+                  {slBook.pages_count != null && (
+                    <Field label="Pages" value={String(slBook.pages_count)} />
+                  )}
+                  {translationPct != null && (
+                    <Field label="Translation" value={`${translationPct}% translated to English`} />
+                  )}
+                  {isPublishedFirstTranslation(slBook) && (
+                    <FieldRaw label="Status">
+                      <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-accent-rust/10 text-accent-rust border border-accent-rust/30">
+                        First English translation
+                      </span>
+                    </FieldRaw>
+                  )}
+                  {slBook.categories && slBook.categories.length > 0 && (
+                    <Field label="Categories" value={slBook.categories.join(', ')} />
+                  )}
+                  {slBook.doi && (
+                    <FieldRaw label="DOI">
+                      <a href={`https://doi.org/${slBook.doi}`} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline inline-flex items-center gap-1">
+                        {slBook.doi} <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </FieldRaw>
+                  )}
+                </dl>
 
-            {slBook.reading_summary?.overview && (
-              <AISection>
-                <p className="text-sm text-secondary leading-relaxed mb-4 italic">
-                  {slBook.reading_summary.overview.length > 380
-                    ? slBook.reading_summary.overview.slice(0, 380) + '…'
-                    : slBook.reading_summary.overview}
-                </p>
-              </AISection>
-            )}
+                {slBook.reading_summary?.overview && (
+                  <AISection>
+                    <p className="text-sm text-secondary leading-relaxed mb-4 italic">
+                      {slBook.reading_summary.overview.length > 380
+                        ? slBook.reading_summary.overview.slice(0, 380) + '…'
+                        : slBook.reading_summary.overview}
+                    </p>
+                  </AISection>
+                )}
 
-            <a
-              href={slBookHref}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
-            >
-              <BookOpen className="w-4 h-4" />
-              Read the digitised copy
-            </a>
+                <a
+                  href={slBookHref}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Read the digitised copy
+                </a>
               </div>
             </div>
           </section>
@@ -640,10 +640,10 @@ export default async function CatalogEntryPage({ params }: Props) {
           {work.bibliographic_format
             && work.field_provenance?.bibliographic_format?.source
             && work.field_provenance.bibliographic_format.source !== 'derived_from_size' && (
-            <FieldRaw label="Format">
-              <span className="text-primary capitalize">{work.bibliographic_format}</span>
-            </FieldRaw>
-          )}
+              <FieldRaw label="Format">
+                <span className="text-primary capitalize">{work.bibliographic_format}</span>
+              </FieldRaw>
+            )}
           <Field label="Number of copies held" value={work.number_of_copies != null ? String(work.number_of_copies) : null} />
           <Field label="Binding" value={work.binding} />
           <Field label="Bound with" value={work.bound_with} />

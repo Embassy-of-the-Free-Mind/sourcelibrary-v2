@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight, Quote, Clock, Users, Sparkles } from 'lucide-react';
@@ -9,6 +9,10 @@ import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
+import { useEmbedHref } from '@/lib/EmbedContext';
+
+// Context for embed-aware URL transformation
+const EmbedHrefContext = createContext<(href: string) => string>((href) => href);
 
 // ─── Types ──────────────────────────────────────────────────────
 
@@ -66,9 +70,9 @@ function imageUrl(img: GalleryImage): string {
   return img.extracted_url || img.thumbnail_url || img.image_url || '';
 }
 
-function imagePageHref(img: GalleryImage): string {
-  if (img.page_id) return `/book/${img.book_id}/page/${img.page_id}`;
-  return `/book/${img.book_id}`;
+function imagePageHref(img: GalleryImage, embedHref: (href: string) => string): string {
+  if (img.page_id) return embedHref(`/book/${img.book_id}/page/${img.page_id}`);
+  return embedHref(`/book/${img.book_id}`);
 }
 
 // ─── Helper: Link book titles in text ───────────────────────────
@@ -432,6 +436,7 @@ function FeaturedImageBlock({ image, caption }: {
   image?: GalleryImage;
   caption: string;
 }) {
+  const embedHref = useContext(EmbedHrefContext);
   // Use full extracted image for display, thumb only as placeholder
   const fullSrc = image ? (image.extracted_url || image.image_url || image.thumbnail_url || '') : '';
   const thumbSrc = image?.thumbnail_url || '';
@@ -454,7 +459,7 @@ function FeaturedImageBlock({ image, caption }: {
       <figcaption className="px-5 py-3 text-sm text-secondary bg-white leading-relaxed">
         {caption}
         {image?.book_id && (
-          <Link href={imagePageHref(image)} className="text-accent-rust hover:underline ml-2 text-xs">
+          <Link href={imagePageHref(image, embedHref)} className="text-accent-rust hover:underline ml-2 text-xs">
             View in book &rarr;
           </Link>
         )}
@@ -554,6 +559,7 @@ function ThematicGalleryBlock({ clusters, books }: {
   }[];
   books: BookRef[];
 }) {
+  const embedHref = useContext(EmbedHrefContext);
   const validClusters = clusters.filter(c => c.images.some(img => imageUrl(img)));
   if (validClusters.length === 0) return null;
   return (
@@ -576,7 +582,7 @@ function ThematicGalleryBlock({ clusters, books }: {
               {/* Hero image — spans 2 cols on desktop */}
               {heroSrc && (
                 <Link
-                  href={imagePageHref(hero)}
+                  href={imagePageHref(hero, embedHref)}
                   className="group relative sm:col-span-2 aspect-[4/3] rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-lg"
                 >
                   <Image
@@ -601,7 +607,7 @@ function ThematicGalleryBlock({ clusters, books }: {
                 return (
                   <Link
                     key={img.id}
-                    href={imagePageHref(img)}
+                    href={imagePageHref(img, embedHref)}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                   >
                     <Image
@@ -635,6 +641,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
   indices?: number[];
   title?: string;
 }) {
+  const embedHref = useContext(EmbedHrefContext);
   // Prefer embedded resolved images, fall back to index-based lookup
   const selected = embeddedImages && embeddedImages.length > 0
     ? embeddedImages
@@ -657,7 +664,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
           return (
             <Link
               key={img.id}
-              href={imagePageHref(img)}
+              href={imagePageHref(img, embedHref)}
               className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
               title={img.museum_description}
             >
@@ -685,34 +692,37 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
 // ─── Layout Renderer ────────────────────────────────────────────
 
 export default function ExhibitionLayout({ layout, books, images, collectionSlug }: ExhibitionLayoutProps) {
+  const embedHref = useEmbedHref();
+  
   return (
-    <div className="space-y-10">
-      {layout.map((block, i) => {
-        switch (block.component) {
-          case 'hook':
-            return <HookBlock key={i} text={block.text} attribution={block.attribution} />;
+    <EmbedHrefContext.Provider value={embedHref}>
+      <div className="space-y-10">
+        {layout.map((block, i) => {
+          switch (block.component) {
+            case 'hook':
+              return <HookBlock key={i} text={block.text} attribution={block.attribution} />;
 
-          case 'stats':
-            return null; // Stats block removed — too noisy for collection pages
+            case 'stats':
+              return null; // Stats block removed — too noisy for collection pages
 
-          case 'sections':
-            return <SectionsBlock key={i} sections={block.sections} books={books} />;
+            case 'sections':
+              return <SectionsBlock key={i} sections={block.sections} books={books} />;
 
-          case 'key_figures':
-            return <KeyFiguresBlock key={i} figures={block.figures} books={books} />;
+            case 'key_figures':
+              return <KeyFiguresBlock key={i} figures={block.figures} books={books} />;
 
-          case 'quotes':
-            return <QuotesBlock key={i} quotes={block.quotes} books={books} title={block.title} />;
+            case 'quotes':
+              return <QuotesBlock key={i} quotes={block.quotes} books={books} title={block.title} />;
 
-          case 'timeline':
-            return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} books={books} />;
+            case 'timeline':
+              return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} books={books} />;
 
-          case 'featured_image': {
-            const featImg = block.image || (typeof block.image_index === 'number' ? images[block.image_index] : null);
-            return featImg
-              ? <FeaturedImageBlock key={i} image={featImg} caption={block.caption} />
-              : null;
-          }
+            case 'featured_image': {
+              const featImg = block.image || (typeof block.image_index === 'number' ? images[block.image_index] : null);
+              return featImg
+                ? <FeaturedImageBlock key={i} image={featImg} caption={block.caption} />
+                : null;
+            }
 
           case 'reading_paths':
             return <ReadingPathsBlock key={i} paths={block.paths} books={books} />;
@@ -745,6 +755,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
             return null;
         }
       })}
-    </div>
+      </div>
+    </EmbedHrefContext.Provider>
   );
 }

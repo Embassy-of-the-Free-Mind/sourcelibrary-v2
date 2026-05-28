@@ -5,9 +5,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
+import LibrarianMessageBody from '@/app/librarian/_components/MessageBody';
 
 interface ThreadMessage {
   id: string;
@@ -300,21 +298,26 @@ function SourceCards({ threadId }: { threadId: string }) {
 
   const bookList = [...books.entries()];
 
+  // Roman-numeral markers up to XX cover any realistic citation count; fall
+  // back to Arabic numerals past that. Decorative — they don't correspond
+  // to inline footnote markers in the prose (yet).
+  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
+
   return (
-    <div className="mt-6">
+    <div className="mt-8">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-2 text-[12px] text-[#6b6560] font-sans tracking-wide uppercase hover:text-[#444] transition-colors"
+        className="flex items-center gap-2 text-[10px] text-[#8a8480] font-serif tracking-[0.25em] uppercase hover:text-[#9e4a3a] transition-colors"
       >
-        <svg className={`w-3.5 h-3.5 transition-transform ${expanded ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+        <svg className={`w-3 h-3 transition-transform ${expanded ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
-        Sources ({bookList.length} books, {findings.length} passages)
+        <span>Cited works · {bookList.length} {bookList.length === 1 ? 'book' : 'books'}, {findings.length} {findings.length === 1 ? 'passage' : 'passages'}</span>
       </button>
 
       {expanded && (
-        <div className="mt-3 grid gap-3">
-          {bookList.map(([bookId, book]) => {
+        <div className="mt-6">
+          {bookList.map(([bookId, book], idx) => {
             const bookSlug = book.slug || bookId;
             const sortedPages = [...book.pages].sort((a, b) => a - b);
             // Single-cited-page: card click jumps straight to that page. Multi-page:
@@ -323,65 +326,72 @@ function SourceCards({ threadId }: { threadId: string }) {
             const cardHref = sortedPages.length === 1
               ? `https://sourcelibrary.org/book/${bookSlug}/page-number/${sortedPages[0]}`
               : `https://sourcelibrary.org/book/${bookSlug}`;
-            const thumbUrl = `https://sourcelibrary.org/api/image?url=https://images.sourcelibrary.org/covers/${bookId}.jpg&w=120&q=75`;
+            const marker = ROMAN[idx] || `${idx + 1}`;
+            const firstQuote = book.quotes[0];
+
             return (
-              <div
+              <article
                 key={bookId}
-                className="flex gap-3 p-3 bg-white rounded-lg border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors group"
+                className="relative pl-14 py-8 border-t border-[#d8cdb6] last:border-b last:border-[#d8cdb6]"
               >
-                <a href={cardHref} target="_blank" rel="noopener noreferrer" className="flex-shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={thumbUrl}
-                    alt=""
-                    className="w-14 h-20 object-cover rounded bg-[#f0ece4]"
-                    loading="lazy"
-                    onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                  />
+                <span
+                  className="absolute left-0 top-8 font-serif text-[10px] tracking-[0.3em] uppercase text-[#9e4a3a]"
+                  aria-hidden="true"
+                >
+                  {marker}
+                </span>
+
+                <a href={cardHref} target="_blank" rel="noopener noreferrer" className="block group">
+                  <h3
+                    className="font-serif text-[#1a1612] group-hover:text-[#9e4a3a] transition-colors"
+                    style={{ fontSize: '22px', fontWeight: 400, lineHeight: 1.2, letterSpacing: '-0.005em' }}
+                  >
+                    {book.title}
+                  </h3>
                 </a>
-                <div className="min-w-0 flex-1">
-                  <a href={cardHref} target="_blank" rel="noopener noreferrer" className="block">
-                    <p className="text-[13px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors" style={{ fontWeight: 400 }}>
-                      {book.title}
-                    </p>
-                    <p className="text-[11px] text-[#8a8480] font-sans mt-0.5">
-                      {book.author}
-                    </p>
-                  </a>
-                  <p className="text-[11px] font-sans mt-1">
-                    {sortedPages.length === 1 ? (
-                      <a
-                        href={`https://sourcelibrary.org/book/${bookSlug}/page-number/${sortedPages[0]}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#9e4a3a] hover:underline"
-                      >
-                        Page {sortedPages[0]}
-                      </a>
-                    ) : (
-                      <>
-                        <span className="text-[#8a8480]">Pages </span>
-                        {sortedPages.map((p, i) => (
-                          <span key={p}>
-                            <a
-                              href={`https://sourcelibrary.org/book/${bookSlug}/page-number/${p}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[#9e4a3a] hover:underline"
-                            >
-                              {p}
-                            </a>
-                            {i < sortedPages.length - 1 ? <span className="text-[#8a8480]">, </span> : null}
-                          </span>
-                        ))}
-                      </>
-                    )}
+
+                <p className="mt-1.5 text-[13px] italic font-serif text-[#6b6560]">
+                  {book.author}
+                </p>
+
+                <p className="mt-3.5 text-[10px] tracking-[0.16em] uppercase font-serif text-[#8a8480]">
+                  {sortedPages.length === 1 ? (
+                    <a
+                      href={`https://sourcelibrary.org/book/${bookSlug}/page-number/${sortedPages[0]}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#9e4a3a] hover:text-[#7e3a2d] border-b border-[#9e4a3a]/30 hover:border-[#9e4a3a] pb-px transition-colors"
+                    >
+                      read at page {sortedPages[0]} &rarr;
+                    </a>
+                  ) : (
+                    <>
+                      <span>read at pages </span>
+                      {sortedPages.map((p, i) => (
+                        <span key={p}>
+                          <a
+                            href={`https://sourcelibrary.org/book/${bookSlug}/page-number/${p}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#9e4a3a] hover:text-[#7e3a2d] border-b border-[#9e4a3a]/30 hover:border-[#9e4a3a] pb-px transition-colors"
+                          >
+                            {p}
+                          </a>
+                          {i < sortedPages.length - 1 ? <span>, </span> : null}
+                        </span>
+                      ))}
+                    </>
+                  )}
+                </p>
+
+                {firstQuote && (
+                  <p className="mt-4 text-[13px] leading-[1.55] italic font-serif text-[#444039] max-w-[520px]">
+                    &ldquo;{firstQuote}&hellip;&rdquo;
                   </p>
-                </div>
-              </div>
+                )}
+              </article>
             );
           })}
-
         </div>
       )}
     </div>
@@ -844,33 +854,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
                   {msg.authorName}
                 </p>
                 {msg.authorType === 'ai' ? (
-                  <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed text-[#1a1612] prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-[#1a1612] prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-[#1a1612] prose-hr:my-4 prose-img:rounded-lg prose-img:shadow-md prose-img:my-4 prose-img:max-h-[400px] prose-img:w-auto">
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        a: ({ href, children }) => (
-                          <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
-                        ),
-                        img: ({ src, alt }) => (
-                          <a href={src as string} target="_blank" rel="noopener noreferrer">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={src as string}
-                              alt={(alt as string) || ''}
-                              className="rounded-lg shadow-md max-h-[400px] w-auto"
-                              loading="lazy"
-                              onError={(e) => {
-                                const img = e.currentTarget;
-                                const wrapper = img.closest('a');
-                                if (wrapper) wrapper.style.display = 'none';
-                                else img.style.display = 'none';
-                              }}
-                            />
-                          </a>
-                        ),
-                      }}
-                    >{ensureParagraphBreaks(linkifySourceUrls(msg.content))}</ReactMarkdown>
-                  </div>
+                  <LibrarianMessageBody content={msg.content} variant="thread" />
                 ) : (
                   <p className="text-[15px] font-body leading-relaxed text-[#1a1612] whitespace-pre-wrap">
                     {msg.content}

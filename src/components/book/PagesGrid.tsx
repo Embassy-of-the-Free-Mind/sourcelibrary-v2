@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw } from 'lucide-react';
 import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 function PageImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const [loaded, setLoaded] = useState(false);
@@ -67,6 +68,7 @@ export default function PagesGrid({
   getImageUrl,
   totalCount,
 }: PagesGridProps) {
+  const embedHref = useEmbedHref();
   const displayTotal = totalCount || pages.length;
   // CSS brightness filter — only apply when not default (1.0)
   const brightnessStyle = brightness && brightness !== 1.0
@@ -168,7 +170,7 @@ export default function PagesGrid({
             return (
               <div key={page.id} className="group relative">
                 <a
-                  href={`/book/${bookId}/page/${page.id}`}
+                  href={embedHref(`/book/${bookId}/page/${page.id}`)}
                 >
                   <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
