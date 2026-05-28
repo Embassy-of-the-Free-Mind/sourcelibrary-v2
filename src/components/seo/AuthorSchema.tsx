@@ -82,11 +82,6 @@ export default function AuthorSchema({
     name: `${authorName} — Source Library`,
     ...(description && { description }),
     mainEntity: { '@id': `${pageUrl}#person` },
-    ...(workCount > 0 && { interactionStatistic: {
-      '@type': 'InteractionCounter',
-      interactionType: 'https://schema.org/ViewAction',
-      userInteractionCount: workCount,
-    } }),
   };
 
   const breadcrumbList = {
