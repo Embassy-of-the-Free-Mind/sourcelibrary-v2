@@ -247,7 +247,7 @@ export default function BibliographicInfo({
                   )}
                   {hasCanonical && (
                     <div className="flex gap-2">
-                      <span className="text-stone-500 w-24 flex-shrink-0">Canonical:</span>
+                      <span className="text-stone-500 w-24 flex-shrink-0">Standard name:</span>
                       <span className="text-stone-200 flex flex-wrap items-baseline gap-x-2">
                         {canonicalName || `VIAF ${viafId}`}
                         {viafId && (

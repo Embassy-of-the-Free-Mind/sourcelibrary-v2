@@ -456,7 +456,7 @@ export default async function CatalogEntryPage({ params }: Props) {
 
                 <dl className="space-y-1.5 text-sm mb-4">
                   {canonicalAuthor && canonicalAuthor !== work.author && (
-                    <Field label="Canonical author" value={canonicalAuthor} />
+                    <Field label="Standard name" value={canonicalAuthor} />
                   )}
                   {slBook.published && slBook.published !== String(work.year || '') && (
                     <Field label="Published" value={slBook.published} />
@@ -585,11 +585,11 @@ export default async function CatalogEntryPage({ params }: Props) {
           <Field label="Editor / translator" value={work.editor} />
           <Field label="Editor (as on title page)" value={work.variant_editor} />
           {/* Author authority (#1921 P3) — only render when an identifier is
-              actually linked. The label uses "Canonical (VIAF)" to mirror the
-              terminology in the editor's picker, so cataloguers see the same
-              wording on read and write. */}
+              actually linked. The label uses "Standard name (VIAF)" to mirror
+              the terminology in the editor's picker, so cataloguers see the
+              same wording on read and write. */}
           {(work.author_canonical_name || work.author_entity_id || work.author_wikidata_qid) && (
-            <FieldRaw label="Canonical (VIAF)">
+            <FieldRaw label="Standard name (VIAF)">
               <span className="flex flex-wrap items-baseline gap-x-2 text-primary">
                 {work.author_canonical_name && <span>{work.author_canonical_name}</span>}
                 {work.author_entity_id && (
