@@ -81,13 +81,19 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
       });
       if (!res.ok) throw new Error('fetch failed');
       const data = await res.json();
+      // Drop the result if a newer fetch superseded us — abort() doesn't
+      // stop res.json() once await fetch already resolved. Same race as
+      // fixed in BphCatalogBrowser (#2132).
+      if (abortRef.current !== controller) return;
       setBooks(data.books || []);
       setTotal(data.total || 0);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
       // Keep current state on error
     } finally {
-      if (!controller.signal.aborted) setLoading(false);
+      if (abortRef.current === controller && !controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   }, []);
 

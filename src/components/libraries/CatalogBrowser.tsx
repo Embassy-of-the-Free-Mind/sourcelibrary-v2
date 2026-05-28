@@ -224,16 +224,23 @@ export default function CatalogBrowser({
       const params = buildParams(q, s, kw, off, a);
       const res = await fetch(`/api/catalog/${encodeURIComponent(tenant)}?${params}`, { signal: controller.signal });
       const data = await res.json();
+      // Drop the result if a newer fetch superseded us — abort() doesn't
+      // stop res.json() once await fetch already resolved. Same race as
+      // fixed in BphCatalogBrowser (#2132).
+      if (abortRef.current !== controller) return;
       setWorks(data.works || []);
       setTotal(data.total || 0);
       onTotalChange?.(data.total || 0, isFiltered);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
+      if (abortRef.current !== controller) return;
       setWorks([]);
       setTotal(0);
       onTotalChange?.(0, isFiltered);
     } finally {
-      if (!controller.signal.aborted) setLoading(false);
+      if (abortRef.current === controller && !controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   }, [tenant, buildParams, onTotalChange, lockDigitized]);
 
