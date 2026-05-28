@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { BookMarked, ExternalLink, BookOpen, Pencil } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
-import { tenantBookUrl } from '@/lib/slugify';
+// tenantBookUrl removed - using inline URL construction with embed path
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import { getPartnerBySlug } from '@/lib/library-partners';
@@ -349,10 +349,10 @@ export default async function CatalogEntryPage({ params }: Props) {
     : null;
 
   const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
-  const slBookHref = slBook ? tenantBookUrl({ id: slBook.id, slug: slBook.slug }, tenant) : null;
+  const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook
-    ? tenantBookUrl({ id: externalBook.id, slug: externalBook.slug }, tenant)
+    ? `/embed/${tenant}/book/${encodeURIComponent(externalBook.slug || externalBook.id)}`
     : null;
   const externalCoverUrl = externalBook ? getBookThumbnailUrl(externalBook, 'display') : null;
   const canonicalAuthor = slBook?.author ? formatAuthor(slBook.author).name : null;

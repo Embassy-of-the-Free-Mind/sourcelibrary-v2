@@ -9,7 +9,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
-import { tenantBookUrl } from '@/lib/slugify';
+// Book URL helper moved inline to use basePath
 
 export interface CatalogRecord {
   catalog_id: string;
@@ -151,6 +151,10 @@ export default function CatalogBrowser({
   lockDigitized = false,
   display = 'list',
 }: Props) {
+  // Build book URLs using basePath to preserve embed namespace
+  const bookUrl = (book: { id: string; slug?: string }) =>
+    `${basePath}/book/${encodeURIComponent(book.slug || book.id)}`;
+
   const searchParams = useSearchParams();
 
   const initialQ = searchParams.get('cq') || '';
@@ -577,7 +581,7 @@ export default function CatalogBrowser({
                       </div>
                       {digitized && (
                         <a
-                          href={tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)}
+                          href={bookUrl({ id: digitized.id, slug: digitized.slug })}
                           className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
                         >
                           <BookMarked className="w-3 h-3" />
@@ -586,7 +590,7 @@ export default function CatalogBrowser({
                       )}
                       {external && (
                         <a
-                          href={tenantBookUrl({ id: external.id, slug: external.slug }, tenantSlug)}
+                          href={bookUrl({ id: external.id, slug: external.slug })}
                           className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
                         >
                           <BookMarked className="w-3 h-3 opacity-60" />
@@ -657,9 +661,9 @@ export default function CatalogBrowser({
                 const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
                 const displayAuthor = w.author || w.variant_author || w.pseudonym;
                 const href = digitized
-                  ? tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)
+                  ? bookUrl({ id: digitized.id, slug: digitized.slug })
                   : external
-                    ? tenantBookUrl({ id: external.id, slug: external.slug }, tenantSlug)
+                    ? bookUrl({ id: external.id, slug: external.slug })
                     : '#';
                 return (
                   <a
