@@ -119,13 +119,35 @@ function isAdvFilterApplied(key: string, value: string | boolean, lockDigitized:
 
 const PER_PAGE = 50;
 
-const SORT_OPTIONS = [
-  { value: 'title', label: 'Title A-Z' },
-  { value: 'author', label: 'Author A-Z' },
-  { value: 'year_asc', label: 'Year (oldest first)' },
-  { value: 'year_desc', label: 'Year (newest first)' },
-  { value: 'shelfmark', label: 'Shelfmark' },
-];
+/** Per-column sort cycling — first click sorts ascending, second click sorts
+    descending. Shelfmark only supports ascending (codes don't read meaningfully
+    in reverse). Used by the clickable column headers in the list view. */
+type SortColumn = 'author' | 'title' | 'year' | 'shelfmark';
+
+function nextSort(column: SortColumn, current: string): string {
+  if (column === 'shelfmark') return 'shelfmark';
+  if (column === 'year') return current === 'year_asc' ? 'year_desc' : 'year_asc';
+  const asc = column;
+  const desc = `${column}_desc`;
+  return current === asc ? desc : asc;
+}
+
+function arrowFor(column: SortColumn, current: string): 'asc' | 'desc' | null {
+  if (column === 'shelfmark') return current === 'shelfmark' ? 'asc' : null;
+  if (column === 'year') {
+    if (current === 'year_asc') return 'asc';
+    if (current === 'year_desc') return 'desc';
+    return null;
+  }
+  if (current === column) return 'asc';
+  if (current === `${column}_desc`) return 'desc';
+  return null;
+}
+
+function SortArrow({ direction }: { direction: 'asc' | 'desc' | null }) {
+  if (direction === null) return <span aria-hidden className="ml-1 text-muted/40">↕</span>;
+  return <span aria-hidden className="ml-1 text-accent-rust">{direction === 'asc' ? '↑' : '↓'}</span>;
+}
 
 const KEYWORD_OPTIONS = [
   { value: '', label: 'All subjects' },
@@ -210,7 +232,7 @@ export default function BphCatalogBrowser({
   const searchParams = useSearchParams();
 
   const initialQ = searchParams.get('cq') || '';
-  const initialSort = searchParams.get('csort') || 'title';
+  const initialSort = searchParams.get('csort') || 'author';
   const initialKeyword = searchParams.get('ckeyword') || '';
   const initialOffset = parseInt(searchParams.get('coffset') || '0') || 0;
   const initialAdv: AdvancedFilters = {
@@ -322,7 +344,7 @@ export default function BphCatalogBrowser({
       else params.delete(key);
     };
     setOrDel('cq', q);
-    setOrDel('csort', s !== 'title' ? s : '');
+    setOrDel('csort', s !== 'author' ? s : '');
     setOrDel('ckeyword', kw);
     setOrDel('coffset', off ? String(off) : '');
     setOrDel('cauthor', a.author);
@@ -455,16 +477,16 @@ export default function BphCatalogBrowser({
   };
 
   // When the parent supplies a results-header slot (the unified shell does
-  // this to host the list/grid view icons), the sort dropdown moves into
-  // that row so it sits next to the icons — matching the partner mockup
-  // (search row stays light filters; sort lives with the count + icons).
-  const sortLivesInHeader = resultsHeaderSlot !== undefined;
+  // this to host the list/grid view icons), the count + icons render in a
+  // second row below the filters; otherwise the count renders inline in the
+  // search row.
+  const hasHeaderSlot = resultsHeaderSlot !== undefined;
 
   return (
     <div>
       {/* Search / filter row — search input, subjects dropdown, optional
           parent-supplied toggle (e.g. Show all / Show digitised & translated),
-          Advanced. Sort moves to the results-header row when sortLivesInHeader. */}
+          Advanced. Sort is driven by clicking column headers in the table. */}
       <div className="flex flex-wrap items-center gap-3 mb-3">
         <div className="relative flex-1 min-w-[14rem] max-w-xl">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
@@ -497,18 +519,6 @@ export default function BphCatalogBrowser({
 
         {searchRowSlot}
 
-        {!sortLivesInHeader && (
-          <select
-            value={sort}
-            onChange={(e) => handleSortChange(e.target.value)}
-            className="text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary"
-          >
-            {SORT_OPTIONS.map(o => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
-          </select>
-        )}
-
         <button
           onClick={() => setShowAdvanced(s => !s)}
           className="inline-flex items-center gap-1.5 text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary hover:bg-warm transition-colors"
@@ -522,37 +532,25 @@ export default function BphCatalogBrowser({
           )}
         </button>
 
-        {!hideInlineCount && !sortLivesInHeader && (
+        {!hideInlineCount && !hasHeaderSlot && (
           <span className="text-sm text-muted ml-auto">
             {total.toLocaleString('en-US')} works
           </span>
         )}
       </div>
 
-      {/* Results-header row — counter on the left, sort + parent-supplied
-          view icons on the right. Only rendered when the parent passes a
-          slot (the unified shell does so for the BPH iframe). The count
-          renders here regardless of hideInlineCount — that prop only gates
-          the inline count in the search row above. */}
-      {sortLivesInHeader && (
+      {/* Results-header row — counter on the left, parent-supplied view
+          icons on the right. Only rendered when the parent passes a slot
+          (the unified shell does so for the BPH iframe). The count renders
+          here regardless of hideInlineCount — that prop only gates the
+          inline count in the search row above. */}
+      {hasHeaderSlot && (
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-sm text-muted">
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
           </span>
           <div className="flex items-center gap-3 ml-auto">
-            <label className="inline-flex items-center gap-2 text-sm text-muted">
-              <span>Sort by</span>
-              <select
-                value={sort}
-                onChange={(e) => handleSortChange(e.target.value)}
-                className="text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary"
-              >
-                {SORT_OPTIONS.map(o => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
-            </label>
             {resultsHeaderSlot}
           </div>
         </div>
@@ -643,11 +641,43 @@ export default function BphCatalogBrowser({
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border-light bg-warm">
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">Author</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary">Title</th>
+                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">
+                  <button
+                    type="button"
+                    onClick={() => handleSortChange(nextSort('author', sort))}
+                    className="inline-flex items-center hover:text-primary transition-colors"
+                  >
+                    Author<SortArrow direction={arrowFor('author', sort)} />
+                  </button>
+                </th>
+                <th className="text-left px-3 py-2.5 font-medium text-secondary">
+                  <button
+                    type="button"
+                    onClick={() => handleSortChange(nextSort('title', sort))}
+                    className="inline-flex items-center hover:text-primary transition-colors"
+                  >
+                    Title<SortArrow direction={arrowFor('title', sort)} />
+                  </button>
+                </th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">Year</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Shelfmark</th>
+                <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">
+                  <button
+                    type="button"
+                    onClick={() => handleSortChange(nextSort('year', sort))}
+                    className="inline-flex items-center hover:text-primary transition-colors"
+                  >
+                    Year<SortArrow direction={arrowFor('year', sort)} />
+                  </button>
+                </th>
+                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">
+                  <button
+                    type="button"
+                    onClick={() => handleSortChange(nextSort('shelfmark', sort))}
+                    className="inline-flex items-center hover:text-primary transition-colors"
+                  >
+                    Shelfmark<SortArrow direction={arrowFor('shelfmark', sort)} />
+                  </button>
+                </th>
                 <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
               </tr>
             </thead>

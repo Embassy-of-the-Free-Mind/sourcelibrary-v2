@@ -253,6 +253,12 @@ export async function GET(req: NextRequest) {
       case 'author':
         query = query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
         break;
+      case 'author_desc':
+        query = query.order('author', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+        break;
+      case 'title_desc':
+        query = query.order('title', { ascending: false });
+        break;
       case 'shelfmark':
         query = query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
         break;
