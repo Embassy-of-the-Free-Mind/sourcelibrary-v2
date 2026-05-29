@@ -184,7 +184,9 @@ function linkBookTitles(
   const tokenHrefs = new Map<string, Set<string>>();
   const authorSource = [...allBooks.map(b => b.author), ...authorStrings];
   for (const author of authorSource) {
-    const a = (author || '').trim();
+    // Normalise so date/qualifier variants of ONE person collapse to one page:
+    // "Bruno, Giordano, 1548-1600" / "Bruno, Giordano (Nolan)" → "Bruno, Giordano".
+    const a = (author || '').replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').trim().replace(/[,;]\s*$/, '');
     if (!a) continue;
     const href = authorUrl(a);
     if (!href) continue;
