@@ -70,12 +70,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const searchContent = searchParams.get('search_content') !== 'false'; // Default true — only skip page search if explicitly disabled
     const pagesOnly = searchParams.get('pages_only') === 'true'; // Return only page-level results (for MCP passage search)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
-    // Ranking strategy for relevance sort: 'ladder' (legacy heuristic, default)
-    // or 'rrf' (Reciprocal Rank Fusion of the four lanes). Opt-in via ?ranking=rrf
-    // so default production behavior is unchanged while we A/B the fused order.
-    // SEARCH_RANKING_DEFAULT can flip the default later without a code change.
-    const ranking = (searchParams.get('ranking') || process.env.SEARCH_RANKING_DEFAULT || 'ladder').toLowerCase();
-    const useRrf = ranking === 'rrf';
+    // Ranking strategy for the relevance sort:
+    //   'auto'  (default) — route by query shape: navigational queries (1–2
+    //            words, ~84% of real traffic) keep the curated ladder, which is
+    //            strong for title/author lookups and original-edition ordering;
+    //            conceptual queries (3+ words, the ~16% tail) use RRF, which the
+    //            eval shows wins niche-passage/concept recall there. Captures
+    //            RRF's upside without risking the navigational majority.
+    //   'ladder' / 'rrf' — force a single strategy (used by the compare page A/B
+    //            and for debugging).
+    // SEARCH_RANKING_DEFAULT can override the default without a code change.
+    const rankingParam = (searchParams.get('ranking') || process.env.SEARCH_RANKING_DEFAULT || 'auto').toLowerCase();
     const rrfK = Math.max(1, parseInt(searchParams.get('rrf_k') || '60') || 60);
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 500);
     const offset = parseInt(searchParams.get('offset') || '0');
@@ -91,6 +96,16 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Strip surrounding quotes for matching (phrase detection handled by subsystems)
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
+
+    // Resolve the ranking strategy. 'auto' routes by query word count: 1–2 word
+    // (navigational) → ladder; 3+ word (conceptual) → RRF.
+    const queryWordCount = matchQuery.trim().split(/\s+/).filter(w => w.length >= 2).length;
+    const useRrf = rankingParam === 'rrf'
+      ? true
+      : rankingParam === 'ladder'
+        ? false
+        : queryWordCount >= 3; // 'auto'
+    const rankingApplied = rankingParam === 'auto' ? (useRrf ? 'auto-rrf' : 'auto-ladder') : rankingParam;
 
     const db = await getReadDb();
     const results: SearchResult[] = [];
@@ -747,7 +762,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,
         has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
-        pages_only: pagesOnly, sort: sortBy, ranking: useRrf ? 'rrf' : 'ladder',
+        pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
       },
     });
     return NextResponse.json({
@@ -756,7 +771,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       offset,
       limit,
       sort: sortBy,
-      ranking: useRrf ? 'rrf' : 'ladder',
+      ranking: rankingApplied,
       license: {
         spdx: 'CC-BY-SA-4.0',
         url: 'https://creativecommons.org/licenses/by-sa/4.0/',
