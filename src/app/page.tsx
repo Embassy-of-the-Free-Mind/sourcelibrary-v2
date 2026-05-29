@@ -350,21 +350,21 @@ async function getCollectionShowcase() {
     if (selected.length >= 8) break;
   }
 
-  // Deterministic fallback: if random sampling is sparse, top up from the
-  // highest-quality visible records so this section doesn't disappear.
+  // Randomized fallback: if random sampling is sparse, top up from a
+  // broad high-quality pool without fixed ordering.
   if (selected.length < 8) {
-    const deterministicImages = await db.collection('gallery_images').aggregate([
+    const fallbackImages = await db.collection('gallery_images').aggregate([
+      { $sample: { size: 3000 } },
       {
         $match: {
           ...baseMatch,
           gallery_quality: { $gte: 0.65 },
         },
       },
-      { $sort: { gallery_quality: -1, _id: -1 } },
-      { $limit: 300 },
+      { $limit: 400 },
     ], { maxTimeMS: 8000 }).toArray();
 
-    for (const img of deterministicImages) {
+    for (const img of fallbackImages) {
       if (!img?.book_id || !img?.page_id) continue;
       const galleryId = `${img.page_id}-${img.detection_index || 0}`;
       if (seenBookIds.has(img.book_id) || seenGalleryIds.has(galleryId)) continue;
