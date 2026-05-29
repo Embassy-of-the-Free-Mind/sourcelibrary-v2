@@ -83,7 +83,10 @@ async function main() {
   const uniqueTitles = [...new Set(titles)];
   console.log(`total unique PDFs across categories: ${uniqueTitles.length}`);
 
-  const manifest = []; const licenseCounts = {}; let totalPages = 0, skipped = 0;
+  // WiLMa categories mix in administrative paperwork (owner-declaration letters,
+  // guidelines, reports) — exclude those and trivially short non-manuscripts.
+  const JUNK_RE = /declaration|owner declaration|letter of manuscript|guideline|manual|\breport\b|template|formulir|surat pernyataan|berita acara|laporan|cover sheet|metadata|katalog|catalogue|daftar/i;
+  const manifest = []; const licenseCounts = {}; let totalPages = 0, skipped = 0, junk = 0;
   for (let i = 0; i < uniqueTitles.length; i += 40) {
     const batch = uniqueTitles.slice(i, i + 40);
     const r = await api({ action: 'query', titles: batch.join('|'), prop: 'imageinfo', iiprop: 'extmetadata|size|url' });
@@ -92,6 +95,7 @@ async function main() {
       if (existing.has(norm(fname))) { skipped++; continue; }
       const ii = p.imageinfo?.[0]; if (!ii) continue;
       const pages = ii.pagecount || 0; if (!pages) continue;
+      if (pages < 3 || JUNK_RE.test(fname)) { junk++; continue; }   // skip admin paperwork / non-manuscripts
       const em = ii.extmetadata || {};
       const license = mapLicense(em.LicenseShortName?.value, em.UsageTerms?.value);
       licenseCounts[license] = (licenseCounts[license] || 0) + 1;
@@ -130,7 +134,7 @@ async function main() {
   // sort smallest-first so the bulk job lands many complete manuscripts early
   manifest.sort((a, b) => a.source_pdf_pages - b.source_pdf_pages);
   writeFileSync(args.out, JSON.stringify(manifest, null, 2));
-  console.log(`\n=== manifest: ${manifest.length} manuscripts, ${totalPages.toLocaleString()} total pages (skipped ${skipped} already-imported)`);
+  console.log(`\n=== manifest: ${manifest.length} manuscripts, ${totalPages.toLocaleString()} total pages (skipped ${skipped} already-imported, ${junk} non-manuscript/admin)`);
   console.log('licenses:', JSON.stringify(licenseCounts));
   console.log('page-count distribution:', manifest.map(m => m.source_pdf_pages).filter((_,i)=>i%Math.ceil(manifest.length/10||1)===0));
   console.log('wrote', args.out);

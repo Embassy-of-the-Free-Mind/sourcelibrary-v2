@@ -1,73 +1,5 @@
 [
   {
-    "fingerprint": "commons:wikisource-loves-manuscripts-letter-of-manuscript-owner-declaration-pd",
-    "slug": "wikisource-loves-manuscripts-letter-of-manuscript-owner-declaration",
-    "title": "WIkisource Loves Manuscripts Letter of Manuscript Owner Declaration",
-    "display_title": "WIkisource Loves Manuscripts Letter of Manuscript Owner Declaration",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "WIkisource Loves Manuscripts Letter of Manuscript Owner Declaration.pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3AWIkisource_Loves_Manuscripts_Letter_of_Manuscript_Owner_Declaration.pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/WIkisource%20Loves%20Manuscripts%20Letter%20of%20Manuscript%20Owner%20Declaration.pdf",
-    "original_filename": "WIkisource Loves Manuscripts Letter of Manuscript Owner Declaration.pdf",
-    "license": "cc0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 1
-  },
-  {
-    "fingerprint": "commons:wm-id-010-0077-hisab-pdf",
-    "slug": "wm-id-010-0077-hisab",
-    "title": "WM ID 010 0077 - (Hisab)",
-    "display_title": "WM ID 010 0077 - (Hisab)",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "WM ID 010 0077 - (Hisab).pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3AWM_ID_010_0077_-_(Hisab).pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/WM%20ID%20010%200077%20-%20(Hisab).pdf",
-    "original_filename": "WM ID 010 0077 - (Hisab).pdf",
-    "license": "cc0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 2
-  },
-  {
     "fingerprint": "commons:serat-damar-wulan-missing-pages-pdf",
     "slug": "serat-damar-wulan-missing-pages",
     "title": "Serat Damar Wulan (missing pages)",
@@ -324,40 +256,6 @@
     "original_filename": "WM ID 008 0030 - Mantra Pamlaspas Wadah.pdf",
     "license": "cc0",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 5
-  },
-  {
-    "fingerprint": "commons:wikisource-loves-manuscripts-metadata-form-pdf",
-    "slug": "wikisource-loves-manuscripts-metadata-form",
-    "title": "Wikisource Loves Manuscripts Metadata Form",
-    "display_title": "Wikisource Loves Manuscripts Metadata Form",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "Wikisource Loves Manuscripts Metadata Form.pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3AWikisource_Loves_Manuscripts_Metadata_Form.pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/Wikisource%20Loves%20Manuscripts%20Metadata%20Form.pdf",
-    "original_filename": "Wikisource Loves Manuscripts Metadata Form.pdf",
-    "license": "cc-by-4.0",
-    "license_url": "https://creativecommons.org/licenses/by/4.0/",
     "attribution": "Own work",
     "collections": [
       "javanese-kraton"
@@ -5304,40 +5202,6 @@
     "source_pdf_pages": 74
   },
   {
-    "fingerprint": "commons:arabic-wikisource-loves-manuscripts-digitizing-guidelines-pdf",
-    "slug": "arabic-wikisource-loves-manuscripts-digitizing-guidelines",
-    "title": "(ARABIC) Wikisource Loves Manuscripts Digitizing Guidelines",
-    "display_title": "(ARABIC) Wikisource Loves Manuscripts Digitizing Guidelines",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "(ARABIC) Wikisource Loves Manuscripts Digitizing Guidelines.pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3A(ARABIC)_Wikisource_Loves_Manuscripts_Digitizing_Guidelines.pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/(ARABIC)%20Wikisource%20Loves%20Manuscripts%20Digitizing%20Guidelines.pdf",
-    "original_filename": "(ARABIC) Wikisource Loves Manuscripts Digitizing Guidelines.pdf",
-    "license": "cc-by-sa-4.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 74
-  },
-  {
     "fingerprint": "commons:add-12337-teachings-of-sultan-hamengku-buwana-i-pdf",
     "slug": "add-12337-teachings-of-sultan-hamengku-buwana-i",
     "title": "Add. 12337 Teachings of Sultan Hamengku Buwana I",
@@ -5678,40 +5542,6 @@
     "source_pdf_pages": 84
   },
   {
-    "fingerprint": "commons:hindi-manuscripts-digitizing-manuscripts-guidelines-pdf",
-    "slug": "hindi-manuscripts-digitizing-manuscripts-guidelines",
-    "title": "(HINDI) Manuscripts Digitizing Manuscripts Guidelines",
-    "display_title": "(HINDI) Manuscripts Digitizing Manuscripts Guidelines",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "(HINDI) Manuscripts Digitizing Manuscripts Guidelines.pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3A(HINDI)_Manuscripts_Digitizing_Manuscripts_Guidelines.pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/(HINDI)%20Manuscripts%20Digitizing%20Manuscripts%20Guidelines.pdf",
-    "original_filename": "(HINDI) Manuscripts Digitizing Manuscripts Guidelines.pdf",
-    "license": "cc-by-sa-4.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 84
-  },
-  {
     "fingerprint": "commons:wm-id-008-0003-sundari-gading-pdf",
     "slug": "wm-id-008-0003-sundari-gading",
     "title": "WM ID 008 0003 - Sundari Gading",
@@ -5780,40 +5610,6 @@
     "source_pdf_pages": 86
   },
   {
-    "fingerprint": "commons:english-wikisource-loves-manuscripts-digitizing-guidelines-pdf",
-    "slug": "english-wikisource-loves-manuscripts-digitizing-guidelines",
-    "title": "(ENGLISH) Wikisource Loves Manuscripts Digitizing Guidelines",
-    "display_title": "(ENGLISH) Wikisource Loves Manuscripts Digitizing Guidelines",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "(ENGLISH) Wikisource Loves Manuscripts Digitizing Guidelines.pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3A(ENGLISH)_Wikisource_Loves_Manuscripts_Digitizing_Guidelines.pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/(ENGLISH)%20Wikisource%20Loves%20Manuscripts%20Digitizing%20Guidelines.pdf",
-    "original_filename": "(ENGLISH) Wikisource Loves Manuscripts Digitizing Guidelines.pdf",
-    "license": "cc-by-sa-4.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 86
-  },
-  {
     "fingerprint": "commons:wm-id-009-0003-korawasrama-pdf",
     "slug": "wm-id-009-0003-korawasrama",
     "title": "WM ID 009 0003 - Korawasrama",
@@ -5866,40 +5662,6 @@
     "original_filename": "WM ID 009 0004 - Padewasan.pdf",
     "license": "cc0",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 87
-  },
-  {
-    "fingerprint": "commons:indonesian-manuscripts-digitizing-manuscripts-guidelines-pdf",
-    "slug": "indonesian-manuscripts-digitizing-manuscripts-guidelines",
-    "title": "(INDONESIAN) Manuscripts Digitizing Manuscripts Guidelines",
-    "display_title": "(INDONESIAN) Manuscripts Digitizing Manuscripts Guidelines",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "(INDONESIAN) Manuscripts Digitizing Manuscripts Guidelines.pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3A(INDONESIAN)_Manuscripts_Digitizing_Manuscripts_Guidelines.pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/(INDONESIAN)%20Manuscripts%20Digitizing%20Manuscripts%20Guidelines.pdf",
-    "original_filename": "(INDONESIAN) Manuscripts Digitizing Manuscripts Guidelines.pdf",
-    "license": "cc-by-sa-4.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
     "attribution": "Own work",
     "collections": [
       "javanese-kraton"
@@ -6104,40 +5866,6 @@
     "original_filename": "WM ID 008 0033 - Aji Piwelas.pdf",
     "license": "cc0",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "attribution": "Own work",
-    "collections": [
-      "javanese-kraton"
-    ],
-    "categories": [
-      "manuscripts"
-    ],
-    "dc_type": "Manuscript",
-    "dc_language": "jav",
-    "extract": "pdfimages",
-    "archive_master": false,
-    "image_only": true,
-    "ocr_deferred_reason": "aksara Jawa OCR unsolved on Gemini (recitation loops) — image-only until trustworthy OCR. See issue #2144.",
-    "source_pdf_pages": 90
-  },
-  {
-    "fingerprint": "commons:spanish-manuscripts-digitizing-manuscripts-guidelines-pdf",
-    "slug": "spanish-manuscripts-digitizing-manuscripts-guidelines",
-    "title": "(SPANISH) Manuscripts Digitizing Manuscripts Guidelines",
-    "display_title": "(SPANISH) Manuscripts Digitizing Manuscripts Guidelines",
-    "author": "Anonymous",
-    "language": "Javanese",
-    "genre": "Javanese manuscript",
-    "script": "Javanese (aksara Jawa / Carakan), handwritten",
-    "provider": "wikimedia_commons",
-    "provider_name": "Wikimedia Commons",
-    "contributing_library": "Wikimedia Commons (Wikisource Loves Manuscripts / community digitisation)",
-    "source_id": "(SPANISH) Manuscripts Digitizing Manuscripts Guidelines.pdf",
-    "shelfmark": null,
-    "source_url": "https://commons.wikimedia.org/wiki/File%3A(SPANISH)_Manuscripts_Digitizing_Manuscripts_Guidelines.pdf",
-    "source_pdf": "https://commons.wikimedia.org/wiki/Special:FilePath/(SPANISH)%20Manuscripts%20Digitizing%20Manuscripts%20Guidelines.pdf",
-    "original_filename": "(SPANISH) Manuscripts Digitizing Manuscripts Guidelines.pdf",
-    "license": "cc-by-sa-4.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
     "attribution": "Own work",
     "collections": [
       "javanese-kraton"
