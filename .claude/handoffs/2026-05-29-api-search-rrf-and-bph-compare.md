@@ -17,6 +17,27 @@
 
 ---
 
+## ✅ SESSION COMPLETE — final state (supersedes the planning sections below)
+
+Everything below this line was the plan; here's what actually shipped.
+
+- **Found + fixed a CRITICAL tenant leak (#2159, MERGED):** `/api/search`'s semantic BOOK lane returned global/other-tenant books in a partner subdomain's results (up to 18/25 for "hermetic philosophy and the soul" on bph). `match_books_semantic` is global (no `tenant_id` column) and the Mongo materialization didn't re-apply `tenantId`. Fixed both semantic materializations + added `scripts/audit/search-tenant-purity.mjs` (re-runnable guard: pre-fix 43 leaked across 5 queries → post-fix 0).
+- **BPH compare page is LIVE (#2161, preview-only, NOT merged):** access decision resolved as a **tenant-explicit compare API** served on a **preview** (honors "hold #2154"). Built leak-safe (single tenantId-scoped book join). Features delivered:
+  - Two labeled columns: **Current (ladder)** vs **New (RRF)**, per-result 👍/👎 + overall winner + note → `search_compare_votes` (anonymous).
+  - **Scope checkbox** "Restrict to BPH books only" (default on); unchecked compares against the whole Source Library; scope recorded with each vote.
+  - **Clickable results** → BPH books open on `bph.sourcelibrary.org`, others on `sourcelibrary.org` (per-result `tenantOwned` flag; non-tenant rows tagged "main").
+  - **Librarian URL:** `https://sourcelibrary-v2-git-worktree-bph-se-a1b3f4-dereklomas-projects.vercel.app/embed/bph/search-compare`
+  - Files: `src/lib/search/compare-search.ts`, `src/app/api/search/compare/{route,vote/route}.ts`, `src/app/embed/[tenant]/search-compare/{page,SearchCompareClient}.tsx`.
+
+**Pending human action (nothing blocked on code):**
+1. Review/merge **#2154** (flag-gated RRF; default unchanged — safe).
+2. Share the compare URL with BPH librarians; collect votes in `search_compare_votes`.
+3. Decide RRF's fate from the votes — flip `SEARCH_RANKING_DEFAULT=rrf`, or (per the eval) pivot to **query-aware routing**. A small votes-summary view can be built when wanted.
+
+**Worktrees still live (intentionally — back open PRs):** `feat-api-search-hybrid` (#2154), `bph-search-compare` (#2161). Remove after those PRs resolve.
+
+---
+
 ## What this session shipped
 
 | PR | What | State |
