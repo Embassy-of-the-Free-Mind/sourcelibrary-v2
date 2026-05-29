@@ -17,7 +17,8 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Summary + Index | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, every 5 min, 30 books/run |
 | Chapter extraction | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, runs after summary+index |
 | Lightweight crons | **Vercel** | social-post, health-check, daily-report, warm |
-| e-rara archiving | **Local Mac** via launchd | Hetzner IPs blocked by e-rara |
+| e-rara / Harvard / Gallica archiving | **Local Mac** via launchd | Source hosts block Hetzner IPs (`archive-{erara,harvard,gallica}.mjs`, every 30 min, plists `org.sourcelibrary.archive-*`) |
+| Archiving watchdog | **Local Mac** via launchd (`org.sourcelibrary.archiving-watchdog`, every 6h) | Self-heals books stuck in `archiving`: parks IA-lending/dead-URL books → `needs_attention`, escalates stale-unreachable, optional `--rearchive`. `scripts/maintenance/archiving-watchdog.mjs`, logs `/tmp/archiving-watchdog.log`, audit in `watchdog_runs`. Permanent home should be Hetzner cron. |
 
 **Lambda translation is deprecated for the main pipeline.** The SQS FIFO translation queue is only used for preview translation and manual job submission. The Hetzner `translate-worker.mjs` handles all production translation.
 
