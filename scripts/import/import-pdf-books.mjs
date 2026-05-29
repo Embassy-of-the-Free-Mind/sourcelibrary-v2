@@ -141,7 +141,11 @@ function extractPages(pdfPath, tmpDir, { method, dpi, limit }) {
   if (method !== 'pdftoppm') {
     try {
       const info = inspectPdfImages(pdfPath);
-      useNative = info.clean && info.minWidth >= 1200;
+      // Explicit 'pdfimages' trusts native extraction whenever the PDF is a clean
+      // 1-JPEG-per-page scan (each page comes out at its own true embedded res —
+      // small front-matter/color-chart images don't disqualify content pages).
+      // 'auto' is conservative and only goes native if even the smallest image is large.
+      useNative = method === 'pdfimages' ? info.clean : (info.clean && info.minWidth >= 1200);
       if (method === 'pdfimages' && !info.clean) {
         console.log(`  WARN: pdfimages requested but PDF is not 1-JPEG-per-page (minW=${info.minWidth}); falling back to pdftoppm`);
       } else {
@@ -199,8 +203,12 @@ async function importBook(db, entry) {
   console.log(`\n=== ${entry.title} ===`);
   console.log(`  provider=${entry.provider} source_id=${entry.source_id} license=${entry.license}`);
 
-  // Dupe check
-  const existing = await db.collection('books').findOne({ source_fingerprint: fingerprint });
+  // Dupe check — by fingerprint AND by original filename (underscore/space variants),
+  // so the same Commons file isn't re-imported even under a different fingerprint scheme.
+  const ofn = entry.original_filename;
+  const dupeOr = [{ source_fingerprint: fingerprint }];
+  if (ofn) dupeOr.push({ 'metadata.original_filename': { $in: [ofn, ofn.replace(/_/g, ' '), ofn.replace(/ /g, '_')] } });
+  const existing = await db.collection('books').findOne({ $or: dupeOr });
   if (existing && !FORCE) { console.log(`  SKIP: already imported (book id=${existing.id})`); return { skipped: true }; }
 
   const bookId = new ObjectId();
