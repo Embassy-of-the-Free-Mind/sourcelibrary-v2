@@ -72,30 +72,34 @@ ${sectionSummariesText}
 ${quotesText}
 
 ## Your Task
-Synthesize the material above into a plain, encyclopedic description. Ground every claim in the extracted content; do not embellish or invent significance.
+Synthesize the material above into a plain, encyclopedic description. Ground every claim in the extracted content or in well-established fact. State significance concretely and factually, never as vague praise.
+
+**Identify the author and say what makes the text notable (do this, concretely):**
+- On first naming the author, add a short factual identifier: who they were in a few words (role, period, place), e.g. "Irenaeus, a second-century bishop of Lyon and early Church Father" or "Robert Fludd, an English physician and Paracelsian philosopher". Only state facts you are confident are well established. If the author is obscure or you are unsure, give the name alone and invent nothing.
+- Say in one concrete sentence why the text is notable, when there is a real, factual answer: what it preserves, what it influenced, what it is a source for, what is unusual about it. Example: a polemic against a movement can be a principal source for that movement because it quotes it at length (as with Irenaeus and the Gnostics). This is factual significance, not a rating. If nothing concrete is known, omit it rather than padding with praise.
 
 **Hard rules — these are the difference between a catalog note and ad copy:**
 ${titleRule}
 - Do NOT address or refer to the reader. Ban "you", "your", "readers", "readers will discover", "imagine", "discover". The description talks about the text, never to a prospective reader.
 - Do NOT open with a question. No rhetorical hooks ("What if...?", "Why did...?", "How can...?"). Open by naming the work and stating plainly what it is.
 - Do NOT claim modern relevance the text does not contain. No "distractions of modern life", "still resonates today", "timeless". Describe the text in its own terms and period.
-- Never rate the text. Drop all praise vocabulary: no "seminal", "important", "fascinating", "remarkable", "essential", "profound", "rich", "masterful", "groundbreaking", "radical", "bold", "urgent".
+- Significance must be concrete and specific. Drop empty praise adjectives: no "seminal", "important", "fascinating", "remarkable", "essential", "profound", "rich", "masterful", "groundbreaking", "radical", "bold", "urgent". Say what the text did or preserves, not how impressive it is.
 
 **Style:**
 - Also avoid these AI tells: "delves into", "rich tapestry", "sheds light on", "offers a window into", "pulls back the curtain", "comprehensive", "intricate", "nuanced", "multifaceted", and stiff verbs like "delineates", "elucidates", "utilizes" (write "uses"), "explores the trajectory of".
 - No em-dashes (—). Use commas, colons, semicolons, or separate sentences.
 - Short, concrete sentences. Plain words over Latinate ones. Name people, places, and specifics instead of gesturing at them.
 
-Example of the WRONG register (sells, addresses the reader, rates the text — do NOT write like this):
+Example of the WRONG register (sells, addresses the reader, empty praise — do NOT write like this):
   "Willem Teellinck strips away the distractions of modern life to focus on a singular, urgent question. Readers will discover a seminal manual for the soul that delineates the trajectory toward sanctification."
-Example of the RIGHT register (states what it is, factual, no reader — write like this):
-  "'t Nieuwe Jerusalem is a devotional treatise cast as a dialogue between the Lord and a woman named Maria. It describes how the soul moves from worldly attachment toward sanctification, joining strict Reformed doctrine to the practice of daily piety. Willem Teellinck wrote it as practical guidance for lay believers of the Dutch Second Reformation."
+Example of the RIGHT register (identifies the author, states concrete significance, factual, no reader — write like this):
+  "Adversus haereses (Against Heresies) is a theological treatise by Irenaeus, a second-century bishop of Lyon and one of the early Church Fathers. Writing around 180 AD, he lays out the teachings of Valentinus and other Gnostic groups in order to refute them and defend what he held to be apostolic tradition. Because he quotes those teachings at length, the work is now a principal source for Gnostic thought that survives almost nowhere else."
 
-1. **BRIEF** (2-3 sentences):
-   - Open by naming the work and what kind of text it is (treatise, dialogue, manual, essay, collection). Then state its central subject in plain terms. No hook, no reader.
+1. **BRIEF** (2-4 sentences):
+   - Open by naming the work and what kind of text it is (treatise, dialogue, manual, essay, collection). Identify the author in a few words. State the central subject plainly, and where there is a concrete answer, add one sentence on why the text is notable (what it preserves, influenced, or is a source for). No hook, no reader, no empty praise.
 
 2. **ABSTRACT** (1 paragraph, 4-6 sentences):
-   - What the text covers, the author's position or method, and the kind of reader it serves. Factual, not promotional.
+   - What the text covers, who the author was, the author's position or method, and what the text is a source for or contributed. Factual, not promotional.
 
 3. **DETAILED** (2-4 paragraphs):
    - How the text is organized and how the argument or material unfolds. Concrete content: the actual ideas, people, and claims in the text.
