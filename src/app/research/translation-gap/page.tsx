@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 };
 
 // Snapshot from translation_census_by_language (Supabase), May 2026.
+// Static dated snapshot — refresh from the census view when sources are added.
 // Denominator: USTC (~1.4M distinct works); numerator: 30-source federated catalogue.
 const LANGS = [
   { lang: 'Latin', works: 444120, tr: 8644, pct: 1.95 },
