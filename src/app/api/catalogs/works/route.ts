@@ -65,9 +65,15 @@ export async function GET(req: Request) {
     ? editionsParam.split(',').filter(id => collectionIndexIds.includes(id))
     : collectionIndexIds;
 
+  // 'estimated' not 'exact': an exact count re-runs the full v_index_catalog_works
+  // aggregation (~1s extra) and tipped this endpoint over the role statement
+  // timeout (500s). has_more is computed by fetching one extra row instead, so
+  // pagination stays correct; total is the planner estimate (fine for a "~N
+  // works" display). The deeper fix is a GIN index on edition_ids / a
+  // materialized view — see the catalog perf note.
   let query = supabase
     .from('v_index_catalog_works')
-    .select('*', { count: 'exact' });
+    .select('*', { count: 'estimated' });
 
   // Edition filter — works whose edition_ids array OVERLAPS (any) or CONTAINS (all) the selection
   if (selectedEditions.length > 0) {
@@ -103,16 +109,21 @@ export async function GET(req: Request) {
   else if (sort === 'edition_count') query = query.order('edition_count', { ascending: false });
   else query = query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
 
-  query = query.range(from, to);
+  // Fetch one extra row to detect has_more without depending on the exact count.
+  query = query.range(from, to + 1);
   const { data, error, count } = await query;
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+  const rows = (data || []) as Work[];
+  const hasMore = rows.length > pageSize;
+  const works = hasMore ? rows.slice(0, pageSize) : rows;
+
   return NextResponse.json({
-    works: (data || []) as Work[],
-    total: count ?? 0,
+    works,
+    total: count ?? works.length,   // planner estimate; approximate by design
     page,
     page_size: pageSize,
-    has_more: (count ?? 0) > to + 1,
+    has_more: hasMore,
     editions: collectionIndexIds,
   });
 }

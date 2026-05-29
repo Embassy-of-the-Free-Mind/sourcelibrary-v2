@@ -27,8 +27,10 @@
  * unless --force.
  */
 import { MongoClient } from 'mongodb';
+import { loadAuthority, reconcile } from './lib/author-reconcile.mjs';
 
 const APPLY = process.argv.includes('--apply');
+const NO_RECONCILE = process.argv.includes('--no-reconcile');
 const FORCE = process.argv.includes('--force');
 const limitArg = process.argv.indexOf('--limit');
 const LIMIT = limitArg > -1 ? Number(process.argv[limitArg + 1]) : 0;
@@ -161,18 +163,38 @@ const SURNAME_ALIASES = {
   zorzi:       ['giorgio'],
 };
 
-const slCache = new Map();
-async function slBooksBySurname(db, s) {
-  if (!s) return [];
-  if (slCache.has(s)) return slCache.get(s);
-  const lower = s.toLowerCase();
-  const variants = new Set([lower]);
-  const corrected = fixLongS(lower);
-  if (corrected !== lower) variants.add(corrected);
-  for (const alias of (SURNAME_ALIASES[lower] || [])) variants.add(alias.toLowerCase());
+// Build the set of surname forms to search for one identity. Sources, unioned:
+//   • the literal author_normalized surname (+ long-s correction)
+//   • the curated SURNAME_ALIASES backstop
+//   • stem-then-authority reconciliation (entity_aliases) — the big lever:
+//     resolves Latin "Picus, Ioannes" → the Pico cluster → {pico, mirandola,
+//     mirandula, …}, which our vernacular-catalogued books actually carry.
+// Reconciliation only widens recall; the Gemini same-person verifier downstream
+// still rejects mismatches (Carthusian, wrong surname-mate, etc.).
+function searchTermsForEntry(entry, authority) {
+  const terms = new Set();
+  const lit = (entry.author_normalized || '').toLowerCase();
+  if (lit) {
+    terms.add(lit);
+    const c = fixLongS(lit);
+    if (c !== lit) terms.add(c);
+    for (const a of (SURNAME_ALIASES[lit] || [])) terms.add(a.toLowerCase());
+  }
+  if (authority && entry.author) {
+    const rec = reconcile(entry.author, { authority, year: entry.condemnation_year });
+    if (rec) for (const f of rec.expandedSurnames) terms.add(f.toLowerCase());
+  }
+  return [...terms].filter(t => t.length >= 4);
+}
 
-  const variantList = [...variants];
-  const re = new RegExp(`(^|[^a-z])(${variantList.map(v => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'i');
+const slCache = new Map();
+async function slBooksForEntry(db, entry, authority) {
+  const terms = searchTermsForEntry(entry, authority);
+  if (!terms.length) return [];
+  const cacheKey = terms.slice().sort().join('|');
+  if (slCache.has(cacheKey)) return slCache.get(cacheKey);
+  // Whole-word match so forms like "pico" don't prefix-match "Piccolomini".
+  const re = new RegExp(`(^|[^a-z])(${terms.map(v => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})([^a-z]|$)`, 'i');
   const books = await db.collection('books').find(
     {
       $or: [{ author: re }, { author_normalized: re }, { canonical_author_normalized: re }],
@@ -182,7 +204,7 @@ async function slBooksBySurname(db, s) {
     },
     { projection: { _id: 1, id: 1, slug: 1, title: 1, author: 1, year: 1 } },
   ).limit(80).toArray();
-  slCache.set(s, books);
+  slCache.set(cacheKey, books);
   return books;
 }
 
@@ -231,6 +253,13 @@ async function main() {
   await mc.connect();
   const db = mc.db('bookstore');
 
+  let authority = null;
+  if (!NO_RECONCILE) {
+    console.log('Loading entity_aliases authority index (stem-then-authority)…');
+    authority = await loadAuthority((path) => supa('GET', path));
+    console.log(`  ${authority.clusters.size} clusters indexed.`);
+  }
+
   console.log('\nScanning distinct identities…');
   const identities = await fetchDistinctIdentities();
   const todo = [...identities.entries()].filter(([, v]) => !v.alreadyDone).sort((a, b) => b[1].count - a[1].count);
@@ -254,7 +283,7 @@ async function main() {
       if (!item) break;
       const [key, { entry, count, surname }] = item;
 
-      const books = await slBooksBySurname(db, surname);
+      const books = await slBooksForEntry(db, entry, authority);
 
       let authorHeldCount = 0;
       let sampleSlug = null;
