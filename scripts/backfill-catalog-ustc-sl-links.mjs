@@ -79,7 +79,7 @@ async function supa(method, path, body) {
 // One verification reuses across all entries that share the same pair.
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
-const VERIFY_MODEL = 'gemini-3.1-flash-lite-preview';
+const VERIFY_MODEL = 'gemini-3.1-flash-lite';
 const verifyCache = new Map();
 let verifyCallCount = 0;
 let verifyCostTotal = 0;
