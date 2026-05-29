@@ -583,7 +583,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   // Text-only works (e.g. romanized Javanese from Wikisource): no page scans,
   // so render a dedicated text layout instead of the image+OCR reader. Must come
   // before isVisualArt (a 'text' resource_type would otherwise route to artwork).
-  if (book.content_type === 'text') {
+  if ((book as { content_type?: string }).content_type === 'text') {
     const textDb = await getReadDb();
     const textPages = await textDb.collection('pages')
       .find({ book_id: book.id, page_number: { $gte: 0 } }, {
