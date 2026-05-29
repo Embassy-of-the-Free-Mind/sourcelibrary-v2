@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
     tenant: tenantSlug,
     tenantId,
     scope: body?.scope === 'global' ? 'global' : 'tenant',  // which corpus the comparison ran against
+    strategy: ['navigational', 'conceptual', 'verbatim'].includes(body?.strategy) ? body.strategy : undefined, // LLM intent for this query
     query,
     winner,                                    // which ranking the librarian preferred
     note: typeof body?.note === 'string' ? body.note.slice(0, 1000) : undefined,

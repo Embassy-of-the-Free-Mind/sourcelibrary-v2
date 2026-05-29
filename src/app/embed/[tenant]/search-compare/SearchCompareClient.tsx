@@ -38,6 +38,22 @@ const EXAMPLE_QUERIES = [
 
 type Winner = 'current' | 'new' | 'tie' | null;
 
+// Ask the same LLM step the live search page uses to classify the query's
+// retrieval intent. Returns 'navigational' | 'conceptual' | 'verbatim' | null.
+async function classifyIntent(query: string): Promise<string | null> {
+  try {
+    const res = await fetch('/api/search/ai-expand', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+    const text = await res.text();
+    const m = text.match(/event: strategy\s*\ndata: ("(?:navigational|conceptual|verbatim)")/);
+    return m ? JSON.parse(m[1]) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function SearchCompareClient({ tenant }: { tenant: string }) {
   const [query, setQuery] = useState('');
   const [restrictToTenant, setRestrictToTenant] = useState(true);
@@ -48,12 +64,16 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
   const [winner, setWinner] = useState<Winner>(null);
   const [note, setNote] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [strategy, setStrategy] = useState<string | null>(null); // LLM intent from ai-expand
 
   async function runSearch(q: string, restrict: boolean = restrictToTenant) {
     const trimmed = q.trim();
     if (trimmed.length < 2) return;
-    setLoading(true); setError(null); setData(null);
+    setLoading(true); setError(null); setData(null); setStrategy(null);
     setThumbs({}); setWinner(null); setNote(''); setSubmitted(false);
+    // Classify intent in parallel (non-blocking) so we can show which ranking
+    // production's smart routing would pick for this query.
+    classifyIntent(trimmed).then(setStrategy).catch(() => {});
     try {
       const scope = restrict ? 'tenant' : 'global';
       const res = await fetch(`/api/search/compare?q=${encodeURIComponent(trimmed)}&tenant=${encodeURIComponent(tenant)}&scope=${scope}`);
@@ -90,7 +110,7 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
       await fetch('/api/search/compare/vote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tenant, scope: data.scope, query: data.query, winner, note: note || undefined, thumbs: thumbArr }),
+        body: JSON.stringify({ tenant, scope: data.scope, query: data.query, winner, strategy: strategy || undefined, note: note || undefined, thumbs: thumbArr }),
       });
       setSubmitted(true);
     } catch {
@@ -157,6 +177,15 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
             {' · '}
             <span className="font-medium text-stone-600">{data.scope === 'tenant' ? `${tenant.toUpperCase()} only` : 'all of Source Library'}</span>
           </p>
+
+          {strategy && (
+            <div className="mb-4 rounded-md border border-violet-200 bg-violet-50 px-3 py-2 text-sm text-violet-900">
+              Search read this as a <strong>{strategy}</strong> query. With smart routing, production would show the{' '}
+              <strong>{strategy === 'navigational' ? 'Current' : 'New (RRF)'}</strong> ranking
+              {strategy === 'navigational' ? ' (short lookups stay on the current ranking)' : ''}.
+              <span className="text-violet-500"> Does that column read better to you?</span>
+            </div>
+          )}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <Column label="Current" sub="how search works today" results={data.ladder} column="current" tenant={tenant} thumbs={thumbs} onThumb={toggleThumb} />
             <Column label="New (RRF)" sub="the proposed ordering" results={data.rrf} column="new" tenant={tenant} thumbs={thumbs} onThumb={toggleThumb} />
