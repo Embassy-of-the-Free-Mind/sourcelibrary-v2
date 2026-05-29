@@ -52,7 +52,17 @@ export interface SearchFilters {
 
 export interface SearchResponse {
   query: string;
+  /**
+   * Size of this request's merged + deduped result window — NOT a stable
+   * corpus-wide match count. When `partial` is true a search lane timed out or
+   * errored, so this count is incomplete and should not be treated as
+   * authoritative.
+   */
   total: number;
+  /** True when one or more search lanes degraded (timeout/error); `total` is then incomplete. */
+  partial?: boolean;
+  /** Which lanes degraded (e.g. 'page', 'book', 'semantic_book', 'semantic_page'). */
+  degraded_lanes?: string[];
   offset: number;
   limit: number;
   sort: string;

@@ -81,9 +81,16 @@ async function searchLibrary(args: Record<string, unknown>) {
 }
 
 async function searchPassages(args: Record<string, unknown>) {
-  const limit = Math.min(Number(args.limit) || 20, 50);
+  const userLimit = Math.min(Number(args.limit) || 20, 50);
   const offset = Number(args.offset) || 0;
-  const params = new URLSearchParams({ q: String(args.query), pages_only: 'true', limit: String(limit), offset: String(offset) });
+  // BUG 1 fix: the backend can return page-rows with empty/whitespace snippets,
+  // which the empty-snippet .filter(...) below strips AFTER fetching. Requesting
+  // exactly userLimit rows could leave the page empty while total_matches stays
+  // high. Over-fetch from the same offset to absorb the filter, then slice down
+  // to userLimit. The backend clamps limit to 500 (src/app/api/search/route.ts),
+  // so 150 is well within range.
+  const fetchLimit = Math.min(userLimit * 3, 150);
+  const params = new URLSearchParams({ q: String(args.query), pages_only: 'true', limit: String(fetchLimit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
   if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
   if (Array.isArray(args.exclude_languages) && args.exclude_languages.length > 0) params.set('exclude_languages', args.exclude_languages.join(','));
@@ -92,7 +99,7 @@ async function searchPassages(args: Record<string, unknown>) {
   if (args.book_id) params.set('book_id', String(args.book_id));
 
   const result = await apiGet('/search', params) as Record<string, unknown>;
-  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => {
+  const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
     const snippetType = r.snippet_type as string | undefined;
     const snippetLanguage = snippetType === 'ocr' ? r.language : 'English';
     return {
@@ -111,20 +118,30 @@ async function searchPassages(args: Record<string, unknown>) {
       url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
       short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
     };
-  }).filter(p => !!(p.snippet as string | undefined)?.trim()) || [];
+  }).filter(p => !!(p.snippet as string | undefined)?.trim()) || [])
+    // Slice back to what the user asked for after the empty-snippet filter.
+    .slice(0, userLimit);
   return {
     query: result.query,
     total_matches: result.total,
     returned: passages.length,
     offset,
+    // BUG 2: surface the backend's lane-timeout signal so callers know the count
+    // may be incomplete when a search lane degraded. Only present when true.
+    ...(result.partial ? { partial: true } : {}),
     passages,
     tip: 'original_language is the book\'s source language; snippet_language is the language of the snippet text (English for translations/summaries, source language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
   };
 }
 
 async function searchConcept(args: Record<string, unknown>) {
-  const limit = Math.min(Number(args.limit) || 15, 50);
-  const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(limit) });
+  const userLimit = Math.min(Number(args.limit) || 15, 50);
+  // BUG 1 fix (same pattern as searchPassages): the empty-snippet .filter(...)
+  // below can empty the page when the backend's first rows carry blank snippets.
+  // Over-fetch, filter, then slice to userLimit. Semantic endpoint accepts the
+  // same 50 max as the tool, so clamp fetchLimit to 50.
+  const fetchLimit = Math.min(userLimit * 3, 50);
+  const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(fetchLimit) });
   if (args.language) params.set('language', String(args.language));
   if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
   if (Array.isArray(args.exclude_languages) && args.exclude_languages.length > 0) params.set('exclude_languages', args.exclude_languages.join(','));
@@ -133,7 +150,7 @@ async function searchConcept(args: Record<string, unknown>) {
   if (args.max_per_book) params.set('max_per_book', String(args.max_per_book));
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
-  const passages = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
+  const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
     book_id: r.book_id,
     title: r.book_title,
     author: r.book_author,
@@ -149,9 +166,12 @@ async function searchConcept(args: Record<string, unknown>) {
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
     short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
-  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || [];
+  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || [])
+    .slice(0, userLimit);
   return {
     query: result.query,
+    // total_matches mirrors the post-slice page size here (semantic endpoint does
+    // not return a separate corpus count), so keep it equal to returned.
     total_matches: passages.length,
     returned: passages.length,
     passages,

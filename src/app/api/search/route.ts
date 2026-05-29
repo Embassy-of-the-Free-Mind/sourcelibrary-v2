@@ -175,6 +175,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       return { value, ms: Date.now() - start };
     }
 
+    // BUG 2: `total` (below) is the size of THIS request's merged + deduped result
+    // window — not a stable corpus-wide match count. Each lane (Supabase book
+    // trigram, Atlas page search, semantic book, semantic page) can silently
+    // degrade to [] on timeout or error, which shrinks the merged set and makes
+    // `total` vary run-to-run for the same query. We can't make it a true corpus
+    // count without a backend redesign (follow-up), but we CAN stop it from being
+    // reported as authoritative when a lane dropped out: any lane that fails flips
+    // `lanesDegraded`, surfaced as `partial: true` so callers know the count is
+    // incomplete rather than silently smaller.
+    const degradedLanes: string[] = [];
+
     const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       timed(async () => {
@@ -225,6 +236,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // Fail-soft: a Supabase trigram timeout or MongoDB error should not 500 the whole route.
           // The other 3 lanes (Atlas Search, semantic books, semantic pages) can still produce results.
           console.warn('[search] Book lane failed:', err instanceof Error ? err.message : String(err));
+          degradedLanes.push('book'); // BUG 2: lane dropped out — total is now incomplete.
           return [];
         }
       }),
@@ -296,9 +308,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           pageSearchPromise,
           new Promise<any[]>((resolve) => setTimeout(() => {
             console.warn('[search] Page search timed out after 8s');
+            degradedLanes.push('page'); // BUG 2: lane dropped out — total is now incomplete.
             resolve([]);
           }, 8000)),
-        ]).catch(() => []);
+        ]).catch(() => { degradedLanes.push('page'); return []; });
       }),
 
       // --- Semantic book search (finds conceptually related books) ---
@@ -321,6 +334,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             book_year: b.year,
           }));
         } catch {
+          degradedLanes.push('semantic_book'); // BUG 2: lane dropped out — total is now incomplete.
           return [];
         }
       }),
@@ -346,10 +360,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           );
           return pages.filter(p => !badIds.has(p.page_id));
         } catch {
+          degradedLanes.push('semantic_page'); // BUG 2: lane dropped out — total is now incomplete.
           return [];
         }
       }),
     ]);
+    const lanesDegraded = degradedLanes.length > 0;
 
     const bookDocs = bookResult.value;
     const pageDocs = pageResult.value;
@@ -715,7 +731,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       request, identity, route: 'search', query,
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
       stage_ms: stageMs,
-      page_search_timed_out: pageSearchHitTimeout,
+      page_search_timed_out: pageSearchHitTimeout || degradedLanes.includes('page'),
       filters: {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,
@@ -725,7 +741,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     });
     return NextResponse.json({
       query,
+      // NOTE: `total` is the size of THIS request's merged + deduped result window,
+      // not a stable corpus-wide match count (see BUG 2 note above). When `partial`
+      // is true a search lane timed out / errored, so this count is incomplete and
+      // should not be treated as authoritative. Identical queries under normal
+      // (no-timeout) conditions return the same `total`.
       total: dedupedResults.length,
+      ...(lanesDegraded ? { partial: true, degraded_lanes: degradedLanes } : {}),
       offset,
       limit,
       sort: sortBy,
