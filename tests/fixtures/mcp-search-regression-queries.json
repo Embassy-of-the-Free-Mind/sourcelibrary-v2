@@ -109,5 +109,31 @@
       "queries": ["neidan", "transmutation"],
       "assert": "three identical calls must return identical total_matches, OR partial:true with degraded_lanes set"
     }
+  },
+  "shape_assertions": {
+    "$comment": "Queries from tests/smoke/search.test.ts — they exercise response-shape, quote handling, and XML stripping rather than coverage. Both test files read from this fixture but assert on different properties: search.test.ts asserts shape; mcp-search.test.ts asserts coverage and the P0 regressions.",
+    "unified_search": [
+      { "q": "alchemy",                       "expect": "books.results.length>0; results have title+thumbnail; collections present" },
+      { "q": "Paracelsus",                    "expect": "index.results.length>0 (entity autocomplete fires); results have term" },
+      { "q": "\"transmutation of metals\"",   "expect": "quote-stripped for semantic/visual subsystems; data.query present" },
+      { "q": "\"venus humanitas\"",           "expect": "index.results.length===0 (quoted phrases skip entity autocomplete)" }
+    ],
+    "global_search": [
+      { "q": "alchemy",                                 "extra": { "search_content": true }, "expect": "total>0; types include 'book'" },
+      { "q": "\"transmutation of metals\"",             "extra": { "search_content": true }, "expect": "exact phrase finds page results; snippets free of <note>/<meta> XML" },
+      { "q": "ficino",                                  "expect": "books returned; at least one has thumbnail or thumbnail_blob" }
+    ],
+    "semantic_search": [
+      { "q": "hermes trismegistus", "expect": "valid response shape (results array, query string); results enriched with thumbnail+slug" },
+      { "q": "\"philosopher stone\"", "expect": "quotes stripped before Gemini embedding; does not error" }
+    ],
+    "within_book_search": {
+      "book_id": "694b3abfde93d1d4cec196fd",
+      "book_label": "Ficino — Complete Works",
+      "queries": [
+        { "q": "Venus",                         "expect": "total>0; results have pageNumber+matches; snippets clean and <500 chars" },
+        { "q": "\"mother of the Graces\"",      "expect": "quoted-phrase request handled (returns total+results, may be 0)" }
+      ]
+    }
   }
 }
