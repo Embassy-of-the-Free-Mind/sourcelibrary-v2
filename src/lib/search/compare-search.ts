@@ -30,6 +30,10 @@ export interface CompareResult {
   published?: string;
   page_number?: number;
   snippet?: string;
+  /** True if this book belongs to the page's tenant (e.g. BPH). Drives whether
+   *  the result links to the tenant subdomain or the main site. Always known,
+   *  even in global scope, so mixed-corpus results link to the right home. */
+  tenantOwned: boolean;
   /** Which lanes surfaced this hit — shown for transparency, not scored. */
   lanes: string[];
 }
@@ -77,8 +81,9 @@ function ladderCompare(query: string) {
 
 export async function compareSearch(
   query: string,
-  tenantId: string | null,   // null = global (whole Source Library, no tenant filter)
+  tenantId: string,                 // the page's tenant id — always known (used to flag tenantOwned)
   tenantSlug: string,
+  scope: 'tenant' | 'global',       // 'tenant' filters to tenantId; 'global' searches the whole library
   perColumn = 12,
 ): Promise<CompareResponse> {
   const matchQuery = /^".*"$/.test(query.trim()) ? query.trim().slice(1, -1) : query;
@@ -94,7 +99,7 @@ export async function compareSearch(
       { $project: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } },
     ], { maxTimeMS: 8000 }).toArray().catch(() => [] as any[]),
     semanticBookSearch(matchQuery, 25).catch(() => [] as any[]),
-    semanticPageSearchGlobal(matchQuery, 20, { tenantId: tenantId ?? undefined, maxPerBook: 2 }).catch(() => [] as any[]),
+    semanticPageSearchGlobal(matchQuery, 20, { tenantId: scope === 'tenant' ? tenantId : undefined, maxPerBook: 2 }).catch(() => [] as any[]),
   ]);
 
   // Single tenant-scoped book-metadata join — the tenant purity gate. Any hit
@@ -107,8 +112,8 @@ export async function compareSearch(
   ])];
   const bookDocs = allBookIds.length > 0
     ? await db.collection('books')
-        .find({ id: { $in: allBookIds }, visible: true, pages_count: { $gt: 0 }, ...(tenantId ? { tenantId } : {}) })
-        .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, reading_summary: 1, summary: 1, quality_score: 1 })
+        .find({ id: { $in: allBookIds }, visible: true, pages_count: { $gt: 0 }, ...(scope === 'tenant' ? { tenantId } : {}) })
+        .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, reading_summary: 1, summary: 1, quality_score: 1, tenantId: 1 })
         .toArray()
     : [];
   const bookMap = new Map(bookDocs.map(b => [b.id as string, b]));
@@ -130,6 +135,7 @@ export async function compareSearch(
         title: (b.display_title as string) || (b.title as string), author: b.author as string,
         language: b.language as string, published: b.published as string,
         snippet: summary ? cleanText(summary).slice(0, 220) : undefined,
+        tenantOwned: (b as any).tenantId === tenantId,
         lanes: [lane],
       });
     } else { candidates.get(id)!.lanes.push(lane); }
@@ -146,6 +152,7 @@ export async function compareSearch(
         title: (b.display_title as string) || (b.title as string), author: b.author as string,
         language: b.language as string, published: b.published as string,
         page_number: pageNumber, snippet: snippet ? cleanText(snippet).slice(0, 220) : undefined,
+        tenantOwned: (b as any).tenantId === tenantId,
         lanes: [lane],
       });
     } else { candidates.get(id)!.lanes.push(lane); }
@@ -168,5 +175,5 @@ export async function compareSearch(
     return ladder(a, b);
   }).slice(0, perColumn);
 
-  return { query, tenant: tenantSlug, scope: tenantId ? 'tenant' : 'global', count: all.length, ladder: ladderOrder, rrf: rrfOrder };
+  return { query, tenant: tenantSlug, scope, count: all.length, ladder: ladderOrder, rrf: rrfOrder };
 }

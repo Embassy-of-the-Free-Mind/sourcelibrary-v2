@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const result = await compareSearch(query, scope === 'global' ? null : tenantId, tenantSlug);
+    const result = await compareSearch(query, tenantId, tenantSlug, scope);
     return NextResponse.json(result, {
       headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' },
     });

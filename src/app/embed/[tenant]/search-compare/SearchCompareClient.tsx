@@ -13,6 +13,7 @@ interface CompareResult {
   published?: string;
   page_number?: number;
   snippet?: string;
+  tenantOwned: boolean;
   lanes: string[];
 }
 interface CompareResponse {
@@ -157,8 +158,8 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
             <span className="font-medium text-stone-600">{data.scope === 'tenant' ? `${tenant.toUpperCase()} only` : 'all of Source Library'}</span>
           </p>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <Column label="Current" sub="how search works today" results={data.ladder} column="current" thumbs={thumbs} onThumb={toggleThumb} />
-            <Column label="New (RRF)" sub="the proposed ordering" results={data.rrf} column="new" thumbs={thumbs} onThumb={toggleThumb} />
+            <Column label="Current" sub="how search works today" results={data.ladder} column="current" tenant={tenant} thumbs={thumbs} onThumb={toggleThumb} />
+            <Column label="New (RRF)" sub="the proposed ordering" results={data.rrf} column="new" tenant={tenant} thumbs={thumbs} onThumb={toggleThumb} />
           </div>
 
           <div className="mt-8 rounded-lg border border-stone-200 bg-stone-50 p-4">
@@ -200,10 +201,20 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
   );
 }
 
+function resultHref(r: CompareResult, tenant: string): string {
+  // BPH (tenant-owned) books live on the tenant subdomain; everything else on
+  // the main site. Pages deep-link to the page; books to the book.
+  const host = r.tenantOwned ? `https://${tenant}.sourcelibrary.org` : 'https://sourcelibrary.org';
+  const path = r.type === 'page' && r.page_number != null
+    ? `/book/${r.slug || r.book_id}/page-number/${r.page_number}`
+    : `/book/${r.slug || r.book_id}`;
+  return host + path;
+}
+
 function Column({
-  label, sub, results, column, thumbs, onThumb,
+  label, sub, results, column, tenant, thumbs, onThumb,
 }: {
-  label: string; sub: string; results: CompareResult[]; column: 'current' | 'new';
+  label: string; sub: string; results: CompareResult[]; column: 'current' | 'new'; tenant: string;
   thumbs: Record<string, 1 | -1>; onThumb: (c: 'current' | 'new', r: CompareResult, v: 1 | -1) => void;
 }) {
   return (
@@ -221,9 +232,19 @@ function Column({
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <span className="mr-1 text-xs text-stone-400">{i + 1}.</span>
-                  <span className="font-medium text-stone-900">{r.title}</span>
+                  <a
+                    href={resultHref(r, tenant)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-stone-900 underline decoration-stone-300 underline-offset-2 hover:decoration-stone-600"
+                  >
+                    {r.title}
+                  </a>
                   {r.type === 'page' && r.page_number != null && (
                     <span className="ml-1 text-xs text-amber-700">· p{r.page_number}</span>
+                  )}
+                  {!r.tenantOwned && (
+                    <span className="ml-1 rounded bg-sky-50 px-1 text-[10px] text-sky-700" title="Not a BPH book — opens on sourcelibrary.org">main</span>
                   )}
                   {r.author && <span className="ml-1 text-sm text-stone-500">— {r.author}</span>}
                 </div>
