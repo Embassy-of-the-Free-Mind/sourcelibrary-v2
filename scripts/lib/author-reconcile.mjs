@@ -109,7 +109,7 @@ export async function loadAuthority(supaGet, { dfMax = 30 } = {}) {
   const PAGE = 1000;
   while (true) {
     const rows = await supaGet(
-      `entity_aliases?select=id,primary_name,surnames,names,birth_year,death_year&order=id&limit=${PAGE}&offset=${offset}`);
+      `entity_aliases?select=id,primary_name,surnames,names,birth_year,death_year,viaf_id,wikidata_qid&order=id&limit=${PAGE}&offset=${offset}`);
     if (!rows.length) break;
     for (const r of rows) {
       const surnameStems = new Set();
@@ -132,6 +132,7 @@ export async function loadAuthority(supaGet, { dfMax = 30 } = {}) {
         primary_name: r.primary_name,
         surnameStems, surnameForms, givenStems,
         birth: r.birth_year, death: r.death_year,
+        viaf: r.viaf_id, wikidata: r.wikidata_qid,
       });
       for (const st of surnameStems) {
         if (!stem2cl.has(st)) stem2cl.set(st, new Set());
@@ -217,6 +218,8 @@ export function reconcile(rawName, { authority, year } = {}) {
     clusterId: best.id,
     primary_name: best.c.primary_name,
     birth: best.c.birth, death: best.c.death,
+    viafId: best.c.viaf || null,
+    wikidata: best.c.wikidata || null,
     score: best.score,
     expandedSurnames: [...expanded],
   };
