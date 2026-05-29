@@ -40,6 +40,18 @@ const concArg = process.argv.indexOf('--concurrency');
 // low to avoid the index-contention deadlocks (40P01) seen at 10.
 const CONCURRENCY = Math.max(1, concArg > -1 ? Number(process.argv[concArg + 1]) : 4);
 
+// Curated split-identity overrides: an exact author-string that denotes more
+// than one person. Resolution is per author-string, so these need per-ENTRY
+// title disambiguation, applied as a post-pass. Extend as conflations surface
+// (general title-aware per-entry resolution is the future-work version).
+const SPLIT_OVERRIDES = [
+  // "Picus, Ioannes" = Giovanni Pico della Mirandola (philosopher) AND Jean Pic
+  // the Carthusian (Psalms paraphrases). The Carthusian has no Mongo entity, so
+  // unlink his entries (title is the only disambiguator; name+year can't split
+  // them — both are "Ioannes Picus" alive before the condemnations).
+  { author: 'Picus, Ioannes', titleMatch: /paraphras|psalm/i, entityId: null },
+];
+
 const SUPA_URL = process.env.SUPABASE_URL;
 const SUPA_KEY = APPLY ? process.env.SUPABASE_SERVICE_ROLE_KEY : process.env.SUPABASE_ANON_KEY;
 if (!SUPA_URL || !SUPA_KEY) { console.error('SUPABASE_* missing'); process.exit(1); }
@@ -165,6 +177,21 @@ async function main() {
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
   console.log();
+
+  // Per-entry split-identity overrides (must run AFTER the per-identity pass,
+  // which tags every entry of an author-string uniformly).
+  for (const ov of SPLIT_OVERRIDES) {
+    const rows = await supa('GET',
+      `index_catalog_entries?select=id,title&author=eq.${encodeURIComponent(ov.author)}`);
+    const hit = rows.filter(r => ov.titleMatch.test(r.title || ''));
+    console.log(`split-override "${ov.author}" /${ov.titleMatch.source}/ → ${hit.length} entries → entity ${ov.entityId ?? 'null'}`);
+    if (APPLY) {
+      for (const r of hit) {
+        await supa('PATCH', `index_catalog_entries?id=eq.${r.id}`,
+          { author_entity_id: ov.entityId, author_held_count: 0, author_held_sample_slug: null, author_held_sample_id: null });
+      }
+    }
+  }
 
   console.log('\n─── samples (resolved → entity) ───');
   for (const s of samples) console.log(`  ${s.key.slice(0, 34).padEnd(34)} → ${s.entity} [${s.via}]  ${s.books} held`);
