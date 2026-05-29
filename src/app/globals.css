@@ -651,6 +651,14 @@ body:has(.embed-mode) {
    Apply outside .embed-mode too — root-domain book pages should respect
    the same preferences. */
 html[data-sl-hide-ai="1"] [data-view-section="ai-summary"],
+html[data-sl-hide-ai="default"] [data-view-section="ai-summary"],
 html[data-sl-hide-guide="1"] [data-view-section="reading-guide"] {
+  display: none !important;
+}
+
+/* Catalogue summaries (BphCatalogEntry) are editorially reviewed, so they
+   show under the BPH default ("default") and hide only on an EXPLICIT opt-out
+   ("1") via the gear menu. See VIEW_MODE_INIT_SCRIPT in src/app/layout.tsx. */
+html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
   display: none !important;
 }
