@@ -26,11 +26,12 @@ import { buildSummaryPrompt, SUMMARY_GEN_CONFIG, SUMMARY_PROMPT_VERSION } from '
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const LITE_MODEL = 'gemini-3.1-flash-lite';
-const CONCURRENCY = 6;
+const CONCURRENCY = 12;
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const ALL = args.includes('--all');
+const VISIBLE_ONLY = args.includes('--visible-only');
 const SKIP_EXISTING = args.includes('--skip-existing');
 const idsArg = args.find(a => a.startsWith('--ids='))?.split('=')[1];
 const sampleArg = args.find(a => a.startsWith('--sample='))?.split('=')[1];
@@ -128,6 +129,7 @@ async function main() {
       .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1 }).toArray();
   } else {
     const match = { 'summary.data': { $type: 'string', $ne: '' } };
+    if (VISIBLE_ONLY) match.visible = true;
     if (SKIP_EXISTING) match.summary_candidate = { $exists: false };
     if (sampleArg) {
       targets = await books.aggregate([
