@@ -81,6 +81,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     //            and for debugging).
     // SEARCH_RANKING_DEFAULT can override the default without a code change.
     const rankingParam = (searchParams.get('ranking') || process.env.SEARCH_RANKING_DEFAULT || 'auto').toLowerCase();
+    // Optional LLM-classified intent from /api/search/ai-expand. When present it
+    // routes 'auto' better than word count: only 'navigational' (known
+    // book/author/title lookup) wants the ladder; 'conceptual' and 'verbatim'
+    // both do better with RRF (the eval shows semantic finds the English-quote
+    // passage in a Latin original that keyword/ladder miss).
+    const intentParam = (searchParams.get('intent') || '').toLowerCase();
+    const llmIntent = ['navigational', 'conceptual', 'verbatim'].includes(intentParam) ? intentParam : '';
     const rrfK = Math.max(1, parseInt(searchParams.get('rrf_k') || '60') || 60);
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 500);
     const offset = parseInt(searchParams.get('offset') || '0');
@@ -97,15 +104,21 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
 
-    // Resolve the ranking strategy. 'auto' routes by query word count: 1–2 word
-    // (navigational) → ladder; 3+ word (conceptual) → RRF.
+    // Resolve the ranking strategy for 'auto': prefer the LLM intent when the
+    // client passed one (navigational → ladder, else → RRF); otherwise fall back
+    // to query word count (1–2 words → ladder, 3+ → RRF) so 'auto' still works
+    // with zero added latency when no intent is supplied.
     const queryWordCount = matchQuery.trim().split(/\s+/).filter(w => w.length >= 2).length;
     const useRrf = rankingParam === 'rrf'
       ? true
       : rankingParam === 'ladder'
         ? false
-        : queryWordCount >= 3; // 'auto'
-    const rankingApplied = rankingParam === 'auto' ? (useRrf ? 'auto-rrf' : 'auto-ladder') : rankingParam;
+        : llmIntent
+          ? llmIntent !== 'navigational'
+          : queryWordCount >= 3;
+    const rankingApplied = rankingParam === 'auto'
+      ? `${useRrf ? 'auto-rrf' : 'auto-ladder'}:${llmIntent || 'words'}`
+      : rankingParam;
 
     const db = await getReadDb();
     const results: SearchResult[] = [];
