@@ -20,6 +20,8 @@ interface Entry {
   ustc_sn: number | null;
   sl_book_id: string | null;
   sl_book_slug: string | null;
+  author_held_count: number | null;
+  author_held_sample_slug: string | null;
 }
 
 /**
@@ -50,7 +52,7 @@ export async function GET(
   let query = supabase
     .from('index_catalog_entries')
     .select(
-      'id, source_id, title, author, publication_date, condemnation_year, condemnation_period, scope, reason, ustc_sn, sl_book_id, sl_book_slug',
+      'id, source_id, title, author, publication_date, condemnation_year, condemnation_period, scope, reason, ustc_sn, sl_book_id, sl_book_slug, author_held_count, author_held_sample_slug, source_book_slug, source_page',
       { count: 'exact' },
     )
     .eq('index_id', index_id);
@@ -61,7 +63,8 @@ export async function GET(
     query = query.or(`title.ilike.*${safe}*,author.ilike.*${safe}*`);
   }
   if (filter === 'held') query = query.not('sl_book_id', 'is', null);
-  else if (filter === 'unheld') query = query.is('sl_book_id', null);
+  else if (filter === 'unheld') query = query.is('sl_book_id', null).or('author_held_count.is.null,author_held_count.eq.0');
+  else if (filter === 'author_held') query = query.is('sl_book_id', null).gt('author_held_count', 0);
 
   // Sort
   if (sort === 'year') query = query.order('publication_date', { ascending: true, nullsFirst: false });

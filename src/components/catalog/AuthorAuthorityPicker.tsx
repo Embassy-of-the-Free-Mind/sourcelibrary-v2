@@ -16,9 +16,11 @@ import type { AuthorAuthorityMatch, AuthorAuthorityResult } from '@/lib/author-a
  *      and stores it on `author_entity_id` (Atlas) or `bph_works.author_entity_id`
  *      (Supabase).
  *
- * If a canonical id is already set, the picker shows "Canonical: <name>"
+ * If an identity is already set, the picker shows "Standard name: <name>"
  * with a "Change" button instead of the search box — the common case is a
- * stable identity that never needs lookup.
+ * stable identity that never needs lookup. (The internal storage columns
+ * are still named `author_canonical_name` / `author_entity_id` etc; the
+ * relabel was a 2026-05-28 UX pass to use plainer terminology.)
  *
  * Issue #1921 (P3).
  */
@@ -155,7 +157,7 @@ export default function AuthorAuthorityPicker({
   if (!open && hasCanonical) {
     return (
       <div className="text-xs text-stone-600 dark:text-stone-400 flex items-center gap-2 flex-wrap">
-        <span className="font-medium">Canonical:</span>
+        <span className="font-medium">Standard name:</span>
         <span>{current?.canonical_name || '(linked)'}</span>
         {current?.viaf_id && (
           <a
@@ -191,7 +193,7 @@ export default function AuthorAuthorityPicker({
             type="button"
             onClick={onClear}
             className="text-stone-500 hover:text-accent-rust underline"
-            title="Clear canonical link"
+            title="Clear standard name link"
           >
             Clear
           </button>
@@ -204,7 +206,7 @@ export default function AuthorAuthorityPicker({
     <div className="mt-1 p-2 border border-stone-200 dark:border-stone-700 rounded-md bg-stone-50/50 dark:bg-stone-900/40">
       <div className="flex items-center justify-between mb-1.5">
         <label className="text-[11px] uppercase tracking-wide text-stone-500">
-          Look up canonical author (VIAF)
+          Look up standard name (VIAF)
         </label>
         {hasCanonical && (
           <button

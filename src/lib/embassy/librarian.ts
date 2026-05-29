@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
-import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
+// Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
+// Atlas-search builders no longer imported here directly.
 import { supabase } from '@/lib/supabase';
 import { ObjectId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
@@ -13,11 +14,14 @@ import { stripAnnotations } from '@/lib/semantic-alignment';
  * and builds up a persistent research notebook across the conversation.
  *
  * Tools:
- *   - search_collection: Atlas Search on books + pages (keyword)
- *   - search_semantic: pgvector hybrid search on Supabase (conceptual)
+ *   - search: Hybrid keyword + semantic via RRF (replaces the prior
+ *             search_collection and search_semantic; both old names accepted
+ *             as aliases for one release)
  *   - search_wikipedia: Wikipedia REST API for context
  *   - get_book_page: Read a specific translated page
  *   - read_nearby_pages: Read a range of pages around a finding
+ *   - search_images: CLIP visual search over the gallery (with health probe)
+ *   - search_artworks: Semantic search over standalone artworks
  *   - add_to_notebook: Save a finding to the persistent research notebook
  *   - present_choices: Offer branching options (rarely used)
  */
@@ -121,24 +125,12 @@ function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
 
 const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
-    name: 'search_collection',
-    description: 'Search Source Library\'s collection of rare books by keyword. Searches English translations (boosted 2x) and original language text (Latin, German, French, etc). Search in English for best coverage — nearly all books are translated. Returns matching passages with book metadata and page numbers.',
+    name: 'search',
+    description: 'Search Source Library — fuses keyword search (Atlas) with semantic search (AI embeddings) across the collection. Returns the strongest matching passages plus relevant books. Works for both verbatim queries (Latin/German phrases, technical terms) and conceptual queries (modern paraphrases of historical ideas). Search in English for best coverage — nearly all books are translated.',
     parameters: {
       type: Type.OBJECT,
       properties: {
-        query: { type: Type.STRING, description: 'Search query — use period-appropriate terms (e.g., "sympathetic magic" not "resonance", "flying ointment" not "psychedelics")' },
-        search_books: { type: Type.BOOLEAN, description: 'Also search book titles/authors (default true)' },
-      },
-      required: ['query'],
-    },
-  },
-  {
-    name: 'search_semantic',
-    description: 'Semantic/conceptual search across all translated pages using AI embeddings. This is the best tool for finding passages about a concept when you don\'t know the exact words used — it searches by meaning, not keywords. Works across all languages because it searches English translations. Use for broad conceptual queries or when keyword search misses.',
-    parameters: {
-      type: Type.OBJECT,
-      properties: {
-        query: { type: Type.STRING, description: 'Conceptual query — can be modern language, the embedding model handles the mapping' },
+        query: { type: Type.STRING, description: 'Search query — use period-appropriate terms when known (e.g., "sympathetic magic" not "resonance", "flying ointment" not "psychedelics"). Modern paraphrases also work — semantic matching handles the mapping.' },
       },
       required: ['query'],
     },
@@ -269,135 +261,21 @@ function tenantVisibilityFilter() {
 
 // ── Tool Execution ────────────────────────────────────────────────────
 
-async function executeSearchCollection(query: string, searchBooks = true): Promise<{
-  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string }>;
+// Hybrid search — combines Atlas keyword + book-then-page semantic + global-page
+// semantic via RRF, optionally cross-encoder reranks. See src/lib/search/
+// librarian-search.ts for the implementation and the eval that supports the
+// design (scripts/eval/librarian-search/).
+//
+// Replaces the prior executeSearchCollection (keyword-only) and
+// executeSearchSemantic (book-then-page only) with a single unified path.
+async function executeSearch(query: string): Promise<{
+  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string }>;
   books: Array<{ id: string; title: string; author?: string; year?: number; slug?: string }>;
 }> {
-  const db = await getDb();
-  const visibilityFilter = tenantVisibilityFilter();
-
-  const searchStage = buildPageSearchStage(query);
-  // Over-fetch so post-filtering for tenant scope still yields enough passages.
-  const pages = await db.collection('pages')
-    .aggregate([
-      searchStage,
-      { $limit: 48 },
-      { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
-    ])
-    .toArray();
-
-  // Look up the books referenced by page hits and drop any pages whose book
-  // is hidden or belongs to another tenant.
-  const pageBookIds = [...new Set(pages.map(p => p.book_id))];
-  const visibleBookDocs = pageBookIds.length > 0
-    ? await db.collection('books')
-        .find({ id: { $in: pageBookIds }, ...visibilityFilter })
-        .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 })
-        .toArray()
-    : [];
-  const bookMap = new Map(visibleBookDocs.map(b => [b.id, b]));
-
-  const perBook = new Map<string, number>();
-  const deduped = pages
-    .filter(p => bookMap.has(p.book_id))
-    .filter(p => {
-      const count = perBook.get(p.book_id) || 0;
-      if (count >= 2) return false;
-      perBook.set(p.book_id, count + 1);
-      return true;
-    })
-    .slice(0, 8);
-
-  const passages = deduped.map(page => {
-    const book = bookMap.get(page.book_id);
-    const rawText = page.translation?.data || '';
-    const text = rawText
-      .replace(/\[\[[^\]]+\]\]/g, '')
-      .replace(/^```(?:markdown)?\s*\n?/i, '')
-      .replace(/\n?```\s*$/i, '')
-      .trim()
-      .slice(0, 1200);
-    return {
-      book_id: page.book_id,
-      bookTitle: book?.display_title || book?.title || 'Unknown',
-      bookAuthor: book?.author || 'Unknown',
-      bookSlug: book?.slug,
-      page_number: page.page_number,
-      text,
-    };
-  });
-
-  let books: Array<{ id: string; title: string; author?: string; year?: number; slug?: string }> = [];
-  if (searchBooks) {
-    const bookSearchStage = buildBookSearchStage(query, { hasTranslation: true }, { fuzzy: true });
-    const bookResults = await db.collection('books')
-      .aggregate([
-        bookSearchStage,
-        { $match: visibilityFilter },
-        { $limit: 5 },
-        { $project: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 } },
-      ])
-      .toArray();
-    books = bookResults.map(b => ({ id: b.id, title: b.display_title || b.title, author: b.author, year: b.year, slug: b.slug }));
-  }
-
+  const { hybridSearch } = await import('@/lib/search/librarian-search');
+  // Main-site only; pass tenant UUID here for per-tenant Librarian instances.
+  const { passages, books } = await hybridSearch(query, { tenantId: null });
   return { passages, books };
-}
-
-async function executeSearchSemantic(query: string): Promise<
-  Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>
-> {
-  // Two-step search (issue #1158):
-  // Step 1: book discovery via book_embeddings (HNSW, ~17K vectors, instant)
-  // Step 2: page drill-down via match_pages_in_books (scoped to found books)
-  // Tenant filtering happens post-search via the visibility map below — the
-  // Supabase RPCs don't carry tenant filters (see audit doc).
-  const { semanticBookSearch, semanticPageSearchScoped } = await import('@/lib/semantic-search');
-  try {
-    // Over-fetch to absorb tenant filtering without starving the result set.
-    const books = await semanticBookSearch(query, 24);
-    if (books.length === 0) return [];
-
-    const bookIds = books.map(b => b.book_id);
-
-    // Resolve which of those book IDs belong to the main-site tenant scope
-    // AND aren't hidden. This drops Bhutan/BPH/etc. books that the embedding
-    // RPC happily returned without any tenant awareness.
-    const db = await getDb();
-    const visibleDocs = await db.collection('books')
-      .find({ id: { $in: bookIds }, ...tenantVisibilityFilter() })
-      .project({ id: 1, slug: 1 })
-      .toArray();
-    const visibleMap = new Map(visibleDocs.map(d => [d.id, d.slug]));
-    const visibleBookIds = bookIds.filter(id => visibleMap.has(id));
-    if (visibleBookIds.length === 0) return [];
-
-    const pages = await semanticPageSearchScoped(query, visibleBookIds, 8);
-
-    const bestPageByBook = new Map<string, typeof pages[0]>();
-    for (const p of pages) {
-      const existing = bestPageByBook.get(p.book_id);
-      if (!existing || p.score > existing.score) bestPageByBook.set(p.book_id, p);
-    }
-
-    return books
-      .filter(b => visibleMap.has(b.book_id))
-      .slice(0, 8)
-      .map(b => {
-        const page = bestPageByBook.get(b.book_id);
-        return {
-          book_id: b.book_id,
-          bookTitle: b.title || 'Unknown',
-          bookAuthor: b.author || 'Unknown',
-          bookSlug: visibleMap.get(b.book_id),
-          page_number: page?.page_number || 0,
-          snippet: stripAnnotations(page?.snippet || (b.summary_text || '').slice(0, 500)),
-          score: b.similarity,
-        };
-      });
-  } catch {
-    return [];
-  }
 }
 
 async function executeSearchWikipedia(query: string): Promise<{ title: string; summary: string; url: string } | null> {
@@ -549,10 +427,14 @@ async function executeTool(
   threadId?: string,
 ): Promise<{ result: unknown; step: LibrarianStep; sources?: SourceCard[] }> {
   switch (name) {
-    case 'search_collection': {
+    case 'search':
+    // Aliases — accept old tool names for one release to avoid breakage if
+    // an in-flight Librarian conversation calls the prior tools. Both
+    // collapse to the same hybrid implementation.
+    case 'search_collection':
+    case 'search_semantic': {
       const query = args.query as string;
-      const searchBooks = args.search_books !== false;
-      const data = await executeSearchCollection(query, searchBooks);
+      const data = await executeSearch(query);
       const totalFound = data.passages.length + data.books.length;
 
       let context = '';
@@ -578,32 +460,8 @@ async function executeTool(
 
       return {
         result: { found: totalFound, context },
-        step: { type: 'tool_result', name: 'search_collection', query, found: totalFound,
+        step: { type: 'tool_result', name: 'search', query, found: totalFound,
           summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books` : 'No results' },
-        sources,
-      };
-    }
-
-    case 'search_semantic': {
-      const query = args.query as string;
-      const results = await executeSearchSemantic(query);
-      let context = results.length > 0 ? 'Semantic search results:\n' : 'No semantic matches found.';
-      for (const r of results) {
-        const url = r.bookSlug
-          ? `https://sourcelibrary.org/book/${r.bookSlug}${r.page_number ? `/page-number/${r.page_number}` : ''}`
-          : '';
-        context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number}${url ? ` (${url})` : ''} ---\n${r.snippet}\n`;
-      }
-
-      const sources: SourceCard[] = results.map(r => ({
-        book_id: r.book_id, bookTitle: r.bookTitle, bookAuthor: r.bookAuthor, bookSlug: r.bookSlug,
-        pageNumber: r.page_number, snippet: stripAnnotations(r.snippet).slice(0, 200), inCollection: true,
-      }));
-
-      return {
-        result: { found: results.length, context },
-        step: { type: 'tool_result', name: 'search_semantic', query, found: results.length,
-          summary: results.length > 0 ? `Found ${results.length} conceptually related passages` : 'No semantic matches' },
         sources,
       };
     }
@@ -799,7 +657,7 @@ Examples where choices would just slow things down — search directly:
 - User clicked a choice from a previous message → search on that angle
 
 **Step 4: Deep, focused research.**
-Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use search_collection for keywords, search_semantic for concepts, search_wikipedia for context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
+Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use the **search** tool for everything text-based — it fuses keyword and semantic matching so you don't have to choose between them. Use search_wikipedia for outside context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
 
 For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 23,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
 

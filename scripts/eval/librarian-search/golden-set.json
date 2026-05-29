@@ -1,0 +1,672 @@
+{
+  "description": "Librarian search evaluation — golden set. Hand-curated 2026-05-28. Each entry has a confidence tag; treat 'low' as diagnostic rather than ground truth.",
+  "match_rules": {
+    "book_slug": "Hit's book_slug must equal an expected entry. Multiple editions of the same work are listed separately — hitting any one of them counts.",
+    "page_min_max": "If set, the hit's page_number must fall in [page_min, page_max] inclusive. Allows tolerance for OCR/translation page shift. Omit for any-page-counts queries (most broad-themes and bibliographic)."
+  },
+  "queries": [
+    {
+      "id": "agrippa-natural-magic",
+      "query": "Agrippa on natural magic and planetary correspondences",
+      "category": "well-known-concept",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von"
+        },
+        {
+          "book_slug": "three-books-of-occult-philosophy-1533-latin-agrippa"
+        },
+        {
+          "book_slug": "de-occulta-philosophia-complete-edition-agrippa"
+        },
+        {
+          "book_slug": "de-occulta-philosophia-libri-tres-agrippa"
+        },
+        {
+          "book_slug": "three-books-of-occult-philosophy-nettesheim"
+        }
+      ],
+      "notes": "Several editions of Three Books of Occult Philosophy. Any is a hit."
+    },
+    {
+      "id": "bruno-art-of-memory",
+      "query": "Giordano Bruno on memory images and the art of memory",
+      "category": "well-known-concept",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "de-vmbris-idearvm-implicantibus-artem-quaerendi-inveniendi-bruno"
+        },
+        {
+          "book_slug": "iordani-bruni-nolani-de-imaginum-signorum-amp-idearum-bruno"
+        }
+      ],
+      "notes": "Bruno's mnemonic / 'shadows of ideas' works. De infinito is not in the collection — this tests Bruno coverage we DO have."
+    },
+    {
+      "id": "ficino-spiritus-talismans",
+      "query": "Ficino on drawing down celestial spirits with talismans and music",
+      "category": "well-known-concept",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "three-books-on-life-1489-first-edition-ficino"
+        },
+        {
+          "book_slug": "three-books-on-life-ficino"
+        },
+        {
+          "book_slug": "three-books-on-life-ficino-2"
+        },
+        {
+          "book_slug": "de-vita-libri-tres-three-books-on-life-1529-ficino"
+        },
+        {
+          "book_slug": "three-books-on-life-ficino-3"
+        }
+      ],
+      "notes": "De Vita Coelitus Comparanda (Book III of De Vita) is the canonical text on spiritus/talismans."
+    },
+    {
+      "id": "kepler-harmony-spheres",
+      "query": "Kepler on the harmony of the spheres and planetary music",
+      "category": "well-known-concept",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "harmonices-mundi-1619-first-edition-kepler"
+        },
+        {
+          "book_slug": "harmony-of-the-world-with-mysterium-cosmographicum-kepler"
+        }
+      ]
+    },
+    {
+      "id": "fludd-macrocosm-microcosm",
+      "query": "Robert Fludd on the macrocosm and microcosm",
+      "category": "well-known-concept",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "history-of-the-macrocosm-and-microcosm-fludd"
+        },
+        {
+          "book_slug": "history-of-both-worlds-macrocosm-fludd"
+        },
+        {
+          "book_slug": "history-of-both-worlds-microcosm-fludd"
+        },
+        {
+          "book_slug": "utriusque-cosmi-maioris-scilicet-et-minoris-metaphysica-fludd"
+        }
+      ]
+    },
+    {
+      "id": "paracelsus-archidoxes",
+      "query": "Paracelsus on the spagyric preparation of metals and the archidoxes",
+      "category": "well-known-concept",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "archidoxae-philippi-theophrasti-paracelsi-magni-germani-paracelsus"
+        },
+        {
+          "book_slug": "nobiblis-clarissimi-ac-probatissimi-philosophi-medici-dn-paracelsus"
+        }
+      ],
+      "notes": "Two Archidoxes editions with full translation. The 0-translated ones excluded."
+    },
+    {
+      "id": "porta-natural-magic",
+      "query": "Della Porta on natural magic and the secrets of nature",
+      "category": "well-known-concept",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "magia-naturalis-libri-xx-1607-porta"
+        },
+        {
+          "book_slug": "magia-naturalis-1619-latin-porta"
+        },
+        {
+          "book_slug": "natural-magic-or-on-the-miracles-of-natural-things-porta"
+        },
+        {
+          "book_slug": "natural-magick-1658-english-porta"
+        }
+      ]
+    },
+    {
+      "id": "kircher-magnetism",
+      "query": "magnetic experiments with iron and lodestone",
+      "category": "niche-passage",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "on-the-loadstone-and-magnetic-bodies-english-translation-gilbert"
+        },
+        {
+          "book_slug": "de-magnete-1600-first-edition-gilbert"
+        },
+        {
+          "book_slug": "de-magnete-magneticisque-corporibus-et-de-magno-magnete-gilbert"
+        },
+        {
+          "book_slug": "tractatus-sive-physiologia-nova-de-magnete-gilbert"
+        },
+        {
+          "book_slug": "magnes-sive-de-arte-magnetica-kircher"
+        },
+        {
+          "book_slug": "athanasii-kircheri-magnes-sive-de-arte-magnetica-opus-kircher"
+        },
+        {
+          "book_slug": "magneticum-naturae-regnum-kircher"
+        },
+        {
+          "book_slug": "athanasii-kircheri-magneticum-naturae-regnum-sive-kircher"
+        },
+        {
+          "book_slug": "athanasii-kircheri-ars-magnesia-hoc-est-disquisitio-kircher"
+        }
+      ],
+      "notes": "Gilbert's De Magnete (1600, founding work) and Kircher's Magnes sive de Arte Magnetica (1641, canonical Kircher) are both legitimate answers. Multiple editions of each — any hit counts."
+    },
+    {
+      "id": "vesalius-anatomy-skull",
+      "query": "anatomy of the human skull and cranial sutures",
+      "category": "niche-passage",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "vesalius-de-humani-corporis-fabrica-1555-vesalius"
+        },
+        {
+          "book_slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius"
+        },
+        {
+          "book_slug": "andreae-vesalii-bruxellensis-scholae-medicorum-patavinae-vesalius"
+        },
+        {
+          "book_slug": "de-re-anatomica-libri-xv-colombo"
+        },
+        {
+          "book_slug": "de-re-anatomica-libri-xv-1562-ed-colombo"
+        },
+        {
+          "book_slug": "opuscula-anatomica-eustachio"
+        },
+        {
+          "book_slug": "tabulae-anatomicae-eustachi"
+        }
+      ],
+      "notes": "Vesalius's Fabrica (the canonical anatomy of the skull is in Book I) plus Colombo's De Re Anatomica (Vesalius's pupil/rival) and Eustachio's Tabulae (famous anatomical plates). Query has no author cue — tests broad semantic matching."
+    },
+    {
+      "id": "boehme-aurora",
+      "query": "the seven fountain spirits or properties of nature",
+      "category": "niche-passage",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "aurora-or-the-day-spring-bohme"
+        },
+        {
+          "book_slug": "theosophia-revelata-aurora-oder-morgenrothe-vol-1-bohme"
+        }
+      ],
+      "notes": "Boehme's seven Quellgeister doctrine — central to Aurora and his later works."
+    },
+    {
+      "id": "emerald-tablet",
+      "query": "as above so below — the Emerald Tablet of Hermes",
+      "category": "verbatim-quote",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "tabula-smaragdina-trismegistus"
+        },
+        {
+          "book_slug": "hermetis-trismegisti-phoenicum-aegyptorum-sed-et-aliarum-kriegsmann"
+        }
+      ]
+    },
+    {
+      "id": "rosicrucian-manifestos",
+      "query": "Fama Fraternitatis brothers of the Rose Cross",
+      "category": "verbatim-quote",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "fama-fraternitatis-1615-danzig-attr"
+        },
+        {
+          "book_slug": "fama-fraternitatis-und-confessio-fraternitatis-rosicrucian"
+        },
+        {
+          "book_slug": "fama-fraternitatis-oder-entdeckung-der-bruderschafft-de-andrea"
+        },
+        {
+          "book_slug": "fama-fraternitatis-oder-entdeckung-der-brudersch-des-ordens-fraternitatis"
+        }
+      ]
+    },
+    {
+      "id": "indian-rasa-alchemy",
+      "query": "Indian alchemy mercury rasa preparation",
+      "category": "cross-lingual",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "rasaratnasamuccaya-vagbhata"
+        },
+        {
+          "book_slug": "rasaratnakara-rasayanakhanda-acarya"
+        },
+        {
+          "book_slug": "rasaratnakara-manuscript-nagarjuna"
+        }
+      ],
+      "notes": "Sanskrit Rasashastra texts. English query against English translations. Druze 'Rasa'il' and Ikhwan al-Safa 'Rasa'il' are false positives — different meaning of 'rasa'."
+    },
+    {
+      "id": "artemidorus-dreams",
+      "query": "dream interpretation in the ancient world",
+      "category": "broad-theme",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "oneirocritica-daldianus"
+        },
+        {
+          "book_slug": "artemidori-daldiani-achmetis-sereimi-f-oneirocritica-artemidorus"
+        },
+        {
+          "book_slug": "de-somniorum-interpretatione-libri-quinque-cornarius"
+        },
+        {
+          "book_slug": "de-somniorum-interpretatione-daldis"
+        },
+        {
+          "book_slug": "traumbuch-artemidori-darinnen-ursprung-unterscheid-und-artemidorus"
+        }
+      ],
+      "notes": "Artemidorus's Oneirocritica — multiple editions. Macrobius (Commentary on the Dream of Scipio) would also count if present."
+    },
+    {
+      "id": "sympathetic-magic-renaissance",
+      "query": "sympathetic magic and occult virtues in nature",
+      "category": "broad-theme",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "henrici-cor-agrippae-ab-nettesheym-de-occvlta-philosophia-agrippa-von"
+        },
+        {
+          "book_slug": "three-books-of-occult-philosophy-1533-latin-agrippa"
+        },
+        {
+          "book_slug": "three-books-of-occult-philosophy-nettesheim"
+        },
+        {
+          "book_slug": "magia-naturalis-libri-xx-1607-porta"
+        },
+        {
+          "book_slug": "magia-naturalis-1619-latin-porta"
+        },
+        {
+          "book_slug": "natural-magic-or-on-the-miracles-of-natural-things-porta"
+        },
+        {
+          "book_slug": "natural-magick-1658-english-porta"
+        },
+        {
+          "book_slug": "three-books-on-life-ficino"
+        },
+        {
+          "book_slug": "de-vita-libri-tres-three-books-on-life-1529-ficino"
+        }
+      ],
+      "notes": "Agrippa, Della Porta, and Ficino are the canonical Renaissance sources. Hitting any one counts as recall. May score lower than other queries because there's no single 'right' book."
+    },
+    {
+      "id": "books-on-geomancy",
+      "query": "books about geomancy and divination by points",
+      "category": "bibliographic",
+      "confidence": "high",
+      "expected": [
+        {
+          "book_slug": "fourth-book-of-occult-philosophy-pseudo-agrippa-with"
+        },
+        {
+          "book_slug": "agrippa-fourth-book-of-occult-philosophy-with-geomancy-cremonensis"
+        },
+        {
+          "book_slug": "fourth-book-of-occult-philosophy-arbatel-of-magick-peter-de-al"
+        },
+        {
+          "book_slug": "la-geomance-cattan"
+        },
+        {
+          "book_slug": "ramala-grantha-geomancy"
+        }
+      ]
+    },
+    {
+      "id": "christian-cabala",
+      "query": "Christian cabala in the Renaissance",
+      "category": "bibliographic",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "cabala-mirror-of-art-and-nature-in-alchemy-michelspacher-2"
+        },
+        {
+          "book_slug": "apologia-fratris-archangelus-de-burgonovo-pro-defensione-arcangelo"
+        },
+        {
+          "book_slug": "artis-cabalisticae-hoc-est-reconditae-theologiae-et-kabbala"
+        }
+      ],
+      "notes": "Pico, Reuchlin, Kircher's Oedipus would also count if present. 'Cuaderno de las alcabalas' is a false positive (Spanish tax word, not Kabbalah)."
+    },
+    {
+      "id": "zohar-sefirot",
+      "query": "Kabbalah on the ten sefirot and divine emanation",
+      "category": "cross-lingual",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "the-zohar-book-of-genesis-attributed"
+        },
+        {
+          "book_slug": "kabbala-denudata-tomus-ii-rosenroth"
+        },
+        {
+          "book_slug": "the-zohar-sefer-ha-zohar-attributed"
+        },
+        {
+          "book_slug": "the-zohar-sefer-ha-zohar-attributed-2"
+        },
+        {
+          "book_slug": "vat-ebr-226-leon"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "sefer-yetzirah-creation",
+      "query": "Hebrew letters and the creation of the world",
+      "category": "cross-lingual",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "the-origin-of-letters-and-numerals-according-to-the-sefer-mordell"
+        },
+        {
+          "book_slug": "sepher-yetzirah-book-of-formation-westcott-attr"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "ibn-arabi-unity",
+      "query": "Sufi metaphysics of the unity of being and divine names",
+      "category": "cross-lingual",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "awrad-ibn-arabi-daily-prayers-arabi"
+        },
+        {
+          "book_slug": "al-futuhat-al-makkiyya-the-meccan-revelations-ed"
+        },
+        {
+          "book_slug": "fusus-al-hikam-the-bezels-of-wisdom-trans"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "suhrawardi-illumination",
+      "query": "philosophy of illumination and the world of light",
+      "category": "cross-lingual",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "hikmat-al-ishraq-philosophy-of-illumination-suhrawardi"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "rosicrucian-fama",
+      "query": "Fama Fraternitatis and the discovery of the tomb of Christian Rosenkreutz",
+      "category": "verbatim-quote",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "fama-fraternitatis-1615-danzig-attr"
+        },
+        {
+          "book_slug": "fama-fraternitatis-und-confessio-fraternitatis-rosicrucian"
+        },
+        {
+          "book_slug": "chymische-hochzeit-christiani-rosencreutz-andreae"
+        },
+        {
+          "book_slug": "sphynx-rosacea-das-ist-der-entdeckung-der-bruderschafft-de-nigrinus"
+        },
+        {
+          "book_slug": "silentium-post-clamores-hoc-est-tractatus-apologeticus-quo-maier"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "chymical-wedding",
+      "query": "the chymical wedding of Christian Rosenkreutz",
+      "category": "verbatim-quote",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "chemical-wedding-1616-strassburg-andreae"
+        },
+        {
+          "book_slug": "chymische-hochzeit-christiani-rosencreutz-andreae"
+        },
+        {
+          "book_slug": "chymische-hochzeit-christiani-rosencreutz-anno-1459-arcana-andrea"
+        },
+        {
+          "book_slug": "chymische-hochzeit-christiani-rosencreutz-anno-1459-andrea"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "maier-atalanta-motto",
+      "query": "Atalanta Fugiens emblem the wind carried him in his belly",
+      "category": "verbatim-quote",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier"
+        },
+        {
+          "book_slug": "atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3"
+        },
+        {
+          "book_slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier"
+        },
+        {
+          "book_slug": "michael-maier-atalanta-fugiens-1618-merian-engravings-maier"
+        },
+        {
+          "book_slug": "atalanta-fugiens-c-1625-english-ms-translator"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "coniunctio-opposites",
+      "query": "the marriage and union of opposites in alchemy",
+      "category": "broad-theme",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "reg-lat-1278-anonymous"
+        },
+        {
+          "book_slug": "tractatus-aliquot-chemici-singvlares-summum-philosophorum-ferrarius"
+        },
+        {
+          "book_slug": "rosarium-philosophorum-secunda-pars-alchimiae-de-lapide-s-n-3"
+        },
+        {
+          "book_slug": "rosarium-novum-olympicum-et-benedictum-figulus"
+        },
+        {
+          "book_slug": "rosarium-secretissimum-philosophorum-arcanum-comprehendens-dastin"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "rosicrucian-reformation",
+      "query": "the universal reformation of the whole wide world",
+      "category": "broad-theme",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "fama-fraternitatis-1615-danzig-attr"
+        },
+        {
+          "book_slug": "fama-fraternitatis-und-confessio-fraternitatis-rosicrucian"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "neoplatonic-ascent",
+      "query": "the ascent of the soul to the One",
+      "category": "broad-theme",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "corpus-hermeticum-and-plotinus-enneads-cambridge-trinity-plotinus"
+        },
+        {
+          "book_slug": "urb-gr-62-plotinus"
+        },
+        {
+          "book_slug": "plotini-enneades-ficino-working-copy-plotinus"
+        },
+        {
+          "book_slug": "plotini-enneades-13th-c-copy-a-plotinus"
+        },
+        {
+          "book_slug": "plotini-enneades-13th-c-copy-b-plotinus"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "alchemical-emblem-books",
+      "query": "alchemical emblem books with engraved plates",
+      "category": "bibliographic",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "atalanta-fugiens-c-1625-english-ms-translator"
+        },
+        {
+          "book_slug": "splendor-solis-the-splendour-of-the-sun-trismosin"
+        },
+        {
+          "book_slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier"
+        },
+        {
+          "book_slug": "mutus-liber-the-silent-book-saulat"
+        },
+        {
+          "book_slug": "splendor-solis-solomon-trismosin-trismosin"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "corpus-hermeticum-editions",
+      "query": "editions of the Corpus Hermeticum",
+      "category": "bibliographic",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus"
+        },
+        {
+          "book_slug": "corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus"
+        },
+        {
+          "book_slug": "musaeum-hermeticum-1677-edition-jennis"
+        },
+        {
+          "book_slug": "the-hermetic-museum-various-sendivogius"
+        },
+        {
+          "book_slug": "poimandres-corpus-hermeticum-ficino"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "paracelsus-medicine",
+      "query": "works of Paracelsus on medicine and chemistry",
+      "category": "bibliographic",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "paramirum-works-paracelsus"
+        },
+        {
+          "book_slug": "paracelsus-complete-works-latin-paracelsus"
+        },
+        {
+          "book_slug": "philosophy-reformed-four-profound-tractates-paracelsus"
+        },
+        {
+          "book_slug": "de-lapide-philosophorum-philosophers-stone-paracelsus"
+        },
+        {
+          "book_slug": "de-secretis-creationis-secrets-of-creation-paracelsus"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    },
+    {
+      "id": "ripley-green-lion",
+      "query": "the green lion devouring the sun in alchemy",
+      "category": "niche-passage",
+      "confidence": "medium",
+      "expected": [
+        {
+          "book_slug": "ripley-reviv-d-1678-cooper"
+        },
+        {
+          "book_slug": "reg-lat-1278-anonymous"
+        },
+        {
+          "book_slug": "bodleian-library-ms-bodl-rolls-1-attributed"
+        },
+        {
+          "book_slug": "alchemical-treatises-cambridge-university-library-ms-kk-6-30-george-ripley"
+        },
+        {
+          "book_slug": "tractatus-aliquot-chemici-singvlares-summum-philosophorum-ferrarius"
+        }
+      ],
+      "notes": "Added 2026-05-29 expansion pass; slugs resolved against Mongo + false-positives pruned."
+    }
+  ]
+}

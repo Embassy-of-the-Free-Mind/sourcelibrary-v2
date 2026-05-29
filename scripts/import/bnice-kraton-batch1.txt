@@ -1,0 +1,56 @@
+# Curated first batch — b-nice.nl/pustaka → Javanese Kraton collection
+# ~40 clearly public-domain (pre-1945 Dutch/Javanese scholarship) titles.
+# One filename per line, exactly as hosted at https://b-nice.nl/pustaka/<filename>
+# Grouped by theme for the collection's editorial structure.
+
+## Court, chronicle & dynastic history (the kraton core)
+Babad Tanah Djawi, in proza.pdf
+Het oud-javaansche lofdicht Nāgarakrtāgama.pdf
+De Middeljavaansche historische traditie.pdf
+De opkomst van het Mataramsche Huis door een Mataramschen bril bekeken.pdf
+De kraton van Majapahit, , 1, Stutterheim, W.F., 1948, Koninklijke Bibliotheek.pdf
+Hervormingsplan voor de Javaansche Vorstenlanden.pdf
+De inlandsche rangen en titels op Java en Madoera.pdf
+Geschiedenis van Java, DEEL II, 1, Fruin-Mees, W., 1920, Universiteitsbibliotheek Groningen.pdf
+Geschiedenis van den oorlog op Java, van 1825 tot 1830.pdf
+Iets over den Javaan, zijn geschiedenis en zijn ethiek.pdf
+
+## Temple archaeology — Borobudur / Prambanan / Mendut (Krom, Stutterheim)
+Baraboedoer, 1, Krom, N.J., 1930, Koninklijke Bibliotheek.pdf
+Beschrijving van Barabudur, tweede deel, 1, Krom, N.J., 1931, Universiteitsbibliotheek Groningen.pdf
+De Tjandi Båråboedoer op Midden-Java.pdf
+Candi Prambanan.pdf
+De Bodhisattwa's van den Mĕndut, , 1, Krom, Nicolaas Johannes, 1918, Universitaire Bibliotheken Leiden.pdf
+Hindoe-Javaansche geschiedenis, 1, Krom, N.J., 1931, Koninklijke Bibliotheek, 3013495.pdf
+Inleiding tot de Hindoe-Javaansche kunst.pdf
+Het Râmâyana op Javaansche tempel reliefs, , 1, Kats, J., 1925, Universitaire Bibliotheken Leiden.pdf
+Hindoe-Javaansche beeldhouwkunst, , 1, Verkruysen, H.E., 1928, Universitaire Bibliotheken Leiden, M 3h 506.pdf
+Het hooge heiligdom, legenden, tempelruïnes en heilige graven van Java's bergen.pdf
+
+## Material culture — batik, keris, wayang, gamelan, dance
+De batik-kunst in Nederlandsch-Indië en haar geschiedenis, Deel 2, 1, Rouffaer, Gerrit Pieter, 1900, Universitaire.pdf
+Inleiding tot een bestudeering van de Javaansche kris.pdf
+De wajang op Java en op Bali in het verleden en in het heden.pdf
+Hindoe-Javaansche muziek-instrumenten, speciaal die van Oost-Java, 1, Kunst, J., 1927.pdf
+Een en ander over den gamelan.pdf
+De Javaansche danskunst.pdf
+
+## Language, script & literature
+Het Javaansche letterschrift.pdf
+Beknopte Javaansche grammatica.pdf
+Inleiding tot de studie van het Oud-Javaansch.pdf
+De legende van Kuñjarakarṇa volgens het oudst bekende handschrift, met Oudjavaanschen tekst, Nederlandsche vertaling en aanteekeningen.pdf
+Het oud-Javaansche Âdiparwa en zijn Sanskrit-origineel.pdf
+Eenige weinig bekende Javaansche legenden.pdf
+
+## Religion, mysticism & ritual (Kejawen)
+De Javaansche geestenwereld en de betrekking, die tusschen de geesten en de zinnelijke wereld bestaat,  deel 1.pdf
+Geestelijke stroomingen onder de bevolking op Java.pdf
+De sĕḍĕkahs en slamĕtans in de desa en de daarbij gewoonlijk door den Javaan gegeven andere festiviteiten.pdf
+Iets over Java's overgang tot het Mohammedanisme.pdf
+De Tenggerezen, Hindoes op Java.pdf
+
+## Adat (customary law) & society
+Het adatrecht van Nederlandsch-Indië.pdf
+De inlandsche dorpsgemeenschap op Java.pdf
+Het Inlandsche gemeentewezen op Java en Madoera.pdf

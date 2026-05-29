@@ -38,6 +38,7 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logUsage as logUsageToSupabase } from './lib/supabase-usage-logger.mjs';
 import { createBookRevisions } from './lib/book-revisions.mjs';
+import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
 
 /** Trigger on-demand revalidation for a book page after enrichment completes. */
@@ -614,8 +615,11 @@ function extractPageSummaries(pages) {
 }
 
 // ── Book summary generation ──
-async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, bookLanguage, researchContext, chapters) {
-  const model = getClient().getGenerativeModel({ model: LITE_MODEL });
+async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, bookLanguage, researchContext, chapters, englishTitle) {
+  const model = getClient().getGenerativeModel({
+    model: LITE_MODEL,
+    generationConfig: SUMMARY_GEN_CONFIG,
+  });
 
   if (batchExtractions.length === 0) {
     return {
@@ -646,76 +650,11 @@ async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, book
   const hasChapters = chapters && chapters.length > 0;
   const chapterSection = hasChapters ? `\n## Detected Chapter Structure\n${chapters.map(c => `- Page ${c.pageNumber}: ${c.title}`).join('\n')}\n` : '';
 
-  const prompt = `You're writing compelling copy to help readers discover "${bookTitle}" by ${bookAuthor}.${languageContext}
-
-${researchSection}
-${chapterSection}
-## Extracted from the text:
-
-**Themes:** ${allThemes.join(', ')}
-
-**Key People:** ${allPeople.join(', ') || 'None identified'}
-
-**Key Places:** ${allPlaces.join(', ') || 'None identified'}
-
-**Key Concepts:** ${allConcepts.join(', ')}
-
-## Section-by-section summaries:
-${batchSummariesText}
-
-## Notable quotes extracted:
-${quotesText}
-
-## Your Task
-Synthesize the above into compelling summaries that make readers WANT to explore this text.
-
-**Writing style:**
-- Write like a knowledgeable human, not an AI. Be direct and concrete.
-- NEVER use em-dashes (—). Use commas, colons, semicolons, or separate sentences instead.
-- NEVER use these AI-isms: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into", "comprehensive", "intricate", "nuanced", "multifaceted", "groundbreaking", "seminal".
-- Prefer short, clear sentences over long compound ones.
-- Scholarly but accessible. Say what the text does, not how impressive it is.
-
-1. **BRIEF** (2-3 punchy sentences):
-   - Hook the reader - what's compelling about this text?
-   - What questions does it tackle? What will readers discover?
-
-2. **ABSTRACT** (1 paragraph, 4-6 sentences):
-   - What makes this text worth reading?
-   - What bold claims or intriguing ideas does it contain?
-   - What's the author's unique perspective?
-
-3. **DETAILED** (2-4 paragraphs):
-   - Paint a picture of the journey through this text
-   - Highlight the most striking ideas or arguments
-   - Convey the texture and flavor of the writing
-
-4. **SECTIONS**: ${hasChapters ? 'Use the detected chapter structure.' : 'Group into 5-8 thematic sections.'} For each:
-   - Title and page range
-   - What it covers (2-3 sentences)
-   - 2-4 notable quotes with page numbers and significance
-   - Key concepts
-
-Output as JSON:
-{
-  "brief": "...",
-  "abstract": "...",
-  "detailed": "...",
-  "sections": [
-    {
-      "title": "Section Title",
-      "startPage": 1,
-      "endPage": 10,
-      "summary": "What this section covers...",
-      "quotes": [
-        {"text": "Exact quote", "page": 3, "significance": "Why this matters"}
-      ],
-      "concepts": ["Key Term", "Important Concept"]
-    }
-  ]
-}
-
-IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
+  const prompt = buildSummaryPrompt({
+    bookTitle, englishTitle, bookAuthor, languageContext, researchSection, chapterSection,
+    themes: allThemes, people: allPeople, places: allPlaces, concepts: allConcepts,
+    sectionSummariesText: batchSummariesText, quotesText, hasChapters,
+  });
 
   const result = await withTimeout(
     model.generateContent(prompt),
@@ -1036,10 +975,11 @@ async function enrichBook(db, book) {
   if (batchExtractions.length > 0 || researchContext) {
     try {
       const generated = await generateBookSummary(
-        batchExtractions, bookTitle, bookAuthor,
+        batchExtractions, book.title || bookTitle, bookAuthor,
         book.language || undefined,
         researchContext || undefined,
-        chapters.length > 0 ? chapters : undefined
+        chapters.length > 0 ? chapters : undefined,
+        book.display_title || undefined
       );
       bookSummary = { brief: generated.brief, abstract: generated.abstract, detailed: generated.detailed };
       sectionSummaries = generated.sections || [];

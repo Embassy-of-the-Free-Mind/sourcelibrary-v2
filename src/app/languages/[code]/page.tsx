@@ -74,7 +74,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
 
-  if (count === 0) return { title: 'Language Not Found - Source Library', robots: { index: false, follow: true } };
+  if (count === 0) return {
+    title: 'Language Not Found - Source Library',
+    robots: { index: false, follow: true },
+    alternates: { canonical: `/languages/${code}` },
+  };
 
   const description = `Browse ${count} ${langName} texts in Source Library — digitized and translated from original manuscripts and early printed books.`;
 

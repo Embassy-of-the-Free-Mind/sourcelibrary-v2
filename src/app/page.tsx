@@ -286,43 +286,93 @@ async function getDiscoverBooks(): Promise<Book[]> {
 async function getCollectionShowcase() {
   const db = await getReadDb();
 
-  // $sample FIRST (before $match) so MongoDB uses fast random cursor algorithm.
-  // When $sample is after $match, Mongo scans all matching docs first → 22s on 77k docs.
-  // $sample first on full collection with size < 5% uses O(1) random selection.
-  // Use $gt:'' for thumbnail_url — $ne:'' doesn't exclude null values.
-  const rawImages = await db.collection('gallery_images').aggregate([
-    { $sample: { size: 500 } },
+  // Keep sample-first to preserve the fast random cursor behavior.
+  // A larger sample plus a relaxed second pass avoids the frequent empty/1-item result.
+  const baseMatch = {
+    museum_description: { $exists: true, $ne: '' },
+    $or: [
+      { thumbnail_url: { $type: 'string', $gt: '' } },
+      { extracted_url: { $type: 'string', $gt: '' } },
+    ],
+    book_visible: true,
+  };
+
+  const strictAspectRatio = {
+    extracted_width: { $exists: true },
+    extracted_height: { $exists: true },
+    $expr: {
+      $and: [
+        { $lt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 2] },
+        { $gt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 0.3] },
+      ],
+    },
+  };
+
+  const strictImages = await db.collection('gallery_images').aggregate([
+    { $sample: { size: 2500 } },
     {
       $match: {
+        ...baseMatch,
         gallery_quality: { $gte: 0.85 },
-        museum_description: { $exists: true, $ne: '' },
-        $or: [
-          { thumbnail_url: { $type: 'string', $gt: '' } },
-          { extracted_url: { $type: 'string', $gt: '' } },
-        ],
-        book_visible: true,
-        // Exclude extreme aspect ratios — wide headpieces look blurry in 3:4 portrait cards
-        extracted_width: { $exists: true },
-        extracted_height: { $exists: true },
-        $expr: {
-          $and: [
-            { $lt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 2] },
-            { $gt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 0.3] },
-          ],
-        },
+        ...strictAspectRatio,
       },
     },
-    { $limit: 40 },
+    { $limit: 120 },
   ], { maxTimeMS: 8000 }).toArray();
 
+  // If strict pass is sparse, run a softer pass (still sampled) to fill the showcase.
+  const relaxedImages = strictImages.length >= 40
+    ? []
+    : await db.collection('gallery_images').aggregate([
+      { $sample: { size: 2500 } },
+      {
+        $match: {
+          ...baseMatch,
+          gallery_quality: { $gte: 0.75 },
+        },
+      },
+      { $limit: 120 },
+    ], { maxTimeMS: 8000 }).toArray();
+
+  const rawImages = [...strictImages, ...relaxedImages];
+
   // Diversify: max 1 per book, take 8
-  const seen = new Set<string>();
-  const selected = [];
+  const seenBookIds = new Set<string>();
+  const seenGalleryIds = new Set<string>();
+  const selected: any[] = [];
   for (const img of rawImages) {
-    if (seen.has(img.book_id)) continue;
-    seen.add(img.book_id);
+    if (!img?.book_id || !img?.page_id) continue;
+    const galleryId = `${img.page_id}-${img.detection_index || 0}`;
+    if (seenBookIds.has(img.book_id) || seenGalleryIds.has(galleryId)) continue;
+    seenBookIds.add(img.book_id);
+    seenGalleryIds.add(galleryId);
     selected.push(img);
     if (selected.length >= 8) break;
+  }
+
+  // Randomized fallback: if random sampling is sparse, top up from a
+  // broad high-quality pool without fixed ordering.
+  if (selected.length < 8) {
+    const fallbackImages = await db.collection('gallery_images').aggregate([
+      { $sample: { size: 3000 } },
+      {
+        $match: {
+          ...baseMatch,
+          gallery_quality: { $gte: 0.65 },
+        },
+      },
+      { $limit: 400 },
+    ], { maxTimeMS: 8000 }).toArray();
+
+    for (const img of fallbackImages) {
+      if (!img?.book_id || !img?.page_id) continue;
+      const galleryId = `${img.page_id}-${img.detection_index || 0}`;
+      if (seenBookIds.has(img.book_id) || seenGalleryIds.has(galleryId)) continue;
+      seenBookIds.add(img.book_id);
+      seenGalleryIds.add(galleryId);
+      selected.push(img);
+      if (selected.length >= 8) break;
+    }
   }
 
   // Batch-fetch quotes + slugs for all selected books in ONE query (not N+1)

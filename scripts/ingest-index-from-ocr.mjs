@@ -25,7 +25,7 @@
  *   --concurrency K           Parallel page-extraction requests (default: 4)
  *   --max-pages N             Cap on pages processed (default: all)
  *   --start-page P            Start at this 1-indexed page (default: 1)
- *   --model M                 Gemini model (default: gemini-3.1-flash-lite-preview)
+ *   --model M                 Gemini model (default: gemini-3.1-flash-lite)
  *   --collection-slug SLUG    What index_catalogs.collection_slug to point at (default: index-librorum-prohibitorum)
  */
 
@@ -43,7 +43,7 @@ const INDEX_ID = arg('--index-id');
 const CONCURRENCY = Math.max(1, Number(arg('--concurrency', 4)));
 const MAX_PAGES = Number(arg('--max-pages', 0)) || Infinity;
 const START_PAGE = Number(arg('--start-page', 1));
-const MODEL = arg('--model', 'gemini-3.1-flash-lite-preview');
+const MODEL = arg('--model', 'gemini-3.1-flash-lite');
 const COLLECTION_SLUG = arg('--collection-slug', 'index-librorum-prohibitorum');
 
 if (!BOOK_ID || !INDEX_ID) {

@@ -5,6 +5,7 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
@@ -69,6 +70,25 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const searchContent = searchParams.get('search_content') !== 'false'; // Default true — only skip page search if explicitly disabled
     const pagesOnly = searchParams.get('pages_only') === 'true'; // Return only page-level results (for MCP passage search)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
+    // Ranking strategy for the relevance sort:
+    //   'auto'  (default) — route by query shape: navigational queries (1–2
+    //            words, ~84% of real traffic) keep the curated ladder, which is
+    //            strong for title/author lookups and original-edition ordering;
+    //            conceptual queries (3+ words, the ~16% tail) use RRF, which the
+    //            eval shows wins niche-passage/concept recall there. Captures
+    //            RRF's upside without risking the navigational majority.
+    //   'ladder' / 'rrf' — force a single strategy (used by the compare page A/B
+    //            and for debugging).
+    // SEARCH_RANKING_DEFAULT can override the default without a code change.
+    const rankingParam = (searchParams.get('ranking') || process.env.SEARCH_RANKING_DEFAULT || 'auto').toLowerCase();
+    // Optional LLM-classified intent from /api/search/ai-expand. When present it
+    // routes 'auto' better than word count: only 'navigational' (known
+    // book/author/title lookup) wants the ladder; 'conceptual' and 'verbatim'
+    // both do better with RRF (the eval shows semantic finds the English-quote
+    // passage in a Latin original that keyword/ladder miss).
+    const intentParam = (searchParams.get('intent') || '').toLowerCase();
+    const llmIntent = ['navigational', 'conceptual', 'verbatim'].includes(intentParam) ? intentParam : '';
+    const rrfK = Math.max(1, parseInt(searchParams.get('rrf_k') || '60') || 60);
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 500);
     const offset = parseInt(searchParams.get('offset') || '0');
 
@@ -83,6 +103,22 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Strip surrounding quotes for matching (phrase detection handled by subsystems)
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
+
+    // Resolve the ranking strategy for 'auto': prefer the LLM intent when the
+    // client passed one (navigational → ladder, else → RRF); otherwise fall back
+    // to query word count (1–2 words → ladder, 3+ → RRF) so 'auto' still works
+    // with zero added latency when no intent is supplied.
+    const queryWordCount = matchQuery.trim().split(/\s+/).filter(w => w.length >= 2).length;
+    const useRrf = rankingParam === 'rrf'
+      ? true
+      : rankingParam === 'ladder'
+        ? false
+        : llmIntent
+          ? llmIntent !== 'navigational'
+          : queryWordCount >= 3;
+    const rankingApplied = rankingParam === 'auto'
+      ? `${useRrf ? 'auto-rrf' : 'auto-ladder'}:${llmIntent || 'words'}`
+      : rankingParam;
 
     const db = await getReadDb();
     const results: SearchResult[] = [];
@@ -175,6 +211,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       return { value, ms: Date.now() - start };
     }
 
+    // BUG 2: `total` (below) is the size of THIS request's merged + deduped result
+    // window — not a stable corpus-wide match count. Each lane (Supabase book
+    // trigram, Atlas page search, semantic book, semantic page) can silently
+    // degrade to [] on timeout or error, which shrinks the merged set and makes
+    // `total` vary run-to-run for the same query. We can't make it a true corpus
+    // count without a backend redesign (follow-up), but we CAN stop it from being
+    // reported as authoritative when a lane dropped out: any lane that fails flips
+    // `lanesDegraded`, surfaced as `partial: true` so callers know the count is
+    // incomplete rather than silently smaller.
+    const degradedLanes: string[] = [];
+
     const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       timed(async () => {
@@ -225,6 +272,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // Fail-soft: a Supabase trigram timeout or MongoDB error should not 500 the whole route.
           // The other 3 lanes (Atlas Search, semantic books, semantic pages) can still produce results.
           console.warn('[search] Book lane failed:', err instanceof Error ? err.message : String(err));
+          degradedLanes.push('book'); // BUG 2: lane dropped out — total is now incomplete.
           return [];
         }
       }),
@@ -296,9 +344,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           pageSearchPromise,
           new Promise<any[]>((resolve) => setTimeout(() => {
             console.warn('[search] Page search timed out after 8s');
+            degradedLanes.push('page'); // BUG 2: lane dropped out — total is now incomplete.
             resolve([]);
           }, 8000)),
-        ]).catch(() => []);
+        ]).catch(() => { degradedLanes.push('page'); return []; });
       }),
 
       // --- Semantic book search (finds conceptually related books) ---
@@ -321,6 +370,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             book_year: b.year,
           }));
         } catch {
+          degradedLanes.push('semantic_book'); // BUG 2: lane dropped out — total is now incomplete.
           return [];
         }
       }),
@@ -346,10 +396,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           );
           return pages.filter(p => !badIds.has(p.page_id));
         } catch {
+          degradedLanes.push('semantic_page'); // BUG 2: lane dropped out — total is now incomplete.
           return [];
         }
       }),
     ]);
+    const lanesDegraded = degradedLanes.length > 0;
 
     const bookDocs = bookResult.value;
     const pageDocs = pageResult.value;
@@ -363,6 +415,19 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     };
     // Surface if the page lane hit its 8s ceiling — likely degraded results.
     const pageSearchHitTimeout = pageResult.ms >= 8000 && pageDocs.length === 0;
+
+    // Reciprocal Rank Fusion scores, keyed by the same result.id scheme used
+    // when results are built below (books → book.id, pages → `${book_id}-p${n}`).
+    // Each lane contributes its own ranked order; a book/page surfaced by
+    // several lanes gets summed reciprocal-rank credit. Only used when
+    // ?ranking=rrf — computed unconditionally (cheap, pure) so it's available
+    // to log/compare even on ladder requests.
+    const rrf = rrfScores([
+      bookDocs.map(b => (b as any).id as string),                              // keyword book lane
+      pageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
+      semanticDocs.map(s => (s as any).book_id as string),                    // semantic book lane
+      semanticPageDocs.map(s => `${(s as any).book_id}-p${(s as any).page_number}`), // semantic page lane
+    ], rrfK);
 
     // Process book results
     for (const book of bookDocs) {
@@ -460,6 +525,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
+              // Tenant scope: match_books_semantic is GLOBAL (book_embeddings has
+              // no tenant_id column, so the RPC can't filter), so a tenant request
+              // must re-apply the tenant filter here or global books leak into the
+              // partner reading room (Tenant Subdomain Lockdown). See keyword
+              // page-lane materialization which already does this.
+              ...(tenantId ? { tenantId } : {}),
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
@@ -528,6 +599,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
+              // match_semantic already filters by filter_tenant_id, so this is
+              // defense-in-depth — but keep it consistent with the book lane so a
+              // future RPC change can't silently leak cross-tenant pages.
+              ...(tenantId ? { tenantId } : {}),
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
@@ -593,16 +668,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       // Priority: books > pages, title match, original language, older editions, quality
       const ENGLISH = 'English';
       const queryLower = matchQuery.toLowerCase();
+      const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
 
-      results.sort((a, b) => {
+      // The legacy heuristic ladder. Used directly for ranking=ladder, and as
+      // the tiebreaker when ranking=rrf (so equal fused scores still get a
+      // deterministic, sensible order).
+      const ladderCompare = (a: SearchResult, b: SearchResult): number => {
         // 1. Books before pages
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
 
         // 2. Title/author match (strongest signal)
         // Check both title and display_title, and for multi-word queries
         // count how many query words appear across title+author fields
-        const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
-
         const aAllText = `${(a.display_title || '').toLowerCase()} ${a.title.toLowerCase()} ${(a.author || '').toLowerCase()}`;
         const bAllText = `${(b.display_title || '').toLowerCase()} ${b.title.toLowerCase()} ${(b.author || '').toLowerCase()}`;
 
@@ -632,7 +709,21 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aScore = (a as any).quality_score || 0;
         const bScore = (b as any).quality_score || 0;
         return bScore - aScore;
-      });
+      };
+
+      if (useRrf) {
+        // Reciprocal Rank Fusion: primary sort by fused lane score (desc),
+        // ladder as the deterministic tiebreaker. Unlike the ladder, this lets
+        // a strongly-cross-confirmed page outrank a weakly-matched book.
+        results.sort((a, b) => {
+          const sa = rrf.get(a.id) ?? 0;
+          const sb = rrf.get(b.id) ?? 0;
+          if (sb !== sa) return sb - sa;
+          return ladderCompare(a, b);
+        });
+      } else {
+        results.sort(ladderCompare);
+      }
     }
 
     // Dedup by work_id: keep the first (best-ranked) edition of each work.
@@ -705,20 +796,27 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       request, identity, route: 'search', query,
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
       stage_ms: stageMs,
-      page_search_timed_out: pageSearchHitTimeout,
+      page_search_timed_out: pageSearchHitTimeout || degradedLanes.includes('page'),
       filters: {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,
         has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
-        pages_only: pagesOnly, sort: sortBy,
+        pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
       },
     });
     return NextResponse.json({
       query,
+      // NOTE: `total` is the size of THIS request's merged + deduped result window,
+      // not a stable corpus-wide match count (see BUG 2 note above). When `partial`
+      // is true a search lane timed out / errored, so this count is incomplete and
+      // should not be treated as authoritative. Identical queries under normal
+      // (no-timeout) conditions return the same `total`.
       total: dedupedResults.length,
+      ...(lanesDegraded ? { partial: true, degraded_lanes: degradedLanes } : {}),
       offset,
       limit,
       sort: sortBy,
+      ranking: rankingApplied,
       license: {
         spdx: 'CC-BY-SA-4.0',
         url: 'https://creativecommons.org/licenses/by-sa/4.0/',

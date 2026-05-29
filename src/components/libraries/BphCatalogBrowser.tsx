@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
-import { tenantBookUrl } from '@/lib/slugify';
+// Book URL helper moved inline to use basePath
 
 interface BphWork {
   ubn: string;
@@ -119,13 +119,35 @@ function isAdvFilterApplied(key: string, value: string | boolean, lockDigitized:
 
 const PER_PAGE = 50;
 
-const SORT_OPTIONS = [
-  { value: 'title', label: 'Title A-Z' },
-  { value: 'author', label: 'Author A-Z' },
-  { value: 'year_asc', label: 'Year (oldest first)' },
-  { value: 'year_desc', label: 'Year (newest first)' },
-  { value: 'shelfmark', label: 'Shelfmark' },
-];
+/** Per-column sort cycling — first click sorts ascending, second click sorts
+    descending. Shelfmark only supports ascending (codes don't read meaningfully
+    in reverse). Used by the clickable column headers in the list view. */
+type SortColumn = 'author' | 'title' | 'year' | 'shelfmark';
+
+function nextSort(column: SortColumn, current: string): string {
+  if (column === 'shelfmark') return 'shelfmark';
+  if (column === 'year') return current === 'year_asc' ? 'year_desc' : 'year_asc';
+  const asc = column;
+  const desc = `${column}_desc`;
+  return current === asc ? desc : asc;
+}
+
+function arrowFor(column: SortColumn, current: string): 'asc' | 'desc' | null {
+  if (column === 'shelfmark') return current === 'shelfmark' ? 'asc' : null;
+  if (column === 'year') {
+    if (current === 'year_asc') return 'asc';
+    if (current === 'year_desc') return 'desc';
+    return null;
+  }
+  if (current === column) return 'asc';
+  if (current === `${column}_desc`) return 'desc';
+  return null;
+}
+
+function SortArrow({ direction }: { direction: 'asc' | 'desc' | null }) {
+  if (direction === null) return <span aria-hidden className="ml-1 text-muted/40">↕</span>;
+  return <span aria-hidden className="ml-1 text-accent-rust">{direction === 'asc' ? '↑' : '↓'}</span>;
+}
 
 const KEYWORD_OPTIONS = [
   { value: '', label: 'All subjects' },
@@ -207,10 +229,14 @@ export default function BphCatalogBrowser({
   lockDigitized = false,
   display = 'list',
 }: Props) {
+  // Build book URLs using basePath to preserve embed namespace
+  const bookUrl = (book: { id: string; slug?: string }) =>
+    `${basePath}/book/${encodeURIComponent(book.slug || book.id)}`;
+
   const searchParams = useSearchParams();
 
   const initialQ = searchParams.get('cq') || '';
-  const initialSort = searchParams.get('csort') || 'title';
+  const initialSort = searchParams.get('csort') || 'author';
   const initialKeyword = searchParams.get('ckeyword') || '';
   const initialOffset = parseInt(searchParams.get('coffset') || '0') || 0;
   const initialAdv: AdvancedFilters = {
@@ -295,16 +321,27 @@ export default function BphCatalogBrowser({
       const params = buildParams(q, s, kw, off, a);
       const res = await fetch(`/api/catalog/bph?${params}`, { signal: controller.signal });
       const data = await res.json();
+      // Drop the result if a newer fetch superseded us. `AbortController.abort()`
+      // only rejects the fetch promise itself; if our `await fetch()` already
+      // resolved before the next call fired abort, `res.json()` keeps streaming
+      // the body and we'd `setWorks` with a stale page after the latest result
+      // already landed. Source of the "3 of 29,876 — but 5 rows shown" first-
+      // paint race when the user types fast enough to fire several debounced
+      // searches in a row.
+      if (abortRef.current !== controller) return;
       setWorks(data.works || []);
       setTotal(data.total || 0);
       onTotalChange?.(data.total || 0, isFiltered);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return; // superseded by a newer query
+      if (abortRef.current !== controller) return;
       setWorks([]);
       setTotal(0);
       onTotalChange?.(0, isFiltered);
     } finally {
-      if (!controller.signal.aborted) setLoading(false);
+      if (abortRef.current === controller && !controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   }, [buildParams, onTotalChange, lockDigitized]);
 
@@ -322,7 +359,7 @@ export default function BphCatalogBrowser({
       else params.delete(key);
     };
     setOrDel('cq', q);
-    setOrDel('csort', s !== 'title' ? s : '');
+    setOrDel('csort', s !== 'author' ? s : '');
     setOrDel('ckeyword', kw);
     setOrDel('coffset', off ? String(off) : '');
     setOrDel('cauthor', a.author);
@@ -450,21 +487,28 @@ export default function BphCatalogBrowser({
   // /libraries/{slug}. The bph subdomain proxy doesn't rewrite /embed/...
   // paths, so the URL bar will read /embed/bph/catalog/{ubn} there — uglier
   // than the legacy /catalog/{ubn} but functional in every context.
-  const detailUrl = (ubn: string) => {
+  //
+  // Returns null if ubn is missing. Callers must render plain text instead
+  // of a link in that case — without this guard, `encodeURIComponent(null)`
+  // produces the string "null" and the link points at /catalog/null, which
+  // 404s as a soft 404 ("Catalogue entry not found"). Observed in
+  // not_found_reports 2026-05-26 to 2026-05-28.
+  const detailUrl = (ubn: string | null | undefined): string | null => {
+    if (!ubn) return null;
     return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(ubn)}`;
   };
 
   // When the parent supplies a results-header slot (the unified shell does
-  // this to host the list/grid view icons), the sort dropdown moves into
-  // that row so it sits next to the icons — matching the partner mockup
-  // (search row stays light filters; sort lives with the count + icons).
-  const sortLivesInHeader = resultsHeaderSlot !== undefined;
+  // this to host the list/grid view icons), the count + icons render in a
+  // second row below the filters; otherwise the count renders inline in the
+  // search row.
+  const hasHeaderSlot = resultsHeaderSlot !== undefined;
 
   return (
     <div>
       {/* Search / filter row — search input, subjects dropdown, optional
           parent-supplied toggle (e.g. Show all / Show digitised & translated),
-          Advanced. Sort moves to the results-header row when sortLivesInHeader. */}
+          Advanced. Sort is driven by clicking column headers in the table. */}
       <div className="flex flex-wrap items-center gap-3 mb-3">
         <div className="relative flex-1 min-w-[14rem] max-w-xl">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
@@ -497,18 +541,6 @@ export default function BphCatalogBrowser({
 
         {searchRowSlot}
 
-        {!sortLivesInHeader && (
-          <select
-            value={sort}
-            onChange={(e) => handleSortChange(e.target.value)}
-            className="text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary"
-          >
-            {SORT_OPTIONS.map(o => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
-          </select>
-        )}
-
         <button
           onClick={() => setShowAdvanced(s => !s)}
           className="inline-flex items-center gap-1.5 text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary hover:bg-warm transition-colors"
@@ -522,37 +554,30 @@ export default function BphCatalogBrowser({
           )}
         </button>
 
-        {!hideInlineCount && !sortLivesInHeader && (
+        {!hideInlineCount && !hasHeaderSlot && (
           <span className="text-sm text-muted ml-auto">
             {total.toLocaleString('en-US')} works
           </span>
         )}
       </div>
 
-      {/* Results-header row — counter on the left, sort + parent-supplied
-          view icons on the right. Only rendered when the parent passes a
-          slot (the unified shell does so for the BPH iframe). The count
-          renders here regardless of hideInlineCount — that prop only gates
-          the inline count in the search row above. */}
-      {sortLivesInHeader && (
+      {/* Results-header row — counter on the left, parent-supplied view
+          icons on the right. Only rendered when the parent passes a slot
+          (the unified shell does so for the BPH iframe). The count renders
+          here regardless of hideInlineCount — that prop only gates the
+          inline count in the search row above. */}
+      {hasHeaderSlot && (
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-sm text-muted">
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
+            {display === 'grid' && (
+              <span className="ml-2 text-xs">
+                · Covers view shows only digitised works
+              </span>
+            )}
           </span>
           <div className="flex items-center gap-3 ml-auto">
-            <label className="inline-flex items-center gap-2 text-sm text-muted">
-              <span>Sort by</span>
-              <select
-                value={sort}
-                onChange={(e) => handleSortChange(e.target.value)}
-                className="text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary"
-              >
-                {SORT_OPTIONS.map(o => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
-            </label>
             {resultsHeaderSlot}
           </div>
         </div>
@@ -638,133 +663,177 @@ export default function BphCatalogBrowser({
           above is identical in both modes so the top of the page doesn't
           shift between displays. */}
       {display === 'list' ? (
-      <div className="border border-border-light rounded-lg overflow-hidden bg-white">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border-light bg-warm">
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">Author</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary">Title</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">Year</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Shelfmark</th>
-                <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
-              </tr>
-            </thead>
-            <tbody className={loading ? 'opacity-50' : ''}>
-              {/* Skeleton rows while the initial fetch is in flight. Without
+        <div className="border border-border-light rounded-lg overflow-hidden bg-white">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border-light bg-warm">
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('author', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Author<SortArrow direction={arrowFor('author', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('title', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Title<SortArrow direction={arrowFor('title', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('year', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Year<SortArrow direction={arrowFor('year', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange(nextSort('shelfmark', sort))}
+                      className="inline-flex items-center hover:text-primary transition-colors"
+                    >
+                      Shelfmark<SortArrow direction={arrowFor('shelfmark', sort)} />
+                    </button>
+                  </th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
+                </tr>
+              </thead>
+              <tbody className={loading ? 'opacity-50' : ''}>
+                {/* Skeleton rows while the initial fetch is in flight. Without
                   these the table renders as column-headers-only, which read
                   as broken-empty (B15). One row per expected result up to a
                   reasonable cap. */}
-              {loading && works.length === 0 && (
-                Array.from({ length: 8 }, (_, i) => (
-                  <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
-                    <td className="px-3 py-3 align-top hidden sm:table-cell">
-                      <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top">
-                      <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden md:table-cell">
-                      <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top tabular-nums">
-                      <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden md:table-cell">
-                      <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
-                    </td>
-                    <td className="px-3 py-3 align-top hidden lg:table-cell">
-                      <div className="h-5 w-20 bg-border-light/40 rounded-full animate-pulse" />
-                    </td>
-                  </tr>
-                ))
-              )}
-              {works.map((w) => {
-                const digitized = resolveDigitized(w);
-                const external = resolveExternal(w, !!digitized);
-                const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
-                const displayAuthor = w.author || w.variant_author || w.pseudonym;
-                return (
-                  <tr
-                    key={w.ubn}
-                    className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
-                  >
-                    <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                      {displayAuthor || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top">
-                      <div className="font-medium text-primary leading-snug">
-                        <a
-                          href={detailUrl(w.ubn)}
-                          className="hover:text-accent-rust transition-colors"
-                        >
-                          {displayTitle}
-                        </a>
-                      </div>
-                      {digitized && (
-                        <a
-                          href={tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)}
-                          className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
-                        >
-                          <BookMarked className="w-3 h-3" />
-                          Digitised copy
-                        </a>
-                      )}
-                      {external && (
-                        <a
-                          href={tenantBookUrl({ id: external.id, slug: external.slug }, tenantSlug)}
-                          className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
-                        >
-                          <BookMarked className="w-3 h-3 opacity-60" />
-                          Read at {externalSourceLabel(external.source)}
-                        </a>
-                      )}
-                      {/* Mobile: show author inline (author column is hidden < sm) */}
-                      <div className="text-xs text-muted sm:hidden mt-0.5">
-                        {displayAuthor}
-                      </div>
-                      {/* Impressum line — place, printer/publisher, year — in
+                {loading && works.length === 0 && (
+                  Array.from({ length: 8 }, (_, i) => (
+                    <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
+                      <td className="px-3 py-3 align-top hidden sm:table-cell">
+                        <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top">
+                        <div className="h-4 w-3/4 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden md:table-cell">
+                        <div className="h-4 w-16 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top tabular-nums">
+                        <div className="h-4 w-10 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden md:table-cell">
+                        <div className="h-4 w-20 bg-border-light/40 rounded animate-pulse" />
+                      </td>
+                      <td className="px-3 py-3 align-top hidden lg:table-cell">
+                        <div className="h-5 w-20 bg-border-light/40 rounded-full animate-pulse" />
+                      </td>
+                    </tr>
+                  ))
+                )}
+                {works.map((w, idx) => {
+                  const digitized = resolveDigitized(w);
+                  const external = resolveExternal(w, !!digitized);
+                  const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
+                  const displayAuthor = w.author || w.variant_author || w.pseudonym;
+                  return (
+                    <tr
+                      // 2,012 of 29,876 catalog rows have ubn:null (legacy
+                      // pre-Memorix entries). With reactCompiler:true, multiple
+                      // siblings sharing key={null} collide in the per-key
+                      // memoization cache and previous-search rows persist in
+                      // the DOM after works[] shrinks — e.g. searching
+                      // "Helicone" returned 2 rows but rendered 4. Offset the
+                      // fallback key with the row index so each null-ubn row
+                      // is unique within the current results page.
+                      key={w.ubn ?? `null-ubn-${idx}`}
+                      className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
+                    >
+                      <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
+                        {displayAuthor || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top">
+                        <div className="font-medium text-primary leading-snug">
+                          {detailUrl(w.ubn) ? (
+                            <a
+                              href={detailUrl(w.ubn)!}
+                              className="hover:text-accent-rust transition-colors"
+                            >
+                              {displayTitle}
+                            </a>
+                          ) : (
+                            <span>{displayTitle}</span>
+                          )}
+                        </div>
+                        {digitized && (
+                          <a
+                            href={bookUrl({ id: digitized.id, slug: digitized.slug })}
+                            className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
+                          >
+                            <BookMarked className="w-3 h-3" />
+                            Digitised copy
+                          </a>
+                        )}
+                        {external && (
+                          <a
+                            href={bookUrl({ id: external.id, slug: external.slug })}
+                            className="inline-flex items-center gap-1 mt-1 text-xs text-secondary hover:text-accent-rust hover:underline"
+                          >
+                            <BookMarked className="w-3 h-3 opacity-60" />
+                            Read at {externalSourceLabel(external.source)}
+                          </a>
+                        )}
+                        {/* Mobile: show author inline (author column is hidden < sm) */}
+                        <div className="text-xs text-muted sm:hidden mt-0.5">
+                          {displayAuthor}
+                        </div>
+                        {/* Impressum line — place, printer/publisher, year — in
                           the order librarians expect on a short bibliographic
                           card. Falls back gracefully when fields are missing. */}
-                      {(w.place || w.printer || w.publisher) && (
-                        <div className="text-[11px] text-muted mt-0.5 italic">
-                          {formatImpressum(w)}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                      {w.place || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary tabular-nums">
-                      {w.year || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
-                      {w.shelf_mark || <span className="text-muted">—</span>}
-                    </td>
-                    <td className="px-3 py-2 align-top hidden lg:table-cell">
-                      {w.keywords ? (
-                        <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
-                          {w.keywords}
-                        </span>
-                      ) : (
-                        <span className="text-muted">—</span>
-                      )}
+                        {(w.place || w.printer || w.publisher) && (
+                          <div className="text-[11px] text-muted mt-0.5 italic">
+                            {formatImpressum(w)}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
+                        {w.place || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary tabular-nums">
+                        {w.year || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
+                        {w.shelf_mark || <span className="text-muted">—</span>}
+                      </td>
+                      <td className="px-3 py-2 align-top hidden lg:table-cell">
+                        {w.keywords ? (
+                          <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
+                            {w.keywords}
+                          </span>
+                        ) : (
+                          <span className="text-muted">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+                {!loading && works.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-3 py-12 text-center text-muted">
+                      No works found matching your search.
                     </td>
                   </tr>
-                );
-              })}
-              {!loading && works.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="px-3 py-12 text-center text-muted">
-                    No works found matching your search.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
       ) : (
         // Grid view: covers for the same filtered + sorted page. Every row
         // has a sl_book_id (lockDigitized='sl' enforces it), so detailUrl
@@ -785,20 +854,24 @@ export default function BphCatalogBrowser({
             </div>
           ) : works.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {works.map((w) => {
+              {works.map((w, idx) => {
                 const digitized = resolveDigitized(w);
                 const external = resolveExternal(w, !!digitized);
                 const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
                 const displayAuthor = w.author || w.variant_author || w.pseudonym;
                 const href = digitized
-                  ? tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)
+                  ? bookUrl({ id: digitized.id, slug: digitized.slug })
                   : external
-                    ? tenantBookUrl({ id: external.id, slug: external.slug }, tenantSlug)
+                    ? bookUrl({ id: external.id, slug: external.slug })
                     : detailUrl(w.ubn);
+                const Wrapper: React.ElementType = href ? 'a' : 'div';
                 return (
-                  <a
-                    key={w.ubn}
-                    href={href}
+                  <Wrapper
+                    // Same null-ubn fallback as the list view above — see
+                    // comment at the table render for the reactCompiler /
+                    // duplicate-key collision rationale.
+                    key={w.ubn ?? `null-ubn-${idx}`}
+                    {...(href ? { href } : {})}
                     className="group flex flex-col text-left"
                   >
                     <div className="relative aspect-[2/3] bg-warm rounded-md overflow-hidden border border-border-light group-hover:border-accent-rust/40 transition-colors">
@@ -830,7 +903,7 @@ export default function BphCatalogBrowser({
                         {w.year ? ` · ${w.year}` : ''}
                       </div>
                     )}
-                  </a>
+                  </Wrapper>
                 );
               })}
             </div>

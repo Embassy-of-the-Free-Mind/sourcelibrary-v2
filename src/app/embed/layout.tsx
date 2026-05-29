@@ -8,12 +8,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Synchronous cookie reader. Runs during HTML parsing before any of the
-// gated sections render, so toggling the menu options never produces a
-// flash of unstyled content. The CSS rules in globals.css consume the
-// data attributes set here. Kept inline + minified so it ships in the
-// initial HTML payload without needing a separate script request.
-const VIEW_MODE_INIT_SCRIPT = `(function(){var c=document.cookie;if(/(?:^|; )sl_hide_ai=1/.test(c))document.documentElement.dataset.slHideAi='1';if(/(?:^|; )sl_hide_guide=1/.test(c))document.documentElement.dataset.slHideGuide='1';})();`;
+// The view-mode init script (default-hide AI summaries on BPH) lives in the
+// ROOT layout (src/app/layout.tsx) so it also runs on the real BPH subdomain,
+// which serves global routes (e.g. /book/[id]) without the /embed rewrite and
+// therefore never mounts this layout. No need to duplicate it here — the root
+// layout wraps embed routes too.
 
 /**
  * Layout for embed routes. Adds data-embed attribute to hide
@@ -25,7 +24,6 @@ const VIEW_MODE_INIT_SCRIPT = `(function(){var c=document.cookie;if(/(?:^|; )sl_
 export default function EmbedLayout({ children }: { children: React.ReactNode }) {
   return (
     <TenantLayoutWrapper>
-      <script dangerouslySetInnerHTML={{ __html: VIEW_MODE_INIT_SCRIPT }} />
       <div data-embed="" className="embed-mode">
         {children}
         <EmbedUserMenu />

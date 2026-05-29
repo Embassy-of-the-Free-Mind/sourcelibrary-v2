@@ -253,6 +253,15 @@ export async function GET(req: NextRequest) {
       case 'author':
         query = query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
         break;
+      case 'author_desc':
+        query = query.order('author', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+        break;
+      case 'title_desc':
+        // nullsFirst:false matches every other sort — Supabase otherwise puts
+        // null titles ahead of real ones for descending sorts, which renders
+        // five "None" rows at the top of an unfiltered desc listing.
+        query = query.order('title', { ascending: false, nullsFirst: false });
+        break;
       case 'shelfmark':
         query = query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
         break;
@@ -324,6 +333,13 @@ export async function GET(req: NextRequest) {
   // somewhere else in the record. The underlying ordering (default: title A-Z)
   // is preserved within each group.
   //
+  // Gated on `sort === 'title'`: when the user has explicitly clicked a
+  // different sort header (Author, Year, Shelfmark, or any *_desc variant),
+  // respect their order without re-ordering by prefix relevance. Without
+  // this gate, `cq=X&sort=title_desc` ended up identical to `cq=X&sort=title`
+  // because the bump held prefix matches at the top regardless of direction
+  // (cowork test pass, 2026-05-28 — step A7).
+  //
   // Implementation: we re-sort the current page in JS using a stable sort that
   // keeps title-prefix matches first and falls back to the order Postgres
   // already returned. This avoids any Supabase schema changes (no view, no RPC).
@@ -333,7 +349,7 @@ export async function GET(req: NextRequest) {
   // page 1 — that would require a server-side computed-column sort or an RPC.
   // For BPH (a few thousand rows) the first page is what users see, so this
   // fix satisfies the partner complaint without infra changes.
-  if (q.length >= 2 && works.length > 1) {
+  if (q.length >= 2 && works.length > 1 && sort === 'title') {
     const needle = q.toLocaleLowerCase();
     // Decorate-sort-undecorate to keep the comparator stable.
     const decorated = works.map((row, idx) => {

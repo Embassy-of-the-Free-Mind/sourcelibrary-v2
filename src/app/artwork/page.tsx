@@ -21,7 +21,6 @@ interface ArtCollection {
   featured_images?: ({ extracted_url?: string; thumbnail_url?: string; image_url?: string } | string)[];
 }
 
-/** Pick the best image from featured_images, handling raw strings stored instead of objects. */
 function pickArtCardImage(images: ArtCollection['featured_images']): string | undefined {
   if (!images?.length) return undefined;
   const first = images[0];

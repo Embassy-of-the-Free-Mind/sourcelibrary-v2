@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { BookMarked, BookOpen, ExternalLink } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
-import { tenantBookUrl } from '@/lib/slugify';
+// tenantBookUrl removed - using inline URL construction with embed path
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import type { LibraryPartner } from '@/lib/library-partners';
@@ -181,10 +181,10 @@ export default async function GenericCatalogEntry({
     : null;
 
   const displayTitle = row.title || row.parallel_title || row.uniform_title || `(untitled — ${catalogId})`;
-  const slBookHref = slBook ? tenantBookUrl({ id: slBook.id, slug: slBook.slug }, tenant) : null;
+  const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook
-    ? tenantBookUrl({ id: externalBook.id, slug: externalBook.slug }, tenant)
+    ? `/embed/${tenant}/book/${encodeURIComponent(externalBook.slug || externalBook.id)}`
     : null;
   const externalCoverUrl = externalBook ? getBookThumbnailUrl(externalBook, 'display') : null;
   const canonicalAuthor = slBook?.author ? formatAuthor(slBook.author).name : null;
@@ -268,7 +268,7 @@ export default async function GenericCatalogEntry({
 
                 <dl className="space-y-1.5 text-sm mb-4">
                   {canonicalAuthor && canonicalAuthor !== row.author && (
-                    <Field label="Canonical author" value={canonicalAuthor} />
+                    <Field label="Standard name" value={canonicalAuthor} />
                   )}
                   {slBook.published && slBook.published !== String(row.year || '') && (
                     <Field label="Published" value={slBook.published} />

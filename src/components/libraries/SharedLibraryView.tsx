@@ -17,7 +17,7 @@ import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import BphUnifiedCatalogue from '@/components/libraries/BphUnifiedCatalogue';
 import UnifiedCatalogue from '@/components/libraries/UnifiedCatalogue';
 import { getBookThumbnailUrl } from '@/lib/utils';
-import { getEmbedUiPolicy } from '@/lib/embed-ui-policy';
+import { getEmbedUiPolicy, embeddedContext } from '@/lib/embed-ui-policy';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 
@@ -139,7 +139,7 @@ export default function SharedLibraryView({
   const filteredLanguages = languages.filter(l => l.count > 2);
   const externalPartnerUrl = partner.url?.trim() || '';
   const hasExternalPartnerUrl = /^https?:\/\//i.test(externalPartnerUrl);
-  const embedPolicy = getEmbedUiPolicy(embed);
+  const embedPolicy = getEmbedUiPolicy(embeddedContext(embed));
 
   // BPH layout: `view` selects the FILTER (catalog = all 27,706, books =
   // digitised+translated subset). `display` selects the VIEW MODE (list =
@@ -426,6 +426,7 @@ export default function SharedLibraryView({
                       ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                       : 0,
                   }}
+                  bookUrlPrefix={basePath}
                   priority={i < 10}
                 />
               ))}
@@ -512,6 +513,7 @@ export default function SharedLibraryView({
                           ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                           : 0,
                       }}
+                      bookUrlPrefix={basePath}
                       priority={i < 5}
                     />
                   ))}

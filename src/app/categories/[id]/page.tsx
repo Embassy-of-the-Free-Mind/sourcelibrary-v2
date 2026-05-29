@@ -2,13 +2,16 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Book as BookIcon } from 'lucide-react';
+import { headers } from 'next/headers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
 import CategorySchema from '@/components/seo/CategorySchema';
-import { bookUrl } from '@/lib/slugify';
+import { tenantBookUrl } from '@/lib/slugify';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { AISection } from '@/components/embed/AISection';
 
 interface Book {
   id: string;
@@ -41,17 +44,17 @@ function getCategory(id: string) {
   return LIBRARY_CATEGORIES.find(c => c.id === id);
 }
 
-async function getCategoryBooks(id: string): Promise<Book[]> {
+async function getCategoryBooks(id: string, tenantId: string | null): Promise<Book[]> {
   try {
     const db = await getReadDb();
     // Use cached pages_translated on books — no $lookup against 9.5M pages collection
     const books = await db.collection('books').find(
-      { categories: id, visible: true, pages_translated: { $gt: 0 } },
+      { categories: id, visible: true, pages_translated: { $gt: 0 }, ...(tenantId ? { tenantId } : {}) },
       { maxTimeMS: 30000 }
     )
-    .project({ _id: 0, pages_array: 0 })
-    .sort({ pages_translated: -1, title: 1 })
-    .toArray();
+      .project({ _id: 0, pages_array: 0 })
+      .sort({ pages_translated: -1, title: 1 })
+      .toArray();
     return books as unknown as Book[];
   } catch (err) {
     console.error(`Category books fetch failed for ${id}:`, err);
@@ -82,10 +85,11 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { id } = await params;
+  const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(await headers());
   const category = getCategory(id);
   if (!category) notFound();
 
-  const books = await getCategoryBooks(id);
+  const books = await getCategoryBooks(id, tenantId);
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -145,7 +149,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               return (
                 <Link
                   key={book.id}
-                  href={bookUrl(book)}
+                  href={tenantBookUrl(book, tenantSlug)}
                   className="group bg-white rounded-xl border border-stone-200 overflow-hidden hover:border-accent-gold/20 hover:shadow-lg transition-all"
                 >
                   {/* Thumbnail */}
@@ -165,13 +169,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     )}
                     {/* Translation badge */}
                     {book.translation_percent !== undefined && (
-                      <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium ${
-                        (book.translation_percent ?? 0) >= 95
+                      <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium ${(book.translation_percent ?? 0) >= 95
                           ? 'bg-status-success text-white'
                           : (book.translation_percent ?? 0) > 0
                             ? 'bg-accent-gold/80 text-white'
                             : 'bg-stone-500 text-white'
-                      }`}>
+                        }`}>
                         {(book.translation_percent ?? 0) >= 95
                           ? 'Translated'
                           : `${book.translation_percent}%`}
@@ -190,9 +193,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                       {book.published && <span>{book.published}</span>}
                     </div>
                     {summaryText && (
-                      <p className="text-sm text-stone-600 mt-3 line-clamp-2">
-                        {summaryText}
-                      </p>
+                      <AISection>
+                        <p className="text-sm text-stone-600 mt-3 line-clamp-2">
+                          {summaryText}
+                        </p>
+                      </AISection>
                     )}
                   </div>
                 </Link>
