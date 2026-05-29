@@ -234,7 +234,12 @@ export default function BibliographicInfo({
               const canonicalName = book.author_canonical_name;
               const viafId = book.author_viaf_id;
               const wikidataQid = book.author_wikidata_qid;
-              const hasCanonical = !!(book.author_entity_id || viafId || wikidataQid || canonicalName);
+              // Require an actual displayable authority value. A book linked by
+              // author_entity_id ALONE (no denormalized viaf/canonical) was
+              // rendering "Standard name: VIAF undefined" here — the rich
+              // authority for those books comes from <AuthorAuthority>, fed by
+              // the entity record, so this denormalized row should stay silent.
+              const hasCanonical = !!(canonicalName || viafId || wikidataQid);
               return (
                 <>
                   {showAuthorRow && (
@@ -249,7 +254,7 @@ export default function BibliographicInfo({
                     <div className="flex gap-2">
                       <span className="text-stone-500 w-24 flex-shrink-0">Standard name:</span>
                       <span className="text-stone-200 flex flex-wrap items-baseline gap-x-2">
-                        {canonicalName || `VIAF ${viafId}`}
+                        {canonicalName || (viafId ? `VIAF ${viafId}` : null)}
                         {viafId && (
                           <a
                             href={`https://viaf.org/viaf/${viafId}`}
