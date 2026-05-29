@@ -10,6 +10,7 @@ import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
+import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import EarlyAccessGate from '@/components/book/EarlyAccessGate';
@@ -582,6 +583,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
     (bookTenantSlug && tenantSlug && bookTenantSlug === tenantSlug);
   if (hasTenantContext && hasTenantField && !matchesTenant) {
     notFound();
+  }
+
+  // Text-only works (e.g. romanized Javanese from Wikisource): no page scans,
+  // so render a dedicated text layout instead of the image+OCR reader. Must come
+  // before isVisualArt (a 'text' resource_type would otherwise route to artwork).
+  if ((book as { content_type?: string }).content_type === 'text') {
+    const textDb = await getReadDb();
+    const textPages = await textDb.collection('pages')
+      .find({ book_id: book.id, page_number: { $gte: 0 } }, {
+        projection: { _id: 0, page_number: 1, part_title: 1, 'transliteration.data': 1, 'translation.data': 1, 'ocr.data': 1 },
+        maxTimeMS: 5000,
+      })
+      .sort({ page_number: 1 }).limit(1000).toArray();
+    return <TextReader book={book as any} pages={JSON.parse(JSON.stringify(textPages))} collections={bookCollections} />;
   }
 
   // Empty shell books (0 pages from failed imports) should 404

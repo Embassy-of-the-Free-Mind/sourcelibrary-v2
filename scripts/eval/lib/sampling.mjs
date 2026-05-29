@@ -96,7 +96,9 @@ export async function samplePages(corpusName, n = 10, opts = {}) {
   if (opts.bookId) {
     bookFilter = { id: opts.bookId };
   } else {
-    bookFilter = { pages_ocr: { $gte: 10 }, ...corpus.filter };
+    // By default require books that already have OCR (auditing existing output).
+    // For model-selection BEFORE OCR exists, pass opts.requireOcr === false.
+    bookFilter = { ...(opts.requireOcr === false ? {} : { pages_ocr: { $gte: 10 } }), ...corpus.filter };
   }
 
   // Get candidate books
