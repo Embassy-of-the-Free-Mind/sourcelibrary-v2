@@ -65,6 +65,11 @@ export async function generateStaticParams() {
 interface PageProps {
   params: Promise<{ id: string }>;
   tenantContext?: TenantContext | null;
+  // Review preview: when true, render the staged summary_candidate instead of
+  // the live summary. Set only by the dynamic /book/[id]/preview route — NOT
+  // read from searchParams here, because this page is ISR/static (revalidate)
+  // and reading request-time query params would force a render error.
+  previewProposed?: boolean;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -536,7 +541,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; previewProposed?: boolean }) {
   let data;
   try {
     data = await getBook(id, tenantId, tenantSlug);
@@ -648,11 +653,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
           ? 'blocked'
           : 'open';
   const imageRestricted = imageAccess === 'blocked';
-  const bookSummaryObj = (book as unknown as { index?: { bookSummary?: { brief?: string; detailed?: string; abstract?: string } } }).index?.bookSummary;
+  const candidate = (book as unknown as { summary_candidate?: { brief?: string; abstract?: string; detailed?: string } }).summary_candidate;
+  const bookSummaryObj = previewProposed && candidate?.brief
+    ? { brief: candidate.brief, abstract: candidate.abstract, detailed: candidate.detailed }
+    : (book as unknown as { index?: { bookSummary?: { brief?: string; detailed?: string; abstract?: string } } }).index?.bookSummary;
   const indexBrief = bookSummaryObj?.brief;
-  const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
+  const readingSummary = previewProposed && candidate?.abstract
+    ? candidate.abstract
+    : (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
   const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
   const hasSummary = !!summaryText;
+  const showProposedBanner = previewProposed && !!candidate?.brief;
   const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
   const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
 
@@ -1030,6 +1041,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 belongs on a stripped-down bibliographic page. */}
             <AISection className="card p-6">
               <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
+              {showProposedBanner && (
+                <div className="mb-4 text-xs font-medium rounded px-3 py-2" style={{ background: 'rgba(63,185,80,0.12)', color: '#3fb950', border: '1px solid rgba(63,185,80,0.35)' }}>
+                  Previewing the proposed summary (not yet live). Remove <code>?summary=proposed</code> from the URL to see the current version.
+                </div>
+              )}
 
               {hasSummary ? (
                 <>
@@ -1200,7 +1216,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   );
 }
 
-export default async function BookDetailPage({ params, tenantContext }: PageProps) {
+export default async function BookDetailPage({ params, tenantContext, previewProposed = false }: PageProps) {
   const { id } = await params;
   const ctx = tenantContext ?? null;
   const embedPolicy = getEmbedUiPolicy(ctx);
@@ -1239,7 +1255,7 @@ export default async function BookDetailPage({ params, tenantContext }: PageProp
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} previewProposed={previewProposed} />
       </Suspense>
       {!isEmbedded && <SignUpCTA />}
     </div>
