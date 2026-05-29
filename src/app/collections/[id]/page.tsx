@@ -22,6 +22,7 @@ import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
 import { authorUrl } from '@/lib/slugify';
+import { ObjectId } from 'mongodb';
 
 // ISR: rebuild at most once per day
 export const revalidate = 86400;
@@ -126,7 +127,7 @@ function linkBookTitles(
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
   tenantSlug?: string | null,
-  authorStrings: string[] = [],
+  authorLinks: { name: string; href: string }[] = [],
 ): React.ReactNode {
   const matches: { start: number; end: number; title: string; id: string; href?: string }[] = [];
   const usedRanges: [number, number][] = [];
@@ -182,16 +183,13 @@ function linkBookTitles(
   // is ambiguous and skipped. Best-effort prose linking (names appear in many
   // forms — "Galileo", "Bruno", "Descartes" — so we match any unique token).
   const tokenHrefs = new Map<string, Set<string>>();
-  const authorSource = [...allBooks.map(b => b.author), ...authorStrings];
-  for (const author of authorSource) {
-    // Normalise so date/qualifier variants of ONE person collapse to one page:
-    // "Bruno, Giordano, 1548-1600" / "Bruno, Giordano (Nolan)" → "Bruno, Giordano".
-    const a = (author || '').replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').trim().replace(/[,;]\s*$/, '');
-    if (!a) continue;
-    const href = authorUrl(a);
-    if (!href) continue;
+  // authorLinks carry each author string + its CANONICAL author-page href
+  // (resolved via the book's entity), so variants of one person ("Bruno,
+  // Giordano" / "Giordano Bruno") share one href and survive the dedup below.
+  for (const { name, href } of authorLinks) {
+    if (!name || !href) continue;
     const seenInThisAuthor = new Set<string>();
-    for (const raw of a.replace(/\([^)]*\)/g, '').split(/[\s,;|]+/)) {
+    for (const raw of name.replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').split(/[\s,;|]+/)) {
       const tok = raw.trim().toLowerCase();
       if (tok.length < 5 || seenInThisAuthor.has(tok)) continue;
       seenInThisAuthor.add(tok);
@@ -640,13 +638,31 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   const isCatalogCollection = (catalogEditionCount ?? 0) > 0;
 
   // For catalogue collections, the description names many authors (Bruno,
-  // Galileo, …) — link them to their author pages. `books` is only a compact
-  // subset, so pull the full distinct author list for the description linker.
-  let descriptionAuthors: string[] = [];
+  // Galileo, …) — link them to their CANONICAL author page. Resolve each
+  // distinct author string → its book's entity → canonical name → canonical
+  // slug, so name-order variants of one person ("Bruno, Giordano" / "Giordano
+  // Bruno") share a single href (this is what the canonical-author relink in
+  // #2180 enables). Falls back to the raw string slug when unlinked.
+  let descriptionAuthorLinks: { name: string; href: string }[] = [];
   if (isCatalogCollection) {
     try {
       const db = await getReadDb();
-      descriptionAuthors = (await db.collection('books').distinct('author', { collections: id })) as string[];
+      const pairs = await db.collection('books').aggregate([
+        { $match: { collections: id, author: { $type: 'string', $ne: '' } } },
+        { $group: { _id: '$author', ent: { $first: '$author_entity_id' } } },
+      ]).toArray();
+      const entIds = [...new Set(pairs.map(p => p.ent).filter(Boolean).map(String))];
+      const entDocs = entIds.length
+        ? await db.collection('entities').find(
+            { _id: { $in: entIds.filter(s => ObjectId.isValid(s)).map(s => new ObjectId(s)) } },
+            { projection: { canonical_name: 1, name: 1 } }).toArray()
+        : [];
+      const entName = new Map(entDocs.map(e => [String(e._id), e.canonical_name || e.name]));
+      descriptionAuthorLinks = pairs.flatMap(p => {
+        const canon = p.ent ? entName.get(String(p.ent)) : null;
+        const href = authorUrl(canon || (p._id as string));
+        return href ? [{ name: p._id as string, href }] : [];
+      });
     } catch { /* non-fatal — description just won't gain author links */ }
   }
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
@@ -1099,7 +1115,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             <div className="max-w-4xl">
               {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthors)}
+                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks)}
                 </p>
               ))}
             </div>
