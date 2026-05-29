@@ -181,8 +181,7 @@ function linkBookTitles(
   // from the collection's book authors; a token mapping to more than one author
   // is ambiguous and skipped. Best-effort prose linking (names appear in many
   // forms — "Galileo", "Bruno", "Descartes" — so we match any unique token).
-  const tokenHref = new Map<string, string>();
-  const tokenCount = new Map<string, number>();
+  const tokenHrefs = new Map<string, Set<string>>();
   const authorSource = [...allBooks.map(b => b.author), ...authorStrings];
   for (const author of authorSource) {
     const a = (author || '').trim();
@@ -194,12 +193,13 @@ function linkBookTitles(
       const tok = raw.trim().toLowerCase();
       if (tok.length < 5 || seenInThisAuthor.has(tok)) continue;
       seenInThisAuthor.add(tok);
-      tokenCount.set(tok, (tokenCount.get(tok) || 0) + 1);
-      if (!tokenHref.has(tok)) tokenHref.set(tok, href);
+      if (!tokenHrefs.has(tok)) tokenHrefs.set(tok, new Set());
+      tokenHrefs.get(tok)!.add(href);
     }
   }
-  for (const [tok, href] of tokenHref) {
-    if ((tokenCount.get(tok) || 0) > 1) continue; // ambiguous across authors
+  for (const [tok, hrefs] of tokenHrefs) {
+    if (hrefs.size !== 1) continue; // maps to >1 distinct author page → ambiguous
+    const href = [...hrefs][0];
     const escaped = tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
     let match;
