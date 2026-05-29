@@ -37,6 +37,7 @@ export interface CompareResult {
 export interface CompareResponse {
   query: string;
   tenant: string;
+  scope: 'tenant' | 'global';
   count: number;
   ladder: CompareResult[];
   rrf: CompareResult[];
@@ -76,7 +77,7 @@ function ladderCompare(query: string) {
 
 export async function compareSearch(
   query: string,
-  tenantId: string,
+  tenantId: string | null,   // null = global (whole Source Library, no tenant filter)
   tenantSlug: string,
   perColumn = 12,
 ): Promise<CompareResponse> {
@@ -93,7 +94,7 @@ export async function compareSearch(
       { $project: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } },
     ], { maxTimeMS: 8000 }).toArray().catch(() => [] as any[]),
     semanticBookSearch(matchQuery, 25).catch(() => [] as any[]),
-    semanticPageSearchGlobal(matchQuery, 20, { tenantId, maxPerBook: 2 }).catch(() => [] as any[]),
+    semanticPageSearchGlobal(matchQuery, 20, { tenantId: tenantId ?? undefined, maxPerBook: 2 }).catch(() => [] as any[]),
   ]);
 
   // Single tenant-scoped book-metadata join — the tenant purity gate. Any hit
@@ -106,7 +107,7 @@ export async function compareSearch(
   ])];
   const bookDocs = allBookIds.length > 0
     ? await db.collection('books')
-        .find({ id: { $in: allBookIds }, tenantId, visible: true, pages_count: { $gt: 0 } })
+        .find({ id: { $in: allBookIds }, visible: true, pages_count: { $gt: 0 }, ...(tenantId ? { tenantId } : {}) })
         .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, reading_summary: 1, summary: 1, quality_score: 1 })
         .toArray()
     : [];
@@ -167,5 +168,5 @@ export async function compareSearch(
     return ladder(a, b);
   }).slice(0, perColumn);
 
-  return { query, tenant: tenantSlug, count: all.length, ladder: ladderOrder, rrf: rrfOrder };
+  return { query, tenant: tenantSlug, scope: tenantId ? 'tenant' : 'global', count: all.length, ladder: ladderOrder, rrf: rrfOrder };
 }

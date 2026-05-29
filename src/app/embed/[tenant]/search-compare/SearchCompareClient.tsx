@@ -18,6 +18,7 @@ interface CompareResult {
 interface CompareResponse {
   query: string;
   tenant: string;
+  scope: 'tenant' | 'global';
   count: number;
   ladder: CompareResult[];
   rrf: CompareResult[];
@@ -38,6 +39,7 @@ type Winner = 'current' | 'new' | 'tie' | null;
 
 export default function SearchCompareClient({ tenant }: { tenant: string }) {
   const [query, setQuery] = useState('');
+  const [restrictToTenant, setRestrictToTenant] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<CompareResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -46,13 +48,14 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
   const [note, setNote] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  async function runSearch(q: string) {
+  async function runSearch(q: string, restrict: boolean = restrictToTenant) {
     const trimmed = q.trim();
     if (trimmed.length < 2) return;
     setLoading(true); setError(null); setData(null);
     setThumbs({}); setWinner(null); setNote(''); setSubmitted(false);
     try {
-      const res = await fetch(`/api/search/compare?q=${encodeURIComponent(trimmed)}&tenant=${encodeURIComponent(tenant)}`);
+      const scope = restrict ? 'tenant' : 'global';
+      const res = await fetch(`/api/search/compare?q=${encodeURIComponent(trimmed)}&tenant=${encodeURIComponent(tenant)}&scope=${scope}`);
       const json = await res.json();
       if (!res.ok) { setError(json.error || 'Search failed'); return; }
       setData(json);
@@ -86,7 +89,7 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
       await fetch('/api/search/compare/vote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tenant, query: data.query, winner, note: note || undefined, thumbs: thumbArr }),
+        body: JSON.stringify({ tenant, scope: data.scope, query: data.query, winner, note: note || undefined, thumbs: thumbArr }),
       });
       setSubmitted(true);
     } catch {
@@ -120,6 +123,21 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
         </button>
       </form>
 
+      <label className="mb-4 flex w-fit cursor-pointer items-center gap-2 text-sm text-stone-700">
+        <input
+          type="checkbox"
+          checked={restrictToTenant}
+          onChange={(e) => {
+            const next = e.target.checked;
+            setRestrictToTenant(next);
+            if (query.trim().length >= 2) runSearch(query, next); // re-run with new scope
+          }}
+          className="h-4 w-4 rounded border-stone-300"
+        />
+        Restrict to {tenant.toUpperCase()} books only
+        <span className="text-xs text-stone-400">(uncheck to search all of Source Library)</span>
+      </label>
+
       <div className="mb-8 flex flex-wrap gap-2 text-xs">
         <span className="text-stone-500">Try:</span>
         {EXAMPLE_QUERIES.map((q) => (
@@ -133,7 +151,11 @@ export default function SearchCompareClient({ tenant }: { tenant: string }) {
 
       {data && (
         <>
-          <p className="mb-3 text-sm text-stone-500">{data.count} result{data.count === 1 ? '' : 's'} for “{data.query}”</p>
+          <p className="mb-3 text-sm text-stone-500">
+            {data.count} result{data.count === 1 ? '' : 's'} for “{data.query}”
+            {' · '}
+            <span className="font-medium text-stone-600">{data.scope === 'tenant' ? `${tenant.toUpperCase()} only` : 'all of Source Library'}</span>
+          </p>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <Column label="Current" sub="how search works today" results={data.ladder} column="current" thumbs={thumbs} onThumb={toggleThumb} />
             <Column label="New (RRF)" sub="the proposed ordering" results={data.rrf} column="new" thumbs={thumbs} onThumb={toggleThumb} />

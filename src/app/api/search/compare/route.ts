@@ -12,6 +12,10 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const query = (searchParams.get('q') || '').trim();
   const tenantSlug = (searchParams.get('tenant') || '').trim();
+  // scope=global searches the whole Source Library; default 'tenant' restricts
+  // to the tenant's corpus. Global is an intentional internal-eval option on
+  // this librarian tool — it is NOT the public reading room.
+  const scope = searchParams.get('scope') === 'global' ? 'global' : 'tenant';
 
   if (query.length < 2) {
     return NextResponse.json({ error: 'Query must be at least 2 characters' }, { status: 400 });
@@ -25,7 +29,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const result = await compareSearch(query, tenantId, tenantSlug);
+    const result = await compareSearch(query, scope === 'global' ? null : tenantId, tenantSlug);
     return NextResponse.json(result, {
       headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' },
     });

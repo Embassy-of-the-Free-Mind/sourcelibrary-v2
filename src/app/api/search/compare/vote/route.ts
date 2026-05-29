@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
   await db.collection('search_compare_votes').insertOne({
     tenant: tenantSlug,
     tenantId,
+    scope: body?.scope === 'global' ? 'global' : 'tenant',  // which corpus the comparison ran against
     query,
     winner,                                    // which ranking the librarian preferred
     note: typeof body?.note === 'string' ? body.note.slice(0, 1000) : undefined,
