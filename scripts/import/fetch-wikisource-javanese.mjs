@@ -19,10 +19,14 @@
  */
 import { mkdirSync, writeFileSync } from 'fs';
 import { parseArgs } from 'util';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const { values: args } = parseArgs({ options: {
   work: { type: 'string' }, search: { type: 'string' }, max: { type: 'string', default: '20' },
+  import: { type: 'boolean', default: false }, publish: { type: 'boolean', default: false },
 } });
+const DO_IMPORT = args.import;
+let mongo = null, db = null;
 const API = 'https://jv.wikisource.org/w/api.php';
 const OUT = 'scripts/import/wikisource-staged';
 mkdirSync(OUT, { recursive: true });
@@ -64,11 +68,49 @@ async function stageWork(title) {
   const file = `${OUT}/${slugify(title)}.json`;
   writeFileSync(file, JSON.stringify(doc, null, 2));
   console.log(`  staged "${title}": ${parts.length} part(s), ${totalChars.toLocaleString()} chars -> ${file}`);
+  if (DO_IMPORT) await createTextBook(doc);
   return { title, parts: parts.length, chars: totalChars };
 }
 
+// Create a content_type:'text' book — pages carry romanized text, no images.
+// Renders via TextReader. No pipeline_auto (terminal) so the OCR cron leaves it alone.
+async function createTextBook(doc) {
+  if (!doc.parts.length || doc.total_chars < 500) { console.log(`    (skip import: too little text)`); return; }
+  const fingerprint = 'wikisource:' + slugify(doc.work);
+  const existing = await db.collection('books').findOne({ source_fingerprint: fingerprint });
+  if (existing) { console.log(`    (skip import: already exists ${existing.slug})`); return; }
+  const bookId = new ObjectId(); const now = new Date();
+  let slug = slugify(doc.work), n = 1;
+  while (await db.collection('books').findOne({ slug })) { slug = `${slugify(doc.work)}-${++n}`; }
+  const pageDocs = doc.parts.map((p, i) => ({
+    _id: new ObjectId(), id: new ObjectId().toHexString(), book_id: bookId.toHexString(),
+    page_number: i + 1,
+    part_title: p.title === doc.work ? null : p.title.replace(doc.work + '/', ''),
+    transliteration: { data: p.text, script: 'javanese', source: 'wikisource', model: 'human-wikisource', updated_at: now },
+    ocr: { data: p.text, language: 'jv', source: 'wikisource', updated_at: now },
+    created_at: now, updated_at: now,
+  }));
+  await db.collection('books').insertOne({
+    _id: bookId, id: bookId.toHexString(), slug,
+    title: doc.work, display_title: doc.work, author: 'Anonymous',
+    language: 'Javanese', published: null,
+    content_type: 'text', resource_type: 'text',
+    collections: ['javanese-kraton'], categories: ['javanese-literature'],
+    pages_count: pageDocs.length, pages_ocr: 0, pages_translated: 0,
+    image_source: { provider: 'wikisource', provider_name: 'Wikisource (jv.wikisource.org)', source_url: doc.source_url, license: doc.license, attribution: 'Wikisource contributors (CC-BY-SA); underlying work public domain', access_date: now },
+    metadata: { source: 'jv.wikisource.org', script: 'romanized Javanese', total_chars: doc.total_chars },
+    source_fingerprint: fingerprint,
+    status: args.publish ? 'published' : 'imported', hidden: !args.publish, visible: !!args.publish,
+    pipeline_auto: { status: 'complete', ocr_deferred: true, ocr_deferred_reason: 'text-only work (romanized Javanese); English translation is a separate text-translate pass', source: 'wikisource-text-import', last_updated: now },
+    created_at: now, updated_at: now,
+  });
+  await db.collection('pages').insertMany(pageDocs);
+  console.log(`    ✓ imported text book: /book/${slug} (${pageDocs.length} parts)${args.publish ? ' [PUBLISHED]' : ' [hidden]'}`);
+}
+
 async function main() {
-  if (args.work) { await stageWork(args.work); return; }
+  if (DO_IMPORT) { mongo = new MongoClient(process.env.MONGODB_URI); await mongo.connect(); db = mongo.db('bookstore'); }
+  if (args.work) { await stageWork(args.work); if (mongo) await mongo.close(); return; }
   if (args.search) {
     const r = await api({ action: 'query', list: 'search', srsearch: args.search, srlimit: args.max, srnamespace: '0' });
     const hits = (r.query?.search || []).map(h => h.title);
@@ -77,6 +119,7 @@ async function main() {
     for (const t of hits) { try { catalog.push(await stageWork(t)); } catch (e) { console.log(`  ✗ ${t}: ${e.message}`); } }
     writeFileSync(`${OUT}/_catalog.json`, JSON.stringify(catalog, null, 2));
     console.log(`\ncatalog: ${catalog.length} works staged`);
+    if (mongo) await mongo.close();
     return;
   }
   console.error('pass --work "<title>" or --search "<term>" [--max N]');
