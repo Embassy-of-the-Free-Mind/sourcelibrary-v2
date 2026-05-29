@@ -10,6 +10,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
+import IndexCatalogBrowser from '@/components/collections/IndexCatalogBrowser';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl, tenantBookUrl } from '@/lib/slugify';
@@ -1210,6 +1211,12 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             )}
           </div>
         )}
+
+        {/* Index Librorum Prohibitorum catalogue browser — self-gates (renders
+            only for collections that have index_catalogs editions). */}
+        <React.Suspense fallback={null}>
+          <IndexCatalogBrowser collectionSlug={id} />
+        </React.Suspense>
 
         {/* All Books — client component handles compact → expanded transition */}
         <CollectionAllBooks
