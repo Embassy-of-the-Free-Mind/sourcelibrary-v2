@@ -126,6 +126,7 @@ function linkBookTitles(
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
   tenantSlug?: string | null,
+  authorStrings: string[] = [],
 ): React.ReactNode {
   const matches: { start: number; end: number; title: string; id: string; href?: string }[] = [];
   const usedRanges: [number, number][] = [];
@@ -182,8 +183,9 @@ function linkBookTitles(
   // forms — "Galileo", "Bruno", "Descartes" — so we match any unique token).
   const tokenHref = new Map<string, string>();
   const tokenCount = new Map<string, number>();
-  for (const book of allBooks) {
-    const a = (book.author || '').trim();
+  const authorSource = [...allBooks.map(b => b.author), ...authorStrings];
+  for (const author of authorSource) {
+    const a = (author || '').trim();
     if (!a) continue;
     const href = authorUrl(a);
     if (!href) continue;
@@ -634,6 +636,17 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   const { count: catalogEditionCount } = await supabase
     .from('index_catalogs').select('id', { count: 'exact', head: true }).eq('collection_slug', id);
   const isCatalogCollection = (catalogEditionCount ?? 0) > 0;
+
+  // For catalogue collections, the description names many authors (Bruno,
+  // Galileo, …) — link them to their author pages. `books` is only a compact
+  // subset, so pull the full distinct author list for the description linker.
+  let descriptionAuthors: string[] = [];
+  if (isCatalogCollection) {
+    try {
+      const db = await getReadDb();
+      descriptionAuthors = (await db.collection('books').distinct('author', { collections: id })) as string[];
+    } catch { /* non-fatal — description just won't gain author links */ }
+  }
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const isArtCollection = collection.collection_type === 'visual_art';
   const itemLabel = isArtCollection ? 'works' : 'books';
@@ -1084,7 +1097,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             <div className="max-w-4xl">
               {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug)}
+                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthors)}
                 </p>
               ))}
             </div>
