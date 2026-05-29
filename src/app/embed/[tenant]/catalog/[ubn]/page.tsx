@@ -490,7 +490,7 @@ export default async function CatalogEntryPage({ params }: Props) {
                 </dl>
 
                 {slBook.reading_summary?.overview && (
-                  <AISection>
+                  <AISection kind="ai-summary-catalog">
                     <p className="text-sm text-secondary leading-relaxed mb-4 italic">
                       {slBook.reading_summary.overview.length > 380
                         ? slBook.reading_summary.overview.slice(0, 380) + '…'
