@@ -460,6 +460,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
+              // Tenant scope: match_books_semantic is GLOBAL (book_embeddings has
+              // no tenant_id column, so the RPC can't filter), so a tenant request
+              // must re-apply the tenant filter here or global books leak into the
+              // partner reading room (Tenant Subdomain Lockdown). See keyword
+              // page-lane materialization which already does this.
+              ...(tenantId ? { tenantId } : {}),
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
@@ -528,6 +534,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
+              // match_semantic already filters by filter_tenant_id, so this is
+              // defense-in-depth — but keep it consistent with the book lane so a
+              // future RPC change can't silently leak cross-tenant pages.
+              ...(tenantId ? { tenantId } : {}),
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
