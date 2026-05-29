@@ -24,6 +24,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
 import RelatedEditions from '@/components/book/RelatedEditions';
+import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
 import PublishEditionButton from '@/components/editions/PublishEditionButton';
@@ -1001,6 +1002,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
                     <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                  </Suspense>
+                )}
+                {embedPolicy.showIndexCatalogStatus && (
+                  <Suspense fallback={null}>
+                    <IndexCatalogChip
+                      bookIds={[(book as unknown as { _id?: string })._id, book.id]}
+                      authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null}
+                    />
                   </Suspense>
                 )}
               </BibliographicInfo>

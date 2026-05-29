@@ -33,6 +33,9 @@ export interface EmbedUiPolicy {
   // them in embed mode is the simplest way to guarantee no non-tenant content leaks.
   showRelatedEditions: boolean;
   showAuthorCrossReference: boolean;
+  // "Banned by the Index" chip links to the GLOBAL index-librorum-prohibitorum
+  // collection and reads cross-library catalog data — hide in embed/tenant views.
+  showIndexCatalogStatus: boolean;
   // Gallery rendering pulls images keyed off `held_by` / provider, not the
   // active tenant. Disabling cross-tenant images keeps embed gallery views
   // strictly within the tenant's holdings.
@@ -54,6 +57,7 @@ export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
       showGalleryImages: true,
       showRelatedEditions: true,
       showAuthorCrossReference: true,
+      showIndexCatalogStatus: true,
       showGalleryCrossTenantImages: true,
     };
   }
@@ -69,6 +73,7 @@ export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
     showGalleryImages: false,
     showRelatedEditions: false,
     showAuthorCrossReference: false,
+    showIndexCatalogStatus: false,
     showGalleryCrossTenantImages: false,
   };
 }
