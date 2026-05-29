@@ -84,16 +84,23 @@ async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
 
 // Download a URL to a local file with retry-once (BL/Wikimedia large PDFs 500 on first render).
 async function downloadPdf(url, destPath) {
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    const res = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary-importer/1.0 (https://sourcelibrary.org; library ingest)' } });
-    if (res.ok) {
-      const buf = Buffer.from(await res.arrayBuffer());
-      writeFileSync(destPath, buf);
-      return buf.length;
-    }
-    if (attempt < 3) { await new Promise(r => setTimeout(r, 4000 * attempt)); continue; }
-    throw new Error(`download failed ${res.status} after ${attempt} attempts: ${url}`);
+  // b-nice's PDF endpoint is slow/flaky (8s+ TTFB) and drops connections mid-stream,
+  // surfacing as a thrown "fetch failed" (not a bad HTTP status). Retry on BOTH a
+  // thrown network error and a non-OK status, with generous backoff.
+  let lastErr;
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      const res = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary-importer/1.0 (https://sourcelibrary.org; library ingest)' } });
+      if (res.ok) {
+        const buf = Buffer.from(await res.arrayBuffer());
+        writeFileSync(destPath, buf);
+        return buf.length;
+      }
+      lastErr = new Error(`HTTP ${res.status}`);
+    } catch (e) { lastErr = e; }
+    if (attempt < 5) await new Promise(r => setTimeout(r, 6000 * attempt));
   }
+  throw new Error(`download failed after 5 attempts (${lastErr?.message}): ${url}`);
 }
 
 function pdfPageCount(pdfPath) {
