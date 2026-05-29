@@ -64,8 +64,12 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ id: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
   tenantContext?: TenantContext | null;
+  // Review preview: when true, render the staged summary_candidate instead of
+  // the live summary. Set only by the dynamic /book/[id]/preview route — NOT
+  // read from searchParams here, because this page is ISR/static (revalidate)
+  // and reading request-time query params would force a render error.
+  previewProposed?: boolean;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -1212,13 +1216,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   );
 }
 
-export default async function BookDetailPage({ params, searchParams, tenantContext }: PageProps) {
+export default async function BookDetailPage({ params, tenantContext, previewProposed = false }: PageProps) {
   const { id } = await params;
-  const sp = searchParams ? await searchParams : {};
-  // Review preview: ?summary=proposed renders the staged summary_candidate in
-  // the live layout so a reviewer can see the proposed "About This Book" in
-  // context before it is promoted. No effect for normal visitors.
-  const previewProposed = sp.summary === 'proposed';
   const ctx = tenantContext ?? null;
   const embedPolicy = getEmbedUiPolicy(ctx);
   const isEmbedded = ctx?.isEmbedded ?? false;
