@@ -1,0 +1,113 @@
+{
+  "$comment": "MCP search regression set — see .claude/handoffs/2026-05-29-mcp-search-bug-report.md. Generated from Cowork test session 2026-05-29. Used by tests/smoke/mcp-search.test.ts.",
+  "author_work_discovery": {
+    "tool": "search_library",
+    "expectation": "Top result should be a book by/about the named author or work.",
+    "queries": [
+      { "q": "Paracelsus",          "expectAuthorContains": "Paracelsus" },
+      { "q": "Li Shizhen",          "expectAuthorContains": "Li Shizhen" },
+      { "q": "Albertus Magnus",     "expectAuthorContains": "Albertus" },
+      { "q": "Andreae",             "expectAuthorContains": "Andreae" },
+      { "q": "d'Espagnet",          "expectAuthorContains": "Espagnet" },
+      { "q": "Jabir ibn Hayyan",    "expectAuthorContains": "Jabir" },
+      { "q": "Bai Yuchan",          "expectAuthorContains": "Bai Yuchan" },
+      { "q": "Ge Hong",             "expectAuthorContains": "Ge Hong" },
+      { "q": "Atalanta fugiens",    "expectTitleContains": "Atalanta" },
+      { "q": "Rasarnava",           "expectTitleContains": "Rasarnava" },
+      { "q": "Bencao Gangmu",       "expectTitleContains": "Bencao" },
+      { "q": "Religio Medici",      "expectTitleContains": "Religio" },
+      { "q": "Institutio Oratoria", "expectTitleContains": "Institut" }
+    ]
+  },
+  "modern_english_concepts": {
+    "tool_a": "search_translations",
+    "tool_b": "search_concept",
+    "expectation": "At least one tool returns >= 1 result; relevance to concept is preserved.",
+    "queries": [
+      "memory palace technique of loci",
+      "harmony of the spheres",
+      "active intellect",
+      "transmutation",
+      "elixir of longevity",
+      "mercury and sulfur",
+      "social contract",
+      "distributed cognition",
+      "chemical wedding",
+      "union of opposites yin yang",
+      "subtle body channels of energy"
+    ]
+  },
+  "tradition_vocabulary": {
+    "tool": "search_translations",
+    "expectation": "At least one passage returned with snippet_type 'translation' or 'ocr'.",
+    "queries": [
+      "parada",
+      "suta",
+      "rasendra",
+      "bindu",
+      "jing",
+      "neidan",
+      "iksīr",
+      "kīmiyā",
+      "sahq",
+      "hastamaithuna",
+      "shouyin",
+      "mollities",
+      "tribade",
+      "ouroboros"
+    ]
+  },
+  "latin_bias_probe": {
+    "tool": "search_concept",
+    "$comment": "Bug 5: filter mechanically works but cannot create matches the embedding never produced.",
+    "cases": [
+      { "q": "elixir of longevity immortality",         "filter": null,                                                                          "expectLanguagesIncludeAny": ["Chinese", "Sanskrit", "Arabic", "Latin"] },
+      { "q": "elixir of longevity immortality",         "filter": { "languages": ["Sanskrit", "Arabic", "Chinese", "Tibetan"] },                  "expectLanguagesIncludeAny": ["Sanskrit", "Arabic", "Chinese", "Tibetan"] },
+      { "q": "elixir of longevity immortality",         "filter": { "exclude_languages": ["Latin", "English", "French", "German", "Greek"] },    "expectLanguagesIncludeAny": ["Sanskrit", "Arabic", "Chinese", "Tibetan"] },
+      { "q": "mercury and sulfur principle of metals",  "filter": { "languages": ["Sanskrit", "Arabic", "Chinese"] },                             "knownEmptyDueToBug5": true },
+      { "q": "union of opposites yin yang",             "filter": { "language": "Chinese" },                                                     "knownEmptyDueToBug5": true },
+      { "q": "subtle body channels of energy",          "filter": { "language": "Sanskrit" },                                                    "expectLanguagesIncludeAny": ["Sanskrit"] }
+    ]
+  },
+  "edge_cases": {
+    "tool": "search_library",
+    "cases": [
+      { "q": "a",                "expect": "graceful_empty_or_http_400_until_bug_4_fixed" },
+      { "q": "the",              "expect": "noisy_low_signal" },
+      { "q": "alchmy",           "expect": "fuzzy_match_returns_alchemy_books" },
+      { "q": "paracelus",        "expect": "fuzzy_match_returns_paracelsus" },
+      { "q": "xyzqwabc nonsense","expect": "and_semantics_should_return_zero_(currently_returns_~34_due_to_bug_3)" },
+      { "q": "\"chemical wedding\"", "expect": "phrase_match_should_narrow_(currently_no_op_due_to_bug_3)" },
+      { "q": "\"social contract\"",  "expect": "phrase_match_should_narrow_(currently_no_op_due_to_bug_3)" },
+      { "q": "kimiya",           "expect": "should_overlap_substantially_with_kīmiyā" },
+      { "q": "kīmiyā",           "expect": "should_overlap_substantially_with_kimiya" }
+    ]
+  },
+  "images": {
+    "tool": "search_images",
+    "expectation": "At least 1 result; for symbolic queries, ranking should prefer the named motif.",
+    "queries": [
+      "ouroboros",
+      "tree of life",
+      "sephirot",
+      "mandala",
+      { "q": "green lion", "knownFailureDueToBug6": "returns ordinary lions, not the alchemical motif" },
+      "pelican",
+      "hexagram",
+      "alchemical king queen"
+    ]
+  },
+  "p0_regressions": {
+    "$comment": "These are the exact bugs PR #2162 fixed. The smoke test asserts on these to catch regressions.",
+    "bug_1_default_limit_zero_returned": {
+      "tool": "search_translations",
+      "queries": ["neidan", "transmutation", "social contract", "harmony of the spheres", "chemical wedding", "kīmiyā"],
+      "assert": "when total_matches > 0, returned must also be > 0 (no silent empty-snippet filter on default limit)"
+    },
+    "bug_2_total_matches_stability": {
+      "tool": "search_translations",
+      "queries": ["neidan", "transmutation"],
+      "assert": "three identical calls must return identical total_matches, OR partial:true with degraded_lanes set"
+    }
+  }
+}
