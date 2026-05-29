@@ -20,6 +20,8 @@ import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-uti
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
+import { supabase } from '@/lib/supabase';
+import { authorUrl } from '@/lib/slugify';
 
 // ISR: rebuild at most once per day
 export const revalidate = 86400;
@@ -124,8 +126,9 @@ function linkBookTitles(
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
   tenantSlug?: string | null,
+  authorStrings: string[] = [],
 ): React.ReactNode {
-  const matches: { start: number; end: number; title: string; id: string }[] = [];
+  const matches: { start: number; end: number; title: string; id: string; href?: string }[] = [];
   const usedRanges: [number, number][] = [];
 
   // 1. Explicit mentions first (highest priority — exact text from description)
@@ -174,6 +177,44 @@ function linkBookTitles(
     }
   }
 
+  // 3. Author names → author pages. Collect distinctive name tokens (≥5 chars)
+  // from the collection's book authors; a token mapping to more than one author
+  // is ambiguous and skipped. Best-effort prose linking (names appear in many
+  // forms — "Galileo", "Bruno", "Descartes" — so we match any unique token).
+  const tokenHrefs = new Map<string, Set<string>>();
+  const authorSource = [...allBooks.map(b => b.author), ...authorStrings];
+  for (const author of authorSource) {
+    // Normalise so date/qualifier variants of ONE person collapse to one page:
+    // "Bruno, Giordano, 1548-1600" / "Bruno, Giordano (Nolan)" → "Bruno, Giordano".
+    const a = (author || '').replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').trim().replace(/[,;]\s*$/, '');
+    if (!a) continue;
+    const href = authorUrl(a);
+    if (!href) continue;
+    const seenInThisAuthor = new Set<string>();
+    for (const raw of a.replace(/\([^)]*\)/g, '').split(/[\s,;|]+/)) {
+      const tok = raw.trim().toLowerCase();
+      if (tok.length < 5 || seenInThisAuthor.has(tok)) continue;
+      seenInThisAuthor.add(tok);
+      if (!tokenHrefs.has(tok)) tokenHrefs.set(tok, new Set());
+      tokenHrefs.get(tok)!.add(href);
+    }
+  }
+  for (const [tok, hrefs] of tokenHrefs) {
+    if (hrefs.size !== 1) continue; // maps to >1 distinct author page → ambiguous
+    const href = [...hrefs][0];
+    const escaped = tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+      if (!usedRanges.some(([s, e]) => start < e && end > s)) {
+        matches.push({ start, end, title: match[0], id: `author-${tok}`, href });
+        usedRanges.push([start, end]);
+      }
+    }
+  }
+
   if (matches.length === 0) return text;
   matches.sort((a, b) => a.start - b.start);
 
@@ -182,7 +223,7 @@ function linkBookTitles(
   for (const m of matches) {
     if (m.start > lastIdx) parts.push(text.slice(lastIdx, m.start));
     parts.push(
-      <Link key={m.id + '-' + m.start} href={tenantBookUrl({ id: m.id }, tenantSlug)} className="text-accent-rust hover:underline italic">
+      <Link key={m.id + '-' + m.start} href={m.href ?? tenantBookUrl({ id: m.id }, tenantSlug)} className="text-accent-rust hover:underline italic">
         {m.title}
       </Link>
     );
@@ -590,6 +631,24 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   if (!data) notFound();
 
   const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
+
+  // Collections that carry an Index catalogue (index_catalogs editions) render
+  // the catalogue browser as their centrepiece — hide the Visual Art section
+  // there so it doesn't compete with the bans listing.
+  const { count: catalogEditionCount } = await supabase
+    .from('index_catalogs').select('id', { count: 'exact', head: true }).eq('collection_slug', id);
+  const isCatalogCollection = (catalogEditionCount ?? 0) > 0;
+
+  // For catalogue collections, the description names many authors (Bruno,
+  // Galileo, …) — link them to their author pages. `books` is only a compact
+  // subset, so pull the full distinct author list for the description linker.
+  let descriptionAuthors: string[] = [];
+  if (isCatalogCollection) {
+    try {
+      const db = await getReadDb();
+      descriptionAuthors = (await db.collection('books').distinct('author', { collections: id })) as string[];
+    } catch { /* non-fatal — description just won't gain author links */ }
+  }
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const isArtCollection = collection.collection_type === 'visual_art';
   const itemLabel = isArtCollection ? 'works' : 'books';
@@ -954,7 +1013,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Gallery section moved above exhibition/featured book */}
 
       {/* Visual Art — artworks tagged to this collection (hidden when exhibition present) */}
-      {artworks.length > 0 && !exhibition?.layout && (
+      {artworks.length > 0 && !exhibition?.layout && !isCatalogCollection && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
@@ -1040,7 +1099,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             <div className="max-w-4xl">
               {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug)}
+                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthors)}
                 </p>
               ))}
             </div>
