@@ -20,6 +20,29 @@
  *   node scripts/backfill-catalog-ustc-sl-links.mjs --all --apply                            # every index
  */
 import { MongoClient } from 'mongodb';
+import { loadAuthority, reconcile } from './lib/author-reconcile.mjs';
+
+// Authority index (entity_aliases) for stem-then-authority reconciliation;
+// loaded once in main() unless --no-reconcile.
+let AUTHORITY = null;
+const NO_RECONCILE = process.argv.includes('--no-reconcile');
+
+// Surname forms to search for one catalog entry: literal author_normalized
+// (+ long-s) plus stem-then-authority expansion. `reconciled` is true when the
+// authority resolved a confident cluster — callers use it to relax the
+// surname-collision year guard (identity is established by name+dates, not by
+// year proximity). See scripts/lib/author-reconcile.mjs.
+function slFormsForEntry(entry) {
+  const lit = (entry.author_normalized || '').toLowerCase();
+  const terms = new Set();
+  let reconciled = false;
+  if (lit) { terms.add(lit); const c = fixLongS(lit).toLowerCase(); if (c !== lit) terms.add(c); }
+  if (AUTHORITY && entry.author) {
+    const rec = reconcile(entry.author, { authority: AUTHORITY, year: entry.condemnation_year });
+    if (rec) { reconciled = true; for (const f of rec.expandedSurnames) terms.add(f.toLowerCase()); }
+  }
+  return { forms: [...terms].filter(t => t.length >= 4), reconciled };
+}
 
 function arg(name, fallback) {
   const i = process.argv.indexOf(name);
@@ -184,13 +207,11 @@ function fixLongS(s) { return (s || '').replace(/f/g, 's').replace(/F/g, 'S'); }
 // ─── USTC fetch cache (per surname) ───────────────────────────────────────
 
 const ustcCache = new Map();
-async function ustcEditionsBySurname(s) {
-  if (!s) return [];
-  if (ustcCache.has(s)) return ustcCache.get(s);
-  const variants = [s];
-  // Try OCR-corrected surname too: "Brandeburgenfis" → "Brandeburgensis"
-  const corrected = fixLongS(s);
-  if (corrected !== s) variants.push(corrected);
+async function ustcEditionsByForms(forms) {
+  if (!forms || !forms.length) return [];
+  const cacheKey = forms.slice().sort().join('|');
+  if (ustcCache.has(cacheKey)) return ustcCache.get(cacheKey);
+  const variants = forms;
 
   const editions = [];
   for (const v of variants) {
@@ -209,7 +230,7 @@ async function ustcEditionsBySurname(s) {
       }
     }
   }
-  ustcCache.set(s, editions);
+  ustcCache.set(cacheKey, editions);
   return editions;
 }
 
@@ -286,42 +307,46 @@ async function getMongo() {
   return mongoClient;
 }
 
-// Fetch SL books in our domain whose author surname-normalises to `s`.
-// Cache per surname to avoid repeated Mongo queries.
+// Fetch SL books whose author matches one of the entry's expanded surname
+// forms (literal + stem-then-authority). Returns { books, reconciled }.
 const slCache = new Map();
-async function slBooksBySurname(s) {
-  if (!s) return [];
-  if (slCache.has(s)) return slCache.get(s);
+async function slBooksForEntry(entry) {
+  const { forms, reconciled } = slFormsForEntry(entry);
+  if (!forms.length) return { books: [], reconciled };
+  const cacheKey = forms.slice().sort().join('|');
+  if (slCache.has(cacheKey)) return { books: slCache.get(cacheKey), reconciled };
   const mc = await getMongo();
   const db = mc.db('bookstore');
-  const variants = [s];
-  const corrected = fixLongS(s);
-  if (corrected !== s) variants.push(corrected);
-  const re = new RegExp(`(^|[^a-z])(${variants.map(v => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'i');
+  // Whole-word match so "pico" doesn't prefix-match "Piccolomini".
+  const re = new RegExp(`(^|[^a-z])(${forms.map(v => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})([^a-z]|$)`, 'i');
   const books = await db.collection('books').find(
     { $or: [{ author: re }, { author_normalized: re }, { canonical_author_normalized: re }],
       visible: { $ne: false },
       resource_type: { $nin: ['artwork', 'emblem', 'image', 'illustration', 'manuscript-fragment'] } },
     { projection: { _id: 1, id: 1, slug: 1, title: 1, author: 1, year: 1 } }
   ).limit(80).toArray();
-  slCache.set(s, books);
-  return books;
+  slCache.set(cacheKey, books);
+  return { books, reconciled };
 }
 
 async function findSlBookFor(entry) {
-  const eds = await slBooksBySurname(entry.author_normalized);
+  const { books: eds, reconciled } = await slBooksForEntry(entry);
   if (!eds.length) return null;
+  // The ±year cap guards against unrelated same-surname authors a century
+  // apart. When the authority cluster has CONFIRMED the identity (reconciled),
+  // that collision risk is already handled — so widen the window to cover
+  // posthumous bans (e.g. Pico d.1494, banned 1632, editions 1496–1601). The
+  // Gemini verifier downstream is the real precision gate.
+  const WINDOW = reconciled ? 250 : 50;
   let best = null;
   for (const b of eds) {
-    // Year cap applies to BOTH opera_omnia and title-overlap paths. Without this
-    // a 1564-banned Reformer's surname matches an unrelated 1660 author. ±50y
-    // window covers reprints during the author's plausible lifetime + a generation.
-    if (entry.condemnation_year && b.year && Math.abs(entry.condemnation_year - b.year) > 50) continue;
+    if (entry.condemnation_year && b.year && Math.abs(entry.condemnation_year - b.year) > WINDOW) continue;
 
     if (entry.scope === 'opera_omnia') {
       const proximity = entry.condemnation_year && b.year ? Math.abs(entry.condemnation_year - b.year) : 9999;
-      if (proximity === 9999 && entry.condemnation_year) continue; // SL book has no year — too risky for opera_omnia
-      if (!best || proximity < best.proximity) best = { book: b, score: 1, proximity, reason: 'opera_omnia' };
+      // SL book with no year is too risky for opera_omnia UNLESS reconciled.
+      if (proximity === 9999 && entry.condemnation_year && !reconciled) continue;
+      if (!best || proximity < best.proximity) best = { book: b, score: 1, proximity, reason: reconciled ? 'opera_omnia+authority' : 'opera_omnia' };
       continue;
     }
     const score = scoreMatch(entry.title, b.title);
@@ -351,11 +376,13 @@ async function backfillIndex(indexId) {
       const e = queue.shift();
       const sn = e.author_normalized;
 
-      // Get USTC candidates: prefer author-based, fall back to title-based
+      // Get USTC candidates: prefer author-based, fall back to title-based.
+      // Author search uses stem-then-authority expanded surname forms.
       let editions = [];
       let matchedVia = 'author';
       if (sn && sn.length >= 3) {
-        editions = await ustcEditionsBySurname(sn);
+        const { forms } = slFormsForEntry(e);
+        editions = await ustcEditionsByForms(forms);
       }
       if (editions.length === 0) {
         // Title-fallback for anonymous OR where author search returned nothing
@@ -489,6 +516,12 @@ async function backfillIndex(indexId) {
 
 async function main() {
   console.log(`Catalog → USTC backfill\nMode: ${APPLY ? 'APPLY' : 'DRY-RUN'}${FORCE ? ' --force' : ''}`);
+
+  if (!NO_RECONCILE) {
+    console.log('Loading entity_aliases authority index (stem-then-authority)…');
+    AUTHORITY = await loadAuthority((path) => supa('GET', path));
+    console.log(`  ${AUTHORITY.clusters.size} clusters indexed.`);
+  }
 
   let indexIds = [];
   if (ALL) {
