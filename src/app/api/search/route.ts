@@ -5,6 +5,7 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
@@ -69,6 +70,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const searchContent = searchParams.get('search_content') !== 'false'; // Default true — only skip page search if explicitly disabled
     const pagesOnly = searchParams.get('pages_only') === 'true'; // Return only page-level results (for MCP passage search)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
+    // Ranking strategy for relevance sort: 'ladder' (legacy heuristic, default)
+    // or 'rrf' (Reciprocal Rank Fusion of the four lanes). Opt-in via ?ranking=rrf
+    // so default production behavior is unchanged while we A/B the fused order.
+    // SEARCH_RANKING_DEFAULT can flip the default later without a code change.
+    const ranking = (searchParams.get('ranking') || process.env.SEARCH_RANKING_DEFAULT || 'ladder').toLowerCase();
+    const useRrf = ranking === 'rrf';
+    const rrfK = Math.max(1, parseInt(searchParams.get('rrf_k') || '60') || 60);
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 500);
     const offset = parseInt(searchParams.get('offset') || '0');
 
@@ -364,6 +372,19 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Surface if the page lane hit its 8s ceiling — likely degraded results.
     const pageSearchHitTimeout = pageResult.ms >= 8000 && pageDocs.length === 0;
 
+    // Reciprocal Rank Fusion scores, keyed by the same result.id scheme used
+    // when results are built below (books → book.id, pages → `${book_id}-p${n}`).
+    // Each lane contributes its own ranked order; a book/page surfaced by
+    // several lanes gets summed reciprocal-rank credit. Only used when
+    // ?ranking=rrf — computed unconditionally (cheap, pure) so it's available
+    // to log/compare even on ladder requests.
+    const rrf = rrfScores([
+      bookDocs.map(b => (b as any).id as string),                              // keyword book lane
+      pageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
+      semanticDocs.map(s => (s as any).book_id as string),                    // semantic book lane
+      semanticPageDocs.map(s => `${(s as any).book_id}-p${(s as any).page_number}`), // semantic page lane
+    ], rrfK);
+
     // Process book results
     for (const book of bookDocs) {
       results.push(bookToResult(book as unknown as Book));
@@ -593,16 +614,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       // Priority: books > pages, title match, original language, older editions, quality
       const ENGLISH = 'English';
       const queryLower = matchQuery.toLowerCase();
+      const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
 
-      results.sort((a, b) => {
+      // The legacy heuristic ladder. Used directly for ranking=ladder, and as
+      // the tiebreaker when ranking=rrf (so equal fused scores still get a
+      // deterministic, sensible order).
+      const ladderCompare = (a: SearchResult, b: SearchResult): number => {
         // 1. Books before pages
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
 
         // 2. Title/author match (strongest signal)
         // Check both title and display_title, and for multi-word queries
         // count how many query words appear across title+author fields
-        const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
-
         const aAllText = `${(a.display_title || '').toLowerCase()} ${a.title.toLowerCase()} ${(a.author || '').toLowerCase()}`;
         const bAllText = `${(b.display_title || '').toLowerCase()} ${b.title.toLowerCase()} ${(b.author || '').toLowerCase()}`;
 
@@ -632,7 +655,21 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aScore = (a as any).quality_score || 0;
         const bScore = (b as any).quality_score || 0;
         return bScore - aScore;
-      });
+      };
+
+      if (useRrf) {
+        // Reciprocal Rank Fusion: primary sort by fused lane score (desc),
+        // ladder as the deterministic tiebreaker. Unlike the ladder, this lets
+        // a strongly-cross-confirmed page outrank a weakly-matched book.
+        results.sort((a, b) => {
+          const sa = rrf.get(a.id) ?? 0;
+          const sb = rrf.get(b.id) ?? 0;
+          if (sb !== sa) return sb - sa;
+          return ladderCompare(a, b);
+        });
+      } else {
+        results.sort(ladderCompare);
+      }
     }
 
     // Dedup by work_id: keep the first (best-ranked) edition of each work.
@@ -710,7 +747,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,
         has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
-        pages_only: pagesOnly, sort: sortBy,
+        pages_only: pagesOnly, sort: sortBy, ranking: useRrf ? 'rrf' : 'ladder',
       },
     });
     return NextResponse.json({
@@ -719,6 +756,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       offset,
       limit,
       sort: sortBy,
+      ranking: useRrf ? 'rrf' : 'ladder',
       license: {
         spdx: 'CC-BY-SA-4.0',
         url: 'https://creativecommons.org/licenses/by-sa/4.0/',
