@@ -99,6 +99,45 @@ async function embedFn(text, dims = 768) {
   }
 }
 
+// ── Query expansion fn (mirrors the terms half of /api/search/ai-expand) ──
+// Generates period-appropriate reformulations (Latin titles, original-language
+// names, synonyms) so the multiquery variant can RRF-fuse per-term searches.
+const expandCache = new Map();
+async function expandFn(query) {
+  if (expandCache.has(query)) return expandCache.get(query);
+  const prompt = `You expand search queries for Source Library — alchemy, Hermetica, Kabbalah, Rosicrucianism, Neoplatonism, Renaissance natural magic, and early modern science (antiquity through ~1850).
+Query: "${query}"
+Return ONLY a JSON array of 3-5 search terms a visitor wouldn't think of: period-appropriate synonyms, Latin or original-language titles, original-language author names, specific canonical works. No prose, no markdown — just the array.
+Example for "Agrippa on planetary magic": ["De Occulta Philosophia","Cornelius Agrippa von Nettesheim","planetary seals","talismanic correspondences","celestial magic"]`;
+  try {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${geminiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.3, maxOutputTokens: 200 },
+        }),
+        signal: AbortSignal.timeout(15000),
+      },
+    );
+    if (!res.ok) { expandCache.set(query, []); return []; }
+    const data = await res.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const m = text.match(/\[[\s\S]*?\]/);
+    let terms = [];
+    if (m) { try { const p = JSON.parse(m[0]); if (Array.isArray(p)) terms = p.filter(t => typeof t === 'string' && t.length >= 2); } catch { /* parse fail */ } }
+    terms = terms.slice(0, 5);
+    expandCache.set(query, terms);
+    return terms;
+  } catch (err) {
+    console.error(`Expand error: ${err.message}`);
+    expandCache.set(query, []);
+    return [];
+  }
+}
+
 // ── Runner ────────────────────────────────────────────────────────────
 
 async function runOne(variant, query, ctx) {
@@ -165,7 +204,7 @@ async function main() {
 
   await mongoClient.connect();
   const db = mongoClient.db(mongoDb);
-  const ctx = { db, supabase, embedFn };
+  const ctx = { db, supabase, embedFn, expandFn };
 
   console.log(`\nLibrarian Search Eval`);
   console.log(`  Queries:  ${queries.length}${wantedQuery ? ` (filter: ${wantedQuery})` : ''}${wantedCategory ? ` (category: ${wantedCategory})` : ''}`);

@@ -303,6 +303,28 @@ export async function rrfWithFloorVariant(query, ctx, limit = 8) {
   return merged;
 }
 
+// ── ai-expand multiquery: LLM term expansion + per-term RRF fusion ────
+//
+// Measures the contribution of the search page's `ai-expand` layer, which the
+// other variants ignore. Generates 3-5 reformulations (Latin titles, original-
+// language names, synonyms) via ctx.expandFn, runs book-then-page for each, and
+// RRF-fuses them alongside the base keyword+btp+gp lists for the original query.
+// Hypothesis: lifts niche-passage (more formulations surface buried passages)
+// and cross-lingual (original-language terms hit non-English originals) without
+// the verbatim/broad-theme regression plain RRF shows.
+export async function aiExpandMultiqueryVariant(query, ctx, limit = 8) {
+  const terms = ctx.expandFn ? await ctx.expandFn(query) : [];
+  const base = await Promise.all([
+    keywordVariant(query, ctx, 20),
+    bookThenPageVariant(query, ctx, 20),
+    globalPageVariant(query, ctx, 20),
+  ]);
+  const expanded = await Promise.all(
+    terms.map(t => bookThenPage(t, ctx, 20).catch(() => [])),
+  );
+  return rrfMerge([...base, ...expanded], 60, limit);
+}
+
 // ── Variant registry ──────────────────────────────────────────────────
 
 export const VARIANTS = {
@@ -333,5 +355,9 @@ export const VARIANTS = {
   'rrf-floor': {
     description: 'RRF k=20 with graceful fallback to strongest single source',
     fn: rrfWithFloorVariant,
+  },
+  'ai-expand-multiquery': {
+    description: 'LLM query expansion (ai-expand terms) + per-term book-then-page, RRF-fused with base kw+btp+gp (k=60)',
+    fn: aiExpandMultiqueryVariant,
   },
 };
