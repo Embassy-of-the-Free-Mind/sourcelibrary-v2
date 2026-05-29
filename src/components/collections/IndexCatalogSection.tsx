@@ -258,6 +258,16 @@ export default function IndexCatalogSection({ catalogs }: Props) {
                       USTC {e.ustc_sn}
                     </a>
                   ) : null}
+                  {e.source_book_slug && e.source_page != null && (
+                    <Link
+                      href={`/book/${e.source_book_slug}/page/${e.source_page}`}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 border border-stone-300 text-stone-500 rounded hover:bg-stone-100"
+                      title="See this entry on the original scanned page of the printed Index"
+                    >
+                      <BookMarked className="w-3.5 h-3.5" />
+                      In the Index, p.{e.source_page}
+                    </Link>
+                  )}
                 </div>
               </li>
             ))}
