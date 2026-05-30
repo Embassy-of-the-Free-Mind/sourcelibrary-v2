@@ -91,11 +91,52 @@ function canonicalWork(book) {
     .trim();
 }
 
-function buildRow(book, trans, source) {
+// Junk-translator patterns produced by LLM when the book is itself English-original
+// or when no specific translation actually exists. The 2026-05-30 audit found ~50
+// such rows in production from earlier harvest runs (Pordage / Knight / Hakluyt cases
+// where book is English, LLM produced translator="Original Author" or "N/A").
+// "unknown" is intentionally NOT in this list — anonymous early-modern
+// translations are legitimately catalogued with translator='unknown' (e.g.
+// 1688 Diogenes Laertius). Only block the clear LLM-placeholder forms.
+const JUNK_TRANSLATOR_RE = /^(n\/a|not specified|tbd|none|original author|original)$/i;
+const ORIGINAL_AUTHOR_RE = /\b(original author|original compiler)\b/i;
+
+function isEnglishLanguage(language) {
+  if (!language) return false;
+  const l = language.toLowerCase().trim();
+  return l === 'english' || l === 'en' || l === 'eng';
+}
+
+function authorMatchesTranslator(authorRaw, translatorRaw) {
+  if (!authorRaw || !translatorRaw) return false;
+  const norm = s => s.toLowerCase().replace(/\s*\([^)]*\)\s*/g, '').replace(/[,;].*$/, '').trim();
+  return norm(authorRaw) === norm(translatorRaw);
+}
+
+function buildRow(book, trans, source, skipReasons) {
   if (!trans?.english_title) return null;
   const author = canonicalAuthor(book.author);
   const work = canonicalWork(book);
   if (!author || !work) return null;
+
+  // Schema-error guards — see CLAUDE.md "verify-translation invariants" + 2026-05-30 audit
+  if (isEnglishLanguage(book.language)) {
+    skipReasons.english_source++;
+    return null;
+  }
+  if (trans.translator && JUNK_TRANSLATOR_RE.test(trans.translator.trim())) {
+    skipReasons.junk_translator++;
+    return null;
+  }
+  if (trans.translator && ORIGINAL_AUTHOR_RE.test(trans.translator)) {
+    skipReasons.original_author++;
+    return null;
+  }
+  if (authorMatchesTranslator(book.author, trans.translator)) {
+    skipReasons.author_eq_translator++;
+    return null;
+  }
+
   return {
     source,
     author: book.author || author,
@@ -191,6 +232,7 @@ async function main() {
     'translation_verification.validated_translations': 1,
   }).toArray();
 
+  const skipReasons1 = { english_source: 0, junk_translator: 0, original_author: 0, author_eq_translator: 0 };
   const tier1Rows = [];
   for (const b of tier1Books) {
     const v = b.translation_verification || {};
@@ -200,7 +242,7 @@ async function main() {
       const key = normalize(t.english_title);
       if (!key || seenEnTitles.has(key)) continue;  // skip in-book duplicates
       seenEnTitles.add(key);
-      const row = buildRow(b, t, 'sl_ft_catalog_verified');
+      const row = buildRow(b, t, 'sl_ft_catalog_verified', skipReasons1);
       if (row) tier1Rows.push(row);
     }
   }
@@ -213,6 +255,7 @@ async function main() {
     'translation_verification.llm_knowledge_translations': 1,
   }).toArray();
 
+  const skipReasons2 = { english_source: 0, junk_translator: 0, original_author: 0, author_eq_translator: 0 };
   const tier2Rows = [];
   for (const b of tier2Books) {
     const seenEnTitles = new Set();
@@ -220,7 +263,7 @@ async function main() {
       const key = normalize(t.english_title);
       if (!key || seenEnTitles.has(key)) continue;
       seenEnTitles.add(key);
-      const row = buildRow(b, t, 'sl_ft_llm_claim');
+      const row = buildRow(b, t, 'sl_ft_llm_claim', skipReasons2);
       if (row) tier2Rows.push(row);
     }
   }
@@ -228,7 +271,9 @@ async function main() {
   await client.close();
 
   console.log(`Pass 1 (sl_ft_catalog_verified): ${tier1Rows.length} rows from ${tier1Books.length} books`);
+  console.log(`  skipped (schema guards): ${JSON.stringify(skipReasons1)}`);
   console.log(`Pass 2 (sl_ft_llm_claim):        ${tier2Rows.length} rows from ${tier2Books.length} books`);
+  console.log(`  skipped (schema guards): ${JSON.stringify(skipReasons2)}`);
   if (limit) {
     tier1Rows.splice(limit);
     tier2Rows.splice(limit);
