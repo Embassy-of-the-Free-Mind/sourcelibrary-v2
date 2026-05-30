@@ -1,8 +1,42 @@
 'use client';
 
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ensureParagraphBreaks, linkifySourceUrls } from '@/lib/markdown-prep';
+
+// Image that degrades to a labelled placeholder instead of vanishing when the
+// source 404s — so the reader knows a figure was meant to appear here (and can
+// still follow the link), rather than silently losing it.
+function MarkdownImage({ src, alt }: { src?: string; alt?: string }) {
+  const [broken, setBroken] = useState(false);
+  if (!src) return null;
+  if (broken) {
+    return (
+      <a
+        href={src}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="my-5 flex items-center gap-2 rounded-lg border border-dashed border-[#d8cfbe] bg-[#faf7f1] px-3 py-2 text-[13px] text-[#8a8276] no-underline"
+      >
+        <span aria-hidden>🖼️</span>
+        <span>{alt ? `Image unavailable: ${alt}` : 'Image unavailable'}</span>
+      </a>
+    );
+  }
+  return (
+    <a href={src} target="_blank" rel="noopener noreferrer">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt || ''}
+        className="rounded-lg shadow-md max-h-[400px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-5"
+        loading="lazy"
+        onError={() => setBroken(true)}
+      />
+    </a>
+  );
+}
 
 // ── Shared Librarian message body ─────────────────────────────────────
 // Single source of truth for assistant-message typography across:
@@ -88,21 +122,7 @@ export default function LibrarianMessageBody({ content, variant = 'thread' }: Li
               <td className="border-b border-[#e8e4dc] px-3 py-2 align-top">{children}</td>
             ),
             img: ({ src, alt }) => (
-              <a href={src as string} target="_blank" rel="noopener noreferrer">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src as string}
-                  alt={(alt as string) || ''}
-                  className="rounded-lg shadow-md max-h-[400px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-5"
-                  loading="lazy"
-                  onError={(e) => {
-                    const img = e.currentTarget as HTMLImageElement;
-                    const wrapper = img.closest('a') as HTMLAnchorElement | null;
-                    if (wrapper) wrapper.style.display = 'none';
-                    else img.style.display = 'none';
-                  }}
-                />
-              </a>
+              <MarkdownImage src={src as string} alt={alt as string} />
             ),
           }}
         >{ensureParagraphBreaks(linkifySourceUrls(content))}</ReactMarkdown>
