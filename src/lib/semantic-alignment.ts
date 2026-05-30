@@ -76,10 +76,12 @@ function cosineSimilarity(a: number[], b: number[]): number {
  */
 export function stripAnnotations(text: string): string {
   return text
-    // Remove full XML tag pairs and their content for meta/structural tags
-    .replace(/<(?:meta|language|page-type|page-num|header|sig|folio|warning)>[^]*?<\/(?:meta|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    // Remove full XML tag pairs and their content for meta/structural tags.
+    // summary/keywords/vocab are editorial page-level descriptions — never
+    // verbatim source, must not be embedded or quoted (Nirmal misquote, 2026-05-30).
+    .replace(/<(?:meta|summary|keywords|vocab|language|page-type|page-num|header|sig|folio|warning)>[^]*?<\/(?:meta|summary|keywords|vocab|language|page-type|page-num|header|sig|folio|warning)>/g, '')
     // Remove self-closing and opening-only structural tags
-    .replace(/<\/?(?:meta|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    .replace(/<\/?(?:meta|summary|keywords|vocab|language|page-type|page-num|header|sig|folio|warning)>/g, '')
     // Keep content-bearing tags (note, margin, gloss, term, etc.) but strip the tags themselves
     .replace(/<\/?[a-z-]+>/g, '')
     // Clean up whitespace

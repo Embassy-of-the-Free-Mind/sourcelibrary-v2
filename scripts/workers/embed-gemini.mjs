@@ -130,7 +130,13 @@ async function embedBatch(texts) {
 function cleanText(text) {
   if (!text || typeof text !== 'string') return '';
   return text
-    .replace(/<[^>]+>/g, ' ')    // strip HTML/XML tags
+    // Drop EDITORIAL page-level wrappers content-and-all. These are Gemini's
+    // "what this page is about" descriptions — they routinely name content from
+    // ADJACENT pages (e.g. a page-89 <meta> mentioning the "mercury" wheel that
+    // is actually on page 88). Embedding/quoting them mislocates the source and
+    // produces citations to words that aren't on the page. (Nirmal, 2026-05-30.)
+    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')    // strip remaining tags, keep inner body text
     .replace(/\s+/g, ' ')        // collapse whitespace
     .trim()
     .slice(0, 8000);             // Gemini embedding-2 supports 8192 tokens

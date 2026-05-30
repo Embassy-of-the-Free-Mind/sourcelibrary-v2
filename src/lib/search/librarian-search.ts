@@ -306,7 +306,13 @@ function stripAnnotations(text: string): string {
     .replace(/\[\[[^\]]+\]\]/g, '')
     .replace(/^```(?:markdown)?\s*\n?/i, '')
     .replace(/\n?```\s*$/i, '')
-    .replace(/<meta>[^<]*<\/meta>/g, '')
+    // Drop editorial page-level wrappers content-and-all (multiline, any of
+    // meta/summary/keywords/vocab). These describe the page — often naming
+    // content from neighbouring pages — and must never be quoted as source
+    // text. Old regex (<meta>[^<]*</meta>) missed multiline + the other tags
+    // and was the root of the "mercury on page 89" misquote (Nirmal, 2026-05-30).
+    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/\s{2,}/g, ' ')
     .trim();
 }
 
