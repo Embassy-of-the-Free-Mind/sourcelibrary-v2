@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
+import { resolveLanguage } from '@/lib/resolve-language';
 
 /**
  * Import a book from a local directory
@@ -88,6 +89,11 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const slug = await generateUniqueBookSlug(db, title, author, display_title);
 
+    // #2185: normalise the caller's language (codes → display names) and stamp
+    // provenance. Local-directory imports have no source metadata, so the caller
+    // is the only signal — but it's no longer stored raw and unattributed.
+    const lang = resolveLanguage({ callerLanguage: language });
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
@@ -95,7 +101,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       display_title: display_title || null,
       author,
-      language: language || 'Unknown',
+      language: lang.language,
+      ...(lang.original_language ? { original_language: lang.original_language } : {}),
+      field_provenance: { language: lang.provenance },
       published: published || 'Unknown',
       categories: categories || [],
       ia_identifier: ia_identifier || null,

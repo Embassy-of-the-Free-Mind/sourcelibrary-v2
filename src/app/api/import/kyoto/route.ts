@@ -46,7 +46,10 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       display_title,
       author,
-      language: language || 'Japanese',
+      // #2185: don't hardcode 'Japanese' — Kyoto RMDA also holds Chinese, Sanskrit
+      // and Western rare books. Let resolveLanguage normalise the caller hint and
+      // stamp provenance (Unknown when absent, rather than a wrong blanket default).
+      language: language || undefined,
       published,
       categories,
       work_id,
