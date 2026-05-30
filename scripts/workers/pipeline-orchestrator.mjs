@@ -2537,12 +2537,15 @@ async function run() {
       console.log(`  Enrolled: ${log.enrolled}`);
     }
 
-    // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate)
-    const ARTWORK_TYPES = ['painting', 'print', 'drawing', 'fresco', 'papyrus_fragment', 'object'];
-    // Canonical artwork signal is content_type:'artwork'. resource_type is a finer-grained
-    // sub-category (sculpture, manuscript, scientific_instrument, …) that under-matches — so
-    // match on either. (See CLAUDE.md: don't gate artwork on resource_type alone.)
-    const ARTWORK_MATCH = { $or: [{ content_type: 'artwork' }, { resource_type: { $in: ARTWORK_TYPES } }] };
+    // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate).
+    // NOTE: 'papyrus_fragment' is deliberately NOT here — papyri (and cuneiform) are textual
+    // sources and belong in the BOOK pipeline, like the Egyptian Book-of-the-Dead papyri.
+    const ARTWORK_TYPES = ['painting', 'print', 'drawing', 'fresco', 'object'];
+    // content_type is AUTHORITATIVE: 'book' is never artwork (overrides resource_type — needed
+    // for object-typed textual papyri like "Papyrus, funerary, Book of the Dead"), 'artwork'
+    // always is. resource_type is only a fallback when content_type is unset.
+    // (See CLAUDE.md: don't gate artwork on resource_type alone.)
+    const ARTWORK_MATCH = { content_type: { $ne: 'book' }, $or: [{ content_type: 'artwork' }, { resource_type: { $in: ARTWORK_TYPES } }] };
 
     // ── Phase 0: Skip artworks that somehow entered the pipeline ──
     if (shouldRun(1)) {
@@ -2573,7 +2576,7 @@ async function run() {
       const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
       let queuedBooks = await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'queued', content_type: { $ne: 'artwork' }, resource_type: { $nin: ARTWORK_TYPES } } },
+          { $match: { 'pipeline_auto.status': 'queued', content_type: { $ne: 'artwork' }, $or: [{ content_type: 'book' }, { resource_type: { $nin: ARTWORK_TYPES } }] } },
           { $addFields: {
             _priority: {
               $switch: {
