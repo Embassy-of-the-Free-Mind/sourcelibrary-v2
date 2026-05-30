@@ -1,7 +1,8 @@
 /**
  * Press release body — "Most of the Renaissance Was Never Translated" (June 2026 launch).
- * Straight prose, no stat boxes/tables/callouts. Mission-led: the public narrative is the
- * untranslated-Renaissance idea and open access; fundraising lives only in private donor materials.
+ * Embassy-framed arc: the institution and its creed (ad fontes) open and close the piece;
+ * the untranslated-Renaissance idea and open access drive it. Straight prose, no stat boxes.
+ * Fundraising lives only in private donor materials, never here.
  * Figures verified against the live Source Library database on 30 May 2026.
  * Header/dateline and back-link are supplied by the /press-releases/[slug] route.
  */
@@ -14,18 +15,38 @@ export default function SourceLibraryPublicBetaLaunch() {
       </p>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
-        <strong className="text-stone-800">AMSTERDAM</strong> &mdash; &ldquo;Ninety percent of the Latin
-        texts from the Renaissance have never been available in translation.&rdquo; That estimate comes
-        from Debora Shuger, a Renaissance scholar at UCLA. Far more Latin was written after 1500 than
-        survives from all of ancient Rome, and almost none of it has ever been read in a modern language.
-        The same is true of much of what was written in China, India, and the Islamic world.
+        <strong className="text-stone-800">AMSTERDAM</strong> &mdash; Behind a seventeenth-century facade
+        on the Keizersgracht, the Embassy of the Free Mind holds one of the world&rsquo;s great
+        collections of hidden knowledge: the Hermetic, alchemical, Rosicrucian, and Kabbalistic writings
+        that the Renaissance read in private. Founded by Jozef Ritman as the{' '}
+        <a href="https://embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+          Bibliotheca Philosophica Hermetica
+        </a>
+        , it is inscribed on UNESCO&rsquo;s Memory of the World Register. Its creed is older than the
+        building.
+      </p>
+
+      <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
+        <p className="text-lg text-secondary italic font-body leading-relaxed mb-2">
+          &ldquo;We always say here, <em>ad fontes</em> &mdash; go back to the source. When you go back
+          deeper and further, you become part of the source. Then you can be the source. That&rsquo;s
+          where the magic happens.&rdquo;
+        </p>
+        <p className="text-sm text-muted">&mdash; Jozef Ritman, founder, Bibliotheca Philosophica Hermetica</p>
+      </blockquote>
+
+      <p className="text-secondary leading-relaxed mb-6 font-body">
+        But the sources themselves have been all but unreadable. By a widely cited estimate from Debora
+        Shuger, a Renaissance scholar at UCLA, ninety percent of the Latin texts from the Renaissance have
+        never been available in translation. Far more Latin was written after 1500 than survives from all
+        of ancient Rome, and almost none of it has ever appeared in a modern language. Nor has much of
+        what was written in China, India, and the Islamic world.
       </p>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
-        Today the Embassy of the Free Mind opens Source Library, which has used AI to translate more than
-        13,000 historical books into English. Close to 7,000 of them had never appeared in any modern
-        language before. Each translation sits next to a scan of the original page, and all of it is free
-        to read.
+        Today the Embassy opens Source Library, which has used AI to translate more than 15,000 historical
+        books into English, thousands of them for the first time in any modern language. Each translation
+        sits next to a scan of the original page, and all of it is free to read.
       </p>
 
       <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
@@ -39,7 +60,7 @@ export default function SourceLibraryPublicBetaLaunch() {
       <p className="text-secondary leading-relaxed mb-6 font-body">
         The collection dwarfs every comparable effort. The Loeb Classical Library has produced about 540
         translated volumes since 1911; Harvard&rsquo;s I Tatti Renaissance Library about 100 since 2001.
-        Source Library holds more than 13,000, and unlike those series it translates works that were never
+        Source Library holds more than 15,000, and unlike those series it translates works that were never
         available in English at all. Counted together, the original texts and their translations come to
         more than four billion words, roughly 90 percent of the entire English Wikipedia.
       </p>
@@ -49,8 +70,8 @@ export default function SourceLibraryPublicBetaLaunch() {
         <a href="https://sourcelibrary.org/blog/did-the-ai-read-this" className="text-accent-rust hover:underline">
           Source Library study
         </a>{' '}
-        found that about 7,000 of its books are missing from the data used to train today&rsquo;s leading
-        AI models. They were never translated or summarized, so the machines never saw them either.
+        found that thousands of its books are missing from the data used to train today&rsquo;s leading AI
+        models. They were never translated or summarized, so the machines never saw them either.
       </p>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -75,26 +96,11 @@ export default function SourceLibraryPublicBetaLaunch() {
         Sanskrit, Tibetan, Arabic, and Hebrew.
       </p>
 
-      <p className="text-secondary leading-relaxed mb-6 font-body">
-        The project grows out of the{' '}
-        <a href="https://embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
-          Bibliotheca Philosophica Hermetica
-        </a>
-        , the Embassy&rsquo;s 25,000-volume collection of works on Hermeticism, alchemy, and mysticism,
-        inscribed on UNESCO&rsquo;s Memory of the World Register.
-      </p>
-
-      <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
-        <p className="text-lg text-secondary italic font-body leading-relaxed mb-2">
-          &ldquo;We always say here, <em>ad fontes</em> &mdash; go back to the source. When you go back
-          deeper and further, you become part of the source. Then you can be the source. That&rsquo;s
-          where the magic happens.&rdquo;
-        </p>
-        <p className="text-sm text-muted">&mdash; Jozef Ritman, founder, Bibliotheca Philosophica Hermetica</p>
-      </blockquote>
-
       <p className="text-secondary leading-relaxed mb-10 font-body">
-        Source Library is online now at{' '}
+        It is fitting that the work begins here. The Embassy keeps the library of the first Renaissance,
+        the books Ficino and his circle translated to set it in motion. Five centuries on, the same
+        impulse &mdash; <em>ad fontes</em> &mdash; is opening those sources to everyone. Source Library is
+        online now at{' '}
         <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>,
         and launches with an evening event at the Embassy of the Free Mind on 4 June 2026.
       </p>
