@@ -468,8 +468,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // Prefer translation highlights over OCR
           const translationHL = highlights.find(h => h.path === 'translation.data');
           const hl = translationHL || highlights[0];
-          snippet = cleanText(hl.texts.map(t => t.value).join(''));
           snippetType = hl.path === 'translation.data' ? 'translation' : 'ocr';
+          // Center on the Atlas hit but extract from the FULL field, not the
+          // highlight fragments. Fragments are a window around the hit, so a hit
+          // inside a <meta>/<summary>/<keywords>/<vocab> block arrives WITHOUT
+          // its wrapper tags and stripEditorialWrappers can't remove it — that
+          // leaked the AI page-description as a quote ("mercury on page 89").
+          // extractSnippet runs cleanText over the complete field (tags intact),
+          // so the block is stripped; if the hit was editorial-only it falls back
+          // to real body text rather than the description.
+          const fullData = (snippetType === 'translation' ? page.translation?.data : page.ocr?.data) as string || '';
+          const hitText = hl.texts.find(t => t.type === 'hit')?.value || matchQuery;
+          snippet = extractSnippet(fullData || hl.texts.map(t => t.value).join(''), hitText);
         } else {
           // Fallback to full text extraction
           const translationText = page.translation?.data as string || '';
