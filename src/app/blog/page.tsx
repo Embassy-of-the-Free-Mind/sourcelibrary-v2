@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'does-ai-get-religion',
+    title: 'Does the AI Get Religion?',
+    subtitle: 'We tried to measure how big our library is and found a single page that ran to 491,418 characters — an AI that picked up a book of sacred genealogies and could not stop generating generations. On recitation loops, and why the mean joined a monastery.',
+    date: '30 May 2026',
+    readTime: '7 min read',
+    tag: 'Field notes',
+    tagColor: 'bg-amber-50 text-amber-800',
+  },
+  {
     slug: 'did-an-ai-write-the-encyclical',
     title: "Did an AI Write the Pope's AI Encyclical?",
     subtitle:
