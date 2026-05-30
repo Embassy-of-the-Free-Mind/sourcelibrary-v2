@@ -39,6 +39,14 @@ function canonicalKey(author) {
     .replace(/^j/, 'i').replace(/^gi/, 'i').replace(/v/g, 'u')
     .replace(/(issimus|us|um|orum|arum|ibus|onis|ius|is|ae|i|o|a|e)$/, ''))
     .filter(t => t.length >= 3).sort();
+  // Non-Latin scripts (CJK / Cyrillic / Greek / Arabic) lose every token to the
+  // a–z filter above and would yield an empty key — silently dropping the author
+  // from clustering (e.g. 李時珍 / Li Shizhen). Fall back to the diacritic-folded
+  // raw name (minus editorial parens/dates) so they still cluster + relink.
+  if (!stems.length) {
+    return (author || '').normalize('NFKD').replace(/[̀-ͯ]/g, '')
+      .replace(/\([^)]*\)/g, '').replace(/[\d,.;]/g, '').replace(/\s+/g, '').toLowerCase();
+  }
   return stems.join(' ');
 }
 
