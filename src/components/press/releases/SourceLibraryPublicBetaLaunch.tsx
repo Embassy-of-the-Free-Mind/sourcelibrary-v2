@@ -196,23 +196,18 @@ export default function SourceLibraryPublicBetaLaunch() {
 
         {/* Wikipedia-scale callout */}
         <div className="bg-accent-gold/5 rounded-lg border border-accent-gold/20 p-6 md:p-8 mb-8">
-          <h3 className="font-serif text-lg text-primary mb-3">On the scale of all of Wikipedia &mdash; in primary sources</h3>
+          <h3 className="font-serif text-lg text-primary mb-3">Nearly the size of all of Wikipedia &mdash; in primary sources</h3>
           <p className="text-secondary leading-relaxed font-body mb-3">
-            The English Wikipedia, the largest reference work ever created, holds about{' '}
-            <strong className="text-stone-800">5 billion words</strong> across 7.2 million articles.
-            Source Library&rsquo;s English translations alone come to roughly{' '}
-            <strong className="text-stone-800">1.7 billion words</strong> &mdash; about a third that size.
-            Counting the original-language transcriptions shown beside every translation, plus the
-            AI-generated summaries and indexes, the full corpus runs to roughly{' '}
-            <strong className="text-stone-800">3.5 billion words &mdash; around 5 billion tokens</strong>,
-            approaching the size of the entire English Wikipedia. But where Wikipedia is modern summary,
+            Counting the original transcriptions and their English translations together, Source Library
+            holds more than <strong className="text-stone-800">4 billion words</strong> &mdash; roughly{' '}
+            <strong className="text-stone-800">90% of the entire English Wikipedia</strong> (about 5
+            billion words), the largest reference work ever made. But where Wikipedia is modern summary,
             this is the original record of human thought across five centuries and more than 170 languages.
           </p>
           <p className="text-xs text-muted font-body">
-            Word counts estimated from random samples of the 6.5-million-page corpus (4 million+ pages
-            translated), using median and trimmed-mean page lengths to exclude OCR artifacts; original
-            transcriptions in non-spaced scripts (e.g. Chinese, Tibetan) are undercounted, so the true
-            total is higher. English Wikipedia figures per Wikipedia&rsquo;s own statistics, May 2026.
+            From an exact scan of the corpus, excluding AI recitation-loop artifacts; word counts for
+            non-spaced scripts (e.g. Chinese, Tibetan) are approximate. English Wikipedia figures per
+            Wikipedia&rsquo;s own statistics, May 2026.
           </p>
         </div>
       </section>
