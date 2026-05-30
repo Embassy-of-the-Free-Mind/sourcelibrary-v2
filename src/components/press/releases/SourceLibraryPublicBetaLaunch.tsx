@@ -30,9 +30,8 @@ export default function SourceLibraryPublicBetaLaunch() {
 
       <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
         <p className="text-lg text-secondary italic font-body leading-relaxed mb-2">
-          &ldquo;Most of what the Renaissance wrote has never been read in English: the science, the
-          medicine, the philosophy that made the modern world. We&rsquo;re translating it so anyone can
-          read it, free.&rdquo;
+          &ldquo;Most of what the Renaissance wrote has never been read in English, and we&rsquo;re
+          translating it so anyone can.&rdquo;
         </p>
         <p className="text-sm text-muted">&mdash; Derek Lomas, founder of Source Library, researcher at TU Delft</p>
       </blockquote>
@@ -91,7 +90,7 @@ export default function SourceLibraryPublicBetaLaunch() {
           deeper and further, you become part of the source. Then you can be the source. That&rsquo;s
           where the magic happens.&rdquo;
         </p>
-        <p className="text-sm text-muted">&mdash; Joost Ritman, founder, Bibliotheca Philosophica Hermetica</p>
+        <p className="text-sm text-muted">&mdash; Jozef Ritman, founder, Bibliotheca Philosophica Hermetica</p>
       </blockquote>
 
       <p className="text-secondary leading-relaxed mb-10 font-body">
@@ -105,7 +104,7 @@ export default function SourceLibraryPublicBetaLaunch() {
       <p className="text-sm text-secondary leading-relaxed mb-4 font-body">
         <strong className="text-stone-800">About the Embassy of the Free Mind.</strong> The Embassy of the
         Free Mind is a museum and library in Amsterdam, in the historic Huis met de Hoofden on the
-        Keizersgracht. It holds the Bibliotheca Philosophica Hermetica, founded by Joost R. Ritman: about
+        Keizersgracht. It holds the Bibliotheca Philosophica Hermetica, founded by Jozef Ritman: about
         25,000 volumes on Hermetica, alchemy, mysticism, Rosicrucianism, Kabbalah, and gnosis, inscribed
         on the UNESCO Memory of the World Register.{' '}
         <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">embassyofthefreemind.com</a>
