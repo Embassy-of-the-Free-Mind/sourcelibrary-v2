@@ -1320,6 +1320,17 @@ async function uploadBatchFile(filePath, displayName, keyIndex) {
  */
 async function createBatchJobFromFile(model, fileName, displayName, preferredKeyIndex = 0) {
   const client = getSdkClient(preferredKeyIndex);
+  // Wait for the uploaded File API file to reach ACTIVE before creating the batch.
+  // batches.create against a still-PROCESSING file returns 400 FAILED_PRECONDITION.
+  // Larger file-based OCR JSONLs (big books) take longer to process, so they raced
+  // and failed while small inline books succeeded — root cause of the OCR backlog.
+  for (let i = 0; i < 30; i++) {
+    let state;
+    try { state = (await client.files.get({ name: fileName }))?.state; } catch { state = undefined; }
+    if (state === 'ACTIVE') break;
+    if (state === 'FAILED') throw new Error(`File API processing FAILED for ${fileName}`);
+    await new Promise(r => setTimeout(r, 2000)); // up to ~60s
+  }
   const batchJob = await client.batches.create({
     model,
     src: { fileName },
