@@ -1,5 +1,7 @@
 /**
- * Press release body — "The Embassy of the Free Mind Launches Source Library" (June 2026 launch).
+ * Press release body — "Most of the Renaissance Was Never Translated" (June 2026 launch).
+ * Mission-led: the public narrative is the untranslated-Renaissance idea, the scale, and open
+ * access. Fundraising/asks live only in private donor materials, never here.
  * Figures verified against the live Source Library database on 30 May 2026.
  * Header/dateline and back-link are supplied by the /press-releases/[slug] route.
  */
@@ -70,63 +72,25 @@ const COMPARISONS = [
 export default function SourceLibraryPublicBetaLaunch() {
   return (
     <article className="prose-content max-w-none">
-      {/* Lede */}
-      <p className="text-xl text-secondary leading-relaxed mb-4 font-body italic">
-        A free digital library has translated more than 13,000 ancient and early modern books into
-        English — nearly 7,000 of them for the first time in any modern language — and is making them
-        readable, searchable, and citable by anyone, anywhere.
+      {/* Lede — lead with the idea, not the announcement */}
+      <p className="text-xl text-secondary leading-relaxed mb-4 font-body">
+        Most of what the Renaissance wrote has never been translated into English. A free digital
+        library at the Embassy of the Free Mind in Amsterdam has set out to change that &mdash; and has
+        already become the largest collection of translated historical primary sources ever assembled.
       </p>
       <p className="text-lg text-accent-rust font-serif mb-10">
-        &ldquo;We want to translate the Renaissance&rdquo;
+        &ldquo;We want to translate the Renaissance.&rdquo;
       </p>
 
       <hr className="border-border-light my-12" />
 
-      {/* Body */}
+      {/* The gap — the substance, up front */}
       <section className="mb-16">
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          <strong className="text-stone-800">AMSTERDAM</strong> &mdash; The Embassy of the Free Mind today
-          launches the public beta of Source Library, the largest freely available collection of
-          translated historical primary sources ever assembled. Using AI, the project has translated
-          more than 13,000 historical books into English &mdash; including close to 7,000 works that had
-          never before appeared in any modern language &mdash; across roughly four million pages, each
-          shown beside its original scan.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6 font-body">
-          The launch is being marked with an evening event at the Embassy of the Free Mind, the
-          Amsterdam museum and library housed in the historic Huis met de Hoofden on the Keizersgracht,
-          and home to the{' '}
-          <a href="https://embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
-            Bibliotheca Philosophica Hermetica
-          </a>{' '}
-          (BPH) &mdash; a 25,000-volume collection of rare works on Hermeticism, alchemy, mysticism,
-          Rosicrucianism, and Kabbalah, inscribed on UNESCO&rsquo;s Memory of the World Register.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6 font-body">
-          &ldquo;The assumption that the important texts have already been translated is simply wrong
-          &mdash; we tested it,&rdquo; says Derek Lomas, founder of Source Library and a cognitive
-          scientist and researcher at TU Delft. &ldquo;The gap is enormous, and not just for Latin
-          &mdash; for Classical Chinese, Sanskrit, Arabic, Tibetan, Armenian. The intellectual
-          foundation of the modern world has been locked behind languages almost no one reads anymore.
-          We built Source Library to open it.&rdquo;
-        </p>
-      </section>
-
-      <hr className="border-border-light my-12" />
-
-      {/* Why it matters */}
-      <section className="mb-16">
-        <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-          Why it matters
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6 font-body">
-          In 1460, when a Greek manuscript of the <em>Corpus Hermeticum</em> reached Florence, Cosimo
-          de&rsquo; Medici ordered Marsilio Ficino to translate it before even Plato. That act of
-          translation helped set the Renaissance in motion. Five centuries later, most of the
-          Renaissance itself remains untranslated.
+          <strong className="text-stone-800">AMSTERDAM</strong> &mdash; In 1462, Cosimo de&rsquo; Medici
+          paid Marsilio Ficino to translate the <em>Corpus Hermeticum</em> from Greek into Latin, and
+          helped set the Renaissance in motion. Five centuries later, most of the Renaissance still
+          waits to be translated.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -135,10 +99,46 @@ export default function SourceLibraryPublicBetaLaunch() {
           <a href="https://sourcelibrary.org/census" className="text-accent-rust hover:underline">
             Universal Short Title Catalogue
           </a>{' '}
-          against Library of Congress holdings and dozens of additional catalog sources. The finding:
-          the overwhelming majority of the works printed in Europe between 1450 and 1700 have never been
-          translated into English. At the pace of traditional scholarly translation, closing that gap
-          would take many centuries.
+          against Library of Congress holdings and dozens of additional catalogues. The finding: the
+          overwhelming majority of everything printed in Europe between 1450 and 1700 has never been
+          translated into English &mdash; and that is before counting the manuscript traditions, or the
+          vast written inheritance of China, India, the Islamic world, and beyond. At the pace of
+          traditional scholarship, closing that gap would take many centuries.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          &ldquo;The assumption that the important texts have already been translated is simply wrong
+          &mdash; we tested it,&rdquo; says Derek Lomas, founder of Source Library and a cognitive
+          scientist and researcher at TU Delft. &ldquo;The intellectual foundation of the modern world
+          has been locked behind languages almost no one reads anymore &mdash; not only Latin, but
+          Classical Chinese, Sanskrit, Arabic, Tibetan, Armenian. We built Source Library to open it.&rdquo;
+        </p>
+      </section>
+
+      <hr className="border-border-light my-12" />
+
+      {/* The answer */}
+      <section className="mb-16">
+        <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
+          A library of the untranslated
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Today the Embassy of the Free Mind opens the public beta of Source Library, which has used AI
+          to translate more than <strong className="text-stone-800">13,000 historical books</strong> into
+          English &mdash; including close to <strong className="text-stone-800">7,000 works that had never
+          before appeared in any modern language</strong> &mdash; across roughly four million pages, each
+          shown beside its original scan, and free for anyone to read.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The project begins from the{' '}
+          <a href="https://embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+            Bibliotheca Philosophica Hermetica
+          </a>{' '}
+          (BPH), the Embassy&rsquo;s 25,000-volume collection of rare works on Hermeticism, alchemy,
+          mysticism, Rosicrucianism, and Kabbalah, inscribed on UNESCO&rsquo;s Memory of the World
+          Register &mdash; and reaches outward from there into the wider record of human thought.
         </p>
       </section>
 
@@ -161,7 +161,9 @@ export default function SourceLibraryPublicBetaLaunch() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          The collection already exceeds every comparable resource by an order of magnitude.
+          The collection already exceeds every comparable resource by an order of magnitude &mdash; and
+          unlike them, it produces new translations of texts that have never been available in English,
+          without a paywall or institutional subscription.
         </p>
 
         {/* Comparison table */}
@@ -213,12 +215,6 @@ export default function SourceLibraryPublicBetaLaunch() {
             total is higher. English Wikipedia figures per Wikipedia&rsquo;s own statistics, May 2026.
           </p>
         </div>
-
-        <p className="text-secondary leading-relaxed mb-6 font-body">
-          Unlike the collections above, Source Library produces new translations of texts that have
-          never before been available in English, and provides them without a paywall or institutional
-          subscription.
-        </p>
       </section>
 
       <hr className="border-border-light my-12" />
@@ -230,34 +226,26 @@ export default function SourceLibraryPublicBetaLaunch() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Source Library&rsquo;s pipeline ingests high-resolution page scans from major research
-          libraries worldwide &mdash; among them the Internet Archive, the Bavarian State Library, the
-          Biblioth&egrave;que nationale de France (Gallica), the Vatican Library, the Bodleian Library
-          at Oxford, the Wellcome Collection, and the Library of Congress &mdash; then uses frontier AI
-          models (Google Gemini) to read each page in its original language and render it into English.
-          Every translated page is displayed directly alongside the original scan, so readers and
-          scholars can verify the AI&rsquo;s work against the source.
+          Source Library ingests high-resolution page scans from major research libraries worldwide
+          &mdash; among them the Internet Archive, the Bavarian State Library, the Biblioth&egrave;que
+          nationale de France (Gallica), the Vatican Library, the Bodleian Library at Oxford, the
+          Wellcome Collection, and the Library of Congress &mdash; then uses frontier AI models (Google
+          Gemini) to read each page in its original language and render it into English. Every translated
+          page is displayed directly alongside the original scan, so readers and scholars can check the
+          translation against the source.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The cost to fully process a book &mdash; scanning, OCR, translation, indexing, and metadata
-          &mdash; is roughly <strong className="text-stone-800">$1.50</strong>. A professional
-          translator would charge tens of thousands of dollars for a single volume.
+          AI makes it possible to do in months what would otherwise take centuries. It is not a
+          replacement for expert human scholarship; it is a way to do the part no one ever had the
+          bandwidth to do &mdash; making vast bodies of untranslated material readable and navigable for
+          the first time, and lowering the barrier that has kept these texts confined to specialists.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          &ldquo;AI has made this kind of translation thousands of times cheaper, and that changes what
-          is possible,&rdquo; says Lomas. &ldquo;A 1540 alchemical treatise or an obscure Paracelsus
-          commentary could never justify the cost of a human translation. Now it can be made readable
-          for the price of a cup of coffee &mdash; with the original right there to check.&rdquo;
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6 font-body">
-          This is not a replacement for expert human scholarship. It is a way to make vast bodies of
-          untranslated material discoverable and navigable for the first time, lowering the barrier that
-          has kept these texts confined to specialists. Because the translations are in English, they
-          can be onward-translated into any modern language with widely available tools &mdash; making
-          texts once confined to a handful of specialists reachable by billions of readers worldwide.
+          Because the translations are in English, they can in turn be carried into any modern language
+          with widely available tools. English becomes a bridge: a text once legible to a handful of
+          specialists in Latin or Classical Chinese can now reach readers in every language on earth.
         </p>
       </section>
 
@@ -316,7 +304,9 @@ export default function SourceLibraryPublicBetaLaunch() {
           Every book has a permanent URL and structured metadata. Selected translations are published as
           scholarly editions with DOIs through Zenodo, making them citable in academic work. An open API
           and a Model Context Protocol (MCP) server let AI systems query the library directly &mdash; so
-          that language models can learn from primary sources rather than secondhand summaries.
+          that language models can learn from primary sources rather than secondhand summaries. Source
+          Library is offered as a working draft of the historical record: scholars are invited to correct
+          it, and every correction makes it better.
         </p>
       </section>
 
@@ -326,11 +316,13 @@ export default function SourceLibraryPublicBetaLaunch() {
       <section className="mb-16">
         <div className="border-l-4 border-accent-rust pl-6">
           <p className="text-lg text-secondary italic font-body leading-relaxed mb-3">
-            &ldquo;[Quote for approval &mdash; Embassy of the Free Mind / BPH, on carrying the
-            collection&rsquo;s mission of open access into its next chapter.]&rdquo;
+            &ldquo;Joost Ritman built this library on one conviction: that wisdom belongs to everyone.
+            For decades much of it sat on our shelves, readable only by specialists. To see thousands of
+            these works open at once &mdash; in English, beside their originals, free to anyone &mdash; is
+            to watch that conviction become real at a scale we never expected to witness.&rdquo;
           </p>
           <p className="text-sm text-muted">
-            &mdash; [Name, Title], Embassy of the Free Mind
+            &mdash; [Name, Title], Embassy of the Free Mind <span className="italic">(quote draft, pending approval)</span>
           </p>
         </div>
       </section>
@@ -364,10 +356,9 @@ export default function SourceLibraryPublicBetaLaunch() {
               primary sources, founded by Derek Lomas in 2022 after he encountered Marsilio Ficino&rsquo;s{' '}
               <em>Liber de Voluptate</em> at the Embassy of the Free Mind. Using AI-assisted translation,
               it makes previously inaccessible texts readable in English alongside their original
-              languages. Translations are published under a Creative Commons Attribution-ShareAlike 4.0
-              license (CC BY-SA 4.0). Source Library is an initiative of the Embassy of the Free Mind and
-              is fiscally sponsored in the United States by the National Arts Fund (NAF); U.S. donations
-              are tax-deductible.{' '}
+              languages. The platform is open-source and its translations are published under a Creative
+              Commons Attribution-ShareAlike 4.0 licence (CC BY-SA 4.0). Source Library is an initiative of
+              the Embassy of the Free Mind.{' '}
               <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">
                 sourcelibrary.org
               </a>

@@ -38,16 +38,16 @@ export interface PressReleaseMeta {
 export const PRESS_RELEASES: PressReleaseMeta[] = [
   {
     slug: 'source-library-public-beta-launch',
-    title: 'The Embassy of the Free Mind Launches Source Library',
+    title: 'Most of the Renaissance Was Never Translated',
     subtitle:
-      'The largest open-access collection of translated historical texts ever assembled',
+      'The Embassy of the Free Mind opens Source Library — already the largest collection of translated historical primary sources ever assembled, free to read',
     dateline: '4 June 2026 · Amsterdam, the Netherlands',
     date: '2026-06-04',
     status: 'draft',
     summary:
-      'More than 13,000 historical books translated into English — nearly 7,000 for the first time in any modern language — across roughly 4 million pages, all free to read alongside their originals.',
+      'A census finds the overwhelming majority of what Europe printed between 1450 and 1700 was never translated into English. Source Library has translated more than 13,000 historical books — nearly 7,000 for the first time — free to read beside their originals.',
     metaDescription:
-      "The Embassy of the Free Mind launches Source Library, the largest open-access collection of translated historical texts ever assembled — 13,000+ books translated into English, ~4 million pages, free and open.",
+      "Most of what the Renaissance wrote was never translated into English. Source Library, at the Embassy of the Free Mind, has translated 13,000+ historical books — nearly 7,000 for the first time — free to read alongside their originals.",
     ogImage: 'https://sourcelibrary.org/og-image.png',
   },
   {
