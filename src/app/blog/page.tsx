@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'does-ai-get-religion',
+    title: 'Does the AI Get Religion?',
+    subtitle: 'The longest page in our library is one leaf of a Javanese Bible that the AI translated into 491,418 characters of "generations of generations of generations." It only happens with scripture.',
+    date: '30 May 2026',
+    readTime: '3 min read',
+    tag: 'Field notes',
+    tagColor: 'bg-amber-50 text-amber-800',
+  },
+  {
     slug: 'did-an-ai-write-the-encyclical',
     title: "Did an AI Write the Pope's AI Encyclical?",
     subtitle:
