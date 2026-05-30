@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { resolveTenantId } from '@/lib/tenant-context';
 
 interface SearchMatch {
@@ -20,7 +21,11 @@ function escapeRegex(str: string): string {
 
 function generateSnippet(text: string, query: string, contextChars: number = 80): SearchMatch[] {
   const matches: SearchMatch[] = [];
-  const lowerText = text.toLowerCase();
+  // Strip editorial wrappers (<meta>/<summary>/<keywords>/<vocab>) AND remaining
+  // XML tags before searching/slicing — this route previously sliced raw text,
+  // so snippets carried both AI page-descriptions and markup.
+  const cleaned = stripEditorialWrappers(text).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const lowerText = cleaned.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const words = lowerQuery.split(/\s+/).filter(w => w.length > 0);
 
@@ -51,13 +56,13 @@ function generateSnippet(text: string, query: string, contextChars: number = 80)
 
   for (const pos of snippetPositions) {
     const start = Math.max(0, pos - contextChars);
-    const end = Math.min(text.length, pos + contextChars + query.length);
+    const end = Math.min(cleaned.length, pos + contextChars + query.length);
 
-    let snippet = text.slice(start, end);
+    let snippet = cleaned.slice(start, end);
 
     // Add ellipsis
     if (start > 0) snippet = '...' + snippet;
-    if (end < text.length) snippet = snippet + '...';
+    if (end < cleaned.length) snippet = snippet + '...';
 
     matches.push({
       field: 'ocr', // Will be set by caller
