@@ -160,14 +160,17 @@ describe('getBookThumbnailUrl', () => {
     expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/pages/abc123/0005.jpg');
   });
 
-  // Wikimedia: rewrite to thumb.php
-  it('rewrites Wikimedia URLs to thumb.php', () => {
+  // Wikimedia: keep the upload.wikimedia.org CDN URL as-is. We must NOT
+  // rewrite to commons.wikimedia.org/w/thumb.php — the site CSP img-src
+  // whitelists upload.wikimedia.org but not commons.wikimedia.org, so a
+  // thumb.php URL is blocked by the browser (loads only via curl).
+  it('keeps Wikimedia upload URLs on the whitelisted CDN domain', () => {
     const book = {
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Image.jpg',
     };
     const result = getBookThumbnailUrl(book, 'thumb');
-    expect(result).toContain('thumb.php');
-    expect(result).toContain('w=400');
+    expect(result).toBe('https://upload.wikimedia.org/wikipedia/commons/a/ab/Image.jpg');
+    expect(result).not.toContain('commons.wikimedia.org');
   });
 
   // Artwork URLs without -thumb or -full suffix should pass through
