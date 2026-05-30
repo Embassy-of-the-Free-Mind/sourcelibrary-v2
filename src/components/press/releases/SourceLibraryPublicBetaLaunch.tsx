@@ -312,17 +312,16 @@ export default function SourceLibraryPublicBetaLaunch() {
 
       <hr className="border-border-light my-12" />
 
-      {/* Quote */}
+      {/* Quote — Joost Ritman, founder of the BPH */}
       <section className="mb-16">
         <div className="border-l-4 border-accent-rust pl-6">
           <p className="text-lg text-secondary italic font-body leading-relaxed mb-3">
-            &ldquo;Joost Ritman built this library on one conviction: that wisdom belongs to everyone.
-            For decades much of it sat on our shelves, readable only by specialists. To see thousands of
-            these works open at once &mdash; in English, beside their originals, free to anyone &mdash; is
-            to watch that conviction become real at a scale we never expected to witness.&rdquo;
+            &ldquo;We always say here, <em>ad fontes</em> &mdash; go back to the source. When you go back
+            deeper and further, you become part of the source. Then you can be the source. That&rsquo;s
+            where the magic happens.&rdquo;
           </p>
           <p className="text-sm text-muted">
-            &mdash; [Name, Title], Embassy of the Free Mind <span className="italic">(quote draft, pending approval)</span>
+            &mdash; Joost Ritman, Founder, Bibliotheca Philosophica Hermetica
           </p>
         </div>
       </section>
