@@ -194,14 +194,21 @@ export default function SourceLibraryPublicBetaLaunch() {
 
         {/* Wikipedia-scale callout */}
         <div className="bg-accent-gold/5 rounded-lg border border-accent-gold/20 p-6 md:p-8 mb-8">
-          <h3 className="font-serif text-lg text-primary mb-3">As big as a fifth of Wikipedia &mdash; in primary sources</h3>
-          <p className="text-secondary leading-relaxed font-body">
+          <h3 className="font-serif text-lg text-primary mb-3">About a third of Wikipedia &mdash; in primary sources</h3>
+          <p className="text-secondary leading-relaxed font-body mb-3">
             The English Wikipedia, the largest reference work ever created, holds about{' '}
             <strong className="text-stone-800">5 billion words</strong> across 7.2 million articles.
-            Source Library&rsquo;s roughly four million translated pages amount to{' '}
-            <strong className="text-stone-800">on the order of a billion words</strong> &mdash; close to
-            a fifth the size of the entire English Wikipedia &mdash; drawn not from modern summaries but
-            from the original record of human thought across five centuries and more than 170 languages.
+            Source Library&rsquo;s 4.07 million translated pages amount to roughly{' '}
+            <strong className="text-stone-800">1.7 billion words</strong> &mdash; about{' '}
+            <strong className="text-stone-800">a third the size of the entire English Wikipedia</strong>{' '}
+            &mdash; drawn not from modern summaries but from the original record of human thought across
+            five centuries and more than 170 languages. Counting the original-language texts shown
+            alongside each translation, the corpus is larger still.
+          </p>
+          <p className="text-xs text-muted font-body">
+            Word count estimated from a 7,500-page random sample of the translation corpus
+            (mean 415 words per page) across 4,071,861 translated pages; English Wikipedia figures
+            per Wikipedia&rsquo;s own statistics, May 2026.
           </p>
         </div>
 
