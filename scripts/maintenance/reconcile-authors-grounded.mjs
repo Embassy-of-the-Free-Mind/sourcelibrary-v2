@@ -99,6 +99,7 @@ const queue = clean.slice(0, Number.isFinite(LIMIT) ? LIMIT : clean.length);
 console.log(`unanchored authors: ${targets.length} | malformed skipped: ${targets.length - clean.length} | attempting: ${queue.length}\n`);
 
 let anchored = 0, nulled = 0, gated = 0, errored = 0;
+let inTok = 0, outTok = 0; // flash-lite token usage, for exact cost
 const decisions = [];
 for (const t of queue) {
   try {
@@ -119,6 +120,7 @@ ${cands.map((c, i) => `${i + 1}. ${c.qid} — ${c.label}${c.description ? ` — 
 
 Return STRICT JSON: {"qid":"Q...."|null,"reason":"<≤12 words>"}`;
     const res = await model.generateContent({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { responseMimeType: 'application/json', temperature: 0 } });
+    const um = res.response.usageMetadata; inTok += um?.promptTokenCount || 0; outTok += um?.candidatesTokenCount || 0;
     const pick = JSON.parse(res.response.text());
     const chosen = pick.qid && cands.find(c => c.qid === pick.qid);
     if (!chosen) { nulled++; decisions.push(`  ∅ no-match     "${t.canonical_name}" — ${pick.reason || ''}`); continue; }
@@ -142,6 +144,10 @@ Return STRICT JSON: {"qid":"Q...."|null,"reason":"<≤12 words>"}`;
 
 console.log(decisions.join('\n'));
 console.log(`\nanchored ${anchored} | null ${nulled} | date-gated ${gated} | errors ${errored}  (of ${queue.length})`);
+// gemini-3.1-flash-lite list price (USD per 1M tokens) — update if the rate card changes
+const PRICE_IN = 0.10, PRICE_OUT = 0.40;
+const cost = (inTok / 1e6) * PRICE_IN + (outTok / 1e6) * PRICE_OUT;
+console.log(`flash-lite tokens: ${inTok.toLocaleString()} in / ${outTok.toLocaleString()} out → ~$${cost.toFixed(3)} (at $${PRICE_IN}/$${PRICE_OUT} per 1M)`);
 
 // merge author docs that now share an authority id (only meaningful with --apply)
 if (APPLY && anchored) {
