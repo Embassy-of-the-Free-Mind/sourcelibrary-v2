@@ -5,6 +5,7 @@ import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
 import { supabase } from '@/lib/supabase';
 import { ObjectId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { CLIP_URL } from '@/lib/clip';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -365,7 +366,6 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
 }> {
   // Use CLIP visual search via the gallery API for text-to-image matching
   const db = await getDb();
-  const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
   // Try CLIP text-to-image search first. Distinguish "CLIP searched and found
   // nothing" (reachable, fall back to keyword search) from "CLIP is down"
