@@ -25,6 +25,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'man-his-own-maker',
+    title: 'Man, His Own Maker',
+    subtitle:
+      "Leo XIV's encyclical on AI is, strangely, the grandchild of the first printed book the Church ever banned — Pico's Oration on the Dignity of Man. Reading them across five centuries shows what AI really forces us to decide about the soul.",
+    date: '30 May 2026',
+    readTime: '15 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://images.sourcelibrary.org/archived/adad5f6d-4f68-4009-9406-d0e083cf0acc/3.jpg',
+    imageAlt: 'Title page of an early printed edition of Pico della Mirandola\'s collected works, listing the Heptaplus, the Apologia, De Ente et Uno, and the Oration',
+  },
+  {
     slug: 'does-ai-get-religion',
     title: 'Does the AI Get Religion?',
     subtitle: 'The longest page in our library is one leaf of a Javanese Bible that the AI translated into 491,418 characters of "generations of generations of generations." It only happens with scripture.',
