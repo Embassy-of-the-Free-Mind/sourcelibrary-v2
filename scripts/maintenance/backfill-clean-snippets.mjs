@@ -67,58 +67,71 @@ async function main() {
   }
 
   const cursor = db.collection('pages')
-    .find(mongoFilter, { projection: { _id: 1, book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } })
-    .sort({ page_number: 1 });
+    .find(mongoFilter, { projection: { _id: 1, book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } });
 
-  let scanned = 0, changed = 0, written = 0, droppedTokens = 0;
+  let scanned = 0, changed = 0, written = 0, droppedTokens = 0, errors = 0;
   const samples = [];
 
-  for await (const page of cursor) {
-    if (LIMIT && scanned >= LIMIT) break;
-    scanned++;
+  // Run a batch of Mongo pages: bulk-select existing Supabase snippets in one
+  // call (.in), then UPDATE only the changed rows with a concurrency pool.
+  // We UPDATE (never upsert) so the embedding column is never touched.
+  const SELECT_BATCH = 500;
+  const UPDATE_CONCURRENCY = 25;
 
-    const raw = page.translation?.data || page.ocr?.data || '';
-    if (!raw) continue;
-    const cleaned = cleanText(raw);
-
-    const pageId = page._id.toString();
-    const { data: existing } = await supabase
+  async function flush(batch) {
+    const ids = batch.map(b => b.pageId);
+    const { data: rows, error } = await supabase
       .from('page_translations')
-      .select('translation')
-      .eq('page_id', pageId)
-      .maybeSingle();
-    if (!existing) continue; // not embedded yet — worker will write it clean
+      .select('page_id, translation')
+      .in('page_id', ids);
+    if (error) { console.error(`select batch: ${error.message}`); errors += batch.length; return; }
+    const existing = new Map((rows || []).map(r => [r.page_id, r.translation || '']));
 
-    const old = existing.translation || '';
-    if (old === cleaned) continue;
-    changed++;
+    const todo = [];
+    for (const b of batch) {
+      if (!existing.has(b.pageId)) continue; // not embedded yet — worker writes clean
+      const old = existing.get(b.pageId);
+      if (old === b.cleaned) continue;
+      changed++;
 
-    // crude signal: words present in old snippet but gone after re-clean
-    const oldWords = new Set(old.toLowerCase().match(/[a-z]{4,}/g) || []);
-    const newWords = new Set(cleaned.toLowerCase().match(/[a-z]{4,}/g) || []);
-    const removed = [...oldWords].filter(w => !newWords.has(w));
-    droppedTokens += removed.length;
-
-    if (samples.length < 8) {
-      samples.push({
-        page: page.page_number,
-        removedSample: removed.slice(0, 12).join(', '),
-        oldLen: old.length,
-        newLen: cleaned.length,
-      });
+      const oldWords = new Set(old.toLowerCase().match(/[a-z]{4,}/g) || []);
+      const newWords = new Set(b.cleaned.toLowerCase().match(/[a-z]{4,}/g) || []);
+      const removed = [...oldWords].filter(w => !newWords.has(w));
+      droppedTokens += removed.length;
+      if (samples.length < 8) {
+        samples.push({ page: b.page_number, removedSample: removed.slice(0, 12).join(', '), oldLen: old.length, newLen: b.cleaned.length });
+      }
+      if (WRITE) todo.push(b);
     }
 
-    if (WRITE) {
-      const { error } = await supabase
-        .from('page_translations')
-        .update({ translation: cleaned })
-        .eq('page_id', pageId);
-      if (error) { console.error(`  page ${page.page_number}: ${error.message}`); continue; }
-      written++;
+    for (let i = 0; i < todo.length; i += UPDATE_CONCURRENCY) {
+      const slice = todo.slice(i, i + UPDATE_CONCURRENCY);
+      await Promise.all(slice.map(async b => {
+        const { error: uerr } = await supabase
+          .from('page_translations')
+          .update({ translation: b.cleaned })
+          .eq('page_id', b.pageId);
+        if (uerr) { errors++; } else { written++; }
+      }));
     }
   }
 
-  console.log(`\nScanned ${scanned} pages | snippet changed: ${changed} | written: ${written}${WRITE ? '' : ' (DRY RUN)'}`);
+  let batch = [];
+  for await (const page of cursor) {
+    if (LIMIT && scanned >= LIMIT) break;
+    scanned++;
+    const raw = page.translation?.data || page.ocr?.data || '';
+    if (!raw) continue;
+    batch.push({ pageId: page._id.toString(), page_number: page.page_number, cleaned: cleanText(raw) });
+    if (batch.length >= SELECT_BATCH) {
+      await flush(batch);
+      batch = [];
+      if (scanned % 50000 === 0) console.log(`  …scanned ${scanned} | changed ${changed} | written ${written} | errors ${errors}`);
+    }
+  }
+  if (batch.length) await flush(batch);
+
+  console.log(`\nScanned ${scanned} pages | snippet changed: ${changed} | written: ${written} | errors: ${errors}${WRITE ? '' : ' (DRY RUN)'}`);
   console.log(`Words removed from snippets (editorial prose): ${droppedTokens}\n`);
   for (const s of samples) {
     console.log(`  p${s.page} ${s.oldLen}→${s.newLen} chars | removed: ${s.removedSample}`);
