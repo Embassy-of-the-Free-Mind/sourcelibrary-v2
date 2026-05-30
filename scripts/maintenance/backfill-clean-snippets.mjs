@@ -60,14 +60,10 @@ async function main() {
   await mongo.connect();
   const db = mongo.db('bookstore');
 
-  const mongoFilter = BOOK_ID ? { book_id: BOOK_ID } : {};
   if (!BOOK_ID && !FULL) {
     console.error('Pass --book ID or --full');
     process.exit(1);
   }
-
-  const cursor = db.collection('pages')
-    .find(mongoFilter, { projection: { _id: 1, book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } });
 
   let scanned = 0, changed = 0, written = 0, droppedTokens = 0, errors = 0;
   const samples = [];
@@ -116,20 +112,47 @@ async function main() {
     }
   }
 
-  let batch = [];
-  for await (const page of cursor) {
-    if (LIMIT && scanned >= LIMIT) break;
-    scanned++;
-    const raw = page.translation?.data || page.ocr?.data || '';
-    if (!raw) continue;
-    batch.push({ pageId: page._id.toString(), page_number: page.page_number, cleaned: cleanText(raw) });
-    if (batch.length >= SELECT_BATCH) {
-      await flush(batch);
-      batch = [];
-      if (scanned % 50000 === 0) console.log(`  …scanned ${scanned} | changed ${changed} | written ${written} | errors ${errors}`);
+  // Process ONE book at a time with a short-lived Mongo cursor. A single 4M-doc
+  // cursor held open across slow Supabase writes times out ("cursor not found")
+  // and the process dies mid-run with no summary — which is exactly what
+  // happened on the first attempt. Per-book cursors are hundreds of docs, so
+  // they finish fast; the loop is also restartable via --after.
+  async function processBook(bookId) {
+    const cursor = db.collection('pages')
+      .find({ book_id: bookId }, { projection: { _id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } });
+    let batch = [];
+    for await (const page of cursor) {
+      if (LIMIT && scanned >= LIMIT) break;
+      scanned++;
+      const raw = page.translation?.data || page.ocr?.data || '';
+      if (!raw) continue;
+      batch.push({ pageId: page._id.toString(), page_number: page.page_number, cleaned: cleanText(raw) });
+      if (batch.length >= SELECT_BATCH) { await flush(batch); batch = []; }
+    }
+    if (batch.length) await flush(batch);
+  }
+
+  if (BOOK_ID) {
+    await processBook(BOOK_ID);
+  } else {
+    // --full: drive over book ids (small collection) rather than a giant pages cursor.
+    const AFTER = args.find((_, i, a) => a[i - 1] === '--after') || '';
+    const bookIds = (await db.collection('books')
+      .find({ id: { $exists: true } }, { projection: { id: 1 } })
+      .map(b => b.id).toArray())
+      .filter(Boolean)
+      .sort();
+    const start = AFTER ? bookIds.findIndex(id => id > AFTER) : 0;
+    const work = start < 0 ? [] : bookIds.slice(start);
+    console.log(`Books to process: ${work.length}${AFTER ? ` (resuming after ${AFTER})` : ''}`);
+    let bi = 0;
+    for (const bookId of work) {
+      if (LIMIT && scanned >= LIMIT) break;
+      await processBook(bookId);
+      bi++;
+      if (bi % 200 === 0) console.log(`  …${bi}/${work.length} books | scanned ${scanned} | written ${written} | errors ${errors} | last ${bookId}`);
     }
   }
-  if (batch.length) await flush(batch);
 
   console.log(`\nScanned ${scanned} pages | snippet changed: ${changed} | written: ${written} | errors: ${errors}${WRITE ? '' : ' (DRY RUN)'}`);
   console.log(`Words removed from snippets (editorial prose): ${droppedTokens}\n`);
