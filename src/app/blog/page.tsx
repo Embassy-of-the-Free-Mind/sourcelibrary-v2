@@ -25,6 +25,16 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'did-an-ai-write-the-encyclical',
+    title: "Did an AI Write the Pope's AI Encyclical?",
+    subtitle:
+      'Magnifica Humanitas was flagged 46% AI-written, with 127 em-dashes vs zero in a comparison encyclical. We re-ran the test against eight human encyclicals — Benedict XVI used dashes 2.5× more. The smoking gun is a baseline-selection artifact.',
+    date: '30 May 2026',
+    readTime: '11 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+  },
+  {
     slug: 'carbon-ledger',
     title: 'The Carbon Ledger of a Digital Library',
     subtitle: "Source Library has OCR'd 4.1M pages and translated almost all of them using AI. We logged every API call. ~1.8 tonnes CO₂e — about seven round-trip flights AMS↔London. Six independent estimation methods, full data + sources.",
