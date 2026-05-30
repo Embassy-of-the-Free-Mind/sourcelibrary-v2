@@ -8,7 +8,6 @@ import { bookUrl, authorSlug, authorUrl } from '@/lib/slugify';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
-import { enrichEntityFromWikidata } from '@/lib/wikidata-enrichment';
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -191,15 +190,13 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
-  // Portrait + life dates from Wikidata (lazily resolved & cached on the
-  // entity). Portrait resolves to a CSP-safe upload.wikimedia.org URL.
-  const enrichment = await enrichEntityFromWikidata(db, entity);
-
-  const birthYear = (enrichment.birthDate || entity?.wikidata_birth_date)?.split('-')[0];
-  const deathYear = (enrichment.deathDate || entity?.wikidata_death_date)?.split('-')[0];
+  // Life dates + portrait are a static read of the entity. Enrichment from
+  // Wikidata happens OFFLINE (cron + link hook) — never on render.
+  const birthYear = entity?.wikidata_birth_date?.split('-')[0];
+  const deathYear = entity?.wikidata_death_date?.split('-')[0];
   const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
-  const portraitUrl = enrichment.portraitUrl;
+  const portraitUrl = entity?.portrait_url ?? null;
 
   const wikipediaUrl = entity?.wikipedia_url
     || (entity?.wikidata_id ? `https://www.wikidata.org/wiki/Special:GoToLinkedPage/enwiki/${entity.wikidata_id}` : null);

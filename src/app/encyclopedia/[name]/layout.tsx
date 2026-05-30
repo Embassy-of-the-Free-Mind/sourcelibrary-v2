@@ -3,7 +3,6 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import EntitySchema from '@/components/seo/EntitySchema';
-import { enrichEntityFromWikidata } from '@/lib/wikidata-enrichment';
 
 // ISR: 24h background revalidation
 export const revalidate = 86400;
@@ -89,17 +88,10 @@ export const getEntity = cache(async (name: string) => {
     );
     if (!entity) return null;
 
-    // Backfill life dates from Wikidata for people that carry a wikidata_id
-    // but were never date-enriched (same gap that left author pages blank).
-    // Gated to persons — places/concepts have no birth/death, so enriching
-    // them would re-fetch every render (the missing date never caches).
-    let birthDate = entity.wikidata_birth_date as string | undefined;
-    let deathDate = entity.wikidata_death_date as string | undefined;
-    if (entity.type === 'person' && (!birthDate || !deathDate)) {
-      const enrichment = await enrichEntityFromWikidata(db, entity as Parameters<typeof enrichEntityFromWikidata>[1]);
-      birthDate = birthDate || enrichment.birthDate || undefined;
-      deathDate = deathDate || enrichment.deathDate || undefined;
-    }
+    // Life dates are a static read. Wikidata enrichment happens OFFLINE
+    // (cron + link hook, see src/lib/wikidata-enrichment.ts) — never on render.
+    const birthDate = entity.wikidata_birth_date as string | undefined;
+    const deathDate = entity.wikidata_death_date as string | undefined;
 
     // Fetch related entities (same books)
     const bookIds = entity.books?.map((b: { book_id: string }) => b.book_id) || [];

@@ -1,26 +1,34 @@
 /**
- * Lazy Wikidata enrichment for author/artist `entities`.
+ * Offline Wikidata enrichment for author/artist/person `entities`.
  *
  * Given an entity that carries a `wikidata_id`, this resolves three display
- * fields and caches them back on the entity so subsequent renders are free:
+ * fields and writes them onto the entity so the render path is a pure static
+ * read (it never calls Wikidata itself):
  *   - `portrait_url`        — P18 image, resolved to a CSP-safe CDN URL
  *   - `wikidata_birth_date` — P569
  *   - `wikidata_death_date` — P570
+ *   - `wikidata_enriched_at`— marker so we don't re-check on every run
  *
- * Two non-obvious constraints drove the implementation:
+ * This runs OFFLINE only — from the `/api/cron/enrich-entities` cron, the
+ * `backfill-wikidata-portraits-dates.mjs` script, and once when an author is
+ * linked (`linkAuthorToEntity`). It must NOT be called from a page render:
+ * birth/death/portrait are effectively immutable facts, so they belong in the
+ * DB, not pulled per view. See PR #2187 (the bug that started this) and the
+ * follow-up that made render static.
+ *
+ * Two non-obvious constraints:
  *
  * 1. **CSP.** The site's `img-src` whitelists `upload.wikimedia.org` (the
- *    Wikimedia CDN) but NOT `commons.wikimedia.org`. The old code cached
- *    `commons.wikimedia.org/w/thumb.php?...` URLs, which load fine via curl
- *    but are blocked by the browser — every portrait silently broke. We must
- *    resolve P18 to an `upload.wikimedia.org` URL. The Commons `imageinfo`
- *    API does this (and snaps to a renderable thumbnail bucket — hand-built
- *    `/thumb/.../800px-` URLs 400 unless that exact width was pre-rendered).
+ *    Wikimedia CDN) but NOT `commons.wikimedia.org`. A `commons.wikimedia.org`
+ *    portrait URL loads fine via curl but is blocked by the browser. We resolve
+ *    P18 to an `upload.wikimedia.org` URL via the Commons `imageinfo` API
+ *    (hand-built `/thumb/.../800px-` URLs 400 unless that width was
+ *    pre-rendered, so let the API hand us a renderable thumburl).
  *
- * 2. **Lazy backfill.** ~6.7k entities have a `wikidata_id` but no dates, and
- *    ~1k have a stale `commons.*` portrait. Rather than gate everything on a
- *    batch job, we re-resolve on first render when a field is missing or the
- *    cached portrait points at the blocked domain, then persist.
+ * 2. **Negative caching.** Many people legitimately have no P18/P569/P570 in
+ *    Wikidata. We still stamp `wikidata_enriched_at` so the cron treats them as
+ *    "checked, nothing there" and stops re-fetching — a staleness window
+ *    (cron-side) re-checks them later in case Wikidata gains the data.
  */
 
 import type { Db, ObjectId } from 'mongodb';
@@ -33,16 +41,14 @@ export interface EnrichableEntity {
   wikidata_death_date?: string;
 }
 
-export interface WikidataEnrichment {
-  portraitUrl: string | null;
-  birthDate: string | null;
-  deathDate: string | null;
+export interface EnrichResult {
+  /** Fields newly written this run (excludes the always-written marker). */
+  updated: Array<'portrait_url' | 'wikidata_birth_date' | 'wikidata_death_date'>;
+  /** False when the entity had no wikidata_id or the Wikidata fetch failed. */
+  checked: boolean;
 }
 
-/** 24h revalidate — Wikidata/Commons facts for historical figures rarely move. */
-const REVALIDATE = 60 * 60 * 24;
-
-/** A cached portrait on the blocked Commons domain must be re-resolved. */
+/** A portrait on the CSP-blocked Commons domain is treated as not-yet-resolved. */
 function isCspSafePortrait(url: string | undefined): url is string {
   return !!url && url.includes('upload.wikimedia.org');
 }
@@ -65,7 +71,7 @@ async function resolveCommonsPortrait(filename: string): Promise<string | null> 
     `&titles=${encodeURIComponent(`File:${filename}`)}` +
     `&prop=imageinfo&iiprop=url&iiurlwidth=300`;
   try {
-    const res = await fetch(url, { next: { revalidate: REVALIDATE } });
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) return null;
     const data = await res.json();
     const pages = data?.query?.pages;
@@ -80,65 +86,56 @@ async function resolveCommonsPortrait(filename: string): Promise<string | null> 
 }
 
 /**
- * Return portrait + life dates for an entity, resolving anything missing from
- * Wikidata and caching it back on the entity (fire-and-forget). Safe to call
- * on every render — it only hits the network when a field is absent or the
- * cached portrait points at the CSP-blocked domain.
+ * Fetch P18/P569/P570 from Wikidata and write any missing fields onto the
+ * entity, then stamp `wikidata_enriched_at`. Only fills gaps — never
+ * overwrites an existing value. Returns what changed.
+ *
+ * OFFLINE ONLY (cron / script / link hook). Do not call from a render path.
  */
-export async function enrichEntityFromWikidata(
+export async function enrichEntity(
   db: Db,
-  entity: EnrichableEntity | null,
-): Promise<WikidataEnrichment> {
-  if (!entity) return { portraitUrl: null, birthDate: null, deathDate: null };
+  entity: EnrichableEntity,
+): Promise<EnrichResult> {
+  const set: Record<string, string | Date> = {};
 
-  const cachedPortrait = isCspSafePortrait(entity.portrait_url) ? entity.portrait_url : null;
-  const cachedBirth = entity.wikidata_birth_date ?? null;
-  const cachedDeath = entity.wikidata_death_date ?? null;
+  if (entity.wikidata_id) {
+    try {
+      const res = await fetch(
+        `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
+        { cache: 'no-store' },
+      );
+      if (res.ok) {
+        const data = await res.json();
+        const claims = data?.entities?.[entity.wikidata_id]?.claims;
 
-  const needsPortrait = !cachedPortrait;
-  const needsBirth = !cachedBirth;
-  const needsDeath = !cachedDeath;
+        if (!isCspSafePortrait(entity.portrait_url)) {
+          const filename = claims?.P18?.[0]?.mainsnak?.datavalue?.value as string | undefined;
+          if (filename) {
+            const portraitUrl = await resolveCommonsPortrait(filename);
+            if (portraitUrl) set.portrait_url = portraitUrl;
+          }
+        }
+        if (!entity.wikidata_birth_date) {
+          const b = normaliseWikidataTime(claims?.P569?.[0]?.mainsnak?.datavalue?.value?.time);
+          if (b) set.wikidata_birth_date = b;
+        }
+        if (!entity.wikidata_death_date) {
+          const d = normaliseWikidataTime(claims?.P570?.[0]?.mainsnak?.datavalue?.value?.time);
+          if (d) set.wikidata_death_date = d;
+        }
 
-  // Nothing to do, or nothing we *can* do.
-  if ((!needsPortrait && !needsBirth && !needsDeath) || !entity.wikidata_id) {
-    return { portraitUrl: cachedPortrait, birthDate: cachedBirth, deathDate: cachedDeath };
+        // Mark as checked (negative cache) regardless of what we found.
+        set.wikidata_enriched_at = new Date();
+        await db.collection('entities').updateOne({ _id: entity._id }, { $set: set });
+        return {
+          updated: Object.keys(set).filter((k) => k !== 'wikidata_enriched_at') as EnrichResult['updated'],
+          checked: true,
+        };
+      }
+    } catch {
+      // fall through to checked:false (no marker — let the cron retry it)
+    }
   }
 
-  try {
-    const res = await fetch(
-      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
-      { next: { revalidate: REVALIDATE } },
-    );
-    if (!res.ok) {
-      return { portraitUrl: cachedPortrait, birthDate: cachedBirth, deathDate: cachedDeath };
-    }
-    const data = await res.json();
-    const claims = data?.entities?.[entity.wikidata_id]?.claims;
-
-    let portraitUrl = cachedPortrait;
-    if (needsPortrait) {
-      const filename = claims?.P18?.[0]?.mainsnak?.datavalue?.value as string | undefined;
-      if (filename) portraitUrl = await resolveCommonsPortrait(filename);
-    }
-
-    const birthDate = needsBirth
-      ? normaliseWikidataTime(claims?.P569?.[0]?.mainsnak?.datavalue?.value?.time)
-      : cachedBirth;
-    const deathDate = needsDeath
-      ? normaliseWikidataTime(claims?.P570?.[0]?.mainsnak?.datavalue?.value?.time)
-      : cachedDeath;
-
-    // Persist whatever we newly resolved (don't overwrite with null).
-    const set: Record<string, string> = {};
-    if (portraitUrl && portraitUrl !== entity.portrait_url) set.portrait_url = portraitUrl;
-    if (birthDate && birthDate !== entity.wikidata_birth_date) set.wikidata_birth_date = birthDate;
-    if (deathDate && deathDate !== entity.wikidata_death_date) set.wikidata_death_date = deathDate;
-    if (Object.keys(set).length > 0) {
-      db.collection('entities').updateOne({ _id: entity._id }, { $set: set }).catch(() => {});
-    }
-
-    return { portraitUrl, birthDate, deathDate };
-  } catch {
-    return { portraitUrl: cachedPortrait, birthDate: cachedBirth, deathDate: cachedDeath };
-  }
+  return { updated: [], checked: false };
 }
