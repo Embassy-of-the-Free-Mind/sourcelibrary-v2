@@ -127,7 +127,7 @@ function linkBookTitles(
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
   tenantSlug?: string | null,
-  authorLinks: { name: string; href: string }[] = [],
+  authorLinks: { name: string; href: string; canonical?: string }[] = [],
 ): React.ReactNode {
   const matches: { start: number; end: number; title: string; id: string; href?: string }[] = [];
   const usedRanges: [number, number][] = [];
@@ -173,6 +173,43 @@ function linkBookTitles(
       const end = start + match[0].length;
       if (!usedRanges.some(([s, e]) => start < e && end > s)) {
         matches.push({ start, end, title: match[0], id });
+        usedRanges.push([start, end]);
+      }
+    }
+  }
+
+  // 3a. Full-name phrases first. A bare surname is often shared by several
+  // people in one collection ("Bruno" → Giordano Bruno, Christoph Bruno,
+  // Elwin Bruno Christoffel), so the single-token pass below rules it ambiguous
+  // and drops it. The full/canonical name ("Giordano Bruno") is unambiguous,
+  // so match those multi-token phrases here and claim their ranges — this is
+  // what lets prominent authors link despite a contested surname (#2176/#2179).
+  const phraseHrefs = new Map<string, Set<string>>();
+  const phraseForm = (s: string) => s
+    .replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').replace(/[,;|].*$/, '').trim();
+  for (const { name, href, canonical } of authorLinks) {
+    if (!href) continue;
+    for (const form of [canonical, name]) {
+      if (!form) continue;
+      const p = phraseForm(form);
+      if (p.split(/\s+/).filter(Boolean).length < 2) continue; // need a full name
+      const key = p.toLowerCase();
+      if (!phraseHrefs.has(key)) phraseHrefs.set(key, new Set());
+      phraseHrefs.get(key)!.add(href);
+    }
+  }
+  // longest phrase first so "Giordano Bruno" wins before any shorter overlap
+  for (const [key, hrefs] of [...phraseHrefs].sort((a, b) => b[0].length - a[0].length)) {
+    if (hrefs.size !== 1) continue;
+    const href = [...hrefs][0];
+    const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+      if (!usedRanges.some(([s, e]) => start < e && end > s)) {
+        matches.push({ start, end, title: match[0], id: `author-${key}`, href });
         usedRanges.push([start, end]);
       }
     }
@@ -643,7 +680,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   // slug, so name-order variants of one person ("Bruno, Giordano" / "Giordano
   // Bruno") share a single href (this is what the canonical-author relink in
   // #2180 enables). Falls back to the raw string slug when unlinked.
-  let descriptionAuthorLinks: { name: string; href: string }[] = [];
+  let descriptionAuthorLinks: { name: string; href: string; canonical?: string }[] = [];
   if (isCatalogCollection) {
     try {
       const db = await getReadDb();
@@ -659,9 +696,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         : [];
       const entName = new Map(entDocs.map(e => [String(e._id), e.canonical_name || e.name]));
       descriptionAuthorLinks = pairs.flatMap(p => {
-        const canon = p.ent ? entName.get(String(p.ent)) : null;
+        const canon = (p.ent ? entName.get(String(p.ent)) : null) as string | null;
         const href = authorUrl(canon || (p._id as string));
-        return href ? [{ name: p._id as string, href }] : [];
+        return href ? [{ name: p._id as string, canonical: canon || undefined, href }] : [];
       });
     } catch { /* non-fatal — description just won't gain author links */ }
   }
