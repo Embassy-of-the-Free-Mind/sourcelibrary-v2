@@ -345,15 +345,19 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
   };
 }
 
-async function executeSearchImages(query: string, bookId?: string): Promise<
-  Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>
-> {
+async function executeSearchImages(query: string, bookId?: string): Promise<{
+  images: Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>;
+  clipUnavailable: boolean;
+}> {
   // Use CLIP visual search via the gallery API for text-to-image matching
   const db = await getDb();
   const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
-  // Try CLIP text-to-image search first
+  // Try CLIP text-to-image search first. Distinguish "CLIP searched and found
+  // nothing" (reachable, fall back to keyword search) from "CLIP is down"
+  // (unreachable — we must NOT let the model imply no illustrations exist).
   let clipIds = new Map<string, number>();
+  let clipUnavailable = false;
   try {
     const resp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
@@ -376,9 +380,18 @@ async function executeSearchImages(query: string, bookId?: string): Promise<
             }
           }
         }
+      } else {
+        clipUnavailable = true; // responded without an embedding
       }
+    } else {
+      clipUnavailable = true; // non-2xx from the CLIP service
     }
-  } catch { /* CLIP unavailable — fall back to text search */ }
+  } catch {
+    clipUnavailable = true; // network error / timeout — CLIP is down
+  }
+  if (clipUnavailable) {
+    console.warn(`[Librarian] CLIP visual search unavailable (${CLIP_URL}); falling back to keyword image search`);
+  }
 
   // Fetch gallery_images by CLIP IDs or text search fallback
   let images;
@@ -407,16 +420,19 @@ async function executeSearchImages(query: string, bookId?: string): Promise<
       .toArray();
   }
 
-  return images.slice(0, 6).map(img => ({
-    id: img._id.toString(),
-    imageUrl: img.image_url,
-    description: (img.museum_description || img.description || '').slice(0, 300),
-    bookTitle: img.book_title || 'Unknown',
-    bookAuthor: img.book_author || 'Unknown',
-    bookSlug: img.book_slug,
-    pageNumber: img.page_number,
-    type: img.type,
-  }));
+  return {
+    images: images.slice(0, 6).map(img => ({
+      id: img._id.toString(),
+      imageUrl: img.image_url,
+      description: (img.museum_description || img.description || '').slice(0, 300),
+      bookTitle: img.book_title || 'Unknown',
+      bookAuthor: img.book_author || 'Unknown',
+      bookSlug: img.book_slug,
+      pageNumber: img.page_number,
+      type: img.type,
+    })),
+    clipUnavailable,
+  };
 }
 
 // ── Tool Router ───────────────────────────────────────────────────────
@@ -505,7 +521,7 @@ async function executeTool(
     case 'search_images': {
       const query = args.query as string;
       const bookId = args.book_id as string | undefined;
-      const images = await executeSearchImages(query, bookId);
+      const { images, clipUnavailable } = await executeSearchImages(query, bookId);
 
       let context = '';
       if (images.length > 0) {
@@ -517,14 +533,18 @@ async function executeTool(
           context += `  Gallery: ${url}\n`;
           context += `  Image: ${img.imageUrl}\n`;
         }
+      } else if (clipUnavailable) {
+        // CLIP is down and the keyword fallback found nothing. Do NOT let the
+        // model conclude the library has no illustrations on this topic.
+        context = 'Visual search is temporarily unavailable, so illustrations could not be searched for this query. Do not claim the library has no images on this topic — say image search is briefly unavailable and offer to look again later.';
       } else {
         context = 'No matching images found in the gallery.';
       }
 
       return {
-        result: { found: images.length, context, images: images.map(i => ({ id: i.id, url: i.imageUrl, description: i.description.slice(0, 100), bookTitle: i.bookTitle })) },
+        result: { found: images.length, clipUnavailable, context, images: images.map(i => ({ id: i.id, url: i.imageUrl, description: i.description.slice(0, 100), bookTitle: i.bookTitle })) },
         step: { type: 'tool_result', name: 'search_images', query, found: images.length,
-          summary: images.length > 0 ? `Found ${images.length} illustrations` : 'No images found' },
+          summary: images.length > 0 ? `Found ${images.length} illustrations` : (clipUnavailable ? 'Visual search unavailable' : 'No images found') },
       };
     }
 
