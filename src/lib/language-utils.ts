@@ -5,6 +5,11 @@ const CODE_TO_NAME: Record<string, string> = {
   hu: 'Hungarian', it: 'Italian', ja: 'Japanese', la: 'Latin', nl: 'Dutch',
   no: 'Norwegian', pl: 'Polish', pt: 'Portuguese', ru: 'Russian', sa: 'Sanskrit',
   sv: 'Swedish', tr: 'Turkish', zh: 'Chinese',
+  // Indic / East-Asian 2-letter codes — Gemini emits these in <lang> tags for
+  // South-Asian corpora; without them e.g. "hi" fell through to a bare "Hi".
+  hi: 'Hindi', te: 'Telugu', ta: 'Tamil', mr: 'Marathi', ml: 'Malayalam',
+  kn: 'Kannada', bn: 'Bengali', gu: 'Gujarati', pa: 'Punjabi', ur: 'Urdu',
+  ko: 'Korean', vi: 'Vietnamese',
 };
 
 /** Canonical English name → ISO-639-1 code */
