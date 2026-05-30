@@ -10,7 +10,6 @@ import AuthorBibliography from '@/components/browse/AuthorBibliography';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
-import { enrichEntityFromWikidata } from '@/lib/wikidata-enrichment';
 import AuthorSchema from '@/components/seo/AuthorSchema';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
@@ -264,14 +263,11 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
-  // Portrait + life dates from Wikidata (lazily resolved & cached on the
-  // entity). Portrait resolves to a CSP-safe upload.wikimedia.org URL; dates
-  // backfill entities that carry a wikidata_id but were never date-enriched.
-  const enrichment = await enrichEntityFromWikidata(db, entity);
-
-  // Life dates — prefer freshly resolved, fall back to whatever was cached.
-  const birthYear = (enrichment.birthDate || entity?.wikidata_birth_date)?.split('-')[0];
-  const deathYear = (enrichment.deathDate || entity?.wikidata_death_date)?.split('-')[0];
+  // Life dates + portrait are a static read of the entity. Enrichment from
+  // Wikidata happens OFFLINE (cron + link hook, see wikidata-enrichment.ts) —
+  // never on render, since these are immutable facts.
+  const birthYear = entity?.wikidata_birth_date?.split('-')[0];
+  const deathYear = entity?.wikidata_death_date?.split('-')[0];
   const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
   // Encyclopedia entry: use entity directly if we have one, otherwise regex fallback
@@ -283,8 +279,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     { projection: { name: 1 } }
   );
 
-  // Portrait image from Wikidata (resolved above)
-  const portraitUrl = enrichment.portraitUrl;
+  // Portrait image — static read (enriched offline; CSP-safe CDN URL).
+  const portraitUrl = entity?.portrait_url ?? null;
 
   // Derive Wikipedia URL from entity
   const wikipediaUrl = entity?.wikipedia_url
@@ -320,8 +316,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         authorSlug={name}
         description={entity?.description}
         aliases={entity?.aliases}
-        birthDate={enrichment.birthDate || entity?.wikidata_birth_date}
-        deathDate={enrichment.deathDate || entity?.wikidata_death_date}
+        birthDate={entity?.wikidata_birth_date}
+        deathDate={entity?.wikidata_death_date}
         wikipediaUrl={wikipediaUrl}
         wikidataId={entity?.wikidata_id}
         viafId={entity?.viaf_id}

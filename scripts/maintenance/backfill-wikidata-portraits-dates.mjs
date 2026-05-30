@@ -81,7 +81,9 @@ for await (const ent of cursor) {
     const claims = data?.entities?.[ent.wikidata_id]?.claims;
     if (!claims) continue;
 
-    const set = {};
+    // Always stamp the checked marker (negative cache) — mirrors
+    // src/lib/wikidata-enrichment.ts so the cron treats these as done.
+    const set = { wikidata_enriched_at: new Date() };
 
     const portraitBad = !ent.portrait_url || ent.portrait_url.includes('commons.wikimedia.org');
     if (portraitBad) {
@@ -97,7 +99,7 @@ for await (const ent of cursor) {
     if (birth && birth !== ent.wikidata_birth_date) { set.wikidata_birth_date = birth; datesFixed++; }
     if (death && death !== ent.wikidata_death_date) set.wikidata_death_date = death;
 
-    if (Object.keys(set).length > 0 && !DRY) {
+    if (!DRY) {
       await entities.updateOne({ _id: ent._id }, { $set: set });
     }
     if (processed % 100 === 0) {
