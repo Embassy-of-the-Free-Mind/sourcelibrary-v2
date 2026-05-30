@@ -289,7 +289,11 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const params = useParams<{ tenant: string }>();
   const tenant = params?.tenant;
   const [messages, setMessages] = useState<Message[]>([]);
-  const [suggestions] = useState(() => pickSuggestions(4));
+  // Seed deterministically so SSR and the first client render agree (a random
+  // initial set caused a hydration mismatch — React #418). Shuffle for variety
+  // only after mount, where a state update is safe.
+  const [suggestions, setSuggestions] = useState<string[]>(() => ALL_SUGGESTIONS.slice(0, 4));
+  useEffect(() => { setSuggestions(pickSuggestions(4)); }, []);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
