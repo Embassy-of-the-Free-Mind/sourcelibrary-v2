@@ -2,17 +2,18 @@ import { ProcessingPrompts } from "./core";
 import type { DetectedImage } from "../page";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
-export const PROMPT_VERSION = 'v6.2026-03';
+export const PROMPT_VERSION = 'v6.1.2026-05';
 
 const VALID_PAGE_TYPES = new Set([
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
   'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
-  'digitizer-insert',
+  'digitizer-insert', 'exlibris', 'bookplate',
 ]);
 
 // Page types that should be skipped during translation — no meaningful text content
+// (ex-libris/bookplates are ownership marks, not book content)
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank',
+  'blank', 'exlibris', 'bookplate',
 ];
 
 // Page types hidden from the reader navigation (still accessible via direct URL)
@@ -50,7 +51,8 @@ export function extractScriptType(ocrText: string): 'printed' | 'handwritten' | 
 
 const VALID_IMAGE_TYPES = new Set([
   'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
-  'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score', 'unknown',
+  'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score',
+  'exlibris', 'bookplate', 'unknown',
 ]);
 
 /** Parse <detected-images> JSON from OCR text into typed DetectedImage[]. Returns empty array if none found. */
@@ -158,8 +160,9 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Metadata tags (hidden from readers):**
 - <language>X</language> — the detected language of this page (REQUIRED — always identify the language, e.g. Latin, German, French, English)
-- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text, digitizer-insert
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text, digitizer-insert, exlibris
   - Use "digitizer-insert" for pages added by the digitizer (NOT part of the original book): Internet Archive credit pages, Google Books inserts, "Digitized by Google" pages, library barcode/scan sheets, digital watermark pages
+  - Use "exlibris" for an ownership bookplate pasted into the book (usually on a pastedown or endpaper): an armorial or emblematic plate naming or marking the owner, often with a motto. It is provenance, not the book's content — do NOT treat its motto as body text.
 - <columns>N</columns> — number of text columns on this page (omit for single-column pages, include for 2+ columns)
 - <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
 - <header>X</header> — running headers/chapter titles at top of page (NEVER duplicate as heading in body)
@@ -191,7 +194,7 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 **IMAGE DETECTION:** If the page contains ANY illustrations, diagrams, emblems, woodcuts, engravings, or decorative elements, add at the END:
 
 <detected-images>
-[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
+[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map|exlibris", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
 </detected-images>
 
 **Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY to tightly enclose each illustration.
@@ -201,6 +204,7 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - 0.7-0.9: High — well-executed illustrations, interesting diagrams
 - 0.4-0.7: Moderate — standard frontispieces, simple diagrams
 - 0.0-0.4: Low — page ornaments, generic borders, printer's marks
+- Ownership bookplates / ex-libris: ALWAYS type "exlibris" with gallery_quality ≤ 0.3 — these are provenance marks, not the book's own illustrations, and must not surface in the gallery.
 
 If text-only page, omit the <detected-images> block.`,
 

@@ -108,6 +108,8 @@ const SKIP_MARKUP_RULES = [
   { type: 'stamp', significance: '*' },
   { type: 'ornament', significance: '*' },        // printer's ornaments, tailpieces
   { type: 'blank', significance: '*' },
+  { type: 'exlibris', significance: '*' },        // ownership bookplates — provenance, not content
+  { type: 'bookplate', significance: '*' },
   { type: 'decorative', significance: 'low' },    // drop caps, framing rules
   { type: "printer's mark", significance: 'low' },
   { type: 'photograph', significance: 'low' },    // binding/fore-edge photos
@@ -191,7 +193,7 @@ If the page contains no significant illustrations, return \`extracted_images: []
 For each significant illustration return:
 {
   "description": "Brief factual description",
-  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map",
+  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
   "confidence": 0.95,
   "gallery_quality": 0.85,
