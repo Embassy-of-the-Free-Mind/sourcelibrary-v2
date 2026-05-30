@@ -87,31 +87,33 @@ export default function SourceLibraryPublicBetaLaunch() {
       {/* The gap — the substance, up front */}
       <section className="mb-16">
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          <strong className="text-stone-800">AMSTERDAM</strong> &mdash; In 1462, Cosimo de&rsquo; Medici
-          paid Marsilio Ficino to translate the <em>Corpus Hermeticum</em> from Greek into Latin, and
-          helped set the Renaissance in motion. Five centuries later, most of the Renaissance still
-          waits to be translated.
+          <strong className="text-stone-800">AMSTERDAM</strong> &mdash; &ldquo;Ninety percent of the
+          Latin texts from the Renaissance have never been available in translation.&rdquo; The estimate
+          comes from Debora Shuger, a Renaissance scholar at UCLA, made as the university launched a
+          Mellon Foundation program in the field. It is not an outlier. The Latin written after 1500
+          &mdash; the philosophy, science, medicine, and law of early modern Europe &mdash; vastly
+          outweighs everything that survives from ancient Rome, and the overwhelming majority of it has
+          never been read in any modern language. The same is true of the written inheritance of China,
+          India, and the Islamic world.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          A census conducted by Source Library &mdash; believed to be the first of its kind &mdash;
-          matched roughly 1.6 million editions from the{' '}
+          When Source Library tried to measure the gap precisely &mdash; matching roughly 1.6 million
+          early modern editions against the{' '}
           <a href="https://sourcelibrary.org/census" className="text-accent-rust hover:underline">
-            Universal Short Title Catalogue
+            Library of Congress catalogue and dozens of other sources
           </a>{' '}
-          against Library of Congress holdings and dozens of additional catalogues. The finding: the
-          overwhelming majority of everything printed in Europe between 1450 and 1700 has never been
-          translated into English &mdash; and that is before counting the manuscript traditions, or the
-          vast written inheritance of China, India, the Islamic world, and beyond. At the pace of
-          traditional scholarship, closing that gap would take many centuries.
+          &mdash; it reached the same conclusion: fewer than one work in twenty printed in Europe between
+          1450 and 1700 has a known English translation.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          &ldquo;The assumption that the important texts have already been translated is simply wrong
-          &mdash; we tested it,&rdquo; says Derek Lomas, founder of Source Library and a cognitive
-          scientist and researcher at TU Delft. &ldquo;The intellectual foundation of the modern world
-          has been locked behind languages almost no one reads anymore &mdash; not only Latin, but
-          Classical Chinese, Sanskrit, Arabic, Tibetan, Armenian. We built Source Library to open it.&rdquo;
+          &ldquo;We&rsquo;ve inherited the Renaissance through a keyhole &mdash; the few hundred texts
+          that happened to get translated,&rdquo; says Derek Lomas, founder of Source Library and a
+          researcher at TU Delft. &ldquo;The rest &mdash; the books that actually shaped Copernicus and
+          Newton and the birth of modern science &mdash; have sat unread behind Latin for five hundred
+          years. AI doesn&rsquo;t replace the scholars who read these languages; it finally lets the rest
+          of us into the room.&rdquo;
         </p>
       </section>
 
@@ -210,6 +212,26 @@ export default function SourceLibraryPublicBetaLaunch() {
             Wikipedia&rsquo;s own statistics, May 2026.
           </p>
         </div>
+      </section>
+
+      <hr className="border-border-light my-12" />
+
+      {/* A blind spot for AI */}
+      <section className="mb-16">
+        <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
+          A blind spot for AI, too
+        </h2>
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The gap is not only a human one. In a{' '}
+          <a href="https://sourcelibrary.org/blog/did-the-ai-read-this" className="text-accent-rust hover:underline">
+            separate study
+          </a>
+          , Source Library estimated that roughly <strong className="text-stone-800">7,000 of the books
+          in its corpus are effectively unknown to today&rsquo;s leading AI models</strong> &mdash; never
+          translated, never summarised, absent from the text these systems were trained on. They are a
+          blind spot in the modern mind, human and machine alike. By translating them and publishing the
+          originals beside them, Source Library moves them into reach of both.
+        </p>
       </section>
 
       <hr className="border-border-light my-12" />
