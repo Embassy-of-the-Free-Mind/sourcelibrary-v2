@@ -28,12 +28,13 @@ IMAGE TYPES (use these exactly):
 SKIP these — do NOT include them:
 - Page ornaments, borders, decorative initials, printer's devices
 - Marbled papers, blank frames, ruled lines
+- Ownership bookplates / ex-libris pasted into pastedowns or endpapers — if you must record one, use type "exlibris" with gallery_quality ≤ 0.3 (provenance, not the book's content)
 - Any element that is purely decorative with no intellectual content
 
 For each significant illustration return:
 {
   "description": "Brief factual description",
-  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map",
+  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
   "confidence": 0.95,
   "gallery_quality": 0.85,

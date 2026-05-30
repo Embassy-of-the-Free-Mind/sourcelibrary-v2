@@ -125,6 +125,8 @@ async function run() {
       { $match: {
         book_id: { $in: bookIds },
         gallery_quality: { $gte: 0.7 },
+        // Never feature ownership bookplates / ex-libris (provenance, not content)
+        type: { $nin: ['exlibris', 'bookplate', 'decorative', 'symbol', 'musical_score'] },
         $or: [
           { extracted_url: { $exists: true, $ne: null, $ne: '' } },
           { image_url: { $exists: true, $ne: null, $ne: '' } },

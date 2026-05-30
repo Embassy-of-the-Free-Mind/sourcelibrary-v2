@@ -224,7 +224,7 @@ export interface ImageMetadata {
 export interface DetectedImage {
   id?: string;                  // Unique ID for this detection
   description: string;          // What the image depicts (brief)
-  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'emblem' | 'engraving' | 'portrait' | 'frontispiece' | 'musical_score' | 'unknown';
+  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'emblem' | 'engraving' | 'portrait' | 'frontispiece' | 'musical_score' | 'exlibris' | 'bookplate' | 'unknown';
   // Bounding box (0-1 normalized coordinates, for future extraction)
   bbox?: {
     x: number;      // Left edge (0-1)
