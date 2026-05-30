@@ -31,9 +31,13 @@ const APPLY = process.argv.includes('--apply');
 const PARTICLES = new Set(['de','del','della','di','da','la','le','van','von','der','den','du','des','el','al','ibn','ben','a','ab','zu','of','the','don','fr','st','saint','y','e','pseudo']);
 // People-only: drop placeholders, institutions, and ethnonym/anonymous buckets.
 const PLACEHOLDER = /^(anonymous|unknown|various|anon|n\/a|none|egyptian|sumerian|babylonian|assyrian|traditional|chinese|japanese|tibetan|greek|roman)\b|collection|monastery|temple|press|library|dynasty|school of|circle of|workshop|^mtena|\b(church|council|society|congregation|order of|company of|guild|academy|université|university|conserv|ministry|commission|office|bureau)\b/i;
-/** Compound authorship ("A & B", "A; B", "A and B" with two names) — real co-
- *  authored works, but not one person, so they don't become a canonical author. */
-const COMPOUND = /\s(&|;|\band\b)\s.*[a-z]/i;
+/** Compound authorship ("A & B", "A | B", "A / B", "A; B", "A, B, C, …") — real
+ *  co-authored / multi-attribution works. An entity-linked compound string is
+ *  routed to its primary author via that entity below; the rest are held back so
+ *  they don't mint a spurious "author". Editor/translator tails ("; ed. Waite")
+ *  are NOT compounds — but separating them by string alone is unreliable, so
+ *  entity-linked ones still resolve correctly and only no-entity ones drop. */
+const COMPOUND = /\s[|/&]\s|;\s|\bet\s+al\b|,[^,]+,[^,]+,/i;
 
 const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
@@ -67,9 +71,14 @@ const rows = await books.aggregate([
   { $match: { visible: { $ne: false }, pages_count: { $gt: 0 }, author: { $type: 'string', $ne: '' } } },
   { $group: { _id: '$author', n: { $sum: 1 }, ents: { $addToSet: '$author_entity_id' } } },
 ], { allowDiskUse: true }).toArray();
-const compound = rows.filter(r => !PLACEHOLDER.test(r._id.trim()) && COMPOUND.test(r._id));
-const authors = rows.filter(r => !PLACEHOLDER.test(r._id.trim()) && !COMPOUND.test(r._id));
-console.log(`distinct live author strings: ${rows.length}  (people: ${authors.length}, compound/co-author strings held back: ${compound.length}, placeholders/institutions: ${rows.length - authors.length - compound.length})`);
+const people = rows.filter(r => !PLACEHOLDER.test(r._id.trim()));
+// Keep an entity-linked compound string ("Sendivogius, Michael | Paracelsus")
+// — it carries the PRIMARY author's entity, so union-find routes its books to
+// that person. Drop no-entity compounds (can't attribute → would mint noise).
+const hasEnt = (r) => (r.ents || []).some(Boolean);
+const authors = people.filter(r => !COMPOUND.test(r._id) || hasEnt(r));
+const droppedCompound = people.length - authors.length;
+console.log(`distinct live author strings: ${rows.length}  (people: ${people.length}, clustered: ${authors.length}, no-entity compounds dropped: ${droppedCompound}, placeholders/institutions: ${rows.length - people.length})`);
 
 // 2. harvest viaf / wikidata / canonical_name from the linked entity records
 const allIds = [...new Set(authors.flatMap(r => r.ents).filter(Boolean).map(String))];
@@ -113,7 +122,10 @@ for (const members of clusters.values()) {
   const viaf = members.find(m => m.viaf)?.viaf || null;
   const wd = members.find(m => m.wd)?.wd || null;
   // canonical name: prefer a harvested entity canonical_name (clean, natural order); else the most-common variant
-  const canonical_name = members.find(m => m.viaf && m.entName)?.entName || members.find(m => m.entName)?.entName || members[0]._id;
+  const canonical_name = members.find(m => m.viaf && m.entName)?.entName
+    || members.find(m => m.entName)?.entName
+    || members.find(m => !COMPOUND.test(m._id))?._id   // prefer a clean sole-author string
+    || members[0]._id;
   let slug = authorSlug(canonical_name);
   if (!slug) continue;
   const seen = slugCounts.get(slug) || 0; slugCounts.set(slug, seen + 1);
@@ -135,16 +147,29 @@ for (const members of clusters.values()) {
 }
 docs.sort((a, b) => b.book_count - a.book_count);
 
+// NOTE: merging is DETERMINISTIC only — shared name-key ∪ shared VIAF ∪ shared
+// Wikidata. The famous people already collapse to one doc this way. The
+// no-authority obscure tail (~2K strings) stays as separate docs on purpose:
+// under-merging an obscure author is harmless (a duplicate page); MIS-merging
+// two same-surname people is not. Consolidating that tail correctly needs
+// authority resolution disambiguated by each author's actual books (title /
+// year / language) — tracked as the follow-up "grounded reconciliation" step,
+// NOT a blind name/LLM merge (both mis-resolve same-surname people).
+
 console.log(`\nclusters → ${docs.length} canonical authors`);
 console.log(`  with VIAF: ${docs.filter(d => d.viaf_id).length}  with Wikidata: ${docs.filter(d => d.wikidata_id).length}  multi-variant: ${docs.filter(d => d.variants.length > 1).length}`);
 console.log('\nTop 15 by book_count (name · books · variants · viaf):');
 for (const d of docs.slice(0, 15)) console.log(`  ${String(d.book_count).padStart(4)}b ${String(d.variants.length).padStart(2)}v ${d.viaf_id ? 'VIAF' : 'no-viaf'}  "${d.canonical_name}"  [${d.slug}]`);
 
-// fragmentation sanity — each famous person should be exactly ONE doc
-const oneDoc = (re) => docs.filter(d => d.variants.some(v => re.test(v))).length;
-console.log('\nFragmentation sanity (should be 1 each):');
-for (const [nm, re] of [['Spinoza', /spinoza/i], ['Bruno', /giordano bruno|bruno, giordano/i], ['Erasmus', /erasmus|roterodam/i], ['Paracelsus', /paracelsus/i], ['Aquinas', /aquinas|aquino/i], ['Descartes', /descartes/i]])
-  console.log(`  ${nm.padEnd(12)} → ${oneDoc(re)} doc(s)`);
+// fragmentation sanity — count docs whose CANONICAL NAME is this person (not
+// every doc that merely lists the surname among its variants — those are mostly
+// co-author strings that correctly belong to the other author).
+const canonDocs = (re) => docs.filter(d => re.test(d.canonical_name));
+console.log('\nFragmentation sanity (canonical-name match, should be 1 each):');
+for (const [nm, re] of [['Spinoza', /spinoza/i], ['Bruno', /giordano bruno|bruno, giordano/i], ['Erasmus', /^(desiderius )?erasmus|roterodam/i], ['Paracelsus', /paracelsus|hohenheim/i], ['Aquinas', /aquinas|aquino/i], ['Descartes', /descartes/i]]) {
+  const ds = canonDocs(re);
+  console.log(`  ${nm.padEnd(12)} → ${ds.length} doc(s)${ds.length > 1 ? ': ' + ds.map(d => `"${d.canonical_name}"(${d.book_count}b)`).join(', ') : ''}`);
+}
 
 if (APPLY) {
   await db.collection('authors').drop().catch(() => {});
