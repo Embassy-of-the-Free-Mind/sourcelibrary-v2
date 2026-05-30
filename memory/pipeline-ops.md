@@ -17,6 +17,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Summary + Index | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, every 5 min, 30 books/run |
 | Chapter extraction | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, runs after summary+index |
 | Lightweight crons | **Vercel** | social-post, health-check, daily-report, warm |
+| Finalize tail (cover-select + complete) | **Hetzner** crontab (`*/15 * * * *`) | `pipeline-orchestrator.mjs --phase 9` runs Phase 8.9 (cover) + 9 (finalize), decoupled from the main loop so the tail doesn't starve behind OCR/translation. flock `/tmp/sl-finalize.lock`, log `/var/log/sourcelibrary/finalize.log`. See `lesson_finalize_tail_starvation`. |
 | e-rara / Harvard / Gallica archiving | **Local Mac** via launchd | Source hosts block Hetzner IPs (`archive-{erara,harvard,gallica}.mjs`, every 30 min, plists `org.sourcelibrary.archive-*`) |
 | Archiving watchdog | **Hetzner** crontab (`45 */6 * * *`, every 6h) | Self-heals books stuck in `archiving`: parks IA-lending/dead-URL books → `needs_attention`, escalates stale-unreachable. `scripts/maintenance/archiving-watchdog.mjs --apply` (conservative; add `--rearchive` manually to push recoverable books to R2). Logs `/var/log/sourcelibrary/archiving-watchdog.log`, audit in `watchdog_runs`. |
 
