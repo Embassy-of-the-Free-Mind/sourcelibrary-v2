@@ -27,9 +27,9 @@ const posts: BlogPost[] = [
   {
     slug: 'does-ai-get-religion',
     title: 'Does the AI Get Religion?',
-    subtitle: 'We tried to measure how big our library is and found a single page that ran to 491,418 characters — an AI that picked up a book of sacred genealogies and could not stop generating generations. On recitation loops, and why the mean joined a monastery.',
+    subtitle: 'The longest page in our library is one leaf of a Javanese Bible that the AI translated into 491,418 characters of "generations of generations of generations." It only happens with scripture.',
     date: '30 May 2026',
-    readTime: '7 min read',
+    readTime: '3 min read',
     tag: 'Field notes',
     tagColor: 'bg-amber-50 text-amber-800',
   },
