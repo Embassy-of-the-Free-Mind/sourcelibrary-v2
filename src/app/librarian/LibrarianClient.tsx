@@ -99,10 +99,15 @@ function timeAgo(dateStr: string): string {
 }
 
 const TOOL_LABELS: Record<string, string> = {
+  search: 'Searching the collection',
   search_collection: 'Searching the collection',
   search_semantic: 'Semantic search',
   search_wikipedia: 'Checking Wikipedia',
+  search_images: 'Searching illustrations',
+  search_artworks: 'Searching artworks',
   get_book_page: 'Reading a page',
+  read_nearby_pages: 'Reading nearby pages',
+  add_to_notebook: 'Saving to notebook',
   present_choices: 'Thinking...',
 };
 
@@ -149,17 +154,27 @@ function SourceCardRow({ sources, tenant }: { sources: SourceCard[]; tenant?: st
 
 function SearchSteps({ steps }: { steps: SearchStep[] }) {
   if (steps.length === 0) return null;
+  const busy = steps.some(s => s.status === 'searching');
   return (
-    <div className="space-y-1 mb-2">
-      {steps.map((step, i) => (
+    <div role="status" aria-live="polite" aria-busy={busy} className="space-y-1 mb-2">
+      {steps.map((step, i) => {
+        const statusLabel =
+          step.status === 'searching' ? 'in progress'
+            : step.found && step.found > 0 ? 'found results'
+            : 'no results';
+        return (
         <div key={i} className="flex items-center gap-2 text-[12px] font-sans text-[#8a8480]">
-          <span className={`inline-block w-3.5 text-center ${step.status === 'done' ? (step.found && step.found > 0 ? 'text-[#6b8f5e]' : 'text-[#b0a89c]') : 'text-[#c9a86c]'}`}>
+          <span
+            role="img"
+            aria-label={statusLabel}
+            className={`inline-block w-3.5 text-center ${step.status === 'done' ? (step.found && step.found > 0 ? 'text-[#6b8f5e]' : 'text-[#b0a89c]') : 'text-[#c9a86c]'}`}
+          >
             {step.status === 'searching' ? (
-              <span className="inline-block animate-pulse">...</span>
+              <span aria-hidden className="inline-block animate-pulse">...</span>
             ) : step.found && step.found > 0 ? (
-              <span>&#x2713;</span>
+              <span aria-hidden>&#x2713;</span>
             ) : (
-              <span>&#x2717;</span>
+              <span aria-hidden>&#x2717;</span>
             )}
           </span>
           <span>
@@ -170,7 +185,8 @@ function SearchSteps({ steps }: { steps: SearchStep[] }) {
             )}
           </span>
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -693,6 +709,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                             <div className="mb-2">
                               <button
                                 onClick={() => setShowThinking(!showThinking)}
+                                aria-expanded={showThinking}
                                 className="text-[11px] text-[#b0a89c] hover:text-[#8a8480] font-sans transition-colors"
                               >
                                 {showThinking ? 'Hide reasoning' : 'Show reasoning'}
