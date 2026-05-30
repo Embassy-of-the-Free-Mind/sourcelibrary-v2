@@ -10,6 +10,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 
 export const preferredRegion = 'fra1';
 
@@ -17,8 +18,8 @@ const MAX_PAGE_RESULTS = 25;
 
 /** Strip XML/HTML tags and clean up OCR artifacts for display */
 function cleanText(text: string): string {
-  return text
-    .replace(/<[^>]+>/g, '')        // strip all XML/HTML tags
+  return stripEditorialWrappers(text) // drop <meta>/<summary>/<keywords>/<vocab> prose first
+    .replace(/<[^>]+>/g, '')        // strip remaining tags, keep inner body text
     .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
     .replace(/\s+/g, ' ')           // collapse whitespace
     .trim();

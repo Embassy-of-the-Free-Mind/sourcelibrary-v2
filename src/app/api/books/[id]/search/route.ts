@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { semanticPageSearchScoped } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -22,8 +23,8 @@ function escapeRegex(str: string): string {
 
 /** Strip XML/HTML tags and clean up formatting artifacts */
 function cleanText(text: string): string {
-  return text
-    .replace(/<[^>]+>/g, '')                    // strip all XML/HTML tags
+  return stripEditorialWrappers(text)           // drop <meta>/<summary>/<keywords>/<vocab> prose first
+    .replace(/<[^>]+>/g, '')                    // strip remaining tags, keep inner body text
     .replace(/\*\*([^*]+)\*\*/g, '$1')          // strip markdown bold
     .replace(/\*([^*]+)\*/g, '$1')              // strip markdown italic
     .replace(/original:\s*[^;]+;?\s*/gi, '')    // strip "original: Latin;" annotations
