@@ -75,7 +75,21 @@ export interface LibrarianStep {
   options?: string[];
   descriptions?: (string | undefined)[];
   sources?: SourceCard[];
-  notebook?: { findingCount: number; topic?: string };
+  notebook?: {
+    findingCount: number;
+    topic?: string;
+    // The finding just saved — lets the client render the notebook live
+    // instead of only exposing a count badge.
+    finding?: {
+      quote: string;
+      note: string;
+      bookId: string;
+      bookTitle: string;
+      bookAuthor: string;
+      bookSlug?: string;
+      pageNumber: number;
+    };
+  };
 }
 
 interface ConversationMessage {
@@ -613,7 +627,19 @@ async function executeTool(
       return {
         result: { saved: true, findingCount: count },
         step: { type: 'notebook_update', name: 'add_to_notebook', summary: `Saved finding #${count}`,
-          notebook: { findingCount: count, topic: args.topic as string | undefined } },
+          notebook: {
+            findingCount: count,
+            topic: args.topic as string | undefined,
+            finding: {
+              quote: finding.quote,
+              note: finding.note,
+              bookId: finding.source.bookId,
+              bookTitle: finding.source.bookTitle,
+              bookAuthor: finding.source.bookAuthor,
+              bookSlug: finding.source.bookSlug,
+              pageNumber: finding.source.pageNumber,
+            },
+          } },
       };
     }
 
