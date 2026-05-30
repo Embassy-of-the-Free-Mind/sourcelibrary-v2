@@ -70,34 +70,52 @@ export default function DoesAiGetReligionPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Here is what it does to the{' '}
-          <a href="https://sourcelibrary.org/book/old-testament-begins-with-book-of-enoch-not-genesis-anonymous" className="text-accent-rust hover:underline">
-            Book of Enoch
+          And it is always like this, and it is always scripture. Here is the AI translating a
+          seventy-thousand-word Tibetan volume of the{' '}
+          <a href="https://sourcelibrary.org/book/sgrub-pa-bka-brgyad-kyi-phrin-las-collection" className="text-accent-rust hover:underline">
+            Buddhist canon
           </a>{' '}
-          (page 382, 384,971 characters):
+          &mdash; a liturgy of accomplishment for the benefit of all beings &mdash; which it renders,
+          faithfully, into the one thing the liturgy is for:
         </p>
 
         <div className="bg-stone-900 text-stone-200 rounded-lg p-5 my-8 font-mono text-xs leading-relaxed overflow-hidden">
-          &hellip; and before there comes everything within them, and before there comes everything
-          within them, and before there comes everything within them, and before there comes everything
-          within them, and before there comes everything within them, and before there comes everything
-          within them
-          <span className="text-stone-500"> &mdash; [for 384,971 characters]</span>
+          &hellip; producing happiness, producing happiness, producing happiness, producing happiness,
+          producing happiness, producing happiness, producing happiness, producing happiness, producing
+          happiness, producing happiness, producing happiness, producing happiness, producing happiness,
+          producing happiness, producing happiness, producing happiness
+          <span className="text-stone-500"> &mdash; [for 458,627 characters]</span>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          And it only does this with scripture. The model translates Cicero all day without breaking a
-          sweat. But hand it the{' '}
-          <a href="https://sourcelibrary.org/book/taoist-canon-daozang-masters" className="text-accent-rust hover:underline">
-            Daozang
+          Here it is inside a commentary on the{' '}
+          <a href="https://sourcelibrary.org/book/hebrew-sefer-shiv-im-tikunei-ha-zohar" className="text-accent-rust hover:underline">
+            Zohar
           </a>
-          , the Taoist Canon, and it comes apart on 98% of the pages. Tibetan Buddhist sutras, Hebrew
-          Kabbalah, Syriac homilies, Ethiopic gospels &mdash; the same thing, over and over. The texts
-          that undo it are, almost without exception, the ones built out of <em>sacred repetition</em>:
-          mantras meant to be recited ten thousand times, litanies, the names of God, the long chains of
-          who begat whom. Repetition is the whole point &mdash; the thing a devotee chants on purpose, for
-          hours, to empty the mind. Feed that to a machine that is already unsure of the script, and it
-          does exactly what the devotee does. It falls into the chant.
+          , the central text of Kabbalah, where it locks onto one of the divine attributes and will not
+          let go &mdash; a mind circling a single mystery, which is more or less what the book is about:
+        </p>
+
+        <div className="bg-stone-900 text-stone-200 rounded-lg p-5 my-8 font-mono text-xs leading-relaxed overflow-hidden">
+          &hellip; Foundation of the Secret Kindness. Foundation of the Secret Kindness. Foundation of
+          the Secret Kindness. Foundation of the Secret Kindness. Foundation of the Secret Kindness.
+          Foundation of the Secret Kindness. Foundation of the Secret Kindness. Foundation of the Secret
+          Kindness. Foundation of the Secret Kindness
+          <span className="text-stone-500"> &mdash; [for 372,416 characters]</span>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          It does this with the Taoist Canon (it comes apart on{' '}
+          <a href="https://sourcelibrary.org/book/taoist-canon-daozang-masters" className="text-accent-rust hover:underline">
+            98% of the pages
+          </a>
+          ), with Syriac homilies, with Ethiopic gospels, with the Mishnah. Hand it Cicero and it
+          translates all day without breaking a sweat. But the texts that undo it are, almost without
+          exception, the ones built out of <em>sacred repetition</em> &mdash; mantras meant to be recited
+          ten thousand times, litanies, the names of God, the long chains of who begat whom. Repetition is
+          the whole point: the thing a devotee chants on purpose, for hours, to empty the mind. Feed that
+          to a machine that is already unsure of the script, and it does exactly what the devotee does. It
+          falls into the chant.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
