@@ -142,6 +142,16 @@ Image extraction emits two separate quality signals in the **same Gemini call**.
 
 A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine or microfilmed; the same diagram on microfilm has `scan_quality.scan_class: bitonal_microfilm` regardless of how gallery-worthy it is. See `/blog/what-makes-a-good-scan` for the user-facing version.
 
+## Quote & snippet integrity — CRITICAL
+Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
+
+OCR/translation text in `pages.{ocr,translation}.data` is wrapped in AI-written **editorial annotation blocks**: `<meta>`, `<summary>`, `<keywords>`, `<vocab>`. These *describe* the page and routinely name content from **adjacent** pages ("the previous page focused on perpetual motion wheels using mercury…"). They are **never verbatim source** — quoting or embedding them fabricates citations to words that aren't on the page, which strikes at the core "read and quote the original" promise.
+
+- **Never serve `<meta>`/`<summary>`/`<keywords>`/`<vocab>` content as quotable text.** Strip the *content*, not just the tag. The classic bug is `replace(/<[^>]+>/g, '')` — it deletes the tag but keeps the editorial prose. Use `stripEditorialWrappers()` from `src/lib/strip-editorial-wrappers.ts` **before** any generic tag strip.
+- **Every search/snippet surface reads its own copy of the page text — fixes do NOT propagate.** Known text-cleaning paths: `/api/search`, `/api/books/[id]/search`, `src/lib/search/librarian-search.ts`, `src/lib/semantic-alignment.ts`, `scripts/workers/embed-gemini.mjs` (`cleanText`), `/api/likes/{popular,mine}` (+ tenant), `/api/learn`. Route them all through `stripEditorialWrappers`. When you add a new surface that snippets page text, wire it through too. (See [[project_search_three_surfaces]].)
+- **Inline glosses (`<note>`/`<term>`/`<margin>`/`<gloss>`/`<unclear>`) are NOT editorial wrappers** — they sit on real body text. Keep their content; they aid recall and reading.
+- **The leak is frozen into stored artifacts.** `page_translations.translation` (the semantic-search snippet column) and the embedding vectors were written by the old `cleanText`, so the editorial prose is baked in with the tags already gone — a read-time re-strip can't recover it. Re-derive the snippet column from Mongo with `scripts/maintenance/backfill-clean-snippets.mjs` (UPDATE-only, zero Gemini cost — does NOT touch embeddings). Re-embedding (paid) is separate and only changes *ranking*; decide it on an eval, not reflexively.
+
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
