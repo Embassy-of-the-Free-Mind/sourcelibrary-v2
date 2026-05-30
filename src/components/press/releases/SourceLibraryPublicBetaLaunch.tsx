@@ -73,13 +73,13 @@ export default function SourceLibraryPublicBetaLaunch() {
   return (
     <article className="prose-content max-w-none">
       {/* Lede — lead with the idea, not the announcement */}
-      <p className="text-xl text-secondary leading-relaxed mb-4 font-body">
+      <p className="text-2xl text-accent-rust font-serif leading-snug mb-6">
+        To create the next Renaissance, translate the first.
+      </p>
+      <p className="text-xl text-secondary leading-relaxed mb-10 font-body">
         Most of what the Renaissance wrote has never been translated into English. A free digital
         library at the Embassy of the Free Mind in Amsterdam has set out to change that &mdash; and has
         already become the largest collection of translated historical primary sources ever assembled.
-      </p>
-      <p className="text-lg text-accent-rust font-serif mb-10">
-        &ldquo;We want to translate the Renaissance.&rdquo;
       </p>
 
       <hr className="border-border-light my-12" />
