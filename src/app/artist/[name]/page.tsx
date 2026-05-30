@@ -8,6 +8,7 @@ import { bookUrl, authorSlug, authorUrl } from '@/lib/slugify';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { enrichEntityFromWikidata } from '@/lib/wikidata-enrichment';
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -60,34 +61,6 @@ interface ArtistEntity {
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   portrait_url?: string;
-}
-
-async function getPortraitUrl(db: Db, entity: ArtistEntity | null): Promise<string | null> {
-  if (!entity) return null;
-  if (entity.portrait_url) return entity.portrait_url;
-  if (!entity.wikidata_id) return null;
-
-  try {
-    const res = await fetch(
-      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
-      { next: { revalidate: 86400 } }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
-    if (!filename) return null;
-
-    const thumbUrl = `https://commons.wikimedia.org/w/thumb.php?f=${encodeURIComponent(filename)}&w=300`;
-
-    db.collection('entities').updateOne(
-      { _id: entity._id },
-      { $set: { portrait_url: thumbUrl } }
-    ).catch(() => {});
-
-    return thumbUrl;
-  } catch {
-    return null;
-  }
 }
 
 interface ArtistPageProps {
@@ -218,11 +191,15 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
-  const birthYear = entity?.wikidata_birth_date?.split('-')[0];
-  const deathYear = entity?.wikidata_death_date?.split('-')[0];
+  // Portrait + life dates from Wikidata (lazily resolved & cached on the
+  // entity). Portrait resolves to a CSP-safe upload.wikimedia.org URL.
+  const enrichment = await enrichEntityFromWikidata(db, entity);
+
+  const birthYear = (enrichment.birthDate || entity?.wikidata_birth_date)?.split('-')[0];
+  const deathYear = (enrichment.deathDate || entity?.wikidata_death_date)?.split('-')[0];
   const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
-  const portraitUrl = await getPortraitUrl(db, entity);
+  const portraitUrl = enrichment.portraitUrl;
 
   const wikipediaUrl = entity?.wikipedia_url
     || (entity?.wikidata_id ? `https://www.wikidata.org/wiki/Special:GoToLinkedPage/enwiki/${entity.wikidata_id}` : null);

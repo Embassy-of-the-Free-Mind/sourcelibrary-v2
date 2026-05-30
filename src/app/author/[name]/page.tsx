@@ -8,8 +8,9 @@ import { bookUrl, authorSlug, artistUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorBibliography from '@/components/browse/AuthorBibliography';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
-import { ObjectId, type Db } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { enrichEntityFromWikidata } from '@/lib/wikidata-enrichment';
 import AuthorSchema from '@/components/seo/AuthorSchema';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
@@ -65,37 +66,6 @@ interface AuthorEntity {
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   portrait_url?: string;
-}
-
-/** Fetch portrait thumbnail URL from Wikidata P18 claim, cache on entity */
-async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<string | null> {
-  if (!entity) return null;
-  if (entity.portrait_url) return entity.portrait_url;
-  if (!entity.wikidata_id) return null;
-
-  try {
-    const res = await fetch(
-      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
-      { next: { revalidate: 86400 } } // cache 24h
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
-    if (!filename) return null;
-
-    // Use thumb.php API — more reliable than direct commons URL (avoids 429s)
-    const thumbUrl = `https://commons.wikimedia.org/w/thumb.php?f=${encodeURIComponent(filename)}&w=300`;
-
-    // Cache on entity (fire-and-forget)
-    db.collection('entities').updateOne(
-      { _id: entity._id },
-      { $set: { portrait_url: thumbUrl } }
-    ).catch(() => {});
-
-    return thumbUrl;
-  } catch {
-    return null;
-  }
 }
 
 // dynamicParams + generateStaticParams: generate on first request, not at build time
@@ -294,9 +264,14 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
-  // Life dates from entity
-  const birthYear = entity?.wikidata_birth_date?.split('-')[0];
-  const deathYear = entity?.wikidata_death_date?.split('-')[0];
+  // Portrait + life dates from Wikidata (lazily resolved & cached on the
+  // entity). Portrait resolves to a CSP-safe upload.wikimedia.org URL; dates
+  // backfill entities that carry a wikidata_id but were never date-enriched.
+  const enrichment = await enrichEntityFromWikidata(db, entity);
+
+  // Life dates — prefer freshly resolved, fall back to whatever was cached.
+  const birthYear = (enrichment.birthDate || entity?.wikidata_birth_date)?.split('-')[0];
+  const deathYear = (enrichment.deathDate || entity?.wikidata_death_date)?.split('-')[0];
   const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
   // Encyclopedia entry: use entity directly if we have one, otherwise regex fallback
@@ -308,8 +283,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     { projection: { name: 1 } }
   );
 
-  // Portrait image from Wikidata
-  const portraitUrl = await getPortraitUrl(db, entity);
+  // Portrait image from Wikidata (resolved above)
+  const portraitUrl = enrichment.portraitUrl;
 
   // Derive Wikipedia URL from entity
   const wikipediaUrl = entity?.wikipedia_url
@@ -345,8 +320,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         authorSlug={name}
         description={entity?.description}
         aliases={entity?.aliases}
-        birthDate={entity?.wikidata_birth_date}
-        deathDate={entity?.wikidata_death_date}
+        birthDate={enrichment.birthDate || entity?.wikidata_birth_date}
+        deathDate={enrichment.deathDate || entity?.wikidata_death_date}
         wikipediaUrl={wikipediaUrl}
         wikidataId={entity?.wikidata_id}
         viafId={entity?.viaf_id}
