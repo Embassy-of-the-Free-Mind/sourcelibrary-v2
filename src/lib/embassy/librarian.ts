@@ -730,6 +730,10 @@ export async function* streamAgenticResponse(
 
   const allSources: SourceCard[] = [];
   const seenSourceKeys = new Set<string>();
+  // `${bookId}:${page}` for every page the model actually retrieved this turn
+  // (search hits + get_book_page + read_nearby_pages). Used to ground the
+  // page citations in the final answer — see verifyCitations.
+  const retrievedPageKeys = new Set<string>();
   let choicesPresented = false;
 
   function collectSources(sources?: SourceCard[]) {
@@ -740,6 +744,7 @@ export async function* streamAgenticResponse(
         seenSourceKeys.add(key);
         allSources.push(s);
       }
+      if (s.pageNumber) retrievedPageKeys.add(`${s.book_id}:${s.pageNumber}`);
     }
   }
 
@@ -808,6 +813,15 @@ export async function* streamAgenticResponse(
       yield step;
       collectSources(sources);
 
+      // Pages read directly (not via search) also count as grounded.
+      if (fc.name === 'get_book_page' && fc.args?.book_id != null && fc.args?.page_number != null) {
+        retrievedPageKeys.add(`${fc.args.book_id}:${Number(fc.args.page_number)}`);
+      } else if (fc.name === 'read_nearby_pages' && fc.args?.book_id != null && fc.args?.center_page != null) {
+        const center = Number(fc.args.center_page);
+        const r = Math.min(Number(fc.args.range) || 2, 3);
+        for (let p = center - r; p <= center + r; p++) retrievedPageKeys.add(`${fc.args.book_id}:${p}`);
+      }
+
       responseParts.push({ functionResponse: { name: fc.name, response: result } });
 
       // present_choices ends the turn: the model has delivered its answer and is
@@ -835,37 +849,99 @@ export async function* streamAgenticResponse(
     .map((p: Record<string, unknown>) => p.text as string)
     .join('');
 
-  const brokenLinks = await verifySourceLinks(fullText);
-  if (brokenLinks.length > 0) {
+  const { brokenBooks, unverifiedPages } = await verifyCitations(fullText, retrievedPageKeys);
+  const clauses: string[] = [];
+  if (brokenBooks.length > 0) {
+    clauses.push(
+      `${brokenBooks.length === 1 ? 'a book link that points' : `${brokenBooks.length} book links that point`} to a record not in the collection (${brokenBooks.map(b => `\`${b}\``).join(', ')}) — these may be books we don't yet hold`,
+    );
+  }
+  if (unverifiedPages.length > 0) {
+    clauses.push(
+      `${unverifiedPages.length === 1 ? 'a page citation' : `${unverifiedPages.length} page citations`} I couldn't confirm against the source (${unverifiedPages.map(p => `\`${p}\``).join(', ')}) — please open the linked page to check the quote before relying on it`,
+    );
+  }
+  if (clauses.length > 0) {
+    console.warn('[Librarian] citation check flagged', { brokenBooks, unverifiedPages });
     yield {
       type: 'text',
-      text: `\n\n---\n*Note: ${brokenLinks.length === 1 ? 'One link' : `${brokenLinks.length} links`} could not be verified — ${brokenLinks.map(l => `\`${l}\``).join(', ')}. These may reference books not yet in the collection.*`,
+      text: `\n\n---\n*A note on sourcing: this answer contains ${clauses.join('; and ')}.*`,
     };
   }
 }
 
 /**
- * Extract sourcelibrary.org/book/ URLs from text and verify they exist in the DB.
- * Returns the list of broken URLs.
+ * Verify the book + page citations in a response against the library.
+ *
+ * Two failure modes matter for a scholarly tool:
+ *  - brokenBooks: links to /book/<slug> for a book that doesn't exist.
+ *  - unverifiedPages: a specific page the model never actually retrieved this
+ *    turn AND that doesn't exist in the page store (or is out of range) — the
+ *    signature of a fabricated or misremembered page number.
+ *
+ * `retrievedPageKeys` holds `${bookId}:${page}` for every page the model read
+ * (via search, get_book_page, or read_nearby_pages) during this turn; anything
+ * it actually saw is trusted and not re-checked.
  */
-async function verifySourceLinks(text: string): Promise<string[]> {
-  const urlPattern = /https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)/g;
-  const slugs = new Set<string>();
+export async function verifyCitations(
+  text: string,
+  retrievedPageKeys: Set<string>,
+): Promise<{ brokenBooks: string[]; unverifiedPages: string[] }> {
+  // /book/<slug>, optionally followed by ?page=N, /page-number/N, or /page/N.
+  const citePattern = /sourcelibrary\.org\/book\/([a-z0-9-]+)(?:(?:\/page-number\/|\/page\/|\?page=)(\d+))?/g;
+  const citedPages = new Map<string, Set<number>>();
+  const allSlugs = new Set<string>();
   let match;
-  while ((match = urlPattern.exec(text)) !== null) {
-    slugs.add(match[1]);
+  while ((match = citePattern.exec(text)) !== null) {
+    const slug = match[1];
+    allSlugs.add(slug);
+    if (match[2]) {
+      if (!citedPages.has(slug)) citedPages.set(slug, new Set());
+      citedPages.get(slug)!.add(Number(match[2]));
+    }
   }
-
-  if (slugs.size === 0) return [];
+  if (allSlugs.size === 0) return { brokenBooks: [], unverifiedPages: [] };
 
   const db = await getDb();
-  const existing = await db.collection('books')
-    .find({ slug: { $in: [...slugs] } })
-    .project({ slug: 1 })
+  const books = await db.collection('books')
+    .find({ slug: { $in: [...allSlugs] } })
+    .project({ slug: 1, id: 1, pages_count: 1 })
     .toArray();
 
-  const existingSlugs = new Set(existing.map(b => b.slug));
-  return [...slugs].filter(s => !existingSlugs.has(s)).map(s => `sourcelibrary.org/book/${s}`);
+  const slugToBook = new Map(
+    books.map(b => [b.slug as string, { id: b.id as string, pagesCount: b.pages_count as number | undefined }]),
+  );
+  const brokenBooks = [...allSlugs].filter(s => !slugToBook.has(s)).map(s => `sourcelibrary.org/book/${s}`);
+
+  // A cited page is trusted if the model read it this turn; otherwise it must
+  // exist in the page store and sit within the book's range.
+  const unverified = new Set<string>();
+  const toCheck: Array<{ slug: string; bookId: string; page: number }> = [];
+  for (const [slug, pages] of citedPages) {
+    const book = slugToBook.get(slug);
+    if (!book) continue; // already counted as a broken book link
+    for (const page of pages) {
+      if (retrievedPageKeys.has(`${book.id}:${page}`)) continue;
+      if (book.pagesCount && (page < 1 || page > book.pagesCount)) {
+        unverified.add(`${slug} p.${page}`);
+        continue;
+      }
+      toCheck.push({ slug, bookId: book.id, page });
+    }
+  }
+
+  if (toCheck.length > 0) {
+    const existing = await db.collection('pages')
+      .find({ $or: toCheck.map(c => ({ book_id: c.bookId, page_number: c.page })) })
+      .project({ book_id: 1, page_number: 1 })
+      .toArray();
+    const existingKeys = new Set(existing.map(p => `${p.book_id}:${p.page_number}`));
+    for (const c of toCheck) {
+      if (!existingKeys.has(`${c.bookId}:${c.page}`)) unverified.add(`${c.slug} p.${c.page}`);
+    }
+  }
+
+  return { brokenBooks, unverifiedPages: [...unverified] };
 }
 
 function deduplicateSources(sources: SourceCard[]): SourceCard[] {
