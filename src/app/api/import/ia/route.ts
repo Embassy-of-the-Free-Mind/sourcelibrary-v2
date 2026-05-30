@@ -7,6 +7,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { resolveLanguage, resolveDate, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
 
@@ -243,6 +244,29 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const slug = await generateUniqueBookSlug(db, title, author, display_title);
 
+    // #2185: resolve the MANIFESTATION language from IA's empirical signals
+    // (what the scan actually is), not the caller's work-language hint. All
+    // three IA signals below were already fetched at import and previously
+    // ignored — see #2184. Order = most empirical first.
+    const iaLangCollection = (Array.isArray(iaCatalog.collections) ? iaCatalog.collections : [])
+      .map((c) => /^booksbylanguage_(.+)$/i.exec(String(c))?.[1])
+      .find(Boolean) || null;
+    const sourceSignals: LanguageSignal[] = [
+      { value: iaCatalog.ocr_detected_lang as string, source: 'ia_ocr_detected' },
+      { value: Array.isArray(iaMetadataRaw.language) ? iaMetadataRaw.language[0] : iaMetadataRaw.language, source: 'ia_metadata' },
+      { value: iaLangCollection, source: 'ia_collection' },
+    ];
+    const lang = resolveLanguage({
+      callerLanguage: language,
+      callerOriginalLanguage: original_language,
+      sourceSignals,
+    });
+    const dateRes = resolveDate({
+      callerPublished: published,
+      callerYear: year,
+      sourceDate: (iaCatalog.date_iso as string) || iaMetadataRaw.date || null,
+    });
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
@@ -250,8 +274,13 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       display_title: display_title || null,
       author,
-      language: language || original_language || iaMetadataRaw.language?.[0] || iaMetadataRaw.language || 'Unknown',
-      published: published || (year ? String(year) : null) || iaMetadataRaw.date || 'Unknown',
+      language: lang.language,
+      ...(lang.original_language ? { original_language: lang.original_language } : {}),
+      ...(lang.is_translation ? { is_translation: true } : {}),
+      ...(lang.language_review ? { language_review: true } : {}),
+      published: dateRes.published || 'Unknown',
+      ...(dateRes.original_work_year ? { original_work_year: dateRes.original_work_year } : {}),
+      field_provenance: { language: lang.provenance },
       categories: categories || [],
       ...(requestCollections?.length ? { collections: requestCollections } : {}),
       ...(work_id ? { work_id } : {}),
