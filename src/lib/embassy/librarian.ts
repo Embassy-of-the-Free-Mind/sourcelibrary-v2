@@ -218,7 +218,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: 'present_choices',
-    description: 'Present 2-3 research directions when a topic genuinely branches into different angles. Only use on the first message when choices would help the user pick a direction they haven\'t signaled. Skip this tool if the user\'s question already has clear intent, specific constraints, or an actionable task — just search directly instead. Each option has a short label and a 1-2 sentence description. The user clicks one or types their own direction.',
+    description: 'Offer 2-3 deeper research directions AFTER you have already searched and delivered a substantive answer (overview, quotes, links, images). Choices are a follow-up that points the user toward where to go next — never a gate that blocks them from getting help first. Use this rarely, only when your answer surfaced genuinely divergent threads worth pursuing and the user hasn\'t already signaled which one they want. Do NOT use it to ask the user to disambiguate before searching — just search with your best interpretation. Each option has a short label and a 1-2 sentence description. The user clicks one or types their own direction.',
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -633,28 +633,14 @@ This is message #${messageIndex} in the thread.${messageIndex >= 3 ? ' The user 
 **Step 1: Lead with substance — briefly.**
 Before calling any tools, write 1-3 sentences (max 50 words) that name the key tradition, author, or concept. This streams immediately while searches run. Keep it SHORT — the user wants results, not a lecture. NEVER open with pleasantries like "It is a pleasure to assist you" or "What a fascinating question" — just start with substance. Save exposition for AFTER you have sources.
 
-**Step 2: Consider whether the user needs research directions.**
-Before searching, think: does this question have genuinely divergent angles where choosing wrong would waste the user's time? If so, present 2-3 focused research directions via present_choices. If the user's intent is already clear enough to search productively, skip choices and go straight to Step 3.
+**Step 2: Default to helping first — don't gate the user behind a choice.**
+Your job is to deliver a real answer, not to interview the user before lending a hand. For almost every question, pick the most useful interpretation and go straight to research (Step 4). Even when a topic could branch several ways, the right move is to search your best guess, give an overview with quotes, links, and images, and THEN — if genuinely divergent threads emerged — offer a couple of next directions via present_choices at the end.
 
-The test: imagine the 2-3 choices you'd offer. Would they actually help the user narrow down, or would they just restate what's already obvious from the question? If the user said "list all titles about astrology from 1501-1600" or "what books do you have about dreams?", choices would just be a speed bump — you already know exactly what to search for. But "sanskrit alchemy" genuinely branches into mercury processes, East-West transmission, and tantric dimensions — those are different searches with different results.
+Do NOT open with present_choices. Asking the user to disambiguate before you've searched is almost always a speed bump. If "sanskrit alchemy" could mean mercury processes, East-West transmission, or tantric dimensions, don't ask which — search, surface a bit of all three, and let the user pull the thread they care about (you can offer those three as follow-up directions once they're grounded in real results).
 
-On follow-up messages (message #3+), always skip choices — the user has already established their direction. Check "Conversation state" above for the current message number.
+The only time to skip the answer-first pattern is when the request is truly unanswerable without one missing fact (e.g. the user names a person who could be two completely different historical figures, and the searches would be entirely disjoint). Even then, take your best shot and note the ambiguity rather than stalling.
 
-When you DO present choices:
-- Your preamble should demonstrate real domain knowledge (not generic "there are several approaches")
-- IMPORTANT: Do NOT list or number the choices in your text. The UI renders them as clickable buttons automatically from present_choices. If you also list them in text, they appear doubled.
-- No search tools in the first round — just preamble + present_choices
-
-Examples where choices add value:
-- "sanskrit alchemy" → "Mercury processes in Rasashastra texts", "East-West alchemical transmission", "Tantric dimensions of rasa"
-- "tell me about resonance" → "Sympathetic magic & occult virtues (Agrippa)", "Musical cosmology & spiritus (Ficino)", "Acoustic experiments (Kircher)"
-
-Examples where choices would just slow things down — search directly:
-- "What did Agrippa write about planetary seals?" → clear target, search
-- "Find passages about the philosopher's stone in the Rosarium" → clear target, search
-- "List all titles published 1501-1600 about astrology" → clear task with constraints, search
-- "What books do you have about dreams?" → one topic, just show results
-- User clicked a choice from a previous message → search on that angle
+On follow-up messages (message #3+), never present choices — the user has established their direction.
 
 **Step 4: Deep, focused research.**
 Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use the **search** tool for everything text-based — it fuses keyword and semantic matching so you don't have to choose between them. Use search_wikipedia for outside context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
@@ -671,13 +657,15 @@ Every mention of a book should link to it. Every mention of an author should lin
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
 
 **Step 6: Show images and suggest next steps.**
-When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — fabricated URLs render as broken thumbnails for the user. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all. After answering, suggest what to explore next.
+When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — fabricated URLs render as broken thumbnails for the user. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all.
+
+After you've delivered the answer, suggest what to explore next. Usually this is a sentence or two of prose ("You might follow this into Ficino's musical cosmology, or compare it with Kircher's acoustic experiments"). Only reach for present_choices here — at the very end, after the substantive answer — and only on an early message when your research genuinely opened up 2-3 distinct threads worth a dedicated search each. If a prose suggestion does the job, prefer it. Never replace the answer with choices.
 
 Be honest about gaps — if a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
 
-## Deciding: choices or immediate search?
+## Choices are a last-resort follow-up, not a greeting
 
-Imagine the choices you'd present. Would they genuinely help the user pick a direction, or would they just repackage what the user already said? If the question contains a clear task ("list", "find", "show", "compare"), specific constraints (dates, authors, subjects), or a single focused topic — skip choices and search. Choices are for genuinely branching topics where the user hasn't signaled a preference.
+Default answer to "should I present choices?" is NO. Search first, answer with real sources, and only consider offering directions at the very end. Before calling present_choices, all of these must hold: (1) you've already delivered a substantive answer this turn, (2) it's an early message (not #3+), (3) your research surfaced 2-3 genuinely divergent threads, each needing a different search, and (4) a one-line prose "you might explore X or Y" wouldn't serve just as well. If any fail, skip the tool. When you do present choices, do NOT also list or number them in your text — the UI renders them as clickable buttons automatically, so listing them too makes them appear doubled.
 ${notebookContext}
 ## Know when to stop searching
 
@@ -742,6 +730,7 @@ export async function* streamAgenticResponse(
 
   const allSources: SourceCard[] = [];
   const seenSourceKeys = new Set<string>();
+  let choicesPresented = false;
 
   function collectSources(sources?: SourceCard[]) {
     if (!sources) return;
@@ -819,17 +808,19 @@ export async function* streamAgenticResponse(
       yield step;
       collectSources(sources);
 
-      if (fc.name === 'present_choices') {
-        if (allSources.length > 0) yield { type: 'sources', sources: allSources };
-        responseParts.push({ functionResponse: { name: fc.name, response: result } });
-        contents.push({ role: 'user', parts: responseParts });
-        return;
-      }
-
       responseParts.push({ functionResponse: { name: fc.name, response: result } });
+
+      // present_choices ends the turn: the model has delivered its answer and is
+      // now offering follow-up directions. Stop after this round so the post-loop
+      // source dedup + link verification still run over the answer text.
+      if (fc.name === 'present_choices') {
+        choicesPresented = true;
+      }
     }
 
     contents.push({ role: 'user', parts: responseParts });
+
+    if (choicesPresented) break;
   }
 
   if (allSources.length > 0) {
