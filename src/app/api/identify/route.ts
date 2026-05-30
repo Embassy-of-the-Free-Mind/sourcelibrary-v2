@@ -4,15 +4,13 @@ import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { CLIP_URL } from '@/lib/clip';
 
 export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
 
 // Max image size: 4MB (Vercel serverless body limit is 4.5MB)
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
-
-// CLIP server on Hetzner, proxied through the text embedding server (port 3456)
-const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
 const IDENTIFY_PROMPT = `You are an art historian identifying a physical artwork or book page from a photograph taken in a museum or library.
 

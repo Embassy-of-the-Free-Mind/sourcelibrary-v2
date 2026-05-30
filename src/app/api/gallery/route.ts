@@ -5,9 +5,7 @@ import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-conte
 import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
-
-// CLIP server on Hetzner for visual text→image search
-const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+import { CLIP_URL } from '@/lib/clip';
 
 export const maxDuration = 30;
 

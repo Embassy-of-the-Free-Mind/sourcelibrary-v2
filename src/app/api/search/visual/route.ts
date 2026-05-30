@@ -2,11 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { CLIP_URL } from '@/lib/clip';
 
 export const maxDuration = 15;
-
-// CLIP server on Hetzner, proxied through the text embedding server
-const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
 /**
  * GET /api/search/visual?q=ouroboros&limit=20
