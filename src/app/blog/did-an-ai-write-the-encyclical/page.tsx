@@ -18,12 +18,35 @@ export const metadata: Metadata = {
 };
 
 export default function DidAnAiWriteTheEncyclicalPage() {
+  // ── em-dash baseline (dashes per 1,000 words), descending ──
+  const DASH = [
+    { t: 'Spe Salvi', y: 'Benedict XVI 2007', v: 8.03 },
+    { t: 'Magnifica Humanitas', y: 'Leo XIV 2026', v: 3.14, hl: true },
+    { t: 'Caritas in Veritate', y: 'Benedict XVI 2009', v: 2.71 },
+    { t: 'Fides et Ratio', y: 'John Paul II 1998', v: 2.42 },
+    { t: 'Fratelli Tutti', y: 'Francis 2020', v: 1.07 },
+    { t: 'Dilexit Nos', y: 'Francis 2024', v: 0.83 },
+    { t: "Laudato Si'", y: 'Francis 2015', v: 0.61 },
+    { t: 'Rerum Novarum', y: 'Leo XIII 1891', v: 0.0 },
+  ];
+  const HUMAN_DASH_MEAN = 2.24;
+  const dMax = 8.03, dX = (v: number) => 215 + (v / dMax) * 450;
+  // ── calibration ruler (mean Binoculars B, lower = more machine-like) ──
+  const RULER = [
+    { t: 'Claude — AI-generated', v: 0.947, c: '#b91c1c', side: 'up' as const },
+    { t: 'Magnifica Humanitas', v: 0.975, c: '#d97706', side: 'down' as const, hl: true },
+    { t: 'Dilexit Nos (human)', v: 0.979, c: '#78716c', side: 'up' as const },
+    { t: "Leo XIV's speeches (human)", v: 0.987, c: '#78716c', side: 'down' as const },
+  ];
+  const rX = (v: number) => 70 + ((v - 0.94) / 0.05) * 600;
   return (
     <ContentPageLayout
       header={
         <ContentHeader
           title="Did an AI Write the Pope's AI Encyclical?"
           subtitle="Magnifica Humanitas was flagged 46% AI-written. We re-ran the test against eight human encyclicals — and the smoking gun turned out to be a baseline."
+          image="https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg"
+          imageAlt="Frontispiece of Athanasius Kircher's Turris Babel (1679): a draftsman sketches the half-built Tower of Babel on a tablet while a sage and a general look on, beneath a radiant divine eye — the encyclical's own central image."
         >
           <p className="text-stone-400 text-sm mt-4">30 May 2026 &middot; 11 min read</p>
         </ContentHeader>
@@ -52,6 +75,13 @@ export default function DidAnAiWriteTheEncyclicalPage() {
         <p className="text-secondary leading-relaxed mb-8">
           We build a library that uses AI to read four million pages of historical text, so &ldquo;can you tell whether a machine wrote this?&rdquo; is not an idle question for us &mdash; it is the same question we ask of our own OCR and translations. So we re-ran the analysis ourselves, locally, for free, and added the one ingredient the viral version was missing: a fair baseline. The short version is that the evidence does not survive contact with eight other encyclicals.
         </p>
+
+        <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
+          <p className="text-secondary italic font-body leading-relaxed">
+            &ldquo;Truth is not a territory to be defended, but a good to be shared.&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2 not-italic">&mdash; <em>Magnifica Humanitas</em>, on the very thing a viral misattribution erodes</p>
+        </blockquote>
 
         {/* TOC */}
         <nav className="bg-warm/50 rounded-lg p-6 mb-12 border border-light">
@@ -111,6 +141,29 @@ export default function DidAnAiWriteTheEncyclicalPage() {
           To anchor both ends of the scale, we added two more reference points. For an <em>AI-positive</em> control we had Claude &mdash; the model the viral claim accused &mdash; write sixteen encyclical-style paragraphs on the same themes, and scored them identically. For a same-author <em>human</em> control we scored Leo XIV&rsquo;s own speeches, including his spoken presentation of this very encyclical. Ranked by machine-likeness, the Claude paragraphs are the most machine-like (mean&nbsp;0.947), then <em>Magnifica</em> (0.975), then <em>Dilexit Nos</em> (0.979), then Leo&rsquo;s speeches (0.987). On that human&rarr;AI ruler, <em>Magnifica</em> sits just <strong>12% of the way</strong> toward the Claude anchor &mdash; squarely with the human texts &mdash; and a random <em>Magnifica</em> paragraph is <em>less</em> machine-like than a Claude one about two-thirds of the time. The document does not land where AI-generated text lands.
         </p>
 
+        <figure className="my-10">
+          <svg viewBox="0 0 720 220" className="w-full" role="img" aria-label="Calibration ruler of mean Binoculars scores">
+            <line x1="70" y1="100" x2="670" y2="100" stroke="#d6d3d1" strokeWidth={2} />
+            <text x="70" y="200" fontSize={11} fill="#a8a29e" textAnchor="start">&larr; more machine-like</text>
+            <text x="670" y="200" fontSize={11} fill="#a8a29e" textAnchor="end">more human-like &rarr;</text>
+            {RULER.map((d) => {
+              const x = rX(d.v);
+              const up = d.side === 'up';
+              return (
+                <g key={d.t}>
+                  <line x1={x} y1={100} x2={x} y2={up ? 80 : 120} stroke={d.c} strokeWidth={d.hl ? 2.5 : 1.5} />
+                  <circle cx={x} cy={100} r={d.hl ? 7 : 5} fill={d.c} />
+                  <text x={x} y={up ? 60 : 142} fontSize={d.hl ? 13 : 12} fill={d.c} textAnchor="middle" fontWeight={d.hl ? 700 : 400}>{d.t}</text>
+                  <text x={x} y={up ? 74 : 158} fontSize={11} fill="#a8a29e" textAnchor="middle">{d.v}</text>
+                </g>
+              );
+            })}
+          </svg>
+          <figcaption className="text-center text-sm text-muted mt-3 italic">
+            Mean Binoculars score (lower = more machine-like), all four sources scored by the identical pipeline. Claude-generated encyclical prose is the AI anchor; <em>Dilexit Nos</em> and Leo&rsquo;s own speeches are human anchors. <em>Magnifica Humanitas</em> lands with the humans.
+          </figcaption>
+        </figure>
+
         {/* 5 */}
         <h2 id="emdash" className="text-2xl md:text-3xl text-primary mt-16 mb-6">5. The em-dash collapse</h2>
         <p className="text-secondary leading-relaxed mb-6">
@@ -119,6 +172,28 @@ export default function DidAnAiWriteTheEncyclicalPage() {
         <p className="text-secondary leading-relaxed mb-6">
           But a fingerprint is only evidence against a fair lineup. Here is the dash rate across eight encyclicals:
         </p>
+
+        <figure className="my-10">
+          <svg viewBox="0 0 720 312" className="w-full" role="img" aria-label="Em-dash rate per 1000 words across eight encyclicals">
+            <line x1={dX(HUMAN_DASH_MEAN)} y1={14} x2={dX(HUMAN_DASH_MEAN)} y2={292} stroke="#d6b483" strokeWidth={1} strokeDasharray="4 4" />
+            <text x={dX(HUMAN_DASH_MEAN)} y={10} fontSize={10} fill="#b08442" textAnchor="middle">human avg {HUMAN_DASH_MEAN}</text>
+            {DASH.map((d, i) => {
+              const y = 22 + i * 34;
+              const w = Math.max(2, dX(d.v) - 215);
+              return (
+                <g key={d.t}>
+                  <text x={205} y={y + 12} fontSize={12} fill={d.hl ? '#d97706' : '#57534e'} textAnchor="end" fontWeight={d.hl ? 700 : 400}>{d.t}</text>
+                  <text x={205} y={y + 25} fontSize={9.5} fill="#a8a29e" textAnchor="end">{d.y}</text>
+                  <rect x={215} y={y + 2} width={w} height={19} rx={3} fill={d.hl ? '#d97706' : '#a8a29e'} />
+                  <text x={215 + w + 6} y={y + 16} fontSize={11} fill={d.hl ? '#d97706' : '#78716c'} fontWeight={d.hl ? 700 : 400}>{d.v.toFixed(2)}</text>
+                </g>
+              );
+            })}
+          </svg>
+          <figcaption className="text-center text-sm text-muted mt-3 italic">
+            Em/en-dashes per 1,000 words, eight encyclicals (1891&ndash;2024). <em>Magnifica</em> (highlighted) is ordinary &mdash; Benedict XVI&rsquo;s <em>Spe Salvi</em> uses dashes ~2.5&times; as often. The &ldquo;127 vs 0&rdquo; headline worked only because it was measured against Francis, who avoids the dash.
+          </figcaption>
+        </figure>
 
         <div className="overflow-x-auto mb-6">
           <table className="w-full text-sm border-collapse">

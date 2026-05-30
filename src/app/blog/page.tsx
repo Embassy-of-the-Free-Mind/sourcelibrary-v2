@@ -33,6 +33,8 @@ const posts: BlogPost[] = [
     readTime: '11 min read',
     tag: 'Research',
     tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg',
+    imageAlt: "Frontispiece of Athanasius Kircher's Turris Babel (1679)",
   },
   {
     slug: 'carbon-ledger',
