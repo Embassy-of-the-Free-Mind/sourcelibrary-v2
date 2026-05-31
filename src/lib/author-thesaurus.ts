@@ -24,9 +24,19 @@ import { ObjectId } from 'mongodb';
  * the canonical John Calvin page because "John Calvin" is one of his variants.
  */
 
-export const AUTHOR_THESAURUS_READPATH =
-  process.env.AUTHOR_THESAURUS_READPATH === '1' ||
-  process.env.AUTHOR_THESAURUS_READPATH === 'true';
+/**
+ * Whether the canonical read-path is enabled. Read at RUNTIME (per call), not as
+ * a module-level const — a const is evaluated at build/compile time and gets
+ * baked into the importing page's bundle, so a cached page module keeps the old
+ * value and flipping the env var has no effect without a clean rebuild. A
+ * function read at request time picks up the env var on the next request.
+ */
+export function authorThesaurusReadpathEnabled(): boolean {
+  return (
+    process.env.AUTHOR_THESAURUS_READPATH === '1' ||
+    process.env.AUTHOR_THESAURUS_READPATH === 'true'
+  );
+}
 
 /** NFD-strip + lowercase, matching how variants/variant_slugs were built. */
 function norm(s: string): string {
