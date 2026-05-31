@@ -62,8 +62,8 @@ import fs from 'fs';
 
 // ── Config ──────────────────────────────────────────────────────────
 const MODEL = 'gemini-3.1-flash-lite'; // per CLAUDE.md AI-models policy; -preview suffix is retired
-const CONCURRENCY = 2;     // grounded calls get throttled above this; empty responses → parse_failed
-const DELAY_MS = 1500;
+const CONCURRENCY = 4;     // ~1 inflight per API key (4 keys, round-robin); retries+no-grounding fallback absorb throttle
+const DELAY_MS = 800;
 const MAX_RETRIES = 4;     // also retried when a grounded call returns empty/blocked text
 const RUN_FLAG = 'prior_translations_2026_05_31'; // idempotency / reversibility marker
 const FIRST_FAMILY = [
