@@ -245,6 +245,11 @@ export default function DidAnAiWriteTheEncyclicalPage() {
           <strong>Our instrument is modest.</strong> We used a small model pair, not the large one the Binoculars paper validated; treat the paragraph rankings as relative, not absolute. One consequence is visible in the ruler above: the gap between the Claude anchor and the human texts is narrow, because a 0.5B detector separates the two only weakly. That MH still lands with the humans on a short ruler &mdash; rather than at the AI end &mdash; is the result, but a larger model would draw the anchors farther apart and sharpen it. The honest reading is convergent, not decisive: three different methods all point the same way, and none finds the AI signature the headlines claimed.
         </p>
 
+        {/* Companion */}
+        <p className="text-secondary leading-relaxed mb-6">
+          This piece asks <em>who wrote</em> the encyclical. For what it actually <em>says</em> &mdash; its case for human dignity in the age of AI, read against Pico della Mirandola&rsquo;s <em>Oration on the Dignity of Man</em>, the first book the Church ever banned &mdash; see the companion essay, <Link href="/blog/man-his-own-maker" className="text-accent-rust hover:underline">Man, His Own Maker</Link>.
+        </p>
+
         {/* End */}
         <hr className="my-12 border-light" />
 

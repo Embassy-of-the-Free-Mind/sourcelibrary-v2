@@ -143,6 +143,25 @@ async function main() {
         console.error('Failed to create index:', e.message);
       }
     }
+
+    // Old slugs after a rename live in books.slug_aliases. findBookByIdOrSlug
+    // consults this field ONLY on a miss (a would-be 404), to resolve a stale
+    // URL and 301 to the canonical slug — it is kept out of the hot-path $or.
+    // The index keeps that miss-path lookup (and 404s generally) from scanning
+    // the collection. Sparse + multikey; non-unique to tolerate legacy data.
+    try {
+      await db.collection('books').createIndex(
+        { slug_aliases: 1 },
+        { name: 'books_slug_aliases_idx', sparse: true, background: true }
+      );
+      console.log('Created index on books.slug_aliases');
+    } catch (e) {
+      if (e.message.includes('already exists')) {
+        console.log('Index books_slug_aliases_idx already exists');
+      } else {
+        console.error('Failed to create slug_aliases index:', e.message);
+      }
+    }
   }
 
   await client.close();

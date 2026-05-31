@@ -8,9 +8,7 @@ import { notFound } from 'next/navigation';
 import BrowseViewToggle from '@/components/browse/BrowseViewToggle';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
-// ISR: rebuild daily. Allow 60s for first-hit generation.
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 export const dynamicParams = true;
 
