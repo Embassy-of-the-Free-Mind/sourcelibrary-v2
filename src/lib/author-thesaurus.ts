@@ -79,6 +79,40 @@ const ENTITY_PROJECTION = {
   wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1,
 };
 
+// Memoized normalized-name → canonical-slug index for the orphan-slug fallback
+// (step 2 below). Built once per server instance and refreshed every 10 min,
+// instead of scanning the whole `authors` collection on every cache-miss render.
+// Names that map to >1 person are dropped (ambiguous → no fallback resolution,
+// safer than picking an arbitrary match).
+let canonicalNameIndex: { map: Map<string, string>; builtAt: number } | null = null;
+const NAME_INDEX_TTL_MS = 10 * 60 * 1000;
+
+async function getCanonicalNameIndex(
+  authors: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+): Promise<Map<string, string>> {
+  const now = Date.now();
+  if (canonicalNameIndex && now - canonicalNameIndex.builtAt < NAME_INDEX_TTL_MS) {
+    return canonicalNameIndex.map;
+  }
+  const docs = await authors
+    .find({ variants: { $exists: true, $ne: [] } }, { projection: { slug: 1, canonical_name: 1, variants: 1 } })
+    .toArray();
+  const map = new Map<string, string>();
+  const ambiguous = new Set<string>();
+  for (const d of docs) {
+    for (const v of [d.canonical_name, ...(d.variants || [])]) {
+      if (!v) continue;
+      const n = norm(v);
+      if (ambiguous.has(n)) continue;
+      const existing = map.get(n);
+      if (existing && existing !== d.slug) { map.delete(n); ambiguous.add(n); }
+      else if (!existing) map.set(n, d.slug);
+    }
+  }
+  canonicalNameIndex = { map, builtAt: now };
+  return map;
+}
+
 /**
  * Resolve an incoming author slug to its canonical author via the `authors`
  * thesaurus. Returns null when the slug maps to no canonical person (caller
@@ -110,15 +144,11 @@ export async function resolveCanonicalAuthor(
     );
     const cachedName: string | undefined = config?.slugs?.[slug];
     if (cachedName) {
-      const n = norm(cachedName);
-      // Pull candidate docs whose variants include this name (normalized compare
-      // in JS — variants store original case/diacritics).
-      const candidates: AuthorThesaurusDoc[] = await authors
-        .find({ variants: { $exists: true, $ne: [] } }, {
-          projection: { canonical_name: 1, slug: 1, variants: 1, variant_slugs: 1, entity_ids: 1, viaf_id: 1, wikidata_id: 1, book_count: 1 },
-        })
-        .toArray();
-      doc = candidates.find(d => (d.variants || []).some(v => norm(v) === n)) || null;
+      // Resolve via the memoized name→slug index, then one indexed fetch by slug
+      // (was: scan the entire `authors` collection in JS on every request here).
+      const index = await getCanonicalNameIndex(authors);
+      const canonSlug = index.get(norm(cachedName));
+      if (canonSlug) doc = await authors.findOne({ slug: canonSlug });
     }
   }
 
