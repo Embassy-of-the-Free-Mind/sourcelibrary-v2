@@ -18,9 +18,12 @@ export interface BookLookupResult {
  * 1. slug (new SEO-friendly URLs)
  * 2. id (existing URLs, internal references)
  * 3. _id as ObjectId (legacy URLs)
+ * 4. slug_aliases (old slugs after a rename — resolve, then 301 to canonical)
  *
  * The `matchedBySlug` flag tells the caller whether to 301 redirect
- * (if false and book has a slug, redirect to the slug URL).
+ * (if false and book has a slug, redirect to the slug URL). An alias match
+ * returns matchedBySlug:false (book.slug !== the alias), so the caller
+ * redirects the stale URL to the current canonical slug.
  *
  * If tenantId is provided, filters by that tenant for multi-tenant isolation.
  */
@@ -37,6 +40,9 @@ export async function findBookByIdOrSlug(
   const orConditions: Document[] = [
     { slug: idOrSlug },
     { id: idOrSlug },
+    // Old slugs after a rename. Indexed by books_slug_aliases_idx — keep this
+    // branch index-backed so the $or never degrades to a collection scan.
+    { slug_aliases: idOrSlug },
   ];
   if (ObjectId.isValid(idOrSlug)) {
     try {
