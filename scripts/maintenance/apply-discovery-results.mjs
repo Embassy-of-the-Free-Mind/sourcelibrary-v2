@@ -72,7 +72,37 @@ const NEGATIVE_PATTERNS = [
   /\bold english (text|translation|version)\b/i,
   /\boriginally written in english\b/i,
 ];
-const reasoningSuspect = r => r && NEGATIVE_PATTERNS.some(p => p.test(r));
+// Known scholarly digital corpora that ARE the English translation deliverable,
+// even when their reasoning mentions underlying "scholarly editions" of the
+// source-language text. Override the NEGATIVE_PATTERNS filter for these.
+// ETCSL false-positive was the discovery: my filter caught "scholarly edition by
+// Sjöberg" (the underlying Sumerian text) and held back ETCSL English translations.
+const CORPORA_OVERRIDES = [
+  /\bETCSL\b/i,
+  /\bElectronic Text Corpus of Sumerian Literature\b/i,
+  /\bORACC\b/,
+  /\bOpen Richly Annotated Cuneiform Corpus\b/i,
+  /\bCTEXT\b|\bChinese Text Project\b/i,
+  /\bctext\.org\b/i,
+  /\bPerseus Digital Library\b/i,
+  /\bGRETIL\b/i,
+  /\bGöttingen Register of Electronic Texts in Indian Languages\b/i,
+  /\b84000\b.*\b(Translating the Words of the Buddha|tibetan)\b/i,
+  /\bBDRC\b|\bTBRC\b|\bBuddhist Digital Resource Center\b/i,
+  /\bTLA\b.*\bThesaurus Linguae Aegyptiae\b/i,
+  /\bCDLI\b|\bCuneiform Digital Library Initiative\b/i,
+  /\bDigital Hammurabi\b/i,
+  /\bThLL\b|\bThesaurus Linguae Latinae\b/i,
+];
+const matchesCorpusOverride = r => r && CORPORA_OVERRIDES.some(p => p.test(r));
+
+// Filter: reasoning is suspect UNLESS it explicitly cites a known scholarly
+// corpus that provides the English translation as its deliverable.
+function reasoningSuspect(r) {
+  if (!r) return false;
+  if (matchesCorpusOverride(r)) return false;  // scholarly corpus override
+  return NEGATIVE_PATTERNS.some(p => p.test(r));
+}
 
 const c = new MongoClient(env.MONGODB_URI); await c.connect();
 const db = c.db(env.MONGODB_DB || 'bookstore');
