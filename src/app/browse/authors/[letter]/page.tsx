@@ -9,14 +9,12 @@ import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-// ISR: 24h background revalidation
-export const revalidate = 86400;
+// This route reads request headers (await headers() for tenant detection),
+// so it must render dynamically. Declaring `revalidate` (ISR / static) here
+// while calling headers() throws DYNAMIC_SERVER_USAGE in Next 16 and 500s the
+// whole /browse/authors/[letter] route. Force dynamic instead.
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
-export const dynamicParams = true;
-
-export function generateStaticParams() {
-  return []; // Generate on first request, not at build time
-}
 
 interface PageProps {
   params: Promise<{ letter: string }>;
