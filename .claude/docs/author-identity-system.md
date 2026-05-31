@@ -168,6 +168,47 @@ canonical persons.
   snapshot is gone (Kircher 71 → 193). Still: don't *render* it as ground truth; the
   read-path live query is canonical. It's now a maintained convenience field.
 
+## 5c. ILP ⇄ thesaurus (bidirectional, 2026-05-31)
+
+The Index Librorum Prohibitorum (Supabase `index_catalog_entries`, 62,943 rows)
+relates to the thesaurus **both ways**, and the more valuable direction is
+ILP→thesaurus:
+
+- **Using the thesaurus *on* ILP regresses** — a naive thesaurus author-held join
+  scores lower (4,391 vs the existing surname+Gemini method's 8,723) and its
+  "newly held" set is collision-dominated (`Natalis Beda`→Bede, `Walafridus
+  Strabo`→Strabo). The Gemini-verification step is doing real precision work; don't
+  replace it.
+- **Enriching the thesaurus *from* ILP works** (`ilp-enrich-thesaurus.mjs`): for
+  Gemini-verified held entries, add the Index's Latin/censor name form as a variant
+  of the canonical person, gated by date-window + distinctive + **name-consistency
+  with the held book's author string** (this gate dropped 4,069 collision-risk
+  forms — Pareus father/son, Clusius/Garcia translator). Applied: **252 forms to
+  158 persons**, ~0% sampled wrong-person. Luther gained Latin declensions
+  (`Lutheri, Martini`); Fludd his pseudonym (`alias de Flutibus`). `variant_
+  provenance[]` records each with `run:'ilp-enrich-2250'`. This closes the ILP-join
+  recall gap reciprocally (an enriched variant is a future deterministic match).
+- **ILP↔thesaurus disagreement is a QA signal.** Because ILP is an independent
+  authority, mismatches surface bad merges — it's how the **Mozart/Chrysostom** bug
+  was found (Mozart's doc carried `"Johannes Chrysostomus"` — his baptismal name —
+  so 6 church-father books were attributed to him; fixed, entity + books moved to
+  `john-chrysostom`).
+
+**Date-window QA (`qa-author-date-anachronisms.mjs`)** generalizes that fix:
+flagged **57 persons / 107 books** whose edition predates the assigned author's
+birth — two classes: real misattributions (Cotton Mather→Gaskell, Jami→Jamie
+Oliver) and **wrong authority anchors** (`wikidata_id` resolved to a modern
+namesake — Jean Béguin b.1866, Platina b.1995; correct books, bad dates/portrait).
+
+**Triage applied (`triage-author-anachronisms.mjs`):** 15 misattributed books
+unlinked (`author_id`+`author_entity_id` cleared → revert to string identity:
+Jami off Jamie Oliver, Cotton Mather off Gaskell, William Law off W.L. Shirer, Xiao
+Ji off Li Xiaojiang); 28 wrong wikidata anchors cleared (id + dates + portrait,
+"null beats a wrong anchor"). All reversible — cleared values backed up in
+`anchor_correction` / `author_link_provenance`. Gated so legendary-figure date noise
+(Count Trevisan b.1406) and single-outlier bad book dates (Annie Besant's correct
+1847 anchor) are left alone, not mis-fixed.
+
 ## 5b. Remaining follow-ups
 
 1. **Enumerate canonical persons, not strings.** Browse-by-author, sitemaps,
@@ -176,9 +217,15 @@ canonical persons.
 5. **Byline links from the canonical person.** Book bylines build via
    `authorSlug(raw_string)`; they should resolve to the canonical slug, and
    co-author compounds should link each constituent.
-6. **Corpus-wide `author_id`.** Only entity-less matched books carry `author_id`
-   today; a follow-up should populate it across all books (including entity-linked
-   ones) so it's the single canonical key everywhere.
+6. **Corpus-wide `author_id` — DONE (2026-05-31).** `backfill-author-canonical-
+   links.mjs` is now two-phase + idempotent: Phase A links entity-less books by
+   exact author-string match; Phase B maps `author_entity_id` → the owning
+   `authors` doc for the entity-linked shelf. Live books with `author_id`:
+   **2,274 → 12,894 (74%)**; FT books joinable to the canonical author layer:
+   **575 → 4,362 (68%)**. Remaining unlinked are placeholders/anonymous/
+   institutions, 541 orphan entities (author_entity_id with no canonical owner),
+   and the genuine obscure tail. This is the keystone the FT/ILP catalog joins
+   (#2264) build on.
 7. **Wikidata contribution (#2250 Part D).** For confident, notable, citable
    middle-tier figures lacking a Wikidata item, create one → flows back into VIAF.
    Do *not* push obscure/pseudonymous attributions; those stay in our local layer.
@@ -199,6 +246,9 @@ canonical persons.
 | `scripts/maintenance/quarantine-non-person-authors.mjs` | Flags non-persons `is_person:false` (#2230). |
 | `scripts/maintenance/backfill-author-canonical-links.mjs` | Links the tail; writes `author_id` + provenance (#2250). |
 | `scripts/maintenance/dedup-canonical-authors.mjs` | Self-dedup + title-fold + quarantine + `book_count` recompute (#2250 §5). |
+| `scripts/lib/author-date-window.mjs` | Reusable date-window disambiguation filter (book-predates-birth = impossible). |
+| `scripts/maintenance/qa-author-date-anachronisms.mjs` | QA sweep: finds build mis-merges + wrong anchors by date impossibility. |
+| `scripts/maintenance/ilp-enrich-thesaurus.mjs` | Enriches thesaurus variants FROM the ILP (Latin/censor forms), precision-gated. |
 | `system_config.author_slugs` (Mongo) | Legacy slug→name cache; still the orphan-resolution source. |
 
 memory: `project_author_entity_resolver`, `project_authority_linking`,
