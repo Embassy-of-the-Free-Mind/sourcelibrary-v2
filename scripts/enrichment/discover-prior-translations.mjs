@@ -116,20 +116,44 @@ const LIMIT = getArg('--limit') ? parseInt(getArg('--limit')) : (APPLY ? 200 : 2
 const AUTHOR = getArg('--author');
 const BOOK_ID = getArg('--book-id');
 
+// ── Translator-author / compilation detection ───────────────────────
+// The QC trap (#2244): when the BOOK is itself a translation or a multi-author
+// compilation — e.g. Ficino's *Latin* rendering of Plato, a Dee-annotated alchemical
+// manuscript, a "Various"-author miscellany — asking for "earlier translations of this
+// work" wrongly surfaces independent English translations of the underlying SOURCE
+// (English Plato from Greek) rather than translations of THIS specific edition. We
+// detect these and switch to a stricter prompt that excludes source translations.
+function isCompilationOrTranslation(book) {
+  const a = (book.author || '').trim();
+  if (/translat|\btrans\.|\bvarious\b|annotated by|compiled by|\(ed\.|\bedited by\b/i.test(a)) return true;
+  return a.split(/[;|]/).filter((p) => p.trim()).length >= 2; // semicolon/pipe = multiple contributors
+}
+
 // ── Discovery prompt — tuned for section/excerpt translations ────────
 function buildPrompt(book) {
   const author = (book.author || '').replace(/\s+/g, ' ').trim();
   const title = book.display_title || book.title || '';
   const lang = book.language || 'its original language';
   const year = book.published || book.year || '';
-  return `You are a bibliographer hunting for EARLIER PUBLISHED ENGLISH TRANSLATIONS of a historical work, to credit prior scholarship.
+  const guarded = isCompilationOrTranslation(book);
+  const head = guarded
+    ? `You are a bibliographer crediting prior scholarship. The work below is ITSELF a translation, edition, compilation, or annotated manuscript — NOT an original composition.
+
+WORK: "${title}"${year ? ` (${year})` : ''}, attributed in our catalog as: ${author}. Original language of THIS edition: ${lang}.
+
+CRITICAL SCOPING — only report a translation if it is a prior English translation of THIS SPECIFIC work/edition/compilation, i.e. someone translated THIS text (this exact compilation/miscellany, this author's own commentary, or this very translation/edition).
+
+DO NOT report independent English translations of the underlying classical SOURCE made from its original language. Example of what to EXCLUDE: if this work is Ficino's Latin translation of Plato, do NOT list English translations of Plato made from the Greek (Jowett, Spens, Sydenham, etc.) — those are not translations of THIS work. The same applies to Plotinus, the Hermetica, Iamblichus, Synesius, etc. translated from their original tongues.
+If the only English versions are translations of the source from its original language, return an empty list.`
+    : `You are a bibliographer hunting for EARLIER PUBLISHED ENGLISH TRANSLATIONS of a historical work, to credit prior scholarship.
 
 WORK: "${title}"${year ? ` (${year})` : ''} by ${author}, originally in ${lang}.
 
 CRITICAL: do not only look for a full translation under the same title. The most-missed cases are:
   1. SECTION translations — one part of the work translated and published under a DIFFERENT title. (Example pattern: a section of Fludd's "Utriusque Cosmi Historia" was published as "The Temple of Music" by Peter Hauge, 2011.)
   2. EXCERPT translations inside anthologies, readers, or scholarly monographs (e.g. Godwin, Huffman, Faivre collections).
-  3. Full or near-complete modern translations.
+  3. Full or near-complete modern translations.`;
+  return `${head}
 
 Search library catalogs (HathiTrust, Open Library, WorldCat, Internet Archive), university presses (Brill, Cambridge, Oxford, Harvard, Yale, Penn State, SUNY), and scholarly bibliographies.
 
@@ -324,6 +348,16 @@ function toEvidence(claim, cat) {
   };
 }
 
+// A claim is only eligible for the RENDERED path if we can name a translator to
+// credit. An "unknown" / "anonymous" / "various" translator on an anthology is weak
+// evidence (it was how Maier's book matched a vague "The Alchemical Tradition") — keep
+// such claims as llm-only even when a catalog title matches. #2244
+function hasNamedTranslator(claim) {
+  const core = (claim.translator || '').replace(/\([^)]*\)/g, '').trim(); // drop "(editor/translator)" etc.
+  if (!core) return false;
+  return !/^(unknown|anonymous|various|n\/?a|none|n\.n\.|anon\.?)$/i.test(core);
+}
+
 async function processBook(book) {
   const disc = await callDiscovery(book);
   if (disc.error) return { book, error: disc.error, raw: disc.raw };
@@ -334,7 +368,7 @@ async function processBook(book) {
     if (!claim?.english_title) continue;
     const cat = await resolveCatalog(claim);
     const ev = toEvidence(claim, cat);
-    if (cat && ev.url) validated.push(ev); else llmOnly.push(ev);
+    if (cat && ev.url && hasNamedTranslator(claim)) validated.push(ev); else llmOnly.push(ev);
   }
   // Conflict: a prior COMPLETE translation (catalog-resolved) on a first-* book.
   const priorComplete = validated.filter((e) => e.completeness === 'complete');
@@ -344,6 +378,7 @@ async function processBook(book) {
     validated,
     llmOnly,
     conflict,
+    guarded: isCompilationOrTranslation(book),
     found_complete_prior_translation: !!disc.found_complete_prior_translation,
     reasoning: disc.reasoning || '',
     groundingUrls: disc.groundingUrls || [],
@@ -406,10 +441,10 @@ async function main() {
     report.books.push({
       id: r.book.id, title: r.book.display_title || r.book.title, author: r.book.author,
       disposition: r.book?.translation_verification?.disposition,
-      validated: r.validated, llm_only: r.llmOnly, conflict: r.conflict, reasoning: r.reasoning,
+      validated: r.validated, llm_only: r.llmOnly, conflict: r.conflict, guarded: r.guarded, reasoning: r.reasoning,
     });
     const t = (r.book.display_title || r.book.title || '').slice(0, 60);
-    lines.push(`\n[${r.book.id}] ${t}  — ${r.book.author || ''}${r.conflict ? '   ⚠️ FIRST-TRANSLATION CONFLICT' : ''}`);
+    lines.push(`\n[${r.book.id}] ${t}  — ${r.book.author || ''}${r.guarded ? '  [guarded: compilation/translation]' : ''}${r.conflict ? '   ⚠️ FIRST-TRANSLATION CONFLICT' : ''}`);
     for (const e of r.validated) lines.push(`   ✓ ${e.completeness.toUpperCase()}  "${e.english_title}" tr. ${e.translator || '?'} (${e.pub_year || '?'}) [${e.evidence_source}] ${e.url}`);
     for (const e of r.llmOnly) lines.push(`   · llm-only (NOT rendered): "${e.english_title}" tr. ${e.translator || '?'} (${e.pub_year || '?'})`);
     if (!r.validated.length && !r.llmOnly.length) lines.push('   (no prior translation found)');
