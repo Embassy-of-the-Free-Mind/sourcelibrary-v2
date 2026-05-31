@@ -646,7 +646,14 @@ async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, book
     .join('\n');
 
   const languageContext = bookLanguage ? ` The original text is in ${bookLanguage}.` : '';
-  const researchSection = researchContext ? `\n## Wikipedia Context\n${researchContext}\n` : '';
+  // Summaries are synthesized from the book's own content (section summaries,
+  // themes, quotes, chapter structure) — NOT from a Wikipedia blob. Injecting
+  // Wikipedia here caused mis-attributions framed as fact (e.g. a De Mysteriis
+  // edition summarized as a "correspondence between Porphyry and Abammon", a
+  // detail absent from the page text). This matches resynthesize-summaries.mjs,
+  // which already passes researchSection:'' for the corpus rollout. researchContext
+  // is still used as a placeholder for books with zero extractable content (below).
+  const researchSection = '';
   const hasChapters = chapters && chapters.length > 0;
   const chapterSection = hasChapters ? `\n## Detected Chapter Structure\n${chapters.map(c => `- Page ${c.pageNumber}: ${c.title}`).join('\n')}\n` : '';
 
