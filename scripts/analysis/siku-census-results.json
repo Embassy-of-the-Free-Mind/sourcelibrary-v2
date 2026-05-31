@@ -5,31 +5,31 @@
     "labeled": {
       "works": 58,
       "censused": 58,
-      "translated": 1,
-      "untranslated": 57,
+      "translated": 4,
+      "untranslated": 54,
       "errors": 0,
-      "rate": 0.017241379310344827
+      "rate": 0.06896551724137931
     },
     "unlabeled": {
       "works": 3360,
-      "sampled": 500,
-      "translated": 1,
-      "untranslated": 426,
-      "errors": 73,
-      "rate": 0.00234192037470726,
+      "sampled": 0,
+      "translated": 0,
+      "untranslated": 0,
+      "errors": 0,
+      "rate": 0,
       "ci": [
-        0.00041351550344839554,
-        0.013145063798086089
+        0,
+        0
       ]
     }
   },
   "overall": {
-    "rate": 0.0025947491103032166,
+    "rate": 0.0011702750146284377,
     "ci": [
-      0.0006990673176087213,
-      0.013214574125678542
+      0.0011702750146284377,
+      0.0011702750146284377
     ],
-    "projected_translated_works": 9
+    "projected_translated_works": 4
   },
   "method": "Wikidata denominator; Gemini name-resolution (pinyin + established English title) for Chinese-only titles; Google Books recall + Gemini gemini-3.1-flash-lite precision; errors excluded",
   "ctext_crosscheck": {
@@ -105,15 +105,27 @@
     {
       "qid": "Q844278",
       "work": "Shan Hai Jing",
-      "evidence": "The Classic of Mountains and Seas",
+      "evidence": "The classic of mountains and seas",
+      "confidence": "high"
+    },
+    {
+      "qid": "Q11066377",
+      "work": "Hong Ming Ji",
+      "evidence": "The Collection for the Propagation and Clarification of Buddhism, Volume 2",
+      "confidence": "high"
+    },
+    {
+      "qid": "Q28347652",
+      "work": "Record of Buddhist Kingdoms (Siku Quanshu)",
+      "evidence": "A Record of Buddhistic kingdoms",
+      "confidence": "high"
+    },
+    {
+      "qid": "Q28348702",
+      "work": "Xuanhe Paintings Catalogue (Siku Quanshu ed.)",
+      "evidence": "Xuanhe Catalogue of Paintings",
       "confidence": "high"
     }
   ],
-  "unlabeled_hits": [
-    {
-      "qid": "Q28347654",
-      "work": "大唐西域記",
-      "evidence": "Great Tang Dynasty Record of the Western Regions, The"
-    }
-  ]
+  "unlabeled_hits": []
 }

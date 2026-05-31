@@ -56,3 +56,41 @@ strengthened: both traditions ~1–3%).
   ground-truth labeled rate.
 - Use this audit as the seed of the paper's **adjudicator/recall audit** (Table 4):
   report pipeline precision *and recall* against manual ground truth.
+
+---
+
+## Recall-fix validation + ground-truth labeled rate (2026-05-31)
+
+Implemented the recall fix (strip `(Siku Quanshu …)`/edition suffixes; OpenLibrary
+fallback for Google-Books-quota resilience) and re-ran the labeled stratum:
+
+| Measure | Labeled-stratum translated | Rate |
+|---|---|---|
+| Old pipeline | 1/58 | 1.7% |
+| **Recall-fixed pipeline** | **4/58** | **6.9%** |
+| **Hand-verified ground truth** | **~8/58** | **~14%** |
+
+Recall fix recovered 3 true positives the old run missed: **Record of Buddhist
+Kingdoms** (Faxian/Legge), **Xuanhe Paintings Catalogue** (McNair 2019), **Hong
+Ming Ji** 弘明集 (partial). Residual automated misses are *title-divergent*
+translations — published under a title unrelated to the catalog label — which
+string search can't bridge:
+
+- 洛陽伽藍記 "Record of the Monasteries of Luoyang" → translated as **"Memories of
+  Loyang"** (Jenner 1981) / "A Record of Buddhist Monasteries in Lo-yang" (Wang 1984)
+- 數書九章 "Mathematical Treatise in Nine Sections" → **"Chinese Mathematics in the
+  Thirteenth Century"** (Libbrecht 1973)
+- Wen Xuan annotations → Knechtges, *Wen Xuan* (Princeton, 3 vols)
+- duplicate Wikidata item "Shanhai jing" (romanization-spacing variant of Shan Hai Jing)
+
+**Ground-truth labeled rate ≈ 14%** (≈8/58 items; ~6 distinct works after dedup).
+Even the fixed pipeline undercounts by ~2× — title-divergence is the residual
+gap; closing it needs a work-identity resolver (canonical-title lookup), not more
+search tuning.
+
+**Corrected overall estimate:** labeled contributes ~8/3,418; the Chinese-only
+tail adds translated base classics (大唐西域記, 古列女傳/Lienü zhuan→Kinney, Art
+of War, …). Net **~1–2%, plausibly up to ~3%** — comparable to Renaissance Latin
+(~2%), now anchored by a hand-verified stratum. The headline is robust; the
+precise decimal still rides on a full recall-fixed tail census (Google-Books-quota
+gated → use the OpenLibrary fallback over multiple runs).

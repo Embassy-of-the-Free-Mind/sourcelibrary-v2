@@ -125,12 +125,31 @@ async function getDenominator() {
   return works;
 }
 
-// English forms we can query with: en label + en aliases (skip pure-Chinese)
+// Strip edition/source suffixes that poison title search. The manual QC found
+// these caused real false negatives — e.g. "Record of Buddhist Kingdoms (Siku
+// Quanshu)" never matched Legge's translation because of the parenthetical.
+function stripEditionSuffix(t) {
+  return t
+    .replace(/\s*[（(]\s*(Siku Quanshu|四庫全書|四库全书)[^)）]*[)）]/ig, '')
+    .replace(/\s*[,，]?\s*Siku Quanshu\s*(edition|ed\.?|version)?\s*$/ig, '')
+    .replace(/\s*[（(][^)）]*\b(edition|ed\.|version)\b[^)）]*[)）]/ig, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// English forms we can query with: en label + en aliases (skip pure-Chinese),
+// each also in stripped form (recall fix).
 function englishForms(w) {
+  const raw = [];
+  if (w.enLabel && /[a-z]/i.test(w.enLabel)) raw.push(w.enLabel);
+  for (const a of w.alts) if (/[a-z]/i.test(a)) raw.push(a);
+  if (raw.length === 0 && /[a-z]/i.test(w.label)) raw.push(w.label); // romanized generic label
   const forms = [];
-  if (w.enLabel && /[a-z]/i.test(w.enLabel)) forms.push(w.enLabel);
-  for (const a of w.alts) if (/[a-z]/i.test(a)) forms.push(a);
-  if (forms.length === 0 && /[a-z]/i.test(w.label)) forms.push(w.label); // romanized generic label
+  for (const f of raw) {
+    forms.push(f);
+    const stripped = stripEditionSuffix(f);
+    if (stripped && stripped !== f) forms.push(stripped);
+  }
   return [...new Set(forms)];
 }
 
@@ -156,7 +175,36 @@ async function gbCandidates(forms) {
     await sleep(250);
     if (cands.length >= 8) break;
   }
+  // Quota-resilient fallback: if Google Books errored (429/quota) or found
+  // nothing, try OpenLibrary (no daily quota) so a tail of the corpus isn't
+  // silently dropped to ERROR when Google Books runs dry mid-run.
+  if (err || cands.length === 0) {
+    const olErr = await olCandidates(forms, cands, seen);
+    if (olErr && cands.length === 0) return { cands, err: true };
+    err = false; // OpenLibrary answered → not an error state
+  }
   return { cands, err };
+}
+
+async function olCandidates(forms, cands, seen) {
+  let err = false;
+  for (const f of forms.slice(0, 3)) {
+    const u = `https://openlibrary.org/search.json?language=eng&limit=4&fields=title,author_name,first_publish_year&q=${encodeURIComponent(f)}`;
+    let r;
+    try { r = await fetch(u, { headers: { 'User-Agent': UA } }); }
+    catch { err = true; await sleep(700); continue; }
+    if (r.status === 429 || r.status >= 500) { err = true; await sleep(1500); continue; }
+    if (!r.ok) { await sleep(250); continue; }
+    const d = await r.json();
+    for (const doc of (d.docs || [])) {
+      const key = (doc.title || '') + '|ol';
+      if (seen.has(key)) continue; seen.add(key);
+      cands.push({ title: doc.title, authors: doc.author_name, year: doc.first_publish_year, desc: '' });
+    }
+    await sleep(300);
+    if (cands.length >= 8) break;
+  }
+  return err;
 }
 
 async function geminiAdjudicate(work, cands) {
