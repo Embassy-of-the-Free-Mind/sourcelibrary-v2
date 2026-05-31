@@ -11,7 +11,7 @@ import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
-import { AUTHOR_THESAURUS_READPATH, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
+import { authorThesaurusReadpathEnabled, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -289,7 +289,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   // to the canonical slug. Falls back to the legacy entity/string path on a miss
   // so no author page regresses while the thesaurus tail is still being linked.
   let data: Awaited<ReturnType<typeof loadAuthorData>> = null;
-  if (AUTHOR_THESAURUS_READPATH) {
+  if (authorThesaurusReadpathEnabled()) {
     const canonical = await loadCanonicalAuthorData(db, name);
     if (canonical) {
       if (canonical.canonicalSlug && canonical.canonicalSlug !== name) {
