@@ -399,6 +399,25 @@ export default function BibliographicInfo({
                       <p>
                         {firstTranslationDescription(book.translation_verification.disposition)}
                       </p>
+                      {(book.translation_verification.translations_found?.length ?? 0) > 0 && (
+                        <div className="space-y-1 pt-1">
+                          <span className="text-stone-400">Earlier translations</span>
+                          {book.translation_verification.translations_found!.map((t, i: number) => (
+                            <div key={i} className="pl-2">
+                              <span className="text-stone-300 italic">{t.english_title}</span>
+                              {t.translator && <span className="text-stone-400">, trans. {t.translator}</span>}
+                              {t.pub_year && <span className="text-stone-400"> ({t.pub_year})</span>}
+                              {t.publisher && <span className="text-stone-500">, {t.publisher}</span>}
+                              {t.completeness && t.completeness !== 'complete' && t.completeness !== 'unknown' && (
+                                <span className="text-stone-500"> &mdash; {t.completeness === 'partial' ? 'partial translation' : 'translated excerpts'}</span>
+                              )}
+                              {showExternalLinks && t.url && (
+                                <>{' '}<a href={t.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 underline">view</a></>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                       {book.translation_verification.tools_called && (
                         <details className="cursor-pointer">
                           <summary className="text-accent-gold hover:text-accent-gold/80 underline">
@@ -414,19 +433,6 @@ export default function BibliographicInfo({
                             </p>
                             {book.translation_verification.reasoning && (
                               <p className="text-stone-400">{book.translation_verification.reasoning}</p>
-                            )}
-                            {(book.translation_verification.translations_found?.length ?? 0) > 0 && (
-                              <div>
-                                <span className="text-stone-500">Partial/related translations found:</span>
-                                {book.translation_verification.translations_found!.map((t, i: number) => (
-                                  <p key={i} className="text-stone-400 pl-2">
-                                    {t.english_title}{t.translator ? `, trans. ${t.translator}` : ''}{t.pub_year ? ` (${t.pub_year})` : ''}
-                                    {showExternalLinks && t.url && (
-                                        <>{' '}<a href={t.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 underline">source</a></>
-                                    )}
-                                  </p>
-                                ))}
-                              </div>
                             )}
                             <p className="text-stone-600 text-[10px]">
                               Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via {book.translation_verification.model || 'AI'}
