@@ -84,7 +84,7 @@ export default function ManHisOwnMakerPage() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          They can simulate empathy; they cannot have it. The encyclical&rsquo;s gravest worry is not killer robots but a subtler corrosion: that a civilization measuring itself by efficiency will come to treat the human person &ldquo;as a project to be optimized rather than&hellip; called to relationship and communion.&rdquo; That is a good document. But its deepest moves only become visible when you set it beside the book that was burned.
+          They can simulate empathy; they cannot have it. The encyclical&rsquo;s gravest worry is not killer robots but a subtler corrosion: that a civilization measuring itself by efficiency will come to treat the human person &ldquo;as a project to be optimized rather than&hellip; called to relationship and communion.&rdquo; That is a good document. (There is a wry meta-question I&rsquo;ll set aside here &mdash; whether a machine helped write this document <em>about</em> machines; detectors claimed it was nearly half AI-written, but that evidence dissolves under a fair baseline, as a <Link href="/blog/did-an-ai-write-the-encyclical" className="text-accent-rust hover:underline">companion piece</Link> works out.) But its deepest moves only become visible when you set it beside the book that was burned.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The dignity of man, and why it was dangerous</h2>
@@ -257,6 +257,7 @@ export default function ManHisOwnMakerPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Related:{' '}
           <Link href="/blog/singularity-1486" className="text-accent-rust hover:underline">The Singularity Was Published in 1486</Link>,{' '}
+          <Link href="/blog/did-an-ai-write-the-encyclical" className="text-accent-rust hover:underline">Did an AI Write the Pope&rsquo;s AI Encyclical?</Link>,{' '}
           <Link href="/collection/renaissance-philosophy" className="text-accent-rust hover:underline">Renaissance Philosophy</Link>,{' '}
           <Link href="/collection/the-perennial-philosophy" className="text-accent-rust hover:underline">The Perennial Philosophy</Link>
         </p>
