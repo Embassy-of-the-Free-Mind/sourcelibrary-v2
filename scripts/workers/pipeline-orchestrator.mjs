@@ -3123,10 +3123,10 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
         .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1,
                    description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1,
-                   field_provenance: 1, subject_keywords: 1 })
+                   field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, field_provenance: 1, subject_keywords: 1 });
+      if (BOOK_OVERRIDE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 });
 
       console.log(`  Books ready for AI metadata: ${readyForMetadata.length}`);
       let metadataEnriched = 0;
@@ -3321,12 +3321,24 @@ Rules:
               updates.subject_keywords = parsed.subject_keywords;
             }
 
-            // First translation: derive boolean + refine pipeline flag
+            // First translation: derive boolean + refine pipeline flag.
+            // CATALOG PRECEDENCE (#1974): this is a content-based read of the
+            // book's own pages — it CANNOT establish whether someone else already
+            // published a translation, which is a catalog fact. So it must never
+            // overwrite a catalog-grounded determination (translation_verification
+            // .source === 'catalog_search', written by search/validate-translation-
+            // evidence). Re-enrichment was clobbering correct catalog verdicts and
+            // manufacturing false "first translation" claims. The content opinion is
+            // still preserved in ai_metadata.first_translation below for transparency.
             if (parsed.first_translation?.status) {
-              const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
-              updates.is_first_translation = isFirst;
-              updates['pipeline_auto.likely_first_translation'] = isFirst;
-              changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
+              if (book.translation_verification?.source === 'catalog_search') {
+                changes.push({ field: 'is_first_translation', skipped: 'deferred_to_catalog_verification', content_status: parsed.first_translation.status });
+              } else {
+                const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
+                updates.is_first_translation = isFirst;
+                updates['pipeline_auto.likely_first_translation'] = isFirst;
+                changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
+              }
             }
 
             // Source work dates
