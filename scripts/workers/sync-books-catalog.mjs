@@ -33,13 +33,20 @@ const BATCH_SIZE = 200;
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } });
 
 function extractSummaryText(book) {
-  // Priority: index.bookSummary.brief > reading_summary.overview > summary.data
-  const indexBrief = book.index?.bookSummary?.brief;
-  if (indexBrief) return indexBrief;
+  // Prefer the fields the current enrich/promote pipeline actually maintains:
+  // book.summary.data (the brief) and book.reading_summary.overview. The embedded
+  // book.index.bookSummary is LEGACY — the worker writes the dedicated book_indexes
+  // collection (merged onto book.index only at book-page render time), so reading
+  // the embed first served stale text: the #2153/#2163 plain-encyclopedic rewrite
+  // updated summary.data/reading_summary but NOT the embed, so browse/search kept
+  // showing the old ad-copy voice for ~5k books. Keep the embed as a last resort
+  // for old books that predate book.summary.data.
+  if (typeof book.summary === 'string' && book.summary) return book.summary;
+  if (book.summary?.data) return book.summary.data;
   const readingOverview = book.reading_summary?.overview;
   if (readingOverview) return readingOverview;
-  if (typeof book.summary === 'string') return book.summary;
-  if (book.summary?.data) return book.summary.data;
+  const indexBrief = book.index?.bookSummary?.brief;
+  if (indexBrief) return indexBrief;
   return null;
 }
 
