@@ -115,6 +115,11 @@ const getArg = (n) => { const i = args.indexOf(n); return i >= 0 && i + 1 < args
 const LIMIT = getArg('--limit') ? parseInt(getArg('--limit')) : (APPLY ? 200 : 25);
 const AUTHOR = getArg('--author');
 const BOOK_ID = getArg('--book-id');
+// --apply-report <dir|file>: write the EXACT vetted entries from a prior dry-run's
+// JSON report(s) — decouples writing from a fresh (non-deterministic) discovery pass,
+// so what lands in production is precisely what was QC'd. Reads a single report.json
+// or a directory of per-author <name>.json files. #2244
+const APPLY_REPORT = getArg('--apply-report');
 
 // ── Translator-author / compilation detection ───────────────────────
 // The QC trap (#2244): when the BOOK is itself a translation or a multi-author
@@ -414,8 +419,58 @@ async function pool(items, fn, n) {
   return out;
 }
 
+// ── Apply exactly the vetted entries from a prior dry-run report ─────
+async function applyFromReport(reportPath) {
+  const stat = fs.statSync(reportPath);
+  const files = stat.isDirectory()
+    ? fs.readdirSync(reportPath).filter((f) => f.endsWith('.json')).map((f) => `${reportPath.replace(/\/$/, '')}/${f}`)
+    : [reportPath];
+  // Merge per-book entries across files; last write wins per book id.
+  const byId = new Map();
+  for (const f of files) {
+    let rep;
+    try { rep = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { console.warn(`  skip unreadable ${f}`); continue; }
+    for (const b of rep.books || []) if (b.id) byId.set(b.id, b);
+  }
+  const entries = [...byId.values()];
+  console.log(`Apply-from-report: ${files.length} file(s), ${entries.length} unique books.`);
+
+  const client = new MongoClient(env.MONGODB_URI, { maxPoolSize: 4 });
+  await client.connect();
+  const books = client.db(env.MONGODB_DB || 'bookstore').collection('books');
+  let written = 0, withTf = 0, withConflict = 0;
+  for (const b of entries) {
+    const validated = Array.isArray(b.validated) ? b.validated : [];
+    const llmOnly = Array.isArray(b.llm_only) ? b.llm_only : [];
+    const set = { [`translation_verification.${RUN_FLAG}`]: true, 'translation_verification.prior_translations_discovered_at': new Date() };
+    if (validated.length) {
+      set['translation_verification.translations_found'] = validated;
+      set['translation_verification.validated_translations'] = validated;
+      withTf++;
+    }
+    if (llmOnly.length) set['translation_verification.llm_knowledge_translations'] = llmOnly;
+    if (b.conflict) {
+      set['translation_verification.first_translation_conflict'] = {
+        flagged_at: new Date(),
+        prior_complete: validated.filter((e) => e.completeness === 'complete'),
+        note: 'Catalog-resolved prior COMPLETE translation found; review is_first_translation manually. Flag NOT auto-changed.',
+      };
+      withConflict++;
+    }
+    const res = await books.updateOne({ id: b.id }, { $set: set });
+    if (res.matchedCount) written++; else console.warn(`  no book matched id=${b.id} (${b.title})`);
+  }
+  console.log(`\n=== Applied from report ===`);
+  console.log(`  books updated:            ${written}`);
+  console.log(`  with translations_found:  ${withTf}`);
+  console.log(`  first_translation_conflict flags: ${withConflict}`);
+  console.log('  NOTE: conflicts are flagged, not auto-flipped — review is_first_translation manually.');
+  await client.close();
+}
+
 // ── Main ────────────────────────────────────────────────────────────
 async function main() {
+  if (APPLY_REPORT) { await applyFromReport(APPLY_REPORT); return; }
   console.log('=== discover-prior-translations (#2244) ===');
   console.log(`Mode: ${APPLY ? 'APPLY' : 'DRY-RUN'} | model: ${MODEL} | keys: ${apiKeys.length} | limit: ${LIMIT}`);
 
