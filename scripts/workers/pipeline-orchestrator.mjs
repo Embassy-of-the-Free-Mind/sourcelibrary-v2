@@ -3325,14 +3325,17 @@ Rules:
             // CATALOG PRECEDENCE (#1974): this is a content-based read of the
             // book's own pages — it CANNOT establish whether someone else already
             // published a translation, which is a catalog fact. So it must never
-            // overwrite a catalog-grounded determination (translation_verification
-            // .source === 'catalog_search', written by search/validate-translation-
-            // evidence). Re-enrichment was clobbering correct catalog verdicts and
-            // manufacturing false "first translation" claims. The content opinion is
-            // still preserved in ai_metadata.first_translation below for transparency.
+            // overwrite a catalog-grounded determination. Re-enrichment was
+            // clobbering correct catalog verdicts and manufacturing false "first
+            // translation" claims. Authoritative sources are the catalog-grounded
+            // ones (catalog_search / catalog_and_llm from search+validate-
+            // translation-evidence, and the deliberate canonical_kanjur tag) — NOT
+            // gemini_knowledge_lookup, which is itself memory-based. The content
+            // opinion is still preserved in ai_metadata.first_translation below.
             if (parsed.first_translation?.status) {
-              if (book.translation_verification?.source === 'catalog_search') {
-                changes.push({ field: 'is_first_translation', skipped: 'deferred_to_catalog_verification', content_status: parsed.first_translation.status });
+              const CATALOG_GROUNDED_SOURCES = ['catalog_search', 'catalog_and_llm', 'canonical_kanjur'];
+              if (CATALOG_GROUNDED_SOURCES.includes(book.translation_verification?.source)) {
+                changes.push({ field: 'is_first_translation', skipped: 'deferred_to_catalog_verification', verification_source: book.translation_verification.source, content_status: parsed.first_translation.status });
               } else {
                 const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
                 updates.is_first_translation = isFirst;
