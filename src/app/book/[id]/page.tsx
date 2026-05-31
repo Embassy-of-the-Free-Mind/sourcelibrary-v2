@@ -907,12 +907,31 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
               {embedPolicy.showBookReadCta && (() => {
                 if (pages.length === 0) return null;
                 const bookSlug = book.slug || book.id;
-                // Prefer first chapter page if available
-                const firstChapterPageId = book.chapters?.length ? (book.chapters as { pageId?: string }[])[0]?.pageId : null;
-                const firstChapterPage = firstChapterPageId ? pages.find(p => p.id === firstChapterPageId) : null;
-                // Fallback: skip endpapers (2-4 blank pages before title page)
+                // Prefer the first chapter's starting page. Route through the
+                // resilient page-number redirect (/page-number/<n>) rather than a
+                // stored pageId: ~716 books have a stale chapters[0].pageId (pages
+                // were re-imported/re-IDed) and a stale pageId 404s. The
+                // page-number route resolves to the nearest current page
+                // (see src/lib/page-number-resolve.ts), so the CTA always lands.
+                const firstChapterPageNumber = book.chapters?.length
+                  ? (book.chapters as { pageNumber?: number }[])[0]?.pageNumber
+                  : null;
+                if (typeof firstChapterPageNumber === 'number') {
+                  return (
+                    <div className="mt-5">
+                      <Link
+                        href={`/book/${bookSlug}/page-number/${firstChapterPageNumber}`}
+                        className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
+                      >
+                        <BookOpen className="w-5 h-5" />
+                        Read This Book
+                      </Link>
+                    </div>
+                  );
+                }
+                // No chapters: skip endpapers (2-4 blank pages before title page).
                 const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
-                const readPage = firstChapterPage || pages[skipTo] || pages[0];
+                const readPage = pages[skipTo] || pages[0];
                 return (
                   <div className="mt-5">
                     <Link
