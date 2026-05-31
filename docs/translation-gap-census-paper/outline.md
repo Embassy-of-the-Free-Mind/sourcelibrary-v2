@@ -22,8 +22,9 @@ keyword collision or an excerpt. We apply the method to two independent corpora
 that share no language, script, or century: Renaissance-era Latin print, via the
 Universal Short Title Catalogue (~444K Latin works), and the Chinese imperial
 canon, via the Siku Quanshu (四庫全書, ~3,418 works). We estimate that roughly
-**2% of the Latin corpus** and **1–3% of the Chinese canon** have been
-translated into English. The convergence of two unrelated traditions on the same
+**2% of the Latin corpus** and **on the order of 1% (measured 0.3%, 95% CI
+0.1–1.3%; upper bound ~2%) of the Chinese canon** have been translated into
+English. The convergence of two unrelated traditions on the same
 order of magnitude suggests the "translation gap" is a structural feature of
 scholarly transmission, not an artifact of any single catalogue. We release all
 code, intermediate data, and per-work judgments.
@@ -38,7 +39,8 @@ code, intermediate data, and per-work judgments.
    error-state accounting so rate-limit/lookup failures are never silently
    scored as negatives.
 2. **Two empirical estimates**, the first quantitative figures for either
-   corpus: Renaissance Latin ≈ 2%; Siku Quanshu ≈ 1–3%.
+   corpus: Renaissance Latin ≈ 2%; Siku Quanshu ≈ 1% (measured 0.3%, CI
+   0.1–1.3%, upper bound ~2%).
 3. **A cross-traditional convergence result** — same order of magnitude across
    unrelated corpora — and a discussion of why (the bulk of both corpora is
    commentary, collected works, and minor genres, not the famous canon).
@@ -74,10 +76,12 @@ code, intermediate data, and per-work judgments.
    reconciliation); ~2% with bounds; the catalogue-not-aligned caveat and how
    we address it.
 6. **Case study II: the Chinese imperial canon (Siku Quanshu)** — Wikidata
-   denominator (3,418 ≈ full); recall via book search + LLM precision; the
+   denominator (3,418 ≈ full); recall via grounded Gemini name-resolution
+   (pinyin + established English title) → book search → LLM precision; the
    commentary/edition granularity finding (5/3,418 have an English Wikipedia
-   article; 58/3,418 any English name); ~1–3%; recall ceiling on
-   Chinese-only-titled base classics and the CJK→canonical-work fix.
+   article; 58/3,418 any English name); measured ~0.3% (CI 0.1–1.3%), upper
+   bound ~2%; the name-resolution recall fix (validated: 孫子→Art of War,
+   commentaries→null) and the residual Google-Books-quota constraint.
 7. **Cross-corpus discussion** — convergence; structural explanation (genre
    composition: commentary, collected works, gazetteers, disputations dominate
    both); what the gap means for access and for digitization priorities.
@@ -111,10 +115,13 @@ code, intermediate data, and per-work judgments.
 
 ## Work-to-close checklist (maps to the chosen venue-quality pipeline)
 
-1. **Chinese recall fix** *(critical path)* — resolve Chinese-only-titled works
-   to a searchable English/pinyin form (Wikidata canonical-work resolution +
-   transliteration), re-run, report the corrected rate. Until done, the ~1–3%
-   is "preliminary."
+1. ~~**Chinese recall fix** *(critical path)* — resolve Chinese-only-titled
+   works to a searchable form, re-run, report the corrected rate.~~ **DONE**
+   (grounded Gemini name-resolution; corrected estimate ~0.3%, CI 0.1–1.3%).
+   *Remaining:* full-tail census is capped by the Google Books ~1000/day quota
+   — add OpenLibrary fallback + spread over multiple days; and improve the
+   58-work labeled stratum's recall (it still misses e.g. Libbrecht's
+   *Mathematical Treatise* translation — consider hand-verification at n=58).
 2. **Latin alignment + error bars** — materialize (or rigorously sample-audit)
    the translation-catalogue↔USTC alignment; replace the 4-matcher heuristic
    bound with a measured error estimate.
