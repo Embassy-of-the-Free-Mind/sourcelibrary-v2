@@ -66,6 +66,42 @@ We contend the gap is measurable, given (a) a *bibliographic denominator* that e
 
 **Unit sensitivity** (key finding): edition-weighted sampling over-represents prolific (translated) authors, so the 0.99% work figure is an *estimate from author counts*, not a directly-sampled rate. A directly-measured, **work-uniform** rate + Wilson CI is `[PENDING:step3]` (work-uniform sampler built; per-work verification gated on a daily search-API quota). We expect it to confirm the ~1–2% order of magnitude.
 
+### 5.1 Source Library's contribution to closing the gap
+
+A digital library can *move* the gap, not only measure it. Source Library holds
+**6,317 Latin works** (4,556 publicly visible), of which **5,404 have a readable
+English translation** (`pages_translated > 0`). Splitting those by whether the
+translation is a *first* English translation of the work (`is_first_translation`,
+determined by the bibliographic FT verifier — an LLM that searches
+translation_catalogs / OpenLibrary / Google Books / OpenAlex / LoC by author+title
+and stores its evidence in `translation_verification`):
+
+- **First (new) translations: ~2,119 flagged** — and ~2,566 once a flag/disposition
+  desync is corrected (402 works carry a `confirmed_first` verification disposition
+  yet are flagged not-first; see below).
+- **Not-new (fresh translations of already-translated works): ~3,285**, of which
+  1,447 have a verified `translation_found` disposition (a prior English
+  translation genuinely exists).
+
+**Significance.** Against a historical baseline in which only **~1,500–3,600 Latin
+works** (≈0.5–1% of the corpus) had *ever* been translated into English, Source
+Library's ~2,100–2,600 *first* translations represent a **large net-new addition
+to the translated Latin corpus** — plausibly increasing the count of
+ever-translated Latin works by a substantial fraction. The project does not merely
+quantify the translation gap; it is measurably narrowing it.
+
+**Caveats (important).** (i) `is_first_translation` is an LLM bibliographic
+determination, not externally certified; its recall ceiling is the catalogues it
+searches. (ii) Source Library's holdings are **canon-weighted, not a random sample**
+of the Latin corpus — we acquire known/important works in specific traditions
+(alchemy, Hermetica, Kabbalah, Rosicrucianism, early science), which are
+disproportionately *already* translated. Hence SL's internal new/not-new ratio
+(~40–55% new) reflects acquisition strategy and must **not** be read as the corpus
+translation rate (§3 unit/sampling caution). (iii) A **flag/disposition desync**
+(~447 works verified first-type but flagged not-first; ~1,323 not-new are
+unverified defaults) currently *undercounts* first translations — a data-quality
+fix that would raise the "new" share.
+
 ## 6. Case study II — the Chinese imperial canon (Siku Quanshu)
 
 **Denominator.** Wikidata items linked to the Siku Quanshu (Q699477): **3,418 works** (≈ the full ~3,461). Built via `wbgetentities` REST with disk caching — SPARQL label resolution degraded under load and once silently returned 58 of 257 English labels (a reproducibility hazard worth recording).
