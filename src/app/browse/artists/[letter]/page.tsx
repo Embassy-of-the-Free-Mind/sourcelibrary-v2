@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 export const dynamicParams = true;
 
