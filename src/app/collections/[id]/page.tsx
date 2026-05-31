@@ -127,7 +127,7 @@ function linkBookTitles(
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
   tenantSlug?: string | null,
-  authorLinks: { name: string; href: string }[] = [],
+  authorLinks: { name: string; href: string; canonical?: string; count?: number }[] = [],
 ): React.ReactNode {
   const matches: { start: number; end: number; title: string; id: string; href?: string }[] = [];
   const usedRanges: [number, number][] = [];
@@ -178,28 +178,71 @@ function linkBookTitles(
     }
   }
 
-  // 3. Author names → author pages. Collect distinctive name tokens (≥5 chars)
-  // from the collection's book authors; a token mapping to more than one author
-  // is ambiguous and skipped. Best-effort prose linking (names appear in many
-  // forms — "Galileo", "Bruno", "Descartes" — so we match any unique token).
-  const tokenHrefs = new Map<string, Set<string>>();
-  // authorLinks carry each author string + its CANONICAL author-page href
-  // (resolved via the book's entity), so variants of one person ("Bruno,
-  // Giordano" / "Giordano Bruno") share one href and survive the dedup below.
-  for (const { name, href } of authorLinks) {
+  // 3a. Full-name phrases first. A bare surname is often shared by several
+  // people in one collection ("Bruno" → Giordano Bruno, Christoph Bruno,
+  // Elwin Bruno Christoffel), so the single-token pass below rules it ambiguous
+  // and drops it. The full/canonical name ("Giordano Bruno") is unambiguous,
+  // so match those multi-token phrases here and claim their ranges — this is
+  // what lets prominent authors link despite a contested surname (#2176/#2179).
+  const phraseHrefs = new Map<string, Set<string>>();
+  const phraseForm = (s: string) => s
+    .replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').replace(/[,;|].*$/, '').trim();
+  for (const { name, href, canonical } of authorLinks) {
+    if (!href) continue;
+    for (const form of [canonical, name]) {
+      if (!form) continue;
+      const p = phraseForm(form);
+      if (p.split(/\s+/).filter(Boolean).length < 2) continue; // need a full name
+      const key = p.toLowerCase();
+      if (!phraseHrefs.has(key)) phraseHrefs.set(key, new Set());
+      phraseHrefs.get(key)!.add(href);
+    }
+  }
+  // longest phrase first so "Giordano Bruno" wins before any shorter overlap
+  for (const [key, hrefs] of [...phraseHrefs].sort((a, b) => b[0].length - a[0].length)) {
+    if (hrefs.size !== 1) continue;
+    const href = [...hrefs][0];
+    const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+      if (!usedRanges.some(([s, e]) => start < e && end > s)) {
+        matches.push({ start, end, title: match[0], id: `author-${key}`, href });
+        usedRanges.push([start, end]);
+      }
+    }
+  }
+
+  // 3. Single surname/name tokens (≥5 chars). Descriptions usually name an
+  // author by bare surname ("Bruno", "Spinoza", "Descartes"), so a token often
+  // maps to several people in one collection (Giordano Bruno vs Christoph Bruno
+  // vs Elwin Bruno Christoffel). Rather than drop every contested surname, link
+  // it to the DOMINANT author when one clearly owns it — measured by how many of
+  // the collection's books each candidate holds. Genuinely split surnames
+  // (e.g. two prominent Picos) stay unlinked.
+  const tokenWeights = new Map<string, Map<string, number>>(); // tok → href → book count
+  for (const { name, href, count } of authorLinks) {
     if (!name || !href) continue;
     const seenInThisAuthor = new Set<string>();
     for (const raw of name.replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').split(/[\s,;|]+/)) {
       const tok = raw.trim().toLowerCase();
       if (tok.length < 5 || seenInThisAuthor.has(tok)) continue;
       seenInThisAuthor.add(tok);
-      if (!tokenHrefs.has(tok)) tokenHrefs.set(tok, new Set());
-      tokenHrefs.get(tok)!.add(href);
+      if (!tokenWeights.has(tok)) tokenWeights.set(tok, new Map());
+      const w = tokenWeights.get(tok)!;
+      w.set(href, (w.get(href) || 0) + (count || 1));
     }
   }
-  for (const [tok, hrefs] of tokenHrefs) {
-    if (hrefs.size !== 1) continue; // maps to >1 distinct author page → ambiguous
-    const href = [...hrefs][0];
+  for (const [tok, weights] of tokenWeights) {
+    const ranked = [...weights.entries()].sort((a, b) => b[1] - a[1]);
+    const [topHref, topN] = ranked[0];
+    const secondN = ranked[1]?.[1] ?? 0;
+    // Unique owner → always link. Contested → link only on a clear plurality
+    // (≥3 books and ≥3× the runner-up) so we don't guess on a real tie.
+    if (ranked.length > 1 && !(topN >= 3 && topN >= 3 * secondN)) continue;
+    const href = topHref;
     const escaped = tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
     let match;
@@ -643,13 +686,13 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   // slug, so name-order variants of one person ("Bruno, Giordano" / "Giordano
   // Bruno") share a single href (this is what the canonical-author relink in
   // #2180 enables). Falls back to the raw string slug when unlinked.
-  let descriptionAuthorLinks: { name: string; href: string }[] = [];
+  let descriptionAuthorLinks: { name: string; href: string; canonical?: string }[] = [];
   if (isCatalogCollection) {
     try {
       const db = await getReadDb();
       const pairs = await db.collection('books').aggregate([
         { $match: { collections: id, author: { $type: 'string', $ne: '' } } },
-        { $group: { _id: '$author', ent: { $first: '$author_entity_id' } } },
+        { $group: { _id: '$author', ent: { $first: '$author_entity_id' }, n: { $sum: 1 } } },
       ]).toArray();
       const entIds = [...new Set(pairs.map(p => p.ent).filter(Boolean).map(String))];
       const entDocs = entIds.length
@@ -659,9 +702,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         : [];
       const entName = new Map(entDocs.map(e => [String(e._id), e.canonical_name || e.name]));
       descriptionAuthorLinks = pairs.flatMap(p => {
-        const canon = p.ent ? entName.get(String(p.ent)) : null;
+        const canon = (p.ent ? entName.get(String(p.ent)) : null) as string | null;
         const href = authorUrl(canon || (p._id as string));
-        return href ? [{ name: p._id as string, href }] : [];
+        return href ? [{ name: p._id as string, canonical: canon || undefined, href, count: (p.n as number) || 1 }] : [];
       });
     } catch { /* non-fatal — description just won't gain author links */ }
   }

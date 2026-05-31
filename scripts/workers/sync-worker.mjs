@@ -14,7 +14,7 @@
  *   node scripts/workers/sync-worker.mjs --gallery-only
  */
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -336,7 +336,33 @@ async function syncAuthorSlugs(db) {
     author: { $exists: true, $ne: null, $nin: ['Unknown', 'Anonymous', 'Various'] },
   });
   const slugs = {};
-  for (const a of authors) slugs[authorSlugFn(a)] = a;
+  for (const a of authors) { const s = authorSlugFn(a); if (s) slugs[s] = a; }
+
+  // Canonical-name aliases: an author's books may all be stored under a
+  // name-order variant ("Bruno, Giordano") while links point at the entity's
+  // canonical form ("Giordano Bruno"). Register slug(canonical) → a stored
+  // variant so /author/<canonical-slug> resolves (the page loads by entity and
+  // displays the canonical name). Don't overwrite a base entry. Unblocks the
+  // collection-description author linker (#2176/#2179).
+  let aliases = 0;
+  const ents = await db.collection('books').aggregate([
+    { $match: { visible: true, author: { $type: 'string', $ne: '' }, author_entity_id: { $nin: [null, ''] } } },
+    { $group: { _id: '$author_entity_id', sample: { $first: '$author' } } },
+  ], { allowDiskUse: true }).toArray();
+  const sampleOf = new Map(ents.map(e => [String(e._id), e.sample]));
+  const objIds = [...sampleOf.keys()].filter(s => ObjectId.isValid(s)).map(s => new ObjectId(s));
+  for (let i = 0; i < objIds.length; i += 2000) {
+    const docs = await db.collection('entities').find(
+      { _id: { $in: objIds.slice(i, i + 2000) } },
+      { projection: { canonical_name: 1, name: 1 } }).toArray();
+    for (const e of docs) {
+      const canon = e.canonical_name || e.name;
+      if (!canon) continue;
+      const s = authorSlugFn(canon);
+      const rep = sampleOf.get(String(e._id));
+      if (s && rep && !slugs[s]) { slugs[s] = rep; aliases++; }
+    }
+  }
 
   if (!DRY_RUN) {
     await db.collection('system_config').updateOne(
@@ -346,7 +372,7 @@ async function syncAuthorSlugs(db) {
     );
   }
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-  console.log(`  ${Object.keys(slugs).length} author slugs synced | ${elapsed}s`);
+  console.log(`  ${Object.keys(slugs).length} author slugs synced (${aliases} canonical aliases) | ${elapsed}s`);
   return { author_slugs: Object.keys(slugs).length };
 }
 
