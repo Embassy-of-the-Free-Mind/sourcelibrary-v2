@@ -8,9 +8,7 @@ import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-
-// CLIP server on Hetzner for visual text→image search
-const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+import { CLIP_URL } from '@/lib/clip';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';

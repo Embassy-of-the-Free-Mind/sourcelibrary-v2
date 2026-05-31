@@ -46,7 +46,11 @@ const ENDPOINTS = [
     name: 'embed_bhutan',
     url: 'https://sourcelibrary-v2.vercel.app/embed/bhutan',
     twoShot: true,
-    latencySloMs: 1000,
+    // Bhutan embed SSR sits ~900ms warm and trips a 1000ms SLO on cold-adjacent
+    // hits (the warm shot can land on a different cold lambda instance under
+    // load-balancing), producing flapping "DOWN" alerts that aren't outages.
+    // 2500ms gives headroom while still catching a genuine stall.
+    latencySloMs: 2500,
     checkBody: true,
   },
 ];
@@ -191,6 +195,7 @@ async function checkTwoShot(endpoint) {
       latency_ms: warm_ms,  // primary latency = warm shot
       warm_ms,
       cold_ms,
+      latency_slo_ms: endpoint.latencySloMs ?? null,
       error: reason,
       reason,
       checked_at,
@@ -365,9 +370,16 @@ async function main() {
 
     // Send recovery notification if endpoint was down and is now back and fast
     for (const r of results.filter(r => r.ok)) {
-      // For two-shot embed endpoints, require warm_ms < RECOVERY_WARM_THRESHOLD_MS for recovery
-      if (r.warm_ms !== undefined && r.warm_ms >= RECOVERY_WARM_THRESHOLD_MS) {
-        continue; // still marginal — don't declare recovery yet
+      // For two-shot embed endpoints, recovery requires warm_ms to be comfortably
+      // under the endpoint's own SLO (80% of it), falling back to the global
+      // headroom threshold. A flat 800ms would never let a 2500ms-SLO endpoint recover.
+      if (r.warm_ms !== undefined) {
+        const recoveryCeiling = r.latency_slo_ms
+          ? Math.max(RECOVERY_WARM_THRESHOLD_MS, r.latency_slo_ms * 0.8)
+          : RECOVERY_WARM_THRESHOLD_MS;
+        if (r.warm_ms >= recoveryCeiling) {
+          continue; // still marginal — don't declare recovery yet
+        }
       }
 
       const lastFail = await checksCol.findOne(

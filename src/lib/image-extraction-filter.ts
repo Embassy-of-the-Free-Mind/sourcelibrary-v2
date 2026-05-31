@@ -16,6 +16,8 @@ export const SKIP_MARKUP_RULES: readonly SkipRule[] = [
   { type: 'stamp', significance: '*' },
   { type: 'ornament', significance: '*' },
   { type: 'blank', significance: '*' },
+  { type: 'exlibris', significance: '*' },   // ownership bookplates — provenance, not content
+  { type: 'bookplate', significance: '*' },
   { type: 'decorative', significance: 'low' },
   { type: "printer's mark", significance: 'low' },
   { type: 'photograph', significance: 'low' },

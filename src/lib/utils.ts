@@ -63,15 +63,15 @@ export function getBookThumbnailUrl(
     : (book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
 
-  // Wikimedia Commons: rewrite to thumb.php for CDN-cached resized images.
-  // Loading full-res Wikimedia files (3000-8000px) directly causes 429 rate-limits
-  // and wastes bandwidth. thumb.php serves fast, CDN-cached thumbnails.
+  // Wikimedia Commons images: serve the upload.wikimedia.org CDN URL as-is.
+  // We must NOT rewrite to commons.wikimedia.org/w/thumb.php — the site CSP
+  // `img-src` whitelists upload.wikimedia.org but not commons.wikimedia.org,
+  // so a thumb.php URL loads via curl yet is blocked by the browser. Manually
+  // constructing /thumb/.../<w>px- URLs is also unreliable (Wikimedia 400s
+  // widths it hasn't pre-rendered), so we keep the canonical CDN URL. Only ~43
+  // legacy books still reference these; new imports rehost to R2.
   if (raw.includes('upload.wikimedia.org/wikipedia/commons/')) {
-    const filename = raw.split('/').pop();
-    if (filename) {
-      const w = size === 'thumb' ? 400 : 800;
-      return `https://commons.wikimedia.org/w/thumb.php?f=${filename}&w=${w}`;
-    }
+    return raw;
   }
 
   if (!raw.includes('images.sourcelibrary.org/')) return raw;

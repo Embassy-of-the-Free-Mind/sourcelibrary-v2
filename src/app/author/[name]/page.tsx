@@ -8,7 +8,7 @@ import { bookUrl, authorSlug, artistUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorBibliography from '@/components/browse/AuthorBibliography';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
-import { ObjectId, type Db } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
 
@@ -65,37 +65,6 @@ interface AuthorEntity {
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   portrait_url?: string;
-}
-
-/** Fetch portrait thumbnail URL from Wikidata P18 claim, cache on entity */
-async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<string | null> {
-  if (!entity) return null;
-  if (entity.portrait_url) return entity.portrait_url;
-  if (!entity.wikidata_id) return null;
-
-  try {
-    const res = await fetch(
-      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
-      { next: { revalidate: 86400 } } // cache 24h
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
-    if (!filename) return null;
-
-    // Use thumb.php API — more reliable than direct commons URL (avoids 429s)
-    const thumbUrl = `https://commons.wikimedia.org/w/thumb.php?f=${encodeURIComponent(filename)}&w=300`;
-
-    // Cache on entity (fire-and-forget)
-    db.collection('entities').updateOne(
-      { _id: entity._id },
-      { $set: { portrait_url: thumbUrl } }
-    ).catch(() => {});
-
-    return thumbUrl;
-  } catch {
-    return null;
-  }
 }
 
 // dynamicParams + generateStaticParams: generate on first request, not at build time
@@ -294,7 +263,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
-  // Life dates from entity
+  // Life dates + portrait are a static read of the entity. Enrichment from
+  // Wikidata happens OFFLINE (cron + link hook, see wikidata-enrichment.ts) —
+  // never on render, since these are immutable facts.
   const birthYear = entity?.wikidata_birth_date?.split('-')[0];
   const deathYear = entity?.wikidata_death_date?.split('-')[0];
   const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
@@ -308,8 +279,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     { projection: { name: 1 } }
   );
 
-  // Portrait image from Wikidata
-  const portraitUrl = await getPortraitUrl(db, entity);
+  // Portrait image — static read (enriched offline; CSP-safe CDN URL).
+  const portraitUrl = entity?.portrait_url ?? null;
 
   // Derive Wikipedia URL from entity
   const wikipediaUrl = entity?.wikipedia_url

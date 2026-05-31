@@ -234,6 +234,8 @@ async function syncGalleryImages(db) {
         'detected_images.bbox': { $exists: true },
         'detected_images.detection_source': { $in: ['vision_model', 'manual', 'ocr_tag'] },
         'detected_images.gallery_quality': { $gte: 0.5 },
+        // Ownership bookplates / ex-libris are provenance, not content — never materialize them
+        'detected_images.type': { $nin: ['exlibris', 'bookplate'] },
       },
     },
     {

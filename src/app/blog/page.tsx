@@ -25,6 +25,39 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'man-his-own-maker',
+    title: 'Man, His Own Maker',
+    subtitle:
+      "Leo XIV's encyclical on AI is, strangely, the grandchild of the first printed book the Church ever banned — Pico's Oration on the Dignity of Man. Reading them across five centuries shows what AI really forces us to decide about the soul.",
+    date: '30 May 2026',
+    readTime: '15 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://images.sourcelibrary.org/archived/adad5f6d-4f68-4009-9406-d0e083cf0acc/3.jpg',
+    imageAlt: 'Title page of an early printed edition of Pico della Mirandola\'s collected works, listing the Heptaplus, the Apologia, De Ente et Uno, and the Oration',
+  },
+  {
+    slug: 'does-ai-get-religion',
+    title: 'Does the AI Get Religion?',
+    subtitle: 'The longest page in our library is one leaf of a Javanese Bible that the AI translated into 491,418 characters of "generations of generations of generations." It only happens with scripture.',
+    date: '30 May 2026',
+    readTime: '3 min read',
+    tag: 'Field notes',
+    tagColor: 'bg-amber-50 text-amber-800',
+  },
+  {
+    slug: 'did-an-ai-write-the-encyclical',
+    title: "Did an AI Write the Pope's AI Encyclical?",
+    subtitle:
+      'Magnifica Humanitas was flagged 46% AI-written, with 127 em-dashes vs zero in a comparison encyclical. We re-ran the test against eight human encyclicals — Benedict XVI used dashes 2.5× more. The smoking gun is a baseline-selection artifact.',
+    date: '30 May 2026',
+    readTime: '11 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg',
+    imageAlt: "Frontispiece of Athanasius Kircher's Turris Babel (1679)",
+  },
+  {
     slug: 'carbon-ledger',
     title: 'The Carbon Ledger of a Digital Library',
     subtitle: "Source Library has OCR'd 4.1M pages and translated almost all of them using AI. We logged every API call. ~1.8 tonnes CO₂e — about seven round-trip flights AMS↔London. Six independent estimation methods, full data + sources.",

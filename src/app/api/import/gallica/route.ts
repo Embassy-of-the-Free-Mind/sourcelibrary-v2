@@ -7,6 +7,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { resolveLanguage } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
 
@@ -149,6 +150,11 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const slug = await generateUniqueBookSlug(db, title, author, display_title);
 
+    // #2185: normalise the caller's language and stamp provenance. Gallica IIIF v2
+    // manifests don't expose a reliable structured language field, so the caller
+    // is the only signal here — but normalised and attributed rather than raw.
+    const lang = resolveLanguage({ callerLanguage: language });
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
@@ -156,7 +162,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       display_title: display_title || null,
       author,
-      language: language || 'Unknown',
+      language: lang.language,
+      ...(lang.original_language ? { original_language: lang.original_language } : {}),
+      field_provenance: { language: lang.provenance },
       published: published || 'Unknown',
       categories: categories || [],
       ...(work_id ? { work_id } : {}),

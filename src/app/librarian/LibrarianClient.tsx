@@ -42,6 +42,17 @@ interface AssistantMessage {
   notebookTopic?: string;
 }
 
+interface NotebookFinding {
+  key: string;
+  quote: string;
+  note: string;
+  bookId: string;
+  bookTitle: string;
+  bookAuthor: string;
+  bookSlug?: string;
+  pageNumber: number;
+}
+
 interface UserMessage {
   role: 'user';
   content: string;
@@ -88,10 +99,15 @@ function timeAgo(dateStr: string): string {
 }
 
 const TOOL_LABELS: Record<string, string> = {
+  search: 'Searching the collection',
   search_collection: 'Searching the collection',
   search_semantic: 'Semantic search',
   search_wikipedia: 'Checking Wikipedia',
+  search_images: 'Searching illustrations',
+  search_artworks: 'Searching artworks',
   get_book_page: 'Reading a page',
+  read_nearby_pages: 'Reading nearby pages',
+  add_to_notebook: 'Saving to notebook',
   present_choices: 'Thinking...',
 };
 
@@ -138,17 +154,27 @@ function SourceCardRow({ sources, tenant }: { sources: SourceCard[]; tenant?: st
 
 function SearchSteps({ steps }: { steps: SearchStep[] }) {
   if (steps.length === 0) return null;
+  const busy = steps.some(s => s.status === 'searching');
   return (
-    <div className="space-y-1 mb-2">
-      {steps.map((step, i) => (
+    <div role="status" aria-live="polite" aria-busy={busy} className="space-y-1 mb-2">
+      {steps.map((step, i) => {
+        const statusLabel =
+          step.status === 'searching' ? 'in progress'
+            : step.found && step.found > 0 ? 'found results'
+            : 'no results';
+        return (
         <div key={i} className="flex items-center gap-2 text-[12px] font-sans text-[#8a8480]">
-          <span className={`inline-block w-3.5 text-center ${step.status === 'done' ? (step.found && step.found > 0 ? 'text-[#6b8f5e]' : 'text-[#b0a89c]') : 'text-[#c9a86c]'}`}>
+          <span
+            role="img"
+            aria-label={statusLabel}
+            className={`inline-block w-3.5 text-center ${step.status === 'done' ? (step.found && step.found > 0 ? 'text-[#6b8f5e]' : 'text-[#b0a89c]') : 'text-[#c9a86c]'}`}
+          >
             {step.status === 'searching' ? (
-              <span className="inline-block animate-pulse">...</span>
+              <span aria-hidden className="inline-block animate-pulse">...</span>
             ) : step.found && step.found > 0 ? (
-              <span>&#x2713;</span>
+              <span aria-hidden>&#x2713;</span>
             ) : (
-              <span>&#x2717;</span>
+              <span aria-hidden>&#x2717;</span>
             )}
           </span>
           <span>
@@ -159,7 +185,76 @@ function SearchSteps({ steps }: { steps: SearchStep[] }) {
             )}
           </span>
         </div>
-      ))}
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Research Notebook Panel ───────────────────────────────────────────
+// Surfaces the findings the Librarian saved this session, so the notebook is
+// something you can read and cite — not just a count badge that's opaque
+// until export.
+
+function NotebookPanel({
+  findings,
+  topic,
+  threadId,
+  onClose,
+}: {
+  findings: NotebookFinding[];
+  topic?: string;
+  threadId: string | null;
+  onClose: () => void;
+}) {
+  return (
+    <div className="border-t border-[#e8e4dc] bg-[#faf8f4]">
+      <div className="flex items-center justify-between px-4 py-2.5">
+        <div className="flex items-center gap-2 text-[13px] font-sans text-[#6b8f5e]">
+          <span aria-hidden>&#x1F4D3;</span>
+          <span className="font-medium">Research notebook</span>
+          <span className="text-[#8a8480]">
+            {findings.length} finding{findings.length === 1 ? '' : 's'}{topic ? ` · ${topic}` : ''}
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          {threadId && (
+            <a
+              href={`/api/embassy/threads/${threadId}/notebook`}
+              download
+              className="text-[11px] text-[#6b8f5e] hover:text-[#4a6b40] font-sans"
+            >
+              Export
+            </a>
+          )}
+          <button onClick={onClose} className="text-[11px] text-[#8a8480] hover:text-[#6b6560] font-sans">
+            Close
+          </button>
+        </div>
+      </div>
+      <div className="max-h-[40vh] overflow-y-auto px-4 pb-3 space-y-3">
+        {findings.map((f) => {
+          const url = `/book/${f.bookSlug || f.bookId}/page-number/${f.pageNumber}`;
+          return (
+            <div key={f.key} className="rounded-lg border border-[#e8e4dc] bg-white px-3 py-2.5">
+              <blockquote className="border-l-2 border-[#c9a86c] pl-3 text-[13px] font-body italic text-[#444] leading-relaxed">
+                {f.quote}
+              </blockquote>
+              {f.note && (
+                <p className="mt-2 text-[12px] font-body text-[#6b6560] leading-relaxed">{f.note}</p>
+              )}
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1.5 inline-block text-[11px] font-sans text-[#9e4a3a] hover:underline"
+              >
+                {f.bookTitle} &mdash; {f.bookAuthor}, p.{f.pageNumber}
+              </a>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -194,7 +289,11 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const params = useParams<{ tenant: string }>();
   const tenant = params?.tenant;
   const [messages, setMessages] = useState<Message[]>([]);
-  const [suggestions] = useState(() => pickSuggestions(4));
+  // Seed deterministically so SSR and the first client render agree (a random
+  // initial set caused a hydration mismatch — React #418). Shuffle for variety
+  // only after mount, where a state update is safe.
+  const [suggestions, setSuggestions] = useState<string[]>(() => ALL_SUGGESTIONS.slice(0, 4));
+  useEffect(() => { setSuggestions(pickSuggestions(4)); }, []);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
@@ -206,6 +305,10 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     if (status === 'authenticated') setSidebarTab('mine');
   }, [status]);
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
+  // Research notebook accumulated live across the thread (from notebook_update).
+  const [notebookFindings, setNotebookFindings] = useState<NotebookFinding[]>([]);
+  const [notebookTopic, setNotebookTopic] = useState<string | undefined>();
+  const [notebookOpen, setNotebookOpen] = useState(false);
   const [showThinking, setShowThinking] = useState(true);
   const [visibleThreads, setVisibleThreads] = useState(5);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -396,6 +499,14 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     notebookCount: event.notebook?.findingCount,
                     notebookTopic: event.notebook?.topic || m.notebookTopic,
                   }));
+                  if (event.notebook?.topic) setNotebookTopic(event.notebook.topic);
+                  if (event.notebook?.finding) {
+                    const f = event.notebook.finding;
+                    const key = `${f.bookId}:${f.pageNumber}:${(f.quote || '').slice(0, 48)}`;
+                    setNotebookFindings(prev =>
+                      prev.some(p => p.key === key) ? prev : [...prev, { ...f, key }],
+                    );
+                  }
                   break;
 
                 case 'error':
@@ -467,6 +578,9 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const startNewThread = () => {
     setMessages([]);
     setThreadId(null);
+    setNotebookFindings([]);
+    setNotebookTopic(undefined);
+    setNotebookOpen(false);
     inputRef.current?.focus();
   };
 
@@ -599,6 +713,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                             <div className="mb-2">
                               <button
                                 onClick={() => setShowThinking(!showThinking)}
+                                aria-expanded={showThinking}
                                 className="text-[11px] text-[#b0a89c] hover:text-[#8a8480] font-sans transition-colors"
                               >
                                 {showThinking ? 'Hide reasoning' : 'Show reasoning'}
@@ -679,6 +794,16 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                   <div />
                 </div>
 
+                {/* Research notebook (collapsible) */}
+                {notebookOpen && notebookFindings.length > 0 && (
+                  <NotebookPanel
+                    findings={notebookFindings}
+                    topic={notebookTopic}
+                    threadId={threadId}
+                    onClose={() => setNotebookOpen(false)}
+                  />
+                )}
+
                 {/* Input area */}
                 <div className="border-t border-[#e8e4dc] p-4">
                   <form onSubmit={handleSubmit} className="flex gap-3 items-end">
@@ -718,14 +843,15 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                           New conversation
                         </button>
                       )}
-                      {threadId && messages.some(m => m.role === 'assistant' && (m as AssistantMessage).notebookCount) && (
-                        <a
-                          href={`/api/embassy/threads/${threadId}/notebook`}
-                          download
-                          className="text-[11px] text-[#6b8f5e] hover:text-[#4a6b40] transition-colors font-sans"
+                      {notebookFindings.length > 0 && (
+                        <button
+                          onClick={() => setNotebookOpen(o => !o)}
+                          aria-expanded={notebookOpen}
+                          className="text-[11px] text-[#6b8f5e] hover:text-[#4a6b40] transition-colors font-sans flex items-center gap-1"
                         >
-                          Export research
-                        </a>
+                          <span aria-hidden>&#x1F4D3;</span>
+                          <span>{notebookOpen ? 'Hide' : 'Research'} notebook ({notebookFindings.length})</span>
+                        </button>
                       )}
                     </div>
                     <div className="flex items-center gap-3">

@@ -177,6 +177,8 @@ const SKIP_MARKUP_RULES = [
   { type: 'stamp', significance: '*' },
   { type: 'ornament', significance: '*' },
   { type: 'blank', significance: '*' },
+  { type: 'exlibris', significance: '*' },        // ownership bookplates — provenance, not content
+  { type: 'bookplate', significance: '*' },
   { type: 'decorative', significance: 'low' },
   { type: "printer's mark", significance: 'low' },
   { type: 'photograph', significance: 'low' },
@@ -454,7 +456,7 @@ async function probeDbHealth(db) {
 
 // Page types to skip for translation (mirrors defaults.ts)
 const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank',
+  'blank', 'exlibris', 'bookplate',
 ];
 
 // Languages that get inline transliteration before translation.
@@ -1320,6 +1322,17 @@ async function uploadBatchFile(filePath, displayName, keyIndex) {
  */
 async function createBatchJobFromFile(model, fileName, displayName, preferredKeyIndex = 0) {
   const client = getSdkClient(preferredKeyIndex);
+  // Wait for the uploaded File API file to reach ACTIVE before creating the batch.
+  // batches.create against a still-PROCESSING file returns 400 FAILED_PRECONDITION.
+  // Larger file-based OCR JSONLs (big books) take longer to process, so they raced
+  // and failed while small inline books succeeded — root cause of the OCR backlog.
+  for (let i = 0; i < 30; i++) {
+    let state;
+    try { state = (await client.files.get({ name: fileName }))?.state; } catch { state = undefined; }
+    if (state === 'ACTIVE') break;
+    if (state === 'FAILED') throw new Error(`File API processing FAILED for ${fileName}`);
+    await new Promise(r => setTimeout(r, 2000)); // up to ~60s
+  }
   const batchJob = await client.batches.create({
     model,
     src: { fileName },
@@ -1911,7 +1924,7 @@ If the page contains no significant illustrations, return \`[]\` — an empty ar
 For each significant illustration return:
 {
   "description": "Brief factual description",
-  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map",
+  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
   "confidence": 0.95,
   "gallery_quality": 0.85,
@@ -2526,14 +2539,24 @@ async function run() {
       console.log(`  Enrolled: ${log.enrolled}`);
     }
 
-    // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate)
-    const ARTWORK_TYPES = ['painting', 'print', 'drawing', 'fresco', 'papyrus_fragment', 'object'];
+    // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate).
+    // NOTE: 'papyrus_fragment' is deliberately NOT here — papyri (and cuneiform) are textual
+    // sources and belong in the BOOK pipeline, like the Egyptian Book-of-the-Dead papyri.
+    const ARTWORK_TYPES = ['painting', 'print', 'drawing', 'fresco', 'object'];
+    // content_type is AUTHORITATIVE: 'book' is never artwork (overrides resource_type — needed
+    // for object-typed textual papyri like "Papyrus, funerary, Book of the Dead"), 'artwork'
+    // always is. resource_type is only a fallback when content_type is unset.
+    // (See CLAUDE.md: don't gate artwork on resource_type alone.)
+    const ARTWORK_MATCH = { content_type: { $ne: 'book' }, $or: [{ content_type: 'artwork' }, { resource_type: { $in: ARTWORK_TYPES } }] };
 
     // ── Phase 0: Skip artworks that somehow entered the pipeline ──
     if (shouldRun(1)) {
       const artworks = await db.collection('books').find({
-        'pipeline_auto.status': { $in: ['queued', 'archiving', 'archive_complete'] },
-        resource_type: { $in: ARTWORK_TYPES },
+        // Catch artwork at ANY pre-terminal stage, not just early ones. Some slip all the way
+        // to finalize where Phase 9 mis-flags them "Empty book: 0 pages" (single-object
+        // artworks legitimately have 0 pages).
+        'pipeline_auto.status': { $nin: ['complete', 'needs_attention', 'failed', 'parked'] },
+        ...ARTWORK_MATCH,
       }).project({ id: 1, title: 1 }).toArray();
       if (artworks.length > 0) {
         console.log(`\n--- Phase 0: Skipping ${artworks.length} artworks ---`);
@@ -2555,7 +2578,7 @@ async function run() {
       const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
       let queuedBooks = await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'queued', resource_type: { $nin: ARTWORK_TYPES } } },
+          { $match: { 'pipeline_auto.status': 'queued', content_type: { $ne: 'artwork' }, $or: [{ content_type: 'book' }, { resource_type: { $nin: ARTWORK_TYPES } }] } },
           { $addFields: {
             _priority: {
               $switch: {
@@ -4984,7 +5007,7 @@ Rules:
       let readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, language: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
       if (BOOK_OVERRIDE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1 });
@@ -4995,6 +5018,14 @@ Rules:
         const totalPages = book.pages_count || await db.collection('pages').countDocuments({ book_id: book.id });
 
         if (totalPages === 0) {
+          // Single-object artworks legitimately have 0 pages — finalize, don't flag as a
+          // failed import. (Phase 0 normally diverts these, but the dedicated `--phase 9`
+          // finalize cron doesn't run Phase 0, so guard here too.)
+          if (book.content_type === 'artwork') {
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'complete', { skipped: 'artwork', completed_at: new Date() });
+            log.completed = (log.completed || 0) + 1;
+            continue;
+          }
           if (!DRY_RUN) {
             await setPipelineStatus(db, book.id, 'needs_attention', {
               error: 'Empty book: 0 pages. Likely a failed import.',

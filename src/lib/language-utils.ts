@@ -5,12 +5,69 @@ const CODE_TO_NAME: Record<string, string> = {
   hu: 'Hungarian', it: 'Italian', ja: 'Japanese', la: 'Latin', nl: 'Dutch',
   no: 'Norwegian', pl: 'Polish', pt: 'Portuguese', ru: 'Russian', sa: 'Sanskrit',
   sv: 'Swedish', tr: 'Turkish', zh: 'Chinese',
+  // Indic / East-Asian 2-letter codes — Gemini emits these in <lang> tags for
+  // South-Asian corpora; without them e.g. "hi" fell through to a bare "Hi".
+  hi: 'Hindi', te: 'Telugu', ta: 'Tamil', mr: 'Marathi', ml: 'Malayalam',
+  kn: 'Kannada', bn: 'Bengali', gu: 'Gujarati', pa: 'Punjabi', ur: 'Urdu',
+  ko: 'Korean', vi: 'Vietnamese',
 };
 
 /** Canonical English name → ISO-639-1 code */
 const NAME_TO_CODE: Record<string, string> = Object.fromEntries(
   Object.entries(CODE_TO_NAME).map(([code, name]) => [name.toLowerCase(), code])
 );
+
+/**
+ * ISO-639-2/3 (and other 3-letter) code → canonical English name.
+ * Internet Archive and IIIF manifests emit 3-letter codes (`rus`, `lat`, `grc`).
+ * This was the silent gap behind #2184 — IA's `metadata.language: "rus"` never
+ * matched the catalogued "Russian" because nothing normalised the code.
+ */
+const CODE3_TO_NAME: Record<string, string> = {
+  ara: 'Arabic', ces: 'Czech', cze: 'Czech', dan: 'Danish', deu: 'German', ger: 'German',
+  ell: 'Greek', gre: 'Greek', grc: 'Greek', eng: 'English', spa: 'Spanish',
+  fas: 'Persian', per: 'Persian', fra: 'French', fre: 'French', heb: 'Hebrew',
+  hun: 'Hungarian', ita: 'Italian', jpn: 'Japanese', lat: 'Latin', nld: 'Dutch', dut: 'Dutch',
+  nor: 'Norwegian', pol: 'Polish', por: 'Portuguese', rus: 'Russian', san: 'Sanskrit',
+  swe: 'Swedish', tur: 'Turkish', zho: 'Chinese', chi: 'Chinese',
+  hin: 'Hindi', tel: 'Telugu', tam: 'Tamil', mar: 'Marathi', syr: 'Syriac', urd: 'Urdu',
+};
+
+/**
+ * Normalise a raw language token (ISO-639-1/2/3 code OR free-text name) to a
+ * canonical display name, e.g. "rus" → "Russian", "la" → "Latin",
+ * "Modern Greek" → "Greek". Returns null for empty / placeholder tokens so
+ * callers can treat "no signal" distinctly from a real value.
+ */
+export function displayLanguage(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const cleaned = String(raw)
+    .toLowerCase()
+    .trim()
+    .replace(/^(modern|ancient|old|classical|medieval|middle|early)\s+/, '');
+  if (!cleaned) return null;
+  if (PLACEHOLDER_LANGS.has(cleaned)) return null;
+  if (CODE_TO_NAME[cleaned]) return CODE_TO_NAME[cleaned];
+  if (CODE3_TO_NAME[cleaned]) return CODE3_TO_NAME[cleaned];
+  // Already a display name: title-case it for storage consistency.
+  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+}
+
+/** Tokens that mean "no usable language signal". */
+const PLACEHOLDER_LANGS = new Set([
+  'none', 'n/a', 'na', 'unknown', 'und', 'null', '', 'multiple', 'mul',
+  'mixed', 'various', 'zxx', 'undetermined',
+]);
+
+/**
+ * True when two language tokens refer to the same language after normalisation.
+ * Either argument may be a code or a display name.
+ */
+export function sameLanguage(a: string | null | undefined, b: string | null | undefined): boolean {
+  const na = displayLanguage(a);
+  const nb = displayLanguage(b);
+  return !!na && !!nb && na.toLowerCase() === nb.toLowerCase();
+}
 
 /**
  * Expand a language list to include both ISO codes and English names.
