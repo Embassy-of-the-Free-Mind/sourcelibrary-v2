@@ -33,6 +33,7 @@
  * Usage:
  *   node scripts/analysis/ft-ground-remediation.mjs --set contested [--limit N] [--refresh]
  *   node scripts/analysis/ft-ground-remediation.mjs --set unverified --limit 200
+ *   node scripts/analysis/ft-ground-remediation.mjs --set auto --limit 250   (cron: contested first, then unverified)
  * Resumable: books already in ft_reverify_proposal are skipped unless --refresh.
  */
 
@@ -281,12 +282,16 @@ async function main() {
   const limit = args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1]) : 100000;
   const refresh = args.includes('--refresh');
 
-  let query;
-  if (set === 'contested') {
-    query = { language: 'Latin', pages_translated: { $gt: 0 }, is_first_translation: false, 'translation_verification.disposition': { $in: FIRST_DISPOSITIONS } };
-  } else if (set === 'unverified') {
-    query = { language: 'Latin', pages_translated: { $gt: 0 }, 'translation_verification': { $exists: false } };
-  } else { console.error(`unknown --set ${set} (use: contested | unverified)`); process.exit(1); }
+  const QUERIES = {
+    // flag=false yet a first-type catalog disposition — the demonstrably-wrong set
+    contested: { language: 'Latin', pages_translated: { $gt: 0 }, is_first_translation: false, 'translation_verification.disposition': { $in: FIRST_DISPOSITIONS } },
+    // never given any catalog determination
+    unverified: { language: 'Latin', pages_translated: { $gt: 0 }, 'translation_verification': { $exists: false } },
+  };
+  // `auto` (the cron default) grounds contested first, then fills the nightly
+  // limit with unverified — one stable invocation that never re-does a book.
+  const order = set === 'auto' ? ['contested', 'unverified'] : [set];
+  if (order.some(s => !QUERIES[s])) { console.error(`unknown --set ${set} (use: contested | unverified | auto)`); process.exit(1); }
 
   console.log(`=== FT grounded remediation ===`);
   console.log(`Set: ${set} | limit: ${limit} | refresh: ${refresh}`);
@@ -298,15 +303,19 @@ async function main() {
   const proposals = db.collection('ft_reverify_proposal');
   await proposals.createIndex({ book_id: 1 }, { unique: true }).catch(() => {});
 
-  let books = await db.collection('books').find(query)
-    .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, categories: 1, is_first_translation: 1, 'translation_verification.disposition': 1 })
-    .toArray();
+  const projection = { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, categories: 1, is_first_translation: 1, 'translation_verification.disposition': 1 };
+  let books = [];
+  const seen = new Set();
+  for (const s of order) {
+    const rows = await db.collection('books').find(QUERIES[s]).project(projection).toArray();
+    for (const r of rows) { if (!seen.has(r.id)) { seen.add(r.id); books.push({ ...r, _set: s }); } }
+  }
 
   if (!refresh) {
     const done = new Set((await proposals.find({}, { projection: { book_id: 1 } }).toArray()).map(p => p.book_id));
     const before = books.length;
     books = books.filter(b => !done.has(b.id));
-    console.log(`Resuming: ${before} in set, ${before - books.length} already proposed, ${books.length} remaining`);
+    console.log(`Resuming: ${before} in scope, ${before - books.length} already proposed, ${books.length} remaining`);
   }
   books = books.slice(0, limit);
   console.log(`Grounding ${books.length} books\n`);
@@ -339,7 +348,7 @@ async function main() {
             translations: result.translations || [], evidence_strength: result.evidence_strength || null,
             confidence: result.confidence || null, reasoning: result.reasoning || null,
             catalog_counts: { open_library: result.raw?.open_library?.length || 0, google_books: result.raw?.google_books?.length || 0, internet_archive: result.raw?.internet_archive?.length || 0 },
-            set, created_at: new Date(),
+            set: book._set || set, created_at: new Date(),
         } },
         { upsert: true },
       );
