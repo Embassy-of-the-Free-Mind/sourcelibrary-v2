@@ -43,6 +43,7 @@ export interface AuthorThesaurusDoc {
   viaf_id?: string;
   wikidata_id?: string;
   book_count?: number;
+  merged_into?: string;   // dedup-2250 tombstone → canonical primary slug
 }
 
 export interface AuthorEntityEnrichment {
@@ -122,6 +123,14 @@ export async function resolveCanonicalAuthor(
   }
 
   if (!doc) return null;
+
+  // Follow a dedup tombstone to its primary (dedup-2250): a folded doc carries
+  // `merged_into` and its slug lives in the primary's variant_slugs, so the URL
+  // 301s to the canonical person.
+  if (doc.merged_into) {
+    const primary: AuthorThesaurusDoc | null = await authors.findOne({ $or: [{ _id: doc.merged_into }, { slug: doc.merged_into }] });
+    if (primary) doc = primary;
+  }
 
   const canonicalSlug = doc.slug || doc._id;
 

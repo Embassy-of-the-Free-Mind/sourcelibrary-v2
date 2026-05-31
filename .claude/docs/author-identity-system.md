@@ -138,22 +138,36 @@ Verified post-write: 2,274 `author_id` + provenance, `author_id_1` index created
 
 ---
 
-## 5. Known issues / follow-ups (not yet done)
+## 5. Thesaurus cleanup — DONE (`dedup-canonical-authors.mjs`, 2026-05-31)
 
-1. **Title-contaminated author docs.** The build wrote work titles that leaked
-   into the author field as their own "person" docs: `kircher-mundus`,
-   `kircher-oedipus`, `kircher-musurgia`, `kircher-magneticum`, `gikatilla-portae-
-   lucis`, … They resolve to themselves (no redirect) and don't merge into the real
-   person. Needs a surname-merge cleanup that folds them into the anchored canonical
-   doc. ~804 unanchored docs, 667 with ≤1 book, are the junk+tail mix.
-2. **Same-person split across two `authors` docs.** 18 name strings map to >1
-   canonical doc — several are one person wrongly split (`roger-bacon` +
-   `bacon-roger`; `ikhwan-al-safa` ×4; `persius` ×2). The thesaurus itself needs a
-   dedup pass. These are skipped by the backfill (ambiguous) until merged.
-3. **Quarantine misses.** Institutions still typed as persons ("Bayerische
-   Staatsibliothek", "Kanze School"). Extend `quarantine-non-person-authors.mjs`
-   (#2230) to catch title-contaminated + institution patterns.
-4. **Enumerate canonical persons, not strings.** Browse-by-author, sitemaps,
+Applied via `scripts/maintenance/dedup-canonical-authors.mjs` (dry-run default,
+`--undo`-reversible, additive — folds to tombstones, never deletes). 4,792 → 4,765
+canonical persons.
+
+- **Self-dedup: 14 clusters, 18 docs folded.** Precision-first: 12 by shared
+  `entity_id` (the build already judged them one person), 2 by safe co-author-
+  compound fold (`bacon-roger` "Bacon, Roger|Alexander" → `roger-bacon`). The
+  secondary becomes `{merged_into, is_person:false}`; the resolver follows it →
+  301. **3 held for human review** (NOT merged): `persius`/`persius-2` (the poet
+  conflated with publisher "D.P. Pers"), `johann-michael-faust` ×2 (two distinct
+  VIAFs), `alfonso` ×2 (generic single name).
+- **Title-contamination: explicit allowlist only.** The 4 Kircher work-title docs
+  (`kircher-mundus`/`-oedipus`/`-musurgia`/`-magneticum`) folded into
+  `athanasius-kircher` — so all **8 of Kircher's original slugs now resolve to one
+  person**. A general surname-key heuristic was **tried and rejected**: it
+  mis-merged distinct same-surname people ("George Washington" → "Washington
+  Matthews", "Karl Müller" → "F. Max Müller"). Author-title disambiguation is not
+  safely automatable — remaining title-contaminated docs go to human / Scholar-in-
+  Residence review.
+- **Quarantine misses: 5 flagged** `is_person:false` (Bayerische Staatsibliothek,
+  Kanze School, Confessio Fraternitatis, Fama Fraternitatis, Italian School).
+- **`book_count` recomputed live** on all 4,765 survivors — the stale build
+  snapshot is gone (Kircher 71 → 193). Still: don't *render* it as ground truth; the
+  read-path live query is canonical. It's now a maintained convenience field.
+
+## 5b. Remaining follow-ups
+
+1. **Enumerate canonical persons, not strings.** Browse-by-author, sitemaps,
    `warm-author-pages.mjs`, `revalidate-authors` still enumerate distinct author
    strings — migrate them to enumerate `authors` docs so each person appears once.
 5. **Byline links from the canonical person.** Book bylines build via
@@ -181,6 +195,7 @@ Verified post-write: 2,274 `author_id` + provenance, `author_id_1` index created
 | `scripts/maintenance/build-canonical-authors.mjs` | Builds the `authors` thesaurus (#2202). |
 | `scripts/maintenance/quarantine-non-person-authors.mjs` | Flags non-persons `is_person:false` (#2230). |
 | `scripts/maintenance/backfill-author-canonical-links.mjs` | Links the tail; writes `author_id` + provenance (#2250). |
+| `scripts/maintenance/dedup-canonical-authors.mjs` | Self-dedup + title-fold + quarantine + `book_count` recompute (#2250 §5). |
 | `system_config.author_slugs` (Mongo) | Legacy slug→name cache; still the orphan-resolution source. |
 
 memory: `project_author_entity_resolver`, `project_authority_linking`,
