@@ -131,7 +131,12 @@ const APPLY_REPORT = getArg('--apply-report');
 function isCompilationOrTranslation(book) {
   const a = (book.author || '').trim();
   if (/translat|\btrans\.|\bvarious\b|annotated by|compiled by|\(ed\.|\bedited by\b/i.test(a)) return true;
-  return a.split(/[;|]/).filter((p) => p.trim()).length >= 2; // semicolon/pipe = multiple contributors
+  if (a.split(/[;|]/).filter((p) => p.trim()).length >= 2) return true; // semicolon/pipe = multiple contributors
+  // Title-level compilation signals — anthologies/collections whose author field is a
+  // single editor slip past the author check (e.g. Richebourg's "Bibliothèque des
+  // philosophes chimiques", classic alchemical theatrums/musaeums). #2244
+  const t = book.display_title || book.title || '';
+  return /biblioth[eèé]\w*|theatrum chem|theatrum chym|musaeum|opera omnia|\bfragmente der\b|florilegi|deliciae|anthologi|\bcollected works\b|\bcollection of\b/i.test(t);
 }
 
 // ── Discovery prompt — tuned for section/excerpt translations ────────
