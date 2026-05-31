@@ -64,8 +64,11 @@ with that string → `entities` doc. When **on**:
    - fallback: look the slug up in the `author_slugs` cache, match its NAME
      (NFD-normalized) against `variants[]`. This redirects orphan/title-stale
      slugs **dynamically — no static redirect map is maintained.**
-2. **301 to the canonical slug** when the requested slug ≠ `doc.slug`. One person,
-   one URL; every variant collapses to it.
+2. **Redirect to the canonical slug** when the requested slug ≠ `doc.slug`. One
+   person, one URL; every variant collapses to it. Uses Next `redirect()` (**307
+   temporary**) deliberately during the flagged rollout — a permanent 308 would be
+   cached by browsers/search engines and survive a flag-off. **Switch to
+   `permanentRedirect()` (308) at cutover**, when the flag is removed.
 3. **Fetch the deduplicated book set** as a UNION, in authority order:
    `author_id == slug` **∪** `author_entity_id ∈ entity_ids` **∪** `author ∈ variants`.
    The third arm is a self-healing fallback for books not yet backfilled.
@@ -75,7 +78,7 @@ with that string → `entities` doc. When **on**:
    the tail is still being linked.
 
 Coverage (2026-05-31, all 8,854 `author_slugs` entries): **6,833 resolve via the
-thesaurus**, of which **~3,799 duplicate URLs 301 to a canonical**; 2,021 fall
+thesaurus**, of which **~3,799 duplicate URLs redirect to a canonical**; 2,021 fall
 through to legacy. Examples: `kircher-athanasius` → `athanasius-kircher` (191
 books); `philip-melanchthon` → `melanchthon-philipp` (Latin/vernacular merge).
 
