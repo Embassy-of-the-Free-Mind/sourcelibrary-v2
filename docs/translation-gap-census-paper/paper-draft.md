@@ -76,9 +76,10 @@ determined by the bibliographic FT verifier — an LLM that searches
 translation_catalogs / OpenLibrary / Google Books / OpenAlex / LoC by author+title
 and stores its evidence in `translation_verification`):
 
-- **First (new) translations: ~2,119 flagged** — and ~2,566 once a flag/disposition
-  desync is corrected (402 works carry a `confirmed_first` verification disposition
-  yet are flagged not-first; see below).
+- **First (new) translations: ~2,119 flagged** (every one carries a verification
+  record). A further **~447 works are contested** — see the two-system
+  disagreement below — so the true first count is uncertain by a few hundred in
+  *both* directions.
 - **Not-new (fresh translations of already-translated works): ~3,285**, of which
   1,447 have a verified `translation_found` disposition (a prior English
   translation genuinely exists).
@@ -96,11 +97,19 @@ searches. (ii) Source Library's holdings are **canon-weighted, not a random samp
 of the Latin corpus — we acquire known/important works in specific traditions
 (alchemy, Hermetica, Kabbalah, Rosicrucianism, early science), which are
 disproportionately *already* translated. Hence SL's internal new/not-new ratio
-(~40–55% new) reflects acquisition strategy and must **not** be read as the corpus
-translation rate (§3 unit/sampling caution). (iii) A **flag/disposition desync**
-(~447 works verified first-type but flagged not-first; ~1,323 not-new are
-unverified defaults) currently *undercounts* first translations — a data-quality
-fix that would raise the "new" share.
+(~40% new flagged) reflects acquisition strategy and must **not** be read as the
+corpus translation rate (§3 unit/sampling caution). (iii) **Two first-translation
+determination systems disagree on ~447 works**: a catalog-search verifier
+(authoritative for *whether a prior translation exists*, since that lives in
+catalogues not in the book) marks them first-type, while a later *content-based*
+enrichment pass (which cannot observe external translations) set the flag to
+not-first and currently wins. Of the 447, 24 genuinely have a prior translation
+(`translations_found > 0`) and a handful are translated-from-another-language
+(e.g. Alhazen's *Optics*, English from the Arabic). The net effect on the first
+count is uncertain in both directions; reconciliation (catalog evidence
+authoritative for prior-translation existence, with per-work review for
+cross-language and reference works) is required before the figure can be
+tightened — a bulk flip would risk false "first translation" claims.
 
 ## 6. Case study II — the Chinese imperial canon (Siku Quanshu)
 
