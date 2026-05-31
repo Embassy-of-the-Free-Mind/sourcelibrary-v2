@@ -20,8 +20,11 @@ const PERIODS: Record<string, { label: string; min: number; max: number }> = {
 
 const PERIOD_SLUGS = Object.keys(PERIODS);
 
-// ISR: 24h background revalidation
-export const revalidate = 86400;
+// Must be dynamic: this page reads request headers (x-tenant-id) for tenant
+// scoping. Pairing `revalidate` (ISR) with `await headers()` throws
+// DYNAMIC_SERVER_USAGE and 500s the whole route in Next 16 (see PR #2260,
+// which fixed authors/titles/artists but missed this route).
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 export const dynamicParams = true;
 
