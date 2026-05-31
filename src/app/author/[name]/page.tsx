@@ -11,6 +11,7 @@ import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
+import { AUTHOR_THESAURUS_READPATH, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -102,6 +103,17 @@ function computeBooks(raw: any[]): Book[] {
       ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
       : 0,
   }));
+}
+
+/**
+ * Partition a computed book set into texts (bibliography) and artworks.
+ * Shared by the legacy entity path and the canonical-thesaurus path.
+ */
+function partitionAuthorBooks(books: Book[]): { works: Book[]; artworks: Book[] } {
+  return {
+    works: books.filter(b => !isArtworkRecord(b)),
+    artworks: books.filter(b => isArtworkRecord(b)),
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -199,15 +211,39 @@ async function loadAuthorData(db: any, slug: string): Promise<{
 
   // Partition the record set: texts go to the bibliography, artworks get
   // their own preview strip + link to the dedicated /artist/[name] page.
-  const computed = computeBooks(books);
-  const works = computed.filter(b => !isArtworkRecord(b));
-  const artworks = computed.filter(b => isArtworkRecord(b));
+  const { works, artworks } = partitionAuthorBooks(computeBooks(books));
 
   return {
     authorName: displayName,
     entity,
     works,
     artworks,
+  };
+}
+
+/**
+ * Canonical-thesaurus author load (GitHub #2250), gated by
+ * AUTHOR_THESAURUS_READPATH. Resolves the slug to ONE canonical person via the
+ * `authors` collection and returns the deduplicated book set. The second return
+ * value is the canonical slug — when it differs from the requested slug, the
+ * page 301-redirects so every variant URL collapses to one.
+ */
+async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // eslint-disable-line @typescript-eslint/no-explicit-any
+  authorName: string;
+  entity: AuthorEntity | null;
+  works: Book[];
+  artworks: Book[];
+  canonicalSlug: string;
+} | null> {
+  const resolved = await resolveCanonicalAuthor(db, slug, BOOK_PROJECTION);
+  if (!resolved || resolved.books.length === 0) return null;
+  const { works, artworks } = partitionAuthorBooks(computeBooks(resolved.books));
+  return {
+    authorName: resolved.canonicalName,
+    entity: (resolved.entity as AuthorEntity | null),
+    works,
+    artworks,
+    canonicalSlug: resolved.canonicalSlug,
   };
 }
 
@@ -248,7 +284,21 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   }
 
   const db = await getReadDb();
-  const data = await loadAuthorData(db, name);
+
+  // Canonical-thesaurus path (flag-gated): one URL per person, variant slugs 301
+  // to the canonical slug. Falls back to the legacy entity/string path on a miss
+  // so no author page regresses while the thesaurus tail is still being linked.
+  let data: Awaited<ReturnType<typeof loadAuthorData>> = null;
+  if (AUTHOR_THESAURUS_READPATH) {
+    const canonical = await loadCanonicalAuthorData(db, name);
+    if (canonical) {
+      if (canonical.canonicalSlug && canonical.canonicalSlug !== name) {
+        redirect(`/author/${canonical.canonicalSlug}`);
+      }
+      data = canonical;
+    }
+  }
+  if (!data) data = await loadAuthorData(db, name);
   if (!data) notFound();
 
   const { authorName, entity, works, artworks } = data;
