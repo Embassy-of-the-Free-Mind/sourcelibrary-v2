@@ -125,14 +125,19 @@ export async function resolveCanonicalAuthor(
 
   const canonicalSlug = doc.slug || doc._id;
 
-  // 3. Fetch the full deduplicated book set: linked-by-entity UNION matched-by-name.
+  // 3. Fetch the full deduplicated book set as a UNION of three keys, in order of
+  //    authority:
+  //      a. author_id == slug      — the persisted canonical link (backfill-2250).
+  //      b. author_entity_id ∈ ids — books linked to a merged legacy entity.
+  //      c. author ∈ variants      — self-healing fallback for not-yet-backfilled
+  //                                   books (and freshly imported ones).
   const entityIds = (doc.entity_ids || []).filter(Boolean);
   const variants = (doc.variants || []).filter(Boolean);
-  const orClauses: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+  const orClauses: any[] = [{ author_id: canonicalSlug }]; // eslint-disable-line @typescript-eslint/no-explicit-any
   if (entityIds.length) orClauses.push({ author_entity_id: { $in: entityIds } });
   if (variants.length) orClauses.push({ author: { $in: variants } });
-  // Safety net: a doc with neither (shouldn't happen) matches by canonical_name.
-  if (orClauses.length === 0) orClauses.push({ author: doc.canonical_name });
+  // Safety net: a doc with no variants/entities still matches by canonical_name.
+  if (orClauses.length === 1) orClauses.push({ author: doc.canonical_name });
 
   const books = await db.collection('books')
     .find({ visible: true, $or: orClauses }, { projection: bookProjection })
