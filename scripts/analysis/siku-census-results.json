@@ -12,26 +12,26 @@
     },
     "unlabeled": {
       "works": 3360,
-      "sampled": 400,
-      "translated": 0,
-      "untranslated": 400,
-      "errors": 0,
-      "rate": 0,
+      "sampled": 500,
+      "translated": 1,
+      "untranslated": 426,
+      "errors": 73,
+      "rate": 0.00234192037470726,
       "ci": [
-        0,
-        0.009512640599680667
+        0.00041351550344839554,
+        0.013145063798086089
       ]
     }
   },
   "overall": {
-    "rate": 0.0002925687536571094,
+    "rate": 0.0025947491103032166,
     "ci": [
-      0.0002925687536571094,
-      0.009643789471892055
+      0.0006990673176087213,
+      0.013214574125678542
     ],
-    "projected_translated_works": 1
+    "projected_translated_works": 9
   },
-  "method": "Wikidata denominator; Google Books recall + Gemini gemini-3.1-flash-lite precision; errors excluded",
+  "method": "Wikidata denominator; Gemini name-resolution (pinyin + established English title) for Chinese-only titles; Google Books recall + Gemini gemini-3.1-flash-lite precision; errors excluded",
   "ctext_crosscheck": {
     "reachable": true,
     "stats": {
@@ -109,5 +109,11 @@
       "confidence": "high"
     }
   ],
-  "unlabeled_hits": []
+  "unlabeled_hits": [
+    {
+      "qid": "Q28347654",
+      "work": "大唐西域記",
+      "evidence": "Great Tang Dynasty Record of the Western Regions, The"
+    }
+  ]
 }

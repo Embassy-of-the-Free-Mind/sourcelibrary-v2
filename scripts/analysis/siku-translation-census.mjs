@@ -24,13 +24,17 @@
  *      false-positives that loose search introduces (e.g. "Master & Margarita"
  *      matching "Records of the Grand Historian").
  *
+ * NAME RESOLUTION (recall fix) — works whose only label is Chinese script have
+ *   no string to search with, which previously made the tail an unsearched
+ *   floor (base classics like 孫子/Art of War were missed). For those we first
+ *   resolve the title to searchable forms via a grounded Gemini call: Hanyu
+ *   Pinyin + the established English title IFF one genuinely exists (null
+ *   otherwise — no guessing). Those forms feed the same recall+precision
+ *   pipeline, so the tail is actually searched. Resolutions cached to disk.
+ *
  * DISCIPLINE — every work resolves to TRANSLATED | UNTRANSLATED | ERROR.
  *   Errors (rate-limit/network/model) are counted separately and EXCLUDED from
  *   the rate, never silently scored as "untranslated" (the v1 fake-0/100 bug).
- *
- * Residual caveat: recall for the Chinese-only-titled tail is limited — a work
- *   with no English form we can query could still have a translation under an
- *   English title we never searched. Reported as a known blind spot.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; \
@@ -40,6 +44,14 @@
 import { writeFileSync, existsSync, readFileSync } from 'fs';
 
 const DENOM_CACHE = 'scripts/analysis/siku-denominator.json';
+const RESOLVE_CACHE = 'scripts/analysis/siku-resolved-names.json';
+const resolveCache = existsSync(RESOLVE_CACHE)
+  ? new Map(Object.entries(JSON.parse(readFileSync(RESOLVE_CACHE, 'utf8'))))
+  : new Map();
+let resolveDirty = 0;
+function persistResolveCache() {
+  writeFileSync(RESOLVE_CACHE, JSON.stringify(Object.fromEntries(resolveCache), null, 2));
+}
 
 const UA = 'SourceLibrary-TranslationCensus/1.0 (derek@sourcelibrary.org)';
 const GBOOKS_KEY = process.env.GOOGLE_BOOKS_API_KEY;
@@ -185,9 +197,48 @@ Respond with JSON only: {"translated": boolean, "which": <candidate number or nu
   return { state: 'error' };
 }
 
+// Grounded name resolution for Chinese-only-titled works → searchable forms.
+// Returns { pinyin, english_title|null, work_type }. Cached by QID.
+async function resolveName(work) {
+  if (resolveCache.has(work.qid)) return resolveCache.get(work.qid);
+  const prompt = `Given a classical Chinese work title, provide searchable identifiers.
+Title: ${work.label}
+Description: ${work.desc || '(none)'}
+
+Respond JSON only: {"pinyin": "<Hanyu Pinyin of the title>", "english_title": "<established English title>"|null, "work_type": "base_classic"|"commentary"|"collection"|"gazetteer"|"other"}
+
+Rules: give "english_title" ONLY if there is a genuinely established, widely-used English title for THIS SPECIFIC work (e.g. The Art of War, The Classic of Mountains and Seas). Do NOT invent a literal translation of the characters or guess — if no standard English title exists, use null.`;
+  const u = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
+  const body = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0, responseMimeType: 'application/json' } };
+  let result = { pinyin: null, english_title: null, work_type: 'other' };
+  for (let attempt = 0; attempt < 3; attempt++) {
+    let r;
+    try { r = await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); }
+    catch { await sleep(1200); continue; }
+    if (r.status === 429 || r.status >= 500) { await sleep(2000); continue; }
+    if (!r.ok) break;
+    const d = await r.json();
+    const txt = d?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (txt) { try { result = JSON.parse(txt); } catch {} }
+    break;
+  }
+  resolveCache.set(work.qid, result);
+  if (++resolveDirty % 25 === 0) persistResolveCache();
+  return result;
+}
+
 async function classify(work, useGemini) {
-  const forms = englishForms(work);
-  if (forms.length === 0) return { state: 'untranslated', reason: 'no English form to query (Chinese-only)' };
+  let forms = englishForms(work);
+  let resolved = null;
+  if (forms.length === 0) {
+    // Chinese-only title → resolve to searchable forms before giving up.
+    resolved = await resolveName(work);
+    if (resolved.english_title && /[a-z]/i.test(resolved.english_title)) forms.push(resolved.english_title);
+    if (resolved.pinyin && /[a-z]/i.test(resolved.pinyin)) forms.push(resolved.pinyin);
+    forms = [...new Set(forms)];
+  }
+  if (forms.length === 0) return { state: 'untranslated', reason: 'unresolvable (no searchable form)' };
+  const ctx = resolved ? { ...work, enLabel: work.enLabel || resolved.english_title, alts: [...work.alts, resolved.pinyin].filter(Boolean) } : work;
   const { cands, err } = await gbCandidates(forms);
   if (err && cands.length === 0) return { state: 'error', reason: 'gbooks rate-limit/network' };
   if (cands.length === 0) return { state: 'untranslated', reason: 'no English candidates' };
@@ -195,7 +246,7 @@ async function classify(work, useGemini) {
     // heuristic fallback (unlabeled tail): any English candidate sharing a distinctive token
     return { state: 'translated', reason: 'heuristic candidate', evidence: cands[0].title };
   }
-  const verdict = await geminiAdjudicate(work, cands);
+  const verdict = await geminiAdjudicate(ctx, cands);
   if (verdict.state === 'translated') verdict.evidence = cands[verdict.which - 1]?.title || cands[0].title;
   return verdict;
 }
@@ -241,6 +292,7 @@ async function main() {
   console.log(`\nSAMPLE of Chinese-only stratum (${uSample.length} of ${unlabeled.length})…`);
   const sU = await runFull('unlabeled', uSample, true);
 
+  persistResolveCache();
   const ctext = await ctextCrossCheck();
 
   // labeled: full census → exact rate (no sampling error), errors excluded
@@ -262,7 +314,7 @@ async function main() {
       unlabeled: { works: unlabeled.length, sampled: sU.pool, translated: sU.tr, untranslated: sU.un, errors: sU.err, rate: rU, ci: [loU, hiU] },
     },
     overall: { rate: overall, ci: [lo, hi], projected_translated_works: proj },
-    method: 'Wikidata denominator; Google Books recall + Gemini gemini-3.1-flash-lite precision; errors excluded',
+    method: 'Wikidata denominator; Gemini name-resolution (pinyin + established English title) for Chinese-only titles; Google Books recall + Gemini gemini-3.1-flash-lite precision; errors excluded',
     ctext_crosscheck: ctext,
     labeled_hits: sL.hits.map(h => ({ qid: h.qid, work: h.enLabel || h.label, evidence: h.evidence, confidence: h.confidence })),
     unlabeled_hits: sU.hits.map(h => ({ qid: h.qid, work: h.label, evidence: h.evidence })),
@@ -280,4 +332,7 @@ async function main() {
   if (sU.hits.length) { console.log(`  Chinese-only hits:`); sU.hits.forEach(h => console.log(`    ✓ ${h.label} → "${h.evidence}"`)); }
   console.log(`\n  Results written to scripts/analysis/siku-census-results.json`);
 }
-main().catch(e => { console.error(e); process.exit(1); });
+// Guard: only run when invoked directly, not when imported (e.g. for testing).
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch(e => { console.error(e); process.exit(1); });
+}
