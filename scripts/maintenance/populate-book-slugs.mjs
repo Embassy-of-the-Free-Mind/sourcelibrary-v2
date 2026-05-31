@@ -145,10 +145,10 @@ async function main() {
     }
 
     // Old slugs after a rename live in books.slug_aliases. findBookByIdOrSlug
-    // adds a { slug_aliases } branch to its $or so stale URLs resolve and 301
-    // to the canonical slug — that branch MUST be index-backed, or every book
-    // lookup degrades to a collection scan (Mongo can't index an $or with any
-    // unindexed branch). Sparse + multikey; non-unique to tolerate legacy data.
+    // consults this field ONLY on a miss (a would-be 404), to resolve a stale
+    // URL and 301 to the canonical slug — it is kept out of the hot-path $or.
+    // The index keeps that miss-path lookup (and 404s generally) from scanning
+    // the collection. Sparse + multikey; non-unique to tolerate legacy data.
     try {
       await db.collection('books').createIndex(
         { slug_aliases: 1 },
