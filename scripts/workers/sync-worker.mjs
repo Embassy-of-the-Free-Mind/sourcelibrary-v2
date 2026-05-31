@@ -19,6 +19,13 @@ import { MongoClient, ObjectId } from 'mongodb';
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 
+// Supabase is the source of truth for gemini_usage since 2026-04-10 (Issue #567).
+// MongoDB now only catches ~half the writes, so the daily rollup must read from
+// Supabase. We reuse the same env vars as scripts/workers/lib/supabase-usage-logger.mjs.
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_PAGE_SIZE = 1000; // PostgREST hard cap per request — paginate beyond it.
+
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const COUNTS_ONLY = args.includes('--counts-only');
@@ -476,6 +483,116 @@ async function refreshAnalyticsSnapshot(db) {
 
 // ── Sync Gemini Usage Daily ──
 
+/**
+ * Fetch every gemini_usage row whose timestamp falls in [dayStart, dayEnd)
+ * from Supabase, paginating past PostgREST's 1000-row cap. Returns an array
+ * of rows (each with the columns from supabase-usage-logger.mjs).
+ */
+async function fetchSupabaseUsageRows(dayStart, dayEnd) {
+  const gte = dayStart.toISOString();
+  const lt = dayEnd.toISOString();
+  const rows = [];
+  let from = 0;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const to = from + SUPABASE_PAGE_SIZE - 1;
+    const url = `${SUPABASE_URL}/rest/v1/gemini_usage`
+      + `?select=type,mode,model,endpoint,status,error_category,error_message,`
+      + `cost_usd,input_tokens,output_tokens,page_count`
+      + `&timestamp=gte.${encodeURIComponent(gte)}`
+      + `&timestamp=lt.${encodeURIComponent(lt)}`
+      + `&order=timestamp.asc`;
+    const resp = await fetch(url, {
+      headers: {
+        apikey: SUPABASE_SERVICE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+        Range: `${from}-${to}`,
+        'Range-Unit': 'items',
+      },
+    });
+    if (!resp.ok) {
+      const text = await resp.text().catch(() => '');
+      throw new Error(`Supabase gemini_usage fetch failed (${resp.status}): ${text}`);
+    }
+    const page = await resp.json();
+    rows.push(...page);
+    if (page.length < SUPABASE_PAGE_SIZE) break; // short page → done
+    from += SUPABASE_PAGE_SIZE;
+  }
+  return rows;
+}
+
+/**
+ * Compute the same rollup shape as aggregateDay() (Mongo path) from an array
+ * of Supabase rows. Keeps every field downstream consumers may read.
+ */
+function aggregateRows(rows) {
+  if (!rows || rows.length === 0) return null;
+
+  let totalCost = 0;
+  let totalInputTokens = 0;
+  let totalOutputTokens = 0;
+  const byType = {};
+  const byModel = {};
+  const byEndpoint = {};
+  const byErrorCategory = {};
+
+  for (const r of rows) {
+    const cost = r.cost_usd ?? 0;
+    const inTok = r.input_tokens ?? 0;
+    const outTok = r.output_tokens ?? 0;
+    const pages = r.page_count ?? 0;
+    totalCost += cost;
+    totalInputTokens += inTok;
+    totalOutputTokens += outTok;
+
+    const typeKey = r.type || 'unknown';
+    const t = byType[typeKey] || (byType[typeKey] = {
+      count: 0, cost: 0, inputTokens: 0, outputTokens: 0,
+      successCount: 0, failedCount: 0, pageCount: 0,
+    });
+    t.count += 1;
+    t.cost += cost;
+    t.inputTokens += inTok;
+    t.outputTokens += outTok;
+    t.pageCount += pages;
+    if (r.status === 'success') t.successCount += 1;
+    if (r.status === 'failed') t.failedCount += 1;
+
+    const modelKey = r.model || 'unknown';
+    const m = byModel[modelKey] || (byModel[modelKey] = { count: 0, cost: 0 });
+    m.count += 1;
+    m.cost += cost;
+
+    if (r.endpoint) byEndpoint[r.endpoint] = (byEndpoint[r.endpoint] || 0) + 1;
+
+    if (r.status === 'failed' && r.error_category) {
+      const e = byErrorCategory[r.error_category] || (byErrorCategory[r.error_category] = {
+        count: 0, lastMessage: '',
+      });
+      e.count += 1;
+      if (r.error_message) e.lastMessage = String(r.error_message).substring(0, 200);
+    }
+  }
+
+  return {
+    totalCost,
+    totalInputTokens,
+    totalOutputTokens,
+    totalRecords: rows.length,
+    byType, byModel, byEndpoint, byErrorCategory,
+  };
+}
+
+/**
+ * Supabase-backed day aggregation. Returns the rollup summary, or null if the
+ * day has no rows.
+ */
+async function aggregateDayFromSupabase(dayStart, dayEnd) {
+  const rows = await fetchSupabaseUsageRows(dayStart, dayEnd);
+  return aggregateRows(rows);
+}
+
 async function aggregateDay(db, dayStart, dayEnd) {
   const [result] = await db.collection('gemini_usage').aggregate([
     { $match: { timestamp: { $gte: dayStart, $lt: dayEnd } } },
@@ -557,6 +674,16 @@ async function syncUsageDaily(db) {
   console.log('\n--- Sync Gemini Usage Daily ---');
   const start = Date.now();
 
+  // Source of truth is Supabase since 2026-04-10 (Issue #567). Mongo only
+  // catches ~half the writes, so reading it undercounts spend ~2x. Fall back
+  // to the legacy Mongo aggregation only if the Supabase key is missing.
+  const useSupabase = Boolean(SUPABASE_SERVICE_KEY);
+  if (!useSupabase) {
+    console.warn('  [warn] SUPABASE_SERVICE_ROLE_KEY not set — falling back to MongoDB gemini_usage (undercounts ~2x)');
+  } else {
+    console.log('  Source: Supabase gemini_usage (paginated)');
+  }
+
   // Aggregate today and the past 2 days (covers late-arriving records)
   const now = new Date();
   let daysUpdated = 0;
@@ -568,7 +695,18 @@ async function syncUsageDaily(db) {
     const dayStart = new Date(dateStr + 'T00:00:00Z');
     const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
 
-    const summary = await aggregateDay(db, dayStart, dayEnd);
+    let summary;
+    if (useSupabase) {
+      try {
+        summary = await aggregateDayFromSupabase(dayStart, dayEnd);
+      } catch (err) {
+        console.warn(`  [warn] Supabase aggregation failed for ${dateStr} (${err.message}) — falling back to MongoDB for this day`);
+        summary = await aggregateDay(db, dayStart, dayEnd);
+      }
+    } else {
+      summary = await aggregateDay(db, dayStart, dayEnd);
+    }
+
     if (summary) {
       if (!DRY_RUN) {
         await db.collection('gemini_usage_daily').updateOne(
