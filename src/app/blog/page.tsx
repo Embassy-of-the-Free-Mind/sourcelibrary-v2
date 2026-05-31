@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'how-long-to-translate',
+    title: 'How Long Would It Take to Translate the Renaissance?',
+    subtitle: 'We measured the rate of new Latin translations and counted what is left. At the current pace, the Latin Renaissance alone would take about ten thousand years to finish.',
+    date: '31 May 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+  },
+  {
     slug: 'man-his-own-maker',
     title: 'Man, His Own Maker',
     subtitle:
