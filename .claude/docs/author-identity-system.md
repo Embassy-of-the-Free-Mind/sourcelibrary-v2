@@ -199,7 +199,15 @@ flagged **57 persons / 107 books** whose edition predates the assigned author's
 birth — two classes: real misattributions (Cotton Mather→Gaskell, Jami→Jamie
 Oliver) and **wrong authority anchors** (`wikidata_id` resolved to a modern
 namesake — Jean Béguin b.1866, Platina b.1995; correct books, bad dates/portrait).
-Triage pending — wrong-anchor cases need the bad id cleared, not book relinking.
+
+**Triage applied (`triage-author-anachronisms.mjs`):** 15 misattributed books
+unlinked (`author_id`+`author_entity_id` cleared → revert to string identity:
+Jami off Jamie Oliver, Cotton Mather off Gaskell, William Law off W.L. Shirer, Xiao
+Ji off Li Xiaojiang); 28 wrong wikidata anchors cleared (id + dates + portrait,
+"null beats a wrong anchor"). All reversible — cleared values backed up in
+`anchor_correction` / `author_link_provenance`. Gated so legendary-figure date noise
+(Count Trevisan b.1406) and single-outlier bad book dates (Annie Besant's correct
+1847 anchor) are left alone, not mis-fixed.
 
 ## 5b. Remaining follow-ups
 
