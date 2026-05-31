@@ -18,6 +18,12 @@ export default function robots(): MetadataRoute.Robots {
           // letting Google crawl this burns budget on tens of thousands of
           // redirects (showed up as "Blocked 403" / "Page with redirect" in GSC).
           '/book/*/page-number/',
+          // Auto-generated thin concept stubs. Google classifies these as
+          // soft-404 (1,241 in the 2026-05-31 GSC Coverage report — the single
+          // largest not-indexed bucket) and crawling them burns budget that
+          // should go to the ~15K /book/ landing pages. Block to prioritize
+          // the catalogue. See SEO crawl-budget PR (2026-05-31).
+          '/encyclopedia/',
           '/api/',
           '/admin/',
           '/analytics',
