@@ -1,0 +1,131 @@
+{
+  "generated_for": "siku-quanshu-translation-census",
+  "denominator": 3418,
+  "strata": {
+    "labeled": {
+      "works": 58,
+      "censused": 58,
+      "translated": 4,
+      "untranslated": 54,
+      "errors": 0,
+      "rate": 0.06896551724137931
+    },
+    "unlabeled": {
+      "works": 3360,
+      "sampled": 0,
+      "translated": 0,
+      "untranslated": 0,
+      "errors": 0,
+      "rate": 0,
+      "ci": [
+        0,
+        0
+      ]
+    }
+  },
+  "overall": {
+    "rate": 0.0011702750146284377,
+    "ci": [
+      0.0011702750146284377,
+      0.0011702750146284377
+    ],
+    "projected_translated_works": 4
+  },
+  "method": "Wikidata denominator; Gemini name-resolution (pinyin + established English title) for Chinese-only titles; Google Books recall + Gemini gemini-3.1-flash-lite precision; errors excluded",
+  "ctext_crosscheck": {
+    "reachable": true,
+    "stats": {
+      "charfrequpdate": {
+        "description": "Character frequencies updated",
+        "value": null
+      },
+      "chartotal": {
+        "description": "Textual database: Total characters (pre-Qin and Han)",
+        "value": "5687102"
+      },
+      "chartotal_posthan": {
+        "description": "Textual database: Total characters (Post-Han)",
+        "value": "20385859"
+      },
+      "contribchapters": {
+        "description": "Total Wiki resources (chapters)",
+        "value": "524934"
+      },
+      "contribchars": {
+        "description": "Total Wiki resources (characters)",
+        "value": "7076266392"
+      },
+      "contribitems": {
+        "description": "Total Wiki resources (items)",
+        "value": "46085"
+      },
+      "directquotations": {
+        "description": "Direct identical quotations",
+        "value": "3100"
+      },
+      "docrespages": {
+        "description": "Total library resources (pages)",
+        "value": "36361785"
+      },
+      "paragraphtotal": {
+        "description": "Total paragraphs",
+        "value": "85560"
+      },
+      "parallelgroups": {
+        "description": "Parallel passages (groups)",
+        "value": "139634"
+      },
+      "paralleltotal": {
+        "description": "Parallel passages (total)",
+        "value": "480270"
+      },
+      "semanticchars": {
+        "description": "Total semantically linked characters",
+        "value": "451466"
+      },
+      "semanticcharsp": {
+        "description": "Total semantically linked characters (%)",
+        "value": "7.9%"
+      },
+      "serverlocation": {
+        "description": "Server location",
+        "value": "KC"
+      },
+      "statupdate": {
+        "description": "Statistics updated",
+        "value": "2023-04-06 15:55:04"
+      },
+      "unihan": {
+        "description": "Unihan database version",
+        "value": "17.0"
+      }
+    }
+  },
+  "labeled_hits": [
+    {
+      "qid": "Q844278",
+      "work": "Shan Hai Jing",
+      "evidence": "The classic of mountains and seas",
+      "confidence": "high"
+    },
+    {
+      "qid": "Q11066377",
+      "work": "Hong Ming Ji",
+      "evidence": "The Collection for the Propagation and Clarification of Buddhism, Volume 2",
+      "confidence": "high"
+    },
+    {
+      "qid": "Q28347652",
+      "work": "Record of Buddhist Kingdoms (Siku Quanshu)",
+      "evidence": "A Record of Buddhistic kingdoms",
+      "confidence": "high"
+    },
+    {
+      "qid": "Q28348702",
+      "work": "Xuanhe Paintings Catalogue (Siku Quanshu ed.)",
+      "evidence": "Xuanhe Catalogue of Paintings",
+      "confidence": "high"
+    }
+  ],
+  "unlabeled_hits": []
+}
