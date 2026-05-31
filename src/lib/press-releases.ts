@@ -43,11 +43,11 @@ export const PRESS_RELEASES: PressReleaseMeta[] = [
       'The Embassy of the Free Mind opens Source Library — already the largest collection of translated historical primary sources ever assembled, free to read',
     dateline: '4 June 2026 · Amsterdam, the Netherlands',
     date: '2026-06-04',
-    status: 'draft',
+    status: 'published',
     summary:
-      'A census finds the overwhelming majority of what Europe printed between 1450 and 1700 was never translated into English. Source Library has translated more than 13,000 historical books — nearly 7,000 for the first time — free to read beside their originals.',
+      'The overwhelming majority of what Europe printed between 1450 and 1700 was never translated into English. Source Library has translated more than 15,000 historical books — thousands of them for the first time — free to read beside their originals.',
     metaDescription:
-      "Most of what the Renaissance wrote was never translated into English. Source Library, at the Embassy of the Free Mind, has translated 13,000+ historical books — nearly 7,000 for the first time — free to read alongside their originals.",
+      "Most of what the Renaissance wrote was never translated into English. Source Library, at the Embassy of the Free Mind, has translated more than 15,000 historical books — thousands for the first time — free to read alongside their originals.",
     ogImage: 'https://sourcelibrary.org/og-image.png',
   },
   {
@@ -57,7 +57,7 @@ export const PRESS_RELEASES: PressReleaseMeta[] = [
       'The world’s largest collection of translated ancient and early modern texts',
     dateline: 'March 2026 · Amsterdam, the Netherlands',
     date: '2026-03-21',
-    status: 'published',
+    status: 'draft',
     summary:
       'The original public-beta announcement: a free digital library beginning from the Bibliotheca Philosophica Hermetica, with thousands of works translated into English for the first time.',
     metaDescription:
