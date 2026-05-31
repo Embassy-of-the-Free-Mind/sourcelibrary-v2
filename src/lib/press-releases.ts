@@ -57,7 +57,7 @@ export const PRESS_RELEASES: PressReleaseMeta[] = [
       'The world’s largest collection of translated ancient and early modern texts',
     dateline: 'March 2026 · Amsterdam, the Netherlands',
     date: '2026-03-21',
-    status: 'draft',
+    status: 'published',
     summary:
       'The original public-beta announcement: a free digital library beginning from the Bibliotheca Philosophica Hermetica, with thousands of works translated into English for the first time.',
     metaDescription:
