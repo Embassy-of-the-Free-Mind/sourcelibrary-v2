@@ -295,17 +295,32 @@ async function resolveCatalog(claim) {
 
 // ── Build the per-book proposal ─────────────────────────────────────
 function toEvidence(claim, cat) {
+  // Year reconciliation: we DISPLAY the LLM's claimed pub_year because that is
+  // normally the ORIGINAL publication of the translation (e.g. Hauge's Temple of
+  // Music 2011), which is what "Earlier translations" wants — the earliest date.
+  // But the resolved catalog record often carries a REPRINT year (OL lists Hauge
+  // as 2017). Showing "(2011)" against a 2017-dated record is a silent mismatch a
+  // scholar would catch, so when the two diverge by >1yr we surface the catalog
+  // year in notes for transparency rather than hide it. No new fields (issue #2244
+  // says reuse TranslationEvidence as-is). #2244
+  const yearDivergence = cat && cat.cat_year && claim.pub_year
+    && Math.abs(parseInt(cat.cat_year) - parseInt(claim.pub_year)) > 1
+    ? `linked catalog record dated ${cat.cat_year}` : null;
   return {
     english_title: claim.english_title,
     translator: claim.translator || undefined,
-    pub_year: claim.pub_year || undefined,
+    pub_year: claim.pub_year || (cat ? cat.cat_year : undefined) || undefined,
     publisher: claim.publisher || undefined,
     completeness: ['complete', 'partial', 'excerpts'].includes(claim.completeness) ? claim.completeness : 'unknown',
     evidence_source: cat ? cat.evidence_source : 'llm_knowledge',
     catalog_id: cat ? cat.catalog_id : undefined,
     url: cat ? cat.url : undefined,
     validated: !!cat,
-    notes: [claim.notes, claim.section_translated ? `section: ${claim.section_translated}` : null].filter(Boolean).join('; ') || undefined,
+    notes: [
+      claim.notes,
+      claim.section_translated ? `section: ${claim.section_translated}` : null,
+      yearDivergence,
+    ].filter(Boolean).join('; ') || undefined,
   };
 }
 
