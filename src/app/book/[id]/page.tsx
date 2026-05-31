@@ -755,7 +755,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 );
               })()}
               {authorEntity && (
-                <AuthorAuthority entity={authorEntity} bookAuthor={book.author} />
+                <AuthorAuthority entity={authorEntity} />
               )}
               <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
               {book.display_title && book.title !== book.display_title && (
