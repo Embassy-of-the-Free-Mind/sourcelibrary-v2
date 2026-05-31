@@ -176,9 +176,15 @@ canonical persons.
 5. **Byline links from the canonical person.** Book bylines build via
    `authorSlug(raw_string)`; they should resolve to the canonical slug, and
    co-author compounds should link each constituent.
-6. **Corpus-wide `author_id`.** Only entity-less matched books carry `author_id`
-   today; a follow-up should populate it across all books (including entity-linked
-   ones) so it's the single canonical key everywhere.
+6. **Corpus-wide `author_id` — DONE (2026-05-31).** `backfill-author-canonical-
+   links.mjs` is now two-phase + idempotent: Phase A links entity-less books by
+   exact author-string match; Phase B maps `author_entity_id` → the owning
+   `authors` doc for the entity-linked shelf. Live books with `author_id`:
+   **2,274 → 12,894 (74%)**; FT books joinable to the canonical author layer:
+   **575 → 4,362 (68%)**. Remaining unlinked are placeholders/anonymous/
+   institutions, 541 orphan entities (author_entity_id with no canonical owner),
+   and the genuine obscure tail. This is the keystone the FT/ILP catalog joins
+   (#2264) build on.
 7. **Wikidata contribution (#2250 Part D).** For confident, notable, citable
    middle-tier figures lacking a Wikidata item, create one → flows back into VIAF.
    Do *not* push obscure/pseudonymous attributions; those stay in our local layer.

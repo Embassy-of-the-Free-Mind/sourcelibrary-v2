@@ -1,12 +1,17 @@
 #!/usr/bin/env node
 /**
- * Backfill the canonical author link onto entity-less books (GitHub #2250,
- * Part C — finish linking the unlinked tail).
+ * Backfill the canonical author link CORPUS-WIDE (GitHub #2250, Part C +
+ * corpus-wide author_id). Idempotent: any book that already has `author_id` is
+ * skipped, so re-runs are safe. Two phases in one pass:
+ *   Phase A — entity-LESS books: link by exact author-STRING match to one person.
+ *   Phase B — entity-LINKED books: map `author_entity_id` -> the authors doc that
+ *             owns that entity -> set `author_id`. This is what makes the FT/ILP
+ *             joins reach the whole shelf (the ~23.5K entity-linked books).
  *
  * WHAT IT WRITES (additive, reversible):
  *   - books.author_id           = <authors._id / canonical slug>   (the new canonical FK)
- *   - books.author_entity_id    = <authors.entity_ids[0]>          ONLY if the book has
- *                                 none AND the canonical doc carries one (transitional;
+ *   - books.author_entity_id    = <authors.entity_ids[0]>          (Phase A only) ONLY if the
+ *                                 book has none AND the canonical doc carries one (transitional;
  *                                 `entities` is the retiring layer)
  *   - books.author_link_provenance[] += one assertion record (who/how/when/confidence)
  *
@@ -63,6 +68,7 @@ const allAuthors = await authors
   .find({ is_person: { $ne: false } }, { projection: { slug: 1, canonical_name: 1, variants: 1, entity_ids: 1, viaf_id: 1, wikidata_id: 1 } })
   .toArray();
 const nameMap = new Map();
+const entityToDocs = new Map(); // entity_id (string) -> [canonical docs] (for the entity-linked phase)
 for (const a of allAuthors) {
   for (const v of [a.canonical_name, ...(a.variants || [])]) {
     if (!v) continue;
@@ -70,15 +76,22 @@ for (const a of allAuthors) {
     if (!nameMap.has(n)) nameMap.set(n, []);
     if (!nameMap.get(n).some((d) => d.slug === a.slug)) nameMap.get(n).push(a);
   }
+  for (const e of (a.entity_ids || [])) {
+    const k = String(e);
+    if (!entityToDocs.has(k)) entityToDocs.set(k, []);
+    if (!entityToDocs.get(k).some((d) => d.slug === a.slug)) entityToDocs.get(k).push(a);
+  }
 }
 
-// 2. Entity-less live books with an author string.
+// 2. Entity-LESS live books with an author string and no canonical link yet.
+//    (author_id guard makes the whole script idempotent — already-linked books skipped.)
 const liveUnlinked = await books
   .find(
     {
       visible: { $ne: false },
       pages_count: { $gt: 0 },
       author: { $type: 'string', $ne: '' },
+      author_id: { $exists: false },
       $or: [{ author_entity_id: { $in: [null, ''] } }, { author_entity_id: { $exists: false } }],
     },
     { projection: { id: 1, author: 1, author_entity_id: 1 } },
@@ -123,14 +136,58 @@ for (const b of liveUnlinked) {
   });
 }
 
+// 4. Entity-LINKED live books with no canonical author_id yet — map
+//    author_entity_id -> the authors doc that owns that entity -> set author_id.
+//    Skipped when the entity maps to >1 is_person doc (ambiguous; left for dedup).
+const liveEntityLinked = await books
+  .find(
+    {
+      visible: { $ne: false },
+      pages_count: { $gt: 0 },
+      author_entity_id: { $nin: [null, ''] },
+      author_id: { $exists: false },
+    },
+    { projection: { id: 1, author_entity_id: 1 } },
+  )
+  .toArray();
+
+let entAmbiguous = 0, entOrphan = 0;
+for (const b of liveEntityLinked) {
+  const ds = entityToDocs.get(String(b.author_entity_id));
+  if (!ds) { entOrphan++; continue; }          // entity not owned by any canonical person
+  if (ds.length > 1) { entAmbiguous++; continue; }
+  const doc = ds[0];
+  ops.push({
+    updateOne: {
+      filter: { _id: b._id },
+      update: {
+        $set: { author_id: doc.slug },
+        $push: {
+          author_link_provenance: {
+            run: RUN_ID,
+            method: 'entity-id-link',
+            matched: b.author_entity_id,
+            authors_slug: doc.slug,
+            anchored: !!(doc.viaf_id || doc.wikidata_id),
+            confidence: 'high', // the build already adjudicated this entity = this person
+            at: stamp,
+          },
+        },
+      },
+    },
+  });
+}
+
 console.log('=== backfill-author-canonical-links (#2250) ===');
 console.log(`mode: ${APPLY ? 'APPLY (writing)' : 'DRY RUN (no writes)'}`);
-console.log(`entity-less live books scanned: ${liveUnlinked.length}`);
-console.log(`  -> unique-match writes staged: ${ops.length}`);
-console.log(`       anchored (confidence=high): ${anchored} | unanchored (confidence=medium): ${unanchored}`);
-console.log(`       of which also backfill author_entity_id: ${withEntityBackfill}`);
-console.log(`  -> skipped ambiguous (>1 person): ${ambiguous}`);
-console.log(`  -> skipped no canonical match (tail/placeholder): ${noMatch}`);
+console.log('--- Phase A: entity-less books (exact author-string match) ---');
+console.log(`  scanned: ${liveUnlinked.length} | writes staged: ${ops.length - (liveEntityLinked.length - entAmbiguous - entOrphan)}`);
+console.log(`    anchored=high: ${anchored} | unanchored=medium: ${unanchored} | also set author_entity_id: ${withEntityBackfill}`);
+console.log(`    skipped: ambiguous ${ambiguous}, no-match ${noMatch}`);
+console.log('--- Phase B: entity-linked books (author_entity_id -> authors doc) ---');
+console.log(`  scanned: ${liveEntityLinked.length} | writes staged: ${liveEntityLinked.length - entAmbiguous - entOrphan}`);
+console.log(`    skipped: entity owned by >1 person ${entAmbiguous}, orphan entity (no canonical owner) ${entOrphan}`);
+console.log(`=> TOTAL author_id writes staged: ${ops.length}`);
 
 if (APPLY && ops.length) {
   // Index for the read-path author_id lookup (idempotent).
