@@ -53,11 +53,11 @@ export default function ManHisOwnMakerPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The book was a list of nine hundred theses by a twenty-three-year-old Italian count, Giovanni Pico della Mirandola, who had offered to defend them against all comers in Rome. A papal commission flagged thirteen; Pico answered with a defiant <em>Apologia</em>; Innocent, unamused, condemned the whole nine hundred as heretical. Pico fled, was briefly arrested, and was not absolved until 1493, by a different and far less fastidious pope. His <Link href="/book/900-theses-1486-rome-edition-pico-della-mirandola" className="text-accent-rust hover:underline"><em>Conclusiones</em></Link> hold the odd distinction of being the <a href="https://plato.stanford.edu/entries/pico-della-mirandola/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">first printed book universally banned by the Church</a>.
+          The book was a list of nine hundred theses by a twenty-three-year-old Italian count, Giovanni Pico della Mirandola, who had offered to defend them against all comers in Rome. A papal commission flagged thirteen; Pico answered with a defiant <Link href="/book/pico-della-mirandola-opera-1496-mirandola?page=83" className="text-accent-rust hover:underline"><em>Apologia</em></Link>; Innocent, unamused, condemned the whole nine hundred as heretical. Pico fled, was briefly arrested, and was not absolved until 1493, by a different and far less fastidious pope. His <Link href="/book/900-theses-1486-rome-edition-pico-della-mirandola" className="text-accent-rust hover:underline"><em>Conclusiones</em></Link> hold the odd distinction of being the <a href="https://plato.stanford.edu/entries/pico-della-mirandola/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">first printed book universally banned by the Church</a>.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The preface to that banned book is one of the most famous texts of the Renaissance: the <Link href="/book/works-1496-bologna-incunabulum-pico-della-mirandola" className="text-accent-rust hover:underline"><em>Oration on the Dignity of Man</em></Link>. Its argument &mdash; that the human being is uniquely dignified because he has no fixed nature and must fashion his own &mdash; is the seed of nearly everything we still mean by &ldquo;humanism.&rdquo;
+          The preface to that banned book is one of the most famous texts of the Renaissance: the <Link href="/book/works-1496-bologna-incunabulum-pico-della-mirandola?page=267" className="text-accent-rust hover:underline"><em>Oration on the Dignity of Man</em></Link>. Its argument &mdash; that the human being is uniquely dignified because he has no fixed nature and must fashion his own &mdash; is the seed of nearly everything we still mean by &ldquo;humanism.&rdquo;
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -241,7 +241,7 @@ export default function ManHisOwnMakerPage() {
             <a href="https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">Leo XIV, <em>Magnifica Humanitas</em> (2026)</a> &mdash; the encyclical on artificial intelligence and the human person.
           </li>
           <li className="text-secondary font-body">
-            <Link href="/book/works-1496-bologna-incunabulum-pico-della-mirandola" className="text-accent-rust hover:underline">Pico della Mirandola, <em>Oration on the Dignity of Man</em></Link> and the <Link href="/book/900-theses-1486-rome-edition-pico-della-mirandola" className="text-accent-rust hover:underline">900 Theses</Link> (Source Library).
+            <Link href="/book/works-1496-bologna-incunabulum-pico-della-mirandola?page=267" className="text-accent-rust hover:underline">Pico della Mirandola, <em>Oration on the Dignity of Man</em></Link> and the <Link href="/book/900-theses-1486-rome-edition-pico-della-mirandola" className="text-accent-rust hover:underline">900 Theses</Link> (Source Library).
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/de-dignitate-et-excellentia-hominis-manetti" className="text-accent-rust hover:underline">Giannozzo Manetti, <em>On the Dignity and Excellence of Man</em></Link> (c. 1452).
