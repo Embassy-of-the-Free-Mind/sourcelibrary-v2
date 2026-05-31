@@ -186,3 +186,39 @@ positives that share words with the short title).
    priority set. **No production writes have happened yet** — `--apply` was not run.
 2. Reconcile with the nightly ft-discover cron (grounding-only) on Hetzner.
 3. Clean up `scripts/_tmp-*` probes (already removed this session).
+
+---
+
+## APPLIED TO PRODUCTION — 2026-05-31 (same session, continued)
+
+Feature is LIVE. Renders on real pages (verified): Bruno *Le Opere Italiane* shows
+Imerti/Morehead *Expulsion*; Fludd *History of the Macrocosm and Microcosm* shows
+Hauge *Temple of Music*.
+
+**What shipped (PR #2253):** discover-prior-translations.mjs + 4 refinements:
+1. Grounding-truncation fix (dynamic thinking + parse-retry + no-grounding fallback) — see [[lesson_gemini_grounding_truncation]].
+2. Compilation/translation guard (`isCompilationOrTranslation`): translator-author /
+   multi-contributor books get a stricter prompt that excludes translations of the
+   underlying SOURCE. Fixed the Ficino→English-Plato false-positive class.
+3. Named-translator + anthology-must-name-author gates (`eligibleForRender`).
+4. `--apply-report <dir>` writes EXACTLY the QC'd dry-run entries (no non-deterministic
+   re-run between review and write).
+
+**Apply run:** priority named authors (Fludd, Khunrath, Maier, Bruno, Ficino, Agrippa,
+Paracelsus, Dee), full coverage `--limit 60`. 143 books processed, **0 parse-fails**.
+Wrote translations_found to **31 books** (37 entries), 4 first_translation_conflict
+flags, 76 books with segregated llm-only. Manually trimmed 2 wrong/unverifiable entries
+before apply (Maier "True Invention"→Themis Aurea wrong-work; Maier Viridarium→unverifiable).
+
+**Needs Derek (human review):**
+- 4 `first_translation_conflict` books (prior COMPLETE translation exists → is the
+  `is_first_translation` claim still right?): Paracelsus *Paramirum* (Leidecker 1949);
+  Bruno *Le Opere Italiane*, *Collected Works*, *The Reformed Sky* (Imerti/Morehead/
+  Williams/Greenberg/Gosselin). Flags set, NOT auto-flipped.
+- Known imprecision (kept, labeled `partial`): Hauge *Temple of Music* is attached to
+  several Fludd Utriusque volumes incl. Microcosm tomes, though Templum Musicae sits in
+  the Macrocosm tome. Real translation, broad volume attribution — trim per-volume if undesired.
+
+**Still TODO:** extend beyond the 8 named authors to the wider first-* family (~6,384
+books) once these render well; reconcile with the nightly grounding-only ft-discover cron.
+Reports: scripts/output/prior-final{,-clean}/ (gitignored scratch).
