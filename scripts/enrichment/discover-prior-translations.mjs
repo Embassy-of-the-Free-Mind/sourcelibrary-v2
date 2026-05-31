@@ -349,13 +349,30 @@ function toEvidence(claim, cat) {
 }
 
 // A claim is only eligible for the RENDERED path if we can name a translator to
-// credit. An "unknown" / "anonymous" / "various" translator on an anthology is weak
-// evidence (it was how Maier's book matched a vague "The Alchemical Tradition") — keep
+// credit. An "unknown" / "anonymous" / "various" translator is weak evidence — keep
 // such claims as llm-only even when a catalog title matches. #2244
 function hasNamedTranslator(claim) {
   const core = (claim.translator || '').replace(/\([^)]*\)/g, '').trim(); // drop "(editor/translator)" etc.
   if (!core) return false;
   return !/^(unknown|anonymous|various|n\/?a|none|n\.n\.|anon\.?)$/i.test(core);
+}
+
+// Render eligibility gate. The catalog cross-check confirms a book EXISTS but not
+// that it CONTAINS this work — the failure mode for generic anthologies (Maier's
+// "Circulus physicus" matched a 20th-c. anthology "The Alchemical Tradition" that
+// does not contain it). So for EXCERPTS/anthology claims we additionally require the
+// English title to name THIS author (Godwin's "Robert Fludd: Hermetic Philosopher"
+// contains "Fludd"; a generic "The Alchemical Tradition" does not) — strong evidence
+// the anthology is actually about this author. complete/partial translation titles
+// (e.g. "The Temple of Music") needn't name the author. #2244
+function eligibleForRender(book, claim) {
+  if (!hasNamedTranslator(claim)) return false;
+  if (claim.completeness === 'excerpts') {
+    const authorToks = norm(book.author).split(' ').filter((w) => w.length >= 4);
+    const titleNorm = norm(claim.english_title);
+    if (authorToks.length && !authorToks.some((t) => titleNorm.includes(t))) return false;
+  }
+  return true;
 }
 
 async function processBook(book) {
@@ -368,7 +385,7 @@ async function processBook(book) {
     if (!claim?.english_title) continue;
     const cat = await resolveCatalog(claim);
     const ev = toEvidence(claim, cat);
-    if (cat && ev.url && hasNamedTranslator(claim)) validated.push(ev); else llmOnly.push(ev);
+    if (cat && ev.url && eligibleForRender(book, claim)) validated.push(ev); else llmOnly.push(ev);
   }
   // Conflict: a prior COMPLETE translation (catalog-resolved) on a first-* book.
   const priorComplete = validated.filter((e) => e.completeness === 'complete');
