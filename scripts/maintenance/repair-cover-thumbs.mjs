@@ -26,6 +26,14 @@
  *      display_photo/image_thumb too, and bump `updated_at` so the incremental
  *      `sync-books-catalog` cron propagates it to the Supabase grid.
  *
+ * v2 — book-level fallback (issue #2325 follow-up). ~70% of broken covers are
+ * single-image / non-paginated books (artwork, external-thumb) with NO page
+ * source but a perfectly good book-level cover image (`image_display`). For
+ * those, derive a 150px thumb from that image, store at
+ * `book-thumbnails/{id}-thumb.jpg`, and repoint the THUMB fields only
+ * (image_thumb + thumbnail_blob) — leaving the full image for the detail view.
+ * Only books with no usable image anywhere stay unrepairable (need archiving).
+ *
  * Selection: a book is "broken" when its thumb field (image_thumb, else
  * thumbnail_blob) is NOT a canonical `-thumb.jpg` R2 variant (it's a full URL,
  * an /archived/ or /cropped/ URL, or absent). Drive off a collection (seen
@@ -68,9 +76,14 @@ const r2 = new S3Client({
   credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY },
 });
 
-/** Canonical pre-sized R2 thumb variant: pages/{book}/{NNNN}-thumb.jpg */
-const THUMB_RE = /\/pages\/[a-zA-Z0-9-]+\/[a-z0-9-]*\d{3,}-thumb\.jpg(\?|$)/;
+/**
+ * Canonical pre-sized R2 thumb variants:
+ *   - pages/{book}/{NNNN}-thumb.jpg          (page-sourced, v1)
+ *   - book-thumbnails/{bookId}-thumb.jpg     (book-level image, v2 — artwork/external)
+ */
+const THUMB_RE = /\/(?:pages\/[a-zA-Z0-9-]+\/[a-z0-9-]*\d{3,}|book-thumbnails\/[a-zA-Z0-9-]+)-thumb\.jpg(\?|$)/;
 const isRealThumb = (u) => isUsableImageUrl(u) && THUMB_RE.test(u);
+const isUnsafeFormat = (u) => /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i.test(u || '');
 
 /** A book whose grid thumb is NOT a real -thumb.jpg is broken (serves full/none). */
 function isBrokenCoverThumb(book) {
@@ -81,6 +94,21 @@ function isBrokenCoverThumb(book) {
 function variantKeys(bookId, pageNumber) {
   const num = String(pageNumber).padStart(4, '0');
   return { display: `pages/${bookId}/${num}.jpg`, thumb: `pages/${bookId}/${num}-thumb.jpg` };
+}
+
+/** Book-level thumb key — for single-image / non-paginated books (artwork, external). */
+const bookThumbKey = (bookId) => `book-thumbnails/${bookId}-thumb.jpg`;
+
+/**
+ * The book's existing cover image, for books with no page source (artwork,
+ * external-thumb). This is the full/display image already shown — we only need
+ * to derive a small thumb from it. Skip values that are already a -thumb.jpg or
+ * an unsafe format.
+ */
+function bookLevelCoverImage(book) {
+  const candidate = book.image_display || book.thumbnail || book.image_thumb || book.thumbnail_blob;
+  if (!isUsableImageUrl(candidate) || isRealThumb(candidate) || isUnsafeFormat(candidate)) return null;
+  return candidate;
 }
 
 async function uploadR2(key, buffer) {
@@ -120,9 +148,35 @@ async function findCoverPage(db, book) {
 }
 
 const stats = {
-  scanned: 0, broken: 0, repaired: 0, alreadyOk: 0,
+  scanned: 0, broken: 0, repaired: 0, repaired_booklevel: 0, alreadyOk: 0,
   noCoverSource: 0, errors: 0, wouldRepair: 0,
 };
+
+/**
+ * v2 — book-level fallback: no page source, but the book has a usable cover
+ * image (artwork, external-thumb). Derive just a 150px thumb from it and store
+ * at book-thumbnails/{id}-thumb.jpg; repoint the THUMB fields only (image_thumb
+ * + thumbnail_blob) — leave image_display/thumbnail (the full cover) for the
+ * detail view. Returns true if repaired.
+ */
+async function repairFromBookImage(db, book) {
+  const source = bookLevelCoverImage(book);
+  if (!source) return false;
+  const buf = await download(source);
+  const { thumb } = await generateDisplayVariants(buf);
+  const thumbUrl = await uploadR2(bookThumbKey(book.id), thumb);
+  await db.collection('books').updateOne(
+    { id: book.id },
+    { $set: {
+        image_thumb: thumbUrl,
+        thumbnail_blob: thumbUrl,
+        thumbnail_source: 'cover-thumb-repair-booklevel',
+        updated_at: new Date(),
+      } },
+  );
+  stats.repaired_booklevel++;
+  return true;
+}
 
 async function repairBook(db, book) {
   stats.scanned++;
@@ -133,9 +187,15 @@ async function repairBook(db, book) {
 
   try {
     const page = await findCoverPage(db, book);
-    if (!page) { stats.noCoverSource++; return; }
-    const source = getPageSource(page);
-    if (!source || /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i.test(source)) { stats.noCoverSource++; return; }
+    const source = page ? getPageSource(page) : null;
+    if (!page || !source || isUnsafeFormat(source)) {
+      // No usable PAGE source. Fall back to the book's own cover image
+      // (artwork / external-thumb): derive a thumb from it (v2). If that also
+      // has nothing usable, it's genuinely unrepairable (needs archiving).
+      if (await repairFromBookImage(db, book)) return;
+      stats.noCoverSource++;
+      return;
+    }
 
     const keys = variantKeys(book.id, page.page_number);
     // Regenerate fresh from the CORRECT source (cropped half for split) — bulletproof.
@@ -190,7 +250,7 @@ async function main() {
   const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 12 });
   const db = client.db('bookstore');
 
-  const PROJ = { _id: 0, id: 1, cover_page: 1, image_thumb: 1, thumbnail_blob: 1, image_display: 1, visible: 1 };
+  const PROJ = { _id: 0, id: 1, cover_page: 1, image_thumb: 1, thumbnail_blob: 1, image_display: 1, thumbnail: 1, visible: 1 };
   let query;
   if (BOOK_ID) query = { id: BOOK_ID };
   else if (COLLECTION) query = { collections: COLLECTION };
@@ -207,7 +267,7 @@ async function main() {
     console.log(`\nDRY RUN — ${stats.broken} broken cover thumbs found of ${stats.scanned} scanned (${(100 * stats.broken / Math.max(1, stats.scanned)).toFixed(1)}%).`);
     console.log('Re-run with --apply to repair. Grid updates on the next sync-books-catalog tick.');
   } else {
-    console.log(`\nRepaired ${stats.repaired}; ${stats.noCoverSource} had no usable cover source; ${stats.errors} errors.`);
+    console.log(`\nRepaired ${stats.repaired} (page-sourced) + ${stats.repaired_booklevel} (book-level image) = ${stats.repaired + stats.repaired_booklevel}; ${stats.noCoverSource} had no usable image at all; ${stats.errors} errors.`);
     console.log('Run scripts/workers/sync-books-catalog.mjs (or wait for the cron) to propagate to the Supabase grid.');
   }
 
