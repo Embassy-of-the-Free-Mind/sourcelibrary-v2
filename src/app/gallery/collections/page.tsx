@@ -104,7 +104,7 @@ export default async function CollectionsPage() {
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Intro */}
         <div className="text-center mb-10">
           <h2 className="text-2xl font-serif text-stone-800 mb-2">Curated Image Collections</h2>

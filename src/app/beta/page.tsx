@@ -267,7 +267,7 @@ export default function BetaLandingPage() {
       {/* DEMO — real reader screenshot                */}
       {/* ============================================ */}
       <section id="demo" className="py-20 md:py-28 bg-[#0f0d0a]">
-        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
           <div className="text-center mb-10">
             <p
               className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4 font-sans"
@@ -290,7 +290,7 @@ export default function BetaLandingPage() {
           </div>
 
           {/* Reader screenshot */}
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1500px] mx-auto">
             <a
               href="https://sourcelibrary.org/book/6952dac677f38f6761bc683a?page=87"
               target="_blank"
@@ -324,7 +324,7 @@ export default function BetaLandingPage() {
       {/* GALLERY                                      */}
       {/* ============================================ */}
       <section id="gallery" className="py-20 md:py-28 bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
           <div className="text-center mb-14">
             <h2
               className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-4"
@@ -376,7 +376,7 @@ export default function BetaLandingPage() {
       {/* STATS                                        */}
       {/* ============================================ */}
       <section className="py-16 md:py-20 bg-stone-900">
-        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
             {/* Stats last verified 2026-03-31. 9,344 visible books, 1M+ translated pages. */}
             {[
@@ -443,7 +443,7 @@ export default function BetaLandingPage() {
 
       {/* Footer */}
       <footer className="py-12 bg-stone-950">
-        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/30 text-sm font-sans">
               &copy; {new Date().getFullYear()} Source Library

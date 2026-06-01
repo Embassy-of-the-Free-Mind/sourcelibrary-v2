@@ -81,7 +81,7 @@
      Narrow: focused reading, forms, text-heavy pages */
   --container-narrow: 672px;   /* ≈ max-w-2xl */
   --container-standard: 1024px; /* ≈ max-w-5xl */
-  --container-wide: 1280px;    /* ≈ max-w-7xl */
+  --container-wide: 1500px;    /* widened from 1280px (#232) */
 }
 
 /* Base styles */

@@ -19,7 +19,7 @@ export default function EmbedTenantLoading() {
         <div className="min-h-screen bg-cream" aria-busy="true" aria-live="polite">
             <span className="sr-only">Loading library…</span>
 
-            <div className="max-w-7xl mx-auto px-6 py-10">
+            <div className="max-w-[1500px] mx-auto px-6 py-10">
                 {/* Heading block — "Library Catalogue" + description */}
                 <div className="mb-6">
                     <div className="h-8 sm:h-9 w-56 bg-warm rounded animate-pulse" />

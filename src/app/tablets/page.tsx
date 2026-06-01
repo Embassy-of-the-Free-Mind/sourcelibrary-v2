@@ -131,7 +131,7 @@ export default function TabletsPage() {
         className="border-b py-10 px-6"
         style={{ borderColor: 'var(--border-light)' }}
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1500px] mx-auto">
           <h1
             className="font-serif text-3xl font-semibold mb-2"
             style={{ color: 'var(--text-primary)' }}
@@ -165,7 +165,7 @@ export default function TabletsPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <main className="max-w-[1500px] mx-auto px-6 py-8 space-y-8">
         {tablets.map((tablet) => {
           const sections = parseAtf(tablet.atf);
           return (

@@ -41,7 +41,7 @@ export default function QASamplingPage() {
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3">
+        <div className="max-w-[1500px] mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <BarChart3 className="w-5 h-5 text-accent-rust" />
@@ -71,7 +71,7 @@ export default function QASamplingPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-[1500px] mx-auto px-4 py-8">
         {loading && !data ? (
           <div className="flex items-center justify-center py-20">
             <BookLoader size="sm" />

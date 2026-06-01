@@ -509,7 +509,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
 function BookInfoSkeleton() {
   return (
     <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
           <div className="flex-shrink-0 flex justify-center sm:justify-start">
             <div className="w-32 sm:w-48 aspect-[3/4] rounded-lg overflow-hidden bg-stone-700">
@@ -716,7 +716,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
 
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-8">
             {/* Thumbnail - clickable to change */}
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
@@ -1222,7 +1222,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
       })()}
 
       {/* Stats + Pages Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
+      <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
         {/* Overview link — Pages heading is rendered by PagesGrid */}
         {pages.length > 0 && (
           <div className="flex items-center justify-end">
@@ -1292,7 +1292,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       <Suspense fallback={
         <>
           <BookInfoSkeleton />
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <h2 className="text-xl font-semibold text-stone-900 mb-6">Pages</h2>
             <PagesGridSkeleton />
           </main>

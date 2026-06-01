@@ -384,7 +384,7 @@ export default async function ScanEvaluationPage() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-10">
+    <main className="max-w-[1500px] mx-auto px-6 py-10">
       <header className="mb-8">
         <div className="flex items-center gap-2 text-sm text-stone-500 mb-2">
           <Link href="/admin" className="hover:text-stone-700">admin</Link>

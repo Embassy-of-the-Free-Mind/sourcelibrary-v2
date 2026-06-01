@@ -196,7 +196,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
+        <div className="relative max-w-[1500px] mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">
             {langName}
           </h1>
@@ -216,7 +216,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
       {/* Gallery Grid */}
       {galleryImages.length > 0 && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="max-w-[1500px] mx-auto px-6 py-6">
             <h2 className="text-xl sm:text-2xl text-primary mb-4 font-display">Illustrations</h2>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
               {galleryImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
@@ -257,7 +257,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-[1500px] mx-auto px-6 py-10">
         {/* Books Header */}
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>

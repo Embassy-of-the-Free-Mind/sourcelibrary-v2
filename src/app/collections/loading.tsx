@@ -5,7 +5,7 @@ export default function CollectionsLoading() {
     <div className="min-h-screen bg-cream">
       <SiteHeader variant="light" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="h-10 w-56 bg-stone-200 rounded animate-pulse mb-2" />
         <div className="h-5 w-96 max-w-full bg-stone-100 rounded animate-pulse mb-10" />
 

@@ -5,7 +5,7 @@ export default function GalleryCollectionDetailLoading() {
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Description skeleton */}
         <div className="mb-8 max-w-3xl space-y-2">
           <div className="h-4 w-full bg-stone-200 rounded animate-pulse" />

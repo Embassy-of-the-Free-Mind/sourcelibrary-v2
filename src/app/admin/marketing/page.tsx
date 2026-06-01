@@ -304,7 +304,7 @@ export default function MarketingPage() {
     <div className="min-h-screen bg-stone-950 text-stone-100">
       {/* Header */}
       <header className="border-b border-stone-800 bg-stone-900">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-[1500px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link href="/" className="text-stone-400 hover:text-white">
@@ -322,7 +322,7 @@ export default function MarketingPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-6 space-y-8">
+      <main className="max-w-[1500px] mx-auto px-4 py-6 space-y-8">
         {/* SEO Status */}
         <section className="bg-stone-900 rounded-lg p-6 border border-stone-800">
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2">

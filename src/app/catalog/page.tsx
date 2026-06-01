@@ -28,7 +28,7 @@ export default async function CatalogPage() {
   return (
     <>
       <SiteHeader variant="light" />
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-20">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-20">
         <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
           Catalog
         </h1>

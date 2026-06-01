@@ -149,7 +149,7 @@ export default async function AllEditorialPage() {
     <div className="min-h-screen bg-bg-cream">
       {/* Page header */}
       <div className="bg-white border-b border-border-light">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-8">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8">
           <Link href="/design-options" className="text-sm text-muted hover:text-accent-rust transition-colors">
             &larr; Back to design options
           </Link>
@@ -166,7 +166,7 @@ export default async function AllEditorialPage() {
       {collections.map((col, idx) => (
         <div key={col.slug}>
           {/* Collection label */}
-          <div className="max-w-7xl mx-auto px-6 md:px-12 pt-12 pb-4">
+          <div className="max-w-[1500px] mx-auto px-6 md:px-12 pt-12 pb-4">
             <div className="flex items-center gap-3">
               <span className="text-xs uppercase tracking-[0.2em] text-accent-rust font-medium">
                 {idx + 1} / {collections.length}
@@ -197,7 +197,7 @@ export default async function AllEditorialPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40" />
             </div>
 
-            <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+            <div className="relative max-w-[1500px] mx-auto px-6 md:px-12 py-16 md:py-24">
               <div className="max-w-xl">
                 <span className="text-xs uppercase tracking-[0.2em] text-accent-gold/80 mb-4 block">
                   Featured Collection
@@ -228,7 +228,7 @@ export default async function AllEditorialPage() {
             {/* Book strip at the bottom */}
             {col.books.length > 0 && (
               <div className="relative border-t border-white/10 bg-black/60 backdrop-blur-sm">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 py-6">
+                <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-6">
                   <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin">
                     {col.books.map((book) => {
                       const thumb = book.thumbnail_blob || book.thumbnail;

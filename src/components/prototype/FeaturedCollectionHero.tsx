@@ -50,7 +50,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
   return (
     <section className="bg-dark py-12 md:py-16 relative">
-      <div className="px-6 md:px-12 max-w-7xl mx-auto">
+      <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <span className="text-xs uppercase tracking-[0.2em] text-white/40">Featured Collection</span>
