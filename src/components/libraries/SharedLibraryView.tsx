@@ -573,7 +573,7 @@ export default function SharedLibraryView({
             ) : (
               <span className="text-secondary">{partner.name}</span>
             )}
-            . Original provenance is preserved for every page. Source Library provides OCR transcription, translation, and indexing as a scholarly service.
+            . Original provenance is preserved.
           </p>
         </div>
       </div>
