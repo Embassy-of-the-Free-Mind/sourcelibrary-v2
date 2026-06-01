@@ -7,6 +7,7 @@ import { useSession, signOut } from 'next-auth/react';
 
 const navLinks = [
   { href: '/platform/dashboard', label: 'Dashboard' },
+  { href: '/platform/admin/translate-queue', label: 'Translate Next' },
   { href: '/platform/tenants/new', label: 'New Library' },
 ];
 
