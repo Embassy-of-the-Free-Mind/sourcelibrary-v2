@@ -1,10 +1,10 @@
 /**
- * Press release body — "Most of the Renaissance Was Never Translated" (June 2026 launch).
- * Embassy-framed arc: the institution and its creed (ad fontes) open and close the piece;
- * the untranslated-Renaissance idea and open access drive it. Straight prose, no stat boxes.
- * Fundraising lives only in private donor materials, never here.
- * Figures verified against the live Source Library database on 1 June 2026.
- * Header/dateline and back-link are supplied by the /press-releases/[slug] route.
+ * Press release body — official EFM beta-launch release (4 June 2026).
+ * This is the Embassy of the Free Mind's authoritative press text; keep it in sync
+ * with the EFM-approved release rather than rewriting it editorially. Launch stats
+ * (13,000+ books, 5,100+ translated, etc.) are the official figures — do not inflate.
+ * Header/dateline ("FOR IMMEDIATE RELEASE · …") and back-link are supplied by the
+ * /press-releases/[slug] route. Press contact is EFM (Maria Marqués), not Source Library.
  */
 
 export default function SourceLibraryPublicBetaLaunch() {
@@ -15,71 +15,73 @@ export default function SourceLibraryPublicBetaLaunch() {
       </p>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
-        <strong className="text-stone-800">AMSTERDAM</strong> &mdash; Behind a seventeenth-century facade
-        on the Keizersgracht, the Embassy of the Free Mind holds one of the world&rsquo;s great
-        collections of hidden knowledge: the Hermetic, alchemical, Rosicrucian, and Kabbalistic writings
-        that the Renaissance read in private. Founded by Jozef Ritman as the{' '}
+        The{' '}
         <a href="https://embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
-          Bibliotheca Philosophica Hermetica
-        </a>
-        , it is inscribed on UNESCO&rsquo;s Memory of the World Register. Its creed is older than the
-        building.
-      </p>
-
-      <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
-        <p className="text-lg text-secondary italic font-body leading-relaxed mb-2">
-          &ldquo;We always say here, <em>ad fontes</em> &mdash; go back to the source. When you go back
-          deeper and further, you become part of the source. Then you can be the source. That&rsquo;s
-          where the magic happens.&rdquo;
-        </p>
-        <p className="text-sm text-muted">&mdash; Jozef Ritman, founder, Bibliotheca Philosophica Hermetica</p>
-      </blockquote>
-
-      <p className="text-secondary leading-relaxed mb-6 font-body">
-        But the sources themselves have been all but unreadable. By a widely cited estimate from Debora
-        Shuger, a Renaissance scholar at UCLA, ninety percent of the Latin texts from the Renaissance have
-        never been available in translation. Far more Latin was written after 1500 than survives from all
-        of ancient Rome, and almost none of it has ever appeared in a modern language. Nor has much of
-        what was written in China, India, and the Islamic world.
-      </p>
-
-      <p className="text-secondary leading-relaxed mb-6 font-body">
-        Today the Embassy opens Source Library, which has used AI to translate more than 15,000 historical
-        books into English, thousands of them for the first time in any modern language. Each translation
-        sits next to a scan of the original page, and all of it is free to read.
-      </p>
-
-      <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
-        <p className="text-lg text-secondary italic font-body leading-relaxed mb-2">
-          &ldquo;Most of what the Renaissance wrote has never been read in English, and we&rsquo;re
-          translating it so anyone can.&rdquo;
-        </p>
-        <p className="text-sm text-muted">&mdash; Derek Lomas, founder of Source Library, researcher at TU Delft</p>
-      </blockquote>
-
-      <p className="text-secondary leading-relaxed mb-6 font-body">
-        The collection dwarfs every comparable effort. The Loeb Classical Library has produced about 540
-        translated volumes since 1911; Harvard&rsquo;s I Tatti Renaissance Library about 100 since 2001.
-        Source Library holds more than 15,000, and unlike those series it translates works that were never
-        available in English at all. Counted together, the original texts and their translations come to
-        roughly five billion words &mdash; comparable in scale to the entire English Wikipedia.
-      </p>
-
-      <p className="text-secondary leading-relaxed mb-6 font-body">
-        The gap is not only a human one. A{' '}
-        <a href="https://sourcelibrary.org/blog/did-the-ai-read-this" className="text-accent-rust hover:underline">
-          Source Library study
+          Embassy of the Free Mind
         </a>{' '}
-        found that thousands of its books are missing from the data used to train today&rsquo;s leading AI
-        models. They were never translated or summarized, so the machines never saw them either.
+        (EFM) announces the public beta of Source Library &mdash; an open-access digital library set to
+        become the largest available collection of translated historical primary sources ever assembled.
+        Its Beta Launch takes place on 4 June 2026 at the Embassy of the Free Mind, in Amsterdam.
       </p>
 
+      <h2 className="text-xl font-serif text-stone-800 mt-10 mb-4">Born from a world-record collection</h2>
+
       <p className="text-secondary leading-relaxed mb-6 font-body">
-        Source Library draws scanned pages from major research libraries, including the Internet Archive,
-        the Vatican Library, and the Bodleian at Oxford. AI reads each page in its original language and
-        writes an English translation, shown beside the original so a scholar can check it. The work is
-        not meant to replace scholars. It does the part no one ever had time for: making millions of
-        unread pages legible for the first time.
+        Source Library is rooted in the Bibliotheca Philosophica Hermetica (BPH), home to 25,000+ volumes
+        on alchemy, Hermetica, Kabbalah, Rosicrucianism, astrology, natural philosophy, and the pre-modern
+        roots of modern science. The BPH holds UNESCO&rsquo;s Memory of the World designation (2022) and a
+        Guinness World Record as the world&rsquo;s largest library dedicated to magic and mysticism (2024).
+        Source Library carries this founding mission into the digital age.
+      </p>
+
+      <h2 className="text-xl font-serif text-stone-800 mt-10 mb-4">A new scale of access</h2>
+
+      <p className="text-secondary leading-relaxed mb-6 font-body">
+        Powered by frontier AI translation, Source Library draws on digitised collections from the
+        world&rsquo;s foremost research libraries &mdash; including the Bavarian State Library, the
+        Biblioth&egrave;que nationale de France, the Vatican Library, and the Bodleian Library at Oxford,
+        among more &mdash; with the Bibliotheca Philosophica Hermetica being the first set to become fully
+        digitised.
+      </p>
+
+      <p className="text-secondary leading-relaxed mb-4 font-body">At launch, the full collection spans:</p>
+
+      <ul className="list-disc pl-6 mb-6 space-y-1 text-secondary font-body">
+        <li>13,000+ books in 40+ languages</li>
+        <li>5,100+ books with English translation</li>
+        <li>1.1 million+ pages translated into English</li>
+        <li>2,900+ first-ever English translations</li>
+        <li>1.8 million digitised page images with 69,000+ extracted illustrations</li>
+      </ul>
+
+      <p className="text-secondary leading-relaxed mb-6 font-body">
+        Books being digitised centre on the intellectual traditions at the heart of the Bibliotheca
+        Philosophica Hermetica (BPH) collection. Works by Paracelsus, Robert Fludd, Marsilio Ficino,
+        Heinrich Cornelius Agrippa, and Giordano Bruno sit alongside thousands of lesser-known texts
+        &mdash; many appearing in English for the very first time.
+      </p>
+
+      <h2 className="text-xl font-serif text-stone-800 mt-10 mb-4">Why it matters</h2>
+
+      <p className="text-secondary leading-relaxed mb-6 font-body">
+        By a widely cited estimate, ninety percent of Latin texts from the Renaissance have never been
+        translated into a modern language. Far more Latin was written after 1500 than survives from all of
+        ancient Rome, and almost none of it has ever been read outside a library.
+      </p>
+
+      <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
+        <p className="text-lg text-secondary italic font-body leading-relaxed mb-2">
+          &ldquo;During the Renaissance, the translation of ancient Greek texts into Latin had an enormous
+          impact on the flourishing of European society. Yet very little of the Renaissance itself has been
+          translated. Source Library changes that.&rdquo;
+        </p>
+        <p className="text-sm text-muted">&mdash; Dr. Derek Lomas, Source Library Programme Director</p>
+      </blockquote>
+
+      <p className="text-secondary leading-relaxed mb-6 font-body">
+        AI-powered translations are presented alongside images of the original source pages, allowing
+        scholars to consult the original at any point. The goal is not to replace expert scholarship, but
+        to make vast bodies of untranslated material discoverable for the first time.
       </p>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -97,43 +99,48 @@ export default function SourceLibraryPublicBetaLaunch() {
       </p>
 
       <p className="text-secondary leading-relaxed mb-10 font-body">
-        It is fitting that the work begins here. The Embassy keeps the library of the first Renaissance,
-        the books Ficino and his circle translated to set it in motion. Five centuries on, the same
-        impulse &mdash; <em>ad fontes</em> &mdash; is opening those sources to everyone. Source Library is
-        online now at{' '}
-        <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>,
-        and launches with an evening event at the Embassy of the Free Mind on 4 June 2026.
+        It is fitting that the work begins here. The Embassy of the Free Mind keeps the library of the
+        first Renaissance, the books Ficino and his circle translated to set it in motion. Five centuries
+        on, the same impulse of <em>ad fontes</em> is opening those sources to everyone.
       </p>
+
+      <h2 className="text-xl font-serif text-stone-800 mt-10 mb-4">Beta Launch on 4 June 2026</h2>
+
+      <p className="text-secondary leading-relaxed mb-6 font-body">
+        Source Library will be unveiled at a Beta Launch Party on 4 June 2026 at the Embassy of the Free
+        Mind, Amsterdam (18:00&ndash;20:30 CET). The evening will feature an introduction and panel
+        discussion led by PhD researcher Corey Andrews, as well as a live demonstration by Dr. Derek Lomas
+        and a live Q&amp;A.
+      </p>
+
+      <p className="text-secondary leading-relaxed mb-10 font-body">
+        The event is available via livestream for international audiences. RSVP and access the livestream
+        here:{' '}
+        <a href="https://lnkd.in/erXEsdv5" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+          lnkd.in/erXEsdv5
+        </a>
+      </p>
+
+      <blockquote className="border-l-4 border-accent-rust pl-6 my-8">
+        <p className="text-lg text-secondary italic font-body leading-relaxed mb-2">
+          &ldquo;Source Library is an essential infrastructure: open, verifiable access to primary sources,
+          where wisdom is made accessible. Direct access to sources enables independent interpretation,
+          academic integrity, and the sustainable transmission of cultural memory &ndash; all of which the
+          Bibliotheca Philosophica Hermetica sets out to do.&rdquo;
+        </p>
+        <p className="text-sm text-muted">&mdash; Jozef Ritman, Museum Director at the Embassy of the Free Mind</p>
+      </blockquote>
 
       <hr className="border-border-light my-10" />
 
-      <p className="text-sm text-secondary leading-relaxed mb-4 font-body">
-        <strong className="text-stone-800">About the Embassy of the Free Mind.</strong> The Embassy of the
-        Free Mind is a museum and library in Amsterdam, in the historic Huis met de Hoofden on the
-        Keizersgracht. It holds the Bibliotheca Philosophica Hermetica, founded by Jozef Ritman: about
-        25,000 volumes on Hermetica, alchemy, mysticism, Rosicrucianism, Kabbalah, and gnosis, inscribed
-        on the UNESCO Memory of the World Register.{' '}
-        <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">embassyofthefreemind.com</a>
+      <p className="text-sm text-secondary leading-relaxed mb-2 font-body">
+        <strong className="text-stone-800">Press and Partnerships Contact</strong>
       </p>
-
-      <p className="text-sm text-secondary leading-relaxed mb-4 font-body">
-        <strong className="text-stone-800">About Source Library.</strong> Source Library is a free,
-        open-access library of translated historical sources, founded by Derek Lomas in 2022 after he
-        found Marsilio Ficino&rsquo;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind. Its
-        translations are open and published under a Creative Commons licence. It is an initiative of the
-        Embassy of the Free Mind.{' '}
-        <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>
-      </p>
-
       <p className="text-sm text-secondary leading-relaxed font-body">
-        <strong className="text-stone-800">Media contact:</strong> Derek Lomas &mdash;{' '}
-        <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">derek@sourcelibrary.org</a>{' '}
-        &mdash; Embassy of the Free Mind, Keizersgracht 123, Amsterdam
-      </p>
-
-      <p className="text-xs text-muted leading-relaxed mt-6 font-body">
-        Source for the translation estimate: D. Shuger, UCLA. Library figures verified against the Source
-        Library database, 1 June 2026.
+        Maria Marqu&eacute;s &mdash; Venue &amp; Creative Partnerships &mdash;{' '}
+        <a href="mailto:mmarques@efm.amsterdam" className="text-accent-rust hover:underline">mmarques@efm.amsterdam</a>
+        <br />
+        Embassy of the Free Mind, Keizersgracht 123, Amsterdam
       </p>
     </article>
   );
