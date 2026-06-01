@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { getPageSource } from '@/lib/page-image-url';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -158,29 +159,16 @@ export function formatAuthor(author: string | undefined | null): { name: string;
 }
 
 /**
- * Resolve the best source image URL for a page.
+ * Resolve the best source image URL for a page (the file to OCR, download, or
+ * resize from).
  *
- * IMPORTANT: All image resolution in the app should go through this function
- * or one of its variants (getPageDisplayUrl, getPageThumbUrl) to ensure
- * consistent behavior. In particular, split-from-spread pages bypass the
- * legacy fallback chain entirely — see `.claude/docs/page-system.md`.
- *
- * Legacy chain (non-split pages): cropped_photo > archived_photo > photo_original > photo
- * Split pages: photo directly (no fallback)
+ * Delegates to the canonical {@link getPageSource} (`@/lib/page-image-url`,
+ * issue #1727). Kept as a named export for back-compat with existing callers;
+ * for the size axis use `getPageImageUrl(page, size)` from that module, or the
+ * `getPageDisplayUrl`/`getPageThumbUrl` variants below.
  */
 export function getPageImageUrl(page: Record<string, any>): string | null {
-  // Split-from-spread pages: photo is the single source of truth.
-  // NEVER fall through to photo_original/archived_photo — those point to the unsplit spread.
-  if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
-
-  if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
-  if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
-  // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
-  // Don't try photo/photo_original — archiving already proved those URLs don't work.
-  if (isArchiveFailed(page.archived_photo)) return null;
-  if (isUsableImageUrl(page.photo_original)) return page.photo_original;
-  if (isUsableImageUrl(page.photo)) return page.photo;
-  return null;
+  return getPageSource(page);
 }
 
 /**

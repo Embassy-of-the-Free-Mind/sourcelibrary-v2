@@ -40,6 +40,7 @@ export interface PageImageFields {
   photo?: string | null;
   photo_original?: string | null;
   archived_photo?: string | null;
+  enhanced_photo?: string | null;
   cropped_photo?: string | null;
   display_photo?: string | null;
   image_thumb?: string | null;
@@ -113,14 +114,16 @@ function deriveVariant(photo: string | null | undefined, size: 'display' | 'thum
  *   2. split-from-spread `photo` — new-era split: the splitter rewrote `photo`
  *      to the `sp…` cropped half.
  *   3. archiving failed → null (archiving already proved the source URLs dead).
- *   4. `archived_photo` → `photo_original` → `photo` (normal pages).
- *
- * (`enhanced_photo` is intentionally omitted — 0% populated, a dead field.)
+ *   4. `enhanced_photo` — contrast/brightness-enhanced copy, preferred when present
+ *      (currently ~0% populated, but a deliberate cover-selection preference; placed
+ *      *after* split handling so it can never reintroduce the full-spread).
+ *   5. `archived_photo` → `photo_original` → `photo` (normal pages).
  */
 export function getPageSource(page: PageImageFields): string | null {
   if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
   if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
   if (isArchiveFailed(page.archived_photo)) return null;
+  if (isUsableImageUrl(page.enhanced_photo)) return page.enhanced_photo;
   if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
   if (isUsableImageUrl(page.photo_original)) return page.photo_original;
   if (isUsableImageUrl(page.photo)) return page.photo;
