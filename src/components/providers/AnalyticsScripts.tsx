@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import { getConsent, type ConsentState } from '@/lib/consent';
 
-const GA_ID = 'G-C1QJNTSZT2';
+// GA4 measurement ID, sourced from env so we can point at a Source
+// Library-owned property without a code change. The literal fallback is the
+// legacy property that lives under the PlayPower Labs GA account — keep it
+// only until NEXT_PUBLIC_GA_ID is set in Vercel, then it's dead weight.
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-C1QJNTSZT2';
 const AHREFS_KEY = 'rzuKlnvyAKd8TdooDnPSYg';
 const POSTHOG_KEY = 'phc_b6JJdGHB6YKKhjfPEKn3YLbsYmwAcWliAR3F8jbFch8';
 const POSTHOG_HOST = 'https://eu.i.posthog.com';
