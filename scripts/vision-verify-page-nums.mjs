@@ -90,17 +90,23 @@ async function main() {
   const db = client.db('bookstore');
   const book = await db.collection('books').findOne({ id: BOOK });
   if (!book) { console.error('book not found'); process.exit(1); }
-  const filter = { book_id: BOOK, page_number: { $gt: 0 }, cropped_photo: { $exists: true, $ne: null } };
+  // Some BPH books store the cropped split image in `photo` (sp-prefixed URL)
+  // rather than `cropped_photo`. Accept either, prefer cropped_photo.
+  const filter = { book_id: BOOK, page_number: { $gt: 0 }, $or: [
+    { cropped_photo: { $exists: true, $ne: null } },
+    { photo: { $exists: true, $ne: null }, split_from_spread: { $exists: true } },
+  ] };
   if (!FORCE) filter.printed_pg_verified = { $exists: false };
   const pages = await db.collection('pages').find(filter, {
-    projection: { _id: 1, page_number: 1, cropped_photo: 1 }
+    projection: { _id: 1, page_number: 1, cropped_photo: 1, photo: 1 }
   }).sort({ page_number: 1 }).toArray();
   console.log(`Book: ${book.slug}`);
   console.log(`Pages to verify: ${pages.length} (concurrency=${CONCURRENCY}, ${KEYS.length} keys)`);
   const start = Date.now();
   let done = 0;
   await parallelMap(pages, async (p) => {
-    const v = await visionRead(p.cropped_photo).catch(() => 'ERR');
+    const url = p.cropped_photo || p.photo;
+    const v = await visionRead(url).catch(() => 'ERR');
     await db.collection('pages').updateOne(
       { _id: p._id },
       { $set: { printed_pg_verified: v === 'ERR' ? null : v, printed_pg_verified_at: new Date() } }
