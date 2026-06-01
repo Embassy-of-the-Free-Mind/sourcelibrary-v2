@@ -127,6 +127,16 @@ async function applyProvenanceMarks(buffer) {
  * @returns {{ display: Buffer, thumb: Buffer }} - The generated variants
  */
 export async function generateDisplayVariants(fullResBuffer) {
+  // Guard BEFORE creating displayPromise: an empty/invalid buffer makes the
+  // sharp() constructor throw *synchronously*. If that sync throw happened at
+  // the thumbPromise line below, `displayPromise` would already be a pending
+  // (then rejected) promise with no handler yet attached — an unhandled
+  // rejection that crashes the whole process instead of a catchable error.
+  // Throwing here (before any promise exists) keeps it a clean async rejection
+  // every caller's try/catch can handle. (Root cause of the #1814 crash-loop.)
+  if (!fullResBuffer || fullResBuffer.length === 0) {
+    throw new Error('generateDisplayVariants: empty/invalid input buffer');
+  }
   const displayPromise = (async () => {
     const displayResized = await sharp(fullResBuffer)
       .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
