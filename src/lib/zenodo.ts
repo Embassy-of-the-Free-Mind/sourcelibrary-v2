@@ -305,17 +305,33 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
     role: { id: 'other' },
   });
 
-  // Additional human contributors as personal, AI as organizational
+  // Additional contributors. Human → personal (Zenodo requires family_name, so
+  // split the name like the primary author above); AI and org → organizational
+  // (no family_name; only AI gets the "(AI)" disambiguation suffix). Without the
+  // family_name split, ANY personal contributor — and any single-token org name
+  // mis-typed as 'human' — fails Zenodo validation with "family_name cannot be blank".
   for (const c of edition.contributors) {
     if (c.name === 'Source Library') continue;
-    const displayName = c.type === 'ai' ? `${c.name} (AI)` : c.name;
-    creators.push({
-      person_or_org: {
-        name: displayName,
-        type: c.type === 'human' ? 'personal' as const : 'organizational' as const,
-      },
-      role: { id: 'other' },
-    });
+    if (c.type === 'human') {
+      const parts = c.name.split(' ');
+      const familyName = parts.pop() || c.name;
+      const givenName = parts.join(' ') || undefined;
+      creators.push({
+        person_or_org: {
+          name: c.name,
+          type: 'personal' as const,
+          family_name: familyName,
+          ...(givenName && { given_name: givenName }),
+        },
+        role: { id: 'other' },
+      });
+    } else {
+      const displayName = c.type === 'ai' ? `${c.name} (AI)` : c.name;
+      creators.push({
+        person_or_org: { name: displayName, type: 'organizational' as const },
+        role: { id: 'other' },
+      });
+    }
   }
 
   const description = buildDescription(book, edition) +
