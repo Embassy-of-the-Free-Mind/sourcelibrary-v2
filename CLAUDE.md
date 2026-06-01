@@ -14,12 +14,15 @@ When making product decisions, lead with: who reads this, what experience are th
 - **NEVER push directly to main.** All changes go through PRs.
 - **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
 - The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
+- **Merging a PR does NOT deploy production.** `sourcelibrary.org` is served by a manual `vercel --prod` (not git-integrated). To ship a merged frontend change: in the main directory on `main`, `git pull origin main` then `vercel --prod`. **Exception:** pipeline/worker scripts (`scripts/**`) need no Vercel deploy — the Hetzner box auto-pulls `main` every ~5 min, so script changes go live on their own. Tell: a merged frontend behavior that's absent on prod = not deployed yet.
 
 ## PR Conventions
 Lessons from PR #1980 (see `.claude/handoffs/2026-05-25-pr1980-split.md`). Apply to all contributors — internal, external, and AI-assisted.
 
 - **One concern per PR.** Don't bundle dead-code removal with tooling adoption, or refactors with feature work. The two halves of #1980 had very different risk profiles; bundled, they couldn't be reviewed cleanly. If the diff has more than one "why," split it.
 - **Verify before deleting.** Static analysis (graph audits, IDE "find unused") can confidently miss dynamic requires, framework conventions (Next.js routing, cron triggers, server actions), and recent additions. Always `grep -rn '<name>' src/` for every deletion. `InputWidget.tsx` in #1980 was flagged dead but actively imported by `/founding-donors` — one grep would have caught it.
+- **Verify a flagged bug against current code + data before "fixing" it.** Audits, manifests, migration plans, and stale comments drift from the code — a "bug" they surface may not exist, or the code may already be correct. Read the actual code at the line and run a quick data query to confirm the failure case is real and non-negligible before adding a branch or a fix. Don't kill long-but-finite queries and mistake them for timeouts. Sometimes the documentation is the bug, not the code — fix the doc too.
+- **On PRs, trust `test`/DCO, not the first Vercel result.** The Vercel check often shows "fail" on the first build, then an automatic retry flips it to pass (the deployment is frequently still "Building" when GitHub reports the fail). Wait for the retry to settle; don't bail or assume a real failure while `test`/DCO are green.
 - **Run `npx tsc --noEmit` locally before opening a PR that touches dependencies.** It's the #1 source of wasted deploy cycles.
 - **Tooling additions need provenance + opt-in + install docs.** A PR that adds a third-party CLI, MCP server, or `*ToolUse` hook must include: source link, install command, what network/telemetry access it has, an opt-out path. The default must be "if not installed, repo still works."
 - **Doctrine lives in `CLAUDE.md`, not six files.** No appending the same instructions to `AGENTS.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.kiro/steering/`, etc. One source of truth; cross-tool agents can read `CLAUDE.md` directly.
@@ -43,6 +46,7 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - `EnterWorktree` — creates an isolated checkout with its own branch
 - Active worktrees: `git worktree list`
 - Worktrees live in `.claude/worktrees/`
+- **Fresh worktrees fail the pre-commit `check-imports` hook** because `src/lib/vendor/lamejs-bundle.js` is gitignored and absent from a new checkout. Before your first commit, copy it from the main checkout: `cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`.
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
