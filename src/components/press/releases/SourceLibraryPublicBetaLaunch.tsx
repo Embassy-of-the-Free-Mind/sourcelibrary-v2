@@ -30,7 +30,11 @@ export default function SourceLibraryPublicBetaLaunch() {
       <h2 className="text-xl font-serif text-stone-800 mt-10 mb-4">Born from a world-record collection</h2>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
-        Source Library is rooted in the Bibliotheca Philosophica Hermetica (BPH), home to 25,000+ volumes
+        Source Library is rooted in the{' '}
+        <a href="https://sourcelibrary.org/libraries/bibliotheca-philosophica-hermetica" className="text-accent-rust hover:underline">
+          Bibliotheca Philosophica Hermetica
+        </a>{' '}
+        (BPH), home to 25,000+ volumes
         on alchemy, Hermetica, Kabbalah, Rosicrucianism, astrology, natural philosophy, and the pre-modern
         roots of modern science. The BPH holds UNESCO&rsquo;s Memory of the World designation (2022) and a
         Guinness World Record as the world&rsquo;s largest library dedicated to magic and mysticism (2024).
@@ -41,8 +45,23 @@ export default function SourceLibraryPublicBetaLaunch() {
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
         Powered by frontier AI translation, Source Library draws on digitised collections from the
-        world&rsquo;s foremost research libraries &mdash; including the Bavarian State Library, the
-        Biblioth&egrave;que nationale de France, the Vatican Library, and the Bodleian Library at Oxford,
+        world&rsquo;s foremost research libraries &mdash; including the{' '}
+        <a href="https://sourcelibrary.org/libraries/bavarian-state-library" className="text-accent-rust hover:underline">
+          Bavarian State Library
+        </a>
+        , the{' '}
+        <a href="https://sourcelibrary.org/libraries/gallica" className="text-accent-rust hover:underline">
+          Biblioth&egrave;que nationale de France
+        </a>
+        , the{' '}
+        <a href="https://sourcelibrary.org/libraries/vatican-library" className="text-accent-rust hover:underline">
+          Vatican Library
+        </a>
+        , and the{' '}
+        <a href="https://sourcelibrary.org/libraries/bodleian" className="text-accent-rust hover:underline">
+          Bodleian Library
+        </a>{' '}
+        at Oxford,
         among more &mdash; with the Bibliotheca Philosophica Hermetica being the first set to become fully
         digitised.
       </p>
@@ -65,8 +84,13 @@ export default function SourceLibraryPublicBetaLaunch() {
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
         Books being digitised centre on the intellectual traditions at the heart of the Bibliotheca
-        Philosophica Hermetica (BPH) collection. Works by Paracelsus, Robert Fludd, Marsilio Ficino,
-        Heinrich Cornelius Agrippa, and Giordano Bruno sit alongside thousands of lesser-known texts
+        Philosophica Hermetica (BPH) collection. Works by{' '}
+        <a href="https://sourcelibrary.org/author/paracelsus" className="text-accent-rust hover:underline">Paracelsus</a>,{' '}
+        <a href="https://sourcelibrary.org/author/robert-fludd" className="text-accent-rust hover:underline">Robert Fludd</a>,{' '}
+        <a href="https://sourcelibrary.org/author/marsilio-ficino" className="text-accent-rust hover:underline">Marsilio Ficino</a>,{' '}
+        <a href="https://sourcelibrary.org/author/heinrich-cornelius-agrippa" className="text-accent-rust hover:underline">Heinrich Cornelius Agrippa</a>, and{' '}
+        <a href="https://sourcelibrary.org/author/giordano-bruno" className="text-accent-rust hover:underline">Giordano Bruno</a>{' '}
+        sit alongside thousands of lesser-known texts
         &mdash; many appearing in English for the very first time.
       </p>
 
@@ -98,8 +122,19 @@ export default function SourceLibraryPublicBetaLaunch() {
         <a href="https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd" className="text-accent-rust hover:underline">
           <em>History of Both Worlds</em>
         </a>{' '}
-        (1617), the complete works of Marsilio Ficino (1561) and Pico della Mirandola (1557), Athanasius
-        Kircher&rsquo;s <em>Musurgia Universalis</em> (1650), and the{' '}
+        (1617), the{' '}
+        <a href="https://sourcelibrary.org/book/the-complete-works-of-marsilio-ficino-ficino" className="text-accent-rust hover:underline">
+          complete works of Marsilio Ficino
+        </a>{' '}
+        (1561) and{' '}
+        <a href="https://sourcelibrary.org/book/complete-works-1557-basel-edition-pico-della-mirandola" className="text-accent-rust hover:underline">
+          Pico della Mirandola
+        </a>{' '}
+        (1557), Athanasius Kircher&rsquo;s{' '}
+        <a href="https://sourcelibrary.org/book/athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher" className="text-accent-rust hover:underline">
+          <em>Musurgia Universalis</em>
+        </a>{' '}
+        (1650), and the{' '}
         <a href="https://sourcelibrary.org/book/the-zohar-book-of-genesis-attributed" className="text-accent-rust hover:underline">
           <em>Zohar</em>
         </a>
