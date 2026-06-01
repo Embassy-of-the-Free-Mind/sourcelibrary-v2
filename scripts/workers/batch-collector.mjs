@@ -383,6 +383,13 @@ async function processOneJob(db, job) {
     let totalInputTokens = 0;
     let totalOutputTokens = 0;
 
+    // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
+    // fetched + sent, recorded on the batch job at submit. Lets us stamp
+    // ocr.source_url so `ocr.source_url ≠ getPageSource(page)` becomes a query
+    // (the #2298 re-OCR set) instead of an aspect-ratio guess. Empty for jobs
+    // submitted before this shipped — those pages stay pre-provenance (null).
+    const sourceUrlByPage = new Map((job.page_sources || []).map(s => [s.page_id, s.source_url]));
+
     for (const { pageId, text, usage } of pageResults) {
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
 
@@ -411,6 +418,11 @@ async function processOneJob(db, job) {
           'ocr.output_tokens': outputTokens,
           updated_at: now,
         };
+        // Provenance (#2297) — only stamp when present, so older jobs without
+        // page_sources don't write null and look like a drift mismatch.
+        const srcUrl = sourceUrlByPage.get(pageId);
+        if (srcUrl) setObj['ocr.source_url'] = srcUrl;
+        if (job.code_version) setObj['ocr.code_version'] = job.code_version;
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
         if (pageType) setObj.page_type = pageType;
         if (columns) setObj.columns = columns;
