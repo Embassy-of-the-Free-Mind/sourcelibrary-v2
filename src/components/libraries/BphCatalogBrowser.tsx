@@ -590,9 +590,10 @@ export default function BphCatalogBrowser({
               aria-label="Sort catalogue"
               className="h-9 text-sm border border-border-light rounded-md pl-2.5 pr-7 bg-white text-secondary hover:bg-warm transition-colors cursor-pointer"
             >
+              <option value="author">Author A–Z</option>
+              <option value="author_desc">Author Z–A</option>
               <option value="title">Title A–Z</option>
               <option value="title_desc">Title Z–A</option>
-              <option value="author">Author A–Z</option>
               <option value="year_asc">Date (oldest first)</option>
               <option value="year_desc">Date (newest first)</option>
             </select>
