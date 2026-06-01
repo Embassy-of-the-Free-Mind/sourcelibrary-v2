@@ -2,7 +2,10 @@
  * Press release body — official EFM beta-launch release (4 June 2026).
  * This is the Embassy of the Free Mind's authoritative press text; keep it in sync
  * with the EFM-approved release rather than rewriting it editorially. Launch stats
- * (13,000+ books, 5,100+ translated, etc.) are the official figures — do not inflate.
+ * (15,000+ books, 15,000+ translated, ~7B words, etc.) verified against the live
+ * Source Library database on 1 June 2026. The "~7B words ≈ English Wikipedia" figure
+ * is the corpus re-measurement behind /blog/how-big-is-the-library (winsorised mean
+ * 7.07B; median floor ~4.9B) — NOT the old 1.7B Supabase-snippet undercount.
  * Header/dateline ("FOR IMMEDIATE RELEASE · …") and back-link are supplied by the
  * /press-releases/[slug] route. Press contact is EFM (Maria Marqués), not Source Library.
  */
@@ -47,11 +50,17 @@ export default function SourceLibraryPublicBetaLaunch() {
       <p className="text-secondary leading-relaxed mb-4 font-body">At launch, the full collection spans:</p>
 
       <ul className="list-disc pl-6 mb-6 space-y-1 text-secondary font-body">
-        <li>13,000+ books in 40+ languages</li>
-        <li>5,100+ books with English translation</li>
-        <li>1.1 million+ pages translated into English</li>
-        <li>2,900+ first-ever English translations</li>
-        <li>1.8 million digitised page images with 69,000+ extracted illustrations</li>
+        <li>15,000+ books in 55+ languages</li>
+        <li>15,000+ books with English translation</li>
+        <li>4.2 million+ pages translated into English</li>
+        <li>6,000+ first-ever English translations</li>
+        <li>
+          roughly 7 billion words of original text and translation &mdash; about the size of the entire{' '}
+          <a href="https://sourcelibrary.org/blog/how-big-is-the-library" className="text-accent-rust hover:underline">
+            English Wikipedia
+          </a>
+        </li>
+        <li>4.5 million+ digitised page images with 142,000+ extracted illustrations</li>
       </ul>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
