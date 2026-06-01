@@ -26,7 +26,7 @@ const NAV_LINKS: NavLink[] = [
       { label: 'Catalogue', href: '/catalog' },
     ],
   },
-  { label: 'Explore', href: '/explore/map', activePrefix: '/explore' },
+  { label: 'Map', href: '/explore/map', activePrefix: '/explore' },
   { label: 'Librarian', href: '/librarian' },
   { label: 'Podcast', href: '/podcast' },
 ];
