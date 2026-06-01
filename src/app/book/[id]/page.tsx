@@ -48,6 +48,7 @@ import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
+import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 
@@ -1304,6 +1305,12 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
       {!isEmbedded && <ConditionalSiteHeader variant="light" />}
+
+      {/* Tenant reading rooms (EFM/BPH iframe + subdomains) get a breadcrumb
+          back to the full catalogue. Rendered outside the Suspense boundary so
+          it appears immediately and on every book layout — printed, artwork,
+          and text reader alike. */}
+      {isEmbedded && <CatalogueBreadcrumb />}
 
       {/* Book content streams in */}
       <Suspense fallback={

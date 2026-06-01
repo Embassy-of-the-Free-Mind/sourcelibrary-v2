@@ -167,7 +167,7 @@ export default function SharedLibraryView({
 
   return (
     <div className="min-h-screen bg-cream">
-      {!embed && <ConditionalSiteHeader variant="light" />}
+      {!embed && <ConditionalSiteHeader variant="dark" />}
       {/* Hero, Illustrations, and Contributing Libraries are suppressed on
           the dedicated BPH catalogue/books views so the iframe renders just
           the catalogue. Webflow partners build their own page chrome around
@@ -179,7 +179,7 @@ export default function SharedLibraryView({
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
 
-        <div className="relative max-w-[1500px] mx-auto px-6 pt-8 pb-12 sm:pb-16">
+        <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <h1
             className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display"
           >
@@ -256,7 +256,7 @@ export default function SharedLibraryView({
       {/* Gallery Grid - hidden in embed mode */}
       {galleryImages.length > 0 && embedPolicy.showGalleryImages && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-[1500px] mx-auto px-6 py-6">
+          <div className="max-w-7xl mx-auto px-6 py-6">
             <h2
               className="text-xl sm:text-2xl text-primary mb-4 font-display"
             >
@@ -319,7 +319,7 @@ export default function SharedLibraryView({
           contributors. */}
       {contributingLibraries.length >= 3 && !usesUnifiedCatalogue && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-[1500px] mx-auto px-6 py-6">
+          <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex items-center gap-2 mb-4">
               <Library className="w-5 h-5 text-accent-rust" />
               <h2
@@ -348,7 +348,11 @@ export default function SharedLibraryView({
       </>
       )}
 
-      <div className="max-w-[1500px] mx-auto px-6 py-10">
+      {/* The unified-catalogue view (the EFM/BPH iframe homepage) gets a wider
+          1500px container with 4rem vertical padding on desktop, dropping to
+          2rem from tablet down. Other SharedLibraryView consumers (tenant
+          home grids, /libraries/[slug]) keep the original 7xl / py-10. */}
+      <div className={`${showUnifiedCatalogue ? 'max-w-[1500px] py-8 lg:py-16' : 'max-w-7xl py-10'} mx-auto px-6`}>
         {showUnifiedCatalogue && (
           isBph ? (
             <BphUnifiedCatalogue
