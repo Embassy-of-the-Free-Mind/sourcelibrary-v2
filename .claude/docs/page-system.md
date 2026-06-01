@@ -94,6 +94,8 @@ CDN cache: `Cache-Control: max-age=31536000` (1 year). You cannot invalidate by 
 | `ocr.output_tokens` | number | Gemini output tokens |
 | `ocr.batch_job_id` | string | Batch job that produced this OCR |
 | `ocr.updated_at` | Date | When OCR was last updated |
+| `ocr.source_url` | string | **Provenance (#2297/#2302):** the exact image URL sent to the model. Compare to `getPageSource(page)` (`@/lib/page-image-url`) to find pages OCR'd on the wrong image — e.g. a split page OCR'd on the full spread. Pages OCR'd before #2302 lack this. |
+| `ocr.code_version` | string | **Provenance:** git SHA / release tag of the producing code, so a buggy run is identifiable and reversible as a set. |
 
 ### OCR Metadata Tags
 
@@ -130,6 +132,7 @@ The OCR text contains inline XML tags that serve dual purposes:
 | `translation.target_language` | string | Always `'English'` |
 | `translation.prompt_version` | string | Translation prompt version |
 | `translation.source` | string | `'batch_api'`, `'hetzner'`, `'realtime'` |
+| `translation.code_version` | string | **Provenance (#2302):** git SHA / release of the producing code. Note: translation has **no** `source_url` — its input is the OCR *text*, not an image; image lineage is recoverable via the same page's `ocr.source_url`. |
 
 ### Page Classification
 

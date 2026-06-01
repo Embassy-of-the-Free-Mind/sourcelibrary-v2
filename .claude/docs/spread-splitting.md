@@ -155,21 +155,19 @@ This is the root cause of most display bugs. The page record has 6 image-related
 | `thumbnail` | Standard pipeline | 150px grid thumbnail |
 | `thumbnail_blob` | Vercel Blob era | Legacy CDN thumbnail |
 
-The frontend checks them in priority order:
+**Source resolution is centralized (as of #1727).** Every consumer resolves
+images through `getPageSource(page)` (`@/lib/page-image-url`; JS twin
+`scripts/lib/page-image-url.mjs`) — **do not hand-roll** the
+`cropped_photo || archived_photo || …` chain. The resolver is split-aware:
+old-era split → `cropped_photo` (the half); new-era split → the `sp…` `photo`;
+never the spread. `getPageDisplayUrl`/`getPageThumbUrl` in `src/lib/utils.ts` are
+thin wrappers over `getPageImageUrl(page, size)`. Full model:
+`.claude/docs/page-system.md` → "Images — resolved through ONE function".
 
-**`getPageThumbUrl()` in `src/lib/utils.ts`:**
-1. `crop` coordinates → proxy URL with crop params
-2. `thumbnail_blob` → direct URL
-3. Derive from `photo` path (regex for `/NNNN.jpg` pattern)
-4. `thumbnail` → direct URL
-5. `archived_photo || photo_original || photo` → proxy URL
-
-**`BookPagesSection.tsx` cover picker (line 494):**
-```
-cropped_photo || archived_photo || photo_original || photo
-```
-
-**The problem**: If ANY of the legacy fields exist and point to a spread image, the frontend shows the spread instead of the cropped single page. Setting `photo` is necessary but not sufficient — you must also `$unset` all fields that override it.
+**The hazard it guards against**: if legacy fields exist and point to a spread
+image, a naive precedence chain shows the spread instead of the cropped page.
+Setting `photo` is necessary but not sufficient — you must also `$unset` the
+fields that would override it.
 
 **Mitigation**: The split pipeline MUST `$unset: { photo_original, archived_photo, cropped_photo, thumbnail_blob }` on every page it touches. This is a hard requirement, not optional cleanup.
 
