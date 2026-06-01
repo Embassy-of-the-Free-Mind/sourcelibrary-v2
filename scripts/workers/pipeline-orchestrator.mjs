@@ -153,6 +153,21 @@ function getOcrModelForBook(book) {
 }
 const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
+
+// Code provenance (#2297): the git SHA actually checked out on this worker box.
+// Hetzner auto-pulls main every ~5 min, so HEAD == the running code. Falls back
+// to the Vercel env SHA (if ever run there), then 'dev'. Computed once, cached.
+let _codeVersion = null;
+async function getCodeVersion() {
+  if (_codeVersion) return _codeVersion;
+  try {
+    const { stdout } = await execFileAsync('git', ['rev-parse', '--short', 'HEAD']);
+    _codeVersion = stdout.trim() || 'dev';
+  } catch {
+    _codeVersion = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8) || 'dev';
+  }
+  return _codeVersion;
+}
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 1000;  // Pages per file-based batch. With 1500px resize, 1000 pages = ~500MB JSONL (well under 2GB File API limit). Google recommends 1K-5K. Experiment 2026-04-13: identical OCR quality at 1500px vs full-res.
 const CROSS_BOOK_BATCH_SIZE = 250; // Smaller batches for cross-book OCR — 500-page cross-book batches have 24% success vs 51% single-book. Half size = less blast radius on Gemini cancellation.
@@ -1197,7 +1212,9 @@ async function downloadImagesParallel(pages, concurrency, { maxDim } = {}) {
         if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
         const image = await fetchImageBase64(url, { maxDim });
         if (!image) return null;
-        return { pageId: page.id, image };
+        // Carry the exact URL we fetched so the batch job can record OCR
+        // provenance (#2297) — `url` is the canonical getPageSource result.
+        return { pageId: page.id, image, sourceUrl: url };
       })
     );
     for (const r of settled) {
@@ -1626,6 +1643,11 @@ Output structure:
       type: 'ocr',
       book_id: book.id,
       page_ids: chunk.map(c => c.pageId),
+      // OCR provenance (#2297): the exact image URL fetched + sent for each page,
+      // so batch-collector can stamp ocr.source_url at write-back. getPageSource
+      // already chose this URL in downloadImagesParallel.
+      page_sources: chunk.map(c => ({ page_id: c.pageId, source_url: c.sourceUrl || null })),
+      code_version: await getCodeVersion(),
       page_count: chunk.length,
       status: 'pending',
       model: ocrModel,
@@ -1752,7 +1774,7 @@ async function submitCrossBookOcrBatches(db, books) {
 
     bookMap.set(book.id, book);
     for (const item of downloaded) {
-      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id });
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id, sourceUrl: item.sourceUrl });
     }
   }
 
@@ -1842,6 +1864,9 @@ async function submitCrossBookOcrBatches(db, books) {
     book_id: chunkBookIds[0],
     book_ids: chunkBookIds,
     page_ids: allDownloaded.map(d => d.pageId),
+    // OCR provenance (#2297) — exact image fetched per page, for batch-collector.
+    page_sources: allDownloaded.map(d => ({ page_id: d.pageId, source_url: d.sourceUrl || null })),
+    code_version: await getCodeVersion(),
     page_count: allDownloaded.length,
     status: 'pending',
     model: ocrModel,
