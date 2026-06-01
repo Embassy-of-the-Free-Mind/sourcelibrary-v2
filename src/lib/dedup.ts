@@ -17,6 +17,9 @@ export interface DedupMatch {
   matchedTitle: string;
   matchType: 'source_fingerprint' | 'title_author' | 'iiif_manifest';
   confidence: 'exact' | 'high' | 'medium';
+  /** Whether the already-existing match is public. Hidden matches still count as
+   * duplicates — this lets callers/auditors distinguish a live dup from a backlog one. */
+  matchedVisible?: boolean;
 }
 
 export interface DedupResult {
@@ -162,12 +165,18 @@ export async function checkDuplicate(
 ): Promise<DedupResult> {
   const matches: DedupMatch[] = [];
 
+  // NOTE: dedup does NOT filter on `visible`. A duplicate is a duplicate whether
+  // or not the existing copy is public — and imports land hidden, so a
+  // visible-only check is blind to the entire hidden backlog (the regime we now
+  // import into at volume). We surface the match's visibility instead of hiding it.
+  const VIS_PROJ = { id: 1, title: 1, visible: 1, hidden: 1 };
+
   // Tier 1: Source fingerprint match
   const fp = sourceFingerprint(book);
   if (fp) {
     const fpMatch = await db.collection('books').findOne(
-      { source_fingerprint: fp, visible: true },
-      { projection: { id: 1, title: 1 } }
+      { source_fingerprint: fp },
+      { projection: VIS_PROJ }
     );
     if (fpMatch) {
       matches.push({
@@ -175,6 +184,7 @@ export async function checkDuplicate(
         matchedTitle: fpMatch.title,
         matchType: 'source_fingerprint',
         confidence: 'exact',
+        matchedVisible: fpMatch.visible === true,
       });
     }
   }
@@ -190,9 +200,8 @@ export async function checkDuplicate(
       {
         normalized_title: normTitle,
         normalized_author: normAuthor,
-        visible: true,
       },
-      { projection: { id: 1, title: 1 } }
+      { projection: VIS_PROJ }
     ).limit(5).toArray();
 
     for (const tm of titleMatches) {
@@ -203,6 +212,7 @@ export async function checkDuplicate(
           matchedTitle: tm.title,
           matchType: 'title_author',
           confidence: 'high',
+          matchedVisible: tm.visible === true,
         });
       }
     }
@@ -213,9 +223,8 @@ export async function checkDuplicate(
     const iiifMatch = await db.collection('books').findOne(
       {
         'image_source.iiif_manifest': book.image_source.iiif_manifest,
-        visible: true,
       },
-      { projection: { id: 1, title: 1 } }
+      { projection: VIS_PROJ }
     );
     if (iiifMatch && !matches.some(m => m.matchedBookId === (iiifMatch.id || iiifMatch._id.toString()))) {
       matches.push({
@@ -223,6 +232,7 @@ export async function checkDuplicate(
         matchedTitle: iiifMatch.title,
         matchType: 'iiif_manifest',
         confidence: 'exact',
+        matchedVisible: iiifMatch.visible === true,
       });
     }
   }
@@ -292,8 +302,9 @@ export async function backfillDedupFields(db: Db): Promise<{ updated: number; sk
 }
 
 /**
- * Scan all visible books for duplicates and return groups.
- * Used for periodic auditing.
+ * Scan ALL books (visible AND hidden) for duplicates and return groups.
+ * Used for periodic auditing. Scans hidden too: the import backlog is hidden,
+ * and that is exactly where unnoticed duplicates accumulate.
  */
 export async function scanForDuplicates(db: Db): Promise<{
   fingerprintDupes: Array<{ fingerprint: string; count: number; bookIds: string[]; titles: string[] }>;
@@ -301,7 +312,7 @@ export async function scanForDuplicates(db: Db): Promise<{
 }> {
   // Find duplicate fingerprints
   const fpDupes = await db.collection('books').aggregate([
-    { $match: { visible: true, source_fingerprint: { $exists: true, $ne: null } } },
+    { $match: { source_fingerprint: { $exists: true, $ne: null } } },
     { $group: {
       _id: '$source_fingerprint',
       count: { $sum: 1 },
@@ -315,7 +326,6 @@ export async function scanForDuplicates(db: Db): Promise<{
   // Find duplicate title+author combos
   const taDupes = await db.collection('books').aggregate([
     { $match: {
-      visible: true,
       normalized_title: { $exists: true, $nin: [null, ''] },
       // Exclude generic titles
       title: { $nin: ['Unknown', 'Untitled'] },
