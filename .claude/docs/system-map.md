@@ -186,6 +186,7 @@ src/
 │   │   ├── books/[id]/     # 60 book operations
 │   │   ├── admin/          # 60 admin endpoints
 │   │   ├── import/         # 26 IIIF source importers
+│   │   ├── iiif/[id]/      # IIIF we EXPOSE (manifest/canvas/search) → .claude/docs/iiif-api.md
 │   │   ├── pages/[id]/     # 15 page operations
 │   │   ├── cron/           # 6 active cron routes (7 scheduled in vercel.json)
 │   │   ├── search/         # 8 search endpoints (main, unified, visual, semantic, suggest, etc.)
