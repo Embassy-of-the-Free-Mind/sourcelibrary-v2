@@ -13,6 +13,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { aiGenerator } from '@/lib/iiif-provenance';
 
 const BASE = 'https://sourcelibrary.org';
 const MAX_RESULTS = 200;
@@ -132,7 +134,9 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
           page_number: 1,
           'ocr.data': 1,
           'ocr.language': 1,
+          'ocr.model': 1,
           'translation.data': 1,
+          'translation.model': 1,
         },
         sort: { page_number: 1 },
         limit: 100, // Cap pages scanned
@@ -150,8 +154,10 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
       const pageNum = page.page_number;
       const canvasId = `${BASE}/api/iiif/${bookId}/canvas/p${pageNum}`;
 
-      // Check OCR text
-      const ocrText = page.ocr?.data as string | undefined;
+      // Check OCR text. Strip AI editorial wrappers first so the search never
+      // matches or returns <meta>/<summary> prose that isn't on the page (PR #2232).
+      const ocrRaw = page.ocr?.data as string | undefined;
+      const ocrText = ocrRaw ? stripEditorialWrappers(ocrRaw).trim() : undefined;
       if (ocrText) {
         const ocrMatches = findMatches(ocrText, query);
         if (ocrMatches.length > 0) {
@@ -166,6 +172,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
               format: 'text/plain',
               language: page.ocr?.language || 'none',
             },
+            generator: aiGenerator('ocr', page.ocr?.model),
             target: canvasId,
           });
 
@@ -191,8 +198,9 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
         }
       }
 
-      // Check translation text
-      const transText = page.translation?.data as string | undefined;
+      // Check translation text (same wrapper strip as OCR).
+      const transRaw = page.translation?.data as string | undefined;
+      const transText = transRaw ? stripEditorialWrappers(transRaw).trim() : undefined;
       if (transText) {
         const transMatches = findMatches(transText, query);
         if (transMatches.length > 0) {
@@ -207,6 +215,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
               format: 'text/plain',
               language: 'en',
             },
+            generator: aiGenerator('translation', page.translation?.model),
             target: canvasId,
           });
 
