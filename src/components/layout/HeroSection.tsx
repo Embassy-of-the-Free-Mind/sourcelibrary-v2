@@ -127,7 +127,8 @@ export default function HeroSection() {
 
       {/* Hero Content */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="px-6 md:px-12 w-full max-w-4xl">
+        <div className="w-full max-w-[1500px] mx-auto px-6 md:px-12">
+        <div className="w-full max-w-4xl">
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display text-balance"
           >
@@ -155,6 +156,7 @@ export default function HeroSection() {
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
 
