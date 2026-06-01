@@ -1,5 +1,11 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
+
+// Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
+// Bundled because the proxy runs at the edge with no DB access; regenerate with
+// scripts/maintenance/build-author-redirect-map.mjs when the authors thesaurus changes.
+const AUTHOR_CANONICAL_REDIRECTS = authorCanonicalRedirects as Record<string, string>;
 
 // --- Tenant routing ---
 
@@ -559,6 +565,27 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.host = 'sourcelibrary.org';
     return NextResponse.redirect(url, 301);
+  }
+
+  // --- Canonical author URL redirect (#2250) ---
+  // One person = one /author/ URL. Variant slugs (name-order, Latinized, or
+  // title-contaminated forms) 308 to the canonical slug from the authors
+  // thesaurus. Done HERE rather than in the page because a server redirect()
+  // inside the ISR/streamed /author/[name] RSC page never emits a 307 — the 200
+  // shell commits before the redirect resolves. Cheap pathname check, no DB.
+  // Single-segment only (/author/<slug>), so sub-paths like .../opengraph-image
+  // are untouched; falls through on any miss so author routing can't break.
+  const authorMatch = pathname.match(/^\/author\/([^/]+)\/?$/);
+  if (authorMatch) {
+    const raw = authorMatch[1];
+    let decoded = raw;
+    try { decoded = decodeURIComponent(raw); } catch { /* keep raw */ }
+    const canonical = AUTHOR_CANONICAL_REDIRECTS[decoded] ?? AUTHOR_CANONICAL_REDIRECTS[raw];
+    if (canonical && canonical !== decoded && canonical !== raw) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/author/${canonical}`;
+      return NextResponse.redirect(url, 308);
+    }
   }
 
   // --- Tenant subdomain rewrite ---
