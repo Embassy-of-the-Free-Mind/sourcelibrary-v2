@@ -45,8 +45,14 @@ Priority: ★★★ canonical / high-demand · ★★ important · ★ desirable
 - **Round 2** (`daoist-alchemy-ia-batch-2.mjs`, 14 books): **真誥 Zhen'gao** (Shangqing, 5 vols) + completed partial sets (周易參同契發揮 vols 2–3; 泰定養生主論 vols 2–5; 養生類纂 vols 2–4).
 - Method: enumerate IA `universallibrary` Daoist/alchemy → exact-dedupe on `ia_identifier` → **subject-filter** (the keyword net catches Confucian/math/official/drama false positives — discard) → import hidden → tag.
 
-## Still to source (gaps not in IA universallibrary, or behind JS viewers)
-悟真篇 Wuzhen pian (Chinese original) · Cantong qi 正文 (bare) · 鍾呂傳道集 · 入藥鏡 · 金丹四百字 · 中和集 · 修真十書 · 黃庭經 standalone · 雲笈七籤 juan 1–80 · 太平經 (real one) · 度人經 · 清靜經 · 列仙傳 · 重陽全真集. → need Harvard CURIOSity / NLC (browser-capture) or other repos.
+## Still to source — and IA universallibrary is EXHAUSTED for these (verified 2026-06-01)
+Confirmed via per-title IA queries (`enumerate-dedupe-source.ts` + direct title: queries): the remaining want-list is **NOT in IA universallibrary**. 0 real `.cn` hits for: 黃庭經, 列仙傳, 鍾呂傳道集, 入藥鏡, 度人經, 金丹/金丹大成, 修真十書, 重陽全真集. (太平經 only returns 太平經國書/之書 = a Ming *statecraft-divination* text, NOT the Daoist Taiping jing — a false friend; 修真 only matched a 琴譜 music score.) The IA `.cn` Daoist holdings are essentially the 四庫全書 Daoist cluster we already imported (Cantong qi, Baopuzi In/Out, Yunji qiqian 81–122, Zhen'gao, Shenxian zhuan, Panxi ji, yangsheng). A broad OR-query returns ~116 "NEW" that are ALL 四庫 Confucian/historical/literary false positives (上諭内阁, 全上古…文, 大學衍義, 後漢書, 律呂正義) — textbook subject-filter noise; 0 survive filtering.
+
+**Remaining gaps → need a non-IA route** (Harvard CURIOSity DRS, NLC 中華古籍資源庫, Kyoto RMDA, or Daozang text extraction; mostly browser-capture since the clean IIIF APIs don't expose them):
+悟真篇 Wuzhen pian (Chinese original) · Cantong qi 正文 (bare) · 鍾呂傳道集 · 入藥鏡 · 金丹四百字 · 中和集 · 修真十書 · 黃庭經 standalone · 雲笈七籤 juan 1–80 · 太平經 (the real Daoist one) · 度人經 · 清靜經 · 列仙傳 · 重陽全真集.
+
+## Pipeline status of imported batch (2026-06-01)
+40 books / 5,437 pages: fully archived (5,437/5,437), OCR underway (~1,996 pages), translation pending; all `pipeline_auto.status: archive_complete`, hidden. Classical-Chinese OCR/translation **needs a QA pass before flipping visible** (cf. [[project_siku_translation_census]]).
 
 ## Process
 1. ✅ Want-list defined + deduped against holdings (this doc).
