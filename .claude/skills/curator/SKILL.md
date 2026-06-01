@@ -12,6 +12,7 @@ Autonomous curator for Source Library (Embassy of the Free Mind / Bibliotheca Ph
 **Reference docs** (read on-demand during research, NOT loaded into every conversation):
 - Collection focus, gaps, library catalogs, search patterns: `@.claude/docs/curator-reference.md`
 - Import API reference (all 14 sources): `@.claude/docs/import-apis.md`
+- **Import workflow (dedup discipline): `@.claude/docs/import-workflow.md`** — the canonical enumerate→dedupe→subject-filter→source→import→QA→visible loop. Read before any batch acquisition. Key: dedupe on `source_fingerprint` (matches hidden books too); subject-filter keyword results by hand (they're noisy); sources that 429 datacenter IPs (Harvard, Gallica) use the residential direct-insert pattern; work-level dedup isn't automatic yet (issue #2318).
 
 ---
 
