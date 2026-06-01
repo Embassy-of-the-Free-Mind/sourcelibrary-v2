@@ -21,6 +21,7 @@ export const GET = withAuth(async (request: NextRequest) => {
       country: searchParams.get('country') || undefined,
       section: searchParams.get('section') || undefined,
       referrer: searchParams.get('referrer') || undefined,
+      host: searchParams.get('host') || undefined,
     };
 
     const cacheKey = JSON.stringify({ days, bin, filters });
