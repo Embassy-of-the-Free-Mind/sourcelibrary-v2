@@ -26,8 +26,13 @@
  * entirely in *unmirrored* Mongo pages, so the mirror is a silent cap. Instead
  * we walk the `books` collection (small) and, per book, query its pages on the
  * `{book_id, page_number}` index — full docs, so `getPageSource()` has what it
- * needs. A persisted cursor (`system_config.display_backfill_cursor`) lets the
- * cron resume across runs and wrap when the corpus is drained.
+ * needs. A persisted cursor (`system_config.display_backfill_cursor`, with a
+ * `phase`) lets the cron resume across runs and wrap when the corpus is drained.
+ *
+ * SEEN-FIRST: the book walk is two-phase — `visible: true` books first, then
+ * the rest — so the variants readers actually see get backfilled before the
+ * hidden/non-public long tail (~2/3 of the gap). See the enumeration block for
+ * why read_count / page-number sub-ordering is deliberately omitted.
  *
  * PERSIST canonical `image_thumb` (+ `display_photo`) on the Mongo page — not
  * the deprecated `thumbnail_blob`. The Supabase mirror is updated best-effort
@@ -278,45 +283,87 @@ async function main() {
   } else {
     // Bulk mode — walk the books collection in _id order from a persisted
     // cursor, backfilling each book's gap pages. Resume + wrap across cron runs.
+    //
+    // SEEN-FIRST ordering (measured 2026-06-01): only ~31% of gap pages are in
+    // `visible` books; ~2/3 are hidden/non-public. So we drain in two phases —
+    // `visible: true` books first, then the rest — each phase walked in `_id`
+    // order with the same resumable high-water cursor. That ~3×'s the share of
+    // early drain effort that lands on publicly-visible pages.
+    //
+    // We deliberately do NOT sub-sort by read_count: it's a near-flat signal on
+    // this gap (≈90% of gap books have 0 reads, max ~17), so a compound
+    // (read_count,_id) cursor would add bug surface for no real prioritization
+    // gain. Page order within a book stays natural (cover/early pages are mostly
+    // already backfilled — only ~5% of the gap is pages ≤10 — so page-level
+    // ordering buys little either).
+    const PHASES = ['visible', 'rest'];
+    const phaseQuery = (phase) => (phase === 'visible' ? { visible: true } : { visible: { $ne: true } });
+
+    let phase = 'visible';
     let cursor = null;
     if (START_AFTER) {
       const sb = await db.collection('books').findOne({ $or: [{ id: START_AFTER }, { _id: START_AFTER }] }, { projection: { _id: 1 } });
       cursor = sb?._id ?? null;
     } else if (!NO_CURSOR) {
       const c = await db.collection('system_config').findOne({ _id: 'display_backfill_cursor' });
+      // Back-compat: old cursors stored only lastBookMongoId (no phase).
+      if (c && PHASES.includes(c.phase)) phase = c.phase;
       cursor = c?.lastBookMongoId ?? null;
     }
 
-    const bookQuery = cursor ? { _id: { $gt: cursor } } : {};
-    const bookCursor = db.collection('books')
-      .find(bookQuery, { projection: { _id: 1, id: 1 } }).sort({ _id: 1 });
-
     let lastBookMongoId = cursor;
-    let reachedEnd = true;
-    for await (const book of bookCursor) {
-      if (stats.booksWithGap >= BOOK_LIMIT || stats.processed >= LIMIT) { reachedEnd = false; break; }
-      stats.booksScanned++;
-      lastBookMongoId = book._id;
-      if (!book.id) continue;
+    let phaseIdx = PHASES.indexOf(phase);
+    let limitHit = false;
 
-      const pages = await db.collection('pages')
-        .find(gapFilter(book.id), { projection: PAGE_PROJECTION }).toArray();
-      if (pages.length === 0) continue;
+    // Walk phases from the resumed one onward; advance to the next phase when a
+    // phase is fully scanned, and wrap to 'visible' after the last phase drains.
+    outer:
+    for (; phaseIdx < PHASES.length; phaseIdx++) {
+      phase = PHASES[phaseIdx];
+      const q = phaseQuery(phase);
+      if (lastBookMongoId) q._id = { $gt: lastBookMongoId };
+      const bookCursor = db.collection('books')
+        .find(q, { projection: { _id: 1, id: 1 } }).sort({ _id: 1 });
 
-      stats.booksWithGap++;
-      await runBatch(pages, db);
-      if (!DRY_RUN) await flushSupabase(supabase);
+      for await (const book of bookCursor) {
+        if (stats.booksWithGap >= BOOK_LIMIT || stats.processed >= LIMIT) { limitHit = true; break outer; }
+        stats.booksScanned++;
+        lastBookMongoId = book._id;
+        if (!book.id) continue;
+
+        const pages = await db.collection('pages')
+          .find(gapFilter(book.id), { projection: PAGE_PROJECTION }).toArray();
+        if (pages.length === 0) continue;
+
+        stats.booksWithGap++;
+        await runBatch(pages, db);
+        if (!DRY_RUN) await flushSupabase(supabase);
+      }
+      // Finished this phase within the page/book budget → next phase starts fresh.
+      lastBookMongoId = null;
     }
 
-    // Persist cursor for the next run; wrap to the start once drained.
+    // Resolve the cursor to persist:
+    //  - limit hit mid-phase → resume same phase after lastBookMongoId
+    //  - a phase finished    → start of the next phase (or wrap to 'visible')
+    let nextPhase, nextCursor;
+    if (limitHit) {
+      nextPhase = phase;
+      nextCursor = lastBookMongoId;
+    } else {
+      nextPhase = 'visible';      // walked off the end of 'rest' → wrap
+      nextCursor = null;
+    }
+
     if (!DRY_RUN && !NO_CURSOR && !START_AFTER) {
       await db.collection('system_config').updateOne(
         { _id: 'display_backfill_cursor' },
-        { $set: { lastBookMongoId: reachedEnd ? null : lastBookMongoId, updatedAt: new Date() } },
+        { $set: { phase: nextPhase, lastBookMongoId: nextCursor, updatedAt: new Date() } },
         { upsert: true },
       );
-      if (reachedEnd) console.log('[backfill-display] Reached end of books — cursor reset (next run wraps to start).');
+      if (!limitHit) console.log('[backfill-display] Drained all phases — cursor wrapped to start of visible.');
     }
+    console.log(`[backfill-display] phase=${phase}${limitHit ? ' (budget hit, will resume here)' : ' → next: ' + nextPhase}`);
   }
 
   const elapsed = (Date.now() - stats.startTime) / 1000;
