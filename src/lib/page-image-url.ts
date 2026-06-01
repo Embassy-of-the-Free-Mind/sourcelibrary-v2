@@ -131,6 +131,22 @@ export function getPageSource(page: PageImageFields): string | null {
 }
 
 /**
+ * The crop region to apply, or undefined. Crop coords reference the *full
+ * uncropped* source, so they apply only to a non-split page with no materialized
+ * cropped half: split pages already resolve to the half via getPageSource, and a
+ * materialized `cropped_photo` is already pre-cropped. (~0.04% of pages — rare,
+ * but real and verified, so we preserve the legacy proxy-crop behavior.)
+ */
+function cropRegion(page: PageImageFields): { xStart?: number; xEnd?: number } | undefined {
+  return !page.split_from_spread &&
+    !isUsableImageUrl(page.cropped_photo) &&
+    page.crop?.xStart !== undefined &&
+    page.crop?.xEnd !== undefined
+    ? page.crop
+    : undefined;
+}
+
+/**
  * Resolve a display- or thumb-sized URL. Prefers a pre-sized R2 variant, then an
  * IIIF-native resize, then the /api/image proxy. Always browser-safe and bounded.
  */
@@ -138,6 +154,14 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
   const width = size === 'thumb' ? THUMB_WIDTH : DISPLAY_WIDTH;
   const quality = size === 'thumb' ? 60 : 80;
   const hasCroppedHalf = isUsableImageUrl(page.cropped_photo);
+
+  // Crop-coords page: the pre-sized variant is the UNcropped image, so we must
+  // proxy-crop the source instead of returning display_photo/-thumb.
+  const crop = cropRegion(page);
+  if (crop) {
+    const base = getPageSource(page);
+    return base && isBrowserSafe(base) ? proxyUrl(base, width, quality, crop) : null;
+  }
 
   // (A) Pre-sized R2 variant — only when it matches the *displayed* content.
   // Skip for old-era split pages: their display_photo / image_thumb are resizes
@@ -159,29 +183,16 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
     if (size === 'thumb' && isUsableImageUrl(page.thumbnail)) return page.thumbnail;
     return null;
   }
-
-  // Crop-coords-only page (no materialized half): proxy must crop the source.
-  const crop =
-    !hasCroppedHalf && page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined
-      ? page.crop
-      : undefined;
-  if (!crop) {
-    const iiif = iiifResize(base, width);
-    if (iiif) return iiif;
-  }
-  return proxyUrl(base, width, quality, crop);
+  const iiif = iiifResize(base, width);
+  if (iiif) return iiif;
+  return proxyUrl(base, width, quality);
 }
 
 /** Resolve a large (zoom/magnifier) URL — IIIF-native at high width, else proxy. */
 function resolveHires(page: PageImageFields): string | null {
   const base = getPageSource(page);
   if (!base || !isBrowserSafe(base)) return null;
-  const crop =
-    !isUsableImageUrl(page.cropped_photo) &&
-    page.crop?.xStart !== undefined &&
-    page.crop?.xEnd !== undefined
-      ? page.crop
-      : undefined;
+  const crop = cropRegion(page);
   if (!crop) {
     const iiif = iiifResize(base, HIRES_WIDTH);
     if (iiif) return iiif;

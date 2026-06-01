@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { getPageSource } from '@/lib/page-image-url';
+import { getPageSource, getPageImageUrl as resolvePageImage } from '@/lib/page-image-url';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -172,36 +172,14 @@ export function getPageImageUrl(page: Record<string, any>): string | null {
 }
 
 /**
- * Get the best display-size (1200px) URL for a page.
- * Prefers pre-rendered display_photo from R2 CDN (no proxy needed).
- * Falls back to /api/image proxy for pages without display variants.
- *
- * Split pages (with crop) always go through the proxy since the display
- * variant is generated from the full spread, not the cropped half.
+ * Best display-size (~1200px) URL for a page. Back-compat wrapper over the
+ * canonical `getPageImageUrl(page, 'display')` (`@/lib/page-image-url`, #1727),
+ * which handles split-era source selection, the R2 variant → IIIF → proxy tiers,
+ * and crop-coords pages.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quality = 80): string | null {
-  // Split-from-spread pages have clean photo — use directly
-  if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
-
-  // Split pages need server-side cropping — always use proxy
-  if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-    const baseUrl = page.archived_photo || page.photo_original || page.photo;
-    if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-  }
-
-  // Pre-rendered display photo — direct from R2 CDN, no proxy
-  if (isUsableImageUrl(page.display_photo)) return page.display_photo;
-
-  // Fallback: derive display URL from new path convention (handles sp prefix)
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(-full)?\.jpg$/);
-  if (newPathMatch) return `${newPathMatch[1]}.jpg`;
-
-  // Legacy fallback: proxy for resize
-  const baseUrl = page.archived_photo || page.photo_original || page.photo;
-  if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
+export function getPageDisplayUrl(page: Record<string, any>): string | null {
+  return resolvePageImage(page, 'display');
 }
 
 /**
@@ -230,34 +208,7 @@ export function getPageGridUrl(page: Record<string, any>): string | null {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPageThumbUrl(page: Record<string, any>): string | null {
-  // Split-from-spread pages have clean photo/thumbnail — skip legacy fallback chain
-  if (page.split_from_spread) {
-    if (isUsableImageUrl(page.thumbnail)) return page.thumbnail;
-    if (isUsableImageUrl(page.photo)) return `/api/image?url=${encodeURIComponent(page.photo)}&w=150&q=60`;
-    return null;
-  }
-
-  // Split pages with crop coordinates need proxy
-  if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-    const baseUrl = page.archived_photo || page.photo_original || page.photo;
-    if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-  }
-
-  // Pre-rendered thumbnail
-  if (isUsableImageUrl(page.thumbnail_blob)) return page.thumbnail_blob;
-
-  // Derive from new path convention (handles sp prefix for split pages)
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(-full)?\.jpg$/);
-  if (newPathMatch) return `${newPathMatch[1]}-thumb.jpg`;
-
-  // Existing thumbnail field
-  if (isUsableImageUrl(page.thumbnail)) return page.thumbnail;
-
-  // Legacy fallback: proxy
-  const baseUrl = page.archived_photo || page.photo_original || page.photo;
-  if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
+  return resolvePageImage(page, 'thumb');
 }
 
 /**

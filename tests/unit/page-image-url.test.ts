@@ -42,7 +42,30 @@ const fixtures: Record<string, PageImageFields> = {
     archived_photo: 'failed:HTTP 404',
     photo: `${R2}/archived/${BOOK}/9.jpg`,
   },
+  // Crop-coords page (~0.04%): region defined, no materialized half, not split.
+  // display_photo is the UNcropped resize, so display/thumb must proxy-crop.
+  cropCoords: {
+    crop: { xStart: 250, xEnd: 750 },
+    archived_photo: `${R2}/archived/${BOOK}/3.jpg`,
+    photo: `${R2}/archived/${BOOK}/3.jpg`,
+    display_photo: `${R2}/pages/${BOOK}/0003.jpg`,
+  },
 };
+
+describe('crop-coords page proxy-crops, never the uncropped variant', () => {
+  it('display → proxy-crops the source, not display_photo', () => {
+    const url = getPageImageUrl(fixtures.cropCoords, 'display')!;
+    expect(url).toContain('/api/image');
+    expect(url).toContain('cx=250');
+    expect(url).toContain('cw=750');
+    expect(url).not.toContain('0003.jpg'); // the uncropped display variant
+  });
+  it('thumb → proxy-crops too', () => {
+    const url = getPageImageUrl(fixtures.cropCoords, 'thumb')!;
+    expect(url).toContain('/api/image');
+    expect(url).toContain('cx=250');
+  });
+});
 
 describe('getPageImageUrl — universal size axis', () => {
   it('normal page: display → pre-sized R2 display variant (free)', () => {
