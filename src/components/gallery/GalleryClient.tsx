@@ -318,11 +318,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   return (
     <>
       {!isEmbedded && (
-        <SiteHeader
-          variant="light"
-          sticky
-          breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
-        />
+        <SiteHeader variant="light" />
       )}
 
       <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
