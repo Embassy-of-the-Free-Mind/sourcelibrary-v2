@@ -141,6 +141,15 @@ const stats = {
   _supabaseUpdates: [],
 };
 
+// Safety net for an unattended multi-hour drain: a stray async rejection (e.g.
+// a future floating-promise like the #1814 empty-buffer crash) must not abort
+// the whole batch — log it loudly and keep going. Per-page work is already in
+// try/catch; this only catches escapes.
+process.on('unhandledRejection', (reason) => {
+  stats.failed++;
+  console.error('[backfill-display] unhandledRejection (continuing):', reason?.message || reason);
+});
+
 /**
  * Resolve the correct source for a full Mongo page doc, or a skip reason.
  * Old-era split (cropped_photo) is intentionally out of scope (see header).
@@ -175,6 +184,11 @@ async function processPage(page, db) {
 
     if (!fileAlready) {
       const fullResBuffer = await downloadFromR2(source);
+      // A 200-with-empty-body slips past downloadFromR2's !res.ok check; an
+      // empty buffer would make sharp throw. Fail this page cleanly instead.
+      if (!fullResBuffer || fullResBuffer.length === 0) {
+        throw new Error(`empty source download: ${source.slice(0, 100)}`);
+      }
       const { display, thumb } = await generateDisplayVariants(fullResBuffer);
       displayUrl = await uploadToR2(keys.display, display);
       thumbUrl = await uploadToR2(keys.thumb, thumb);
