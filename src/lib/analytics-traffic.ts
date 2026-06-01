@@ -97,6 +97,7 @@ export interface TrafficFilters {
   country?: string;
   section?: string; // top-level section, e.g. '/book' or '/embed/bph'
   referrer?: string;
+  host?: string; // tenant subdomain, e.g. 'bph.sourcelibrary.org'
 }
 
 export interface TrafficDashboardData {
@@ -105,9 +106,13 @@ export interface TrafficDashboardData {
   summary: { pageviews: number; visitors: number; prevPageviews: number; prevVisitors: number };
   series: Array<{ bucket: string; pageviews: number; visitors: number }>;
   sections: Array<{ section: string; count: number }>;
+  sites: Array<{ host: string; count: number }>;
   topPages: Array<{ path: string; count: number }>;
   topReferrers: Array<{ referrer: string; count: number }>;
   topCountries: Array<{ country: string; count: number }>;
+  // Human vs bot vs AI, from the compact ingestion counter (not the pageview
+  // collection). Empty until traffic accrues after this feature ships.
+  classification: Array<{ class: string; count: number }>;
 }
 
 const MAX_DAYS = 90; // analytics_pageviews has a 90-day TTL — nothing older exists
@@ -156,6 +161,7 @@ export async function getTrafficDashboard(opts: {
   const baseMatch: Record<string, unknown> = { path: { $ne: null } };
   if (filters.country) baseMatch.country = filters.country;
   if (filters.referrer) baseMatch.referrer = filters.referrer;
+  if (filters.host) baseMatch.host = filters.host;
 
   const sectionMatch = filters.section ? [{ $match: { _section: filters.section } }] : [];
 
@@ -185,6 +191,12 @@ export async function getTrafficDashboard(opts: {
               { $group: { _id: '$_section', count: { $sum: 1 } } },
               { $sort: { count: -1 } },
               { $limit: 25 },
+            ],
+            sites: [
+              ...sectionMatch,
+              { $group: { _id: { $ifNull: ['$host', '(pre-tracking)'] }, count: { $sum: 1 } } },
+              { $sort: { count: -1 } },
+              { $limit: 10 },
             ],
             topPages: [
               ...sectionMatch,
@@ -227,6 +239,21 @@ export async function getTrafficDashboard(opts: {
     )
     .toArray();
 
+  // Human/bot/AI split from the compact per-day counter (separate collection,
+  // no TTL). Section/country/referrer filters don't apply here (the counter
+  // isn't per-pageview), but host does.
+  const sinceDay = since.toISOString().slice(0, 10);
+  const classMatch: Record<string, unknown> = { day: { $gte: sinceDay } };
+  if (filters.host) classMatch.host = filters.host;
+  const classRows = await db
+    .collection('analytics_traffic_class')
+    .aggregate([
+      { $match: classMatch },
+      { $group: { _id: '$class', count: { $sum: '$count' } } },
+      { $sort: { count: -1 } },
+    ])
+    .toArray();
+
   const totals = result?.totals?.[0] as { pageviews: number; ips: (string | null)[] } | undefined;
   const prevTotals = prev as { pageviews: number; ips: (string | null)[] } | undefined;
 
@@ -247,8 +274,10 @@ export async function getTrafficDashboard(opts: {
     sections: (result?.sections ?? [])
       .filter((s: { _id: string }) => s._id)
       .map((s: { _id: string; count: number }) => ({ section: s._id, count: s.count })),
+    sites: (result?.sites ?? []).map((s: { _id: string; count: number }) => ({ host: s._id, count: s.count })),
     topPages: (result?.topPages ?? []).map((p: { _id: string; count: number }) => ({ path: p._id, count: p.count })),
     topReferrers: (result?.topReferrers ?? []).map((r: { _id: string; count: number }) => ({ referrer: r._id, count: r.count })),
     topCountries: (result?.topCountries ?? []).map((c: { _id: string; count: number }) => ({ country: c._id, count: c.count })),
+    classification: (classRows as { _id: string; count: number }[]).map((c) => ({ class: c._id, count: c.count })),
   };
 }

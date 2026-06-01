@@ -30,7 +30,7 @@ export default function TrafficPage() {
               className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
               style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
             >
-              Full analytics
+              Pipeline &amp; system
             </Link>
           </div>
         </div>
@@ -38,7 +38,7 @@ export default function TrafficPage() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-          First-party visitor data — collected server-side with anonymized IPs, no cookie consent required. The source of truth, independent of Google Analytics. Includes all subdomains (host-level split coming next).
+          First-party visitor data — collected server-side with anonymized IPs, no cookie consent required. The source of truth, independent of Google Analytics. Filter by subdomain under “Sites,” and see the human / bot / AI split (accruing from today).
         </p>
         <TrafficDashboard />
       </main>

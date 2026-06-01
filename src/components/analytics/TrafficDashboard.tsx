@@ -1,10 +1,22 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Users, Globe, BarChart3, X, ChevronRight } from 'lucide-react';
+import { Users, Globe, BarChart3, X, ChevronRight, Server, Bot } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { AreaChart } from './charts/AreaChart';
 import type { TrafficDashboardData, TrafficBin } from '@/lib/analytics-traffic';
+import { TRAFFIC_CLASS_LABELS, type TrafficClass } from '@/lib/traffic-classification';
+
+type FilterKey = 'country' | 'section' | 'referrer' | 'host';
+
+// Display order + color for the human/bot/AI breakdown.
+const CLASS_ORDER: { key: TrafficClass; color: string }[] = [
+  { key: 'human', color: '#16a34a' },
+  { key: 'ai_agent', color: '#8b5cf6' },
+  { key: 'ai_trainer', color: '#a855f7' },
+  { key: 'search_crawler', color: '#3b82f6' },
+  { key: 'other_bot', color: '#94a3b8' },
+];
 
 const RANGES = [
   { days: 1, label: '24h' },
@@ -41,15 +53,15 @@ export default function TrafficDashboard() {
   const [days, setDays] = useState(30);
   const [bin, setBin] = useState<TrafficBin | 'auto'>('auto');
   const [metric, setMetric] = useState<Metric>('pageviews');
-  const [filters, setFilters] = useState<{ country?: string; section?: string; referrer?: string }>({});
+  const [filters, setFilters] = useState<Partial<Record<FilterKey, string>>>({});
 
   const fetchData = useCallback(() => {
     setLoading(true);
     const params = new URLSearchParams({ days: String(days) });
     if (bin !== 'auto') params.set('bin', bin);
-    if (filters.country) params.set('country', filters.country);
-    if (filters.section) params.set('section', filters.section);
-    if (filters.referrer) params.set('referrer', filters.referrer);
+    (['country', 'section', 'referrer', 'host'] as FilterKey[]).forEach(k => {
+      if (filters[k]) params.set(k, filters[k]!);
+    });
     fetch(`/api/analytics/traffic?${params.toString()}`)
       .then(r => (r.ok ? r.json() : null))
       .then(setData)
@@ -59,13 +71,13 @@ export default function TrafficDashboard() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  const toggleFilter = (key: 'country' | 'section' | 'referrer', value: string) => {
+  const toggleFilter = (key: FilterKey, value: string) => {
     setFilters(f => ({ ...f, [key]: f[key] === value ? undefined : value }));
   };
 
-  const activeFilters = (['section', 'country', 'referrer'] as const)
+  const activeFilters = (['host', 'section', 'country', 'referrer'] as FilterKey[])
     .map(k => (filters[k] ? { key: k, value: filters[k]! } : null))
-    .filter(Boolean) as { key: 'country' | 'section' | 'referrer'; value: string }[];
+    .filter(Boolean) as { key: FilterKey; value: string }[];
 
   const card = { background: 'var(--bg-white)', border: '1px solid var(--border-light)' };
   const pill = (active: boolean) => ({
@@ -152,6 +164,18 @@ export default function TrafficDashboard() {
               delta={pctDelta(data.summary.visitors, data.summary.prevVisitors)}
               hint="approx — anonymized IP"
             />
+          </div>
+
+          {/* Sites + Human/bot/AI split */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ListCard title="Sites" icon={<Server className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />} hint="click to filter by subdomain">
+              {data.sites.length === 0 ? <Empty /> : data.sites.map((s, i) => (
+                <Row key={i} label={s.host} count={s.count} unit="views"
+                  active={filters.host === s.host}
+                  onClick={s.host === '(pre-tracking)' ? undefined : () => toggleFilter('host', s.host)} />
+              ))}
+            </ListCard>
+            <ClassificationCard rows={data.classification} />
           </div>
 
           {/* Trend */}
@@ -270,4 +294,58 @@ function Row({ label, count, unit, active, onClick, drill }: {
 
 function Empty() {
   return <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>None in this range</p>;
+}
+
+// Human vs bot vs AI. Counts come from the ingestion-time classifier, which
+// only starts accruing once this ships — so it's empty for prior history.
+function ClassificationCard({ rows }: { rows: { class: string; count: number }[] }) {
+  const byClass = new Map(rows.map(r => [r.class, r.count]));
+  const ordered = CLASS_ORDER.map(c => ({ ...c, count: byClass.get(c.key) ?? 0 }));
+  const total = ordered.reduce((sum, c) => sum + c.count, 0);
+  const aiCount = (byClass.get('ai_agent') ?? 0) + (byClass.get('ai_trainer') ?? 0);
+
+  return (
+    <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+          <Bot className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
+          Human · bot · AI
+        </h2>
+        {total > 0 && (
+          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            AI {Math.round((aiCount / total) * 100)}% of {total.toLocaleString('en-US')}
+          </span>
+        )}
+      </div>
+
+      {total === 0 ? (
+        <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>
+          No classified traffic yet — this begins accruing now that ingestion records it.
+        </p>
+      ) : (
+        <>
+          {/* Proportion bar */}
+          <div className="flex w-full h-3 rounded-full overflow-hidden mb-4">
+            {ordered.filter(c => c.count > 0).map(c => (
+              <div key={c.key} style={{ width: `${(c.count / total) * 100}%`, background: c.color }}
+                title={`${TRAFFIC_CLASS_LABELS[c.key]}: ${c.count.toLocaleString('en-US')}`} />
+            ))}
+          </div>
+          <div className="space-y-1">
+            {ordered.map(c => (
+              <div key={c.key} className="flex items-center justify-between py-1">
+                <span className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: c.color }} />
+                  {TRAFFIC_CLASS_LABELS[c.key]}
+                </span>
+                <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                  {c.count.toLocaleString('en-US')} · {total > 0 ? Math.round((c.count / total) * 100) : 0}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
