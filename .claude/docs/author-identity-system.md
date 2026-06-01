@@ -78,13 +78,19 @@ with that string → `entities` doc. When **on**:
 1. **Resolve slug → canonical person** (`resolveCanonicalAuthor`):
    - direct: `authors` where `_id` / `slug` / `variant_slugs` == slug;
    - fallback: look the slug up in the `author_slugs` cache, match its NAME
-     (NFD-normalized) against `variants[]`. This redirects orphan/title-stale
-     slugs **dynamically — no static redirect map is maintained.**
+     (NFD-normalized) against `variants[]`. This resolves orphan/title-stale slugs
+     to the right person's **content dynamically**. (URL-level dedup is separate —
+     the proxy uses a precomputed map; see §"Proxy redirect".)
 2. **Redirect to the canonical slug** when the requested slug ≠ `doc.slug`. One
-   person, one URL; every variant collapses to it. Uses Next `redirect()` (**307
-   temporary**) deliberately during the flagged rollout — a permanent 308 would be
-   cached by browsers/search engines and survive a flag-off. **Switch to
-   `permanentRedirect()` (308) at cutover**, when the flag is removed.
+   person, one URL; every variant collapses to it. **As of #2292 (shipped
+   2026-06-01) this 308 is issued by the PROXY (`src/proxy.ts`), NOT the page.**
+   The page's own `resolveCanonicalAuthor`-driven `redirect()` was a silent no-op —
+   it returned 200, never a 307 — because `/author/[name]` is ISR/streamed: the
+   200 response shell commits before a server `redirect()` in the RSC body
+   resolves, so it degrades to an ineffective client-side nav (invisible to curl
+   and crawlers). The proxy runs *before* the page and returns a real server 308.
+   See §"Proxy redirect" below. (The page still uses the resolver for content-level
+   dedup — the merged book set renders correctly even if you land on a variant URL.)
 3. **Fetch the deduplicated book set** as a UNION, in authority order:
    `author_id == slug` **∪** `author_entity_id ∈ entity_ids` **∪** `author ∈ variants`.
    The third arm is a self-healing fallback for books not yet backfilled.
@@ -92,6 +98,25 @@ with that string → `entities` doc. When **on**:
    doc (offline-populated; never fetched at render).
 5. On any miss, fall back to the legacy path — **no author page regresses** while
    the tail is still being linked.
+
+### Proxy redirect (the live URL-dedup mechanism, #2292)
+
+URL canonicalization is done in **`src/proxy.ts`** (Next 16's renamed middleware —
+the repo has no `middleware.ts`; adding one is a build error since `proxy.ts`
+already exists). A single-segment `/author/<variant>` request 308s to the
+canonical slug, right after the www→non-www redirect, before any DB work.
+
+- **Map:** `src/lib/author-canonical-redirects.json` — precomputed
+  `variant-slug → canonical-slug` table (≈2,900 entries), bundled because the edge
+  proxy has no DB. Built by `scripts/maintenance/build-author-redirect-map.mjs` from
+  the `authors` thesaurus; **excludes any variant that is itself another person's
+  canonical slug.** It is a STATIC SNAPSHOT — **regenerate + commit when `authors`
+  changes** (new variants/merges), else new variants won't 308 until then.
+- Scope is single-segment only, so `/author/[name]/opengraph-image` etc. are
+  untouched; the block falls through on any miss/error so author routing can't break.
+- This SUPERSEDES the page-level `redirect()` for URL dedup. The `AUTHOR_THESAURUS_READPATH`
+  flag no longer gates the URL redirect (it's unconditional in the proxy); the flag
+  still gates the page's content resolver.
 
 Coverage (2026-05-31, all 8,854 `author_slugs` entries): **6,833 resolve via the
 thesaurus**, of which **~3,799 duplicate URLs redirect to a canonical**; 2,021 fall
@@ -257,7 +282,10 @@ Ji off Li Xiaojiang); 28 wrong wikidata anchors cleared (id + dates + portrait,
 | File | Role |
 |---|---|
 | `src/lib/author-thesaurus.ts` | `resolveCanonicalAuthor()` — the read-path resolver. |
-| `src/app/author/[name]/page.tsx` | Author page; flag-gated canonical branch + 301. |
+| `src/app/author/[name]/page.tsx` | Author page; flag-gated canonical resolver for **content** dedup (its own `redirect()` is a no-op on this ISR/streamed route — URL dedup is in the proxy). |
+| `src/proxy.ts` | **Issues the variant→canonical 308** (URL dedup), before the page (#2292). |
+| `src/lib/author-canonical-redirects.json` | Bundled variant→canonical map the proxy reads (≈2,900 entries). |
+| `scripts/maintenance/build-author-redirect-map.mjs` | Regenerates that map from the `authors` thesaurus. Re-run + commit when authors change. |
 | `scripts/maintenance/build-authors-collection.mjs` | Builds the `authors` thesaurus — deterministic name-key ∪ VIAF ∪ Wikidata (#2202). The actual writer; `source: build-authors-collection`. |
 | `scripts/maintenance/reconcile-authors-grounded.mjs` | Grounded reconciler — anchors the bare tail to a Wikidata QID/VIAF using each author's books as evidence; merges on shared id (#2218). |
 | `scripts/maintenance/build-canonical-authors.mjs` | Older READ-ONLY cluster sizer — does not write `authors`. Superseded by build-authors-collection. |
