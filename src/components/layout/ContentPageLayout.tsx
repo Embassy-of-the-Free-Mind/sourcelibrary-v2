@@ -42,7 +42,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, maxW
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
         )}
-        <div className={`relative w-full ${headerWidthClass} mx-auto px-6`}>
+        <div className={`relative w-full ${headerWidthClass} mx-auto px-6 md:px-12`}>
           <h1 className={`font-serif text-4xl md:text-5xl tracking-tight ${subtitle ? 'mb-4' : ''} ${image ? 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]' : ''}`}>{title}</h1>
           {subtitle && (
             <p className={`text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed ${image ? 'drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]' : ''}`}>{subtitle}</p>
@@ -54,7 +54,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, maxW
       {/* Date/byline below hero when image is present */}
       {image && children && (
         <div className="bg-cream">
-          <div className={`${headerWidthClass} mx-auto px-6 pt-6`}>
+          <div className={`${headerWidthClass} mx-auto px-6 md:px-12 pt-6`}>
             {children}
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function ContentPageLayout({
   return (
     <div className={`min-h-screen ${bg}`}>
       {header}
-      <main className={`${widthClass} ${widthClass ? 'mx-auto' : ''} ${noPadding ? '' : 'px-6 py-12'} ${className}`}>
+      <main className={`${widthClass} ${widthClass ? 'mx-auto' : ''} ${noPadding ? '' : 'px-6 md:px-12 py-12'} ${className}`}>
         {children}
       </main>
     </div>
