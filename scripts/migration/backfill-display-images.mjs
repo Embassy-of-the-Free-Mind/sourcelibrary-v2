@@ -1,36 +1,71 @@
 #!/usr/bin/env node
 /**
- * Backfill display (1200px) and thumbnail (150px) variants for pages
- * that already have archived_photo but no display_photo.
+ * Backfill display (1200px) + thumbnail (150px) R2 variants for pages that have
+ * a full-res source but no free, browser-safe display variant — issue #1814.
  *
- * Strategy: iterate books (small collection, indexed), then query pages
- * per book using the book_id index. Avoids collection-scanning the
- * 9.5M pages collection on unindexed fields.
+ * For those pages the read-side resolver (`src/lib/page-image-url.ts`) falls
+ * through to the metered `/api/image` proxy on every view; materializing the
+ * variants + persisting the fields moves the reads onto free R2 egress.
  *
- * Downloads full-res from R2, generates variants, uploads back to R2.
- * R2 egress is free, so the only cost is CPU time + write ops.
+ * SOURCE CORRECTNESS (the #1814 fix). We resize whatever `getPageSource()`
+ * returns — never `archived_photo` blindly. `archived_photo` is the *full
+ * spread* for split scans; the half lives in `cropped_photo` (old-era) or the
+ * `sp…` `photo` (new-era). Resizing the spread bakes a wrong variant at scale.
+ *   - new-era split  → `photo` (the sp half)        → backfilled here
+ *   - normal page    → `archived_photo` / `photo`   → backfilled here
+ *   - old-era split  → `cropped_photo`              → SKIPPED (out of scope)
+ * Old-era split pages are skipped because the read-side `resolveSized`
+ * deliberately ignores `display_photo`/`image_thumb` whenever `cropped_photo`
+ * is set and always proxies+crops instead — so a variant we wrote would never
+ * be served (wasted R2 + Mongo writes). They need a read-side change to benefit
+ * (tracked separately; revisit with #1730 / materialize-crops).
+ *
+ * ENUMERATION is Mongo-driven, per-book. The Supabase `pages_images` mirror was
+ * the old selector, but it only covers ~2.96M of 6.49M pages and exposes just
+ * ~2.7K of the ~700K gap (verified 2026-06-01, #1814) — the gap is almost
+ * entirely in *unmirrored* Mongo pages, so the mirror is a silent cap. Instead
+ * we walk the `books` collection (small) and, per book, query its pages on the
+ * `{book_id, page_number}` index — full docs, so `getPageSource()` has what it
+ * needs. A persisted cursor (`system_config.display_backfill_cursor`) lets the
+ * cron resume across runs and wrap when the corpus is drained.
+ *
+ * PERSIST canonical `image_thumb` (+ `display_photo`) on the Mongo page — not
+ * the deprecated `thumbnail_blob`. The Supabase mirror is updated best-effort
+ * (UPDATE-only, never INSERT) so browse/cover surfaces pick up the new thumb;
+ * mirror failures never fail the run.
+ *
+ * IDEMPOTENCY: selection on missing `display_photo` is the primary gate (field/
+ * file drift measured ~0pp). A HEAD on the display key is cheap insurance for
+ * the rare file-present/field-absent case — it re-persists the field without
+ * re-resizing; it does not gate throughput.
  *
  * Usage:
- *   set -a; source .env.production.local; set +a; node scripts/migration/backfill-display-images.mjs
- *   node scripts/migration/backfill-display-images.mjs --limit=1000 --concurrency=8 --dry-run
+ *   set -a; source .env.production.local; set +a; node scripts/migration/backfill-display-images.mjs --dry-run
+ *   node scripts/migration/backfill-display-images.mjs --limit=20000 --concurrency=10 --dry-run
  *   node scripts/migration/backfill-display-images.mjs --book=BOOK_ID
+ *   node scripts/migration/backfill-display-images.mjs --no-cursor   # ignore/scan from start
+ *
+ * ⚠️ --dry-run reports counts only. A real run writes to R2 + Mongo (+ best-effort
+ *    Supabase). Per #1814, get the source-selection diff reviewed before a prod run.
  */
 
 import { MongoClient } from 'mongodb';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
 import { createClient } from '@supabase/supabase-js';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
+import { getPageSource, isUsableImageUrl } from '../lib/page-image-url.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
 const hasFlag = (name) => args.includes(`--${name}`);
 
-const LIMIT = parseInt(getArg('limit') || '50000', 10);
+const LIMIT = parseInt(getArg('limit') || '50000', 10);       // max pages backfilled per run
 const CONCURRENCY = parseInt(getArg('concurrency') || '10', 10);
-const BOOK_CONCURRENCY = parseInt(getArg('book-concurrency') || '3', 10);
+const BOOK_LIMIT = parseInt(getArg('books') || '100000', 10); // max books with a gap per run
 const DRY_RUN = hasFlag('dry-run');
-const BOOK_ID = getArg('book');  // Optional: backfill a single book
-const START_AFTER = getArg('start-after');  // Start after this book id (for partitioning)
+const NO_CURSOR = hasFlag('no-cursor');
+const BOOK_ID = getArg('book');                               // single-book mode
+const START_AFTER = getArg('start-after');                    // manual cursor override (book id)
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -48,6 +83,27 @@ const s3 = new S3Client({
   credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
 });
 
+/** Image-bearing fields getPageSource() and the variant writer need. */
+const PAGE_PROJECTION = {
+  _id: 1, id: 1, book_id: 1, page_number: 1,
+  photo: 1, photo_original: 1, archived_photo: 1, enhanced_photo: 1,
+  cropped_photo: 1, display_photo: 1, image_thumb: 1, split_from_spread: 1,
+};
+
+/** Per-book Mongo pre-filter: pages missing display_photo. */
+const gapFilter = (bookId) => ({
+  book_id: bookId,
+  $or: [{ display_photo: { $exists: false } }, { display_photo: null }, { display_photo: '' }],
+});
+
+function variantKeys(bookId, pageNumber) {
+  const num = String(pageNumber).padStart(4, '0');
+  return {
+    display: `pages/${bookId}/${num}.jpg`,
+    thumb: `pages/${bookId}/${num}-thumb.jpg`,
+  };
+}
+
 async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   await s3.send(new PutObjectCommand({
     Bucket: R2_BUCKET_NAME, Key: key, Body: buffer,
@@ -56,9 +112,18 @@ async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
+async function r2Exists(key) {
+  try {
+    await s3.send(new HeadObjectCommand({ Bucket: R2_BUCKET_NAME, Key: key }));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function downloadFromR2(url) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30_000);
+  const timeout = setTimeout(() => controller.abort(), 45_000);
   try {
     const res = await fetch(url, { signal: controller.signal });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -69,58 +134,63 @@ async function downloadFromR2(url) {
 }
 
 const stats = {
-  processed: 0, succeeded: 0, failed: 0, skipped: 0,
-  booksProcessed: 0, booksSkipped: 0,
+  processed: 0, succeeded: 0, failed: 0,
+  skip_legacy_split: 0, skip_no_source: 0, skip_already_present: 0,
+  wouldBackfill: 0, booksScanned: 0, booksWithGap: 0,
   bytesUploaded: 0, startTime: Date.now(),
+  _supabaseUpdates: [],
 };
 
+/**
+ * Resolve the correct source for a full Mongo page doc, or a skip reason.
+ * Old-era split (cropped_photo) is intentionally out of scope (see header).
+ */
+function resolveSource(page) {
+  if (isUsableImageUrl(page.cropped_photo)) return { skip: 'legacy_split' };
+  const source = getPageSource(page);
+  if (!source || !/^https?:\/\//.test(source) || /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i.test(source)) {
+    return { skip: 'no_source' };
+  }
+  return { source };
+}
+
 async function processPage(page, db) {
+  const { source, skip } = resolveSource(page);
+  if (skip === 'legacy_split') { stats.skip_legacy_split++; return; }
+  if (skip === 'no_source') { stats.skip_no_source++; return; }
+
+  const keys = variantKeys(page.book_id, page.page_number);
+
+  if (DRY_RUN) { stats.wouldBackfill++; return; }
+
   try {
-    if (!page.archived_photo?.startsWith('https://')) {
-      stats.skipped++;
-      return;
-    }
-    const fullResBuffer = await downloadFromR2(page.archived_photo);
-
-    if (DRY_RUN) {
-      stats.skipped++;
-      return;
-    }
-
-    const { display, thumb } = await generateDisplayVariants(fullResBuffer);
-
-    const num = String(page.page_number).padStart(4, '0');
-    const displayKey = `pages/${page.book_id}/${num}.jpg`;
-    const thumbKey = `pages/${page.book_id}/${num}-thumb.jpg`;
-
-    const displayUrl = await uploadToR2(displayKey, display);
-    const thumbUrl = await uploadToR2(thumbKey, thumb);
-
-    stats.bytesUploaded += display.length + thumb.length;
-
-    // Update Atlas (use id field which matches pages_images.id)
     const pageId = page.id || page._id;
-    await db.collection('pages').updateOne(
-      { $or: [{ id: pageId }, { _id: pageId }] },
-      {
-        $set: {
-          display_photo: displayUrl,
-          thumbnail_blob: thumbUrl,
-          updated_at: new Date(),
-        }
-      }
-    );
+    const mongoFilter = { $or: [{ id: pageId }, { _id: pageId }] };
 
-    // Track for Supabase bulk update (include all required columns for upsert)
-    if (!stats._supabaseUpdates) stats._supabaseUpdates = [];
-    stats._supabaseUpdates.push({
-      id: pageId,
-      book_id: page.book_id,
-      page_number: page.page_number,
-      archived_photo: page.archived_photo,
-      display_photo: displayUrl,
-      thumbnail_blob: thumbUrl,
+    // Cheap insurance: if the display file already exists (field/file drift),
+    // just persist the fields — don't re-download/resize/upload.
+    const fileAlready = await r2Exists(keys.display);
+    let displayUrl = `${R2_PUBLIC_URL}/${keys.display}`;
+    let thumbUrl = `${R2_PUBLIC_URL}/${keys.thumb}`;
+
+    if (!fileAlready) {
+      const fullResBuffer = await downloadFromR2(source);
+      const { display, thumb } = await generateDisplayVariants(fullResBuffer);
+      displayUrl = await uploadToR2(keys.display, display);
+      thumbUrl = await uploadToR2(keys.thumb, thumb);
+      stats.bytesUploaded += display.length + thumb.length;
+    } else {
+      stats.skip_already_present++;
+    }
+
+    // Mongo (read-side source of truth): canonical image_thumb, not thumbnail_blob.
+    await db.collection('pages').updateOne(mongoFilter, {
+      $set: { display_photo: displayUrl, image_thumb: thumbUrl, updated_at: new Date() },
     });
+
+    // Best-effort Supabase mirror UPDATE (existing rows only) so browse/cover
+    // surfaces pick up the new thumb. Never INSERTs, never fails the run.
+    stats._supabaseUpdates.push({ id: pageId, display_photo: displayUrl, thumbnail_blob: thumbUrl });
 
     stats.succeeded++;
   } catch (err) {
@@ -131,155 +201,107 @@ async function processPage(page, db) {
   }
 }
 
-async function processBook(book, db) {
-  // Query pages per book — uses book_id index, fast. No sort needed for backfill.
-  // Don't filter on display_photo (unindexed) — check in code instead
-  const pages = await db.collection('pages')
-    .find(
-      { book_id: book.id },
-      { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1, display_photo: 1 } }
-    )
-    .batchSize(5000)
-    .maxTimeMS(15_000)
-    .toArray()
-    .catch((err) => {
-      if (stats.failed <= 5) console.error(`  [book ${book.id}] page query failed: ${err.message?.slice(0, 80)}`);
-      return [];
-    });
-
-  // Filter in code: need archived_photo, no display_photo yet
-  const needsBackfill = pages.filter(p =>
-    p.archived_photo && !p.display_photo && p.archived_photo.startsWith('https://')
-  );
-
-  if (needsBackfill.length === 0) {
-    stats.booksSkipped++;
-    return 0;
-  }
-
-  // Process pages within this book with bounded concurrency
+/** Run a list of full page docs through processPage with bounded concurrency. */
+async function runBatch(pages, db) {
   let idx = 0;
-  const pageConcurrency = Math.min(CONCURRENCY, needsBackfill.length);
-  async function pageWorker() {
-    while (idx < needsBackfill.length && stats.processed < LIMIT) {
+  async function worker() {
+    while (idx < pages.length && stats.processed < LIMIT) {
       const i = idx++;
-      if (i >= needsBackfill.length) break;
-      await processPage(needsBackfill[i], db);
+      if (i >= pages.length) break;
+      await processPage(pages[i], db);
       stats.processed++;
+      if (stats.processed % 500 === 0) logProgress();
     }
   }
+  await Promise.all(Array.from({ length: Math.min(CONCURRENCY, pages.length) }, () => worker()));
+}
 
-  await Promise.all(Array.from({ length: pageConcurrency }, () => pageWorker()));
-  stats.booksProcessed++;
-
-  return needsBackfill.length;
+/** Best-effort flush of mirror updates (UPDATE existing rows only). */
+async function flushSupabase(supabase) {
+  const updates = stats._supabaseUpdates;
+  if (!supabase || updates.length === 0) return;
+  stats._supabaseUpdates = [];
+  for (const u of updates) {
+    try {
+      await supabase.from('pages_images')
+        .update({ display_photo: u.display_photo, thumbnail_blob: u.thumbnail_blob })
+        .eq('id', u.id);
+    } catch { /* mirror is best-effort; sync-worker will reconcile */ }
+  }
 }
 
 function logProgress() {
   const elapsed = (Date.now() - stats.startTime) / 1000;
   const rate = (stats.processed / elapsed).toFixed(1);
   const mb = (stats.bytesUploaded / (1024 * 1024)).toFixed(0);
-  console.log(`  ${stats.processed.toLocaleString()} pages (${stats.booksProcessed} books) — ${stats.succeeded} ok, ${stats.failed} fail — ${rate}/s — ${mb}MB uploaded`);
+  console.log(`  ${stats.processed.toLocaleString()} pages (${stats.booksWithGap} books) — ${stats.succeeded} ok, ${stats.failed} fail, ${stats.skip_legacy_split} split-skip — ${rate}/s — ${mb}MB`);
 }
 
 async function main() {
-  console.log(`[backfill-display] Display image backfill — limit=${LIMIT}, concurrency=${CONCURRENCY}${DRY_RUN ? ' (DRY RUN)' : ''}`);
+  console.log(`[backfill-display] #1814 split-aware backfill — page-limit=${LIMIT}, book-limit=${BOOK_LIMIT}, concurrency=${CONCURRENCY}${DRY_RUN ? ' (DRY RUN)' : ''}`);
 
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 10 });
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 12 });
   await client.connect();
   const db = client.db('bookstore');
 
+  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabase = SUPABASE_KEY
+    ? createClient(process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co', SUPABASE_KEY, { auth: { persistSession: false } })
+    : null;
+  if (!supabase) console.warn('[backfill-display] No SUPABASE_SERVICE_ROLE_KEY — skipping mirror updates (Mongo is the read-side source of truth).');
+
   if (BOOK_ID) {
-    // Single book mode
+    // Single-book mode.
     const book = await db.collection('books').findOne(
-      { $or: [{ id: BOOK_ID }, { _id: BOOK_ID }] },
-      { projection: { id: 1, title: 1 } }
+      { $or: [{ id: BOOK_ID }, { _id: BOOK_ID }] }, { projection: { id: 1, title: 1 } },
     );
     if (!book) { console.error(`Book not found: ${BOOK_ID}`); await client.close(); return; }
     console.log(`[backfill-display] Single book: ${book.title?.slice(0, 60)}`);
-    await processBook(book, db);
+    const pages = await db.collection('pages')
+      .find(gapFilter(book.id), { projection: PAGE_PROJECTION }).batchSize(5000).toArray();
+    console.log(`  ${pages.length} pages missing display_photo`);
+    if (pages.length) { stats.booksWithGap++; await runBatch(pages, db); if (!DRY_RUN) await flushSupabase(supabase); }
   } else {
-    // Query pages needing backfill directly from Supabase pages_images table.
-    // One indexed query replaces thousands of per-book Atlas queries.
-    const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
-    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!SUPABASE_KEY) {
-      console.error('[backfill-display] Missing SUPABASE_SERVICE_ROLE_KEY');
-      process.exit(1);
+    // Bulk mode — walk the books collection in _id order from a persisted
+    // cursor, backfilling each book's gap pages. Resume + wrap across cron runs.
+    let cursor = null;
+    if (START_AFTER) {
+      const sb = await db.collection('books').findOne({ $or: [{ id: START_AFTER }, { _id: START_AFTER }] }, { projection: { _id: 1 } });
+      cursor = sb?._id ?? null;
+    } else if (!NO_CURSOR) {
+      const c = await db.collection('system_config').findOne({ _id: 'display_backfill_cursor' });
+      cursor = c?.lastBookMongoId ?? null;
     }
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+    const bookQuery = cursor ? { _id: { $gt: cursor } } : {};
+    const bookCursor = db.collection('books')
+      .find(bookQuery, { projection: { _id: 1, id: 1 } }).sort({ _id: 1 });
 
-    console.log(`[backfill-display] Querying pages_images for pages needing display variants...`);
-    const t = Date.now();
-    // Supabase default limit is 1000 — paginate to get up to LIMIT
-    const pages = [];
-    let from = 0;
-    while (pages.length < LIMIT) {
-      const batchSize = Math.min(1000, LIMIT - pages.length);
-      const { data, error: qErr } = await supabase
-        .from('pages_images')
-        .select('id,book_id,page_number,archived_photo')
-        .not('archived_photo', 'is', null)
-        .is('display_photo', null)
-        .range(from, from + batchSize - 1);
-      if (qErr) { console.error('Supabase query error:', qErr.message); break; }
-      if (!data || data.length === 0) break;
-      pages.push(...data);
-      from += data.length;
-      if (data.length < batchSize) break; // no more results
-    }
-    const error = null;
+    let lastBookMongoId = cursor;
+    let reachedEnd = true;
+    for await (const book of bookCursor) {
+      if (stats.booksWithGap >= BOOK_LIMIT || stats.processed >= LIMIT) { reachedEnd = false; break; }
+      stats.booksScanned++;
+      lastBookMongoId = book._id;
+      if (!book.id) continue;
 
-    if (error) {
-      console.error('Supabase query error:', error.message);
-      await client.close();
-      return;
+      const pages = await db.collection('pages')
+        .find(gapFilter(book.id), { projection: PAGE_PROJECTION }).toArray();
+      if (pages.length === 0) continue;
+
+      stats.booksWithGap++;
+      await runBatch(pages, db);
+      if (!DRY_RUN) await flushSupabase(supabase);
     }
 
-    console.log(`[backfill-display] ${pages.length} pages from Supabase in ${Date.now() - t}ms`);
-
-    if (pages.length === 0) {
-      console.log('[backfill-display] No pages need backfill — done!');
-      await client.close();
-      return;
-    }
-
-    // Process pages with bounded concurrency
-    // Atlas only needed for writes (updateOne per page) — no reads!
-    let idx = 0;
-    async function worker() {
-      while (idx < pages.length) {
-        const i = idx++;
-        if (i >= pages.length) break;
-        const page = pages[i];
-        // Skip non-URL archived photos
-        if (!page.archived_photo?.startsWith('https://')) {
-          stats.skipped++;
-          stats.processed++;
-          continue;
-        }
-        await processPage({ _id: page.id, ...page }, db);
-        stats.processed++;
-
-        if (stats.processed % 500 === 0) {
-          logProgress();
-        }
-      }
-    }
-
-    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, pages.length) }, () => worker()));
-
-    // Bulk update Supabase mirror so next run skips these pages
-    const updates = stats._supabaseUpdates || [];
-    if (updates.length > 0) {
-      console.log(`  Syncing ${updates.length} display_photo updates to Supabase...`);
-      for (let i = 0; i < updates.length; i += 500) {
-        const batch = updates.slice(i, i + 500);
-        const { error: upsertErr } = await supabase.from('pages_images').upsert(batch, { onConflict: 'id' });
-        if (upsertErr) console.error(`  Supabase sync error: ${upsertErr.message}`);
-      }
+    // Persist cursor for the next run; wrap to the start once drained.
+    if (!DRY_RUN && !NO_CURSOR && !START_AFTER) {
+      await db.collection('system_config').updateOne(
+        { _id: 'display_backfill_cursor' },
+        { $set: { lastBookMongoId: reachedEnd ? null : lastBookMongoId, updatedAt: new Date() } },
+        { upsert: true },
+      );
+      if (reachedEnd) console.log('[backfill-display] Reached end of books — cursor reset (next run wraps to start).');
     }
   }
 
@@ -287,35 +309,37 @@ async function main() {
   const rate = stats.processed > 0 ? parseFloat((stats.processed / elapsed).toFixed(1)) : 0;
   const gb = parseFloat((stats.bytesUploaded / (1024 * 1024 * 1024)).toFixed(2));
   console.log(`\n[backfill-display] Done in ${Math.round(elapsed)}s`);
-  if (stats.booksProcessed) console.log(`  Books: ${stats.booksProcessed} processed, ${stats.booksSkipped} skipped`);
-  console.log(`  Pages: ${stats.processed.toLocaleString()} processed, ${stats.succeeded.toLocaleString()} succeeded, ${stats.failed} failed`);
-  console.log(`  Rate: ${rate} pages/sec`);
-  console.log(`  Uploaded: ${gb} GB`);
+  console.log(`  Books scanned: ${stats.booksScanned.toLocaleString()}, with gap: ${stats.booksWithGap.toLocaleString()}`);
+  console.log(`  Pages processed: ${stats.processed.toLocaleString()} — succeeded ${stats.succeeded.toLocaleString()}, failed ${stats.failed}`);
+  console.log(`  Skipped — old-era split: ${stats.skip_legacy_split.toLocaleString()}, no source: ${stats.skip_no_source.toLocaleString()}, file-present (field repair): ${stats.skip_already_present.toLocaleString()}`);
+  if (DRY_RUN) {
+    const estPuts = stats.wouldBackfill * 2;
+    const estGb = (stats.wouldBackfill * 0.126 / 1024).toFixed(2);
+    console.log(`  WOULD backfill: ${stats.wouldBackfill.toLocaleString()} pages → ~${estPuts.toLocaleString()} R2 PUTs, ~${estGb} GB`);
+    console.log(`  DRY RUN — no writes. Get the source-selection diff reviewed before a prod run (#1814).`);
+  } else {
+    console.log(`  Uploaded: ${gb} GB`);
+  }
 
-  // Log stats to system_config for the monitoring dashboard
-  if (stats.processed > 0) {
+  // Stats for the monitoring dashboard (display_backfill_stats).
+  if (!DRY_RUN && stats.processed > 0) {
     try {
       const runRecord = {
         completedAt: new Date().toISOString(),
-        pages: stats.succeeded,
-        failed: stats.failed,
-        rate,
-        gb,
-        elapsed: Math.round(elapsed),
-        concurrency: CONCURRENCY,
+        pages: stats.succeeded, failed: stats.failed,
+        splitSkipped: stats.skip_legacy_split,
+        rate, gb, elapsed: Math.round(elapsed), concurrency: CONCURRENCY,
       };
-      // Read CPU load from log file
       let cpuLoad = [];
       try {
         const fs = await import('fs');
-        const lines = fs.readFileSync('/var/log/sourcelibrary/cpu-load.log', 'utf-8').trim().split('\n').slice(-288); // last 24h at 5min intervals
+        const lines = fs.readFileSync('/var/log/sourcelibrary/cpu-load.log', 'utf-8').trim().split('\n').slice(-288);
         cpuLoad = lines.map(line => {
           const [time, ...rest] = line.split(' ');
           const [l1, l5, l15] = rest.join(' ').split(',').map(s => parseFloat(s.trim()));
           return { time, load1: l1, load5: l5, load15: l15 };
         }).filter(d => !isNaN(d.load1));
       } catch {}
-
       await db.collection('system_config').updateOne(
         { _id: 'display_backfill_stats' },
         {
@@ -323,7 +347,7 @@ async function main() {
           $inc: { totalPages: stats.succeeded, totalGB: gb },
           $set: { cpuLoad, lastRunAt: new Date(), updatedAt: new Date() },
         },
-        { upsert: true }
+        { upsert: true },
       );
     } catch (e) {
       console.error('  [warn] Failed to write stats to DB:', e.message);
