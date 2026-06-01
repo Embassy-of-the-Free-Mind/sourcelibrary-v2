@@ -58,7 +58,12 @@ const env = loadEnv();
 const apply = process.argv.includes('--apply');
 const getArg = name => { const i = process.argv.indexOf(name); return i >= 0 && i + 1 < process.argv.length ? process.argv[i + 1] : null; };
 const LIMIT = getArg('--limit') ? parseInt(getArg('--limit')) : null;
-const FLAG = 'audit_applied_2026_05_30';
+// Stable field name (#2332 Task 2). LEGACY is the pre-rename dated marker —
+// still honored in skip filters so already-processed books aren't re-audited
+// before the one-time backfill (scripts/maintenance/migrate-ft-dated-fields.mjs)
+// copies legacy→stable. A follow-up can drop the LEGACY branch once backfilled.
+const FLAG = 'audit_applied';
+const LEGACY_FLAG = 'audit_applied_2026_05_30';
 
 // Negative reasoning patterns: when the audit's reasoning text contains any of
 // these, the alternative_translation_found is suspect — usually a different
@@ -118,6 +123,7 @@ const eligible = await db.collection('books').find({
   'translation_verification.disposition': 'needs_review',
   'translation_verification.verification_audit.audited_at': { $exists: true },
   [`translation_verification.${FLAG}`]: { $ne: true },
+  [`translation_verification.${LEGACY_FLAG}`]: { $ne: true },
 }).project({
   id: 1,
   'translation_verification.disposition': 1,
@@ -229,6 +235,7 @@ for (const b of queue) {
 
   const update = {
     [`translation_verification.${FLAG}`]: true,
+    'translation_verification.audit_run_at': now,
     updated_at: now,
   };
   // Disposition mutation paths (skip if keeping at needs_review)
