@@ -80,8 +80,8 @@ export default function PlaceholderCover({ title, author, year, className }: Pla
               ...wrap,
               fontFamily: 'var(--font-serif)',
               fontStyle: 'italic',
-              fontSize: '10.5cqw',
-              lineHeight: 1.14,
+              fontSize: '8.5cqw',
+              lineHeight: 1.16,
               color: 'var(--color-cover-title, #e9e1d0)',
               display: '-webkit-box',
               WebkitLineClamp: 3,
@@ -97,8 +97,8 @@ export default function PlaceholderCover({ title, author, year, className }: Pla
               style={{
                 ...wrap,
                 fontFamily: 'var(--font-serif)',
-                fontSize: '6cqw',
-                lineHeight: 1.22,
+                fontSize: '4.8cqw',
+                lineHeight: 1.25,
                 color: 'var(--color-cover-muted, #b3a890)',
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
@@ -114,7 +114,7 @@ export default function PlaceholderCover({ title, author, year, className }: Pla
             <div
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '4cqw',
+                fontSize: '3.3cqw',
                 letterSpacing: '0.18em',
                 color: 'var(--color-cover-muted, #b3a890)',
               }}

@@ -121,7 +121,7 @@ function isAdvFilterApplied(key: string, value: string | boolean, lockDigitized:
   return value !== '' && !(lockDigitized && key === 'digitized');
 }
 
-const PER_PAGE = 50;
+const PER_PAGE = 60;
 
 /** Per-column sort cycling — first click sorts ascending, second click sorts
     descending. Shelfmark only supports ascending (codes don't read meaningfully
@@ -287,6 +287,7 @@ export default function BphCatalogBrowser({
 
   const buildParams = useCallback((q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     const params = new URLSearchParams();
+    params.set('limit', String(PER_PAGE));
     if (q) params.set('q', q);
     if (s) params.set('sort', s);
     if (kw) params.set('keyword', kw);
