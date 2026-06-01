@@ -89,6 +89,7 @@ Autonomous book acquisition agent for Source Library, focused on Western esoteri
 ## Import APIs (24 Sources)
 
 Full API reference: `.claude/docs/import-apis.md`
+**Workflow + dedup discipline: `.claude/docs/import-workflow.md`** — canonical enumerate→dedupe→subject-filter→source→import→QA→visible loop. Always dedupe on `source_fingerprint` (matches hidden books); subject-filter noisy keyword hits by hand; 429-on-datacenter sources (Harvard/Gallica) use residential direct-insert; work-level dedup is manual until issue #2318.
 
 ### Internet Archive
 ```bash
