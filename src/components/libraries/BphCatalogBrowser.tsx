@@ -684,10 +684,13 @@ export default function BphCatalogBrowser({
       {display === 'list' ? (
         <div className="border border-border-light rounded-lg overflow-hidden bg-white">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            {/* table-fixed + explicit column widths so columns don't resize to
+                the current page's content when the sort order changes. Title
+                is left width-less to absorb the remaining space. */}
+            <table className="w-full text-sm table-fixed">
               <thead>
                 <tr className="border-b border-border-light bg-warm">
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell w-[20%]">
                     <button
                       type="button"
                       onClick={() => handleSortChange(nextSort('author', sort))}
@@ -705,7 +708,7 @@ export default function BphCatalogBrowser({
                       Title<SortArrow direction={arrowFor('title', sort)} />
                     </button>
                   </th>
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell w-[15%]">Place</th>
                   <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">
                     <button
                       type="button"
@@ -715,7 +718,7 @@ export default function BphCatalogBrowser({
                       Year<SortArrow direction={arrowFor('year', sort)} />
                     </button>
                   </th>
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell w-[15%]">
                     <button
                       type="button"
                       onClick={() => handleSortChange(nextSort('shelfmark', sort))}
@@ -724,7 +727,7 @@ export default function BphCatalogBrowser({
                       Shelfmark<SortArrow direction={arrowFor('shelfmark', sort)} />
                     </button>
                   </th>
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell w-[14%]">Subject</th>
                 </tr>
               </thead>
               <tbody className={loading ? 'opacity-50' : ''}>
