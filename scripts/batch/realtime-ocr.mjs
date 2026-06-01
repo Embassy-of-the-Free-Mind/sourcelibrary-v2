@@ -23,6 +23,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -108,11 +109,7 @@ function markKeyRateLimited(keyName) {
 }
 
 // --- Image helpers ---
-function getPageImageUrl(page) {
-  if (page.crop && page.cropped_photo) return page.cropped_photo;
-  if (page.archived_photo && !page.archived_photo.startsWith('failed:')) return page.archived_photo;
-  return page.photo_original || page.photo || null;
-}
+// getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
 
 async function fetchImageBuffer(url) {
   const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
@@ -505,7 +502,7 @@ async function main() {
       projection: {
         id: 1, _id: 0, book_id: 1, page_number: 1,
         photo: 1, photo_original: 1, archived_photo: 1,
-        cropped_photo: 1, crop: 1,
+        cropped_photo: 1, crop: 1, split_from_spread: 1,
         'ocr.model': 1, 'ocr.prompt_version': 1,
       },
     }).sort({ book_id: 1, page_number: 1 }).skip(OFFSET).limit(MAX_PAGES).toArray();

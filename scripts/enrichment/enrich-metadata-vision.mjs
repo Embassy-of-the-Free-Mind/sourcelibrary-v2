@@ -430,7 +430,9 @@ async function main() {
         .find({ book_id: book.id })
         .sort({ page_number: 1 })
         .limit(pagesPerBook)
-        .project({ page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1 })
+        // split_from_spread is required by getPageSource() to pick the new-era
+        // sp… cropped half; omitting it silently routes ~all splits to the spread.
+        .project({ page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1 })
         .toArray();
 
       if (pages.length === 0) {
