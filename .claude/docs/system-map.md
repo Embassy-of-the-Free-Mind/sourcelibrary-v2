@@ -132,8 +132,8 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | `pages_warehouse` | Archived pages (~6.4M) | Same schema |
 | `deleted_books` | Soft-deleted books | Same as books, recoverable |
 | `collections` | Book groupings | `slug`, `name`, `hidden`, `collection_type` |
-| `entities` | Encyclopedia entries | People, places, concepts |
-| `authors` | Normalized author entities | Aliases, Wikipedia, enrichment |
+| `entities` | Legacy per-string author/encyclopedia layer (people, places, concepts). **Being retired for authorship** — superseded by `authors`. | linked via `books.author_entity_id` |
+| `authors` | **Canonical person thesaurus** — one doc per person, `_id`=slug. Books FK via `books.author_id`. | variants, variant_slugs, viaf_id, wikidata_id, entity_ids · see `.claude/docs/author-identity-system.md` |
 
 ### Processing
 | Collection | Purpose |
