@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import { getReadDb } from '@/lib/mongodb';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
+import { galleryThumbLoader } from '@/lib/book-cover-loader';
 
 export const revalidate = false;
 
@@ -128,11 +129,11 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
       {heroImage ? (
         <Image
           src={heroImage}
+          loader={galleryThumbLoader}
           alt={`Illustration from ${tradition.name}`}
           fill
           sizes="(max-width: 640px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          unoptimized
         />
       ) : (
         <div className="absolute inset-0 bg-warm" />

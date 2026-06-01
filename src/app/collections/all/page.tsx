@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { collectionCountLabel } from '@/lib/collections-utils';
+import { galleryThumbLoader } from '@/lib/book-cover-loader';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -122,11 +123,11 @@ function CollectionCard({ col }: { col: SubCollection }) {
       {col.image ? (
         <Image
           src={col.image}
+          loader={galleryThumbLoader}
           alt={col.name}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          unoptimized
         />
       ) : (
         <div className="absolute inset-0 bg-warm" />
@@ -179,11 +180,11 @@ export default async function AllCollectionsPage() {
               {wing.image ? (
                 <Image
                   src={wing.image}
+                  loader={galleryThumbLoader}
                   alt={wing.name}
                   fill
                   sizes="100vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  unoptimized
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-r from-[#2a1f17] to-[#3d2e22]" />

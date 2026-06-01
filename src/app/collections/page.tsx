@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { sortCollections, sanitizeThumbnail, collectionCountLabel } from '@/lib/collections-utils';
+import { galleryThumbLoader } from '@/lib/book-cover-loader';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -190,6 +191,7 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
       {heroUrl ? (
         <Image
           src={heroUrl}
+          loader={galleryThumbLoader}
           alt={`Illustration from ${col.name}`}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
@@ -227,6 +229,7 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
       {heroUrl ? (
         <Image
           src={heroUrl}
+          loader={galleryThumbLoader}
           alt={`Illustration from ${col.name}`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

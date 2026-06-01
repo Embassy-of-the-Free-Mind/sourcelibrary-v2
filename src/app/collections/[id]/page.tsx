@@ -18,6 +18,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { galleryThumbLoader } from '@/lib/book-cover-loader';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
@@ -807,7 +808,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 'grid-cols-3 sm:grid-cols-6'
             }`}>
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
-              const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
+              const rawSrc = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
+              const src = rawSrc ? galleryThumbLoader({ src: rawSrc, width: 400 }) : rawSrc;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
               if (!src) return null;
               return (
@@ -834,7 +836,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         ) : fallbackHeroUrl && (
           <div className="absolute inset-0 opacity-40">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={fallbackHeroUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <img src={galleryThumbLoader({ src: fallbackHeroUrl, width: 800 })} alt="" className="absolute inset-0 w-full h-full object-cover" />
           </div>
         )}
 
@@ -907,6 +909,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                     {heroUrl ? (
                       <Image
                         src={heroUrl}
+                        loader={galleryThumbLoader}
                         alt={`Illustration from ${child.name}`}
                         fill
                         sizes="(max-width: 640px) 50vw, 25vw"
@@ -967,11 +970,11 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                     {thumb && (
                       <Image
                         src={thumb}
+                        loader={galleryThumbLoader}
                         alt={img.description || img.bookTitle || img.book_title || 'Illustration'}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
-                        unoptimized
                       />
                     )}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">

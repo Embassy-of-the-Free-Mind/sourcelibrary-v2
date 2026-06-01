@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getReadDb } from '@/lib/mongodb';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
+import { galleryThumbLoader } from '@/lib/book-cover-loader';
 
 export const revalidate = false;
 
@@ -187,6 +188,7 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
                     {thumb ? (
                       <Image
                         src={thumb}
+                        loader={galleryThumbLoader}
                         alt={book.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"

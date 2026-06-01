@@ -60,3 +60,35 @@ export function bookCoverResponsiveLoader({
 
   return src;
 }
+
+/**
+ * Loader for collection hero / gallery thumbnails.
+ *
+ * These render gallery illustrations (`gallery_images.extracted_url` /
+ * `image_url`), which point at the **full-resolution** `-full.jpg` R2 source
+ * — 3–4 MB scans (e.g. 3409×5254). The slots that show them are small:
+ * 4:3 cards (~400px) and full-width hero banners (~1200px). The original is
+ * never needed here.
+ *
+ * Unlike `bookCoverResponsiveLoader` (which falls through to the source for
+ * large widths), this loader **caps at the medium variant** (`.jpg`,
+ * ~1200px, ~150 KB) and never returns `-full`. Tiny widths get `-thumb.jpg`
+ * (~150px, ~2 KB). A 4 MB scan becomes ~150 KB — roughly 26× smaller.
+ *
+ * Falls through to the original `src` for any URL we don't recognise.
+ */
+export function galleryThumbLoader({
+  src,
+  width,
+}: {
+  src: string;
+  width: number;
+  quality?: number;
+}): string {
+  if (!src.includes(SOURCELIBRARY_HOST)) return src;
+  const variant = width <= 200 ? '-thumb.jpg' : '.jpg';
+  if (src.endsWith('-full.jpg')) return src.replace(/-full\.jpg$/, variant);
+  if (src.endsWith('-thumb.jpg')) return src.replace(/-thumb\.jpg$/, variant);
+  if (src.endsWith('.jpg')) return src.replace(/\.jpg$/, variant);
+  return src;
+}
