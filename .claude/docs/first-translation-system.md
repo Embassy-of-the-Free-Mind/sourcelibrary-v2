@@ -43,7 +43,7 @@ Two scripts, both flock-gated nightly on Hetzner. They write `disposition` only 
 
 ## 4. The five nightly Hetzner crons
 
-Verified against live `crontab -l` on `root@46.224.122.120` (the committed `scripts/workers/crontab.production` is **stale** — see #2332 Task 0).
+Verified against live `crontab -l` on `root@46.224.122.120`. The committed `scripts/workers/crontab.production` is a *derived snapshot* kept fresh by PR; a drift detector (`scripts/workers/sync-crontab.sh`, daily 04:00) logs if it diverges from live (#2332 Task 0 / #2342). **The live crontab is the source of truth.**
 
 | Time (UTC) | Job | Command | Effect |
 |---|---|---|---|
@@ -83,7 +83,7 @@ Set by `make_determination` (agent) or Stage 2 (cron). Live counts: `confirmed_f
 
 ## 7. Coverage reality + the unflagged pool
 
-- 67% of readable+visible books (10,273 / 15,320) have a disposition; **~5,047 unchecked — but only ~1 is flagged true**, so the nightly crons never reach them.
+- 67% of readable+visible books (10,273 / 15,320) have a disposition; **~5,047 unchecked — but only ~1 is flagged true**, so the nightly crons never reach them. This ratio is now surfaced as `system_config.homepage_stats.verification_coverage` (`{ checked, readable, pct }`), refreshed by `prewarm-browse.mjs` / `update-homepage-stats.mjs` (#2332 Task 3 / #2344).
 - That 5,047 = 1,213 English (non-candidates) + 2,810 enrichment-judged-`false` (1,852 non-English) + 2,236 never-flagged. **3,251 never got Stage-1 enrichment at all.**
 - **Genuine uncounted-candidate pool ≈ 1,981 non-English, never-assessed readable books.**
 - **Estimate (2026-06-01, real 8-tool agent, dry-run, n=40):** 75% returned a first disposition → ~1,486 projected. **But heavily caveated by non-Western catalog recall:** Tibetan 12/12 and Korean 2/2 came back `confirmed_first` only because OL/GB/IA/OpenAlex/LoC don't index those scripts — that's recall failure, not verification. Every *famous* work was correctly caught as `translation_found`. **Defensible promotable headroom ≈ +800–1,400** (the well-catalogued Western-language slice), lifting the public count toward ~7,000–7,400 — and only via a deliberate, reviewed `--unflagged search → validate → reconcile` batch (NOT the passive cron). Non-Western "firsts" need a different verification basis. Estimator: `scripts/enrichment/estimate-unflagged-agent.mjs` (dry-run, `npx tsx`).
@@ -100,6 +100,7 @@ Set by `make_determination` (agent) or Stage 2 (cron). Live counts: `confirmed_f
 | …`+ visible + pages_translated>0` (**quote this**) | **6,009** |
 | Books with a `disposition` | 12,556 |
 | Readable+visible total / checked / unchecked | 15,320 / 10,273 / 5,047 |
+| Verification coverage (checked / readable) | 67.1% |
 | Non-English never-flagged readable (candidate pool) | 1,981 |
 
 ## 10. Known limitations
@@ -122,14 +123,15 @@ Set by `make_determination` (agent) or Stage 2 (cron). Live counts: `confirmed_f
 | `scripts/maintenance/reconcile-ft-from-catalog.mjs` | disposition→flag bridge (NOT cronned) |
 | `scripts/enrichment/cleanup-first-translation-claims.mjs` | run the agent on a batch (`npx tsx`) |
 | `scripts/enrichment/estimate-unflagged-agent.mjs` | dry-run estimator for the unflagged pool |
+| `scripts/maintenance/{prewarm-browse,update-homepage-stats}.mjs` | write `homepage_stats.verification_coverage` (#2332 Task 3) |
 | `pipeline-orchestrator.mjs` (Phase 1.6) | content classification + #2275 catalog-precedence guard |
 
 ## 12. Known debt → issues
 
-- **#1974** — no automated setter for the flag (the central gap; §5). Includes the importer audit and the set-vs-scan-vs-derive decision.
+- **#1974** — no automated setter for the flag (the central gap; §5). Includes the importer audit and the set-vs-scan-vs-derive decision. The "promote unflagged candidates" work (former #2332 Tasks 4 & 5) lives here.
 - **#2244** — backfill prior translations (`translations_found`) via `discover-prior-translations.mjs`.
-- **#2332** — subsystem cleanup: stale `crontab.production` (Task 0), archive genuinely-dead one-offs, the date-stamped schema fields (`*_2026_05_30`) that are now baked into live crons, a coverage metric, and flag↔disposition reconciliation.
+- **#2332** — subsystem cleanup: stale `crontab.production` (Task 0, done — #2342), archive genuinely-dead one-offs (Task 1, #2346), the date-stamped schema fields (`*_2026_05_30`) baked into live crons (Task 2, #2348), a coverage metric (Task 3, done — #2344), and flag↔disposition reconciliation.
 
 ## 13. Provenance
 
-Reconciled 2026-06-01 by reading the live engines (`verify-first-translation.ts`, both cron scripts, orchestrator Phase 1.6), the live Hetzner crontab, and the recent handoffs (`2026-05-31-ft-1974-catalog-precedence-and-chip.md`, `2026-05-31-discover-prior-translations-2244.md`). Counts from live `bookstore` queries that day — re-verify if >14 days old. This rewrite replaced an earlier version whose architecture/numbers had drifted (it described a retired in-pipeline Phase 3.7 path).
+Reconciled 2026-06-01 by reading the live engines (`verify-first-translation.ts`, both cron scripts, orchestrator Phase 1.6), the live Hetzner crontab, and the recent handoffs (`2026-05-31-ft-1974-catalog-precedence-and-chip.md`, `2026-05-31-discover-prior-translations-2244.md`). Counts from live `bookstore` queries that day — re-verify if >14 days old. This rewrite (PR #2340) replaced an earlier version whose architecture/numbers had drifted (it described a retired in-pipeline Phase 3.7 path).
