@@ -9,17 +9,26 @@ import type { Page } from '@/lib/types';
 import { buildCoverUpdate } from '@/lib/cover-fields';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { AuthCheck } from '../auth/AuthCheck';
+import { useEmbed } from '@/lib/EmbedContext';
+import PlaceholderCover from '@/components/book/PlaceholderCover';
 
 interface CoverImagePickerProps {
   bookId: string;
   currentThumbnail?: string;
   currentThumbnailBlob?: string;
   bookTitle: string;
+  /** Byline + year, used by the generated placeholder cover when there is no
+   *  thumbnail. Optional — the placeholder omits each line when absent. */
+  bookAuthor?: string | null;
+  bookYear?: string | number | null;
   pages: Page[];
 }
 
-export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, pages }: CoverImagePickerProps) {
+export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, bookAuthor, bookYear, pages }: CoverImagePickerProps) {
   const router = useRouter();
+  // Placeholder cover is an embedded-reading-room feature; the main site keeps
+  // the plain icon fallback.
+  const embed = useEmbed();
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
   const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnail || currentThumbnailBlob);
@@ -87,6 +96,8 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                 priority
                 onError={handleThumbnailError}
               />
+            ) : embed ? (
+              <PlaceholderCover title={bookTitle} author={bookAuthor} year={bookYear} />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />
@@ -111,6 +122,8 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
               priority
               onError={handleThumbnailError}
             />
+          ) : embed ? (
+            <PlaceholderCover title={bookTitle} author={bookAuthor} year={bookYear} />
           ) : (
             <div className="w-full h-full flex items-center justify-center group-hover:bg-stone-600 transition-colors">
               <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />

@@ -6,6 +6,8 @@ import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
+import { useEmbed } from '@/lib/EmbedContext';
+import PlaceholderCover from '@/components/book/PlaceholderCover';
 // Book URL helper moved inline to use basePath
 
 interface BphWork {
@@ -236,6 +238,9 @@ export default function BphCatalogBrowser({
     `${basePath}/book/${encodeURIComponent(book.slug || book.id)}`;
 
   const searchParams = useSearchParams();
+  // Generated placeholder covers are an embedded-reading-room feature only —
+  // the main sourcelibrary.org catalogue keeps its plain icon fallback.
+  const embed = useEmbed();
 
   const initialQ = searchParams.get('cq') || '';
   const initialSort = searchParams.get('csort') || 'author';
@@ -892,6 +897,8 @@ export default function BphCatalogBrowser({
                           sizes="(min-width: 1280px) 16vw, (min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
                           className="object-cover"
                         />
+                      ) : embed ? (
+                        <PlaceholderCover title={displayTitle} author={displayAuthor} year={w.year} />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-muted">
                           <BookMarked className="w-8 h-8 opacity-40" />

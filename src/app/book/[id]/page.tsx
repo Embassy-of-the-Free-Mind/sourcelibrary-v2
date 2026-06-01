@@ -726,7 +726,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 bookId={book.id}
                 currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
                 currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
-                bookTitle={book.title}
+                bookTitle={book.display_title || book.title}
+                bookAuthor={book.author}
+                bookYear={book.published}
                 pages={pages}
               />
             </div>
