@@ -39,4 +39,31 @@ describe('stripEditorialWrappers', () => {
     const t = 'plain translated body with a <term>gloss</term>';
     expect(stripEditorialWrappers(t)).toBe(t);
   });
+
+  it('strips the OCR page-level metadata envelope content-and-all', () => {
+    // The real value served by the live IIIF OCR annotation route before the fix.
+    const ocr = `<scan-quality>good</scan-quality>\n<language>English</language>\n<script>printed</script>\n<page-type>blank</page-type>\n\nActual body line of the page.`;
+    const out = stripEditorialWrappers(ocr);
+    expect(out).not.toMatch(/scan-quality|page-type/);
+    expect(out).not.toMatch(/\bprinted\b/); // <script>printed</script> label gone
+    expect(out).not.toMatch(/\bblank\b/);   // <page-type>blank</page-type> label gone
+    expect(out).toContain('Actual body line of the page.');
+  });
+
+  it('drops <columns> and <warning> metadata but keeps real page marks', () => {
+    const t = `<columns>2</columns><warning>low contrast</warning><header>RUNNING HEAD</header>real body<insert>OLIN BM 175</insert>`;
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/low contrast/);
+    expect(out).not.toContain('<columns>');
+    // header/insert are real printed marks, not AI description — they survive.
+    expect(out).toContain('<header>RUNNING HEAD</header>');
+    expect(out).toContain('real body');
+    expect(out).toContain('<insert>OLIN BM 175</insert>');
+  });
+
+  it('strips inline <language> switch markers without eating the body', () => {
+    const t = `Lorem ipsum <language>Latin</language> dolor sit amet`;
+    const out = stripEditorialWrappers(t).replace(/\s+/g, ' ').trim();
+    expect(out).toBe('Lorem ipsum dolor sit amet');
+  });
 });

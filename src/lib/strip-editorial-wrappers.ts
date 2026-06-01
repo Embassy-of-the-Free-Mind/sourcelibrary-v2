@@ -12,17 +12,28 @@
  * producing citations to words that aren't on the page (Nirmal's "mercury on
  * page 89" misquote, 2026-05-30; see PR #2232).
  *
+ * The OCR format adds its own PAGE-LEVEL metadata envelope — <language>,
+ * <scan-quality>, <script>, <page-type>, <columns>, <warning> — that likewise
+ * *describes* the page/scan rather than transcribing it (the same tags the
+ * enrich-worker skips, enrich-worker.mjs). Serving "<scan-quality>good</…>" as
+ * a transcription is the same class of fabrication, so these are stripped too.
+ *
  * Call this BEFORE the generic tag strip. Inline glosses (note/term/margin/
- * gloss/unclear) are intentionally left for the caller to handle — they sit on
- * real body text and are safe to keep.
+ * gloss/unclear) and real page marks that happen to sit outside the body flow
+ * (header/catchword/sig/page-num — actual printed text, not AI description) are
+ * intentionally left for the caller to handle and are safe to keep.
  *
  * IMPORTANT: every search/snippet surface reads its own copy of the page text
  * (web /api/search, /api/books/[id]/search, the librarian, embeddings, the
- * eval). Fixes do NOT propagate between them — route every text-cleaning path
- * through this helper so the leak can't reopen on one surface.
+ * eval, the IIIF annotation + content-search routes). Fixes do NOT propagate
+ * between them — route every text-cleaning path through this helper so the leak
+ * can't reopen on one surface.
  */
 
-const EDITORIAL_WRAPPERS = 'meta|summary|keywords|vocab';
+// Translation-side page-description blocks ∪ OCR-side page-level metadata
+// envelope. All *describe* the page; none are verbatim source text.
+const EDITORIAL_WRAPPERS =
+  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning';
 
 export function stripEditorialWrappers(text: string): string {
   if (!text) return text;
