@@ -23,6 +23,7 @@
 
 import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -1155,11 +1156,7 @@ async function canSubmitMore() {
   return getLeastLoadedKey() >= 0;
 }
 
-function getPageImageUrl(page) {
-  if (page.crop && page.cropped_photo) return page.cropped_photo;
-  if (page.archived_photo && !page.archived_photo.startsWith('failed:')) return page.archived_photo;
-  return page.photo_original || page.photo || null;
-}
+// getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
 
 /**
  * Fetch image and return as base64. If maxDim is set, resize to fit within that
@@ -1406,7 +1403,7 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     })
     .sort({ page_number: 1 })
     .limit(pageLimit)
-    .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+    .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
     .toArray();
 
   if (pages.length === 0) {
@@ -1732,7 +1729,7 @@ async function submitCrossBookOcrBatches(db, books) {
       })
       .sort({ page_number: 1 })
       .limit(remaining)
-      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
       .toArray();
 
     if (pages.length === 0) continue;
@@ -1964,7 +1961,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
   // Fetch page image URLs
   const pages = await db.collection('pages')
     .find({ id: { $in: candidatePages.map(p => p.id) } })
-    .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+    .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
     .toArray();
 
   if (pages.length === 0) return { submitted: 0 };
@@ -2208,7 +2205,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
     const pages = await db.collection('pages')
       .find({ id: { $in: candidatePages.map(p => p.id) } })
-      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
       .toArray();
 
     if (pages.length === 0) continue;
@@ -2969,7 +2966,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             })
             .sort({ page_number: 1 })
             .limit(PREVIEW_PAGE_COUNT)
-            .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+            .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
             .toArray();
 
           if (previewPages.length === 0) {

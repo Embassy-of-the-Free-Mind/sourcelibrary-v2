@@ -16,6 +16,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
@@ -329,11 +330,7 @@ Re-read your scan_quality block before finalizing. If any of these rules is viol
 fix the scan_class to match the evidence in concerns/completeness, not the other way around.`;
 
 // ── Helpers ──
-function getPageImageUrl(page) {
-  if (page.crop && page.cropped_photo) return page.cropped_photo;
-  if (page.archived_photo && !page.archived_photo.startsWith('failed:')) return page.archived_photo;
-  return page.photo_original || page.photo || null;
-}
+// getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
 
 async function fetchImage(url) {
   try {
@@ -746,7 +743,7 @@ async function processBook(db, book) {
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
         { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
       ],
-    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, 'ocr.data': 1 } })
+    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1 } })
     .toArray();
 
   // Pre-filter: drop pages where OCR has already classified all illustrations
