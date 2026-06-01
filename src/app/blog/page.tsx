@@ -25,6 +25,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'how-big-is-the-library',
+    title: 'How Big Is the Library?',
+    subtitle:
+      'We counted every word — original OCR, AI translation, and enrichment. Roughly five to seven billion words, about the size of English Wikipedia. With the methodology, and the recitation-loop bug that nearly tripled the count.',
+    date: '1 June 2026',
+    readTime: '6 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg',
+    imageAlt: "Frontispiece of Athanasius Kircher's Ars Magna Lucis et Umbrae (1671)",
+  },
+  {
     slug: 'how-long-to-translate',
     title: 'How Long Would It Take to Translate the Renaissance?',
     subtitle: 'We measured the rate of new Latin translations and counted what is left. At the current pace, the Latin Renaissance alone would take about ten thousand years to finish.',

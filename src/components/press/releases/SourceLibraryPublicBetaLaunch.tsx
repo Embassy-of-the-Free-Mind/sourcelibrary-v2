@@ -3,7 +3,7 @@
  * Embassy-framed arc: the institution and its creed (ad fontes) open and close the piece;
  * the untranslated-Renaissance idea and open access drive it. Straight prose, no stat boxes.
  * Fundraising lives only in private donor materials, never here.
- * Figures verified against the live Source Library database on 30 May 2026.
+ * Figures verified against the live Source Library database on 1 June 2026.
  * Header/dateline and back-link are supplied by the /press-releases/[slug] route.
  */
 
@@ -62,7 +62,7 @@ export default function SourceLibraryPublicBetaLaunch() {
         translated volumes since 1911; Harvard&rsquo;s I Tatti Renaissance Library about 100 since 2001.
         Source Library holds more than 15,000, and unlike those series it translates works that were never
         available in English at all. Counted together, the original texts and their translations come to
-        more than four billion words, roughly 90 percent of the entire English Wikipedia.
+        roughly five billion words &mdash; comparable in scale to the entire English Wikipedia.
       </p>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -133,7 +133,7 @@ export default function SourceLibraryPublicBetaLaunch() {
 
       <p className="text-xs text-muted leading-relaxed mt-6 font-body">
         Source for the translation estimate: D. Shuger, UCLA. Library figures verified against the Source
-        Library database, 30 May 2026.
+        Library database, 1 June 2026.
       </p>
     </article>
   );
