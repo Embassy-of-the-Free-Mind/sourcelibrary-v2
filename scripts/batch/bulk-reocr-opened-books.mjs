@@ -17,6 +17,7 @@
 
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 
 // --- Config ---
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -65,12 +66,6 @@ async function fetchImageAsBase64(url, timeout = 30000) {
     clearTimeout(timeoutId);
     return null;
   }
-}
-
-function getPageImageUrl(page) {
-  if (page.crop && page.cropped_photo) return page.cropped_photo;
-  if (page.archived_photo) return page.archived_photo;
-  return page.photo_original || page.photo;
 }
 
 // --- Gemini Batch API ---
