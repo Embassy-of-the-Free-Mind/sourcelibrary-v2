@@ -269,16 +269,6 @@ export const GET = withAdminAuth(async () => {
     checked_at: new Date().toISOString(),
     duration_ms: Date.now() - started,
     checks,
-    // TEMP DIAGNOSTIC (#2250 flag-flip): echo what the runtime actually reads for
-    // the thesaurus read-path flag. Not a secret (a feature flag). Remove once the
-    // env-injection puzzle is resolved.
-    runtime_flags: {
-      AUTHOR_THESAURUS_READPATH_raw: process.env.AUTHOR_THESAURUS_READPATH ?? null,
-      AUTHOR_THESAURUS_READPATH_len: (process.env.AUTHOR_THESAURUS_READPATH ?? '').length,
-      thesaurus_readpath_enabled:
-        process.env.AUTHOR_THESAURUS_READPATH === '1' ||
-        process.env.AUTHOR_THESAURUS_READPATH === 'true',
-    },
   });
 });
 
