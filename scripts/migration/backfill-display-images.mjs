@@ -95,10 +95,22 @@ const PAGE_PROJECTION = {
   cropped_photo: 1, display_photo: 1, image_thumb: 1, split_from_spread: 1,
 };
 
-/** Per-book Mongo pre-filter: pages missing display_photo. */
+/**
+ * Per-book Mongo pre-filter: pages missing display_photo AND not old-era split.
+ *
+ * Excluding old-era split (`cropped_photo` set) at the QUERY level — not just in
+ * `resolveSource()` — matters because BPH (~half the catalogue) is almost
+ * entirely old-era split spreads. Without this, a split-heavy book returns
+ * thousands of pages that all get skipped, burning the per-run page budget on
+ * scan-and-skip instead of producing variants (observed: one run skipped
+ * 9,830 / 10,009 pages). The read-side proxies+crops these regardless, so they
+ * are out of scope (see header). `resolveSource()` keeps its guard as defence
+ * in depth for any that slip through (e.g. cropped_photo added after this read).
+ */
 const gapFilter = (bookId) => ({
   book_id: bookId,
   $or: [{ display_photo: { $exists: false } }, { display_photo: null }, { display_photo: '' }],
+  cropped_photo: { $in: [null, ''] },  // exclude old-era split (field absent or empty)
 });
 
 function variantKeys(bookId, pageNumber) {
