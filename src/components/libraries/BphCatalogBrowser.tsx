@@ -573,11 +573,6 @@ export default function BphCatalogBrowser({
           <span className="text-sm text-muted">
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
-            {display === 'grid' && (
-              <span className="ml-2 text-xs">
-                · Covers view shows only digitised works
-              </span>
-            )}
           </span>
           <div className="flex items-center gap-3 ml-auto">
             {resultsHeaderSlot}
