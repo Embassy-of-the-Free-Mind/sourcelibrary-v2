@@ -49,7 +49,12 @@ Priority: ★★★ canonical / high-demand · ★★ important · ★ desirable
 Confirmed via per-title IA queries (`enumerate-dedupe-source.ts` + direct title: queries): the remaining want-list is **NOT in IA universallibrary**. 0 real `.cn` hits for: 黃庭經, 列仙傳, 鍾呂傳道集, 入藥鏡, 度人經, 金丹/金丹大成, 修真十書, 重陽全真集. (太平經 only returns 太平經國書/之書 = a Ming *statecraft-divination* text, NOT the Daoist Taiping jing — a false friend; 修真 only matched a 琴譜 music score.) The IA `.cn` Daoist holdings are essentially the 四庫全書 Daoist cluster we already imported (Cantong qi, Baopuzi In/Out, Yunji qiqian 81–122, Zhen'gao, Shenxian zhuan, Panxi ji, yangsheng). A broad OR-query returns ~116 "NEW" that are ALL 四庫 Confucian/historical/literary false positives (上諭内阁, 全上古…文, 大學衍義, 後漢書, 律呂正義) — textbook subject-filter noise; 0 survive filtering.
 
 **Remaining gaps → need a non-IA route** (Harvard CURIOSity DRS, NLC 中華古籍資源庫, Kyoto RMDA, or Daozang text extraction; mostly browser-capture since the clean IIIF APIs don't expose them):
-悟真篇 Wuzhen pian (Chinese original) · Cantong qi 正文 (bare) · 鍾呂傳道集 · 入藥鏡 · 金丹四百字 · 中和集 · 修真十書 · 黃庭經 standalone · 雲笈七籤 juan 1–80 · 太平經 (the real Daoist one) · 度人經 · 清靜經 · 列仙傳 · 重陽全真集.
+~~悟真篇 Wuzhen pian~~ (FOUND, see below) · Cantong qi 正文 (bare) · 鍾呂傳道集 · 入藥鏡 · 金丹四百字 · 中和集 · 修真十書 · 黃庭經 standalone · 雲笈七籤 juan 1–80 · 太平經 (the real Daoist one) · 度人經 · 清靜經 · 列仙傳 · 重陽全真集.
+
+### Harvard CURIOSity = the working route for browser-capture (confirmed 2026-06-01)
+Search `https://curiosity.lib.harvard.edu/chinese-rare-books/catalog?q={CJK}` in a real browser (JS SPA; fetch 403s). Each record's page DOM contains the IIIF manifest at pattern **`https://nrs.harvard.edu/urn-3:FHCL:{id}:MANIFEST`** (IIIF v2). Import via `/api/import/iiif` with `{manifest_url,title,author}`. **Caveat: Harvard rate-limits manifest fetches (429) — space out imports; the Vercel import route fetches server-side so client retries don't help.**
+
+**悟真篇 Wuzhen pian — FOUND.** Best available = the Ming Wanli neidan anthology **道言內外秘訣全書 (6 juan, 850pp)** which contains Zhang Boduan's Wuzhen pian. Manifest: `https://nrs.harvard.edu/urn-3:FHCL:25667336:MANIFEST` (validated HTTP 200, 850 canvases). No bare standalone Wuzhen pian at Harvard (the other 3 search hits are false matches: a missionary travel text, Liang Afa's 勸世良言, and a 解悟真經 commentary). Import command recorded; pending Harvard 429 clear.
 
 ## Pipeline status of imported batch (2026-06-01)
 40 books / 5,437 pages: fully archived (5,437/5,437), OCR underway (~1,996 pages), translation pending; all `pipeline_auto.status: archive_complete`, hidden. Classical-Chinese OCR/translation **needs a QA pass before flipping visible** (cf. [[project_siku_translation_census]]).
