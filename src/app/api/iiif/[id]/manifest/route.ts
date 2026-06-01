@@ -11,6 +11,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getPartnerByProvider, type LibraryPartner } from '@/lib/library-partners';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -119,6 +120,85 @@ function extractImageService(url: string): { id: string; type: string; profile: 
 // Default canvas dimensions, used only when a page has no stored pixel size.
 const DEFAULT_WIDTH = 1500;
 const DEFAULT_HEIGHT = 2160;
+
+// `image_source.provider` has accumulated alternate keys over time; map the
+// aliases back to the canonical key that LIBRARY_PARTNERS is registered under
+// so the holding institution still resolves.
+const PROVIDER_KEY_ALIASES: Record<string, string> = {
+  ia: 'internet_archive',
+  bsb: 'mdz',
+  e_rara: 'e-rara',
+  vatlib: 'vatican',
+  ndl: 'ndl_japan',
+};
+
+function resolvePartner(provider?: string): LibraryPartner | undefined {
+  if (!provider) return undefined;
+  return (
+    getPartnerByProvider(provider) ||
+    getPartnerByProvider(PROVIDER_KEY_ALIASES[provider] ?? provider)
+  );
+}
+
+/**
+ * IIIF `provider` agents, holding institution FIRST.
+ *
+ * The library that digitized the book is the primary provider — IIIF's whole
+ * model rests on consumers crediting the source institution structurally, not
+ * demoting it to a free-text metadata row. Source Library is listed second as
+ * the aggregator that re-hosts and adds AI OCR/translation. Falls back to the
+ * stored `provider_name` / `source_url` when the institution isn't a registered
+ * LIBRARY_PARTNER, so long-tail sources are still credited.
+ */
+function buildProviders(
+  imageSource: { provider?: string; provider_name?: string; source_url?: string } | undefined,
+): Array<Record<string, unknown>> {
+  const providers: Array<Record<string, unknown>> = [];
+
+  const partner = resolvePartner(imageSource?.provider);
+  const name = partner?.name || imageSource?.provider_name;
+  const homepageUrl = partner?.url || imageSource?.source_url;
+
+  if (name) {
+    const agent: Record<string, unknown> = {
+      id: homepageUrl || BASE,
+      type: 'Agent',
+      label: { en: [name] },
+    };
+    if (homepageUrl) {
+      agent.homepage = [
+        { id: homepageUrl, type: 'Text', label: { en: [name] }, format: 'text/html' },
+      ];
+    }
+    if (partner) {
+      agent.seeAlso = [
+        {
+          id: `${BASE}/libraries/${partner.slug}`,
+          type: 'Text',
+          label: { en: [`${name} on Source Library`] },
+          format: 'text/html',
+        },
+      ];
+    }
+    providers.push(agent);
+  }
+
+  providers.push({
+    id: BASE,
+    type: 'Agent',
+    label: { en: ['Source Library'] },
+    homepage: [
+      {
+        id: BASE,
+        type: 'Text',
+        label: { en: ['Source Library — re-hosted edition with AI OCR & translation'] },
+        format: 'text/html',
+      },
+    ],
+  });
+
+  return providers;
+}
 
 export async function GET(
   request: NextRequest,
@@ -267,8 +347,16 @@ export async function GET(
     const license = book.image_source?.license || book.license;
     const rightsUri = resolveRights(license);
 
-    // Attribution
-    const attribution = book.image_source?.attribution;
+    // Attribution — always credit the digitizing institution. Prefer an explicit
+    // attribution string when stored; otherwise build one from the institution
+    // name so the required statement is never empty.
+    const institutionName =
+      resolvePartner(book.image_source?.provider)?.name || book.image_source?.provider_name;
+    const attribution =
+      book.image_source?.attribution ||
+      (institutionName
+        ? `Digitized by ${institutionName}. Re-hosted with AI-generated OCR and translation by Source Library.`
+        : 'Re-hosted with AI-generated OCR and translation by Source Library.');
 
     // Build canvases
     const canvases = pagesLight.map((page) => {
@@ -385,21 +473,7 @@ export async function GET(
       behavior: ['paged'],
       viewingDirection: 'left-to-right',
 
-      provider: [
-        {
-          id: BASE,
-          type: 'Agent',
-          label: { en: ['Source Library'] },
-          homepage: [
-            {
-              id: BASE,
-              type: 'Text',
-              label: { en: ['Source Library — Digital Archive of Western Esoteric Texts'] },
-              format: 'text/html',
-            },
-          ],
-        },
-      ],
+      provider: buildProviders(book.image_source),
 
       homepage: [
         {
@@ -430,12 +504,10 @@ export async function GET(
       manifest.rights = rightsUri;
     }
 
-    if (attribution) {
-      manifest.requiredStatement = {
-        label: { en: ['Attribution'] },
-        value: { en: [attribution] },
-      };
-    }
+    manifest.requiredStatement = {
+      label: { en: ['Attribution'] },
+      value: { en: [attribution] },
+    };
 
     if (book.published) {
       // navDate needs ISO 8601 — approximate from year
