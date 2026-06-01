@@ -1,27 +1,19 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { ChevronLeft, RefreshCw } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 
-const LoadingBar = () => (
-  <div className="py-8">
-    <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
-      <div className="h-full rounded-full" style={{ background: 'var(--accent-sage)', width: '40%', animation: 'loading-bar 2s ease-in-out infinite' }} />
-    </div>
-    <style>{`@keyframes loading-bar { 0% { transform: translateX(-100%); } 50% { transform: translateX(150%); } 100% { transform: translateX(-100%); } }`}</style>
-    <p className="text-center text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Loading...</p>
-  </div>
-);
-
-// TrafficTab fetches first-party pageviews from /api/analytics (Mongo source of
-// truth). Loaded client-side only, mirroring how /analytics renders its tabs.
-const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), { ssr: false, loading: LoadingBar });
+// First-party traffic dashboard (range/bin/compare + sectioned drill-down +
+// cross-filtering). Reads /api/analytics/traffic, which aggregates Mongo
+// directly. Client-only, mirroring how /analytics loads its tabs.
+const TrafficDashboard = dynamic(() => import('@/components/analytics/TrafficDashboard'), {
+  ssr: false,
+  loading: () => <div className="py-16 text-center"><BookLoader size="xs" /></div>,
+});
 
 export default function TrafficPage() {
-  const [refreshKey, setRefreshKey] = useState(0);
-
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <header className="px-6 py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
@@ -41,22 +33,14 @@ export default function TrafficPage() {
               Full analytics
             </Link>
           </div>
-          <button
-            onClick={() => setRefreshKey(k => k + 1)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--accent-rust)' }}
-          >
-            <RefreshCw className="w-4 h-4" />
-            Refresh
-          </button>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-          First-party visitor data from the last 30 days — collected server-side with anonymized IPs, no cookie consent required. This is the source of truth, independent of Google Analytics.
+          First-party visitor data — collected server-side with anonymized IPs, no cookie consent required. The source of truth, independent of Google Analytics. Includes all subdomains (host-level split coming next).
         </p>
-        <TrafficTab key={refreshKey} />
+        <TrafficDashboard />
       </main>
     </div>
   );
