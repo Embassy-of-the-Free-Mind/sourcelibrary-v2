@@ -69,5 +69,9 @@ Harvard 429-rate-limits manifest fetches from **datacenter IPs** (Vercel) — bu
 2. ⏳ **Source** each GAP (manifest/IA id) via `chinese-iiif-sources.md` — IA `universallibrary` .cn first, then browser-capture (Harvard/NLC) for what's only behind JS viewers.
 3. Import the sourced gaps (hidden) → OCR/translation → **QA pass** (Classical Chinese) → flip visible.
 
-## Open dedup decision
-- **Baopuzi Inner Chapters ×2** (`06049004-07` Siku vs `06076375`) — pick one to keep, retire the other (needs confirmation; do NOT delete unilaterally).
+## Dedup decisions (resolved 2026-06-01)
+- **雲笈七籤 partial fragments RETIRED.** The 10 juan-81–122 fragments (`06050877–886`, all hidden, no translation) were superseded by the complete 122-juan edition (`yunji-qiqian-complete-122-juan`, FHCL:26080845) and soft-deleted to `deleted_books` (recoverable, 1,692 pages).
+- **Baopuzi Inner ×2 — KEEP BOTH (not a true dup).** `06076375` is a *fully translated* edition (137/137); `06049004-07` is the partially-translated Siku woodblock. Distinct editions — deleting either destroys value. Resolve by `work_id` grouping (issue #2318), not deletion.
+
+## Pipeline note: Harvard archiving is already handled (no change needed)
+`archive-ocr.mjs` excludes Harvard (Hetzner blocked at AWS ELB); `scripts/workers/archive-harvard.mjs` is the **Mac-only** worker that archives `image_source.provider:'harvard'` pages at ~1 req/s (Harvard MPS 429s datacenter IPs). The imported Harvard books (Wuzhen anthology + the 5-book Daoist batch) carry `provider:'harvard'`, so they're correctly queued. **Action:** run `archive-harvard.mjs` on a Mac to archive them (~30 min/1000 pages; ~6.6k pages total) before they can OCR/translate. Tracked by `backfill-r2-status.mjs`.
