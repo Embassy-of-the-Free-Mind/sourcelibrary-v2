@@ -44,7 +44,13 @@ function loadEnv() {
 
 const env = loadEnv();
 const apply = process.argv.includes('--apply');
-const FLAG = 'discovery_applied_2026_05_30';
+// Stable field names (#2332 Task 2). LEGACY_* are the pre-rename dated markers,
+// still honored on read so already-applied / already-estimated books survive the
+// transition until migrate-ft-dated-fields.mjs backfills legacy→stable.
+const FLAG = 'discovery_applied';
+const LEGACY_FLAG = 'discovery_applied_2026_05_30';
+const ESTIMATE = 'discovery_estimate';
+const LEGACY_ESTIMATE = 'discovery_estimate_2026_05_30';
 
 // Same as apply-audit-verdicts — reasoning text patterns that mean the
 // discovered "translation" is actually a study, edition, partial, or
@@ -109,13 +115,19 @@ const db = c.db(env.MONGODB_DB || 'bookstore');
 
 const eligible = await db.collection('books').find({
   'translation_verification.disposition': 'confirmed_first',
-  'translation_verification.discovery_estimate_2026_05_30': { $exists: true },
+  // has an estimate under EITHER name, and not-yet-applied under EITHER name
+  $or: [
+    { [`translation_verification.${ESTIMATE}`]: { $exists: true } },
+    { [`translation_verification.${LEGACY_ESTIMATE}`]: { $exists: true } },
+  ],
   [`translation_verification.${FLAG}`]: { $ne: true },
+  [`translation_verification.${LEGACY_FLAG}`]: { $ne: true },
 }).project({
   id: 1, language: 1, author: 1,
   'translation_verification.disposition': 1,
   'translation_verification.disposition_reasoning': 1,
-  'translation_verification.discovery_estimate_2026_05_30': 1,
+  [`translation_verification.${ESTIMATE}`]: 1,
+  [`translation_verification.${LEGACY_ESTIMATE}`]: 1,
 }).toArray();
 console.log(`Eligible books (with discovery results): ${eligible.length}`);
 
@@ -129,7 +141,7 @@ const samples = { tf: [], suspect: [], partial: [] };
 const now = new Date();
 
 for (const b of eligible) {
-  const d = b.translation_verification.discovery_estimate_2026_05_30;
+  const d = b.translation_verification[ESTIMATE] ?? b.translation_verification[LEGACY_ESTIMATE];
   if (!d.translation_exists) { counts.not_found_no_change++; continue; }
 
   // Reasoning-text gate — same as apply-audit-verdicts

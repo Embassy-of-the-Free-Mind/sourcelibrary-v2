@@ -98,7 +98,10 @@ await pgc.query('SET statement_timeout = 30000');
 
 const match = {
   'translation_verification.disposition': 'confirmed_first',
+  // Stable + legacy markers both honored (#2332 Task 2).
+  'translation_verification.audit_applied': { $ne: true },
   'translation_verification.audit_applied_2026_05_30': { $ne: true },
+  'translation_verification.catalog_lookup': { $exists: false },
   'translation_verification.catalog_lookup_2026_05_30': { $exists: false },
   visible: true,
   pages_count: { $gt: 0 },
@@ -157,7 +160,7 @@ for (const b of books) {
     await db.collection('books').updateOne(
       { _id: b._id },
       { $set: {
-        'translation_verification.catalog_lookup_2026_05_30': {
+        'translation_verification.catalog_lookup': {
           looked_up_at: new Date(),
           translation_found: true,
           hit: {
