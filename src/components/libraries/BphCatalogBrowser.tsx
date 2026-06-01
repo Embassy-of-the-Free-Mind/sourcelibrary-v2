@@ -581,6 +581,21 @@ export default function BphCatalogBrowser({
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
           </span>
           <div className="flex items-center gap-3 ml-auto">
+            {/* Sort control — sits to the LEFT of the list/grid toggle. Drives
+                the same `sort` state as the list-view column headers, so it
+                works in grid view too (where there are no headers to click). */}
+            <select
+              value={sort}
+              onChange={(e) => handleSortChange(e.target.value)}
+              aria-label="Sort catalogue"
+              className="h-9 text-sm border border-border-light rounded-md pl-2.5 pr-7 bg-white text-secondary hover:bg-warm transition-colors cursor-pointer"
+            >
+              <option value="title">Title A–Z</option>
+              <option value="title_desc">Title Z–A</option>
+              <option value="author">Author A–Z</option>
+              <option value="year_asc">Date (oldest first)</option>
+              <option value="year_desc">Date (newest first)</option>
+            </select>
             {resultsHeaderSlot}
           </div>
         </div>
