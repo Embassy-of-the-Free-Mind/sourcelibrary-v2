@@ -269,8 +269,8 @@
       <div class="worker-desc">Reconcile book counters (pages_ocr, pages_translated, pages_archived) from page data.</div>
     </div>
     <div class="worker">
-      <div class="worker-name">resize-worker.mjs<span class="worker-schedule">*/30 min</span></div>
-      <div class="worker-desc">Generate display-size images from full-res on R2.</div>
+      <div class="worker-name">backfill-display-images.mjs<span class="worker-schedule">*/30 min</span></div>
+      <div class="worker-desc">Split-aware display (1200px) + thumb (150px) variant backfill on R2 (#1814; replaced resize-worker.mjs).</div>
     </div>
     <div class="worker">
       <div class="worker-name">pipeline-health-alert.mjs<span class="worker-schedule">7:00 UTC</span></div>
