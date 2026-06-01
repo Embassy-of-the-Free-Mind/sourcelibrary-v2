@@ -69,6 +69,14 @@
   --color-border-light: #e8e4dc;
   --color-border-medium: #d4cfc4;
 
+  /* Generated placeholder-cover palette — dark warm-brown "book cover" with
+     cream type, used by PlaceholderCover for books with no digitised cover.
+     Themeable: swap these to retheme every generated cover at once. */
+  --color-cover-bg: #2b2722;       /* deep near-black warm brown */
+  --color-cover-title: #e9e1d0;    /* warm cream title */
+  --color-cover-muted: #b3a890;    /* dimmer warm cream — author/year */
+  --color-cover-rule: #46413a;     /* hairline, barely lighter than the bg */
+
   /* Status colors as Tailwind utilities */
   --color-status-success: #16a34a;
   --color-status-error: #dc2626;
