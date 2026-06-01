@@ -273,7 +273,7 @@ function VoiceAgentInner() {
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="relative bg-[#0e0c0a] overflow-hidden">

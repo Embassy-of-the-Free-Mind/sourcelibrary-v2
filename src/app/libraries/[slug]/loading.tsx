@@ -3,7 +3,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 export default function LibraryDetailLoading() {
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-dark overflow-hidden">

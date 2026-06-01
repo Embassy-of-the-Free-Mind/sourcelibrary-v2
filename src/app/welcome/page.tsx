@@ -36,7 +36,7 @@ export default async function WelcomePage() {
 
       {/* Header sits over the image */}
       <div className="relative z-20">
-        <SiteHeader variant="dark" />
+        <SiteHeader variant="light" />
       </div>
 
       {/* Form pinned just below the header */}

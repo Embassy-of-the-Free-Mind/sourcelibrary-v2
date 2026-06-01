@@ -821,7 +821,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   return (
     <div className="bg-cream">
-      {!embed && <SiteHeader variant="dark" />}
+      {!embed && <SiteHeader variant="light" />}
 
       {/* Search Bar */}
       <div className="bg-white border-b border-border-light sticky top-0 z-10">

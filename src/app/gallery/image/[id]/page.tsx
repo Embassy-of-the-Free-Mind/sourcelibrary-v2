@@ -608,7 +608,7 @@ export default function ImageDetailPage({
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <BookLoader size="md" variant="dark" />
+        <BookLoader size="md" variant="light" />
       </div>
     );
   }

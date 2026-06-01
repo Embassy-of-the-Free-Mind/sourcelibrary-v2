@@ -783,7 +783,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   return (
     <div className="min-h-screen bg-cream">
       <EmbedNavigationReporter />
-      <ConditionalSiteHeader variant="dark" />
+      <ConditionalSiteHeader variant="light" />
       <CollectionSchema
         slug={id}
         name={collection.name}

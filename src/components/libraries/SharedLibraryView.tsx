@@ -167,7 +167,7 @@ export default function SharedLibraryView({
 
   return (
     <div className="min-h-screen bg-cream">
-      {!embed && <ConditionalSiteHeader variant="dark" />}
+      {!embed && <ConditionalSiteHeader variant="light" />}
       {/* Hero, Illustrations, and Contributing Libraries are suppressed on
           the dedicated BPH catalogue/books views so the iframe renders just
           the catalogue. Webflow partners build their own page chrome around

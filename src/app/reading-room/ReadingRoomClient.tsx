@@ -472,7 +472,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
       {/* Hero */}
       <div className="relative bg-[#0e0c0a] overflow-hidden min-h-[360px] sm:min-h-[420px]">
         <div className="absolute inset-0">

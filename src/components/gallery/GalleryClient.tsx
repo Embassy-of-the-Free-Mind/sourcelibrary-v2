@@ -319,7 +319,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     <>
       {!isEmbedded && (
         <SiteHeader
-          variant="dark"
+          variant="light"
           sticky
           breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
         />
@@ -597,7 +597,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <BookLoader size="sm" variant="dark" />
+            <BookLoader size="sm" variant="light" />
           </div>
         )}
 

@@ -246,7 +246,7 @@ export default function BetaLandingPage() {
               status={status}
               errorMsg={errorMsg}
               onSubmit={handleSubmit}
-              variant="dark"
+              variant="light"
               idPrefix="hero"
             />
             <p className="text-white/30 text-xs mt-3 font-sans">
@@ -431,7 +431,7 @@ export default function BetaLandingPage() {
               status={status}
               errorMsg={errorMsg}
               onSubmit={handleSubmit}
-              variant="dark"
+              variant="light"
               idPrefix="cta"
             />
           </div>

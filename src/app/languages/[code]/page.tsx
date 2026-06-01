@@ -192,7 +192,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
 
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
