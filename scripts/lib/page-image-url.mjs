@@ -27,14 +27,14 @@ export function isArchiveFailed(photo) {
  *   1. cropped_photo        — old-era split: materialized cropped half
  *   2. split_from_spread photo — new-era split: `photo` rewritten to the sp… half
  *   3. archiving failed → null
- *   4. archived_photo → photo_original → photo
- *
- * (enhanced_photo intentionally omitted — dead field, 0% populated.)
+ *   4. enhanced_photo — enhanced copy, preferred when present (after split handling)
+ *   5. archived_photo → photo_original → photo
  */
 export function getPageSource(page) {
   if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
   if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
   if (isArchiveFailed(page.archived_photo)) return null;
+  if (isUsableImageUrl(page.enhanced_photo)) return page.enhanced_photo;
   if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
   if (isUsableImageUrl(page.photo_original)) return page.photo_original;
   if (isUsableImageUrl(page.photo)) return page.photo;

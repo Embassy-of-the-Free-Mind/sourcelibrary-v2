@@ -1,4 +1,5 @@
 import { PromptReference } from "./prompt";
+import { getPageSource } from "@/lib/page-image-url";
 
 export interface Page {
   id: string;
@@ -254,18 +255,13 @@ export interface DetectedImage {
 }
 
 /**
- * Get the best available image URL for a page.
- * Prefers enhanced > cropped > archived > photo_original > photo.
- * For split-from-spread pages, uses photo directly (skip legacy fallback).
+ * Get the best available source image URL for a page.
+ *
+ * Delegates to the canonical {@link getPageSource} (`@/lib/page-image-url`,
+ * issue #1727), which prefers the cropped half for split pages (old-era
+ * `cropped_photo` or new-era `sp…` `photo`) and drops the dead `enhanced_photo`
+ * field. Returns '' on a miss to preserve this helper's string contract.
  */
 export function pageImageUrl(page: Partial<Page>): string {
-  // Split pages: use photo directly (the cropped half), skip legacy fallback
-  // which would show the full spread via archived_photo/photo_original
-  if ((page as any).split_from_spread || (page as any).crop) return page.photo || '';
-  return (page as any).enhanced_photo
-    || (page as any).cropped_photo
-    || page.archived_photo
-    || page.photo_original
-    || page.photo
-    || '';
+  return getPageSource(page) ?? '';
 }
