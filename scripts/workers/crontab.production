@@ -46,11 +46,6 @@
 # R2 coverage snapshot (every 6h — updates the doc /admin/r2-coverage reads)
 30 */6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
 
-# Gallery_images CDN coverage snapshot (every 12h, offset 3h from the page-side
-# snapshot so they don't compete for the undici connection pool). ~90s on
-# the full catalog. Surfaced on the same /admin/r2-coverage page.
-45 3,15 * * * cd /root/sourcelibrary && flock -n /tmp/sl-gallery-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/gallery-coverage-snapshot.mjs" >> /var/log/sourcelibrary/gallery-coverage.log 2>&1
-
 # Archive auto-unblock (daily — retry books blocked >14d ago with transient failure reasons)
 0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-unblock.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-auto-unblock.mjs" >> /var/log/sourcelibrary/archive-auto-unblock.log 2>&1
 
@@ -83,3 +78,17 @@
 # Image-side embeddings — artwork_embeddings, gallery_text_embeddings, clip_embeddings (issue #2021)
 # These tables had no recurring writer; froze for 35+ days. Uses TIER3 paid key for data-rights.
 0 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-image-embeddings.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=$GEMINI_API_KEY_TIER3; node scripts/workers/image-embeddings-cron.mjs" >> /var/log/sourcelibrary/image-embeddings.log 2>&1
+45 3,15 * * * cd /root/sourcelibrary && flock -n /tmp/sl-gallery-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/gallery-coverage-snapshot.mjs" >> /var/log/sourcelibrary/gallery-coverage.log 2>&1
+
+45 */6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archiving-watchdog.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/archiving-watchdog.mjs --apply --stale-hours=12 --escalate-days=7" >> /var/log/sourcelibrary/archiving-watchdog.log 2>&1
+
+*/15 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-finalize.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 9" >> /var/log/sourcelibrary/finalize.log 2>&1
+
+# FT verification continuous: audit hallucinated translator claims, then apply verdicts (idempotent, ~$0.014/book)
+40 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/audit-translation-claims.mjs --apply --limit 300 && node scripts/maintenance/apply-audit-verdicts.mjs --apply" >> /var/log/sourcelibrary/ft-audit.log 2>&1
+# FT discovery continuous: sample confirmed_first books for missed translations, then apply (idempotent)
+40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-discover.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/discover-translations-estimate.mjs --save --limit 300 && node scripts/maintenance/apply-discovery-results.mjs --apply" >> /var/log/sourcelibrary/ft-discover.log 2>&1
+0 8 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-ground.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/ft-ground-remediation.mjs --set unverified --limit 250" >> /var/log/sourcelibrary/ft-ground.log 2>&1
+
+# Crontab drift detector — logs if live crontab diverges from committed snapshot (#2332)
+0 4 * * * /root/sourcelibrary/scripts/workers/sync-crontab.sh >> /var/log/sourcelibrary/crontab-sync.log 2>&1
