@@ -114,6 +114,14 @@ encodes that:
    after PR #2025 and are candidates for deletion. New contributing libraries
    go in `LIBRARY_PARTNERS`, not in the `tenants` collection.
 
+## Author identity — the `authors` thesaurus (read this before touching author code)
+"Who wrote this, and is *this* Andreas the same as *that* Andreas?" is answered by the canonical **`authors`** collection — one doc per person, `_id` = canonical slug, with `variants[]` / `variant_slugs[]` / `viaf_id` / `wikidata_id`. It **supersedes** the legacy `entities` layer. Umbrella issue #2179.
+
+- **Read `books.author_id` → `authors._id`, not `author_entity_id`.** `author_id` is the canonical FK (~74% of live books linked); `author_entity_id` → `entities` is transitional and being retired. Both are written during migration.
+- **Don't render `authors.book_count`** — it's a stale build snapshot. The true count is the read-path union query.
+- **Build/enrich scripts:** `scripts/maintenance/build-authors-collection.mjs` writes the collection (deterministic name-key ∪ VIAF ∪ Wikidata, #2202); `reconcile-authors-grounded.mjs` anchors the tail to Wikidata/VIAF using each author's books as evidence (#2218). The similarly-named `build-canonical-authors.mjs` is a read-only sizer that does NOT write — don't run it to rebuild.
+- **Read-path** (`/author/[slug]` → `src/lib/author-thesaurus.ts`) is flag-gated by `AUTHOR_THESAURUS_READPATH` and redirects every variant slug to the canonical one. Full design, provenance, and migration status: **`.claude/docs/author-identity-system.md`**.
+
 ## Authentication across subdomains
 
 The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.

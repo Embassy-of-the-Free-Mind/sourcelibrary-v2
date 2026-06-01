@@ -29,25 +29,41 @@ and `author_id` are written (transitional); new consumers should read `author_id
 
 ### The `authors` thesaurus doc (`authors` collection)
 
-Built by `scripts/maintenance/build-canonical-authors.mjs` (#2202). One doc per
-canonical person:
+Built by `scripts/maintenance/build-authors-collection.mjs` (#2202) — the
+deterministic clusterer (shared name-key ∪ VIAF ∪ Wikidata). `source` on every
+live doc is `build-authors-collection`. (`build-canonical-authors.mjs` is the
+older read-only sizer — it does NOT write the collection; don't run it to
+rebuild.) Authority on the no-authority tail was then backfilled by the grounded
+reconciler `scripts/maintenance/reconcile-authors-grounded.mjs` (#2218), which
+adds the `anchored_by` / `wikidata_birth_year` / `merged_from` fields below. One
+doc per canonical person:
 
 ```
-_id            "athanasius-kircher"        // == canonical slug
-canonical_name "Athanasius Kircher"
-slug           "athanasius-kircher"
-variants       ["Athanasius Kircher", "Kircher, Athanasius"]   // every author STRING form
-variant_slugs  ["athanasius-kircher", "kircher-athanasius"]    // every URL form that resolves here
-entity_ids     ["6957ef96…"]               // legacy entities merged into this person
-viaf_id        "31998409"                  // external anchors (may be null)
-wikidata_id    "Q76738"
-book_count     71                          // STALE — build-time snapshot, do not trust at render
-source         "build-canonical-authors"
-built_at       <ISO>
+_id                 "athanasius-kircher"   // == canonical slug
+canonical_name      "Athanasius Kircher"
+slug                "athanasius-kircher"
+variants            ["Athanasius Kircher", "Kircher, Athanasius"]   // every author STRING form
+variant_slugs       ["athanasius-kircher", "kircher-athanasius"]    // every URL form that resolves here
+entity_ids          ["6957ef96…"]          // legacy entities merged into this person
+viaf_id             "31998409"             // external anchors (may be null)
+wikidata_id         "Q76738"
+book_count          71                     // STALE — build-time snapshot, do not trust at render
+source              "build-authors-collection"
+built_at            <ISO>
+// added by the grounded reconciler (#2218) when it anchors a previously-bare doc:
+anchored_by         "grounded-reconciliation"   // provenance — present only on grounded anchors
+wikidata_birth_year 1602                    // life-dates from Wikidata (used as the date gate)
+wikidata_death_year 1680
+merged_from         ["Kircher Oedipus"]     // canonical_names of strays folded in on a shared id
 ```
 
 **`book_count` is stale** — it's a build snapshot. The true count is the live
 read-path query (Kircher: doc says 71, actual live is 191). Never render it.
+
+**Coverage (post-#2218):** 4,815 author docs, ~70% Wikidata-anchored, ~52% VIAF
+(up from 27% / 11% at build). The grounded reconciler under-merges rather than
+mis-merges — a same-name person it can't confidently resolve is left bare, not
+wrongly anchored.
 
 ---
 
@@ -242,7 +258,9 @@ Ji off Li Xiaojiang); 28 wrong wikidata anchors cleared (id + dates + portrait,
 |---|---|
 | `src/lib/author-thesaurus.ts` | `resolveCanonicalAuthor()` — the read-path resolver. |
 | `src/app/author/[name]/page.tsx` | Author page; flag-gated canonical branch + 301. |
-| `scripts/maintenance/build-canonical-authors.mjs` | Builds the `authors` thesaurus (#2202). |
+| `scripts/maintenance/build-authors-collection.mjs` | Builds the `authors` thesaurus — deterministic name-key ∪ VIAF ∪ Wikidata (#2202). The actual writer; `source: build-authors-collection`. |
+| `scripts/maintenance/reconcile-authors-grounded.mjs` | Grounded reconciler — anchors the bare tail to a Wikidata QID/VIAF using each author's books as evidence; merges on shared id (#2218). |
+| `scripts/maintenance/build-canonical-authors.mjs` | Older READ-ONLY cluster sizer — does not write `authors`. Superseded by build-authors-collection. |
 | `scripts/maintenance/quarantine-non-person-authors.mjs` | Flags non-persons `is_person:false` (#2230). |
 | `scripts/maintenance/backfill-author-canonical-links.mjs` | Links the tail; writes `author_id` + provenance (#2250). |
 | `scripts/maintenance/dedup-canonical-authors.mjs` | Self-dedup + title-fold + quarantine + `book_count` recompute (#2250 §5). |
