@@ -14,6 +14,12 @@ import { getTranslationPrompt } from '@/lib/prompts';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PromptReference } from '@/lib/types';
 
+// Git SHA of the producing code, for translation provenance (#2297). Translation's
+// *input* is the page's OCR text (not an image), so there is no image source_url to
+// stamp here — its source is traceable via the page's ocr.* provenance. We record
+// code_version so a translation can be tied to the code release that produced it.
+const CODE_VERSION = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8) || 'dev';
+
 /**
  * Translation Processor - processes one page at a time
  *
@@ -244,6 +250,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         prompt_hash: promptRef.content_hash,
         prompt_id: promptRef.id,
         prompt_name: promptRef.name,
+        code_version: CODE_VERSION,     // provenance (#2297)
       },
       ...translationMeta,
       updated_at: new Date()
