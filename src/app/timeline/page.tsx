@@ -116,7 +116,7 @@ export default async function TimelinePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Timeline"
           subtitle="10,000+ texts from antiquity to the Enlightenment — browse the tradition by era"
         >

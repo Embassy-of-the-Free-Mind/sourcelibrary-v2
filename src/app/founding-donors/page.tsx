@@ -16,7 +16,7 @@ export default function FoundingDonorsPage() {
     <ContentPageLayout
       maxWidth="wide"
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="A letter to our founding donors"
           subtitle="Source Library &middot; an initiative of the Embassy of the Free Mind, Amsterdam"
           image={`${BLOB}/archived/6952dac677f38f6761bc683a/13.jpg`}

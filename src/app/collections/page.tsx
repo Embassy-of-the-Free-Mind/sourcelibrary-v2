@@ -276,7 +276,7 @@ export default async function CollectionsPage() {
     <ContentPageLayout
       maxWidth="wide"
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Collections"
           subtitle="10,000+ books across three millennia of human knowledge."
           image={heroBg}

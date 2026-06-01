@@ -197,7 +197,7 @@ export default async function DataPage({
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title={showAdmin ? 'The Full Collection' : 'The Collection'}
           subtitle={
             showAdmin

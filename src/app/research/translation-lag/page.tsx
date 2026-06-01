@@ -125,7 +125,7 @@ export default async function TranslationLagPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Translation Lag"
           subtitle="How long did it take for key works to reach readers in other languages? Mapping the gap between composition and publication across 1,700 years."
         />

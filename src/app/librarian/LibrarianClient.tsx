@@ -603,7 +603,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0e0c0a]/90" />
 
-        <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-14">
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-14">
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
             The Librarian
           </h1>
@@ -656,7 +656,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="https://images.sourcelibrary.org/artwork/reading-room-hero.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.06]" />
         </div>
-        <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 py-8 md:py-12">
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8 md:py-12">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
             {/* Chat area */}
