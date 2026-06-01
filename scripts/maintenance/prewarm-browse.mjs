@@ -68,7 +68,7 @@ if (process.env.MONGODB_URI) {
     // Artworks: single-object entries (content_type:'artwork') — see update-homepage-stats.mjs for rationale.
     const artworkFilter = { visible: true, content_type: 'artwork' };
 
-    const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount] = await Promise.all([
+    const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount, verificationReadable, verificationChecked] = await Promise.all([
       books.countDocuments(filter),
       books.countDocuments(readableFilter),
       books.countDocuments({ ...translatedFilter, is_first_translation: true }),
@@ -76,9 +76,18 @@ if (process.env.MONGODB_URI) {
       books.distinct('language', translatedFilter).then(l => l.filter(x => x && !x.includes(',') && !x.includes(' and ')).length),
       books.countDocuments(artworkFilter),
       db.collection('gallery_images').countDocuments({}),
+      // First-translation verification coverage (#2332 Task 3): of all readable+visible
+      // books (the FT-eligible pool = translatedFilter), how many have a catalog disposition?
+      books.countDocuments(translatedFilter),
+      books.countDocuments({ ...translatedFilter, 'translation_verification.disposition': { $exists: true } }),
     ]);
 
-    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount, updatedAt: new Date() };
+    const verification_coverage = {
+      checked: verificationChecked,
+      readable: verificationReadable,
+      pct: verificationReadable ? +(100 * verificationChecked / verificationReadable).toFixed(1) : 0,
+    };
+    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, updatedAt: new Date() };
     await db.collection('system_config').updateOne(
       { _id: 'homepage_stats' },
       { $set: stats },
