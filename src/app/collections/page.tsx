@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -252,7 +253,34 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
   );
 }
 
-export default async function CollectionsPage() {
+const INITIAL_PATHWAYS = 12;
+
+// Static hero so the header/navbar render instantly instead of waiting on the
+// collections queries. The body streams in via <Suspense> below.
+const COLLECTIONS_HERO =
+  'https://images.sourcelibrary.org/gallery/69a5e476006a4098422172b0/69a5e476006a409842217474-0.jpg';
+
+export default function CollectionsPage() {
+  return (
+    <ContentPageLayout
+      maxWidth="wide"
+      header={
+        <ContentHeader maxWidth="wide"
+          title="Collections"
+          subtitle="10,000+ books across three millennia of human knowledge."
+          image={COLLECTIONS_HERO}
+          imageAlt="Historical illustration from the collection"
+        />
+      }
+    >
+      <Suspense fallback={<CollectionsSkeleton />}>
+        <CollectionsBody />
+      </Suspense>
+    </ContentPageLayout>
+  );
+}
+
+async function CollectionsBody() {
   const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
 
   const [categories, pathways, timeline] = await Promise.all([
@@ -261,30 +289,8 @@ export default async function CollectionsPage() {
     fetchTimelineDecades(),
   ]);
 
-  const INITIAL_PATHWAYS = 12;
-
-  // Pick a hero background from the first collection with a usable image
-  const allCols = [...pathways, ...categories];
-  const heroBg = sanitizeThumbnail(
-    allCols.flatMap(c => c.featured_images || [])
-      .find(img => img.extracted_url || img.image_url)
-      ?.extracted_url || allCols.flatMap(c => c.featured_images || [])
-        .find(img => img.image_url)?.image_url
-  );
-
   return (
-    <ContentPageLayout
-      maxWidth="wide"
-      header={
-        <ContentHeader maxWidth="wide"
-          title="Collections"
-          subtitle="10,000+ books across three millennia of human knowledge."
-          image={heroBg}
-          imageAlt="Historical illustration from the collection"
-        />
-      }
-    >
-
+    <>
       {/* Curated pathways — the hooks, shown first */}
       {pathways.length > 0 && (
         <div>
@@ -318,6 +324,31 @@ export default async function CollectionsPage() {
 
       {/* Era timeline — full-bleed dark section */}
       <EraTimeline decades={timeline.decades} total={timeline.total} />
-    </ContentPageLayout>
+    </>
+  );
+}
+
+function CollectionsSkeleton() {
+  return (
+    <div className="animate-pulse">
+      <div className="h-7 w-48 bg-stone-200 rounded mb-4" />
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div key={i} className="rounded-xl overflow-hidden">
+            <div className="aspect-[4/3] bg-stone-200" />
+            <div className="h-4 w-3/4 bg-stone-200 rounded mt-2" />
+          </div>
+        ))}
+      </div>
+      <div className="h-7 w-44 bg-stone-200 rounded mt-12 mb-4" />
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div key={i} className="rounded-xl overflow-hidden">
+            <div className="aspect-[4/3] bg-stone-200" />
+            <div className="h-4 w-2/3 bg-stone-200 rounded mt-2" />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
