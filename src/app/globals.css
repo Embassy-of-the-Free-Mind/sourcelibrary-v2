@@ -92,6 +92,16 @@
   --container-wide: 1500px;    /* widened from 1280px (#232) */
 }
 
+/* Embedded contexts (iframe, tenant subdomain, /embed/* route) must never
+   show the global Source Library header. Some pages (e.g. /gallery) render
+   SiteHeader and only hide it after a post-mount iframe check, which flashes
+   the header for a frame. The pre-paint init script in src/app/layout.tsx sets
+   html[data-embedded] synchronously, so this rule suppresses that flash before
+   first paint. React still removes the header from the DOM post-mount. */
+html[data-embedded] [data-site-header] {
+  display: none !important;
+}
+
 /* Base styles */
 /* scroll-behavior: smooth removed — causes visible tearing during fast
    scrolling when combined with many compositing layers. */
