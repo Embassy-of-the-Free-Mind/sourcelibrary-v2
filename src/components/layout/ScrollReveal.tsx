@@ -35,17 +35,41 @@ export default function ScrollReveal() {
       { threshold: 0, rootMargin: '0px 0px -12% 0px' },
     );
 
-    const consider = (el: Element) => {
+    // A background layer (hero video, featured-collection image, overlay) is an
+    // absolutely/fixed-positioned child or a <video>. These must NOT fade — only
+    // the content over them should — so a faded section would drag its bg in too.
+    const isBackgroundLayer = (el: Element) => {
+      if (el.tagName === 'VIDEO') return true;
+      const pos = getComputedStyle(el).position;
+      return pos === 'absolute' || pos === 'fixed';
+    };
+
+    // What to actually animate for a candidate: if it has a background layer,
+    // reveal its in-flow content children (leaving the bg static); otherwise
+    // reveal the element itself.
+    const targetsFor = (el: Element): Element[] => {
+      const kids = Array.from(el.children);
+      if (!kids.some(isBackgroundLayer)) return [el];
+      const content = kids.filter((k) => !isBackgroundLayer(k));
+      return content.length ? content : [el];
+    };
+
+    const reveal = (el: Element) => {
       if (el.hasAttribute('data-reveal-item') || el.hasAttribute('data-reveal-skip')) return;
-      if (el.closest('header')) return; // never hide the navbar (and avoids breaking sticky)
-      const top = el.getBoundingClientRect().top;
       // On screen (or above): leave as-is so nothing flashes.
-      if (top < window.innerHeight) {
+      if (el.getBoundingClientRect().top < window.innerHeight) {
         el.setAttribute('data-reveal-skip', '');
         return;
       }
       el.setAttribute('data-reveal-item', '');
       io.observe(el);
+    };
+
+    const consider = (el: Element) => {
+      if (el.hasAttribute('data-reveal-done')) return;
+      if (el.closest('header')) return; // never hide the navbar (and avoids breaking sticky)
+      el.setAttribute('data-reveal-done', '');
+      for (const target of targetsFor(el)) reveal(target);
     };
 
     const scan = () => {
