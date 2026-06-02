@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
@@ -876,12 +877,23 @@ export default function BphCatalogBrowser({
                   >
                     <div className="relative aspect-[2/3] bg-warm rounded-md overflow-hidden border border-border-light group-hover:border-accent-rust/40 transition-colors">
                       {w.sl_cover ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        // Next's image optimiser resizes the 1200px display
+                        // source down to the grid-tile width (~170px) and
+                        // serves AVIF/WebP, so the browser no longer downloads
+                        // a ~400KB cover per tile. We intentionally do NOT use
+                        // bookCoverResponsiveLoader here: ~18% of digitised BPH
+                        // covers (the /cropped/ manuscript covers + /uploads/)
+                        // have no `-thumb.jpg` sibling, so the thumb-swap would
+                        // 404 exactly the manuscript covers. The default loader
+                        // fetches the always-present display variant instead.
+                        <Image
                           src={w.sl_cover}
                           alt={displayTitle}
+                          fill
                           loading="lazy"
-                          className="absolute inset-0 w-full h-full object-cover"
+                          quality={70}
+                          sizes="(min-width: 1280px) 16vw, (min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
+                          className="object-cover"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-muted">
