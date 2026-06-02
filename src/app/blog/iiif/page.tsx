@@ -1,0 +1,545 @@
+import { Metadata } from 'next';
+import Link from 'next/link';
+import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import BlogComments from '@/components/blog/BlogComments';
+
+export const metadata: Metadata = {
+  title: 'How IIIF Helped Us Translate the Renaissance - Research Notes - Source Library',
+  description:
+    'IIIF turned thirteen institutional image archives into a single input layer for an AI translation pipeline. We consume IIIF to import rare books, and we serve IIIF so any viewer can read our OCR and translation laid over the original page. A behind-the-scenes look, with diagrams.',
+  openGraph: {
+    title: 'How IIIF Helped Us Translate the Renaissance',
+    description:
+      'IIIF as a universal input layer for an AI pipeline: import rare books from thirteen institutions through one importer, then serve them back as IIIF with machine OCR and translation overlaid on the original page.',
+    images: [
+      {
+        url: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1200,/0/default.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/blog/iiif',
+  },
+};
+
+/* ── Brand palette for the diagrams ── */
+const INK = '#2a1f17';
+const RUST = '#b5482a';
+const GOLD = '#9a6f2e';
+const SAGE = '#6b7d5a';
+const STONE = '#8a8178';
+const PAPER = '#faf7f1';
+const LINE = '#e3dccf';
+
+export default function IIIFPage() {
+  return (
+    <ContentPageLayout
+      header={
+        <ContentHeader
+          title="How IIIF Helped Us Translate the Renaissance"
+          subtitle="One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world."
+          image="https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1600,/0/default.jpg"
+          imageAlt="Chakra diagram from the Shaiva tantric tradition, served from the Wellcome Collection's IIIF image server"
+        >
+          <p className="text-stone-400 text-sm mt-4">
+            2 June 2026 &middot; 11 min read &middot; Notes accompanying a lightning talk at the IIIF
+            2026 Annual Conference, Leiden &amp; The Hague
+          </p>
+        </ContentHeader>
+      }
+      bg="bg-cream"
+    >
+      <div className="mb-6">
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 text-muted hover:text-secondary transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          All notes
+        </Link>
+      </div>
+
+      <article className="prose-content max-w-none">
+        <p className="text-xl text-secondary leading-relaxed mb-8">
+          The hero image above is a tantric chakra diagram. It is not stored on our servers. It came,
+          live, from a single line in a manifest published by the Wellcome Collection in London &mdash;
+          the same kind of manifest published by the Bodleian, by Gallica, by the Vatican, by the
+          Bavarian State Library. That shared format is{' '}
+          <strong>IIIF</strong>, the International Image Interoperability Framework, and it is the
+          reason a small team was able to take rare books from a dozen of the world&rsquo;s great
+          libraries and turn them into <strong>readable, translated, citable English editions</strong>{' '}
+          at a scale that would otherwise be impossible.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Source Library is on a mission to translate the Renaissance. We started inside the{' '}
+          <Link href="/libraries/bph" className="text-accent-rust hover:text-accent-rust underline">
+            Bibliotheca Philosophica Hermetica
+          </Link>{' '}
+          (the Embassy of the Free Mind) in Amsterdam, and we now hold roughly{' '}
+          <strong>30,000 publicly visible works</strong> in Latin, German, Hebrew, Arabic, Sanskrit,
+          Chinese and more &mdash; with about <strong>6,800</strong> identified as first-ever English
+          translations and nearly <strong>143,000</strong> illustrations extracted from their pages.
+          This is the story of how IIIF made that possible, told from both sides of the standard: as a
+          consumer, and as a publisher.
+        </p>
+
+        <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-12">
+          <p className="text-stone-700 leading-relaxed text-sm">
+            <strong>What IIIF is, in one breath.</strong> A set of open APIs that let any library
+            describe a digitized object &mdash; its pages, their pixel dimensions, the order they go in,
+            who holds it, what you&rsquo;re allowed to do with it &mdash; in a <em>manifest</em> that
+            any compliant viewer can open. The companion Image API lets you ask for any region of a
+            page at any size with one predictable URL. Adopted by hundreds of institutions, it is the
+            closest thing the cultural-heritage world has to a universal plug.
+          </p>
+        </div>
+
+        {/* ── Section 1: IIIF as a universal input layer ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">A universal input layer</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Before IIIF, ingesting a book from each new institution meant writing a new scraper against a
+          new bespoke viewer, with its own URL scheme, its own tiling quirks, its own login walls. The
+          promise of IIIF is that the <em>shape</em> of the data is the same everywhere. Point the same
+          importer at a Gallica manifest or a Bodleian manifest and the page images come out the same
+          way. The institution changes; the code does not.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          That uniformity is what let us treat thirteen-plus archives as a single faucet feeding one
+          downstream pipeline. Everything past the manifest &mdash; OCR, translation, illustration
+          detection, scholarly publishing &mdash; is identical regardless of who digitized the book.
+        </p>
+
+        <Figure caption="IIIF as a fan-in. Many institutions, one manifest shape, one importer, one pipeline. The interoperability promise is most powerful when the consumer on the right is not a human viewer but a machine.">
+          <svg viewBox="0 0 720 360" className="w-full h-auto" role="img" aria-label="Diagram: many institutional IIIF manifests converge into a single importer and pipeline">
+            <defs>
+              <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L7,3 L0,6 Z" fill={STONE} />
+              </marker>
+            </defs>
+            {[
+              ['Gallica / BnF', 28],
+              ['Bodleian', 70],
+              ['Vatican', 112],
+              ['MDZ Munich', 154],
+              ['e-rara', 196],
+              ['Wellcome', 238],
+              ['Cambridge', 280],
+              ['Internet Archive', 322],
+            ].map(([label, y]) => (
+              <g key={label as string}>
+                <rect x="14" y={(y as number) - 14} width="150" height="28" rx="6" fill={PAPER} stroke={LINE} />
+                <text x="89" y={(y as number) + 4} textAnchor="middle" fontSize="12" fill={INK} fontFamily="ui-sans-serif, system-ui">
+                  {label}
+                </text>
+                <path d={`M164 ${y} C 220 ${y}, 240 175, 300 175`} fill="none" stroke={STONE} strokeWidth="1.2" opacity="0.7" markerEnd="url(#arrow)" />
+              </g>
+            ))}
+            <rect x="300" y="150" width="120" height="52" rx="8" fill="#fff" stroke={GOLD} strokeWidth="1.5" />
+            <text x="360" y="171" textAnchor="middle" fontSize="12.5" fill={INK} fontWeight="600" fontFamily="ui-sans-serif, system-ui">One importer</text>
+            <text x="360" y="189" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">parses v2 &amp; v3</text>
+            <path d="M420 176 L470 176" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow)" />
+            <rect x="470" y="150" width="118" height="52" rx="8" fill="#fff" stroke={SAGE} strokeWidth="1.5" />
+            <text x="529" y="171" textAnchor="middle" fontSize="12.5" fill={INK} fontWeight="600" fontFamily="ui-sans-serif, system-ui">One pipeline</text>
+            <text x="529" y="189" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">OCR &middot; translate</text>
+            <path d="M588 176 L632 176" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow)" />
+            <rect x="614" y="146" width="96" height="60" rx="8" fill={RUST} />
+            <text x="662" y="170" textAnchor="middle" fontSize="12" fill="#fff" fontWeight="600" fontFamily="ui-sans-serif, system-ui">Readable</text>
+            <text x="662" y="186" textAnchor="middle" fontSize="11" fill="#fff" opacity="0.92" fontFamily="ui-sans-serif, system-ui">English book</text>
+          </svg>
+        </Figure>
+
+        {/* ── Section 2: the import pipeline ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">From manifest to readable book</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          When a book enters the library, its IIIF manifest is the seed. Our importer detects the
+          version &mdash; IIIF Presentation 2.x stores canvases under{' '}
+          <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">sequences[0].canvases[]</code>,
+          while 3.0 puts them under{' '}
+          <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">items[]</code> &mdash; walks every
+          canvas, and resolves each page to a canonical Image API URL. From there a single pipeline
+          carries the book the rest of the way.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          A principle we hold firmly: <strong>every page image is mirrored to our own storage</strong>{' '}
+          (Cloudflare R2) as soon as the book is imported. About 99.8% of pages now serve from our
+          mirror. We credit and link the source institution on every book, but a reader who lands here
+          never depends on an upstream endpoint that might rate-limit, move, or disappear.
+        </p>
+
+        <PipelineFlow />
+
+        <p className="text-secondary leading-relaxed mt-10 mb-8">
+          The books arrive <em>hidden</em>. Nothing becomes publicly visible until it has been through
+          OCR, translation, and a quality pass &mdash; the <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">visible</code>{' '}
+          flag flips only at the end. The whole sequence, from a Gallica manifest to an English edition
+          with a DOI, runs unattended.
+        </p>
+
+        {/* ── Section 3: the IIIF Image API URL ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The line that does the work</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The quiet hero of the whole arrangement is the IIIF Image API URL. It is a small grammar that
+          lets you request any region of any page at any size, by rotation and quality, just by editing
+          the path. The hero image at the top of this post is exactly this URL, asking Wellcome for the
+          full page at 1600 pixels wide:
+        </p>
+
+        <ImageApiAnatomy />
+
+        <p className="text-secondary leading-relaxed mt-8 mb-8">
+          That grammar is why thumbnails, reading-size pages, and the multi-thousand-pixel crops our
+          illustration detector needs are all the <em>same</em> request with three characters changed.
+          It is also why, for the small tail of books we still serve from an upstream IIIF server,
+          external viewers get true deep-zoom for free: we hand the viewer the provider&rsquo;s image
+          service and it tiles on demand.
+        </p>
+
+        {/* ── Section 4: we serve IIIF too ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">We give it back</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          IIIF is not just how books come in. It is also how they go back out. Every book in the library
+          publishes its own Presentation 3.0 manifest:
+        </p>
+
+        <div className="bg-stone-900 rounded-lg p-4 mb-8 overflow-x-auto">
+          <code className="text-sm text-stone-200 whitespace-nowrap">
+            https://sourcelibrary.org/api/iiif/<span style={{ color: '#e0a96d' }}>{'{bookId}'}</span>/manifest
+          </code>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Point Mirador, Universal Viewer, Clover, or Theseus at that URL and you get the page images
+          &mdash; but also something the original manifest never had:{' '}
+          <strong>our AI-generated OCR and English translation, delivered as Web Annotations that overlay
+          the original folio</strong>. The transcription and the translation sit on the very pixels they
+          describe, so you can read the Latin and the English against the page itself, in a viewer the
+          institution already trusts.
+        </p>
+
+        <Figure caption="The round trip. We take a provider's images-only manifest, add OCR and translation as annotations, and republish a richer manifest that any IIIF viewer can open. The digitizing institution is credited first; we are the re-hosting, enriching aggregator second.">
+          <svg viewBox="0 0 720 300" className="w-full h-auto" role="img" aria-label="Diagram: a provider manifest gains OCR and translation annotations and is republished as a Source Library manifest for any IIIF viewer">
+            <defs>
+              <marker id="arrow2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L7,3 L0,6 Z" fill={STONE} />
+              </marker>
+            </defs>
+            {/* provider manifest */}
+            <rect x="20" y="100" width="150" height="100" rx="8" fill={PAPER} stroke={LINE} />
+            <text x="95" y="128" textAnchor="middle" fontSize="12.5" fontWeight="600" fill={INK} fontFamily="ui-sans-serif, system-ui">Provider manifest</text>
+            <text x="95" y="150" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">page images</text>
+            <text x="95" y="167" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">order, rights</text>
+            <text x="95" y="184" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">institution</text>
+            {/* arrow into SL */}
+            <path d="M170 150 L232 150" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow2)" />
+            {/* Source Library enriches */}
+            <rect x="234" y="78" width="186" height="144" rx="10" fill="#fff" stroke={GOLD} strokeWidth="1.6" />
+            <text x="327" y="104" textAnchor="middle" fontSize="13" fontWeight="700" fill={INK} fontFamily="ui-sans-serif, system-ui">Source Library</text>
+            <rect x="252" y="118" width="150" height="26" rx="5" fill="#fbf3e6" stroke={GOLD} strokeOpacity="0.4" />
+            <text x="327" y="135" textAnchor="middle" fontSize="11" fill={INK} fontFamily="ui-sans-serif, system-ui">+ OCR annotations</text>
+            <rect x="252" y="150" width="150" height="26" rx="5" fill="#fbf3e6" stroke={GOLD} strokeOpacity="0.4" />
+            <text x="327" y="167" textAnchor="middle" fontSize="11" fill={INK} fontFamily="ui-sans-serif, system-ui">+ translation</text>
+            <rect x="252" y="182" width="150" height="26" rx="5" fill="#eef1e8" stroke={SAGE} strokeOpacity="0.5" />
+            <text x="327" y="199" textAnchor="middle" fontSize="11" fill={INK} fontFamily="ui-sans-serif, system-ui">credits provider first</text>
+            {/* arrow out */}
+            <path d="M420 150 L482 150" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow2)" />
+            {/* viewers */}
+            <rect x="484" y="100" width="216" height="100" rx="8" fill={RUST} />
+            <text x="592" y="128" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="#fff" fontFamily="ui-sans-serif, system-ui">Any IIIF viewer</text>
+            <text x="592" y="150" textAnchor="middle" fontSize="11" fill="#fff" opacity="0.92" fontFamily="ui-sans-serif, system-ui">Mirador &middot; Universal Viewer</text>
+            <text x="592" y="167" textAnchor="middle" fontSize="11" fill="#fff" opacity="0.92" fontFamily="ui-sans-serif, system-ui">Clover &middot; Theseus</text>
+            <text x="592" y="184" textAnchor="middle" fontSize="11" fill="#fff" opacity="0.92" fontFamily="ui-sans-serif, system-ui">reads text on the folio</text>
+          </svg>
+        </Figure>
+
+        <p className="text-secondary leading-relaxed mt-2 mb-6">
+          Serving annotations from a machine carries an obligation, and we treat it as a hard
+          invariant. AI text is never presented as a faithful human transcription: every annotation
+          carries a Web-Annotation <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">generator</code>{' '}
+          labeled &ldquo;machine-generated, not human-verified,&rdquo; with the model name attached. And
+          we are scrupulous never to leak the AI&rsquo;s <em>editorial</em> notes &mdash; the little
+          summaries and keyword blocks our pipeline writes <em>about</em> a page &mdash; into the
+          transcription, because those describe the page rather than quote it. The whole point of a
+          source library is that what you quote is really on the leaf in front of you.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Two more disciplines that matter to a IIIF audience: the digitizing institution is always
+          listed <strong>first</strong> in the manifest&rsquo;s provider array and named in a
+          required-statement (&ldquo;Digitized by {'{'}institution{'}'}. Re-hosted with AI-generated OCR
+          and translation by Source Library&rdquo;); and canvas dimensions use the <em>real</em>{' '}
+          digitized pixel size, so a region citation lands on exactly the words it claims. There is also
+          a Content Search endpoint, so a viewer can search across a book&rsquo;s OCR and translation and
+          get back highlighted hits as annotations.
+        </p>
+
+        {/* ── Section 5: ideas ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Where this could go next</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A few directions we&rsquo;re thinking about &mdash; some prompted by the question that started
+          this post: <em>do we really have to hit an endpoint for every single book?</em>
+        </p>
+
+        <div className="space-y-5 mb-8">
+          <IdeaCard
+            n="01"
+            title="Harvest collections, not books — via IIIF Collection documents"
+            body={
+              <>
+                Today we mostly enumerate candidates one institution at a time, then fetch each
+                manifest at import. But IIIF already has the right primitive for bulk: the{' '}
+                <strong>Collection</strong> document &mdash; a manifest of manifests. A single
+                Collection URL can list thousands of objects with their manifest links and enough
+                metadata to dedupe and subject-filter <em>before</em> we ever fetch a page. Walking
+                published Collections (and the top-level &ldquo;collection of collections&rdquo; some
+                institutions expose) would let us snapshot an entire archive&rsquo;s catalog in a few
+                polite requests, diff it against what we hold, and queue only the genuinely new works.
+                It turns &ldquo;crawl and hope&rdquo; into &ldquo;subscribe and diff.&rdquo;
+              </>
+            }
+          />
+          <IdeaCard
+            n="02"
+            title="A local manifest cache + change detection"
+            body={
+              <>
+                Even without Collections everywhere, we can store each manifest we fetch with its{' '}
+                <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">ETag</code> /{' '}
+                <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">Last-Modified</code> and a
+                content hash. Re-imports and re-checks then become conditional requests that mostly
+                return <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">304 Not Modified</code>{' '}
+                &mdash; near-zero load on the institution, and we notice when a manifest genuinely
+                changes (a new page, corrected rights, an added DOI). It also makes our imports
+                reproducible: the manifest we built from is on disk, not re-fetched from a moving target.
+              </>
+            }
+          />
+          <IdeaCard
+            n="03"
+            title="Run a IIIF Image API over our own mirror"
+            body={
+              <>
+                Because ~99.8% of our pages live as flat JPEGs on R2, our own hosted books are{' '}
+                <em>not</em> currently deep-zoomable in external viewers &mdash; only the upstream tail
+                is. The clean convergence is to serve a Level 1/2 Image API over the R2 derivatives:
+                then every page is simultaneously <em>ours</em>, reliable, <em>and</em> zoomable, with no
+                dependency on any upstream server. The most promising path extends our existing image
+                proxy to honor Image API URL syntax and emit{' '}
+                <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">info.json</code>, then attaches{' '}
+                <em>our</em> image service to the manifest.
+              </>
+            }
+          />
+          <IdeaCard
+            n="04"
+            title="Publish our own Collections — and a Change Discovery feed"
+            body={
+              <>
+                If Collections are good for ingesting, they&rsquo;re good for sharing. We could expose
+                our holdings as IIIF Collections (by language, by tradition, by source institution) and
+                a IIIF Change Discovery activity stream, so other projects can harvest <em>us</em> the
+                same efficient way &mdash; including the first-translation editions that don&rsquo;t
+                exist anywhere else.
+              </>
+            }
+          />
+        </div>
+
+        {/* ── Section 6: appreciations ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Appreciations</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          None of this exists without the institutions that did the patient, expensive work of
+          digitizing these books and &mdash; crucially &mdash; <em>chose to publish them as IIIF</em>{' '}
+          rather than locking them behind a bespoke viewer. Every English translation we&rsquo;ve made
+          rests on their decision to be interoperable. A standard is only as generous as the people who
+          adopt it, and these libraries have been generous.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          First among them is the <Link href="/libraries/bph" className="text-accent-rust hover:text-accent-rust underline">Bibliotheca Philosophica Hermetica</Link>{' '}
+          / Embassy of the Free Mind in Amsterdam, where this project began and whose collection
+          remains its heart. And then, in gratitude, the archives whose IIIF manifests have become books
+          you can now read in English:
+        </p>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+          {[
+            ['Internet Archive', '8,360'],
+            ['Bavarian State Library (MDZ)', '2,383'],
+            ['British Library (incl. EAP)', '1,538'],
+            ['e-rara (ETH Zürich et al.)', '1,149'],
+            ['Harvard Library', '827'],
+            ['Allard Pierson, Amsterdam', '489'],
+            ['Gallica / BnF', '251'],
+            ['John Rylands, Manchester', '214'],
+            ['Bodleian Libraries, Oxford', '210'],
+            ['Biblioteca Medicea Laurenziana', '130'],
+            ['Vatican Apostolic Library', '111'],
+            ['Cambridge Digital Library', '63'],
+            ['Leiden University Libraries', '53'],
+            ['Library of Congress', '50'],
+            ['National Diet Library, Japan', '41'],
+          ].map(([name, count]) => (
+            <div key={name} className="bg-white rounded-lg border border-border-light px-4 py-3">
+              <div className="text-sm text-primary font-medium leading-snug">{name}</div>
+              <div className="text-xs text-muted mt-1">{count} works</div>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8 text-sm">
+          Counts are of imported works by source; many more institutions contribute manuscripts,
+          artworks, and open-access images through IIIF and adjacent APIs (the Rijksmuseum, the Met, the
+          National Gallery, Wikimedia Commons, e-codices, Chester Beatty, and others). To every
+          digitization team, cataloguer, and standards contributor behind these manifests:{' '}
+          <em>thank you.</em> You built the rails. We just ran a train on them.
+        </p>
+
+        <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">
+          <p className="text-stone-700 leading-relaxed">
+            <strong>Try it:</strong> open any book&rsquo;s manifest at{' '}
+            <code className="text-sm bg-white/70 px-1.5 py-0.5 rounded">/api/iiif/{'{bookId}'}/manifest</code>{' '}
+            in your viewer of choice, or browse the{' '}
+            <Link href="/library" className="text-accent-rust hover:text-accent-rust underline">
+              library
+            </Link>{' '}
+            and read the original page beside the translation. Every book keeps the source text next to
+            the English, and credits the library that digitized it.
+          </p>
+        </div>
+
+        <div className="border-t border-border-light pt-8 mt-16">
+          <p className="text-secondary text-sm leading-relaxed">
+            Source Library is a project of the Embassy of the Free Mind. These notes accompany a
+            lightning talk at the IIIF 2026 Annual Conference &amp; Showcase in Leiden and The Hague.
+            Corrections and feedback are welcome &mdash;{' '}
+            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              derek@sourcelibrary.org
+            </a>
+            .
+          </p>
+        </div>
+      </article>
+
+      <BlogComments slug="iiif" />
+    </ContentPageLayout>
+  );
+}
+
+/* ── Reusable figure wrapper ── */
+function Figure({ children, caption }: { children: React.ReactNode; caption: string }) {
+  return (
+    <figure className="my-10">
+      <div className="bg-white rounded-xl border border-border-light p-4 md:p-6">{children}</div>
+      <figcaption className="text-sm text-muted leading-relaxed mt-3 px-1">{caption}</figcaption>
+    </figure>
+  );
+}
+
+/* ── The import pipeline, as responsive steps ── */
+function PipelineFlow() {
+  const steps: { n: string; title: string; sub: string; tone: 'in' | 'mid' | 'out' }[] = [
+    { n: '1', title: 'IIIF manifest', sub: 'fetch v2 or v3', tone: 'in' },
+    { n: '2', title: 'Parse canvases', sub: 'walk to page image URLs', tone: 'in' },
+    { n: '3', title: 'Mirror to R2', sub: 'copy every page to our storage', tone: 'in' },
+    { n: '4', title: 'Gemini OCR', sub: 'read each page', tone: 'mid' },
+    { n: '5', title: 'Translate', sub: 'render English', tone: 'mid' },
+    { n: '6', title: 'Detect images', sub: 'find & crop illustrations', tone: 'mid' },
+    { n: '7', title: 'Enrich', sub: 'summary, index, DOI', tone: 'mid' },
+    { n: '8', title: 'Publish', sub: 'readable & citable /book', tone: 'out' },
+  ];
+  const tones: Record<string, string> = {
+    in: 'border-stone-300 bg-stone-50',
+    mid: 'border-accent-gold/40 bg-accent-gold/5',
+    out: 'border-accent-rust/40 bg-accent-rust/5',
+  };
+  return (
+    <div className="bg-white rounded-xl border border-border-light p-4 md:p-6">
+      <div className="flex flex-wrap items-stretch gap-2">
+        {steps.map((s, i) => (
+          <div key={s.n} className="flex items-stretch gap-2 grow">
+            <div className={`flex-1 min-w-[120px] rounded-lg border px-3 py-3 ${tones[s.tone]}`}>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[11px] font-mono text-muted">{s.n}</span>
+                <span className="text-sm font-medium text-primary leading-tight">{s.title}</span>
+              </div>
+              <div className="text-xs text-muted leading-snug">{s.sub}</div>
+            </div>
+            {i < steps.length - 1 && (
+              <div className="flex items-center text-stone-300 shrink-0" aria-hidden>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-x-6 gap-y-1 mt-4 text-xs text-muted">
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-stone-300 bg-stone-50" /> ingest</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-accent-gold/40 bg-accent-gold/10" /> AI processing</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-accent-rust/40 bg-accent-rust/10" /> published</span>
+      </div>
+    </div>
+  );
+}
+
+/* ── IIIF Image API URL anatomy ── */
+function ImageApiAnatomy() {
+  const parts: { text: string; label: string; color: string }[] = [
+    { text: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2', label: 'identifier', color: '#6b7d5a' },
+    { text: '/full', label: 'region', color: '#9a6f2e' },
+    { text: '/1600,', label: 'size', color: '#b5482a' },
+    { text: '/0', label: 'rotation', color: '#3f6f8f' },
+    { text: '/default.jpg', label: 'quality.format', color: '#7a5a8f' },
+  ];
+  return (
+    <div className="bg-white rounded-xl border border-border-light p-5 md:p-6">
+      <div className="font-mono text-sm md:text-base break-all leading-relaxed">
+        {parts.map((p) => (
+          <span key={p.label} style={{ color: p.color, borderBottom: `2px solid ${p.color}` }}>
+            {p.text}
+          </span>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-x-5 gap-y-2 mt-5">
+        {parts.map((p) => (
+          <span key={p.label} className="inline-flex items-center gap-1.5 text-xs text-secondary">
+            <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: p.color }} />
+            {p.label}
+          </span>
+        ))}
+      </div>
+      <p className="text-xs text-muted mt-4 leading-relaxed">
+        Change <span className="font-mono">/full</span> to a pixel box and you get a crop; change{' '}
+        <span className="font-mono">/1600,</span> to <span className="font-mono">/200,</span> and you get
+        a thumbnail. Same page, same grammar, three characters apart.
+      </p>
+    </div>
+  );
+}
+
+/* ── Idea cards for the roadmap section ── */
+function IdeaCard({ n, title, body }: { n: string; title: string; body: React.ReactNode }) {
+  return (
+    <div className="bg-white rounded-xl border border-border-light p-5 md:p-6 flex gap-4">
+      <div className="font-mono text-accent-gold-dark text-sm pt-0.5 shrink-0">{n}</div>
+      <div>
+        <h3 className="text-lg text-primary font-medium mb-2 leading-snug">{title}</h3>
+        <p className="text-secondary leading-relaxed text-[15px]">{body}</p>
+      </div>
+    </div>
+  );
+}
