@@ -39,5 +39,8 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
 
   const pageId = page.id || page._id?.toString();
   const destination = new URL(`/book/${bookSlug}/page/${pageId}`, request.url);
+  // Preserve the incoming query string (e.g. ?highlight=, ?v=) so search-result
+  // links that land here still highlight/pin on the resolved page reader.
+  destination.search = request.nextUrl.search;
   return NextResponse.redirect(destination, 308);
 }
