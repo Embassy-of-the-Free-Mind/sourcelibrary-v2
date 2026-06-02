@@ -144,7 +144,7 @@ export default async function FeaturedCollections() {
 
   return (
     <section className="bg-[#f6f3ee] pt-16 md:pt-24 pb-8">
-      <div className="px-6 md:px-12 max-w-7xl mx-auto">
+      <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
         {/* Header */}
         <div className="flex items-end justify-between mb-8">
           <div>

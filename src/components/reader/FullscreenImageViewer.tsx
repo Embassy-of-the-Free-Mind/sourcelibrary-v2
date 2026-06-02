@@ -345,7 +345,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
       >
         {!isLoaded && !hasError && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <BookLoader size="sm" variant="dark" />
+            <BookLoader size="sm" variant="light" />
           </div>
         )}
         {hasError ? (

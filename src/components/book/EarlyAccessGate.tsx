@@ -30,7 +30,7 @@ export default function EarlyAccessGate({ membersOnlyUntil, children }: EarlyAcc
     return (
       <>
         <div
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6"
+          className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 mb-6"
         >
           <div
             className="rounded-lg px-5 py-3 text-sm flex items-center gap-2"
@@ -51,7 +51,7 @@ export default function EarlyAccessGate({ membersOnlyUntil, children }: EarlyAcc
   const daysLeft = Math.ceil((until.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div
         className="rounded-xl p-8 text-center max-w-lg mx-auto"
         style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}

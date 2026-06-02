@@ -151,7 +151,7 @@ export default async function AllCollectionsPage() {
     <ContentPageLayout
       maxWidth="wide"
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="All Collections"
           subtitle="Every wing and sub-collection in the library."
           image={wings.find(w => w.image)?.image}

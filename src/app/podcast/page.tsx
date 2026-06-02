@@ -90,7 +90,7 @@ export default async function PodcastPage() {
 
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
-      <SiteHeader variant="light" breadcrumbs={[{ label: 'Podcast', href: '/podcast' }]} />
+      <SiteHeader variant="light" />
 
       <div className="max-w-[720px] mx-auto px-6 py-10 md:py-16">
         {/* Header */}

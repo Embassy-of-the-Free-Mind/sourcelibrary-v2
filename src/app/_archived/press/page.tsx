@@ -65,7 +65,7 @@ const SOURCE_LIBRARIES = [
 export default function PressPage() {
   return (
     <div className="min-h-screen bg-white">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
       {/* Hero */}
       <div className="bg-stone-900 text-white py-16 md:py-24">
         <div className="max-w-5xl mx-auto px-6 md:px-12">

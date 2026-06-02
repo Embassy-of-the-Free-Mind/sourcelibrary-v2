@@ -3,7 +3,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 export default function GalleryLoading() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      <SiteHeader variant="dark" sticky breadcrumbs={[{ label: 'Image Gallery', href: '/gallery' }]} />
+      <SiteHeader variant="light" />
 
       <div className="px-4 sm:px-6 lg:px-8 py-6">
         {/* Search & filter bar skeleton */}

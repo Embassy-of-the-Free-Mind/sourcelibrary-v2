@@ -126,8 +126,9 @@ export default function HeroSection() {
       <SiteHeader variant="transparent" />
 
       {/* Hero Content */}
-      <div className="relative z-10 h-full flex items-center">
-        <div className="px-6 md:px-12 w-full max-w-4xl">
+      <div className="relative z-10 h-full flex items-center animate-fade-in-up">
+        <div className="w-full max-w-[1500px] mx-auto px-6 md:px-12">
+        <div className="w-full max-w-4xl">
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display text-balance"
           >
@@ -139,13 +140,10 @@ export default function HeroSection() {
 
           {/* Reserve min-height to prevent layout shift while session loads */}
           <div className="min-h-[120px]">
-            {status === 'loading' ? (
-              <div className="max-w-xl opacity-0">
-                {/* Invisible placeholder matching sign-up form height */}
-                <div className="h-[52px] rounded-lg" />
-                <div className="h-[24px] mt-4" />
-              </div>
-            ) : status === 'authenticated' ? (
+            {/* Show the sign-up immediately on load (also during session
+                'loading') so it fades in with the hero instead of waiting for
+                the session round-trip. Authenticated visitors swap to search. */}
+            {status === 'authenticated' ? (
               <div className="max-w-xl animate-fade-in">
                 <UnifiedSearch />
               </div>
@@ -155,6 +153,7 @@ export default function HeroSection() {
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
 

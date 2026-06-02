@@ -146,7 +146,7 @@ export default async function PipelineArchitecturePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Pipeline Architecture"
           subtitle="How 10,000+ historical books flow from scanned images to searchable, translated text — the full technical picture."
         />

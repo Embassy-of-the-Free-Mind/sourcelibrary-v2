@@ -783,7 +783,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   return (
     <div className="min-h-screen bg-cream">
       <EmbedNavigationReporter />
-      <ConditionalSiteHeader variant="dark" />
+      <ConditionalSiteHeader variant="light" />
       <CollectionSchema
         slug={id}
         name={collection.name}
@@ -840,7 +840,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
+        <div className="relative max-w-[1500px] mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <Link
             href={parentCollection ? (tenantSlug ? `/${tenantSlug}/collections/${parentCollection.slug}` : `/collections/${parentCollection.slug}`) : isArtCollection ? '/artwork' : '/#library'}
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
@@ -881,7 +881,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Sub-collections grid */}
       {childCollections.length > 0 && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="max-w-[1500px] mx-auto px-6 py-8">
             <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
               Sub-collections
             </h2>
@@ -937,7 +937,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Gallery — labeled illustrations */}
       {diverseGalleryImages.length > 0 && !isArtCollection && !exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="max-w-[1500px] mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">
                 Illustrations
@@ -1007,7 +1007,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         const featured = tier1[0];
         return (
           <div className="bg-warm border-b border-border-light">
-            <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="max-w-[1500px] mx-auto px-6 py-8">
               <Link
                 href={tenantBookUrl({ id: featured.id, slug: featured.slug }, tenantSlug)}
                 className="group flex flex-col sm:flex-row gap-6 sm:gap-8"
@@ -1055,7 +1055,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Exhibition Layout — renders curated components ABOVE gallery when available */}
       {exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-10">
+          <div className="max-w-[1500px] mx-auto px-6 py-10">
             {exhibition.subtitle && (
               <p className="text-lg text-muted italic mb-6 font-display">{exhibition.subtitle}</p>
             )}
@@ -1074,7 +1074,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Visual Art — artworks tagged to this collection (hidden when exhibition present) */}
       {artworks.length > 0 && !exhibition?.layout && !isCatalogCollection && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="max-w-[1500px] mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">
                 Visual Art
@@ -1154,7 +1154,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Overview description */}
       {!exhibition?.layout && (collection.expanded_description || collection.description) && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="max-w-[1500px] mx-auto px-6 py-8">
             <div className="max-w-4xl">
               {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
@@ -1166,7 +1166,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-[1500px] mx-auto px-6 py-10">
 
         {/* Exhibition Layout is now rendered above the gallery section */}
 

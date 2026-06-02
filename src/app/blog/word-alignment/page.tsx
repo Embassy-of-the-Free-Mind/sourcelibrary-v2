@@ -21,7 +21,7 @@ export default function WordAlignmentPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Reading Through the Translation"
           subtitle="Click any English word to see the original that produced it"
           image="https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg"

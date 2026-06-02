@@ -513,7 +513,7 @@ export default function SocialAdminPage() {
     <div className="min-h-screen bg-stone-950 text-stone-100">
       {/* Header */}
       <header className="border-b border-stone-800 bg-stone-900">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-[1500px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link href="/" className="text-stone-400 hover:text-white">
@@ -581,7 +581,7 @@ export default function SocialAdminPage() {
       </header>
 
       {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-[1500px] mx-auto px-4 py-6">
         {/* Browse Tab */}
         {activeTab === 'browse' && (
           <div className="space-y-6">

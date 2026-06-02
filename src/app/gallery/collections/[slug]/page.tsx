@@ -105,9 +105,9 @@ export default async function CollectionDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Collection description */}
         <div className="mb-8">
           <p className="text-stone-600 max-w-3xl">{data.description}</p>

@@ -64,7 +64,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   return (
     <Link
       href={isArtwork ? artworkHref : bookHref}
-      className="group block"
+      className="group block animate-fade-in-up"
     >
       <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">
         {/* Book Poster with Shimmer Loading */}

@@ -115,7 +115,7 @@ export default async function MapPage() {
     return (
       <ContentPageLayout
         header={
-          <ContentHeader
+          <ContentHeader maxWidth="wide"
             title="Map"
             subtitle={`${locationCount.toLocaleString('en-US')} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
           >
@@ -135,7 +135,7 @@ export default async function MapPage() {
     return (
       <ContentPageLayout
         header={
-          <ContentHeader title="Map" subtitle="Map data is temporarily unavailable. Please try again shortly." >
+          <ContentHeader maxWidth="wide" title="Map" subtitle="Map data is temporarily unavailable. Please try again shortly." >
             <div className="mt-5">
               <ExploreTabBar />
             </div>

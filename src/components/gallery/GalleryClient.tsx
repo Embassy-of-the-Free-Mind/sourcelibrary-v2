@@ -13,8 +13,6 @@ import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import IconclassFilter from '@/components/gallery/IconclassFilter';
-import SiteHeader from '@/components/layout/SiteHeader';
-import { useEmbedContext } from '@/hooks/useEmbedContext';
 import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
@@ -92,10 +90,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const router = useRouter();
   const pathname = usePathname();
   const identity = useIdentity();
-  // On tenant subdomains the global SL header (Collections, Gallery, Browse…)
-  // is a lockdown leak — see CLAUDE.md invariant #5. Suppress it; the tenant
-  // shell renders its own chrome.
-  const { isEmbedded } = useEmbedContext();
+  // The global SL header is rendered by the page shell via ConditionalSiteHeader,
+  // which suppresses it on embedded/tenant surfaces (CLAUDE.md invariant #5).
 
   // Path-tenants (e.g. /internet-archive/gallery) should never propagate
   // into book/page links — those URLs are canonical at /book/{id}. The
@@ -317,15 +313,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   return (
     <>
-      {!isEmbedded && (
-        <SiteHeader
-          variant="dark"
-          sticky
-          breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
-        />
-      )}
-
-      <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden animate-fade-in-up">
         {/* Search & Filter Bar */}
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
           {/* Image Search */}
@@ -597,7 +585,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <BookLoader size="sm" variant="dark" />
+            <BookLoader size="sm" variant="light" />
           </div>
         )}
 

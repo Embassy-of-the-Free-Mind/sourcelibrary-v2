@@ -70,7 +70,7 @@ export default function GlobalFooter() {
     <>
     <FeedbackCallout />
     <footer className="bg-dark text-white/60 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Zone 1: Brand + Mission */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-b border-white/[0.08]">

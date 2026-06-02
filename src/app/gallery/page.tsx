@@ -1,10 +1,36 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import { unstable_cache } from 'next/cache';
 import { getReadDb } from '@/lib/mongodb';
 import { headers } from 'next/headers';
 import GalleryClient from '@/components/gallery/GalleryClient';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
+
+// Per-tenant cached wrappers. The DB work runs at most once per revalidate
+// window per (tenant, bookId) — warm requests skip Mongo entirely. tenantId is
+// part of the cache key, so tenant isolation is preserved.
+const getGalleryInitial = (tenantId: string | null, bookId?: string) =>
+  unstable_cache(
+    () => fetchInitialGalleryData(tenantId, bookId),
+    ['gallery-initial-v1', tenantId || 'main', bookId || 'all'],
+    { revalidate: 3600 },
+  )();
+
+const getGalleryFeatured = (tenantId: string | null) =>
+  unstable_cache(
+    () => fetchFeaturedCollections(tenantId),
+    ['gallery-featured-v1', tenantId || 'main'],
+    { revalidate: 3600 },
+  )();
+
+const getGalleryBookCollections = (tenantId: string | null) =>
+  unstable_cache(
+    () => fetchBookCollections(tenantId),
+    ['gallery-bookcollections-v1', tenantId || 'main'],
+    { revalidate: 3600 },
+  )();
 
 export const revalidate = 3600; // ISR: rebuild every hour (unfiltered landing only)
 
@@ -46,29 +72,14 @@ interface GalleryPageProps {
  * image loads). Accessing searchParams marks the page dynamic for filtered
  * requests; the unfiltered landing stays ISR-cached.
  */
-export default async function GalleryPage({ searchParams }: GalleryPageProps) {
-  const h = await headers();
-  const tenantId = h.get('x-tenant-id');
-  const params = (await searchParams) ?? {};
-  const bookIdParam = params.bookId ?? params.book;
-  const bookId = typeof bookIdParam === 'string' ? bookIdParam : undefined;
-
-  const [initialData, initialCollections, bookCollections] = await Promise.all([
-    fetchInitialGalleryData(tenantId, bookId),
-    fetchFeaturedCollections(tenantId),
-    fetchBookCollections(tenantId),
-  ]);
-
+export default function GalleryPage({ searchParams }: GalleryPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
+      {/* Header renders instantly; the data-heavy grid streams in below. */}
+      <ConditionalSiteHeader variant="light" />
       <h1 className="sr-only">Image Gallery — Illustrations from Rare Historical Texts</h1>
-      <Suspense>
-        <GalleryClient
-          initialData={initialData}
-          initialCollections={initialCollections}
-          bookCollections={bookCollections}
-          initialBookId={bookId}
-        />
+      <Suspense fallback={<GalleryShell />}>
+        <GalleryData searchParams={searchParams} />
       </Suspense>
       <SignUpCTA />
 
@@ -80,6 +91,46 @@ export default async function GalleryPage({ searchParams }: GalleryPageProps) {
           {' '}and the{' '}
           <a href="https://chineseiconography.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-600">Chinese Iconography Thesaurus</a>
         </p>
+      </div>
+    </div>
+  );
+}
+
+async function GalleryData({ searchParams }: GalleryPageProps) {
+  const h = await headers();
+  const tenantId = h.get('x-tenant-id');
+  const params = (await searchParams) ?? {};
+  const bookIdParam = params.bookId ?? params.book;
+  const bookId = typeof bookIdParam === 'string' ? bookIdParam : undefined;
+
+  const [initialData, initialCollections, bookCollections] = await Promise.all([
+    getGalleryInitial(tenantId, bookId),
+    getGalleryFeatured(tenantId),
+    getGalleryBookCollections(tenantId),
+  ]);
+
+  return (
+    <GalleryClient
+      initialData={initialData}
+      initialCollections={initialCollections}
+      bookCollections={bookCollections}
+      initialBookId={bookId}
+    />
+  );
+}
+
+function GalleryShell() {
+  return (
+    <div className="px-4 sm:px-6 lg:px-8 py-6">
+      <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
+        <div className="flex-1 min-w-0 sm:min-w-[200px] max-w-md h-9 bg-stone-200/70 rounded-lg animate-pulse" />
+        <div className="min-w-0 sm:min-w-[200px] max-w-sm flex-1 h-9 bg-stone-200/70 rounded-lg animate-pulse" />
+        <div className="h-9 w-24 bg-stone-200/70 rounded-lg animate-pulse" />
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        {Array.from({ length: 18 }).map((_, i) => (
+          <div key={i} className="aspect-square bg-stone-200/70 rounded-lg animate-pulse" />
+        ))}
       </div>
     </div>
   );

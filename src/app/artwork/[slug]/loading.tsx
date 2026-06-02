@@ -3,7 +3,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 export default function ArtworkLoading() {
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
 
       {/* Hero image skeleton — dark background like the real artwork page */}
       <div className="bg-stone-900">

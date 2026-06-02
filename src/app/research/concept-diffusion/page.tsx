@@ -151,7 +151,7 @@ export default function ConceptDiffusionPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Concept Diffusion"
           subtitle="How did ideas spread across languages and centuries? Tracking concept frequency across theology, philosophy, alchemy, and more in 2,400 pre-modern texts."
         />

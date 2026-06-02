@@ -238,7 +238,7 @@ function VoiceAgentInner() {
 
   return (
     <div className="flex flex-col h-[100dvh] bg-[#f5f0e8] overflow-hidden">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
 
       {idle || appStatus === 'connecting' ? (
         /* ── Landing screen ── */

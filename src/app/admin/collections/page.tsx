@@ -346,7 +346,7 @@ export default function AdminCollectionsPage() {
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header */}
       <header className="bg-stone-900 text-white py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <Link
               href="/gallery/collections"
@@ -414,7 +414,7 @@ export default function AdminCollectionsPage() {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* ==================== BOOK CURATION MODE ==================== */}
         {mode === 'book-curation' && (
           <div>

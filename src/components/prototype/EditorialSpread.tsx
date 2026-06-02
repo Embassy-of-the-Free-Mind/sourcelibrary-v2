@@ -51,7 +51,7 @@ export default function EditorialSpread({ collection, books }: EditorialSpreadPr
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div className="relative max-w-[1500px] mx-auto px-6 md:px-12 py-16 md:py-24">
         <div className="max-w-xl">
           <span className="text-xs uppercase tracking-[0.2em] text-accent-gold/80 mb-4 block">
             Featured Collection
@@ -82,7 +82,7 @@ export default function EditorialSpread({ collection, books }: EditorialSpreadPr
       {/* Book strip at the bottom */}
       {books.length > 0 && (
         <div className="relative border-t border-white/10 bg-black/60 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 py-6">
+          <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-6">
             <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin">
               {books.slice(0, 8).map((book) => {
                 const thumb = book.thumbnail_blob || book.thumbnail;

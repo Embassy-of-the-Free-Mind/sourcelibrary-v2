@@ -821,11 +821,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   return (
     <div className="bg-cream">
-      {!embed && <SiteHeader variant="dark" />}
+      {!embed && <SiteHeader variant="light" />}
 
       {/* Search Bar */}
-      <div className="bg-white border-b border-border-light sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-4">
+      <div className="bg-white border-b border-border-light sticky top-0 z-30">
+        <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
@@ -1109,7 +1109,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
       </div>
 
       {/* Results */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
         {/* Browse gallery — shown when no query + images tab */}
         {isBrowseMode && viewMode === 'images' && (
           <div>

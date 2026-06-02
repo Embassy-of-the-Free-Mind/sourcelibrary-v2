@@ -326,7 +326,7 @@ export default async function TopicDetailPage({ params }: Props) {
 
     return (
       <div className="min-h-screen bg-cream">
-        <SiteHeader variant="dark" />
+        <SiteHeader variant="light" />
         {/* Hero */}
         <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
           <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
@@ -432,7 +432,7 @@ export default async function TopicDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
       <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
         <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-display">

@@ -26,7 +26,7 @@ const NAV_LINKS: NavLink[] = [
       { label: 'Catalogue', href: '/catalog' },
     ],
   },
-  { label: 'Explore', href: '/explore/map', activePrefix: '/explore' },
+  { label: 'Map', href: '/explore/map', activePrefix: '/explore' },
   { label: 'Librarian', href: '/librarian' },
   { label: 'Podcast', href: '/podcast' },
 ];
@@ -37,8 +37,8 @@ interface Breadcrumb {
 }
 
 interface SiteHeaderProps {
-  /** 'transparent' for hero overlays, 'light' for cream pages, 'dark' for dark-bg pages (gallery) */
-  variant?: 'transparent' | 'light' | 'dark';
+  /** 'transparent' for the homepage hero overlay, 'light' (default) for all other pages */
+  variant?: 'transparent' | 'light';
   /** Optional breadcrumb trail after the logo (e.g. "Image Gallery") */
   breadcrumbs?: Breadcrumb[];
   /** Make header sticky */
@@ -48,7 +48,7 @@ interface SiteHeaderProps {
 }
 
 export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '' }: SiteHeaderProps) {
-  const isWhiteText = variant === 'transparent' || variant === 'dark';
+  const isWhiteText = variant === 'transparent';
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -76,7 +76,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const variantClasses = {
     transparent: 'relative z-50 py-4',
     light: 'bg-cream border-b border-border-light py-3',
-    dark: 'bg-stone-900 text-white py-3',
   }[variant];
 
   const linkClass = isWhiteText
@@ -91,7 +90,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     <header
       className={`${variantClasses} ${sticky ? 'sticky top-0 z-20' : ''} ${className}`}
     >
-      <div className={`flex items-center justify-between px-6 md:px-12 ${variant !== 'transparent' ? 'max-w-[var(--container-wide)] mx-auto' : ''}`}>
+      <div className="flex items-center justify-between px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
         <div className="flex items-center gap-3">
           <Logo white={isWhiteText} compact={!!breadcrumbs} />
           {breadcrumbs?.map((crumb) => (

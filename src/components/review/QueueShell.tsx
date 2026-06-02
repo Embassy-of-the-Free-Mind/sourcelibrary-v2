@@ -26,7 +26,7 @@ export function QueueShell(props: {
   return (
     <main className="min-h-screen bg-stone-50">
       <header className="border-b border-stone-200 bg-white sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-sm">
+        <div className="max-w-[1500px] mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-sm">
           <Link href="/review" className="text-stone-600 hover:text-stone-900">&larr; All queues</Link>
           <div className="text-stone-700">
             <b>{queueTitle}</b> &middot; <span className="text-stone-500">{sessionCount} rated this session</span>
@@ -48,7 +48,7 @@ export function QueueShell(props: {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-[1500px] mx-auto px-4 py-6">
         {loading && <div className="text-stone-500 py-12 text-center">Loading next item…</div>}
         {!loading && error && (
           <div className="text-center py-12">

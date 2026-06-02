@@ -98,7 +98,7 @@ export default async function ArtworkPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
       <ArtworkInfo book={data.artwork} collections={data.collections} prevWork={data.prevWork} nextWork={data.nextWork} />
     </div>
   );

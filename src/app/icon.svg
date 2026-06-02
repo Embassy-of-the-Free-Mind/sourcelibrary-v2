@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#1a1612">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    path { fill: #1a1612; }
+    @media (prefers-color-scheme: dark) {
+      path { fill: #f5f0e6; }
+    }
+  </style>
   <path fill-rule="evenodd" d="M 32 0 A 32 32 0 1 0 32 64 32 32 0 0 0 32 0 z M 32 4 A 28 28 0 1 1 32 60 28 28 0 0 1 32 4 z"/>
   <path fill-rule="evenodd" d="M 32 12 A 20 20 0 1 0 32 52 20 20 0 0 0 32 12 z M 32 16 A 16 16 0 1 1 32 48 16 16 0 0 1 32 16 z"/>
   <path fill-rule="evenodd" d="M 32 22 A 10 10 0 1 0 32 42 10 10 0 0 0 32 22 z M 32 26 A 6 6 0 1 1 32 38 6 6 0 0 1 32 26 z"/>

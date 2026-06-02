@@ -206,7 +206,7 @@ export default function EmailAdminPage() {
     <div className="min-h-screen bg-stone-950 text-stone-100">
       {/* Header */}
       <header className="border-b border-stone-800 bg-stone-900">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-[1500px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link href="/" className="text-stone-400 hover:text-white">
@@ -228,7 +228,7 @@ export default function EmailAdminPage() {
 
       {/* Tabs */}
       <div className="border-b border-stone-800 bg-stone-900/50">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-[1500px] mx-auto px-4">
           <nav className="flex gap-1">
             {tabs.map(tab => (
               <button
@@ -252,7 +252,7 @@ export default function EmailAdminPage() {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-[1500px] mx-auto px-4 py-6">
         {/* ===== COMPOSE TAB ===== */}
         {activeTab === 'compose' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
