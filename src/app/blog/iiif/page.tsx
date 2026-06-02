@@ -25,13 +25,13 @@ export const metadata: Metadata = {
 };
 
 /* ── Brand palette for the diagrams ── */
-const INK = '#2a1f17';
-const RUST = '#b5482a';
-const GOLD = '#9a6f2e';
-const SAGE = '#6b7d5a';
-const STONE = '#8a8178';
-const PAPER = '#faf7f1';
-const LINE = '#e3dccf';
+const INK = '#231a12';
+const RUST = '#a83c1d';
+const GOLD = '#7c5212';
+const SAGE = '#465738';
+const STONE = '#4f4537'; // darkened: used for connectors + small captions — now reads with strong contrast
+const PAPER = '#ece0c8'; // distinct cream fill so source boxes stand out from the white card
+const LINE = '#b6a47e'; // darker border
 
 export default function IIIFPage() {
   return (
@@ -134,21 +134,21 @@ export default function IIIFPage() {
               ['Internet Archive', 322],
             ].map(([label, y]) => (
               <g key={label as string}>
-                <rect x="14" y={(y as number) - 14} width="150" height="28" rx="6" fill={PAPER} stroke={LINE} />
+                <rect x="14" y={(y as number) - 14} width="150" height="28" rx="6" fill={PAPER} stroke={LINE} strokeWidth="1.5" />
                 <text x="89" y={(y as number) + 4} textAnchor="middle" fontSize="12" fill={INK} fontFamily="ui-sans-serif, system-ui">
                   {label}
                 </text>
-                <path d={`M164 ${y} C 220 ${y}, 240 175, 300 175`} fill="none" stroke={STONE} strokeWidth="1.2" opacity="0.7" markerEnd="url(#arrow)" />
+                <path d={`M164 ${y} C 220 ${y}, 240 175, 300 175`} fill="none" stroke={STONE} strokeWidth="1.8" opacity="1" markerEnd="url(#arrow)" />
               </g>
             ))}
             <rect x="300" y="150" width="120" height="52" rx="8" fill="#fff" stroke={GOLD} strokeWidth="1.5" />
             <text x="360" y="171" textAnchor="middle" fontSize="12.5" fill={INK} fontWeight="600" fontFamily="ui-sans-serif, system-ui">One importer</text>
             <text x="360" y="189" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">parses v2 &amp; v3</text>
-            <path d="M420 176 L470 176" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow)" />
+            <path d="M420 176 L470 176" fill="none" stroke={STONE} strokeWidth="2" markerEnd="url(#arrow)" />
             <rect x="470" y="150" width="118" height="52" rx="8" fill="#fff" stroke={SAGE} strokeWidth="1.5" />
             <text x="529" y="171" textAnchor="middle" fontSize="12.5" fill={INK} fontWeight="600" fontFamily="ui-sans-serif, system-ui">One pipeline</text>
             <text x="529" y="189" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">OCR &middot; translate</text>
-            <path d="M588 176 L632 176" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow)" />
+            <path d="M588 176 L632 176" fill="none" stroke={STONE} strokeWidth="2" markerEnd="url(#arrow)" />
             <rect x="614" y="146" width="96" height="60" rx="8" fill={RUST} />
             <text x="662" y="170" textAnchor="middle" fontSize="12" fill="#fff" fontWeight="600" fontFamily="ui-sans-serif, system-ui">Readable</text>
             <text x="662" y="186" textAnchor="middle" fontSize="11" fill="#fff" opacity="0.92" fontFamily="ui-sans-serif, system-ui">English book</text>
@@ -372,13 +372,13 @@ export default function IIIFPage() {
                 <text x="112" y={y + 4} textAnchor="middle" fontSize="12" fill={INK} fontFamily="ui-sans-serif, system-ui">
                   {label}
                 </text>
-                <path d={`M210 ${y} C 274 ${y}, 300 113, 350 113`} fill="none" stroke={STONE} strokeWidth="1.2" opacity="0.7" markerEnd="url(#arrow3)" />
+                <path d={`M210 ${y} C 274 ${y}, 300 113, 350 113`} fill="none" stroke={STONE} strokeWidth="1.8" opacity="1" markerEnd="url(#arrow3)" />
               </g>
             ))}
             <rect x="352" y="85" width="156" height="56" rx="9" fill="#fff" stroke={SAGE} strokeWidth="1.6" />
             <text x="430" y="107" textAnchor="middle" fontSize="12.5" fontWeight="700" fill={INK} fontFamily="ui-sans-serif, system-ui">Normalized doc</text>
             <text x="430" y="125" textAnchor="middle" fontSize="10.5" fill={STONE} fontFamily="ui-sans-serif, system-ui">+ fingerprint + provenance</text>
-            <path d="M508 113 L556 113" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow3)" />
+            <path d="M508 113 L556 113" fill="none" stroke={STONE} strokeWidth="2" markerEnd="url(#arrow3)" />
             <rect x="558" y="86" width="148" height="54" rx="9" fill={RUST} />
             <text x="632" y="108" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="#fff" fontFamily="ui-sans-serif, system-ui">One pipeline</text>
             <text x="632" y="126" textAnchor="middle" fontSize="10.5" fill="#fff" opacity="0.92" fontFamily="ui-sans-serif, system-ui">OCR &middot; translate &middot; publish</text>
@@ -416,24 +416,24 @@ export default function IIIFPage() {
               </marker>
             </defs>
             {/* provider manifest */}
-            <rect x="20" y="100" width="150" height="100" rx="8" fill={PAPER} stroke={LINE} />
+            <rect x="20" y="100" width="150" height="100" rx="8" fill={PAPER} stroke={LINE} strokeWidth="1.5" />
             <text x="95" y="128" textAnchor="middle" fontSize="12.5" fontWeight="600" fill={INK} fontFamily="ui-sans-serif, system-ui">Provider manifest</text>
             <text x="95" y="150" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">page images</text>
             <text x="95" y="167" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">order, rights</text>
             <text x="95" y="184" textAnchor="middle" fontSize="11" fill={STONE} fontFamily="ui-sans-serif, system-ui">institution</text>
             {/* arrow into SL */}
-            <path d="M170 150 L232 150" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow2)" />
+            <path d="M170 150 L232 150" fill="none" stroke={STONE} strokeWidth="2" markerEnd="url(#arrow2)" />
             {/* Source Library enriches */}
             <rect x="234" y="78" width="186" height="144" rx="10" fill="#fff" stroke={GOLD} strokeWidth="1.6" />
             <text x="327" y="104" textAnchor="middle" fontSize="13" fontWeight="700" fill={INK} fontFamily="ui-sans-serif, system-ui">Source Library</text>
-            <rect x="252" y="118" width="150" height="26" rx="5" fill="#fbf3e6" stroke={GOLD} strokeOpacity="0.4" />
+            <rect x="252" y="118" width="150" height="26" rx="5" fill="#f3e3c0" stroke={GOLD} strokeOpacity="0.9" />
             <text x="327" y="135" textAnchor="middle" fontSize="11" fill={INK} fontFamily="ui-sans-serif, system-ui">+ OCR annotations</text>
-            <rect x="252" y="150" width="150" height="26" rx="5" fill="#fbf3e6" stroke={GOLD} strokeOpacity="0.4" />
+            <rect x="252" y="150" width="150" height="26" rx="5" fill="#f3e3c0" stroke={GOLD} strokeOpacity="0.9" />
             <text x="327" y="167" textAnchor="middle" fontSize="11" fill={INK} fontFamily="ui-sans-serif, system-ui">+ translation</text>
-            <rect x="252" y="182" width="150" height="26" rx="5" fill="#eef1e8" stroke={SAGE} strokeOpacity="0.5" />
+            <rect x="252" y="182" width="150" height="26" rx="5" fill="#dbe5cc" stroke={SAGE} strokeOpacity="0.9" />
             <text x="327" y="199" textAnchor="middle" fontSize="11" fill={INK} fontFamily="ui-sans-serif, system-ui">credits provider first</text>
             {/* arrow out */}
-            <path d="M420 150 L482 150" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow2)" />
+            <path d="M420 150 L482 150" fill="none" stroke={STONE} strokeWidth="2" markerEnd="url(#arrow2)" />
             {/* viewers */}
             <rect x="484" y="100" width="216" height="100" rx="8" fill={RUST} />
             <text x="592" y="128" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="#fff" fontFamily="ui-sans-serif, system-ui">Any IIIF viewer</text>
@@ -693,9 +693,9 @@ function PipelineFlow() {
     { n: '8', title: 'Publish', sub: 'readable & citable /book', tone: 'out' },
   ];
   const tones: Record<string, string> = {
-    in: 'border-stone-300 bg-stone-50',
-    mid: 'border-accent-gold/40 bg-accent-gold/5',
-    out: 'border-accent-rust/40 bg-accent-rust/5',
+    in: 'border-stone-400 bg-stone-100',
+    mid: 'border-accent-gold/70 bg-accent-gold/15',
+    out: 'border-accent-rust/70 bg-accent-rust/15',
   };
   return (
     <div className="bg-white rounded-xl border border-border-light p-4 md:p-6">
@@ -710,7 +710,7 @@ function PipelineFlow() {
               <div className="text-xs text-muted leading-snug">{s.sub}</div>
             </div>
             {i < steps.length - 1 && (
-              <div className="flex items-center text-stone-300 shrink-0" aria-hidden>
+              <div className="flex items-center text-stone-500 shrink-0" aria-hidden>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
@@ -720,9 +720,9 @@ function PipelineFlow() {
         ))}
       </div>
       <div className="flex flex-wrap gap-x-6 gap-y-1 mt-4 text-xs text-muted">
-        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-stone-300 bg-stone-50" /> ingest</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-accent-gold/40 bg-accent-gold/10" /> AI processing</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-accent-rust/40 bg-accent-rust/10" /> published</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-stone-400 bg-stone-100" /> ingest</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-accent-gold/70 bg-accent-gold/15" /> AI processing</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm border border-accent-rust/70 bg-accent-rust/15" /> published</span>
       </div>
     </div>
   );
