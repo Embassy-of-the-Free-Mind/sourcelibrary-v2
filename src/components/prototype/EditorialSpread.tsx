@@ -33,7 +33,7 @@ function bookTitle(book: { display_title?: string; title: string }): string {
 
 export default function EditorialSpread({ collection, books }: EditorialSpreadProps) {
   return (
-    <section className="relative overflow-hidden animate-fade-in-up">
+    <section className="relative overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
         {collection.hero_image ? (
