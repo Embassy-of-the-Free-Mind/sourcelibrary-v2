@@ -273,79 +273,81 @@ export default function CollectionsPage() {
         />
       }
     >
-      <Suspense fallback={<CollectionsSkeleton />}>
-        <CollectionsBody />
+      {/* Each section streams on its own so the fast Curated Pathways query
+          isn't blocked behind the heavy timeline aggregation over all books. */}
+      <Suspense fallback={<SectionSkeleton heading="Curated Pathways" sub="Thematic journeys through the collection" />}>
+        <CuratedPathwaysSection />
+      </Suspense>
+
+      <div className="mt-12">
+        <Suspense fallback={<SectionSkeleton heading="Core Collections" sub="The main wings of the library" />}>
+          <CoreCollectionsSection />
+        </Suspense>
+      </div>
+
+      <Suspense fallback={null}>
+        <TimelineSection />
       </Suspense>
     </ContentPageLayout>
   );
 }
 
-async function CollectionsBody() {
+async function CuratedPathwaysSection() {
   const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
-
-  const [categories, pathways, timeline] = await Promise.all([
-    fetchCollections(tenantId),
-    fetchCuratedPathways(tenantId),
-    fetchTimelineDecades(),
-  ]);
+  const pathways = await fetchCuratedPathways(tenantId);
+  if (pathways.length === 0) return null;
 
   return (
-    <>
-      {/* Curated pathways — the hooks, shown first */}
-      {pathways.length > 0 && (
-        <div>
-          <div className="mb-4">
-            <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
-            <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
-          </div>
-          <ShowMorePathways
-            initialCount={INITIAL_PATHWAYS}
-            totalCount={pathways.length}
-          >
-            {pathways.map((col, i) => (
-              <CuratedCard key={col.slug} col={col} tenantSlug={tenantSlug} priority={i < 4} />
-            ))}
-          </ShowMorePathways>
-        </div>
-      )}
-
-      {/* Core collections */}
-      <div className="mt-12">
-        <div className="mb-4">
-          <h2 className="font-display text-2xl text-primary">Core Collections</h2>
-          <p className="text-stone-500 mt-1 text-sm">The main wings of the library</p>
-        </div>
-        <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {categories.map((col, i) => (
-            <CollectionCard key={col.slug} col={col} tenantSlug={tenantSlug} />
-          ))}
-        </div>
+    <div>
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
+        <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
       </div>
-
-      {/* Era timeline — full-bleed dark section */}
-      <EraTimeline decades={timeline.decades} total={timeline.total} />
-    </>
+      <ShowMorePathways initialCount={INITIAL_PATHWAYS} totalCount={pathways.length}>
+        {pathways.map((col, i) => (
+          <CuratedCard key={col.slug} col={col} tenantSlug={tenantSlug} priority={i < 4} />
+        ))}
+      </ShowMorePathways>
+    </div>
   );
 }
 
-function CollectionsSkeleton() {
+async function CoreCollectionsSection() {
+  const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
+  const categories = await fetchCollections(tenantId);
+
   return (
-    <div className="animate-pulse">
-      <div className="h-7 w-48 bg-stone-200 rounded mb-4" />
+    <div>
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-primary">Core Collections</h2>
+        <p className="text-stone-500 mt-1 text-sm">The main wings of the library</p>
+      </div>
       <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {categories.map((col) => (
+          <CollectionCard key={col.slug} col={col} tenantSlug={tenantSlug} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+async function TimelineSection() {
+  const timeline = await fetchTimelineDecades();
+  return <EraTimeline decades={timeline.decades} total={timeline.total} />;
+}
+
+function SectionSkeleton({ heading, sub }: { heading: string; sub: string }) {
+  return (
+    <div>
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-primary">{heading}</h2>
+        <p className="text-stone-500 mt-1 text-sm">{sub}</p>
+      </div>
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 animate-pulse">
         {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="rounded-xl overflow-hidden">
             <div className="aspect-[4/3] bg-stone-200" />
             <div className="h-4 w-3/4 bg-stone-200 rounded mt-2" />
-          </div>
-        ))}
-      </div>
-      <div className="h-7 w-44 bg-stone-200 rounded mt-12 mb-4" />
-      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} className="rounded-xl overflow-hidden">
-            <div className="aspect-[4/3] bg-stone-200" />
-            <div className="h-4 w-2/3 bg-stone-200 rounded mt-2" />
           </div>
         ))}
       </div>
