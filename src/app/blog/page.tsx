@@ -28,9 +28,9 @@ const posts: BlogPost[] = [
     slug: 'iiif',
     title: 'How IIIF Helped Us Translate the Renaissance',
     subtitle:
-      'One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world. With diagrams of the import pipeline, and appreciations. Notes for a lightning talk at IIIF 2026 in Leiden.',
+      'One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world. With diagrams of the import pipeline, the real challenges (rate limits, the datacenter problem), the workflow when there is no manifest, why provenance matters, and appreciations. Notes for a lightning talk at IIIF 2026 in Leiden.',
     date: '2 June 2026',
-    readTime: '11 min read',
+    readTime: '14 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
     image: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg',

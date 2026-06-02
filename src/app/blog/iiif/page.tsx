@@ -44,7 +44,7 @@ export default function IIIFPage() {
           imageAlt="Chakra diagram from the Shaiva tantric tradition, served from the Wellcome Collection's IIIF image server"
         >
           <p className="text-stone-400 text-sm mt-4">
-            2 June 2026 &middot; 11 min read &middot; Notes accompanying a lightning talk at the IIIF
+            2 June 2026 &middot; 14 min read &middot; Notes accompanying a lightning talk at the IIIF
             2026 Annual Conference, Leiden &amp; The Hague
           </p>
         </ContentHeader>
@@ -204,6 +204,187 @@ export default function IIIFPage() {
           service and it tiles on demand.
         </p>
 
+        {/* ── Section 3.5: the parts that are hard ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The parts that are hard</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The clean story above hides a lot of friction. IIIF standardizes the <em>shape</em> of the
+          data, but not the politics of getting it &mdash; and a project that fetches millions of images
+          has to be a good citizen or it gets (rightly) blocked.
+        </p>
+
+        <h3 className="text-lg text-primary font-medium mt-8 mb-3">Rate limits, and being polite</h3>
+        <p className="text-secondary leading-relaxed mb-6">
+          Library and museum image servers throttle aggressively, and they should. We keep a per-host
+          token bucket with deliberately conservative limits and exponential backoff on every fetch.
+          These are real numbers from our fetcher &mdash; requests per second, per host:
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-6">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border-light bg-stone-50">
+                <th className="text-left px-4 py-3 text-primary font-semibold">Host</th>
+                <th className="text-left px-4 py-3 text-primary font-semibold">Limit (req/s)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['Internet Archive', '10'],
+                ['British Library / EAP (CloudFront)', '15'],
+                ['MDZ Munich · Wellcome', '5'],
+                ['Gallica · Vatican · Bodleian · Cambridge · Manchester · NDL · Allard Pierson', '3'],
+                ['e-rara', '2'],
+                ['anything else (default)', '5'],
+              ].map(([host, lim]) => (
+                <tr key={host} className="border-b border-border-light last:border-0">
+                  <td className="px-4 py-3 text-secondary">{host}</td>
+                  <td className="px-4 py-3 text-secondary font-mono">{lim}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Those small numbers add up. A single corpus-wide re-archive job to pull full-resolution
+          illustrations from the British Library&rsquo;s Endangered Archives meant roughly{' '}
+          <strong>240,000 pages &times; 9 image tiles each &mdash; about 2.16 million requests</strong>.
+          Done impatiently, that&rsquo;s an accidental denial-of-service against a cultural institution.
+          Done at fifteen requests a second behind their cache, it&rsquo;s invisible. The rate limit
+          isn&rsquo;t a nuisance to route around; it&rsquo;s the terms of the relationship.
+        </p>
+
+        <h3 className="text-lg text-primary font-medium mt-8 mb-3">
+          The datacenter problem (and an accidental gift from IIIF)
+        </h3>
+        <p className="text-secondary leading-relaxed mb-6">
+          Some institutions &mdash; Harvard, and apparently Gallica &mdash; serve <em>residential</em> IP
+          addresses happily but rate-limit <em>datacenter</em> IPs hard. Our import server runs on
+          Vercel, in a datacenter, so its requests get 429&rsquo;d while the same manifest opens fine in a
+          browser at home. The workaround is to fetch the manifest from a residential connection and
+          insert the book directly.
+        </p>
+        <p className="text-secondary leading-relaxed mb-8">
+          Here IIIF&rsquo;s architecture quietly saves us. Because the manifest is separate from the
+          images &mdash; it merely <em>references</em> image URLs that are then served straight to the
+          reader&rsquo;s browser &mdash; we only need to fetch the manifest <strong>once</strong>. The
+          facsimile renders for every reader afterwards even if our own servers never successfully fetch
+          those images datacenter-side. Separating presentation metadata from pixels turns a hard block
+          into a one-time, low-volume fetch.
+        </p>
+
+        <h3 className="text-lg text-primary font-medium mt-8 mb-3">
+          Browser gates, version drift, and the things we won&rsquo;t do
+        </h3>
+        <ul className="space-y-3 mb-8 text-secondary leading-relaxed">
+          <li className="flex gap-3">
+            <span className="text-accent-gold-dark mt-1 shrink-0">&bull;</span>
+            <span>
+              <strong>Browser gates.</strong> Some viewers hide the manifest behind a JavaScript or
+              Cloudflare challenge (the International Dunhuang Programme is one). There is no clean API
+              call; you have to drive a real browser to get the manifest at all.
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-accent-gold-dark mt-1 shrink-0">&bull;</span>
+            <span>
+              <strong>Version drift.</strong> Presentation 2.x and 3.0 nest their canvases differently,
+              and plenty of &ldquo;IIIF&rdquo; endpoints are partial &mdash; a valid manifest with no
+              Image API service (so no deep zoom), metadata in a dozen idiosyncratic shapes, the
+              occasional canvas pointing at a missing image.
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-accent-gold-dark mt-1 shrink-0">&bull;</span>
+            <span>
+              <strong>Terms we honor.</strong> Some sources prohibit automated download outright
+              (ctext.org, the National Library of China). We don&rsquo;t ingest them, even where it would
+              be technically trivial. &ldquo;Can&rdquo; is not &ldquo;may,&rdquo; and a library that
+              didn&rsquo;t respect that wouldn&rsquo;t deserve the name.
+            </span>
+          </li>
+        </ul>
+
+        {/* ── Section 3.7: when there is no manifest ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">When there is no manifest</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Not everything publishes IIIF. A great many digitized books live behind a bespoke viewer, an
+          OAI-PMH feed, a discovery layer, or nothing more than a download link. IIIF is our preferred
+          on-ramp, not our only one &mdash; so when there&rsquo;s no manifest, we fall back, roughly in
+          this order:
+        </p>
+
+        <ol className="space-y-4 mb-8 text-secondary leading-relaxed">
+          <li className="flex gap-3">
+            <span className="font-mono text-sm text-accent-gold-dark mt-0.5 shrink-0">1.</span>
+            <span>
+              <strong>Another catalog API.</strong> OAI-PMH, SRU, or a discovery API like Primo VE (which
+              we sometimes drive through a real browser session) gives us a candidate list and enough
+              metadata to dedupe and locate the page images, which we then assemble ourselves. This is
+              how we harvested KU Leuven&rsquo;s digitized holdings, where there is no clean IIIF-only
+              facet.
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="font-mono text-sm text-accent-gold-dark mt-0.5 shrink-0">2.</span>
+            <span>
+              <strong>The fallback chain.</strong> To find a digitized copy at all, we try Internet
+              Archive &rarr; Gallica &rarr; HathiTrust &rarr; Project Gutenberg in turn. If one source
+              blocks or 403s, we move on rather than fight it.
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="font-mono text-sm text-accent-gold-dark mt-0.5 shrink-0">3.</span>
+            <span>
+              <strong>Direct partner ingest.</strong> The founding collection &mdash; the Embassy of the
+              Free Mind&rsquo;s own rare books &mdash; comes straight off the institution&rsquo;s scanning
+              archive, never via IIIF. (Those scans bring their own puzzles: many are two-page spreads
+              that have to be detected and split before the pipeline can read a single page.)
+            </span>
+          </li>
+        </ol>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The design choice that makes this manageable: <strong>every path normalizes into the same book
+          and page document shape</strong> &mdash; same fields, same content fingerprint for dedup, same
+          provenance record &mdash; before anything downstream runs. So the pipeline neither knows nor
+          cares whether a book arrived as a pristine IIIF v3 manifest or was hand-assembled from a browser
+          session. IIIF is the widest, cleanest door into one shared room.
+        </p>
+
+        <Figure caption="Every on-ramp converges. IIIF is the best entry point, but a browser-driven viewer, a catalog API, the fallback chain, or a partner's own scans all normalize into the same document shape — so one downstream pipeline serves them all.">
+          <svg viewBox="0 0 720 260" className="w-full h-auto" role="img" aria-label="Diagram: four ingest paths — IIIF manifest, browser-driven viewer, catalog API, partner scans — converge into one normalized document shape and one pipeline">
+            <defs>
+              <marker id="arrow3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L7,3 L0,6 Z" fill={STONE} />
+              </marker>
+            </defs>
+            {([
+              ['IIIF manifest', 38, GOLD],
+              ['Browser-driven viewer', 88, STONE],
+              ['Catalog API (OAI / SRU)', 138, STONE],
+              ["Partner's own scans", 188, STONE],
+            ] as [string, number, string][]).map(([label, y, c]) => (
+              <g key={label}>
+                <rect x="14" y={y - 16} width="196" height="32" rx="6" fill={PAPER} stroke={c} strokeWidth={c === GOLD ? 1.6 : 1} />
+                <text x="112" y={y + 4} textAnchor="middle" fontSize="12" fill={INK} fontFamily="ui-sans-serif, system-ui">
+                  {label}
+                </text>
+                <path d={`M210 ${y} C 274 ${y}, 300 113, 350 113`} fill="none" stroke={STONE} strokeWidth="1.2" opacity="0.7" markerEnd="url(#arrow3)" />
+              </g>
+            ))}
+            <rect x="352" y="85" width="156" height="56" rx="9" fill="#fff" stroke={SAGE} strokeWidth="1.6" />
+            <text x="430" y="107" textAnchor="middle" fontSize="12.5" fontWeight="700" fill={INK} fontFamily="ui-sans-serif, system-ui">Normalized doc</text>
+            <text x="430" y="125" textAnchor="middle" fontSize="10.5" fill={STONE} fontFamily="ui-sans-serif, system-ui">+ fingerprint + provenance</text>
+            <path d="M508 113 L556 113" fill="none" stroke={STONE} strokeWidth="1.4" markerEnd="url(#arrow3)" />
+            <rect x="558" y="86" width="148" height="54" rx="9" fill={RUST} />
+            <text x="632" y="108" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="#fff" fontFamily="ui-sans-serif, system-ui">One pipeline</text>
+            <text x="632" y="126" textAnchor="middle" fontSize="10.5" fill="#fff" opacity="0.92" fontFamily="ui-sans-serif, system-ui">OCR &middot; translate &middot; publish</text>
+          </svg>
+        </Figure>
+
         {/* ── Section 4: we serve IIIF too ── */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">We give it back</h2>
 
@@ -281,6 +462,57 @@ export default function IIIFPage() {
           digitized pixel size, so a region citation lands on exactly the words it claims. There is also
           a Content Search endpoint, so a viewer can search across a book&rsquo;s OCR and translation and
           get back highlighted hits as annotations.
+        </p>
+
+        {/* ── Section 4.5: provenance ── */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Provenance is the whole point</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Everything above is in service of one idea, and it is worth saying plainly. We take a book, run
+          it through machine OCR, run that through machine translation, and add machine-written editorial
+          notes. By the time a reader sees an English sentence, it has passed through three layers of
+          automation. The single thing that keeps this honest &mdash; that makes it a <em>library</em>{' '}
+          rather than a content farm &mdash; is an unbroken chain of provenance back to the original leaf.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          IIIF is unusually good at carrying that chain, and we lean on it at both ends:
+        </p>
+
+        <ul className="space-y-3 mb-8 text-secondary leading-relaxed">
+          <li className="flex gap-3">
+            <span className="text-accent-gold-dark mt-1 shrink-0">&bull;</span>
+            <span>
+              <strong>On the way in,</strong> every book records who digitized it, the URL of the original
+              catalog record, the institution&rsquo;s own attribution and rights statement, and a content
+              fingerprint (often the IIIF identifier itself) used for deduplication. We mirror the page
+              images to our own storage for speed and reliability &mdash; but we never sever the link
+              back. Every book page keeps a live link to the source record <em>and</em> to the upstream
+              IIIF manifest, so a skeptical reader can go check the original for themselves. <em>Ad
+              fontes.</em>
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-accent-gold-dark mt-1 shrink-0">&bull;</span>
+            <span>
+              <strong>On the way out,</strong> our manifest credits the digitizing institution first;
+              every AI annotation carries a machine-generated marker with the model&rsquo;s name; canvas
+              dimensions are the real digitized pixel sizes so a region citation lands on exactly the
+              words it claims; and we rigorously strip the AI&rsquo;s editorial <em>descriptions</em> of a
+              page so they can never be quoted as if they were the text on it.
+            </span>
+          </li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          That last point is not theoretical. Early on, a page-description note our pipeline had written{' '}
+          <em>about</em> a page &mdash; mentioning mercury discussed on a neighboring leaf &mdash; leaked
+          into a search snippet and produced a confident citation to words that were not on the page. The
+          fix was to treat the boundary between the author&rsquo;s words and the machine&rsquo;s words as
+          sacred, everywhere those words are served. For a human reader that boundary is a matter of
+          trust; for an AI consuming the library through these same manifests, it is the difference
+          between grounded scholarship and fluent invention. Provenance is what lets either one tell the
+          two apart.
         </p>
 
         {/* ── Section 5: ideas ── */}
