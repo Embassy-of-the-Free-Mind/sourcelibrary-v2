@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       'IIIF as a universal input layer for an AI pipeline: import rare books from thirteen institutions through one importer, then serve them back as IIIF with machine OCR and translation overlaid on the original page.',
     images: [
       {
-        url: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1200,/0/default.jpg',
+        url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg',
         width: 1200,
         height: 630,
       },
@@ -40,8 +40,8 @@ export default function IIIFPage() {
         <ContentHeader
           title="How IIIF Helped Us Translate the Renaissance"
           subtitle="One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world."
-          image="https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1600,/0/default.jpg"
-          imageAlt="Chakra diagram from the Shaiva tantric tradition, served from the Wellcome Collection's IIIF image server"
+          image="https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg"
+          imageAlt="Engraved frontispiece of Michael Maier's Atalanta Fugiens (Oppenheim, 1617), an alchemical emblem book digitized by e-rara and re-hosted on Source Library"
         >
           <p className="text-stone-400 text-sm mt-4">
             2 June 2026 &middot; 14 min read &middot; Notes accompanying a lightning talk at the IIIF
@@ -65,14 +65,26 @@ export default function IIIFPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          The hero image above is a tantric chakra diagram. It is not stored on our servers. It came,
-          live, from a single line in a manifest published by the Wellcome Collection in London &mdash;
-          the same kind of manifest published by the Bodleian, by Gallica, by the Vatican, by the
-          Bavarian State Library. That shared format is{' '}
-          <strong>IIIF</strong>, the International Image Interoperability Framework, and it is the
-          reason a small team was able to take rare books from a dozen of the world&rsquo;s great
-          libraries and turn them into <strong>readable, translated, citable English editions</strong>{' '}
-          at a scale that would otherwise be impossible.
+          The hero image above is the engraved frontispiece of Michael Maier&rsquo;s{' '}
+          <Link href="/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier-3" className="text-accent-rust hover:text-accent-rust underline">
+            <em>Atalanta Fugiens</em>
+          </Link>{' '}
+          (Oppenheim, 1617), an alchemical book of fifty emblems set to music. It reached Source Library
+          as a single line in a manifest published by{' '}
+          <Link href="/libraries/e-rara" className="text-accent-rust hover:text-accent-rust underline">
+            e-rara
+          </Link>
+          , the Swiss rare-books platform run from the ETH Library in Zurich &mdash; the same kind of
+          manifest published by the{' '}
+          <Link href="/libraries/bodleian" className="text-accent-rust hover:text-accent-rust underline">Bodleian</Link>, by{' '}
+          <Link href="/libraries/gallica" className="text-accent-rust hover:text-accent-rust underline">Gallica</Link>, by the{' '}
+          <Link href="/libraries/vatican" className="text-accent-rust hover:text-accent-rust underline">Vatican</Link>, by the{' '}
+          <Link href="/libraries/bavarian-state-library" className="text-accent-rust hover:text-accent-rust underline">Bavarian State Library</Link>.
+          That shared format is <strong>IIIF</strong>, the International Image Interoperability Framework,
+          and it is the reason a small team could take rare books from a dozen of the world&rsquo;s great{' '}
+          <Link href="/libraries" className="text-accent-rust hover:text-accent-rust underline">libraries</Link>{' '}
+          and turn them into <strong>readable, translated, citable English editions</strong> at a scale
+          that would otherwise be impossible.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -81,11 +93,13 @@ export default function IIIFPage() {
             Bibliotheca Philosophica Hermetica
           </Link>{' '}
           (the Embassy of the Free Mind) in Amsterdam, and we now hold roughly{' '}
-          <strong>30,000 publicly visible works</strong> in Latin, German, Hebrew, Arabic, Sanskrit,
-          Chinese and more &mdash; with about <strong>6,800</strong> identified as first-ever English
-          translations and nearly <strong>143,000</strong> illustrations extracted from their pages.
-          This is the story of how IIIF made that possible, told from both sides of the standard: as a
-          consumer, and as a publisher.
+          <Link href="/library" className="text-accent-rust hover:text-accent-rust underline"><strong>30,000 publicly visible works</strong></Link>{' '}
+          in Latin, German, Hebrew, Arabic, Sanskrit, Chinese and more &mdash; with over{' '}
+          <Link href="/search?first_translation=true" className="text-accent-rust hover:text-accent-rust underline"><strong>6,000</strong> first-ever English translations</Link>{' '}
+          you can read today and nearly{' '}
+          <Link href="/gallery" className="text-accent-rust hover:text-accent-rust underline"><strong>143,000</strong> illustrations</Link>{' '}
+          extracted from their pages. This is the story of how IIIF made that possible, told from both
+          sides of the standard: as a consumer, and as a publisher.
         </p>
 
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-12">
@@ -179,19 +193,23 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mt-10 mb-8">
           The books arrive <em>hidden</em>. Nothing becomes publicly visible until it has been through
-          OCR, translation, and a quality pass &mdash; the <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">visible</code>{' '}
-          flag flips only at the end. The whole sequence, from a Gallica manifest to an English edition
-          with a DOI, runs unattended.
+          OCR, translation, and a{' '}
+          <Link href="/blog/what-makes-a-good-scan" className="text-accent-rust hover:text-accent-rust underline">quality pass</Link>{' '}
+          &mdash; the <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">visible</code> flag
+          flips only at the end. The whole sequence, from a Gallica manifest to a readable, translated
+          English edition, runs unattended; minting a citable DOI through Zenodo is a separate, deliberate
+          publishing step on top.
         </p>
 
         {/* ── Section 3: the IIIF Image API URL ── */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The line that does the work</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The quiet hero of the whole arrangement is the IIIF Image API URL. It is a small grammar that
-          lets you request any region of any page at any size, by rotation and quality, just by editing
-          the path. The hero image at the top of this post is exactly this URL, asking Wellcome for the
-          full page at 1600 pixels wide:
+          The quiet hero of the whole arrangement is the{' '}
+          <a href="https://iiif.io/api/image/3.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF Image API</a>{' '}
+          URL. It is a small grammar that lets you request any region of any page at any size, by rotation
+          and quality, just by editing the path. Here is a real one &mdash; how a viewer asks the Wellcome
+          Collection&rsquo;s image server for a full page at 1600 pixels wide:
         </p>
 
         <ImageApiAnatomy />
@@ -390,18 +408,30 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           IIIF is not just how books come in. It is also how they go back out. Every book in the library
-          publishes its own Presentation 3.0 manifest:
+          publishes its own{' '}
+          <a href="https://iiif.io/api/presentation/3.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Presentation 3.0</a>{' '}
+          manifest:
         </p>
 
-        <div className="bg-stone-900 rounded-lg p-4 mb-8 overflow-x-auto">
+        <div className="bg-stone-900 rounded-lg p-4 mb-4 overflow-x-auto">
           <code className="text-sm text-stone-200 whitespace-nowrap">
             https://sourcelibrary.org/api/iiif/<span style={{ color: '#e0a96d' }}>{'{bookId}'}</span>/manifest
           </code>
         </div>
+        <p className="text-sm text-muted mb-8">
+          Live example: the{' '}
+          <a href="https://sourcelibrary.org/api/iiif/69bd9e336120d54bd037bf37/manifest" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">manifest for <em>Atalanta Fugiens</em></a>{' '}
+          &mdash; load it in a viewer and you can search and read its translation.
+        </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Point Mirador, Universal Viewer, Clover, or Theseus at that URL and you get the page images
-          &mdash; but also something the original manifest never had:{' '}
+          Point{' '}
+          <a href="https://projectmirador.org/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Mirador</a>,{' '}
+          <a href="https://universalviewer.io/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Universal Viewer</a>,{' '}
+          <a href="https://samvera-labs.github.io/clover-iiif/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Clover</a>, or{' '}
+          <a href="https://theseusviewer.org/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Theseus</a>{' '}
+          at that URL and you get the page images &mdash; but also something the original manifest never
+          had:{' '}
           <strong>our AI-generated OCR and English translation, delivered as Web Annotations that overlay
           the original folio</strong>. The transcription and the translation sit on the very pixels they
           describe, so you can read the Latin and the English against the page itself, in a viewer the
@@ -459,9 +489,12 @@ export default function IIIFPage() {
           listed <strong>first</strong> in the manifest&rsquo;s provider array and named in a
           required-statement (&ldquo;Digitized by {'{'}institution{'}'}. Re-hosted with AI-generated OCR
           and translation by Source Library&rdquo;); and canvas dimensions use the <em>real</em>{' '}
-          digitized pixel size, so a region citation lands on exactly the words it claims. There is also
-          a Content Search endpoint, so a viewer can search across a book&rsquo;s OCR and translation and
-          get back highlighted hits as annotations.
+          digitized pixel size whenever the archiving step recorded it, so a region citation lands on the
+          words it claims. There is also a{' '}
+          <a href="https://iiif.io/api/search/2.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Content Search 2.0</a>{' '}
+          endpoint, so a viewer can search across a book&rsquo;s OCR and translation and get back
+          highlighted hits as annotations &mdash; a single book&rsquo;s manifest can return dozens of
+          matches with the exact phrase highlighted on each folio.
         </p>
 
         {/* ── Section 4.5: provenance ── */}
@@ -497,7 +530,7 @@ export default function IIIFPage() {
             <span>
               <strong>On the way out,</strong> our manifest credits the digitizing institution first;
               every AI annotation carries a machine-generated marker with the model&rsquo;s name; canvas
-              dimensions are the real digitized pixel sizes so a region citation lands on exactly the
+              dimensions are the real digitized pixel sizes (when known) so a region citation lands on the
               words it claims; and we rigorously strip the AI&rsquo;s editorial <em>descriptions</em> of a
               page so they can never be quoted as if they were the text on it.
             </span>
@@ -511,8 +544,9 @@ export default function IIIFPage() {
           fix was to treat the boundary between the author&rsquo;s words and the machine&rsquo;s words as
           sacred, everywhere those words are served. For a human reader that boundary is a matter of
           trust; for an AI consuming the library through these same manifests, it is the difference
-          between grounded scholarship and fluent invention. Provenance is what lets either one tell the
-          two apart.
+          between grounded scholarship and{' '}
+          <Link href="/blog/confident-hallucinator" className="text-accent-rust hover:text-accent-rust underline">fluent invention</Link>.
+          Provenance is what lets either one tell the two apart.
         </p>
 
         {/* ── Section 5: ideas ── */}
@@ -531,7 +565,8 @@ export default function IIIFPage() {
               <>
                 Today we mostly enumerate candidates one institution at a time, then fetch each
                 manifest at import. But IIIF already has the right primitive for bulk: the{' '}
-                <strong>Collection</strong> document &mdash; a manifest of manifests. A single
+                <a href="https://iiif.io/api/presentation/3.0/#51-collection" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline"><strong>Collection</strong></a>{' '}
+                document &mdash; a manifest of manifests. A single
                 Collection URL can list thousands of objects with their manifest links and enough
                 metadata to dedupe and subject-filter <em>before</em> we ever fetch a page. Walking
                 published Collections (and the top-level &ldquo;collection of collections&rdquo; some
@@ -580,9 +615,10 @@ export default function IIIFPage() {
               <>
                 If Collections are good for ingesting, they&rsquo;re good for sharing. We could expose
                 our holdings as IIIF Collections (by language, by tradition, by source institution) and
-                a IIIF Change Discovery activity stream, so other projects can harvest <em>us</em> the
-                same efficient way &mdash; including the first-translation editions that don&rsquo;t
-                exist anywhere else.
+                a{' '}
+                <a href="https://iiif.io/api/discovery/1.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF Change Discovery</a>{' '}
+                activity stream, so other projects can harvest <em>us</em> the same efficient way &mdash;
+                including the first-translation editions that don&rsquo;t exist anywhere else.
               </>
             }
           />
@@ -607,27 +643,27 @@ export default function IIIFPage() {
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-          {[
-            ['Internet Archive', '8,360'],
-            ['Bavarian State Library (MDZ)', '2,383'],
-            ['British Library (incl. EAP)', '1,538'],
-            ['e-rara (ETH Zürich et al.)', '1,149'],
-            ['Harvard Library', '827'],
-            ['Allard Pierson, Amsterdam', '489'],
-            ['Gallica / BnF', '251'],
-            ['John Rylands, Manchester', '214'],
-            ['Bodleian Libraries, Oxford', '210'],
-            ['Biblioteca Medicea Laurenziana', '130'],
-            ['Vatican Apostolic Library', '111'],
-            ['Cambridge Digital Library', '63'],
-            ['Leiden University Libraries', '53'],
-            ['Library of Congress', '50'],
-            ['National Diet Library, Japan', '41'],
-          ].map(([name, count]) => (
-            <div key={name} className="bg-white rounded-lg border border-border-light px-4 py-3">
-              <div className="text-sm text-primary font-medium leading-snug">{name}</div>
+          {([
+            ['Internet Archive', '8,360', 'internet-archive'],
+            ['Bavarian State Library (MDZ)', '2,383', 'bavarian-state-library'],
+            ['British Library (incl. EAP)', '1,538', 'british-library'],
+            ['e-rara (ETH Zürich et al.)', '1,149', 'e-rara'],
+            ['Harvard Library', '827', 'harvard'],
+            ['Allard Pierson, Amsterdam', '489', 'allard-pierson'],
+            ['Gallica / BnF', '251', 'gallica'],
+            ['John Rylands, Manchester', '214', 'manchester'],
+            ['Bodleian Libraries, Oxford', '210', 'bodleian'],
+            ['Biblioteca Medicea Laurenziana', '130', 'laurenziana'],
+            ['Vatican Apostolic Library', '111', 'vatican'],
+            ['Cambridge Digital Library', '63', 'cambridge'],
+            ['Leiden University Libraries', '53', 'leiden'],
+            ['Library of Congress', '50', 'library-of-congress'],
+            ['National Diet Library, Japan', '41', 'national-diet-library'],
+          ] as [string, string, string][]).map(([name, count, slug]) => (
+            <Link key={name} href={`/libraries/${slug}`} className="block bg-white rounded-lg border border-border-light px-4 py-3 hover:border-accent-gold/40 hover:shadow-sm transition-all group">
+              <div className="text-sm text-primary font-medium leading-snug group-hover:text-accent-gold-dark transition-colors">{name}</div>
               <div className="text-xs text-muted mt-1">{count} works</div>
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -641,22 +677,28 @@ export default function IIIFPage() {
 
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">
           <p className="text-stone-700 leading-relaxed">
-            <strong>Try it:</strong> open any book&rsquo;s manifest at{' '}
-            <code className="text-sm bg-white/70 px-1.5 py-0.5 rounded">/api/iiif/{'{bookId}'}/manifest</code>{' '}
-            in your viewer of choice, or browse the{' '}
-            <Link href="/library" className="text-accent-rust hover:text-accent-rust underline">
-              library
-            </Link>{' '}
-            and read the original page beside the translation. Every book keeps the source text next to
-            the English, and credits the library that digitized it.
+            <strong>Try it:</strong> open the{' '}
+            <a href="https://sourcelibrary.org/api/iiif/69bd9e336120d54bd037bf37/manifest" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">
+              <em>Atalanta Fugiens</em> manifest
+            </a>{' '}
+            (or any book&rsquo;s <code className="text-sm bg-white/70 px-1.5 py-0.5 rounded">/api/iiif/{'{bookId}'}/manifest</code>)
+            in your viewer of choice, browse the{' '}
+            <Link href="/library" className="text-accent-rust hover:text-accent-rust underline">library</Link>,{' '}
+            search{' '}
+            <Link href="/search" className="text-accent-rust hover:text-accent-rust underline">the full text</Link>, or
+            wander the{' '}
+            <Link href="/gallery" className="text-accent-rust hover:text-accent-rust underline">gallery</Link>{' '}
+            of extracted illustrations. Every book keeps the source text next to the English, and credits
+            the library that digitized it.
           </p>
         </div>
 
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed">
             Source Library is a project of the Embassy of the Free Mind. These notes accompany a
-            lightning talk at the IIIF 2026 Annual Conference &amp; Showcase in Leiden and The Hague.
-            Corrections and feedback are welcome &mdash;{' '}
+            lightning talk at the{' '}
+            <a href="https://iiif.io/event/2026/leiden/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF 2026 Annual Conference &amp; Showcase</a>{' '}
+            in Leiden and The Hague. Corrections and feedback are welcome &mdash;{' '}
             <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
               derek@sourcelibrary.org
             </a>
@@ -688,8 +730,8 @@ function PipelineFlow() {
     { n: '3', title: 'Mirror to R2', sub: 'copy every page to our storage', tone: 'in' },
     { n: '4', title: 'Gemini OCR', sub: 'read each page', tone: 'mid' },
     { n: '5', title: 'Translate', sub: 'render English', tone: 'mid' },
-    { n: '6', title: 'Detect images', sub: 'find & crop illustrations', tone: 'mid' },
-    { n: '7', title: 'Enrich', sub: 'summary, index, DOI', tone: 'mid' },
+    { n: '6', title: 'Enrich', sub: 'summary, index, chapters', tone: 'mid' },
+    { n: '7', title: 'Detect images', sub: 'find & crop illustrations', tone: 'mid' },
     { n: '8', title: 'Publish', sub: 'readable & citable /book', tone: 'out' },
   ];
   const tones: Record<string, string> = {

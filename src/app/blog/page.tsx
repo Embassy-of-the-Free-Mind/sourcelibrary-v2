@@ -33,8 +33,8 @@ const posts: BlogPost[] = [
     readTime: '14 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
-    image: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg',
-    imageAlt: "Chakra diagram from the Shaiva tantric tradition, served from the Wellcome Collection's IIIF image server",
+    image: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg',
+    imageAlt: "Engraved frontispiece of Michael Maier's Atalanta Fugiens (Oppenheim, 1617), digitized by e-rara and re-hosted on Source Library",
   },
   {
     slug: 'how-big-is-the-library',
