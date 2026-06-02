@@ -538,6 +538,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
   const pages = await db.collection('pages')
     .find({
       book_id: book.id,
+      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
       'ocr.data': { $exists: true, $nin: [null, ''] },
       page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
@@ -919,9 +920,11 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
   // If complete, advance pipeline and sync page counts
   if (isComplete) {
-    // Count actual translated + blank pages from source of truth
+    // Count actual translated + blank pages from source of truth.
+    // page_number > 0 excludes hidden/deduped trailing pages so this rollup
+    // doesn't re-inflate pages_count after Phase 1.97 decremented it.
     const [countAgg] = await db.collection('pages').aggregate([
-      { $match: { book_id: book.id } },
+      { $match: { book_id: book.id, page_number: { $gt: 0 } } },
       { $group: {
         _id: null,
         total: { $sum: 1 },

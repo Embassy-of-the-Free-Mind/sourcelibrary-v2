@@ -42,6 +42,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { DEFAULT_OPTS, findTrailingDupes, applyHide } from '../workers/lib/trailing-dedup.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -50,136 +51,24 @@ const APPLY = process.argv.includes('--apply');
 const BOOK_ID = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
 const PROVIDER = process.argv.find(a => a.startsWith('--provider='))?.split('=')[1]; // optional filter
 const BOOK_LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
-// Initial probe size — start small so books WITHOUT dupes return fast (the
-// common case). The auto-expand loop doubles the lookback each time the run
-// covers the whole probed batch, so Secret Doctrine's 200+ dupe block is
-// still fully caught — just iteratively. At INITIAL=30 with MAX_EXPANSIONS=8,
-// max coverage = 30 × 2^8 = 7680 pages, plenty for any plausible book.
-const WINDOW = parseInt(process.argv.find(a => a.startsWith('--window='))?.split('=')[1] || '30', 10);
-const MIN_RUN_LEN = parseInt(process.argv.find(a => a.startsWith('--min-run='))?.split('=')[1] || '5', 10);
-const MIN_BOOK_PAGES = parseInt(process.argv.find(a => a.startsWith('--min-pages='))?.split('=')[1] || '50', 10);
-const HEAD_CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--head-concurrency='))?.split('=')[1] || '20', 10);
-const MAX_EXPANSIONS = parseInt(process.argv.find(a => a.startsWith('--max-expansions='))?.split('=')[1] || '8', 10);
+// Detection tuning — CLI overrides over DEFAULT_OPTS (shared with the
+// orchestrator's Phase 1.97). The auto-expand loop doubles the lookback each
+// time the run covers the whole probed batch, so a 200+ dupe block is still
+// fully caught — just iteratively.
+const WINDOW = parseInt(process.argv.find(a => a.startsWith('--window='))?.split('=')[1] || '', 10) || DEFAULT_OPTS.window;
+const MIN_RUN_LEN = parseInt(process.argv.find(a => a.startsWith('--min-run='))?.split('=')[1] || '', 10) || DEFAULT_OPTS.minRunLen;
+const MIN_BOOK_PAGES = parseInt(process.argv.find(a => a.startsWith('--min-pages='))?.split('=')[1] || '', 10) || DEFAULT_OPTS.minBookPages;
+const HEAD_CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--head-concurrency='))?.split('=')[1] || '', 10) || DEFAULT_OPTS.headConcurrency;
+const MAX_EXPANSIONS = parseInt(process.argv.find(a => a.startsWith('--max-expansions='))?.split('=')[1] || '', 10) || DEFAULT_OPTS.maxExpansions;
 
-// Returns the R2 ETag (MD5 of file content) — the only stable identity signal.
-// `content-length` is NOT reliable: Cloudflare's edge serves different values
-// across HEAD probes for the same file (132488, 249196, 103268 all observed on
-// the same URL within seconds). ETag is constant across edge nodes and equals
-// the file's MD5. Same ETag → byte-identical content with practical certainty.
-//
-// Retries once on null result — single flaky HEAD mid-run shouldn't truncate
-// the dupe block detection.
-async function headOnce(url) {
-  try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 8000);
-    const r = await fetch(url, { method: 'HEAD', signal: ctrl.signal });
-    clearTimeout(t);
-    if (r.status !== 200) return null;
-    const etag = r.headers.get('etag');
-    return etag ? etag.replace(/"/g, '') : null;
-  } catch { return null; }
-}
-
-async function head(url) {
-  const a = await headOnce(url);
-  if (a) return a;
-  await new Promise(r => setTimeout(r, 150 + Math.random() * 250));
-  return headOnce(url);
-}
-
-async function runWithConcurrency(items, worker, concurrency) {
-  const results = new Array(items.length);
-  let idx = 0;
-  async function pump() {
-    while (true) {
-      const i = idx++;
-      if (i >= items.length) return;
-      results[i] = await worker(items[i], i);
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, pump));
-  return results;
-}
-
-async function findTrailingDupes(db, book) {
-  // Auto-expand: start with WINDOW, double the lookback each time the run
-  // covers the whole probed range, up to MAX_EXPANSIONS times. This handles
-  // books like Secret Doctrine where 200+ pages are identical.
-  let lookback = WINDOW;
-  let lastEtag = null;
-  let totalRunLen = 0;
-  let allRunPages = [];
-
-  for (let exp = 0; exp <= MAX_EXPANSIONS; exp++) {
-    const end = book.pages_count - totalRunLen;
-    const start = Math.max(1, end - lookback + 1);
-    if (start >= end) break;
-    const pages = await db.collection('pages')
-      .find({ book_id: book.id, page_number: { $gte: start, $lte: end } })
-      .sort({ page_number: 1 })
-      .project({ _id: 1, page_number: 1, archived_photo: 1 })
-      .toArray();
-    if (pages.length === 0) break;
-
-    const probes = pages.map(p => p.archived_photo?.startsWith('https://') ? p.archived_photo : null);
-    const sizes = await runWithConcurrency(probes, u => u ? head(u) : null, HEAD_CONCURRENCY);
-
-    if (lastEtag === null) {
-      lastEtag = sizes[sizes.length - 1];
-      if (!lastEtag) return null;
-    }
-
-    // Walk backward through this batch, counting pages that match lastEtag.
-    // Tolerate up to 2 consecutive nulls (probe flakes) so a single failed
-    // HEAD mid-run doesn't artificially truncate the dupe block.
-    let batchRun = 0;
-    let consecutiveNulls = 0;
-    for (let i = sizes.length - 1; i >= 0; i--) {
-      const s = sizes[i];
-      if (s === lastEtag) { batchRun++; consecutiveNulls = 0; }
-      else if (s === null && consecutiveNulls < 2) { batchRun++; consecutiveNulls++; }
-      else break;
-    }
-    if (batchRun === 0) break;
-
-    // Prepend the matching pages from this batch to allRunPages
-    allRunPages = pages.slice(pages.length - batchRun).concat(allRunPages);
-    totalRunLen += batchRun;
-
-    // If we didn't consume the whole batch, the upstream boundary is found
-    if (batchRun < pages.length) break;
-    // If first page in this batch is page 1, we've hit the start of the book
-    if (start === 1) break;
-    // Otherwise, expand window and continue probing further back
-    lookback = Math.min(lookback * 2, 10000);
-  }
-
-  if (totalRunLen < MIN_RUN_LEN) return null;
-
-  return {
-    book,
-    dupe_etag: lastEtag,
-    run_len: totalRunLen,
-    canonical_page: allRunPages[0],
-    dupes_to_hide: allRunPages.slice(1),
-    hit_book_start: allRunPages[0]?.page_number === 1,
-  };
-}
-
-async function applyHide(db, dupes_to_hide) {
-  if (dupes_to_hide.length === 0) return { matched: 0, modified: 0 };
-  // Negate page_number on each dupe in one batched updateMany using $set per doc isn't possible
-  // (updateMany sets the same value). Use bulkWrite to set each to its own -|n|.
-  const ops = dupes_to_hide.map(p => ({
-    updateOne: {
-      filter: { _id: p._id },
-      update: { $set: { page_number: -Math.abs(p.page_number), updated_at: new Date(), hidden_reason: 'ia_trailing_dupe' } },
-    },
-  }));
-  const r = await db.collection('pages').bulkWrite(ops, { ordered: false });
-  return { matched: r.matchedCount, modified: r.modifiedCount };
-}
+// Detection opts passed to the shared findTrailingDupes on every call.
+const DEDUP_OPTS = {
+  window: WINDOW,
+  minRunLen: MIN_RUN_LEN,
+  minBookPages: MIN_BOOK_PAGES,
+  headConcurrency: HEAD_CONCURRENCY,
+  maxExpansions: MAX_EXPANSIONS,
+};
 
 async function main() {
   const client = new MongoClient(MONGODB_URI);
@@ -213,7 +102,7 @@ async function main() {
 
   for (let i = 0; i < books.length; i++) {
     const b = books[i];
-    const result = await findTrailingDupes(db, b);
+    const result = await findTrailingDupes(db, b, DEDUP_OPTS);
     if (!result) continue;
 
     booksWithDupes++;

@@ -34,6 +34,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { logUsage, logUsageAsync } from './lib/supabase-usage-logger.mjs';
+import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -1403,6 +1404,7 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
   const pages = await db.collection('pages')
     .find({
       book_id: book.id,
+      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
       'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
       $or: [
         { 'ocr.data': { $exists: false } },
@@ -1739,6 +1741,7 @@ async function submitCrossBookOcrBatches(db, books) {
     const pages = await db.collection('pages')
       .find({
         book_id: book.id,
+        page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
         'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
         $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
         $and: [{
@@ -2491,6 +2494,9 @@ async function run() {
     enrolled: 0,
     archived: 0,
     preview_queued: 0,
+    dedup_books: 0,
+    dedup_pages_hidden: 0,
+    dedup_flagged: 0,
     ocr_submitted: 0,
     ocr_advanced: 0,
     metadata_enriched: 0,
@@ -3555,6 +3561,74 @@ Rules:
       }
     }
 
+    // ── Phase 1.97: Trailing-dupe dedup (archive_complete, before OCR) ──
+    // IA's PDF→page extraction often repeats a back cover / title page hundreds
+    // of times at the end of a book. These pages are byte-identical on R2 (same
+    // ETag). Hide them BEFORE any per-page Gemini call so OCR/translation/image/
+    // embedding budget is never spent on them. Reuses the same detection as the
+    // standalone scripts/maintenance/dedup-ia-trailing-pages.mjs CLI.
+    //
+    // Independently pausable via paused_phases:[1.97]. When paused, Phase 2's
+    // dedup_complete gate is relaxed (see below) so books flow straight to OCR.
+    if (shouldRun(1.97)) {
+      const DEDUP_LIMIT = 50;        // per tick — bounds runtime (~30+ R2 HEADs/book); drains backlog across ticks
+      const DEDUP_MAX_ATTEMPTS = 3;  // transient-failure giveup; release the book so Phase 2 isn't blocked forever
+      const candidates = await db.collection('books').find({
+        'pipeline_auto.status': 'archive_complete',
+        'pipeline_auto.dedup_complete': { $ne: true },
+      }).project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
+        .limit(DEDUP_LIMIT).toArray();
+
+      if (candidates.length > 0) {
+        console.log('\n--- Phase 1.97: Trailing-dupe dedup ---');
+        let deduped = 0, pagesHidden = 0, flagged = 0;
+        for (const book of candidates) {
+          try {
+            const result = await findTrailingDupes(db, book);
+            if (result && !result.hit_book_start && result.dupes_to_hide.length > 0) {
+              await applyHide(db, result.dupes_to_hide);
+              await db.collection('books').updateOne({ id: book.id }, {
+                $inc: { pages_count: -(result.run_len - 1) },
+                $set: { 'pipeline_auto.dedup_complete': true, updated_at: new Date() },
+              });
+              deduped++; pagesHidden += result.dupes_to_hide.length;
+              console.log(`  ${(book.title || book.id).slice(0, 50)}: hid ${result.dupes_to_hide.length} trailing dupes`);
+            } else {
+              // null result (no dupes) OR hit_book_start (whole book may be one
+              // repeated image — suspicious; mark done + flag, do NOT apply).
+              await db.collection('books').updateOne({ id: book.id }, {
+                $set: {
+                  'pipeline_auto.dedup_complete': true,
+                  updated_at: new Date(),
+                  ...(result?.hit_book_start ? { 'pipeline_auto.dedup_needs_review': true } : {}),
+                },
+              });
+              if (result?.hit_book_start) flagged++;
+            }
+          } catch (err) {
+            // Transient (network / HEAD flake) — count the attempt. Leave
+            // dedup_complete unset so it retries next tick, but after
+            // DEDUP_MAX_ATTEMPTS release the book (mark complete + failed) so
+            // Phase 2's gate doesn't strand it in archive_complete forever.
+            const attempts = (book.pipeline_auto?.dedup_attempts || 0) + 1;
+            if (attempts >= DEDUP_MAX_ATTEMPTS) {
+              await db.collection('books').updateOne({ id: book.id }, {
+                $set: { 'pipeline_auto.dedup_complete': true, 'pipeline_auto.dedup_failed': true, updated_at: new Date() },
+                $inc: { 'pipeline_auto.dedup_attempts': 1 },
+              });
+            } else {
+              await db.collection('books').updateOne({ id: book.id }, { $inc: { 'pipeline_auto.dedup_attempts': 1 } });
+            }
+            log.errors.push(`Dedup ${book.id}: ${err.message}`);
+          }
+        }
+        log.dedup_books += deduped;
+        log.dedup_pages_hidden += pagesHidden;
+        log.dedup_flagged += flagged;
+        console.log(`  Phase 1.97 dedup: ${deduped} books, ${pagesHidden} pages hidden, ${flagged} flagged`);
+      }
+    }
+
     // Shared Gemini active job count — queried once, reused by OCR (Phase 2) and image extraction (Phase 5)
     let geminiActiveJobs = null;
 
@@ -3564,6 +3638,14 @@ Rules:
     //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
     if (shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
+
+      // Ordering gate: never OCR a book before Phase 1.97 has deduped it, else
+      // trailing dupes flow through the whole pipeline. DEDUP_LIMIT (50) < this
+      // pass's limit (~200), so without the gate the overflow would be OCR'd
+      // un-deduped in the same tick and never revisited. When 1.97 is paused,
+      // relax the gate so "pause dedup" means "let books flow straight to OCR".
+      const requireDedup = !PAUSED_PHASES.has(1.97);
+      const dedupGate = requireDedup ? { 'pipeline_auto.dedup_complete': true } : {};
 
       // Work-ID dedup: skip books if another copy of the same work is already complete
       async function filterDuplicateWorks(db, candidates) {
@@ -3616,6 +3698,7 @@ Rules:
               'pipeline_auto.recitation_blocked': { $ne: true },
               'pipeline_auto.recitation_retry': { $ne: true }, // Recitation books go to Pass 2 w/ fallback model
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
+              ...dedupGate, // Phase 1.97 must run first (relaxed when 1.97 paused)
             }},
             { $addFields: {
               _priority: {
@@ -3715,6 +3798,7 @@ Rules:
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
             'pipeline_auto.recitation_blocked': { $ne: true },
+            ...dedupGate, // Phase 1.97 must run first (relaxed when 1.97 paused)
             $or: [
               { pages_ocr: { $gt: 0 } }, // Already has some OCR (preview pass done)
               { 'pipeline_auto.recitation_retry': true }, // All pages were RECITATION-blocked — retry with fallback model regardless of pages_ocr
@@ -4275,6 +4359,7 @@ Rules:
             const pages = await db.collection('pages')
               .find({
                 book_id: book.id,
+                page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
                 'ocr.data': { $exists: true, $nin: [null, ''] },
                 page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
                 $or: [
@@ -4614,6 +4699,7 @@ Rules:
               const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
+                  page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
@@ -4750,6 +4836,7 @@ Rules:
               const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
+                  page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
@@ -5205,6 +5292,9 @@ Rules:
           actions: {
             enrolled: log.enrolled,
             archived: log.archived,
+            dedup_books: log.dedup_books,
+            dedup_pages_hidden: log.dedup_pages_hidden,
+            dedup_flagged: log.dedup_flagged,
             ocr_submitted: log.ocr_submitted,
             ocr_advanced: log.ocr_advanced,
             metadata_enriched: log.metadata_enriched,
@@ -5227,7 +5317,7 @@ Rules:
           errors: log.errors.slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
           error_count: log.errors.length,
           health_grade: healthGrade,
-          summary: `[${healthGrade}] E:${log.enrolled} A:${log.archived} P:${log.preview_queued} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
+          summary: `[${healthGrade}] E:${log.enrolled} A:${log.archived} D:${log.dedup_books}/${log.dedup_pages_hidden}p P:${log.preview_queued} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
         }),
       ]);
     }
