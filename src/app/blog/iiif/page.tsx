@@ -231,7 +231,7 @@ export default function IIIFPage() {
           has to be a good citizen or it gets (rightly) blocked.
         </p>
 
-        <h3 className="text-lg text-primary font-medium mt-8 mb-3">Rate limits, and being polite</h3>
+        <h3 className="text-xl md:text-2xl text-primary font-semibold mt-10 mb-3">Rate limits, and being polite</h3>
         <p className="text-secondary leading-relaxed mb-6">
           Library and museum image servers throttle aggressively, and they should. We keep a per-host
           token bucket with deliberately conservative limits and exponential backoff on every fetch.
@@ -273,7 +273,7 @@ export default function IIIFPage() {
           isn&rsquo;t a nuisance to route around; it&rsquo;s the terms of the relationship.
         </p>
 
-        <h3 className="text-lg text-primary font-medium mt-8 mb-3">
+        <h3 className="text-xl md:text-2xl text-primary font-semibold mt-10 mb-3">
           The datacenter problem (and an accidental gift from IIIF)
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
@@ -292,7 +292,7 @@ export default function IIIFPage() {
           into a one-time, low-volume fetch.
         </p>
 
-        <h3 className="text-lg text-primary font-medium mt-8 mb-3">
+        <h3 className="text-xl md:text-2xl text-primary font-semibold mt-10 mb-3">
           Browser gates, version drift, and the things we won&rsquo;t do
         </h3>
         <ul className="space-y-3 mb-8 text-secondary leading-relaxed">
