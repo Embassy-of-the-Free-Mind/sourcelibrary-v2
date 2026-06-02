@@ -408,6 +408,12 @@ mark {
   animation: fade-in 0.7s ease-out forwards;
 }
 
+/* Page-load entrance: opacity-only (a transform here would break sticky
+   headers inside the page). Slightly longer + a soft ease so it's noticeable. */
+.animate-page-enter {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
 /* Pulse glow animation for loading spinner */
 @keyframes pulse-glow {
   0%, 100% {

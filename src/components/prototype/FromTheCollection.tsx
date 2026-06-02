@@ -32,7 +32,7 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="bg-warm py-16 md:py-24">
+    <section className="bg-warm py-16 md:py-24 animate-fade-in-up">
       <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
         <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
           From the Collection

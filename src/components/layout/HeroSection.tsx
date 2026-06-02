@@ -140,13 +140,10 @@ export default function HeroSection() {
 
           {/* Reserve min-height to prevent layout shift while session loads */}
           <div className="min-h-[120px]">
-            {status === 'loading' ? (
-              <div className="max-w-xl opacity-0">
-                {/* Invisible placeholder matching sign-up form height */}
-                <div className="h-[52px] rounded-lg" />
-                <div className="h-[24px] mt-4" />
-              </div>
-            ) : status === 'authenticated' ? (
+            {/* Show the sign-up immediately on load (also during session
+                'loading') so it fades in with the hero instead of waiting for
+                the session round-trip. Authenticated visitors swap to search. */}
+            {status === 'authenticated' ? (
               <div className="max-w-xl animate-fade-in">
                 <UnifiedSearch />
               </div>
