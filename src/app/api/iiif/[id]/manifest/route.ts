@@ -11,19 +11,47 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getPartnerByProvider, type LibraryPartner } from '@/lib/library-partners';
 
 const BASE = 'https://sourcelibrary.org';
 
-// Map SPDX-ish license IDs to IIIF-required CC/RS URIs
+// Map SPDX-ish license IDs to IIIF-required CC/RS URIs. Keys are matched
+// case-insensitively (see resolveRights), so list the canonical form only.
 const LICENSE_URIS: Record<string, string> = {
   publicdomain: 'http://creativecommons.org/publicdomain/mark/1.0/',
-  'CC0-1.0': 'http://creativecommons.org/publicdomain/zero/1.0/',
-  'CC-BY-4.0': 'http://creativecommons.org/licenses/by/4.0/',
-  'CC-BY-SA-4.0': 'http://creativecommons.org/licenses/by-sa/4.0/',
-  'CC-BY-NC-4.0': 'http://creativecommons.org/licenses/by-nc/4.0/',
-  'CC-BY-NC-SA-4.0': 'http://creativecommons.org/licenses/by-nc-sa/4.0/',
+  pdm: 'http://creativecommons.org/publicdomain/mark/1.0/',
+  'public-domain': 'http://creativecommons.org/publicdomain/mark/1.0/',
+  'cc0-1.0': 'http://creativecommons.org/publicdomain/zero/1.0/',
+  cc0: 'http://creativecommons.org/publicdomain/zero/1.0/',
+  'cc-by-4.0': 'http://creativecommons.org/licenses/by/4.0/',
+  'cc-by-sa-4.0': 'http://creativecommons.org/licenses/by-sa/4.0/',
+  'cc-by-nd-4.0': 'http://creativecommons.org/licenses/by-nd/4.0/',
+  'cc-by-nc-4.0': 'http://creativecommons.org/licenses/by-nc/4.0/',
+  'cc-by-nc-sa-4.0': 'http://creativecommons.org/licenses/by-nc-sa/4.0/',
+  'cc-by-nc-nd-4.0': 'http://creativecommons.org/licenses/by-nc-nd/4.0/',
   'in-copyright': 'http://rightsstatements.org/vocab/InC/1.0/',
+  inc: 'http://rightsstatements.org/vocab/InC/1.0/',
+  'noc-us': 'http://rightsstatements.org/vocab/NoC-US/1.0/',
+  'noc-nc': 'http://rightsstatements.org/vocab/NoC-NC/1.0/',
+  cne: 'http://rightsstatements.org/vocab/CNE/1.0/',
+  und: 'http://rightsstatements.org/vocab/UND/1.0/',
 };
+
+/**
+ * Resolve a stored license/rights value to a single IIIF `rights` URI.
+ * Passes through values that are already CC / rightsstatements.org URIs, and
+ * otherwise maps SPDX-ish IDs case-insensitively. The IIIF spec REQUIRES rights
+ * to be exactly one CC or rightsstatements.org URI — anything else is dropped
+ * rather than emitted as an invalid value.
+ */
+function resolveRights(license?: string): string | undefined {
+  if (!license) return undefined;
+  const raw = license.trim();
+  if (/^https?:\/\/(creativecommons\.org|rightsstatements\.org)\//i.test(raw)) {
+    return raw;
+  }
+  return LICENSE_URIS[raw.toLowerCase()];
+}
 
 // BCP 47 codes for languages we encounter
 const LANG_CODES: Record<string, string> = {
@@ -46,44 +74,131 @@ function langCode(language?: string): string {
   return LANG_CODES[lower] || lower.slice(0, 2);
 }
 
+// Known IIIF image hosts whose API version/profile we can state precisely.
+// Anything else that is still IIIF-shaped falls through to a conservative
+// default (see extractImageService).
+const KNOWN_IIIF_HOSTS: Array<{ test: RegExp; type: string; profile: string }> = [
+  { test: /iiif\.archive\.org\/image\/iiif\/3\//, type: 'ImageService3', profile: 'level2' },
+  { test: /gallica\.bnf\.fr\/iiif\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
+  { test: /api\.digitale-sammlungen\.de\/iiif\/image\/v2\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
+  { test: /e-rara\.ch\/i3f\/v20\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level1.json' },
+  { test: /iiif\.wellcomecollection\.org\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
+  { test: /iiif\.bodleian\.ox\.ac\.uk\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
+  { test: /tile\.loc\.gov\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
+  { test: /digi\.vatlib\.it\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level1.json' },
+  { test: /ids\.lib\.harvard\.edu\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
+  { test: /images\.lib\.cam\.ac\.uk\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
+];
+
 /**
- * Try to extract a IIIF Image Service URL from a page image URL.
- * Returns { id, type, profile } or null.
+ * Try to extract a IIIF Image Service from a stored page image URL.
+ *
+ * Works for ANY upstream IIIF endpoint, not a fixed host list: a canonical
+ * Image API request is `{service}/{region}/{size}/{rotation}/{quality}.{format}`,
+ * so we strip those four trailing segments to recover the service base. Known
+ * hosts get their exact API version/profile; an unrecognized but IIIF-shaped
+ * URL gets the most widely supported default (viewers read info.json for the
+ * truth). Plain re-hosted JPEGs (our R2 derivatives) don't match and correctly
+ * return null — we don't run an Image API server over those.
  */
 function extractImageService(url: string): { id: string; type: string; profile: string } | null {
-  // Internet Archive IIIF v3
-  // e.g. https://iiif.archive.org/image/iiif/3/identifier%24pagenum/full/max/0/default.jpg
-  const iaMatch = url.match(/^(https:\/\/iiif\.archive\.org\/image\/iiif\/3\/[^/]+)\/full\//);
-  if (iaMatch) {
-    return { id: iaMatch[1], type: 'ImageService3', profile: 'level2' };
+  const m = url.match(
+    /^(https?:\/\/.+?)\/(full|square|\d+,\d+,\d+,\d+|pct:[\d.,]+)\/(max|full|\^?!?\d*,\d*|pct:[\d.]+)\/(!?-?\d+(?:\.\d+)?)\/(default|color|gray|bitonal)\.(jpg|jpeg|png|tif|tiff|gif|jp2|webp)$/i
+  );
+  if (!m) return null;
+  const base = m[1];
+  for (const host of KNOWN_IIIF_HOSTS) {
+    if (host.test.test(base)) {
+      return { id: base, type: host.type, profile: host.profile };
+    }
   }
-
-  // Gallica IIIF v2
-  // e.g. https://gallica.bnf.fr/iiif/ark:/12148/bpt6k.../f42/full/full/0/native.jpg
-  const gallicaMatch = url.match(/^(https:\/\/gallica\.bnf\.fr\/iiif\/ark:\/12148\/[^/]+\/f\d+)\/full\//);
-  if (gallicaMatch) {
-    return { id: gallicaMatch[1], type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' };
-  }
-
-  // MDZ / BSB IIIF
-  // e.g. https://api.digitale-sammlungen.de/iiif/image/v2/bsb.../full/...
-  const mdzMatch = url.match(/^(https:\/\/api\.digitale-sammlungen\.de\/iiif\/image\/v2\/[^/]+)\/full\//);
-  if (mdzMatch) {
-    return { id: mdzMatch[1], type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' };
-  }
-
-  // e-rara IIIF
-  const eraraMatch = url.match(/^(https:\/\/www\.e-rara\.ch\/i3f\/v20\/[^/]+)\/full\//);
-  if (eraraMatch) {
-    return { id: eraraMatch[1], type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level1.json' };
-  }
-
-  return null;
+  // IIIF-shaped URL from an unrecognized host: declare the broadly compatible
+  // v2/level1 and let the viewer confirm via info.json.
+  return { id: base, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level1.json' };
 }
 
-// Default canvas dimensions (reasonable for a book page)
+// Default canvas dimensions, used only when a page has no stored pixel size.
 const DEFAULT_WIDTH = 1500;
 const DEFAULT_HEIGHT = 2160;
+
+// `image_source.provider` has accumulated alternate keys over time; map the
+// aliases back to the canonical key that LIBRARY_PARTNERS is registered under
+// so the holding institution still resolves.
+const PROVIDER_KEY_ALIASES: Record<string, string> = {
+  ia: 'internet_archive',
+  bsb: 'mdz',
+  e_rara: 'e-rara',
+  vatlib: 'vatican',
+  ndl: 'ndl_japan',
+};
+
+function resolvePartner(provider?: string): LibraryPartner | undefined {
+  if (!provider) return undefined;
+  return (
+    getPartnerByProvider(provider) ||
+    getPartnerByProvider(PROVIDER_KEY_ALIASES[provider] ?? provider)
+  );
+}
+
+/**
+ * IIIF `provider` agents, holding institution FIRST.
+ *
+ * The library that digitized the book is the primary provider — IIIF's whole
+ * model rests on consumers crediting the source institution structurally, not
+ * demoting it to a free-text metadata row. Source Library is listed second as
+ * the aggregator that re-hosts and adds AI OCR/translation. Falls back to the
+ * stored `provider_name` / `source_url` when the institution isn't a registered
+ * LIBRARY_PARTNER, so long-tail sources are still credited.
+ */
+function buildProviders(
+  imageSource: { provider?: string; provider_name?: string; source_url?: string } | undefined,
+): Array<Record<string, unknown>> {
+  const providers: Array<Record<string, unknown>> = [];
+
+  const partner = resolvePartner(imageSource?.provider);
+  const name = partner?.name || imageSource?.provider_name;
+  const homepageUrl = partner?.url || imageSource?.source_url;
+
+  if (name) {
+    const agent: Record<string, unknown> = {
+      id: homepageUrl || BASE,
+      type: 'Agent',
+      label: { en: [name] },
+    };
+    if (homepageUrl) {
+      agent.homepage = [
+        { id: homepageUrl, type: 'Text', label: { en: [name] }, format: 'text/html' },
+      ];
+    }
+    if (partner) {
+      agent.seeAlso = [
+        {
+          id: `${BASE}/libraries/${partner.slug}`,
+          type: 'Text',
+          label: { en: [`${name} on Source Library`] },
+          format: 'text/html',
+        },
+      ];
+    }
+    providers.push(agent);
+  }
+
+  providers.push({
+    id: BASE,
+    type: 'Agent',
+    label: { en: ['Source Library'] },
+    homepage: [
+      {
+        id: BASE,
+        type: 'Text',
+        label: { en: ['Source Library — re-hosted edition with AI OCR & translation'] },
+        format: 'text/html',
+      },
+    ],
+  });
+
+  return providers;
+}
 
 export async function GET(
   request: NextRequest,
@@ -122,6 +237,7 @@ export async function GET(
             photo: 1,
             photo_original: 1,
             archived_photo: 1,
+            image_width: 1, image_height: 1,
             thumbnail_blob: 1, image_thumb: 1,
             thumbnail: 1, image_display: 1,
             'ocr.language': 1,
@@ -229,10 +345,18 @@ export async function GET(
 
     // Rights
     const license = book.image_source?.license || book.license;
-    const rightsUri = license ? LICENSE_URIS[license] : undefined;
+    const rightsUri = resolveRights(license);
 
-    // Attribution
-    const attribution = book.image_source?.attribution;
+    // Attribution — always credit the digitizing institution. Prefer an explicit
+    // attribution string when stored; otherwise build one from the institution
+    // name so the required statement is never empty.
+    const institutionName =
+      resolvePartner(book.image_source?.provider)?.name || book.image_source?.provider_name;
+    const attribution =
+      book.image_source?.attribution ||
+      (institutionName
+        ? `Digitized by ${institutionName}. Re-hosted with AI-generated OCR and translation by Source Library.`
+        : 'Re-hosted with AI-generated OCR and translation by Source Library.');
 
     // Build canvases
     const canvases = pagesLight.map((page) => {
@@ -241,12 +365,18 @@ export async function GET(
       const imageUrl = page.archived_photo || page.photo_original || page.photo;
       const service = imageUrl ? extractImageService(imageUrl) : null;
 
+      // Use the real digitized pixel size when archiving recorded it, so that
+      // xywh region citation / annotation targeting lands on the correct part
+      // of the image. Fall back to a nominal page size only when unknown.
+      const width = page.image_width || DEFAULT_WIDTH;
+      const height = page.image_height || DEFAULT_HEIGHT;
+
       const imageBody: Record<string, unknown> = {
         id: imageUrl,
         type: 'Image',
         format: 'image/jpeg',
-        width: DEFAULT_WIDTH,
-        height: DEFAULT_HEIGHT,
+        width,
+        height,
       };
       if (service) {
         imageBody.service = [service];
@@ -256,8 +386,8 @@ export async function GET(
         id: canvasId,
         type: 'Canvas',
         label: { none: [`p. ${pageNum}`] },
-        width: DEFAULT_WIDTH,
-        height: DEFAULT_HEIGHT,
+        width,
+        height,
         items: [
           {
             id: `${canvasId}/painting`,
@@ -343,21 +473,7 @@ export async function GET(
       behavior: ['paged'],
       viewingDirection: 'left-to-right',
 
-      provider: [
-        {
-          id: BASE,
-          type: 'Agent',
-          label: { en: ['Source Library'] },
-          homepage: [
-            {
-              id: BASE,
-              type: 'Text',
-              label: { en: ['Source Library — Digital Archive of Western Esoteric Texts'] },
-              format: 'text/html',
-            },
-          ],
-        },
-      ],
+      provider: buildProviders(book.image_source),
 
       homepage: [
         {
@@ -388,12 +504,10 @@ export async function GET(
       manifest.rights = rightsUri;
     }
 
-    if (attribution) {
-      manifest.requiredStatement = {
-        label: { en: ['Attribution'] },
-        value: { en: [attribution] },
-      };
-    }
+    manifest.requiredStatement = {
+      label: { en: ['Attribution'] },
+      value: { en: [attribution] },
+    };
 
     if (book.published) {
       // navDate needs ISO 8601 — approximate from year

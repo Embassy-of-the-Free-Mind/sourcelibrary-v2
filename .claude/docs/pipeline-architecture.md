@@ -64,7 +64,7 @@ Note: `enrich-books` cron code exists in the codebase but is NOT in `vercel.json
 | Cron | Interval | Lock file | Purpose |
 |------|----------|-----------|---------|
 | `archive-ocr.mjs` | */30 min | `sl-archive-ocr.lock` | Per-page IIIF download -> R2 |
-| `resize-worker.mjs` | */30 min | `sl-resize.lock` | Generate display-size from full-res |
+| `backfill-display-images.mjs` | */30 min | `sl-display-backfill.lock` | Split-aware display+thumb variant backfill (#1814; replaced the retired `resize-worker.mjs`) |
 | `sync-worker.mjs` | */2 hr | `sl-sync.lock` | Page count cache refresh |
 
 **Daily maintenance:**

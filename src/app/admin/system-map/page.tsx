@@ -738,7 +738,7 @@ const serviceData: Record<string, ServiceInfo> = {
     details: [
       'Analysis (~49 scripts): Pipeline stats, OCR backlog checks, duplicate detection, data quality audits, processing candidate identification. Examples: pipeline-stats.mjs, find-duplicates.mjs, check-ocr-backlog.mjs.',
       'Batch processing (~33): Direct Gemini API calls for bulk OCR, translation, re-OCR. Examples: realtime-ocr.mjs (Tier 3 keys, high RPS), submit-translations.mjs, retranslate-stale.mjs.',
-      'Enrichment (~38): Catalog enrichment from USTC/BPH databases, entity extraction, collection assignment, language normalization, work ID assignment. Examples: enrich-from-catalogs.mjs, assign-collections.mjs, verify-first-translations.mjs.',
+      'Enrichment (~38): Catalog enrichment from USTC/BPH databases, entity extraction, collection assignment, language normalization, work ID assignment. Examples: enrich-from-catalogs.mjs, assign-collections.mjs, search-translation-evidence.mjs.',
       'Maintenance (~49): Fix stuck jobs, correct page counts, repair covers, create MongoDB indexes, clean up Gemini batch artifacts. Examples: fix-stuck-jobs.mjs, fix-inflated-page-counts.mjs, create-critical-indexes.mjs.',
       'Import (~12): Bulk collection imports from specific archives. Examples: import-kloss-collection.mjs, import-laurenziana.mjs, import-getty-alchemy.mjs.',
       'Lambda build/deploy: scripts/aws-lambda/ has build-lambda.sh (esbuild), package-lambda.sh (zip), deploy-lambda.sh (AWS CLI upload).',

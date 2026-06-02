@@ -208,19 +208,11 @@ const WORKERS = [
   },
 
   // Tier 5: Image processing — R2/sharp bound, light on Atlas
-  {
-    name: 'resize-worker',
-    cmd: 'node scripts/workers/resize-worker.mjs --limit 500 --concurrency 10',
-    lock: '/tmp/sl-resize.lock',
-    connections: 5,
-    tier: 5,
-    interval: 1800,     // every 30 min
-    healthMin: 'healthy',
-    log: '/var/log/sourcelibrary/resize.log',
-  },
+  // (resize-worker.mjs retired in #1814 — it was a broken no-op for the real
+  //  gap; display-backfill below is the split-aware variant backfill.)
   {
     name: 'display-backfill',
-    cmd: 'node scripts/migration/backfill-display-images.mjs --limit=10000 --concurrency=10 --book-concurrency=2',
+    cmd: 'node scripts/migration/backfill-display-images.mjs --limit=10000 --concurrency=10',
     lock: '/tmp/sl-display-backfill.lock',
     connections: 5,
     tier: 5,

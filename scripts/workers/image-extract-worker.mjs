@@ -739,6 +739,7 @@ async function processBook(db, book) {
   const rawCandidates = await db.collection('pages')
     .find({
       book_id: book.id,
+      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
       $or: [
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
         { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },

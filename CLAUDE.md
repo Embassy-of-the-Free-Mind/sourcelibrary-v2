@@ -14,12 +14,15 @@ When making product decisions, lead with: who reads this, what experience are th
 - **NEVER push directly to main.** All changes go through PRs.
 - **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
 - The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
+- **Merging a PR does NOT deploy production.** `sourcelibrary.org` is served by a manual `vercel --prod` (not git-integrated). To ship a merged frontend change: in the main directory on `main`, `git pull origin main` then `vercel --prod`. **Exception:** pipeline/worker scripts (`scripts/**`) need no Vercel deploy — the Hetzner box auto-pulls `main` every ~5 min, so script changes go live on their own. Tell: a merged frontend behavior that's absent on prod = not deployed yet.
 
 ## PR Conventions
 Lessons from PR #1980 (see `.claude/handoffs/2026-05-25-pr1980-split.md`). Apply to all contributors — internal, external, and AI-assisted.
 
 - **One concern per PR.** Don't bundle dead-code removal with tooling adoption, or refactors with feature work. The two halves of #1980 had very different risk profiles; bundled, they couldn't be reviewed cleanly. If the diff has more than one "why," split it.
 - **Verify before deleting.** Static analysis (graph audits, IDE "find unused") can confidently miss dynamic requires, framework conventions (Next.js routing, cron triggers, server actions), and recent additions. Always `grep -rn '<name>' src/` for every deletion. `InputWidget.tsx` in #1980 was flagged dead but actively imported by `/founding-donors` — one grep would have caught it.
+- **Verify a flagged bug against current code + data before "fixing" it.** Audits, manifests, migration plans, and stale comments drift from the code — a "bug" they surface may not exist, or the code may already be correct. Read the actual code at the line and run a quick data query to confirm the failure case is real and non-negligible before adding a branch or a fix. Don't kill long-but-finite queries and mistake them for timeouts. Sometimes the documentation is the bug, not the code — fix the doc too.
+- **On PRs, trust `test`/DCO, not the first Vercel result.** The Vercel check often shows "fail" on the first build, then an automatic retry flips it to pass (the deployment is frequently still "Building" when GitHub reports the fail). Wait for the retry to settle; don't bail or assume a real failure while `test`/DCO are green.
 - **Run `npx tsc --noEmit` locally before opening a PR that touches dependencies.** It's the #1 source of wasted deploy cycles.
 - **Tooling additions need provenance + opt-in + install docs.** A PR that adds a third-party CLI, MCP server, or `*ToolUse` hook must include: source link, install command, what network/telemetry access it has, an opt-out path. The default must be "if not installed, repo still works."
 - **Doctrine lives in `CLAUDE.md`, not six files.** No appending the same instructions to `AGENTS.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.kiro/steering/`, etc. One source of truth; cross-tool agents can read `CLAUDE.md` directly.
@@ -43,6 +46,7 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - `EnterWorktree` — creates an isolated checkout with its own branch
 - Active worktrees: `git worktree list`
 - Worktrees live in `.claude/worktrees/`
+- **Fresh worktrees fail the pre-commit `check-imports` hook** because `src/lib/vendor/lamejs-bundle.js` is gitignored and absent from a new checkout. Before your first commit, copy it from the main checkout: `cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`.
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
@@ -153,11 +157,11 @@ A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine
 ## Quote & snippet integrity — CRITICAL
 Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
 
-OCR/translation text in `pages.{ocr,translation}.data` is wrapped in AI-written **editorial annotation blocks**: `<meta>`, `<summary>`, `<keywords>`, `<vocab>`. These *describe* the page and routinely name content from **adjacent** pages ("the previous page focused on perpetual motion wheels using mercury…"). They are **never verbatim source** — quoting or embedding them fabricates citations to words that aren't on the page, which strikes at the core "read and quote the original" promise.
+OCR/translation text in `pages.{ocr,translation}.data` is wrapped in AI-written **editorial annotation blocks**. There are **two distinct families**: the translation-side page descriptions `<meta>`, `<summary>`, `<keywords>`, `<vocab>`, and the OCR-side page-level metadata envelope `<language>`, `<scan-quality>`, `<script>`, `<page-type>`, `<columns>`, `<warning>` (the tags `enrich-worker.mjs:1125` already skips). Both *describe* the page/scan and routinely name content from **adjacent** pages ("the previous page focused on perpetual motion wheels using mercury…"). They are **never verbatim source** — quoting or embedding them fabricates citations to words that aren't on the page, which strikes at the core "read and quote the original" promise.
 
-- **Never serve `<meta>`/`<summary>`/`<keywords>`/`<vocab>` content as quotable text.** Strip the *content*, not just the tag. The classic bug is `replace(/<[^>]+>/g, '')` — it deletes the tag but keeps the editorial prose. Use `stripEditorialWrappers()` from `src/lib/strip-editorial-wrappers.ts` **before** any generic tag strip.
-- **Every search/snippet surface reads its own copy of the page text — fixes do NOT propagate.** Known text-cleaning paths: `/api/search`, `/api/books/[id]/search`, `src/lib/search/librarian-search.ts`, `src/lib/semantic-alignment.ts`, `scripts/workers/embed-gemini.mjs` (`cleanText`), `/api/likes/{popular,mine}` (+ tenant), `/api/learn`. Route them all through `stripEditorialWrappers`. When you add a new surface that snippets page text, wire it through too. (See [[project_search_three_surfaces]].)
-- **Inline glosses (`<note>`/`<term>`/`<margin>`/`<gloss>`/`<unclear>`) are NOT editorial wrappers** — they sit on real body text. Keep their content; they aid recall and reading.
+- **Never serve any of those wrapper blocks as quotable text.** Strip the *content*, not just the tag. The classic bug is `replace(/<[^>]+>/g, '')` — it deletes the tag but keeps the editorial prose. Use `stripEditorialWrappers()` from `src/lib/strip-editorial-wrappers.ts` (it knows **both** wrapper families) **before** any generic tag strip.
+- **Every search/snippet surface reads its own copy of the page text — fixes do NOT propagate.** Known text-cleaning paths: `/api/search`, `/api/books/[id]/search`, `src/lib/search/librarian-search.ts`, `src/lib/semantic-alignment.ts`, `scripts/workers/embed-gemini.mjs` (`cleanText`), `/api/likes/{popular,mine}` (+ tenant), `/api/learn`, and the **IIIF surfaces** `/api/iiif/[id]/canvas/[n]/{ocr,translation}` + `/api/iiif/[id]/search` (PR #2323/#2327). Route them all through `stripEditorialWrappers`. When you add a new surface that snippets page text, wire it through too. (See [[project_search_three_surfaces]] and `.claude/docs/iiif-api.md`.)
+- **Inline glosses (`<note>`/`<term>`/`<margin>`/`<gloss>`/`<unclear>`/`<insert>`) and real page marks (`<header>`/`<catchword>`/`<sig>`/`<page-num>`) are NOT editorial wrappers** — they sit on / are real body text. Keep their content; they aid recall and reading.
 - **The leak is frozen into stored artifacts.** `page_translations.translation` (the semantic-search snippet column) and the embedding vectors were written by the old `cleanText`, so the editorial prose is baked in with the tags already gone — a read-time re-strip can't recover it. Re-derive the snippet column from Mongo with `scripts/maintenance/backfill-clean-snippets.mjs` (UPDATE-only, zero Gemini cost — does NOT touch embeddings). Re-embedding (paid) is separate and only changes *ranking*; decide it on an eval, not reflexively.
 
 ## System Map
@@ -174,7 +178,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
 - **MCP server/CLI:** read `memory/mcp-server.md`
 - **Embeddings / semantic search:** read `.claude/docs/embeddings.md` — five Supabase tables (`page_translations`, `book_embeddings`, `artwork_embeddings`, `gallery_text_embeddings`, `clip_embeddings`), three workers, five RPCs.
-- **Book acquisition / curation:** `/curator` or `/library-curator`
+- **Book acquisition / curation:** `/curator` or `/library-curator`. For importing at scale without duplicates, follow the canonical loop in `.claude/docs/import-workflow.md` (enumerate → dedupe → subject-filter → source → import hidden → process → QA → visible). Dedup runs in `src/lib/dedup.ts` (matches hidden books too — don't reintroduce a `visible:true` filter); reusable tool `scripts/import/enumerate-dedupe-source.ts`; sources that 429 datacenter IPs (Harvard, likely Gallica) use the residential direct-insert pattern (`scripts/import/harvard-wuzhen-direct.mjs`). Work-level dedup is not yet automatic — issue #2318.
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
 - **Handoffs:** `.claude/handoffs/` (read by date/topic)

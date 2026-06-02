@@ -125,7 +125,11 @@ async function main() {
 
   const match = {
     'translation_verification.disposition': 'confirmed_first',
+    // Stable + legacy markers both honored (#2332 Task 2): skip a book if it
+    // was audited or already estimated under EITHER the new or the dated name.
+    'translation_verification.audit_applied': { $ne: true },
     'translation_verification.audit_applied_2026_05_30': { $ne: true },
+    'translation_verification.discovery_estimate': { $exists: false },
     'translation_verification.discovery_estimate_2026_05_30': { $exists: false },  // idempotent skip
     visible: true,
     pages_count: { $gt: 0 },
@@ -164,7 +168,7 @@ async function main() {
         await db.collection('books').updateOne(
           { _id: book._id },
           { $set: {
-            'translation_verification.discovery_estimate_2026_05_30': {
+            'translation_verification.discovery_estimate': {
               audited_at: new Date(),
               model: MODEL,
               translation_exists: r.translation_exists,

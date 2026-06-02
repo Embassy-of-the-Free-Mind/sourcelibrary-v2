@@ -163,8 +163,10 @@ const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
 
-// Build query — need pages with OCR or translation
+// Build query — need pages with OCR or translation.
+// page_number > 0 skips hidden/deduped trailing pages (page_number ≤ 0).
 const pageQuery = {
+  page_number: { $gt: 0 },
   $or: [
     { 'ocr.data': { $exists: true, $type: 'string' } },
     { 'translation.data': { $exists: true, $type: 'string' } },

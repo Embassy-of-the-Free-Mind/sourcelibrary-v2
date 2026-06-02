@@ -5,6 +5,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
+import LibrarianMessageBody from '@/app/librarian/_components/MessageBody';
 
 const HERO_IMG = 'https://images.sourcelibrary.org/artwork/reading-room-hero.png';
 
@@ -28,76 +29,41 @@ The collection covers the full breadth of pre-modern intellectual history: alche
 // ── Types ─────────────────────────────────────────────────────────────
 
 interface TranscriptEntry { role: 'user' | 'agent'; text: string; isFinal: boolean }
-interface SourceResult { bookId: string; title: string; author: string; slug?: string; pageNumber?: number; snippet?: string }
+interface SourceResult { bookId: string; title: string; author: string; slug?: string; pageNumber?: number; snippet?: string; thumbnail?: string | null }
 interface Visual { type: 'image' | 'page'; url: string; title: string; caption?: string; bookSlug?: string; pageNumber?: number }
 
 // ── Client Tools ──────────────────────────────────────────────────────
+// All search tools route through /api/embassy/voice-search, which runs the
+// SAME hybrid search (RRF + rerank) the text Librarian uses, plus gallery
+// images — so voice matches the text Librarian's result quality and visuals.
 
 function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v: Visual) => void) {
-  return {
-    search_library: async ({ query }: { query: string }): Promise<string> => {
-      console.log('[voice-agent] search_library called:', query);
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true`, { signal: controller.signal });
-        clearTimeout(timeout);
-        if (!res.ok) return JSON.stringify({ error: `${res.status}` });
-        const data = await res.json();
-        const results = (data.results || []).slice(0, 6);
-        addSources(results.map((r: any) => ({
-          bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-          slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
-        })));
-        return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
-          title: r.title || r.bookTitle, author: r.author || r.bookAuthor, year: r.year,
-          bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
-          pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
-        })) });
-      } catch (e) { return JSON.stringify({ error: String(e) }); }
-    },
-    search_semantic: async ({ query }: { query: string }): Promise<string> => {
-      // Semantic search via book_embeddings HNSW (fast, ~17K vectors).
-      // Falls back to keyword search if semantic endpoint fails.
-      console.log('[voice-agent] search_semantic called:', query);
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 8000);
-        const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(query)}&limit=8`, { signal: controller.signal });
-        clearTimeout(timeout);
-        if (!res.ok) throw new Error(`${res.status}`);
-        const data = await res.json();
-        const results = (data.results || []).slice(0, 6);
-        addSources(results.map((r: any) => ({
-          bookId: r.book_id, title: r.title, author: r.author,
-          slug: r.slug || r.book_id, snippet: r.summary_snippet || (r.summary_text || '').slice(0, 200),
-        })));
-        return JSON.stringify({ found: results.length, mode: 'semantic', results: results.map((r: any) => ({
-          title: r.title, author: r.author, year: r.year, language: r.language,
-          bookId: r.book_id, slug: r.slug || r.book_id,
-          snippet: r.summary_snippet || (r.summary_text || '').slice(0, 300),
-          similarity: r.similarity,
-        })) });
-      } catch (e) {
-        // Fallback to keyword search if semantic fails
-        console.log('[voice-agent] semantic failed, falling back to keyword:', String(e));
-        try {
-          const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true`);
-          if (!res.ok) return JSON.stringify({ error: `${res.status}` });
-          const data = await res.json();
-          const results = (data.results || []).slice(0, 6);
-          addSources(results.map((r: any) => ({
-            bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-            slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
-          })));
-          return JSON.stringify({ found: results.length, mode: 'keyword_fallback', results: results.map((r: any) => ({
-            title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-            bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
-            pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
-          })) });
-        } catch (e2) { return JSON.stringify({ error: String(e2) }); }
+  const runVoiceSearch = async (query: string, mode: string): Promise<string> => {
+    console.log(`[voice-agent] ${mode}:`, query);
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 13000);
+      const res = await fetch(`/api/embassy/voice-search?q=${encodeURIComponent(query)}&limit=8`, { signal: controller.signal });
+      clearTimeout(timeout);
+      if (!res.ok) return JSON.stringify({ error: `${res.status}` });
+      const data = await res.json();
+      const sources = (data.sources || []) as SourceResult[];
+      addSources(sources);
+      for (const img of (data.images || [])) {
+        if (img.imageUrl) addVisual({ type: 'image', url: img.imageUrl, title: img.description || img.bookTitle || 'Illustration', caption: img.bookAuthor, bookSlug: img.bookSlug, pageNumber: img.pageNumber });
       }
-    },
+      return JSON.stringify({
+        spoken: data.spoken,
+        found: data.found,
+        results: sources.slice(0, 6).map((s) => ({ title: s.title, author: s.author, bookId: s.bookId, slug: s.slug, pageNumber: s.pageNumber, snippet: (s.snippet || '').slice(0, 240) })),
+        images: (data.images || []).slice(0, 4).map((i: any) => ({ description: i.description, book: i.bookTitle })),
+      });
+    } catch (e) { return JSON.stringify({ error: String(e) }); }
+  };
+
+  return {
+    search_library: ({ query }: { query: string }): Promise<string> => runVoiceSearch(query, 'search_library'),
+    search_semantic: ({ query }: { query: string }): Promise<string> => runVoiceSearch(query, 'search_semantic'),
     read_page: async ({ book_id, page_number }: { book_id: string; page_number: number }): Promise<string> => {
       try {
         const res = await fetch(`/api/books/${book_id}/pages?page=${page_number}`);
@@ -112,17 +78,14 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
     },
     search_images: async ({ query }: { query: string }): Promise<string> => {
       try {
-        const res = await fetch(`/api/search/visual?q=${encodeURIComponent(query)}&limit=6`);
+        const res = await fetch(`/api/embassy/voice-search?q=${encodeURIComponent(query)}&limit=2`);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
         const data = await res.json();
-        const images = (data.results || data.images || []).slice(0, 6);
+        const images = (data.images || []);
         for (const img of images) {
-          const url = img.imageUrl || img.fullImageUrl || img.image_url;
-          if (url) addVisual({ type: 'image', url, title: img.title || img.description || 'Illustration', caption: img.author, bookSlug: img.bookSlug || img.slug });
+          if (img.imageUrl) addVisual({ type: 'image', url: img.imageUrl, title: img.description || img.bookTitle || 'Illustration', caption: img.bookAuthor, bookSlug: img.bookSlug, pageNumber: img.pageNumber });
         }
-        return JSON.stringify({ found: images.length, images: images.map((img: any) => ({
-          description: (img.title || img.description || '').slice(0, 200), bookTitle: img.book_title || img.title, subjects: img.subjects?.slice(0, 5),
-        })) });
+        return JSON.stringify({ found: images.length, images: images.map((img: any) => ({ description: (img.description || '').slice(0, 200), book: img.bookTitle, type: img.type })) });
       } catch (e) { return JSON.stringify({ error: String(e) }); }
     },
   };
@@ -271,159 +234,148 @@ function VoiceAgentInner() {
   const sendText = () => { const msg = textInput.trim(); if (!msg) return; setTextInput(''); conversation.sendUserMessage(msg); setTranscript(prev => [...prev, { role: 'user', text: msg, isFinal: true }]); };
   const pushContext = (text: string) => { conversation.sendContextualUpdate(text); };
 
+  const idle = appStatus === 'idle' || appStatus === 'error';
+
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
+    <div className="flex flex-col h-[100dvh] bg-[#f5f0e8] overflow-hidden">
       <SiteHeader variant="light" />
 
-      {/* Hero */}
-      <div className="relative bg-[#0e0c0a] overflow-hidden">
-        <div className="absolute inset-0">
+      {idle || appStatus === 'connecting' ? (
+        /* ── Landing screen ── */
+        <div className="relative flex-1 bg-[#0e0c0a] overflow-hidden flex flex-col items-center justify-center text-center px-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-70" loading="eager" />
+          <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" loading="eager" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-[#0e0c0a]/95" />
+          <div className="relative flex flex-col items-center max-w-[520px]">
+            <h1 className="text-4xl sm:text-5xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>The Librarian</h1>
+            <p className="text-white/60 text-base font-body leading-relaxed mb-10">
+              Ask aloud and the Librarian searches 10,000 rare books as you speak &mdash; philosophy, science, alchemy, sacred texts, the whole history of ideas.
+            </p>
+            {appStatus === 'connecting' ? (
+              <div className="w-32 h-32 rounded-full bg-[#c9a86c]/40 text-white flex items-center justify-center animate-pulse text-sm font-sans">Connecting&hellip;</div>
+            ) : (
+              <button onClick={start}
+                className="w-32 h-32 rounded-full bg-[#c9a86c]/90 hover:bg-[#c9a86c] text-[#0e0c0a] transition-all shadow-[0_0_40px_rgba(201,168,108,0.25)] hover:shadow-[0_0_60px_rgba(201,168,108,0.45)] flex flex-col items-center justify-center">
+                <MicIcon /><span className="text-sm mt-1.5 font-sans font-medium">Begin</span>
+              </button>
+            )}
+            {errorMsg && <p className="text-red-300 text-sm mt-5 font-sans max-w-[360px]">{errorMsg}</p>}
+            <Link href="/librarian" className="mt-10 text-sm text-white/50 hover:text-white/80 font-display">Prefer to type? Switch to text chat &rarr;</Link>
+          </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0e0c0a]/90" />
-
-        <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-16 flex flex-col items-center text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
-            The Librarian
-          </h1>
-          <p className="text-white/60 text-base sm:text-lg font-body leading-relaxed max-w-[520px] mb-8">
-            Voice research across 10,000 rare books &mdash; philosophy, science, medicine, alchemy, sacred texts, and the full history of ideas from antiquity to the Enlightenment.
-          </p>
-
-          {/* Central orb */}
-          {appStatus === 'idle' || appStatus === 'error' ? (
-            <button onClick={start}
-              className="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-[#c9a86c]/90 hover:bg-[#c9a86c] text-[#0e0c0a] transition-all shadow-[0_0_40px_rgba(201,168,108,0.2)] hover:shadow-[0_0_60px_rgba(201,168,108,0.4)] flex flex-col items-center justify-center backdrop-blur-sm">
-              <MicIcon /><span className="text-sm mt-1.5 font-sans font-medium">Begin</span>
-            </button>
-          ) : appStatus === 'connecting' ? (
-            <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-[#c9a86c]/40 text-white flex items-center justify-center animate-pulse text-sm font-sans">
-              Connecting...
-            </div>
-          ) : (
-            <div className="flex flex-col items-center gap-4">
-              <div
-                onMouseDown={holdStart} onMouseUp={holdEnd} onMouseLeave={holdEnd}
-                onTouchStart={holdStart} onTouchEnd={holdEnd}
-                className={`w-28 h-28 sm:w-32 sm:h-32 rounded-full flex items-center justify-center transition-all duration-150 select-none ${
-                  holding ? 'bg-white shadow-[0_0_60px_rgba(255,255,255,0.3)] scale-110'
-                    : agentSpeaking ? 'bg-[#c9a86c] shadow-[0_0_60px_rgba(201,168,108,0.5)]'
-                      : pttMode ? 'bg-white/20 hover:bg-white/30 cursor-pointer' : 'bg-[#c9a86c]/70'
-                }`}
-                style={{ transform: holding ? 'scale(1.1)' : agentSpeaking ? 'scale(1.08)' : `scale(${1 + volume * 0.12})` }}
-              >
-                <div className={`flex flex-col items-center ${holding ? 'text-[#0e0c0a]' : pttMode && !agentSpeaking ? 'text-white/70' : 'text-[#0e0c0a]'}`}>
-                  {holding ? (<><MicIcon /><span className="text-xs mt-1 font-sans font-medium">Speaking</span></>)
-                    : agentSpeaking ? (<><SpeakerIcon /><span className="text-xs mt-1 font-sans opacity-70">Speaking</span></>)
-                      : pttMode ? (<><MicIcon /><span className="text-xs mt-1 font-sans opacity-70">Hold to talk</span></>)
-                        : (<><MicIcon /><span className="text-xs mt-1 font-sans opacity-70">Listening</span></>)}
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <button onClick={togglePtt} className={`text-xs font-sans transition-colors ${pttMode ? 'text-[#c9a86c]' : 'text-white/40 hover:text-white/60'}`}>
-                  {pttMode ? 'Switch to open mic' : 'Switch to push-to-talk'}
-                </button>
-                <span className="text-white/20">&middot;</span>
-                <button onClick={stop} className="text-xs text-white/40 hover:text-white/70 font-sans transition-colors">End</button>
-              </div>
-              {pttMode && <p className="text-xs text-white/50 font-sans">Hold the orb or press spacebar to speak</p>}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {errorMsg && <p className="text-red-700 text-sm text-center mt-3 font-sans">{errorMsg}</p>}
-
-      {/* Main content */}
-      <div className="relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.04]" />
-        <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 py-8">
-          <div className="flex flex-col lg:flex-row gap-8">
-
-            {/* Left: Visuals + Transcript + Input */}
-            <div className="flex-1 flex flex-col gap-5 min-w-0">
+      ) : (
+        /* ── Connected: conversation + docked mic ── */
+        <div className="flex-1 flex flex-col min-h-0">
+          {/* Conversation (main scroll area) */}
+          <div ref={scrollRef} className="flex-1 overflow-y-auto">
+            <div className="max-w-2xl mx-auto w-full px-4 py-5 space-y-4">
               {showVisuals && visuals.length > 0 && (
                 <VisualPanel visuals={visuals} onClose={() => setShowVisuals(false)} />
               )}
-
-              <div ref={scrollRef}
-                className="min-h-[250px] max-h-[50vh] overflow-y-auto bg-white rounded-lg border border-[#e8e4dc] p-5 space-y-4 shadow-sm">
-                {transcript.length === 0 && appStatus === 'idle' && (
-                  <div className="text-center py-10">
-                    <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-30" />
-                    <p className="text-[#8a8480] text-sm font-body max-w-[360px] mx-auto leading-relaxed">
-                      The Librarian searches the collection as you speak &mdash; philosophy, science, sacred texts, manuscripts from every tradition.
-                    </p>
-                  </div>
-                )}
-                {transcript.length === 0 && appStatus === 'connected' && (
-                  <div className="text-center py-10 animate-pulse"><p className="text-[#b0a89c] text-sm font-body">Listening...</p></div>
-                )}
-                {transcript.map((entry, i) => (
-                  <div key={i} className={`flex gap-3 ${entry.role === 'user' ? 'justify-end' : ''}`}>
-                    {entry.role === 'agent' && (
-                      <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="flex-shrink-0 w-8 h-8 rounded-full opacity-60 mt-1" />
-                    )}
-                    <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-[15px] font-body leading-relaxed ${
-                      entry.role === 'agent' ? 'bg-[#faf8f4] text-[#2c2824] rounded-tl-sm' : 'bg-[#1a1612] text-white rounded-br-sm'
-                    }`}>
+              {transcript.length === 0 ? (
+                <div className="text-center py-12">
+                  <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-30" />
+                  <p className="text-[#8a8480] text-sm font-body max-w-[360px] mx-auto leading-relaxed animate-pulse">
+                    The Librarian is listening. Hold the mic below and ask your question&hellip;
+                  </p>
+                </div>
+              ) : transcript.map((entry, i) => (
+                <div key={i} className={`flex gap-3 ${entry.role === 'user' ? 'justify-end' : ''}`}>
+                  {entry.role === 'agent' && (
+                    <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="flex-shrink-0 w-8 h-8 rounded-full opacity-60 mt-1" />
+                  )}
+                  {entry.role === 'agent' ? (
+                    <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-white text-[#2c2824] px-4 py-1 shadow-sm">
+                      <LibrarianMessageBody content={entry.text} variant="thread" />
+                    </div>
+                  ) : (
+                    <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-[#1a1612] text-white px-4 py-3 text-[15px] font-body leading-relaxed">
                       {entry.text}
                     </div>
-                  </div>
-                ))}
-              </div>
-
-              {appStatus === 'connected' && (
-                <div className="flex gap-2">
-                  <input type="text" value={textInput}
-                    onChange={(e) => setTextInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && sendText()}
-                    placeholder="Type a question or note..."
-                    className="flex-1 px-4 py-3 text-sm font-sans bg-white border border-[#e8e4dc] rounded-lg focus:outline-none focus:border-[#c9a86c]/50 text-[#2c2824] placeholder-[#b0a89c]" />
-                  <button onClick={sendText} className="px-5 py-3 text-sm font-sans font-medium bg-[#1a1612] text-white rounded-lg hover:bg-[#2c2824] transition-colors">Send</button>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
+          </div>
 
-            {/* Right: Sources */}
-            <div className="lg:w-[280px] flex flex-col gap-3">
-              <p className="text-[11px] text-[#8a8480] tracking-[0.15em] uppercase font-sans">Sources found</p>
-              {sources.length === 0 ? (
-                <div className="bg-white rounded-lg border border-[#e8e4dc] p-5 text-center shadow-sm">
-                  <p className="text-[#b0a89c] text-sm font-body leading-relaxed">Sources will appear here as Thoth searches the collection.</p>
+          {/* Sources strip */}
+          {sources.length > 0 && (
+            <div className="border-t border-[#e8e4dc] bg-[#faf8f4] shrink-0">
+              <div className="max-w-2xl mx-auto w-full px-4 py-2.5">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[10px] text-[#8a8480] tracking-[0.15em] uppercase font-sans">Sources found</p>
+                  {!showVisuals && visuals.length > 0 && (
+                    <button onClick={() => setShowVisuals(true)} className="text-[11px] text-[#c9a86c] hover:text-[#a88a4c] font-sans">
+                      Show {visuals.length} image{visuals.length > 1 ? 's' : ''}
+                    </button>
+                  )}
                 </div>
-              ) : (
-                <div className="space-y-2 max-h-[60vh] overflow-y-auto">
+                <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
                   {sources.map((s, i) => (
-                    <div key={`${s.bookId}-${s.pageNumber}-${i}`} className="bg-white rounded-lg border border-[#e8e4dc] p-4 hover:border-[#c9a86c]/40 transition-all shadow-sm">
-                      <Link href={`/book/${s.slug || s.bookId}${s.pageNumber ? `/page-number/${s.pageNumber}` : ''}`} target="_blank" className="block">
-                        <p className="text-sm text-[#2c2824] font-display leading-tight">{s.title}</p>
-                        <p className="text-xs text-[#8a8480] mt-0.5 font-sans">{s.author}{s.pageNumber ? ` · p. ${s.pageNumber}` : ''}</p>
-                        {s.snippet && <p className="text-xs text-[#8a8480] mt-1.5 line-clamp-2 font-sans leading-relaxed">{s.snippet}</p>}
+                    <div key={`${s.bookId}-${s.pageNumber}-${i}`} className="flex-shrink-0 w-52 bg-white rounded-lg border border-[#e8e4dc] p-2.5 hover:border-[#c9a86c]/50 transition-colors">
+                      <Link href={`/book/${s.slug || s.bookId}${s.pageNumber ? `/page-number/${s.pageNumber}` : ''}`} target="_blank" className="flex gap-2.5">
+                        {s.thumbnail ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={s.thumbnail} alt="" className="flex-shrink-0 w-10 h-14 object-cover rounded bg-[#eee]" loading="lazy" />
+                        ) : null}
+                        <div className="min-w-0">
+                          <p className="text-[12px] text-[#1a1612] font-body font-medium leading-tight line-clamp-2">{s.title}</p>
+                          <p className="text-[10px] text-[#8a8480] mt-0.5 font-sans">{s.author}{s.pageNumber ? ` · p. ${s.pageNumber}` : ''}</p>
+                        </div>
                       </Link>
-                      {appStatus === 'connected' && (
-                        <button onClick={() => pushContext(`The user is now looking at "${s.title}" by ${s.author}${s.pageNumber ? `, page ${s.pageNumber}` : ''}. ${s.snippet ? `Passage: "${s.snippet.slice(0, 150)}"` : ''}`)}
-                          className="mt-2 text-[10px] text-[#c9a86c] hover:text-[#a88a4c] font-sans tracking-wide uppercase">Tell Librarian</button>
-                      )}
+                      {s.snippet && <p className="text-[10px] text-[#6b6560] mt-1.5 line-clamp-2 italic font-body leading-relaxed">{s.snippet}</p>}
+                      <button onClick={() => pushContext(`The user is now looking at "${s.title}" by ${s.author}${s.pageNumber ? `, page ${s.pageNumber}` : ''}. ${s.snippet ? `Passage: "${s.snippet.slice(0, 150)}"` : ''}`)}
+                        className="mt-1.5 text-[10px] text-[#c9a86c] hover:text-[#a88a4c] font-sans tracking-wide uppercase">Tell Librarian</button>
                     </div>
                   ))}
                 </div>
-              )}
-              {!showVisuals && visuals.length > 0 && (
-                <button onClick={() => setShowVisuals(true)} className="text-xs text-[#c9a86c] hover:text-[#a88a4c] font-sans mt-1">
-                  Show {visuals.length} image{visuals.length > 1 ? 's' : ''}
+              </div>
+            </div>
+          )}
+
+          {/* Docked control bar */}
+          <div className="border-t border-[#e8e4dc] bg-white shrink-0 px-4 pt-3 pb-[max(0.9rem,env(safe-area-inset-bottom))]">
+            <div className="max-w-2xl mx-auto w-full flex flex-col items-center gap-2.5">
+              <div
+                onMouseDown={holdStart} onMouseUp={holdEnd} onMouseLeave={holdEnd}
+                onTouchStart={holdStart} onTouchEnd={holdEnd}
+                className={`select-none w-[72px] h-[72px] rounded-full flex items-center justify-center transition-all duration-150 ${
+                  holding ? 'bg-[#c9a86c] text-[#0e0c0a] shadow-[0_0_40px_rgba(201,168,108,0.5)]'
+                    : agentSpeaking ? 'bg-[#1a1612] text-[#c9a86c]'
+                      : pttMode ? 'bg-[#1a1612] text-white cursor-pointer hover:bg-[#2c2824]'
+                        : 'bg-[#c9a86c] text-[#0e0c0a]'
+                }`}
+                style={{ transform: holding ? 'scale(1.08)' : `scale(${1 + volume * 0.1})` }}
+              >
+                <div className="flex flex-col items-center">
+                  {agentSpeaking && !holding ? <SpeakerIcon /> : <MicIcon />}
+                  <span className="text-[10px] mt-0.5 font-sans">{holding ? 'Speaking' : agentSpeaking ? 'Speaking' : pttMode ? 'Hold to talk' : 'Listening'}</span>
+                </div>
+              </div>
+              <p className="text-xs text-[#8a8480] font-sans">{pttMode ? 'Hold the mic or press spacebar to talk' : 'Open mic — just speak'}</p>
+
+              <div className="flex gap-2 w-full">
+                <input type="text" value={textInput}
+                  onChange={(e) => setTextInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && sendText()}
+                  placeholder="…or type a question"
+                  className="flex-1 px-4 py-2.5 text-sm font-sans bg-[#f5f0e8] border border-[#e8e4dc] rounded-full focus:outline-none focus:border-[#c9a86c]/60 text-[#2c2824] placeholder-[#b0a89c]" />
+                <button onClick={sendText} className="px-5 py-2.5 text-sm font-sans font-medium bg-[#1a1612] text-white rounded-full hover:bg-[#2c2824] transition-colors">Send</button>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button onClick={togglePtt} className={`text-xs font-sans transition-colors ${pttMode ? 'text-[#c9a86c]' : 'text-[#8a8480] hover:text-[#6b6560]'}`}>
+                  {pttMode ? 'Switch to open mic' : 'Switch to push-to-talk'}
                 </button>
-              )}
-              <div className="mt-auto pt-4 border-t border-[#e8e4dc]">
-                <Link href="/librarian" className="text-sm text-[#c9a86c] hover:text-[#a88a4c] font-display">Switch to text chat &rarr;</Link>
+                <span className="text-[#d8d2c8]">&middot;</span>
+                <button onClick={stop} className="text-xs text-[#8a8480] hover:text-[#6b6560] font-sans transition-colors">End</button>
+                <span className="text-[#d8d2c8]">&middot;</span>
+                <Link href="/librarian" className="text-xs text-[#8a8480] hover:text-[#6b6560] font-sans">Text chat</Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

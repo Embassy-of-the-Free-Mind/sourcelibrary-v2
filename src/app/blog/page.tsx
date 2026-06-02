@@ -25,6 +25,30 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'iiif',
+    title: 'How IIIF Helped Us Translate the Renaissance',
+    subtitle:
+      'One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world. With diagrams of the import pipeline, the real challenges (rate limits, the datacenter problem), the workflow when there is no manifest, why provenance matters, and appreciations. Notes for a lightning talk at IIIF 2026 in Leiden.',
+    date: '2 June 2026',
+    readTime: '14 min read',
+    tag: 'Technical',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg',
+    imageAlt: "Engraved frontispiece of Michael Maier's Atalanta Fugiens (Oppenheim, 1617), digitized by e-rara and re-hosted on Source Library",
+  },
+  {
+    slug: 'how-big-is-the-library',
+    title: 'How Big Is the Library?',
+    subtitle:
+      'We counted every word — original OCR, AI translation, and enrichment. Roughly five to seven billion words, about the size of English Wikipedia. With the methodology, and the recitation-loop bug that nearly tripled the count.',
+    date: '1 June 2026',
+    readTime: '6 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg',
+    imageAlt: "Frontispiece of Athanasius Kircher's Ars Magna Lucis et Umbrae (1671)",
+  },
+  {
     slug: 'how-long-to-translate',
     title: 'How Long Would It Take to Translate the Renaissance?',
     subtitle: 'We measured the rate of new Latin translations and counted what is left. At the current pace, the Latin Renaissance alone would take about ten thousand years to finish.',
