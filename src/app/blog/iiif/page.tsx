@@ -169,6 +169,38 @@ export default function IIIFPage() {
           </svg>
         </Figure>
 
+        <p className="text-secondary leading-relaxed mb-6">
+          Here is what that machine consumer actually looks like. Asked to explore the historical
+          libraries discussed in the collection, Claude works through Source Library, surfaces the
+          relevant works, and &mdash; on a follow-up to find quotes &mdash; returns exact passages from
+          Gabriel Naud&eacute;&rsquo;s{' '}
+          <em>Advice on Establishing a Library</em> (1627), each with a page number and a citation link
+          back to the original:
+        </p>
+
+        <figure className="my-10">
+          <div className="bg-white rounded-xl border border-border-light p-2 md:p-3 overflow-hidden">
+            <video
+              className="w-full h-auto rounded-lg block"
+              src="https://images.sourcelibrary.org/blog/iiif/claude-reading-sourcelibrary-30s.mp4"
+              poster="https://images.sourcelibrary.org/blog/iiif/claude-reading-sourcelibrary-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              controls
+              aria-label="Screen recording: Claude exploring Source Library and returning page-cited quotes from Naudé's Advice on Establishing a Library"
+            />
+          </div>
+          <figcaption className="text-sm text-muted leading-relaxed mt-3 px-1">
+            An AI reading the library (sped up). Claude reaches Source Library through its connector,
+            works the collection, and returns grounded quotes with page numbers and citation URLs back to
+            the original folios &mdash; the interoperability promise, with a machine on the other end. The
+            same content is exposed as IIIF for any viewer.
+          </figcaption>
+        </figure>
+
         {/* ── Section 2: the import pipeline ── */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">From manifest to readable book</h2>
 
