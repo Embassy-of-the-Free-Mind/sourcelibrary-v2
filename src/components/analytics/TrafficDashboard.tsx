@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Users, Globe, BarChart3, X, ChevronRight, Server, Bot } from 'lucide-react';
+import { Users, Globe, BarChart3, X, ChevronRight, Server, Bot, MousePointerClick } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { AreaChart } from './charts/AreaChart';
 import type { TrafficDashboardData, TrafficBin } from '@/lib/analytics-traffic';
@@ -214,15 +214,30 @@ export default function TrafficDashboard() {
             </ListCard>
           </div>
 
-          {/* Referrers + Countries */}
+          {/* Clicks by source vs Traffic sources — distinct visitors vs pageviews */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ListCard title="Traffic sources" hint="click to filter">
+            <ListCard
+              title="Clicks by source"
+              icon={<MousePointerClick className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />}
+              hint="distinct visitors · ~ Search Console clicks"
+            >
+              {data.clicksBySource.length === 0 ? <Empty /> : data.clicksBySource.map((r, i) => (
+                <Row key={i} label={r.referrer} count={r.count} unit="clicks"
+                  active={filters.referrer === r.referrer}
+                  onClick={() => toggleFilter('referrer', r.referrer)} />
+              ))}
+            </ListCard>
+            <ListCard title="Traffic sources" hint="pageviews · click to filter">
               {data.topReferrers.length === 0 ? <Empty /> : data.topReferrers.map((r, i) => (
                 <Row key={i} label={r.referrer} count={r.count} unit="views"
                   active={filters.referrer === r.referrer}
                   onClick={() => toggleFilter('referrer', r.referrer)} />
               ))}
             </ListCard>
+          </div>
+
+          {/* Countries */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ListCard title="Countries" icon={<Globe className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />} hint="click to filter">
               {data.topCountries.length === 0 ? <Empty /> : data.topCountries.map((c, i) => (
                 <Row key={i} label={c.country} count={c.count} unit="views"
