@@ -36,6 +36,7 @@ import { MongoClient } from 'mongodb';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { makeCandidate, upsertCandidates, recordRun, arkOf } from './lib/harvest-store.mjs';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dir, 'output');
@@ -66,24 +67,6 @@ const QUERIES = AD_HOC ? [AD_HOC] : [
   'paracelse', 'paracelsus',
   'lullisme', 'ars notoria', 'géomancie', 'talisman',
 ];
-
-// ── provider mapping from the manifest host ─────────────────────────────────
-function providerFromManifest(url) {
-  let host = '';
-  try { host = new URL(url).host; } catch { return { provider: 'unknown', source_library: 'Unknown' }; }
-  const map = [
-    [/gallica\.bnf\.fr/, 'gallica', 'Bibliothèque nationale de France'],
-    [/irht\.cnrs\.fr/, 'irht', 'IRHT (CNRS)'],
-    [/bis-sorbonne\.fr/, 'sorbonne', 'Bibliothèque interuniversitaire de la Sorbonne'],
-    [/digitale-sammlungen\.de/, 'bsb', 'Bayerische Staatsbibliothek'],
-    [/bodleian|digital\.bodleian/, 'bodleian', 'Bodleian Library'],
-    [/teca\.bmlonline|bmlonline/, 'laurenziana', 'Biblioteca Medicea Laurenziana'],
-    [/digi\.ub\.uni-heidelberg/, 'heidelberg', 'Heidelberg University Library'],
-    [/purl\.pt|bnportugal|bnd\.bn\.pt/, 'bnp', 'Biblioteca Nacional de Portugal'],
-  ];
-  for (const [re, provider, lib] of map) if (re.test(host)) return { provider, source_library: lib };
-  return { provider: host.replace(/^www\./, ''), source_library: host };
-}
 
 // ── parse one search-results HTML page ──────────────────────────────────────
 function parseResults(html) {
@@ -145,7 +128,7 @@ async function harvestQuery(query) {
       const key = r.manifest_url;
       if (seen.has(key)) continue;
       seen.add(key);
-      items.push({ ...r, ...providerFromManifest(r.manifest_url) });
+      items.push(r);
       added++;
     }
     process.stdout.write(`\r  q="${query}"  page ${page}  (+${added}, total seen ${items.length}${total ? `/${total}` : ''})   `);
@@ -157,17 +140,12 @@ async function harvestQuery(query) {
   return { query, total, items };
 }
 
-// ── coarse dedup against our catalog (manifest/ark match) ───────────────────
-function arkOf(url = '') {
-  const m = url.match(/ark:\/[^/]+\/[^/?#]+/);
-  return m ? m[0] : null;
-}
-
 async function main() {
   console.log(`Biblissima harvest — ${COMMIT ? 'COMMIT (Mongo)' : 'DRY RUN (JSON only)'} — ${QUERIES.length} queries`);
 
   // Build candidates across all queries (dedupe by manifest URL across queries,
-  // tracking which subject terms surfaced each one).
+  // tracking which subject terms surfaced each one). Discovery only — dedup vs
+  // the catalog and title recovery happen in the triage stage.
   const byManifest = new Map();
   const queryList = LIMIT ? QUERIES.slice(0, LIMIT) : QUERIES;
   for (const q of queryList) {
@@ -179,22 +157,13 @@ async function main() {
     }
   }
 
-  const candidates = [...byManifest.values()].map((c) => ({
-    _id: c.biblissima_id || arkOf(c.manifest_url) || c.manifest_url,
-    provider: c.provider,
-    source_library: c.source_library,
+  const candidates = [...byManifest.values()].map((c) => makeCandidate({
+    id: c.biblissima_id || arkOf(c.manifest_url) || c.manifest_url,
     manifest_url: c.manifest_url,
-    source_uri: c.manifest_url.replace(/\/manifest(\.json)?$/, ''),
-    label: c.shelfmark,           // shelfmark; true work-title comes from the manifest at promote time
+    label: c.shelfmark, // shelfmark; real work-title is recovered in triage
     thumbnail: c.thumbnail,
-    ark: arkOf(c.manifest_url),
-    subjects: [...c.subjects],
     aggregator: 'biblissima',
-    dedup_status: 'unchecked',
-    matched_book_id: null,
-    decision: 'pending',
-    reason: null,
-    imported_book_id: null,
+    subjects: [...c.subjects],
   }));
 
   console.log(`\nHarvested ${candidates.length} unique manifests across ${queryList.length} queries.`);
@@ -202,64 +171,16 @@ async function main() {
   for (const c of candidates) byProv[c.provider] = (byProv[c.provider] || 0) + 1;
   console.log('By provider:', Object.entries(byProv).sort((a, b) => b[1] - a[1]).map(([p, n]) => `${p}:${n}`).join('  '));
 
-  // Coarse dedup: do we already hold this ARK / manifest?
-  let client;
-  if (process.env.MONGODB_URI) {
-    client = new MongoClient(process.env.MONGODB_URI);
+  if (COMMIT) {
+    const client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
     const db = client.db('bookstore');
-    const arks = candidates.map((c) => c.ark).filter(Boolean);
-    const owned = await db.collection('books').find(
-      { $or: [
-        { 'image_source.source_url': { $regex: '(ark:|/iiif/)', $options: 'i' } },
-        { iiif_manifest: { $exists: true } },
-      ] },
-      { projection: { iiif_manifest: 1, 'image_source.source_url': 1 } },
-    ).toArray();
-    const ownedArks = new Set();
-    for (const b of owned) {
-      for (const u of [b.iiif_manifest, b.image_source?.source_url]) {
-        const a = arkOf(u || ''); if (a) ownedArks.add(a);
-      }
-    }
-    let dupes = 0;
-    for (const c of candidates) {
-      if (c.ark && ownedArks.has(c.ark)) { c.dedup_status = 'duplicate'; dupes++; }
-      else c.dedup_status = 'novel';
-    }
-    console.log(`Dedup vs catalog: ${dupes} already held (by ARK), ${candidates.length - dupes} novel.`);
-
-    if (COMMIT) {
-      const col = db.collection('harvest_candidates');
-      await col.createIndex({ manifest_url: 1 }, { unique: true }).catch(() => {});
-      await col.createIndex({ decision: 1, provider: 1 });
-      const now = new Date();
-      const ops = candidates.map((c) => ({
-        updateOne: {
-          filter: { _id: c._id },
-          update: {
-            $set: { ...c, harvested_at: now },
-            $setOnInsert: { first_seen: now },
-          },
-          upsert: true,
-        },
-      }));
-      const res = await col.bulkWrite(ops, { ordered: false });
-      console.log(`Upserted: ${res.upsertedCount} new, ${res.modifiedCount} updated in harvest_candidates.`);
-      // record harvest state per query
-      const state = db.collection('harvest_state');
-      await state.updateOne(
-        { _id: 'biblissima' },
-        { $set: { last_run_at: now, queries: queryList, candidate_count: candidates.length } },
-        { upsert: true },
-      );
-    }
+    const now = new Date();
+    const res = await upsertCandidates(db, candidates, now);
+    await recordRun(db, 'biblissima', { queries: queryList, candidate_count: candidates.length }, now);
+    console.log(`Upserted: ${res.upserted} new, ${res.modified} updated in harvest_candidates. Run triage next.`);
     await client.close();
   } else {
-    console.log('(no MONGODB_URI — skipping dedup; source .env.production.local for the dedup pass)');
-  }
-
-  if (!COMMIT) {
     const path = join(OUT, 'biblissima-candidates.json');
     writeFileSync(path, JSON.stringify({ harvested_at: new Date().toISOString(), queries: queryList, count: candidates.length, candidates }, null, 2));
     console.log(`\nDRY RUN — wrote ${candidates.length} candidates to ${path}`);
