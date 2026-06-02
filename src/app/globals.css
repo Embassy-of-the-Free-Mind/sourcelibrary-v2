@@ -77,8 +77,8 @@
   --color-cover-muted: #b3a890;    /* dimmer warm cream — author/year */
   --color-cover-rule: #46413a;     /* hairline, barely lighter than the bg */
 
-  /* Search-result match highlight (catalogue search). #c09a5d @ 70%. */
-  --color-search-highlight: rgba(192, 154, 93, 0.7);
+  /* Search-result match highlight (catalogue search). #c09a5d @ 50%. */
+  --color-search-highlight: rgba(192, 154, 93, 0.5);
 
   /* Status colors as Tailwind utilities */
   --color-status-success: #16a34a;
@@ -109,7 +109,7 @@ html[data-embedded] [data-site-header] {
    (title, author, place, …) with the brand highlight tone. Text colour is
    inherited so it stays readable on the parchment rows. */
 mark.sl-search-hl {
-  background-color: var(--color-search-highlight, rgba(192, 154, 93, 0.7));
+  background-color: var(--color-search-highlight, rgba(192, 154, 93, 0.5));
   color: inherit;
   border-radius: 2px;
   padding: 0 0.1em;
