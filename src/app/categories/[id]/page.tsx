@@ -29,12 +29,12 @@ interface Book {
   summary?: { data: string } | string;
 }
 
-// ISR: rebuild at most every hour
-export const revalidate = false;
-export const dynamicParams = true;
-export async function generateStaticParams() {
-  return []; // All paths generated on demand via ISR
-}
+// This route reads request headers (await headers() for tenant detection),
+// so it must render dynamically. Declaring `revalidate` (ISR / static) here
+// while calling headers() throws DYNAMIC_SERVER_USAGE in Next 16 and 500s the
+// whole /categories/[id] route. Force dynamic instead (same fix as PR #2260).
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 interface CategoryPageProps {
   params: Promise<{ id: string }>;
