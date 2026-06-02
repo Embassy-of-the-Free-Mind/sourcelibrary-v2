@@ -102,16 +102,29 @@ describe('Embassy API', () => {
       expect(messages[1].authorName).toBe('The Librarian');
     });
 
-    it('rejects unauthenticated requests', async () => {
+    it('allows unauthenticated requests as an anonymous, unlisted thread', async () => {
       const { auth } = await import('@/lib/auth');
       (auth as any).mockResolvedValueOnce(null);
 
       const req = makeRequest('/api/embassy/chat', {
         message: 'Hello',
+        visibility: 'public',
       });
 
       const res = await chatPost(req as any);
-      expect(res.status).toBe(401);
+      const data = await res.json();
+      expect(res.status).toBe(200);
+      expect(data.threadId).toBeDefined();
+
+      // Anonymous threads carry a null creatorId and are 'unlisted' — they
+      // never surface in the public Recent feed or anyone's "mine" list, even
+      // when the request asked for 'public'.
+      const db = getTestDb();
+      const thread = await db.collection('embassy_threads').findOne({
+        _id: new ObjectId(data.threadId),
+      });
+      expect(thread!.creatorId).toBeNull();
+      expect(thread!.visibility).toBe('unlisted');
     });
 
     it('validates message length', async () => {
