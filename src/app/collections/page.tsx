@@ -186,7 +186,7 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
     <Link
       key={col.slug}
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
-      className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
+      className="group relative block overflow-hidden rounded-lg aspect-[4/3] animate-fade-in-up"
     >
       {heroUrl ? (
         <Image
@@ -223,7 +223,7 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
   return (
     <Link
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
-      className="group relative block overflow-hidden rounded-lg aspect-[3/2]"
+      className="group relative block overflow-hidden rounded-lg aspect-[3/2] animate-fade-in-up"
     >
       {heroUrl ? (
         <Image

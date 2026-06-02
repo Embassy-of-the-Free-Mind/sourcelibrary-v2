@@ -101,7 +101,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
   };
 
   return (
-    <Link href={bookUrl(book)} className="group relative">
+    <Link href={bookUrl(book)} className="group relative animate-fade-in-up">
       <div
         ref={cardRef}
         className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 h-full flex flex-col"
