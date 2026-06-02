@@ -220,32 +220,74 @@ interface Props {
   display?: 'list' | 'grid';
 }
 
+// Strip diacritics so matching is accent-insensitive ("bohme" → "Böhme",
+// "cafe" → "café"). Decompose to NFD and drop the combining marks.
+function foldDiacritics(s: string): string {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 // Wrap occurrences of the active search query inside a piece of result text
 // with <mark> so the matched term is highlighted wherever it shows (title,
-// author, place, …). Case-insensitive, multi-token (each whitespace-separated
-// token of length >= 2 is highlighted), regex-safe. Returns the original text
-// untouched when there's no query or no match.
+// author, place, …). Case- and diacritic-insensitive, multi-token (each
+// whitespace-separated token of length >= 2). Matching runs on a folded copy
+// of the text but the ORIGINAL (accented) characters are what get rendered —
+// we keep a folded-index → original-index map to slice the real string back
+// out. Returns the original text untouched when there's no query or no match.
 function highlightQuery(text: string | number | null | undefined, query: string): React.ReactNode {
   if (text == null || text === '') return text;
   const str = String(text);
+
   const tokens = query
     .trim()
     .split(/\s+/)
-    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    .filter(t => t.length >= 2);
+    .filter(t => t.length >= 2)
+    .map(t => foldDiacritics(t).toLowerCase())
+    .filter(Boolean);
   if (tokens.length === 0) return str;
-  let re: RegExp;
-  try {
-    re = new RegExp(`(${tokens.join('|')})`, 'gi');
-  } catch {
-    return str;
+
+  // Per-character fold keeps each original code point aligned to its folded
+  // form, so a match in the folded string maps cleanly back to original chars.
+  const chars = Array.from(str);
+  let folded = '';
+  const map: number[] = []; // folded char position → index into `chars`
+  for (let i = 0; i < chars.length; i++) {
+    for (const fc of foldDiacritics(chars[i]).toLowerCase()) {
+      folded += fc;
+      map.push(i);
+    }
   }
-  const parts = str.split(re);
-  if (parts.length === 1) return str;
-  // String.split with a capturing group puts the matches at odd indices.
-  return parts.map((part, i) =>
-    i % 2 === 1 ? <mark key={i} className="sl-search-hl">{part}</mark> : part
-  );
+
+  // Collect match ranges (in original-char indices) for every token.
+  const ranges: Array<[number, number]> = [];
+  for (const tok of tokens) {
+    let from = 0;
+    let idx = folded.indexOf(tok, from);
+    while (idx !== -1) {
+      ranges.push([map[idx], map[idx + tok.length - 1] + 1]);
+      from = idx + tok.length;
+      idx = folded.indexOf(tok, from);
+    }
+  }
+  if (ranges.length === 0) return str;
+
+  // Sort + merge overlapping/adjacent ranges.
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged: Array<[number, number]> = [];
+  for (const r of ranges) {
+    const last = merged[merged.length - 1];
+    if (last && r[0] <= last[1]) last[1] = Math.max(last[1], r[1]);
+    else merged.push([r[0], r[1]]);
+  }
+
+  const nodes: React.ReactNode[] = [];
+  let pos = 0;
+  merged.forEach(([s, e], i) => {
+    if (s > pos) nodes.push(chars.slice(pos, s).join(''));
+    nodes.push(<mark key={i} className="sl-search-hl">{chars.slice(s, e).join('')}</mark>);
+    pos = e;
+  });
+  if (pos < chars.length) nodes.push(chars.slice(pos).join(''));
+  return nodes;
 }
 
 export default function BphCatalogBrowser({
