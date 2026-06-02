@@ -812,8 +812,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       value={input}
                       onChange={handleInputChange}
                       onKeyDown={handleKeyDown}
-                      placeholder={isSignedIn ? 'Ask the Librarian...' : 'Sign in to ask the Librarian...'}
-                      disabled={!isSignedIn && status !== 'loading'}
+                      placeholder="Ask the Librarian..."
                       rows={1}
                       className="flex-1 resize-none border border-[#e8e4dc] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#8a8480] focus:outline-none focus:border-[#c9a86c] transition-colors bg-transparent disabled:opacity-50"
                     />
@@ -828,7 +827,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     ) : (
                       <button
                         type="submit"
-                        disabled={!input.trim() || (!isSignedIn && status !== 'loading')}
+                        disabled={!input.trim()}
                         className="flex-shrink-0 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-30 transition-colors"
                       >
                         Send
@@ -873,7 +872,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       <Link href="/auth/signin?callbackUrl=/librarian" className="text-[#9e4a3a] hover:underline">
                         Sign in
                       </Link>
-                      {' '}to talk with the Librarian. Free — no membership required.
+                      {' '}(free) to save your conversations and keep them private.
                     </p>
                   )}
                 </div>

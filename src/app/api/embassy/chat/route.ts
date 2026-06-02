@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -38,9 +39,24 @@ const chatRequestSchema = z.object({
  *   error      — something went wrong
  */
 export async function POST(request: NextRequest) {
+  // The Librarian is open to everyone — no login required. Signed-in users get
+  // their threads tied to their account; anonymous visitors get ephemeral
+  // public threads. We rate-limit anonymous traffic per-IP because this is an
+  // expensive agentic endpoint (multiple tool calls, up to maxDuration each).
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
+  const userId = session?.user?.id ?? null;
+
+  if (!userId) {
+    const rl = checkRateLimit(
+      { name: 'librarian-chat', limit: 20, windowSeconds: 3600 },
+      getClientIp(request),
+    );
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'You\'ve reached the hourly limit for anonymous use. Sign in (free) to keep going, or try again later.' },
+        { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+      );
+    }
   }
 
   const body = await request.json();
@@ -55,21 +71,26 @@ export async function POST(request: NextRequest) {
   const { threadId, message, history = [], visibility = 'public', stream = false } = parsed.data;
   const db = await getDb();
 
-  // Get user display name
-  const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
-    { projection: { name: 1, membership: 1 } },
-  );
+  // Get user display name (anonymous visitors skip the lookup)
+  const user = userId
+    ? await db.collection('users').findOne(
+        { _id: userId as any },
+        { projection: { name: 1, membership: 1 } },
+      )
+    : null;
   const displayName = user?.membership?.profile?.displayName || user?.name || 'A visitor';
 
   const now = new Date();
   let activeThreadId: string;
 
   if (threadId) {
-    // Continue existing thread — verify ownership
+    // Continue existing thread — verify ownership. Signed-in users may only
+    // continue their own threads; anonymous visitors may only continue
+    // anonymous (creatorId: null) threads, so they can't append to a
+    // logged-in user's conversation.
     const thread = await db.collection('embassy_threads').findOne({
       _id: new ObjectId(threadId),
-      creatorId: session.user.id,
+      creatorId: userId,
     });
     if (!thread) {
       return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
@@ -79,19 +100,22 @@ export async function POST(request: NextRequest) {
     await db.collection('embassy_messages').insertOne({
       threadId: new ObjectId(threadId),
       authorType: 'human',
-      authorId: session.user.id,
+      authorId: userId,
       authorName: displayName,
       content: message,
       createdAt: now,
     });
   } else {
-    // Create new thread
+    // Create new thread. Anonymous threads are 'unlisted' (null creatorId,
+    // so they can't be claimed via the "mine" filter and aren't surfaced in
+    // the public Recent feed) — the conversation still continues in-session
+    // via threadId. Signed-in users keep their public/private choice.
     const result = await db.collection('embassy_threads').insertOne({
       type: 'chat',
       title: message.slice(0, 120),
-      creatorId: session.user.id,
+      creatorId: userId,
       creatorName: displayName,
-      visibility,
+      visibility: userId ? visibility : 'unlisted',
       aiEnabled: true,
       messageCount: 0,
       createdAt: now,
@@ -102,7 +126,7 @@ export async function POST(request: NextRequest) {
     await db.collection('embassy_messages').insertOne({
       threadId: result.insertedId,
       authorType: 'human',
-      authorId: session.user.id,
+      authorId: userId,
       authorName: displayName,
       content: message,
       createdAt: now,
