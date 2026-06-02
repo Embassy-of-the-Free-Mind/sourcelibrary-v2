@@ -21,7 +21,7 @@ const getGalleryInitial = (tenantId: string | null, bookId?: string) =>
 const getGalleryFeatured = (tenantId: string | null) =>
   unstable_cache(
     () => fetchFeaturedCollections(tenantId),
-    ['gallery-featured-v1', tenantId || 'main'],
+    ['gallery-featured-v2', tenantId || 'main'],
     { revalidate: 3600 },
   )();
 
@@ -342,29 +342,43 @@ async function fetchFeaturedCollections(tenantId: string | null) {
 
     if (collections.length === 0) return undefined;
 
-    // Resolve cover images — use gallery_images (always populated) with pages fallback
-    const coverImageIds = collections
-      .map((c) => c.cover_image_id as string)
-      .filter(Boolean);
-    const galleryDocs = coverImageIds.length > 0
+    // Resolve cover images from gallery_images. Fetch the explicit cover plus a
+    // few of each collection's own images, so collections without a (resolvable)
+    // cover_image_id fall back to their first available image instead of showing
+    // an empty placeholder.
+    const FALLBACK_DEPTH = 4;
+    const idsToFetch = new Set<string>();
+    for (const c of collections) {
+      if (c.cover_image_id) idsToFetch.add(c.cover_image_id as string);
+      for (const imgId of ((c.image_ids as string[]) || []).slice(0, FALLBACK_DEPTH)) {
+        if (imgId) idsToFetch.add(imgId);
+      }
+    }
+    const galleryDocs = idsToFetch.size > 0
       ? await db.collection('gallery_images')
-        .find({ id: { $in: coverImageIds } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
+        .find({ id: { $in: [...idsToFetch] } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
         .toArray()
       : [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const galleryMap = new Map(galleryDocs.map((d: any) => [d.id, d]));
+    const coverFrom = (id: string | undefined, fallbackTitle: string) => {
+      if (!id) return null;
+      const gImg = galleryMap.get(id) as { thumbnail_url?: string; extracted_url?: string; description?: string } | undefined;
+      if (!gImg) return null;
+      const url = gImg.thumbnail_url || gImg.extracted_url;
+      if (!url) return null;
+      return { url, description: gImg.description || fallbackTitle };
+    };
 
     const result = await Promise.all(
       collections.map(async (col) => {
-        let coverImage: { url: string; description: string } | null = null;
-        if (col.cover_image_id) {
-          const gImg = galleryMap.get(col.cover_image_id as string);
-          if (gImg) {
-            coverImage = {
-              url: (gImg as { thumbnail_url?: string }).thumbnail_url
-                || (gImg as { extracted_url?: string }).extracted_url || '',
-              description: (gImg as { description?: string }).description || col.title as string,
-            };
+        const title = col.title as string;
+        // Prefer the explicit cover; otherwise use the collection's own images.
+        let coverImage = coverFrom(col.cover_image_id as string | undefined, title);
+        if (!coverImage) {
+          for (const imgId of ((col.image_ids as string[]) || []).slice(0, FALLBACK_DEPTH)) {
+            coverImage = coverFrom(imgId, title);
+            if (coverImage) break;
           }
         }
         return {
