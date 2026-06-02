@@ -70,13 +70,17 @@ async function searchImages(query: string): Promise<GalleryImage[]> {
     book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1,
   };
 
-  let images: Record<string, unknown>[];
+  let images: Record<string, unknown>[] = [];
   if (clipIds.size > 0) {
     const ids = [...clipIds.keys()].filter((id) => /^[a-f0-9]{24}$/.test(id)).map((id) => new ObjectId(id));
-    images = ids.length
-      ? await db.collection('gallery_images').find({ _id: { $in: ids } }).project(projection).toArray()
-      : [];
-  } else {
+    if (ids.length) {
+      images = await db.collection('gallery_images').find({ _id: { $in: ids } }).project(projection).toArray();
+    }
+  }
+  // Keyword fallback whenever CLIP gave us nothing usable (down, or returned
+  // ids that no longer resolve to gallery_images). The original librarian
+  // logic returned [] in that case — this surfaces images far more reliably.
+  if (images.length === 0) {
     const regex = query.split(/\s+/).map((w) => `(?=.*${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`).join('');
     images = await db.collection('gallery_images')
       .find({
