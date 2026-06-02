@@ -1,12 +1,12 @@
 import { Suspense } from 'react';
 import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
-import Image from 'next/image';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { sortCollections, sanitizeThumbnail, collectionCountLabel } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
+import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import type { Metadata } from 'next';
 
@@ -167,40 +167,39 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   }
 }
 
-/** Pick the best image URL for a card: prefer small thumbnails, fall back to extracted, then raw page. */
-function pickCardImage(images: FeaturedImage[] | undefined): string | undefined {
-  if (!images?.length) return undefined;
+/** Ordered, de-duped list of candidate image URLs for a card — prefer small
+ *  thumbnails, then extracted, then the raw page, across all featured images.
+ *  The card renders these with a fallback chain so a single dead/slow source
+ *  doesn't leave a broken thumbnail. */
+function cardImageCandidates(images: FeaturedImage[] | undefined): string[] {
+  if (!images?.length) return [];
+  const urls: string[] = [];
+  const add = (u: string | undefined | null) => {
+    const s = sanitizeThumbnail(u);
+    if (s && !urls.includes(s)) urls.push(s);
+  };
   for (const img of images) {
-    // Guard against raw strings stored instead of objects
-    if (typeof img === 'string') return img;
-    const url = img.thumbnail_url || img.extracted_url || img.image_url;
-    if (url) return url;
+    if (typeof img === 'string') { add(img); continue; }
+    add(img.thumbnail_url);
+    add(img.extracted_url);
+    add(img.image_url);
   }
-  return undefined;
+  return urls;
 }
 
 function CollectionCard({ col, tenantSlug, priority = false }: { col: CollectionDoc; tenantSlug?: string | null; priority?: boolean }) {
-  const heroUrl = sanitizeThumbnail(pickCardImage(col.featured_images));
-
   return (
     <Link
       key={col.slug}
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
       className="group relative block overflow-hidden rounded-lg aspect-[4/3] animate-fade-in-up"
     >
-      {heroUrl ? (
-        <Image
-          src={heroUrl}
-          alt={`Illustration from ${col.name}`}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-        />
-      ) : (
-        <div className="absolute inset-0 bg-warm" />
-      )}
+      <CollectionCardImage
+        candidates={cardImageCandidates(col.featured_images)}
+        alt={`Illustration from ${col.name}`}
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+        priority={priority}
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-[11px] mb-1 hidden sm:block">
@@ -218,26 +217,17 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
 
 
 function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc; tenantSlug?: string | null; priority?: boolean }) {
-  const heroUrl = sanitizeThumbnail(pickCardImage(col.featured_images));
-
   return (
     <Link
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
       className="group relative block overflow-hidden rounded-lg aspect-[3/2] animate-fade-in-up"
     >
-      {heroUrl ? (
-        <Image
-          src={heroUrl}
-          alt={`Illustration from ${col.name}`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-        />
-      ) : (
-        <div className="absolute inset-0 bg-warm" />
-      )}
+      <CollectionCardImage
+        candidates={cardImageCandidates(col.featured_images)}
+        alt={`Illustration from ${col.name}`}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        priority={priority}
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
         <h3 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight mb-1 group-hover:text-accent-gold transition-colors">
