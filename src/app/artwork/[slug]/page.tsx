@@ -25,7 +25,16 @@ async function getArtwork(slug: string) {
   // Get collections this artwork belongs to
   const collectionSlugs = (artwork.collections as string[]) || [];
 
-  // Get prev/next works by same artist (chronologically by published date, then title)
+  // Scope prev/next navigation to the artwork's collection when it has one — so the
+  // arrows walk that set in order (e.g. the 49 hashika-e measles prints). This matters
+  // most for collections of anonymous works, where author-scoping would otherwise wander
+  // through every "Anonymous" artwork in the library. Falls back to same-artist when the
+  // work isn't in any collection.
+  const navScope: Record<string, unknown> = collectionSlugs.length > 0
+    ? { collections: collectionSlugs[0] }
+    : { author: artwork.author };
+
+  // Get prev/next works (chronologically by published date, then title)
   const [collections, prevWorkRaw, nextWorkRaw] = await Promise.all([
     collectionSlugs.length > 0
       ? db.collection('collections')
@@ -33,10 +42,10 @@ async function getArtwork(slug: string) {
           .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1 })
           .toArray()
       : Promise.resolve([]),
-    // Previous: same artist, earlier in sort order
+    // Previous: earlier in sort order within scope
     db.collection('books').findOne(
       {
-        author: artwork.author,
+        ...navScope,
         resource_type: { $exists: true },
         $or: [
           { published: { $lt: artwork.published || '' } },
@@ -45,10 +54,10 @@ async function getArtwork(slug: string) {
       },
       { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: -1, title: -1 } }
     ),
-    // Next: same artist, later in sort order
+    // Next: later in sort order within scope
     db.collection('books').findOne(
       {
-        author: artwork.author,
+        ...navScope,
         resource_type: { $exists: true },
         $or: [
           { published: { $gt: artwork.published || '' } },
