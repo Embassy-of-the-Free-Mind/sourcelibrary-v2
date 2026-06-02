@@ -11,7 +11,6 @@ import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
 import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
 import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationListener";
 import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
-import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/layout/ScrollReveal";
 
 
@@ -134,7 +133,7 @@ export default async function RootLayout({
           <EmbedHostNavigationListener />
           <EmbedHistoryPatch />
           <div id="main-content" className="flex-1">
-            <PageTransition>{children}</PageTransition>
+            {children}
           </div>
           <ScrollReveal />
           <ConditionalFooter />

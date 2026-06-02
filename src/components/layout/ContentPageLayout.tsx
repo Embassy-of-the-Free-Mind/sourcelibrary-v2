@@ -42,7 +42,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, maxW
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
         )}
-        <div className={`relative w-full ${headerWidthClass} mx-auto px-6 md:px-12`}>
+        <div className={`relative w-full ${headerWidthClass} mx-auto px-6 md:px-12 animate-fade-in-up`}>
           <h1 className={`font-serif text-4xl md:text-5xl tracking-tight ${subtitle ? 'mb-4' : ''} ${image ? 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]' : ''}`}>{title}</h1>
           {subtitle && (
             <p className={`text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed ${image ? 'drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]' : ''}`}>{subtitle}</p>

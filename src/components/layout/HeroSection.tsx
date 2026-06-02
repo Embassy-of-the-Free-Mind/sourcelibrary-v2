@@ -126,7 +126,7 @@ export default function HeroSection() {
       <SiteHeader variant="transparent" />
 
       {/* Hero Content */}
-      <div className="relative z-10 h-full flex items-center">
+      <div className="relative z-10 h-full flex items-center animate-fade-in-up">
         <div className="w-full max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="w-full max-w-4xl">
           <h1
