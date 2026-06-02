@@ -77,6 +77,9 @@
   --color-cover-muted: #b3a890;    /* dimmer warm cream — author/year */
   --color-cover-rule: #46413a;     /* hairline, barely lighter than the bg */
 
+  /* Search-result match highlight (catalogue search). */
+  --color-search-highlight: #B8965A;
+
   /* Status colors as Tailwind utilities */
   --color-status-success: #16a34a;
   --color-status-error: #dc2626;
@@ -100,6 +103,16 @@
    first paint. React still removes the header from the DOM post-mount. */
 html[data-embedded] [data-site-header] {
   display: none !important;
+}
+
+/* Catalogue search-term highlight. Marks the matched query text in results
+   (title, author, place, …) with the brand highlight tone. Text colour is
+   inherited so it stays readable on the parchment rows. */
+mark.sl-search-hl {
+  background-color: var(--color-search-highlight, #B8965A);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 0.1em;
 }
 
 /* Base styles */

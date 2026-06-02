@@ -220,6 +220,34 @@ interface Props {
   display?: 'list' | 'grid';
 }
 
+// Wrap occurrences of the active search query inside a piece of result text
+// with <mark> so the matched term is highlighted wherever it shows (title,
+// author, place, …). Case-insensitive, multi-token (each whitespace-separated
+// token of length >= 2 is highlighted), regex-safe. Returns the original text
+// untouched when there's no query or no match.
+function highlightQuery(text: string | number | null | undefined, query: string): React.ReactNode {
+  if (text == null || text === '') return text;
+  const str = String(text);
+  const tokens = query
+    .trim()
+    .split(/\s+/)
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .filter(t => t.length >= 2);
+  if (tokens.length === 0) return str;
+  let re: RegExp;
+  try {
+    re = new RegExp(`(${tokens.join('|')})`, 'gi');
+  } catch {
+    return str;
+  }
+  const parts = str.split(re);
+  if (parts.length === 1) return str;
+  // String.split with a capturing group puts the matches at odd indices.
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <mark key={i} className="sl-search-hl">{part}</mark> : part
+  );
+}
+
 export default function BphCatalogBrowser({
   basePath,
   digitizedUbns,
@@ -464,6 +492,9 @@ export default function BphCatalogBrowser({
     ).length,
     [adv, lockDigitized]
   );
+  // Highlight the active search query wherever it appears in a result.
+  const hl = (text: string | number | null | undefined) => highlightQuery(text, searchQuery);
+
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const totalPages = Math.ceil(total / PER_PAGE);
 
@@ -778,7 +809,7 @@ export default function BphCatalogBrowser({
                       className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
                     >
                       <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                        {displayAuthor || <span className="text-muted">—</span>}
+                        {displayAuthor ? hl(displayAuthor) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top">
                         <div className="font-medium text-primary leading-snug">
@@ -787,10 +818,10 @@ export default function BphCatalogBrowser({
                               href={detailUrl(w.ubn)!}
                               className="hover:text-accent-rust transition-colors"
                             >
-                              {displayTitle}
+                              {hl(displayTitle)}
                             </a>
                           ) : (
-                            <span>{displayTitle}</span>
+                            <span>{hl(displayTitle)}</span>
                           )}
                         </div>
                         {digitized && (
@@ -813,30 +844,30 @@ export default function BphCatalogBrowser({
                         )}
                         {/* Mobile: show author inline (author column is hidden < sm) */}
                         <div className="text-xs text-muted sm:hidden mt-0.5">
-                          {displayAuthor}
+                          {hl(displayAuthor)}
                         </div>
                         {/* Impressum line — place, printer/publisher, year — in
                           the order librarians expect on a short bibliographic
                           card. Falls back gracefully when fields are missing. */}
                         {(w.place || w.printer || w.publisher) && (
                           <div className="text-[11px] text-muted mt-0.5 italic">
-                            {formatImpressum(w)}
+                            {hl(formatImpressum(w))}
                           </div>
                         )}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                        {w.place || <span className="text-muted">—</span>}
+                        {w.place ? hl(w.place) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary tabular-nums">
-                        {w.year || <span className="text-muted">—</span>}
+                        {w.year ? hl(w.year) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
-                        {w.shelf_mark || <span className="text-muted">—</span>}
+                        {w.shelf_mark ? hl(w.shelf_mark) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top hidden lg:table-cell">
                         {w.keywords ? (
                           <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
-                            {w.keywords}
+                            {hl(w.keywords)}
                           </span>
                         ) : (
                           <span className="text-muted">—</span>
@@ -931,11 +962,11 @@ export default function BphCatalogBrowser({
                       )}
                     </div>
                     <div className="mt-2 text-sm font-medium text-primary leading-snug line-clamp-2 group-hover:text-accent-rust transition-colors">
-                      {displayTitle}
+                      {hl(displayTitle)}
                     </div>
                     {displayAuthor && (
                       <div className="text-xs text-muted mt-0.5 line-clamp-1">
-                        {displayAuthor}
+                        {hl(displayAuthor)}
                         {w.year ? ` · ${w.year}` : ''}
                       </div>
                     )}
