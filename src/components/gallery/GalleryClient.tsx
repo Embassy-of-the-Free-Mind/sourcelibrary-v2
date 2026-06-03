@@ -626,7 +626,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             )}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {allItems.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} tenantPrefix={tenantPrefix} />
+                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
               ))}
             </div>
 
@@ -656,7 +656,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   );
 }
 
-function GalleryCard({ item, priority = false, tenantPrefix = '' }: { item: GalleryItem; priority?: boolean; tenantPrefix?: string }) {
+function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScope }: { item: GalleryItem; priority?: boolean; tenantPrefix?: string; collectionScope?: string }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
 
@@ -670,10 +670,12 @@ function GalleryCard({ item, priority = false, tenantPrefix = '' }: { item: Gall
 
   const isPreGenerated = !useCropFallback && !!blobUrl;
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
+  // Forward the collection scope so the image viewer keeps prev/next inside the collection.
+  const imageHref = `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
 
   return (
     <div className="relative group rounded-lg overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={`${tenantPrefix}/gallery/image/${galleryImageId}`} className="block relative aspect-square bg-stone-100">
+      <Link href={imageHref} className="block relative aspect-square bg-stone-100">
         {!imageError ? (
           <Image
             src={displayUrl}
