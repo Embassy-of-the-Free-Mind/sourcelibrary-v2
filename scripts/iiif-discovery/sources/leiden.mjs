@@ -21,11 +21,19 @@
  *
  * Indonesian / Southeast-Asian collection slugs (counts ≈ full collection):
  *   balinese_narrative_drawings  Balinese Narrative Drawings (van der Tuuk) — ART, ~434, all PD
- *   ubl_manuscripts              Manuscripts, Archives & Letters (Oriental mss)
- *   sinomalay                    (Sino-)Malay popular fiction (KITLV)
- *   kitlv_maps / KIT_maps / ubl_maps   Maps & atlases
+ *   ubl_manuscripts              GLOBAL manuscripts collection (mostly European VLQ codices).
+ *                                For Indonesian mss, narrow with --extra-facet country=Indonesia
+ *                                → 139 PD multi-page codices (Diponegoro, Pasai Sufi 1629, etc.).
+ *   kitlv_maps / KIT_maps / ubl_maps   Maps & atlases (mostly PD)
  *   kitlv_photos / kern / photoalbums  Photography (huge — curate before bulk)
  *   indonesianprinted / aceh_books     Printed books (mostly post-1900 → restricted)
+ *   sinomalay                    (Sino-)Malay popular fiction — NO public IIIF manifests
+ *                                ({"error":"No manifest available"}); not harvestable here.
+ *
+ * Narrowing a global collection: add a second Solr facet, e.g.
+ *   --extra-facet="mods_originInfo_place_placeTerm_text_authority_marccountry_ms:Indonesia"
+ *   --extra-facet="mods_subject_geographic_ms:Indonesia"
+ * (Useful facet fields: ...marccountry_ms, mods_subject_geographic_ms, language facets.)
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
@@ -72,6 +80,17 @@ if (!COLLECTION) {
 function collectionFacet(slug) {
   const v = `info\\:fedora\\/collection\\:${slug}`;
   return `RELS_EXT_isMemberOfCollection_uri_ms:%22${encodeURIComponent(v).replace(/%5C/g, '%5C')}%22`;
+}
+
+// Optional second facet to narrow a global collection, e.g.
+//   --extra-facet="mods_originInfo_place_placeTerm_text_authority_marccountry_ms:Indonesia"
+//   --extra-facet="mods_language_..._ms:Javanese"
+// Pass as field:value (value is plain text; we URL-encode it).
+function extraFacetParam(spec) {
+  if (!spec) return null;
+  const i = spec.indexOf(':');
+  const field = spec.slice(0, i), value = spec.slice(i + 1);
+  return `${field}:%22${encodeURIComponent(value)}%22`;
 }
 
 const firstStr = v => Array.isArray(v) ? (v[0] ?? '') : (v ?? '');
@@ -121,7 +140,8 @@ const scrapeIds = page => page.$$eval('a[href*="/view/item/"]', as =>
  * never truncating the whole collection. Returns ordered list of item ids.
  */
 async function enumerateCollection(page) {
-  const base = `${HOST}/islandora/search?type=dismax&islandora_solr_search_navigation=0&f%5B0%5D=${collectionFacet(COLLECTION)}`;
+  const extra = extraFacetParam(args['extra-facet']);
+  const base = `${HOST}/islandora/search?type=dismax&islandora_solr_search_navigation=0&f%5B0%5D=${collectionFacet(COLLECTION)}${extra ? `&f%5B1%5D=${extra}` : ''}`;
   const ids = []; const seen = new Set();
   const pageUrl = p => base + `&page=${p}`;
   const readyIds = async pg => { const f = await scrapeIds(pg); return f.length ? f : null; };
