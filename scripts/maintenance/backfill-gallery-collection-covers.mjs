@@ -27,7 +27,8 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const client = new MongoClient(process.env.MONGODB_URI);
 
 function usableUrl(img) {
-  return img && (img.extracted_url || img.thumbnail_url) || null;
+  // Matches the page resolver: extracted_url → thumbnail_url → image_url.
+  return img && (img.extracted_url || img.thumbnail_url || img.image_url) || null;
 }
 
 async function main() {
@@ -47,7 +48,7 @@ async function main() {
     for (const id of (c.image_ids || [])) allIds.add(id);
   }
   const imgDocs = await gi.find({ id: { $in: [...allIds] } }, {
-    projection: { id: 1, extracted_url: 1, thumbnail_url: 1 },
+    projection: { id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1 },
   }).toArray();
   const imgMap = new Map(imgDocs.map((d) => [d.id, d]));
 

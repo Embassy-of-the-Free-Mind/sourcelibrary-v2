@@ -83,15 +83,17 @@ async function resolveCoverImages(db: any, imageIds: string[]) {
     .collection('gallery_images')
     .find(
       { id: { $in: imageIds } },
-      { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } }
+      { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1 } }
     )
     .toArray();
 
   const result = new Map<string, { url: string; description: string }>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   for (const doc of docs as any[]) {
+    // Fall back to image_url (full archived page) — some gallery_images have
+    // only image_url populated, which would otherwise render a blank cover.
     result.set(doc.id, {
-      url: doc.extracted_url || doc.thumbnail_url || '',
+      url: doc.extracted_url || doc.thumbnail_url || doc.image_url || '',
       description: doc.description || '',
     });
   }
