@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 interface FeaturedBook {
   id: string;
@@ -85,7 +86,10 @@ export default function EditorialSpread({ collection, books }: EditorialSpreadPr
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-6">
             <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin">
               {books.slice(0, 8).map((book) => {
-                const thumb = book.thumbnail_blob || book.thumbnail;
+                // Feed next/image the ~1200px display variant (not the 150px
+                // thumb_blob) so the optimizer can produce a crisp sized image
+                // for the 120px slot — a 150px source upscales and looks soft.
+                const thumb = getBookThumbnailUrl(book, 'display') || book.thumbnail_blob || book.thumbnail;
                 return (
                   <Link key={book.id} href={bookUrl(book)} className="group flex-shrink-0">
                     <div className="w-[100px] md:w-[120px] aspect-[3/4] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover:border-accent-gold/50 transition-all">
