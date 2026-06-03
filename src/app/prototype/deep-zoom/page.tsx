@@ -71,12 +71,12 @@ export default function DeepZoomPrototypePage() {
         </p>
         <h1 className="mt-1 text-3xl font-semibold text-stone-900">Deep zoom</h1>
         <p className="mt-3 max-w-2xl leading-relaxed text-stone-600">
-          A reader leaning in over an original engraving wants to read the tiny
-          lettering, trace the hatching, follow a line of interlace. This viewer
-          streams the image in tiles — only the detail you’re looking at is
-          fetched — so even a 40-megapixel engraving stays sharp and fast. It’s the
-          loupe-over-the-sheet experience our current magnifier can only
-          approximate.
+          The gallery experience, with a loupe. Page left and right through the
+          images — edge arrows, the ← → keys, or the thumbnail rail — exactly
+          like the gallery viewer, but every image is deep-zoomable. Scroll or
+          pinch to zoom into the original; the viewer streams it in tiles, so
+          only the detail you’re looking at is fetched and even a 40-megapixel
+          sheet stays sharp and fast.
         </p>
       </header>
 
