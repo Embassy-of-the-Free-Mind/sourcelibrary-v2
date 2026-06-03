@@ -2,7 +2,7 @@
 /**
  * Geocode place_of_publication strings to lat/lng coordinates.
  *
- * 1. Collect all distinct place_of_publication values
+ * 1. Collect all distinct place strings from place_of_publication AND place_published
  * 2. Query Wikidata for coordinates (batch via SPARQL)
  * 3. Build city→coords lookup and cache in system_config
  * 4. Write locations[] array to books
@@ -142,11 +142,18 @@ async function main() {
     console.log(`Loaded ${Object.keys(cache).length} cached cities`);
   }
 
-  // Step 2: Get all distinct place_of_publication values
-  const places = await db.collection('books').distinct('place_of_publication', {
-    visible: true,
-    place_of_publication: { $exists: true, $ne: null, $ne: '' },
-  });
+  // Step 2: Get all distinct place strings. Books record their imprint city in
+  // EITHER `place_of_publication` OR the legacy `place_published` field; geocode
+  // the union of both so neither set of books is silently left off the map.
+  const [placesA, placesB] = await Promise.all([
+    db.collection('books').distinct('place_of_publication', {
+      visible: true, place_of_publication: { $exists: true, $ne: null, $ne: '' },
+    }),
+    db.collection('books').distinct('place_published', {
+      visible: true, place_published: { $exists: true, $ne: null, $ne: '' },
+    }),
+  ]);
+  const places = [...new Set([...placesA, ...placesB])];
 
   // Filter out non-place values
   const skipPatterns = [/^n\.p\.?$/i, /^s\.l\.?$/i, /^\?$/, /^unknown$/i, /^—$/];
@@ -251,16 +258,19 @@ async function main() {
 
     if (DRY_RUN) continue;
 
+    // A book matches this place via either imprint field.
+    const placeMatch = { $or: [{ place_of_publication: place }, { place_published: place }] };
+
     if (FIX_OVERRIDES) {
       // When fixing overrides: replace existing publication location
       const result = await db.collection('books').updateMany(
-        { visible: true, place_of_publication: place, 'locations.type': 'publication' },
+        { visible: true, ...placeMatch, 'locations.type': 'publication' },
         { $set: { 'locations.$[elem]': location } },
         { arrayFilters: [{ 'elem.type': 'publication' }] }
       );
       // Also add to books that don't have one yet
       const result2 = await db.collection('books').updateMany(
-        { visible: true, place_of_publication: place, 'locations.type': { $ne: 'publication' } },
+        { visible: true, ...placeMatch, 'locations.type': { $ne: 'publication' } },
         { $push: { locations: location } }
       );
       updated += result.modifiedCount + result2.modifiedCount;
@@ -269,7 +279,7 @@ async function main() {
       const result = await db.collection('books').updateMany(
         {
           visible: true,
-          place_of_publication: place,
+          ...placeMatch,
           'locations.type': { $ne: 'publication' }, // don't add if already has one
         },
         {
