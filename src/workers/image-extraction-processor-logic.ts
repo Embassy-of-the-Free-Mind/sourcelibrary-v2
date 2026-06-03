@@ -315,6 +315,11 @@ async function buildGalleryDocs(
           confidence: img.confidence || null,
           museum_description: img.museum_description || null,
           detection_source: img.detection_source || null,
+          // AI provenance — keep in sync with detected_images so the gallery
+          // page can attribute the generating model (issue #2406). Omitting
+          // these here is what left ~76% of gallery_images without `model`.
+          model: img.model || null,
+          detected_at: img.detected_at || null,
           metadata: img.metadata || null,
           dhash: img.dhash || null,
           book_title: book?.display_title || book?.title || 'Unknown',

@@ -119,6 +119,9 @@ export async function GET(
           galleryQuality: galleryDoc.gallery_quality ?? null,
           museumDescription: galleryDoc.museum_description ?? null,
           metadata: galleryDoc.metadata ?? null,
+          model: galleryDoc.model ?? null,
+          detectionSource: galleryDoc.detection_source ?? null,
+          detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
           book: {
             id: galleryDoc.book_id,
@@ -129,7 +132,7 @@ export async function GET(
           pageNumber: galleryDoc.page_number,
           readUrl: tenantPath(`/book/${galleryDoc.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${galleryDoc.book_id}`),
-          citation: `${galleryDoc.book_author || ''}, "${galleryDoc.book_title || 'Unknown'}", p. ${galleryDoc.page_number}, Source Library`,
+          citation: `${galleryDoc.book_author || ''}, "${galleryDoc.book_title || 'Unknown'}", p. ${galleryDoc.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
           orphaned: true, // Signal to UI that source page is gone
         }, {
           headers: tenantResponseHeaders,
@@ -169,6 +172,9 @@ export async function GET(
           galleryQuality: galleryDoc.gallery_quality ?? null,
           museumDescription: galleryDoc.museum_description ?? null,
           metadata: galleryDoc.metadata ?? null,
+          model: galleryDoc.model ?? null,
+          detectionSource: galleryDoc.detection_source ?? null,
+          detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
           book: {
             id: pageData.book_id,
@@ -179,7 +185,7 @@ export async function GET(
           pageNumber: pageData.page_number,
           readUrl: tenantPath(`/book/${pageData.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
-          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
           stale: true, // Signal that detection index is stale
         }, {
           headers: tenantResponseHeaders,
@@ -214,6 +220,9 @@ export async function GET(
           galleryQuality: galleryDoc.gallery_quality ?? null,
           museumDescription: galleryDoc.museum_description ?? null,
           metadata: galleryDoc.metadata ?? null,
+          model: galleryDoc.model ?? null,
+          detectionSource: galleryDoc.detection_source ?? null,
+          detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
           book: {
             id: pageData.book_id,
@@ -224,7 +233,7 @@ export async function GET(
           pageNumber: pageData.page_number,
           readUrl: tenantPath(`/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
-          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
           corrupt: true,
         }, {
           headers: tenantResponseHeaders,
@@ -321,8 +330,9 @@ export async function GET(
       description: detection.description,
       type: detection.type,
       confidence: detection.confidence,
-      model: detection.model,
-      detectionSource: detection.detection_source,
+      model: detection.model ?? null,
+      detectionSource: detection.detection_source ?? null,
+      detectedAt: detection.detected_at ?? null,
 
       // Gallery curation
       galleryQuality: detection.gallery_quality ?? null,
@@ -642,5 +652,16 @@ function buildCitation(page: Record<string, unknown>, detection: Record<string, 
     parts.push(`DOI: ${book.doi}`);
   }
 
+  parts.push(aiCitationNote(detection.model));
+
   return parts.join(', ');
+}
+
+/**
+ * Provenance note appended to citations: the image description/title quoted in
+ * the citation is AI-generated, so the citation must carry that disclaimer
+ * (and the generating model, when recorded) wherever it gets pasted.
+ */
+function aiCitationNote(model: unknown): string {
+  return `[Image description AI-generated${typeof model === 'string' && model ? ` (${model})` : ''}]`;
 }
