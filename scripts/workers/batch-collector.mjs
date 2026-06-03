@@ -1222,22 +1222,24 @@ async function run() {
 
   // RECITATION recovery: mark affected books for retry with a different model.
   // The batch API with gemini-3-flash-preview triggers RECITATION on some historical
-  // texts. Orchestrator retries these with gemini-2.5-flash (modelOverride).
-  // If a book that already had recitation_retry=true fails RECITATION again,
-  // it means even the fallback model can't handle this content — mark as
-  // pipeline_auto.recitation_blocked=true so both Pass 1 and Pass 2 permanently skip it.
+  // texts. Three-tier escalation before a permanent block:
+  //   1. First failure  -> recitation_retry      -> orchestrator retries with gemini-2.5-flash.
+  //   2. Second failure -> recitation_retry_lite -> orchestrator retries with gemini-3.1-flash-lite
+  //                        (proven to bypass RECITATION on famous texts where 2.5-flash also fails).
+  //   3. Third failure  -> recitation_blocked    -> permanently skip (all 3 models failed).
   if (recitationBooks.size > 0) {
     console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
     for (const bookId of recitationBooks) {
       try {
         const book = await db.collection('books').findOne(
           { id: bookId },
-          { projection: { 'pipeline_auto.recitation_retry': 1 } }
+          { projection: { 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1 } }
         );
-        const alreadyRetried = book?.pipeline_auto?.recitation_retry === true;
+        const retriedFallback = book?.pipeline_auto?.recitation_retry === true;
+        const retriedLite = book?.pipeline_auto?.recitation_retry_lite === true;
 
-        if (alreadyRetried) {
-          // Second RECITATION failure: fallback model also blocked. Permanently skip.
+        if (retriedLite) {
+          // Third RECITATION failure: flash-lite also blocked. Permanently skip.
           await db.collection('books').updateOne(
             { id: bookId },
             {
@@ -1248,10 +1250,25 @@ async function run() {
                 'pipeline_auto.recitation_blocked_at': new Date(),
                 updated_at: new Date(),
               },
+              $unset: { 'pipeline_auto.recitation_retry_lite': '' },
+            }
+          );
+          console.log(`  RECITATION permanently blocked ${bookId} -> needs_attention (all 3 models failed)`);
+        } else if (retriedFallback) {
+          // Second RECITATION failure: gemini-2.5-flash also blocked. Escalate to gemini-3.1-flash-lite.
+          await db.collection('books').updateOne(
+            { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
+            {
+              $set: {
+                'pipeline_auto.status': 'archive_complete',
+                'pipeline_auto.last_updated': new Date(),
+                'pipeline_auto.recitation_retry_lite': true,
+                updated_at: new Date(),
+              },
               $unset: { 'pipeline_auto.recitation_retry': '' },
             }
           );
-          console.log(`  RECITATION permanently blocked ${bookId} -> needs_attention (both models failed)`);
+          console.log(`  RECITATION escalate to flash-lite ${bookId} -> archive_complete (recitation_retry_lite)`);
         } else {
           // First RECITATION failure: reset to archive_complete for retry with fallback model.
           await db.collection('books').updateOne(
@@ -1270,6 +1287,8 @@ async function run() {
       } catch (e) { console.error(`  RECITATION reset error ${bookId}: ${e.message}`); }
     }
   }
+  // NOTE: Translation-side RECITATION is a separate per-page mechanism in translate-worker.mjs
+  // and is NOT handled here. A parallel flash-lite translation-retry tier is a possible follow-up.
 
   // ── Recovery sweep: re-check recently-failed jobs against Gemini ──
   // Race condition: collector marks a job as "failed" (stale PENDING), but Gemini
