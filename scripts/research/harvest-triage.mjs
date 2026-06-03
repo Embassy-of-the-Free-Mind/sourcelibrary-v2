@@ -35,6 +35,10 @@ const COMMIT = argv.includes('--commit');
 const REENRICH = argv.includes('--reenrich');
 const flag = (n) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const LIMIT = flag('--limit') ? Number(flag('--limit')) : null;
+// Skip providers that are rate-limiting us (e.g. --exclude gallica) — defers them
+// to a later gentle resume. Comma-separated.
+const EXCLUDE = (flag('--exclude') || '').split(',').map((s) => s.trim()).filter(Boolean);
+const ONLY = flag('--only'); // restrict to a single provider (e.g. --only gallica)
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -163,6 +167,8 @@ async function main() {
   // Fetch-failures never set triaged_at, so a plain re-run retries them.
   // --reenrich forces all rows.
   const filter = REENRICH ? {} : { triaged_at: { $exists: false } };
+  if (EXCLUDE.length) filter.provider = { $nin: EXCLUDE };
+  if (ONLY) filter.provider = ONLY;
   let cursor = candCol.find(filter);
   if (LIMIT) cursor = cursor.limit(LIMIT);
   const todo = await cursor.toArray();
