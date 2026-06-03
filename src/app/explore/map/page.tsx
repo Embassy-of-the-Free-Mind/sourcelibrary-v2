@@ -11,7 +11,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Map — Explore — Source Library',
   description:
-    'Interactive map of 7,000+ books plotted by publication city and author birthplace from Wikidata coordinates.',
+    'Interactive map of 10,000+ books plotted by publication city, author birthplace, and the heartland of each text’s tradition.',
   openGraph: {
     title: 'Map — Explore — Source Library',
     description:
@@ -117,7 +117,7 @@ export default async function MapPage() {
         header={
           <ContentHeader maxWidth="wide"
             title="Map"
-            subtitle={`${locationCount.toLocaleString('en-US')} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
+            subtitle={`${locationCount.toLocaleString('en-US')} locations worldwide — publication cities, author birthplaces, and the heartlands of the traditions we hold`}
           >
             <div className="mt-5">
               <ExploreTabBar />
