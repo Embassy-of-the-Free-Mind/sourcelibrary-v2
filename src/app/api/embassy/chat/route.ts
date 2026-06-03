@@ -48,12 +48,15 @@ export async function POST(request: NextRequest) {
 
   if (!userId) {
     const rl = checkRateLimit(
-      { name: 'librarian-chat', limit: 20, windowSeconds: 3600 },
+      { name: 'librarian-chat', limit: 5, windowSeconds: 3600 },
       getClientIp(request),
     );
     if (!rl.allowed) {
       return NextResponse.json(
-        { error: 'You\'ve reached the hourly limit for anonymous use. Sign in (free) to keep going, or try again later.' },
+        {
+          error: 'You\'ve used your 5 free questions this hour. Sign in (free) to keep talking with the Librarian.',
+          code: 'SIGNIN_REQUIRED',
+        },
         { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
       );
     }

@@ -400,10 +400,12 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        if (res.status === 401) {
+        if (res.status === 401 || res.status === 429 || err.code === 'SIGNIN_REQUIRED') {
+          // Anonymous visitors get a few free questions; past that we ask them
+          // to sign in (free) to continue.
           updateLastAssistant(m => ({
             ...m,
-            content: 'Please [sign in](/auth/signin?callbackUrl=/librarian) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
+            content: 'You\'ve used your free questions for now. [Sign in](/auth/signin?callbackUrl=/librarian) (free) to keep talking with the Librarian — create an account or sign in with Google.',
           }));
         } else {
           updateLastAssistant(m => ({ ...m, content: err.error || 'Something went wrong. Please try again.' }));

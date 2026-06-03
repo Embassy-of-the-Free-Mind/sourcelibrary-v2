@@ -87,6 +87,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [viewMode, setViewMode] = useState<ViewMode>(initialMode);
   const [loading, setLoading] = useState(false);
+  // Anonymous visitors get 5 free searches/hour; past that the API 401s and we
+  // show a sign-in wall instead of results.
+  const [signInRequired, setSignInRequired] = useState(false);
 
   // Unified results
   const [bookResults, setBookResults] = useState<SearchResult[]>([]);
@@ -383,6 +386,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
       return;
     }
     setLoading(true);
+    setSignInRequired(false);
 
     try {
       if (mode === 'unified') {
@@ -507,8 +511,23 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             if (oldest) searchCache.current.delete(oldest[0]);
           }
         } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          // Anonymous free-search allowance exhausted — show the sign-in wall
+          // and stop (don't fire the parallel agents or report an error).
+          if (/free searches this hour/i.test(msg) || /SIGNIN_REQUIRED/.test(msg)) {
+            setSignInRequired(true);
+            setBookResults([]); setBookTotal(0);
+            setIndexResults([]); setIndexTotal(0);
+            setImageResults([]); setImageTotal(0);
+            setCollectionResults([]); setSemanticResults([]);
+            // Stop the parallel AI-expand stream so nothing leaks past the wall.
+            aiAbortRef.current?.();
+            setAiResults([]); setAiNarration(''); setAiStreaming(false);
+            setLoading(false);
+            return;
+          }
           reportError({
-            message: `Unified search failed: ${err instanceof Error ? err.message : String(err)}`,
+            message: `Unified search failed: ${msg}`,
             source: 'search_query',
           });
         }
@@ -769,7 +788,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
-  const noResults = query.length >= 2 && !loading && !semanticLoading && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
+  const noResults = !signInRequired && query.length >= 2 && !loading && !semanticLoading && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
   useEffect(() => {
     if (!noResults || query.length < 3) { setSuggestion(null); return; }
     let cancelled = false;
@@ -1110,6 +1129,20 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
       {/* Results */}
       <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
+        {/* Anonymous free-search wall — shown after 5 searches/hour */}
+        {signInRequired && (
+          <div className="text-center py-16 max-w-lg mx-auto">
+            <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
+            <h2 className="text-2xl font-serif font-medium text-primary mb-2">Sign in to keep searching</h2>
+            <p className="text-secondary mb-6">
+              You&rsquo;ve used your free searches for now. Sign in &mdash; it&rsquo;s free &mdash; to keep exploring over 10,000 primary sources.
+            </p>
+            <Link href="/auth/signin?callbackUrl=/search"
+              className="inline-block px-6 py-3 rounded-xl bg-accent-rust text-white font-medium hover:bg-accent-rust/90 transition-colors">
+              Sign in &mdash; free
+            </Link>
+          </div>
+        )}
         {/* Browse gallery — shown when no query + images tab */}
         {isBrowseMode && viewMode === 'images' && (
           <div>
@@ -1369,7 +1402,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         )}
 
         {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
-        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
+        {!signInRequired && viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
           const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
@@ -1665,7 +1698,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         )}
 
         {/* AI-expanded related results — shows for all searches with results */}
-        {!noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
+        {!signInRequired && !noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
           <section className="mt-12 pt-8 border-t border-border-light">
             <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
             <div className="space-y-3">

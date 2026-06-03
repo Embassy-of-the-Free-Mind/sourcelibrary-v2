@@ -136,6 +136,7 @@ function VoiceAgentInner() {
   const [showVisuals, setShowVisuals] = useState(true);
   const [agentSpeaking, setAgentSpeaking] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [signInRequired, setSignInRequired] = useState(false);
   const [volume, setVolume] = useState(0);
   const [textInput, setTextInput] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -190,9 +191,18 @@ function VoiceAgentInner() {
   const [pttMode, setPttMode] = useState(true);
 
   const start = async () => {
-    setAppStatus('connecting'); setErrorMsg(null); setTranscript([]); setSources([]); setVisuals([]);
+    setAppStatus('connecting'); setErrorMsg(null); setSignInRequired(false); setTranscript([]); setSources([]); setVisuals([]);
     try {
-      const res = await fetch('/api/embassy/voice'); if (!res.ok) throw new Error(`Signed URL failed: ${res.status}`);
+      const res = await fetch('/api/embassy/voice');
+      if (res.status === 401) {
+        // Anonymous voice-session allowance used up — ask the visitor to sign in.
+        const body = await res.json().catch(() => ({}));
+        setSignInRequired(true);
+        setErrorMsg(body.error || 'You\'ve used your free voice sessions for now. Sign in (free) to keep going.');
+        setAppStatus('error');
+        return;
+      }
+      if (!res.ok) throw new Error(`Signed URL failed: ${res.status}`);
       const { signedUrl } = await res.json();
       conversation.startSession({
         signedUrl,
@@ -260,6 +270,12 @@ function VoiceAgentInner() {
               </button>
             )}
             {errorMsg && <p className="text-red-300 text-sm mt-5 font-sans max-w-[360px]">{errorMsg}</p>}
+            {signInRequired && (
+              <Link href="/auth/signin?callbackUrl=/librarian/voice"
+                className="mt-3 inline-block px-5 py-2.5 rounded-full bg-[#c9a86c]/90 hover:bg-[#c9a86c] text-[#0e0c0a] text-sm font-sans font-medium transition-colors">
+                Sign in &mdash; free
+              </Link>
+            )}
             <Link href="/librarian" className="mt-10 text-sm text-white/50 hover:text-white/80 font-display">Prefer to type? Switch to text chat &rarr;</Link>
           </div>
         </div>
