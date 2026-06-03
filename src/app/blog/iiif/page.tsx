@@ -33,6 +33,16 @@ const STONE = '#4f4537'; // darkened: used for connectors + small captions — n
 const PAPER = '#ece0c8'; // distinct cream fill so source boxes stand out from the white card
 const LINE = '#b6a47e'; // darker border
 
+/* ── Transcript of the lightning talk (Scheltema, Leiden, 2 June 2026) ── */
+const TALK_TRANSCRIPT: string[] = [
+  `Hello, I'm Derek Lomas, Director of the Digital Collection at the Embassy of the Free Mind in Amsterdam. This is our brand new website; it launched last week. This library is special; it has a Guinness record for the largest library devoted to magic and mysticism. It is a really, really special place, and I've been going there for the past few years. I'm a design professor at TU Delft, and much of my work focuses on design philosophy. So, looking at topics like harmony and resonance, which are esoteric topics, I found this library to be incredible. The problem is that it's all in Latin, or most of it. I have a couple years of Latin, but it's really not good enough. So I started working with them to translate their Latin works, which you can find in their digitized catalog.`,
+  `Now, there are probably on the order of 300,000 Latin works from the Renaissance, and about 3% of them have been translated. Many people don't know that; they think that with Latin, we've kind of covered that. The Loeb Classical Library is incredible, but very, very little of it has anything to do with the neo-Latin works of the medieval and Renaissance. I think Marx even published in Latin. I also don't read German — I know I'm married to a German, but I don't read German. I don't read French. There are a lot of languages I don't read. Actually, I only read English.`,
+  `So, the thing was that we were working with the Embassy of the Free Mind, and it was taking a long time to get their digitized works. Dan Brown, the author of the Da Vinci Code, donated to scan these books, because he wrote much of the Da Vinci Code based on the works in the collection — also known as the Bibliotheca Philosophica Hermetica. These books were kind of locked away in an outdated database system, and so we were waiting. I was busy trying to build a pipeline to translate these books with the new Gemini 3 models, which we heard earlier today are just incredible for transcription and translation. I was impatient, and I was also trying to do my research on metadata standards for libraries. I knew some of the standards, but then I stumbled across IIIF, and I had no idea — and it was so magical. Because of that, we created this organization called SourceLibrary.org.`,
+  `This is where we are trying to translate the Renaissance, and because of IIIF, we've now done 15,000 books. It's not so easy to prove a negative, but it seems that about 8,000 or so of these books have never been translated before. And not just the back catalog; some really incredible books, like Robert Fludd's "The Greater and Lesser of Two Worlds," where there are selected translations here and there, but no one took the time to translate a thousand-page Latin tome that has beautiful imagery. A lot of these books have really incredible illustrations. Here's Jacob Böhme, and they have little bits of Latin in there.`,
+  `So this is what we've got: a facing-page system where you can see the original text, and you can see the OCR — if it's still appropriate to call it OCR these days — and you can see the language models that were used. So here it's the 3 Flash model, and then you have the English over here. Now, when you throw these things into search — if you use Claude, we've got an MCP, you can connect to this, this is all free, this is all AGPL, open source, Creative Commons — and if you connect to the MCP, it is just incredible. Because not only are there the Latin works that I don't read, there are also the Chinese works and the Sanskrit works, the Armenian works. There's so much that I can't read, and now Claude is able to do these cross-cutting investigations. The Embassy of the Free Mind focuses on things like alchemy. Well, there's a huge Sanskrit alchemy tradition; there's a huge Chinese alchemy tradition, and no one is an expert in all three. Being able to find these links, to put all of these books in one place so you can search through it all — and to search by images too — is really, really fun.`,
+  `So this whole talk is basically a love letter to IIIF. Really, what you all have done is remarkable; it's magical. I didn't know it existed, and I felt like I was just able to take advantage of this. So I want to buy you all drinks, and I really encourage you to check out SourceLibrary.org. I also encourage you to visit the Embassy of the Free Mind — that's embassyofthefreemind.com. It's in Amsterdam, on Keizersgracht 123. Source Library is on the fourth floor, so 1-2-3-4. I'm really into Pythagoreanism. And on Thursday evening we're having an official beta launch of Source Library. I just hope to be in touch with all of you, and I thank you for the work that you do.`,
+];
+
 export default function IIIFPage() {
   return (
     <ContentPageLayout
@@ -111,6 +121,37 @@ export default function IIIFPage() {
             page at any size with one predictable URL. Adopted by hundreds of institutions, it is the
             closest thing the cultural-heritage world has to a universal plug.
           </p>
+        </div>
+
+        {/* ── The talk itself ── */}
+        <div className="bg-white rounded-xl border border-border-light p-5 md:p-6 mb-12">
+          <div className="flex items-center gap-2 mb-3">
+            <svg className="w-5 h-5 text-accent-rust shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-14 0m7 7v3m-4 0h8M12 4a3 3 0 00-3 3v4a3 3 0 006 0V7a3 3 0 00-3-3z" />
+            </svg>
+            <h2 className="text-lg md:text-xl text-primary font-semibold m-0">Listen to the talk</h2>
+          </div>
+          <p className="text-sm text-muted leading-relaxed mb-4">
+            The five-minute lightning talk as delivered at the Scheltema in Leiden, 2 June 2026 (lightly
+            trimmed). It is, in Derek&rsquo;s own words, &ldquo;a love letter to IIIF.&rdquo;
+          </p>
+          <audio
+            className="w-full"
+            controls
+            preload="metadata"
+            src="https://images.sourcelibrary.org/blog/iiif/iiif-2026-talk.mp3"
+            aria-label="Audio recording of the IIIF 2026 lightning talk"
+          />
+          <details className="mt-4 group">
+            <summary className="cursor-pointer text-sm text-accent-rust hover:text-accent-rust font-medium select-none">
+              Read the transcript
+            </summary>
+            <div className="mt-4 space-y-4 text-secondary leading-relaxed text-[15px] border-l-2 border-border-light pl-4">
+              {TALK_TRANSCRIPT.map((para, i) => (
+                <p key={i} className="m-0">{para}</p>
+              ))}
+            </div>
+          </details>
         </div>
 
         {/* ── Section 1: IIIF as a universal input layer ── */}
