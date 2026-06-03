@@ -189,14 +189,23 @@ async function readManifest(page, id) {
   console.log(`[leiden] enumerated ${ids.length} item ids\n`);
 
   let client = null, db = null;
+  // The shared import_candidates collection already carries a NON-unique
+  // `manifest_url_lookup` index, which blocks ensureIndexes() from adding the
+  // unique one — so insertCandidate's 11000-dup guard never fires and re-runs
+  // would duplicate rows. Guard idempotency ourselves with a preloaded URL set.
+  const haveUrls = new Set();
   if (!DRY_RUN) {
     ({ client, db } = await getScriptClient({ noTimeout: true }));
     try { await ensureIndexes(db); } catch (e) { console.log(`[leiden] index warning: ${e.message.slice(0, 80)}`); }
+    (await db.collection('import_candidates').distinct('manifest_url', { source: SOURCE })).forEach(u => haveUrls.add(u));
+    console.log(`[leiden] ${haveUrls.size} existing leiden candidates already in ledger (will skip)\n`);
   }
 
   let inserted = 0, skippedDup = 0, skippedRights = 0, errors = 0, idx = 0;
   for (const id of ids) {
     idx++;
+    // Idempotency: skip already-harvested URLs before the expensive manifest nav.
+    if (haveUrls.has(`${HOST}/iiif_manifest/item:${id}/manifest`)) { skippedDup++; continue; }
     const man = await readManifest(page, id);
     if (man.error) { errors++; if (errors <= 8) console.log(`  [err ${idx}/${ids.length}] item:${id} → ${man.error}`); await sleep(1500); continue; }
 
