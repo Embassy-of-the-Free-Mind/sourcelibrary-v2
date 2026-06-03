@@ -5,22 +5,51 @@ Bulk discovery and import of pre-1800 books from IIIF-enabled digital libraries.
 ## Architecture
 
 ```
-Discovery (OAI-PMH / SRU / IIIF Collections)
-  → import_candidates (MongoDB staging collection)
-    → import-batch.mjs (dedup + import via /api/import/iiif)
-      → books collection (main library)
-        → OCR/translation pipeline
+1. ENUMERATE   sources/<x>.mjs            → import_candidates (id + manifest_url + metadata)
+2. CACHE       harvest-manifests.mjs      → manifest_cache on each candidate (pages + rights)
+3. DEDUPE      analyze/dedupe-candidates  → mark dupes vs the library + cross-source
+4. IMPORT      import-from-cache.mjs       → books (+ pages) HIDDEN   [offline, no network]
+                                          → QA → flip visible
 ```
 
-**Two-phase approach:**
-1. **Discovery** — harvest metadata + manifest URLs from each source into `import_candidates`
-2. **Import** — batch import from candidates, with dedup checking, into the main collection
+**Why four stages (not two).** A staging collection (`import_candidates`) decouples
+discovery from import. The key piece is the **manifest-cache stage**: it fetches each
+candidate's IIIF manifest exactly once — isolating all the slow, rate-limited, or
+browser-driven network work into one resumable pass — and stores the per-page image
+URLs + rights on the candidate. Import is then a fast, offline, idempotent DB→DB
+operation. A throttled source (Leiden F5, Harvard 429) is hit once.
 
-This separation means:
-- Discovery can run independently per source
-- Candidates can be reviewed/filtered before import
-- Everything is resumable
-- Progress is tracked per source
+- Each stage runs independently and is fully resumable
+- Network work (the expensive part) happens once, in stage 2
+- Candidates are deduped/reviewed before any write to `books`
+- `import-from-cache` routes by shape: 1 canvas → `content_type:'artwork'`,
+  >1 → book + per-page docs. No bespoke importer per source.
+
+**Two ways to enumerate (stage 1):** rich adapters fetch the manifest during
+enumeration (fine for fast sources); `--enumerate-only` (e.g. `sources/leiden.mjs`)
+records just id + manifest_url and leaves the single fetch to stage 2 — best for
+slow/bot-walled sources, avoids fetching each manifest twice.
+
+**Legacy path:** `import-batch.mjs` is the older one-shot importer (manifest fetched
+server-side via `/api/import/iiif`, books only). Still fine for fast/open/book
+sources; it breaks on artworks and datacenter-429/F5 sources — those use the
+cache→import-from-cache path (or a direct importer like `import-leiden-{artworks,books}.mjs`).
+
+### The new pipeline, end to end
+
+```bash
+set -a; source .env.production.local; set +a
+# 1. enumerate (lightweight) — e.g. Indonesian maps from Leiden
+node scripts/iiif-discovery/sources/leiden.mjs --collection=ubl_maps \
+  --extra-facet="mods_originInfo_place_placeTerm_text_authority_marccountry_ms:Indonesia" --enumerate-only
+# 2. cache every manifest once (browser fetcher auto-selected for leiden)
+node scripts/iiif-discovery/harvest-manifests.mjs --source=leiden --collection=ubl_maps
+# 3. (optional) dedupe/analyze
+node scripts/iiif-discovery/analyze-candidates.mjs --source=leiden --mark-dupes
+# 4. import offline — routes artwork vs book automatically; lands HIDDEN
+node scripts/iiif-discovery/import-from-cache.mjs --source=leiden --collection=ubl_maps \
+  --sl-collection=indonesian-maps --book-type=map --facsimile --dry-run
+```
 
 ## Sources
 

@@ -70,6 +70,10 @@ const MAX_RECORDS = parseInt(args['max-records']) || 100000;
 const DRY_RUN = 'dry-run' in args;
 const INCLUDE_RESTRICTED = 'include-restricted' in args;
 const HEADED = 'headed' in args;
+// Lightweight mode: record id + manifest_url only (no per-item manifest fetch).
+// Metadata + rights + pages are filled later by harvest-manifests.mjs. This is
+// the decoupled pipeline: enumerate → harvest-manifests → import-from-cache.
+const ENUMERATE_ONLY = 'enumerate-only' in args;
 
 if (!COLLECTION) {
   console.error('ERROR: --collection=<slug> is required (e.g. balinese_narrative_drawings)');
@@ -224,8 +228,23 @@ async function readManifest(page, id) {
   let inserted = 0, skippedDup = 0, skippedRights = 0, errors = 0, idx = 0;
   for (const id of ids) {
     idx++;
+    const manifest_url = `${HOST}/iiif_manifest/item:${id}/manifest`;
     // Idempotency: skip already-harvested URLs before the expensive manifest nav.
-    if (haveUrls.has(`${HOST}/iiif_manifest/item:${id}/manifest`)) { skippedDup++; continue; }
+    if (haveUrls.has(manifest_url)) { skippedDup++; continue; }
+
+    // Decoupled pipeline: record id+url only; harvest-manifests.mjs fills the rest.
+    if (ENUMERATE_ONLY) {
+      if (DRY_RUN) { if (idx <= 12) console.log(`  item:${id}`); inserted++; continue; }
+      const res = await insertCandidate(db, {
+        manifest_url, source: SOURCE, origin_library: 'Leiden University Libraries',
+        provider_name: 'Leiden University Libraries', title: '(pending)', author: 'Unknown',
+        categories: [COLLECTION], source_url: `http://hdl.handle.net/1887.1/item:${id}`, source_id: `item:${id}`,
+      });
+      if (res.inserted) { inserted++; haveUrls.add(manifest_url); if (inserted <= 3 || inserted % 100 === 0) console.log(`  enumerated [${inserted}] item:${id}`); }
+      else skippedDup++;
+      continue;
+    }
+
     const man = await readManifest(page, id);
     if (man.error) { errors++; if (errors <= 8) console.log(`  [err ${idx}/${ids.length}] item:${id} → ${man.error}`); await sleep(1500); continue; }
 

@@ -189,6 +189,68 @@ export function extractManifestMetadata(manifest) {
 }
 
 /**
+ * Extract ordered per-page image URLs from a IIIF manifest (v2 + v3).
+ * Returns [{ photo, thumbnail }] — `photo` is a full-size image URL, `thumbnail`
+ * a ~400px derivative. Prefers the IIIF Image API service (so we can size on
+ * demand); falls back to the static resource id.
+ *
+ * @param {Object} manifest
+ * @param {Object} [opts]
+ * @param {number|string} [opts.thumbSize=!400,400] IIIF size param for thumbnails
+ */
+export function manifestToPages(manifest, { thumbSize = '!400,400' } = {}) {
+  const fromService = (svc, fallback) => {
+    const base = typeof svc === 'string' ? svc : (svc?.['@id'] || svc?.id);
+    if (!base) return fallback ? { photo: fallback, thumbnail: fallback } : null;
+    return { photo: `${base}/full/full/0/default.jpg`, thumbnail: `${base}/full/${thumbSize}/0/default.jpg` };
+  };
+
+  // v2: sequences[].canvases[].images[].resource(.service)
+  const v2 = manifest.sequences?.[0]?.canvases;
+  if (Array.isArray(v2)) {
+    return v2.map(c => {
+      const res = c.images?.[0]?.resource;
+      const svc = res?.service;
+      return fromService(Array.isArray(svc) ? svc[0] : svc, res?.['@id']);
+    }).filter(Boolean);
+  }
+
+  // v3: items[](canvas).items[](AnnotationPage).items[](Annotation).body(.service)
+  const v3 = manifest.items;
+  if (Array.isArray(v3)) {
+    return v3.map(canvas => {
+      const body = canvas.items?.[0]?.items?.[0]?.body;
+      const b = Array.isArray(body) ? body[0] : body;
+      const svc = b?.service;
+      return fromService(Array.isArray(svc) ? svc[0] : svc, b?.id);
+    }).filter(Boolean);
+  }
+
+  return [];
+}
+
+/**
+ * Classify rights from a IIIF manifest (v2 `attribution`/`license`,
+ * v3 `requiredStatement`/`rights`). Returns { open, label, text }.
+ */
+export function manifestRights(manifest) {
+  const parts = [];
+  if (manifest.license) parts.push(String(manifest.license));
+  if (manifest.rights) parts.push(String(manifest.rights));
+  if (typeof manifest.attribution === 'string') parts.push(manifest.attribution);
+  else if (manifest.attribution) parts.push(extractLabel(manifest.attribution) || '');
+  const rs = manifest.requiredStatement?.value;
+  if (rs) parts.push(extractLabel(rs) || '');
+  const text = parts.join(' ').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const t = text.toLowerCase();
+  if (/within the library premises|on campus|not available off|reading room/.test(t)) return { open: false, label: 'restricted', text };
+  if (/public\s*domain|publicdomain|\/mark\/|cc0|no known copyright/.test(t)) return { open: true, label: 'public-domain', text };
+  if (/creativecommons\.org\/licenses\/by|cc[\s-]?by/.test(t)) return { open: true, label: 'cc-by', text };
+  if (/full access/.test(t)) return { open: true, label: 'full-access', text };
+  return { open: false, label: 'unknown', text };
+}
+
+/**
  * Clean a title string — strip HTML, normalize whitespace, truncate.
  */
 function cleanTitle(title) {
