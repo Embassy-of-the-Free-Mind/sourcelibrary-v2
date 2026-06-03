@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, Calendar, FileText } from 'lucide-react';
+import { Calendar, FileText } from 'lucide-react';
 import { cn, getBookThumbnailUrl } from '@/lib/utils';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
+import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
 import { getEffectiveByline } from '@/lib/byline';
 import { useEmbedHref } from '@/lib/EmbedContext';
 
@@ -100,9 +101,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjQiIGZpbGw9IiNlN2UyZGUiLz48L3N2Zz4="
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <BookOpen className="w-16 h-16 text-muted" />
-            </div>
+            <BookCoverPlaceholder
+              title={book.display_title || book.title}
+              author={isArtwork ? undefined : book.author}
+            />
           )}
 
           {/* Status badges */}
