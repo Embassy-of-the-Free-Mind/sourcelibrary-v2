@@ -5,7 +5,11 @@ import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation } from '@/components/explore/BookMap';
 
-export const revalidate = false;
+// Daily ISR so the page re-reads the system_config.map_data cache that the
+// Hetzner cron rebuilds at 05:45 — `revalidate = false` froze the rendered
+// page at deploy time, hiding every cache refresh. The layout chain uses no
+// headers()/cookies(), so ISR is safe here (cf. explore/page.tsx).
+export const revalidate = 86400;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
