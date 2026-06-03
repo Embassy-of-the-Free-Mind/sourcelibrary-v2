@@ -209,10 +209,14 @@ async function main() {
     matchFilter.book_id = BOOK_ID;
   }
 
-  const totalNeeding = await pagesCol.countDocuments(matchFilter);
-  console.log(`\nPages needing thumbnail generation: ${totalNeeding}`);
-
+  // countDocuments(matchFilter) is a full COLLSCAN over the pages collection
+  // (the $elemMatch on detected_images isn't indexed) and at backlog scale
+  // (tens of thousands matching) it can take many minutes — pointless to pay
+  // in apply mode where it's only an informational log. The limited find below
+  // stops early once it hits LIMIT matches, so skip the count unless dry-run.
   if (DRY_RUN) {
+    const totalNeeding = await pagesCol.countDocuments(matchFilter);
+    console.log(`\nPages needing thumbnail generation: ${totalNeeding}`);
     // Count individual detections
     const detectionCount = await pagesCol.aggregate([
       { $match: matchFilter },
@@ -252,7 +256,7 @@ async function main() {
 
     for (let idx = 0; idx < (page.detected_images || []).length; idx++) {
       const det = page.detected_images[idx];
-      if (!det.bbox) continue;
+      if (!det || !det.bbox) continue;
       if (det.extracted_url) continue; // already has thumbnail
       if (!['vision_model', 'manual', 'ocr_tag'].includes(det.detection_source)) continue;
       if (MIN_QUALITY > 0 && (det.gallery_quality || 0) < MIN_QUALITY) continue;
