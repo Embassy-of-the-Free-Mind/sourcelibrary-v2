@@ -59,7 +59,10 @@ export default function DeepZoomViewer({ items }: { items: DeepZoomItem[] }) {
     let disposed = false;
     let viewer: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-    import('openseadragon').then(({ default: OpenSeadragon }) => {
+    import('openseadragon').then((mod) => {
+      // UMD interop: the factory may sit on .default or on the module root.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const OpenSeadragon = ((mod as any).default ?? mod) as any;
       if (disposed || !containerRef.current) return;
       viewer = OpenSeadragon({
         element: containerRef.current,
@@ -80,7 +83,9 @@ export default function DeepZoomViewer({ items }: { items: DeepZoomItem[] }) {
         visibilityRatio: 1,
         constrainDuringPan: true,
         zoomPerScroll: 1.4,
-        crossOriginPolicy: 'Anonymous',
+        // No crossOriginPolicy: the tiles are served without CORS headers, and
+        // requesting them with `crossorigin` would leave the canvas blank. We
+        // only display (never read pixels back), so a tainted canvas is fine.
         immediateRender: false,
       });
       viewerRef.current = viewer;
