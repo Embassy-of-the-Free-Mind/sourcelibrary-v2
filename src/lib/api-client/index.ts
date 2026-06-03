@@ -49,6 +49,7 @@ export * from './prompts';
 export * from './qa';
 export * from './queues';
 export * from './research'; // Client-safe API wrappers only
+export * from './views';
 export * from './search';
 export * from './social';
 export * from './email';

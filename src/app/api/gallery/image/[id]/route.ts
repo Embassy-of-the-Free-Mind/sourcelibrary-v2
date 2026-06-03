@@ -300,6 +300,13 @@ export async function GET(
     // wrong side of a spread. extracted_url is the authoritative crop.
     const croppedUrl = detection.extracted_url || detection.hires_url || cropUrl || imageUrl;
 
+    // Durable first-party view counter (written by POST /api/views; keyed the
+    // same hyphen-form id as likes)
+    const viewsDoc = await db.collection('views').findOne(
+      { target_type: 'image', target_id: `${pageId}-${detectionIndex}` },
+      { projection: { count: 1 } }
+    );
+
     // Build the response
     const response = {
       // Identity
@@ -328,6 +335,9 @@ export async function GET(
       galleryQuality: detection.gallery_quality ?? null,
       galleryRationale: detection.gallery_rationale ?? null,
       featured: detection.featured ?? false,
+
+      // Engagement
+      viewCount: viewsDoc?.count ?? 0,
 
       // Rich metadata
       metadata: detection.metadata ?? null,
