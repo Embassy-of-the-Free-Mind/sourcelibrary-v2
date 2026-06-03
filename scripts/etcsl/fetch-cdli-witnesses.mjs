@@ -11,6 +11,7 @@
  *   node scripts/etcsl/fetch-cdli-witnesses.mjs --dry-run
  *   node scripts/etcsl/fetch-cdli-witnesses.mjs --book-id=69afd3fcf6ab0e0de59ae807
  *   node scripts/etcsl/fetch-cdli-witnesses.mjs --limit=10
+ *   node scripts/etcsl/fetch-cdli-witnesses.mjs --only-missing   # only books with no thumbnail yet
  */
 
 import { MongoClient } from 'mongodb';
@@ -144,6 +145,7 @@ function artifactToWitness(artifact, hasPhoto, qNumber) {
 async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
+  const onlyMissing = args.includes('--only-missing');
   const bookIdArg = args.find(a => a.startsWith('--book-id='))?.split('=')[1];
   const limitArg = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 
@@ -159,6 +161,9 @@ async function main() {
   // Find ETCSL books
   const query = { etcsl_id: { $exists: true, $ne: '' } };
   if (bookIdArg) query.id = bookIdArg;
+  // --only-missing: skip books that already have a cover, so a re-run just
+  // fills gaps (and doesn't re-hit CDLI for the whole corpus).
+  if (onlyMissing) query.$or = [{ thumbnail: { $exists: false } }, { thumbnail: null }, { thumbnail: '' }];
 
   const books = await db.collection('books')
     .find(query, { projection: { _id: 0, id: 1, etcsl_id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 } })
@@ -212,10 +217,14 @@ async function main() {
     // Update book with witnesses
     const update = { $set: { cdli_witnesses: witnesses } };
 
-    // Set thumbnail to first witness with a photo (if book has no manual cover)
+    // Set thumbnail to first witness with a photo (if book has no manual cover).
+    // Bump updated_at so the Supabase books_catalog sync (5-min cron / manual
+    // sync-books-catalog.mjs) picks up the new cover — a plain $set of thumbnail
+    // does NOT touch updated_at, so the collection grid would otherwise lag.
     if (withPhotos.length > 0 && book.thumbnail_source !== 'manual') {
       update.$set.thumbnail = withPhotos[0].photo_url;
       update.$set.thumbnail_source = 'auto';
+      update.$set.updated_at = new Date();
       thumbnailsUpdated++;
     }
 
