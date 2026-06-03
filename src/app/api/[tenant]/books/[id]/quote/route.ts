@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { resolveTenantId } from '@/lib/tenant-context';
 
@@ -200,7 +201,10 @@ export async function GET(request: NextRequest, context: RouteContext) {
     // Build response
     const response: QuoteResponse = {
       quote: {
-        translation: markForExport(page.translation.data, book.id),
+        // Editorial annotation blocks (<meta>/<summary>/… and the OCR page
+        // envelope) describe the page — they are never verbatim source text
+        // and must not be served as quotable content (PR #2232).
+        translation: markForExport(stripEditorialWrappers(page.translation.data).trim(), book.id),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,
@@ -220,7 +224,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Include original text if requested
     if (includeOriginal && page.ocr?.data) {
-      response.quote.original = page.ocr.data;
+      response.quote.original = stripEditorialWrappers(page.ocr.data).trim();
     }
 
     // Include context (adjacent pages) if requested
@@ -241,8 +245,8 @@ export async function GET(request: NextRequest, context: RouteContext) {
       const prevText = (prevPage as unknown as Page | null)?.translation?.data;
       const nextText = (nextPage as unknown as Page | null)?.translation?.data;
       response.context = {
-        previous_page: prevText ? markForExport(prevText, book.id) : undefined,
-        next_page: nextText ? markForExport(nextText, book.id) : undefined,
+        previous_page: prevText ? markForExport(stripEditorialWrappers(prevText).trim(), book.id) : undefined,
+        next_page: nextText ? markForExport(stripEditorialWrappers(nextText).trim(), book.id) : undefined,
       };
     }
 
