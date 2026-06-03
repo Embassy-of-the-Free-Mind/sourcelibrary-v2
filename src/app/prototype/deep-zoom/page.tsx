@@ -31,18 +31,19 @@ const ITEMS: DeepZoomItem[] = [
       'Heinrich Khunrath’s famous engraving of the alchemist at prayer, flanked by his furnace and instruments. Zoom into the banners and the open books to read the Latin mottoes lettered into the plate.',
   },
   {
-    id: 'book-of-kells',
-    title: 'Illuminated folio',
-    book: 'Book of Kells (facsimile)',
-    width: 4893,
-    height: 6726,
+    id: 'blaeu-world-map',
+    title: 'Nova Totius Terrarum Orbis — hand-coloured world map',
+    book: 'Willem Blaeu — Toonneel des Aerdrycks (Amsterdam) · BPH',
+    width: 7355,
+    height: 5507,
     tileSize: 256,
     overlap: 1,
     format: 'jpeg',
-    tileBase: 'https://images.sourcelibrary.org/deepzoom/book-of-kells',
-    source: 'https://archive.org/download/TheBookOfKells/page/n153/full/full/0/default.jpg',
+    tileBase: 'https://images.sourcelibrary.org/deepzoom/blaeu-world-map',
+    source:
+      'https://images.uba.uva.nl/iiif/2/default!1!3!1!990011196650205131!otm-kzl-1804-a-2_004.jpg/full/max/0/default.jpg',
     blurb:
-      'Insular interlace at its most intricate. Zoom all the way in to follow a single ribbon through the knotwork and find the animals woven into the initials — detail that is invisible at page scale.',
+      'A 40-megapixel hand-coloured engraving from a Blaeu atlas. Zoom into the oceans to find the sailing ships and sea-creatures, then read the place-names threading across the continents and the allegorical borders — the four elements, the seasons, and the cities of the world.',
   },
   {
     id: 'kircher-china',
@@ -73,7 +74,7 @@ export default function DeepZoomPrototypePage() {
           A reader leaning in over an original engraving wants to read the tiny
           lettering, trace the hatching, follow a line of interlace. This viewer
           streams the image in tiles — only the detail you’re looking at is
-          fetched — so even a 33-megapixel folio stays sharp and fast. It’s the
+          fetched — so even a 40-megapixel engraving stays sharp and fast. It’s the
           loupe-over-the-sheet experience our current magnifier can only
           approximate.
         </p>
