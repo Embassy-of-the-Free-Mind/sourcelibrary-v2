@@ -126,8 +126,10 @@ export interface GalleryImageDetail {
   description: string;
   type?: string;
   confidence?: number;
-  model?: string;
-  detectionSource?: string;
+  model?: string | null;
+  detectionSource?: string | null;
+  /** ISO timestamp of the AI extraction run that produced description/metadata. */
+  detectedAt?: string | null;
   galleryQuality?: number | null;
   galleryRationale?: string | null;
   featured?: boolean;
