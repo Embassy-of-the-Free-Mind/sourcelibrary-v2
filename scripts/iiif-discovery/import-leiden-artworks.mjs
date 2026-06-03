@@ -120,6 +120,9 @@ for (const c of cands) {
     pageCount: 1, pages_count: 1, pages_ocr: 0, pages_translated: 0,
     content_type: 'artwork', resource_type: RESOURCE_TYPE,
     status: PUBLISH ? 'live' : 'draft', hidden: !PUBLISH, visible: PUBLISH,
+    // Keep out of the OCR/translation cron: 'leiden' isn't in the orchestrator's
+    // ART_PROVIDERS skip-list, so without this artworks get auto-enrolled.
+    pipeline_auto: { status: 'complete', note: 'artwork facsimile (no OCR)', updated_at: now },
     categories: ['visual-art'],
     ...(SL_COLLECTION ? { collections: [SL_COLLECTION] } : {}),
     image_source: {
