@@ -111,7 +111,7 @@ export default function AdminCollectionsPage() {
 
   const fetchCollections = useCallback(async () => {
     try {
-      const data = await gallery.collections.list();
+      const data = await gallery.collections.list(undefined, true); // admin sees hidden too
       setCollections(data.collections);
     } catch (e) {
       console.error('Failed to load collections:', e);

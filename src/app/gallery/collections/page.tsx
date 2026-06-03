@@ -37,7 +37,9 @@ async function getCollections(): Promise<CollectionListItem[]> {
 
     const collections = await db
       .collection('gallery_collections')
-      .find({}, { projection: { id: 1, slug: 1, title: 1, description: 1, image_ids: 1, featured: 1, cover_image_id: 1 } })
+      // Hide collections with no resolvable cover (their backing gallery_images
+      // were deleted) — flagged `hidden: true` by backfill-gallery-collection-covers.mjs.
+      .find({ hidden: { $ne: true } }, { projection: { id: 1, slug: 1, title: 1, description: 1, image_ids: 1, featured: 1, cover_image_id: 1 } })
       .sort({ sort_order: 1, created_at: -1 })
       .toArray();
 
