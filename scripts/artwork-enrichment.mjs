@@ -18,6 +18,7 @@ const RE_ENRICH = process.argv.includes('--re-enrich');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '10');
 const ARTIST_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--artist') || null;
 const SLUG_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--slug') || null;
+const COLLECTION_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--collection') || null;
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -210,12 +211,14 @@ async function main() {
   if (!RE_ENRICH) query.enrichment = { $exists: false };
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
   if (SLUG_FILTER) query.slug = SLUG_FILTER;
+  if (COLLECTION_FILTER) query.collections = COLLECTION_FILTER;
 
   const projection = {
     _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
     medium: 1, resource_type: 1, thumbnail_blob: 1, thumbnail: 1,
     archived_full_url: 1, commons_full_url: 1, commons_categories: 1,
-    display_title: 1, 'enrichment.ulan_artist': 1,
+    display_title: 1, description: 1, hidden: 1, hidden_reason: 1,
+    'image_source.source_description': 1, 'enrichment.ulan_artist': 1,
   };
 
   // Use batched skip/limit to avoid cursor timeouts on long-running enrichment
@@ -346,10 +349,16 @@ async function main() {
           provenance.author = { ...provenanceEntry, previous_value: art.author };
         }
 
-        // Description — promote to top-level for search indexing
+        // Description — promote to top-level for search indexing.
+        // Preserve the original source description (e.g. ContentDM catalog text) in
+        // provenance so AI enrichment never destroys it. Also keep a one-time snapshot
+        // of the source-of-record description under image_source.source_description.
         if (enrichment.description) {
           updateFields.description = enrichment.description;
-          provenance.description = provenanceEntry;
+          provenance.description = { ...provenanceEntry, previous_value: art.description ?? null };
+          if (art.description && !art.image_source?.source_description) {
+            updateFields['image_source.source_description'] = art.description;
+          }
         }
 
         // Summary — combine subject + significance for book-level search
