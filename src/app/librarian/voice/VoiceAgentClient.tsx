@@ -37,9 +37,14 @@ interface Visual { type: 'image' | 'page'; url: string; title: string; caption?:
 // SAME hybrid search (RRF + rerank) the text Librarian uses, plus gallery
 // images — so voice matches the text Librarian's result quality and visuals.
 
-function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v: Visual) => void) {
+function buildClientTools(
+  addSources: (s: SourceResult[]) => void,
+  addVisual: (v: Visual) => void,
+  onSearch: (q: string | null) => void,
+) {
   const runVoiceSearch = async (query: string, mode: string): Promise<string> => {
     console.log(`[voice-agent] ${mode}:`, query);
+    onSearch(query);
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 13000);
@@ -59,6 +64,7 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
         images: (data.images || []).slice(0, 4).map((i: any) => ({ description: i.description, book: i.bookTitle })),
       });
     } catch (e) { return JSON.stringify({ error: String(e) }); }
+    finally { onSearch(null); }
   };
 
   return {
@@ -77,6 +83,7 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
       } catch (e) { return JSON.stringify({ error: String(e) }); }
     },
     search_images: async ({ query }: { query: string }): Promise<string> => {
+      onSearch(query);
       try {
         const res = await fetch(`/api/embassy/voice-search?q=${encodeURIComponent(query)}&limit=2`);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
@@ -87,6 +94,7 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
         }
         return JSON.stringify({ found: images.length, images: images.map((img: any) => ({ description: (img.description || '').slice(0, 200), book: img.bookTitle, type: img.type })) });
       } catch (e) { return JSON.stringify({ error: String(e) }); }
+      finally { onSearch(null); }
     },
   };
 }
@@ -139,6 +147,7 @@ function VoiceAgentInner() {
   const [signInRequired, setSignInRequired] = useState(false);
   const [volume, setVolume] = useState(0);
   const [textInput, setTextInput] = useState('');
+  const [searchStatus, setSearchStatus] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const addSources = useCallback((newSources: SourceResult[]) => {
@@ -148,9 +157,10 @@ function VoiceAgentInner() {
     setVisuals((prev) => prev.some(p => p.url === v.url) ? prev : [...prev, v]);
     setShowVisuals(true);
   }, []);
+  const onSearch = useCallback((q: string | null) => setSearchStatus(q), []);
 
   const conversation = useConversation({
-    clientTools: buildClientTools(addSources, addVisual),
+    clientTools: buildClientTools(addSources, addVisual, onSearch),
     onMessage: (payload: { role?: string; source?: string; message: string }) => {
       setTranscript((prev) => {
         const entry: TranscriptEntry = { role: payload.role === 'agent' || payload.source === 'ai' ? 'agent' : 'user', text: payload.message, isFinal: true };
@@ -180,7 +190,7 @@ function VoiceAgentInner() {
     onDebug: (props: any) => { if (props?.type?.includes('tool')) console.log('[voice-agent] debug:', props); },
   });
 
-  useEffect(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' }); }, [transcript]);
+  useEffect(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' }); }, [transcript, searchStatus]);
   useEffect(() => {
     if (appStatus !== 'connected') return;
     const interval = setInterval(() => { try { setVolume(conversation.getInputVolume()); } catch { /* */ } }, 100);
@@ -188,7 +198,8 @@ function VoiceAgentInner() {
   }, [appStatus, conversation]);
 
   const [holding, setHolding] = useState(false);
-  const [pttMode, setPttMode] = useState(true);
+  // Open mic by default — visitors just talk. Push-to-talk stays available as a toggle.
+  const [pttMode, setPttMode] = useState(false);
 
   const start = async () => {
     setAppStatus('connecting'); setErrorMsg(null); setSignInRequired(false); setTranscript([]); setSources([]); setVisuals([]);
@@ -211,7 +222,7 @@ function VoiceAgentInner() {
             prompt: {
               prompt: VOICE_SYSTEM_PROMPT,
             },
-            firstMessage: "Welcome to Source Library. I can search over 10,000 rare books — alchemy, philosophy, Sanskrit texts, Kabbalah, early science, and more. What are you looking for?",
+            firstMessage: "Welcome to the library. What would you like to explore?",
           },
         },
       });
@@ -259,7 +270,7 @@ function VoiceAgentInner() {
           <div className="relative flex flex-col items-center max-w-[520px]">
             <h1 className="text-4xl sm:text-5xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>The Librarian</h1>
             <p className="text-white/60 text-base font-body leading-relaxed mb-10">
-              Ask aloud and the Librarian searches 10,000 rare books as you speak &mdash; philosophy, science, alchemy, sacred texts, the whole history of ideas.
+              Ask aloud &mdash; the Librarian searches the collection as you speak.
             </p>
             {appStatus === 'connecting' ? (
               <div className="w-32 h-32 rounded-full bg-[#c9a86c]/40 text-white flex items-center justify-center animate-pulse text-sm font-sans">Connecting&hellip;</div>
@@ -292,7 +303,7 @@ function VoiceAgentInner() {
                 <div className="text-center py-12">
                   <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-30" />
                   <p className="text-[#8a8480] text-sm font-body max-w-[360px] mx-auto leading-relaxed animate-pulse">
-                    The Librarian is listening. Hold the mic below and ask your question&hellip;
+                    The Librarian is listening &mdash; just ask your question aloud.
                   </p>
                 </div>
               ) : transcript.map((entry, i) => (
@@ -311,6 +322,16 @@ function VoiceAgentInner() {
                   )}
                 </div>
               ))}
+              {searchStatus && (
+                <div className="flex items-center gap-2.5 text-[13px] font-sans text-[#8a8480] pl-11">
+                  <span className="flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9a86c] animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9a86c] animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9a86c] animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </span>
+                  <span>Searching the library for &ldquo;{searchStatus.length > 48 ? searchStatus.slice(0, 48) + '…' : searchStatus}&rdquo;</span>
+                </div>
+              )}
             </div>
           </div>
 
