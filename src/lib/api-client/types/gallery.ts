@@ -109,7 +109,7 @@ export interface GalleryImageUpdateResponse {
   extractedUrl?: string;
   thumbnailUrl?: string;
   /** Diagnostic info for the materialized gallery_images sync. */
-  gallerySync?: 'ok' | 'removed_low_quality' | 'no_change' | { error: string };
+  gallerySync?: 'ok' | 'hidden_low_quality' | 'no_change' | { error: string };
 }
 
 export interface GalleryImageDetail {
