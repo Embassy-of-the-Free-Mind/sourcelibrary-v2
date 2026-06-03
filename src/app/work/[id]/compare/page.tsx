@@ -89,7 +89,9 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params;
+  const { id: rawId } = await params;
+  // Decode non-ASCII work_id (CJK / accented) before use — see /work/[id]/page.tsx.
+  const id = decodeURIComponent(rawId);
   const title = workTitle(id);
   return {
     title: `Compare Translations — ${title} | Source Library`,
@@ -100,7 +102,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CompareWorkPage({ params }: PageProps) {
-  const { id } = await params;
+  const { id: rawId } = await params;
+  const id = decodeURIComponent(rawId);
   const editions = await getEditionsForCompare(id);
   if (editions.length < 2) notFound();
 

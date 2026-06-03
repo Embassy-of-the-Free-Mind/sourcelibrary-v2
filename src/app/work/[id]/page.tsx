@@ -42,7 +42,11 @@ function workTitle(workId: string): string {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params;
+  const { id: rawId } = await params;
+  // work_id values include non-ASCII (CJK, accented Latin); the route param
+  // arrives percent-encoded, so decode before matching against Mongo — otherwise
+  // the query silently finds 0 editions and 404s. Same pattern as /author/[name].
+  const id = decodeURIComponent(rawId);
   let editions: Awaited<ReturnType<typeof getWorkEditions>>;
   try {
     editions = await getWorkEditions(id);
@@ -62,7 +66,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function WorkPage({ params }: PageProps) {
-  const { id } = await params;
+  const { id: rawId } = await params;
+  const id = decodeURIComponent(rawId);
   const editions = await getWorkEditions(id);
   if (editions.length === 0) notFound();
 
