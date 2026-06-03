@@ -101,7 +101,7 @@ function parseManifest(m) {
 }
 
 // ── per-host rate limiting (Gallica 429s aggressively even from residential IPs) ─
-const HOST_MIN_INTERVAL = { 'gallica.bnf.fr': 1500 }; // ms between requests to a host
+const HOST_MIN_INTERVAL = { 'gallica.bnf.fr': 2000 }; // ms between requests to a host
 const DEFAULT_INTERVAL = 250;
 const hostNext = new Map(); // host -> earliest next-request timestamp (chained)
 
@@ -115,8 +115,11 @@ async function hostGate(url) {
   if (earliest > now) await sleep(earliest - now);
 }
 
+// Only 2 attempts: persistent Gallica 429s aren't worth a 5x retry storm
+// (it exhausts local ephemeral ports → EADDRNOTAVAIL). Failures stay un-enriched
+// and are re-tried on the next resume run.
 async function fetchManifest(url) {
-  for (let attempt = 0; attempt < 5; attempt++) {
+  for (let attempt = 0; attempt < 2; attempt++) {
     await hostGate(url);
     try {
       const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json,application/ld+json' }, redirect: 'follow' });
@@ -156,13 +159,24 @@ async function main() {
   }
   console.log(`Catalog dedup keys: ${ownedArk.size} ARKs, ${ownedTA.size} title|author.`);
 
-  const filter = REENRICH ? {} : { dedup_status: 'unchecked' };
+  // Resume by default: only rows not yet successfully triaged (no triaged_at).
+  // Fetch-failures never set triaged_at, so a plain re-run retries them.
+  // --reenrich forces all rows.
+  const filter = REENRICH ? {} : { triaged_at: { $exists: false } };
   let cursor = candCol.find(filter);
   if (LIMIT) cursor = cursor.limit(LIMIT);
   const todo = await cursor.toArray();
-  console.log(`Triaging ${todo.length} candidates (concurrency ${CONCURRENCY})…`);
+  console.log(`Triaging ${todo.length} candidates${REENRICH ? '' : ' (resume — un-triaged only)'} (concurrency ${CONCURRENCY})…`);
 
   let done = 0, dupes = 0, weak = 0, enriched = 0, failed = 0;
+  let pendingOps = [];
+  async function flush() {
+    if (!COMMIT || !pendingOps.length) { pendingOps = []; return; }
+    try { await candCol.bulkWrite(pendingOps, { ordered: false }); }
+    catch (e) { console.error(`\n  [warn] bulkWrite failed (${e.message}); ${pendingOps.length} updates dropped this batch, will retry on resume`); }
+    pendingOps = [];
+  }
+
   for (let i = 0; i < todo.length; i += CONCURRENCY) {
     const batch = todo.slice(i, i + CONCURRENCY);
     await Promise.all(batch.map(async (c) => {
@@ -170,34 +184,38 @@ async function main() {
       const parsed = m ? parseManifest(m) : null;
       if (m) enriched++; else failed++;
       const title = parsed?.title || c.label;
-      // dedup
+      // dedup: ARK first (works even without a fetched title), then title|author
       let dedup_status = 'novel', matched = null;
       if (c.ark && ownedArk.has(c.ark)) { dedup_status = 'duplicate'; matched = ownedArk.get(c.ark); }
-      else {
-        const key = `${normalizeTitle(title || '')}|${normalizeAuthor(parsed?.author || '')}`;
-        if (parsed?.title && ownedTA.has(key)) { dedup_status = 'duplicate'; matched = ownedTA.get(key); }
+      else if (parsed?.title) {
+        const key = `${normalizeTitle(title)}|${normalizeAuthor(parsed?.author || '')}`;
+        if (ownedTA.has(key)) { dedup_status = 'duplicate'; matched = ownedTA.get(key); }
       }
       const score = subjectScore(c, title);
       if (dedup_status === 'duplicate') dupes++;
       let decision = c.decision, reason = c.reason;
-      // only auto-suggest on rows the curator hasn't decided
-      if (c.decision === 'pending') {
+      if (c.decision === 'pending') { // only auto-suggest on undecided rows
         if (dedup_status === 'duplicate') { decision = 'skip'; reason = `duplicate of ${matched}`; }
         else if (score < 0.4) { decision = 'skip'; reason = 'weak subject relevance'; weak++; }
       }
+      // Mark done only if we got a usable result (fetched OR resolved as duplicate
+      // by ARK). A pure fetch-failure leaves triaged_at unset so resume retries it.
+      const resolved = m || dedup_status === 'duplicate';
       const update = {
         dedup_status, matched_book_id: matched, subject_score: score,
         title: parsed?.title || null, author: parsed?.author || null,
         date: parsed?.date || null, manifest_language: parsed?.language || null,
-        canvas_count: parsed?.canvas_count ?? null,
-        triaged_at: new Date(), decision, reason,
+        canvas_count: parsed?.canvas_count ?? null, decision, reason,
+        ...(resolved ? { triaged_at: new Date() } : {}),
       };
-      if (COMMIT) await candCol.updateOne({ _id: c._id }, { $set: update });
+      pendingOps.push({ updateOne: { filter: { _id: c._id }, update: { $set: update } } });
       done++;
     }));
+    if (pendingOps.length >= 100) await flush();
     process.stdout.write(`\r  ${done}/${todo.length}  (enriched ${enriched}, fetch-fail ${failed}, dup ${dupes}, weak ${weak})   `);
-    await sleep(300);
+    await sleep(200);
   }
+  await flush();
   process.stdout.write('\n');
 
   const summary = { triaged: done, enriched, fetch_failed: failed, duplicates: dupes, weak_subject: weak };
