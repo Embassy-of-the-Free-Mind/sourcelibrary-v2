@@ -7,6 +7,7 @@ import { BookOpen, X, Check, Loader2 } from 'lucide-react';
 import { books } from '@/lib/api-client';
 import type { Page } from '@/lib/types';
 import { buildCoverUpdate } from '@/lib/cover-fields';
+import { getPageImageUrl } from '@/lib/page-image-url';
 import { AuthCheck } from '../auth/AuthCheck';
 
 interface CoverImagePickerProps {
@@ -44,25 +45,6 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose]);
-
-  const getPageImageUrl = (page: Page) => {
-    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
-
-    // Split pages: use cropped_photo (the actual half-page image).
-    // `page.photo` points at the full uncropped spread for these, so
-    // returning it would render both halves of the spread instead of
-    // the individual page.
-    if (page.split_from_spread || page.crop) {
-      return typedPage.cropped_photo || page.photo;
-    }
-
-    // Prefer pre-generated R2 thumbnail (fast CDN)
-    if (page.thumbnail_blob) return page.thumbnail_blob;
-
-    const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
-    if (!baseUrl) return null;
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
-  };
 
   const selectCover = async (page: Page) => {
     setSaving(page.id);
@@ -167,7 +149,10 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
             <div className="p-4 overflow-y-auto max-h-[calc(85vh-80px)]">
               <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
                 {pages.map((page) => {
-                  const imageUrl = getPageImageUrl(page);
+                  // Canonical resolver: always a size-bounded thumbnail (pre-sized
+                  // R2 variant, IIIF resize, or /api/image proxy) — never the raw
+                  // full-res scan. Fixes the picker loading multi-MB images per cell.
+                  const imageUrl = getPageImageUrl(page, 'thumb');
                   const typedPage = page as Page & { archived_photo?: string };
                   const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
                   const isCurrentCover = currentThumbnail?.includes(encodeURIComponent(baseUrl));
@@ -188,6 +173,8 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                           src={imageUrl}
                           alt={`Page ${page.page_number}`}
                           className="w-full h-full object-cover"
+                          loading="lazy"
+                          decoding="async"
                         />
                       )}
                       {isCurrentCover && (
