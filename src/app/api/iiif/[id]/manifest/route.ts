@@ -258,6 +258,27 @@ export async function GET(
       ])
       .toArray();
 
+    // Visual art (content_type:'artwork') has no `pages` documents — it's a single
+    // object/image. Synthesize one canvas from the book-level image fields so artworks
+    // get a valid IIIF manifest just like books. full_width/full_height match image_full
+    // (both written at import from the same buffer), so canvas dims line up with the body.
+    if (pagesLight.length === 0) {
+      const artImage = (book as any).image_full || (book as any).archived_full_url || (book as any).image_display || book.thumbnail;
+      if (artImage) {
+        pagesLight.push({
+          page_number: 1,
+          photo: artImage,
+          photo_original: (book as any).image_full || (book as any).archived_full_url || artImage,
+          image_width: (book as any).full_width || undefined,
+          image_height: (book as any).full_height || undefined,
+          thumbnail_blob: (book as any).image_thumb || (book as any).image_display || book.thumbnail,
+          thumbnail: (book as any).image_display || book.thumbnail,
+          hasOcr: false,
+          hasTranslation: false,
+        });
+      }
+    }
+
     const manifestId = `${BASE}/api/iiif/${id}/manifest`;
     const originalLang = langCode(book.language);
 
