@@ -25,8 +25,12 @@ import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 
 const COMMIT = process.argv.includes('--commit');
+// Optional: --items <path.json> supplies the import list (array of item objects with the
+// same shape as the built-in ITEMS below). Lets the same importer drive curated sweeps.
+const itemsArgIdx = process.argv.indexOf('--items');
+const ITEMS_FILE = itemsArgIdx > -1 ? process.argv[itemsArgIdx + 1] : null;
 
-const ITEMS = [
+const BUILTIN_ITEMS = [
   {
     pdf_url: 'https://dspace.ut.ee/server/api/core/bitstreams/8d041997-43a7-4d59-817d-63ba80b3cdf5/content',
     item_url: 'https://dspace.ut.ee/items/4a243232-8f87-48c6-b95d-e5a56d61db1c',
@@ -126,6 +130,7 @@ async function importItem(db, it) {
 }
 
 async function main() {
+  const ITEMS = ITEMS_FILE ? JSON.parse(readFileSync(ITEMS_FILE, 'utf8')) : BUILTIN_ITEMS;
   let client, db;
   if (COMMIT) { client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 3 }); await client.connect(); db = client.db('bookstore'); }
   for (const it of ITEMS) { console.log(`\n=== ${it.display_title} (${it.published}) ===`); await importItem(db, it); }
