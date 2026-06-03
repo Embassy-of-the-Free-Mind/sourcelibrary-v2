@@ -79,7 +79,10 @@ export default function DeepZoomViewer({ items }: { items: DeepZoomItem[] }) {
         animationTime: 0.8,
         springStiffness: 7,
         minZoomImageRatio: 0.7,
-        maxZoomPixelRatio: 2.5, // allow zooming past 1:1 to inspect the engraving grain
+        // Cap zoom at native resolution. Past 1:1 the viewer just magnifies
+        // source pixels into mush (the "blur" — most visible on softer/more
+        // compressed masters). 1.0 keeps every zoom level showing real detail.
+        maxZoomPixelRatio: 1.0,
         visibilityRatio: 1,
         constrainDuringPan: true,
         zoomPerScroll: 1.4,
