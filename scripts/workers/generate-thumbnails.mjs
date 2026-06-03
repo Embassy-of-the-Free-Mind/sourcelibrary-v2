@@ -202,6 +202,18 @@ async function main() {
     },
   };
 
+  // Require a source image to crop from. Pages with no archived/cropped/photo
+  // can't be thumbnailed — the work-item loop skips them — but without this
+  // they still match the filter and re-appear in every `--limit` batch, so a
+  // front cluster of source-less pages stalls the batch loop before it reaches
+  // processable pages further back (and the loop never terminates).
+  matchFilter.$or = [
+    { archived_photo: { $ne: null } },
+    { cropped_photo: { $ne: null } },
+    { photo_original: { $ne: null } },
+    { photo: { $ne: null } },
+  ];
+
   if (ARCHIVED_ONLY) {
     matchFilter.archived_photo = { $exists: true, $ne: '' };
   }
