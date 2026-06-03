@@ -557,46 +557,51 @@ export async function PATCH(
     }
 
     // Sync changes to materialized gallery_images collection
-    let gallerySyncStatus: 'ok' | 'removed_low_quality' | 'no_change' | { error: string } = 'no_change';
+    let gallerySyncStatus: 'ok' | 'hidden_low_quality' | 'no_change' | { error: string } = 'no_change';
     try {
       const galleryImageId = `${pageId}-${detectionIndex}`;
 
-      // If quality dropped below materialization threshold, remove from gallery
-      if (typeof body.galleryQuality === 'number' && body.galleryQuality < 0.5) {
-        await db.collection('gallery_images').deleteOne({ id: galleryImageId, ...tenantGalleryFilter });
-        gallerySyncStatus = 'removed_low_quality';
-      } else {
-        const galleryUpdate: Record<string, unknown> = {};
-        if (typeof body.galleryQuality === 'number') {
-          galleryUpdate.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
-        }
-        if (typeof body.featured === 'boolean') galleryUpdate.featured = body.featured;
-        if (typeof body.museumDescription === 'string') galleryUpdate.museum_description = body.museumDescription;
-        if (typeof body.description === 'string') galleryUpdate.description = body.description;
-        if (body.metadata && typeof body.metadata === 'object') galleryUpdate.metadata = body.metadata;
-        if (typeof body.rotation === 'number') galleryUpdate.rotation = body.rotation;
-        if (body.bbox) galleryUpdate.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
+      // Always upsert — never delete. When a curator lowers quality below the
+      // 0.5 materialization threshold the row is HIDDEN from the public gallery
+      // by the gallery_quality >= minQuality read-filter gate (see
+      // api/gallery/route.ts), not destroyed. It stays recoverable: raising
+      // quality back ≥ 0.5 makes it reappear, and admin/curation views
+      // (minQuality=0) can still see it. (Source of truth
+      // pages.detected_images[].gallery_quality was already updated above.)
+      const galleryUpdate: Record<string, unknown> = {};
+      if (typeof body.galleryQuality === 'number') {
+        galleryUpdate.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
+      }
+      if (typeof body.featured === 'boolean') galleryUpdate.featured = body.featured;
+      if (typeof body.museumDescription === 'string') galleryUpdate.museum_description = body.museumDescription;
+      if (typeof body.description === 'string') galleryUpdate.description = body.description;
+      if (body.metadata && typeof body.metadata === 'object') galleryUpdate.metadata = body.metadata;
+      if (typeof body.rotation === 'number') galleryUpdate.rotation = body.rotation;
+      if (body.bbox) galleryUpdate.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
 
-        if (Object.keys(galleryUpdate).length > 0) {
-          galleryUpdate.updated_at = new Date();
-          // Upsert: if a prior edit dropped quality < 0.5 the row was deleted
-          // (line above). Without upsert, raising quality back ≥ 0.5 would leave
-          // the gallery list view permanently out of sync with pages.detected_images.
-          // On insert, also write the foreign-key fields needed for queries.
-          const result = await db.collection('gallery_images').updateOne(
-            { id: galleryImageId, ...tenantGalleryFilter },
-            {
-              $set: galleryUpdate,
-              $setOnInsert: {
-                id: galleryImageId,
-                page_id: pageId,
-                detection_index: detectionIndex,
-              },
+      const lowQuality = typeof body.galleryQuality === 'number' && body.galleryQuality < 0.5;
+
+      if (Object.keys(galleryUpdate).length > 0) {
+        galleryUpdate.updated_at = new Date();
+        // Upsert (never delete): keeps the gallery list view in sync with
+        // pages.detected_images and preserves the row when quality drops < 0.5.
+        // On insert, also write the foreign-key fields needed for queries.
+        const result = await db.collection('gallery_images').updateOne(
+          { id: galleryImageId, ...tenantGalleryFilter },
+          {
+            $set: galleryUpdate,
+            $setOnInsert: {
+              id: galleryImageId,
+              page_id: pageId,
+              detection_index: detectionIndex,
             },
-            { upsert: true },
-          );
-          gallerySyncStatus = result.upsertedCount > 0 || result.modifiedCount > 0 ? 'ok' : 'no_change';
-        }
+          },
+          { upsert: true },
+        );
+        const changed = result.upsertedCount > 0 || result.modifiedCount > 0;
+        gallerySyncStatus = lowQuality ? 'hidden_low_quality' : changed ? 'ok' : 'no_change';
+      } else if (lowQuality) {
+        gallerySyncStatus = 'hidden_low_quality';
       }
     } catch (syncErr) {
       console.error('Gallery images sync failed:', syncErr);
