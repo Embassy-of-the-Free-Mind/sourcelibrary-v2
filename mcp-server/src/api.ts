@@ -152,6 +152,8 @@ export async function searchLibrary(args: {
 export async function searchPassages(args: {
   query: string;
   language?: string;
+  languages?: string[];
+  exclude_languages?: string[];
   year_from?: number;
   year_to?: number;
   book_id?: string;
@@ -163,6 +165,10 @@ export async function searchPassages(args: {
     limit: String(Math.min(args.limit || 20, 50)),
   });
   if (args.language) params.set("language", args.language);
+  if (Array.isArray(args.languages) && args.languages.length > 0)
+    params.set("languages", args.languages.join(","));
+  if (Array.isArray(args.exclude_languages) && args.exclude_languages.length > 0)
+    params.set("exclude_languages", args.exclude_languages.join(","));
   if (args.year_from) params.set("year_from", String(args.year_from));
   if (args.year_to) params.set("year_to", String(args.year_to));
   if (args.book_id) params.set("book_id", args.book_id);
@@ -199,6 +205,8 @@ export async function searchPassages(args: {
 export async function searchConcept(args: {
   query: string;
   language?: string;
+  languages?: string[];
+  exclude_languages?: string[];
   year_from?: number;
   year_to?: number;
   limit?: number;
@@ -209,6 +217,10 @@ export async function searchConcept(args: {
     limit: String(Math.min(args.limit || 15, 50)),
   });
   if (args.language) params.set("language", args.language);
+  if (Array.isArray(args.languages) && args.languages.length > 0)
+    params.set("languages", args.languages.join(","));
+  if (Array.isArray(args.exclude_languages) && args.exclude_languages.length > 0)
+    params.set("exclude_languages", args.exclude_languages.join(","));
   if (args.year_from) params.set("year_min", String(args.year_from));
   if (args.year_to) params.set("year_max", String(args.year_to));
 
