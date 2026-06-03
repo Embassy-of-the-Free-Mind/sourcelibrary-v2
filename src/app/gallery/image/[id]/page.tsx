@@ -26,13 +26,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  Loader2
+  Loader2,
+  Eye
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
 import AiBadge, { formatModelName } from '@/components/ui/AiBadge';
 import { BookLoader } from '@/components/ui/BookLoader';
-import { gallery } from '@/lib/api-client';
+import { gallery, views } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import type { GalleryImageDetail, GalleryItem, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
@@ -162,6 +163,7 @@ export default function ImageDetailPage({
         preload.onerror = () => requestAnimationFrame(() => setImageOpacity(1));
         preload.src = json.imageUrl;
         sendGAEvent({ action: 'view_item', category: 'gallery', label: imageId!, content_type: 'image' });
+        views.record('image', imageId!);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
       } finally {
@@ -362,6 +364,7 @@ export default function ImageDetailPage({
       setImageId(imgId);
       setData(json);
       sendGAEvent({ action: 'view_item', category: 'gallery', label: imgId, content_type: 'image' });
+      views.record('image', imgId);
       requestAnimationFrame(() => setImageOpacity(1));
     } catch {
       // On error, fade back in with old content
@@ -743,6 +746,15 @@ export default function ImageDetailPage({
             )}
 
             <div className="flex items-center gap-1 flex-shrink-0 overflow-x-auto">
+              {(data?.viewCount ?? 0) > 0 && (
+                <span
+                  className="hidden sm:inline-flex items-center gap-1 px-1.5 text-sm text-stone-500 tabular-nums flex-shrink-0"
+                  title={`${data!.viewCount!.toLocaleString()} views`}
+                >
+                  <Eye className="w-4 h-4" />
+                  {data!.viewCount!.toLocaleString()}
+                </span>
+              )}
               {imageId && (
                 <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0">
                   <LikeButton

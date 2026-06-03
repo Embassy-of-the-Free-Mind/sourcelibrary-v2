@@ -133,6 +133,7 @@ export interface GalleryImageDetail {
   galleryQuality?: number | null;
   galleryRationale?: string | null;
   featured?: boolean;
+  viewCount?: number;
   metadata?: ImageMetadata | null;
   museumDescription?: string | null;
   bbox?: BBox;
