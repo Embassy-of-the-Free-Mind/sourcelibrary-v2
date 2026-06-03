@@ -3802,6 +3802,7 @@ Rules:
             $or: [
               { pages_ocr: { $gt: 0 } }, // Already has some OCR (preview pass done)
               { 'pipeline_auto.recitation_retry': true }, // All pages were RECITATION-blocked — retry with fallback model regardless of pages_ocr
+              { 'pipeline_auto.recitation_retry_lite': true }, // 2.5-flash also RECITATION-blocked — retry with gemini-3.1-flash-lite regardless of pages_ocr
             ],
           }},
           { $addFields: {
@@ -3818,7 +3819,7 @@ Rules:
             },
           }},
           { $sort: { _priority: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
@@ -3845,10 +3846,18 @@ Rules:
           }
 
           // Direct OCR submission — downloads images on Hetzner, submits to Gemini Batch API
-          // Use fallback model for RECITATION retries (gemini-3-flash-preview triggers it)
+          // Use a fallback model for RECITATION retries (gemini-3-flash-preview triggers it).
+          // 3-tier escalation: recitation_retry -> gemini-2.5-flash; recitation_retry_lite ->
+          // gemini-3.1-flash-lite (proven to bypass RECITATION where 2.5-flash also fails).
+          const isLiteRetry = book.pipeline_auto?.recitation_retry_lite === true;
           const isRecitationRetry = book.pipeline_auto?.recitation_retry === true;
-          const ocrOpts = isRecitationRetry ? { modelOverride: 'gemini-2.5-flash' } : {};
-          if (isRecitationRetry) console.log(`  RECITATION retry with gemini-2.5-flash: ${label}`);
+          const ocrOpts = isLiteRetry
+            ? { modelOverride: OCR_MODEL_LITE }
+            : isRecitationRetry
+              ? { modelOverride: 'gemini-2.5-flash' }
+              : {};
+          if (isLiteRetry) console.log(`  RECITATION retry with ${OCR_MODEL_LITE}: ${label}`);
+          else if (isRecitationRetry) console.log(`  RECITATION retry with gemini-2.5-flash: ${label}`);
           else console.log(`  Submitting OCR: ${label}...`);
           const result = await submitOcrDirectly(db, book, ocrOpts);
 
@@ -3862,8 +3871,14 @@ Rules:
           } else {
             const statusExtra = { ocr_job_name: result.jobName, retry_count: 0 };
             await setPipelineStatus(db, book.id, 'ocr_submitted', statusExtra);
-            // Clear recitation_retry flag after successful resubmission
-            if (isRecitationRetry) {
+            // Clear whichever recitation retry flag was set after successful resubmission.
+            // (If this attempt also hits RECITATION, batch-collector re-flags the next tier.)
+            if (isLiteRetry) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $unset: { 'pipeline_auto.recitation_retry_lite': '' } }
+              );
+            } else if (isRecitationRetry) {
               await db.collection('books').updateOne(
                 { id: book.id },
                 { $unset: { 'pipeline_auto.recitation_retry': '' } }
