@@ -58,10 +58,22 @@ export function getBookThumbnailUrl(
   book: { thumbnail?: string | null; thumbnail_blob?: string | null; image_display?: string | null; image_thumb?: string | null },
   size: 'display' | 'thumb' = 'display'
 ): string | null {
-  // Prefer canonical image_* fields, fall back to legacy thumbnail/thumbnail_blob
+  // Prefer canonical image_* fields, fall back to legacy thumbnail/thumbnail_blob.
+  //
+  // Artwork exception: ~98% of artworks store a 150px `book-thumbnails/{id}-thumb.jpg`
+  // in `image_thumb` while their real high-res lives at `artwork/art-*.jpg`
+  // (which has a 600px `-thumb.jpg` variant). Card grids render ~300px CSS cells —
+  // ~600px on a 2x-DPR display — so the 150px thumb upscales ~4x and looks badly
+  // pixelated (reported on /collections/hermetic-image, 2026-06-03). When an
+  // artwork source URL is available, derive the thumb from it (→ 600px) instead
+  // of the 150px `book-thumbnails/` variant. (#1727 cost policy: still a tier-1
+  // R2 variant, never /_next/image.)
+  const artworkSource = (book.image_display?.includes('/artwork/') && book.image_display)
+    || (book.thumbnail?.includes('/artwork/') && book.thumbnail)
+    || null;
   const raw = size === 'display'
     ? (book.image_display || book.thumbnail || book.thumbnail_blob || null)
-    : (book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
+    : (artworkSource || book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
 
   // Wikimedia Commons images: serve the upload.wikimedia.org CDN URL as-is.
@@ -78,10 +90,17 @@ export function getBookThumbnailUrl(
   if (!raw.includes('images.sourcelibrary.org/')) return raw;
 
   // Artwork URLs: use thumb variants for 'thumb' size, full for 'display'.
+  // Three R2 variants exist per artwork: `-thumb.jpg` (600px), `.jpg` (2000px),
+  // `-full.jpg` (original, 3-4MB). Card grids want the 600px thumb; detail/hero
+  // wants full. Normalize whichever suffix `raw` carries to the requested one.
   if (raw.includes('/artwork/')) {
     if (size === 'thumb') {
-      // Prefer -thumb.jpg for card grids
+      // Prefer -thumb.jpg (600px) for card grids — map both -full and the bare
+      // 2000px display variant down to it (the bare-.jpg case is the common one,
+      // since image_display / thumbnail hold the 2000px URL).
+      if (raw.endsWith('-thumb.jpg')) return raw;
       if (raw.endsWith('-full.jpg')) return raw.replace(/-full\.jpg$/, '-thumb.jpg');
+      if (raw.endsWith('.jpg')) return raw.replace(/\.jpg$/, '-thumb.jpg');
       return raw;
     }
     // Display size: prefer -full.jpg

@@ -173,16 +173,41 @@ describe('getBookThumbnailUrl', () => {
     expect(result).not.toContain('commons.wikimedia.org');
   });
 
-  // Artwork URLs without -thumb or -full suffix should pass through
-  it('passes through artwork URLs without size suffix', () => {
+  // A bare artwork .jpg is the 2000px display variant; thumb mode must map it
+  // down to the 600px -thumb.jpg (the bare 2000px would be ~1.5MB into a ~300px
+  // card cell). Display mode keeps the bare .jpg (there's nothing to upgrade).
+  it('maps a bare artwork .jpg to -thumb.jpg in thumb mode', () => {
     const book = {
       thumbnail: 'https://images.sourcelibrary.org/artwork/some-image.jpg',
       thumbnail_blob: 'https://images.sourcelibrary.org/artwork/some-image.jpg',
     };
-    // Display: no -thumb to rewrite, passes through
     expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/some-image.jpg');
-    // Thumb: no -full to rewrite, passes through
-    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/artwork/some-image.jpg');
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/artwork/some-image-thumb.jpg');
+  });
+
+  // Regression for /collections/hermetic-image low-res grid (2026-06-03):
+  // ~98% of artworks store a 150px book-thumbnails/{id}-thumb.jpg in image_thumb
+  // while their real high-res lives at artwork/art-*.jpg (with a 600px -thumb).
+  // thumb mode must prefer the 600px artwork thumb over the 150px book-thumbnail.
+  it('prefers the 600px artwork thumb over a 150px book-thumbnails image_thumb', () => {
+    const book = {
+      image_display: 'https://images.sourcelibrary.org/artwork/art-khunrath.jpg',
+      image_thumb: 'https://images.sourcelibrary.org/book-thumbnails/abc123-thumb.jpg',
+      thumbnail: 'https://images.sourcelibrary.org/artwork/art-khunrath.jpg',
+    };
+    // Was returning the 150px book-thumbnails URL → 4x upscale in card cells.
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/artwork/art-khunrath-thumb.jpg');
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/art-khunrath.jpg');
+  });
+
+  // Non-artwork books keep using image_thumb (their pages/ thumbnails are the
+  // right source — the artwork exception must not touch them).
+  it('keeps image_thumb for non-artwork books', () => {
+    const book = {
+      image_display: 'https://images.sourcelibrary.org/pages/abc/0002.jpg',
+      image_thumb: 'https://images.sourcelibrary.org/pages/abc/0002-thumb.jpg',
+    };
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/pages/abc/0002-thumb.jpg');
   });
 
   // Default size is 'display'
