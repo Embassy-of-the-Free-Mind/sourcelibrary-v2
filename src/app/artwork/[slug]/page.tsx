@@ -29,12 +29,22 @@ async function getArtwork(slug: string) {
   // arrows walk that set in order (e.g. the 49 hashika-e measles prints). This matters
   // most for collections of anonymous works, where author-scoping would otherwise wander
   // through every "Anonymous" artwork in the library. Falls back to same-artist when the
-  // work isn't in any collection.
-  const navScope: Record<string, unknown> = collectionSlugs.length > 0
-    ? { collections: collectionSlugs[0] }
-    : { author: artwork.author };
+  // work isn't in any collection — but NOT for generic/placeholder author values
+  // ("Various", "Unknown", "Anonymous", …), where same-author scoping would walk through
+  // hundreds of unrelated works (e.g. ~160 author:"Various" prints). In that case we
+  // suppress prev/next entirely: no arrows is better than jumping to something unrelated.
+  const GENERIC_AUTHOR = /^\s*(various|unknown|unidentified|unattributed|anonymous|anon|n\.?\s*a\.?)\s*$/i;
+  const hasUsableAuthor =
+    typeof artwork.author === 'string' && artwork.author.trim() !== '' && !GENERIC_AUTHOR.test(artwork.author);
+  const navScope: Record<string, unknown> | null =
+    collectionSlugs.length > 0
+      ? { collections: collectionSlugs[0] }
+      : hasUsableAuthor
+      ? { author: artwork.author }
+      : null;
 
-  // Get prev/next works (chronologically by published date, then title)
+  // Get prev/next works (chronologically by published date, then title). When navScope
+  // is null (no collection + generic author) we skip the queries so no arrows render.
   const [collections, prevWorkRaw, nextWorkRaw] = await Promise.all([
     collectionSlugs.length > 0
       ? db.collection('collections')
@@ -43,29 +53,33 @@ async function getArtwork(slug: string) {
           .toArray()
       : Promise.resolve([]),
     // Previous: earlier in sort order within scope
-    db.collection('books').findOne(
-      {
-        ...navScope,
-        resource_type: { $exists: true },
-        $or: [
-          { published: { $lt: artwork.published || '' } },
-          { published: artwork.published || '', title: { $lt: artwork.title } },
-        ],
-      },
-      { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: -1, title: -1 } }
-    ),
+    navScope
+      ? db.collection('books').findOne(
+          {
+            ...navScope,
+            resource_type: { $exists: true },
+            $or: [
+              { published: { $lt: artwork.published || '' } },
+              { published: artwork.published || '', title: { $lt: artwork.title } },
+            ],
+          },
+          { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: -1, title: -1 } }
+        )
+      : Promise.resolve(null),
     // Next: later in sort order within scope
-    db.collection('books').findOne(
-      {
-        ...navScope,
-        resource_type: { $exists: true },
-        $or: [
-          { published: { $gt: artwork.published || '' } },
-          { published: artwork.published || '', title: { $gt: artwork.title } },
-        ],
-      },
-      { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: 1, title: 1 } }
-    ),
+    navScope
+      ? db.collection('books').findOne(
+          {
+            ...navScope,
+            resource_type: { $exists: true },
+            $or: [
+              { published: { $gt: artwork.published || '' } },
+              { published: artwork.published || '', title: { $gt: artwork.title } },
+            ],
+          },
+          { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: 1, title: 1 } }
+        )
+      : Promise.resolve(null),
   ]);
 
   const prevWork = prevWorkRaw ? { slug: prevWorkRaw.slug, title: prevWorkRaw.display_title || prevWorkRaw.title } : null;
