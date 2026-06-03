@@ -7,6 +7,7 @@ import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
 
@@ -66,6 +67,23 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const tenantContext = getTenantContextFromRequest(request.headers);
     const query = searchParams.get('q') || '';
+
+    // Anonymous visitors get 5 distinct searches/hour, then a sign-in prompt.
+    // Counts distinct query strings (not raw requests) so typeahead and filter
+    // refinement of one search don't burn the allowance. Signed-in users, SEO
+    // crawlers, and internal warmers are exempt (see anon-gate.ts).
+    const gate = await anonSearchGate(request, query);
+    if (!gate.allowed) {
+      return NextResponse.json(
+        {
+          error: 'You\'ve used your 5 free searches this hour. Sign in (free) to keep searching.',
+          code: 'SIGNIN_REQUIRED',
+          sign_in: SIGNIN_URL,
+        },
+        { status: 401, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : {} },
+      );
+    }
+
     const limit = Math.min(parseInt(searchParams.get('limit') || '8'), 12);
     const galleryLimit = Math.min(parseInt(searchParams.get('gallery_limit') || '6'), 12);
 
