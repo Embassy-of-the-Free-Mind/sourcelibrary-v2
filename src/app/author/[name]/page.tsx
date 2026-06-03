@@ -542,7 +542,10 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {artworks.slice(0, 12).map(art => {
-                const thumb = art.image_thumb || art.image_display || getBookThumbnailUrl(art);
+                // Route through the resolver (size 'thumb') so artwork URL
+                // normalization applies — reading image_thumb raw re-introduces
+                // the 150px-upscaled blur if an import ever writes a small thumb.
+                const thumb = getBookThumbnailUrl(art, 'thumb') || art.image_display;
                 return (
                   <Link
                     key={art.id}
