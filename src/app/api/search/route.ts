@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
@@ -197,6 +198,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       };
       // Transient field for work-level dedup (stripped before response)
       if ((typedBook as any).work_id) (result as any)._work_id = (typedBook as any).work_id;
+      if ((typedBook as any).text_role) (result as any)._text_role = (typedBook as any).text_role;
       return result;
     }
 
@@ -230,7 +232,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, text_role: 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -445,7 +447,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const pageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, text_role: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -513,6 +515,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail_blob: (book as any).thumbnail_blob,
         };
         if ((book as any).work_id) (pageResult as any)._work_id = (book as any).work_id;
+        if ((book as any).text_role) (pageResult as any)._text_role = (book as any).text_role;
         results.push(pageResult);
       }
     }
@@ -545,7 +548,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -584,6 +587,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             quality_score: (book as any).quality_score,
           };
           if ((book as any).work_id) (semResult as any)._work_id = (book as any).work_id;
+          if ((book as any).text_role) (semResult as any)._text_role = (book as any).text_role;
           results.push(semResult);
         }
       }
@@ -617,7 +621,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -656,6 +660,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail_blob: book.thumbnail_blob,
         };
         if (book.work_id) (spResult as any)._work_id = book.work_id;
+        if ((book as any).text_role) (spResult as any)._text_role = (book as any).text_role;
         results.push(spResult);
       }
     }
@@ -705,11 +710,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const bTitleExact = bTitle.includes(queryLower);
         if (aTitleExact !== bTitleExact) return aTitleExact ? -1 : 1;
 
-        // 3. Original language beats modern English translations
-        // A Latin "De Occulta Philosophia" should rank above an English reprint
-        const aOriginal = a.language !== ENGLISH ? 1 : 0;
-        const bOriginal = b.language !== ENGLISH ? 1 : 0;
-        if (aOriginal !== bOriginal) return bOriginal - aOriginal;
+        // 3. Closeness to the source (#2395): original-language texts beat
+        // period translations beat modern translations. text_role is the
+        // classified signal; language is the fallback proxy for pages and
+        // unclassified imports (see src/lib/text-role.ts).
+        const aRank = textRoleRank((a as any)._text_role, a.language);
+        const bRank = textRoleRank((b as any)._text_role, b.language);
+        if (aRank !== bRank) return aRank - bRank;
 
         // 4. Older editions rank higher (earlier = closer to source)
         const aYear = parseInt(a.published?.match(/\d{3,4}/)?.[0] || '9999');
@@ -753,7 +760,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
 
     // Apply offset and strip transient fields
     const paginatedResults = dedupedResults.slice(offset, offset + limit)
-      .map(r => { const { _work_id, ...clean } = r as any; return clean as SearchResult; });
+      .map(r => { const { _work_id, _text_role, ...clean } = r as any; return clean as SearchResult; });
 
     // For exact year searches, find nearby books (within 5 years)
     let nearby: SearchResult[] = [];

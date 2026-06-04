@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
@@ -442,10 +443,11 @@ async function searchBooks(
     const bTitleMatch = bTitle.includes(queryLower);
     if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
 
-    // 2. Original language beats English translations
-    const aOriginal = a.language !== 'English' ? 1 : 0;
-    const bOriginal = b.language !== 'English' ? 1 : 0;
-    if (aOriginal !== bOriginal) return bOriginal - aOriginal;
+    // 2. Closeness to the source (#2395): originals beat period translations
+    // beat modern translations; language is the fallback for unclassified rows.
+    const aRank = textRoleRank(a.text_role, a.language);
+    const bRank = textRoleRank(b.text_role, b.language);
+    if (aRank !== bRank) return aRank - bRank;
 
     // 3. Older editions rank higher (earlier = closer to source)
     const aYear = parsePublishedYear(a.published);
