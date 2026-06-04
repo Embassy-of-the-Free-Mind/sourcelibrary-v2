@@ -733,9 +733,22 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // Reciprocal Rank Fusion: primary sort by fused lane score (desc),
         // ladder as the deterministic tiebreaker. Unlike the ladder, this lets
         // a strongly-cross-confirmed page outrank a weakly-matched book.
+        //
+        // text_role demotion (#2395): the ladder tier only breaks RRF ties, so
+        // a popular old translation (Evans-Wentz, Jowett) still outranked the
+        // original via lane cross-confirmation. Scale the fused score down for
+        // CLASSIFIED translations only — unclassified results are untouched,
+        // so this is surgical (265 books + their pages), not a filter.
+        const rrfAdjusted = (r: SearchResult) => {
+          const s = rrf.get(r.id) ?? 0;
+          const tr = (r as any)._text_role;
+          if (tr === 'modern-translation') return s / 1.5;
+          if (tr === 'period-translation') return s / 1.2;
+          return s;
+        };
         results.sort((a, b) => {
-          const sa = rrf.get(a.id) ?? 0;
-          const sb = rrf.get(b.id) ?? 0;
+          const sa = rrfAdjusted(a);
+          const sb = rrfAdjusted(b);
           if (sb !== sa) return sb - sa;
           return ladderCompare(a, b);
         });
