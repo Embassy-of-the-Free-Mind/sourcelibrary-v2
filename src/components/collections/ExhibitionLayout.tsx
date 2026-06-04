@@ -134,6 +134,54 @@ function linkBookNames(text: string, books: BookRef[]): React.ReactNode {
   return <>{parts}</>;
 }
 
+/**
+ * Renders curated text with inline markdown-style links: `[label](href)`.
+ * Internal hrefs (starting with `/`) become Next links and stay relative,
+ * so they resolve on tenant subdomains too (see CLAUDE.md, Tenant Subdomain
+ * Lockdown). External hrefs open in a new tab. Plain-text segments still get
+ * automatic book-title linking via linkBookNames.
+ *
+ * Lets exhibition copy cite sources directly: quote → `/book/<id>?page=N`,
+ * illustration → `/gallery/image/<id>`.
+ */
+function renderRichText(text: string, books: BookRef[]): React.ReactNode {
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+  const parts: React.ReactNode[] = [];
+  let lastIdx = 0;
+  let match;
+  while ((match = re.exec(text)) !== null) {
+    const [full, label, href] = match;
+    if (match.index > lastIdx) {
+      parts.push(
+        <React.Fragment key={`t-${lastIdx}`}>
+          {linkBookNames(text.slice(lastIdx, match.index), books)}
+        </React.Fragment>
+      );
+    }
+    parts.push(
+      href.startsWith('/') ? (
+        <Link key={`l-${match.index}`} href={href} className="text-accent-rust hover:underline">
+          {label}
+        </Link>
+      ) : (
+        <a key={`l-${match.index}`} href={href} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
+          {label}
+        </a>
+      )
+    );
+    lastIdx = match.index + full.length;
+  }
+  if (parts.length === 0) return linkBookNames(text, books);
+  if (lastIdx < text.length) {
+    parts.push(
+      <React.Fragment key={`t-${lastIdx}`}>
+        {linkBookNames(text.slice(lastIdx), books)}
+      </React.Fragment>
+    );
+  }
+  return <>{parts}</>;
+}
+
 // ─── Component: Hook ────────────────────────────────────────────
 
 function HookBlock({ text, attribution }: { text: string; attribution?: string }) {
@@ -193,7 +241,7 @@ function SectionsBlock({ sections, books }: {
                 <span className="text-sm text-muted whitespace-nowrap">{section.period}</span>
               )}
             </div>
-            <p className="text-secondary leading-relaxed max-w-3xl">{section.description}</p>
+            <p className="text-secondary leading-relaxed max-w-3xl">{renderRichText(section.description || '', books)}</p>
           </div>
 
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
@@ -576,7 +624,7 @@ function ThematicGalleryBlock({ clusters, books }: {
               {cluster.theme}
             </h3>
             {cluster.description && (
-              <p className="text-sm text-muted mb-4">{linkBookNames(cluster.description, books)}</p>
+              <p className="text-sm text-muted mb-4">{renderRichText(cluster.description, books)}</p>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Hero image — spans 2 cols on desktop */}
@@ -741,7 +789,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
               <div key={i} className="max-w-3xl">
                 {(block.paragraphs || []).map((p: string, pi: number) => (
                   <p key={pi} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                    {linkBookNames(p, books)}
+                    {renderRichText(p, books)}
                   </p>
                 ))}
               </div>
