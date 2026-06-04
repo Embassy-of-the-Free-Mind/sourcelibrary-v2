@@ -33,6 +33,8 @@ export interface CatalogBook {
   categories: string[];
   collections: string[];
   resource_type: string | null;
+  /** original | period-translation | modern-translation — see src/lib/text-role.ts (#2395) */
+  text_role: string | null;
 }
 
 /** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
@@ -59,7 +61,7 @@ export interface CatalogBookDetail extends CatalogBook {
   updated_at: string | null;
 }
 
-const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type';
+const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 

@@ -86,6 +86,7 @@ function transformBook(book) {
     place_published: book.place_published || null,
     doi: book.doi || null,
     work_id: book.work_id || null,
+    text_role: book.text_role || null,
     resource_type: book.resource_type || null,
     source_url: book.image_source?.source_url || null,
     provider_name: book.image_source?.provider_name || null,
@@ -168,7 +169,7 @@ const projection = {
   // Book detail fields
   summary: 1, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1,
   publisher: 1, place_published: 1, doi: 1, work_id: 1,
-  resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1,
+  resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1, text_role: 1,
   source_work_dates: 1,
   'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
   'ai_metadata.description': 1, description: 1, subject_keywords: 1,
