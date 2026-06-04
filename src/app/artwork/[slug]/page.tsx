@@ -18,7 +18,8 @@ async function getArtwork(slug: string) {
   // Try exact slug match, then with art- prefix
   const slugsToTry = [slug, `art-${slug}`];
   const artwork = await db.collection('books').findOne(
-    { slug: { $in: slugsToTry }, resource_type: { $exists: true } },
+    // content_type:'book' wins: never render a textual book as artwork even via a direct /artwork/<slug> URL.
+    { slug: { $in: slugsToTry }, resource_type: { $exists: true }, content_type: { $ne: 'book' } },
   );
   if (!artwork) return null;
 
@@ -58,6 +59,7 @@ async function getArtwork(slug: string) {
           {
             ...navScope,
             resource_type: { $exists: true },
+            content_type: { $ne: 'book' },
             $or: [
               { published: { $lt: artwork.published || '' } },
               { published: artwork.published || '', title: { $lt: artwork.title } },
@@ -72,6 +74,7 @@ async function getArtwork(slug: string) {
           {
             ...navScope,
             resource_type: { $exists: true },
+            content_type: { $ne: 'book' },
             $or: [
               { published: { $gt: artwork.published || '' } },
               { published: artwork.published || '', title: { $gt: artwork.title } },
