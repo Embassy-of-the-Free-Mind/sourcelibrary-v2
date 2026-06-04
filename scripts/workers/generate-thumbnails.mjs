@@ -54,6 +54,7 @@ async function storagePut(key, body, contentType = 'application/octet-stream') {
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const ARCHIVED_ONLY = args.includes('--archived-only');
+const INCLUDE_SENSITIVE = args.includes('--include-sensitive');
 
 function getArg(name, defaultVal) {
   const arg = args.find(a => a.startsWith(`--${name}=`));
@@ -219,6 +220,19 @@ async function main() {
   }
   if (BOOK_ID) {
     matchFilter.book_id = BOOK_ID;
+  } else if (!INCLUDE_SENSITIVE) {
+    // Sensitive-content hold (issue #2431): the global gallery/feed/search
+    // currently have NO sensitive gate — erotic books' images stay out of
+    // those surfaces only because their crops were never materialized.
+    // Until the read-path gate ships, do not materialize crops for books
+    // flagged `sensitive: true` (set from erotic-collection membership by
+    // scripts/maintenance/flag-sensitive-books.mjs). Explicit --book-id or
+    // --include-sensitive overrides for deliberate, scoped runs.
+    const sensitiveIds = await db.collection('books').distinct('id', { sensitive: true });
+    if (sensitiveIds.length > 0) {
+      matchFilter.book_id = { $nin: sensitiveIds };
+      console.log(`Skipping ${sensitiveIds.length} sensitive books (#2431; --include-sensitive to override)`);
+    }
   }
 
   // countDocuments(matchFilter) is a full COLLSCAN over the pages collection
