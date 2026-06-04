@@ -128,7 +128,7 @@ async function importItem(db, m) {
     categories: [], collections: [],
     thumbnail: pages[0].thumbnail || '',
     pages_count: pages.length, pages_ocr: 0, pages_translated: 0, pages_archived: 0,
-    content_type: 'book', resource_type: 'manuscript',
+    content_type: 'book', // do NOT set resource_type: ANY resource_type makes isArtworkRecord()/CollectionBookCard treat the record as artwork (→ /artwork/ route). These are textual manuscripts = books.
     dublin_core: {
       dc_identifier: [m.urn ? `URN:${m.urn}` : null, `Fragmenta:${m.signum}`, `handle:10024/${m.handle}`].filter(Boolean),
       dc_source: m.url, dc_spatial: m.origin || undefined, dc_date: m.dateRange || undefined,

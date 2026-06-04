@@ -106,7 +106,7 @@ async function importItem(db, it) {
       language: it.language, original_language: it.language, published: it.published, year: it.year,
       categories: [], collections: [], thumbnail: pages[0] || '',
       pages_count: pages.length, pages_ocr: 0, pages_translated: 0, pages_archived: 0,
-      content_type: 'book', resource_type: it.resource_type,
+      content_type: 'book', // do NOT set resource_type: ANY resource_type makes isArtworkRecord()/CollectionBookCard treat the record as artwork (→ /artwork/ route). These are textual books.
       dublin_core: { dc_identifier: [`Tartu:${it.identifier}`, it.item_url], dc_source: it.item_url },
       image_source: {
         provider: 'tartu_dspace', provider_name: 'University of Tartu Library (DSpace)',
