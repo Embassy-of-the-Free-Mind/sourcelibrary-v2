@@ -120,6 +120,96 @@ const USER_AGENT =
   'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)';
 
 /**
+ * Extract the Internet Archive item identifier from its IIIF manifest URL.
+ * Handles /iiif/{id}/manifest, /iiif/2/{id}/manifest, /iiif/3/{id}/manifest
+ * on iiif.archive.org / iiif.archivelab.org.
+ */
+export function iaIdFromManifestUrl(u) {
+  const m = (u || '').match(/\/iiif\/(?:[23]\/)?([^/]+)\/manifest/i);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+/**
+ * Store provenance for an Internet Archive item via its lightweight metadata
+ * endpoint (archive.org/metadata/{id}) instead of the heavy IIIF manifest.
+ *
+ * IA's IIIF manifests are large (per-canvas objects for 100s–1000s of pages)
+ * and the iiif.archive.org endpoint frequently times out. The metadata endpoint
+ * is ~8KB, fast, bulk-friendly, and carries `imagecount` — exactly the page
+ * count we need for drift detection (#1504). We already hold IA page image URLs
+ * on the `pages` collection, so we don't re-derive them here.
+ *
+ * Stored doc keeps the original IIIF manifest_url as the key, with
+ * `provenance_kind: 'ia_metadata'` to distinguish it from a parsed IIIF manifest.
+ */
+export async function fetchAndStoreIaMetadata(db, opts) {
+  const { manifest_url, book_id = null, timeoutMs = 30000, retries = 1, storeRaw = true } = opts;
+  const col = db.collection('iiif_manifests');
+  const id = iaIdFromManifestUrl(manifest_url);
+  if (!id) {
+    await col.updateOne(
+      { manifest_url },
+      { $set: { manifest_url, book_id, source: 'internet_archive', error: 'no IA id in url', fetched_at: new Date() } },
+      { upsert: true }
+    );
+    return { ok: false, error: 'no IA id in url' };
+  }
+
+  const metaUrl = `https://archive.org/metadata/${encodeURIComponent(id)}`;
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  let res, meta, lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    if (attempt > 0) await sleep(1000 * attempt);
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), timeoutMs);
+      try {
+        res = await fetch(metaUrl, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' }, signal: ctrl.signal });
+      } finally { clearTimeout(t); }
+      if (res.ok) { meta = await res.json(); lastErr = null; break; }
+      lastErr = `HTTP ${res.status}`;
+      if (res.status < 500 || attempt === retries) {
+        await col.updateOne({ manifest_url }, { $set: { manifest_url, book_id, source: 'internet_archive', http_status: res.status, error: lastErr, fetched_at: new Date() } }, { upsert: true });
+        return { ok: false, status: res.status, error: lastErr };
+      }
+    } catch (err) {
+      lastErr = err.name === 'AbortError' ? 'timeout' : (err.message || 'fetch failed');
+      if (attempt === retries) {
+        await col.updateOne({ manifest_url }, { $set: { manifest_url, book_id, source: 'internet_archive', error: lastErr, fetched_at: new Date() } }, { upsert: true });
+        return { ok: false, error: lastErr };
+      }
+    }
+  }
+
+  // IA metadata is empty for dark/removed items.
+  if (!meta || (!meta.metadata && !meta.files)) {
+    await col.updateOne({ manifest_url }, { $set: { manifest_url, book_id, source: 'internet_archive', error: 'empty IA metadata (dark/removed?)', fetched_at: new Date() } }, { upsert: true });
+    return { ok: false, error: 'empty IA metadata' };
+  }
+
+  const pageCount = parseInt(meta.metadata?.imagecount, 10) || null;
+  const setDoc = {
+    manifest_url,
+    book_id,
+    source: 'internet_archive',
+    provenance_kind: 'ia_metadata',
+    ia_identifier: id,
+    ia_server: meta.server || null,
+    ia_dir: meta.dir || null,
+    label: meta.metadata?.title || null,
+    page_count: pageCount,
+    image_urls: [],
+    http_status: res.status,
+    fetched_at: new Date(),
+    error: null,
+  };
+  if (storeRaw) setDoc.raw = meta; // ~8KB, safe to keep
+
+  await col.updateOne({ manifest_url }, { $set: setDoc, ...(storeRaw ? {} : { $unset: { raw: '' } }) }, { upsert: true });
+  return { ok: true, page_count: pageCount, provenance_kind: 'ia_metadata' };
+}
+
+/**
  * Fetch a IIIF manifest and upsert it into `iiif_manifests`.
  *
  * Idempotent: re-running updates the same doc (keyed on manifest_url).

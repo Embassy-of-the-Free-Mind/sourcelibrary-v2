@@ -27,7 +27,7 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { ensureManifestIndexes, fetchAndStoreManifest } from '../iiif-discovery/lib/manifest-store.mjs';
+import { ensureManifestIndexes, fetchAndStoreManifest, fetchAndStoreIaMetadata } from '../iiif-discovery/lib/manifest-store.mjs';
 
 const args = process.argv.slice(2);
 const has = (f) => args.includes(f);
@@ -113,13 +113,23 @@ async function worker() {
     if (next > now) await sleep(next - now);
     hostNext.set(host, Date.now() + HOST_DELAY);
 
-    const r = await fetchAndStoreManifest(db, {
-      manifest_url: item.manifest_url,
-      book_id: item.book_id,
-      source: item.source,
-      timeoutMs: TIMEOUT,
-      storeRaw: STORE_RAW,
-    });
+    // Internet Archive: use the lightweight metadata endpoint (fast, ~8KB,
+    // carries imagecount) instead of the heavy, timeout-prone IIIF manifest.
+    const isIA = item.source === 'internet_archive' || /(\.|\/)archive(lab)?\.org/i.test(host);
+    const r = isIA
+      ? await fetchAndStoreIaMetadata(db, {
+          manifest_url: item.manifest_url,
+          book_id: item.book_id,
+          timeoutMs: TIMEOUT,
+          storeRaw: STORE_RAW,
+        })
+      : await fetchAndStoreManifest(db, {
+          manifest_url: item.manifest_url,
+          book_id: item.book_id,
+          source: item.source,
+          timeoutMs: TIMEOUT,
+          storeRaw: STORE_RAW,
+        });
     if (r.ok) { ok++; pages += r.page_count || 0; }
     else { failed++; }
 
