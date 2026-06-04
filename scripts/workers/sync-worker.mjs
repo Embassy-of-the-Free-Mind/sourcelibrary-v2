@@ -183,6 +183,72 @@ async function syncPageCounts(db) {
   return { books_checked: books.length, mismatches: mismatchCount, updated };
 }
 
+// ── Sync Collection Counts ──
+//
+// Restores the collections.book_count / artwork_count cache sync that lived in
+// the archived Vercel cron (src/app/api/cron/_archived/sync-page-counts). When
+// the cron routes were archived (45fb98fb) this block was never ported into
+// sync-worker, so the cached counts drifted on 271/359 collections (found
+// 2026-06-04 via the eastern-erotic-literature "0 books" header — the
+// collection page header at src/app/collections/[id]/page.tsx reads this
+// cached field while the book grid does a live query, so they disagreed).
+
+async function syncCollectionCounts(db) {
+  console.log('\n--- Sync Collection Counts ---');
+  const start = Date.now();
+
+  // One pass over books per counter, instead of 2 countDocuments per collection.
+  // book_count uses the canonical "readable book" filter from the archived cron;
+  // artwork_count counts resource_type-bearing entries regardless of visibility.
+  const [bookCounts, artworkCounts] = await Promise.all([
+    db.collection('books').aggregate([
+      { $match: { status: { $ne: 'deleted' }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, resource_type: { $exists: false } } },
+      { $unwind: '$collections' },
+      { $group: { _id: '$collections', n: { $sum: 1 } } },
+    ]).toArray(),
+    db.collection('books').aggregate([
+      { $match: { resource_type: { $exists: true } } },
+      { $unwind: '$collections' },
+      { $group: { _id: '$collections', n: { $sum: 1 } } },
+    ]).toArray(),
+  ]);
+  const bookMap = new Map(bookCounts.map(r => [r._id, r.n]));
+  const artMap = new Map(artworkCounts.map(r => [r._id, r.n]));
+
+  const collections = await db.collection('collections')
+    .find({}, { projection: { _id: 1, slug: 1, book_count: 1, artwork_count: 1 } })
+    .toArray();
+
+  const ops = [];
+  let mismatchCount = 0;
+  for (const col of collections) {
+    const liveBookCount = bookMap.get(col.slug) || 0;
+    const liveArtworkCount = artMap.get(col.slug) || 0;
+    if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount) {
+      mismatchCount++;
+      if (!DRY_RUN) {
+        ops.push({
+          updateOne: {
+            filter: { _id: col._id },
+            update: { $set: { book_count: liveBookCount, artwork_count: liveArtworkCount, updated_at: new Date() } },
+          },
+        });
+      }
+    }
+  }
+
+  let updated = 0;
+  if (ops.length > 0) {
+    const result = await db.collection('collections').bulkWrite(ops);
+    updated = result.modifiedCount;
+  }
+
+  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  console.log(`  Collections checked: ${collections.length} | Mismatches: ${mismatchCount} | Updated: ${updated} | ${elapsed}s`);
+
+  return { collections_checked: collections.length, mismatches: mismatchCount, updated };
+}
+
 // ── Sync Gallery Images ──
 
 async function syncGalleryImages(db) {
@@ -752,6 +818,14 @@ async function run() {
     } catch (err) {
       console.error(`[sync-worker] Page counts phase FAILED: ${err.message}`);
       phaseErrors.push({ phase: 'counts', error: err.message });
+    }
+
+    try {
+      await syncCollectionCounts(db);
+      phasesCompleted.push('collection_counts');
+    } catch (err) {
+      console.error(`[sync-worker] Collection counts phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'collection_counts', error: err.message });
     }
   }
 

@@ -344,8 +344,9 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
-  // Use cached book_count — sync-page-counts cron updates this every 6h
-  // to reflect only translated books (pages_translated > 0).
+  // Use cached book_count — syncCollectionCounts in scripts/workers/sync-worker.mjs
+  // (Hetzner, every 2h) updates this to reflect only translated books
+  // (pages_translated > 0). The old Vercel sync-page-counts cron is archived.
   const total = collection.book_count || 0;
 
   // Track gallery collection slug for linking (captured in the gallery query below)
