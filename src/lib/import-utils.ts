@@ -8,6 +8,7 @@ import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { computeProcessingPriority } from '@/lib/processing-priority';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 import { resolveLanguage, resolveDate } from '@/lib/resolve-language';
+import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -473,6 +474,14 @@ export async function importBookFromIIIF(
     pages_affected: pageDocs.length,
     metadata: { provider: config.provider, identifier: config.identifier },
   });
+
+  // Persist the IIIF manifest we already fetched (provenance, #2416; non-blocking)
+  storeImportedManifest(db, {
+    manifest,
+    manifest_url: config.manifest_url,
+    book_id: bookIdStr,
+    source: config.provider,
+  }).catch((e) => console.warn(`[Import] manifest store failed for ${bookIdStr}: ${e?.message}`));
 
   // Queue preview OCR for early metadata enrichment (non-blocking)
   queuePreviewOcr(bookIdStr, config.title).catch(() => {});

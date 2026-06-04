@@ -6,6 +6,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import type { ImageSourceProvider } from '@/lib/types/image-source';
 
 export const maxDuration = 300;
@@ -558,6 +559,14 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     await db.collection('pages').insertMany(pageDocs);
+
+    // Persist the IIIF manifest we already fetched (provenance, #2416; non-blocking)
+    storeImportedManifest(db, {
+      manifest,
+      manifest_url,
+      book_id: bookIdStr,
+      source: (provider as string) || 'iiif',
+    }).catch((e) => console.warn(`[IIIF Import] manifest store failed for ${bookIdStr}: ${e?.message}`));
 
     // Queue preview OCR for early metadata enrichment (non-blocking)
     queuePreviewOcr(bookIdStr, title).catch(() => {});
