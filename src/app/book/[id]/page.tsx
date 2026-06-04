@@ -23,6 +23,7 @@ import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
+import OriginalEditionNotice from '@/components/book/OriginalEditionNotice';
 import RelatedEditions from '@/components/book/RelatedEditions';
 import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
@@ -902,6 +903,22 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
               <div className="mt-3">
                 <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
               </div>
+
+              {/* Historical-translation notice — never let an old English
+                  translation silently present as the source (#2395). Cross-link
+                  to the held original is tenant-gated like RelatedEditions. */}
+              {['modern-translation', 'period-translation'].includes((book as any).text_role) && (
+                <Suspense fallback={null}>
+                  <OriginalEditionNotice
+                    textRole={(book as any).text_role}
+                    originalEditionId={(book as any).original_edition_id ?? null}
+                    originalInScan={(book as any).original_in_scan ?? false}
+                    originalLanguage={(book as any).original_language ?? null}
+                    year={Number((book as any).year || book.published) || null}
+                    showCrossLink={embedPolicy.showRelatedEditions}
+                  />
+                </Suspense>
+              )}
 
               {/* Read This Book — first chapter > endpaper-skip fallback */}
               {embedPolicy.showBookReadCta && (() => {
