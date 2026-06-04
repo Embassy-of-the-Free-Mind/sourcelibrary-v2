@@ -53,8 +53,19 @@ echo "▸ Typechecking (npx tsc --noEmit)…"
 npx tsc --noEmit
 
 # 4. Deploy to production.
+#    Do NOT let a nonzero exit from the CLI abort the script before the purge:
+#    `vercel --prod` can deploy SUCCESSFULLY and then exit nonzero on a
+#    post-deploy status-poll timeout (ETIMEDOUT against api.vercel.com — bit us
+#    2026-06-04). Skipping the purge is far worse than purging after a failed
+#    deploy (a purge is always safe; stale HTML pointing at purged CSS is not).
 echo "▸ Deploying to production (vercel --prod)…"
-vercel --prod
+DEPLOY_EXIT=0
+vercel --prod || DEPLOY_EXIT=$?
+if [ "$DEPLOY_EXIT" -ne 0 ]; then
+  echo "  ⚠ vercel exited $DEPLOY_EXIT — verifying whether the deployment actually shipped…" >&2
+  PROD_OK=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "https://sourcelibrary.org/" || echo 000)
+  echo "  prod / responds: HTTP $PROD_OK — continuing to purge + warm regardless." >&2
+fi
 
 # 5. Purge the CDN so cached HTML can't outlive the assets it references.
 echo "▸ Purging Cloudflare cache (purge_everything)…"
@@ -80,4 +91,8 @@ WARM_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   --max-time 300 || true)
 echo "  deploy-warm → HTTP $WARM_CODE"
 
+if [ "$DEPLOY_EXIT" -ne 0 ]; then
+  echo "⚠ Purge + warm completed, but the vercel CLI exited $DEPLOY_EXIT — verify the deployment shipped (vercel ls sourcelibrary-v2 | head -2)." >&2
+  exit "$DEPLOY_EXIT"
+fi
 echo "✓ Production deploy complete (deployed → purged → warmed)."
