@@ -51,6 +51,10 @@ function isArtworkRecord(b: Pick<Book, 'content_type' | 'resource_type'>): boole
   // have only one. Treat either as artwork to avoid leaks during slow
   // backfills, mirroring the /artist/[slug] page (which keys off
   // resource_type).
+  // An explicit content_type:'book' always wins: a textual book that happens to
+  // carry a resource_type (e.g. a digitized papyrus text tagged 'papyrus_fragment')
+  // must never be treated as artwork, or it routes to /artwork/ instead of /book/.
+  if (b.content_type === 'book') return false;
   return b.content_type === 'artwork' || !!b.resource_type;
 }
 

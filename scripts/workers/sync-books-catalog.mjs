@@ -87,7 +87,9 @@ function transformBook(book) {
     doi: book.doi || null,
     work_id: book.work_id || null,
     text_role: book.text_role || null,
-    resource_type: book.resource_type || null,
+    // content_type:'book' wins — never expose a resource_type for a book, or the catalog
+    // grid (CollectionBookCard) routes it to /artwork/ instead of /book/.
+    resource_type: book.content_type === 'book' ? null : (book.resource_type || null),
     source_url: book.image_source?.source_url || null,
     provider_name: book.image_source?.provider_name || null,
     image_attribution: book.image_source?.attribution || null,
