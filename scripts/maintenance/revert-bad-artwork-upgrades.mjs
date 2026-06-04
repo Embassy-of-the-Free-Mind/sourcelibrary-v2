@@ -68,13 +68,25 @@ async function main() {
 
   for (const m of mismatches) {
     const label = `${m.slug} (${m.author} — ${m.title?.substring(0, 40)})`;
-    if (m.original_provider !== 'wikimedia_commons' || !m.original_file) {
-      console.log(`SKIP ${label}: original is ${m.original_provider || 'unknown'} / ${m.original_file || 'no file'} — handle manually`);
+    // Original file reference: image_source.identifier when the importer set it,
+    // else parse the (percent-encoded) Commons File: page URL in source_url.
+    let originalFile = m.original_file;
+    if (!originalFile) {
+      const doc = await books.findOne({ slug: m.slug }, { projection: { 'image_source.source_url': 1 } });
+      const srcUrl = doc?.image_source?.source_url || '';
+      const match = srcUrl.match(/commons\.wikimedia\.org\/wiki\/(.+)$/);
+      if (match) {
+        const decoded = decodeURIComponent(match[1]);
+        if (/^File:/i.test(decoded)) originalFile = decoded;
+      }
+    }
+    if (m.original_provider !== 'wikimedia_commons' || !originalFile) {
+      console.log(`SKIP ${label}: original is ${m.original_provider || 'unknown'} / ${originalFile || 'no file'} — handle manually`);
       skipped++;
       continue;
     }
     try {
-      const info = await commonsFileUrl(m.original_file);
+      const info = await commonsFileUrl(originalFile);
       if (DRY_RUN) {
         console.log(`WOULD REVERT ${label} → ${info.url} (${info.width}x${info.height})`);
         reverted++;
@@ -103,7 +115,7 @@ async function main() {
 
       await books.updateOne({ slug: m.slug }, {
         $set: {
-          commons_title: m.original_file.startsWith('File:') ? m.original_file : `File:${m.original_file}`,
+          commons_title: originalFile.startsWith('File:') ? originalFile : `File:${originalFile}`,
           commons_full_url: info.url,
           commons_width: meta.width,
           commons_height: meta.height,
