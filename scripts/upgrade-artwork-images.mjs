@@ -220,23 +220,39 @@ async function main() {
     commons_height: { $lt: MIN_UPGRADE_PX },
     'image_source.provider': 'wikimedia_commons',
   };
+  // --resume: skip docs a previous (crashed) run already concluded — both
+  // "no upgrade found" and gate-rejected docs get `upgrade_available` set.
+  if (process.argv.includes('--resume')) query.upgrade_available = { $exists: false };
 
-  // noCursorTimeout: each artwork takes 1.5–30s (Commons API + image download
-  // + R2 upload), and a full sweep is ~12h. The default 10-minute idle timeout
-  // would expire the cursor mid-run; this keeps it open until we close it.
-  const cursor = books.find(query, {
-    projection: {
-      _id: 1, slug: 1, title: 1, author: 1,
-      commons_title: 1, commons_full_url: 1,
-      commons_width: 1, commons_height: 1,
-      description: 1, summary: 1,
-    },
-    noCursorTimeout: true,
-  }).limit(LIMIT);
+  // _id-paginated batches instead of one long-lived cursor: each artwork takes
+  // 1.5–30s (Commons API + vision check + image download + R2 upload) and a
+  // full sweep is ~12h. Even with noCursorTimeout, Atlas kills the server-side
+  // session after ~30 min and the run dies with CursorNotFound (happened
+  // 2026-06-05 at item ~1100). Short-lived 25-doc batches can't expire.
+  const projection = {
+    _id: 1, slug: 1, title: 1, author: 1,
+    commons_title: 1, commons_full_url: 1,
+    commons_width: 1, commons_height: 1,
+    description: 1, summary: 1,
+  };
+  async function* batchedDocs() {
+    let lastId = null;
+    let yielded = 0;
+    for (;;) {
+      const q = lastId ? { ...query, _id: { $gt: lastId } } : query;
+      const batch = await books.find(q, { projection }).sort({ _id: 1 }).limit(25).toArray();
+      if (!batch.length) return;
+      for (const doc of batch) {
+        if (yielded++ >= LIMIT) return;
+        yield doc;
+      }
+      lastId = batch[batch.length - 1]._id;
+    }
+  }
 
   let upgraded = 0, flagged = 0, noUpgrade = 0, errors = 0, processed = 0;
 
-  for await (const doc of cursor) {
+  for await (const doc of batchedDocs()) {
     processed++;
     const maxDim = Math.max(doc.commons_width || 0, doc.commons_height || 0);
     const label = `[${processed}] ${doc.author} — ${doc.title?.substring(0, 40)} (${maxDim}px)`;
