@@ -32,7 +32,7 @@
  */
 
 import { withMongo } from '../../lib/mongo.mjs';
-import { insertCandidates } from '../lib/candidate-store.mjs';
+import { ensureIndexes, insertCandidates } from '../lib/candidate-store.mjs';
 
 const SOURCE = 'wikidata';
 const ENDPOINT = 'https://query.wikidata.org/sparql';
@@ -96,13 +96,12 @@ async function runQuery(q) {
 }
 
 withMongo(async (db) => {
-  // NB: we do NOT call candidate-store's ensureIndexes() — it tries to build a
-  // plain unique index on manifest_url, which fails because import_candidates
-  // already holds ~91K null-manifest_url docs (the live index is the sparse
-  // `manifest_url_lookup`). Since that index is non-unique, insertCandidates'
-  // skip-if-exists isn't DB-enforced, so we dedup in-app against existing rows
-  // (this is also the point of this source: contribute only the institutions the
-  // OAI/SRU sources don't already cover — Gallica/BSB/Bodleian overlap is dropped).
+  await ensureIndexes(db);
+  // manifest_url is intentionally non-unique here (dedup is by dedupe-candidates.mjs
+  // clustering, not the DB), so insertCandidates' skip-if-exists isn't DB-enforced.
+  // We therefore dedup in-app against existing rows — which is also the point of this
+  // source: contribute only the institutions the OAI/SRU sources don't already cover
+  // (the ~13K Gallica/BSB/Bodleian overlap is dropped, ~48K net-new added).
   const col = db.collection('import_candidates');
   console.log(`Wikidata discovery — ${MANUSCRIPTS ? 'manuscripts (P31=Q87167)' : 'all P6108'}${DRY_RUN ? ' [DRY RUN]' : ''}`);
 
