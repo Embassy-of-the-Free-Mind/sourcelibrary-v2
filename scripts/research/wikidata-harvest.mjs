@@ -36,10 +36,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const argv = process.argv.slice(2);
 const COMMIT = argv.includes('--commit');
 const DOMAIN = argv.includes('--domain');
+const MANUSCRIPTS = argv.includes('--manuscripts'); // P31 = manuscript (Q87167) — multipage books
 const WITH_LABELS = argv.includes('--with-labels') || DOMAIN;
 const flag = (n) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
 const PAGE = flag('--page') ? Number(flag('--page')) : 5000;
 const MAX = flag('--max') ? Number(flag('--max')) : Infinity;
+const COLLECTION = flag('--collection') || (MANUSCRIPTS ? 'iiif_manifests' : 'harvest_candidates');
 
 // Domain main-subjects (P921) — Wikidata QIDs for our traditions.
 const DOMAIN_QIDS = [
@@ -53,9 +55,11 @@ const DOMAIN_QIDS = [
 ];
 
 function buildQuery(offset) {
-  const subjectFilter = DOMAIN
-    ? `?item wdt:P921 ?subj . VALUES ?subj { ${DOMAIN_QIDS.map((q) => `wd:${q}`).join(' ')} }`
-    : '';
+  const subjectFilter = MANUSCRIPTS
+    ? '?item wdt:P31 wd:Q87167 .'
+    : DOMAIN
+      ? `?item wdt:P921 ?subj . VALUES ?subj { ${DOMAIN_QIDS.map((q) => `wd:${q}`).join(' ')} }`
+      : '';
   const labels = WITH_LABELS
     ? `OPTIONAL { ?item wdt:P170 ?creator. } SERVICE wikibase:label { bd:serviceParam wikibase:language "en,la,de,fr,it". }`
     : '';
@@ -93,12 +97,14 @@ function toCandidate(b) {
     label: b.itemLabel?.value || null,
     source_uri: b.item.value,
     aggregator: 'wikidata',
+    kind: MANUSCRIPTS ? 'manuscript' : null,
     subjects: DOMAIN ? ['wikidata-domain'] : [],
   });
 }
 
 async function main() {
-  console.log(`Wikidata harvest — ${COMMIT ? 'COMMIT' : 'DRY RUN'}${DOMAIN ? ' (domain-filtered)' : ' (full P6108)'} — page ${PAGE}`);
+  const scope = MANUSCRIPTS ? 'manuscripts (P31=Q87167)' : DOMAIN ? 'domain-filtered' : 'full P6108';
+  console.log(`Wikidata harvest — ${COMMIT ? 'COMMIT' : 'DRY RUN'} (${scope}) → ${COLLECTION} — page ${PAGE}`);
   const byUrl = new Map();
   for (let offset = 0; offset < MAX; offset += PAGE) {
     const rows = await runQuery(buildQuery(offset));
@@ -124,9 +130,9 @@ async function main() {
     await client.connect();
     const db = client.db('bookstore');
     const now = new Date();
-    const res = await upsertCandidates(db, candidates, now);
-    await recordRun(db, DOMAIN ? 'wikidata-domain' : 'wikidata', { candidate_count: candidates.length }, now);
-    console.log(`Upserted: ${res.upserted} new, ${res.modified} updated.`);
+    const res = await upsertCandidates(db, candidates, now, COLLECTION);
+    await recordRun(db, MANUSCRIPTS ? 'wikidata-manuscripts' : DOMAIN ? 'wikidata-domain' : 'wikidata', { candidate_count: candidates.length, collection: COLLECTION }, now);
+    console.log(`Upserted into ${COLLECTION}: ${res.upserted} new, ${res.modified} updated.`);
     await client.close();
   } else {
     const path = join(OUT, `wikidata-${DOMAIN ? 'domain' : 'all'}-candidates.json`);

@@ -52,6 +52,7 @@ const HOST_MAP = [
   [/lib\.cam\.ac\.uk/, 'cambridge', 'Cambridge University Library'],
   [/lib\.harvard\.edu/, 'harvard', 'Harvard Library'],
   [/europeana\.eu/, 'europeana', 'Europeana'],
+  [/archive\.org/, 'internet_archive', 'Internet Archive'],
 ];
 
 export function providerFromManifest(url) {
@@ -61,8 +62,9 @@ export function providerFromManifest(url) {
   return { provider: host.replace(/^www\./, ''), source_library: host };
 }
 
-/** Build a uniform candidate doc. `subjects` is the term(s) that surfaced it. */
-export function makeCandidate({ id, manifest_url, label, thumbnail, source_uri, aggregator, subjects = [], language = null, source_library = null }) {
+/** Build a uniform candidate doc. `subjects` is the term(s) that surfaced it.
+ *  `kind` is the material type (manuscript | printed | art | unknown). */
+export function makeCandidate({ id, manifest_url, label, thumbnail, source_uri, aggregator, subjects = [], language = null, source_library = null, kind = null }) {
   const { provider, source_library: lib } = providerFromManifest(manifest_url);
   const ark = arkOf(manifest_url);
   return {
@@ -76,6 +78,7 @@ export function makeCandidate({ id, manifest_url, label, thumbnail, source_uri, 
     thumbnail: thumbnail || null,
     ark,
     language,
+    ...(kind ? { kind } : {}),
     subjects: [...new Set(subjects)],
   };
 }
@@ -84,9 +87,9 @@ export function makeCandidate({ id, manifest_url, label, thumbnail, source_uri, 
  * Idempotent upsert. Refreshes last_seen + unions subjects; never overwrites
  * decision / dedup_status / triage fields on existing rows.
  */
-export async function upsertCandidates(db, candidates, now = new Date()) {
+export async function upsertCandidates(db, candidates, now = new Date(), collectionName = 'harvest_candidates') {
   if (!candidates.length) return { upserted: 0, modified: 0 };
-  const col = db.collection('harvest_candidates');
+  const col = db.collection(collectionName);
   await col.createIndex({ manifest_url: 1 }, { unique: true }).catch(() => {});
   await col.createIndex({ decision: 1, dedup_status: 1, provider: 1 }).catch(() => {});
   const ops = candidates.map((c) => {
@@ -122,4 +125,13 @@ export async function recordRun(db, aggregator, info, now = new Date()) {
     { $set: { ...info, last_run_at: now } },
     { upsert: true },
   );
+}
+
+/** True if this manifest_url already exists in the catalog (books.image_source.iiif_manifest).
+ *  Cheap exact-URL dedup the triage ARK-matcher can miss (e.g. Leiden, no ARK). */
+export async function loadOwnedManifests(db) {
+  const rows = await db.collection('books')
+    .find({ 'image_source.iiif_manifest': { $exists: true, $ne: null } }, { projection: { 'image_source.iiif_manifest': 1 } })
+    .toArray();
+  return new Set(rows.map((b) => b.image_source?.iiif_manifest).filter(Boolean));
 }
