@@ -73,6 +73,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       author: authorOverride,
       language: languageOverride,
       published: publishedOverride,
+      year,
       categories,
       collections: requestCollections,
     } = body;
@@ -249,6 +250,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       language,
       published,
       categories: categories || work.subjects?.map(s => s.label) || [],
+      ...(typeof year === 'number' ? { year } : /^\d{3,4}$/.test(String(published || '')) ? { year: parseInt(String(published), 10) } : {}),
       ...(requestCollections?.length ? { collections: requestCollections } : {}),
       ...(work_id ? { work_id } : {}),
       wellcome_id: work_id,
