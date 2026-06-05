@@ -92,15 +92,21 @@ export async function upsertCandidates(db, candidates, now = new Date(), collect
   const col = db.collection(collectionName);
   await col.createIndex({ manifest_url: 1 }, { unique: true }).catch(() => {});
   await col.createIndex({ decision: 1, dedup_status: 1, provider: 1 }).catch(() => {});
+  // Dedup identity is manifest_url (the unique index), NOT _id: the same manifest
+  // can arrive via different channels with different _ids (e.g. a Wikidata item
+  // and an IA identifier pointing at the same archive.org manifest). Filtering on
+  // _id would then try to INSERT a duplicate manifest_url → E11000. _id is set
+  // once on insert (first channel wins) and never changed thereafter.
   const ops = candidates.map((c) => {
-    const { subjects, ...rest } = c;
+    const { subjects, _id, manifest_url, ...rest } = c;
     return {
       updateOne: {
-        filter: { _id: c._id },
+        filter: { manifest_url },
         update: {
-          $set: { ...rest, last_seen: now },
+          $set: { ...rest, manifest_url, last_seen: now },
           $addToSet: { subjects: { $each: subjects || [] } },
           $setOnInsert: {
+            _id,
             first_seen: now,
             dedup_status: 'unchecked',
             matched_book_id: null,
@@ -114,8 +120,13 @@ export async function upsertCandidates(db, candidates, now = new Date(), collect
       },
     };
   });
-  const res = await col.bulkWrite(ops, { ordered: false });
-  return { upserted: res.upsertedCount, modified: res.modifiedCount };
+  // Chunk to isolate failures and keep payloads sane at 60k+ scale.
+  let upserted = 0, modified = 0;
+  for (let i = 0; i < ops.length; i += 2000) {
+    const res = await col.bulkWrite(ops.slice(i, i + 2000), { ordered: false });
+    upserted += res.upsertedCount; modified += res.modifiedCount;
+  }
+  return { upserted, modified };
 }
 
 /** Record a per-aggregator run summary in harvest_state. */
