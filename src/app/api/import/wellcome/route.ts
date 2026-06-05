@@ -28,10 +28,13 @@ interface WellcomeWork {
 }
 
 interface IIIFManifest {
+  '@type'?: string;
   label?: string | { '@value'?: string }[];
   description?: string | { '@value'?: string }[];
   license?: string;
   attribution?: string;
+  // Multi-copy works return a sc:Collection wrapping one manifest per copy
+  manifests?: Array<{ '@id'?: string; label?: string }>;
   sequences?: Array<{
     canvases?: Array<{
       '@id'?: string;
@@ -57,7 +60,8 @@ interface IIIFManifest {
  *   author?: string,        // Override author
  *   language?: string,
  *   published?: string,
- *   categories?: string[]
+ *   categories?: string[],
+ *   collections?: string[]  // Source Library collection slugs to tag the book with
  * }
  */
 export const POST = withCuratorAuth(async (request, session) => {
@@ -70,6 +74,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       language: languageOverride,
       published: publishedOverride,
       categories,
+      collections: requestCollections,
     } = body;
 
     if (!work_id) {
@@ -105,24 +110,43 @@ export const POST = withCuratorAuth(async (request, session) => {
       );
     }
 
-    const manifestUrl = iiifLocation.url;
+    let manifestUrl = iiifLocation.url;
 
     // Fetch IIIF manifest
-    const manifestRes = await fetch(manifestUrl, {
-      headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
-        'Accept': 'application/json, application/ld+json',
+    const fetchManifest = async (url: string): Promise<IIIFManifest | NextResponse> => {
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+          'Accept': 'application/json, application/ld+json',
+        }
+      });
+      if (!res.ok) {
+        return NextResponse.json(
+          { error: `Failed to fetch IIIF manifest: ${res.status}` },
+          { status: 400 }
+        );
       }
-    });
+      return res.json();
+    };
 
-    if (!manifestRes.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch IIIF manifest: ${manifestRes.status}` },
-        { status: 400 }
-      );
+    let manifest = await fetchManifest(manifestUrl);
+    if (manifest instanceof NextResponse) return manifest;
+
+    // Works with multiple physical copies return a sc:Collection whose
+    // manifests[] holds one manifest per copy (e.g. b10005766 → b10005766_0001
+    // "Copy 1"). Follow the first copy's manifest. See issue #2437.
+    if (manifest['@type'] === 'sc:Collection' && manifest.manifests?.length) {
+      const copyUrl = manifest.manifests[0]['@id'];
+      if (!copyUrl) {
+        return NextResponse.json(
+          { error: 'IIIF collection has no resolvable copy manifest' },
+          { status: 400 }
+        );
+      }
+      manifestUrl = copyUrl;
+      manifest = await fetchManifest(manifestUrl);
+      if (manifest instanceof NextResponse) return manifest;
     }
-
-    const manifest: IIIFManifest = await manifestRes.json();
 
     // Get page count from IIIF canvases
     const canvases = manifest.sequences?.[0]?.canvases || [];
@@ -225,6 +249,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       language,
       published,
       categories: categories || work.subjects?.map(s => s.label) || [],
+      ...(requestCollections?.length ? { collections: requestCollections } : {}),
       ...(work_id ? { work_id } : {}),
       wellcome_id: work_id,
       wellcome_b_number: bNumber,

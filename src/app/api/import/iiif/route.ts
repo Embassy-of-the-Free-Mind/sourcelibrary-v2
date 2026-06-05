@@ -193,6 +193,7 @@ function parseLicense(licenseUrl: string | null, attribution: string | null, pro
  *   language?: string,
  *   published?: string,
  *   categories?: string[],
+ *   collections?: string[],  // Source Library collection slugs to tag the book with
  *   provider?: string,       // e.g., "Vatican", "IRHT", "Bodleian"
  *   start_page?: number,     // 1-indexed start page (for extracting portion of manifest)
  *   end_page?: number        // 1-indexed end page (inclusive)
@@ -210,6 +211,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       language,
       published,
       categories,
+      collections: requestCollections,
       work_id,
       provider,
       start_page,
@@ -495,6 +497,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       language: language || 'Unknown',
       published: published || 'Unknown',
       categories: categories || [],
+      ...(requestCollections?.length ? { collections: requestCollections } : {}),
       ...(work_id ? { work_id } : {}),
       ...(contributing_library ? { contributing_library } : providerName !== 'IIIF Source' ? { contributing_library: providerName } : {}),
       thumbnail: pageImages[0]?.thumbnail || '',
