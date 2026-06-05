@@ -50,6 +50,18 @@ function extractSummaryText(book) {
   return null;
 }
 
+// Many importers only set the `published` string ("1578", "ca. 1576-1577"),
+// not a numeric `year` — a null year renders as "—" in collection tables.
+// Fall back to the first plausible year found in `published` (2026-06-05).
+function deriveYear(book) {
+  if (typeof book.year === 'number') return book.year;
+  if (typeof book.published === 'string') {
+    const m = book.published.match(/\b([1-9][0-9]{2,3})\b/);
+    if (m) return parseInt(m[1], 10);
+  }
+  return null;
+}
+
 function transformBook(book) {
   return {
     id: book.id,
@@ -60,7 +72,7 @@ function transformBook(book) {
     thumbnail: book.thumbnail || null,
     thumbnail_blob: book.thumbnail_blob || null,
     language: book.language || null,
-    year: typeof book.year === 'number' ? book.year : null,
+    year: deriveYear(book),
     published: book.published || null,
     pages_count: book.pages_count || 0,
     pages_ocr: book.pages_ocr || 0,
