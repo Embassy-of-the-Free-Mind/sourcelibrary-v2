@@ -2999,6 +2999,74 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       console.log(`  Split checked: ${splitChecked}, flagged for splitting: ${splitFlagged}`);
     }
 
+    // ── Phase 1.3: Split spreads at detection time (#2454) ──
+    // Books flagged needs_splitting by Phase 1.25 get their images split into
+    // left/right pages BEFORE any OCR, via split-book.mjs --gutter-only (one
+    // cheap "where is the gutter" Gemini call per page, no transcription).
+    // Everything downstream — preview OCR, batch OCR, translation, extraction —
+    // then only ever sees single pages, eliminating the entire marker-dance /
+    // race-window class of bugs (#2449). Phase 3.1 remains for books already
+    // past OCR with spread markers (legacy in-flight path).
+    if (shouldRun(1.3)) {
+      console.log('\n--- Phase 1.3: Pre-OCR spread split (gutter-only) ---');
+
+      const PRE_SPLIT_LIMIT = 8; // each book downloads + crops + uploads all its images
+
+      let readyForPreSplit = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'archive_complete',
+          'pipeline_auto.split_checked': true,
+          needs_splitting: true,
+          split_completed: { $ne: true },
+          // Books that already have substantial OCR are mid-flight on the legacy
+          // marker path (Phase 2 spread OCR → Phase 3.1) — let that finish rather
+          // than discarding their spread OCR. Fresh books have at most preview OCR.
+          $or: [{ pages_ocr: { $in: [0, null] } }, { pages_ocr: { $exists: false } }],
+        })
+        .sort({ pages_count: 1 }) // smallest first — fast wins
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.pre_split_retry_count': 1 })
+        .limit(PRE_SPLIT_LIMIT)
+        .toArray();
+      if (BOOK_OVERRIDE) readyForPreSplit = await applyBookOverride(db, readyForPreSplit, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
+
+      if (readyForPreSplit.length > 0) {
+        console.log(`  Books ready for pre-OCR split: ${readyForPreSplit.length}`);
+      }
+
+      for (const book of readyForPreSplit) {
+        const label = (book.title || '').substring(0, 50);
+        if (DRY_RUN) { console.log(`  Would pre-split: ${label} (${book.pages_count} pages)`); continue; }
+        try {
+          console.log(`  Pre-splitting: ${label} (${book.pages_count} pages)...`);
+          const scriptPath = new URL('../split-book.mjs', import.meta.url).pathname;
+          const { stderr } = await execFileAsync('node', [scriptPath, book.id, '--gutter-only'], {
+            timeout: 600000, // 10 min per book (downloads + crops + uploads)
+            env: process.env,
+            maxBuffer: 10 * 1024 * 1024,
+          });
+          if (stderr) console.log(`    stderr: ${stderr.slice(0, 200)}`);
+          // split-book.mjs sets split_completed, needs_splitting:false, and
+          // requeues at archive_complete — the book now flows as single pages.
+          console.log(`    Done: ${label}`);
+        } catch (err) {
+          const msg = err.stderr || err.message || String(err);
+          console.log(`    FAIL: ${label} — ${msg.slice(0, 150)}`);
+          const retryCount = (book.pipeline_auto?.pre_split_retry_count || 0) + 1;
+          if (retryCount >= 3) {
+            await setPipelineStatus(db, book.id, 'needs_attention', {
+              error: `Pre-OCR split failed ${retryCount} times: ${msg.slice(0, 200)}`,
+              pre_split_retry_count: retryCount,
+            });
+          } else {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { 'pipeline_auto.pre_split_retry_count': retryCount, 'pipeline_auto.last_updated': new Date() } }
+            );
+          }
+        }
+      }
+    }
+
     // ── Phase 1.5: Preview OCR — first 25 pages via inline Gemini ──
     // OCRs the title page, TOC, and opening pages directly via Gemini realtime API.
     // Purpose: get text for AI metadata classification (Phase 1.6) before full OCR.
