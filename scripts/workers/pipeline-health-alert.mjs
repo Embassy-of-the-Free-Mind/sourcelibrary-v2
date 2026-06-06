@@ -220,6 +220,67 @@ async function run() {
     });
   }
 
+  // 8. Pause-age check (#2455): paused_phases sat for 6 days behind a "healthy"
+  // status while 1,759 books piled up at archive_complete. Warn after 48h.
+  try {
+    const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+    const paused = control?.paused_phases || [];
+    if (paused.length > 0) {
+      const setAt = control.paused_phases_set_at ? new Date(control.paused_phases_set_at) : null;
+      const ageHours = setAt ? (now - setAt) / 3600000 : Infinity;
+      if (ageHours >= 48) {
+        const backlog = await db.collection('books').countDocuments({
+          'pipeline_auto.status': { $in: ['archive_complete', 'ocr_complete'] },
+        });
+        alerts.push({
+          level: 'critical',
+          check: 'paused_phases_stale',
+          message: `paused_phases=[${paused.join(', ')}] set ${setAt ? ageHours.toFixed(0) + 'h ago' : 'at unknown time'} (reason: ${control.paused_phases_reason || 'none recorded'}). ${backlog} books queued behind the pause. Clear system_config.processing_control.paused_phases if no longer needed.`,
+        });
+      } else {
+        console.log(`[health] paused_phases=[${paused.join(', ')}] active for ${ageHours.toFixed(0)}h (alerts at 48h)`);
+      }
+    }
+  } catch (e) {
+    console.error(`[health] pause-age check failed: ${e.message}`);
+  }
+
+  // 9. Gemini key parity (#2455): batch jobs are visible only to their creating
+  // key. If Vercel holds a key this box lacks, the collector falsely fails every
+  // job that key submits (the 2026-06-05 key-drift incident). Compare SHA-256
+  // fingerprints with the production deployment.
+  try {
+    const { createHash } = await import('crypto');
+    const localFps = new Map();
+    for (const [name, value] of Object.entries(process.env)) {
+      if (!name.startsWith('GEMINI_API_KEY') || !value) continue;
+      localFps.set(createHash('sha256').update(value).digest('hex').slice(0, 12), name);
+    }
+    const res = await fetch('https://sourcelibrary.org/api/admin/key-fingerprints', {
+      headers: { Authorization: `Bearer ${process.env.CRON_SECRET}` },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (res.ok) {
+      const { fingerprints: remote } = await res.json();
+      const missingHere = Object.entries(remote || {}).filter(([, fp]) => !localFps.has(fp));
+      if (missingHere.length > 0) {
+        alerts.push({
+          level: 'critical',
+          check: 'gemini_key_drift',
+          message: `Vercel holds ${missingHere.length} Gemini key(s) absent from this box (${missingHere.map(([n]) => n).join(', ')}). Batch jobs submitted with them will 404 for the collector and be falsely failed. Mirror them into /root/sourcelibrary/.env.production.local (see memory/pipeline-ops.md 2026-06-05 lesson).`,
+        });
+      } else {
+        console.log(`[health] Gemini key parity OK (${localFps.size} local keys cover all ${Object.keys(remote || {}).length} Vercel keys)`);
+      }
+    } else if (res.status === 404) {
+      console.log('[health] key-fingerprints endpoint not deployed yet — skipping parity check');
+    } else {
+      console.error(`[health] key parity check HTTP ${res.status}`);
+    }
+  } catch (e) {
+    console.error(`[health] key parity check failed: ${e.message}`);
+  }
+
   // 7. Quick stats
   const ocrSubmitted = await db.collection('books').countDocuments({
     'pipeline_auto.status': 'ocr_submitted',

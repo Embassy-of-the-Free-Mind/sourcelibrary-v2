@@ -1088,6 +1088,21 @@ let _geminiKeyLoadsAt = 0; // timestamp of last refresh
 
 const MAX_ACTIVE_PER_KEY = 30; // Hard cap per GCP project — Gemini stalls above this
 
+// Batch-broken keys (#2455): a key that returns FAILED_PRECONDITION from
+// batches.create can't run Batch API at all (free tier / unbilled project).
+// Such a key always LOOKS least-loaded — its batches die instantly — so the
+// load-aware selector funnels every submission into it (602 books failed this
+// way on 2026-06-05). Mark it broken for the rest of the run and route around.
+const _batchBrokenKeys = new Set();
+const _batchBrokenKeyEvents = [];
+function markKeyBatchBroken(ki, context) {
+  if (_batchBrokenKeys.has(ki)) return;
+  _batchBrokenKeys.add(ki);
+  const msg = `Gemini key ${ki} marked batch-broken (FAILED_PRECONDITION on batches.create, ${context}) — excluded for the rest of this run. Likely free-tier/unbilled; remove it from GEMINI_API_KEY_2..10 if persistent.`;
+  _batchBrokenKeyEvents.push(msg);
+  console.error(`    ALERT: ${msg}`);
+}
+
 /**
  * Query real Gemini-side active job counts per key.
  * Returns { total, perKey: number[] }. Also updates the cached _geminiKeyLoads.
@@ -1135,6 +1150,7 @@ function getLeastLoadedKey() {
   let bestKey = -1;
   let bestCount = Infinity;
   for (let i = 0; i < _geminiKeyLoads.length; i++) {
+    if (_batchBrokenKeys.has(i)) continue; // batch-broken key (#2455) — never select
     if (_geminiKeyLoads[i] < MAX_ACTIVE_PER_KEY && _geminiKeyLoads[i] < bestCount) {
       bestCount = _geminiKeyLoads[i];
       bestKey = i;
@@ -1260,6 +1276,11 @@ async function createBatchJobInline(model, requests, displayName) {
         _geminiKeyLoads[ki] = MAX_ACTIVE_PER_KEY; // Mark as full
         continue;
       }
+      if (msg.includes('FAILED_PRECONDITION') || msg.includes('Precondition check failed')) {
+        // Key can't run Batch API at all (#2455) — exclude it and try the next key
+        markKeyBatchBroken(ki, 'inline batch');
+        continue;
+      }
       throw err;
     }
   }
@@ -1348,11 +1369,22 @@ async function createBatchJobFromFile(model, fileName, displayName, preferredKey
     if (state === 'FAILED') throw new Error(`File API processing FAILED for ${fileName}`);
     await new Promise(r => setTimeout(r, 2000)); // up to ~60s
   }
-  const batchJob = await client.batches.create({
-    model,
-    src: { fileName },
-    config: { displayName },
-  });
+  let batchJob;
+  try {
+    batchJob = await client.batches.create({
+      model,
+      src: { fileName },
+      config: { displayName },
+    });
+  } catch (err) {
+    const msg = err.message || '';
+    // File reached ACTIVE but batch creation still 400s — the KEY can't run
+    // Batch API (#2455). Mark it so the selector routes future uploads elsewhere.
+    if (msg.includes('FAILED_PRECONDITION') || msg.includes('Precondition check failed')) {
+      markKeyBatchBroken(preferredKeyIndex, 'file-based batch');
+    }
+    throw err;
+  }
   return { name: batchJob.name, state: batchJob.state || 'JOB_STATE_PENDING', keyIndex: preferredKeyIndex };
 }
 
@@ -5342,8 +5374,8 @@ Rules:
             stale_failed: log.stale_failed,
             zombie_jobs_cancelled: log.zombie_jobs_cancelled,
           },
-          errors: log.errors.slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
-          error_count: log.errors.length,
+          errors: [..._batchBrokenKeyEvents, ...log.errors].slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
+          error_count: _batchBrokenKeyEvents.length + log.errors.length,
           health_grade: healthGrade,
           summary: `[${healthGrade}] E:${log.enrolled} A:${log.archived} D:${log.dedup_books}/${log.dedup_pages_hidden}p P:${log.preview_queued} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
         }),

@@ -1442,6 +1442,44 @@ async function run() {
   if (zombiesReaped > 0) console.log(`Zombies reaped: ${zombiesReaped}`);
   if (notFoundCount > 0) console.log(`Gemini 404 (gone): ${notFoundCount}`);
   if (ghostsCleaned > 0) console.log(`Ghosts cleaned: ${ghostsCleaned}`);
+
+  // ── 404-on-all-keys alert (#2455) ──
+  // A burst of jobs that 404 on EVERY key almost always means key drift between
+  // the submitting host (Vercel) and this collector — the jobs exist, we just
+  // can't see them (348 jobs were falsely failed this way on 2026-06-05). Email
+  // instead of failing silently. 12h cooldown so a drift doesn't spam.
+  const NOT_FOUND_ALERT_THRESHOLD = 10;
+  if (notFoundCount >= NOT_FOUND_ALERT_THRESHOLD && process.env.RESEND_API_KEY && !DRY_RUN) {
+    try {
+      const COOLDOWN_MS = 12 * 60 * 60 * 1000;
+      const state = await db.collection('system_config').findOne({ _id: 'collector_404_alert_state' });
+      const elapsed = state?.last_sent_at ? Date.now() - new Date(state.last_sent_at).getTime() : Infinity;
+      if (elapsed >= COOLDOWN_MS) {
+        const { Resend } = await import('resend');
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: 'Source Library <noreply@sourcelibrary.org>',
+          to: process.env.ALERT_EMAIL || 'derek@sourcelibrary.org',
+          subject: `[COLLECTOR] ${notFoundCount} batch jobs 404 on all Gemini keys — likely key drift`,
+          html: [
+            '<h2>Batch jobs invisible to every collector key</h2>',
+            `<p><strong>${notFoundCount}</strong> jobs this run returned 404 from <code>batches.get</code> on all ${ALL_KEYS.length} keys and were marked failed.</p>`,
+            '<p>This pattern almost always means the submitting host (Vercel) holds a Gemini key this box does not — the jobs exist and their results are recoverable. See memory/pipeline-ops.md (2026-06-05 key-drift lesson): mirror the missing key into the Hetzner env, reset the jobs to pending, and re-run the collector.</p>',
+          ].join('\n'),
+        });
+        await db.collection('system_config').updateOne(
+          { _id: 'collector_404_alert_state' },
+          { $set: { last_sent_at: new Date(), last_count: notFoundCount } },
+          { upsert: true },
+        );
+        console.log(`[collector] 404-drift alert emailed (${notFoundCount} jobs)`);
+      } else {
+        console.log(`[collector] 404-drift alert suppressed (cooldown, ${notFoundCount} jobs)`);
+      }
+    } catch (e) {
+      console.error(`[collector] 404-drift alert failed: ${e.message}`);
+    }
+  }
   console.log(`Total time: ${totalElapsed}s`);
 
   // Write cron_runs record for observability
