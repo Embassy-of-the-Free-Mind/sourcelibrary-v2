@@ -48,6 +48,10 @@ export async function fetchRetry(url, opts = {}, tries = 4) {
 // ON CONFLICT updates the mutable fields but never downgrades translation
 // status fields that another ingest set (COALESCE keeps existing non-null).
 export async function upsertWorks(client, rows, { batch = 500 } = {}) {
+  // dedupe by id within the call — ON CONFLICT can't update the same row twice
+  // in one statement (KR-Catalog has a handful of duplicate headings)
+  const seen = new Set();
+  rows = rows.filter(r => !seen.has(r.id) && seen.add(r.id));
   let n = 0;
   for (let i = 0; i < rows.length; i += batch) {
     const chunk = rows.slice(i, i + batch);
@@ -83,6 +87,11 @@ export async function upsertWorks(client, rows, { batch = 500 } = {}) {
 }
 
 export async function upsertSources(client, rows, { batch = 500 } = {}) {
+  const seen = new Set();
+  rows = rows.filter(r => {
+    const k = `${r.work_id}|${r.source}|${r.source_id}`;
+    return !seen.has(k) && seen.add(k);
+  });
   let n = 0;
   for (let i = 0; i < rows.length; i += batch) {
     const chunk = rows.slice(i, i + batch);
