@@ -30,6 +30,7 @@ This separation means:
 | BSB Munich | ~30-50K (of 3.1M total) | OAI-PMH | Ready |
 | Gallica (BnF) | ~20-40K | SRU API | Ready |
 | Biblissima | ~60K (aggregated) | IIIF Collections / Portal API | Ready |
+| Internet Archive | ~1M by language, all dates (Latin 200K, Chinese 717K, Sanskrit 93K) | Scraping API (cursor-based) | Ready |
 
 ## Usage
 
@@ -50,6 +51,15 @@ node scripts/iiif-discovery/sources/gallica.mjs --max-year=1800
 
 # Discover from Biblissima (already pre-1800)
 node scripts/iiif-discovery/sources/biblissima.mjs
+
+# Discover from Internet Archive by language (census, all dates — see issue #2447)
+# IA language metadata is freetext: presets use ISO-code unions
+# (language:sanskrit alone = 3.3K items; the san union = 93K)
+node scripts/iiif-discovery/sources/ia-language.mjs --language=sanskrit
+node scripts/iiif-discovery/sources/ia-language.mjs --language=chinese
+node scripts/iiif-discovery/sources/ia-language.mjs --language=latin
+# Or sweep an untagged collection (language classified later)
+node scripts/iiif-discovery/sources/ia-language.mjs --collection=digitallibraryindia
 ```
 
 ### 2. Check progress
