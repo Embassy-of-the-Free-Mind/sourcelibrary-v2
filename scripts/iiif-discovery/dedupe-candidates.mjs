@@ -373,7 +373,6 @@ for (const [blockKey, records] of blocks) {
 
       if (score >= 0.85) {
         totalMatches++;
-        union(parent, rank, a._id.toString(), b._id.toString());
 
         // Determine match type
         const sameSource = a.source === b.source;
@@ -381,6 +380,20 @@ for (const [blockKey, records] of blocks) {
         const matchType = sameSource && sameDate ? 'same_edition_copies'
           : !sameSource && sameDate ? 'cross_source_same_edition'
           : 'related_edition';
+
+        // EDITION edges only feed clusters. related_edition pairs (dates
+        // differ) are the same WORK in a different edition — clustering them
+        // chains 1556 and 1601 printings into one cluster and --apply would
+        // mark distinct editions skipped (43% of all matches on the 2026-06
+        // full-pool dry run were related_edition). Work-level grouping is
+        // issue #2318, not this script. Near-dates (±2y) still count as the
+        // same edition: catalogs disagree by a year or two on the same
+        // printing far more often than a true reprint lands within 2 years.
+        const nearDate = sameDate
+          || (a.date_earliest && b.date_earliest && Math.abs(a.date_earliest - b.date_earliest) <= 2);
+        if (nearDate) {
+          union(parent, rank, a._id.toString(), b._id.toString());
+        }
 
         matchTypeCounts[matchType] = (matchTypeCounts[matchType] || 0) + 1;
         if (matchPairs.length < MATCH_SAMPLE_CAP) {
