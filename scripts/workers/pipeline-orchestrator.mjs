@@ -1399,6 +1399,13 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true };
   }
 
+  // Generation guard (#2449): stamp the book's current OCR generation on every
+  // job so batch-collector can refuse to save results from before a deliberate
+  // reset (reset-book-ocr.mjs bumps pipeline_auto.ocr_generation).
+  const ocrGeneration = (await db.collection('books').findOne(
+    { id: book.id }, { projection: { 'pipeline_auto.ocr_generation': 1 } }
+  ))?.pipeline_auto?.ocr_generation || 0;
+
   // Find pages needing OCR — only pages with R2 images (archived_photo or cropped_photo).
   // Pages without R2 URLs are not ready for OCR (archiving incomplete).
   const pages = await db.collection('pages')
@@ -1661,6 +1668,7 @@ Output structure:
       prompt_hash: ocrPromptRef.content_hash,
       submission_method: useFileBased ? 'file' : 'inline',
       key_index: batchJob.keyIndex,
+      ocr_generation: ocrGeneration, // #2449 generation guard
       force: false,
       created_at: new Date(),
       updated_at: new Date(),
@@ -1688,6 +1696,7 @@ Output structure:
       book_id: book.id,
       child_job_ids: childJobIds,
       total_pages: totalSubmitted,
+      ocr_generation: ocrGeneration, // #2449 generation guard
       status: 'pending',
       model: ocrModel,
       prompt_version: ocrPromptRef.version || OCR_PROMPT_VERSION,
@@ -1731,6 +1740,14 @@ async function submitCrossBookOcrBatches(db, books) {
     eligible.push(book);
   }
   if (eligible.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+
+  // Generation guard (#2449): per-book OCR generations, stamped on the job so
+  // the collector can drop pages of any book that was reset after submit.
+  const genDocs = await db.collection('books').find(
+    { id: { $in: eligible.map(b => b.id) } },
+    { projection: { id: 1, 'pipeline_auto.ocr_generation': 1 } }
+  ).toArray();
+  const bookGenerations = Object.fromEntries(genDocs.map(d => [d.id, d.pipeline_auto?.ocr_generation || 0]));
 
   // Gather pages from all eligible books
   const allDownloaded = []; // { pageId, image, prompt, bookId }
@@ -1882,6 +1899,8 @@ async function submitCrossBookOcrBatches(db, books) {
     submission_method: 'file',
     key_index: batchJob.keyIndex,
     cross_book: true,
+    ocr_generation: bookGenerations[chunkBookIds[0]] ?? 0, // #2449 generation guard
+    book_generations: Object.fromEntries(chunkBookIds.map(id => [id, bookGenerations[id] ?? 0])),
     created_at: new Date(),
     updated_at: new Date(),
   });
