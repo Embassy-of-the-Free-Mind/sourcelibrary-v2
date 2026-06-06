@@ -132,6 +132,51 @@ function normalizeAuthor(author) {
     .slice(0, 60);
 }
 
+/**
+ * Volume guard — extract an explicit volume/part enumeration from a title.
+ * "Opera omnia, vol. 1" vs "Opera omnia, vol. 2" score ~0.97 on Jaro-Winkler
+ * and would cluster as duplicates, marking volume 2 skipped. If BOTH titles
+ * carry an enumeration and they differ, the pair is rejected. One-sided or
+ * absent enumerations still match (same volume labeled differently).
+ */
+const VOLUME_RE_WESTERN = /\b(?:vol(?:ume)?|tom(?:e|us|o)?|band|bd|teil|th(?:eil)?|part(?:e|s)?|pars|deel|fasc(?:icule|iculus)?|livre|liber|buch)\b\.?\s*([0-9]+|[ivxlc]+)\b/i;
+const VOLUME_RE_CJK = /第?([0-9〇一二三四五六七八九十百千]+)\s*[卷冊册巻号輯辑編编集]/;
+const ROMAN = { i: 1, v: 5, x: 10, l: 50, c: 100 };
+function romanToInt(s) {
+  let n = 0;
+  for (let i = 0; i < s.length; i++) {
+    const v = ROMAN[s[i]], next = ROMAN[s[i + 1]] || 0;
+    n += v < next ? -v : v;
+  }
+  return n;
+}
+function volumeKey(title) {
+  if (!title) return null;
+  const w = title.toLowerCase().match(VOLUME_RE_WESTERN);
+  if (w) {
+    // Normalize roman numerals so "vol. II" === "vol. 2" across catalogs
+    const raw = w[1];
+    const n = /^[0-9]+$/.test(raw) ? parseInt(raw) : romanToInt(raw);
+    return `w${n}`;
+  }
+  const c = title.match(VOLUME_RE_CJK);
+  if (c) return `c${cjkNumeral(c[1])}`;
+  return null;
+}
+const CJK_DIGITS = { '〇': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9 };
+function cjkNumeral(s) {
+  if (/^[0-9]+$/.test(s)) return parseInt(s);
+  // Handle 十/百/千 compositions: 二十三 = 23, 十二 = 12, 三百 = 300
+  let total = 0, current = 0;
+  for (const ch of s) {
+    if (ch in CJK_DIGITS) current = CJK_DIGITS[ch];
+    else if (ch === '十') { total += (current || 1) * 10; current = 0; }
+    else if (ch === '百') { total += (current || 1) * 100; current = 0; }
+    else if (ch === '千') { total += (current || 1) * 1000; current = 0; }
+  }
+  return total + current;
+}
+
 function getBlockKey(record) {
   const decade = record.date_earliest
     ? Math.floor(record.date_earliest / 10) * 10
@@ -195,6 +240,7 @@ for await (const record of cursor) {
     manifest_url: record.manifest_url,
     title: record.title,
     normTitle,
+    volKey: volumeKey(record.title),
     author: record.author,
     normAuthor,
     source: record.source,
@@ -217,11 +263,20 @@ for await (const record of cursor) {
 console.log(`Loaded ${totalLoaded.toLocaleString()} candidates into ${blocks.size.toLocaleString()} blocks\n`);
 
 // Block size distribution
-const blockSizes = [...blocks.values()].map(b => b.length);
-const maxBlock = Math.max(...blockSizes);
-const avgBlock = blockSizes.reduce((a, b) => a + b, 0) / blockSizes.length;
-const bigBlocks = blockSizes.filter(s => s > 100).length;
+// NOTE: no spread (Math.max(...arr)) here — with millions of blocks the spread
+// blows the call stack (RangeError). Plain loop instead.
+let maxBlock = 0, sumBlock = 0, bigBlocks = 0, skippedHugeBlocks = 0, recordsInHugeBlocks = 0;
+for (const b of blocks.values()) {
+  const len = b.length;
+  if (len > maxBlock) maxBlock = len;
+  sumBlock += len;
+  if (len > 100) bigBlocks++;
+  if (len > 500) { skippedHugeBlocks++; recordsInHugeBlocks += len; }
+}
+const avgBlock = sumBlock / blocks.size;
 console.log(`Block stats: avg=${avgBlock.toFixed(1)}, max=${maxBlock}, blocks>100=${bigBlocks}`);
+// Log what the >500 skip drops — silent caps misread as "covered everything".
+console.log(`Skipping ${skippedHugeBlocks.toLocaleString()} huge blocks (>500 records) containing ${recordsInHugeBlocks.toLocaleString()} records (${(recordsInHugeBlocks / totalLoaded * 100).toFixed(1)}% of pool) — these are NOT deduped`);
 
 // ── Phase 2: Pairwise matching within blocks ────────────────────────────
 
@@ -229,13 +284,22 @@ console.log('\nRunning pairwise comparisons...\n');
 
 let totalComparisons = 0;
 let totalMatches = 0;
+let volumeRejects = 0;
 let nextClusterId = 1;
 const clusterMerge = new Map(); // record._id -> clusterId
 
 // Union-Find for clustering
+// Iterative find with path compression — the recursive version overflows the
+// call stack on long parent chains at 2M+ records.
 function find(parent, i) {
-  if (parent.get(i) !== i) parent.set(i, find(parent, parent.get(i)));
-  return parent.get(i);
+  let root = i;
+  while (parent.get(root) !== root) root = parent.get(root);
+  while (parent.get(i) !== root) {
+    const next = parent.get(i);
+    parent.set(i, root);
+    i = next;
+  }
+  return root;
 }
 function union(parent, rank, i, j) {
   const ri = find(parent, i);
@@ -250,7 +314,11 @@ const parent = new Map();
 const rank = new Map();
 
 let blocksProcessed = 0;
+// matchPairs is sample-only (capped) — at 2M+ records the uncapped array was a
+// memory risk. Full counts live in matchTypeCounts.
+const MATCH_SAMPLE_CAP = 5000;
 const matchPairs = [];
+const matchTypeCounts = {};
 
 for (const [blockKey, records] of blocks) {
   blocksProcessed++;
@@ -276,6 +344,9 @@ for (const [blockKey, records] of blocks) {
 
       // Quick reject: if both titles are empty/short, skip
       if (a.normTitle.length < 5 || b.normTitle.length < 5) continue;
+
+      // Volume guard: explicit differing volume enumerations are NOT duplicates
+      if (a.volKey && b.volKey && a.volKey !== b.volKey) { volumeRejects++; continue; }
 
       // Compute title similarity
       const titleSim = jaroWinkler(a.normTitle, b.normTitle);
@@ -311,14 +382,17 @@ for (const [blockKey, records] of blocks) {
           : !sameSource && sameDate ? 'cross_source_same_edition'
           : 'related_edition';
 
-        matchPairs.push({
-          a: { source: a.source, id: a.source_id, title: a.title.slice(0, 60) },
-          b: { source: b.source, id: b.source_id, title: b.title.slice(0, 60) },
-          score: score.toFixed(3),
-          titleSim: titleSim.toFixed(3),
-          authorSim: authorSim.toFixed(3),
-          matchType,
-        });
+        matchTypeCounts[matchType] = (matchTypeCounts[matchType] || 0) + 1;
+        if (matchPairs.length < MATCH_SAMPLE_CAP) {
+          matchPairs.push({
+            a: { source: a.source, id: a.source_id, title: a.title.slice(0, 60) },
+            b: { source: b.source, id: b.source_id, title: b.title.slice(0, 60) },
+            score: score.toFixed(3),
+            titleSim: titleSim.toFixed(3),
+            authorSim: authorSim.toFixed(3),
+            matchType,
+          });
+        }
       }
     }
   }
@@ -330,6 +404,7 @@ for (const [blockKey, records] of blocks) {
 
 console.log(`\nComparisons: ${totalComparisons.toLocaleString()}`);
 console.log(`Matches found: ${totalMatches.toLocaleString()}`);
+console.log(`Volume-guard rejects (differing vol. enumerations): ${volumeRejects.toLocaleString()}`);
 
 // ── Phase 3: Build clusters ─────────────────────────────────────────────
 
@@ -355,9 +430,7 @@ console.log(`Reduction: ${(totalLoaded - totalUniqueAfterDedup).toLocaleString()
 // ── Phase 4: Analyze match types ────────────────────────────────────────
 
 console.log('\n--- Match Type Breakdown ---');
-const matchTypes = {};
-matchPairs.forEach(p => { matchTypes[p.matchType] = (matchTypes[p.matchType] || 0) + 1; });
-Object.entries(matchTypes).sort((a, b) => b[1] - a[1]).forEach(([type, count]) => {
+Object.entries(matchTypeCounts).sort((a, b) => b[1] - a[1]).forEach(([type, count]) => {
   console.log(`  ${type}: ${count.toLocaleString()}`);
 });
 
