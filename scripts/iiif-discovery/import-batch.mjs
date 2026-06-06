@@ -33,11 +33,15 @@ const args = Object.fromEntries(
 );
 
 const SOURCE = args.source || null;
+const TIER = args.tier || null;            // filter by candidate tag, e.g. --tier=core (mission_tier)
+const SAMPLE = parseInt(args.sample) || null; // draw N uniformly at random ($sample) — for canary batches
 const LIMIT = parseInt(args.limit) || 500;
 const DELAY = parseInt(args.delay) || 2000;
 const DRY_RUN = 'dry-run' in args;
 const MIN_YEAR = parseInt(args['min-year']) || null;
-const MAX_YEAR = parseInt(args['max-year']) || 1800;
+// Default 1800 cap for untagged runs; when targeting a tag, the tag defines scope
+// (no implicit year cap unless --max-year is passed explicitly).
+const MAX_YEAR = args['max-year'] ? parseInt(args['max-year']) : (TIER ? null : 1800);
 const MIN_PAGES = parseInt(args['min-pages']) || 5;
 const LANGUAGES = args.language ? args.language.split(',').map(l => l.trim()) : null;
 
@@ -100,7 +104,8 @@ async function safeUpdateCandidate(manifestUrl, status, extra = {}) {
 
 console.log(`\nIIIF Batch Import`);
 console.log(`  Source: ${SOURCE || 'all'}`);
-console.log(`  Limit: ${LIMIT}`);
+console.log(`  Tier: ${TIER || 'none'}`);
+console.log(`  ${SAMPLE ? `Sample (random): ${SAMPLE}` : `Limit: ${LIMIT}`}`);
 console.log(`  Date range: ${MIN_YEAR || 'any'} - ${MAX_YEAR || 'any'}`);
 console.log(`  Languages: ${LANGUAGES ? LANGUAGES.join(', ') : 'all'}`);
 console.log(`  Min pages: ${MIN_PAGES}`);
@@ -111,6 +116,7 @@ console.log('');
 const d = await getDb();
 const filter = { status: 'discovered' };
 if (SOURCE) filter.source = SOURCE;
+if (TIER) filter.mission_tier = TIER;
 if (LANGUAGES?.length) filter.language = { $in: LANGUAGES };
 if (MAX_YEAR) {
   filter.$or = [
@@ -120,11 +126,13 @@ if (MAX_YEAR) {
 }
 if (MIN_YEAR) filter.date_earliest = { ...(filter.date_earliest || {}), $gte: MIN_YEAR };
 
-const candidates = await d.collection('import_candidates')
-  .find(filter)
-  .sort({ date_earliest: 1 })
-  .limit(LIMIT)
-  .toArray();
+// --sample draws N uniformly at random (representative canary); otherwise take
+// the oldest LIMIT by date. $sample is unbiased across source/language/date.
+const candidates = SAMPLE
+  ? await d.collection('import_candidates')
+      .aggregate([{ $match: filter }, { $sample: { size: SAMPLE } }]).toArray()
+  : await d.collection('import_candidates')
+      .find(filter).sort({ date_earliest: 1 }).limit(LIMIT).toArray();
 
 console.log(`Found ${candidates.length} candidates to process.\n`);
 
