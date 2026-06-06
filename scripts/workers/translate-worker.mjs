@@ -1051,7 +1051,12 @@ async function selfDispatch(db, limit) {
   // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
-    { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
+    // Spread guard (#2449): never translate a book that still needs splitting —
+    // Phase 3.1 must crop the spreads first, or readers get two-page translations.
+    { $match: {
+      'pipeline_auto.status': { $in: ['ocr_complete'] },
+      $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+    } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
         { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -1072,7 +1077,11 @@ async function selfDispatch(db, limit) {
   let candidates = fresh;
   if (fresh.length === 0) {
     candidates = await db.collection('books').aggregate([
-      { $match: { 'pipeline_auto.status': 'translate_partial' } },
+      { $match: {
+        'pipeline_auto.status': 'translate_partial',
+        // Spread guard (#2449)
+        $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+      } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] } } },
       { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },

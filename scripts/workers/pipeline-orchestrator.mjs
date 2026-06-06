@@ -1437,7 +1437,9 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     // Exception: if this is the entire book (small book), submit anyway
     const totalBookPages = book.pages_count || 0;
     const ocrDone = book.pages_ocr || 0;
-    if (ocrDone > 0 && pages.length < MIN_BATCH_PAGES) {
+    if (ocrDone > 0 && pages.length < MIN_BATCH_PAGES && !book.needs_splitting) {
+      // Spread books are exempt (#2449): their sub-25-page re-OCR remainders carry
+      // the split markers Phase 3.1 depends on — starving them wedges the split.
       console.log(`    Skipping small retry batch: ${pages.length} pages remaining (min ${MIN_BATCH_PAGES})`);
       return { submitted: 0, jobName: null, skippedSmallBatch: true };
     }
@@ -2960,6 +2962,10 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'pipeline_auto.preview_ocr_done': { $ne: true },
           'pipeline_auto.recitation_retry': { $ne: true },
           'pipeline_auto.recitation_blocked': { $ne: true },
+          // Spread guard (#2449): preview OCR uses the standard prompt, which writes
+          // marker-less text that poisons the post-OCR split. Spread books get their
+          // first OCR from Phase 2's spread-aware path instead.
+          $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
         })
         .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
         .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
@@ -4325,7 +4331,12 @@ Rules:
 
         // Fresh books first (never translated), then re-queue partially-translated books
         let freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
-          { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
+          // Spread guard (#2449): unsplit spread books must wait for Phase 3.1 —
+          // translating them produces two-page texts the split then discards.
+          { $match: {
+            'pipeline_auto.status': { $in: ['ocr_complete'] },
+            $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+          } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
               { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -4351,6 +4362,8 @@ Rules:
             { $match: {
               'pipeline_auto.status': { $in: ['translate_partial', 'translate_complete', 'chapters_complete', 'complete'] },
               pages_ocr: { $gt: 0 },
+              // Spread guard (#2449)
+              $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
             }},
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
