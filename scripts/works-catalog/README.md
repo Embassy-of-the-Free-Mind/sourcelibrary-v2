@@ -22,7 +22,9 @@ node scripts/works-catalog/apply-schema.mjs        # idempotent DDL
 node scripts/works-catalog/ingest-kanripo.mjs      # ~10.1K Chinese works (Kanseki Repository)
 node scripts/works-catalog/ingest-siku-wikidata.mjs # 3,418 Siku QIDs joined onto kr: works
 node scripts/works-catalog/ingest-openiti.mjs      # ~8.9K Islamicate works (Arabic/Persian)
-node scripts/works-catalog/ingest-bdrc.mjs         # Tibetan works (BUDA linked data)
+node scripts/works-catalog/ingest-bdrc.mjs         # Tibetan works (BUDA linked data; --harvest then --load)
+node scripts/works-catalog/ingest-ia-cadal.mjs     # IA-CADAL scan volumes -> chinese work_sources
+node scripts/works-catalog/build-holdings.mjs      # Mongo books -> work_holdings (title-auto)
 ```
 
 All idempotent (upserts). Env: `set -a; source .env.production.local; set +a`.
