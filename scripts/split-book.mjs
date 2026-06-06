@@ -32,10 +32,11 @@ const MIN_SPREAD_AR = 1.1;   // Aspect ratio gate: below this is portrait (singl
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const WITH_OCR = args.includes('--with-ocr');
+const GUTTER_ONLY = args.includes('--gutter-only'); // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
-  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr]');
+  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only]');
   process.exit(1);
 }
 
@@ -196,6 +197,34 @@ async function runSpreadOCR(imageBuf) {
     { inlineData: { mimeType: 'image/jpeg', data: imageBuf.toString('base64') } }
   ]);
   return r.response.text();
+}
+
+// --- Gutter-only detection (#2454: split BEFORE OCR) ---
+// One cheap vision call per page: where is the gutter? No transcription, so
+// output is ~10 tokens instead of ~2K. The split pages then flow through the
+// normal single-page OCR pipeline (batch, 50% off) instead of realtime.
+const GUTTER_PROMPT = `This image is a scan from a book. Decide whether it shows a TWO-PAGE SPREAD (an open book with a left and a right page) or a SINGLE page.
+
+Respond with EXACTLY one tag and nothing else:
+- Two-page spread: <split-position>N</split-position> where N (0-1000) is the horizontal position of the gutter (the fold between the pages). The gutter is usually near the center (400-600).
+- Single page: <split-position>null</split-position>`;
+
+async function initGeminiGutter() {
+  const { GoogleGenerativeAI } = await import('@google/generative-ai');
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  geminiModel = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+}
+
+async function runGutterDetect(imageBuf) {
+  const r = await geminiModel.generateContent([
+    GUTTER_PROMPT,
+    { inlineData: { mimeType: 'image/jpeg', data: imageBuf.toString('base64') } }
+  ]);
+  const text = r.response.text();
+  const m = text.match(/<split-position>([^<]*)<\/split-position>/);
+  if (!m) return null; // unparseable — caller decides fallback
+  const n = parseInt(m[1]);
+  return (!isNaN(n) && n > 0 && n < 1000) ? n : 'single';
 }
 
 // --- Parse spread OCR ---
@@ -373,7 +402,41 @@ console.log(`  ${withPageBreak.length} have <page-break/>, ${withSplitPos.length
 
 // --- Step 3: Run OCR if needed ---
 let ocrVersion = 'existing';
-if (WITH_OCR || withPageBreak.length === 0) {
+if (GUTTER_ONLY) {
+  // #2454: no transcription — one cheap gutter call per landscape page.
+  // Portrait pages (AR < MIN_SPREAD_AR) skip the call entirely.
+  console.log('\n--- Step 3: Gutter-only detection (no OCR) ---');
+  await initGeminiGutter();
+  for (let i = 0; i < iiifUrls.length; i += CONCURRENCY) {
+    const batch = iiifUrls.slice(i, i + CONCURRENCY);
+    await Promise.all(batch.map(async (url, j) => {
+      const idx = i + j;
+      if (!url || idx >= existingPages.length) return;
+      const page = existingPages[idx];
+      try {
+        const buf = await fetchImage(url);
+        const meta = await sharp(buf).metadata();
+        page._imageBuf = buf;
+        page._w = meta.width;
+        page._h = meta.height;
+        const ar = meta.width / meta.height;
+        if (ar < MIN_SPREAD_AR) {
+          page._gutter = 'single'; // portrait — no Gemini call needed
+          return;
+        }
+        const pos = await runGutterDetect(buf);
+        // Wide page where detection failed or said single: a landscape page in a
+        // flagged spread book is overwhelmingly a spread — default to center.
+        page._gutter = pos === 'single' && ar < 1.3 ? 'single' : (typeof pos === 'number' ? pos : 500);
+      } catch (e) {
+        console.log(`  FAIL p.${page.page_number}: ${e.message?.slice(0, 50)}`);
+        page._error = true;
+      }
+    }));
+    process.stderr.write(`  Gutter: ${Math.min(i + CONCURRENCY, iiifUrls.length)}/${iiifUrls.length}\r`);
+  }
+  console.log();
+} else if (WITH_OCR || withPageBreak.length === 0) {
   if (!WITH_OCR && withPageBreak.length === 0) {
     console.log('\n  No spread OCR found. Running Gemini OCR (use --with-ocr to force)...');
   }
@@ -416,6 +479,19 @@ for (let idx = 0; idx < existingPages.length; idx++) {
   const page = existingPages[idx];
   if (page._error) {
     newPages.push({ side: 'error', ocr: null, sourceIdx: idx, splitPosition: null });
+    continue;
+  }
+
+  if (GUTTER_ONLY) {
+    if (page._gutter === 'single') {
+      // Singles keep any existing OCR — it was made from this exact image.
+      newPages.push({ side: 'single', ocr: page.ocr?.data || null, sourceIdx: idx, splitPosition: null });
+    } else {
+      // Spread: two OCR-less pages; the normal pipeline OCRs them as singles.
+      const pos = typeof page._gutter === 'number' ? page._gutter : 500;
+      newPages.push({ side: 'left', ocr: null, sourceIdx: idx, splitPosition: pos });
+      newPages.push({ side: 'right', ocr: null, sourceIdx: idx, splitPosition: pos });
+    }
     continue;
   }
 
@@ -555,7 +631,7 @@ for (let i = 0; i < newPages.length; i++) {
     split_side: p.side === 'error' ? 'single' : p.side,
     split_position: p.splitPosition,
     field_provenance: {
-      ocr: { source: 'gemini', method: 'spread-split-ocr', confidence: 1.0, date: new Date() },
+      ...(p.ocr ? { ocr: { source: 'gemini', method: 'spread-split-ocr', confidence: 1.0, date: new Date() } } : {}),
       photo: { source: 'r2', method: 'spread-split-crop', confidence: 1.0, date: new Date() },
     },
     created_at: new Date(),
@@ -630,6 +706,16 @@ await db.collection('books').updateOne({ id: book.id }, {
     updated_at: new Date(),
   }
 });
+
+if (GUTTER_ONLY) {
+  // #2454: pages were created without OCR — requeue the book so the normal
+  // single-page batch OCR pipeline picks it up (needs_splitting is now false,
+  // so no spread prompt and no Phase 1.5 skip).
+  await db.collection('books').updateOne({ id: book.id }, {
+    $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() },
+  });
+  console.log('  Requeued at archive_complete for single-page OCR');
+}
 
 console.log(`  pages: ${existingPages.length} spread → ${newDocs.length} split`);
 console.log(`  OCR: ${pagesWithOCR}/${newDocs.length}`);
