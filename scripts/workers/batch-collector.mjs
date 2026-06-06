@@ -270,6 +270,46 @@ async function processOneJob(db, job) {
     console.log(`  Collecting: ${job.book_id} | ${job.type} | ${state}`);
     if (DRY_RUN) return { status: 'would_collect', bookId: job.book_id };
 
+    // ── Generation guard (#2449) ──
+    // If a book's OCR was deliberately reset after this job was submitted
+    // (scripts/maintenance/reset-book-ocr.mjs bumps pipeline_auto.ocr_generation),
+    // these results are stale: saving them would resurrect cleared marker-less
+    // text and silently undo the reset. Jobs submitted before this shipped have
+    // no ocr_generation field and are exempt.
+    let staleDropPages = null; // Set of pageIds to skip (cross-book partial staleness)
+    if (job.type === 'ocr' && job.ocr_generation !== undefined) {
+      const genBookIds = job.book_ids?.length ? job.book_ids : [job.book_id];
+      const genDocs = await db.collection('books').find(
+        { id: { $in: genBookIds } },
+        { projection: { id: 1, 'pipeline_auto.ocr_generation': 1 } }
+      ).toArray();
+      const jobGens = job.book_generations || { [job.book_id]: job.ocr_generation };
+      const staleBooks = new Set();
+      for (const b of genDocs) {
+        const current = b.pipeline_auto?.ocr_generation || 0;
+        const submitted = jobGens[b.id] ?? job.ocr_generation ?? 0;
+        if (current !== submitted) staleBooks.add(b.id);
+      }
+      if (staleBooks.size >= genBookIds.length) {
+        // Every book in the job was reset — nothing to save.
+        await db.collection('batch_jobs').updateOne(
+          { _id: job._id },
+          { $set: { status: 'superseded', error: `OCR generation advanced after submit (job gen ${job.ocr_generation})`, updated_at: new Date() } }
+        );
+        console.log(`  SUPERSEDED (generation guard): ${jobName} (book: ${job.book_id})`);
+        return { status: 'superseded', bookId: job.book_id };
+      }
+      if (staleBooks.size > 0 && job.page_ids?.length) {
+        // Cross-book job, some books reset: drop only their pages.
+        const stalePages = await db.collection('pages').find(
+          { id: { $in: job.page_ids }, book_id: { $in: [...staleBooks] } },
+          { projection: { id: 1 } }
+        ).toArray();
+        staleDropPages = new Set(stalePages.map(pg => pg.id));
+        console.log(`  Generation guard: dropping ${staleDropPages.size} pages from ${staleBooks.size} reset book(s) in cross-book job ${jobName}`);
+      }
+    }
+
     const responses = await extractResults(sdkJob, workingKey);
     let successCount = 0;
     let failCount = 0;
@@ -391,6 +431,7 @@ async function processOneJob(db, job) {
     const sourceUrlByPage = new Map((job.page_sources || []).map(s => [s.page_id, s.source_url]));
 
     for (const { pageId, text, usage } of pageResults) {
+      if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
 
       const inputTokens = usage?.promptTokenCount || 0;

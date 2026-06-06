@@ -221,6 +221,9 @@ export const POST = withAuth(async (request, session, context) => {
     // split. The bare prompt silently produces marker-less text that wedges the
     // book as an unsplit spread. Mirrors pipeline-orchestrator submitOcrDirectly.
     const needsSpreadPrompt = book.needs_splitting === true && book.split_completed !== true;
+    // Generation guard (#2449): stamp the book's current OCR generation on every
+    // job so batch-collector refuses results submitted before a deliberate reset.
+    const ocrGeneration = book.pipeline_auto?.ocr_generation || 0;
     const spreadPrefix = `**TWO-PAGE SPREAD HANDLING:**
 This image is a two-page spread (open book scan). Process BOTH pages separately.
 
@@ -395,6 +398,7 @@ Output structure:
         language,
         force,
         ...promptProvenance,
+        ocr_generation: ocrGeneration, // #2449 generation guard
         page_ids: allPageIds,
         page_count: allPageIds.length,
         pages_per_request: effectivePPR,
@@ -491,6 +495,7 @@ Output structure:
         language,
         force,
         ...promptProvenance,
+        ocr_generation: ocrGeneration, // #2449 generation guard
         page_ids: child.batchPageIds,
         page_count: child.batchPageIds.length,
         pages_per_request: effectivePPR,
@@ -511,6 +516,7 @@ Output structure:
       language,
       force,
       ...promptProvenance,
+      ocr_generation: ocrGeneration, // #2449 generation guard
       page_ids: allPageIds,
       page_count: allPageIds.length,
       total_pages: allPageIds.length,
