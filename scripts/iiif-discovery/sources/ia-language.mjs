@@ -137,6 +137,8 @@ async function filterNew(db, candidates) {
   return candidates.filter(c => !seen.has(c.manifest_url));
 }
 
+// noTimeout: withMongo's 300s zombie-killer force-exits long runs — a full
+// language sweep (chinese: 717K items, ~72 batches) takes 15+ minutes.
 await withMongo(async (db) => {
   await ensureIndexes(db);
 
@@ -243,4 +245,4 @@ await withMongo(async (db) => {
   if (cursor && totalDiscovered >= MAX_RECORDS) {
     console.log(`Stopped at --max-records. Resume with: --cursor=${cursor}`);
   }
-});
+}, { noTimeout: true });
