@@ -309,23 +309,47 @@ if (!iiifUrls || iiifUrls.length === 0) {
 
 console.log(`  ${iiifUrls.length} original images found`);
 
-// --- AR gate: check first image aspect ratio ---
-// If the first image is portrait (AR < 1.1), this book isn't actually spreads.
+// --- AR gate: sample several pages and use the median aspect ratio ---
+// The first page is often a portrait cover/title on a book whose body is
+// spreads (e.g. Hollandus VCQ 37: page 1 AR 0.45, body AR ~1.35), so gating
+// on iiifUrls[0] alone produced false "portrait" verdicts. Sample up to 5
+// pages spread through the book and decide on the median.
 try {
-  const gateBuf = await fetchImage(iiifUrls[0]);
-  const gateMeta = await sharp(gateBuf).metadata();
-  const ar = gateMeta.width / gateMeta.height;
-  if (ar < MIN_SPREAD_AR) {
-    console.log(`  AR gate: ${ar.toFixed(2)} < ${MIN_SPREAD_AR} — portrait pages, not spreads. Skipping.`);
-    await db.collection('books').updateOne({ id: book.id }, {
-      $set: { needs_splitting: false, split_completed: true, split_note: `AR gate: ${ar.toFixed(2)} — portrait` },
-    });
-    await client.close();
-    process.exit(0);
+  const sampleCount = Math.min(5, iiifUrls.length);
+  const sampleIdxs = [...new Set(
+    Array.from({ length: sampleCount }, (_, i) =>
+      Math.floor(((i + 1) / (sampleCount + 1)) * iiifUrls.length))
+  )];
+  const ars = [];
+  for (const idx of sampleIdxs) {
+    try {
+      const gateBuf = await fetchImage(iiifUrls[idx]);
+      const gateMeta = await sharp(gateBuf).metadata();
+      ars.push(gateMeta.width / gateMeta.height);
+    } catch { /* skip unfetchable sample */ }
   }
-  console.log(`  AR: ${ar.toFixed(2)} — confirmed spreads`);
+  if (ars.length > 0) {
+    ars.sort((a, b) => a - b);
+    const ar = ars[Math.floor(ars.length / 2)];
+    const arList = ars.map(a => a.toFixed(2)).join(', ');
+    if (ar < MIN_SPREAD_AR) {
+      console.log(`  AR gate: median ${ar.toFixed(2)} < ${MIN_SPREAD_AR} over ${ars.length} samples [${arList}] — portrait pages, not spreads. Skipping.`);
+      if (!DRY_RUN) {
+        await db.collection('books').updateOne({ id: book.id }, {
+          $set: { needs_splitting: false, split_completed: true, split_note: `AR gate: median ${ar.toFixed(2)} — portrait` },
+        });
+      } else {
+        console.log('  (dry run — not writing needs_splitting/split_completed)');
+      }
+      await client.close();
+      process.exit(0);
+    }
+    console.log(`  AR: median ${ar.toFixed(2)} over ${ars.length} samples [${arList}] — confirmed spreads`);
+  } else {
+    console.log('  AR gate: no sample images fetchable — proceeding anyway');
+  }
 } catch (e) {
-  console.log(`  AR gate: failed to fetch first image (${e.message?.slice(0, 40)}) — proceeding anyway`);
+  console.log(`  AR gate: failed (${e.message?.slice(0, 40)}) — proceeding anyway`);
 }
 
 // --- Step 2: Load existing pages (for their OCR) ---
