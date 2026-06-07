@@ -178,8 +178,13 @@ Respond JSON only: {"translated": boolean, "which": <number|null>, "complete": b
 // --- main ---------------------------------------------------------------------
 const client = pgClient();
 await client.connect();
+// Pre-1900 scope: OpenITI carries modern authors (century = author death CE),
+// so exclude century > 19 from the islamicate denominator. Tibetan/etc. are
+// already purified into their own traditions, so no filter needed there.
+const scopeFilter = TRADITION === 'islamicate' ? `and (century is null or century <= 19)` : '';
 const all = (await client.query(
-  `select id, title, title_romanized, title_english, author, extra from works where tradition = $1 order by id`,
+  `select id, title, title_romanized, title_english, author, extra from works
+   where tradition = $1 ${scopeFilter} order by id`,
   [TRADITION])).rows;
 const rng = mulberry32(SEED);
 const sample = [...all].map(w => [rng(), w]).sort((a, b) => a[0] - b[0]).map(x => x[1]).slice(0, N);
