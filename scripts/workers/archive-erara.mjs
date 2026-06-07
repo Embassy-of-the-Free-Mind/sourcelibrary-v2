@@ -110,8 +110,13 @@ async function processBook(book, db) {
     return;
   }
 
+  // Warehouse books carry their collection names so writes go back to the right
+  // place; live books default to the canonical `pages`/`books` collections.
+  const pagesCol = book._pagesCol || 'pages';
+  const booksCol = book._booksCol || 'books';
+
   // Find unarchived pages
-  const pages = await db.collection('pages')
+  const pages = await db.collection(pagesCol)
     .find({
       book_id: book.id,
       $or: [
@@ -144,7 +149,7 @@ async function processBook(book, db) {
       console.log(`    [FAIL] PDF download: ${err.message?.slice(0, 100)}`);
       // Mark pages as failed so we don't retry forever
       if (err.message?.includes('403') || err.message?.includes('404')) {
-        await db.collection('pages').updateMany(
+        await db.collection(pagesCol).updateMany(
           { book_id: book.id, archived_photo: { $exists: false } },
           { $set: { archived_photo: `failed:${err.message.slice(0, 50)}` } }
         );
@@ -221,7 +226,7 @@ async function processBook(book, db) {
           if (urls.width) dimFields.image_width = urls.width;
           if (urls.height) dimFields.image_height = urls.height;
 
-          await db.collection('pages').updateOne(
+          await db.collection(pagesCol).updateOne(
             { _id: page._id },
             {
               $set: {
@@ -258,19 +263,19 @@ async function processBook(book, db) {
 
     // Sync pages_archived counter (#497)
     if (archived > 0) {
-      const archivedCount = await db.collection('pages').countDocuments(
+      const archivedCount = await db.collection(pagesCol).countDocuments(
         { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
         { maxTimeMS: 10000 }
       );
       const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
-      await db.collection('books').updateOne(
+      await db.collection(booksCol).updateOne(
         { id: book.id },
         { $set: { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() } }
       );
     }
 
     // If all pages archived, mark book as archive_complete
-    const remainingUnarchived = await db.collection('pages').countDocuments({
+    const remainingUnarchived = await db.collection(pagesCol).countDocuments({
       book_id: book.id,
       $or: [
         { archived_photo: { $exists: false } },
@@ -279,7 +284,7 @@ async function processBook(book, db) {
       ],
     });
     if (remainingUnarchived === 0) {
-      await db.collection('books').updateOne(
+      await db.collection(booksCol).updateOne(
         { id: book.id },
         {
           $set: {
@@ -310,22 +315,43 @@ async function main() {
   // Find e-rara books that need archiving — any pipeline status, not just 'archiving'.
   // Many e-rara books sailed past the archiving stage before this worker existed.
   // Priority: smaller books first (faster throughput), then first translations
+  const eraraFilter = {
+    'image_source.provider': 'e-rara',
+    pages_count: { $gt: 0 },
+    pages_archived: { $not: { $gte: 1 } },  // No pages archived yet (null, 0, or missing)
+  };
+  const eraraProjection = { id: 1, title: 1, image_source: 1, pages_count: 1, language: 1, is_first_translation: 1 };
+
   const eraraBooks = await db.collection('books')
-    .find({
-      'image_source.provider': 'e-rara',
-      pages_count: { $gt: 0 },
-      pages_archived: { $not: { $gte: 1 } },  // No pages archived yet (null, 0, or missing)
-    })
+    .find(eraraFilter)
     .sort({ pages_count: 1 })  // Small books first — clear the queue faster
-    .project({ id: 1, title: 1, image_source: 1, pages_count: 1, language: 1, is_first_translation: 1 })
+    .project(eraraProjection)
     .limit(BOOK_LIMIT)
     .toArray();
 
-  console.log(`[archive-erara] Found ${eraraBooks.length} e-rara books to archive`);
+  // Also scan the warehouse — the bulk of the e-rara backlog was moved out of the
+  // live `books` collection into `books_warehouse` (statuses archiving/archive_complete)
+  // to keep Atlas queries fast. archive-bulk already scans the warehouse this way;
+  // mirror it here so the e-rara backlog is reachable. Each warehouse book is tagged
+  // with its collection names so processBook() writes back to the right place.
+  const warehouseRemaining = Math.max(0, BOOK_LIMIT - eraraBooks.length);
+  const warehouseEraraBooks = warehouseRemaining > 0
+    ? await db.collection('books_warehouse')
+        .find(eraraFilter)
+        .sort({ pages_count: 1 })
+        .project(eraraProjection)
+        .limit(warehouseRemaining)
+        .toArray()
+        .catch(() => [])
+    : [];
+  warehouseEraraBooks.forEach(b => { b._pagesCol = 'pages_warehouse'; b._booksCol = 'books_warehouse'; });
+  eraraBooks.push(...warehouseEraraBooks);
+
+  console.log(`[archive-erara] Found ${eraraBooks.length - warehouseEraraBooks.length} live + ${warehouseEraraBooks.length} warehouse e-rara books to archive`);
 
   if (DRY_RUN) {
     eraraBooks.forEach((b, i) =>
-      console.log(`  ${i + 1}. ${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ID ${extractEraraId(b)})`)
+      console.log(`  ${i + 1}. ${b._booksCol === 'books_warehouse' ? '[WH] ' : ''}${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ID ${extractEraraId(b)})`)
     );
     await client.close();
     return;
