@@ -73,3 +73,22 @@ create table if not exists work_holdings (
 );
 
 create index if not exists work_holdings_book_idx on work_holdings (book_id);
+
+-- Provenance / rights of each contributing source. One row per ingest source.
+-- Lets us answer "where did this come from and what may we do with it" without
+-- re-researching. Per-ITEM rights overrides (e.g. a single CopyrightUndetermined
+-- BDRC scan) live in work_sources.rights; this table is the source-level default.
+create table if not exists catalog_sources (
+  source text primary key,                -- matches work_sources.source / works.source_catalog
+  name text not null,
+  url text,
+  data_license text not null,             -- license of the METADATA we ingested
+  content_license text,                   -- license of the underlying text/scan (may differ + bind on import)
+  commercial_ok boolean,                  -- may the content be used commercially? null = depends/per-item
+  attribution text,                       -- required credit string
+  notes text,
+  updated_at timestamptz not null default now()
+);
+
+-- per-item rights override (PD / CopyrightUndetermined / etc.) for scan & text rows
+alter table work_sources add column if not exists rights text;
