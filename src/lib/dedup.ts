@@ -20,6 +20,9 @@ export interface DedupMatch {
   /** Whether the already-existing match is public. Hidden matches still count as
    * duplicates — this lets callers/auditors distinguish a live dup from a backlog one. */
   matchedVisible?: boolean;
+  /** Which collection the match was found in: 'books' (live) or 'books_warehouse'
+   * (acquired+archived, awaiting promotion). Both count as duplicates. */
+  matchedCollection?: 'books' | 'books_warehouse';
 }
 
 export interface DedupResult {
@@ -171,69 +174,83 @@ export async function checkDuplicate(
   // import into at volume). We surface the match's visibility instead of hiding it.
   const VIS_PROJ = { id: 1, title: 1, visible: 1, hidden: 1 };
 
-  // Tier 1: Source fingerprint match
+  // Check BOTH the live library and the warehouse. `books_warehouse` holds books
+  // we've already acquired + archived that are awaiting promotion to `books`
+  // (pipeline Phase 1.95). A duplicate there is still a duplicate — skipping the
+  // warehouse re-acquires ~items we already hold. (issue: warehouse dedup gap)
+  const COLLECTIONS: Array<'books' | 'books_warehouse'> = ['books', 'books_warehouse'];
+  const seen = (id: string) => matches.some(m => m.matchedBookId === id);
+
+  // Tier 1: Source fingerprint match (exact)
   const fp = sourceFingerprint(book);
   if (fp) {
-    const fpMatch = await db.collection('books').findOne(
-      { source_fingerprint: fp },
-      { projection: VIS_PROJ }
-    );
-    if (fpMatch) {
-      matches.push({
-        matchedBookId: fpMatch.id || fpMatch._id.toString(),
-        matchedTitle: fpMatch.title,
-        matchType: 'source_fingerprint',
-        confidence: 'exact',
-        matchedVisible: fpMatch.visible === true,
-      });
-    }
-  }
-
-  // Tier 2: Normalized title+author match
-  const normTitle = normalizeTitle(book.title);
-  const normAuthor = normalizeAuthor(book.author);
-
-  if (normTitle.length >= 5) {
-    // Use regex to find books with similar normalized titles
-    // This is a fallback — the primary path uses the stored normalized fields
-    const titleMatches = await db.collection('books').find(
-      {
-        normalized_title: normTitle,
-        normalized_author: normAuthor,
-      },
-      { projection: VIS_PROJ }
-    ).limit(5).toArray();
-
-    for (const tm of titleMatches) {
-      // Don't double-count fingerprint matches
-      if (!matches.some(m => m.matchedBookId === (tm.id || tm._id.toString()))) {
-        matches.push({
-          matchedBookId: tm.id || tm._id.toString(),
-          matchedTitle: tm.title,
-          matchType: 'title_author',
-          confidence: 'high',
-          matchedVisible: tm.visible === true,
+    for (const cn of COLLECTIONS) {
+      const fpMatch = await db.collection(cn).findOne(
+        { source_fingerprint: fp },
+        { projection: VIS_PROJ }
+      );
+      if (fpMatch) {
+        const id = fpMatch.id || fpMatch._id.toString();
+        if (!seen(id)) matches.push({
+          matchedBookId: id,
+          matchedTitle: fpMatch.title,
+          matchType: 'source_fingerprint',
+          confidence: 'exact',
+          matchedVisible: fpMatch.visible === true,
+          matchedCollection: cn,
         });
       }
     }
   }
 
-  // Tier 3: IIIF manifest URL match
+  // Tier 2: Normalized title+author match (high)
+  const normTitle = normalizeTitle(book.title);
+  const normAuthor = normalizeAuthor(book.author);
+
+  if (normTitle.length >= 5) {
+    for (const cn of COLLECTIONS) {
+      const titleMatches = await db.collection(cn).find(
+        {
+          normalized_title: normTitle,
+          normalized_author: normAuthor,
+        },
+        { projection: VIS_PROJ }
+      ).limit(5).toArray();
+
+      for (const tm of titleMatches) {
+        const id = tm.id || tm._id.toString();
+        if (!seen(id)) matches.push({
+          matchedBookId: id,
+          matchedTitle: tm.title,
+          matchType: 'title_author',
+          confidence: 'high',
+          matchedVisible: tm.visible === true,
+          matchedCollection: cn,
+        });
+      }
+    }
+  }
+
+  // Tier 3: IIIF manifest URL match (exact)
   if (book.image_source?.iiif_manifest) {
-    const iiifMatch = await db.collection('books').findOne(
-      {
-        'image_source.iiif_manifest': book.image_source.iiif_manifest,
-      },
-      { projection: VIS_PROJ }
-    );
-    if (iiifMatch && !matches.some(m => m.matchedBookId === (iiifMatch.id || iiifMatch._id.toString()))) {
-      matches.push({
-        matchedBookId: iiifMatch.id || iiifMatch._id.toString(),
-        matchedTitle: iiifMatch.title,
-        matchType: 'iiif_manifest',
-        confidence: 'exact',
-        matchedVisible: iiifMatch.visible === true,
-      });
+    for (const cn of COLLECTIONS) {
+      const iiifMatch = await db.collection(cn).findOne(
+        {
+          'image_source.iiif_manifest': book.image_source.iiif_manifest,
+        },
+        { projection: VIS_PROJ }
+      );
+      if (iiifMatch) {
+        const id = iiifMatch.id || iiifMatch._id.toString();
+        if (!seen(id)) matches.push({
+          matchedBookId: id,
+          matchedTitle: iiifMatch.title,
+          matchType: 'iiif_manifest',
+          confidence: 'exact',
+          matchedVisible: iiifMatch.visible === true,
+          matchedCollection: cn,
+        });
+      }
     }
   }
 
@@ -244,11 +261,15 @@ export async function checkDuplicate(
 }
 
 /**
- * Backfill normalized fields and source fingerprints on all books.
- * Run once to populate, then maintained at import time.
+ * Backfill normalized fields and source fingerprints on a collection.
+ * Run once to populate, then maintained at import time. Defaults to `books`;
+ * pass 'books_warehouse' to populate the warehouse so dedup can match it.
  */
-export async function backfillDedupFields(db: Db): Promise<{ updated: number; skipped: number }> {
-  const cursor = db.collection('books').find(
+export async function backfillDedupFields(
+  db: Db,
+  collectionName: 'books' | 'books_warehouse' = 'books'
+): Promise<{ updated: number; skipped: number }> {
+  const cursor = db.collection(collectionName).find(
     { $or: [
       { source_fingerprint: { $exists: false } },
       { normalized_title: { $exists: false } },
@@ -287,14 +308,14 @@ export async function backfillDedupFields(db: Db): Promise<{ updated: number; sk
     });
 
     if (bulk.length >= 500) {
-      await db.collection('books').bulkWrite(bulk);
+      await db.collection(collectionName).bulkWrite(bulk);
       updated += bulk.length;
       bulk.length = 0;
     }
   }
 
   if (bulk.length > 0) {
-    await db.collection('books').bulkWrite(bulk);
+    await db.collection(collectionName).bulkWrite(bulk);
     updated += bulk.length;
   }
 
