@@ -1,9 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
-import { ZoomIn, Maximize, Minimize, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ZoomIn, Maximize, Minimize, ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import type { DeepZoomManifest } from '@/lib/types/book';
+
+// Lazy so OpenSeadragon (and its bundle weight) only loads on user intent.
+const DeepZoomOverlay = lazy(() => import('./DeepZoomOverlay'));
 
 interface ArtworkNavItem {
   slug: string;
@@ -21,11 +25,13 @@ interface ArtworkHeroProps {
   prevWork?: ArtworkNavItem | null;
   nextWork?: ArtworkNavItem | null;
   institution?: string;
+  deepZoom?: DeepZoomManifest | null;
 }
 
-export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork, institution }: ArtworkHeroProps) {
+export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork, institution, deepZoom }: ArtworkHeroProps) {
   const [fitWidth, setFitWidth] = useState(false);
   const [showChrome, setShowChrome] = useState(true);
+  const [zoomOpen, setZoomOpen] = useState(false);
   const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
   const hasHiRes = !!hiResUrl && hiResUrl !== imageUrl;
   const [medReady, setMedReady] = useState(!hasThumb);
@@ -95,15 +101,39 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
           />
       </div>
 
-      {/* Fit toggle — appears on hover */}
-      <button
-        onClick={() => setFitWidth(!fitWidth)}
-        className={`absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-all z-10 ${showChrome ? 'opacity-100' : 'opacity-0'}`}
-        title={fitWidth ? 'Fit to screen' : 'Fit to width'}
-      >
-        {fitWidth ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
-        {fitWidth ? 'Fit screen' : 'Full width'}
-      </button>
+      {/* Top-right controls — appear on hover */}
+      <div className={`absolute top-4 right-4 flex items-center gap-2 z-10 transition-all ${showChrome ? 'opacity-100' : 'opacity-0'}`}>
+        {deepZoom && (
+          <button
+            onClick={() => setZoomOpen(true)}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-all"
+            title="Open deep zoom — stream the full-resolution image tile by tile"
+          >
+            <Search className="w-3.5 h-3.5" />
+            Deep zoom
+          </button>
+        )}
+        <button
+          onClick={() => setFitWidth(!fitWidth)}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-all"
+          title={fitWidth ? 'Fit to screen' : 'Fit to width'}
+        >
+          {fitWidth ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
+          {fitWidth ? 'Fit screen' : 'Full width'}
+        </button>
+      </div>
+
+      {/* Deep-zoom overlay — mounted only on user intent */}
+      {zoomOpen && deepZoom && (
+        <Suspense fallback={null}>
+          <DeepZoomOverlay
+            manifest={deepZoom}
+            title={title}
+            caption={captionText}
+            onClose={() => setZoomOpen(false)}
+          />
+        </Suspense>
+      )}
 
       {/* Prev/Next navigation — appears on hover */}
       {prevWork && (

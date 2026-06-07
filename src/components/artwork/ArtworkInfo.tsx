@@ -114,6 +114,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
           prevWork={prevWork}
           nextWork={nextWork}
           institution={holdingMuseum}
+          deepZoom={(book as any).deepzoom || null}
         />
       )}
 
