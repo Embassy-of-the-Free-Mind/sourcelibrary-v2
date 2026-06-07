@@ -32,7 +32,8 @@ const MIN_SPREAD_AR = 1.1;   // Aspect ratio gate: below this is portrait (singl
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const WITH_OCR = args.includes('--with-ocr');
-const GUTTER_ONLY = args.includes('--gutter-only'); // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
+const GUTTER_ONLY = args.includes('--gutter-only');
+let detectGutterPixel; // lazy-loaded in gutter-only mode (avoids sharp import cost on OCR runs) // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
@@ -331,8 +332,27 @@ if (!iiifUrls && manifestUrl) {
   iiifUrls = await getOriginalImageUrls(book.id, manifestUrl, existingPageCount);
 }
 
+// Page-record fallback: providers that don't use the /archived/{id}/{n}.jpg
+// convention (e.g. cmc_kloss PDF extracts at /books/{id}/pages/NNNN.jpg, the
+// largest cohort) still carry the correct R2 URL on the page document itself.
+// Only safe for never-split books — on an already-split book `photo` is a
+// cropped half, not the spread. All #2454 first-time splits qualify.
+if (!iiifUrls && book.split_completed !== true) {
+  const srcPages = await db.collection('pages')
+    .find({ book_id: book.id }, { projection: { page_number: 1, archived_photo: 1, photo: 1 } })
+    .sort({ page_number: 1 })
+    .toArray();
+  const urls = srcPages
+    .map(p => p.archived_photo || p.photo)
+    .filter(u => typeof u === 'string' && /^https?:\/\//.test(u));
+  if (urls.length > 0 && urls.length >= srcPages.length * 0.9) {
+    iiifUrls = urls;
+    console.log(`  Using ${iiifUrls.length} page-record image URLs (provider: ${book.image_source?.provider || 'unknown'})`);
+  }
+}
+
 if (!iiifUrls || iiifUrls.length === 0) {
-  console.log('ERROR: No original images available (no archived copies, no IIIF manifest).');
+  console.log('ERROR: No original images available (no archived copies, no IIIF manifest, no usable page-record URLs).');
   process.exit(1);
 }
 
@@ -403,10 +423,20 @@ console.log(`  ${withPageBreak.length} have <page-break/>, ${withSplitPos.length
 // --- Step 3: Run OCR if needed ---
 let ocrVersion = 'existing';
 if (GUTTER_ONLY) {
-  // #2454: no transcription — one cheap gutter call per landscape page.
-  // Portrait pages (AR < MIN_SPREAD_AR) skip the call entirely.
-  console.log('\n--- Step 3: Gutter-only detection (no OCR) ---');
-  await initGeminiGutter();
+  // #2454 decision tree: split images BEFORE any OCR.
+  //   portrait (AR < 1.1)        → keep whole, no detection
+  //   pixel detector confident   → cut there (FREE — no model call)
+  //   pixel low-confidence        → Gemini gutter call (the manuscript/tight tail)
+  //   both unsure + wide (≥1.3)   → center cut, marked uncertain
+  //   both unsure + tight (<1.3)  → KEEP WHOLE, marked uncertain (never blind
+  //                                 center-cut a tight page — that clips text)
+  // If too many pages end up uncertain, the book is parked for review rather
+  // than partially clipped (book-level guard after the loop).
+  console.log('\n--- Step 3: Gutter detection — pixel-primary, Gemini fallback (no OCR) ---');
+  ({ detectGutterPixel } = await import('./lib/gutter-detect.mjs'));
+  let geminiReady = false;
+  const stats = { portrait: 0, pixel: 0, gemini: 0, centerUncertain: 0, keptWholeUncertain: 0 };
+
   for (let i = 0; i < iiifUrls.length; i += CONCURRENCY) {
     const batch = iiifUrls.slice(i, i + CONCURRENCY);
     await Promise.all(batch.map(async (url, j) => {
@@ -420,14 +450,46 @@ if (GUTTER_ONLY) {
         page._w = meta.width;
         page._h = meta.height;
         const ar = meta.width / meta.height;
+
         if (ar < MIN_SPREAD_AR) {
-          page._gutter = 'single'; // portrait — no Gemini call needed
+          page._gutter = 'single';        // portrait — keep whole
+          page._splitMethod = 'portrait';
+          stats.portrait++;
           return;
         }
-        const pos = await runGutterDetect(buf);
-        // Wide page where detection failed or said single: a landscape page in a
-        // flagged spread book is overwhelmingly a spread — default to center.
-        page._gutter = pos === 'single' && ar < 1.3 ? 'single' : (typeof pos === 'number' ? pos : 500);
+
+        // 1. Pixel detector (free)
+        const pix = await detectGutterPixel(buf);
+        if (pix.confidence === 'high' && pix.column != null) {
+          page._gutter = Math.round((pix.column / meta.width) * 1000); // 0-1000 scale
+          page._splitMethod = `pixel:${pix.reason}`;
+          stats.pixel++;
+          return;
+        }
+
+        // 2. Gemini fallback (only fires on pixel low-confidence)
+        if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
+        let gem = null;
+        try { gem = await runGutterDetect(buf); } catch { gem = null; }
+        if (typeof gem === 'number') {
+          page._gutter = gem;
+          page._splitMethod = 'gemini';
+          stats.gemini++;
+          return;
+        }
+
+        // 3. Neither detector confident
+        if (ar >= 1.3) {
+          page._gutter = 500;             // clearly wide → almost certainly a spread; center is best guess
+          page._splitMethod = 'center-uncertain';
+          page._uncertain = true;
+          stats.centerUncertain++;
+        } else {
+          page._gutter = 'single';        // tight/borderline → keep whole, do NOT clip
+          page._splitMethod = 'kept-whole-uncertain';
+          page._uncertain = true;
+          stats.keptWholeUncertain++;
+        }
       } catch (e) {
         console.log(`  FAIL p.${page.page_number}: ${e.message?.slice(0, 50)}`);
         page._error = true;
@@ -436,6 +498,30 @@ if (GUTTER_ONLY) {
     process.stderr.write(`  Gutter: ${Math.min(i + CONCURRENCY, iiifUrls.length)}/${iiifUrls.length}\r`);
   }
   console.log();
+  console.log(`  Methods: pixel ${stats.pixel}, gemini ${stats.gemini}, portrait ${stats.portrait}, center-uncertain ${stats.centerUncertain}, kept-whole-uncertain ${stats.keptWholeUncertain}`);
+
+  // Book-level guard: if too much of the book is uncertain, don't split it at
+  // all — park for review. A few uncertain pages in a long book are fine; a
+  // book that's mostly uncertain is a detector mismatch (curved binding,
+  // unusual layout) that needs eyes, not a silent half-clipped result.
+  const uncertainCount = stats.centerUncertain + stats.keptWholeUncertain;
+  const uncertainFrac = uncertainCount / Math.max(1, existingPages.filter(p => !p._error).length);
+  if (uncertainFrac > 0.15 && DRY_RUN) {
+    console.log(`\n  WOULD PARK: ${uncertainCount}/${existingPages.length} pages uncertain (${(uncertainFrac * 100).toFixed(0)}% > 15%) — real run flags needs_attention instead of splitting.`);
+  }
+  if (uncertainFrac > 0.15 && !DRY_RUN) {
+    console.error(`\n  PARK: ${uncertainCount}/${existingPages.length} pages uncertain (${(uncertainFrac * 100).toFixed(0)}% > 15%). Not splitting — flagging needs_attention for review.`);
+    await db.collection('books').updateOne({ id: book.id }, {
+      $set: {
+        'pipeline_auto.status': 'needs_attention',
+        'pipeline_auto.error': `Gutter detection uncertain on ${uncertainCount}/${existingPages.length} pages — manual split review needed (#2454)`,
+        'pipeline_auto.split_review_needed': true,
+        'pipeline_auto.last_updated': new Date(),
+      },
+    });
+    await client.close();
+    process.exit(0);
+  }
 } else if (WITH_OCR || withPageBreak.length === 0) {
   if (!WITH_OCR && withPageBreak.length === 0) {
     console.log('\n  No spread OCR found. Running Gemini OCR (use --with-ocr to force)...');
@@ -483,14 +569,15 @@ for (let idx = 0; idx < existingPages.length; idx++) {
   }
 
   if (GUTTER_ONLY) {
+    const method = page._splitMethod || 'unknown';
     if (page._gutter === 'single') {
       // Singles keep any existing OCR — it was made from this exact image.
-      newPages.push({ side: 'single', ocr: page.ocr?.data || null, sourceIdx: idx, splitPosition: null });
+      newPages.push({ side: 'single', ocr: page.ocr?.data || null, sourceIdx: idx, splitPosition: null, splitMethod: method, uncertain: !!page._uncertain });
     } else {
       // Spread: two OCR-less pages; the normal pipeline OCRs them as singles.
       const pos = typeof page._gutter === 'number' ? page._gutter : 500;
-      newPages.push({ side: 'left', ocr: null, sourceIdx: idx, splitPosition: pos });
-      newPages.push({ side: 'right', ocr: null, sourceIdx: idx, splitPosition: pos });
+      newPages.push({ side: 'left', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
+      newPages.push({ side: 'right', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
     }
     continue;
   }
@@ -522,7 +609,7 @@ if (DRY_RUN) {
   console.log('\n--- DRY RUN — would create: ---');
   for (let i = 0; i < newPages.length; i++) {
     const p = newPages[i];
-    console.log(`  p.${i + 1} ${p.side.padEnd(7)} source:${p.sourceIdx + 1} split:${p.splitPosition || '-'} type:${p.pageType || '-'} ocr:${p.ocr?.length || 0}ch`);
+    console.log(`  p.${i + 1} ${p.side.padEnd(7)} source:${p.sourceIdx + 1} split:${p.splitPosition || '-'} ${p.splitMethod ? `[${p.splitMethod}${p.uncertain ? ' UNCERTAIN' : ''}]` : ''} type:${p.pageType || '-'} ocr:${p.ocr?.length || 0}ch`);
   }
   await client.close();
   process.exit(0);
@@ -630,6 +717,8 @@ for (let i = 0; i < newPages.length; i++) {
     split_from_spread: true,
     split_side: p.side === 'error' ? 'single' : p.side,
     split_position: p.splitPosition,
+    ...(p.splitMethod ? { split_method: p.splitMethod } : {}),
+    ...(p.uncertain ? { split_uncertain: true } : {}),
     field_provenance: {
       ...(p.ocr ? { ocr: { source: 'gemini', method: 'spread-split-ocr', confidence: 1.0, date: new Date() } } : {}),
       photo: { source: 'r2', method: 'spread-split-crop', confidence: 1.0, date: new Date() },
