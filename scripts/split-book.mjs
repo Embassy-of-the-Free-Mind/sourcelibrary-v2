@@ -22,7 +22,7 @@ import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 // --- Config ---
-const OVERLAP = 0.01;        // 1% overlap on each crop
+const OVERLAP = 0.03;        // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters)
 const CONCURRENCY = 3;       // Gemini / fetch concurrency
 const MAX_RETRIES = 3;       // Image fetch retries
 const FETCH_TIMEOUT = 15000; // 15s per image
@@ -69,6 +69,7 @@ function spPath(bookId, pageNum, suffix) {
 
 async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
   const full = await sharp(buf).extract({ left, top: 0, width, height }).jpeg({ quality: 90, progressive: true }).toBuffer();
+  const fullDim = { width, height };
   const display = await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
   const thumb = await sharp(full).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
@@ -76,10 +77,11 @@ async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
     upload(spPath(bookId, pageNum, '.jpg'), display),
     upload(spPath(bookId, pageNum, '-thumb.jpg'), thumb),
   ]);
-  return { fullUrl, dispUrl, thumbUrl };
+  return { fullUrl, dispUrl, thumbUrl, width: fullDim.width, height: fullDim.height };
 }
 
 async function uploadFullImage(buf, bookId, pageNum) {
+  const fm = await sharp(buf).metadata();
   const display = await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
   const thumb = await sharp(buf).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
@@ -87,7 +89,7 @@ async function uploadFullImage(buf, bookId, pageNum) {
     upload(spPath(bookId, pageNum, '.jpg'), display),
     upload(spPath(bookId, pageNum, '-thumb.jpg'), thumb),
   ]);
-  return { fullUrl, dispUrl, thumbUrl };
+  return { fullUrl, dispUrl, thumbUrl, width: fm.width, height: fm.height };
 }
 
 // --- Page type extraction ---
@@ -662,6 +664,8 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
         entry._full = urls.fullUrl;
+        entry._imgW = urls.width;
+        entry._imgH = urls.height;
       } else if (entry.side === 'left') {
         const splitFrac = (entry.splitPosition || 500) / 1000;
         const leftEnd = Math.round(Math.min(1, splitFrac + OVERLAP) * w);
@@ -669,6 +673,8 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
         entry._full = urls.fullUrl;
+        entry._imgW = urls.width;
+        entry._imgH = urls.height;
       } else if (entry.side === 'right') {
         const splitFrac = (entry.splitPosition || 500) / 1000;
         const rightStart = Math.round(Math.max(0, splitFrac - OVERLAP) * w);
@@ -676,6 +682,8 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
         entry._full = urls.fullUrl;
+        entry._imgW = urls.width;
+        entry._imgH = urls.height;
       }
     }
 
@@ -714,6 +722,7 @@ for (let i = 0; i < newPages.length; i++) {
     archived_photo: p._full || p._photo,   // full-res crop — what archive audits key on (#829)
     display_photo: p._photo,
     thumbnail_blob: p._thumb,
+    ...(p._imgW ? { image_width: p._imgW, image_height: p._imgH } : {}), // #1491: dims on each page record
     ...(iiifUrls[p.sourceIdx] ? { spread_source: iiifUrls[p.sourceIdx] } : {}), // lineage to the pre-split spread
     ocr: p.ocr ? {
       data: p.ocr,
