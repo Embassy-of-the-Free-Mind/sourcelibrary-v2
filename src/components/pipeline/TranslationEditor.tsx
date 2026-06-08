@@ -29,6 +29,7 @@ import {
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
+import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
@@ -1317,6 +1318,9 @@ export default function TranslationEditor({
                           No image available
                         </div>
                       )}
+                      {page.deepzoom && (
+                        <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
+                      )}
                     </div>
                     {/* Image metadata + download */}
                     {pageDisplayUrl && (page.image_width || page.archived_photo) && (
@@ -2038,6 +2042,9 @@ export default function TranslationEditor({
             </div>
             <div className="flex-1 overflow-auto p-4" data-reader-panel>
               <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
+                {page.deepzoom && (
+                  <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
+                )}
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
                 ) : hasWitnessPhotos && currentWitness ? (
