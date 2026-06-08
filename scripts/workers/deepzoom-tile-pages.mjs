@@ -34,6 +34,10 @@ const has = (n) => process.argv.includes(n);
 
 const PROVIDERS = (arg('--providers', '') || '').split(',').map((s) => s.trim()).filter(Boolean);
 const BOOK_ID = arg('--book-id', null);
+// Deep-zoom is a "lean in and admire the illustration" feature, so only tile pages
+// whose best detected illustration clears this gallery_quality bar (0.7 = real
+// illustrations, dropping musical scores + the 0.6–0.7 marginal tier). 0 = no gate.
+const MIN_GALLERY_QUALITY = parseFloat(arg('--min-gallery-quality', '0.7'));
 const LIMIT = parseInt(arg('--limit', '200'), 10);
 const CONCURRENCY = parseInt(arg('--concurrency', '2'), 10);
 const UPLOAD_CONCURRENCY = 24;
@@ -164,10 +168,28 @@ if (BOOK_ID) {
   pageFilter.book_id = { $in: ids };
 }
 
-const targets = await pages
+let targets = await pages
   .find(pageFilter, { projection: { book_id: 1, page_number: 1, fullres_master: 1 } })
-  .limit(LIMIT)
   .toArray();
+
+// Gallery-quality gate: keep only pages whose best illustration clears the bar.
+if (MIN_GALLERY_QUALITY > 0 && targets.length) {
+  const gallery = db.collection('gallery_images');
+  const bookIds = [...new Set(targets.map((t) => t.book_id))];
+  const qualified = new Set();
+  const rows = await gallery
+    .aggregate([
+      { $match: { book_id: { $in: bookIds } } },
+      { $group: { _id: { b: '$book_id', p: '$page_number' }, maxq: { $max: '$gallery_quality' } } },
+      { $match: { maxq: { $gte: MIN_GALLERY_QUALITY } } },
+    ])
+    .toArray();
+  for (const r of rows) qualified.add(`${r._id.b}:${r._id.p}`);
+  const before = targets.length;
+  targets = targets.filter((t) => qualified.has(`${t.book_id}:${t.page_number}`));
+  console.log(`Gallery-quality gate ≥${MIN_GALLERY_QUALITY}: ${targets.length}/${before} pages qualify.`);
+}
+targets = targets.slice(0, LIMIT);
 
 console.log(`${DRY_RUN ? '[dry-run] ' : ''}Tiling ${targets.length} page master(s)…`);
 const results = await pool(targets, CONCURRENCY, async (p) => {
