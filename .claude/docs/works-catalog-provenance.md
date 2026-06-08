@@ -45,8 +45,12 @@ constraints bite when we go further and **import the underlying text or scan**:
 - **Kanripo (10,141 chinese works):** texts are CC BY-SA 4.0, derived from PD
   Siku Quanshu (1773) / Daozang + CBETA. Importing transcriptions is fine with
   attribution + share-alike.
-- **IA-CADAL (33,821 scan volumes):** mostly PD facsimiles of pre-1773 works,
-  but rights are per-item — check IA metadata before a bulk scan pull.
+- **IA-CADAL (33,821 scan volumes): stamped `PublicDomainByAge`.** The IA items
+  carry **no** rights/copyright/license metadata (verified 0/500 sampled) and
+  the `universallibrary` collection has no access restriction. All 2,091 linked
+  works are premodern Chinese (0 post-1900), so the underlying texts are PD by
+  age and the facsimile is openly served — a defensible blanket determination,
+  not a per-item assertion (the per-item data doesn't exist upstream).
 - **Wikidata:** CC0, no constraint.
 
 ## Attribution

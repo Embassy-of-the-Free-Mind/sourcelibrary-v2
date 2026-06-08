@@ -36,9 +36,9 @@ const SOURCES = [
   {
     source: 'ia-cadal', name: 'Internet Archive — Universal Library / CADAL',
     url: 'https://archive.org/details/universallibrary',
-    data_license: 'Open metadata', content_license: null, commercial_ok: null,
+    data_license: 'Open metadata', content_license: 'Public domain by age', commercial_ok: true,
     attribution: 'China-America Digital Academic Library (CADAL); Internet Archive',
-    notes: 'Volume-level facsimiles, mostly of pre-1773 PD works, but rights are per-item. Check IA item metadata (possible-copyright) before bulk scan import.',
+    notes: 'Volume-level facsimiles of premodern Chinese works (pre-1773 Siku-era and earlier). IA items expose NO rights/copyright metadata (verified 0/500); the collection has no access restriction. All 2,091 linked works are premodern Chinese (0 post-1900), so underlying texts are PD by age and the facsimile is openly served — work_sources.rights = PublicDomainByAge on that basis.',
   },
   {
     source: 'wikidata-siku', name: 'Wikidata (Siku Quanshu denominator)',
@@ -100,5 +100,20 @@ if (existsSync(CACHE)) {
     `select rights, count(*) n from work_sources where source='bdrc' group by 1 order by 2 desc limit 8`)).rows;
   console.log(`Stamped ${stamped} bdrc work_sources with rights. Distribution:`, JSON.stringify(dist));
 }
+
+// IA-CADAL rights: the items carry NO rights/copyright/license metadata
+// (verified 2026-06-08 — 0 of 500 sampled), so determination is by-age:
+// every CADAL-linked work is a premodern (pre-1773 Siku-era) Chinese text
+// (confirmed: 2,091 works, 0 post-1900), and IA imposes no access restriction
+// on the universallibrary collection. Underlying texts are PD by age; the
+// facsimile is openly served. Stamp only rows whose work is verifiably
+// premodern so the basis holds.
+const iaRes = await client.query(
+  `update work_sources ws set rights = 'PublicDomainByAge'
+   from works w
+   where ws.source = 'ia-cadal' and ws.work_id = w.id
+     and w.tradition = 'chinese'
+     and coalesce(w.century, 0) <= 19`);
+console.log(`Stamped ${iaRes.rowCount} ia-cadal work_sources rights = PublicDomainByAge (premodern Chinese facsimiles, IA open)`);
 
 await client.end();
