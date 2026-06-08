@@ -47,6 +47,29 @@ const SOURCES = [
     attribution: 'Wikidata contributors (CC0)',
     notes: 'Public-domain dedication — no constraint. Used for QIDs, labels, aliases.',
   },
+  {
+    source: 'wikidata-sanskrit', name: 'Wikidata (Sanskrit works, P407=Q11059)',
+    url: 'https://www.wikidata.org',
+    data_license: 'CC0 1.0', content_license: 'CC0 1.0', commercial_ok: true,
+    attribution: 'Wikidata contributors (CC0)',
+    notes: 'Public-domain dedication. SPARQL: works whose language-of-work (P407) is Sanskrit (Q11059). Titles English-skewed; ~180/3.9K carry IAST. ingest-sanskrit-wikidata.mjs.',
+  },
+  {
+    source: 'gretil', name: 'GRETIL — Goettingen Register of Electronic Texts in Indian Languages',
+    url: 'https://gretil.sub.uni-goettingen.de',
+    data_license: 'Bibliographic facts (titles) — uncopyrightable',
+    content_license: 'Per-text, varies (contributed e-texts; mostly non-commercial scholarly use)',
+    commercial_ok: null,
+    attribution: 'GRETIL, ed. Reinhold Gruenendahl, Goettingen State and University Library',
+    notes: 'We hold only titles (fact) + transcription URLs (pointers), NOT the e-text bodies. Each GRETIL text carries its OWN licence/encoder terms — check the file header before importing any body. Enumerated via the open GitHub mirror INDOLOGY/GRETIL-mirror. ingest-gretil.mjs.',
+  },
+  {
+    source: 'pandit', name: 'Pandit — Prosopographical Database of Indic Texts',
+    url: 'https://www.panditproject.org',
+    data_license: 'CC BY-NC-SA 4.0', content_license: 'CC BY-NC-SA 4.0', commercial_ok: false,
+    attribution: 'PANDiT: Prosopographical Database of Indic Texts (panditproject.org), CC BY-NC-SA 4.0',
+    notes: 'NON-COMMERCIAL + ShareAlike. Bibliographic facts (titles/authors/dates) are arguably uncopyrightable, but the project asserts CC BY-NC-SA — attribute + assess before any commercial use. Retrieved 2026-06-09 via the site own entity CSV export (type=Work, field_language=45=Sanskrit). ingest-pandit.mjs.',
+  },
 ];
 
 const client = pgClient();
