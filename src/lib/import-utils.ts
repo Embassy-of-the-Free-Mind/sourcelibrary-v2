@@ -9,6 +9,7 @@ import { computeProcessingPriority } from '@/lib/processing-priority';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 import { resolveLanguage, resolveDate } from '@/lib/resolve-language';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
+import { applyTextRole } from '@/lib/text-role';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -434,6 +435,10 @@ export async function importBookFromIIIF(
   // Publisher/place from IIIF manifest metadata
   if (manifestPublisher) (bookDoc as Record<string, unknown>).publisher = manifestPublisher;
   if (manifestPlace) (bookDoc as Record<string, unknown>).place_of_publication = manifestPlace;
+
+  // Classify original-vs-translation at import (issue #2395) so the book gets a
+  // real text_role immediately instead of the language-proxy fallback.
+  applyTextRole(bookDoc as Record<string, unknown>);
 
   await db.collection('books').insertOne(bookDoc);
 
