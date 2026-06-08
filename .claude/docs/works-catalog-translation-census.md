@@ -1,56 +1,61 @@
 # Translation census — Tibetan & Islamicate (works catalog #2453)
 
-Run 2026-06-06 on Hetzner. First automated English-translation gap numbers for
-either corpus. Method: `scripts/works-catalog/translation-census.mjs` — seeded
-300-work sample, Gemini established-English-title resolution (null when none
-exists), Google Books + OpenLibrary recall, Gemini precision adjudication
-(complete/partial), errors excluded. **The automated rate is a RECALL FLOOR**
-(the Siku census ran ~2× higher on hand-verified ground truth).
+First automated English-translation gap numbers for either corpus. Method:
+`scripts/works-catalog/translation-census.mjs` — seeded 300-work sample, Gemini
+established-English-title resolution (null when none exists), Google Books +
+OpenLibrary recall, Gemini precision adjudication (complete/partial), errors
+excluded. **The automated rate is a RECALL FLOOR** (the Siku census ran ~2×
+higher on hand-verified ground truth).
 
-## Headline (raw, as-sampled)
+## Headline (purified denominators, 2026-06-08)
 
 | Tradition | Denominator | Sample | Translated | Rate | 95% CI | Projected works |
 |---|---|---|---|---|---|---|
-| Islamicate (OpenITI) | 8,791 | 300 | 13 | 4.3% | 2.5–7.3% | 224–639 |
-| Tibetan (BDRC) | 42,041 | 300 | 19 | 6.3% | 4.1–9.7% | 1,720–4,069 |
+| Islamicate (OpenITI, pre-1900) | 6,531 | 300 | 16 | 5.3% | 3.3–8.5% | 216–554 |
+| Tibetan (BDRC, language-purified) | 30,437 | 300 | 8 | 2.7% | 1.4–5.2% | 413–1,574 |
 
-Written back as `census-auto` claims: islamicate 10 full + 3 partial, tibetan
-18 full + 1 partial. Same order of magnitude as Latin (~2%, USTC) and Chinese
-(~1–3%, Siku): **the vast majority of the premodern written record in every
-tradition we've measured has no English translation.**
+Same order of magnitude as Latin (~2%, USTC) and Chinese (~1–3%, Siku).
+**Tibetan is now the lowest measured (~2.7%)** — a vast, deeply under-translated
+literature. Across every tradition we've measured, **the premodern written
+record is ~95–98% untranslated into English.** Written back as evidenced
+`census-auto` claims.
 
-## Denominator-purity caveats (READ before quoting a per-tradition rate)
+## Denominators were purified before these numbers (the prior raw run was wrong)
 
-Both raw rates are inflated by corpus contamination — the diligence lesson from
-the Siku census applies. Surfacing, not hiding:
+The first run (2026-06-06) reported islamicate 4.3% / tibetan 6.3% on
+*contaminated* denominators. Both were corrected at the source (fix committed in
+the same PR), not just caveated:
 
-- **Tibetan: 9 of the 19 hits are not Tibetan.** BDRC includes 11,392 FEMC
-  records (`*FEMC*` ids = Fonds pour l'Édition des Manuscrits du Cambodge —
-  Pali/Khmer palm-leaf manuscripts). The well-translated Pali canon (Dhammapada,
-  Anattalakkhana Sutta, Vessantara Jataka, Abhidhammattha-sangaha…) lands in
-  this sample and lifts the rate. **Genuine Tibetan-only rate is roughly half
-  the headline** (~3–4%), and several remaining hits are Indic Mahayana sutras
-  preserved *in* Tibetan (Perfection of Wisdom, Uttaratantra) — translated from
-  the Sanskrit/Tibetan, i.e. canon, not the indigenous Tibetan corpus.
-- **Islamicate: 2,260 of 8,791 works (26%) are post-1900.** OpenITI is "texts
-  of the Islamicate world," not "pre-1900." 2 of 13 hits are Naguib Mahfouz
-  (d. 2006) novels. Filtered to pre-1900 the rate is marginally lower and the
-  denominator drops to ~6,500.
+- **Tibetan: BDRC blanket-tagged ~11,600 non-Tibetan works as Tibetan.** The
+  records carry explicit `bdo:language` tags that the first ingest ignored.
+  Split out: **khmer 9,497, pali 1,895, sanskrit 185, newari 27** (the FEMC
+  Cambodian manuscript fund — Fonds pour l'Édition des Manuscrits du Cambodge).
+  The well-translated Pali canon (Dhammapada, Vessantara Jataka…) had been
+  inflating the "Tibetan" rate; on the genuine 30,437-work Tibetan denominator
+  it falls to 2.7%. Khmer/Pali/Sanskrit now get their own censuses if wanted.
+- **Islamicate: OpenITI carries 2,260 post-1900 works** (it's "Islamicate
+  texts," not "pre-1900"; author death-date = century). The census now filters
+  `century ≤ 19`, giving a 6,531-work pre-1900 denominator.
 - **Adjudicator occasionally affirms from parametric knowledge.** A few hits
   (al-Biruni's *India*, Mahfouz) were marked translated with the reason noting
   *no candidate matched* — the model knew a translation exists outside the
   search results. Correct for Biruni (Sachau 1910); a false-positive risk
   elsewhere. Keep `confidence` + `evidence` on every claim for audit.
 
+## Remaining caveat
+- **Adjudicator occasionally affirms from parametric knowledge.** A few hits
+  (al-Biruni's *India*) were marked translated with the reason noting *no
+  candidate matched* — the model knew a translation exists outside the search
+  results. Correct for Biruni (Sachau 1910); a false-positive risk elsewhere.
+  Every claim keeps `confidence` + `evidence` for audit.
+
 ## Recommended follow-ups
-1. **Purify denominators before publishing per-tradition rates:** split FEMC
-   into a `pali` / `khmer` tradition; add a `pre-1900` filter (century ≤ 19) to
-   the Islamicate denominator. Then re-report.
-2. Hand-verify a labeled stratum (≥30 works/tradition) to calibrate the
-   recall-floor multiplier, as done for Siku.
-3. These are the publishable gap numbers — once purified, they extend the
-   translation-gap-site story to Tibetan + Arabic (no prior published figure
-   exists for either).
+1. Hand-verify a labeled stratum (≥30 works/tradition) to calibrate the
+   recall-floor multiplier, as done for Siku — then these are publishable.
+2. Census the peeled-off traditions (khmer 9,497, pali 1,895, sanskrit 185) if
+   wanted — the Pali canon will read much higher (it's well-translated).
+3. These extend the translation-gap-site story to Tibetan + Arabic — **no prior
+   published English-translation figure exists for either corpus.**
 
 Reports: Hetzner `/root/works-catalog-cache/census-{tibetan,islamicate}-report.json`;
 verdict caches alongside (resumable).

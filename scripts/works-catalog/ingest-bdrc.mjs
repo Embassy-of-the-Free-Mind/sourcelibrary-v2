@@ -68,15 +68,29 @@ const label = v => {
   // prefLabel/altLabel values: object or array of {@value,@language}
   const arr = Array.isArray(v) ? v : v ? [v] : [];
   const by = lang => arr.find(x => x['@language'] === lang)?.['@value'];
+  const byPrefix = p => arr.find(x => (x['@language'] || '').startsWith(p))?.['@value'];
   return {
     ewts: by('bo-x-ewts') || null,
     bo: by('bo') || null,
     en: by('en') || by('en-x-mixed') || null,
     zh: by('zh-Hans') || by('zh-Hant') || null,
+    // transliteration (BDRC -x-twktt) + native script for non-Tibetan langs
+    translit: by('pi-x-twktt') || by('km-x-twktt') || by('sa-x-ndia') || by('sa-x-iast') || byPrefix('sa-x') || null,
+    native: by('km') || by('pi-khmr') || by('sa-deva') || byPrefix('km') || byPrefix('pi') || null,
     any: arr[0]?.['@value'] || (typeof v === 'string' ? v : null),
   };
 };
 const refs = v => (Array.isArray(v) ? v : v ? [v] : []).map(x => (typeof x === 'string' ? x : x['@id'])).filter(Boolean);
+
+// BDRC language id -> { tradition, iso }. Bulk Tibetan records leave language
+// implicit (inherited from the abstract Work), so absence => tibetan.
+const LANG_MAP = {
+  LangPi: { tradition: 'pali', iso: 'pli' },
+  LangKm: { tradition: 'khmer', iso: 'khm' },
+  LangSa: { tradition: 'sanskrit', iso: 'san' },
+  LangNew: { tradition: 'newari', iso: 'new' },
+  LangBo: { tradition: 'tibetan', iso: 'bod' },
+};
 
 function parseRecord(id) {
   let doc;
@@ -94,12 +108,15 @@ function parseRecord(id) {
   const event = refs(node['instanceEvent'] ?? node['bdo:instanceEvent'])
     .map(eid => graph.find(n => n['@id'] === eid)).filter(Boolean)[0];
   const when = event?.['eventWhen']?.['@value'] || event?.['eventWhen'] || null;
+  const langId = refs(node['language'] ?? node['bdo:language'])[0]?.replace(/^bdr:/, '') || null;
   return {
     mw: id,
     wa: wa?.replace(/^bdr:/, '') || null,
-    title: pref.bo || pref.ewts || pref.any,
-    title_bo: pref.bo || alts.bo || null,
-    ewts: pref.ewts || alts.ewts || null,
+    lang: langId, // LangBo/LangPi/LangKm/LangSa/LangNew or null (=> tibetan)
+    // native-script title preferred; falls back across scripts
+    title: pref.bo || pref.native || pref.ewts || pref.translit || pref.any,
+    title_bo: pref.bo || alts.bo || pref.native || alts.native || null,
+    translit: pref.ewts || alts.ewts || pref.translit || alts.translit || null,
     en: pref.en || alts.en || null,
     agents: agents.map(a => a.replace(/^bdr:/, '')),
     when: typeof when === 'string' ? when : null,
@@ -128,13 +145,18 @@ async function load() {
     // representative record: prefer one with an English title
     const best = instances.find(i => i.en) || rec;
     const year = parseInt((best.when || '').slice(0, 4), 10);
+    // tradition from the most specific explicit language across instances;
+    // absence => tibetan (bulk Tibetan records inherit language implicitly)
+    const langId = instances.map(i => i.lang).find(l => l && l !== 'LangBo')
+      || instances.map(i => i.lang).find(Boolean) || null;
+    const { tradition, iso } = LANG_MAP[langId] || { tradition: 'tibetan', iso: 'bod' };
     works.push({
       id: `bdrc:${key}`,
-      tradition: 'tibetan',
-      original_language: 'bod',
+      tradition,
+      original_language: iso,
       title: best.title_bo || best.title,
       title_normalized: (best.title_bo || best.title).trim(),
-      title_romanized: best.ewts,
+      title_romanized: best.translit,
       title_english: best.en,
       author: null, // P-ids resolved in a later pass; stored in authority_ids
       century: Number.isFinite(year) ? Math.floor(year / 100) + 1 : null,
@@ -145,7 +167,7 @@ async function load() {
       },
       corpus_tags: ['bdrc'],
       source_catalog: 'bdrc',
-      extra: { script: best.script, published: best.when },
+      extra: { script: best.script, published: best.when, bdrc_lang: langId },
     });
     for (const i of instances) {
       sources.push({
@@ -155,7 +177,7 @@ async function load() {
         kind: 'scan', // BUDA viewer record; IIIF manifests hang off the linked image instances
         url: `https://library.bdrc.io/show/bdr:${i.mw}`,
         iiif: true,
-        extra: { ewts: i.ewts },
+        extra: { translit: i.translit },
       });
     }
   }

@@ -70,6 +70,8 @@ export async function upsertWorks(client, rows, { batch = 500 } = {}) {
     const res = await client.query(
       `insert into works (${cols.join(',')}) values ${values.join(',')}
        on conflict (id) do update set
+         tradition       = excluded.tradition,
+         original_language = coalesce(excluded.original_language, works.original_language),
          title_romanized = coalesce(excluded.title_romanized, works.title_romanized),
          title_english   = coalesce(excluded.title_english, works.title_english),
          author          = coalesce(excluded.author, works.author),
