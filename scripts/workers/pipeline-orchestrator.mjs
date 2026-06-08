@@ -3713,7 +3713,7 @@ Rules:
             if (result && !result.hit_book_start && result.dupes_to_hide.length > 0) {
               await applyHide(db, result.dupes_to_hide);
               await db.collection('books').updateOne({ id: book.id }, {
-                $inc: { pages_count: -(result.run_len - 1) },
+                $inc: { pages_count: -result.run_len },
                 $set: { 'pipeline_auto.dedup_complete': true, updated_at: new Date() },
               });
               deduped++; pagesHidden += result.dupes_to_hide.length;

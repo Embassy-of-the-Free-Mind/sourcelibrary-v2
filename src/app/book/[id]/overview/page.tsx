@@ -80,7 +80,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
   // Use a generous limit but cap at 2000 for sanity
   const pagesRaw = await db.collection('pages')
     .find(
-      { book_id: bookId },
+      { book_id: bookId, page_number: { $gt: 0 } },
       { projection: PAGE_PROJECTION, maxTimeMS: 10000 },
     )
     .sort({ page_number: 1 })

@@ -14,12 +14,12 @@
  *     1. HEAD-probe the last WINDOW pages, collect content-length values
  *     2. Walk backward from the last page, count the longest run of
  *        identical content-length
- *     3. If the run ≥ MIN_RUN_LEN, mark all but the FIRST page of the run
- *        as duplicates by setting page_number = -<original_page_number>
+ *     3. If the run ≥ MIN_RUN_LEN, hide the entire trailing duplicate run by
+ *        setting page_number = -<original_page_number> for every matched page
  *        (per the atlas-search convention: hidden/deduped pages live at
- *        page_number ≤ 0). The first page in the run is preserved as the
- *        canonical "this is the back cover" entry.
- *     4. Decrement book.pages_count by (run_len - 1). Don't touch pageCount.
+ *        page_number ≤ 0). The page immediately before the run is preserved as
+ *        the visible keep page.
+ *     4. Decrement book.pages_count by run_len. Don't touch pageCount.
  *
  * Why byte-size and not dhash:
  *   IA's trash pages are generated from the same template — they hit R2
@@ -115,15 +115,15 @@ async function main() {
     const startNote = result.hit_book_start ? ' ⚠️dupe block reaches page 1 — likely entire book is one image, SKIP-WORTHY' : '';
     console.log(`  [${i + 1}/${books.length}] ${b.title?.slice(0,50)}`);
     console.log(`        ${result.run_len} dupe pages at end (etag=${result.dupe_etag.slice(0, 10)})${startNote}`);
-    console.log(`        canonical: keep p${result.canonical_page.page_number}, hide p${result.dupes_to_hide[0]?.page_number}–p${result.dupes_to_hide[result.dupes_to_hide.length - 1]?.page_number}`);
+    console.log(`        canonical: keep p${result.canonical_page?.page_number ?? '(none)'}, hide p${result.dupes_to_hide[0]?.page_number}–p${result.dupes_to_hide[result.dupes_to_hide.length - 1]?.page_number}`);
 
     if (APPLY && !result.hit_book_start) {
       const hide = await applyHide(db, result.dupes_to_hide);
       await db.collection('books').updateOne(
         { id: b.id },
-        { $inc: { pages_count: -(result.run_len - 1) }, $set: { updated_at: new Date() } }
+        { $inc: { pages_count: -result.run_len }, $set: { updated_at: new Date() } }
       );
-      console.log(`        applied: hid ${hide.modified} pages, decremented pages_count by ${result.run_len - 1}`);
+      console.log(`        applied: hid ${hide.modified} pages, decremented pages_count by ${result.run_len}`);
     } else if (APPLY && result.hit_book_start) {
       console.log(`        SKIPPED (hit book start — needs hand review)`);
     }

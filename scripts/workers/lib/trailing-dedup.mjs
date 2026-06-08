@@ -138,12 +138,17 @@ export async function findTrailingDupes(db, book, opts = {}) {
 
   if (totalRunLen < MIN_RUN_LEN) return null;
 
+  const keepPageNumber = book.pages_count - totalRunLen;
+  const canonical_page = keepPageNumber > 0
+    ? await db.collection('pages').findOne({ book_id: book.id, page_number: keepPageNumber }, { projection: { _id: 1, page_number: 1, archived_photo: 1 } })
+    : null;
+
   return {
     book,
     dupe_etag: lastEtag,
     run_len: totalRunLen,
-    canonical_page: allRunPages[0],
-    dupes_to_hide: allRunPages.slice(1),
+    canonical_page,
+    dupes_to_hide: allRunPages,
     hit_book_start: allRunPages[0]?.page_number === 1,
   };
 }
