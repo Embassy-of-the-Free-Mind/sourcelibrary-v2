@@ -22,7 +22,7 @@ import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 // --- Config ---
-const OVERLAP = 0.01;        // 1% overlap on each crop
+const OVERLAP = 0.03;        // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters)
 const CONCURRENCY = 3;       // Gemini / fetch concurrency
 const MAX_RETRIES = 3;       // Image fetch retries
 const FETCH_TIMEOUT = 15000; // 15s per image
@@ -32,7 +32,8 @@ const MIN_SPREAD_AR = 1.1;   // Aspect ratio gate: below this is portrait (singl
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const WITH_OCR = args.includes('--with-ocr');
-const GUTTER_ONLY = args.includes('--gutter-only'); // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
+const GUTTER_ONLY = args.includes('--gutter-only');
+let detectGutterPixel; // lazy-loaded in gutter-only mode (avoids sharp import cost on OCR runs) // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
@@ -68,25 +69,27 @@ function spPath(bookId, pageNum, suffix) {
 
 async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
   const full = await sharp(buf).extract({ left, top: 0, width, height }).jpeg({ quality: 90, progressive: true }).toBuffer();
+  const fullDim = { width, height };
   const display = await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
   const thumb = await sharp(full).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
-  const [, dispUrl, thumbUrl] = await Promise.all([
+  const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), full),
     upload(spPath(bookId, pageNum, '.jpg'), display),
     upload(spPath(bookId, pageNum, '-thumb.jpg'), thumb),
   ]);
-  return { dispUrl, thumbUrl };
+  return { fullUrl, dispUrl, thumbUrl, width: fullDim.width, height: fullDim.height };
 }
 
 async function uploadFullImage(buf, bookId, pageNum) {
+  const fm = await sharp(buf).metadata();
   const display = await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
   const thumb = await sharp(buf).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
-  const [, dispUrl, thumbUrl] = await Promise.all([
+  const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), buf),
     upload(spPath(bookId, pageNum, '.jpg'), display),
     upload(spPath(bookId, pageNum, '-thumb.jpg'), thumb),
   ]);
-  return { dispUrl, thumbUrl };
+  return { fullUrl, dispUrl, thumbUrl, width: fm.width, height: fm.height };
 }
 
 // --- Page type extraction ---
@@ -203,16 +206,21 @@ async function runSpreadOCR(imageBuf) {
 // One cheap vision call per page: where is the gutter? No transcription, so
 // output is ~10 tokens instead of ~2K. The split pages then flow through the
 // normal single-page OCR pipeline (batch, 50% off) instead of realtime.
-const GUTTER_PROMPT = `This image is a scan from a book. Decide whether it shows a TWO-PAGE SPREAD (an open book with a left and a right page) or a SINGLE page.
+// NO center hint: measured that "usually 400-600" anchors the model to ~500 and
+// it ignores the real (often offset) gutter. Without the hint, gemini-3-flash-preview
+// localizes the gutter to within ~3/1000 of the pixel detector even on strongly
+// offset RTL manuscripts. flash-lite stays center-biased — must use preview.
+const GUTTER_MODEL = 'gemini-3-flash-preview';
+const GUTTER_PROMPT = `This is a photo of an open book showing a left page and a right page. Find the GUTTER — the vertical line where the two pages meet at the binding (often a shadow, or the innermost margins of the two pages). It may NOT be at the center; look carefully.
 
 Respond with EXACTLY one tag and nothing else:
-- Two-page spread: <split-position>N</split-position> where N (0-1000) is the horizontal position of the gutter (the fold between the pages). The gutter is usually near the center (400-600).
-- Single page: <split-position>null</split-position>`;
+- Two-page spread: <split-position>N</split-position> where N (0-1000) is the gutter's horizontal position. 0 = far left edge, 1000 = far right edge.
+- Single page (not a spread): <split-position>null</split-position>`;
 
 async function initGeminiGutter() {
   const { GoogleGenerativeAI } = await import('@google/generative-ai');
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  geminiModel = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+  geminiModel = genAI.getGenerativeModel({ model: GUTTER_MODEL });
 }
 
 async function runGutterDetect(imageBuf) {
@@ -331,8 +339,27 @@ if (!iiifUrls && manifestUrl) {
   iiifUrls = await getOriginalImageUrls(book.id, manifestUrl, existingPageCount);
 }
 
+// Page-record fallback: providers that don't use the /archived/{id}/{n}.jpg
+// convention (e.g. cmc_kloss PDF extracts at /books/{id}/pages/NNNN.jpg, the
+// largest cohort) still carry the correct R2 URL on the page document itself.
+// Only safe for never-split books — on an already-split book `photo` is a
+// cropped half, not the spread. All #2454 first-time splits qualify.
+if (!iiifUrls && book.split_completed !== true) {
+  const srcPages = await db.collection('pages')
+    .find({ book_id: book.id }, { projection: { page_number: 1, archived_photo: 1, photo: 1 } })
+    .sort({ page_number: 1 })
+    .toArray();
+  const urls = srcPages
+    .map(p => p.archived_photo || p.photo)
+    .filter(u => typeof u === 'string' && /^https?:\/\//.test(u));
+  if (urls.length > 0 && urls.length >= srcPages.length * 0.9) {
+    iiifUrls = urls;
+    console.log(`  Using ${iiifUrls.length} page-record image URLs (provider: ${book.image_source?.provider || 'unknown'})`);
+  }
+}
+
 if (!iiifUrls || iiifUrls.length === 0) {
-  console.log('ERROR: No original images available (no archived copies, no IIIF manifest).');
+  console.log('ERROR: No original images available (no archived copies, no IIIF manifest, no usable page-record URLs).');
   process.exit(1);
 }
 
@@ -384,9 +411,9 @@ try {
 // --- Step 2: Load existing pages (for their OCR) ---
 console.log('\n--- Step 2: Load existing page OCR ---');
 const allExistingPages = await db.collection('pages')
-  .find({ book_id: book.id })
+  .find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }) // live pages only — skip spreads archived by a prior run (idempotency)
   .sort({ page_number: 1 })
-  .project({ id: 1, page_number: 1, photo: 1, 'ocr.data': 1, 'ocr.prompt_version': 1, 'ocr.model': 1 })
+  .project({ id: 1, page_number: 1, photo: 1, page_type: 1, 'ocr.data': 1, 'ocr.prompt_version': 1, 'ocr.model': 1 })
   .toArray();
 
 // Only use the first N pages matching the source image count (the original spreads).
@@ -403,10 +430,85 @@ console.log(`  ${withPageBreak.length} have <page-break/>, ${withSplitPos.length
 // --- Step 3: Run OCR if needed ---
 let ocrVersion = 'existing';
 if (GUTTER_ONLY) {
-  // #2454: no transcription — one cheap gutter call per landscape page.
-  // Portrait pages (AR < MIN_SPREAD_AR) skip the call entirely.
-  console.log('\n--- Step 3: Gutter-only detection (no OCR) ---');
-  await initGeminiGutter();
+  // #2454 decision tree: split images BEFORE any OCR.
+  //   portrait (AR < 1.1)               → keep whole
+  //   pixel valley + Gemini AGREE (≤8%) → cut (two independent methods concur — strongest)
+  //   only one of pixel/Gemini confident → cut on it
+  //   both confident but DISAGREE (>8%) → uncertain (don't trust either blindly)
+  //   neither confident + wide          → center, uncertain
+  //   neither confident + tight         → keep whole, uncertain
+  // Gemini = gemini-3-flash-preview with a no-center-hint prompt (it tracks
+  // offset gutters to ~3/1000; flash-lite + the old hint just guessed center).
+  // Pixel is free and runs first; Gemini cross-checks / rescues the tail.
+  // Book-level park: too many uncertain pages, OR confident gutter positions
+  // SCATTERED across pages (a real binding is stable book-wide; scatter ⇒ not a
+  // spread book — map atlas / plate album — must not be cut).
+  // ── Step 2.5: OCR-based content classification (FREE — uses existing OCR) ──
+  // These books were already OCR'd, so each page carries a <page-type>. A
+  // single map/plate book has page_type 'map'/'illustration' on most pages and
+  // almost no body text; a real text spread is page_type 'text' with thousands
+  // of chars. That separates the two cases pixels/Gemini can't (an atlas of
+  // single wide maps vs two text pages) — for free, no model call. Only 6 of
+  // the 331 #2454 books are plate books, and this finds them precisely.
+  const IMG_PAGE_TYPES = new Set(['map', 'illustration', 'diagram', 'frontispiece', 'plate']);
+  let imgPages = 0, contentPages = 0;
+  for (const pg of existingPages) {
+    if (pg.page_type === 'blank') continue;
+    const body = (pg.ocr?.data || '').replace(/<[^>]+>/g, '').trim().length;
+    const isImg = IMG_PAGE_TYPES.has(pg.page_type) || (/<image-desc>/i.test(pg.ocr?.data || '') && body < 400);
+    if (isImg) imgPages++; else contentPages++;
+  }
+  const imgFrac = (imgPages + contentPages) ? imgPages / (imgPages + contentPages) : 0;
+  console.log(`  Content class (from existing OCR): ${imgPages} image-pages / ${contentPages} text-pages → imgFrac ${imgFrac.toFixed(2)}`);
+
+  if (imgFrac >= 0.6) {
+    // Plate/map book — these are single wide images, not two-page text spreads.
+    // Splitting would bisect maps; they display best as full spreads. Stop
+    // trying to split: clear needs_splitting, leave pages intact.
+    console.log(`  PLATE/MAP BOOK (imgFrac ${imgFrac.toFixed(2)} ≥ 0.6) — not a text spread book; clearing needs_splitting, keeping pages whole.`);
+    if (!DRY_RUN) {
+      await db.collection('books').updateOne({ id: book.id }, {
+        $set: {
+          needs_splitting: false,
+          split_completed: true,
+          split_note: `OCR page_type: ${imgPages}/${imgPages + contentPages} image pages — plate/map book, kept whole (#2454)`,
+          'pipeline_auto.status': 'complete',
+          'pipeline_auto.last_updated': new Date(),
+        },
+      });
+    }
+    await client.close();
+    process.exit(0);
+  }
+  if (imgFrac >= 0.25) {
+    // Mixed (text + a meaningful share of plates) — too risky to auto-split.
+    console.log(`  MIXED BOOK (imgFrac ${imgFrac.toFixed(2)}) — text + plates; parking for review rather than auto-splitting.`);
+    if (!DRY_RUN) {
+      await db.collection('books').updateOne({ id: book.id }, {
+        $set: {
+          'pipeline_auto.status': 'needs_attention',
+          'pipeline_auto.error': `Mixed text/plate book (imgFrac ${imgFrac.toFixed(2)}) — manual split review (#2454)`,
+          'pipeline_auto.split_review_needed': true,
+          'pipeline_auto.last_updated': new Date(),
+        },
+      });
+    }
+    await client.close();
+    process.exit(0);
+  }
+  // imgFrac < 0.25 → text spread book → split it.
+
+  console.log('\n--- Step 3: Gutter detection — pixel/page (free), Gemini on a sample (no OCR) ---');
+  ({ detectGutterPixel } = await import('./lib/gutter-detect.mjs'));
+  let geminiReady = false;
+  const stats = { portrait: 0, agree: 0, pixelOnly: 0, geminiOnly: 0, disagree: 0, centerUncertain: 0, keptWholeUncertain: 0 };
+  const AGREE_TOL = 80; // 0-1000 → 8% of width
+  // The binding is stable book-wide, so Gemini (the paid call) only needs to run
+  // on a small SAMPLE to validate/establish the book gutter. Pixel runs on every
+  // page (free); non-sample pages where pixel is unsure snap to the book median.
+  const GEM_SAMPLE = Math.min(8, iiifUrls.length);
+  const gemSampleIdx = new Set(Array.from({ length: GEM_SAMPLE }, (_, k) => Math.floor(((k + 1) / (GEM_SAMPLE + 1)) * iiifUrls.length)));
+
   for (let i = 0; i < iiifUrls.length; i += CONCURRENCY) {
     const batch = iiifUrls.slice(i, i + CONCURRENCY);
     await Promise.all(batch.map(async (url, j) => {
@@ -420,14 +522,46 @@ if (GUTTER_ONLY) {
         page._w = meta.width;
         page._h = meta.height;
         const ar = meta.width / meta.height;
+
         if (ar < MIN_SPREAD_AR) {
-          page._gutter = 'single'; // portrait — no Gemini call needed
+          page._gutter = 'single'; page._splitMethod = 'portrait'; stats.portrait++;
           return;
         }
-        const pos = await runGutterDetect(buf);
-        // Wide page where detection failed or said single: a landscape page in a
-        // flagged spread book is overwhelmingly a spread — default to center.
-        page._gutter = pos === 'single' && ar < 1.3 ? 'single' : (typeof pos === 'number' ? pos : 500);
+
+        // Pixel every page (free). Gemini only on the sample (validates the
+        // book gutter + cross-checks pixel; the binding is stable book-wide).
+        const pix = await detectGutterPixel(buf);
+        const pixPos = (pix.confidence === 'high' && pix.column != null) ? Math.round((pix.column / meta.width) * 1000) : null;
+        let gemPos = null;
+        if (gemSampleIdx.has(idx)) {
+          if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
+          try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch { /* gemini optional */ }
+        }
+
+        if (pixPos != null && gemPos != null) {
+          if (Math.abs(pixPos - gemPos) <= AGREE_TOL) {
+            page._gutter = Math.round((pixPos + gemPos) / 2); // concur → average
+            page._splitMethod = `agree(px${pixPos}/gem${gemPos})`;
+            page._confidentPos = page._gutter; stats.agree++;
+          } else {
+            // Two methods disagree — genuinely ambiguous, don't guess.
+            page._splitMethod = `disagree(px${pixPos}/gem${gemPos})`;
+            page._uncertain = true;
+            if (ar >= 1.3) { page._gutter = pixPos; stats.disagree++; } // wide: trust pixel (measures the image), flag for review
+            else { page._gutter = 'single'; stats.disagree++; }
+          }
+        } else if (pixPos != null) {
+          page._gutter = pixPos; page._splitMethod = `pixel:${pix.reason}`; page._confidentPos = pixPos; stats.pixelOnly++;
+        } else if (gemPos != null) {
+          // Text book (maps already filtered out in Step 2.5), so a Gemini-only
+          // position is a real spread that pixel found hard (e.g. faint gutter).
+          // Trust it as a confident position.
+          page._gutter = gemPos; page._splitMethod = 'gemini'; page._confidentPos = gemPos; stats.geminiOnly++;
+        } else if (ar >= 1.3) {
+          page._gutter = 500; page._splitMethod = 'center-uncertain'; page._uncertain = true; stats.centerUncertain++;
+        } else {
+          page._gutter = 'single'; page._splitMethod = 'kept-whole-uncertain'; page._uncertain = true; stats.keptWholeUncertain++;
+        }
       } catch (e) {
         console.log(`  FAIL p.${page.page_number}: ${e.message?.slice(0, 50)}`);
         page._error = true;
@@ -435,7 +569,75 @@ if (GUTTER_ONLY) {
     }));
     process.stderr.write(`  Gutter: ${Math.min(i + CONCURRENCY, iiifUrls.length)}/${iiifUrls.length}\r`);
   }
+  const confidentPositions = [];
+  for (const p of existingPages) if (typeof p._confidentPos === 'number') confidentPositions.push(p._confidentPos);
   console.log();
+
+  // ── Book-level consensus (approach A) ──────────────────────────────────────
+  // The binding sits at a STABLE position book-wide, so a single page's bad
+  // detection should be overruled by the book median — not park the whole book
+  // (a 10-page book parked over one diagram page is the failure this fixes).
+  // Robust median + MAD over confident positions; scatter = no stable binding.
+  const sorted = [...confidentPositions].sort((a, b) => a - b);
+  const median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
+  const mad = sorted.length
+    ? [...sorted.map(p => Math.abs(p - median))].sort((a, b) => a - b)[Math.floor(sorted.length / 2)]
+    : 0;
+  const landscapeCount = existingPages.filter(p => !p._error && p._gutter !== 'single' || p._uncertain).length;
+  // Maps are already filtered out (Step 2.5), so any confident gutter — pixel OR
+  // Gemini — counts. Need at least a couple to anchor the book median.
+  const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscapeCount * 0.25));
+  const SCATTER_MAD = 60; // 0-1000 → 6% — robust scatter measure (MAD, not stdev: one outlier won't trip it)
+  const scattered = confidentPositions.length >= 3 && mad > SCATTER_MAD;
+  console.log(`  Methods: agree ${stats.agree}, pixel-only ${stats.pixelOnly}, gemini-only ${stats.geminiOnly}, disagree ${stats.disagree}, portrait ${stats.portrait}, center-unc ${stats.centerUncertain}, kept-whole-unc ${stats.keptWholeUncertain}`);
+  console.log(`  Book consensus: median ${median}/1000, MAD ${mad}/1000, ${confidentPositions.length} confident/${landscapeCount} landscape${scattered ? ' — SCATTERED' : ''}`);
+
+  // Park only when there's no trustworthy consensus: too few confident pages, or
+  // genuinely scattered positions (maps/plates, not a spread book).
+  const parkReason = !enoughSignal
+    ? `only ${confidentPositions.length}/${landscapeCount} landscape pages gave a confident gutter — too little signal`
+    : scattered
+      ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — inconsistent binding, needs review`
+      : null;
+
+  // Resolve every landscape page against the consensus: outliers and uncertain
+  // pages snap to the book median; pages near the median keep their own (more
+  // accurate per-page) cut. Only runs when we're going to split (not parking).
+  if (!parkReason) {
+    const OUTLIER_TOL = 80; // 0-1000 → 8% from median = outlier, use median instead
+    let snapped = 0;
+    for (const p of existingPages) {
+      if (p._error || p._gutter === 'single' && !p._uncertain && p._splitMethod === 'portrait') continue;
+      if (typeof p._gutter === 'number' && typeof p._confidentPos === 'number' && Math.abs(p._confidentPos - median) <= OUTLIER_TOL) {
+        continue; // confident & consistent → keep its own cut
+      }
+      // outlier, uncertain, or kept-whole landscape page → apply book median
+      if (p._gutter !== 'single' || p._uncertain) {
+        if (p._splitMethod === 'portrait') continue;
+        p._gutter = median;
+        p._splitMethod = `book-median(${median})`;
+        p._uncertain = false;
+        snapped++;
+      }
+    }
+    if (snapped) console.log(`  Snapped ${snapped} outlier/uncertain pages to book median ${median}`);
+  }
+  if (parkReason && DRY_RUN) {
+    console.log(`\n  WOULD PARK: ${parkReason} — real run flags needs_attention instead of splitting.`);
+  }
+  if (parkReason && !DRY_RUN) {
+    console.error(`\n  PARK: ${parkReason}. Not splitting — flagging needs_attention for review.`);
+    await db.collection('books').updateOne({ id: book.id }, {
+      $set: {
+        'pipeline_auto.status': 'needs_attention',
+        'pipeline_auto.error': `Split review needed (#2454): ${parkReason}`,
+        'pipeline_auto.split_review_needed': true,
+        'pipeline_auto.last_updated': new Date(),
+      },
+    });
+    await client.close();
+    process.exit(0);
+  }
 } else if (WITH_OCR || withPageBreak.length === 0) {
   if (!WITH_OCR && withPageBreak.length === 0) {
     console.log('\n  No spread OCR found. Running Gemini OCR (use --with-ocr to force)...');
@@ -483,14 +685,15 @@ for (let idx = 0; idx < existingPages.length; idx++) {
   }
 
   if (GUTTER_ONLY) {
+    const method = page._splitMethod || 'unknown';
     if (page._gutter === 'single') {
       // Singles keep any existing OCR — it was made from this exact image.
-      newPages.push({ side: 'single', ocr: page.ocr?.data || null, sourceIdx: idx, splitPosition: null });
+      newPages.push({ side: 'single', ocr: page.ocr?.data || null, sourceIdx: idx, splitPosition: null, splitMethod: method, uncertain: !!page._uncertain });
     } else {
       // Spread: two OCR-less pages; the normal pipeline OCRs them as singles.
       const pos = typeof page._gutter === 'number' ? page._gutter : 500;
-      newPages.push({ side: 'left', ocr: null, sourceIdx: idx, splitPosition: pos });
-      newPages.push({ side: 'right', ocr: null, sourceIdx: idx, splitPosition: pos });
+      newPages.push({ side: 'left', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
+      newPages.push({ side: 'right', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
     }
     continue;
   }
@@ -522,7 +725,7 @@ if (DRY_RUN) {
   console.log('\n--- DRY RUN — would create: ---');
   for (let i = 0; i < newPages.length; i++) {
     const p = newPages[i];
-    console.log(`  p.${i + 1} ${p.side.padEnd(7)} source:${p.sourceIdx + 1} split:${p.splitPosition || '-'} type:${p.pageType || '-'} ocr:${p.ocr?.length || 0}ch`);
+    console.log(`  p.${i + 1} ${p.side.padEnd(7)} source:${p.sourceIdx + 1} split:${p.splitPosition || '-'} ${p.splitMethod ? `[${p.splitMethod}${p.uncertain ? ' UNCERTAIN' : ''}]` : ''} type:${p.pageType || '-'} ocr:${p.ocr?.length || 0}ch`);
   }
   await client.close();
   process.exit(0);
@@ -574,18 +777,27 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
         const urls = await uploadFullImage(buf, book.id, pageNum);
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
+        entry._full = urls.fullUrl;
+        entry._imgW = urls.width;
+        entry._imgH = urls.height;
       } else if (entry.side === 'left') {
         const splitFrac = (entry.splitPosition || 500) / 1000;
         const leftEnd = Math.round(Math.min(1, splitFrac + OVERLAP) * w);
         const urls = await cropAndUpload(buf, 0, leftEnd, h, book.id, pageNum);
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
+        entry._full = urls.fullUrl;
+        entry._imgW = urls.width;
+        entry._imgH = urls.height;
       } else if (entry.side === 'right') {
         const splitFrac = (entry.splitPosition || 500) / 1000;
         const rightStart = Math.round(Math.max(0, splitFrac - OVERLAP) * w);
         const urls = await cropAndUpload(buf, rightStart, w - rightStart, h, book.id, pageNum);
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
+        entry._full = urls.fullUrl;
+        entry._imgW = urls.width;
+        entry._imgH = urls.height;
       }
     }
 
@@ -596,8 +808,8 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
 }
 console.log();
 
-// --- Step 6: Delete old pages, insert new ones ---
-console.log('\n--- Step 6: Delete old pages, insert new ones ---');
+// --- Step 6: Archive old spreads, insert new pages ---
+console.log('\n--- Step 6: Archive old spreads, insert new pages ---');
 
 const ocrModel = WITH_OCR ? 'gemini-3.1-flash-lite' : (existingPages[0]?.ocr?.model || 'gemini-3.1-flash-lite');
 const promptVersion = WITH_OCR ? `spread-v2+ocr-v${ocrVersion}` : (existingPages[0]?.ocr?.prompt_version || 'spread-v2+ocr-v10');
@@ -621,6 +833,11 @@ for (let i = 0; i < newPages.length; i++) {
     page_number: pageNum,
     photo: p._photo,
     thumbnail: p._thumb,
+    archived_photo: p._full || p._photo,   // full-res crop — what archive audits key on (#829)
+    display_photo: p._photo,
+    thumbnail_blob: p._thumb,
+    ...(p._imgW ? { image_width: p._imgW, image_height: p._imgH } : {}), // #1491: dims on each page record
+    ...(iiifUrls[p.sourceIdx] ? { spread_source: iiifUrls[p.sourceIdx] } : {}), // lineage to the pre-split spread
     ocr: p.ocr ? {
       data: p.ocr,
       model: ocrModel,
@@ -630,6 +847,8 @@ for (let i = 0; i < newPages.length; i++) {
     split_from_spread: true,
     split_side: p.side === 'error' ? 'single' : p.side,
     split_position: p.splitPosition,
+    ...(p.splitMethod ? { split_method: p.splitMethod } : {}),
+    ...(p.uncertain ? { split_uncertain: true } : {}),
     field_provenance: {
       ...(p.ocr ? { ocr: { source: 'gemini', method: 'spread-split-ocr', confidence: 1.0, date: new Date() } } : {}),
       photo: { source: 'r2', method: 'spread-split-crop', confidence: 1.0, date: new Date() },
@@ -652,20 +871,20 @@ if (!coverPage && newDocs.length > 0) {
   coverPage = { num: first.page_number, url: first.photo, type: first.page_type };
 }
 
-// Safety check: don't delete pages if too many failed (>20% loss = abort)
+// Safety check: don't touch old pages if too many failed (>20% loss = abort)
 const failedCount = newPages.length - newDocs.length;
 if (failedCount > 0 && failedCount / newPages.length > 0.2) {
-  console.error(`\nABORT: ${failedCount}/${newPages.length} pages failed (>${Math.round(0.2 * 100)}% threshold). Not deleting old pages.`);
+  console.error(`\nABORT: ${failedCount}/${newPages.length} pages failed (>${Math.round(0.2 * 100)}% threshold). Not archiving old pages.`);
   await client.close();
   process.exit(1);
 }
 if (newDocs.length === 0) {
-  console.error('\nABORT: Zero pages would be created. Not deleting old pages.');
+  console.error('\nABORT: Zero pages would be created. Not archiving old pages.');
   await client.close();
   process.exit(1);
 }
 
-// Save pre-split revision (lightweight snapshot before destructive delete)
+// Save pre-split revision snapshot.
 const pagesWithOcrData = allExistingPages.filter(p => p.ocr?.data);
 if (pagesWithOcrData.length > 0) {
   await db.collection('page_revisions').insertOne({
@@ -679,8 +898,22 @@ if (pagesWithOcrData.length > 0) {
   });
 }
 
-console.log(`  Deleting ${allExistingPages.length} old pages (${failedCount} failed, within threshold)...`);
-await db.collection('pages').deleteMany({ book_id: book.id });
+// Archive old spreads in place rather than delete (#1491): negate page_number
+// and tag page_type:'archived-spread' so the originals stay fully recoverable.
+// The read path filters page_number>=0 && page_type!='archived-spread' in the
+// Mongo query (PR #1441), so archived spreads never surface in the reader,
+// grids, galleries, or extraction. page_number = -(abs+1) avoids a 0 collision.
+console.log(`  Archiving ${allExistingPages.length} old spread pages (negative page_number)...`);
+await db.collection('pages').updateMany(
+  { book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } },
+  [{ $set: {
+    page_number: { $subtract: [-1, { $abs: '$page_number' }] },
+    page_type: 'archived-spread',
+    archived_spread: true,
+    hidden: true,
+    updated_at: new Date(),
+  } }]
+);
 
 console.log(`  Inserting ${newDocs.length} new pages...`);
 if (newDocs.length > 0) {
