@@ -95,18 +95,24 @@ export async function detectGutterPixel(spreadBuf) {
       return { column: Math.round(inkX / ratio), confidence: 'high', reason: `ink-valley-${Math.round(inkMin * 100)}pct`, ar };
     }
 
-    // ── Signal B: dark gutter (binding shadow) — the luminance MINIMUM,
-    // confirmed as a valley flanked by brighter page margins on both sides.
+    // ── Signal B: dark gutter (binding shadow) — the luminance MINIMUM, as a
+    // valley flanked by brighter margins. Returned as a LOW-confidence HINT only,
+    // NOT a standalone cut: on manuscripts a dark figure / shadow / margin is
+    // easily mistaken for the binding (it mis-cut Figurae p6 → 594, Annvae p11 →
+    // 540, both ~50px off the true gutter). The caller treats a low-confidence
+    // result as "snap to the book median", which is anchored by the reliable
+    // ink-valley pages + the Gemini sample. Photographed codices with no bright
+    // gap (Euclid) are covered by that median, so we lose nothing by demoting it.
     let lumX = cs, lumMin = Infinity;
     for (let x = cs; x < ce; x++) if (lum[x] < lumMin) { lumMin = lum[x]; lumX = x; }
     let lLum = 0, rLum = 0;
     for (let x = Math.max(0, lumX - flank); x < lumX; x++) lLum = Math.max(lLum, lum[x]);
     for (let x = lumX + 1; x <= Math.min(W - 1, lumX + flank); x++) rLum = Math.max(rLum, lum[x]);
     if (lLum - lumMin >= 25 && rLum - lumMin >= 25) {
-      return { column: Math.round(lumX / ratio), confidence: 'high', reason: `dark-valley-${Math.round(lumMin)}lum`, ar };
+      return { column: Math.round(lumX / ratio), confidence: 'low', reason: `dark-valley-hint-${Math.round(lumMin)}lum`, ar };
     }
 
-    // Neither a bright nor dark central valley → LOW; caller escalates / parks.
+    // Neither a bright nor (trusted) dark central valley → LOW; snap to median.
     return { column: null, confidence: 'low', reason: 'no-central-valley', ar };
   } catch (e) {
     return { column: null, confidence: 'low', reason: `pixel-error:${(e.message || '').slice(0, 40)}`, ar };
