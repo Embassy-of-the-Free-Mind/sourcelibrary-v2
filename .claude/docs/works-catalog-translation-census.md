@@ -49,9 +49,30 @@ the same PR), not just caveated:
   results. Correct for Biruni (Sachau 1910); a false-positive risk elsewhere.
   Every claim keeps `confidence` + `evidence` for audit.
 
+## Calibration — the bare numbers are a 2–3.5× undercount (2026-06-08)
+
+`calibrate-census.mjs` re-checked the first 40 works of each seeded census
+stratum with **web-grounded** Gemini (googleSearch + thinkingBudget:-1 +
+parse-inside-retry) — which finds translations whose published title diverges
+from the original. Per-work CSVs for human sign-off:
+`/root/works-catalog-cache/calibrate-{tradition}.csv`.
+
+| Tradition | bare (Google Books) | grounded (web) | multiplier | implied true rate |
+|---|---|---|---|---|
+| Islamicate | 3/40 = 7.5% | 6/40 = 15.0% | **2.0×** | ~10% |
+| Tibetan | 2/40 = 5.0% | 7/40 = 17.5% | **3.5×** | ~9% |
+| Chinese | 0/40 = 0% | 4/40 = 10.0% | n/a (bare=0) | — |
+
+The 2.0× matches the Siku census's hand-verified finding exactly. **Tibetan is
+the worst-undercounted (3.5×)** — Wylie titles diverge hard from published
+English titles, so bare title-matching misses most. Caveat: n=40 is small and
+this is *machine*-deep-verified (web-grounded, not human) — the CSV is the
+artifact a human signs off to publish. Apply the multiplier to the headline
+rates for a true-rate estimate; keep the bare rate as the defensible floor.
+
 ## Recommended follow-ups
-1. Hand-verify a labeled stratum (≥30 works/tradition) to calibrate the
-   recall-floor multiplier, as done for Siku — then these are publishable.
+1. Human-review the calibration CSVs (40/tradition) to lock the multiplier —
+   then the true rates are publishable.
 2. Census the peeled-off traditions (khmer 9,497, pali 1,895, sanskrit 185) if
    wanted — the Pali canon will read much higher (it's well-translated).
 3. These extend the translation-gap-site story to Tibetan + Arabic — **no prior
