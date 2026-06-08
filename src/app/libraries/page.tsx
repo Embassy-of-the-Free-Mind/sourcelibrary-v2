@@ -129,26 +129,26 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
       className={`group relative block overflow-hidden rounded-xl ${
         isHero ? 'aspect-[21/9] md:aspect-[3/1]' :
         isFeatured ? 'aspect-[21/9]' :
-        'aspect-[4/3]'
+        'aspect-[3/2]'
       }`}
     >
-      {heroImage ? (
+      {/* Warm gradient base — always rendered so tiles never flash black while the scan loads */}
+      <div className={`absolute inset-0 ${
+        partner.color === 'gold' ? 'bg-gradient-to-br from-amber-900 to-amber-950' :
+        partner.color === 'rust' ? 'bg-gradient-to-br from-stone-800 to-stone-900' :
+        partner.color === 'violet' ? 'bg-gradient-to-br from-indigo-900 to-slate-900' :
+        'bg-gradient-to-br from-emerald-900 to-stone-900'
+      }`} />
+
+      {heroImage && (
         <Image
           src={heroImage}
           alt={`Illustration from ${partner.name}`}
           fill
-          sizes={isHero || isFeatured ? '100vw' : '(max-width: 640px) 100vw, 50vw'}
+          sizes={isHero || isFeatured ? '100vw' : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'}
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          unoptimized
           priority={isHero || isFeatured}
         />
-      ) : (
-        <div className={`absolute inset-0 ${
-          partner.color === 'gold' ? 'bg-gradient-to-br from-amber-900 to-amber-950' :
-          partner.color === 'rust' ? 'bg-gradient-to-br from-stone-800 to-stone-900' :
-          partner.color === 'violet' ? 'bg-gradient-to-br from-indigo-900 to-slate-900' :
-          'bg-gradient-to-br from-emerald-900 to-stone-900'
-        }`} />
       )}
 
       {/* Gradient overlay */}
@@ -160,7 +160,7 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
 
       {/* Content */}
       <div className={`absolute inset-0 flex flex-col ${
-        isHero || isFeatured ? 'justify-center p-8 md:p-12 max-w-2xl' : 'justify-end p-5 sm:p-6'
+        isHero || isFeatured ? 'justify-center p-8 md:p-12 max-w-2xl' : 'justify-end p-3 sm:p-4'
       }`}>
         {isHero && (
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-amber-300/80 mb-3">
@@ -171,20 +171,20 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
         <h2 className={`font-serif text-white font-semibold leading-tight ${
           isHero ? 'text-3xl md:text-4xl' :
           isFeatured ? 'text-2xl md:text-3xl' :
-          'text-xl sm:text-2xl'
+          'text-sm sm:text-base md:text-lg'
         }`}>
           {partner.name}
         </h2>
 
-        <p className={`mt-2 text-white/70 leading-relaxed ${
-          isHero ? 'text-base md:text-lg line-clamp-3' :
-          isFeatured ? 'text-sm md:text-base line-clamp-2' :
-          'text-sm line-clamp-2'
+        <p className={`text-white/70 leading-relaxed ${
+          isHero ? 'mt-2 text-base md:text-lg line-clamp-3' :
+          isFeatured ? 'mt-2 text-sm md:text-base line-clamp-2' :
+          'mt-1 text-xs line-clamp-2 hidden sm:block'
         }`}>
           {partner.description}
         </p>
 
-        <div className={`flex items-center gap-3 ${isHero || isFeatured ? 'mt-5' : 'mt-3'}`}>
+        <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 ${isHero || isFeatured ? 'mt-5' : 'mt-2'}`}>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
             <BookOpen className="w-3 h-3" />
             {count.toLocaleString('en-US')} books
@@ -267,7 +267,7 @@ export default async function LibrariesPage() {
             Libraries and platforms whose digitized collections we import, translate, and preserve.
           </p>
 
-          <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
             {rest.map((partner) => (
               <PartnerCard
                 key={partner.slug}
