@@ -413,7 +413,7 @@ console.log('\n--- Step 2: Load existing page OCR ---');
 const allExistingPages = await db.collection('pages')
   .find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }) // live pages only — skip spreads archived by a prior run (idempotency)
   .sort({ page_number: 1 })
-  .project({ id: 1, page_number: 1, photo: 1, 'ocr.data': 1, 'ocr.prompt_version': 1, 'ocr.model': 1 })
+  .project({ id: 1, page_number: 1, photo: 1, page_type: 1, 'ocr.data': 1, 'ocr.prompt_version': 1, 'ocr.model': 1 })
   .toArray();
 
 // Only use the first N pages matching the source image count (the original spreads).
@@ -443,6 +443,61 @@ if (GUTTER_ONLY) {
   // Book-level park: too many uncertain pages, OR confident gutter positions
   // SCATTERED across pages (a real binding is stable book-wide; scatter ⇒ not a
   // spread book — map atlas / plate album — must not be cut).
+  // ── Step 2.5: OCR-based content classification (FREE — uses existing OCR) ──
+  // These books were already OCR'd, so each page carries a <page-type>. A
+  // single map/plate book has page_type 'map'/'illustration' on most pages and
+  // almost no body text; a real text spread is page_type 'text' with thousands
+  // of chars. That separates the two cases pixels/Gemini can't (an atlas of
+  // single wide maps vs two text pages) — for free, no model call. Only 6 of
+  // the 331 #2454 books are plate books, and this finds them precisely.
+  const IMG_PAGE_TYPES = new Set(['map', 'illustration', 'diagram', 'frontispiece', 'plate']);
+  let imgPages = 0, contentPages = 0;
+  for (const pg of existingPages) {
+    if (pg.page_type === 'blank') continue;
+    const body = (pg.ocr?.data || '').replace(/<[^>]+>/g, '').trim().length;
+    const isImg = IMG_PAGE_TYPES.has(pg.page_type) || (/<image-desc>/i.test(pg.ocr?.data || '') && body < 400);
+    if (isImg) imgPages++; else contentPages++;
+  }
+  const imgFrac = (imgPages + contentPages) ? imgPages / (imgPages + contentPages) : 0;
+  console.log(`  Content class (from existing OCR): ${imgPages} image-pages / ${contentPages} text-pages → imgFrac ${imgFrac.toFixed(2)}`);
+
+  if (imgFrac >= 0.6) {
+    // Plate/map book — these are single wide images, not two-page text spreads.
+    // Splitting would bisect maps; they display best as full spreads. Stop
+    // trying to split: clear needs_splitting, leave pages intact.
+    console.log(`  PLATE/MAP BOOK (imgFrac ${imgFrac.toFixed(2)} ≥ 0.6) — not a text spread book; clearing needs_splitting, keeping pages whole.`);
+    if (!DRY_RUN) {
+      await db.collection('books').updateOne({ id: book.id }, {
+        $set: {
+          needs_splitting: false,
+          split_completed: true,
+          split_note: `OCR page_type: ${imgPages}/${imgPages + contentPages} image pages — plate/map book, kept whole (#2454)`,
+          'pipeline_auto.status': 'complete',
+          'pipeline_auto.last_updated': new Date(),
+        },
+      });
+    }
+    await client.close();
+    process.exit(0);
+  }
+  if (imgFrac >= 0.25) {
+    // Mixed (text + a meaningful share of plates) — too risky to auto-split.
+    console.log(`  MIXED BOOK (imgFrac ${imgFrac.toFixed(2)}) — text + plates; parking for review rather than auto-splitting.`);
+    if (!DRY_RUN) {
+      await db.collection('books').updateOne({ id: book.id }, {
+        $set: {
+          'pipeline_auto.status': 'needs_attention',
+          'pipeline_auto.error': `Mixed text/plate book (imgFrac ${imgFrac.toFixed(2)}) — manual split review (#2454)`,
+          'pipeline_auto.split_review_needed': true,
+          'pipeline_auto.last_updated': new Date(),
+        },
+      });
+    }
+    await client.close();
+    process.exit(0);
+  }
+  // imgFrac < 0.25 → text spread book → split it.
+
   console.log('\n--- Step 3: Gutter detection — pixel + Gemini cross-check (no OCR) ---');
   ({ detectGutterPixel } = await import('./lib/gutter-detect.mjs'));
   let geminiReady = false;
@@ -490,11 +545,10 @@ if (GUTTER_ONLY) {
         } else if (pixPos != null) {
           page._gutter = pixPos; page._splitMethod = `pixel:${pix.reason}`; page._confidentPos = pixPos; stats.pixelOnly++;
         } else if (gemPos != null) {
-          // Gemini found a gutter but PIXEL abstained — weak. A single map/plate
-          // triggers exactly this (no real binding for pixel to find). Do NOT
-          // count it as a confirmed spread position; it only splits if the book
-          // is independently confirmed a spread (then it snaps to the median).
-          page._gutter = gemPos; page._splitMethod = 'gemini-only(unconfirmed)'; stats.geminiOnly++;
+          // Text book (maps already filtered out in Step 2.5), so a Gemini-only
+          // position is a real spread that pixel found hard (e.g. faint gutter).
+          // Trust it as a confident position.
+          page._gutter = gemPos; page._splitMethod = 'gemini'; page._confidentPos = gemPos; stats.geminiOnly++;
         } else if (ar >= 1.3) {
           page._gutter = 500; page._splitMethod = 'center-uncertain'; page._uncertain = true; stats.centerUncertain++;
         } else {
@@ -522,11 +576,9 @@ if (GUTTER_ONLY) {
     ? [...sorted.map(p => Math.abs(p - median))].sort((a, b) => a - b)[Math.floor(sorted.length / 2)]
     : 0;
   const landscapeCount = existingPages.filter(p => !p._error && p._gutter !== 'single' || p._uncertain).length;
-  // Confirmed = pixel found a real gutter (alone or agreeing with Gemini). A
-  // book is a spread book only if pixel confirms a gutter on a good fraction of
-  // its landscape pages — single-map/plate books (pixel abstains, only Gemini
-  // guesses) fall below this and park.
-  const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscapeCount * 0.4));
+  // Maps are already filtered out (Step 2.5), so any confident gutter — pixel OR
+  // Gemini — counts. Need at least a couple to anchor the book median.
+  const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscapeCount * 0.25));
   const SCATTER_MAD = 60; // 0-1000 → 6% — robust scatter measure (MAD, not stdev: one outlier won't trip it)
   const scattered = confidentPositions.length >= 3 && mad > SCATTER_MAD;
   console.log(`  Methods: agree ${stats.agree}, pixel-only ${stats.pixelOnly}, gemini-only ${stats.geminiOnly}, disagree ${stats.disagree}, portrait ${stats.portrait}, center-unc ${stats.centerUncertain}, kept-whole-unc ${stats.keptWholeUncertain}`);
@@ -535,9 +587,9 @@ if (GUTTER_ONLY) {
   // Park only when there's no trustworthy consensus: too few confident pages, or
   // genuinely scattered positions (maps/plates, not a spread book).
   const parkReason = !enoughSignal
-    ? `only ${confidentPositions.length}/${landscapeCount} pages gave a confident gutter — too little signal to trust a book consensus`
+    ? `only ${confidentPositions.length}/${landscapeCount} landscape pages gave a confident gutter — too little signal`
     : scattered
-      ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — likely not a spread book (maps/plates)`
+      ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — inconsistent binding, needs review`
       : null;
 
   // Resolve every landscape page against the consensus: outliers and uncertain

@@ -77,7 +77,7 @@ async function decide(buf) {
     return { colPx: toCol(pixPos), pct: pixPos / 10, method: `DISAGREE px${pixPos}/gem${gemPos}`, color: '#e87a7a', uncertain: true, ar, meta };
   }
   if (pixPos != null) return { colPx: toCol(pixPos), pct: pixPos / 10, method: `pixel ${pix.reason}`, color: '#9ae87a', uncertain: false, pos: pixPos, confirmed: true, ar, meta };
-  if (gemPos != null) return { colPx: toCol(gemPos), pct: gemPos / 10, method: `gemini ${gemPos} (unconfirmed)`, color: '#7a9ae8', uncertain: true, ar, meta };
+  if (gemPos != null) return { colPx: toCol(gemPos), pct: gemPos / 10, method: `gemini ${gemPos}`, color: '#7a9ae8', uncertain: false, pos: gemPos, confirmed: true, ar, meta };
   if (ar >= 1.3) return { colPx: Math.round(meta.width / 2), pct: 50, method: 'center (uncertain)', color: '#e87a7a', uncertain: true, ar, meta };
   return { colPx: null, pct: null, method: 'kept-whole (uncertain)', color: '#e8b07a', uncertain: true, ar, meta };
 }
@@ -112,9 +112,20 @@ let parkCount = 0;
 for (const id of IDS) {
   const book = await db.collection('books').findOne({ id }, { projection: { id: 1, title: 1, slug: 1, pages_count: 1, image_source: 1 } });
   if (!book) { console.error(`skip ${id}: not found`); continue; }
-  const pages = await db.collection('pages').find({ book_id: id }, { projection: { page_number: 1, archived_photo: 1, photo: 1 } }).sort({ page_number: 1 }).toArray();
+  const pages = await db.collection('pages').find({ book_id: id }, { projection: { page_number: 1, archived_photo: 1, photo: 1, page_type: 1, 'ocr.data': 1 } }).sort({ page_number: 1 }).toArray();
   const total = pages.length;
   if (!total) continue;
+
+  // OCR content class (free): plate/map book vs text spread book.
+  const IMG_PAGE_TYPES = new Set(['map', 'illustration', 'diagram', 'frontispiece', 'plate']);
+  let imgPages = 0, contentPages = 0;
+  for (const pg of pages) {
+    if (pg.page_type === 'blank') continue;
+    const body = (pg.ocr?.data || '').replace(/<[^>]+>/g, '').trim().length;
+    if (IMG_PAGE_TYPES.has(pg.page_type) || (/<image-desc>/i.test(pg.ocr?.data || '') && body < 400)) imgPages++; else contentPages++;
+  }
+  const imgFrac = (imgPages + contentPages) ? imgPages / (imgPages + contentPages) : 0;
+  const contentClass = imgFrac >= 0.6 ? 'PLATE/MAP — keep whole' : imgFrac >= 0.25 ? 'MIXED — review' : 'text';
 
   // Pass 1: decide each sampled page (no rendering yet — need the book median first).
   const idxs = [...new Set(Array.from({ length: Math.min(SAMPLES, total) }, (_, i) => Math.floor(((i + 1) / (Math.min(SAMPLES, total) + 1)) * total)))];
@@ -138,9 +149,9 @@ for (const id of IDS) {
   const sorted = [...confidentPositions].sort((a, b) => a - b);
   const median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
   const mad = sorted.length ? [...sorted.map(v => Math.abs(v - median))].sort((a, b) => a - b)[Math.floor(sorted.length / 2)] : 0;
-  const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscape * 0.4));
+  const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscape * 0.25));
   const scattered = confidentPositions.length >= 3 && mad > 60;
-  const wouldPark = !enoughSignal || scattered;
+  const wouldPark = imgFrac >= 0.25 || !enoughSignal || scattered;
   if (wouldPark) parkCount++;
 
   // Pass 2: render, snapping outlier/uncertain landscape pages to the median.
@@ -158,7 +169,7 @@ for (const id of IDS) {
   const url = `https://sourcelibrary.org/book/${book.slug || book.id}`;
   bookHtml += `<div class="book" style="border-color:${wouldPark ? '#e8b07a' : '#7ae87a'}">
     <h2><a href="${url}" target="_blank">${esc(book.title)}</a> ${wouldPark ? '<span class="park">WOULD PARK</span>' : ''}</h2>
-    <div class="meta">${esc(book.image_source?.provider || '?')} · ${total} pages · median ${median}/1000 · MAD ${mad} · ${confidentPositions.length}/${landscape} confident${snapped ? ` · ${snapped} snapped` : ''}${scattered ? ' · SCATTERED' : ''}${!enoughSignal ? ' · LOW-SIGNAL' : ''}</div>
+    <div class="meta">${esc(book.image_source?.provider || '?')} · ${total}p · ${esc(contentClass)} (imgFrac ${imgFrac.toFixed(2)}) · median ${median} MAD ${mad} · ${confidentPositions.length}/${landscape} conf${snapped ? ` · ${snapped} snapped` : ''}${scattered ? ' · SCATTERED' : ''}</div>
     <div class="samples">${samplesHtml}</div>
   </div>`;
   console.error(`done ${id}: median ${median} MAD ${mad} ${confidentPositions.length}/${landscape} conf${wouldPark ? ' (PARK)' : ''}`);
