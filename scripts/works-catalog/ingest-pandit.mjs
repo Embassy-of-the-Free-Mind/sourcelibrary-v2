@@ -115,6 +115,14 @@ function centuryOf(s) {
   return null;
 }
 
+// Sanskrit-script signal: Devanagari, or IAST romanization (the diacritics
+// Sanskrit transliteration uses and Chinese/pinyin does not). Used to keep the
+// ingest precise when the export has NO language column (e.g. a year-filtered
+// Pandit export mixes Sanskrit with Chinese Buddhist texts like "Anban shouyi
+// jing"). NB: misses diacritic-less Sanskrit (Arjunacarita) — precision over
+// recall, since the alternative is mislabeling Chinese as Sanskrit.
+const SANSKRIT_SCRIPT = /[ऀ-ॿ]|[āīūṛṝḷḹṅñṭḍṇśṣṃḥ]/;
+
 const works = [];
 let skippedNonSkt = 0, skippedNoTitle = 0;
 for (const r of dataRows) {
@@ -122,8 +130,12 @@ for (const r of dataRows) {
   const title = (r[titleCol] || '').trim();
   if (!id || !title) { skippedNoTitle++; continue; }
   const language = langCol >= 0 ? (r[langCol] || '').trim() : '';
-  const isSanskrit = /sanskrit|sa\b|saṃskṛta|samskrita/i.test(language) || langCol < 0;
-  if (!KEEP_ALL && langCol >= 0 && !isSanskrit) { skippedNonSkt++; continue; }
+  // With a language column, trust it. Without one, require a Sanskrit script
+  // signal in the title (unless --all) so non-Sanskrit rows aren't mislabeled.
+  const isSanskrit = langCol >= 0
+    ? /sanskrit|sa\b|saṃskṛta|samskrita/i.test(language)
+    : SANSKRIT_SCRIPT.test(title);
+  if (!KEEP_ALL && !isSanskrit) { skippedNonSkt++; continue; }
   const author = authorCol >= 0 ? (r[authorCol] || '').trim().split(',')[0] || null : null;
   const wd = wdCol >= 0 ? (r[wdCol] || '').trim().match(/Q\d+/)?.[0] : null;
   const tradition = isSanskrit ? 'sanskrit' : (language.toLowerCase().split(/[,;]/)[0].trim() || 'sanskrit');
