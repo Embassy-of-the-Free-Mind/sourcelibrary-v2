@@ -32,7 +32,11 @@ export const analytics = {
    */
   usage: async (days?: number): Promise<UsageStats> => {
     const tenant = getTenantSlug();
-    const url = days ? `/api/${tenant}/analytics/usage?days=${days}` : `/api/${tenant}/analytics/usage`;
+    const prefix = tenant ? `/api/${tenant}` : '/api';
+    let url = `${prefix}/analytics/usage`;
+    if(days) {
+      url += `?days=${days}`;
+    }
     return await apiClient.get(url, { timeout: 90000 });
   },
 
