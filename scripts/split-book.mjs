@@ -406,7 +406,7 @@ try {
 // --- Step 2: Load existing pages (for their OCR) ---
 console.log('\n--- Step 2: Load existing page OCR ---');
 const allExistingPages = await db.collection('pages')
-  .find({ book_id: book.id })
+  .find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }) // live pages only — skip spreads archived by a prior run (idempotency)
   .sort({ page_number: 1 })
   .project({ id: 1, page_number: 1, photo: 1, 'ocr.data': 1, 'ocr.prompt_version': 1, 'ocr.model': 1 })
   .toArray();
@@ -694,8 +694,8 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
 }
 console.log();
 
-// --- Step 6: Delete old pages, insert new ones ---
-console.log('\n--- Step 6: Delete old pages, insert new ones ---');
+// --- Step 6: Archive old spreads, insert new pages ---
+console.log('\n--- Step 6: Archive old spreads, insert new pages ---');
 
 const ocrModel = WITH_OCR ? 'gemini-3.1-flash-lite' : (existingPages[0]?.ocr?.model || 'gemini-3.1-flash-lite');
 const promptVersion = WITH_OCR ? `spread-v2+ocr-v${ocrVersion}` : (existingPages[0]?.ocr?.prompt_version || 'spread-v2+ocr-v10');
@@ -757,20 +757,20 @@ if (!coverPage && newDocs.length > 0) {
   coverPage = { num: first.page_number, url: first.photo, type: first.page_type };
 }
 
-// Safety check: don't delete pages if too many failed (>20% loss = abort)
+// Safety check: don't touch old pages if too many failed (>20% loss = abort)
 const failedCount = newPages.length - newDocs.length;
 if (failedCount > 0 && failedCount / newPages.length > 0.2) {
-  console.error(`\nABORT: ${failedCount}/${newPages.length} pages failed (>${Math.round(0.2 * 100)}% threshold). Not deleting old pages.`);
+  console.error(`\nABORT: ${failedCount}/${newPages.length} pages failed (>${Math.round(0.2 * 100)}% threshold). Not archiving old pages.`);
   await client.close();
   process.exit(1);
 }
 if (newDocs.length === 0) {
-  console.error('\nABORT: Zero pages would be created. Not deleting old pages.');
+  console.error('\nABORT: Zero pages would be created. Not archiving old pages.');
   await client.close();
   process.exit(1);
 }
 
-// Save pre-split revision (lightweight snapshot before destructive delete)
+// Save pre-split revision snapshot.
 const pagesWithOcrData = allExistingPages.filter(p => p.ocr?.data);
 if (pagesWithOcrData.length > 0) {
   await db.collection('page_revisions').insertOne({
@@ -784,8 +784,22 @@ if (pagesWithOcrData.length > 0) {
   });
 }
 
-console.log(`  Deleting ${allExistingPages.length} old pages (${failedCount} failed, within threshold)...`);
-await db.collection('pages').deleteMany({ book_id: book.id });
+// Archive old spreads in place rather than delete (#1491): negate page_number
+// and tag page_type:'archived-spread' so the originals stay fully recoverable.
+// The read path filters page_number>=0 && page_type!='archived-spread' in the
+// Mongo query (PR #1441), so archived spreads never surface in the reader,
+// grids, galleries, or extraction. page_number = -(abs+1) avoids a 0 collision.
+console.log(`  Archiving ${allExistingPages.length} old spread pages (negative page_number)...`);
+await db.collection('pages').updateMany(
+  { book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } },
+  [{ $set: {
+    page_number: { $subtract: [-1, { $abs: '$page_number' }] },
+    page_type: 'archived-spread',
+    archived_spread: true,
+    hidden: true,
+    updated_at: new Date(),
+  } }]
+);
 
 console.log(`  Inserting ${newDocs.length} new pages...`);
 if (newDocs.length > 0) {
