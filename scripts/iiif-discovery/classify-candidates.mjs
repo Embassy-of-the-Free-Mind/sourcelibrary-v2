@@ -81,18 +81,28 @@ const BOOK_COLLECTIONS = new Set([
   'popularchinesebooks', 'indic-manuscripts', 'universityofarizona-ol', 'getty',
 ]);
 
-function recordType(collections) {
-  if (!collections || collections.length === 0) return ['unknown', 'no-collections'];
-  for (const c of collections) {
-    if (SERIAL_COLLECTIONS.has(c)) return ['serial', `umbrella:${c}`];
+function recordType(collections, source) {
+  if (collections && collections.length) {
+    for (const c of collections) {
+      if (SERIAL_COLLECTIONS.has(c)) return ['serial', `umbrella:${c}`];
+    }
+    for (const c of collections) {
+      if (SERIAL_NAME_RE.test(c)) return ['serial', `name-rule:${c}`];
+    }
+    for (const c of collections) {
+      if (BOOK_COLLECTIONS.has(c)) return ['monograph', `book-collection:${c}`];
+    }
+    return ['unknown', 'no-typed-collection'];
   }
-  for (const c of collections) {
-    if (SERIAL_NAME_RE.test(c)) return ['serial', `name-rule:${c}`];
-  }
-  for (const c of collections) {
-    if (BOOK_COLLECTIONS.has(c)) return ['monograph', `book-collection:${c}`];
-  }
-  return ['unknown', 'no-typed-collection'];
+  // No IA collections. Every non-IA source is an institutional book/manuscript
+  // harvester (BSB, Gallica, e-rara, Biblissima, Vatican, ISTC, SAT, …) — they
+  // target single works, never periodical runs. Verified 2026-06-08: no non-IA
+  // source carries serial signals (ia_microfilm's name notwithstanding — its
+  // contents are microfilmed early *books*: Demosthenes, Aristotle, pamphlets).
+  // Manuscripts (Biblissima/Vatican/Heidelberg) and canon texts (SAT/Dunhuang)
+  // are single works → 'monograph' for the serial-vs-monograph census split.
+  if (source && source !== 'ia_language') return ['monograph', 'harvester-default'];
+  return ['unknown', 'no-collections'];
 }
 
 // ── Script detection from title codepoints ──────────────────────────────────
@@ -168,7 +178,7 @@ await withMongo(async (db) => {
   let processed = 0;
 
   for await (const doc of cursor) {
-    const [rt, rtReason] = recordType(doc.metadata?.collections);
+    const [rt, rtReason] = recordType(doc.metadata?.collections, doc.source);
     const script = detectScript(doc.title);
     const iso = languageIso(doc.language);
 
