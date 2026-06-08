@@ -41,13 +41,21 @@ function skeleton(t) {
     .toLowerCase()
     .replace(/^[\s\d._-]+/, '')                          // strip leading IA-id / numbers
     .replace(/[^a-z]+/g, '')                             // letters only (drops spaces too)
+    // anusvāra ONLY: a nasal before another consonant ↔ ṃ↔m↔n (Saṃdhi/Sandhi,
+    // Saṃgraha/Sangraha). NOT a nasal before a vowel (keeps Mata ≠ Nata).
+    .replace(/[mn](?=[bcdfghjklmnpqrstvwxyz])/g, 'n')
     .replace(/h/g, '')                                  // aspirates + inserted-h (bh→b, sh→s)
-    .replace(/[mn]/g, 'n')                              // anusvāra: ṃ↔m↔n (Saṃdhi/Sandhi)
     .replace(VOWELS, '');                               // consonant skeleton
 }
 function keyOf(t) {
   const s = skeleton(t);
   return s.length >= 5 ? s.slice(0, KEYLEN) : null;
+}
+// Precision filter: a key collision is a real match only if one full skeleton
+// is a prefix of the other (work name leads the IA title, possibly with trailing
+// commentary/volume) — rejects mid-word divergence (Gītā vs Mahāpurāṇam).
+function prefixCompatible(a, b) {
+  return a.length >= 5 && b.length >= 5 && (a.startsWith(b) || b.startsWith(a));
 }
 
 // ── 1. index IA manifests by skeleton key ────────────────────────────────────
@@ -65,7 +73,7 @@ for await (const d of cur) {
   if (!k) continue;
   if (!iaByKey.has(k)) iaByKey.set(k, []);
   const arr = iaByKey.get(k);
-  if (arr.length < 12) arr.push({ url: d.manifest_url, ia: d.source_id, title: d.title, restricted: !!d.metadata?.access_restricted });
+  if (arr.length < 12) arr.push({ url: d.manifest_url, ia: d.source_id, title: d.title, skel: skeleton(d.title), restricted: !!d.metadata?.access_restricted });
   iaCount++;
 }
 console.log(`Indexed ${iaCount.toLocaleString()} IA manifests → ${iaByKey.size.toLocaleString()} distinct keys`);
@@ -81,10 +89,11 @@ let matched = 0, thin = 0;
 const sources = [];
 const samplePairs = [];
 for (const w of works) {
+  const wskel = skeleton(w.title).length >= 5 ? skeleton(w.title) : skeleton(w.title_romanized);
   const k = keyOf(w.title) || keyOf(w.title_romanized);
-  if (!k) { thin++; continue; }
-  const hits = iaByKey.get(k);
-  if (!hits || !hits.length) continue;
+  if (!k || !wskel || wskel.length < 5) { thin++; continue; }
+  const hits = (iaByKey.get(k) || []).filter(h => prefixCompatible(wskel, h.skel));
+  if (!hits.length) continue;
   matched++;
   if (samplePairs.length < SAMPLE) samplePairs.push({ w: w.title, ia: hits[0].title, k });
   for (const h of hits.slice(0, MAX_SRC_PER_WORK)) {
