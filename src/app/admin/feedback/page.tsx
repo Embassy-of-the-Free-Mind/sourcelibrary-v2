@@ -16,6 +16,9 @@ interface FeedbackItem {
   addressed_by?: string | null;
   addressed_action?: string | null;
   addressed_link?: string | null;
+  reply_message?: string | null;
+  reply_sent_at?: string | null;
+  reply_recipient?: string | null;
 }
 
 type Tab = 'unread' | 'read' | 'addressed';
@@ -30,7 +33,7 @@ export default function AdminFeedbackPage() {
   const [items, setItems] = useState<FeedbackItem[]>([]);
   const [counts, setCounts] = useState<{ unread: number; read: number; addressed: number }>({ unread: 0, read: 0, addressed: 0 });
   const [loading, setLoading] = useState(false);
-  const [actionDraft, setActionDraft] = useState<Record<string, { action: string; link: string }>>({});
+  const [actionDraft, setActionDraft] = useState<Record<string, { action: string; link: string; reply: string }>>({});
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -62,17 +65,45 @@ export default function AdminFeedbackPage() {
     return true;
   }
 
+  // Like patch(), but returns the parsed response (so callers can read `replied`).
+  async function patchRaw(id: string, body: Record<string, unknown>): Promise<{ ok: boolean; replied?: boolean } | null> {
+    const res = await fetch(`/api/feedback/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      alert(`Update failed: ${res.status}`);
+      return null;
+    }
+    return res.json();
+  }
+
   async function markRead(id: string) {
     if (await patch(id, { read: true })) load();
   }
 
-  async function markAddressed(id: string) {
-    const draft = actionDraft[id] || { action: '', link: '' };
+  async function markAddressed(item: FeedbackItem) {
+    const id = item._id;
+    const draft = actionDraft[id] || { action: '', link: '', reply: '' };
     if (!draft.action.trim()) {
       alert('Add a one-line action before marking addressed');
       return;
     }
-    if (await patch(id, { addressed: true, addressed_action: draft.action.trim(), addressed_link: draft.link.trim() || undefined })) {
+    const willEmail = !!item.email && !item.reply_sent_at;
+    if (willEmail && !confirm(`This will email ${item.email} to let them know their feedback was addressed. Continue?`)) {
+      return;
+    }
+    const res = await patchRaw(id, {
+      addressed: true,
+      addressed_action: draft.action.trim(),
+      addressed_link: draft.link.trim() || undefined,
+      reply_message: draft.reply.trim() || undefined,
+    });
+    if (res) {
+      if (willEmail && res.replied === false) {
+        alert('Marked addressed, but the reply email failed to send (check RESEND_API_KEY / logs).');
+      }
       setActionDraft(d => { const next = { ...d }; delete next[id]; return next; });
       load();
     }
@@ -86,7 +117,7 @@ export default function AdminFeedbackPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <h1 className="text-2xl font-semibold mb-2">Feedback</h1>
-      <p className="text-sm text-stone-500 mb-6">From the &quot;Give Feedback&quot; button in the site footer. Mark items as <em>addressed</em> once a fix ships.</p>
+      <p className="text-sm text-stone-500 mb-6">From the &quot;Give Feedback&quot; button in the site footer. Mark items as <em>addressed</em> once a fix ships &mdash; if the submitter left an email, they&apos;re automatically notified (once).</p>
 
       <div className="flex gap-2 mb-6 border-b border-stone-200">
         {(['unread', 'read', 'addressed'] as Tab[]).map(t => (
@@ -133,6 +164,11 @@ export default function AdminFeedbackPage() {
                 {item.addressed_link && (
                   <a href={item.addressed_link} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline mt-1 inline-block">{item.addressed_link}</a>
                 )}
+                {item.reply_sent_at ? (
+                  <p className="mt-2 text-emerald-700">↩ Replied to {item.reply_recipient || item.email} · {formatDate(item.reply_sent_at)}</p>
+                ) : item.email ? (
+                  <p className="mt-2 text-stone-400">No reply email sent.</p>
+                ) : null}
               </div>
             )}
 
@@ -148,18 +184,27 @@ export default function AdminFeedbackPage() {
                     type="text"
                     placeholder="What was done (one line)"
                     value={actionDraft[item._id]?.action || ''}
-                    onChange={e => setActionDraft(d => ({ ...d, [item._id]: { ...d[item._id] || { action: '', link: '' }, action: e.target.value } }))}
+                    onChange={e => setActionDraft(d => ({ ...d, [item._id]: { ...(d[item._id] || { action: '', link: '', reply: '' }), action: e.target.value } }))}
                     className="flex-1 min-w-[200px] text-xs px-2 py-1.5 border border-stone-200 rounded focus:outline-none focus:border-accent-rust"
                   />
                   <input
                     type="url"
                     placeholder="PR/commit URL (optional)"
                     value={actionDraft[item._id]?.link || ''}
-                    onChange={e => setActionDraft(d => ({ ...d, [item._id]: { ...d[item._id] || { action: '', link: '' }, link: e.target.value } }))}
+                    onChange={e => setActionDraft(d => ({ ...d, [item._id]: { ...(d[item._id] || { action: '', link: '', reply: '' }), link: e.target.value } }))}
                     className="w-[26ch] text-xs px-2 py-1.5 border border-stone-200 rounded focus:outline-none focus:border-accent-rust"
                   />
-                  <button onClick={() => markAddressed(item._id)} className="text-xs px-3 py-1.5 bg-accent-rust hover:bg-accent-rust/90 text-white rounded transition-colors">
-                    Mark addressed
+                  {item.email && !item.reply_sent_at && (
+                    <input
+                      type="text"
+                      placeholder={`Friendly note to ${item.email} (optional)`}
+                      value={actionDraft[item._id]?.reply || ''}
+                      onChange={e => setActionDraft(d => ({ ...d, [item._id]: { ...(d[item._id] || { action: '', link: '', reply: '' }), reply: e.target.value } }))}
+                      className="flex-1 min-w-[200px] text-xs px-2 py-1.5 border border-stone-200 rounded focus:outline-none focus:border-accent-rust"
+                    />
+                  )}
+                  <button onClick={() => markAddressed(item)} className="text-xs px-3 py-1.5 bg-accent-rust hover:bg-accent-rust/90 text-white rounded transition-colors">
+                    {item.email && !item.reply_sent_at ? 'Mark addressed & email' : 'Mark addressed'}
                   </button>
                 </>
               )}

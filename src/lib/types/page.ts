@@ -1,4 +1,5 @@
 import { PromptReference } from "./prompt";
+import { DeepZoomManifest } from "./book";
 import { getPageSource } from "@/lib/page-image-url";
 
 export interface Page {
@@ -56,6 +57,20 @@ export interface Page {
   // Image dimensions (populated during archiving)
   image_width?: number;         // Full-res image width in pixels
   image_height?: number;        // Full-res image height in pixels
+
+  // Deep-zoom (issue #2411) — illustrated pages only.
+  // `fullres_master`: native-res master harvested to R2, separate from archived_photo
+  // (the display copy), so OCR/gallery/splitter stay undisturbed.
+  // `deepzoom`: DZI tile-pyramid manifest, written LAST after tiles are verified — the
+  // only field the reader branches on. See scripts/workers/deepzoom-{harvest,tile}-page*.mjs.
+  fullres_master?: {
+    url: string;
+    width: number;
+    height: number;
+    source_url?: string;
+    harvested_at?: Date;
+  };
+  deepzoom?: DeepZoomManifest;
 
   // Split/crop workflow (legacy — stale on split_from_spread pages)
   photo_original?: string;      // Original S3 URL before cropping

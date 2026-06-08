@@ -3446,13 +3446,20 @@ Rules:
               }
             }
 
-            // Categories: merge with existing
+            // Categories: merge with existing. Canonicalize (lowercase, trim,
+            // spaces → hyphens) so the AI's free-form casing ("Philosophy",
+            // "Natural Philosophy") folds into the curated category ids instead
+            // of drifting into separate buckets that `categories @> [id]` can't
+            // match. Keep in sync with canonicalizeCategory() in src/lib/books-catalog.ts.
             if (parsed.categories?.length > 0) {
-              const existing = book.categories || [];
-              const merged = [...new Set([...existing, ...parsed.categories])];
-              if (merged.length !== existing.length) {
+              const canon = (s) => String(s).toLowerCase().trim().replace(/\s+/g, '-');
+              const existing = (book.categories || []).map(canon);
+              const merged = [...new Set([...existing, ...parsed.categories.map(canon)])].filter(Boolean);
+              const changed = merged.length !== existing.length ||
+                merged.some((c, i) => c !== (book.categories || [])[i]);
+              if (changed) {
                 updates.categories = merged;
-                changes.push({ field: 'categories', previous: existing, new_value: merged });
+                changes.push({ field: 'categories', previous: book.categories || [], new_value: merged });
               }
             }
 

@@ -21,9 +21,17 @@
  * Also records `original_in_scan: true` for Loeb/facing-page so the gate knows
  * the original text is already present.
  *
+ * KEEP THE classify() HEURISTIC IN SYNC with src/lib/text-role.ts
+ * `classifyTextRole()`, which runs the same logic at import time so new books
+ * are classified on insert. This script is the catch-all sweep for import paths
+ * that bypass that hook (the direct-insert scripts) and for re-classifying after
+ * metadata enrichment (e.g. once `year` lands). Run `--only-missing` from a cron
+ * to keep the tail classified.
+ *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/maintenance/classify-text-role.mjs --dry-run
- *   node scripts/maintenance/classify-text-role.mjs            # live write
+ *   node scripts/maintenance/classify-text-role.mjs                    # live write, all visible books
+ *   node scripts/maintenance/classify-text-role.mjs --only-missing     # only books with no text_role (cron-friendly)
  *   node scripts/maintenance/classify-text-role.mjs --limit=50 --dry-run
  */
 
@@ -38,6 +46,18 @@ const TRANS_AUTHOR = /\btr(ans)?\.?\b|translated by|;\s*tr\b/i;
 // them is by definition a translation.
 const CLASSICAL = /\b(plato|aristotle|plotinus|proclus|iamblichus|porphyry|plutarch|pythagoras|ptolemy|galen|hippocrates|homer|hesiod|sophocles|euripides|aeschylus|epictetus|marcus aurelius|sextus empiricus|philo|origen|cicero|seneca|virgil|ovid|lucretius|apuleius|boethius|aquinas|avicenna|averroes|al-biruni|al-kindi|maimonides|hermes trismegistus|laozi|lao tzu|confucius|zhuangzi|mencius|xunzi|patanjali|shankara|kabir|rumi|hafiz|sa'di|nagarjuna|padmasambhava)\b/i;
 const LOEB = /\b(loeb|sacred books of the east)\b/i;
+
+// First 4-digit year found across the candidate fields, or NaN. Mirrors
+// coerceYear() in src/lib/text-role.ts — keep in sync.
+function coerceYear(...vals) {
+  for (const v of vals) {
+    if (v == null) continue;
+    if (typeof v === 'number' && v > 0) return v;
+    const m = String(v).match(/\d{4}/);
+    if (m) return Number(m[0]);
+  }
+  return NaN;
+}
 
 function classify(book) {
   // Non-English scan → it's an original-language source.
@@ -58,7 +78,7 @@ function classify(book) {
   // It's a translation. Loeb always counts as modern (original co-present but
   // presented as translation). Otherwise split by era.
   if (loeb) return { role: 'modern-translation', loeb: true };
-  const yr = Number(book.year);
+  const yr = coerceYear(book.year, book.published, book.original_work_year);
   if (yr && yr > 0 && yr < 1700) return { role: 'period-translation', loeb: false };
   return { role: 'modern-translation', loeb: false };
 }
@@ -66,6 +86,7 @@ function classify(book) {
 async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
+  const onlyMissing = args.includes('--only-missing');
   const limit = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 
   if (!process.env.MONGODB_URI) {
@@ -76,9 +97,14 @@ async function main() {
   await client.connect();
   const col = client.db('bookstore').collection('books');
 
+  // --only-missing: classify just the books that have no text_role yet (the
+  // import tail). Default: re-classify all visible books.
+  const query = onlyMissing
+    ? { visible: true, text_role: { $exists: false } }
+    : { visible: true };
   const cursor = col.find(
-    { visible: true },
-    { projection: { _id: 0, id: 1, title: 1, author: 1, year: 1, language: 1, original_language: 1, read_count: 1 } },
+    query,
+    { projection: { _id: 0, id: 1, title: 1, author: 1, year: 1, published: 1, original_work_year: 1, language: 1, original_language: 1, read_count: 1 } },
   );
 
   const dist = { original: 0, 'period-translation': 0, 'modern-translation': 0 };
