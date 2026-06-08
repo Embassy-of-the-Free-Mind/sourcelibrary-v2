@@ -57,7 +57,7 @@ async function doMongo() {
 async function doSupabase() {
   const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
   let from = 0; const PAGE = 1000;
-  let scanned = 0, changed = 0;
+  let scanned = 0, changed = 0, errs = 0;
   for (;;) {
     const { data, error } = await sb.from('books_catalog').select('id, categories').range(from, from + PAGE - 1);
     if (error) { console.error('Supabase read error:', error.message); break; }
@@ -68,14 +68,19 @@ async function doSupabase() {
       if (!norm || sameArr(norm, row.categories)) continue;
       changed++;
       if (APPLY) {
-        const { error: uErr } = await sb.from('books_catalog').update({ categories: norm }).eq('id', row.id);
-        if (uErr) console.error(`  update ${row.id} failed: ${uErr.message}`);
+        // Wrap per-row: a rejected update await would otherwise crash node
+        // (unhandled rejection) and abort the whole backfill mid-run.
+        try {
+          const { error: uErr } = await sb.from('books_catalog').update({ categories: norm }).eq('id', row.id);
+          if (uErr) { errs++; console.error(`  update ${row.id} failed: ${uErr.message}`); }
+        } catch (e) { errs++; console.error(`  update ${row.id} threw: ${e.message}`); }
+        if (changed % 1000 === 0) console.log(`  ...Supabase ${changed} updated (errs=${errs})`);
       }
     }
     if (data.length < PAGE) break;
     from += PAGE;
   }
-  console.log(`Supabase books_catalog: scanned=${scanned}, ${APPLY ? 'updated' : 'would-update'}=${changed}`);
+  console.log(`Supabase books_catalog: scanned=${scanned}, ${APPLY ? 'updated' : 'would-update'}=${changed}, errors=${errs}`);
 }
 
 console.log(`Mode: ${APPLY ? 'APPLY' : 'DRY'}`);
