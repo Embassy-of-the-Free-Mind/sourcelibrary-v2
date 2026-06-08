@@ -41,6 +41,13 @@ const SOURCES = [
     notes: 'Volume-level facsimiles of premodern Chinese works (pre-1773 Siku-era and earlier). IA items expose NO rights/copyright metadata (verified 0/500); the collection has no access restriction. All 2,091 linked works are premodern Chinese (0 post-1900), so underlying texts are PD by age and the facsimile is openly served — work_sources.rights = PublicDomainByAge on that basis.',
   },
   {
+    source: 'sefaria', name: 'Sefaria',
+    url: 'https://www.sefaria.org',
+    data_license: 'CC0 1.0', content_license: 'mixed (CC0 / CC BY / CC BY-NC)', commercial_ok: true,
+    attribution: 'Sefaria (sefaria.org)',
+    notes: 'Metadata and structural data are CC0. Individual TEXT versions/translations vary (CC0, CC BY, CC BY-NC) — check the version license before importing a specific translation. Hebrew/Aramaic canon; most works carry Sefaria-hosted English, so the published-book census undercounts their true translation status.',
+  },
+  {
     source: 'wikidata-siku', name: 'Wikidata (Siku Quanshu denominator)',
     url: 'https://www.wikidata.org',
     data_license: 'CC0 1.0', content_license: 'CC0 1.0', commercial_ok: true,
