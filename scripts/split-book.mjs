@@ -498,11 +498,16 @@ if (GUTTER_ONLY) {
   }
   // imgFrac < 0.25 → text spread book → split it.
 
-  console.log('\n--- Step 3: Gutter detection — pixel + Gemini cross-check (no OCR) ---');
+  console.log('\n--- Step 3: Gutter detection — pixel/page (free), Gemini on a sample (no OCR) ---');
   ({ detectGutterPixel } = await import('./lib/gutter-detect.mjs'));
   let geminiReady = false;
   const stats = { portrait: 0, agree: 0, pixelOnly: 0, geminiOnly: 0, disagree: 0, centerUncertain: 0, keptWholeUncertain: 0 };
   const AGREE_TOL = 80; // 0-1000 → 8% of width
+  // The binding is stable book-wide, so Gemini (the paid call) only needs to run
+  // on a small SAMPLE to validate/establish the book gutter. Pixel runs on every
+  // page (free); non-sample pages where pixel is unsure snap to the book median.
+  const GEM_SAMPLE = Math.min(8, iiifUrls.length);
+  const gemSampleIdx = new Set(Array.from({ length: GEM_SAMPLE }, (_, k) => Math.floor(((k + 1) / (GEM_SAMPLE + 1)) * iiifUrls.length)));
 
   for (let i = 0; i < iiifUrls.length; i += CONCURRENCY) {
     const batch = iiifUrls.slice(i, i + CONCURRENCY);
@@ -523,12 +528,15 @@ if (GUTTER_ONLY) {
           return;
         }
 
-        // Pixel (free) + Gemini (preview, good prompt) in parallel-ish.
+        // Pixel every page (free). Gemini only on the sample (validates the
+        // book gutter + cross-checks pixel; the binding is stable book-wide).
         const pix = await detectGutterPixel(buf);
         const pixPos = (pix.confidence === 'high' && pix.column != null) ? Math.round((pix.column / meta.width) * 1000) : null;
-        if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
         let gemPos = null;
-        try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch { /* gemini optional */ }
+        if (gemSampleIdx.has(idx)) {
+          if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
+          try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch { /* gemini optional */ }
+        }
 
         if (pixPos != null && gemPos != null) {
           if (Math.abs(pixPos - gemPos) <= AGREE_TOL) {
