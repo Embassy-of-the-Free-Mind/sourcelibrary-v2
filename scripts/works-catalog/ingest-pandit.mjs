@@ -71,11 +71,13 @@ const findCol = (...patterns) => {
 const idCol = findCol(/^entity\s*id$/i, /^id$/i, /entity\s*id/i);
 // Title: prefer an exact "Title"/"Name"; avoid columns that are clearly references.
 const titleCol = findCol(/^title$/i, /^name$/i, /work.*title/i, /title/i, /name/i);
-// Author NAME column (not the *_id pair). Pandit emits ID then name; take a
-// header that has 'author' but not 'id'.
+// Author NAME column (not the *_id pair). Pandit emits an "Author (person IDs)"
+// column then "Authors (person)"; take the one with NO "id" anywhere in the
+// header (the earlier /id$/ test missed the "IDs)" suffix and grabbed the
+// numeric-id column).
 const authorCol = (() => {
   const cands = header.map((h, i) => ({ h, i })).filter(x => /author|creator|composed by/i.test(x.h));
-  const named = cands.find(x => !/id$/i.test(x.h.trim()));
+  const named = cands.find(x => !/\bid|ids?\b/i.test(x.h));
   return (named || cands[1] || cands[0])?.i ?? -1;
 })();
 const langCol = findCol(/language/i, /^lang/i);
