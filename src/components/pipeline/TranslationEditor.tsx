@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
@@ -29,8 +29,7 @@ import {
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
-// Lazy so OpenSeadragon's bundle only loads when a reader opens deep zoom.
-const DeepZoomOverlay = lazy(() => import('@/components/artwork/DeepZoomOverlay'));
+import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
@@ -444,7 +443,6 @@ export default function TranslationEditor({
   const bookMetadata = book as Book & { metadata?: { scriptType?: string } };
   const hasRashiScript = !!bookMetadata.metadata?.scriptType?.toLowerCase().includes('rashi');
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
-  const [deepZoomOpen, setDeepZoomOpen] = useState(false);
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
   // Save state for the inline page editor. The previous design auto-saved on
@@ -1321,14 +1319,7 @@ export default function TranslationEditor({
                         </div>
                       )}
                       {page.deepzoom && (
-                        <button
-                          onClick={() => setDeepZoomOpen(true)}
-                          className="absolute top-2 right-2 z-10 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/55 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-colors"
-                          title="Open deep zoom — stream this page at full resolution"
-                        >
-                          <Search className="w-3.5 h-3.5" />
-                          Deep zoom
-                        </button>
+                        <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
                       )}
                     </div>
                     {/* Image metadata + download */}
@@ -1857,16 +1848,6 @@ export default function TranslationEditor({
   // EDIT MODE - Full editing interface
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--bg-warm)' }}>
-      {/* Deep-zoom overlay — mounted only on user intent; one instance for both layouts */}
-      {deepZoomOpen && page.deepzoom && (
-        <Suspense fallback={null}>
-          <DeepZoomOverlay
-            manifest={page.deepzoom}
-            title={`${book.title} — page ${page.page_number}`}
-            onClose={() => setDeepZoomOpen(false)}
-          />
-        </Suspense>
-      )}
       {/* Header - Two rows on mobile, one row on desktop */}
       <header className="px-3 sm:px-6 py-2 sm:py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
         {/* Row 1: Back, Title, Navigation */}
@@ -2062,14 +2043,7 @@ export default function TranslationEditor({
             <div className="flex-1 overflow-auto p-4" data-reader-panel>
               <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                 {page.deepzoom && (
-                  <button
-                    onClick={() => setDeepZoomOpen(true)}
-                    className="absolute top-2 right-2 z-10 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/55 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-colors"
-                    title="Open deep zoom — stream this page at full resolution"
-                  >
-                    <Search className="w-3.5 h-3.5" />
-                    Deep zoom
-                  </button>
+                  <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
                 )}
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
