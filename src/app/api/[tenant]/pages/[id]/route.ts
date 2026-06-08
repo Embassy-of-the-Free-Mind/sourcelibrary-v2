@@ -48,10 +48,18 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const full = searchParams.get('full') === 'true';
 
+    // Default tenant = the main library: untagged (global) pages ARE in scope,
+    // alongside any explicitly tagged with the default-tenant UUID. Subdomain
+    // tenants (bph / kloss / bhutan) stay strict — exact tenantId only. This
+    // mirrors findTenantBookByIdOrSlug() so per-page content reads match the
+    // book-level lookup; without it, reader page-turns 404 on every untagged
+    // book under the default tenant (the "stuck on page N" bug, 2026-05-27/06-08).
+    const tenantFilter = tenant === 'default' ? { $in: [tenantId, null] } : tenantId;
+
     // Default: exclude detected_images (large array unused by the reader)
     const projection = full ? undefined : { detected_images: 0 };
     let page = await db.collection('pages').findOne(
-      { id, tenantId },
+      { id, tenantId: tenantFilter },
       projection ? { projection } : undefined
     );
 
@@ -60,7 +68,7 @@ export async function GET(
       const { ObjectId } = await import('mongodb');
       if (ObjectId.isValid(id)) {
         page = await db.collection('pages').findOne(
-          { _id: new ObjectId(id), tenantId },
+          { _id: new ObjectId(id), tenantId: tenantFilter },
           projection ? { projection } : undefined
         );
       }
