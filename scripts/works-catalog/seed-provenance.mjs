@@ -41,6 +41,13 @@ const SOURCES = [
     notes: 'Volume-level facsimiles of premodern Chinese works (pre-1773 Siku-era and earlier). IA items expose NO rights/copyright metadata (verified 0/500); the collection has no access restriction. All 2,091 linked works are premodern Chinese (0 post-1900), so underlying texts are PD by age and the facsimile is openly served — work_sources.rights = PublicDomainByAge on that basis.',
   },
   {
+    source: 'ia-sanskrit', name: 'Internet Archive — Sanskrit scans (general)',
+    url: 'https://archive.org',
+    data_license: 'Open metadata', content_license: 'Per-item — NOT assumed PD', commercial_ok: null,
+    attribution: 'Internet Archive (per-item uploader credited on each item)',
+    notes: 'IA manifests matched to Sanskrit works by match-scans-ia.mjs (IAST consonant-skeleton). Unlike ia-cadal these are GENERAL IA uploads, not one curated PD collection — the underlying work is premodern but the IA item may be a modern critical edition/translation. Rights are PER-ITEM and UNVERIFIED; work_sources.extra.access_restricted is captured. TODO: stamp work_sources.rights from IA possible-copyright-status before any scan import. Do not assume PD.',
+  },
+  {
     source: 'sefaria', name: 'Sefaria',
     url: 'https://www.sefaria.org',
     data_license: 'CC0 1.0', content_license: 'mixed (CC0 / CC BY / CC BY-NC)', commercial_ok: true,

@@ -142,7 +142,10 @@ for (const r of dataRows) {
   works.push({
     id: `pandit:${id}`,
     tradition,
-    original_language: isSanskrit ? 'san' : null,
+    // keep language consistent with tradition: a no-language-signal Pandit row
+    // defaults tradition to 'sanskrit' (above), so language should too — else
+    // tradition='sanskrit' + original_language=null (was 344 such rows)
+    original_language: tradition === 'sanskrit' ? 'san' : null,
     title,
     title_romanized: /[a-zA-Z]/.test(title) ? title : null,
     author: author || null,
