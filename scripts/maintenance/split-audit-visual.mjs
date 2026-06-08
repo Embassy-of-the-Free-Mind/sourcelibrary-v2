@@ -28,6 +28,7 @@ const arg = (flag, def) => {
 };
 const OUT = arg('--out', '/tmp/split-audit.html');
 const SAMPLES = parseInt(arg('--samples', '6'), 10);
+const GEMINI_MODEL = arg('--gemini-model', 'gemini-3-flash-preview');
 let IDS = (arg('--ids', '') || '').split(',').filter(Boolean);
 if (!IDS.length && arg('--ids-file')) {
   IDS = JSON.parse((await import('fs')).readFileSync(arg('--ids-file'), 'utf8'));
@@ -38,14 +39,14 @@ const MIN_SPREAD_AR = 1.1;
 
 // Gemini gutter fallback — same prompt/model as split-book.mjs --gutter-only.
 let geminiModel = null;
-const GUTTER_PROMPT = `This image is a scan from a book. Decide whether it shows a TWO-PAGE SPREAD (an open book with a left and a right page) or a SINGLE page.
+const GUTTER_PROMPT = `This is a photo of an open book showing a left page and a right page. Find the GUTTER — the vertical line where the two pages meet at the binding (often a shadow, or the innermost margins of the two pages). It may NOT be at the center; look carefully.
 
 Respond with EXACTLY one tag and nothing else:
-- Two-page spread: <split-position>N</split-position> where N (0-1000) is the horizontal position of the gutter (the fold between the pages). The gutter is usually near the center (400-600).
-- Single page: <split-position>null</split-position>`;
+- Two-page spread: <split-position>N</split-position> where N (0-1000) is the gutter's horizontal position. 0 = far left edge, 1000 = far right edge.
+- Single page (not a spread): <split-position>null</split-position>`;
 async function initGemini() {
   const { GoogleGenerativeAI } = await import('@google/generative-ai');
-  geminiModel = new GoogleGenerativeAI(process.env.GEMINI_API_KEY).getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+  geminiModel = new GoogleGenerativeAI(process.env.GEMINI_API_KEY).getGenerativeModel({ model: GEMINI_MODEL });
 }
 async function runGutterDetect(buf) {
   const r = await geminiModel.generateContent([GUTTER_PROMPT, { inlineData: { mimeType: 'image/jpeg', data: buf.toString('base64') } }]);
@@ -55,42 +56,48 @@ async function runGutterDetect(buf) {
   return (!isNaN(n) && n > 0 && n < 1000) ? n : 'single';
 }
 
-// Resolve one decision-tree result for a page image (no writes).
+// Resolve one decision-tree result (no writes): pixel valley + Gemini cross-check.
+const AGREE_TOL = 80; // 0-1000 → 8%
 async function decide(buf) {
   const meta = await sharp(buf).metadata();
   const ar = meta.width / meta.height;
   if (ar < MIN_SPREAD_AR) return { colPx: null, pct: null, method: 'portrait', color: '#7a7ae8', uncertain: false, ar, meta };
   const pix = await detectGutterPixel(buf);
-  if (pix.confidence === 'high' && pix.column != null) {
-    return { colPx: pix.column, pct: (pix.column / meta.width) * 100, method: `pixel (${pix.reason})`, color: '#7ae87a', uncertain: false, ar, meta };
-  }
+  const pixPos = (pix.confidence === 'high' && pix.column != null) ? Math.round((pix.column / meta.width) * 1000) : null;
   if (!geminiModel) await initGemini();
-  let gem = null;
-  try { gem = await runGutterDetect(buf); } catch { gem = null; }
-  if (typeof gem === 'number') return { colPx: Math.round((gem / 1000) * meta.width), pct: gem / 10, method: 'gemini', color: '#7a9ae8', uncertain: false, ar, meta };
+  let gemPos = null;
+  try { gemPos = await runGutterDetect(buf); if (typeof gemPos !== 'number') gemPos = null; } catch { gemPos = null; }
+  const toCol = (pos1000) => Math.round((pos1000 / 1000) * meta.width);
+  if (pixPos != null && gemPos != null) {
+    if (Math.abs(pixPos - gemPos) <= AGREE_TOL) {
+      const pos = Math.round((pixPos + gemPos) / 2);
+      return { colPx: toCol(pos), pct: pos / 10, method: `agree px${pixPos}/gem${gemPos}`, color: '#7ae87a', uncertain: false, pos, confirmed: true, ar, meta };
+    }
+    // disagree → uncertain
+    return { colPx: toCol(pixPos), pct: pixPos / 10, method: `DISAGREE px${pixPos}/gem${gemPos}`, color: '#e87a7a', uncertain: true, ar, meta };
+  }
+  if (pixPos != null) return { colPx: toCol(pixPos), pct: pixPos / 10, method: `pixel ${pix.reason}`, color: '#9ae87a', uncertain: false, pos: pixPos, confirmed: true, ar, meta };
+  if (gemPos != null) return { colPx: toCol(gemPos), pct: gemPos / 10, method: `gemini ${gemPos} (unconfirmed)`, color: '#7a9ae8', uncertain: true, ar, meta };
   if (ar >= 1.3) return { colPx: Math.round(meta.width / 2), pct: 50, method: 'center (uncertain)', color: '#e87a7a', uncertain: true, ar, meta };
   return { colPx: null, pct: null, method: 'kept-whole (uncertain)', color: '#e8b07a', uncertain: true, ar, meta };
 }
 
 const HEX = { '#7ae87a': [122, 232, 122], '#7a9ae8': [122, 154, 232], '#e87a7a': [232, 122, 122], '#e8b07a': [232, 176, 122], '#7a7ae8': [122, 122, 232] };
 
-// Gutter-zoom: crop a vertical band around the cut, burn the cut line into the
-// image, return a base64 PNG data-URI. This is the diagnostic view — the
-// line-vs-text relationship is unmistakable, and a data-URI always renders in a
-// headless screenshot (remote loads can flake).
-async function gutterZoom(buf, colPx, color, meta) {
-  const H = 340;
-  const bandHalf = Math.round(meta.width * 0.16);
-  const left = colPx != null ? Math.max(0, colPx - bandHalf) : 0;
-  const w = colPx != null ? Math.min(meta.width - left, bandHalf * 2) : meta.width;
-  const region = await sharp(buf).extract({ left, top: 0, width: w, height: meta.height }).resize({ height: H }).toBuffer();
-  const rMeta = await sharp(region).metadata();
-  if (colPx == null) return `data:image/png;base64,${(await sharp(region).png().toBuffer()).toString('base64')}`;
-  const scale = H / meta.height;
-  const lineX = Math.round((colPx - left) * scale);
+// Honest render: the FULL spread with the cut line at its TRUE horizontal
+// position (not a band re-centered on the cut). This is the only view that
+// shows whether the line lands in the binding or slices a column. Burned into
+// the image (data-URI) so a headless screenshot always renders it.
+async function fullSpreadWithLine(buf, colPx, color, meta) {
+  const W = 520;
+  const scale = W / meta.width;
+  const H = Math.round(meta.height * scale);
+  const base = await sharp(buf).resize(W, H, { fit: 'fill' }).toBuffer();
+  if (colPx == null) return `data:image/png;base64,${(await sharp(base).png().toBuffer()).toString('base64')}`;
+  const lineX = Math.round(colPx * scale);
   const [r, g, b] = HEX[color] || [255, 0, 0];
-  const svg = Buffer.from(`<svg width="${rMeta.width}" height="${H}"><line x1="${lineX}" y1="0" x2="${lineX}" y2="${H}" stroke="rgb(${r},${g},${b})" stroke-width="3"/></svg>`);
-  const out = await sharp(region).composite([{ input: svg, top: 0, left: 0 }]).png().toBuffer();
+  const svg = Buffer.from(`<svg width="${W}" height="${H}"><line x1="${lineX}" y1="0" x2="${lineX}" y2="${H}" stroke="rgb(${r},${g},${b})" stroke-width="2"/></svg>`);
+  const out = await sharp(base).composite([{ input: svg, top: 0, left: 0 }]).png().toBuffer();
   return `data:image/png;base64,${out.toString('base64')}`;
 }
 
@@ -109,37 +116,55 @@ for (const id of IDS) {
   const total = pages.length;
   if (!total) continue;
 
-  // sample SAMPLES pages evenly through the book
+  // Pass 1: decide each sampled page (no rendering yet — need the book median first).
   const idxs = [...new Set(Array.from({ length: Math.min(SAMPLES, total) }, (_, i) => Math.floor(((i + 1) / (Math.min(SAMPLES, total) + 1)) * total)))];
-  let samplesHtml = '';
-  let uncertain = 0, landscape = 0;
+  const samples = [];
+  const confidentPositions = [];
+  let landscape = 0;
   for (const idx of idxs) {
     const p = pages[idx];
     const url = p.archived_photo || p.photo;
     if (!url) continue;
-    let d, zoom;
     try {
       const buf = Buffer.from(await (await fetch(url, { signal: AbortSignal.timeout(20000) })).arrayBuffer());
-      d = await decide(buf);
-      zoom = await gutterZoom(buf, d.colPx, d.color, d.meta);
-    } catch (e) { samplesHtml += `<div class="sample"><div class="err">p${p.page_number} fetch fail</div></div>`; continue; }
-    if (d.method !== 'portrait') landscape++;
-    if (d.uncertain) uncertain++;
-    samplesHtml += `<div class="sample"><div class="imgwrap"><img src="${zoom}" alt="p${p.page_number}"></div><div class="label" style="color:${d.color}">p${p.page_number} · AR ${d.ar.toFixed(2)}<br>${esc(d.method)}</div></div>`;
+      const d = await decide(buf);
+      if (d.method !== 'portrait') landscape++;
+      if (d.confirmed && typeof d.pos === 'number') confidentPositions.push(d.pos);
+      samples.push({ p, buf, d });
+    } catch { samples.push({ p, err: true }); }
   }
-  const uncertainFrac = landscape ? uncertain / landscape : 0;
-  const wouldPark = uncertainFrac > 0.15;
+
+  // Book consensus (approach A): robust median + MAD; snap outliers/uncertain to it.
+  const sorted = [...confidentPositions].sort((a, b) => a - b);
+  const median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
+  const mad = sorted.length ? [...sorted.map(v => Math.abs(v - median))].sort((a, b) => a - b)[Math.floor(sorted.length / 2)] : 0;
+  const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscape * 0.4));
+  const scattered = confidentPositions.length >= 3 && mad > 60;
+  const wouldPark = !enoughSignal || scattered;
   if (wouldPark) parkCount++;
+
+  // Pass 2: render, snapping outlier/uncertain landscape pages to the median.
+  let samplesHtml = '', snapped = 0;
+  for (const s of samples) {
+    if (s.err) { samplesHtml += `<div class="sample"><div class="err">p${s.p.page_number} fetch fail</div></div>`; continue; }
+    let { d } = s; let colPx = d.colPx, color = d.color, method = d.method;
+    const isLandscape = d.method !== 'portrait';
+    if (!wouldPark && isLandscape && (d.uncertain || (typeof d.pos === 'number' && Math.abs(d.pos - median) > 80))) {
+      colPx = Math.round((median / 1000) * d.meta.width); color = '#c79ae8'; method = `book-median(${median})`; snapped++;
+    }
+    const zoom = await fullSpreadWithLine(s.buf, colPx, color, d.meta);
+    samplesHtml += `<div class="sample"><div class="imgwrap"><img src="${zoom}" alt="p${s.p.page_number}"></div><div class="label" style="color:${color}">p${s.p.page_number} · AR ${d.ar.toFixed(2)}<br>${esc(method)}</div></div>`;
+  }
   const url = `https://sourcelibrary.org/book/${book.slug || book.id}`;
   bookHtml += `<div class="book" style="border-color:${wouldPark ? '#e8b07a' : '#7ae87a'}">
     <h2><a href="${url}" target="_blank">${esc(book.title)}</a> ${wouldPark ? '<span class="park">WOULD PARK</span>' : ''}</h2>
-    <div class="meta">${esc(book.image_source?.provider || '?')} · ${total} pages · ${uncertain}/${landscape} sampled-landscape uncertain</div>
+    <div class="meta">${esc(book.image_source?.provider || '?')} · ${total} pages · median ${median}/1000 · MAD ${mad} · ${confidentPositions.length}/${landscape} confident${snapped ? ` · ${snapped} snapped` : ''}${scattered ? ' · SCATTERED' : ''}${!enoughSignal ? ' · LOW-SIGNAL' : ''}</div>
     <div class="samples">${samplesHtml}</div>
   </div>`;
-  console.error(`done ${id}: ${uncertain}/${landscape} uncertain${wouldPark ? ' (PARK)' : ''}`);
+  console.error(`done ${id}: median ${median} MAD ${mad} ${confidentPositions.length}/${landscape} conf${wouldPark ? ' (PARK)' : ''}`);
 }
 
-const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Split Audit — Difficult Subset</title><style>
+const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Split Audit — ${GEMINI_MODEL}</title><style>
 body{font-family:system-ui;background:#1a1a1a;color:#ddd;padding:20px;max-width:1500px;margin:0 auto}
 h1{color:#e8c87a}
 .legend{display:flex;gap:18px;margin:14px 0;font-size:13px;flex-wrap:wrap}
@@ -158,12 +183,13 @@ h1{color:#e8c87a}
 .label{font-size:11px;margin-top:4px;line-height:1.3}
 .err{color:#e87a7a;font-size:12px;height:360px;display:flex;align-items:center;padding:0 20px}
 </style></head><body>
-<h1>Split Audit — Difficult Subset (${IDS.length} books, ${parkCount} would park)</h1>
+<h1>Split Audit — gutter model: ${GEMINI_MODEL} (${IDS.length} books, ${parkCount} would park)</h1>
 <p style="font-size:13px;color:#aaa">Each tile is a <b>zoom on the gutter region</b> with the proposed cut line burned in. Check: does the line sit in the binding, or slice through text? Color = which detector chose the cut.</p>
 <div class="legend">
-<span><span class="dot" style="background:#7ae87a"></span>pixel (free)</span>
-<span><span class="dot" style="background:#7a9ae8"></span>gemini fallback</span>
-<span><span class="dot" style="background:#e87a7a"></span>center — uncertain</span>
+<span><span class="dot" style="background:#7ae87a"></span>pixel + gemini agree</span>
+<span><span class="dot" style="background:#9ae87a"></span>pixel only</span>
+<span><span class="dot" style="background:#7a9ae8"></span>gemini only</span>
+<span><span class="dot" style="background:#e87a7a"></span>disagree / center — uncertain</span>
 <span><span class="dot" style="background:#e8b07a"></span>kept whole — uncertain</span>
 <span><span class="dot" style="background:#7a7ae8"></span>portrait (no cut)</span>
 </div>

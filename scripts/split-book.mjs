@@ -206,16 +206,21 @@ async function runSpreadOCR(imageBuf) {
 // One cheap vision call per page: where is the gutter? No transcription, so
 // output is ~10 tokens instead of ~2K. The split pages then flow through the
 // normal single-page OCR pipeline (batch, 50% off) instead of realtime.
-const GUTTER_PROMPT = `This image is a scan from a book. Decide whether it shows a TWO-PAGE SPREAD (an open book with a left and a right page) or a SINGLE page.
+// NO center hint: measured that "usually 400-600" anchors the model to ~500 and
+// it ignores the real (often offset) gutter. Without the hint, gemini-3-flash-preview
+// localizes the gutter to within ~3/1000 of the pixel detector even on strongly
+// offset RTL manuscripts. flash-lite stays center-biased — must use preview.
+const GUTTER_MODEL = 'gemini-3-flash-preview';
+const GUTTER_PROMPT = `This is a photo of an open book showing a left page and a right page. Find the GUTTER — the vertical line where the two pages meet at the binding (often a shadow, or the innermost margins of the two pages). It may NOT be at the center; look carefully.
 
 Respond with EXACTLY one tag and nothing else:
-- Two-page spread: <split-position>N</split-position> where N (0-1000) is the horizontal position of the gutter (the fold between the pages). The gutter is usually near the center (400-600).
-- Single page: <split-position>null</split-position>`;
+- Two-page spread: <split-position>N</split-position> where N (0-1000) is the gutter's horizontal position. 0 = far left edge, 1000 = far right edge.
+- Single page (not a spread): <split-position>null</split-position>`;
 
 async function initGeminiGutter() {
   const { GoogleGenerativeAI } = await import('@google/generative-ai');
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  geminiModel = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+  geminiModel = genAI.getGenerativeModel({ model: GUTTER_MODEL });
 }
 
 async function runGutterDetect(imageBuf) {
@@ -426,18 +431,23 @@ console.log(`  ${withPageBreak.length} have <page-break/>, ${withSplitPos.length
 let ocrVersion = 'existing';
 if (GUTTER_ONLY) {
   // #2454 decision tree: split images BEFORE any OCR.
-  //   portrait (AR < 1.1)        → keep whole, no detection
-  //   pixel detector confident   → cut there (FREE — no model call)
-  //   pixel low-confidence        → Gemini gutter call (the manuscript/tight tail)
-  //   both unsure + wide (≥1.3)   → center cut, marked uncertain
-  //   both unsure + tight (<1.3)  → KEEP WHOLE, marked uncertain (never blind
-  //                                 center-cut a tight page — that clips text)
-  // If too many pages end up uncertain, the book is parked for review rather
-  // than partially clipped (book-level guard after the loop).
-  console.log('\n--- Step 3: Gutter detection — pixel-primary, Gemini fallback (no OCR) ---');
+  //   portrait (AR < 1.1)               → keep whole
+  //   pixel valley + Gemini AGREE (≤8%) → cut (two independent methods concur — strongest)
+  //   only one of pixel/Gemini confident → cut on it
+  //   both confident but DISAGREE (>8%) → uncertain (don't trust either blindly)
+  //   neither confident + wide          → center, uncertain
+  //   neither confident + tight         → keep whole, uncertain
+  // Gemini = gemini-3-flash-preview with a no-center-hint prompt (it tracks
+  // offset gutters to ~3/1000; flash-lite + the old hint just guessed center).
+  // Pixel is free and runs first; Gemini cross-checks / rescues the tail.
+  // Book-level park: too many uncertain pages, OR confident gutter positions
+  // SCATTERED across pages (a real binding is stable book-wide; scatter ⇒ not a
+  // spread book — map atlas / plate album — must not be cut).
+  console.log('\n--- Step 3: Gutter detection — pixel + Gemini cross-check (no OCR) ---');
   ({ detectGutterPixel } = await import('./lib/gutter-detect.mjs'));
   let geminiReady = false;
-  const stats = { portrait: 0, pixel: 0, gemini: 0, centerUncertain: 0, keptWholeUncertain: 0 };
+  const stats = { portrait: 0, agree: 0, pixelOnly: 0, geminiOnly: 0, disagree: 0, centerUncertain: 0, keptWholeUncertain: 0 };
+  const AGREE_TOL = 80; // 0-1000 → 8% of width
 
   for (let i = 0; i < iiifUrls.length; i += CONCURRENCY) {
     const batch = iiifUrls.slice(i, i + CONCURRENCY);
@@ -454,43 +464,41 @@ if (GUTTER_ONLY) {
         const ar = meta.width / meta.height;
 
         if (ar < MIN_SPREAD_AR) {
-          page._gutter = 'single';        // portrait — keep whole
-          page._splitMethod = 'portrait';
-          stats.portrait++;
+          page._gutter = 'single'; page._splitMethod = 'portrait'; stats.portrait++;
           return;
         }
 
-        // 1. Pixel detector (free)
+        // Pixel (free) + Gemini (preview, good prompt) in parallel-ish.
         const pix = await detectGutterPixel(buf);
-        if (pix.confidence === 'high' && pix.column != null) {
-          page._gutter = Math.round((pix.column / meta.width) * 1000); // 0-1000 scale
-          page._splitMethod = `pixel:${pix.reason}`;
-          stats.pixel++;
-          return;
-        }
-
-        // 2. Gemini fallback (only fires on pixel low-confidence)
+        const pixPos = (pix.confidence === 'high' && pix.column != null) ? Math.round((pix.column / meta.width) * 1000) : null;
         if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
-        let gem = null;
-        try { gem = await runGutterDetect(buf); } catch { gem = null; }
-        if (typeof gem === 'number') {
-          page._gutter = gem;
-          page._splitMethod = 'gemini';
-          stats.gemini++;
-          return;
-        }
+        let gemPos = null;
+        try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch { /* gemini optional */ }
 
-        // 3. Neither detector confident
-        if (ar >= 1.3) {
-          page._gutter = 500;             // clearly wide → almost certainly a spread; center is best guess
-          page._splitMethod = 'center-uncertain';
-          page._uncertain = true;
-          stats.centerUncertain++;
+        if (pixPos != null && gemPos != null) {
+          if (Math.abs(pixPos - gemPos) <= AGREE_TOL) {
+            page._gutter = Math.round((pixPos + gemPos) / 2); // concur → average
+            page._splitMethod = `agree(px${pixPos}/gem${gemPos})`;
+            page._confidentPos = page._gutter; stats.agree++;
+          } else {
+            // Two methods disagree — genuinely ambiguous, don't guess.
+            page._splitMethod = `disagree(px${pixPos}/gem${gemPos})`;
+            page._uncertain = true;
+            if (ar >= 1.3) { page._gutter = pixPos; stats.disagree++; } // wide: trust pixel (measures the image), flag for review
+            else { page._gutter = 'single'; stats.disagree++; }
+          }
+        } else if (pixPos != null) {
+          page._gutter = pixPos; page._splitMethod = `pixel:${pix.reason}`; page._confidentPos = pixPos; stats.pixelOnly++;
+        } else if (gemPos != null) {
+          // Gemini found a gutter but PIXEL abstained — weak. A single map/plate
+          // triggers exactly this (no real binding for pixel to find). Do NOT
+          // count it as a confirmed spread position; it only splits if the book
+          // is independently confirmed a spread (then it snaps to the median).
+          page._gutter = gemPos; page._splitMethod = 'gemini-only(unconfirmed)'; stats.geminiOnly++;
+        } else if (ar >= 1.3) {
+          page._gutter = 500; page._splitMethod = 'center-uncertain'; page._uncertain = true; stats.centerUncertain++;
         } else {
-          page._gutter = 'single';        // tight/borderline → keep whole, do NOT clip
-          page._splitMethod = 'kept-whole-uncertain';
-          page._uncertain = true;
-          stats.keptWholeUncertain++;
+          page._gutter = 'single'; page._splitMethod = 'kept-whole-uncertain'; page._uncertain = true; stats.keptWholeUncertain++;
         }
       } catch (e) {
         console.log(`  FAIL p.${page.page_number}: ${e.message?.slice(0, 50)}`);
@@ -499,24 +507,70 @@ if (GUTTER_ONLY) {
     }));
     process.stderr.write(`  Gutter: ${Math.min(i + CONCURRENCY, iiifUrls.length)}/${iiifUrls.length}\r`);
   }
+  const confidentPositions = [];
+  for (const p of existingPages) if (typeof p._confidentPos === 'number') confidentPositions.push(p._confidentPos);
   console.log();
-  console.log(`  Methods: pixel ${stats.pixel}, gemini ${stats.gemini}, portrait ${stats.portrait}, center-uncertain ${stats.centerUncertain}, kept-whole-uncertain ${stats.keptWholeUncertain}`);
 
-  // Book-level guard: if too much of the book is uncertain, don't split it at
-  // all — park for review. A few uncertain pages in a long book are fine; a
-  // book that's mostly uncertain is a detector mismatch (curved binding,
-  // unusual layout) that needs eyes, not a silent half-clipped result.
-  const uncertainCount = stats.centerUncertain + stats.keptWholeUncertain;
-  const uncertainFrac = uncertainCount / Math.max(1, existingPages.filter(p => !p._error).length);
-  if (uncertainFrac > 0.15 && DRY_RUN) {
-    console.log(`\n  WOULD PARK: ${uncertainCount}/${existingPages.length} pages uncertain (${(uncertainFrac * 100).toFixed(0)}% > 15%) — real run flags needs_attention instead of splitting.`);
+  // ── Book-level consensus (approach A) ──────────────────────────────────────
+  // The binding sits at a STABLE position book-wide, so a single page's bad
+  // detection should be overruled by the book median — not park the whole book
+  // (a 10-page book parked over one diagram page is the failure this fixes).
+  // Robust median + MAD over confident positions; scatter = no stable binding.
+  const sorted = [...confidentPositions].sort((a, b) => a - b);
+  const median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
+  const mad = sorted.length
+    ? [...sorted.map(p => Math.abs(p - median))].sort((a, b) => a - b)[Math.floor(sorted.length / 2)]
+    : 0;
+  const landscapeCount = existingPages.filter(p => !p._error && p._gutter !== 'single' || p._uncertain).length;
+  // Confirmed = pixel found a real gutter (alone or agreeing with Gemini). A
+  // book is a spread book only if pixel confirms a gutter on a good fraction of
+  // its landscape pages — single-map/plate books (pixel abstains, only Gemini
+  // guesses) fall below this and park.
+  const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscapeCount * 0.4));
+  const SCATTER_MAD = 60; // 0-1000 → 6% — robust scatter measure (MAD, not stdev: one outlier won't trip it)
+  const scattered = confidentPositions.length >= 3 && mad > SCATTER_MAD;
+  console.log(`  Methods: agree ${stats.agree}, pixel-only ${stats.pixelOnly}, gemini-only ${stats.geminiOnly}, disagree ${stats.disagree}, portrait ${stats.portrait}, center-unc ${stats.centerUncertain}, kept-whole-unc ${stats.keptWholeUncertain}`);
+  console.log(`  Book consensus: median ${median}/1000, MAD ${mad}/1000, ${confidentPositions.length} confident/${landscapeCount} landscape${scattered ? ' — SCATTERED' : ''}`);
+
+  // Park only when there's no trustworthy consensus: too few confident pages, or
+  // genuinely scattered positions (maps/plates, not a spread book).
+  const parkReason = !enoughSignal
+    ? `only ${confidentPositions.length}/${landscapeCount} pages gave a confident gutter — too little signal to trust a book consensus`
+    : scattered
+      ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — likely not a spread book (maps/plates)`
+      : null;
+
+  // Resolve every landscape page against the consensus: outliers and uncertain
+  // pages snap to the book median; pages near the median keep their own (more
+  // accurate per-page) cut. Only runs when we're going to split (not parking).
+  if (!parkReason) {
+    const OUTLIER_TOL = 80; // 0-1000 → 8% from median = outlier, use median instead
+    let snapped = 0;
+    for (const p of existingPages) {
+      if (p._error || p._gutter === 'single' && !p._uncertain && p._splitMethod === 'portrait') continue;
+      if (typeof p._gutter === 'number' && typeof p._confidentPos === 'number' && Math.abs(p._confidentPos - median) <= OUTLIER_TOL) {
+        continue; // confident & consistent → keep its own cut
+      }
+      // outlier, uncertain, or kept-whole landscape page → apply book median
+      if (p._gutter !== 'single' || p._uncertain) {
+        if (p._splitMethod === 'portrait') continue;
+        p._gutter = median;
+        p._splitMethod = `book-median(${median})`;
+        p._uncertain = false;
+        snapped++;
+      }
+    }
+    if (snapped) console.log(`  Snapped ${snapped} outlier/uncertain pages to book median ${median}`);
   }
-  if (uncertainFrac > 0.15 && !DRY_RUN) {
-    console.error(`\n  PARK: ${uncertainCount}/${existingPages.length} pages uncertain (${(uncertainFrac * 100).toFixed(0)}% > 15%). Not splitting — flagging needs_attention for review.`);
+  if (parkReason && DRY_RUN) {
+    console.log(`\n  WOULD PARK: ${parkReason} — real run flags needs_attention instead of splitting.`);
+  }
+  if (parkReason && !DRY_RUN) {
+    console.error(`\n  PARK: ${parkReason}. Not splitting — flagging needs_attention for review.`);
     await db.collection('books').updateOne({ id: book.id }, {
       $set: {
         'pipeline_auto.status': 'needs_attention',
-        'pipeline_auto.error': `Gutter detection uncertain on ${uncertainCount}/${existingPages.length} pages — manual split review needed (#2454)`,
+        'pipeline_auto.error': `Split review needed (#2454): ${parkReason}`,
         'pipeline_auto.split_review_needed': true,
         'pipeline_auto.last_updated': new Date(),
       },

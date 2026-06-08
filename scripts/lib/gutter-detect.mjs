@@ -47,58 +47,67 @@ export async function detectGutterPixel(spreadBuf) {
     const bandEnd = Math.round(H * 0.75);
     const DARK = 120;
     const inkPerCol = new Float32Array(W);
+    const lumPerCol = new Float32Array(W); // mean luminance — for binding-shadow valley
     for (let x = 0; x < W; x++) {
-      let d = 0;
+      let d = 0, lum = 0;
       for (let y = bandStart; y < bandEnd; y++) {
         const i = (y * W + x) * 3;
         const m = Math.min(raw[i], raw[i + 1], raw[i + 2]);
         if (m < DARK) d++;
+        lum += (raw[i] + raw[i + 1] + raw[i + 2]) / 3;
       }
       inkPerCol[x] = d / (bandEnd - bandStart);
+      lumPerCol[x] = lum / (bandEnd - bandStart);
     }
 
-    // ±5px smoothing so inter-character white slivers don't fragment the gap.
-    const half = 5;
-    const smoothed = new Float32Array(W);
-    for (let x = 0; x < W; x++) {
-      const lo = Math.max(0, x - half);
-      const hi = Math.min(W - 1, x + half);
-      let s = 0;
-      for (let i = lo; i <= hi; i++) s += inkPerCol[i];
-      smoothed[x] = s / (hi - lo + 1);
-    }
-
-    const cs = Math.round(W * 0.30);
-    const ce = Math.round(W * 0.70);
-    const NO_INK = 0.02;
-    let bestStart = -1, bestLen = 0;
-    let curStart = -1, curLen = 0;
-    for (let x = cs; x < ce; x++) {
-      if (smoothed[x] < NO_INK) {
-        if (curStart < 0) curStart = x;
-        curLen = x - curStart + 1;
-        if (curLen > bestLen) { bestLen = curLen; bestStart = curStart; }
-      } else {
-        curStart = -1; curLen = 0;
+    // LIGHT smoothing (±2px) — bridges inter-character white slivers without
+    // smearing a NARROW gutter above the detection floor. ±5px used to erase
+    // 1-2px bright gutters entirely (the bug that sent clean pages to Gemini's
+    // useless center-guess).
+    const smooth = (src) => {
+      const out = new Float32Array(W);
+      const half2 = 2;
+      for (let x = 0; x < W; x++) {
+        const lo = Math.max(0, x - half2), hi = Math.min(W - 1, x + half2);
+        let s = 0; for (let i = lo; i <= hi; i++) s += src[i];
+        out[x] = s / (hi - lo + 1);
       }
-    }
-
-    // No usable ink-free run → LOW confidence. The old code center-cut here;
-    // we hand off to the caller (Gemini fallback) instead.
-    if (bestStart < 0 || bestLen < 10) {
-      return { column: null, confidence: 'low', reason: 'no-ink-free-run', ar };
-    }
-
-    const WIDE = Math.round(W * 0.15);
-    const chosen = bestLen < WIDE
-      ? bestStart + bestLen                  // narrow gap → cut at gap end
-      : bestStart + Math.floor(bestLen / 2); // wide gap → cut at gap center
-    return {
-      column: Math.round(chosen / ratio),
-      confidence: 'high',
-      reason: bestLen < WIDE ? `ink-free-run-${bestLen}px-end` : `ink-free-run-${bestLen}px-center`,
-      ar,
+      return out;
     };
+    const ink = smooth(inkPerCol);
+    const lum = smooth(lumPerCol);
+
+    // Search the CENTRAL third only (35%–65%). These books are 2-columns-per-page,
+    // so the intra-page column gaps sit near 25% and 75% — outside this window —
+    // leaving the binding gutter as the dominant central valley.
+    const cs = Math.round(W * 0.35);
+    const ce = Math.round(W * 0.65);
+    const flank = Math.round(W * 0.08);
+
+    // ── Signal A: bright gutter — the relative ink MINIMUM in the window,
+    // confirmed as a valley flanked by text (higher ink) on both sides.
+    let inkX = cs, inkMin = Infinity;
+    for (let x = cs; x < ce; x++) if (ink[x] < inkMin) { inkMin = ink[x]; inkX = x; }
+    let lInk = 0, rInk = 0;
+    for (let x = Math.max(0, inkX - flank); x < inkX; x++) lInk = Math.max(lInk, ink[x]);
+    for (let x = inkX + 1; x <= Math.min(W - 1, inkX + flank); x++) rInk = Math.max(rInk, ink[x]);
+    if (inkMin < 0.10 && lInk - inkMin >= 0.10 && rInk - inkMin >= 0.10) {
+      return { column: Math.round(inkX / ratio), confidence: 'high', reason: `ink-valley-${Math.round(inkMin * 100)}pct`, ar };
+    }
+
+    // ── Signal B: dark gutter (binding shadow) — the luminance MINIMUM,
+    // confirmed as a valley flanked by brighter page margins on both sides.
+    let lumX = cs, lumMin = Infinity;
+    for (let x = cs; x < ce; x++) if (lum[x] < lumMin) { lumMin = lum[x]; lumX = x; }
+    let lLum = 0, rLum = 0;
+    for (let x = Math.max(0, lumX - flank); x < lumX; x++) lLum = Math.max(lLum, lum[x]);
+    for (let x = lumX + 1; x <= Math.min(W - 1, lumX + flank); x++) rLum = Math.max(rLum, lum[x]);
+    if (lLum - lumMin >= 25 && rLum - lumMin >= 25) {
+      return { column: Math.round(lumX / ratio), confidence: 'high', reason: `dark-valley-${Math.round(lumMin)}lum`, ar };
+    }
+
+    // Neither a bright nor dark central valley → LOW; caller escalates / parks.
+    return { column: null, confidence: 'low', reason: 'no-central-valley', ar };
   } catch (e) {
     return { column: null, confidence: 'low', reason: `pixel-error:${(e.message || '').slice(0, 40)}`, ar };
   }
