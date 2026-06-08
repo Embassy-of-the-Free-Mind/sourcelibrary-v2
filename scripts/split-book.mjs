@@ -71,23 +71,23 @@ async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
   const full = await sharp(buf).extract({ left, top: 0, width, height }).jpeg({ quality: 90, progressive: true }).toBuffer();
   const display = await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
   const thumb = await sharp(full).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
-  const [, dispUrl, thumbUrl] = await Promise.all([
+  const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), full),
     upload(spPath(bookId, pageNum, '.jpg'), display),
     upload(spPath(bookId, pageNum, '-thumb.jpg'), thumb),
   ]);
-  return { dispUrl, thumbUrl };
+  return { fullUrl, dispUrl, thumbUrl };
 }
 
 async function uploadFullImage(buf, bookId, pageNum) {
   const display = await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
   const thumb = await sharp(buf).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
-  const [, dispUrl, thumbUrl] = await Promise.all([
+  const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), buf),
     upload(spPath(bookId, pageNum, '.jpg'), display),
     upload(spPath(bookId, pageNum, '-thumb.jpg'), thumb),
   ]);
-  return { dispUrl, thumbUrl };
+  return { fullUrl, dispUrl, thumbUrl };
 }
 
 // --- Page type extraction ---
@@ -661,18 +661,21 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
         const urls = await uploadFullImage(buf, book.id, pageNum);
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
+        entry._full = urls.fullUrl;
       } else if (entry.side === 'left') {
         const splitFrac = (entry.splitPosition || 500) / 1000;
         const leftEnd = Math.round(Math.min(1, splitFrac + OVERLAP) * w);
         const urls = await cropAndUpload(buf, 0, leftEnd, h, book.id, pageNum);
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
+        entry._full = urls.fullUrl;
       } else if (entry.side === 'right') {
         const splitFrac = (entry.splitPosition || 500) / 1000;
         const rightStart = Math.round(Math.max(0, splitFrac - OVERLAP) * w);
         const urls = await cropAndUpload(buf, rightStart, w - rightStart, h, book.id, pageNum);
         entry._photo = urls.dispUrl;
         entry._thumb = urls.thumbUrl;
+        entry._full = urls.fullUrl;
       }
     }
 
@@ -708,6 +711,10 @@ for (let i = 0; i < newPages.length; i++) {
     page_number: pageNum,
     photo: p._photo,
     thumbnail: p._thumb,
+    archived_photo: p._full || p._photo,   // full-res crop — what archive audits key on (#829)
+    display_photo: p._photo,
+    thumbnail_blob: p._thumb,
+    ...(iiifUrls[p.sourceIdx] ? { spread_source: iiifUrls[p.sourceIdx] } : {}), // lineage to the pre-split spread
     ocr: p.ocr ? {
       data: p.ocr,
       model: ocrModel,
