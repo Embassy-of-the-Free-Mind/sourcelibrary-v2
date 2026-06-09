@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
+import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -14,8 +15,8 @@ const AUTHOR_CANONICAL_REDIRECTS = authorCanonicalRedirects as Record<string, st
 // .claude/docs/tenant-architecture-migration.md), every other route is a
 // global root — tenant context is supplied by the proxy via x-tenant-* headers
 // when a subdomain or this set matches, and the dynamic [tenant] segment
-// rejects everything else.
-const TENANT_ROOT_PATHS = new Set(['bph', 'kloss-collection', 'bhutan']);
+// rejects everything else. Defined in provider-prefix.ts so the provider
+// strip below stays mutually exclusive with tenant routing.
 
 // Domains that enable the Ficino Society social layer
 const SOCIETY_DOMAINS = [
@@ -639,6 +640,23 @@ export async function proxy(request: NextRequest) {
     }
     // Fall through — the resolution block below picks up the subdomain
     // tenant and stamps x-tenant-* headers on the global route.
+  }
+
+  // --- Source-provider URL strip (PR #2025, restored) ---
+  // Contributing libraries (Internet Archive, Gallica, Bodleian, …) credit
+  // books but never own URL space — content is tenant-agnostic (/book/...,
+  // /gallery/...). Old provider-prefixed links are still indexed and cited,
+  // so 308 them to the global equivalent. Static LIBRARY_PARTNERS lookup,
+  // no DB — the earlier Mongo-backed version (kind:'provider' rows in
+  // `tenants`) was removed in 8e348991 because providers were wrongly
+  // resolving as tenants; this one is keyed off library-partners.ts and
+  // excludes real routing tenants, so the two can't collide. On a tenant
+  // subdomain only the pathname changes, so the redirect stays on-host.
+  const providerRedirectPath = getProviderPrefixRedirect(pathname);
+  if (providerRedirectPath) {
+    const url = request.nextUrl.clone();
+    url.pathname = providerRedirectPath;
+    return NextResponse.redirect(url, 308);
   }
 
   // Tenant-prefix canonicalizers (/{tenant}/book → /book, /{tenant}/collections
