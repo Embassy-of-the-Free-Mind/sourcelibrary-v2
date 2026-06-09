@@ -97,9 +97,16 @@ encodes that:
    `/collections/<slug>`. Never `/internet-archive/book/foo`,
    `/gallica/gallery`, or any other `/<provider-slug>/*` prefix for content.
    This was patched in two waves: PR #1918 dropped the tenant prefix from
-   book-page gallery links; PR #2025 added a proxy-level strip for any
-   `kind:'provider'` first segment so every provider-prefixed URL 308s to its
-   global equivalent. Don't reintroduce provider-prefixed content paths.
+   book-page gallery links; PR #2025 added a proxy-level strip so every
+   provider-prefixed URL 308s to its global equivalent. The strip's original
+   Mongo lookup (`kind:'provider'` rows in `tenants`) was removed in commit
+   8e348991 (providers were wrongly resolving as tenants), which silently
+   killed the redirect for ~2 weeks (~770 404s/week in `not_found_reports`).
+   PR #2505 restored it as a static lookup in `src/lib/provider-prefix.ts`,
+   keyed off `LIBRARY_PARTNERS` with routing tenants excluded — a guard test
+   (`tests/unit/provider-prefix-redirect.test.ts`) now pins the proxy wiring.
+   Don't reintroduce provider-prefixed content paths, and don't replace the
+   static lookup with a `tenants`-collection query.
 2. **Each contributing library has its own page on Source Library at
    `/libraries/<slug>`.** The page credits the institution (name, description,
    hero image), shows the books we have from them, and may link out to the
