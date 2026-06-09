@@ -589,6 +589,21 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // --- Bare /book/<id>/page redirect ---
+  // A page link with the page number missing — arrives steadily from AI-chat
+  // citations and hand-truncated URLs (~230 404s/week in not_found_reports,
+  // real browser UAs). No route matches the bare segment. Redirected HERE for
+  // the same reason as the author block above: a redirect() inside the
+  // streamed /book RSC tree commits a 200 shell before the redirect resolves,
+  // so crawlers would index the junk URL. Pathname-only change, so on tenant
+  // subdomains the redirect stays on-host.
+  const barePageMatch = pathname.match(/^\/book\/([^/]+)\/page\/?$/);
+  if (barePageMatch) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/book/${barePageMatch[1]}`;
+    return NextResponse.redirect(url, 308);
+  }
+
   // --- Tenant subdomain rewrite ---
   //
   // Only a handful of tenant-specific routes still live under /embed/<tenant>/:
