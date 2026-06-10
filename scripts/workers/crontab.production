@@ -19,7 +19,7 @@
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 */2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
 30 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-entity-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-entities.mjs" >> /var/log/sourcelibrary/entity-sync.log 2>&1
-30 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-embed-gemini.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=$GEMINI_API_KEY_TIER3 && node scripts/workers/embed-gemini.mjs --incremental" >> /var/log/sourcelibrary/embed-gemini.log 2>&1
+#PAUSED-GEMINI 30 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-embed-gemini.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=\$GEMINI_API_KEY_TIER3 && node scripts/workers/embed-gemini.mjs --incremental" >> /var/log/sourcelibrary/embed-gemini.log 2>&1
 30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/snapshot-stats.mjs" >> /var/log/sourcelibrary/snapshot.log 2>&1
 30 5 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; curl -s -X POST https://sourcelibrary.org/api/admin/cache-probe -H "Authorization: Bearer $CRON_SECRET"" >> /var/log/sourcelibrary/cache-probe.log 2>&1
 45 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-books-catalog-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-books-catalog.mjs" >> /var/log/sourcelibrary/books-catalog-sync.log 2>&1
@@ -43,15 +43,15 @@
 # Weekly: clear image_thumb fields on books whose /pages/-thumb URL 404s (#1945)
 0 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-thumb-sweep.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/fix-broken-image-thumb.mjs --apply" >> /var/log/sourcelibrary/thumb-sweep.log 2>&1
 
-# R2 coverage snapshot (every 6h — updates the doc /admin/r2-coverage reads)
-30 */6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
+# R2 coverage snapshot (daily — was 6h; the HEAD sweep was ~27% of all site traffic, 2026-06-11)
+30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
 
 # Archive auto-unblock (daily — retry books blocked >14d ago with transient failure reasons)
 0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-unblock.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-auto-unblock.mjs" >> /var/log/sourcelibrary/archive-auto-unblock.log 2>&1
 
 # First Translation verification pipeline (Stage 1 catalog search + Stage 2 disposition)
-30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-search.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/search-translation-evidence.mjs --apply --limit 500" >> /var/log/sourcelibrary/ft-search.log 2>&1
-15 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-validate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/validate-translation-evidence.mjs --apply --limit 1000" >> /var/log/sourcelibrary/ft-validate.log 2>&1
+#PAUSED-GEMINI 30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-search.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/search-translation-evidence.mjs --apply --limit 500" >> /var/log/sourcelibrary/ft-search.log 2>&1
+#PAUSED-GEMINI 15 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-validate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/validate-translation-evidence.mjs --apply --limit 1000" >> /var/log/sourcelibrary/ft-validate.log 2>&1
 
 # Supabase pages-content sync (PR #2026 / issue #2020)
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync-pages-content.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-pages-content.mjs" >> /var/log/sourcelibrary/sync-pages-content.log 2>&1
@@ -77,7 +77,7 @@
 
 # Image-side embeddings — artwork_embeddings, gallery_text_embeddings, clip_embeddings (issue #2021)
 # These tables had no recurring writer; froze for 35+ days. Uses TIER3 paid key for data-rights.
-0 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-image-embeddings.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=$GEMINI_API_KEY_TIER3; node scripts/workers/image-embeddings-cron.mjs" >> /var/log/sourcelibrary/image-embeddings.log 2>&1
+0 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-image-embeddings.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=\$GEMINI_API_KEY_TIER3; node scripts/workers/image-embeddings-cron.mjs" >> /var/log/sourcelibrary/image-embeddings.log 2>&1
 45 3,15 * * * cd /root/sourcelibrary && flock -n /tmp/sl-gallery-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/gallery-coverage-snapshot.mjs" >> /var/log/sourcelibrary/gallery-coverage.log 2>&1
 
 45 */6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archiving-watchdog.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/archiving-watchdog.mjs --apply --stale-hours=12 --escalate-days=7" >> /var/log/sourcelibrary/archiving-watchdog.log 2>&1
@@ -92,3 +92,7 @@
 
 # Crontab drift detector — logs if live crontab diverges from committed snapshot (#2332)
 0 4 * * * /root/sourcelibrary/scripts/workers/sync-crontab.sh >> /var/log/sourcelibrary/crontab-sync.log 2>&1
+45 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-mapcache.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-map-cache.mjs" >> /var/log/sourcelibrary/build-map-cache.log 2>&1
+# Materialize gallery crops for batch-path detections (batch-collector writes bbox-only rows; #2430)
+30 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-gen-thumbnails.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/generate-thumbnails.mjs --limit=8000 --concurrency=6 --min-quality=0.5 --include-sensitive" >> /var/log/sourcelibrary/generate-thumbnails.log 2>&1
+50 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-classify-text-role.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/classify-text-role.mjs --only-missing" >> /var/log/sourcelibrary/classify-text-role.log 2>&1
