@@ -17,6 +17,7 @@ import sharp from 'sharp';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, '..', '..', '.env.production.local') });
@@ -64,8 +65,11 @@ async function processOne(db, gi, pageMap) {
   const page = pageMap.get(gi.page_id);
   if (!page) return 'skip-no-page';
 
-  // Use archived_photo (R2) or cropped_photo (R2 split pages) — both are already on our CDN
-  const sourceUrl = page.cropped_photo || page.archived_photo;
+  // MUST be the same image the bbox was detected on (image-extract-worker uses
+  // getPageSource): cropped_photo first, then the split_from_spread half in
+  // `photo`, then archived_photo. Cropping the spread with a half-page bbox
+  // produces gutter-spanning junk (see PR #2516).
+  const sourceUrl = getPageSource(page);
   if (!sourceUrl) return 'skip-no-source';
   if (!sourceUrl.includes('images.sourcelibrary.org')) return 'skip-not-r2';
 
@@ -159,7 +163,7 @@ async function main() {
         { cropped_photo: { $regex: '^https://images\\.sourcelibrary\\.org/' } },
       ],
     })
-    .project({ id: 1, archived_photo: 1, cropped_photo: 1 })
+    .project({ id: 1, archived_photo: 1, cropped_photo: 1, photo: 1, photo_original: 1, enhanced_photo: 1, split_from_spread: 1 })
     .limit(BATCH_SIZE * 2)  // Overfetch since not all will need hires
     .toArray();
 
@@ -188,7 +192,7 @@ async function main() {
   if (DRY_RUN) {
     const withSource = batch.filter(gi => {
       const p = pageMap.get(gi.page_id);
-      return p && (p.cropped_photo || p.archived_photo)?.includes('images.sourcelibrary.org');
+      return p && getPageSource(p)?.includes('images.sourcelibrary.org');
     });
     console.log(`Would process ${withSource.length}/${batch.length} (have R2 source)`);
     await client.close();
