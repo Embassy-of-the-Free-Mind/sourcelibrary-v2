@@ -190,6 +190,24 @@ const nextConfig: NextConfig = {
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
+      // Static marketing/info pages. Without an edge TTL these render on every
+      // request — a June 2026 scraper flood sent ~1.3M req/day at exactly these
+      // pages and all of it reached Vercel.
+      {
+        source: '/(privacy|terms|dmca|support|sponsors|developers|contribute|beta)',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/about/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/blog/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
       // Prevent Cloudflare from caching admin/auth routes
       {
         source: '/admin/:path*',
