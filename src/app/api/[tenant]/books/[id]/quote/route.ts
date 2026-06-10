@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
+import { getRequestBaseUrl } from '@/lib/shortlinks';
+import { Citation, generateCitations } from '@/lib/citations';
 import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
@@ -9,18 +10,6 @@ import { resolveTenantId } from '@/lib/tenant-context';
 
 interface RouteContext {
   params: Promise<{ tenant: string; id: string }>;
-}
-
-interface Citation {
-  inline: string;           // (Drebbel 1628, p. 15)
-  footnote: string;         // Full footnote citation
-  bibliography: string;     // Bibliography entry
-  bibtex: string;           // BibTeX format
-  chicago: string;          // Chicago style
-  mla: string;              // MLA style
-  url: string;              // Direct link to page in Source Library
-  short_url: string;        // Shortlink for sharing (e.g., Twitter)
-  doi_url?: string;         // Clickable DOI URL
 }
 
 interface QuoteResponse {
@@ -45,89 +34,6 @@ interface QuoteResponse {
   context?: {
     previous_page?: string;
     next_page?: string;
-  };
-}
-
-function formatAccessedDate(): string {
-  const d = new Date();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
-function generateCitations(
-  book: Book,
-  pageNumber: number,
-  bookId: string,
-  pageId: string,
-  baseUrl: string,
-  edition?: TranslationEdition
-): Citation {
-  const year = book.published || 'n.d.';
-  const author = book.author || 'Unknown';
-  const title = book.display_title || book.title;
-  const doi = edition?.doi || book.doi;
-  const doiUrl = doi ? `https://doi.org/${doi}` : undefined;
-  const accessed = formatAccessedDate();
-  const translationYear = edition?.published_at
-    ? new Date(edition.published_at).getFullYear()
-    : new Date().getFullYear();
-
-  // Clean author name (remove extra spaces, handle "Lastname, Firstname")
-  const authorParts = author.split(',').map(s => s.trim());
-  const authorLastFirst = authorParts.length === 2
-    ? `${authorParts[0]}, ${authorParts[1]}`
-    : author;
-  const authorFirstLast = authorParts.length === 2
-    ? `${authorParts[1]} ${authorParts[0]}`
-    : author;
-
-  // Inline citation
-  const inline = `(${authorParts[0]} ${year}, p. ${pageNumber})`;
-
-  // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
-
-  // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
-
-  // BibTeX
-  const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${year}`;
-  const bibtex = `@book{${bibtexKey},
-  author = {${authorLastFirst}},
-  title = {${title}},
-  year = {${year}},
-  translator = {Source Library},
-  note = {Translation published ${translationYear}}${doi ? `,
-  doi = {${doi}},
-  url = {${doiUrl}}` : ''}
-}`;
-
-  // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
-
-  // MLA
-  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
-
-  // Direct URL to page in Source Library (pinned to edition version).
-  // baseUrl is the request host so citations rendered on tenant subdomains
-  // (e.g. bph.sourcelibrary.org) link back to the same subdomain.
-  const editionVersion = edition?.version;
-  const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const url = `${baseUrl}/book/${bookId}/page/${pageId}${vParam}`;
-
-  // Short URL for sharing
-  const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl);
-
-  return {
-    inline,
-    footnote,
-    bibliography,
-    bibtex,
-    chicago,
-    mla,
-    url,
-    short_url,
-    doi_url: doiUrl,
   };
 }
 

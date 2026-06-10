@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Quote, Copy, Check } from 'lucide-react';
+import { formatImprint } from '@/lib/citations';
 
 function getRuntimeOrigin(): string {
   if (typeof window !== 'undefined' && window.location?.origin) {
@@ -84,7 +85,7 @@ function formatAccessedDate(): string {
 }
 
 function generateApa(props: CiteButtonProps, origin: string): string {
-  const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion } = props;
+  const { author, title, displayTitle, year, publisher, placePublished, doi, pageNumber, editionVersion } = props;
   const url = buildCitableUrl(props, origin);
   const displayName = displayTitle || title;
   const yearStr = year || 'n.d.';
@@ -92,15 +93,18 @@ function generateApa(props: CiteButtonProps, origin: string): string {
   const version = editionVersion ? `, v${editionVersion}` : '';
   const page = pageNumber ? `, p. ${pageNumber}` : '';
   const accessed = formatAccessedDate();
+  const imprint = formatImprint(placePublished, publisher);
 
   if (doi) {
-    return `${authorStr}. ${displayName}, trans. Source Library (${yearStr})${version}${page}. https://doi.org/${doi}`;
+    return imprint
+      ? `${authorStr}. ${displayName} (${imprint}, ${yearStr}), trans. Source Library${version}${page}. https://doi.org/${doi}`
+      : `${authorStr}. ${displayName}, trans. Source Library (${yearStr})${version}${page}. https://doi.org/${doi}`;
   }
-  return `${authorStr}. (${yearStr}). ${displayName}. Source Library${page}. Retrieved ${accessed}, from ${url}`;
+  return `${authorStr}. (${yearStr}). ${displayName}.${imprint ? ` ${imprint}.` : ''} Source Library${page}. Retrieved ${accessed}, from ${url}`;
 }
 
 function generateBibtex(props: CiteButtonProps, origin: string): string {
-  const { author, title, year, doi, language, pageNumber, editionVersion } = props;
+  const { author, title, year, publisher, placePublished, doi, language, pageNumber, editionVersion } = props;
   const authorStr = author || 'Anonymous';
 
   const authorKey = authorStr.split(',')[0].split(' ').pop()?.toLowerCase().replace(/[^a-z]/g, '') || 'unknown';
@@ -115,7 +119,8 @@ function generateBibtex(props: CiteButtonProps, origin: string): string {
     `  translator = {{Source Library}},`,
   ];
   if (year) lines.push(`  year = {${year}},`);
-  lines.push(`  publisher = {Source Library},`);
+  lines.push(`  publisher = {${publisher || 'Source Library'}},`);
+  if (placePublished) lines.push(`  address = {${placePublished}},`);
   if (editionVersion) lines.push(`  edition = {${editionVersion}},`);
   if (language) lines.push(`  language = {${language}},`);
   if (doi) lines.push(`  doi = {${doi}},`);
