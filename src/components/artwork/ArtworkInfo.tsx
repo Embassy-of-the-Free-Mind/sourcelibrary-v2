@@ -57,12 +57,14 @@ interface ArtworkInfoProps {
   collections: Array<{ slug: string; name: string; subtitle?: string; color?: string }>;
   prevWork?: ArtworkNavItem | null;
   nextWork?: ArtworkNavItem | null;
+  /** Per-collection prev/next pairs — ArtworkHero picks the one matching ?from=<collection>. */
+  navByCollection?: Record<string, { prev: ArtworkNavItem | null; next: ArtworkNavItem | null }>;
   relatedBooks?: RelatedBookPreview[];
   /** When true, hide cross-tenant widgets (AuthorCrossReference renders unfiltered global data). */
   isEmbedded?: boolean;
 }
 
-export default function ArtworkInfo({ book, collections, prevWork, nextWork, relatedBooks = [], isEmbedded = false }: ArtworkInfoProps) {
+export default function ArtworkInfo({ book, collections, prevWork, nextWork, navByCollection, relatedBooks = [], isEmbedded = false }: ArtworkInfoProps) {
   const displayImage = book.thumbnail || (book as any).thumbnail_blob || '';
   const thumbImage = (book as any).thumbnail_blob || '';
   const commonsUrl = (book as any).commons_url || '';
@@ -113,6 +115,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
           isLandscape={isLandscape}
           prevWork={prevWork}
           nextWork={nextWork}
+          navByCollection={navByCollection}
           institution={holdingMuseum}
           deepZoom={(book as any).deepzoom || null}
         />

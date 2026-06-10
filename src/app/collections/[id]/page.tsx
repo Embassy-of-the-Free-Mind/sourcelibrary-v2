@@ -16,7 +16,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl, tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
-import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
@@ -344,10 +344,24 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
-  // Use cached book_count — syncCollectionCounts in scripts/workers/sync-worker.mjs
-  // (Hetzner, every 2h) updates this to reflect only translated books
-  // (pages_translated > 0). The old Vercel sync-page-counts cron is archived.
-  const total = collection.book_count || 0;
+  // Art collections share one canonical filter with the manifest API
+  // (/api/collections/[id]?mode=manifest) — keep them in sync or the
+  // server-rendered grid and the expanded grid show different works.
+  const artFilter = {
+    collections: id,
+    resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
+    visible: true,
+  };
+
+  // book_count is cached by syncCollectionCounts in scripts/workers/sync-worker.mjs
+  // (Hetzner, every 2h) and reflects only translated books (pages_translated > 0) —
+  // meaningless for visual_art collections, whose items are artworks. Count those live.
+  const total = isArtCollection
+    ? await withTimeout(
+      db.collection('books').countDocuments(artFilter, { maxTimeMS: 8000 }),
+      8000, collection.artwork_count || 0,
+    )
+    : collection.book_count || 0;
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;
@@ -360,7 +374,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     ? withTimeout(
       db.collection('books')
         .find(
-          { collections: id, resource_type: { $exists: true } },
+          { collections: id, resource_type: { $exists: true }, visible: true },
           {
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
@@ -381,18 +395,13 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   // Books query: Supabase primary (fast), MongoDB fallback (has collection_scores
   // but Atlas multiplanner timeouts cause 10-15s delays or 500s).
   async function fetchBooksWithFallback() {
-    // Art collections: use MongoDB directly to sort by image resolution.
-    // Exclude photographs, modern reproductions, and museum object photos.
+    // Art collections: use MongoDB directly, curated rank first then image
+    // resolution — same filter and sort as the manifest API.
     if (isArtCollection) {
-      const EXCLUDED_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
-      const artFilter = {
-        collections: id,
-        resource_type: { $exists: true, $nin: EXCLUDED_TYPES },
-      };
       const docs = await withTimeout(
         db.collection('books')
           .find(artFilter, { projection, maxTimeMS: 8000 })
-          .sort({ commons_width: -1 })
+          .sort({ [`art_collection_rank.${id}`]: -1, commons_width: -1 })
           .limit(COMPACT_LIMIT)
           .toArray(),
         15000, [],
@@ -1097,7 +1106,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 return (
                   <Link
                     key={art.id}
-                    href={`/artwork/${art.slug || art.id}`}
+                    href={`/artwork/${art.slug || art.id}?from=${id}`}
                     className="group block"
                   >
                     <div className="rounded-lg border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">

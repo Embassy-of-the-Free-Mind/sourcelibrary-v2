@@ -382,7 +382,7 @@ export default function CollectionAllBooks({
               return (
                 <Link
                   key={book.id}
-                  href={`/artwork/${book.slug || book.id}`}
+                  href={`/artwork/${book.slug || book.id}?from=${collectionId}`}
                   className="group block relative"
                 >
                   <div className={`relative ${isPortrait ? 'aspect-[3/4]' : 'aspect-[4/3]'} bg-stone-900`}>
