@@ -164,6 +164,8 @@ Image extraction emits two separate quality signals in the **same Gemini call**.
 
 A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine or microfilmed; the same diagram on microfilm has `scan_quality.scan_class: bitonal_microfilm` regardless of how gallery-worthy it is. See `/blog/what-makes-a-good-scan` for the user-facing version.
 
+**Bbox coordinate-space invariant (PRs #2516/#2517):** `detected_images[].bbox` / `gallery_images.bbox` are normalized to the image returned by `getPageSource()` (`scripts/lib/page-image-url.mjs`; TS twin `getPageImageUrl()` in `src/lib/utils.ts`) — on split pages that's the half, NOT `archived_photo` (the full spread). Every crop writer (extracted/thumbnail/hires generators, current: `generate-thumbnails.mjs`, `backfill-hires-gallery.mjs`, `gallery-image-gen.ts` callers) must resolve its source with that same function, never an ad-hoc `archived_photo || cropped_photo` priority. Symptom of getting it wrong: gutter-spanning junk crops in the gallery, and the `/gallery/image/[id]` magnifier showing different content than the displayed image (the lens crops on-the-fly from the correct source — check the data before debugging lens math). Repair sweep: `scripts/maintenance/regen-split-gallery-images.mjs` (`--dry-run` / `--clear` / `--regenerate`).
+
 ## Quote & snippet integrity — CRITICAL
 Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
 
