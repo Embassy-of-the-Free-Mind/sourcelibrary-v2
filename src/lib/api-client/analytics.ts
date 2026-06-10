@@ -52,9 +52,9 @@ export const analytics = {
   /**
    * Get traffic data (pageviews, referrers, countries)
    */
-  traffic: async (): Promise<TrafficData> => {
-    const tenant = getTenantSlug();
-    return await apiClient.get(`/api/${tenant}/analytics`);
+  traffic: async (): Promise<TrafficData> => {    
+    const url = `/api/analytics`;
+    return await apiClient.get(url);
   },
 
   /**
