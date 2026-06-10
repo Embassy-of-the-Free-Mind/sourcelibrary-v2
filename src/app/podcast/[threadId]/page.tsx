@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import TranscriptToggle from '../TranscriptToggle';
+import EpisodePlayer from '../EpisodePlayer';
 
 export const revalidate = 3600;
 
@@ -43,6 +44,7 @@ interface EpisodeData {
   title: string;
   topic: string;
   audioUrl: string;
+  format: string;
   formatLabel: string;
   findingCount: number;
   generatedAt: string;
@@ -209,6 +211,7 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
       title: thread.title || podcast.topic,
       topic: podcast.topic,
       audioUrl: podcast.audioUrl,
+      format,
       formatLabel: FORMAT_LABELS[format] || 'Deep Dive',
       findingCount: podcast.findingCount || 0,
       generatedAt: podcast.generatedAt,
@@ -301,11 +304,10 @@ export default async function EpisodePage({ params }: Props) {
         </div>
 
         {/* Audio player */}
-        <audio
-          controls
-          src={episode.audioUrl}
-          className="w-full mb-6"
-          preload="metadata"
+        <EpisodePlayer
+          threadId={episode.threadId}
+          format={episode.format}
+          audioUrl={episode.audioUrl}
         />
 
         {/* Transcript */}
