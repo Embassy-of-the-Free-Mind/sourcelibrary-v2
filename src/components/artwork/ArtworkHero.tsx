@@ -2,6 +2,7 @@
 
 import { useState, useEffect, lazy, Suspense } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import { ZoomIn, Maximize, Minimize, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import type { DeepZoomManifest } from '@/lib/types/book';
@@ -31,41 +32,17 @@ interface ArtworkHeroProps {
 }
 
 export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork, navByCollection, institution, deepZoom }: ArtworkHeroProps) {
+  const router = useRouter();
   const [fitWidth, setFitWidth] = useState(false);
   const [showChrome, setShowChrome] = useState(true);
   const [zoomOpen, setZoomOpen] = useState(false);
   const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
-  const hasHiRes = !!hiResUrl && hiResUrl !== imageUrl;
-  const [medReady, setMedReady] = useState(!hasThumb);
-  const [hiResReady, setHiResReady] = useState(false);
 
   // Auto-hide chrome after 3s
   useEffect(() => {
     const timer = setTimeout(() => setShowChrome(false), 3000);
     return () => clearTimeout(timer);
   }, []);
-
-  // Background-load medium blob
-  useEffect(() => {
-    if (!hasThumb) return;
-    const img = new window.Image();
-    img.onload = () => setMedReady(true);
-    img.src = imageUrl;
-  }, [hasThumb, imageUrl]);
-
-  // Background-load hi-res after medium is ready
-  useEffect(() => {
-    if (!medReady || !hasHiRes) return;
-    const img = new window.Image();
-    img.onload = () => setHiResReady(true);
-    img.src = hiResUrl!;
-  }, [medReady, hasHiRes, hiResUrl]);
-
-  const displaySrc = hiResReady && hiResUrl ? hiResUrl
-    : medReady ? imageUrl
-    : thumbUrl || imageUrl;
-
-  const magnifierSrc = hiResReady && hiResUrl ? hiResUrl : imageUrl;
 
   // Collection context: when the visitor arrived from a collection page
   // (?from=<slug>), walk that collection's prev/next instead of the default
@@ -82,19 +59,19 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
   const navHref = (item: ArtworkNavItem) =>
     `/artwork/${item.slug}${fromCollection ? `?from=${encodeURIComponent(fromCollection)}` : ''}`;
 
-  // Keyboard navigation
+  // Keyboard navigation — client-side, same as the chevron Links
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft' && activeNav.prev) {
-        window.location.href = navHref(activeNav.prev);
+        router.push(navHref(activeNav.prev));
       } else if (e.key === 'ArrowRight' && activeNav.next) {
-        window.location.href = navHref(activeNav.next);
+        router.push(navHref(activeNav.next));
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNav.prev, activeNav.next, fromCollection]);
+  }, [activeNav.prev, activeNav.next, fromCollection, router]);
 
   const captionText = [institution, license].filter(Boolean).join(' · ');
 
@@ -104,15 +81,21 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
       onMouseEnter={() => setShowChrome(true)}
       onMouseLeave={() => setShowChrome(false)}
     >
-      {/* Image container — viewport-height by default, natural proportions */}
+      {/* Image container — viewport-height by default, natural proportions.
+          src stays stable across the thumb→medium upgrade: ImageWithMagnifier
+          shows `thumbnail` immediately and decode-then-swaps to `src` without
+          a flash. Changing `src` mid-view resets its loaded state (black
+          "Loading..." blink) — that was the flicker on prev/next paging.
+          The fixed height keeps the upscaled thumb the same size as the
+          medium image, so the swap doesn't jump the layout either. */}
       <div className="flex items-center justify-center" style={{ minHeight: fitWidth ? undefined : 'calc(100vh - 64px)' }}>
           <ImageWithMagnifier
-            src={displaySrc}
-            thumbnail={displaySrc}
-            highResSrc={magnifierSrc}
+            src={imageUrl}
+            thumbnail={hasThumb ? thumbUrl : imageUrl}
+            highResSrc={hiResUrl || undefined}
             alt={title}
             className={`${fitWidth ? 'w-full' : ''} mx-auto`}
-            imgClassName={fitWidth ? 'w-full' : 'max-h-[calc(100vh-64px)]'}
+            imgClassName={fitWidth ? 'w-full' : 'h-[calc(100vh-64px)] object-contain'}
             magnifierSize={240}
             zoomLevel={3}
             darkMode

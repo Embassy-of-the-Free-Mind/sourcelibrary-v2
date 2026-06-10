@@ -131,12 +131,14 @@ export default function ImageWithMagnifier({
 
     if (!naturalWidth || !naturalHeight) return { width: rect.width, height: rect.height };
 
-    if (scrollable || imgClassName) {
-      // No object-contain — element box = content area
+    // Without object-contain the element box IS the content area; with it,
+    // the content may be letterboxed inside the box (custom imgClassName
+    // included — callers like ArtworkHero pass object-contain explicitly).
+    const usesObjectContain = imgClassName ? imgClassName.includes('object-contain') : !scrollable;
+    if (!usesObjectContain) {
       return { width: rect.width, height: rect.height };
     }
 
-    // Non-scrollable with object-contain: content may be smaller than element box
     const containerAspect = rect.width / rect.height;
     const imageAspect = naturalWidth / naturalHeight;
 
@@ -145,7 +147,7 @@ export default function ImageWithMagnifier({
     } else {
       return { width: rect.height * imageAspect, height: rect.height };
     }
-  }, [scrollable]);
+  }, [scrollable, imgClassName]);
 
   useEffect(() => {
     const updateDimensions = () => {
