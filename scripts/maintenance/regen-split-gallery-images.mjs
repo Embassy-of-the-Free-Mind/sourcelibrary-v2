@@ -4,9 +4,14 @@
  *
  * Problem: Gallery backfill ran before page splitting, so bboxes (computed against
  * cropped_photo) were applied to archived_photo (full spread), producing wrong crops.
+ * The same mismatch hit generate-thumbnails.mjs, which preferred archived_photo over
+ * cropped_photo until 2026-06 — wrong crops on ALL split pages it touched, including
+ * old-era `crop`-split pages that have no split_from marker.
  *
  * Fix: Clear extracted_url/thumbnail_url on split pages' gallery_images (and their
  * detected_images subdocs), then re-run the backfill which will correctly use cropped_photo.
+ * Split pages are selected by split_from OR split_from_spread OR the old-era signature
+ * (cropped_photo + archived_photo both materialized).
  *
  * Usage:
  *   node scripts/maintenance/regen-split-gallery-images.mjs --dry-run
@@ -47,7 +52,19 @@ async function collectSplitPageIds(db) {
   console.log('Streaming split page IDs...');
   const ids = [];
   const cursor = db.collection('pages')
-    .find({ split_from: { $exists: true } })
+    .find({
+      $or: [
+        { split_from: { $exists: true } },
+        { split_from_spread: { $exists: true } },
+        // Old-era splits (crop xStart/xEnd) carry no split_from marker — the
+        // cropped half is materialized as cropped_photo while archived_photo
+        // still holds the full spread the bad backfill cropped from.
+        { $and: [
+          { cropped_photo: { $regex: '^https' } },
+          { archived_photo: { $regex: '^https' } },
+        ] },
+      ],
+    })
     .project({ id: 1, _id: 0 })
     .batchSize(2000);
 
