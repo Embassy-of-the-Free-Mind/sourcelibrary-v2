@@ -67,7 +67,7 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage';
   text?: string;
   name?: string;
   query?: string;
@@ -76,6 +76,9 @@ export interface LibrarianStep {
   options?: string[];
   descriptions?: (string | undefined)[];
   sources?: SourceCard[];
+  // Token accounting for the whole turn (all agent rounds summed). Emitted
+  // last and persisted on the AI message; never rendered to the user.
+  usage?: TurnUsage;
   notebook?: {
     findingCount: number;
     topic?: string;
@@ -91,6 +94,15 @@ export interface LibrarianStep {
       pageNumber: number;
     };
   };
+}
+
+export interface TurnUsage {
+  model: string;
+  rounds: number;
+  promptTokens: number;
+  outputTokens: number;
+  thinkingTokens: number;
+  cachedTokens: number;
 }
 
 interface ConversationMessage {
@@ -781,6 +793,7 @@ export async function* streamAgenticResponse(
   // page citations in the final answer — see verifyCitations.
   const retrievedPageKeys = new Set<string>();
   let choicesPresented = false;
+  const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
 
   function collectSources(sources?: SourceCard[]) {
     if (!sources) return;
@@ -807,8 +820,13 @@ export async function* streamAgenticResponse(
     const allParts: Array<Record<string, unknown>> = [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const functionCalls: Array<any> = [];
+    // usageMetadata is cumulative within one generateContentStream call —
+    // keep the last chunk's value, then sum across rounds.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let roundUsage: any = null;
 
     for await (const chunk of stream) {
+      if (chunk.usageMetadata) roundUsage = chunk.usageMetadata;
       const candidate = chunk.candidates?.[0];
       if (!candidate?.content?.parts) continue;
       for (const part of candidate.content.parts) {
@@ -821,6 +839,14 @@ export async function* streamAgenticResponse(
           yield { type: 'text', text: p.text };
         }
       }
+    }
+
+    usage.rounds++;
+    if (roundUsage) {
+      usage.promptTokens += roundUsage.promptTokenCount ?? 0;
+      usage.outputTokens += roundUsage.candidatesTokenCount ?? 0;
+      usage.thinkingTokens += roundUsage.thoughtsTokenCount ?? 0;
+      usage.cachedTokens += roundUsage.cachedContentTokenCount ?? 0;
     }
 
     if (allParts.length === 0) break;
@@ -914,6 +940,8 @@ export async function* streamAgenticResponse(
       text: `\n\n---\n*A note on sourcing: this answer contains ${clauses.join('; and ')}.*`,
     };
   }
+
+  yield { type: 'usage', usage };
 }
 
 /**

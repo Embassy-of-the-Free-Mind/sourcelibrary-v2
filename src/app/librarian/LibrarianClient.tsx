@@ -434,7 +434,14 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
               switch (event.type) {
                 case 'threadId':
-                  if (!threadId) setThreadId(event.threadId);
+                  if (!threadId) {
+                    setThreadId(event.threadId);
+                    // Keep the conversation in the URL so browser Back (e.g.
+                    // after following a source link) restores it instead of
+                    // landing on an empty chat. replaceState avoids a Next.js
+                    // navigation; the restore effect reads location directly.
+                    window.history.replaceState(null, '', `${window.location.pathname}?thread=${event.threadId}`);
+                  }
                   break;
 
                 case 'thinking':
@@ -554,6 +561,34 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     }
   }, [sending, messages.length]);
 
+  // Restore the conversation from ?thread=<id> on mount. The chat otherwise
+  // lives only in component state, so a reader who follows a source link and
+  // presses Back lands on an empty chat and has to re-ask from scratch (the
+  // top complaint in real anonymous sessions — same question re-asked in
+  // fresh threads minutes apart).
+  const threadRestoreAttempted = useRef(false);
+  useEffect(() => {
+    if (threadRestoreAttempted.current) return;
+    threadRestoreAttempted.current = true;
+    const restoreId = new URLSearchParams(window.location.search).get('thread');
+    if (!restoreId) return;
+    fetch(`/api/embassy/threads/${restoreId}`)
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        if (!data?.messages?.length) return;
+        const restored: Message[] = data.messages.map((m: { authorType: string; content: string; sources?: SourceCard[] }) =>
+          m.authorType === 'human'
+            ? { role: 'user' as const, content: m.content }
+            : { role: 'assistant' as const, content: m.content, sources: m.sources || [], steps: [] },
+        );
+        // Don't clobber a conversation the user already started while the
+        // fetch was in flight.
+        setMessages(prev => (prev.length > 0 ? prev : restored));
+        setThreadId(prev => prev ?? restoreId);
+      })
+      .catch(() => { });
+  }, []);
+
   const pendingChoiceRef = useRef<string | null>(null);
 
   const handleChoiceClick = (choice: string) => {
@@ -583,6 +618,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     setNotebookFindings([]);
     setNotebookTopic(undefined);
     setNotebookOpen(false);
+    window.history.replaceState(null, '', window.location.pathname);
     inputRef.current?.focus();
   };
 
