@@ -34,6 +34,8 @@ interface CollectionListViewProps {
   onSort: (sort: string) => void;
   loading?: boolean;
   collectionType?: string;
+  /** Collection slug carried on artwork links (?from=) so prev/next walks this collection. */
+  fromCollection?: string;
 }
 
 function SortIcon({ column, currentSort }: { column: string; currentSort: string }) {
@@ -61,6 +63,7 @@ export default function CollectionListView({
   onSort,
   loading,
   collectionType,
+  fromCollection,
 }: CollectionListViewProps) {
   const handleColumnSort = (column: string) => {
     if (column === 'year') {
@@ -114,7 +117,7 @@ export default function CollectionListView({
           {books.map((book) => {
             const pct = translationPercent(book);
             const href = book.resource_type
-              ? `/artwork/${book.slug || book.id}`
+              ? `/artwork/${book.slug || book.id}${fromCollection ? `?from=${fromCollection}` : ''}`
               : `/book/${book.slug || book.id}`;
             const byline = getEffectiveByline(book);
             const bylineNode = byline.role === 'editor'

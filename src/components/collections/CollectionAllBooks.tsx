@@ -361,6 +361,7 @@ export default function CollectionAllBooks({
           onSort={handleSort}
           loading={loading}
           collectionType={collectionType}
+          fromCollection={collectionId}
         />
       ) : isArt ? (
         /* Art gallery grid — CSS grid with fixed row height for row-first loading.
