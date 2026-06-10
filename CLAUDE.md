@@ -121,10 +121,12 @@ encodes that:
 4. **The `tenants` Mongo collection is for subdomain partners, not for
    contributing libraries.** Subdomain tenants (`bph`, `kloss-collection`,
    `bhutan`) have their own scoped UI under a partner subdomain. The 29
-   provider rows that also live there are legacy from when routing tried to
-   double as an attribution registry — they're no longer used for routing
-   after PR #2025 and are candidates for deletion. New contributing libraries
-   go in `LIBRARY_PARTNERS`, not in the `tenants` collection.
+   legacy `kind:'provider'` rows (from when routing doubled as an attribution
+   registry) were **deleted on 2026-06-10** — backup at
+   `scripts/output/tenants-provider-rows-backup-2026-06-10.json` in Derek's
+   main checkout. Don't recreate them (`create-all-provider-tenants.mjs` is
+   the legacy writer — don't run it). New contributing libraries go in
+   `LIBRARY_PARTNERS`, not in the `tenants` collection.
 
 ## Author identity — the `authors` thesaurus (read this before touching author code)
 "Who wrote this, and is *this* Andreas the same as *that* Andreas?" is answered by the canonical **`authors`** collection — one doc per person, `_id` = canonical slug, with `variants[]` / `variant_slugs[]` / `viaf_id` / `wikidata_id`. It **supersedes** the legacy `entities` layer. Umbrella issue #2179.
