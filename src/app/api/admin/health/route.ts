@@ -374,7 +374,10 @@ export const GET = withAdminAuth(async () => {
 
   // --- Overall health ---
   const hasAnyCritical = Object.values(checks).some(c => c.status === 'critical');
-  const healthy = !hasAnyCritical && !paused;
+  // A deliberate pause is an operator choice, not an incident — the system is
+  // healthy, just paused. The pause stays visible as the system_paused
+  // warning above; only critical checks flip the overall flag.
+  const healthy = !hasAnyCritical;
 
   return NextResponse.json({
     healthy,
