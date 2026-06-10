@@ -22,6 +22,7 @@ import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { computeDHash } from '../lib/dhash.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 // ── Config ──
 
@@ -269,6 +270,7 @@ async function main() {
       id: 1, book_id: 1,
       detected_images: 1,
       archived_photo: 1, cropped_photo: 1, photo_original: 1, photo: 1,
+      enhanced_photo: 1, split_from_spread: 1,
     })
     .toArray();
 
@@ -277,7 +279,11 @@ async function main() {
   // Flatten to individual work items
   const workItems = [];
   for (const page of pages) {
-    const sourceUrl = page.archived_photo || page.cropped_photo || page.photo_original || page.photo;
+    // MUST match the source the detection bboxes were computed against
+    // (image-extract-worker resolves it via getPageSource). On split pages
+    // archived_photo is the full two-page spread — cropping it with a
+    // cropped_photo-space bbox produces a gutter-spanning junk crop.
+    const sourceUrl = getPageSource(page);
     if (!sourceUrl) continue;
 
     for (let idx = 0; idx < (page.detected_images || []).length; idx++) {
