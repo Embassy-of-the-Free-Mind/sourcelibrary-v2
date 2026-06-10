@@ -26,73 +26,76 @@ async function getArtwork(slug: string) {
   // Get collections this artwork belongs to
   const collectionSlugs = (artwork.collections as string[]) || [];
 
-  // Scope prev/next navigation to the artwork's collection when it has one — so the
-  // arrows walk that set in order (e.g. the 49 hashika-e measles prints). This matters
-  // most for collections of anonymous works, where author-scoping would otherwise wander
-  // through every "Anonymous" artwork in the library. Falls back to same-artist when the
-  // work isn't in any collection — but NOT for generic/placeholder author values
-  // ("Various", "Unknown", "Anonymous", …), where same-author scoping would walk through
-  // hundreds of unrelated works (e.g. ~160 author:"Various" prints). In that case we
-  // suppress prev/next entirely: no arrows is better than jumping to something unrelated.
+  // Scope prev/next navigation to the artwork's collections — so the arrows walk
+  // that set in order (e.g. the 49 hashika-e measles prints). One pair is computed
+  // per collection the work belongs to: the page is statically rendered, so it
+  // can't read the ?from=<collection> param a visitor arrived with — ArtworkHero
+  // picks the matching pair client-side, defaulting to the first collection's pair.
+  // Falls back to same-artist when the work isn't in any collection — but NOT for
+  // generic/placeholder author values ("Various", "Unknown", "Anonymous", …), where
+  // same-author scoping would walk through hundreds of unrelated works (e.g. ~160
+  // author:"Various" prints). In that case we suppress prev/next entirely: no
+  // arrows is better than jumping to something unrelated.
   const GENERIC_AUTHOR = /^\s*(various|unknown|unidentified|unattributed|anonymous|anon|n\.?\s*a\.?)\s*$/i;
   const hasUsableAuthor =
     typeof artwork.author === 'string' && artwork.author.trim() !== '' && !GENERIC_AUTHOR.test(artwork.author);
-  const navScope: Record<string, unknown> | null =
-    collectionSlugs.length > 0
-      ? { collections: collectionSlugs[0] }
-      : hasUsableAuthor
-      ? { author: artwork.author }
-      : null;
 
-  // Get prev/next works (chronologically by published date, then title). When navScope
-  // is null (no collection + generic author) we skip the queries so no arrows render.
-  const [collections, prevWorkRaw, nextWorkRaw] = await Promise.all([
+  // Prev/next within a scope, chronologically by published date, then title.
+  // visible: true keeps the arrows off hidden works.
+  const navNeighbor = (scope: Record<string, unknown>, dir: 'prev' | 'next') =>
+    db.collection('books').findOne(
+      {
+        ...scope,
+        resource_type: { $exists: true },
+        content_type: { $ne: 'book' },
+        visible: true,
+        $or: dir === 'prev'
+          ? [
+              { published: { $lt: artwork.published || '' } },
+              { published: artwork.published || '', title: { $lt: artwork.title } },
+            ]
+          : [
+              { published: { $gt: artwork.published || '' } },
+              { published: artwork.published || '', title: { $gt: artwork.title } },
+            ],
+      },
+      {
+        projection: { slug: 1, title: 1, display_title: 1 },
+        sort: dir === 'prev' ? { published: -1, title: -1 } : { published: 1, title: 1 },
+      }
+    ).then(doc => (doc ? { slug: doc.slug as string, title: (doc.display_title || doc.title) as string } : null));
+
+  const navCollections = collectionSlugs.slice(0, 4);
+  const useAuthorScope = navCollections.length === 0 && hasUsableAuthor;
+  const [collections, authorPrev, authorNext, ...collectionPairs] = await Promise.all([
     collectionSlugs.length > 0
       ? db.collection('collections')
           .find({ slug: { $in: collectionSlugs } })
           .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1 })
           .toArray()
       : Promise.resolve([]),
-    // Previous: earlier in sort order within scope
-    navScope
-      ? db.collection('books').findOne(
-          {
-            ...navScope,
-            resource_type: { $exists: true },
-            content_type: { $ne: 'book' },
-            $or: [
-              { published: { $lt: artwork.published || '' } },
-              { published: artwork.published || '', title: { $lt: artwork.title } },
-            ],
-          },
-          { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: -1, title: -1 } }
-        )
-      : Promise.resolve(null),
-    // Next: later in sort order within scope
-    navScope
-      ? db.collection('books').findOne(
-          {
-            ...navScope,
-            resource_type: { $exists: true },
-            content_type: { $ne: 'book' },
-            $or: [
-              { published: { $gt: artwork.published || '' } },
-              { published: artwork.published || '', title: { $gt: artwork.title } },
-            ],
-          },
-          { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: 1, title: 1 } }
-        )
-      : Promise.resolve(null),
+    useAuthorScope ? navNeighbor({ author: artwork.author }, 'prev') : Promise.resolve(null),
+    useAuthorScope ? navNeighbor({ author: artwork.author }, 'next') : Promise.resolve(null),
+    ...navCollections.flatMap(colSlug => [
+      navNeighbor({ collections: colSlug }, 'prev'),
+      navNeighbor({ collections: colSlug }, 'next'),
+    ]),
   ]);
 
-  const prevWork = prevWorkRaw ? { slug: prevWorkRaw.slug, title: prevWorkRaw.display_title || prevWorkRaw.title } : null;
-  const nextWork = nextWorkRaw ? { slug: nextWorkRaw.slug, title: nextWorkRaw.display_title || nextWorkRaw.title } : null;
+  const navByCollection: Record<string, { prev: { slug: string; title: string } | null; next: { slug: string; title: string } | null }> = {};
+  navCollections.forEach((colSlug, i) => {
+    navByCollection[colSlug] = { prev: collectionPairs[i * 2], next: collectionPairs[i * 2 + 1] };
+  });
+
+  // Default pair when no ?from= context: first collection, else same-artist.
+  const defaultNav = navCollections.length > 0 ? navByCollection[navCollections[0]] : { prev: authorPrev, next: authorNext };
 
   return {
     artwork: JSON.parse(JSON.stringify(artwork)) as Book,
     collections: collections as { slug: string; name: string; subtitle?: string; color?: string }[],
-    prevWork,
-    nextWork,
+    prevWork: defaultNav.prev,
+    nextWork: defaultNav.next,
+    navByCollection,
   };
 }
 
@@ -109,6 +112,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${artwork.display_title || artwork.title} — ${artwork.author} — Source Library`,
     description: (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`,
+    // ?from=<collection> nav-context URLs must not index as duplicates
+    alternates: { canonical: `/artwork/${artwork.slug || slug}` },
     robots: { index: true, follow: true },
     openGraph: {
       title: `${artwork.display_title || artwork.title} by ${artwork.author}`,
@@ -125,7 +130,7 @@ export default async function ArtworkPage({ params }: PageProps) {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="light" />
-      <ArtworkInfo book={data.artwork} collections={data.collections} prevWork={data.prevWork} nextWork={data.nextWork} />
+      <ArtworkInfo book={data.artwork} collections={data.collections} prevWork={data.prevWork} nextWork={data.nextWork} navByCollection={data.navByCollection} />
     </div>
   );
 }
