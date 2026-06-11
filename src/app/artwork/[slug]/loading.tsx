@@ -1,41 +1,27 @@
 import SiteHeader from '@/components/layout/SiteHeader';
 
+// Mirrors the loaded page's layout (header + full-viewport black hero +
+// dark metadata band) so rapid prev/next paging doesn't flash a light
+// background between artworks.
 export default function ArtworkLoading() {
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-stone-900">
       <SiteHeader variant="light" />
 
-      {/* Hero image skeleton — dark background like the real artwork page */}
-      <div className="bg-stone-900">
-        <div className="max-w-3xl mx-auto py-4 sm:py-8">
-          <div className="aspect-[3/4] bg-stone-800 rounded animate-pulse flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-stone-600 border-t-stone-400 rounded-full animate-spin" />
-          </div>
-        </div>
-        {/* Caption bar skeleton */}
-        <div className="border-t border-stone-800">
-          <div className="max-w-4xl mx-auto px-6 md:px-12 py-3">
-            <div className="h-3 w-64 bg-stone-800 rounded animate-pulse" />
-          </div>
-        </div>
+      {/* Hero skeleton — same black, viewport-height box as ArtworkHero */}
+      <div className="bg-black flex items-center justify-center" style={{ minHeight: 'calc(100vh - 64px)' }}>
+        <div className="w-8 h-8 border-2 border-stone-800 border-t-stone-600 rounded-full animate-spin" />
       </div>
 
-      {/* Info section skeleton */}
-      <div className="max-w-4xl mx-auto px-6 md:px-12 py-8 space-y-4">
-        {/* Title */}
-        <div className="h-8 w-2/3 bg-stone-200 rounded animate-pulse" />
-        {/* Artist */}
-        <div className="h-5 w-1/3 bg-stone-200 rounded animate-pulse" />
-        {/* Date + medium */}
-        <div className="flex gap-4">
-          <div className="h-4 w-20 bg-stone-100 rounded animate-pulse" />
-          <div className="h-4 w-32 bg-stone-100 rounded animate-pulse" />
-        </div>
-        {/* Description */}
-        <div className="mt-6 space-y-3">
-          <div className="h-4 w-full bg-stone-200 rounded animate-pulse" />
-          <div className="h-4 w-5/6 bg-stone-200 rounded animate-pulse" />
-          <div className="h-4 w-3/4 bg-stone-200 rounded animate-pulse" />
+      {/* Metadata band skeleton — matches the stone-800→900 gradient header */}
+      <div className="bg-gradient-to-b from-stone-800 to-stone-900">
+        <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-8 sm:py-10 space-y-4">
+          <div className="h-8 w-2/3 bg-stone-700/60 rounded animate-pulse" />
+          <div className="h-5 w-1/3 bg-stone-700/60 rounded animate-pulse" />
+          <div className="flex gap-4">
+            <div className="h-4 w-20 bg-stone-800 rounded animate-pulse" />
+            <div className="h-4 w-32 bg-stone-800 rounded animate-pulse" />
+          </div>
         </div>
       </div>
     </div>
