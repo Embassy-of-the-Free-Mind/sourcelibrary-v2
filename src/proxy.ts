@@ -28,7 +28,6 @@ const NON_TENANT_PATHS = new Set([
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
   'research', 'embed', 'shwep', 'for-researchers', 'for-libraries', 'identify',
-  'review',
   // Legal / policy
   'dmca',
   // Welcome flow (post-signup interstitial + temporary preview route)
