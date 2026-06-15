@@ -145,6 +145,17 @@ const nextConfig: NextConfig = {
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
+      // Editor-only hidden-book preview routes are force-dynamic + auth-gated and
+      // MUST NOT be edge-cached — a cached editor 200 would leak to anon users.
+      // Placed AFTER the broad /book rule so these specific paths override it.
+      {
+        source: '/book/:id/preview',
+        headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/book/:id/page/:pageId/preview',
+        headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
+      },
       {
         source: '/collections/:path*',
         missing: [{ type: 'header', key: 'rsc' }],

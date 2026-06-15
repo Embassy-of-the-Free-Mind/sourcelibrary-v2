@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { isBookReadable } from '@/lib/book-access';
 import { getChapterTexts } from '@/lib/chapter-text';
 import { z } from 'zod';
 
@@ -348,6 +349,11 @@ export async function GET(
 
     const book = await db.collection('books').findOne({ id });
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor / CRON_SECRET.
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

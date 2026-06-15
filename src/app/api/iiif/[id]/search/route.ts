@@ -15,6 +15,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { aiGenerator } from '@/lib/iiif-provenance';
+import { isBookReadable } from '@/lib/book-access';
 
 const BASE = 'https://sourcelibrary.org';
 const MAX_RESULTS = 200;
@@ -89,10 +90,16 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
 
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { id: 1, pages_count: 1, pages_ocr: 1 } }
+      { projection: { id: 1, pages_count: 1, pages_ocr: 1, visible: 1 } }
     );
 
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor session
+    // or CRON_SECRET (pipeline / Claude Code).
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

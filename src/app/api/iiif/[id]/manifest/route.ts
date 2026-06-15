@@ -12,6 +12,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getPartnerByProvider, type LibraryPartner } from '@/lib/library-partners';
+import { isBookReadable } from '@/lib/book-access';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -210,6 +211,11 @@ export async function GET(
 
     const book = await db.collection('books').findOne({ id });
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor / CRON_SECRET.
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
