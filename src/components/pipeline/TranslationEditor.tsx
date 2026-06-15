@@ -1244,6 +1244,8 @@ export default function TranslationEditor({
                   year={book.published}
                   publisher={book.publisher}
                   placePublished={book.place_published}
+                  format={book.format}
+                  ustcId={book.ustc_id}
                   language={book.language}
                   doi={book.doi}
                   pageNumber={page.page_number}

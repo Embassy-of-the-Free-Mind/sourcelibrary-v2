@@ -82,32 +82,50 @@ function generateCitations(
     ? `${authorParts[1]} ${authorParts[0]}`
     : author;
 
+  // Original-edition imprint (place, publisher, format, USTC) of the source
+  // printing being translated — the bibliographic record of the original work,
+  // distinct from the Source Library translation credit. Mirrors the "Cite"
+  // dropdown (CiteButton) and the bibliographic panel (BibliographicInfo).
+  const pubImprint = [book.place_published, book.publisher].filter(Boolean).join(': ');
+  const imprint = [pubImprint, book.format, book.ustc_id ? `USTC ${book.ustc_id}` : ''].filter(Boolean).join('. ');
+  const imprintStr = imprint ? `${imprint}. ` : '';
+
   // Inline citation
   const inline = `(${authorParts[0]} ${year}, p. ${pageNumber})`;
 
   // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
+  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
 
   // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
+  const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
 
-  // BibTeX
+  // BibTeX — original imprint (address/publisher) + translation credit (note)
   const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${year}`;
-  const bibtex = `@book{${bibtexKey},
-  author = {${authorLastFirst}},
-  title = {${title}},
-  year = {${year}},
-  translator = {Source Library},
-  note = {Translation published ${translationYear}}${doi ? `,
-  doi = {${doi}},
-  url = {${doiUrl}}` : ''}
-}`;
+  const bibtexLines = [
+    `@book{${bibtexKey},`,
+    `  author = {${authorLastFirst}},`,
+    `  title = {${title}},`,
+    `  year = {${year}},`,
+  ];
+  if (book.place_published) bibtexLines.push(`  address = {${book.place_published}},`);
+  bibtexLines.push(`  publisher = {${book.publisher || 'Source Library'}},`);
+  bibtexLines.push(`  translator = {Source Library},`);
+  if (doi) {
+    bibtexLines.push(`  doi = {${doi}},`);
+    bibtexLines.push(`  url = {${doiUrl}},`);
+  }
+  const bibtexNote = [`Translation published ${translationYear}`];
+  if (book.format) bibtexNote.push(book.format);
+  if (book.ustc_id) bibtexNote.push(`USTC ${book.ustc_id}`);
+  bibtexLines.push(`  note = {${bibtexNote.join('; ')}}`);
+  bibtexLines.push(`}`);
+  const bibtex = bibtexLines.join('\n');
 
   // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
+  const chicago = `${authorLastFirst}. ${year}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
 
   // MLA
-  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
+  const mla = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
 
   // Direct URL to page in Source Library (pinned to edition version).
   // baseUrl is the request host so citations rendered on tenant subdomains

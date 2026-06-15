@@ -1016,6 +1016,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                       year={book.published}
                       publisher={book.publisher}
                       placePublished={book.place_published}
+                      format={book.format}
+                      ustcId={book.ustc_id}
                       language={book.language}
                       doi={book.doi}
                       editionVersion={currentEdition?.version}
