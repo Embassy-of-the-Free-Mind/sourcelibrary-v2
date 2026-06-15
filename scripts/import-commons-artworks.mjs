@@ -160,8 +160,13 @@ const IMPORT_CATEGORIES = [
   // Teniers — alchemist genre paintings
   { category: 'Alchemists by David Teniers the Younger', artist: 'David Teniers the Younger', type: 'painting', recurse: false },
 
-  // William Blake — visionary
-  { category: 'Art works by William Blake', artist: 'William Blake', type: 'print', recurse: true },
+  // William Blake — visionary / prophetic
+  { category: 'Paintings by William Blake', artist: 'William Blake', type: 'painting', recurse: true, collections: ['the-visionary', 'visions-ecstasies', 'dreams-unconscious', 'poetry'] },
+  { category: 'Drawings by William Blake', artist: 'William Blake', type: 'drawing', recurse: true, collections: ['the-visionary', 'visions-ecstasies', 'dreams-unconscious', 'poetry'] },
+  { category: 'Engravings by William Blake', artist: 'William Blake', type: 'print', recurse: true, collections: ['the-visionary', 'visions-ecstasies', 'dreams-unconscious', 'poetry'] },
+  { category: 'Illustrations by William Blake', artist: 'William Blake', type: 'print', recurse: true, collections: ['the-visionary', 'visions-ecstasies', 'dreams-unconscious', 'poetry'] },
+  { category: "William Blake's illustrations by subject", artist: 'William Blake', type: 'print', recurse: true, collections: ['the-visionary', 'visions-ecstasies', 'dreams-unconscious', 'poetry'] },
+  { category: 'Manuscripts by William Blake', artist: 'William Blake', type: 'drawing', recurse: true, collections: ['the-visionary', 'visions-ecstasies', 'dreams-unconscious', 'poetry'] },
 
   // Stradanus — Nova Reperta (discoveries/inventions)
   { category: 'Nova Reperta', artist: 'Jan van der Straet (Stradanus)', type: 'print', recurse: true },
@@ -437,6 +442,11 @@ async function main() {
   const collIdx = args.indexOf('--collections');
   const extraCollections = collIdx >= 0 ? args[collIdx + 1].split(',').map(s => s.trim()).filter(Boolean) : [];
   const recurseFlag = args.includes('--recurse');
+  const titlesIdx = args.indexOf('--titles');
+  // Separator is | (file titles can contain commas)
+  const explicitTitles = titlesIdx >= 0
+    ? args[titlesIdx + 1].split('|').map(s => s.trim()).filter(Boolean).map(s => s.startsWith('File:') ? s : `File:${s}`)
+    : null;
 
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Images: ${skipImages ? 'SKIP' : 'UPLOAD'} | Limit: ${limit === Infinity ? 'none' : limit}`);
 
@@ -493,9 +503,11 @@ async function main() {
 
     console.log(`\n━━━ ${cat.category} (${cat.artist}) ━━━`);
 
-    // List files in category
-    const files = await listCategoryFiles(cat.category, cat.recurse);
-    console.log(`  Found ${files.length} files`);
+    // List files in category (or use explicit --titles list)
+    const files = explicitTitles && singleCategory
+      ? explicitTitles
+      : await listCategoryFiles(cat.category, cat.recurse);
+    console.log(`  Found ${files.length} files${explicitTitles ? ' (from --titles)' : ''}`);
 
     // Dedupe across categories
     const newFiles = files.filter(f => !seenTitles.has(f));
