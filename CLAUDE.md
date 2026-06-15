@@ -193,7 +193,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Book acquisition / curation:** `/curator` or `/library-curator`. For importing at scale without duplicates, follow the canonical loop in `.claude/docs/import-workflow.md` (enumerate → dedupe → subject-filter → source → import hidden → process → QA → visible). Dedup runs in `src/lib/dedup.ts` (matches hidden books too — don't reintroduce a `visible:true` filter); reusable tool `scripts/import/enumerate-dedupe-source.ts`; sources that 429 datacenter IPs (Harvard, likely Gallica) use the residential direct-insert pattern (`scripts/import/harvard-wuzhen-direct.mjs`). Work-level dedup is not yet automatic — issue #2318.
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
-- **Handoffs:** `.claude/handoffs/` (read by date/topic)
+- **Handoffs:** `.claude/handoffs/` (read by date/topic). **This repo is PUBLIC (AGPL).** New handoffs and all operational/business material (fundraising, contacts, outreach, budgets, donors, sponsors) go in the **private** repo `Embassy-of-the-Free-Mind/sourcelibrary-ops` (clone at `~/sourcelibrary-ops`), which is gitignored here — never commit them to this repo. Only genuinely public-worthy *technical* postmortems (no PII/secrets/business strategy) belong in `.claude/handoffs/` here, and only by deliberate `git add -f`.
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 
 ### Optional: code-review-graph
