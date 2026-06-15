@@ -28,10 +28,24 @@ const client = new MongoClient(process.env.MONGODB_URI, {
 await client.connect();
 const db = client.db('bookstore');
 
-const KEY = { split_from_spread: 1, 'ocr.model': 1 };
-const NAME = 'pages_split_from_spread_ocr_idx';
+const KEY = { split_from_spread: 1 };
+const NAME = 'pages_split_from_spread_idx';
 
-console.log(`Creating ${NAME} = ${JSON.stringify(KEY)} on pages (sparse, background)...`);
+// Drop the earlier sparse compound attempt if present — sparse made the planner
+// refuse the index (it COLLSCANned even a plain split_from_spread filter; verified
+// via explain). A non-sparse single-field index on the boolean serves
+// `{ split_from_spread: true }` as a clean IXSCAN; the `ocr.model` existence check
+// the callers add is a cheap residual on the ~22k matched docs.
+try {
+  await db.collection('pages').dropIndex('pages_split_from_spread_ocr_idx');
+  console.log('  dropped prior sparse index pages_split_from_spread_ocr_idx');
+} catch (e) {
+  if (!e.message?.includes('index not found') && e.codeName !== 'IndexNotFound') {
+    console.log(`  (no prior sparse index to drop: ${e.message})`);
+  }
+}
+
+console.log(`Creating ${NAME} = ${JSON.stringify(KEY)} on pages (non-sparse, background)...`);
 console.log(`  Started: ${new Date().toLocaleTimeString()}`);
 
 const heartbeat = setInterval(() => {
@@ -42,7 +56,6 @@ try {
   await db.collection('pages').createIndex(KEY, {
     name: NAME,
     background: true,
-    sparse: true,
   });
   console.log(`  OK: pages.${NAME}`);
 } catch (e) {
