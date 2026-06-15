@@ -227,6 +227,10 @@ export default function DevelopersPage() {
                 <td className="py-2.5 text-secondary">Search inside translated text across the whole library</td>
               </tr>
               <tr>
+                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_concept</td>
+                <td className="py-2.5 text-secondary">Semantic / conceptual passage search &mdash; matches paraphrases and adjacent ideas, not just keywords</td>
+              </tr>
+              <tr>
                 <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_within_book</td>
                 <td className="py-2.5 text-secondary">Search inside a specific book&apos;s pages</td>
               </tr>
@@ -292,10 +296,10 @@ source-library search "Paracelsus" --language=German
 source-library translations "harmony of the spheres"
 
 # Read a book
-source-library text fludd-utriusque --from=1 --to=50
+source-library text history-of-both-worlds-macrocosm-fludd --from=1 --to=50
 
 # Get exact text for quoting
-source-library quote fludd-utriusque 57
+source-library quote history-of-both-worlds-macrocosm-fludd 57
 
 # Browse illustrations
 source-library images --subject=alchemy --type=emblem
@@ -386,7 +390,7 @@ source-library search "alchemy" --json | jq .results`}
                 </tbody>
               </table>
               <div className="mt-4 bg-stone-900 rounded-lg p-3">
-                <code className="text-stone-300 text-sm">GET /books/fludd-utriusque/text?content=translation&amp;from=1&amp;to=50</code>
+                <code className="text-stone-300 text-sm">GET /books/history-of-both-worlds-macrocosm-fludd/text?content=translation&amp;from=1&amp;to=50</code>
               </div>
             </div>
           </div>
@@ -448,11 +452,11 @@ source-library search "alchemy" --json | jq .results`}
         <div className="bg-white rounded-xl border border-border-light p-6 space-y-4">
           <div>
             <span className="text-sm font-medium text-muted">Page</span>
-            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque?page=57</p>
+            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd?page=57</p>
           </div>
           <div>
             <span className="text-sm font-medium text-muted">Book</span>
-            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque</p>
+            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd</p>
           </div>
           <div>
             <span className="text-sm font-medium text-muted">With DOI</span>
