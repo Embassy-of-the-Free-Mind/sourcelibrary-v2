@@ -13,6 +13,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { aiGenerator } from '@/lib/iiif-provenance';
+import { isBookReadable } from '@/lib/book-access';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -60,6 +61,16 @@ export async function GET(
     }
 
     const db = await getReadDb();
+
+    // Hidden (visible:false) books are not public — gate before serving any
+    // page transcription. 404 unless editor session or CRON_SECRET.
+    const gateBook = await db.collection('books').findOne(
+      { $or: [{ id }, { slug: id }] },
+      { projection: { id: 1, visible: 1 } }
+    );
+    if (!gateBook || !(await isBookReadable(gateBook, request))) {
+      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
 
     // Fetch only the field we need
     const projection =

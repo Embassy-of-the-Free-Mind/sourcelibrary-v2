@@ -4,6 +4,7 @@ import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search
 import { semanticPageSearchScoped } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { isBookReadable } from '@/lib/book-access';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -91,6 +92,16 @@ export async function GET(
     const isPhrase = /^".*"$/.test(trimmedQuery);
     const matchQuery = isPhrase ? trimmedQuery.slice(1, -1) : trimmedQuery;
     const db = await getDb();
+
+    // Hidden (visible:false) books are not public — gate before searching their
+    // text. 404 unless editor session or CRON_SECRET (pipeline / Claude Code).
+    const gateBook = await db.collection('books').findOne(
+      { $or: [{ id: bookId }, { slug: bookId }] },
+      { projection: { id: 1, visible: 1 } }
+    );
+    if (!gateBook || !(await isBookReadable(gateBook, request))) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
 
     // Run keyword search and semantic search in parallel
     const [keywordResults, semanticResults] = await Promise.all([

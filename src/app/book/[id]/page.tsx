@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
@@ -73,6 +74,10 @@ interface PageProps {
   // read from searchParams here, because this page is ISR/static (revalidate)
   // and reading request-time query params would force a render error.
   previewProposed?: boolean;
+  // Allow rendering a hidden (visible:false) book. Set ONLY by the dynamic,
+  // editor-gated /book/[id]/preview route. The public ISR route leaves this
+  // false so hidden books 404 uniformly (cache-safe — no per-user branch).
+  allowHidden?: boolean;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -191,6 +196,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!book) {
     // Self-referential canonical (not the inherited root '/') so Google doesn't
     // see this as a duplicate of the homepage while it's still 200/noindex.
+    return {
+      title: 'Book Not Found - Source Library',
+      robots: { index: false, follow: false },
+      alternates: { canonical: `/book/${id}` },
+    };
+  }
+
+  // Hidden books (visible:false) are not public. Emit not-found/noindex metadata
+  // on the public ISR route — matches the notFound() the page body returns.
+  // Editors reach hidden books via /book/[id]/preview (dynamic, auth-gated).
+  if (isHiddenBook(book)) {
     return {
       title: 'Book Not Found - Source Library',
       robots: { index: false, follow: false },
@@ -544,7 +560,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; previewProposed?: boolean }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed = false, allowHidden = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; previewProposed?: boolean; allowHidden?: boolean }) {
   let data;
   try {
     data = await getBook(id, tenantId, tenantSlug);
@@ -567,6 +583,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   }
 
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
+
+  // Hidden books (visible:false) are not public — defense in depth alongside
+  // the early gate in BookDetailPage. allowHidden is set only by the dynamic,
+  // editor-gated /book/[id]/preview route.
+  if (isHiddenBook(book as any) && !allowHidden) {
+    notFound();
+  }
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
   // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
@@ -1276,7 +1299,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   );
 }
 
-export default async function BookDetailPage({ params, tenantContext, previewProposed = false }: PageProps) {
+export default async function BookDetailPage({ params, tenantContext, previewProposed = false, allowHidden = false }: PageProps) {
   const { id } = await params;
   const ctx = tenantContext ?? null;
   const embedPolicy = getEmbedUiPolicy(ctx);
@@ -1301,6 +1324,13 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     notFound();
   }
 
+  // Hidden books (visible:false) 404 on the public route. allowHidden is set
+  // only by the dynamic, editor-gated /book/[id]/preview route. Gating here
+  // (not on a session check) keeps the public route statically cacheable.
+  if (isHiddenBook(earlyBook) && !allowHidden) {
+    notFound();
+  }
+
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
       {!isEmbedded && <ConditionalSiteHeader variant="light" />}
@@ -1315,7 +1345,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} previewProposed={previewProposed} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} previewProposed={previewProposed} allowHidden={allowHidden} />
       </Suspense>
       {!isEmbedded && <SignUpCTA />}
     </div>

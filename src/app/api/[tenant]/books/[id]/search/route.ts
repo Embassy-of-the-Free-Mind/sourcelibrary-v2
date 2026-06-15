@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { isBookReadable } from '@/lib/book-access';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -92,6 +93,16 @@ export async function GET(
     const tenantId = await resolveTenantId(tenant);
 
     if (!tenantId) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — gate before searching their
+    // text. 404 unless editor session or CRON_SECRET (pipeline / Claude Code).
+    const gateBook = await db.collection('books').findOne(
+      { id: bookId, tenantId },
+      { projection: { id: 1, visible: 1 } }
+    );
+    if (!gateBook || !(await isBookReadable(gateBook, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

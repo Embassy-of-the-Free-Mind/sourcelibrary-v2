@@ -5,6 +5,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { createBookRevisions } from '@/lib/book-revisions';
 import { withAuth } from '@/lib/auth-helpers';
+import { isBookReadable } from '@/lib/book-access';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
 import { getBookIndex } from '@/lib/book-index';
@@ -1142,6 +1143,11 @@ export async function GET(
     // Get book
     const book = await db.collection('books').findOne({ id });
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor / CRON_SECRET.
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

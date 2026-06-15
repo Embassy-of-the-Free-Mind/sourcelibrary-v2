@@ -6,6 +6,7 @@ import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { isBookReadable } from '@/lib/book-access';
 
 interface RouteContext {
   params: Promise<{ tenant: string; id: string }>;
@@ -161,6 +162,12 @@ export async function GET(request: NextRequest, context: RouteContext) {
       book = await db.collection('books').findOne({ _id: new ObjectId(bookId), tenantId }) as unknown as Book | null;
     }
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor session
+    // or CRON_SECRET (pipeline / Claude Code).
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

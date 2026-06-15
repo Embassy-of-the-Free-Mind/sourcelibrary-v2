@@ -5,6 +5,7 @@ import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate
 import { getChapterTexts } from '@/lib/chapter-text';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
+import { isBookReadable } from '@/lib/book-access';
 
 export const maxDuration = 30;
 
@@ -60,15 +61,21 @@ export const GET = withApiAuth(async (
     // Find book by id or _id
     let book = await db.collection('books').findOne(
       { id: bookId },
-      { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, pages_count: 1 } }
+      { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, pages_count: 1, visible: 1 } }
     );
     if (!book && ObjectId.isValid(bookId)) {
       book = await db.collection('books').findOne(
         { _id: new ObjectId(bookId) },
-        { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, pages_count: 1 } }
+        { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, pages_count: 1, visible: 1 } }
       );
     }
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor session
+    // or CRON_SECRET (pipeline / Claude Code).
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

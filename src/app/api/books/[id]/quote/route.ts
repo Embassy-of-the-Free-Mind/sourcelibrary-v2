@@ -6,6 +6,7 @@ import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { withApiAuth } from '@/lib/api-auth';
+import { isBookReadable } from '@/lib/book-access';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -156,6 +157,12 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       book = await db.collection('books').findOne({ _id: new ObjectId(bookId) }) as unknown as Book | null;
     }
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless the caller is an
+    // editor session or carries CRON_SECRET (pipeline / Claude Code).
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

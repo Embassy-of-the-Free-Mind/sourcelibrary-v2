@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, PRICES } from '@/lib/purchases';
+import { isBookReadable } from '@/lib/book-access';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -2418,6 +2419,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // Get book
     const book = await db.collection('books').findOne({ id, tenantId });
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor / CRON_SECRET.
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
