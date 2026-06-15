@@ -541,6 +541,7 @@ export async function getCategoryCounts(): Promise<Map<string, number>> {
 // All fields needed for the book detail page shell
 const BOOK_DETAIL_SELECT = [
   BOOK_SELECT,
+  'visible', // needed by the /book/[id] hidden-book gate (book-access.ts)
   'contributing_library',
   'summary_text',
   'publisher',
