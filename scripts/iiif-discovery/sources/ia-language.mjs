@@ -44,6 +44,9 @@ const LANGUAGE_PRESETS = {
   latin: '(lat OR latin OR la)',
   chinese: '(chi OR zho OR zh OR cmn OR chinese)',
   sanskrit: '(san OR sanskrit OR sa)',
+  arabic: '(ara OR ar OR arabic)',
+  persian: '(per OR fas OR fa OR persian OR farsi)',
+  hebrew: '(heb OR he OR hebrew)',
 };
 
 const args = Object.fromEntries(
