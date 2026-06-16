@@ -38,9 +38,16 @@ const SAMPLE = parseInt(args.sample) || 30;
 const MAX_SRC_PER_WORK = 3;
 const KEYLEN = 3;  // block-key length on the normalized skeleton
 
+// minLen = min normalized-skeleton length to accept a prefix match. Calibrated
+// 2026-06: islamicate 8 (6 let through generic short IA titles — الكتاب "the
+// book", الحضارة "civilization" — that prefix longer work titles; 8 = ~93%
+// precision / 4,010 works). hebrew is structurally low-yield (Sefaria nodes are
+// granular commentaries, IA has ~2.9K usable Hebrew manifests) — even min-len 9
+// is only ~58% precision / 12 works, so hebrew is NOT applied via this path;
+// the real Hebrew scan source is NLI / Otzar HaHochma, a separate harvest.
 const CONFIG = {
-  islamicate: { norm: normalizeArabic, queries: ['arabic', 'persian'], source: 'ia-islamicate', minLen: 6 },
-  hebrew:     { norm: normalizeHebrew, queries: ['hebrew'],            source: 'ia-hebrew',     minLen: 5 },
+  islamicate: { norm: normalizeArabic, queries: ['arabic', 'persian'], source: 'ia-islamicate', minLen: 8 },
+  hebrew:     { norm: normalizeHebrew, queries: ['hebrew'],            source: 'ia-hebrew',     minLen: 9 },
 };
 const cfg = CONFIG[TRADITION];
 if (!cfg) { console.error(`--tradition must be one of: ${Object.keys(CONFIG).join(', ')}`); process.exit(1); }
