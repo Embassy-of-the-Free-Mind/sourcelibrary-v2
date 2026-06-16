@@ -39,7 +39,13 @@ node scripts/works-catalog/ingest-gretil.mjs             # ~891 GRETIL works + t
 node scripts/works-catalog/ingest-pandit.mjs <csv> [--all]  # richest: authors/dates/disciplines (manual CSV — see Pandit note)
 node scripts/works-catalog/ingest-sefaria.mjs         # ~6.6K Hebrew works (Sefaria, CC0)
 # Coverage join (Phase 1) + provenance + holdings:
-node scripts/works-catalog/match-scans-ia.mjs --tradition=sanskrit --apply  # works <-> IA manifests -> work_sources(scan)
+node scripts/works-catalog/match-scans-ia.mjs --tradition=sanskrit --apply  # works <-> IA-sanskrit manifests -> work_sources(scan)
+node scripts/works-catalog/match-scans-chinese.mjs --apply                  # works <-> IA-chinese (717K) -> work_sources(scan); CJK-prefix, high precision
+# Scan-coverage gaps: islamicate + hebrew had NO IA manifests harvested at all —
+# harvest first (presets added 2026-06), then a script-aware matcher per language:
+#   node scripts/iiif-discovery/sources/ia-language.mjs --language=arabic
+#   node scripts/iiif-discovery/sources/ia-language.mjs --language=persian
+#   node scripts/iiif-discovery/sources/ia-language.mjs --language=hebrew
 node scripts/works-catalog/seed-provenance.mjs        # catalog_sources licensing/attribution rows
 node scripts/works-catalog/build-holdings.mjs         # Mongo books -> work_holdings (title-auto)
 # Translation census + calibration (per tradition):
