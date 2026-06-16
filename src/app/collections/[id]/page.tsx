@@ -483,11 +483,11 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
             galleryTotalCount = thematicIds.length;
             // Resolve a sample of image IDs for rendering (full set available via gallery page)
             return db.collection('gallery_images')
-              .find({ id: { $in: thematicIds.slice(0, 60) } })
+              .find({ id: { $in: thematicIds.slice(0, 60) } }, { projection: { _id: 0 } })
               .toArray();
           }
           if (collection.curated_gallery_images?.length > 0) {
-            return collection.curated_gallery_images;
+            return (collection.curated_gallery_images as any[]).map(({ _id, ...rest }: any) => rest);
           }
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
@@ -503,7 +503,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
               book_id: { $in: bookIds.slice(0, 200) },
               gallery_quality: { $gte: 0.8 },
               type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-            }, { maxTimeMS: 3000 })
+            }, { projection: { _id: 0 }, maxTimeMS: 3000 })
             .sort({ gallery_quality: -1 })
             .limit(60)
             .toArray();
@@ -630,7 +630,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       const exBooks = await withTimeout(
         db.collection('books').find(
           { id: { $in: [...allBookIds] }, visible: true },
-          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
+          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
         ).toArray(),
         8000, [],
       );
@@ -649,12 +649,12 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     highlights: mergedHighlights,
     total,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    galleryImages: galleryImages as any[],
+    galleryImages: JSON.parse(JSON.stringify(galleryImages)) as any[],
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
     parentCollection,
     galleryCollectionSlug,
     galleryTotalCount,
-    exhibition: curationDraft?.curation || null,
+    exhibition: curationDraft?.curation ? JSON.parse(JSON.stringify(curationDraft.curation)) : null,
     exhibitionBooks,
     childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -707,8 +707,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       const entIds = [...new Set(pairs.map(p => p.ent).filter(Boolean).map(String))];
       const entDocs = entIds.length
         ? await db.collection('entities').find(
-            { _id: { $in: entIds.filter(s => ObjectId.isValid(s)).map(s => new ObjectId(s)) } },
-            { projection: { canonical_name: 1, name: 1 } }).toArray()
+          { _id: { $in: entIds.filter(s => ObjectId.isValid(s)).map(s => new ObjectId(s)) } },
+          { projection: { canonical_name: 1, name: 1 } }).toArray()
         : [];
       const entName = new Map(entDocs.map(e => [String(e._id), e.canonical_name || e.name]));
       descriptionAuthorLinks = pairs.flatMap(p => {
