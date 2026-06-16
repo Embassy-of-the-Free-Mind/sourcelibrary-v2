@@ -53,6 +53,8 @@ node scripts/works-catalog/match-scans-semitic.mjs --tradition=islamicate --appl
 # node scripts/works-catalog/match-scans-semitic.mjs --tradition=hebrew --apply
 node scripts/works-catalog/seed-provenance.mjs        # catalog_sources licensing/attribution rows
 node scripts/works-catalog/build-holdings.mjs         # Mongo books -> work_holdings (title-auto)
+# Translation FLOOR (Phase 2, free) — evidenced 'full'/'partial' for works we hold + translated:
+node scripts/works-catalog/translation-floor-from-holdings.mjs --apply  # ~786 works (mostly tibetan SL translations)
 # Translation census + calibration (per tradition):
 node scripts/works-catalog/translation-census.mjs --tradition islamicate --sample 300 --write
 node scripts/works-catalog/calibrate-census.mjs --tradition islamicate --sample 40  # web-grounded recall-floor check
