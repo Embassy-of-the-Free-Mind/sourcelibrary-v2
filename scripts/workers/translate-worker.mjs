@@ -313,6 +313,40 @@ async function translatePage(db, page, book, prevTranslation) {
   };
 }
 
+// ── Collapse guard ──
+// flash-lite occasionally COLLAPSES a substantial page: when a page begins
+// mid-sentence and ends on a printer's catchword, the model mistakes the whole
+// page for a continuation fragment and emits only its boundary <note> + the
+// <summary>/<keywords> page-description wrapper, dropping the entire body. The
+// batch path's 15%-of-raw-length check misses this (the wrapper padding clears
+// 15%); the single-page path had no check at all. Detect a near-empty body on a
+// substantial OCR page and retry once, keeping whichever attempt has more prose.
+// Corpus detector + bulk fixer: scripts/maintenance/{detect-translation-collapse,
+// retranslate-pages}.mjs.
+const COLLAPSE_OCR_FLOOR = 800; // only guard substantial pages
+const COLLAPSE_BODY_CAP = 300;  // body this short on a big page = collapse
+function strippedBodyLen(text) {
+  if (!text) return 0;
+  return String(text)
+    .replace(/<(meta|image-desc|vocab|summary|keywords|warning|note|scan-quality|language|page-type|page-num|header|sig|insert|columns|script)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ').trim().length;
+}
+function looksCollapsed(ocrData, text) {
+  return (ocrData || '').length > COLLAPSE_OCR_FLOOR && strippedBodyLen(text) < COLLAPSE_BODY_CAP;
+}
+async function translatePageGuarded(db, page, book, prevTranslation) {
+  let result = await translatePage(db, page, book, prevTranslation);
+  if (looksCollapsed(page.ocr?.data, result.text)) {
+    const retry = await translatePage(db, page, book, prevTranslation);
+    if (strippedBodyLen(retry.text) > strippedBodyLen(result.text)) result = retry;
+    if (looksCollapsed(page.ocr?.data, result.text)) {
+      console.log(`  [collapse-guard] ${book.id} p${page.page_number}: still thin after retry (${strippedBodyLen(result.text)} body chars)`);
+    }
+  }
+  return result;
+}
+
 // ── Translate a batch of pages in one API call ──
 async function translateBatch(db, pages, book, prevTranslation) {
   const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
@@ -672,7 +706,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       // ── Single-page path ──
       const page = batch[0];
       try {
-        const result = await translatePage(db, page, book, prevTranslation);
+        const result = await translatePageGuarded(db, page, book, prevTranslation);
         prevTranslation = result.text;
         await writePageTranslation(db, page, result.text, book, result.promptRef);
 
@@ -773,7 +807,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           } else {
             // Missing from batch — fall back to single page
             try {
-              const singleResult = await translatePage(db, page, book, prevTranslation);
+              const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
               await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
               batchTranslated++;
@@ -849,7 +883,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           consecutiveBatchFailures++;
           for (const page of batch) {
             try {
-              const singleResult = await translatePage(db, page, book, prevTranslation);
+              const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
               await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
               translated++;
