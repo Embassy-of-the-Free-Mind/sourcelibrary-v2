@@ -41,11 +41,13 @@ node scripts/works-catalog/ingest-sefaria.mjs         # ~6.6K Hebrew works (Sefa
 # Coverage join (Phase 1) + provenance + holdings:
 node scripts/works-catalog/match-scans-ia.mjs --tradition=sanskrit --apply  # works <-> IA-sanskrit manifests -> work_sources(scan)
 node scripts/works-catalog/match-scans-chinese.mjs --apply                  # works <-> IA-chinese (717K) -> work_sources(scan); CJK-prefix, high precision
-# Scan-coverage gaps: islamicate + hebrew had NO IA manifests harvested at all —
-# harvest first (presets added 2026-06), then a script-aware matcher per language:
-#   node scripts/iiif-discovery/sources/ia-language.mjs --language=arabic
+# Islamicate + hebrew had NO IA manifests harvested — harvest first (presets added 2026-06):
+#   node scripts/iiif-discovery/sources/ia-language.mjs --language=arabic   # ~749K manifests
 #   node scripts/iiif-discovery/sources/ia-language.mjs --language=persian
 #   node scripts/iiif-discovery/sources/ia-language.mjs --language=hebrew
+# then the Semitic-script matcher (Arabic-script for islamicate, Hebrew-script for hebrew):
+node scripts/works-catalog/match-scans-semitic.mjs --tradition=islamicate --apply  # ~53%+ of works (arabic+persian harvests)
+node scripts/works-catalog/match-scans-semitic.mjs --tradition=hebrew --apply      # low yield expected: Sefaria nodes are granular commentaries
 node scripts/works-catalog/seed-provenance.mjs        # catalog_sources licensing/attribution rows
 node scripts/works-catalog/build-holdings.mjs         # Mongo books -> work_holdings (title-auto)
 # Translation census + calibration (per tradition):

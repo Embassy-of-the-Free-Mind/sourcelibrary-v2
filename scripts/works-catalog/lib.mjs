@@ -29,6 +29,34 @@ export function normalizeCjk(s) {
     .replace(/[()（）\s]/g, '');
 }
 
+// Arabic-script title normalization for scan matching (OpenITI works ↔ IA Arabic
+// manifests). IA Arabic titles carry tashkeel (harakat), tatweel, and alif/ya/
+// hamza variants inconsistently; collapse them to a diacritic-free skeleton.
+const AR_DIACRITICS = /[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E8\u06EA-\u06ED\u0640]/g; // harakat + Quranic marks + tatweel
+export function normalizeArabic(s) {
+  return (s || '')
+    .replace(AR_DIACRITICS, '')
+    .replace(/[آأإٱٲٳ]/g, 'ا') // آأإ etc → ا
+    .replace(/ى/g, 'ي')   // alif maqsura ى → ي
+    .replace(/ة/g, 'ه')   // ta marbuta ة → ه
+    .replace(/ؤ/g, 'و')   // waw-hamza ؤ → و
+    .replace(/ئ/g, 'ي')   // ya-hamza ئ → ي
+    .replace(/[ء]/g, '')       // bare hamza ء → drop
+    .replace(/[^؀-ۿ]/g, ''); // letters only (drops spaces, latin, punctuation)
+}
+
+// Hebrew-script title normalization (Sefaria works ↔ IA Hebrew manifests).
+// Strip niqqud + cantillation + gershayim/geresh (incl. ASCII " ' that Sefaria
+// uses inside abbreviations like רידב"ז), fold final letters (sofit).
+const HE_POINTS = /[֑-ֽֿׁ-ׇ׳״"']/g;
+const HE_SOFIT = { 'ך': 'כ', 'ם': 'מ', 'ן': 'נ', 'ף': 'פ', 'ץ': 'צ' };
+export function normalizeHebrew(s) {
+  return [...((s || '').replace(HE_POINTS, ''))]
+    .map(c => HE_SOFIT[c] || c)
+    .join('')
+    .replace(/[^א-ת]/g, ''); // Hebrew letters only
+}
+
 export async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 export async function fetchRetry(url, opts = {}, tries = 4) {
