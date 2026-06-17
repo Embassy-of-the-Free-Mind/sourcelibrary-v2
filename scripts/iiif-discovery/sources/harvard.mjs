@@ -102,10 +102,15 @@ function parseItem(itemXml) {
     return matches;
   };
 
-  // Title
-  const title = get('mods:title') || get('title') || 'Unknown';
+  // Title. CJK records carry BOTH a romanized mods:title (listed first) and an
+  // original-script one — prefer the CJK form so works-catalog matchers can use
+  // it; keep the romanized as a fallback / alternate.
+  const allTitles = getAll('mods:title');
+  const cjkTitle = allTitles.find(t => /[㐀-鿿]/.test(t)) || null;
+  const romanTitle = get('mods:title') || get('title') || 'Unknown';
+  const title = cjkTitle || romanTitle;
   const subtitle = get('mods:subTitle') || get('subTitle') || null;
-  const displayTitle = subtitle ? `${title}: ${subtitle}` : title;
+  const displayTitle = (subtitle && !cjkTitle) ? `${title}: ${subtitle}` : title;
 
   // Creator/Author
   const creators = getAll('mods:namePart') || getAll('namePart');
@@ -136,6 +141,7 @@ function parseItem(itemXml) {
 
   return {
     title: displayTitle.slice(0, 500),
+    titleRoman: cjkTitle ? romanTitle.slice(0, 500) : null,
     author,
     language,
     dateText,
@@ -268,6 +274,7 @@ await withMongo(async (db) => {
             nrs_urn: item.nrsUrn,
             thumbnail: item.thumbnail,
             repository: item.repoName,
+            title_roman: item.titleRoman,
             discovery_query: LANGUAGE ? `harvard-${LANGUAGE.toLowerCase()}` : (QUERY || COLLECTION || 'sweep'),
           },
         });
@@ -293,4 +300,4 @@ await withMongo(async (db) => {
   }
 
   console.log(`\n[harvard] Done: ${totalInserted} inserted, ${totalSkipped} skipped (dedup), ${totalErrors} errors`);
-});
+}, { noTimeout: true }); // a full language sweep (Chinese ~8K) exceeds withMongo's 300s zombie-killer
