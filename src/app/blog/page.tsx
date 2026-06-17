@@ -25,6 +25,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'translation-collapse',
+    title: 'Quality Control on Four Million Machine-Translated Pages',
+    subtitle:
+      'A reader found a 1589 page that the AI returned as a single word instead of a translation. Pulling the thread surfaced 25,000 more — and the two times our own measurement was wrong before the model was. On detecting "translation collapse," why long pages and looping OCR drive it, and what it takes to check a generative system at scale.',
+    date: '17 June 2026',
+    readTime: '7 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/69b2f434f9f1ad2b3b15154a/9.jpg',
+    imageAlt: "A page from Henri Estienne's 1589 edition of the fragments of Dicaearchus",
+  },
+  {
     slug: 'iiif',
     title: 'How IIIF Helped Us Translate the Renaissance',
     subtitle:
