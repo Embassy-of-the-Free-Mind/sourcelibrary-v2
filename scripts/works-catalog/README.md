@@ -33,6 +33,7 @@ node scripts/works-catalog/ingest-siku-wikidata.mjs   # 3,418 Siku QIDs joined o
 node scripts/works-catalog/ingest-openiti.mjs         # ~8.9K Islamicate works (Arabic/Persian)
 node scripts/works-catalog/ingest-bdrc.mjs            # Tibetan works (BUDA linked data; --harvest then --load)
 node scripts/works-catalog/ingest-ia-cadal.mjs        # IA-CADAL scan volumes -> chinese work_sources
+node scripts/works-catalog/ingest-cbeta.mjs           # Chinese Buddhist canon (CBETA, DILA-edu/cbeta-metadata) — grows the chinese denominator (T/X-preferred, intra-CBETA deduped)
 # Sanskrit spine (#2453, added 2026-06):
 node scripts/works-catalog/ingest-sanskrit-wikidata.mjs  # ~3.9K Sanskrit works (Wikidata P407=Q11059)
 node scripts/works-catalog/ingest-gretil.mjs             # ~891 GRETIL works + transcription work_sources
@@ -41,6 +42,9 @@ node scripts/works-catalog/ingest-sefaria.mjs         # ~6.6K Hebrew works (Sefa
 # Coverage join (Phase 1) + provenance + holdings:
 node scripts/works-catalog/match-scans-ia.mjs --tradition=sanskrit --apply  # works <-> IA-sanskrit manifests -> work_sources(scan)
 node scripts/works-catalog/match-scans-chinese.mjs --apply                  # works <-> IA-chinese (717K) -> work_sources(scan); CJK-prefix, high precision
+# Chinese scans from Harvard-Yenching (better than IA's modern-reprint mass — classical CJK titles):
+node scripts/iiif-discovery/sources/harvard.mjs --language=Chinese          # ~8K digitized Chinese -> import_candidates (discovery_query=harvard-chinese)
+node scripts/works-catalog/match-scans-chinese.mjs --query=harvard-chinese --source=harvard-yenching --apply
 # Islamicate + hebrew had NO IA manifests harvested — harvest first (presets added 2026-06):
 #   node scripts/iiif-discovery/sources/ia-language.mjs --language=arabic   # ~749K manifests
 #   node scripts/iiif-discovery/sources/ia-language.mjs --language=persian

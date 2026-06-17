@@ -30,16 +30,22 @@ const MIN_LEN = parseInt(args['min-len']) || 4;   // min normalized-title chars 
 const APPLY = 'apply' in args;
 const SAMPLE = parseInt(args.sample) || 30;
 const MAX_SRC_PER_WORK = 3;
+// Which harvested manifest pool to match against, and what source tag to write.
+// Default = the IA ia_language=chinese harvest; --query=harvard-chinese matches
+// the Harvard-Yenching sweep (source tag harvard-yenching) — same CJK-prefix logic.
+const DISCOVERY_QUERY = args.query || 'chinese';
+const SOURCE_TAG = args.source || (DISCOVERY_QUERY === 'chinese' ? 'ia-chinese' : DISCOVERY_QUERY);
+const IA_SOURCE = DISCOVERY_QUERY.startsWith('harvard') ? 'harvard' : 'ia_language';
 
-// ── 1. index IA chinese manifests by 2-char block key of normalized title ─────
+// ── 1. index harvested manifests by 2-char block key of normalized title ──────
 const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
 const col = mc.db('bookstore').collection('import_candidates');
-console.log('Indexing ia_language=chinese manifests by normalized-title key…');
+console.log(`Indexing ${IA_SOURCE} (discovery_query=${DISCOVERY_QUERY}) manifests by normalized-title key…`);
 const byKey = new Map();
 let iaCount = 0;
 const cur = col.find(
-  { source: 'ia_language', 'metadata.discovery_query': 'chinese', manifest_url: { $ne: null } },
+  { source: IA_SOURCE, 'metadata.discovery_query': DISCOVERY_QUERY, manifest_url: { $ne: null } },
   { projection: { title: 1, manifest_url: 1, source_id: 1, 'metadata.access_restricted': 1 } });
 for await (const d of cur) {
   const n = normalizeCjk(d.title);
@@ -78,7 +84,7 @@ for (const w of works) {
   if (samplePairs.length < SAMPLE) samplePairs.push({ w: w.title, ia: hits[0].title });
   for (const h of hits.slice(0, MAX_SRC_PER_WORK)) {
     sources.push({
-      work_id: w.id, source: 'ia-chinese', source_id: h.ia, kind: 'scan',
+      work_id: w.id, source: SOURCE_TAG, source_id: h.ia, kind: 'scan',
       url: h.url, iiif: true, coverage: null,
       extra: { ia_title: h.title?.slice(0, 120), access_restricted: h.restricted, match: 'cjk-prefix' },
     });
@@ -96,7 +102,7 @@ console.log('NOTE: precision drops sharply below len 4 (周易, 論語 too gener
 
 if (APPLY) {
   const n = await upsertSources(pg, sources);
-  console.log(`\nApplied ${n} ia-chinese scan work_sources.`);
+  console.log(`\nApplied ${n} ${SOURCE_TAG} scan work_sources.`);
 } else {
   console.log('\nMEASUREMENT ONLY — re-run with --apply to write work_sources.');
 }
