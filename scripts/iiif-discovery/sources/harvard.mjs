@@ -47,6 +47,10 @@ const MAX_RECORDS = parseInt(args['max-records']) || 10000;
 const QUERY = args.query || null;
 const COLLECTION = args.collection || null;
 const RESUME = 'resume' in args;
+// LibraryCloud `language=` facet (e.g. Chinese, Sanskrit, Tibetan). When set we
+// sweep that whole language instead of the keyword queries below, and tag
+// metadata.discovery_query so the works-catalog matchers can target it.
+const LANGUAGE = args.language || null;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -150,6 +154,9 @@ function parseItem(itemXml) {
  * Returns array of { query, description } objects.
  */
 function getSearchQueries() {
+  if (LANGUAGE) {
+    return [{ query: '', description: `Language: ${LANGUAGE}`, language: LANGUAGE }];
+  }
   if (QUERY) {
     return [{ query: QUERY, description: `Custom: ${QUERY}` }];
   }
@@ -189,17 +196,19 @@ await withMongo(async (db) => {
   const queries = getSearchQueries();
   let totalInserted = 0, totalSkipped = 0, totalErrors = 0;
 
-  for (const { query, description } of queries) {
+  for (const { query, description, language } of queries) {
     if (totalInserted >= MAX_RECORDS) break;
 
-    console.log(`\n[harvard] Searching: ${description} (q="${query}")`);
+    console.log(`\n[harvard] Searching: ${description}`);
     let start = 0;
     let queryInserted = 0;
 
     while (true) {
       if (totalInserted + queryInserted >= MAX_RECORDS) break;
 
-      const url = `${API_BASE}?q=${encodeURIComponent(query)}&digitalFormat=Books%20and%20documents&limit=${PAGE_SIZE}&start=${start}`;
+      // language facet sweep (whole language) vs keyword query
+      const selector = language ? `language=${encodeURIComponent(language)}` : `q=${encodeURIComponent(query)}`;
+      const url = `${API_BASE}?${selector}&digitalFormat=Books%20and%20documents&limit=${PAGE_SIZE}&start=${start}`;
 
       let xml;
       try {
@@ -259,6 +268,7 @@ await withMongo(async (db) => {
             nrs_urn: item.nrsUrn,
             thumbnail: item.thumbnail,
             repository: item.repoName,
+            discovery_query: LANGUAGE ? `harvard-${LANGUAGE.toLowerCase()}` : (QUERY || COLLECTION || 'sweep'),
           },
         });
 
