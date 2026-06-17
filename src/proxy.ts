@@ -722,8 +722,15 @@ export async function proxy(request: NextRequest) {
     if (looksLikeId) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
-      url.searchParams.set('id', segment);
-      return NextResponse.rewrite(url);
+      url.search = '';
+      // Pass the id via a request header (not a query param). Next's dev
+      // runtime drops query params added to an internal rewrite target, so the
+      // handler would hit its "no id → 302 /" branch and bounce every
+      // /book/<id> link to the homepage. Headers survive the rewrite — this
+      // mirrors the ?page=N redirect above.
+      const headers = new Headers(request.headers);
+      headers.set('x-redirect-book', segment);
+      return NextResponse.rewrite(url, { request: { headers } });
     }
   }
 

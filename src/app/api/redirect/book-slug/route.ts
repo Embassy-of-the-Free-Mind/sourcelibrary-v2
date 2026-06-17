@@ -8,7 +8,10 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
  * which would force it into fully-dynamic rendering (no ISR).
  */
 export async function GET(request: NextRequest) {
-  const bookIdOrSlug = request.nextUrl.searchParams.get('id');
+  // Proxy passes the id via header (survives the internal rewrite in dev).
+  // Fall back to the query param for direct hits / older callers.
+  const bookIdOrSlug =
+    request.headers.get('x-redirect-book') || request.nextUrl.searchParams.get('id');
 
   if (!bookIdOrSlug) {
     return NextResponse.redirect(new URL('/', request.url), 302);
