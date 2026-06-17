@@ -15,6 +15,18 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 
 const APPLY = process.argv.includes('--apply');
+const LANG = (process.argv.find(a=>a.startsWith('--lang='))||'--lang=sanskrit').split('=')[1].toLowerCase();
+// per-language config: catalog tradition filter, book language values, and the
+// generic single-word work titles to reject (genre/common nouns that many
+// distinct works share). Author-anchor/containment/specificity logic is shared.
+const CONFIG = {
+  sanskrit: { trad:'sanskrit', bookLangs:['Sanskrit'], generic:['ratnakara','sara','sangraha','vilasa','muhurta','ganita','manorama','vivarana','kundali','tilaka','bharata','svapna','sindhu','darpana','sagara','prakasa','samudrika','martanda','chintamani','kaumudi','sastra','shastra','sutika','bhavadhyaya'] },
+  pali:     { trad:'pali', bookLangs:['Pali','Pāli'], generic:['sutta','nikaya','pitaka','vagga','gatha','atthakatha','katha','vatthu','jataka','pali'] },
+  tibetan:  { trad:'tibetan', bookLangs:['Tibetan'], generic:['mdo','rgyud','grel','bstan','chos','gsung','bum','skor','phyi','nang'] },
+  chinese:  { trad:'chinese', bookLangs:['Chinese','Classical Chinese'], generic:['jing','lun','shu','ji','zhuan','juan','bian','zhi','xu','jiao'] },
+  hebrew:   { trad:'hebrew', bookLangs:['Hebrew','Aramaic'], generic:['sefer','torah','mishnah','perush','sidur','megillah'] },
+  arabic:   { trad:'islamicate', bookLangs:['Arabic','Persian'], generic:['kitab','sharh','risala','diwan','tafsir','maqala','bab'] },
+}[LANG] || { trad:LANG, bookLangs:[LANG[0].toUpperCase()+LANG.slice(1)], generic:[] };
 const deacc = s => (s||'').normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase();
 // apparatus/edition words only — NOT work-identity words like samhita/sutra/jataka
 // (those distinguish Bṛhat-Saṃhitā from Bṛhat-Jātaka, so they must stay).
@@ -33,10 +45,10 @@ const jacc=(A,B)=>{ if(!A.size||!B.size) return 0; let i=0; for(const x of A) if
 let DF=new Map();
 const shareDistinct=(A,B)=>{ for(const x of A) if(x.length>=6 && B.has(x) && (DF.get(x)||0)<=3) return x; return null; };
 
-// ---- pull Sanskrit works from the catalog (paginated) ----
+// ---- pull works for this tradition from the catalog (paginated) ----
 const sb=createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 let works=[]; for(let off=0;;off+=1000){
-  const { data } = await sb.from('works').select('id,title,title_romanized,title_english,author,wikidata_qid,original_language,tradition').or('tradition.ilike.%sanskrit%,original_language.ilike.%sanskrit%').range(off,off+999);
+  const { data } = await sb.from('works').select('id,title,title_romanized,title_english,author,wikidata_qid,original_language,tradition').or(`tradition.ilike.%${CONFIG.trad}%`).range(off,off+999);
   if(!data||!data.length) break; works.push(...data); if(data.length<1000) break;
 }
 // index works by author token + precompute title token sets
@@ -46,12 +58,12 @@ for(const w of works){
   for(const tk of w._tt) DF.set(tk,(DF.get(tk)||0)+1);   // document frequency across catalog titles
   for(const at of authorTokens(w.author||'')){ if(!worksIdx.has(at)) worksIdx.set(at,[]); worksIdx.get(at).push(w); }
 }
-console.log(`catalog: ${works.length} Sanskrit works loaded (${worksIdx.size} author tokens)`);
+console.log(`catalog: ${works.length} ${LANG} works loaded (${worksIdx.size} author tokens)`);
 
 // ---- pull our Sanskrit books ----
 const mc=new MongoClient(process.env.MONGODB_URI); await mc.connect();
 const B=mc.db('bookstore').collection('books');
-const books=await B.find({$or:[{language:'Sanskrit'},{original_language:'Sanskrit'}], title:{$exists:true,$ne:''}})
+const books=await B.find({$or:[{language:{$in:CONFIG.bookLangs}},{original_language:{$in:CONFIG.bookLangs}}], title:{$exists:true,$ne:''}})
   .project({id:1,title:1,author:1,text_role:1,work_id:1,_id:0}).toArray();
 
 const out={high:[],medium:[],low:[]};
@@ -85,7 +97,7 @@ for(const b of books){
   // that many distinct works trivially contain; for those require near-exact sim.
   // a single-token work title that is a generic Sanskrit word (genre/common
   // noun) is NOT specific even if long — many distinct works share it.
-  const GENERIC = new Set(['ratnakara','sara','sangraha','vilasa','muhurta','ganita','manorama','vivarana','kundali','tilaka','bharata','svapna','sindhu','darpana','sagara','prakasa','samudrika','martanda','chintamani','kaumudi','sastra','shastra','sutika','bhavadhyaya']);
+  const GENERIC = new Set(CONFIG.generic);
   const workSpecific = (best._tt.size>=2 || [...best._tt].some(x=>x.length>=9)) && !(best._tt.size===1 && GENERIC.has([...best._tt][0]));
   const baseOK = cont>=0.8 && (workSpecific || bestScore>=0.6);
   rec.specific = workSpecific;
@@ -94,7 +106,7 @@ for(const b of books){
   else if((authorMatch && cont>=0.5) || (distinct && cont>=0.67)) out.medium.push(rec);
   else out.low.push(rec);
 }
-console.log(`\nSanskrit books needing work_id: matched HIGH ${out.high.length} | MEDIUM ${out.medium.length} | LOW ${out.low.length}`);
+console.log(`\n${LANG} books needing work_id: matched HIGH ${out.high.length} | MEDIUM ${out.medium.length} | LOW ${out.low.length}`);
 console.log('\n=== HIGH-confidence proposals (evidence) ===');
 for(const r of out.high.slice(0,30)) console.log(`  [${r.role}] "${r.book}" (${r.bookAuthor})\n        → ${r.qid} "${r.work}"  via=${r.via} sim=${r.titleSim} authorMatch=${r.authorMatch}${r.distinct?' tok='+r.distinct:''}`);
 console.log('\n=== MEDIUM (would queue for review, NOT written) ===');
@@ -104,11 +116,11 @@ console.log('\nfull -> /tmp/work-id-proposals.json');
 
 if(APPLY){
   const before = await B.find({ id:{$in:out.high.map(r=>r.bookId)} }, { projection:{id:1,work_id:1,_id:0} }).toArray();
-  fs.writeFileSync('scripts/output/resolve-work-ids-backup-sanskrit.json', JSON.stringify(before,null,2));
+  fs.writeFileSync(`scripts/output/resolve-work-ids-backup-${LANG}.json`, JSON.stringify(before,null,2));
   let n=0;
   for(const r of out.high){
     n += (await B.updateOne({ id:r.bookId, work_id:{$exists:false} }, { $set:{ work_id:r.qid, work_title:r.work, work_id_source:'resolve-work-ids:'+r.via, work_id_confidence:'high', updated_at:new Date() } })).modifiedCount;
   }
-  console.log(`\n[--apply] wrote work_id on ${n}/${out.high.length} HIGH matches (Sanskrit). Backup -> scripts/output/resolve-work-ids-backup-sanskrit.json`);
+  console.log(`\n[--apply] wrote work_id on ${n}/${out.high.length} HIGH matches (${LANG}). Backup -> scripts/output/resolve-work-ids-backup-${LANG}.json`);
 }
 await mc.close(); process.exit(0);
