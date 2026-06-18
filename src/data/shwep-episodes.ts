@@ -336,6 +336,12 @@ const postAntiquityEpisodes: ShwepEpisode[] = [
   { number: 307, title: "Westward Ho! with Matthew Melvin-Koushki", url: "https://shwep.net/podcast/westward-ho-with-matthew-melvin-koushki/", period: "post-antiquity", tags: [] },
   { number: 309, title: "Fred Donner on the History of the History of Early Islām", url: "https://shwep.net/podcast/fred-donner-on-the-history-of-the-history-of-early-islam/", period: "post-antiquity", tags: ['Goldziher'] },
   { number: 320, title: "Jonathan Greig on the Question of Universal Salvation in Maximus", url: "https://shwep.net/podcast/jonathan-greig-on-the-question-of-universal-salvation-in-maximus/", period: "post-antiquity", tags: [] },
+  // Added 2026-06-18 — episodes published after the May refresh (newest display first via array reversal)
+  { number: 218, title: "'This Fortunate City': Constantinople Considered as Talisman, Part I", url: "https://shwep.net/podcast/this-fortunate-city-constantinople-considered-as-talisman-part-i/", period: "post-antiquity", tags: ['Constantinople', 'Apollonios of Tyana', 'Parastaseis Syntomoi Chronikai', 'Patria of Constantinople', 'talisman'] },
+  { number: 219, title: "'This Fortunate City': Constantinople Considered as Talisman, Part II", url: "https://shwep.net/podcast/this-fortunate-city-constantinople-considered-as-talisman-part-ii/", period: "post-antiquity", tags: ['Constantinople', 'Apollonios of Tyana', 'Patria of Constantinople', 'talisman', 'palladium'] },
+  { number: 323, title: "The Play's the Thing: Matthew Vadnais on (Ancient) Theatre, Initiation, and the Esotericism of Public Performance", url: "https://shwep.net/podcast/the-plays-the-thing-matthew-vadnais-on-ancient-theatre-initiation-and-the-esotericism-of-public-performance/", period: "post-antiquity", tags: ['Dionysus', 'theatre', 'Eleusinian Mysteries', 'initiation', 'Poetics'] },
+  { number: 321, title: "Storytime: Reading the Hermetic Kyranides, Part I", url: "https://shwep.net/podcast/storytime-reading-the-hermetic-kyranides-part-i/", period: "post-antiquity", tags: ['Kyranides', 'Cyranides', 'Hermetica', 'Hermes Trismegistus'] },
+  { number: 322, title: "Storytime: Reading the Hermetic Kyranides, Part II", url: "https://shwep.net/podcast/storytime-reading-the-hermetic-kyranides-part-ii/", period: "post-antiquity", tags: ['Kyranides', 'Cyranides', 'Hermetica', 'Hermes Trismegistus'] },
 ];
 
 // ---------------------------------------------------------------------------

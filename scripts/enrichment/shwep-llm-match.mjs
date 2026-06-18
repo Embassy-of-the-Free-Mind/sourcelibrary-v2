@@ -41,8 +41,8 @@ const singleBatchNum = singleBatch ? parseInt(singleBatch.split('=')[1]) : null;
 async function loadEpisodes() {
   // Dynamically import the TS data via a simple parse approach
   // Read the compiled episodes from the source
-  const episodesPath = path.join(__dirname, '..', 'src', 'data', 'shwep-episodes.ts');
-  const descriptionsPath = path.join(__dirname, '..', 'src', 'data', 'shwep-descriptions.ts');
+  const episodesPath = path.join(__dirname, '..', '..', 'src', 'data', 'shwep-episodes.ts');
+  const descriptionsPath = path.join(__dirname, '..', '..', 'src', 'data', 'shwep-descriptions.ts');
 
   // We'll extract episode data by running a quick eval-safe approach
   // Actually, let's just read from the crawled JSON if available, or parse TS
@@ -131,7 +131,7 @@ function buildCatalogText(books) {
 // ── Build episode batch text ─────────────────────────────────────────────────
 
 function loadReadingLists() {
-  const rlPath = path.join(__dirname, '..', 'src', 'data', 'shwep-reading-lists.json');
+  const rlPath = path.join(__dirname, '..', '..', 'src', 'data', 'shwep-reading-lists.json');
   if (fs.existsSync(rlPath)) {
     return JSON.parse(fs.readFileSync(rlPath, 'utf-8'));
   }
@@ -339,7 +339,7 @@ async function main() {
 
   // Load existing matches if resuming (skip if --force)
   const allMatches = {};
-  const outputPath = path.join(__dirname, '..', 'src', 'data', 'shwep-book-matches.ts');
+  const outputPath = path.join(__dirname, '..', '..', 'src', 'data', 'shwep-book-matches.ts');
   if (!forceMode && fs.existsSync(outputPath)) {
     const existing = fs.readFileSync(outputPath, 'utf-8');
     const idRegex = /(\d+):\s*\[([^\]]+)\]/g;
