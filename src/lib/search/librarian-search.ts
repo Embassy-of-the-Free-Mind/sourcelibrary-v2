@@ -62,6 +62,14 @@ export interface HybridSearchOptions {
 function tenantBookFilter(tenantId: string | null | undefined) {
   return {
     hidden: { $ne: true },
+    // Match the reader gate (isHiddenBook → visible === false). The reader page
+    // and content APIs 404 any book with visible:false (PR #2522), but ~1.1k
+    // books drifted into visible:false while hidden stayed unset — so a
+    // hidden-only filter surfaced them in the librarian and they 404'd on click
+    // (Rainsford "Mytho-Hermetic Dictionary", etc.). Gate on visible too so the
+    // librarian only returns books the reader will actually open. Narrow scope:
+    // only explicit visible:false is excluded; null/missing stays public.
+    visible: { $ne: false },
     // Main-site convention: tenantId null/undefined.
     // For specific tenants, equality.
     ...(tenantId
