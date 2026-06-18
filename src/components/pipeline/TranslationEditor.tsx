@@ -547,8 +547,21 @@ export default function TranslationEditor({
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
+  // Jump-to-page: the counter ("18/864") doubles as an editable input
+  const [isEditingPage, setIsEditingPage] = useState(false);
+  const [pageInputValue, setPageInputValue] = useState('');
+
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
+
+  const commitJumpToPage = () => {
+    const n = parseInt(pageInputValue, 10);
+    setIsEditingPage(false);
+    if (Number.isNaN(n)) return;
+    const clamped = Math.min(Math.max(n, 1), pages.length);
+    const target = pages[clamped - 1];
+    if (target && target.id !== page.id) onNavigate(target.id);
+  };
 
   // Build image URLs at different quality tiers
   // Tier 1: Thumbnail (150px) - for navigation, grid views
@@ -1015,8 +1028,40 @@ export default function TranslationEditor({
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
-              <div className="flex flex-col items-center px-1 sm:px-2">
-                <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
+              <div className="flex items-center px-1 sm:px-2">
+                {isEditingPage ? (
+                  <form
+                    onSubmit={(e) => { e.preventDefault(); commitJumpToPage(); }}
+                    className="flex items-center gap-1"
+                  >
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      min={1}
+                      max={pages.length}
+                      autoFocus
+                      value={pageInputValue}
+                      onChange={(e) => setPageInputValue(e.target.value)}
+                      onBlur={commitJumpToPage}
+                      onKeyDown={(e) => { if (e.key === 'Escape') setIsEditingPage(false); }}
+                      className="w-12 text-sm font-medium text-center bg-transparent border-b focus:outline-none"
+                      style={{ color: 'var(--text-primary)', borderColor: 'var(--accent-rust)' }}
+                      aria-label={`Jump to page (1 to ${pages.length})`}
+                    />
+                    <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>/{pages.length}</span>
+                  </form>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => { setPageInputValue(String(currentIndex + 1)); setIsEditingPage(true); }}
+                    className="text-sm font-medium rounded px-1 hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none transition-colors"
+                    style={{ color: 'var(--text-muted)' }}
+                    aria-label={`Page ${currentIndex + 1} of ${pages.length}. Click to jump to a page`}
+                    title="Jump to page"
+                  >
+                    {currentIndex + 1}/{pages.length}
+                  </button>
+                )}
               </div>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
