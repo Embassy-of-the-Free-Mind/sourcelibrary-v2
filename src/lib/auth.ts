@@ -234,6 +234,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
     },
+    // Stamp lastLogin on every actual authentication (fires on real sign-in,
+    // not on every JWT validation / page load — so it measures returning
+    // members who re-authenticate, e.g. after their session expires). Pairs
+    // with createdAt so we can tell new sign-ups from returning ones.
+    async signIn({ user }) {
+      if (!user?.email) return;
+      try {
+        const client = await clientPromise;
+        const db = client.db(dbName);
+        await db.collection('users').updateOne(
+          { email: user.email.toLowerCase() },
+          { $set: { lastLogin: new Date() }, $inc: { loginCount: 1 } }
+        );
+      } catch (error) {
+        console.error('[auth] Failed to stamp lastLogin:', error);
+      }
+    },
   },
   callbacks: {
     // Enforce signup restrictions based on tenant allowSignup setting
