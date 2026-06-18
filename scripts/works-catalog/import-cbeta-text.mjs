@@ -164,11 +164,15 @@ for (const wid of ids.slice(0, LIMIT)) {
     pipeline_auto: { status: 'images_complete', ocr_deferred: true, ocr_deferred_reason: 'text-only work (CBETA digital edition); no scan' },
     created_at: now, updated_at: now,
   });
-  await Pages.insertMany(pages.map((p, idx) => ({
-    book_id: id, page_number: idx + 1, page_label: p.label,
-    ocr: { data: p.text, model: 'cbeta-tei-p5', generated_at: now },
-    created_at: now, updated_at: now,
-  })));
+  await Pages.insertMany(pages.map((p, idx) => {
+    const pid = new ObjectId();             // pages have a UNIQUE index on `id`
+    return {
+      _id: pid, id: pid.toString(),
+      book_id: id, page_number: idx + 1, page_label: p.label,
+      ocr: { data: p.text, model: 'cbeta-tei-p5', generated_at: now, updated_at: now },
+      created_at: now, updated_at: now,
+    };
+  }));
   created++;
   console.log(`  + ${wid} "${title}" — ${pages.length} pages, ${totalChars} chars (${VISIBLE ? 'visible' : 'hidden'})  /book/${slug}`);
 }
