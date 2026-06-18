@@ -63,7 +63,25 @@ export async function GET(request: NextRequest) {
     issues.push({ check: 'books_findOne', detail: `Failed: ${msg}`, severity: 'critical' });
   }
 
-  // 3. Zombie jobs (processing > 2h)
+  // Is processing deliberately paused by an operator? A pause is an operator
+  // choice, not an incident — while paused, zombie jobs and a silent pipeline
+  // cron are EXPECTED consequences (no jobs run by design), so alerting on them
+  // is pure noise that re-fires every hour. Skip those pipeline-consequence
+  // checks while paused. DB/latency criticals below still fire. Mirrors the
+  // reasoning in /api/admin/health (a deliberate pause keeps healthy:true).
+  let paused = false;
+  try {
+    const control = await db.collection('system_config').findOne(
+      { _id: 'processing_control' as any },
+      { maxTimeMS: 5000 }
+    );
+    paused = control?.paused === true;
+  } catch {
+    // If we can't read the flag, assume not paused and check normally.
+  }
+
+  // 3. Zombie jobs (processing > 2h) — skip while deliberately paused
+  if (!paused)
   try {
     const zombieThreshold = new Date(Date.now() - THRESHOLDS.zombieAge);
     const zombies = await db.collection('jobs')
@@ -106,9 +124,11 @@ export async function GET(request: NextRequest) {
       ], { maxTimeMS: 10000 })
       .toArray();
 
-    // Check if pipeline cron is missing (runs every 5min on Hetzner, should appear in 2h window)
+    // Check if pipeline cron is missing (runs every 5min on Hetzner, should
+    // appear in 2h window). Skip while paused — the orchestrator legitimately
+    // goes quiet when processing is paused, so its absence isn't an outage.
     const pipelineCron = recentCrons.find(c => c._id === 'pipeline-orchestrator-worker');
-    if (!pipelineCron) {
+    if (!pipelineCron && !paused) {
       issues.push({ check: 'cron_missing', detail: 'pipeline-orchestrator-worker has not run in 2 hours', severity: 'warning' });
     }
 
@@ -137,7 +157,10 @@ export async function GET(request: NextRequest) {
       actions: { issues_found: issues.length },
       errors: issues.map(i => `[${i.severity}] ${i.check}: ${i.detail}`),
       error_count: issues.length,
-      summary: status === 'healthy' ? `Healthy (${duration}ms)` : `${status}: ${issues.map(i => i.check).join(', ')}`,
+      paused,
+      summary: status === 'healthy'
+        ? `Healthy (${duration}ms)${paused ? ' — processing paused, pipeline checks skipped' : ''}`
+        : `${status}: ${issues.map(i => i.check).join(', ')}`,
     });
   } catch {
     // Can't log — DB might be the problem
