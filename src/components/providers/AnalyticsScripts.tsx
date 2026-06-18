@@ -110,7 +110,20 @@ export default function AnalyticsScripts() {
             api_host: '${POSTHOG_HOST}',
             person_profiles: 'identified_only',
             capture_pageview: true,
-            capture_pageleave: true
+            capture_pageleave: true,
+            // Full session replay. We only reach this code path after the user
+            // clicks "Accept" on the consent banner, so recording is consent-gated
+            // by construction. Capture everything: unmask all text + inputs so we
+            // see exactly what readers see (search queries, navigation, scroll).
+            // Passwords are always masked by PostHog regardless of this config.
+            disable_session_recording: false,
+            session_recording: {
+              maskAllInputs: false,
+              maskTextSelector: undefined,
+              maskInputOptions: { password: true },
+              recordCrossOriginIframes: true,
+            },
+            capture_performance: true,
           });
         `}
           </Script>
