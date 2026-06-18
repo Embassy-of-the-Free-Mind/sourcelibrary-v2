@@ -136,6 +136,26 @@ encodes that:
 - **Build/enrich scripts:** `scripts/maintenance/build-authors-collection.mjs` writes the collection (deterministic name-key ∪ VIAF ∪ Wikidata, #2202); `reconcile-authors-grounded.mjs` anchors the tail to Wikidata/VIAF using each author's books as evidence (#2218). The similarly-named `build-canonical-authors.mjs` is a read-only sizer that does NOT write — don't run it to rebuild.
 - **Read-path** (`/author/[slug]` → `src/lib/author-thesaurus.ts`) is flag-gated by `AUTHOR_THESAURUS_READPATH` and redirects every variant slug to the canonical one. Full design, provenance, and migration status: **`.claude/docs/author-identity-system.md`**.
 
+## Work identity & "do we have the original?" (read before reasoning about gaps)
+The **work** layer (sibling to the author thesaurus). "Is *this* translation a
+work we also hold the source-language original of?" is answered by clustering
+editions under a shared **`books.work_id`** (Wikidata QID or works-catalog id),
+NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
+
+- **CRITICAL invariant:** `text_role:'modern-translation'` does **not** mean we
+  lack the original — it usually sits as a separate, *unlinked* book. **Never
+  infer a gap from an unlinked translation.** Cluster by `work_id` and read
+  coverage with `scripts/analysis/work-coverage.mjs`, which reports anything
+  without a `work_id` as "unknown coverage," never a gap. (Inferring gaps the
+  wrong way once claimed Plato/Zohar/Avicenna "missing" when we hold them.)
+- **Assigning `work_id`** (the "fit" rule): author-anchor + title **containment**
+  + **specificity** (reject generic stubs/containers like "Fragments"/"Muhūrta")
+  + rare-token fallback for anonymous works. HIGH-confidence only is auto-written,
+  always with a backup. Resolvers: `resolve-work-ids.mjs` (local `works` catalog —
+  Sanskrit) and `resolve-work-ids-wikidata.mjs` (Wikidata P50 — Greek/Latin).
+- Full design, tool list, per-tradition candidate coverage, and open levers:
+  **`.claude/docs/work-identity-coverage.md`**.
+
 ## Authentication across subdomains
 
 The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.
