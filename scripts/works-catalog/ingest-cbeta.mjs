@@ -16,7 +16,7 @@
  * Idempotent upsert. Run on Hetzner (SUPABASE_DB_URL).
  *   set -a; source .env.production.local; set +a; node scripts/works-catalog/ingest-cbeta.mjs
  */
-import { pgClient, normalizeCjk, fetchRetry, upsertWorks } from './lib.mjs';
+import { pgClient, normalizeCjk, fetchRetry, upsertWorks, upsertSources } from './lib.mjs';
 
 const UA = { headers: { 'User-Agent': 'SourceLibrary-WorksCatalog/1.0 (derek@sourcelibrary.org)' } };
 const REPO = 'DILA-edu/cbeta-metadata';
@@ -75,10 +75,26 @@ const works = deduped.map(w => ({
 
 console.log(`Prepared ${works.length} works (e.g. ${works.slice(0, 3).map(w => w.id + ' ' + w.title).join(' / ')})`);
 
+// CBETA is a full digital TEXT edition — record a transcription work_source per
+// work pointing at the CBETA reader. This is a LINK (not a redistribution of the
+// text), so it carries no licence burden; it lets the census show these works as
+// digitized-as-text (not "undigitized") even though they have no scan. The text
+// metadata is MIT; the text bodies are CC BY-NC-SA 3.0 TW + © Taishō/Zokuzōkyō
+// publishers — importing bodies into the reader is a separate, deliberate step.
+const sources = deduped.map(w => ({
+  work_id: `cbeta:${w.wid}`,
+  source: 'cbeta',
+  source_id: w.wid,
+  kind: 'transcription',
+  url: `https://cbetaonline.dila.edu.tw/${w.wid}`,
+  iiif: false,
+}));
+
 const client = pgClient();
 await client.connect();
 const n = await upsertWorks(client, works);
+const nS = await upsertSources(client, sources);
 const count = (await client.query(`select count(*) c from works where source_catalog='cbeta'`)).rows[0].c;
 const chinese = (await client.query(`select count(*) c from works where tradition='chinese'`)).rows[0].c;
 await client.end();
-console.log(`Upserted ${n} works. works(cbeta)=${count}; total chinese works now ${chinese}.`);
+console.log(`Upserted ${n} works, ${nS} transcription sources. works(cbeta)=${count}; total chinese works now ${chinese}.`);
