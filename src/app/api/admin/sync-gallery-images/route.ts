@@ -116,6 +116,13 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
           updated_at: new Date(),
         },
       },
+      // Drop any stray `metadata.language` subfield. The gallery_images text index
+      // (`language_override: "language"`) descends into the indexed `metadata`
+      // subdocument; a value like "Greek" on a Byzantine-manuscript detection is
+      // read as the subtree language and aborts the $merge with
+      // "language override unsupported", silently dropping those images. $unset is
+      // surgical (keeps subjects/figures/symbols/iconclass/cit/…) and a no-op when absent.
+      { $unset: 'metadata.language' },
     ];
 
     if (dryRun) {

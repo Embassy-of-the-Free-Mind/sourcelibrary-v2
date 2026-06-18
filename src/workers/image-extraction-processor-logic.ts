@@ -320,7 +320,12 @@ async function buildGalleryDocs(
           // these here is what left ~76% of gallery_images without `model`.
           model: img.model || null,
           detected_at: img.detected_at || null,
-          metadata: img.metadata || null,
+          // Drop any stray `language` subfield — the gallery_images text index reads
+          // metadata.language as a per-subtree language override and rejects values
+          // like "Greek" ("language override unsupported"), dropping the image (#2531).
+          metadata: img.metadata
+            ? (() => { const m = { ...(img.metadata as Record<string, unknown>) }; delete m.language; return m; })()
+            : null,
           dhash: img.dhash || null,
           book_title: book?.display_title || book?.title || 'Unknown',
           book_author: book?.author || null,

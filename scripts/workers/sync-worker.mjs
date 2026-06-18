@@ -343,6 +343,11 @@ async function syncGalleryImages(db) {
         updated_at: new Date(),
       },
     },
+    // Drop any stray `metadata.language` subfield. The gallery_images text index
+    // (`language_override: "language"`) reads it as the metadata subtree's language;
+    // a value like "Greek" aborts the $merge with "language override unsupported",
+    // silently dropping the image. $unset keeps all other metadata; no-op when absent.
+    { $unset: 'metadata.language' },
     {
       $merge: {
         into: 'gallery_images',
