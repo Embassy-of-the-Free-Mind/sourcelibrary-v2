@@ -5,6 +5,7 @@ import { SiteModeProvider } from './SiteModeProvider';
 import { SiteModeConfig } from '@/lib/site-mode';
 import ErrorReporter from './ErrorReporter';
 import MigrateOnSignIn from '@/components/auth/MigrateOnSignIn';
+import PostHogIdentify from '@/components/auth/PostHogIdentify';
 import WelcomeGate from '@/components/auth/WelcomeGate';
 
 interface ProvidersProps {
@@ -18,6 +19,7 @@ export default function Providers({ children, siteMode }: ProvidersProps) {
       <SiteModeProvider initialMode={siteMode}>
         <ErrorReporter>
           <MigrateOnSignIn />
+          <PostHogIdentify />
           <WelcomeGate />
           {children}
         </ErrorReporter>
