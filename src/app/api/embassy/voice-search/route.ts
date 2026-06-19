@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { supabase } from '@/lib/supabase';
 import { CLIP_URL } from '@/lib/clip';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { logAiUsage } from '@/lib/log-ai-usage';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -147,6 +148,15 @@ export async function GET(req: NextRequest) {
       sources.slice(0, 4).map((s) => `"${s.title}" by ${s.author}${s.pageNumber ? `, page ${s.pageNumber}` : ''}`).join('; ') + '.' +
       (images.length ? ` ${images.length} illustration${images.length === 1 ? '' : 's'} also found.` : '')
     : 'No matching passages found in the library for that query.';
+
+  // Usage volume for the voice search surface. Its AI cost is Cohere rerank
+  // (inside hybridSearch) + self-hosted CLIP, not Gemini tokens, so we record
+  // occurrence rather than a token-based estimate.
+  logAiUsage({
+    feature: 'voice_search',
+    ok: true,
+    country: req.headers.get('x-vercel-ip-country') || req.headers.get('cf-ipcountry') || null,
+  });
 
   return NextResponse.json({ spoken, found: sources.length, sources, images });
 }
