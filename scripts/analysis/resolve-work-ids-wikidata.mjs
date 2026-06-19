@@ -18,7 +18,12 @@ const APPLY = process.argv.includes('--apply');
 const LANG = (process.argv.find(a=>a.startsWith('--lang='))||'--lang=greek').split('=')[1].toLowerCase();
 const BOOKLANGS = { greek:['Greek','Ancient Greek'], latin:['Latin'], pali:['Pali','Pāli'] }[LANG] || [LANG[0].toUpperCase()+LANG.slice(1)];
 const UA = 'SourceLibrary-work-resolver/1.0 (https://sourcelibrary.org; derek@playpowerlabs.com)';
-const deacc = s => (s||'').normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase();
+// Fold precomposed ligatures BEFORE NFKD (æ/œ/ß don't canonically decompose, so
+// they otherwise survive and make "Philosophiæ" ≠ "Philosophiae" — zero Latin/Greek
+// HIGHs). Then NFKD + strip combining marks.
+const deacc = s => (s||'')
+  .replace(/[æÆ]/g,'ae').replace(/[œŒ]/g,'oe').replace(/ß/g,'ss')
+  .normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase();
 // apparatus words only. NOT container words (fragments/works/opera) — those must
 // survive tokenization so the container-skip can see and reject them; they live
 // in GENERIC instead. (Stripping them here left only the author name → snapped.)
@@ -32,9 +37,18 @@ async function worksForAuthors(qids){
   const values = qids.map(q=>`wd:${q}`).join(' ');
   // label only — altLabels injected foreign tokens into container items
   // ("Fragments"), defeating the generic-skip and faking matches.
+  // work_id must point at the abstract WORK, never a person (Q5) or a specific
+  // EDITION/version (Q3331189). The Pascal bug: a collected-works *edition* labelled
+  // just "Blaise Pascal" (P31=Q3331189) — when authors.name is only a surname, the
+  // given-name token survives the author-strip in both title and label, faking
+  // cont=1.0. Excluding editions also drops the Boethius-Venetian / Dürer-woodcuts
+  // edition-QIDs the dry-run flagged. Under-cluster over mis-cluster: works that
+  // exist in Wikidata only as editions are dropped (LOW), not mis-linked.
   const query = `SELECT ?author ?w ?wLabel WHERE {
     VALUES ?author { ${values} }
     ?w wdt:P50 ?author .
+    MINUS { ?w wdt:P31 wd:Q5 }
+    MINUS { ?w wdt:P31 wd:Q3331189 }
     SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
   }`;
   const r = await fetch('https://query.wikidata.org/sparql?'+new URLSearchParams({query, format:'json'}),
