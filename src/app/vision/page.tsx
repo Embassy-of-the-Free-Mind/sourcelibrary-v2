@@ -91,19 +91,14 @@ export default function VisionPage() {
           Mirandola.
         </p>
 
-        {/* Pico pull-quote — Latin original + translation, verified to p.91 */}
+        {/* Pico pull-quote — snappy English + Latin echo, verified to p.91 */}
         <figure className="my-12 pl-8 border-l-2 border-accent-rust">
-          <blockquote
-            lang="la"
-            className="font-serif italic text-xl md:text-2xl text-primary/80 leading-snug mb-4"
-          >
-            &ldquo;&hellip;altera nihil est aliud, cum bene exploratur, quam naturalis
-            philosophi&aelig; absoluta consummatio.&rdquo;
+          <blockquote className="font-serif text-2xl md:text-[1.75rem] text-primary leading-snug">
+            &ldquo;Magic is the absolute consummation of natural philosophy.&rdquo;
           </blockquote>
-          <blockquote className="font-serif text-2xl md:text-[1.625rem] text-primary leading-snug">
-            &ldquo;The second kind [of magic], when properly explored, is nothing other than the
-            absolute consummation of natural philosophy.&rdquo;
-          </blockquote>
+          <p lang="la" className="font-serif italic text-lg md:text-xl text-muted leading-snug mt-3">
+            Naturalis philosophi&aelig; absoluta consummatio.
+          </p>
           <figcaption className="mt-4 text-sm tracking-wide uppercase text-muted">
             <a
               href={PICO_QUOTE_URL}
