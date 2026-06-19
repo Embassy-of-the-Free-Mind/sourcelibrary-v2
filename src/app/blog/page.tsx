@@ -25,6 +25,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'cannabis-bangue',
+    title: 'Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis',
+    subtitle:
+      'In 1689 a sea-captain set a sample of "bangue" on Robert Hooke\'s coffeehouse table, and the Royal Society met cannabis. But the plant had two lives, and the West had been forgetting one of them for two thousand years. A tour through sixty books in twelve languages — from the Shennong Bencao Jing to Baudelaire.',
+    date: '19 June 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg',
+    imageAlt: "Botanical woodcut of the cannabis plant labelled 'Bangue' in Cristóvão da Costa's Tractado, 1578",
+  },
+  {
     slug: 'translation-collapse',
     title: 'Quality Control on Four Million Machine-Translated Pages',
     subtitle:
