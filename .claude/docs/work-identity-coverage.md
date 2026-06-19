@@ -27,9 +27,11 @@ Cluster editions by a shared **`work_id`** and read coverage off the cluster.
 Hardened over many spot-checked passes against real failures. **Author anchor is
 the linchpin; a title match without author agreement is what burns you.**
 
-1. **External-id bridge** (deterministic) — book already carries an
-   OpenLibrary-work / OCLC / LCCN → resolve to a Wikidata work QID. (~2.5k books
-   carry one; not yet wired into the resolvers — a future lever.)
+1. ~~**External-id bridge** (deterministic) — book already carries an
+   OpenLibrary-work / OCLC / LCCN → resolve to a Wikidata work QID.~~ **DEAD
+   (verified 2026-06-19): 0 books carry `openlibrary_work`/`oclc`/`lccn` under
+   those field names.** The earlier "~2.5k books carry one" claim was wrong. If
+   external work ids ever land, re-enable this; today it resolves nothing.
 2. **Author-anchored title match** — resolve `author_id` → canonical author →
    authority id, look **only** at works by that author (collapses ~10–80k
    candidates to a handful), then match the title. Requirements that earn a HIGH:
@@ -78,8 +80,15 @@ language original mistagged `modern-translation` shows as a false gap (e.g.
 Āryabhaṭīya). Clean `text_role` before trusting the gap list.
 
 ## Open levers
-- **Wire the external-id bridge** (OpenLibrary-work/OCLC on ~2.5k books) into the
-  resolvers — deterministic, no fuzzy matching.
+- **Embedding-based clustering (highest-leverage, free).** Reuse the 35,943
+  `book_embeddings` already in Supabase (one vector per book: title+author+
+  summary+entities). Same-work editions cluster tightly — probe 2026-06-19:
+  intra-work cos mean 0.88 vs cross-work 0.73. Design: embeddings as the recall
+  layer + the author-anchor fit-rule as the precision gate. Reaches the native-
+  script Tibetan/Chinese mass that title-matching can't, without re-embedding.
+  Script: `scripts/analysis/cluster-works-by-embedding.mjs`. Tracked in #1634.
+- ~~**Wire the external-id bridge** (OpenLibrary-work/OCLC).~~ DEAD — 0 books
+  carry those fields (see fit-rule #1 above).
 - **Title-direct path for Pali / anonymous works** (Tipiṭaka, Vedas, sutras).
 - **Transliterate-then-match** for Tibetan/Chinese/Pali catalogs (Gemini).
 - **`text_role` cleanup** so the gap side is as trustworthy as the covered side.
