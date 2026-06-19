@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
+import { isInAppBrowser as detectInApp, preferredBrowser } from '@/lib/in-app-browser';
 
 // NextAuth (Auth.js v5) redirects here with ?error=<code>. The codes we
 // actually see in production (PostHog, 60d): `Verification` (single-use
@@ -8,16 +9,10 @@ import { headers } from 'next/headers';
 // failed — almost always because sign-in was attempted inside an in-app browser
 // webview, e.g. Instagram, which can't preserve the OAuth state cookie). The
 // old page ignored the code and showed one generic message; this one reads the
-// code + User-Agent and gives recovery-oriented guidance.
+// code + User-Agent and gives recovery-oriented guidance. In-app browser
+// detection is shared with the sign-in page via @/lib/in-app-browser.
 
-// In-app browser webviews break OAuth (lost state cookie) and Google often
-// blocks them outright. Detect the common ones so we can tell the user to
-// reopen in their real browser — the only reliable cure for those sign-ins.
-const IN_APP_BROWSER_RE =
-  /(Instagram|FBAN|FBAV|FB_IAB|FBIOS|Line\/|Twitter|Snapchat|WhatsApp|Pinterest|TikTok|musical_ly|BytedanceWebview|GSA\/|; wv\))/i;
-
-function describe(error: string | undefined, isInAppBrowser: boolean, isIOS: boolean) {
-  const browserName = isIOS ? 'Safari' : 'Chrome';
+function describe(error: string | undefined, isInAppBrowser: boolean, browserName: 'Safari' | 'Chrome') {
   const openHint = `You appear to be in an in-app browser. Tap the ⋯ menu and choose “Open in ${browserName}”, then sign in there.`;
 
   switch (error) {
@@ -64,10 +59,9 @@ export default async function AuthErrorPage({
   // Next.js 16: searchParams arrives as a Promise and must be awaited.
   const { error } = await searchParams;
   const ua = (await headers()).get('user-agent') || '';
-  const isInAppBrowser = IN_APP_BROWSER_RE.test(ua);
-  const isIOS = /(iPhone|iPad|iPod)/i.test(ua);
+  const isInAppBrowser = detectInApp(ua);
 
-  const { title, body, cta } = describe(error, isInAppBrowser, isIOS);
+  const { title, body, cta } = describe(error, isInAppBrowser, preferredBrowser(ua));
 
   return (
     <div className="min-h-screen relative flex items-center justify-center">
