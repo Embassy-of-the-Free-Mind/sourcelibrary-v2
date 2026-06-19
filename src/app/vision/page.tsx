@@ -9,10 +9,22 @@ export const metadata: Metadata = {
   alternates: { canonical: '/vision' },
 };
 
+// ── Images ──────────────────────────────────────────────────────────────
+// Placeholders pulled from the library. Swap these for real photos when ready:
+//   HERO        → a striking wide image (the Embassy reading room, or a hero illustration)
+//   LETTER_IMG1 → an original page / illustration (the "read at the source" beat)
+//   LETTER_IMG2 → an experiential photo (a gathering at the Embassy, or an expedition)
 const HERO_IMAGE = 'https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg';
+const LETTER_IMG1 = 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg';
+const LETTER_IMG2 =
+  'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg';
+
 const PICO_QUOTE_URL =
   '/book/ioannis-pici-mirandulae-omnia-opera-mirandola/page/695906974953388fe7ac6d15';
 const CONTACT_EMAIL = 'derek@sourcelibrary.org';
+const TALK_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+  'Source Library — let’s talk'
+)}`;
 
 // A brief plan — the work ahead and the resources it asks for.
 const PLAN = [
@@ -21,7 +33,8 @@ const PLAN = [
   { work: 'Partner with 1,000+ libraries and archives worldwide', resource: '$2M' },
   { work: 'Convene a braintrust of linguists and scholars', resource: '$2M' },
   { work: 'Build a technical foundation that will last', resource: '$1M' },
-  { work: 'Gatherings, expeditions, a small full-time team, and support for partner libraries', resource: '$6M' },
+  { work: 'Gatherings and expeditions to bring the community together', resource: '$2M' },
+  { work: 'A small full-time team and direct support for partner libraries', resource: '$4M' },
 ];
 
 export default function VisionPage() {
@@ -47,7 +60,14 @@ export default function VisionPage() {
         <p className="mb-6">Dear friend,</p>
 
         <p className="mb-6">
-          The first Renaissance began with an act of translation. When a small circle in
+          <span className="font-serif text-primary text-xl md:text-2xl leading-snug">
+            The last time the world translated its ancient wisdom, it set off the Renaissance.
+            I think we can do it again &mdash; this time for the age of AI.
+          </span>
+        </p>
+
+        <p className="mb-6">
+          That first Renaissance began with an act of translation. When a small circle in
           fifteenth-century Florence brought Plato and the Hermetic writings out of Greek into
           Latin, they set loose ideas that reshaped a civilization. Throughout history, the
           recovery of ancient works has consistently sparked humanity&rsquo;s most profound and
@@ -63,12 +83,12 @@ export default function VisionPage() {
         </p>
 
         <p className="mb-6">
-          I find that worth pausing on. As we enter an uncertain age, a strong foundation in
-          wisdom &mdash; and the preservation of our full inheritance &mdash; has never felt more
-          pressing. Maybe, just maybe, translating the world&rsquo;s ancient wisdom could make a
-          global AI renaissance more likely than an AI apocalypse. Perhaps that is magical
-          thinking. But what is magic, anyway? I went looking in our own library, and found a
-          lovely answer from Pico della Mirandola.
+          As we enter an uncertain age, a strong foundation in wisdom &mdash; and the
+          preservation of our full inheritance &mdash; has never felt more pressing. Maybe, just
+          maybe, translating the world&rsquo;s ancient wisdom could make a global AI renaissance
+          more likely than an AI apocalypse. Perhaps that is magical thinking. But what is magic,
+          anyway? I went looking in our own library, and found a lovely answer from Pico della
+          Mirandola.
         </p>
 
         {/* Pico pull-quote */}
@@ -95,6 +115,20 @@ export default function VisionPage() {
           use can reach for the actual source.
         </p>
 
+        {/* Image 1 — an original page */}
+        <figure className="my-12 -mx-2 md:-mx-8">
+          <img
+            src={LETTER_IMG1}
+            alt="An emblem from Michael Maier's Atalanta Fugiens (1618)"
+            className="w-full h-auto rounded-lg border border-primary/10 shadow-sm"
+            loading="lazy"
+          />
+          <figcaption className="mt-3 text-sm text-muted italic text-center">
+            One of thousands of pages now readable and quotable &mdash; an emblem from Maier&rsquo;s
+            <em> Atalanta Fugiens</em>, 1618.
+          </figcaption>
+        </figure>
+
         <p className="mb-6">
           We are embedded within one of the world&rsquo;s great collections of ancient texts: the{' '}
           <a
@@ -107,16 +141,51 @@ export default function VisionPage() {
           </a>{' '}
           in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a UNESCO &ldquo;Memory of
           the World&rdquo; rare-book library. Source Library was created with the support of the
-          Wisdom Frontiers Society of La Jolla, California, and is run as an open initiative of
-          the Embassy, a Dutch nonprofit with 501(c)(3) status.
+          Wisdom Frontiers Society of La Jolla, California, and runs as an open initiative of the
+          Embassy, a Dutch nonprofit with 501(c)(3) status.
+        </p>
+
+        <h2 className="font-serif text-2xl md:text-3xl text-primary leading-snug mb-5 mt-12">
+          What I want to build
+        </h2>
+
+        <p className="mb-6">
+          Everything so far has been made possible by a handful of people who believed in the
+          work early. Now I want to build something lasting: a world-class humanist institution
+          devoted to the stewardship of ancient wisdom &mdash; from books to oral histories to
+          expeditions in the field. The wisdom, after all, is more than the books.
         </p>
 
         <p className="mb-6">
-          Everything so far has been made possible by a handful of generous people who believed
-          in the work early. Now I want to build something lasting &mdash; a world-class humanist
-          institution devoted to the stewardship of ancient wisdom, from books to oral histories
-          to expeditions in the field. The wisdom, after all, is more than the books. If any of
-          this resonates with you, I would be glad to hear from you.
+          I want our founding donors to feel that directly. Picture an evening in the Bibliotheca
+          with the original volumes of Fludd and Ficino open in front of you; an expedition to
+          scan a monastery&rsquo;s manuscripts before they&rsquo;re lost; a hand in deciding what
+          humanity translates next; and your name on the work, in perpetuity. This is
+          philanthropy you can stand inside &mdash; a library of lost knowledge, brought back to
+          life, with you among its founders.
+        </p>
+
+        {/* Image 2 — experiential */}
+        <figure className="my-12 -mx-2 md:-mx-8">
+          <img
+            src={LETTER_IMG2}
+            alt="Robert Fludd, Integra Naturae — the mirror of all nature and the image of art"
+            className="w-full h-auto rounded-lg border border-primary/10 shadow-sm"
+            loading="lazy"
+          />
+          <figcaption className="mt-3 text-sm text-muted italic text-center">
+            Robert Fludd&rsquo;s <em>Integra Naturae</em> &mdash; the mirror of all nature, and
+            the image of art.
+          </figcaption>
+        </figure>
+
+        <p className="mb-6">
+          And here is the real reason I&rsquo;m writing to you. I&rsquo;m not only hoping for your
+          support &mdash; I&rsquo;m hoping you&rsquo;ll help us <em>gather</em> the founding
+          circle, not just join it. If you&rsquo;re someone who brings remarkable people together
+          around bold ideas, then convening the people who will steward humanity&rsquo;s wisdom
+          for the next century is exactly the kind of room worth building. I&rsquo;d love to build
+          it with you.
         </p>
 
         <p className="mb-4">With gratitude,</p>
@@ -135,12 +204,9 @@ export default function VisionPage() {
               Derek Lomas, PhD
             </div>
             <div className="text-muted text-sm tracking-wide mt-1">
-              Founder, Source Library &middot; Embassy of the Free Mind
+              Founder, Source Library &middot; Asst. Professor of Positive AI, TU&nbsp;Delft
             </div>
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="text-accent-rust hover:underline text-sm"
-            >
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent-rust hover:underline text-sm">
               {CONTACT_EMAIL}
             </a>
           </div>
@@ -174,43 +240,43 @@ export default function VisionPage() {
         </dl>
 
         <p className="text-muted text-sm leading-relaxed mt-6">
-          These figures are illustrative of the scale of the work, not a fixed budget. Beyond the
-          translations and scanning, the resources sustain people: gatherings that bring the
-          community together, expeditions to gather and preserve materials, a small full-time
-          team, and direct support for partner libraries around the world.
+          These figures are illustrative of the scale of the work, not a fixed budget. As much as
+          they fund translation and scanning, they sustain people: the gatherings that bring the
+          community together, the expeditions that gather and preserve materials, and the
+          libraries we partner with around the world.
         </p>
       </section>
 
       {/* ───────────── INVITATION / CTA ───────────── */}
       <section className="mt-20 max-w-[68ch] border-t border-primary/10 pt-12">
         <h2 className="font-serif text-2xl md:text-3xl text-primary leading-snug mb-4">
-          Join us
+          Let&rsquo;s talk
         </h2>
         <p className="text-secondary leading-relaxed mb-8">
-          Source Library is entirely supported by personal donors. We are convening a circle of
-          founding donors to anchor the institution &mdash; and we welcome gifts of every size,
-          tax-deductible in the US and the Netherlands.
+          The best way to understand this is to see it. I&rsquo;d love to show you the library
+          &mdash; in person at the Embassy in Amsterdam, or on a call &mdash; and talk about what
+          becoming a founding donor could look like for you.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link
-            href="/founding-donors"
+          <a
+            href={TALK_MAILTO}
             className="inline-block bg-accent-rust text-white py-3 px-8 rounded-full hover:bg-accent-rust/90 transition-colors text-base font-medium text-center"
           >
-            Become a founding donor
-          </Link>
+            Let&rsquo;s talk
+          </a>
           <Link
-            href="/support"
+            href="/founding-donors"
             className="inline-block bg-white border border-primary/20 text-primary py-3 px-8 rounded-full hover:border-accent-rust hover:text-accent-rust transition-colors text-base font-medium text-center"
           >
-            Make a gift
+            The founding circle
           </Link>
         </div>
         <p className="mt-6 text-sm text-muted">
-          For major gifts or corporate sponsorship, write to me directly at{' '}
-          <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent-rust hover:underline">
-            {CONTACT_EMAIL}
-          </a>
-          . I read every message.
+          Prefer to give now? Every gift helps &mdash;{' '}
+          <Link href="/support" className="text-accent-rust hover:underline">
+            make a gift
+          </Link>
+          , tax-deductible in the US and the Netherlands. I read every message myself.
         </p>
       </section>
     </ContentPageLayout>
