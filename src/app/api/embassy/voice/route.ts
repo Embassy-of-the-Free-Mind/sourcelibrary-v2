@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
+import { logAiUsage } from '@/lib/log-ai-usage';
 
 export const dynamic = 'force-dynamic';
 
@@ -53,6 +54,13 @@ export async function GET(request: Request) {
     }
 
     const data = await res.json();
+    // Usage volume for the voice feature (cost is ElevenLabs, not Gemini, so
+    // no token-based estimate here — this tracks how often it's used).
+    logAiUsage({
+      feature: 'voice',
+      ok: true,
+      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || null,
+    });
     return NextResponse.json({ signedUrl: data.signed_url });
   } catch (err) {
     console.error('[voice] ElevenLabs signed URL error:', err);

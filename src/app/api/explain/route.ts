@@ -3,6 +3,7 @@ import { getGeminiClient } from '@/lib/gemini-client';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { withAuth } from '@/lib/auth-helpers';
+import { logAiUsage } from '@/lib/log-ai-usage';
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
@@ -134,6 +135,7 @@ async function fetchBookContext(bookId: string, currentPage: number): Promise<st
 }
 
 export const POST = withAuth(async (request: NextRequest) => {
+  const _aiStart = Date.now();
   try {
     const body = await request.json();
     const {
@@ -206,6 +208,16 @@ export const POST = withAuth(async (request: NextRequest) => {
     const usageMetadata = response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
     const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    logAiUsage({
+      feature: `explain:${mode}`,
+      model: DEFAULT_MODEL,
+      inputTokens,
+      outputTokens,
+      costUsd: calculateCost(inputTokens, outputTokens, DEFAULT_MODEL),
+      ms: Date.now() - _aiStart,
+      ok: true,
+      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || null,
+    });
 
     // For analyze mode, parse the JSON response
     if (mode === 'analyze') {
