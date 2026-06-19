@@ -178,3 +178,13 @@ This doc is the current-state SoT for the *flag mechanics*. The forward design i
 - **Works catalog (frame + denominator):** #2453 (generalizes Chinese #2452); IIIF census #2447
 - **Translation registry (growing positive asset):** work-keyed index #2352 (membership test = the #1974 setter); backfill #2244; provenance bug #2476
 - **Flag mechanics (this doc):** setter #1974 · cleanup #2332 · measurement/effort/single-writer #2564
+
+## 17. Process invariant — never derive a destructive flag from an unverified match (incident 2026-06-19)
+
+The first single-writer reconcile demoted 39 `not_first` derived from `disposition`, silently flipping genuine firsts to `false` — including the **Arithmologia**, whose `translation_found` cited Godwin's *Theatre of the World* (an **anthology**, not a translation) as the "prior." Root cause: `disposition: translation_found` is a **fallible match**, not verified truth, and deriving the flag from it laundered bad matches into live errors (worse than the drift it fixed — the drift was *masking* the bad disposition). Invariants for any flag-flipping batch:
+
+- **Demotion requires evidence-quality guards, not just the enum:** prior is not a **self-match** (≠ the book's own catalog record), `completeness = complete`, **same source-language**, prior is a **translation** (not anthology/study), **person-disambiguated** author (namesake guard — Michael Alberti ≠ L.B. Alberti). Fail any → Tier-2/human, never auto-demote.
+- **Batches must be reversible + audited** — record before/after per book; run only on guard-passing rows; route the rest to review.
+- **A documented hazard must become a code guard** — a comment does not gate a batch job (the 6 false matches were posted before the batch and demoted anyway).
+- **Mass-restore is as dangerous as mass-demote** — only 1 of the 6 worksheet-flagged "false matches" was ground-truth-verified (Arithmologia, restored); Avicenna's demotion was actually *correct* (a complete Bakhtiar 1999 prior exists). Heuristic flags are not verdicts.
+- These books are the regression set for `ft-eval.mjs`. Full analysis: #2564.
