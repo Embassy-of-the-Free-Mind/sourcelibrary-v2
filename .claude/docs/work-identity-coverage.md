@@ -87,14 +87,31 @@ Earlier coverage-census numbers (2026-06-18): reliable **797 works** (52 both /
 `text_role` accuracy** — a source-language original mistagged `modern-translation`
 shows as a false gap (e.g. Āryabhaṭīya). Clean `text_role` before trusting it.
 
-## Next: the merge layer (the 726 held clusters)
-Per the field consensus (GLIMIR "merge-only, never split"), the held clusters go
-to a **human-gated review queue** — confirm same-work with title+incipit (NOT
-full-page embeddings — those false-merge on boilerplate, #1634). Most are
-obviously correct (Albertus *De secretis mulierum* ×12 editions); multi-volume
-canon sets (Tibetan Kanjur, juan-sliced Chinese) need a curatorial eye on
-"one work in N volumes" vs "N distinct works." This is curatorial work — a
-natural Scholar-in-Residence deliverable.
+## The merge layer — in progress (2026-06-20, textual coverage now 89.2%)
+Per the field consensus (GLIMIR "merge-only, never split"), the 726 held
+clusters are being adjudicated, NOT auto-merged. Done so far: **543 duplicate
+editions collapsed into 200 multi-edition works**, all reversible by source tag:
+- `work-merge:hand-adjudicated` (103 books / 24 works) — individually judged
+  with a clean uniform title + authorship caveats (e.g. *Proverbia* pseudo-Seneca
+  ×8 1475–1500; Juvenal *Satirae* ×6 across Latin/German/English; Ficino *De
+  religione christiana*; Siebmacher *Wasserstein der Weisen*).
+- `work-merge:identical-title-deterministic` (440 books / 185 works) — bulk
+  exact-key merges: same canonical author + byte-identical multi-word title
+  (the OCLC FRBR key). Excludes generic single-word titles + series.
+- **Held (not guessed):** "Vol. N" series (Euclid *Opera*, Plato *Dialogues*,
+  Ante-Nicene Fathers — distinct works per volume), generic single-word titles
+  (*geography*/*gospel*/*physics* — one title ≠ one work), language-tag anomalies.
+
+Remaining (~1,765 without work_id): the **divergent-title** tail (cross-language
+variants no deterministic rule catches — the highest-value hand work), native-
+script volume sets (Tibetan Kanjur / juan-sliced Chinese — the "one work in N
+volumes vs N works" call), and anonymous/no-distinctive-title. This is curatorial
+work — a natural Scholar-in-Residence deliverable.
+
+**Known slug bug (fix before any automated merge):** single-digit volume numbers
+("Vol. 8") drop out of the token≥2 filter, so single-digit multi-volume sets
+falsely cluster. Hand-adjudication catches them; the filter needs a fix to keep
+1-char numeric tokens when preceded by vol/band/tome.
 
 ## Open levers
 - **Embedding clustering = candidate generator, NOT an auto-writer (tested to
