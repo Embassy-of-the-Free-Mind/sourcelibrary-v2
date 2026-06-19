@@ -234,29 +234,6 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     };
   }
 
-  // 2. Write the revision row FIRST. If this fails, we abort without touching
-  //    bph_works — better to refuse the edit than to mutate the live row
-  //    without recording history.
-  const { error: revErr } = await supabaseAdmin
-    .from('bph_works_revisions')
-    .insert({
-      id: revisionId,
-      ubn,
-      change_type: changeType,
-      field_changes: liveFieldChanges,
-      editor_email: editorEmail,
-      proposed_by: proposedBy,
-      source_pending_id: sourcePendingId,
-      applied_at: appliedAt,
-      note,
-    });
-
-  if (revErr) throw new BphCatalogError('insert bph_works_revisions failed', revErr);
-
-  // 3. Write bph_works. For a create we INSERT a fresh row; for an edit we
-  //    UPDATE in place, merging provenance into the existing JSONB so other
-  //    writers' entries survive (Postgres `||` deep-merges at the top level,
-  //    which is exactly what we want for per-field keys).
   const existingProvenance = current?.field_provenance;
   const mergedProvenance = {
     ...(typeof existingProvenance === 'object' && existingProvenance !== null
@@ -265,12 +242,31 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     ...provenancePatch,
   };
 
+  const insertRevision = () =>
+    supabaseAdmin!
+      .from('bph_works_revisions')
+      .insert({
+        id: revisionId,
+        ubn,
+        change_type: changeType,
+        field_changes: liveFieldChanges,
+        editor_email: editorEmail,
+        proposed_by: proposedBy,
+        source_pending_id: sourcePendingId,
+        applied_at: appliedAt,
+        note,
+      });
+
   if (changeType === 'create') {
-    // Brand-new record. Only `ubn` is required by the schema; everything else
-    // is nullable, so we insert just the supplied fields plus provenance and a
-    // created_at stamp. The record is marked Source-Library-originated so it's
-    // distinguishable from Memorix-synced rows (and won't be clobbered by a
-    // future Memorix upsert, which keys on numeric UBNs).
+    // 2a. The revisions table has a FK on ubn → bph_works(ubn), so the row
+    //     must exist before its revision. INSERT the row first, then the
+    //     history; if the history write fails, roll the row back so we never
+    //     leave a created record with no provenance trail. Only `ubn` is
+    //     required by the schema (everything else nullable). The row is marked
+    //     Source-Library-originated (via acquisition_source) so it's
+    //     distinguishable from Memorix-synced rows. `record_type` is a
+    //     constrained enum (bph_record_type) we deliberately leave unset
+    //     rather than guess between printed/manuscript/journal.
     const { error: insErr } = await supabaseAdmin
       .from('bph_works')
       .insert({
@@ -278,13 +274,27 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
         ...updates,
         field_provenance: mergedProvenance,
         created_at: appliedAt,
-        record_type: 'source-library',
         acquisition_source: `source-library-editor:${editorEmail}`,
       });
     if (insErr) {
-      throw new BphCatalogError('insert bph_works failed (revision is orphaned)', insErr);
+      throw new BphCatalogError('insert bph_works failed', insErr);
+    }
+    const { error: revErr } = await insertRevision();
+    if (revErr) {
+      // Roll back the just-created row — a record without history would
+      // violate the audit invariant.
+      await supabaseAdmin.from('bph_works').delete().eq('ubn', ubn);
+      throw new BphCatalogError('insert bph_works_revisions failed (create rolled back)', revErr);
     }
   } else {
+    // 2b. Edit: write the revision FIRST. If it fails we abort without
+    //     touching the live row — better to refuse the edit than to mutate
+    //     bph_works without recording history. Then UPDATE in place, merging
+    //     provenance into the existing JSONB so other writers' entries survive
+    //     (Postgres `||` deep-merges at the top level — per-field keys).
+    const { error: revErr } = await insertRevision();
+    if (revErr) throw new BphCatalogError('insert bph_works_revisions failed', revErr);
+
     const { error: updErr } = await supabaseAdmin
       .from('bph_works')
       .update({
