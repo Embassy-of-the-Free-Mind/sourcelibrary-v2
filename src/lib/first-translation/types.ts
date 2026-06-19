@@ -153,7 +153,15 @@ export const VERDICT_TO_DISPOSITION: Partial<Record<FirstTranslationVerdict, Leg
  */
 export interface FirstTranslationBook {
   first_translation?: FirstTranslation | null;
-  translation_verification?: { disposition?: string } | null;
+  translation_verification?: {
+    disposition?: string;
+    /**
+     * The priors the disposition rests on. An empty/absent array under a
+     * `translation_found` disposition means the verdict is unsupported — it is
+     * NOT treated as a defeat (see the evidence gate in resolveFirstTranslation).
+     */
+    translations_found?: unknown[];
+  } | null;
   visible?: boolean;
   pages_translated?: number | null;
 }

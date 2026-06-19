@@ -52,7 +52,21 @@ export function resolveFirstTranslation(
     | undefined;
   if (!disposition || !(disposition in DISPOSITION_TO_VERDICT)) return null;
 
-  const verdict = DISPOSITION_TO_VERDICT[disposition];
+  let verdict = DISPOSITION_TO_VERDICT[disposition];
+
+  // EVIDENCE GATE (spot-check 2026-06-19): a `translation_found` disposition is
+  // only trustworthy if it actually recorded the prior it claims to have found.
+  // The catalog cron set ~42% of `translation_found` with an EMPTY
+  // translations_found (e.g. Olivier de Serres' Théâtre d'Agriculture — a
+  // work-identity false match), which wrongly demotes genuine firsts. An
+  // evidence-free `translation_found` is NOT a defeat — escalate to needs_review.
+  if (verdict === 'not_first') {
+    const priors = book.translation_verification?.translations_found;
+    if (!Array.isArray(priors) || priors.length === 0) {
+      verdict = 'needs_review';
+    }
+  }
+
   return {
     verdict,
     // Legacy claims were never produced by the rigorous engine → weak.
