@@ -1,5 +1,6 @@
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
+import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
 import { supabase } from '@/lib/supabase';
@@ -767,6 +768,8 @@ export async function* streamAgenticResponse(
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
+  const _t0 = Date.now();
+
   const ai = new GoogleGenAI({ apiKey });
 
   // Load research notebook if thread exists
@@ -940,6 +943,18 @@ export async function* streamAgenticResponse(
       text: `\n\n---\n*A note on sourcing: this answer contains ${clauses.join('; and ')}.*`,
     };
   }
+
+  // Persist AI cost for the librarian — the heaviest request-path AI feature
+  // (agentic, several Gemini calls per turn). usage is already summed across
+  // rounds; thinking tokens bill at the output rate, so fold them in for cost.
+  logAiUsage({
+    feature: 'librarian',
+    model: usage.model,
+    inputTokens: usage.promptTokens,
+    outputTokens: usage.outputTokens + usage.thinkingTokens,
+    ms: Date.now() - _t0,
+    ok: true,
+  });
 
   yield { type: 'usage', usage };
 }
