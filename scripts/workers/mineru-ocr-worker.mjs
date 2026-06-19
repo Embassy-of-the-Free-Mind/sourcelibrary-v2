@@ -101,10 +101,13 @@ async function processBook(db, book) {
     return { id, title: book.title, skipped: 'title-language-gate' };
   }
 
-  // pages with an image and no usable OCR yet
+  // pages with an image and no usable OCR yet — excluding pages MinerU has already
+  // tried and flagged (empty/low-quality), so repeated runs converge instead of
+  // re-OCRing the same illustration plates forever.
   const pages = await pagesCol.find({
     book_id: id,
     page_number: { $gt: 0 },
+    ocr_mineru_status: { $nin: ['empty', 'low-quality'] },
     $and: [
       { $or: [{ display_photo: { $exists: true, $ne: null } }, { archived_photo: { $exists: true, $ne: null } }, { photo: { $exists: true, $ne: null } }] },
       { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': '' }] },
