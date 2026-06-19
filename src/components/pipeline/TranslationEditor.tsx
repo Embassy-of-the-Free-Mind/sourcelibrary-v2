@@ -526,11 +526,17 @@ export default function TranslationEditor({
 
   // Page Assistant state
 
-  // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden)
+  // English-source books need no translation — the OCR (the original English text) IS
+  // the reading view. Show OCR by default and hide the redundant "English" translation
+  // panel/toggle, so an English book presents one reading column, not two identical ones.
+  const isEnglishSource = (book.language || '').trim().toLowerCase() === 'english';
+
+  // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden;
+  // for English-source books, image + OCR visible, translation hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
   const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
-  const [showOcrPanel, setShowOcrPanel] = useState(false);
-  const [showTranslationPanel, setShowTranslationPanel] = useState(true);
+  const [showOcrPanel, setShowOcrPanel] = useState(isEnglishSource);
+  const [showTranslationPanel, setShowTranslationPanel] = useState(!isEnglishSource);
   const [showTransliterationPanel, setShowTransliterationPanel] = useState(false);
   const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
@@ -1135,19 +1141,21 @@ export default function TranslationEditor({
                   <span className="hidden sm:inline">Deutsch</span>
                 </button>
               )}
-              <button
-                onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
-                style={{
-                  background: showTranslationPanel ? 'var(--accent-rust)' : 'transparent',
-                  color: showTranslationPanel ? '#fff' : 'var(--text-muted)',
-                }}
-                aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
-                aria-pressed={showTranslationPanel}
-              >
-                <Languages className="w-4 h-4" aria-hidden="true" />
-                <span className="hidden sm:inline">English</span>
-              </button>
+              {!isEnglishSource && (
+                <button
+                  onClick={() => setShowTranslationPanel(!showTranslationPanel)}
+                  className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
+                  style={{
+                    background: showTranslationPanel ? 'var(--accent-rust)' : 'transparent',
+                    color: showTranslationPanel ? '#fff' : 'var(--text-muted)',
+                  }}
+                  aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
+                  aria-pressed={showTranslationPanel}
+                >
+                  <Languages className="w-4 h-4" aria-hidden="true" />
+                  <span className="hidden sm:inline">English</span>
+                </button>
+              )}
             </div>
 
             {/* Right side: Mode toggle + Like + extras on desktop */}
@@ -1635,8 +1643,8 @@ export default function TranslationEditor({
                 </div>
               )}
 
-              {/* Translation Panel */}
-              {showTranslationPanel && (
+              {/* Translation Panel — suppressed for English-source books (OCR is the reading view) */}
+              {showTranslationPanel && !isEnglishSource && (
                 <div id={showOcrPanel ? undefined : 'reader-text'} className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
