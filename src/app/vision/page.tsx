@@ -160,9 +160,8 @@ export default function VisionPage() {
           I want our founding donors to feel that directly. Picture an evening in the Bibliotheca
           with the original volumes of Fludd and Ficino open in front of you; an expedition to
           scan a monastery&rsquo;s manuscripts before they&rsquo;re lost; a hand in deciding what
-          humanity translates next; and your name on the work, in perpetuity. This is
-          philanthropy you can stand inside &mdash; a library of lost knowledge, brought back to
-          life, with you among its founders.
+          humanity translates next; and your name on the work, in perpetuity. I want them in the
+          room, not just on the donor wall.
         </p>
 
         {/* Image 2 — experiential */}
@@ -183,9 +182,9 @@ export default function VisionPage() {
           And here is the real reason I&rsquo;m writing to you. I&rsquo;m not only hoping for your
           support &mdash; I&rsquo;m hoping you&rsquo;ll help us <em>gather</em> the founding
           circle, not just join it. If you&rsquo;re someone who brings remarkable people together
-          around bold ideas, then convening the people who will steward humanity&rsquo;s wisdom
-          for the next century is exactly the kind of room worth building. I&rsquo;d love to build
-          it with you.
+          around bold ideas, then helping convene the people who will steward humanity&rsquo;s
+          wisdom for the next century is something you&rsquo;d be extraordinary at. I&rsquo;d love
+          to do it with you.
         </p>
 
         <p className="mb-4">With gratitude,</p>
