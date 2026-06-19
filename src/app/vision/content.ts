@@ -112,8 +112,8 @@ export const visionContent: VisionContent = {
     body: 'The best way to understand this is to see it. I’d love to show you the library — in person at the Embassy in Amsterdam, or on a call — and talk about what becoming a founding donor could look like for you.',
     primaryLabel: 'Let’s talk',
     primaryHref: 'mailto:derek@sourcelibrary.org?subject=Source%20Library%20%E2%80%94%20let%E2%80%99s%20talk',
-    secondaryLabel: 'The founding circle',
-    secondaryHref: '/founding-donors',
-    footer: 'Prefer to give now? Every gift helps — [make a gift](/support), tax-deductible in the US and the Netherlands. I read every message myself.',
+    secondaryLabel: 'Make a gift',
+    secondaryHref: '/support',
+    footer: 'All gifts are tax-deductible in the US and the Netherlands. I read every message myself.',
   },
 };
