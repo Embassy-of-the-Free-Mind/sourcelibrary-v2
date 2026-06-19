@@ -17,6 +17,11 @@ const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
 const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
 const CONTACT_EMAIL = 'derek@sourcelibrary.org';
 
+// Hand-coloured volvelle (perpetual calendar wheel) — a vivid, instantly
+// recognizable engraving from the astrology collection.
+const HERO_IMAGE =
+  'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6990688d249ce014347d6e76/6990688d249ce014347d6eb2-0.jpg';
+
 function formatStat(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`.replace('.0K', 'K');
@@ -53,38 +58,51 @@ export default async function SupportPage() {
 
   return (
     <div className="min-h-screen">
-      <SiteHeader variant="light" />
+      {/* Hero — image-backed, the ask up front */}
+      <section className="relative overflow-hidden bg-stone-950">
+        {/* Background engraving */}
+        <img
+          src={HERO_IMAGE}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-90"
+        />
+        {/* Readability overlays: a base wash plus a stronger bottom gradient */}
+        <div className="absolute inset-0 bg-stone-950/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/50 to-stone-950/70" />
 
-      {/* Hero — the ask, up front */}
-      <section className="bg-gradient-to-b from-[#f6f3ee] to-white pt-10 pb-10 md:pt-14 md:pb-14">
-        <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-4 leading-tight font-display">
-            Support Source Library
-          </h1>
-          <p className="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl mb-6">
-            We digitize, translate, and freely publish rare historical texts — many in English for the first time. Your gift funds that work directly. Source Library is a project of the{' '}
-            <a
-              href="https://embassyofthefreemind.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent-rust hover:text-accent-gold-dark underline"
-            >
-              Embassy of the Free Mind
-            </a>{' '}
-            (ANBI-registered) in Amsterdam.
-          </p>
+        <div className="relative">
+          <SiteHeader variant="transparent" />
 
-          {/* Inline stats */}
-          <div className="flex flex-wrap gap-x-8 gap-y-3 text-stone-700">
-            <span className="text-sm md:text-base">
-              <strong className="font-display text-stone-900">{formatStat(stats.totalBooks)}</strong> books digitized
-            </span>
-            <span className="text-sm md:text-base">
-              <strong className="font-display text-stone-900">{formatStat(stats.pagesTranslated)}</strong> pages translated
-            </span>
-            <span className="text-sm md:text-base">
-              <strong className="font-display text-stone-900">{formatStat(stats.firstTranslations)}</strong> first-ever English translations
-            </span>
+          <div className="px-6 md:px-12 max-w-5xl mx-auto pt-12 pb-14 md:pt-20 md:pb-20">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight font-display drop-shadow-sm">
+              Support Source Library
+            </h1>
+            <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mb-8">
+              We digitize, translate, and freely publish rare historical texts — many in English for the first time. Your gift funds that work directly. Source Library is a project of the{' '}
+              <a
+                href="https://embassyofthefreemind.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent-gold hover:text-white underline underline-offset-2"
+              >
+                Embassy of the Free Mind
+              </a>{' '}
+              (ANBI-registered) in Amsterdam.
+            </p>
+
+            {/* Inline stats */}
+            <div className="flex flex-wrap gap-x-10 gap-y-4 text-white/80">
+              <span className="text-sm md:text-base">
+                <strong className="font-display text-white text-lg md:text-xl">{formatStat(stats.totalBooks)}</strong> books digitized
+              </span>
+              <span className="text-sm md:text-base">
+                <strong className="font-display text-white text-lg md:text-xl">{formatStat(stats.pagesTranslated)}</strong> pages translated
+              </span>
+              <span className="text-sm md:text-base">
+                <strong className="font-display text-white text-lg md:text-xl">{formatStat(stats.firstTranslations)}</strong> first-ever English translations
+              </span>
+            </div>
           </div>
         </div>
       </section>
