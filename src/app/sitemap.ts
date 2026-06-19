@@ -124,6 +124,7 @@ function blogPosts(): MetadataRoute.Sitemap {
   return [
     'astrological-diagrams', 'chakra-tradition', 'demonology', 'fechner-bohme',
     'fire-horse', 'first-translation-methodology', 'first-translations',
+    'counting-first-translations',
     'hidden-engineers', 'history-of-astrology', 'indigenous-traditions',
     'invisible-hand', 'mcp-server', 'ocr-consistency', 'cuneiform-ocr',
     'rithmomachia', 'progress-studies', '2000-first-translations',
