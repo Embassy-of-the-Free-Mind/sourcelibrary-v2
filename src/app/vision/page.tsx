@@ -19,8 +19,8 @@ const LETTER_IMG1 = 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f04
 const LETTER_IMG2 =
   'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg';
 
-// Pico, Oration on the Dignity of Man (Opera, Bologna 1496), p. 91 — verified passage
-const PICO_QUOTE_URL = 'https://sourcelibrary.org/q/Bek54SCHDUKr4EJMnM3';
+// Pico, Oration on the Dignity of Man (Opera, Bologna 1496), p. 92 — verified passage
+const PICO_QUOTE_URL = 'https://sourcelibrary.org/q/Bek54SCHDUKr4EJMnM4';
 const CONTACT_EMAIL = 'derek@sourcelibrary.org';
 const TALK_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   'Source Library — let’s talk'
@@ -94,10 +94,10 @@ export default function VisionPage() {
         {/* Pico pull-quote — snappy English + Latin echo, verified to p.91 */}
         <figure className="my-12 pl-8 border-l-2 border-accent-rust">
           <blockquote className="font-serif text-2xl md:text-[1.75rem] text-primary leading-snug">
-            &ldquo;Magic is the absolute consummation of natural philosophy.&rdquo;
+            &ldquo;Magic does not so much work wonders as serve nature while she works them.&rdquo;
           </blockquote>
           <p lang="la" className="font-serif italic text-lg md:text-xl text-muted leading-snug mt-3">
-            Naturalis philosophi&aelig; absoluta consummatio.
+            Non tam facit miranda quam facienti natur&aelig; sedula famulatur.
           </p>
           <figcaption className="mt-4 text-sm tracking-wide uppercase text-muted">
             <a
