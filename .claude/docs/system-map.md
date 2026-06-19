@@ -134,6 +134,7 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | `collections` | Book groupings | `slug`, `name`, `hidden`, `collection_type` |
 | `entities` | Legacy per-string author/encyclopedia layer (people, places, concepts). **Being retired for authorship** — superseded by `authors`. | linked via `books.author_entity_id` |
 | `authors` | **Canonical person thesaurus** — one doc per person, `_id`=slug. Books FK via `books.author_id`. | variants, variant_slugs, viaf_id, wikidata_id, entity_ids · see `.claude/docs/author-identity-system.md` |
+| `translation_catalogs` | **Prior-translation registry** — known English translations the first-translation verifier checks first. ~24k rows (UNESCO Index Translationum, Loeb, Brill, Penguin…). Drives `is_first_translation`. | source, author, english_title, translator, pub_year, completeness · see `.claude/docs/first-translation-system.md` |
 
 ### Processing
 | Collection | Purpose |

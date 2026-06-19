@@ -2,9 +2,30 @@
 
 *Source of truth for "how do we decide a book is a first English translation, and how is that counted?" Last reconciled against live code + production data 2026-06-01. Sibling: `.claude/docs/author-identity-system.md`.*
 
-**Related issues:** [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter for the flag — the central open gap) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill prior translations) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
+**Related issues:** [#2567](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2567) (cluster map / tracking) · [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter — central gap) · [#2352](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2352) (work-keyed translation index) · [#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564) (measurement + effort-routing + single-writer) · [#2264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2264) (work resolver) · [#2453](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2453) (works catalog) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
+
+> **Refreshed 2026-06-19** with §0 (re-pinned numbers + skeptical findings), §14 (eval & validation), §15 (writer sprawl), §16 (architecture cluster). The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted — **§0 supersedes them.**
 
 ---
+
+## 0. Update 2026-06-19 — re-pinned numbers + skeptical findings
+
+⚠️ The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted. Live re-pin:
+
+| Metric | 2026-06-01 | 2026-06-19 |
+|---|---|---|
+| `is_first_translation:true` (raw) | 7,126 | **6,908** |
+| public (`+visible +pages_translated>0`) | 6,009 | **5,732** |
+| `disposition=confirmed_first` | 7,909 | **7,668** |
+
+**Stop quoting ~6,000 — it's 5,732 and falling** (crons only flip true→false). Four findings from a skeptical re-audit:
+
+1. **The public count rests on the WEAK path.** By `source`: `catalog_search` ≈ 5,725; the "BEST" 8-tool agent (`catalog_and_llm`) appears on **~0** of the 5,732 public firsts. They were originated by content-enrichment (Phase 1.6, reading the book's own pages — structurally blind to *external* prior translations). The rigorous verifier has touched almost none of what we publicly badge.
+2. **~⅓ is unverifiable by design.** 1,888 / 5,732 (33%) public firsts are non-Western (Tibetan 830, Chinese 442, Hebrew 163, Sanskrit 126…) where catalogs don't index → `confirmed_first` *defaults* (recall failure, not verification). Proven false-firsts here: Milarepa (Quintman 2010), Padmasambhava (Padmakara 1993). Treat as a distinct **"unverified — no catalog coverage"** class, not headline firsts.
+3. **38 clean internal contradictions:** public firsts with `disposition: translation_found` (the system's own verdict = a complete translation exists) yet still badged — demote-on-sight, no oracle. (Plus 124 `needs_review`. Distinct from the noisier 173/125 `first_translation_conflict` signal from the secondary `discover-prior-translations.mjs`.)
+4. **Matching/reconcile failure, not a seeding gap.** `translation_catalogs` already holds Loeb (466) + the classics (Seneca 489, Caesar 357, Virgil 794, Pliny 266) — yet those books are still badged first. We hold the answer and don't match/reconcile it → measure **internal-match recall** (§14) before adding any source.
+
+Forward design + cluster map: **#2567**. Eval + validator: §14. Writer sprawl: §15. Cluster: §16.
 
 ## 1. TL;DR — what to quote
 
@@ -134,4 +155,26 @@ Set by `make_determination` (agent) or Stage 2 (cron). Live counts: `confirmed_f
 
 ## 13. Provenance
 
-Reconciled 2026-06-01 by reading the live engines (`verify-first-translation.ts`, both cron scripts, orchestrator Phase 1.6), the live Hetzner crontab, and the recent handoffs (`2026-05-31-ft-1974-catalog-precedence-and-chip.md`, `2026-05-31-discover-prior-translations-2244.md`). Counts from live `bookstore` queries that day — re-verify if >14 days old. This rewrite (PR #2340) replaced an earlier version whose architecture/numbers had drifted (it described a retired in-pipeline Phase 3.7 path).
+Reconciled 2026-06-01 by reading the live engines (`verify-first-translation.ts`, both cron scripts, orchestrator Phase 1.6), the live Hetzner crontab, and the recent handoffs (`2026-05-31-ft-1974-catalog-precedence-and-chip.md`, `2026-05-31-discover-prior-translations-2244.md`). Counts from live `bookstore` queries that day — re-verify if >14 days old. This rewrite (PR #2340) replaced an earlier version whose architecture/numbers had drifted (it described a retired in-pipeline Phase 3.7 path). **§0/§14/§15/§16 added 2026-06-19** from a three-part audit (code/data/eval) + skeptical live re-check; §0 numbers supersede §1/§9.
+
+## 14. Eval & validation (the missing measurement)
+
+There is **no measured accuracy** for the verifier — this is the spine gap.
+
+- **Harness:** `scripts/eval/ft-eval.mjs` (`seed` → `run` → `report`). **Never run at scale:** `scripts/eval/ft-benchmark.json` has 0 cases, and `seed` pre-fills "expected" labels from the pipeline's *own* verdict (`ground_truth_source: 'NEEDS REVIEW — pre-filled…'`) → running as-is grades the pipeline against itself (circular).
+- **Partial ground truth:** `scripts/eval/ft-ground-truth.json` (**33** Latin cases, vetted vs 5 external APIs; *not* wired into `run()`). Manual census audits: Siku 8/58 (`docs/translation-gap-census-paper/manual-qc-audit.md`), Latin ~70% precision n=25 (`latin-qc-audit.md`). Pattern to copy: `scripts/eval/librarian-search/golden-set.json`.
+- **Non-circular benchmark** = an **independent validator** (separate Claude Code window → later Gemini), adversarial, sources *independent of the production engine*, emitting a verdict **plus an append-only attempt log** (the evidence of absence). Silver-standard, human sample-audited. Spec: **`scripts/eval/ft-validator-runbook.md`**.
+- **Metrics — report for BOTH paths** (8-tool agent AND the `catalog_search` cron that actually made the count): precision, negative-recall, **internal-match recall** (of priors already in `translation_catalogs`, what fraction does the verifier surface?), verdict stability.
+- **Inference at scale:** run the effortful validator on a **work-uniform stratified random sample** (strata = source-path × language-indexing × single-work/container), estimate corpus rates with CIs, *measure the measurer* (audit the validator vs a human sub-sample), report non-Western separately. (#2564.)
+
+## 15. Writer sprawl (the single-writer target)
+
+**~37 scripts** write `is_first_translation` / `disposition` / `translation_verification` (103 files reference the flag; ~37 contain `$set`/`updateOne`/`updateMany` near it). The flag should become **derived single-writer from `disposition`** (#2564 / #2332) so it cannot drift. Active direct-writers to retire/centralize include: `src/lib/verify-first-translation.ts`, `src/lib/metadata-enrichment.ts` (Phase 1.6), `scripts/maintenance/reconcile-ft-from-catalog.mjs`, `scripts/maintenance/apply-audit-verdicts.mjs`, `scripts/maintenance/apply-discovery-results.mjs`, plus the archived `scripts/_archived/2026-06-ft-cleanup/bulk-flag-*.mjs`. A full active/archived inventory is the deliverable for the retire-list.
+
+## 16. Architecture cluster (where this fits)
+
+This doc is the current-state SoT for the *flag mechanics*. The forward design is a layered cluster (map: **#2567**):
+- **Identity:** authors #2179 → work resolver #2264 → dedup-at-scale #2318
+- **Works catalog (frame + denominator):** #2453 (generalizes Chinese #2452); IIIF census #2447
+- **Translation registry (growing positive asset):** work-keyed index #2352 (membership test = the #1974 setter); backfill #2244; provenance bug #2476
+- **Flag mechanics (this doc):** setter #1974 · cleanup #2332 · measurement/effort/single-writer #2564
