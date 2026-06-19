@@ -1,10 +1,11 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { BookLoader } from '@/components/ui/BookLoader';
+import { isInAppBrowser, preferredBrowser, inAppBrowserName } from '@/lib/in-app-browser';
 
 function SignInContent() {
   const searchParams = useSearchParams();
@@ -15,6 +16,19 @@ function SignInContent() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  // Detect in-app browsers (Instagram/FB/TikTok webviews) client-side after
+  // mount. These break Google OAuth, so we warn up front and steer to email —
+  // whose magic link opens in the device's real browser, escaping the webview.
+  const [inApp, setInApp] = useState(false);
+  const [browser, setBrowser] = useState<'Safari' | 'Chrome'>('Chrome');
+  const [appName, setAppName] = useState<string | null>(null);
+  useEffect(() => {
+    const ua = navigator.userAgent;
+    setInApp(isInAppBrowser(ua));
+    setBrowser(preferredBrowser(ua));
+    setAppName(inAppBrowserName(ua));
+  }, []);
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,6 +108,14 @@ function SignInContent() {
             Access the full collection of rare texts in alchemy, Hermetica, and natural philosophy.
           </p>
         </div>
+
+        {inApp && (
+          <div className="mb-6 p-3 rounded-lg text-sm" style={{ background: '#fffbeb', color: '#92400e', border: '1px solid #fde68a' }}>
+            You&rsquo;re in {appName ? `${appName}’s` : 'an'} in-app browser, where Google sign-in usually fails.
+            Use <strong>email</strong> below — the link opens in your normal browser — or tap the{' '}
+            <strong>&#8230;</strong> menu and choose &ldquo;Open in {browser}&rdquo;.
+          </div>
+        )}
 
         {(error || emailError) && (
           <div className="mb-6 p-3 rounded-lg text-sm" style={{ background: '#fef2f2', color: '#991b1b' }}>
@@ -178,6 +200,11 @@ function SignInContent() {
               </>
             )}
           </button>
+          {inApp && (
+            <p className="text-center text-xs" style={{ color: 'var(--text-faint)' }}>
+              Often blocked in in-app browsers — email is more reliable here.
+            </p>
+          )}
         </div>
 
         <p className="mt-6 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
