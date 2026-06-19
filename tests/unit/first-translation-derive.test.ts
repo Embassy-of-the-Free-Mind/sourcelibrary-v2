@@ -107,9 +107,25 @@ describe('legacy disposition fallback (transition compatibility)', () => {
     expect(isFirstTranslation(legacy('confirmed_first'))).toBe(true);
   });
 
-  it('maps translation_found → not_first (the 38 flagged-but-found demotions)', () => {
-    expect(firstTranslationVerdict(legacy('translation_found'))).toBe('not_first');
-    expect(isFirstTranslation(legacy('translation_found'))).toBe(false);
+  it('evidence-BACKED translation_found → not_first (real demotion)', () => {
+    const b: FirstTranslationBook = {
+      visible: true, pages_translated: 50,
+      translation_verification: { disposition: 'translation_found', translations_found: [{ translator: 'Gibson', year: '1894' }] },
+    };
+    expect(firstTranslationVerdict(b)).toBe('not_first');
+    expect(isFirstTranslation(b)).toBe(false);
+  });
+
+  it('evidence-FREE translation_found → needs_review, NOT a demotion (de Serres class)', () => {
+    // The cron set ~42% of translation_found with no recorded prior; treating
+    // those as not_first wrongly demoted genuine firsts (Olivier de Serres).
+    expect(firstTranslationVerdict(legacy('translation_found'))).toBe('needs_review');
+    const withEmpty: FirstTranslationBook = {
+      visible: true, pages_translated: 50,
+      translation_verification: { disposition: 'translation_found', translations_found: [] },
+    };
+    expect(firstTranslationVerdict(withEmpty)).toBe('needs_review');
+    expect(isFirstTranslation(withEmpty)).toBe(false); // needs_review still doesn't badge
   });
 
   it('treats legacy first_complete_translation as our-complete (passes the gate)', () => {
