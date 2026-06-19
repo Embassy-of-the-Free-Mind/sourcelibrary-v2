@@ -57,14 +57,14 @@ export default function CannabisBanguePage() {
           over coffee in a London coffeehouse. Knox had spent nearly twenty years a captive in Ceylon and
           credited the plant with keeping him well on foul water during his escape. Hooke gave the Society the
           plant&apos;s names as the traders knew them:{' '}
-          <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/695595e67bd6d2cd1d620307" className="text-accent-rust hover:text-accent-rust underline">
             &ldquo;&apos;Tis call&apos;d, by the <em>Moors</em>, Gange; by the <em>Chingalese</em>, Comsa, and by
             the <em>Portugals</em>, Bangue.&rdquo;
           </Link>
         </p>
 
         <figure className="my-12">
-          <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/390">
+          <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/69ef286185daccce30f2cb87">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg"
@@ -75,23 +75,23 @@ export default function CannabisBanguePage() {
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             &ldquo;Bangue&rdquo; &mdash; cannabis as the Portuguese met it in the Indies. Cristóvão da Costa,
             <em> Tractado de las Drogas y Medicinas de las Indias Orientales</em>, 1578.{' '}
-            <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/390" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+            <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/69ef286185daccce30f2cb87" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
           </figcaption>
         </figure>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
           Hooke&apos;s report, printed posthumously in his{' '}
-          <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/695595e67bd6d2cd1d620307" className="text-accent-rust hover:text-accent-rust underline">
             <em>Philosophical Experiments and Observations</em>
           </Link>{' '}
           (1726), is precise and a little astonished. The dose is{' '}
-          <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/695595e67bd6d2cd1d620307" className="text-accent-rust hover:text-accent-rust underline">
             &ldquo;about as much as may fill a common Tobacco-Pipe&rdquo;
           </Link>; the patient grows{' '}
-          <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/695595e67bd6d2cd1d620307" className="text-accent-rust hover:text-accent-rust underline">
             &ldquo;unable to speak a Word of Sense, yet is he very merry, and laughs, and sings&rdquo;
           </Link>. And his verdict: it might{' '}
-          <Link href="/book/philosophical-experiments-and-observations-hooke/page/226" className="text-accent-rust hover:text-accent-rust underline">
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/695595e67bd6d2cd1d620309" className="text-accent-rust hover:text-accent-rust underline">
             &ldquo;prove as considerable a Medicine in Drugs, as any that is brought from the Indies&rdquo;
           </Link>. He even tried to grow the seeds in London.
         </p>
@@ -128,10 +128,10 @@ export default function CannabisBanguePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Read the European herbals and you would never guess cannabis could do anything to the mind. From
             Dioscorides through the hand-coloured woodcuts of the 1484{' '}
-            <Link href="/book/herbarius-latinus-with-german-synonyms/page/107" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/herbarius-latinus-with-german-synonyms/page/69dbca381040d1d5e20aa2b1" className="text-accent-rust hover:text-accent-rust underline">
               <em>Herbarius latinus</em>
             </Link>, Leonhart Fuchs&apos;s{' '}
-            <Link href="/book/de-historia-stirpium-commentarii-insignes-fuchs-2/page/426" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/de-historia-stirpium-commentarii-insignes-fuchs-2/page/69a5d8114d84314297c08ace" className="text-accent-rust hover:text-accent-rust underline">
               <em>De historia stirpium</em>
             </Link>{' '}
             (1542), and Mattioli&apos;s Italian <em>Discorsi</em> (1568), hemp is a sober fibre-and-seed crop:
@@ -145,7 +145,7 @@ export default function CannabisBanguePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The <em>other</em> life of the plant lived in the East, under entirely different names, and those
             texts are in the collection too. The oldest is the most startling. The Chinese{' '}
-            <Link href="/book/the-divine-farmers-classic-of-materia-medica/page/68" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/the-divine-farmers-classic-of-materia-medica/page/69ee19caa478f461b9eb639b" className="text-accent-rust hover:text-accent-rust underline">
               <em>Shennong Bencao Jing</em>
             </Link>{' '}
             (by ~200 BCE) already warns that eating cannabis flowers &ldquo;makes people see ghosts and run
@@ -159,7 +159,7 @@ export default function CannabisBanguePage() {
             files it among the fast-acting drugs, &ldquo;for example, cannabis and opium.&rdquo; The Islamic
             world made the resin a mass intoxicant and gave us, by way of the hashish-eaters, our word{' '}
             <em>assassin</em> &mdash; a story Edward Lane lays out in his{' '}
-            <Link href="/book/an-account-of-the-manners-and-customs-of-the-modern-lane/page/374" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/an-account-of-the-manners-and-customs-of-the-modern-lane/page/69907936b621b177c1af5b49" className="text-accent-rust hover:text-accent-rust underline">
               <em>Modern Egyptians</em>
             </Link>.
           </p>
@@ -169,7 +169,7 @@ export default function CannabisBanguePage() {
             cannabis residue in mortuary braziers at the Jirzankal cemetery in the Pamirs, dated to about
             500 BCE &mdash; ritual cannabis smoking that predates every text we hold. Herodotus saw a version
             of it among the Scythians: in our{' '}
-            <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus/page/298" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus/page/69937cdbc970b9f8351dd39d" className="text-accent-rust hover:text-accent-rust underline">
               <em>Histories</em>
             </Link>{' '}
             they throw hemp-seed on hot stones and howl with pleasure in the vapour-bath.
@@ -186,7 +186,7 @@ export default function CannabisBanguePage() {
             The two lives met at a single word: <strong>bangue</strong>. It is the Portuguese transliteration
             (from Persian <em>bang</em>, Sanskrit <em>bhaṅgā</em>) that the Indies pharmacologists carried into
             European print &mdash; Garcia de Orta, Monardes, and Cristóvão da Costa, whose{' '}
-            <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/391" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/69ef286185daccce30f2cb88" className="text-accent-rust hover:text-accent-rust underline">
               <em>Tractado de las Drogas</em>
             </Link>{' '}
             (1578) gives a chapter and a botanical plate to &ldquo;the Bangue.&rdquo; It is <em>bangue</em>{' '}
@@ -206,7 +206,7 @@ export default function CannabisBanguePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             By the time Baudelaire is dissolving a spoonful of{' '}
-            <Link href="/book/les-paradis-artificiels-opium-et-haschisch-charles-baudelair/page/115" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/les-paradis-artificiels-opium-et-haschisch-charles-baudelair/page/6a08a2b743d85a6ece189398" className="text-accent-rust hover:text-accent-rust underline">
               <em>dawamesc</em>
             </Link>{' '}
             in <em>Les Paradis Artificiels</em> (1860) and Fitz Hugh Ludlow is narrating his visions in{' '}
@@ -251,7 +251,7 @@ export default function CannabisBanguePage() {
           <ul className="list-disc list-inside space-y-2 text-secondary font-body text-sm">
             <li>
               Robert Hooke,{' '}
-              <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+              <Link href="/book/philosophical-experiments-and-observations-hooke/page/695595e67bd6d2cd1d620307" className="text-accent-rust hover:text-accent-rust underline">
                 <em>Philosophical Experiments and Observations</em>
               </Link>{' '}
               (1726) &mdash; &ldquo;An Account of the Plant called Bangue&rdquo; (read to the Royal Society, 1689).
