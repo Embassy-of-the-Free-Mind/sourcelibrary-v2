@@ -254,7 +254,15 @@ if (BOOK_ID) {
   }
   globalThis.SKIP_PAGE_IDS = existing;
   pageQuery.book_id = { $in: targetIds };
-  console.log(`${existing.size.toLocaleString()} pages already embedded — will embed the rest.`);
+  // Scope the stream to UNtranslated OCR pages only — the embeddable tail.
+  // Without this we'd drag every already-embedded page (full ocr.data text)
+  // of these partially-translated books over the wire just to skip it. The
+  // skip-set above stays as a correctness backstop for the rare untranslated
+  // page that was somehow already embedded.
+  delete pageQuery.$or;
+  pageQuery['ocr.data'] = { $exists: true, $type: 'string' };
+  pageQuery['translation.data'] = { $exists: false };
+  console.log(`${existing.size.toLocaleString()} pages already embedded — streaming only untranslated OCR pages.`);
 } else if (RESTALE) {
   // Find rows whose Mongo source has moved past the Supabase mongo_updated_at
   // watermark — re-OCR or re-translation in Mongo without a re-embed. The
