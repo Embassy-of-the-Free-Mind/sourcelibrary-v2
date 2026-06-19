@@ -47,7 +47,11 @@ export default function CannabisBanguePage() {
       <article className="prose-content max-w-none">
         {/* Lede */}
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          On 18 December 1689, Robert Hooke &mdash; curator of experiments at the Royal Society, Newton&apos;s
+          On 18 December 1689,{' '}
+          <Link href="/author/robert-hooke" className="text-accent-rust hover:text-accent-rust underline">
+            Robert Hooke
+          </Link>{' '}
+          &mdash; curator of experiments at the Royal Society, Newton&apos;s
           rival, the man who gave biology the word <em>cell</em> &mdash; stood before the Fellows to describe
           a drug. He had been handed a sample six weeks earlier by an old friend, the sea-captain Robert Knox,
           over coffee in a London coffeehouse. Knox had spent nearly twenty years a captive in Ceylon and
