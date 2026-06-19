@@ -372,9 +372,9 @@ export default async function SponsorsPage() {
             <Link href="/support" className="underline hover:text-stone-300">
               /support
             </Link>
-            . For founding-donor programs, see{' '}
-            <Link href="/founding-donors" className="underline hover:text-stone-300">
-              /founding-donors
+            . For our vision and founding-donor plan, see{' '}
+            <Link href="/vision" className="underline hover:text-stone-300">
+              /vision
             </Link>
             .
           </p>
