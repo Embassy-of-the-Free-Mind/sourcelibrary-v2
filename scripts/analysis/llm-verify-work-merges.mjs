@@ -1,0 +1,248 @@
+/**
+ * llm-verify-work-merges.mjs — author-blocked LLM clustering for the divergent-
+ * title tail (#1634 / #2264).
+ *
+ * The divergent-title cross-language case ("De occulta philosophia" ⇄ "Three
+ * Books of Occult Philosophy") defeats every string/embedding method — the
+ * bridge is *knowledge*, not computation. This is the scalable version of the
+ * hand-adjudication: Gemini in "Compare" mode, blocked by canonical author,
+ * proposes which of an author's works are the same intellectual work.
+ *
+ * Design (matches the field consensus — GLIMIR "merge-only, never split"):
+ *  - Block by author_id (NEVER merge across authors).
+ *  - Build one ITEM per distinct current work_id (+ one per unset book).
+ *  - Ask Gemini to group items that are the SAME work (editions/translations),
+ *    keeping distinct works / series volumes separate. HIGH-confidence only.
+ *  - Apply: reassign all books in a merged group to one canonical work_id
+ *    (prefer an existing Wikidata QID > existing local slug > mint). Never
+ *    splits an existing cluster. Backup + reversible source tag.
+ *
+ *   node scripts/analysis/llm-verify-work-merges.mjs                 # dry-run (proposals + sample)
+ *   node scripts/analysis/llm-verify-work-merges.mjs --limit-authors 40
+ *   node scripts/analysis/llm-verify-work-merges.mjs --apply         # write HIGH merges (+backup)
+ *
+ * Env: MONGODB_URI, GEMINI_API_KEY_TIER3|GEMINI_API_KEY. Model: gemini-3.1-flash-lite.
+ */
+import { MongoClient } from 'mongodb';
+import fs from 'node:fs';
+
+const APPLY = process.argv.includes('--apply');
+const LIMIT_AUTHORS = parseInt((process.argv.find(a => a.startsWith('--limit-authors=')) || '').split('=')[1]
+  || process.argv[process.argv.indexOf('--limit-authors') + 1] || '0', 10) || 0;
+const KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+const MODEL = 'gemini-3.1-flash-lite';
+const GEN_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`;
+if (!KEY) { console.error('GEMINI_API_KEY[_TIER3] not set'); process.exit(1); }
+
+const deacc = s => (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const slug = s => deacc(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+const isQID = w => /^Q\d/.test(w || '');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+const SCHEMA = {
+  type: 'object',
+  properties: {
+    groups: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          members: { type: 'array', items: { type: 'string' } },   // item refs
+          canonical_title: { type: 'string' },
+          confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+          reason: { type: 'string' },
+        },
+        required: ['members', 'canonical_title', 'confidence', 'reason'],
+      },
+    },
+  },
+  required: ['groups'],
+};
+
+async function clusterAuthor(authorName, items) {
+  const list = items.map(it => `${it.ref}: "${it.title}" [${[...it.langs].join('/')}${it.years ? ' ' + it.years : ''}]`).join('\n');
+  const prompt = `You are a bibliographic cataloger applying FRBR Work-level identity. All items below are by the author "${authorName}". Group the items that are the SAME intellectual WORK — i.e. editions, printings, or translations of one work belong together, even when their titles differ across languages (e.g. "De occulta philosophia libri tres" and "Three Books of Occult Philosophy" are ONE work).
+
+Rules:
+- DIFFERENT works stay in their own group (even if they share a series title, a collected-edition title, or a preface).
+- Separate VOLUMES or PARTS of a multi-volume set are DIFFERENT works — do NOT merge "Vol. 1" with "Vol. 2", or different dialogues/books of a collection.
+- A commentary ON a work, or a single excerpt OF a work, is a different work from the whole — keep separate unless clearly the same text.
+- Use your bibliographic knowledge of original-vs-translated titles. When you are NOT confident two items are the same work, keep them in separate groups (under-cluster — never guess a merge).
+- Every item ref must appear in exactly one group. Singletons get their own one-member group.
+- confidence: "high" only when you are sure; "medium"/"low" otherwise. Give a clean canonical (preferably original-language) uniform title per group.
+
+Items:
+${list}`;
+
+  const body = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { responseMimeType: 'application/json', responseSchema: SCHEMA, thinkingConfig: { thinkingBudget: 0 }, temperature: 0 },
+  };
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const r = await fetch(GEN_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(60000) });
+      if (r.status === 429) { await sleep(5000 * (attempt + 1)); continue; }
+      if (!r.ok) { if (attempt === 3) throw new Error(`Gemini ${r.status}: ${(await r.text()).slice(0, 200)}`); await sleep(2000); continue; }
+      const j = await r.json();
+      const txt = j.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!txt) { if (attempt === 3) return null; await sleep(1500); continue; }
+      return JSON.parse(txt);
+    } catch (e) { if (attempt === 3) { console.error(`  ! ${authorName}: ${e.message}`); return null; } await sleep(2000); }
+  }
+  return null;
+}
+
+// volume guard: reject a group whose member titles carry conflicting vol/band numbers
+function hasVolumeConflict(titles) {
+  const nums = new Set();
+  for (const t of titles) {
+    const m = (t || '').match(/\b(?:vol\.?|band|tome|part|teil|book)\s*\.?\s*(\d{1,3})\b/i);
+    if (m) nums.add(m[1]);
+  }
+  return nums.size > 1;
+}
+
+const _afIdx = process.argv.indexOf('--apply-from');
+const APPLY_FROM = (process.argv.find(a => a.startsWith('--apply-from=')) || '').split('=')[1]
+  || (_afIdx !== -1 && process.argv[_afIdx + 1] && !process.argv[_afIdx + 1].startsWith('--') ? process.argv[_afIdx + 1] : '');
+
+const mc = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
+await mc.connect();
+const db = mc.db('bookstore');
+const books = db.collection('books');
+const authorsCol = db.collection('authors');
+
+// ── apply-from-file: no LLM spend — apply HIGH merges from a saved proposal ──
+if (APPLY_FROM) {
+  const data = JSON.parse(fs.readFileSync(APPLY_FROM, 'utf8'));
+  const high = (data.proposals || []).filter(p => p.confidence === 'high');
+  const outDir2 = new URL('../output/', import.meta.url).pathname;
+  const writes = [];
+  for (const p of high) {
+    const wids = p.members.map(m => m.currentWorkId).filter(Boolean);
+    const wid = wids.find(isQID) || wids.filter(w => w.startsWith('local:')).sort()[0] || `local:a:${p.author_id}:${slug(p.canonical_title)}`;
+    for (const id of p.bookIds) writes.push({ id, work_id: wid, title: p.canonical_title });
+  }
+  fs.writeFileSync(`${outDir2}llm-work-merge-apply-backup.json`, JSON.stringify({ when: 'apply-from', source: APPLY_FROM, groups: high.length, writes }, null, 2));
+  console.log(`apply-from ${APPLY_FROM}: ${high.length} HIGH merge groups → ${writes.length} book writes`);
+  let mod = 0;
+  for (const w of writes) {
+    const r = await books.updateOne({ id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() } });
+    mod += r.modifiedCount;
+  }
+  console.log(`applied: ${mod} book records updated`);
+  await mc.close();
+  process.exit(0);
+}
+
+const TEXT = { visible: true, pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] }, author_id: { $exists: true, $ne: null } };
+const all = await books.find(TEXT, { projection: { id: 1, work_id: 1, title: 1, display_title: 1, language: 1, year: 1, author_id: 1 } }).toArray();
+
+// group by author -> items (one per work_id, one per unset book)
+const byAuthor = new Map();
+for (const b of all) { if (!byAuthor.has(b.author_id)) byAuthor.set(b.author_id, []); byAuthor.get(b.author_id).push(b); }
+
+// candidate authors: have a possible merge (>=2 distinct work_ids, OR an unset book alongside another item)
+const candidates = [];
+for (const [aid, bks] of byAuthor) {
+  const items = new Map(); // key -> {ref,title,langs,years,currentWorkId,bookIds}
+  for (const b of bks) {
+    const key = b.work_id || `unset:${b.id}`;
+    if (!items.has(key)) items.set(key, { key, title: b.display_title || b.title || '', langs: new Set(), years: [], currentWorkId: b.work_id || null, bookIds: [] });
+    const it = items.get(key);
+    it.bookIds.push(b.id);
+    if (b.language) it.langs.add(b.language);
+    if (typeof b.year === 'number') it.years.push(b.year);
+    const t = b.display_title || b.title || '';
+    if (t.length > it.title.length) it.title = t;   // representative = longest title
+  }
+  const arr = [...items.values()];
+  if (arr.length < 2) continue;                      // nothing to merge
+  if (arr.length > 50) continue;                     // skip pathological mega-authors (handle separately)
+  arr.forEach((it, i) => { it.ref = 'I' + i; it.years = it.years.length ? `${Math.min(...it.years)}${Math.max(...it.years) !== Math.min(...it.years) ? '-' + Math.max(...it.years) : ''}` : ''; });
+  candidates.push({ aid, items: arr });
+}
+
+// resolve author names
+const aids = candidates.map(c => c.aid);
+const nameMap = new Map();
+for (let i = 0; i < aids.length; i += 500) {
+  const docs = await authorsCol.find({ _id: { $in: aids.slice(i, i + 500) } }, { projection: { name: 1 } }).toArray();
+  for (const d of docs) nameMap.set(d._id, d.name);
+}
+
+let pool = candidates;
+if (LIMIT_AUTHORS) pool = candidates.slice(0, LIMIT_AUTHORS);
+console.log(`Candidate authors with a possible merge: ${candidates.length}${LIMIT_AUTHORS ? ` (processing ${pool.length})` : ''}`);
+
+const proposals = [];
+let processed = 0, mergeGroups = 0;
+const CONC = 12;
+async function runAuthor(c) {
+  const authorName = nameMap.get(c.aid) || c.aid;
+  const res = await clusterAuthor(authorName, c.items);
+  processed++;
+  if (processed % 20 === 0) process.stderr.write(`  ${processed}/${pool.length} authors...\n`);
+  if (!res?.groups) return;
+  const itemByRef = new Map(c.items.map(it => [it.ref, it]));
+  for (const g of res.groups) {
+    const mems = (g.members || []).map(r => itemByRef.get(r)).filter(Boolean);
+    if (mems.length < 2) continue;                                   // singleton group = no merge
+    // skip if all members already share one work_id (no-op)
+    const cwids = new Set(mems.map(m => m.currentWorkId).filter(Boolean));
+    const allBooks = mems.flatMap(m => m.bookIds);
+    if (cwids.size <= 1 && !mems.some(m => !m.currentWorkId)) continue;
+    if (hasVolumeConflict(mems.map(m => m.title))) continue;         // series guard
+    mergeGroups++;
+    proposals.push({
+      author: authorName, author_id: c.aid, confidence: g.confidence, reason: g.reason,
+      canonical_title: g.canonical_title,
+      members: mems.map(m => ({ ref: m.ref, title: m.title, langs: [...m.langs], currentWorkId: m.currentWorkId, nBooks: m.bookIds.length })),
+      bookIds: allBooks,
+    });
+  }
+}
+
+// concurrency pool
+for (let i = 0; i < pool.length; i += CONC) {
+  await Promise.all(pool.slice(i, i + CONC).map(runAuthor));
+}
+
+const outDir = new URL('../output/', import.meta.url).pathname;
+fs.mkdirSync(outDir, { recursive: true });
+fs.writeFileSync(`${outDir}llm-work-merge-proposals.json`, JSON.stringify({ processed, candidateAuthors: candidates.length, mergeGroups, proposals }, null, 2));
+
+const high = proposals.filter(p => p.confidence === 'high');
+const crossLang = high.filter(p => new Set(p.members.flatMap(m => m.langs)).size > 1);
+console.log(`\n── Proposed merges ──`);
+console.log(`groups: ${proposals.length} (HIGH ${high.length}, of which cross-language ${crossLang.length})`);
+console.log(`\n── Sample HIGH cross-language merges (the divergent-title wins) ──`);
+for (const p of crossLang.slice(0, 12)) {
+  console.log(`\n  [${p.author}] → ${p.canonical_title}`);
+  for (const m of p.members) console.log(`     "${m.title.slice(0, 56)}" [${m.langs.join('/')}]`);
+  console.log(`     ${p.reason.slice(0, 120)}`);
+}
+console.log(`\nProposal → ${outDir}llm-work-merge-proposals.json`);
+
+if (APPLY) {
+  const backup = `${outDir}llm-work-merge-backup.json`;
+  const writes = [];
+  for (const p of high) {
+    // canonical work_id: prefer existing QID > existing local slug (sorted) > mint
+    const wids = p.members.map(m => m.currentWorkId).filter(Boolean);
+    let wid = wids.find(isQID) || wids.filter(w => w.startsWith('local:')).sort()[0]
+      || `local:a:${p.author_id}:${slug(p.canonical_title)}`;
+    for (const id of p.bookIds) writes.push({ id, work_id: wid, title: p.canonical_title });
+  }
+  fs.writeFileSync(backup, JSON.stringify({ when: 'apply', groups: high.length, writes }, null, 2));
+  console.log(`\n--apply: ${high.length} HIGH merges → ${writes.length} book writes (backup ${backup})`);
+  let mod = 0;
+  for (const w of writes) {
+    // reassign even if already set (cross-slug unify) — but only within this LLM pass's books
+    const r = await books.updateOne({ id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() } });
+    mod += r.modifiedCount;
+  }
+  console.log(`applied: ${mod} book records updated`);
+}
+
+await mc.close();

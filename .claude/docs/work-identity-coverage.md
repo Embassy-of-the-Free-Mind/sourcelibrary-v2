@@ -87,7 +87,23 @@ Earlier coverage-census numbers (2026-06-18): reliable **797 works** (52 both /
 `text_role` accuracy** — a source-language original mistagged `modern-translation`
 shows as a false gap (e.g. Āryabhaṭīya). Clean `text_role` before trusting it.
 
-## The merge layer — in progress (2026-06-20, textual coverage now 89.2%)
+## The merge layer — textual coverage now 91.6% (2026-06-20)
+**14,920 / 16,280 textual books carry a work_id; 4,115 sit in 1,287 multi-edition
+works** (the dedup payoff — `filterDuplicateWorks` can finally act). Four tiers,
+all reversible by `work_id_source`:
+- `local-mint` (11,874) — deterministic singleton backbone.
+- `work-merge:identical-title-deterministic` (440) — exact author+title key.
+- `work-merge:hand-adjudicated` (144) — individually judged, uniform titles.
+- `work-merge:llm-verified` (2,491) — **`llm-verify-work-merges.mjs`**: Gemini
+  Compare mode, author-blocked, HIGH-only, volume-guard. 799 merge groups, 302
+  cross-language — the divergent-title tail no string/embedding method reaches
+  (Agrippa *De occulta* ⇄ "Three Books of Occult Philosophy"; Aelian *Varia
+  Historia* = "Various History"/"Historical Miscellany"; Avicenna *Canon* ×15
+  Latin+Arabic). Validation 16/16; the few soft spots are mild over-merges of
+  works that always travel bound together (reversible).
+
+### earlier note (superseded above)
+The merge layer began as hand-adjudication (89.2%):
 Per the field consensus (GLIMIR "merge-only, never split"), the 726 held
 clusters are being adjudicated, NOT auto-merged. Done so far: **543 duplicate
 editions collapsed into 200 multi-edition works**, all reversible by source tag:
