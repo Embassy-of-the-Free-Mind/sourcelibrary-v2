@@ -128,7 +128,7 @@ export default function CountingFirstTranslationsPage() {
         <div className="bg-white rounded-xl border border-border-light p-6 mb-8">
           <p className="text-primary font-semibold mb-2">Best current estimate</p>
           <p className="text-secondary leading-relaxed mb-0">
-Roughly <strong>5,700 genuine first English translations</strong> across the library (95% interval ~4,800&ndash;6,700) &mdash; about <strong>3,800</strong> among the books we badge today plus another <strong>~1,900</strong> we never flagged &mdash; against ~14,000 translated, non-English books in all. That&apos;s a first translation for something like <strong>two of every five</strong> eligible books.
+Roughly <strong>5,700 genuine first English translations</strong> across the library (95% interval ~4,900&ndash;6,400) &mdash; about <strong>3,800</strong> among the books we badge today plus another <strong>~1,900</strong> we never flagged &mdash; against ~14,000 translated, non-English books in all. That&apos;s a first translation for something like <strong>two of every five</strong> eligible books.
           </p>
         </div>
 
@@ -157,7 +157,7 @@ Roughly <strong>5,700 genuine first English translations</strong> across the lib
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 text-muted text-sm">
-          Methodology and code are tracked in our public repository (issue #2564). Figures from a 462-book sample of badged firsts and a 73-book sample of the never-assessed pool, June 2026; sampling intervals are 95% Wilson. The recall sample is still widening and the re-balancing has not yet run, so these numbers will firm up.
+          Methodology and code are tracked in our public repository (issue #2564). Figures from a 462-book sample of the badged firsts and a 150-book sample of the never-assessed pool, June 2026; sampling intervals are 95% Wilson. The re-balancing has not yet run, so the per-book badges will catch up to these aggregate numbers over the coming weeks.
         </p>
       </article>
 
