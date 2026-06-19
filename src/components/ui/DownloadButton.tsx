@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import { trackEvent } from '@/lib/track-event';
 import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 
@@ -112,6 +113,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
+      trackEvent('download', { bookId, format });
       setIsOpen(false);
     } catch (error) {
       console.error('Download error:', error);

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Share2, Twitter, Link2, Check, MessageCircle, Phone } from 'lucide-react';
+import { trackEvent } from '@/lib/track-event';
 
 function getRuntimeOrigin(): string {
   if (typeof window !== 'undefined' && window.location?.origin) {
@@ -101,11 +102,15 @@ export default function ShareButton({
   const tweetText = buildTweetText();
 
   // Share handlers
+  const logShare = (channel: string) =>
+    trackEvent('share', { channel, url: shareUrl, page, hasDoi: !!doi });
+
   const shareToTwitter = () => {
     const twitterUrl = new URL('https://twitter.com/intent/tweet');
     twitterUrl.searchParams.set('text', tweetText);
     twitterUrl.searchParams.set('url', shareUrl);
     window.open(twitterUrl.toString(), '_blank', 'width=550,height=420');
+    logShare('twitter');
     setShowMenu(false);
   };
 
@@ -116,6 +121,7 @@ export default function ShareButton({
       : `${citation}\n\n${shareUrl}`;
     bskyUrl.searchParams.set('text', fullText);
     window.open(bskyUrl.toString(), '_blank', 'width=550,height=420');
+    logShare('bluesky');
     setShowMenu(false);
   };
 
@@ -125,6 +131,7 @@ export default function ShareButton({
       : `${citation}\n${shareUrl}`;
     const waUrl = `https://wa.me/?text=${encodeURIComponent(waText)}`;
     window.open(waUrl, '_blank');
+    logShare('whatsapp');
     setShowMenu(false);
   };
 
@@ -134,6 +141,7 @@ export default function ShareButton({
       : `${citation} — Source Library`;
     const pinUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(desc)}`;
     window.open(pinUrl, '_blank', 'width=750,height=550');
+    logShare('pinterest');
     setShowMenu(false);
   };
 
@@ -144,6 +152,7 @@ export default function ShareButton({
 
     await navigator.clipboard.writeText(textToCopy);
     setCopied(true);
+    logShare('link');
     setTimeout(() => setCopied(false), 2000);
     setShowMenu(false);
   };
@@ -153,6 +162,7 @@ export default function ShareButton({
     const quoteToCopy = `"${text}"\n\n— ${citation}${doi ? `\nDOI: ${doi}` : ''}`;
     await navigator.clipboard.writeText(quoteToCopy);
     setCopied(true);
+    trackEvent('quote_copy', { url: shareUrl, page, hasDoi: !!doi });
     setTimeout(() => setCopied(false), 2000);
     setShowMenu(false);
   };

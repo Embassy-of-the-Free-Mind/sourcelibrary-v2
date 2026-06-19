@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Quote, Copy, Check } from 'lucide-react';
+import { trackEvent } from '@/lib/track-event';
 
 function getRuntimeOrigin(): string {
   if (typeof window !== 'undefined' && window.location?.origin) {
@@ -174,6 +175,7 @@ export default function CiteButton({
   const copyToClipboard = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedId(id);
+    trackEvent('cite', { bookId, format: id, page: pageNumber, hasDoi: !!doi });
     setTimeout(() => setCopiedId(null), 2000);
   };
 
