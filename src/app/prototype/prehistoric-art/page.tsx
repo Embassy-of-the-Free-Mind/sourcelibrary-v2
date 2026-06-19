@@ -14,8 +14,9 @@ export const metadata: Metadata = {
  * image-making") belong in Source Library, and if so does the `artwork`
  * content-type / gallery visual language carry it?
  *
- * Images are hot-linked from Don Hitchcock's donsmaps.com, which licenses his
- * photographs under CC BY 4.0 (attribution requested; see his copyright page).
+ * Images are self-hosted on R2 under prototype/prehistoric-art/<id>.jpg,
+ * mirrored from Don Hitchcock's donsmaps.com (photographs licensed CC BY 4.0;
+ * attribution requested). Mirror script: scripts/_tmp_mirror_prehistoric.mjs.
  * The objects themselves are prehistoric → public domain. Third-party museum
  * house-rules on object images are a theoretical (low) risk, hence: not public.
  *
@@ -25,7 +26,8 @@ export const metadata: Metadata = {
  * stays the index/inspiration, not the import target.
  */
 
-const DONSMAPS = 'https://donsmaps.com';
+const R2 = 'https://images.sourcelibrary.org/prototype/prehistoric-art';
+const imgUrl = (id: string) => `${R2}/${id}.jpg`;
 
 type Artwork = {
   id: string;
@@ -34,11 +36,10 @@ type Artwork = {
   site: string;
   museum: string;
   medium: string;
-  img: string; // path on donsmaps.com
   blurb: string;
 };
 
-const ARTWORKS: Artwork[] = [
+const FIGURINES: Artwork[] = [
   {
     id: 'lion-man',
     title: 'The Lion Man (Löwenmensch)',
@@ -46,7 +47,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Hohlenstein-Stadel, Germany',
     museum: 'Museum Ulm',
     medium: 'Mammoth ivory',
-    img: '/images23/lionladyrect.jpg',
     blurb:
       'A standing figure with a lion’s head — the oldest known representation of a being that never existed. Roughly 300 hours of carving with a flint blade, made when the last ice age was at its coldest.',
   },
@@ -57,7 +57,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Hohle Fels Cave, Germany',
     museum: 'Urgeschichtliches Museum, Blaubeuren',
     medium: 'Mammoth ivory',
-    img: '/images14/hohlefelsrect.jpg',
     blurb:
       'The oldest undisputed depiction of a human being yet found. A carved ring in place of a head suggests it was worn as a pendant.',
   },
@@ -68,7 +67,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Geißenklösterle, Germany',
     museum: 'Württembergisches Landesmuseum',
     medium: 'Carved ivory relief',
-    img: '/images24/adorantrect.jpg',
     blurb:
       'A tiny relief of a figure with raised arms. On the reverse, rows of incised notches may be one of the earliest attempts at a calendar or tally.',
   },
@@ -79,7 +77,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Willendorf, Austria',
     museum: 'Naturhistorisches Museum, Vienna',
     medium: 'Oolitic limestone, traces of red ochre',
-    img: '/clickphotos/venusw200x100.jpg',
     blurb:
       'The most famous Palaeolithic figurine. The stone is not local — it travelled, or its maker did — and was once coloured with red ochre.',
   },
@@ -90,7 +87,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Rideaux Cave, Lespugue, France',
     museum: 'Musée de l’Homme, Paris',
     medium: 'Tusk ivory',
-    img: '/images23/lespuguerect.jpg',
     blurb:
       'Carved with a near-geometric symmetry that fascinated 20th-century artists — Picasso kept two casts of it in his studio.',
   },
@@ -101,7 +97,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Dolní Věstonice, Moravia',
     museum: 'Pavilon Anthropos, Brno',
     medium: 'Fired clay',
-    img: '/clickphotos/dolni200x100.jpg',
     blurb:
       'Among the oldest known ceramics anywhere — fired more than ten thousand years before pottery vessels existed. A fingerprint of a child is baked into a nearby fragment.',
   },
@@ -112,7 +107,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Brassempouy, France',
     museum: 'Musée d’Archéologie Nationale',
     medium: 'Mammoth ivory',
-    img: '/clickphotos/ayla200x100.jpg',
     blurb:
       'One of the earliest realistic representations of a human face — a hood or hairstyle rendered in fine cross-hatching above calm, deliberate features.',
   },
@@ -123,7 +117,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Laussel, Dordogne, France',
     museum: 'Musée d’Aquitaine, Bordeaux',
     medium: 'Limestone bas-relief',
-    img: '/images23/lausselrect.jpg',
     blurb:
       'A figure carved into a rock shelter wall, holding a crescent — possibly a horn — incised with thirteen marks, read by some as a lunar count.',
   },
@@ -134,7 +127,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Barma Grande, Grimaldi',
     museum: 'Musée d’Archéologie Nationale',
     medium: 'Yellow steatite',
-    img: '/images24/mentonrect.jpg',
     blurb:
       'One of the Balzi Rossi figurines from the Italian–French Riviera caves — a series carved in soft, jewel-coloured stones.',
   },
@@ -145,7 +137,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Balzi Rossi, Italy',
     museum: 'Private collection',
     medium: 'Serpentine',
-    img: '/images24/doublerect.jpg',
     blurb:
       'Two figures sharing a single body, carved from green serpentine — an early image of pairing, or of two states of one being.',
   },
@@ -156,7 +147,6 @@ const ARTWORKS: Artwork[] = [
     site: 'Hohle Fels Cave, Germany',
     museum: 'Urgeschichtliches Museum, Blaubeuren',
     medium: 'Polished siltstone',
-    img: '/images26/hohlephallusrect.jpg',
     blurb:
       'A finely polished stone, reassembled from fragments — one of the oldest unambiguous representations of male anatomy, and possibly also a tool.',
   },
@@ -167,11 +157,114 @@ const ARTWORKS: Artwork[] = [
     site: 'Berekhat Ram, Golan Heights',
     museum: 'Hebrew University of Jerusalem',
     medium: 'Modified volcanic pebble',
-    img: '/images26/berekhatrect.jpg',
     blurb:
       'A pebble whose natural shape suggests a figure, deliberately enhanced with a few grooves — possibly made by Homo erectus, which would make it almost ten times older than anything else here.',
   },
 ];
+
+const CAVE_PAINTINGS: Artwork[] = [
+  {
+    id: 'chauvet-horses',
+    title: 'Panel of the Horses',
+    date: 'c. 36,000 BP',
+    site: 'Chauvet Cave, Ardèche, France',
+    museum: 'In situ (UNESCO World Heritage)',
+    medium: 'Charcoal on limestone',
+    blurb:
+      'Four horses’ heads drawn in overlapping profile, with stumping and shading to model the muzzles — perspective and volume tens of thousands of years before either was “invented.”',
+  },
+  {
+    id: 'chauvet-handprints',
+    title: 'Panel of Hand Prints',
+    date: 'c. 36,000 BP',
+    site: 'Chauvet Cave, Ardèche, France',
+    museum: 'In situ (UNESCO World Heritage)',
+    medium: 'Red ochre on limestone',
+    blurb:
+      'Hands pressed and stencilled onto the wall — the most direct trace any of these makers left: the print of a living hand, held up in the dark.',
+  },
+  {
+    id: 'lascaux-bulls',
+    title: 'The Hall of the Bulls',
+    date: 'c. 17,300 BP',
+    site: 'Lascaux, Dordogne, France',
+    museum: 'In situ (closed; replica Lascaux IV)',
+    medium: 'Ochre and manganese on limestone',
+    blurb:
+      'A frieze of aurochs, horses and stags wrapping a chamber, including the enigmatic spotted “unicorn.” One of the supreme achievements of ice-age painting.',
+  },
+  {
+    id: 'lascaux-black-bull',
+    title: 'The Great Black Bull',
+    date: 'c. 17,300 BP',
+    site: 'Lascaux (Axial Gallery), France',
+    museum: 'In situ (closed; replica Lascaux IV)',
+    medium: 'Manganese pigment on limestone',
+    blurb:
+      'At 3.7 metres long, the largest single figure at Lascaux — its body left as bare rock, its outline and head rendered in dense black.',
+  },
+  {
+    id: 'lascaux-shaft',
+    title: 'The Shaft Scene',
+    date: 'c. 17,300 BP',
+    site: 'Lascaux (the Well), France',
+    museum: 'In situ (closed; replica Lascaux IV)',
+    medium: 'Pigment on limestone',
+    blurb:
+      'A disembowelled bison, a bird-headed falling man, a spear, a rhinoceros — the most argued-over image in all of cave art, and a candidate for the oldest narrative scene.',
+  },
+  {
+    id: 'altamira-ceiling',
+    title: 'The Polychrome Ceiling',
+    date: 'c. 15,000–22,000 BP',
+    site: 'Altamira, Cantabria, Spain',
+    museum: 'In situ (Museo de Altamira)',
+    medium: 'Ochre, haematite and charcoal',
+    blurb:
+      'A herd of bison painted across a low ceiling, the artists using the rock’s natural bulges to give each animal a three-dimensional swell. Dismissed as a forgery when first published in 1880 — too good to be ancient.',
+  },
+  {
+    id: 'altamira-bison',
+    title: 'Polychrome Bison (detail)',
+    date: 'c. 15,000–22,000 BP',
+    site: 'Altamira, Cantabria, Spain',
+    museum: 'In situ (Museo de Altamira)',
+    medium: 'Ochre, haematite and charcoal',
+    blurb:
+      'A single curled bison from the great ceiling — pigment diluted to grade from deep red to soft brown, conjuring muscle and weight out of stone.',
+  },
+];
+
+function Card({ a }: { a: Artwork }) {
+  return (
+    <figure className="group overflow-hidden rounded-xl bg-[#161412] ring-1 ring-white/10 transition-all hover:ring-white/25">
+      <div className="relative aspect-[4/3] overflow-hidden bg-black">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imgUrl(a.id)}
+          alt={a.title}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
+      <figcaption className="p-4">
+        <div className="flex items-baseline justify-between gap-3">
+          <h3 className="font-serif text-lg text-stone-100">{a.title}</h3>
+          <span className="shrink-0 font-mono text-xs tabular-nums text-amber-300/70">
+            {a.date}
+          </span>
+        </div>
+        <p className="mt-1 text-xs text-stone-500">
+          {a.site} · {a.medium}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-stone-400">{a.blurb}</p>
+        <p className="mt-3 text-[11px] uppercase tracking-wide text-stone-600">
+          {a.museum}
+        </p>
+      </figcaption>
+    </figure>
+  );
+}
 
 export default function PrehistoricArtPrototype() {
   return (
@@ -203,58 +296,49 @@ export default function PrehistoricArtPrototype() {
           </h1>
           <p className="mt-5 text-base leading-relaxed text-stone-400">
             Before writing, before the city, before the wheel — people carved
-            faces, bodies, and impossible beings from ivory and stone. These are
-            among the oldest surviving works of human imagination, made across
-            forty thousand years of the last ice age. Source Library is built
-            around the read-and-quote experience of historical texts; this asks
-            what it would mean to hold the images that came before any text at
-            all.
+            faces, bodies, and impossible beings from ivory and stone, and
+            painted living animals across the walls of caves. These are among
+            the oldest surviving works of human imagination, made across forty
+            thousand years of the last ice age. Source Library is built around
+            the read-and-quote experience of historical texts; this asks what it
+            would mean to hold the images that came before any text at all.
           </p>
         </header>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {ARTWORKS.map((a) => (
-            <figure
-              key={a.id}
-              className="group overflow-hidden rounded-xl bg-[#161412] ring-1 ring-white/10 transition-all hover:ring-white/25"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-black">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`${DONSMAPS}${a.img}`}
-                  alt={a.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <figcaption className="p-4">
-                <div className="flex items-baseline justify-between gap-3">
-                  <h2 className="font-serif text-lg text-stone-100">
-                    {a.title}
-                  </h2>
-                  <span className="shrink-0 font-mono text-xs tabular-nums text-amber-300/70">
-                    {a.date}
-                  </span>
-                </div>
-                <p className="mt-1 text-xs text-stone-500">
-                  {a.site} · {a.medium}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-stone-400">
-                  {a.blurb}
-                </p>
-                <p className="mt-3 text-[11px] uppercase tracking-wide text-stone-600">
-                  {a.museum}
-                </p>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        {/* Carved figures */}
+        <section className="mb-16">
+          <h2 className="mb-1 font-serif text-2xl text-stone-100">
+            Carved figures
+          </h2>
+          <p className="mb-6 text-sm text-stone-500">
+            Ivory, stone and fired clay — the oldest sculptures in the world.
+          </p>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {FIGURINES.map((a) => (
+              <Card key={a.id} a={a} />
+            ))}
+          </div>
+        </section>
+
+        {/* Painted caves */}
+        <section className="mb-4">
+          <h2 className="mb-1 font-serif text-2xl text-stone-100">
+            The painted caves
+          </h2>
+          <p className="mb-6 text-sm text-stone-500">
+            Animals and signs drawn by firelight, deep underground.
+          </p>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {CAVE_PAINTINGS.map((a) => (
+              <Card key={a.id} a={a} />
+            ))}
+          </div>
+        </section>
 
         {/* Footer note */}
         <footer className="mt-14 border-t border-white/10 pt-6 text-sm text-stone-500">
           <p>
-            All photographs by Don Hitchcock and reproduced under{' '}
+            All photographs by Don Hitchcock, mirrored with attribution under{' '}
             <a
               href="https://creativecommons.org/licenses/by/4.0/"
               className="underline hover:text-stone-300"
@@ -273,7 +357,7 @@ export default function PrehistoricArtPrototype() {
               Don’s Maps
             </a>
             , a remarkable independent archive of Palaeolithic archaeology. The
-            artefacts depicted are public domain by virtue of age.
+            artefacts and paintings depicted are public domain by virtue of age.
           </p>
         </footer>
       </div>
