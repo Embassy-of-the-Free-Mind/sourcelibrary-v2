@@ -486,9 +486,12 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause
+  // Check processing_control pause. A targeted one-off (--book-id) bypasses it: it's an
+  // explicit manual archive of a single specified book, not queue auto-dispatch, so it
+  // should run regardless of the queue-level pause (matching the "bypassing the queue"
+  // intent of --book-id). The pause only gates the automatic queue path.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
+  if (control?.paused && !TARGET_BOOK_ID) {
     console.log(`[archive-bulk] Pipeline paused. Exiting.`);
     await client.close();
     process.exit(0);
