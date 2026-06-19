@@ -70,12 +70,31 @@ written to `/tmp/*proposals*.json`.
   without transliteration. (Gemini *can* transliterate Khmer/Tibetan/Hanzi Pali
   accurately — demonstrated — so a transliterate-then-match path is feasible.)
 
-## Current state (2026-06-18)
-Reliable coverage **797 works** (52 both / 643 original-only / 102 confirmed gaps);
-**10,076 works still "unknown"** (no work_id). Coverage of *what we hold* is
-trustworthy; the **gap side still inherits `text_role` accuracy** — a source-
-language original mistagged `modern-translation` shows as a false gap (e.g.
-Āryabhaṭīya). Clean `text_role` before trusting the gap list.
+## Current state (2026-06-20)
+**Textual work_id coverage 12.9% → 85.8%** after the deterministic local mint
+(`mint-local-work-ids.mjs`): 11,874 singleton work_ids written
+(`work_id_source:'local-mint'`, zero merge risk — every id unique). 2,020 books
+in 726 multi-edition clusters are **held for the human-gated merge review**
+(would lift coverage to ~98%). The reframe that unlocked this: **a work_id need
+not resolve to an external authority** — the Wikidata P50 resolver is *exhausted*
+on our esoteric corpus (re-run on the full Latin gap = 0 new HIGH), so we mint a
+deterministic `local:{author_id}:{uniform-title-slug}` backbone (OCLC FRBR
+Work-Set pattern) and treat Wikidata QIDs / `translation_catalogs` as
+enrichment on top. Full method survey: `.claude/docs/work-dedup-methods.md`.
+
+Earlier coverage-census numbers (2026-06-18): reliable **797 works** (52 both /
+643 original-only / 102 confirmed gaps). The **gap side still inherits
+`text_role` accuracy** — a source-language original mistagged `modern-translation`
+shows as a false gap (e.g. Āryabhaṭīya). Clean `text_role` before trusting it.
+
+## Next: the merge layer (the 726 held clusters)
+Per the field consensus (GLIMIR "merge-only, never split"), the held clusters go
+to a **human-gated review queue** — confirm same-work with title+incipit (NOT
+full-page embeddings — those false-merge on boilerplate, #1634). Most are
+obviously correct (Albertus *De secretis mulierum* ×12 editions); multi-volume
+canon sets (Tibetan Kanjur, juan-sliced Chinese) need a curatorial eye on
+"one work in N volumes" vs "N distinct works." This is curatorial work — a
+natural Scholar-in-Residence deliverable.
 
 ## Open levers
 - **Embedding clustering = candidate generator, NOT an auto-writer (tested to
