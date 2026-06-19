@@ -95,7 +95,11 @@ function extractBibliography(html) {
     .replace(/<(?:em|i)[^>]*>([\s\S]*?)<\/(?:em|i)>/gi, '*$1*')
     // Convert <strong> and <b>
     .replace(/<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>/gi, '**$1**')
-    // Extract link text (keep the text, drop the href)
+    // Preserve links as markdown — Earl's reading lists rely on them (cross-episode
+    // "...can be found here" references, JSTOR / archive.org links, etc.). Dropping the
+    // href left dangling "here" text. Anchors with an href become [text](href); any
+    // without fall back to plain text.
+    .replace(/<a\b[^>]*?href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (_m, href, text) => `[${text.replace(/<[^>]+>/g, '').trim()}](${href})`)
     .replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1')
     // Remove remaining HTML tags
     .replace(/<[^>]+>/g, '')

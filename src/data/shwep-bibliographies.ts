@@ -36,7 +36,7 @@ For a fascinating look at the evolution of Hermes from the god of tricksters, th
 - Faivre, Antoine, 1995. *The Eternal Hermes, from Greek God to Alchemical Magus*. Phanes Press, Grand Rapids, MI. J. Godwin, trans.`,
   2: `### Recommended Reading
 
-Same as Episode 1.`,
+Same as [Episode 1](http://shwep.net/podcast/a-secret-history-of-secret-history-part-i/).`,
   3: `### Recommended Reading
 
 Professor Hanegraaff has written widely on the field of western esotericism. His books have the elusive combination of academic rigorour and readability. Indeed, for a true history-of-ideas nerd, they are compulsive page-turners. Here is a selection of his book-length treatments:
@@ -261,13 +261,13 @@ The most thorough book-length survey of evidence for cosmic ascent in the west r
 - Turner, D. (1995). *The Darkness of God: Negativity in Christian Mysticism*. Cambridge University Press, Cambridge.`,
   15: `### Recommended Reading (and Listening):
 
-The Stanford online Encyclopedia of Philosophy is an amazing resource for all things philosophic; their page on the Presocratics is a case in point.
+The Stanford online [Encyclopedia of Philosophy](https://plato.stanford.edu/) is an amazing resource for all things philosophic; their [page on the Presocratics](https://plato.stanford.edu/entries/presocratics/) is a case in point.
 
-If you are a lover of podcasts (and why else would you be here?), be sure to check out Peter Adamson's History of Philosophy Without Any Gaps podcast, which fills in many of the gaps in our own presentation of the ancient Greek thinkers.
+If you are a lover of podcasts (and why else would you be here?), be sure to check out Peter Adamson's [History of Philosophy Without Any Gaps](https://historyofphilosophy.net/) podcast, which fills in many of the gaps in our own presentation of the ancient Greek thinkers.
 
 If you are not a classicist by training, but are interested in presocratic philosophy, you may have run into a curious citation like this: Parm. B 1.24-30 DK.
 
-What does this mean? It is a citation from the standard edition of the fragments of the presocratic philosophers, a.k.a. Diels and Krantz, or, to give its full title:
+What does this mean? It is a citation from the standard edition of the fragments of the presocratic philosophers, a.k.a. [Diels and Krantz](https://archive.org/details/diefragmenteder00krangoog), or, to give its full title:
 
 - Diels, H. and Krantz, W., 1951-1952. Die Fragmente der Vorsokratiker*. Weidmannsche Verlagsbuchhandlung, Berlin.
 
@@ -342,12 +342,12 @@ Pythagorean silence is taken as proverbial by Isocrates (*Busiris* 29) and the c
 - von Stuckrad, K., 2000. *Western Esotericism: A Brief History of Secret Knowledge*. Equinox, London.`,
   19: `### Recommended Reading and Listening:
 
-The History of Philosophy Podcast's episode on Heraclitus is a wonderful intro to the guy. See also the Stanford article on Heraclitus. The wikipedia article on riddles is really cool.
+The History of Philosophy Podcast's[episode on Heraclitus](https://historyofphilosophy.net/heraclitus) is a wonderful intro to the guy. See also the Stanford [article](https://plato.stanford.edu/entries/heraclitus/) on Heraclitus. The [wikipedia article on riddles](https://en.wikipedia.org/wiki/Riddle) is really cool.
 
 - Mortley, R., 1986. *From Word to Silence.* Hanstein, Bonn contains fascinating material on the rise of the idea of a metaphysical *logos* in Greek thought.`,
   20: `### Recommended Reading (and Listening):
 
-Be sure to check out Peter Adamson’s episode on Parmenides to get some of the philosophical basics which this episode hardly looks at. For a brief introduction to Parmenides' philosophy, the article at the Stanford Online Encyclopedia of Philosophy is excellent.
+Be sure to check out Peter Adamson’s [episode on Parmenides](https://historyofphilosophy.net/parmenides) to get some of the philosophical basics which this episode hardly looks at. For a brief introduction to Parmenides' philosophy, the [article](https://plato.stanford.edu/entries/parmenides/) at the Stanford Online Encyclopedia of Philosophy is excellent.
 
 -  Brown, L. (1994). 'The Verb 'To Be' in Greek Philosophy: Some Remarks', *Language. Companion to Ancient Thought* 3 : 212-236.
 
@@ -385,10 +385,10 @@ The primary texts relevant to ancient *Orphika* were first edited by Kern (Kern,
 
 - Edmonds, R. G., 2013. *Redefining Ancient Orphism: A Study in Greek Religion*. Cambridge University Press, Cambridge.
 
-The inscriptions found on the Orphic bone inscriptions from Olbia, which seem to refer directly to people known as ὀρφικοί, can be seen on this page.`,
+The inscriptions found on the Orphic bone inscriptions from Olbia, which seem to refer directly to people known as ὀρφικοί, can be seen on [this page.](http://philipharland.com/greco-roman-associations/orphic-bone-tablets-5th-century-bce/)`,
   24: `### Recommended Reading:
 
-The Bodleian Library in Oxford has our oldest extensive manuscript of Plato, MS Clarke 39, and you can actually browse through it electronically on their website, which is pretty nifty.
+The Bodleian Library in Oxford has our oldest extensive manuscript of Plato, MS Clarke 39, and you can actually [browse through it electronically](http://bodley30.bodley.ox.ac.uk:8180/luna/servlet/detail/ODLodl~1~1~44473~125696:Twenty-four-Dialogues,-with-margina?qvq=w4s:/who/Plato/what/MS.%20E.%20D.%20Clarke%2039;q:clarke%2B39;lc:ODLodl~29~29,ODLodl~7~7,ODLodl~6~6,ODLodl~14~14,ODLodl~8~8,ODLodl~23~23,ODLodl~1~1,ODLodl~24~24&mi=0&trs=21) on their website, which is pretty nifty.
 
 ### On Plato’s many detractors in antiquity:
 
@@ -440,7 +440,7 @@ And for the the continuation of hatred of Plato into the middle ages and Renaiss
 - Stroumsa, G. (1996). 'Myth as Enigma: Cultural Hermeneutics in Late Antiquity'. In: Hasan-Rokem, G. & Shulman, D. (Ed.), *Untying the Knot: On Riddles and Other Enigmatic Modes*, Oxford University Press, Oxford.`,
   27: `### Recommended Reading (and Listening):
 
-Peter Adamson's *History of Philosophy Podcas*t has some great material on the philosophic-speculative side of the *Timæus*. In the context of this dialogue, the episode on Plato's understanding of myth is also very interesting.
+Peter Adamson's *History of Philosophy Podcas*t has some great material [on the philosophic-speculative side of the *Timæus*](https://historyofphilosophy.net/plato-timaeus). In the context of this dialogue, the [episode on Plato's understanding of myth](https://historyofphilosophy.net/plato-myth) is also very interesting.
 
 - Cornford, F. M., 2014. *Plato's Cosmology: the Timaeus of Plato*. Routledge, London.
 
@@ -473,9 +473,9 @@ Peter Adamson's *History of Philosophy Podcas*t has some great material on the p
 
 - Vidal-Naquet, P., 2007. *The Atlantis Story: A Short History of Plato's Myth*. University of Exeter Press, Exeter, trans. J. Lloyd.
 
-The number of modern works of Atlantean fantasy is truly staggering. One of the most influential of them, and one which spawned many a fanciful return to the lost continent, is Ignatius Donnely's wonderful *Atlantis: The Antediluvian World* of 1882. The best history of the reception history of the Atlantis myth is Vidal-Naquet 2007, listed above.
+The number of modern works of Atlantean fantasy is truly staggering. One of the most influential of them, and one which spawned many a fanciful return to the lost continent, is Ignatius Donnely's wonderful [*Atlantis: The Antediluvian World*](http://digital.library.upenn.edu/webbin/gutbook/lookup?num=4032) of 1882. The best history of the reception history of the Atlantis myth is Vidal-Naquet 2007, listed above.
 
-[Addendum: There has been an in-depth critique of Professor Gill's approach in this interview by Thorwald C. Franke, who describes himself as "a private researcher without academic degrees in ancient philosophy, philology, archaeology, or history. He considers Plato’s Atlantis a real place, located in the Mediterranean Sea around the year 1200 BC." I include this here for those who might be interested in a take on the 'Atlantis question' from someone who does not feel that Plato made it all up, but is also very concerned to separate his thought on the matter from fantasy and from 'pseudo-science'. Whether or not Franke succeeds in demonstrating his theories I leave to the interested reader, but I will say that the placement of this link here is by no means intended to subsume Franke's work under the heading of Atlantean fantasy alluded to above; this is more like Atlantean theorising or speculative historical reconstruction.]`,
+[Addendum: There has been an[in-depth critique](https://www.atlantis-scout.de/atlantis-christopher-gill-2018-engl.htm) of Professor Gill's approach in this interview by Thorwald C. Franke, who describes himself as "a private researcher without academic degrees in ancient philosophy, philology, archaeology, or history. He considers Plato’s Atlantis a real place, located in the Mediterranean Sea around the year 1200 BC." I include this here for those who might be interested in a take on the 'Atlantis question' from someone who does not feel that Plato made it all up, but is also very concerned to separate his thought on the matter from fantasy and from 'pseudo-science'. Whether or not Franke succeeds in demonstrating his theories I leave to the interested reader, but I will say that the placement of this link here is by no means intended to subsume Franke's work under the heading of Atlantean fantasy alluded to above; this is more like Atlantean theorising or speculative historical reconstruction.]`,
   29: `### Recommended Reading:
 
 - Carey, J. (Ed.), 1999. *The Faber Book of Utopias*. Faber and Faber, London.
@@ -485,7 +485,7 @@ The number of modern works of Atlantean fantasy is truly staggering. One of the 
 - Sargent, L. T., 1979.* British and American Utopian Literature, 1516-1975: An Annotated Bibliography*. G.K. Hall, Boston.`,
   30: `### Recommended Reading:
 
-If you would like more information on the hard philosophy going on behind the scenes of this and the next episode, check out the *History of Philosophy Podcast's* discussion of the *Republic*, parts one and and two.
+If you would like more information on the hard philosophy going on behind the scenes of this and the next episode, check out the *History of Philosophy Podcast's* discussion of the *Republic*, [parts one](https://historyofphilosophy.net/plato-republic-soul-political-philosophy) and and [two](https://historyofphilosophy.net/plato-cave-allegory-republic).
 
 - Annas J., *An Introduction to Plato’s Republic*, Oxford 1981.
 
@@ -526,7 +526,7 @@ If you would like more information on the hard philosophy going on behind the sc
 
 - Mountford, J. (1923). 'The Musical Scales of Plato's Republic', *Classical Quarterly* 17 : 125-36.
 
-- This web page from the University of Surrey has a good introduction to all things Fibonacci and Golden Section.`,
+- This [web page from the University of Surrey](http://Recommended Reading: On Plato’s Epistemology in the Republic Annas J., An Introduction to Plato’s Republic, Oxford 1981 (esp. Chs. 9-11) Cairns D., Hermann F.G. and Penner T. (ed.), Pursuing the Good: Ethics and Metaphysics in Plato’s Republic, Edinburg 2007 [this collection, which is among our online resources, includes essays on Plato’s Republic. I recommend in particular Chs. 6, 8, 9, 10, 11, 12] Cross R.C. and Woozley A.D., Plato’s Republic: A Philosophical Commentary, London-New York 1964 (repr. London 1979) Ferejohn M.T., “Knowledge, Recollection and the Forms in Republic VII”, in Santas G. (ed.), The Blackwell Guide to Plato’s Republic, Oxford-Malden, MA 2005, pp. 214-233 Fine G., “Knowledge and Belief in Republic V-VII”, in Everson S. (ed.), Epistemology, Cambridge 1990, pp. 85-111 Mueller I., “Mathematical Method and Philosophical Truth”, in Kraut R. (ed.), The Cambridge Companion to Plato, Cambridge 1992, pp. 170-199 Penner T., “The Forms in the Republic”, in Santas G. (ed.), The Blackwell Guide to Plato’s Republic, Oxford-Malden MA 2005, pp. 234-262 Vlastos G., “Degrees of Reality in Plato”, in Platonic Studies, Princeton 1973,pp. 52-75 White N., N. White, Plato on Knowledge and Reality , Indianapolis 1976. White, N., A Companion to Plato’s Republic, Oxford 1979. White, N., “Plato’s Metaphysical Epistemology”, in Kraut R. (ed.), The Cambridge Companion to Plato, Cambridge 1992, pp. 277-310 On the Golden Section and Harmonics in the Republic Bremer, J. (2000). Some Arithmetical Patterns in Plato's "Republic", Hermathena : 69-97. McClain, E., 1978. The Pythagorean Plato: Prelude to the Song Itself. Nicolas-Hays, York Beach, MN. Mountford, J. (1923). The Musical Scales of Plato's Republic, Classical Quarterly 17 : 125-36. http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/phi.html#section4.1) has a good introduction to all things Fibonacci and Golden Section.`,
   32: `- Adam, J., 1985. *The Nuptial Number of Plato*. Kairos, Wellingborough.
 - Brann, E., with Kalkavage, P. and Salem, E., 2011. *The Music of the Republic: Essays on Socrates' Conversations and Plato's Writings*. Paul Dry Books, Philadelphia, PA.
 - Bremer, J. (2000). 'Some Arithmetical Patterns in Plato's "Republic"', *Hermathena* : 69-97.
@@ -610,7 +610,7 @@ Also of interest:
 - Parker, R., 1983. *Miasma: Pollution and Purification in Early Greek Religion.* Clarendon Press, Oxford.`,
   36: `### Recommended Reading:
 
-A good introduction to Plato's Parmenides from an analytic standpoint can be found at the Stanford online encyclopedia of philosophy.
+A good introduction to Plato's Parmenides from an analytic standpoint can be found at the Stanford [online encyclopedia of philosophy](https://plato.stanford.edu/entries/plato-parmenides/).
 
 - Cherniss, H., 1932, ‘Parmenides and the Parmenides of Plato’, *American Journal of Philology*, 53: 122–138.
 
@@ -631,9 +631,9 @@ A good introduction to Plato's Parmenides from an analytic standpoint can be fou
 - Strauss, L., 1975. *The Argument and Action of Plato’s Laws*. University of Chicago Press, Chicago, IL.`,
   38: `### Recommended Reading:
 
-As always, the *Stanford Encyclopedia of Philosophy*'s article on Aristotle is a good place to start if you want to know more about the historical figure of Aristotle and his thought, and Peter Adamson's *History of Philosophy without any Gaps* podcast has lots of useful things to say about the Stagirite as well.
+As always, the *Stanford Encyclopedia of Philosophy*'s [article on Aristotle](https://plato.stanford.edu/entries/aristotle/) is a good place to start if you want to know more about the historical figure of Aristotle and his thought, and Peter Adamson's *History of Philosophy without any Gaps* podcast has [lots of useful things to say about the Stagirite](https://historyofphilosophy.net/aristotle-life-works) as well.
 
-A bibliography by John Sellars of scholarship and primary sources relating to the huge Aristotelean commentary tradition can be found online.
+A bibliography by John Sellars of scholarship and primary sources relating to the huge Aristotelean commentary tradition can be [found online](https://www.kcl.ac.uk/artshums/depts/philosophy/research/commentators/files/comm-bibl.pdf).
 
 ### Useful books:
 
@@ -696,7 +696,7 @@ in Warburg Institute Surveys and Texts, pages 110-240. Warburg Institute, London
 Diagram from Thos. Digges, A Perfit Description of the Coelestiall Orbes According to the most Aunciente Doctrines of the Pythagoreans, Lately Reviv’d by Copernicus and by Geometricall Demonstrations Approved,* 1546. P. 236.`,
   41: `### Recommended Reading:
 
-Chris Brennan, whom we interview in the next episode, maintains the Hellenistic Astrology website, where you can find an excellent timeline of ancient astrology which may be helpful in orienting oneself among all these dates and cultures. Marilynn Lawrence's article for the *Internet Encyclopedia of Philosophy* is an excellent introduction.
+Chris Brennan, whom we interview in the next episode, maintains the [Hellenistic Astrology website](https://www.hellenisticastrology.com/), where you can find an excellent [timeline of ancient astrology](https://www.hellenisticastrology.com/articles/timeline-of-ancient-astrologers/) which may be helpful in orienting oneself among all these dates and cultures. Marilynn Lawrence's [article](https://iep.utm.edu/astr-hel/) for the *Internet Encyclopedia of Philosophy* is an excellent introduction.
 
 - Barton, T., 2002. *Ancient Astrology*. Routledge, London.
 
@@ -704,7 +704,7 @@ Chris Brennan, whom we interview in the next episode, maintains the Hellenistic 
 
 - Bouché-Leclercq, A., 1899. *L'Astrologie grecque*. Leroux, Paris. The classic study.
 
-- Cumont, Franz, et al (eds.), *Catalogus Codicum Astrologorum Graecorum*, 12 vols. in 20 parts, Lamertin, Brussels, 1898–1953. Now available, and searchable, online here!
+- Cumont, Franz, et al (eds.), *Catalogus Codicum Astrologorum Graecorum*, 12 vols. in 20 parts, Lamertin, Brussels, 1898–1953. Now available, and searchable, online [here](https://catalog.hathitrust.org/Record/000527862)!
 
 - Freudenthal, G. (2009).' The Astrologization of the Aristotelian Cosmos: Celestial Influences on the Sublunar World in Aristotle, Alexander of Aphrodisias, and Averroes'. In: Bowen, A. C. & Wildberg, C. (Ed.), *New Perspectives on Aristotle's *De cælo, Brill, Leiden.
 
@@ -741,7 +741,7 @@ Chris Brennan, whom we interview in the next episode, maintains the Hellenistic 
 
 - Bobzien, Susanne, *Determinism and Freedom in Stoic Philosophy*, Clarendon Press, Oxford, 2001.
 
-- Brennan, Chris, 'The Planetary Joys and the Origins of the Significations of the Houses and Triplicities', *ISAR International Astrologer Journal*, vol. 42, no. 1 (Apr. 2013), pp. 27–42. You can read the article here.
+- Brennan, Chris, 'The Planetary Joys and the Origins of the Significations of the Houses and Triplicities', *ISAR International Astrologer Journal*, vol. 42, no. 1 (Apr. 2013), pp. 27–42. You can [read the article here](https://www.hellenisticastrology.com/the-planetary-joys.pdf).
 
 - Campion, Nicholas, *A History of Western Astrology. Volume 1: The Ancient and Classical Worlds*, Bloomsbury, London/New York, 2008 (repr. 2012).
 
@@ -778,7 +778,7 @@ Professor Gill has published a translation of Marcus Aurelius' *Meditations* ( *
 
 - *Naturalistic Psychology in Galen and Stoicism* (2010).
 
-On the Stoics more generally, the ever-helpful *Stanford Encyclopedia of Philosophy* has a good introductory article.
+On the Stoics more generally, the ever-helpful *Stanford Encyclopedia of Philosophy* has a [good introductory article](https://plato.stanford.edu/entries/stoicism/).
 
 Essential reading for anyone wanting to grapple with the Stoics themselves is:
 
@@ -934,7 +934,7 @@ Long and Sedley, as it is known, marked a seminal jumping off point for the mode
 - Zhmud, L. (2014). 'Sixth-, Fifth- and Fourth-Century Pythagoreans'. In: Huffman, C. (Ed.), *A History of Pythagoreanism*, Cambridge University Press.`,
   47: `### Recommended Reading:
 
-The Isopsephy Database project is a wonderful tool for quickly checking out whether a given number found in a Greek text has any intriguing verbal content.
+The [Isopsephy Database](http://www.isopsephy.com/) project is a wonderful tool for quickly checking out whether a given number found in a Greek text has any intriguing verbal content.
 
 - Kalvesmaki, J., 2013. *The Theology of Arithmetic: Number Symbolism in Platonism and Early Christianity*. Center for Hellenic Studies, Washington, DC.
 
@@ -949,7 +949,7 @@ The Isopsephy Database project is a wonderful tool for quickly checking out whet
 *Dr Kalvesmaki's diagram of the Valentinian æon-system discussed in the episode.`,
   48: `### Recommended Reading:
 
-See in the first instance The Stanford Encyclopedia of Philosophy, *s.v.* ‘Pythagoreanism’.
+See in the first instance The Stanford Encyclopedia of Philosophy, *s.v.* ‘[Pythagoreanism](https://plato.stanford.edu/entries/pythagoreanism/)’.
 
 - Dodds, E. R., 1963. *Proclus: The Elements of Theology*. Clarendon Press, Oxford. Talk of Neopythagoreanism as an autonomous movement throughout.
 
@@ -972,7 +972,7 @@ See in the first instance The Stanford Encyclopedia of Philosophy, *s.v.* ‘Pyt
 - Whittaker, J. (1973). 'Neopythagoreanism and the Transcendent Absolute', *Symbolae Osloenses* 48 : 77-86.`,
   49: `### Recommended Reading:
 
-The 4 Enoch website is a somewhat involute and sprawling affair, but absolutely full of useful information on Second Temple Judaism and it wonderful esoteric productions. Definitely worth a visit, but not easy navigation for non-specialists.
+The [4 Enoch website](http://www.4enoch.org/wiki4/index.php?title=Main_Page) is a somewhat involute and sprawling affair, but absolutely full of useful information on Second Temple Judaism and it wonderful esoteric productions. Definitely worth a visit, but not easy navigation for non-specialists.
 
 - Attridge, H. W. (1984). 'Jewish Writings of the Second Temple Period: Apocrypha, Pseudepigrapha, Qumran Sectarian Writings, Philo, Josephus'. In: (Ed.), *Josephus and His Works*, Van Gorcum.
 
@@ -1078,7 +1078,7 @@ The 4 Enoch website is a somewhat involute and sprawling affair, but absolutely 
 - VanderKam, J. C. and Adler, W. (1996). 'The Jewish Apocalyptic Heritage in Early Christianity'. In: VanderKam, J. C. (Ed.), *1 Enoch, Enochic Motifs, and Enoch in Early Christian Literature*, Fortress.`,
   53: `### Recommended Reading:
 
-If you know Aramaic, Judæo-Arabic, and/or Yiddish and would like to help scholars sort through the more than 300,000 documents of the Cairo Geniza, there is an amazing citizen-science project to get involved in!
+If you know Aramaic, Judæo-Arabic, and/or Yiddish and would like to help scholars sort through the more than 300,000 documents of the Cairo Geniza, there is an amazing [citizen-science project](https://www.zooniverse.org/projects/judaicadh/scribes-of-the-cairo-geniza) to get involved in!
 
 ### Editions of primary texts:
 
@@ -1165,7 +1165,7 @@ Journeys. State University of New York Press, Albany, NY.
 
 For a handy list of the abbreviations used for Philo's many works, and the Latin titles traditionally attributed to them, see below this section.
 
-For a handy resource for reading Philo, the Loeb Classical Library 12-volume edition of Philo is in the public domain and available online. The *Studia Philonica* journal maintains an ongoing bibliographic listing of secondary works on Philo. For linuxy, digital humanities type folks, Philo-dev provides a ton of public-domain Philonic critical editions in the EpiDoc markup language.
+For a handy resource for reading Philo, the Loeb Classical Library 12-volume edition of Philo is in the public domain and available [online](https://archive.org/details/PhiloSupplement01Genesis). The *Studia Philonica* journal maintains an [ongoing bibliographic listing](https://divinity.yale.edu/continuing-education/philo-alexandria/related-projects/philo-alexandria-bibliography) of secondary works on Philo. For linuxy, digital humanities type folks, [Philo-dev](https://opengreekandlatin.github.io/philo-dev/) provides a ton of public-domain Philonic critical editions in the [EpiDoc](https://sourceforge.net/p/epidoc/wiki/Home/) markup language.
 
 - Borgen, P., 1997. *Philo of Alexandria: An Exegete for His Time*. Brill, Leiden.
 
@@ -1465,7 +1465,7 @@ On the Philonic reincarnation debate, see:
 - Idem. *Thrasyllan Platonism*. Cornell University Press, Ithaca and London, 1993.`,
   67: `### Works Cited in this Episode:
 
-(Note: Plutarch's works are conventionally cited by the Latin titles given them by Humanists; if the title is a personal name – e.g. ‘Numa’, ‘Julius Cæsar’ – the reference is to one of the Lives*, while thematic titles like *de defectu oraculorum*, or ‘On how the Oracles Have Stopped Functioning’, refer to the *Moralia*. The works of Plutarch, like those of Plato, have ‘Stephanus numbers’, a standard way of referring to his text based on the critical edition of Stephanus (1572). Thus, *de Is.* 67-68.377f-378a would refer to ‘*On Isis and Osiris* Chapters 67-68, Stephanus numbers 377f-378a. As for the first Latin edition of Plutarch, it was edited by Niccolò Tomeo, a fascinating Renaissance esotericist about whom you can hear in this interview)
+(Note: Plutarch's works are conventionally cited by the Latin titles given them by Humanists; if the title is a personal name – e.g. ‘Numa’, ‘Julius Cæsar’ – the reference is to one of the Lives*, while thematic titles like *de defectu oraculorum*, or ‘On how the Oracles Have Stopped Functioning’, refer to the *Moralia*. The works of Plutarch, like those of Plato, have ‘Stephanus numbers’, a standard way of referring to his text based on the critical edition of Stephanus (1572). Thus, *de Is.* 67-68.377f-378a would refer to ‘*On Isis and Osiris* Chapters 67-68, Stephanus numbers 377f-378a. As for the first Latin edition of Plutarch, it was edited by Niccolò Tomeo, a fascinating Renaissance esotericist about whom you can hear in [this interview](https://shwep.net/2019/10/25/allegra-baggio-corradi-on-niccolo-leonico-tomeo/))
 
 ### Primary:
 
@@ -1492,7 +1492,7 @@ On the Philonic reincarnation debate, see:
 
 ### Primary:
 
-*On Isis and Osiris* (which you can read online here in the Loeb edition used in this episode, if you are so inclined. References are to Stephanus pages; if you are unclear what those are, see the notes to the previous episode):
+*On Isis and Osiris* (which you can read online [here](http://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Moralia/Isis_and_Osiris*/home.html) in the Loeb edition used in this episode, if you are so inclined. References are to Stephanus pages; if you are unclear what those are, see the notes to the previous episode):
 
 - Esoteric etymologies: Isis = οἶδα 351f; cf. 352a, where Isis' temple is called the ἰσεῖον because, through her mysteries ‘we shall know’ (ἐσομένων). 375d: ἵησθαι, φέρεσθαι.
 
@@ -1577,7 +1577,7 @@ Our three myths can be found in the following works in Plutarch's *Moralia*: *De
 
 - Robert Klaerr and Yvonne Vernière. *Plutarch: oeuvres morales VII.2*. Les Belles Lettres, Paris, 1974.
 
-- Gil Renberg.* Where Dreams May Come: Incubation-Sanctuaries in the Greco-Roman World*, volume 2 vols. Brill, Leiden, 2017. [Vol. II, Appendix II, pp. 565-602 gives a superb and detailed survey of our evidence for the Trophonion and what went on there. See also Episode 70, where we interview the author in question].
+- Gil Renberg.* Where Dreams May Come: Incubation-Sanctuaries in the Greco-Roman World*, volume 2 vols. Brill, Leiden, 2017. [Vol. II, Appendix II, pp. 565-602 gives a superb and detailed survey of our evidence for the Trophonion and what went on there. See also [Episode 70](https://shwep.net/podcast/gil-renberg-on-dream-incubation/), where we interview the author in question].
 
 - von Arnim, H.. *Plutarch über Dämonen und Mantik*. Verhandelingen der Koninklijke Akademie van Wetenschappen te Amsterdam, Afdeeling Letterkunde. J. Müller, Amsterdam, 1925.
 
@@ -1596,7 +1596,7 @@ On the second-century revival of Greek oracle-culture, see
 
 - Livy on Rome's importation of Asklepios and his incubation-cult through consultation of the Sibylline Books in response to the plague of 291 BCE: 10.47.6–7; cf. Ov., *Met*. 15.622–744; Val. Max. 1.8.2; and Ps.-Aur. Vict., *De vir.* ill. 22.1–3.
 
-- Gilgamesh and Atrahasis: see our interview with Matthew Neujahr for more information about these interesting gentlemen.
+- Gilgamesh and Atrahasis: see our [interview with Matthew Neujahr](https://shwep.net/podcast/matthew-neujahr-on-near-eastern-roots-of-apocalyptic/) for more information about these interesting gentlemen.
 
 - The Archives of Mari: see Durand 1988 and Dossin 1978 in *Recommended Reading* below.
 
@@ -1651,7 +1651,7 @@ Kernos Supplément 29. Liège, 2015.
 
 - Aristander of Telmessus, Alexander the Great's personal diviner: This fellow is mentioned in numerous ancient sources (see the informative wikipedia article). Artemidorus refers to works by him (Oneirocritica 1.31, 4.23-24), which unfortunately do not survive.
 
-- Aristotle: Aristotle's three-part treatise On Dreams, which travels bundled together with other texts under the title *Parva naturalia*, theorises how dreams operate, giving a thoroughly naturalistic account. Aristotle describes lucid dreaming at 3.462a3-8, which is cool.
+- Aristotle: Aristotle's three-part treatise[On Dreams](https://en.wikisource.org/wiki/On_Dreams_(Aristotle)), which travels bundled together with other texts under the title *Parva naturalia*, theorises how dreams operate, giving a thoroughly naturalistic account. Aristotle describes lucid dreaming at 3.462a3-8, which is cool.
 
 - Artemidorus:  see *Recommended Reading* below for various editions and translations available. The entry in the late-antique encyclopædia *Suda*: see *sub voc*. Ἐνύπνιον.
 
@@ -1661,7 +1661,7 @@ Kernos Supplément 29. Liège, 2015.
 
 - Juvenal on those mysterious dream-selling Jewish ladies: 6.546 ff.
 
-- Varro: listeners will remember the Roman antiquarian and man of letters Marcus Terentius Varro from Episode 60. His work on farming, *Rerum rusticarum libri III*, is one of the few Varrine works extant.
+- Varro: listeners will remember the Roman antiquarian and man of letters Marcus Terentius Varro from [Episode 60](https://shwep.net/podcast/politics-and-the-esoteric-in-rome/). His work on farming, *Rerum rusticarum libri III*, is one of the few Varrine works extant.
 
 ### Secondary:
 
@@ -1891,7 +1891,7 @@ See below for the articles by Bradley and Nelson about the fish.
 
 - Proclus: The two Juliani who lived under Marcus Aurelius:* In rem pub*. I.12.
 
-- The *Suda* can be accessed at Suda Online.
+- The *Suda* can be accessed at [Suda Online](https://www.cs.uky.edu/~raphael/sol/sol-html/).
 
 ### Secondary:
 
@@ -1903,7 +1903,7 @@ See below for the articles by Bradley and Nelson about the fish.
 
 - Hans Lewy: we quote p. 3 from Lewy (1978) – see *Recommended Reading* below.
 
-- For the ‘Underworld of Platonism’ see J. Dillon. *The Middle Platonists: A Study of Platonism 80 BC to AD 220*. Duckworth, London, 1977, p. 384 ff. and Episodes 62 and 63 of the podcast.
+- For the ‘Underworld of Platonism’ see J. Dillon. *The Middle Platonists: A Study of Platonism 80 BC to AD 220*. Duckworth, London, 1977, p. 384 ff. and Episodes [62](https://shwep.net/podcast/john-dillon-on-middle-platonism/) and [63](https://shwep.net/podcast/dylan-burns-on-the-underworld-of-platonism/) of the podcast.
 
 ### Selected Publication-History of the *Chaldæan Oracles*:
 
@@ -2008,7 +2008,7 @@ Any additions or corrections to this selected bibliography are welcome.
 
 - E.R. Dodds. 'Theurgy and its Relationship to Neoplatonism'. *Journal of Roman Studies*, 37(1+2):55–69, 1947.
 
-- Álvaro Fernández Fernández. *La teúrgia de los Oráculos caldeos: cuestiones de léxico y*
+- Álvaro Fernández Fernández. [*La teúrgia de los Oráculos caldeos: cuestiones de léxico y*](https://digibug.ugr.es/handle/10481/20325)
 
 *de contexto historico*. PhD thesis, Universidad de Granada, 2011.
 
@@ -2035,11 +2035,11 @@ Any additions or corrections to this selected bibliography are welcome.
 
 - Jacco Dieleman. *Priests, Tongues, and Rites: The London-Leiden Magical Manuscripts and Translation in Egyptian Ritual (100–300 CE)*. Brill, Leiden, 2005.
 
-- Korshi Dosoo. *Rituals of Apparition in the Theban Magical Library*. PhD thesis, Macquarie University, 2014 (available on Korshi's Academia page!).
+- Korshi Dosoo. *Rituals of Apparition in the Theban Magical Library*. PhD thesis, Macquarie University, 2014 (available on [Korshi's Academia page!](https://www.academia.edu/15681152/Rituals_of_Apparition_in_the_Theban_Magical_Library)).
 
 - Christopher A. Faraone. 'Handbooks and Anthologies: The Collection of Greek and Egyptian Incantations in Late Hellenistic Egypt'. *Archiv für Religionsgeschichte*, 2:195–214, 2000.
 
-- Christopher A. Faraone and Sofia Torallas Tovar, editors. *Greek and Egyptian Magical Formularies, vol. I: Text and Translation*, volume 9. California Classical Studies, Berkeley, CA, 2022.
+- Christopher A. Faraone and Sofia Torallas Tovar, editors. [*Greek and Egyptian Magical Formularies, vol. I: Text and Translation*](https://escholarship.org/uc/item/9650x69r#article_main), volume 9. California Classical Studies, Berkeley, CA, 2022.
 
 - D. Frankfurter. 'Ritual Expertise in Roman Egypt and the Problem of the Category of Magician'. In Peter Schäfer and Hans G. Kippenberg, editors, *Envisioning Magic: A Princeton Seminar and Symposium, Studies in the History of Religions*, pages 115–36. Brill, Leiden, 1997.
 
@@ -2155,7 +2155,7 @@ Other authors:
 
 ### Recommended Reading:
 
-George Karamonoulis' article on Numenius in the *Stanford Online Encyclopedia of Philosophy* is a superb first introduction to the metaphysics of the man from Apamea; highly recommended. Also relevant and good:
+George Karamonoulis' [article on Numenius](https://plato.stanford.edu/entries/numenius/#Met) in the *Stanford Online Encyclopedia of Philosophy* is a superb first introduction to the metaphysics of the man from Apamea; highly recommended. Also relevant and good:
 
 - M. Baltes. ‘Numenius von Apamea und der platonische *Timaios*’. *Vigiliae Christianae*, (29):241–270, 1975.
 
@@ -2202,17 +2202,17 @@ The Nag Hammadi Library (abbreviated NHC [that's ‘Nag Hammadi Corpus’] I, II
 
 - Scholer, David M., ed. *Nag Hammadi Bibliography, 1995–2006.* Leiden: Brill, 2009.
 
-In English, the most important series is NHMS, published by Brill. Among many essential works in English, Brill has brought out the wonderful sourceworks of Robinson:
+In English, the most important series is [NHMS](http://media.shwep.net/wp-content/uploads/2020/01/26111137/NHMS.pdf), published by Brill. Among many essential works in English, Brill has brought out the wonderful sourceworks of Robinson:
 
 - J. M. Robinson. *The Nag Hammadi Library in English*. Brill, Leiden, 1977a.
 
-- James M. Robinson. *The Facsimile Edition of the Nag Hammadi Codices: Introduction*. Brill, Leiden, 1972 [with these black-and-white facsimiles you can work on these texts at home; nowadays there is also the Nag Hammadi Archive at Claremont Colleges Digital Library.]
+- James M. Robinson. *The Facsimile Edition of the Nag Hammadi Codices: Introduction*. Brill, Leiden, 1972 [with these black-and-white facsimiles you can work on these texts at home; nowadays there is also the [Nag Hammadi Archive at Claremont Colleges Digital Library](http://ccdl.libraries.claremont.edu/cdm/landingpage/collection/nha).]
 
 - James M. Robinson. *The Coptic Gnostic Library*. Brill, Leiden, 1978.
 
 Two major research-projects are ongoing,
 
-- at the Université de Laval, producing the *Bibliothèque copte de Nag Hammadi* series of French-Coptic critical editions and useful stuff like concordences, and
+- at the Université de Laval, producing the [*Bibliothèque copte de Nag Hammadi*](https://www.naghammadi.org/welcome/)series of French-Coptic critical editions and useful stuff like concordences, and
 
 - the Berlin 'Arbeitskreis', producing German-Coptic critical editions and other great stuff, like Hans-Martin Schenke , Hans-Gebhard Bethge, and Ursula Ulrike Kaiser, eds. *Nag Hammadi Deutsch. Eingeleitet und übersetzt von Mitgliedern des Berliner Arbeitskreises für koptisch-gnostische Schriften*. 2 vols. Berlin: de Gruyter, 2001.
 
@@ -2491,7 +2491,7 @@ Most of the primary texts discussed in this episode can be found in English in B
 
 The subject-matter of this episode is so sweeping that any attempt at a short bibliography will come up, well, short. We have put in some essential sourcebooks, some synoptic treatments, and a few books dealing with specific realms (e.g. Jewish alchemy, early-modern alchemy) likely to blow one's mind.
 
-Be sure to check out the research-project AlchemEast, which is doing much-needed cross-disciplinary work on the ‘lost centuries’ of ancient alchemy. Also, hard-core alchemy-heads will need these two multi-volume works before they can even get started:
+Be sure to check out the research-project [AlchemEast](https://alchemeast.eu/), which is doing much-needed cross-disciplinary work on the ‘lost centuries’ of ancient alchemy. Also, hard-core alchemy-heads will need these two multi-volume works before they can even get started:
 
 - Marcelin Berthelot and C.E. Ruelle. *Collection des Anciens Alchimistes Grecs, texte et traduction.* G. Steinheil, Paris, 1887-8. [The primary edition for much of Greek alchemy.].
 
@@ -2564,7 +2564,7 @@ Step 3: Vegetative gold!`,
 
 ### Recommended Reading:
 
-Check out Matteo Martelli's many fascinating publications on ancient alchemy, some of which can be found on his Academia page. Also check out the ambitious AlchemEast project, of which he is the director, which is putting our understanding of the ‘lost centuries’ of alchemy on a much firmer footing, and keep your eye on the publishing project, Sources of Alchemy and Chemistry, from which we expect great things.
+Check out Matteo Martelli's many fascinating publications on ancient alchemy, some of which can be found on [his Academia page](https://unibo.academia.edu/MatteoMartelli). Also check out the ambitious [AlchemEast](http://alchemeast.eu) project, of which he is the director, which is putting our understanding of the ‘lost centuries’ of alchemy on a much firmer footing, and keep your eye on the publishing project, [Sources of Alchemy and Chemistry](https://www.oxbowbooks.com/dbbc/sourcesofalchemyandchemistry), from which we expect great things.
 
 - Joseph Bidez and Franz Cumont. *Les mages hellénisés: Zoroastre, Ostanès et Hystaspe d’après la tradition grecque*. Les Belles Lettres, Paris, 1938.
 
@@ -2610,7 +2610,7 @@ ford University Press, Oxford, 1989.
 
 The best available edition of Ptolemy's *Almagest* (under the title *Syntaxis mathematica*) remains J. L. Heiberg, *Claudii Ptolemaei opera quae exstant omnia*, vols. 1.1 and 1.2 (1898, 1903). A much more up-to-date edition of the *Tetrabiblos* (under the title* Apotelesmatika*) is now available in Wolfgang Hübner, editor. *Claudii Ptolemaei opera quae exstant omnia 1, Apotelesmatika*. Teubner, Stuttgart, 1998.
 
-For English, there is a Loeb translation of the *Tetrabiblos* (Frank E. Robbins ed. and trans. Cambridge, MA: Harvard University Press 1940, available online here) and several stand-alone translations of the *Almagest*, notably G.J. Toomer, editor. *Ptolemy: Almagest*. Duckworth, London, 1984. A recent book of essays, mostly on the medieval reception of Ptolemy, *Ptolemy's Science of the Stars in the Middle Ages*, David Juste, Benno van Dalen, Dag Nikolaus Hasse, and Charles Burnett edd. (Turnhout: Brepols 2020), is available online through open access.
+For English, there is a Loeb translation of the *Tetrabiblos* (Frank E. Robbins ed. and trans. Cambridge, MA: Harvard University Press 1940, available online [here](http://penelope.uchicago.edu/Thayer/E/Roman/Texts/Ptolemy/Tetrabiblos/home.html)) and several stand-alone translations of the *Almagest*, notably G.J. Toomer, editor. *Ptolemy: Almagest*. Duckworth, London, 1984. A recent book of essays, mostly on the medieval reception of Ptolemy, *Ptolemy's Science of the Stars in the Middle Ages*, David Juste, Benno van Dalen, Dag Nikolaus Hasse, and Charles Burnett edd. (Turnhout: Brepols 2020), is [available online](https://www.brepolsonline.net/doi/epdf/10.1484/M.PALS-EB.5.120189) through open access.
 
 Also relevant and interesting:
 
@@ -2660,11 +2660,11 @@ de la Maison des Sciences de l’Homme, Paris, 1982.
 
 - Mark Riley. ‘Theoretical and Practical Astrology: Ptolemy and his Colleagues’. *Trans-*
 
-*actions of the American Philological Association*, 117:235–256, 1987 [Available online here].
+*actions of the American Philological Association*, 117:235–256, 1987 [Available online [here](https://www.csus.edu/indiv/r/rileymt/PDF_folder/theoretical.pdf)].
 
 - *Idem*. ‘Science and Tradition in the Tetrabiblos’. *Proceedings of the American*
 
-*Philolosophical Society*, 132(1):67–84, 1988 [Available online here].
+*Philolosophical Society*, 132(1):67–84, 1988 [Available online [here](https://www.csus.edu/indiv/r/rileymt/PDF_folder/Science.pdf)].
 
 - George Saliba.* A History of Arabic Astronomy: Planetary Theories During the Golden*
 
@@ -2703,9 +2703,9 @@ The first critical edition was Kroll, 1906, since replaced by Pingree, 1986. Bar
 
 - David Pingree. ‘The Byzantine Tradition of Vettius Valens’ *Anthologies*’. *Harvard Ukrainian Studies*, 7:532–41, 1983.
 
-- Mark Riley. ‘A Survey of Vettius Valens’. Accessed at https://www.csus.edu/indiv/r/rileymt/PDF_folder/VettiusValens.PDF.
+- Mark Riley. ‘A Survey of Vettius Valens’. Accessed at [https://www.csus.edu/indiv/r/rileymt/PDF_folder/VettiusValens.PDF](https://www.csus.edu/indiv/r/rileymt/PDF_folder/VettiusValens.PDF).
 
-- *Idem*. A full translation of the *Anthologies* of Vettius Valens by Mark Riley can be found online here [Despite being unfinished, it remains the best English version of Vettius' text, and Riley knows his astrology].
+- *Idem*. A full translation of the *Anthologies* of Vettius Valens by Mark Riley can be found online [here](https://www.csus.edu/indiv/r/rileymt/Vettius%20Valens%20entire.pdf) [Despite being unfinished, it remains the best English version of Vettius' text, and Riley knows his astrology].
 
 - *Idem*. ‘Theoretical and Practical Astrology: Ptolemy and his Colleagues’. *Transactions of the American Philological Association*, 117:235–256, 1987.
 
@@ -2730,7 +2730,7 @@ The first critical edition was Kroll, 1906, since replaced by Pingree, 1986. Bar
 
 ### Recommended Reading:
 
-This episode is pretty dense, and assumes listeners are well stuck in with all matters Middle Platonist, Philonic, second-century Christian, and *Logos*-theological. Peter Adamson's podcast on the early Greek fathers is a good intro to the scene if one is needed.
+This episode is pretty dense, and assumes listeners are well stuck in with all matters Middle Platonist, Philonic, second-century Christian, and *Logos*-theological. Peter Adamson's [podcast on the early Greek fathers](https://historyofphilosophy.net/greek-fathers)is a good intro to the scene if one is needed.
 
 ### Editions of Clement's works:**
 
@@ -3030,7 +3030,7 @@ Brooks Otis. Cappadocian Thought as a Coherent System. *Dumbarton Oaks Papers,* 
 - Roelof van den Broek, editor. *Knowledge of God in the Graeco-Roman World*. Brill, Leiden, 1988 [a useful collection of essays for getting the parameters of the debate over God's (un)knowability].`,
   94: `### Works Cited in this Episode:
 
-Thanks to Geoffrey Smith for sending us his Valentinian sourcebook, from which we cite his text and translation of the *Extracts of Theodotus*. Note 2025: the book is now out, with University of California Press.
+Thanks to Geoffrey Smith for sending us his Valentinian sourcebook, from which we cite his text and translation of the *Extracts of Theodotus*. Note 2025: the [book is now out](https://www.ucpress.edu/books/valentinian-christianity/hardcover), with University of California Press.
 
 ### Primary:
 
@@ -3145,7 +3145,7 @@ On Angelification/Deification:
 
 A comprehensive bibliography on just the concept of late antiquity would run to thousands of titles; the following list is just a brief indication of a few works which are especially relevant to this episode. Some argue for a long late antiquity, while others (esp. Ward-Perkins and Marcone) argue that, in essence, we need to re-instill some crises and hard cultural breaks into our historiography.
 
-On Islam, see the *corpus coranicum* project at the Berlin-Brandenburg Academy of Sciences, which is seeking to realign our understanding of the *Qur'ân* into late antiquity.
+On Islam, see the [*corpus coranicum* project](https://corpuscoranicum.de/) at the Berlin-Brandenburg Academy of Sciences, which is seeking to realign our understanding of the *Qur'ân* into late antiquity.
 
 - G. W. Bowersock. *Hellenism in Late Antiquity*. University of Michigan Press, Ann Arbor, MI, 1996b.
 
@@ -3249,7 +3249,7 @@ An English version can be found at:
 
 ### Recommended Reading:
 
-A number of Origen's works can be found in various forms online, as kindly collected by John Übersax on his website.
+A number of Origen's works can be found in various forms online, as kindly collected by John Übersax [on his website](http://john-uebersax.com/plato/origen2.htm).
 
 ### On Origen's Life and Thought:
 
@@ -3408,7 +3408,7 @@ Catastrophism and eternity versus creationism: I.19; cf. IV.79.
 
 ### Secondary (alphabetical):
 
-- The Hermetic Library website can be accessed here.
+- The Hermetic Library website can be accessed [here](https://hermetic.com/).
 
 - Isaac Casaubon. *De rebus sacris et ecclesiasticis exercitationes XVI*. Eliot’s Court Press *ex officina Nortoniana apud Ioan. Billium*, England, 1614.
 
@@ -3496,7 +3496,7 @@ On the figure(s) of Hermes and his reception(s), Faivre 1995 is a great introduc
 
 The Hermetic tradition is an idea far broader in its scope than anything the ancients would have understood by ‘Hermetic’, and no recommended bibliography will do more than scratch the surface. Nevertheless, here are a few interesting and useful books, leaving alchemy for the most part to one side:
 
-- The Hermes Latinus series published by Brepols is a first-stop for the many Latin-language Hermetica of the middle ages.
+- The [Hermes Latinus series](https://www.corpuschristianorum.org/cccm-hermes) published by Brepols is a first-stop for the many Latin-language Hermetica of the middle ages.
 
 - F. van Lamoen, editor. *Hermes Trismegistus: Pater Philosophorum. Tekstgeschiedenis van het Corpus Hermeticum.* Bibliotheca Philosophica Hermetica, Amsterdam, 1990.
 
@@ -3532,7 +3532,7 @@ The Hermetic tradition is an idea far broader in its scope than anything the anc
 
 ### Primary:
 
-*CH* II, III, and the *Poimandres* can all be found in the usual places (see Episode 100 for basic bibliography).
+*CH* II, III, and the *Poimandres* can all be found in the usual places (see [Episode 100](https://shwep.net/podcast/thrice-greatest-hermes/) for basic bibliography).
 
 ### Secondary:
 
@@ -3609,7 +3609,7 @@ The Hermetic tradition is an idea far broader in its scope than anything the anc
 
 - Augustine cites the *Asclepius*: *De civ. dei* books 8-10.
 
-- The planet Jupiter/Zeus as Φαέθων: Arist. *Mu*. 392a24; Eudox. *Ars*. 5.14; Cic. *N.D*. 2.52.
+- The planet Jupiter/Zeus as Φαέθων: Arist. *Mu*. 392a24; Eudox. *Ars*. 5.14; Cic. [*N.D*. 2.52](http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2007.01.0037%3Abook%3D2%3Asection%3D52).
 
 *Asclepius*:
 
@@ -3629,7 +3629,7 @@ The Hermetic tradition is an idea far broader in its scope than anything the anc
 
 ### Recommended:
 
-Edward Bleiberg has an interesting online article on Egyptian statues, how they acted, and why people used to destroy them to keep them from acting.`,
+Edward Bleiberg has an interesting [online article](https://hyperallergic.com/591628/why-are-the-noses-broken-on-egyptian-statues/) on Egyptian statues, how they acted, and why people used to destroy them to keep them from acting.`,
   106: `### Primary Sources for this Episode:
 
 We use The Budé text of Nock and Festugère for the *Corpus *and Stobæus Hermetica, and J.M. Robinson, editor. *The Nag Hammadi Library in English*. Brill, Leiden, 1977 for *The* *Ennead Reveals the Ogdoad*. All refs. below that are just a Roman numeral followed by a number are to the *Corpus Hermeticum*. S.H. stands for Stobæus Hermeticum. *NHC* stands for Nag Hammadi Corpus, the standard reference-name for texts found in that esteemed library; *NHC* is followed by codex-number (Roman), tractate number, subsection and line numbers where appropriate.
@@ -3747,7 +3747,7 @@ On the question of esotericism in the teaching practices of the ancient Hermetis
 
 ### Recommended Reading:
 
-Dr Litwa has done an interview on personal deification for the Gnostic Wisdom Network which you might want to check out. See Litwa 2012 (cited above) for a history of scholarship on divinisation. Along with the books by David Litwa cited above, the following texts may be of interest:
+Dr Litwa has done an [interview](https://gnosticwisdom.net/personal-deification/) on personal deification for the Gnostic Wisdom Network which you might want to check out. See Litwa 2012 (cited above) for a history of scholarship on divinisation. Along with the books by David Litwa cited above, the following texts may be of interest:
 
 - Spencer Cole, *Cicero and the Rise of Deification at Rome* (Cambridge: Cambridge University Press, 2013).
 
@@ -3875,7 +3875,7 @@ For the modern scholars alluded to, see below.
 - Collins, John J. “Sibylline Oracles.” Pp. 1.317-472 in *Old Testament Pseudepigrapha*. 2 vols. Edited by James H. Charlesworth. Garden City, NY: Doubleday, 1983-1985.`,
   111: `### Recommended Reading:
 
-The Stanford online encyclopedia of philosophy is always a good place to get started with some basics on an author like Plotinus. Peter Adamson's History of Philosophy podcast will give some helpful orientation as well. John Uebersax maintains a useful page of links for online-available translations in various languages, Greek text, and lots of other Plotinian goodies.
+The Stanford online encyclopedia of philosophy is always[a good place to get started](https://plato.stanford.edu/entries/plotinus/) with some basics on an author like Plotinus. Peter Adamson's History of Philosophy podcast will give some [helpful orientation](https://historyofphilosophy.net/plotinus-life) as well. John Uebersax maintains a [useful page of links](https://john-uebersax.com/plato/enneads.htm) for online-available translations in various languages, Greek text, and lots of other Plotinian goodies.
 
 ### On Citing Plotinus:
 
@@ -3901,7 +3901,7 @@ In English (chronological):
 
 - Kenneth Sylvan Guthrie. *Plotinos; The Complete Works*. Alpine, NJ: Comparative Literature Press, 1918 [This translation by the many-faceted Guthrie (who shall be receiving his own place in this podcast, as something like an Americanised version of Thomas Taylor, a neo-Platonist and prolific, if academically-suspect translator) is the first attempt to do Plotinus in the chronological, Porphyrian order. An interesting project, if somewhat flawed as a translation].
 
-- MacKenna, S. *Plotinus. The Enneads*. English Translation Revised by B.S. Page. London, 1962 [first published in five magnificent volumes 1917-1930. MacKenna's translation is a masterpiece, highly recommended for those seeking to quaff the draught of Plotinus' vision without worrying too much about the technical details. Based on Kreuzer's edition, so less reliable than Armstrong, if more truly Plotinian in spirit].
+- MacKenna, S. *Plotinus. The Enneads*. English Translation Revised by B.S. Page. London, 1962 [first published in five magnificent volumes 1917-1930. MacKenna's translation is a masterpiece, highly recommended for those seeking to quaff the draught of Plotinus' vision without worrying too much about the technical details. Based on[Kreuzer's edition](https://archive.org/details/plotinioperaomni01plotuoft), so less reliable than Armstrong, if more truly Plotinian in spirit].
 
 - MacKenna, S. *Plotinus. The Enneads*. Selected Treatises Revised with Notes by John M. Dillon. London: Penguin, 1991 [This is a greatest-hits selection of MacKenna's *Enneads*, chosen by John Dillon, a good one-volume Plotinus to carry with you on holiday].
 
@@ -3923,7 +3923,7 @@ In other tongues:
 
 ### Series:
 
-A number of excellent series of translations-with-commentary of the *Enneads* are out there. The French have led the way, firstly with the du Cerf series (the Red Plotties) edited by the late Pierre Hadot, and more recently with the Flammarion series (the white Plotties)  edited by Bresson and Pradeau. But the Anglophone world is catching up with them through the Parmenides Press series, edited by John Dillon and Andrew Smith. Paul Kalligas' six-volume modern Greek commentary on the *Enneads *has set a new standard for thoroughness, importantly updating Henry and Schwyzer's *apparatus criticus* with many new suggested emendations, updating their* index fontium* with many new additions, and more. It is currently coming out in an English translation (utilising Armstrong's translation of the *Enneads* as a reference-point, rather than Kalligas' modern Greek translation) with Princeton. Find a review of the second volume by Lloyd Gerson here.`,
+A number of excellent series of translations-with-commentary of the *Enneads* are out there. The French have led the way, firstly with the [du Cerf series](https://www.editionsducerf.fr/librairie/cat/philosophie-antique-et-medievale/plotin) (the Red Plotties) edited by the late Pierre Hadot, and more recently with the [Flammarion series](https://editions.flammarion.com/Catalogue/(auteur)/Plotin) (the white Plotties)  edited by Bresson and Pradeau. But the Anglophone world is catching up with them through the [Parmenides Press series](https://www.parmenides.com/publications/publications-plotinus.html), edited by John Dillon and Andrew Smith. Paul Kalligas' six-volume modern Greek commentary on the *Enneads *has set a new standard for thoroughness, importantly updating Henry and Schwyzer's *apparatus criticus* with many new suggested emendations, updating their* index fontium* with many new additions, and more. It is currently coming out in an English translation (utilising Armstrong's translation of the *Enneads* as a reference-point, rather than Kalligas' modern Greek translation) with [Princeton](https://press.princeton.edu/books/hardcover/9780691158266/the-enneads-of-plotinus). Find a review of the second volume by Lloyd Gerson [here](https://bmcr.brynmawr.edu/2023/2023.06.28/).`,
   112: `### Works Cited in this Episode:
 
 On the fascinating theory of the self in Plotinus, a few essential works are Blumenthal
@@ -4390,11 +4390,11 @@ There were at the same time many Christians and others, of a contrary school of 
 
 - Syriac Christian testimony to the *dies natalis invicti*, 25 December, having been appropriated by Christians: ‘It was in fact customary among the pagans to celebrate the festival of the Sun's birthday on 25th December and to light bonfires in honour of the day. They even used to invite the Christian population to these rites. But when the teachers of the Church realised that Christians were allowing themselves to take part, they decided to observe the Feast of the true Birth on the same day.’ Translation Clauss 2000, 66, cited from *Corpus inscriptionum Latinarum* I, second edition, 338-9.
 
-- The Orphic lamellæ: see Episode 23.
+- The Orphic lamellæ: see [Episode 23](https://shwep.net/podcast/miguel-herrero-de-jauregui-on-ancient-orphism/).
 
-- Plato's Myth of Er: see Episode 33 .
+- Plato's Myth of Er: see [Episode 33](https://shwep.net/podcast/nowhere-to-go-but-up-philosophic-ascent-in-plato/) .
 
-- Apuleius' account of initiation into the Isis-mysteries: see Episodes 12 and 73.
+- Apuleius' account of initiation into the Isis-mysteries: see Episodes [12](https://shwep.net/podcast/richard-seaford-on-the-mysteries/) and [73](https://shwep.net/podcast/ineffable-initiations-and-golden-asses-apuleius-of-madauros-and-the-metamorphoses/).
 
 - References to Mithras Phanes: see the rock-birth with Mithras as Phanes from Vercovicium/Housesteads, Vermaseren 860; Vermaseren 475=Moretti, *Inscriptiones Græcæ urbis Romæ* 108; Nonnos of Panopolis, *Dionysiaka* 21.248-9, 40.400; Zenobius 5.78 ap. *Paroemiogr*.
 
@@ -4414,7 +4414,7 @@ There were at the same time many Christians and others, of a contrary school of 
 
 For a bibliographic survey up to c. 1980, see Beck 1984. The majority of the data discussed in this episode (and much, much more) can be found in Vermaseren 1956-60, which remains the standard reference-work.
 
-The website The New Mithræum has an interactive map of Mithræum sites across the Mediterranean. Roger Pearse maintains a web-based Mithraic resource chock-full of photos and other goodies, and very conscientiously documented.
+The website The New Mithræum has an [interactive map of Mithræum sites](https://www.mithraeum.eu/tabula) across the Mediterranean. Roger Pearse maintains a [web-based Mithraic resource](https://www.roger-pearse.com/mithras/display.php?page=main) chock-full of photos and other goodies, and very conscientiously documented.
 
 See also:
 
@@ -4514,13 +4514,13 @@ See also:
 
 ### Primary:
 
-- Eunapius of Sardis' *Lives of the Sophists* is available online in the out-of-copyright Loeb edition of Wilmer Cave Wright. A must-read if you like your Platonist sages to levitate and perform magical healings and suchlike.
+- Eunapius of Sardis' *Lives of the Sophists* is available [online](http://ryanfb.github.io/loebolus/) in the out-of-copyright Loeb edition of Wilmer Cave Wright. A must-read if you like your Platonist sages to levitate and perform magical healings and suchlike.
 
 - Hierocles of Alexandria on the purification of the luminous soul-vehicle:* In aurum pyth*. 26.22, citing Plato, *Phædo* 67b.
 
 - Marinus: Proclus invokes Hekatē: 28.17 in the edition Henri Dominique Saffrey, Alain-Philipe Segonds, and Concetta Luna, editors. *Marinus: Proclus, ou sur le bonheur*. Les Belles Lettres, Paris, 2002.
 
-- Plutarch *On Isis and Osiris*: see Episode 68.
+- Plutarch *On Isis and Osiris*: see [Episode 68](https://shwep.net/podcast/plutarchs-on-isis-and-osiris/).
 
 - Porphyry's *On the Cave of the Nymphs* can be found in Augustus Nauck, editor. *Porphyrii philosophus platonicus opuscula selecta.* Teubner, Leipzig, 1963.
 
@@ -4607,7 +4607,7 @@ Allberry Manichaean Psalm Book 1938.
 
 - The Kellis fragments are a body of Coptic materials found in Egypt in the 1990's, containing fragments of letters of Mani, as well as letters between Manichæans. See Iain Gardner, Anthony Alcock, and Wolf-Peter Funk, *Coptic Documentary Texts from Kellis, Volume 2: P. Kellis VII (P. Kellis Copt. 57–131)*. Dakhleh Oasis Project Monograph 16. Oxford; Philadelphia: Oxbow Books, 2014.
 
-- The Turfan texts: A huge amount of Manichæan material (about 5,000 fragments of various kinds including works of visual art) survives in the Iranian languages Parthian, Middle Persian, and Sogdian, and in Uighur/Old Turkic, from the oasis of Turfan. In print, the most basic resources are in the Berliner Turfantexte series, previously published by Akademie Verlag and now by Brepols. Approximately 40 volumes have been published since the 1960s. Not every volume is on Manichaean material, but about a third of it is. A good accessible English translation for much of this is Hans-Joachim Klimkeit. *Gnosis on the Silk Road: Gnostic Texts from Central Asia.* Harper, San Francisco, CA, 1993.The Digitales Turfan-Archiv maintained by the Turfanforschung group at the Berlin-Brandenburgische Akademie der Wissenschaften is the primary resource here. Middle Persian and Parthian etexts for many of these documents are available from TITUS at the University of Frankfurt. New critical editions and English translation of the Turkic Manichaean texts are coming out in the *Corpus Fontium Manichaeorum* series at Brepols:
+- The Turfan texts: A huge amount of Manichæan material (about 5,000 fragments of various kinds including works of visual art) survives in the Iranian languages Parthian, Middle Persian, and Sogdian, and in Uighur/Old Turkic, from the oasis of Turfan. In print, the most basic resources are in the Berliner Turfantexte series, previously published by Akademie Verlag and now by Brepols. Approximately 40 volumes have been published since the 1960s. Not every volume is on Manichaean material, but about a third of it is. A good accessible English translation for much of this is Hans-Joachim Klimkeit. *Gnosis on the Silk Road: Gnostic Texts from Central Asia.* Harper, San Francisco, CA, 1993.The [Digitales Turfan-Archiv](http://turfan.bbaw.de/dta/index.html) maintained by the Turfanforschung group at the Berlin-Brandenburgische Akademie der Wissenschaften is the primary resource here. Middle Persian and Parthian etexts for many of these documents are available from [TITUS](http://titus.uni-frankfurt.de/indexe.htm?/texte/texte2.htm) at the University of Frankfurt. New critical editions and English translation of the Turkic Manichaean texts are coming out in the *Corpus Fontium Manichaeorum* series at Brepols:
 
 Larry Clark, *Uygur Manichaean Texts, 2: Liturgical Texts*, 2013
 
@@ -4615,7 +4615,7 @@ Idem,* Uygur Manichaean Texts, 3: Ecclesiastical Texts*, 2016
 
 (vol. 1 on Doctrinal Texts is forthcoming).
 
-- The Dunhuang texts, an amazing cave-library containing, among much else, Manichaean writings in Uighur and Chinese, were found by a Taoist monk at the turn of the last century. See Helwig Schmidt-Glintzer. *Chinesische Manichaeica*. Wiesbaden, 1987, and the online International Dunhuang Project organised through the British Library. In print, Lieu & Mikkelsen, *Tractatus Manichaicus Sinica* (Corpus Fontium Manichaeorum, Brepols, 2017) is a critical edition of one Chinese text.
+- The Dunhuang texts, an amazing cave-library containing, among much else, Manichaean writings in Uighur and Chinese, were found by a Taoist monk at the turn of the last century. See Helwig Schmidt-Glintzer. *Chinesische Manichaeica*. Wiesbaden, 1987, and the online [International Dunhuang Project](http://idp.bl.uk/) organised through the British Library. In print, Lieu & Mikkelsen, *Tractatus Manichaicus Sinica* (Corpus Fontium Manichaeorum, Brepols, 2017) is a critical edition of one Chinese text.
 
 - For the new Chinese paintings, there is a Japanese volume by Yutaka Yoshida, Studies of the Chinese Manichaean paintings of South China origin preserved in Japan, 2015.
 
@@ -4625,7 +4625,7 @@ Idem,* Uygur Manichaean Texts, 3: Ecclesiastical Texts*, 2016
 
 ### Secondary:
 
-- Ibn al-Nadīm, Fihrist: The *Kitāb al-Fihrist* (‘Book of the Catalogue’) is a late tenth-century treasure-trove of all kinds of lore current in ‘Abbasid Baghdad, including a section on the Ṣābians (see our interview with Michael Noble), under which heading (section 9.1) the beliefs of the Manichæans are discussed. The standard edition is Flügel's (*Muḥammad b. Isḥāq al-Nadı̄m. Kitāb al-fihrist*. F.C.W. Vogel, Leipzig, 1871-1872. 2 vols.), and the standard English translation is Bayard Dodge's (*The Fihrist of al-Nadim: A Tenth-Century Survey of Muslim Culture*. Columbia University Press, New York, NY, 1970).
+- Ibn al-Nadīm, Fihrist: The *Kitāb al-Fihrist* (‘Book of the Catalogue’) is a late tenth-century treasure-trove of all kinds of lore current in ‘Abbasid Baghdad, including a section on the Ṣābians (see [our interview with Michael Noble](https://shwep.net/oddcast/philosophising-the-occult-michael-noble-on-the-hidden-secret-of-fakr-al-din-al-razi/)), under which heading (section 9.1) the beliefs of the Manichæans are discussed. The standard edition is Flügel's (*Muḥammad b. Isḥāq al-Nadı̄m. Kitāb al-fihrist*. F.C.W. Vogel, Leipzig, 1871-1872. 2 vols.), and the standard English translation is Bayard Dodge's (*The Fihrist of al-Nadim: A Tenth-Century Survey of Muslim Culture*. Columbia University Press, New York, NY, 1970).
 
 - Iain Gardner 2020: see below.
 
@@ -4633,7 +4633,7 @@ Idem,* Uygur Manichaean Texts, 3: Ecclesiastical Texts*, 2016
 
 ### Recommended Reading:
 
-The International Association of Manichæan Studies is a good place to start any search for up-to-date work on Manichæism; their book series is ridiculously-rich, and they put out a newsletter. Also of central interest:
+The [International Association of Manichæan Studies](https://www.manichaeism.de/) is a good place to start any search for up-to-date work on Manichæism; their [book series](https://www.manichaeism.de/published-volumes/) is ridiculously-rich, and they put out a [newsletter](https://www.manichaeism.de/manichaean-studies-newsletter/). Also of central interest:
 
 - Jason BeDuhn and Paul Mirecki, editors. *The Light and the Darkness: Studies in Manichaeism and its World*. Brill, Leiden/Boston, MA/Köln, 2001.
 
@@ -4666,7 +4666,7 @@ The International Association of Manichæan Studies is a good place to start any
 
 ### Primary:
 
-- The Cologne Mani Codex: see the notes to Episode 123.
+- The Cologne Mani Codex: see the notes to [Episode 123](https://shwep.net/podcast/jason-beduhn-on-mani-and-manichaeism/).
 
 - Paul, Letter to the Galatians* 2:20: ‘I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me.’
 
@@ -4719,23 +4719,23 @@ The references to Smith below are to Andrew Smith's edition of Porphyry's fragme
 
 - Tuomas Rasimus. Porphyry and the Gnostics: Reassessing Pierre Hadot’s Thesis in Light of the Second- and Third-Century Sethian Treatises. In John D. Turner and Kevin Corrigan, editors, *Plato’s ‘Parmenides’ and Its Heritage, Volume 2: Reception in Patristic, Gnostic, and the Christian Neoplatonic Texts*, pages 81–110. Brill, Leiden, 2011.
 
-*Porphyrian Tree from Purchotius' Institutiones philosophicae I* (1730), also from wikipedia. Does this diagram remind you of anything?
+*Porphyrian Tree from Purchotius' Institutiones philosophicae I* (1730), also from [wikipedia](https://en.wikipedia.org/wiki/File:Arbor_porphyrii_(from_Purchotius%27_Institutiones_philosophicae_I,_1730).png). Does this diagram remind you of anything?
 
 ### Recommended Reading:
 
 ### Porphyry's Biography:
 
-On Porphyry's life we have mainly circumstantial details from his *Life of Plotinus* (the best edition of which is P. Henry and H.-R. Schwyzer, editors. *Plotini opera*. Clarendon Press, Oxford, 1964-1983. 3 vols; for an abundance of useful notes, see Brisson et al., in the Recommended Reading below) and Eunapius'* Lives of the Philosophers and Sophists*, which remains woefully neglected: Wilmer Cave Wright's Loeb edition is still your best bet, freely available online.
+On Porphyry's life we have mainly circumstantial details from his *Life of Plotinus* (the best edition of which is P. Henry and H.-R. Schwyzer, editors. *Plotini opera*. Clarendon Press, Oxford, 1964-1983. 3 vols; for an abundance of useful notes, see Brisson et al., in the Recommended Reading below) and Eunapius'* Lives of the Philosophers and Sophists*, which remains woefully neglected: Wilmer Cave Wright's Loeb edition is still your best bet, [freely available online](http://ryanfb.github.io/loebolus/).
 
 ### Good editions of Porphyry's works:
 
-The Teubner series (that's *Bibliotheca scriptorum Graecorum et Romanorum Teubneriana *to you) of editions of Porphyry's writings remains the only one-stop shop (and even they are no longer one-stop, as new fragments are still being discovered). Andrew Smith's edition of the fragments in this series is absolutely essential.
+The Teubner series (that's [*Bibliotheca scriptorum Graecorum et Romanorum Teubneriana *](https://www.degruyter.com/serial/BT-B/html)to you) of editions of Porphyry's writings remains the only one-stop shop (and even they are no longer one-stop, as new fragments are still being discovered). Andrew Smith's edition of the fragments in this series is absolutely essential.
 
 - Andrew Smith, editor. *Porphyrius: Fragmenta*. Teubner, Leipzig, 1993.
 
-The Belles Lettres have put out a number of Porphyry's surviving works in Greek/French. In English it is a case of catch-as-catch can.
+The Belles Lettres have put out a number of [Porphyry's surviving works in Greek/French](https://www.lesbelleslettres.com/recherche?q=porphyre). In English it is a case of catch-as-catch can.
 
-The Stanford online Encyclopædia of Philosophy gives a superb bibliography of useful editions and translations of Porphyry's principal works.  To this must now be added Yuri Arzhanov, editor. *Porphyry "On Principles and Matter": A Syriac Version of a Lost Greek Text with an English Translation, Introduction, and Glossaries*. Number 34 in Scientia Graeco-Arabica. De Gruyter, Berlin, 2021.
+The Stanford online Encyclopædia of Philosophy gives a [superb bibliography](https://plato.stanford.edu/entries/porphyry/#MetaHighReal) of useful editions and translations of Porphyry's principal works.  To this must now be added Yuri Arzhanov, editor. *Porphyry "On Principles and Matter": A Syriac Version of a Lost Greek Text with an English Translation, Introduction, and Glossaries*. Number 34 in Scientia Graeco-Arabica. De Gruyter, Berlin, 2021.
 
 ### Useful General Studies:
 
@@ -4894,7 +4894,7 @@ Porphyry:
 
 - Digs the Jews: *Phil Orac*. frr. 323-4 Smith, on the god of the Hebrews. The Essenes: *De abst*. 4.13.7. His wife, Marcella, was a Jewess: *Tub. Theos*. 85, p. 55.1 Erbse.
 
-- For references to Eusebius and Origen, see our special episode *Ammonius, Origen, and Plotinus: Exploring an Enigma*.
+- For references to Eusebius and Origen, see our special episode [*Ammonius, Origen, and Plotinus: Exploring an Enigma*](https://shwep.net/podcast/ammonius-origen-and-plotinus-exploring-an-enigma/).
 
 ### Secondary:
 
@@ -4984,7 +4984,7 @@ Of further interest:
 
 - Anna Corrias. Imagination and Memory in Marsilio Ficino’s Theory of the Vehicles of the Soul. *The International Journal of the Platonic Tradition*, 6(1):81–114, 2012.
 
-- Simon Paul Cox. *A Genealogy of the Subtle Body*. PhD thesis, Rice University, 2019 [soon to be a book].
+- Simon Paul Cox. *A Genealogy of the Subtle Body*. PhD thesis, Rice University, 2019 [soon to be a [book](https://www.amazon.co.uk/Subtle-Body-Genealogy-WESTERN-ESOTERICISM/dp/019758103X)].
 
 - Jay Johnston. *Angels of Desire: Esoteric Bodies, Aesthetics and Ethics*. Equinox, New York, NY, 2008.
 
@@ -5197,7 +5197,7 @@ Origen: The αὐγοειδὲς σῶμα responsible for apparitions: *Cels*. 
 
 - Markham J. Geller. Jesus’ Theurgic Powers: Parallels in the Talmud and Incantation Bowls.* Journal of Jewish Studies*, 28:141–155, 1977.
 
-- Randall Hall on the Theurgic Saxophone.
+- [Randall Hall on the Theurgic Saxophone](https://shwep.net/2019/10/12/randall-hall-on-the-theurgic-saxophone/).
 
 - Wouter J. Hanegraaff, editor. *Dictionary of Gnosis and Western Esotericism*. Brill, Leiden, 2005.
 
@@ -5349,7 +5349,7 @@ For the podcast we are consulting Saffrey-Segonds 2018, and generally only bothe
 
 ### Recommended Reading:
 
-The Stanford Online Encyclopædia of Philosophy's article on Iamblichus is a great place to start.
+The Stanford Online Encyclopædia of Philosophy's [article on Iamblichus](https://plato.stanford.edu/entries/iamblichus/) is a great place to start.
 
 Also useful:
 
@@ -5429,7 +5429,7 @@ Evil *daimones*: II.7.84; cf. III.31.178; X.7.293.
 - Andrei Timotin. *La démonologie platonicienne. Histoire de la notion du daimōn de Platon aux derniers néoplatoniciens*. Number 128 in Philosophia Antiqua. Brill, Leiden/Boston, MA, 2012.`,
   137: `### Works Cited in this Episode:
 
-On the complicated ways in which Iamblichus' *De mysteriis/Response to Porphyry* are cited in scholarship, see the note to Episode 134.
+On the complicated ways in which Iamblichus' *De mysteriis/Response to Porphyry* are cited in scholarship, see the note to [Episode 134](https://shwep.net/podcast/introducing-iamblichus-of-chalcis/).
 
 ### Primary:
 
@@ -5471,7 +5471,7 @@ Iamblichus:
 
 Plato: ‘O Solon, Solon ’: *Tim*. 22b45.
 
-On the three Valentinian grades of soul, see Episode 83.
+On the three Valentinian grades of soul, see [Episode 83](https://shwep.net/podcast/geoffrey-smith-on-valentinus-and-valentinianism/).
 
 ### Secondary:
 
@@ -5617,7 +5617,7 @@ Iamblichus:
 
 Origen of Alexandria on divinely-inspired names: *Cels*. 5.45.7-16, 37-49.
 
-Plato: on the macrocosm/microcosm theory in Plato's *Timæus*, see Episode 27 of the podcast.
+Plato: on the macrocosm/microcosm theory in Plato's *Timæus*, see [Episode 27](https://shwep.net/podcast/platos-timaeus/) of the podcast.
 
 *Papyri magicæ græcæ*:
 
@@ -5627,7 +5627,7 @@ Plato: on the macrocosm/microcosm theory in Plato's *Timæus*, see Episode 27 of
 
 - The rite for ‘Meeting with your own *Daimōn*’ = *PGM* VII 505-28.
 
-- The limb-divinization (Gliedervergottung) of plants is *PGM* IV 2967-3006. Check out Brian Alt's translation of this ritual here.
+- The limb-divinization (Gliedervergottung) of plants is *PGM* IV 2967-3006. Check out Brian Alt's translation of this ritual [here](http://www.interlinearmagic.com/translations/egyptian-rite-for-gathering-herbs-pgm-iv-2967-3006/).
 
 Plotinus:
 
@@ -5641,9 +5641,9 @@ Plutarch on different types of incense:* De Iside et Osiride* 383a-384c.
 
 Porphyry:
 
-- for the subtle-body material discussed, see Episode 132.
+- for the subtle-body material discussed, see [Episode 132](https://shwep.net/podcast/astral-accretions-fate-and-the-resurrection-body-other-subtle-bodies-of-antiquity).
 
-- On Porphyry's astrologised theory of the personal *daimōn*, see Episode 127.
+- On Porphyry's astrologised theory of the personal *daimōn*, see [Episode 127.](https://shwep.net/podcast/dorian-greenbaum-on-porphyry-and-astrology/)
 
 Proclus on names as ‘verbal statues (ἀγάλματα)’: *In Crat*. 51.33-40.
 
@@ -5684,7 +5684,7 @@ Synesius' *De insomniis*/*On Dreams* will be discussed in a forthcoming episode.
 
 ### Primary
 
-- Anatolius On the Decad*: this difficult-to-find work was first published in French translation in Johan Ludwig Heiberg. Anatolius d’Alexandrie sur les dix premiers nombres.* Annales internationales d’histoire: congrès de Paris 1900, 5e Section: histoire des sciences*:12– 31, 1901, now conveniently available online. It survives in a single manuscript, cod. Monac. gr. 384 (fol. 57v-59r).
+- Anatolius On the Decad*: this difficult-to-find work was first published in French translation in Johan Ludwig Heiberg. Anatolius d’Alexandrie sur les dix premiers nombres.* Annales internationales d’histoire: congrès de Paris 1900, 5e Section: histoire des sciences*:12– 31, 1901, now conveniently available [online](http://remacle.org/bloodwolf/erudits/anatolius/decade.htm). It survives in a single manuscript, cod. Monac. gr. 384 (fol. 57v-59r).
 
 - Aristotle on the Pythagoreans positing numbers as the *archai* (principles) of all things: *Metaph*. 987b 24. See Walter Burkert. Lore and Science in Ancient Pythagoreanism. Harvard University Press, Cambridge, MA, 1972. Translated by Edward L. Minar, p. 31 n. 15 for loads more sources on this Pythagorean doctrine.
 
@@ -5725,7 +5725,7 @@ Synesius' *De insomniis*/*On Dreams* will be discussed in a forthcoming episode.
 *Pythagoras by J.A. Knapp, from Manly P. Hall's The Secret Teachings of All Ages (1928). Note the signs of pre-socratic kabbalah, from the Yod-Tetraktys to the tree of life diagram at lower left!`,
   143: `### Recommended Reading:
 
-SHWEP Episode 143 Recommended Reading`,
+[SHWEP Episode 143 Recommended Reading](https://media.shwep.net/wp-content/uploads/2022/06/22170232/SHWEP-Episode-143-Recommended-Reading.pdf)`,
   144: `### Works Cited in this Episode, roughly-chronologically:
 
 - The *Gospel of John* on Jews expelling Christians from the synagogue: 9:22; 12:42; 16:2.
@@ -5806,11 +5806,11 @@ SHWEP Episode 143 Recommended Reading`,
 
 ### Primary:
 
-- For Apuleius' *Apology*, see Episode 74.
+- For Apuleius' *Apology*, see [Episode 74](https://shwep.net/podcast/im-not-sorry-the-apology-of-apuleius/).
 
-- The story of the rabbinic disciple who wrote the wrong amulet, and another disciple had to do the proper amulet to get the demons to leave: *Babylonian Talmud*, Tractate Pesachim, fol. 111b. (You can find the text, and an English translation, here).
+- The story of the rabbinic disciple who wrote the wrong amulet, and another disciple had to do the proper amulet to get the demons to leave: *Babylonian Talmud*, Tractate Pesachim, fol. 111b. (You can find the text, and an English translation, [here](https://www.sefaria.org.il/Pesachim.111b.8?ven=William_Davidson_Edition_-_English&lang=bi&with=Translations&lang2=en)).
 
-Rabbi Yohanan: in order to sit in the Sanhedrin you have to be a master of magic: *Babylonian Talmud*, Tractate Sanhedrin, fol. 17a and Tractate Menachot 65a (You can find the text, and an English translation, here).
+Rabbi Yohanan: in order to sit in the Sanhedrin you have to be a master of magic: *Babylonian Talmud*, Tractate Sanhedrin, fol. 17a and Tractate Menachot 65a (You can find the text, and an English translation, [here](https://www.sefaria.org.il/Sanhedrin.17a.21?lang=bi)).
 
 ### Secondary:
 
@@ -5889,7 +5889,7 @@ Analytic studies can be found in e.g:
 - Philip S. Alexander, “Sefer ha-Razim and the Problem of Black Magic in Early Judaism,” in *Magic in the Biblical World*, 170–190.`,
   147: `### Works Cited in this Episode:
 
-- Brill's Magical and Religious Literature of Late Antiquity (MRLA) series can be checked out here.
+- Brill's Magical and Religious Literature of Late Antiquity (MRLA) series can be checked out [here](https://brill.com/view/serial/MRLA?language=en).
 
 - The Rabbis say we have thousands of demons crowding around us: *Bavli Berakhot* 6a; cf. Ps 91.7: ‘It has been taught: Abba Benjamin says, If the eye had the power to see them, no creature could endure the demons. Abaye says: They are more numerous than we are and they surround us like the ridge around a field. R. Huna says: Every one of us has a thousand on his left side and ten thousand on his right side.’
 
@@ -6014,7 +6014,7 @@ Analytic studies can be found in e.g:
 
 - Michael D. Swartz. Jewish Magic in Late Antiquity. In Steven T. Katz, editor, *The Cambridge History of Judaism, Volume Four: The Late Roman–Rabbinic Period*, volume 4, pages 699–720. Cambridge University Press, Cambridge, 2006, we cite p. 700.
 
-- Solomon's temple read esoterically by Clement of Alexandria: see Part I of our special episode on Book V of the *Stromateis*.
+- Solomon's temple read esoterically by Clement of Alexandria: see Part I of our [special episode on Book V of the *Stromateis*.](https://shwep.net/podcast/storytime-exploring-book-v-of-the-stromateis/)
 
 - Michael A. Morgan. *Sepher ha-Razim: The Book of the Mysteries*, volume 25 of Texts and Translations. Scholars Press, Chico, CA, 1983., we cite p. 19.
 
@@ -6022,7 +6022,7 @@ Analytic studies can be found in e.g:
 
 - McCown 1922 (see below).
 
-- Harleian MS 5596, with its wonderful assortment of magical, angelic, and divinatory materials, is available online through the good offices of the British Library.
+- Harleian MS 5596, with its wonderful assortment of magical, angelic, and divinatory materials, is [available online](https://www.bl.uk/manuscripts/FullDisplay.aspx?ref=Harley_MS_5596&index=0) through the good offices of the British Library.
 
 - Solomon authored the books of *Proverbs* (*Prov*. 1:1), *Ecclesiastes* (1:1, 12, 16-18), and the *Song of Songs* (1:1; cf. 1:5;3:7, 9, 11; 8:11).
 
@@ -6042,7 +6042,7 @@ Analytic studies can be found in e.g:
 
 - Todd E. Klutz. *Rewriting The Testament of Solomon: Tradition, Conflict, and Identity in a Late Antique Pseudepigraphon*. T&T Clark, London, 2005.
 
-- Chester Charlton McCown. *The Testament of Solomon*. J. C. Hinrichs, Leipzig, 1922 [available online! and highly recommended].
+- Chester Charlton McCown. *The Testament of Solomon*. J. C. Hinrichs, Leipzig, 1922 [[available online!](https://archive.org/details/cu31924028957400) and highly recommended].
 
 - Sarah L. Schwarz. Reconsidering the Testament of Solomon. *Journal for the Study of the Pseudepigrapha*, 16:203–237, 2007.
 
@@ -6079,7 +6079,7 @@ The following is a somewhat-random selection from an enormous scholarly literatu
 
 - Testament of Solomon*: Basic tripartite cosmology: 18.3. But multiple heavens: 14.8; 20.11-17. Beelzeboul is the prince of all the demons: 6:2; 3:6. Abezethibou is his lieutenant: 6.3; 25.
 
-- *Corpus Hermeticum* 13 on the twelve astral vices (‘tormentors’) driven out by the ten noetic powers: *CH* XIII 11 and ff. See episode 106.
+- *Corpus Hermeticum* 13 on the twelve astral vices (‘tormentors’) driven out by the ten noetic powers: *CH* XIII 11 and ff. See [episode 106](https://shwep.net/podcast/silent-encounters-the-esoteric-in-the-ancient-hermetica/).
 
 - Demons know the future by eavesdropping on the angels: Talmud *Hagiga* 16a; *Qur'ān* e.g. 37:6-9.
 
@@ -6089,7 +6089,7 @@ The following is a somewhat-random selection from an enormous scholarly literatu
 
 - Dennis C. Duling. The Testament of Solomon. In James H. Charlesworth, editor, *The Old Testament Pseudepigrapha, Volume One: Apocalyptic Literature and Testaments*, pages 935–87. Hendrickson, Peabody, MA, 2021; we quote p. 952.
 
-- Chester Charlton McCown.* The Testament of Solomon*. J. C. Hinrichs, Leipzig, 1922. We quote p. 43 and cite p. 48 on the *voces magicæ*.
+- Chester Charlton McCown.[* The Testament of Solomon*](https://archive.org/details/cu31924028957400). J. C. Hinrichs, Leipzig, 1922. We quote p. 43 and cite p. 48 on the *voces magicæ*.
 
 ### Recommended Reading:
 
@@ -6110,7 +6110,7 @@ See previous episode. On the Decans, Gundel remains a monument of scholarship: H
 
 - Hostile accusations of magical practice among early Christians refuted by Christians: Hippolytus *Philosophumena* 6.7 ff; 39 ff; 7.32; 9.14 ff; 10.29.  Lactantius *Inst*. 5.3. Origen *Cels*. 6.40 et passim. Eusebius *Dem. ev.* 3.2; 3.5. Jerome *Tract. Ps*. 81. Augustine *Cons*. 1.9.14; 1.10.15; 1.11.17.
 
-- The Osiris-Christ magical gem can be found here. The crucified Christ without the cross discussed in the episode looks like this:
+- The Osiris-Christ magical gem can be found [here](http://cbd.mfab.hu/cbd/973/?sid=308). The [crucified Christ without the cross](http://cbd.mfab.hu/cbd/816/?sid=13887) discussed in the episode looks like this:
 
 *British Museum gem 231.
 
@@ -6161,7 +6161,7 @@ Augustine and Chrysostom on Christian amulets – maybe not effective, but at le
 
 On that ‘Jesus’ incantation-bowl, see Dan Levene. ‘… And by the name of Jesus …’: An Unpublished Magic Bowl in Jewish Aramaic. *JSQ*, 6:283–308, 1999.
 
-The charm known as ‘Flum Jordan’ is found e.g. at British Library, Sloane MS 962, folio 38v: Criste was borne in Bedlem, baptized in þo flem Jordan. Also þo flem astode, also astond þi blode .N. In nomine Patris et Filii et Spiritus Sancti.
+The charm known as ‘Flum Jordan’ is found e.g. at British Library, [Sloane MS 962](https://searcharchives.bl.uk/primo_library/libweb/action/display.do?tabs=detailsTab&ct=display&doc=IAMS040-002113314&displayMode=full&vid=IAMS_VU2), folio 38v: Criste was borne in Bedlem, baptized in þo flem Jordan. Also þo flem astode, also astond þi blode .N. In nomine Patris et Filii et Spiritus Sancti.
 
 Ninth-century English healing charm (Corrigendum: actually tenth century) mentioning Woðen: B4 in F. Grendon, “The Anglo-Saxon Charms,” *Journal of American Folklore* 22.84 (1909), 191–95, 226–29.
 
@@ -6177,7 +6177,7 @@ The Prayer of Jacob discussed in Michael Zellmann-Rohrer. Seth on Mount Sinai: A
 
 ### Secondary:
 
-Korshi's project, the Coptic Magical Papyri project, must be visited by anyone interested in ancient magic, ancient Christian magic, and even Late-Antique Islamicate magic.
+Korshi's project, the [Coptic Magical Papyri project](https://www.coptic-magic.phil.uni-wuerzburg.de/), must be visited by anyone interested in ancient magic, ancient Christian magic, and even Late-Antique Islamicate magic.
 
 Roger Bagnall. *Early Christian Books in Egypt*. Princeton University Press, Princeton, NJ, 2009.
 
@@ -6207,7 +6207,7 @@ Henk S. Versnel. Beyond Cursing: The Appeal to Justice in Judicial Prayers. In C
 
 ### Recommended Reading (and Listening):
 
-The Coptic Magic Project hosts ample online bibliographical resources, to which we refer the interested listener. The project also has an occasional podcast devoted to conversations between eminent scholars, which SHWEP listeners will find to be of a ridiculously high-quality.`,
+The Coptic Magic Project hosts ample [online bibliographical resources](https://www.coptic-magic.phil.uni-wuerzburg.de/index.php/bibliography/), to which we refer the interested listener. The project also has an occasional [podcast](https://www.coptic-magic.phil.uni-wuerzburg.de/index.php/the-podcast/) devoted to conversations between eminent scholars, which SHWEP listeners will find to be of a ridiculously high-quality.`,
   154: `### Works Cited in this Episode:
 
 Paul Pasquesi cites a very wide range of literature in this interview; rather than mentioning each instance here, we refer the listener to the Recommended Reading below, where the most accessible translations, primary critical editions, and so forth for our Syrian friends have been gathered. As for the other stuff we talked about:
@@ -6228,7 +6228,7 @@ The Four who Ascended to Pardis: *Tosefta Hagigah* 2:2, elaborated in *Bavli Hag
 
 ### Secondary:
 
-Our interview with Francis Flannery referred to is Episode 54.
+Our interview with Francis Flannery referred to is [Episode 54.](https://shwep.net/podcast/frances-flannery-on-jewish-dreams-in-antiquity/)
 
 Ross Kraemer thinks *Joseph and Aseneth* isn't Jewish: Kraemer, Ross Shepard. *When Aseneth Met Joseph: A Late Antique Tale of the Biblical Patriarch and His Egyptian Wife, Reconsidered*. United Kingdom: Oxford University Press, 2015. Compare e.g. Ahearne-Kroll, Patricia D. *Aseneth of Egypt: The Composition of a Jewish Narrative*. United States: SBL Press, 2020.
 
@@ -6331,7 +6331,7 @@ Siouffi, N., *Études sur la religion des Soubbas ou Sabéens* (Paris: Imprimeri
 
 ### By our Guest
 
-Academia page: https://rutgers.academia.edu/cghaberl
+Academia page: [https://rutgers.academia.edu/cghaberl](https://rutgers.academia.edu/cghaberl)
 
 Häberl, C.G., ‘The Enclosed Nations of Mandaean Lore’, in Greisiger, L., Mein, A., and Tamer, G. eds, *Gog and Magog: Proceedings of the Conference held on September 23–25, 2019, at Friedrich-AlexanderUniversität Erlangen-Nürnberg, Erlangen, Germany* (Judaism, Christianity, and Islam – Tension, Transmission, Transformation [JCIT]; Berlin: De Gruyter, Forthcoming).
 
@@ -6339,7 +6339,7 @@ Häberl, C.G., ‘The Enclosed Nations of Mandaean Lore’, in Greisiger, L., Me
 
 — ‘Meryey, Standing at the Boundary’, in Zimrat JAH: A Tribute to Jo Anne Hackett, Jonathan Kaplan and Na'ama Pat-El (eds.), a special issue of *Maarav: A Journal for the Study of the Northwest Semitic Languages and Literatures* 25.1–2 (2022: 65–89 (Rolling Hills Estates, CA: Western Academic Press).
 
-— ‘Of Calendars—and Kings—and Why the Winter is Boiling Hot’, the *Bulletin of the Royal Asiatic Society* FirstView (13 January 2021), https: //www.cambridge.org/core/journals/journal-of-the-royal-asiaticsociety/article/abs/of-calendarsand-kingsand-why-the-winter-isboiling-hot/074CF5A8A65C73265413E0A4F143D9D1 (accessed on 20 February 2021).
+— ‘Of Calendars—and Kings—and Why the Winter is Boiling Hot’, the *Bulletin of the Royal Asiatic Society* FirstView (13 January 2021), [https: //www.cambridge.org/core/journals/journal-of-the-royal-asiaticsociety/article/abs/of-calendarsand-kingsand-why-the-winter-isboiling-hot/074CF5A8A65C73265413E0A4F143D9D1](https://www.cambridge.org/core/journals/journal-of-the-royal-asiaticsociety/article/abs/of-calendarsand-kingsand-why-the-winter-isboiling-hot/074CF5A8A65C73265413E0A4F143D9D1) (accessed on 20 February 2021).
 
 — ‘Incantation Texts in Mandaic Script as Witnesses to the Mandaean Scriptures’, in Wissa, M., ed., *Scribal Practices and the Social Construction of Knowledge in Late Antiquity* (Leuven: Peeters, 2017), 143–160.
 
@@ -6420,7 +6420,7 @@ The Pseudo-Clementines (H refers to the Homilies*, R to the *Recognitions*):
 
 - Simon makes a kind of homonculus: H 3.26; cf. R 2.9, 10, 13–15; 3.47.
 
-Simon Magus in *Acts*: 8:9-24; the *Acts of Peter*, where he flies around, can be accessed online in M.R. James' translation.
+Simon Magus in *Acts*: 8:9-24; the *Acts of Peter*, where he flies around, can be accessed [online](http://www.earlychristianwritings.com/text/actspeter.html) in M.R. James' translation.
 
 ### Secondary:
 
@@ -6469,7 +6469,7 @@ Guy G. Stroumsa.* The End of Sacrifice: Religious Transformations of Late Antiqu
 
 ### Primary:
 
-The Suda's entry for Zosimus (ζ 168), translation from the Suda Online project: Of Alexandria, philosopher. [He wrote] Matters Alchemical*, addressed to his sister Theosebia; it is alphabetically arranged in 28 volumes, and known by some as *Things Wrought By Hand*; and the *Life of Plato* [sc. is by him].
+The Suda's entry for Zosimus (ζ 168), translation from the [Suda Online project](https://www.cs.uky.edu/~raphael/sol/sol-cgi-bin/search.cgi?login=guest&enlogin=guest&db=REAL&field=adlerhw_gr&searchstr=zeta,168): Of Alexandria, philosopher. [He wrote] Matters Alchemical*, addressed to his sister Theosebia; it is alphabetically arranged in 28 volumes, and known by some as *Things Wrought By Hand*; and the *Life of Plato* [sc. is by him].
 
 Ælius Aristides on hypnagogy: e.g. *Hieroi logoi* II.32.
 
@@ -6477,7 +6477,7 @@ Zosimus of Panopolis: ‘Spit on matter!’ *The Final Account* (*Teleutaia Apoc
 
 ### Secondary:
 
-Our interview with Gil Renberg on ancient incubation is SHWEPisode 70;  you'll find our discussion of Ælius Aristides in Episode 72.
+Our interview with Gil Renberg on ancient incubation is [SHWEPisode 70](https://shwep.net/podcast/gil-renberg-on-dream-incubation/);  you'll find our discussion of Ælius Aristides in [Episode 72](https://shwep.net/podcast/hypochondria-and-epiphany-the-strange-case-of-aelius-aristides/).
 
 Berthelot and Ruelle's edition/translation: see below.
 
@@ -6535,11 +6535,11 @@ Idem. *Early Greek Alchemy. Patronage and Innovation in Late Antiquity*. Berkele
 
 Idem. ‘Was Zosimus of Panopolis Christian?’ *ARYS. Antigüedad: Religiones y Sociedades*, 20 (2022): 135–170
 
-(special issue: Chemical Arts and Religion in Antiquity, edited by N. Borrelli, M. Martelli)
+([special issue](https://e-revistas.uc3m.es/index.php/ARYS/article/view/6795/5727): Chemical Arts and Religion in Antiquity, edited by N. Borrelli, M. Martelli)
 
 M. Escolano-Poveda, ‘Zosimos Aigyptiakos: Identifying the Imagery of the ‘Visions’ and Locating Zosimos of Panopolis in His Egyptian Context.’ *ARYS. Antigüedad: Religiones y Sociedades*, 20 (2022): 77–134
 
-(special issue: Chemical Arts and Religion in Antiquity, edited by N. Borrelli, M. Martelli):
+([special issue](https://e-revistas.uc3m.es/index.php/ARYS/article/view/6793/5726): Chemical Arts and Religion in Antiquity, edited by N. Borrelli, M. Martelli):
 
 A.-J. Festugière, L*a révélation d’Hermès Trismégiste, Vol. 1: L’astrologie et les sciences occultes*. Paris: Gabalda, 19502, pp. 217–282
 
@@ -6577,7 +6577,7 @@ Idem. ‘Alchemy, Medicine and Religion: Zosimus of Panopolis and the Egyptian P
 
 L. Principe. *The Secrets of Alchemy*. Chicago: The Chicago University Press, 2013, pp. 15–24
 
-A. Rinotas. 2021. ‘Spiritual and Material Conversion in the Alchemical Work of Zosimus of Panopolis.’ *Religions*, 12 (2021): 1–13
+A. Rinotas. 2021. ‘[Spiritual and Material Conversion in the Alchemical Work of Zosimus of Panopolis](https://doi.org/10.3390/rel12111008).’ *Religions*, 12 (2021): 1–13
 
 D. Stolzenberg. ‘Unpropitious Tinctures. Alchemy, Astrology and Gnosis According to Zosimos of Panopolis.’* Archives Internationales d’Histoire des Sciences*, 142 (1999): 3–31.
 
@@ -6610,7 +6610,7 @@ The images of Zos. and Theo. in the *Muṣḥaf al-ṣuwar* known in 10th centur
 
 ### Secondary:
 
-SHWEPisode 110 on the Sibylline Oracles is here; Episode 51 on the Enochic textual tradition is here.
+SHWEPisode 110 on the Sibylline Oracles is [here](https://shwep.net/podcast/matthew-neujahr-on-the-sibylline-oracles/); Episode 51 on the Enochic textual tradition is [here](https://shwep.net/podcast/enoch-and-the-book-of-watchers/).
 
 Theodor Abt. *The Book of Pictures. Mushaf as-suwar by Zosimus of Panopolis*. Facsimile with an Introduction. Number II.i in Corpus Alchemicum Arabicum. Living Human Heritage Publications, Zurich, 2007.
 
@@ -6665,13 +6665,13 @@ Stolzenberg, Daniel, ‘Unpropitious Tinctures: Alchemy, Astrology and Gnosis Ac
 
 ### Primary:
 
-The *Suda*'s entry for Zosimus (ζ 168), translation from the Suda Online project: Of Alexandria, philosopher. [He wrote] *Matters Alchemical*, addressed to his sister Theosebia; it is alphabetically arranged in 28 volumes, and known by some as *Things Wrought By Hand*; and the *Life of Plato* [sc. is by him].
+The *Suda*'s entry for Zosimus (ζ 168), translation from the [Suda Online project](https://www.cs.uky.edu/~raphael/sol/sol-cgi-bin/search.cgi?login=guest&enlogin=guest&db=REAL&field=adlerhw_gr&searchstr=zeta,168): Of Alexandria, philosopher. [He wrote] *Matters Alchemical*, addressed to his sister Theosebia; it is alphabetically arranged in 28 volumes, and known by some as *Things Wrought By Hand*; and the *Life of Plato* [sc. is by him].
 
 The first-century CE ‘Gnomon of the Idios Logos’ (in P.Oxy. XLII 3014) and the 196 BCE ‘Memphis Decree’ are discussed at Dielemann 2005 (see below), pp. 206-8.
 
 ### Secondary:
 
-Episode 85 with Laurence Principe can be found here.
+Episode 85 with Laurence Principe can be found [here](https://shwep.net/podcast/introducing-alchemy-with-lawrence-principe/).
 
 Grimes 2018 and articles [see below].
 
@@ -6760,7 +6760,7 @@ Cristiana Sogno. Astrology, Morality, the Emperor, and the Law in Firmicus Mater
 
 ### Primary:
 
-The works of Gregory of Nyssa have been edited by Ekkehard Mühlenberg and Giulio Maspero for Brill in a massive edition-project, the *Gregorii Nysseni Opera*. If you are a member of a participating institution, you can access them online.
+The works of Gregory of Nyssa have been edited by Ekkehard Mühlenberg and Giulio Maspero for Brill in a massive edition-project, the *Gregorii Nysseni Opera*. If you are a member of a participating institution, you can access them [online](https://scholarlyeditions.brill.com/gnoo/).
 
 Plato *Theætetus* on assimilation to the divine as far as possible: *Theæt*. 176b.
 
@@ -6787,11 +6787,11 @@ Sergey Trostyanskiy. St. Basil the Great’s Philosophy of Time: A Historical Pe
 Idem. Units, Limits and the Order of Nature: Basil the Great’s Theory of Time and Creation. *Studia Patristica*, CXV:261–81, 2021.`,
   163: `### Works Cited in this Episode:
 
-Our special SHWEPisode on Ammonius, Origen, and Plotinus: Exploring an Enigma.
+Our special SHWEPisode on [Ammonius, Origen, and Plotinus: Exploring an Enigma](https://shwep.net/podcast/ammonius-origen-and-plotinus-exploring-an-enigma/).
 
-Our interview on early Syriac asceticism with Paul Pasquesi is here: Episode 154.
+Our interview on early Syriac asceticism with Paul Pasquesi is here: [Episode 154](https://shwep.net/podcast/paul-pasquesi-on-christian-asceticism-in-the-late-antique-syriac-world/).
 
-Our interview with Henny Fiska Hagg on Clement's apophaticism is here: Episode 93.
+Our interview with Henny Fiska Hagg on Clement's apophaticism is here: [Episode 93](https://shwep.net/podcast/henny-fiska-hagg-on-clements-apophatic-writing/).
 
 ### Recommended Reading:
 
@@ -6808,13 +6808,13 @@ Bible:
 
 - No one has seen god: *John* 1:18/*Exodus* 33:20
 
-The classic anecdote about Gregory walking around Constantinople and getting into debates over Christology with every shop-assistant: Gregory of Nyssa, *De deitate filii et spiritus sancti*, GNO 57.120–21; French trans. Matthieu Cassin. (There's not an official English one yet. But here's one online).
+The classic anecdote about Gregory walking around Constantinople and getting into debates over Christology with every shop-assistant: Gregory of Nyssa, *De deitate filii et spiritus sancti*, GNO 57.120–21; [French trans.](https://www.revue-conference.com/index.php?option=com_content&view=article&id=445:sur-la-divinite-du-fils-et-de-lespritet-sur-abraham&catid=3:etudesatraductions&Itemid=11) Matthieu Cassin. (There's not an official English one yet. But here's one [online](https://sourcebooks.fordham.edu/source/GregoryNyssa-theologyintheStreetsofConstantinople.asp)).
 
-Basil of Cæsarea on the difference between exoteric *kerygma* and esoteric *dogma*: *On the Holy Spirit* 27.66. His Rule for ascetics online.
+Basil of Cæsarea on the difference between exoteric *kerygma* and esoteric *dogma*: [*On the Holy Spirit* 27.66](https://www.newadvent.org/fathers/3203.htm). His Rule for ascetics [online](https://www.newadvent.org/cathen/02322a.htm).
 
-Gregory's homage to Plato's *Phædo* on the death of Macrina:* Life of Macrina* and *On the Soul and Resurrection.*
+Gregory's homage to Plato's *Phædo* on the death of Macrina:[* Life of Macrina*](https://sourcebooks.fordham.edu/basis/macrina.asp) and *[On the Soul and Resurrection](https://www.newadvent.org/fathers/2915.htm).*
 
-His arguments against slavery in the *Homilies on Ecclesiastes*: Homily 4.
+His arguments against slavery in the *Homilies on Ecclesiastes*: [Homily 4](https://earlychurchtexts.com/public/gregoryofnyss_ecclesiastes_slavery.htm).
 
 Clement of Alexandria on Moses entering the darkness: *Strom*. II.6.1
 
@@ -6832,7 +6832,7 @@ Mark DelCogliano on ‘theology of theology’: Mark DelCogliano. *Basil of Caes
 
 ### Primary Sources for Gregory, and Good Translations
 
-The works of Gregory of Nyssa have been edited by Ekkehard Mühlenberg and Giulio Maspero for Brill in a massive edition-project, the *Gregorii Nysseni Opera*. If you are a member of a participating institution, you can access them online.
+The works of Gregory of Nyssa have been edited by Ekkehard Mühlenberg and Giulio Maspero for Brill in a massive edition-project, the *Gregorii Nysseni Opera*. If you are a member of a participating institution, you can access them [online](https://scholarlyeditions.brill.com/gnoo/).
 
 Also, check out these translations:
 
@@ -6873,7 +6873,7 @@ Palladius: Greek edition: *Palladius of Helenopolis. The Lausiac History of Pall
 
 Palladius Coptic (there are disputes among scholars as to what priority the Coptic version, which has expansions, should be given): Amélineau, Emile, ed. *De Historia Lausiaca quaenam sit hujus ad monachorum Aegyptiorum historiam scribendam utilitas: Adjecta sunt quaedam hujus historiae Coptica fragmenta inedita.* Paris: E. Leroux, 1887.See Vivian, Tim. *Four Desert Fathers: Pambo, Evagrius, Macarius of Egypt, and Macarius of Alexandria: Coptic Texts Relating to the Lausiac History of Palladius*. Popular Patristics. Crestwood, N.Y.: St Vladimir’s Seminary Press, 2004.
 
-Jerome's mentions of Evagrius: see https://evagriusponticus.net/life.htm (scroll down).
+Jerome's mentions of Evagrius: see [https://evagriusponticus.net/life.htm](https://evagriusponticus.net/life.htm) (scroll down).
 
 ### Secondary:
 
@@ -6883,7 +6883,7 @@ Ramelli's translation of the second Syriac recension of the *Kephalaia*: Ilaria 
 
 ### Recommended Reading:
 
-Dr Kalvesmaki's own Evagrius page is the one-stop-shop for all things Evagrian, including a rich bibliography.
+Dr Kalvesmaki's own [Evagrius page](https://evagriusponticus.net/bibliography.htm) is the one-stop-shop for all things Evagrian, including a rich bibliography.
 
 ### Evagrius, Editions and Translations
 
@@ -6911,7 +6911,7 @@ Kalvesmaki, Joel, and Robin Darling Young, eds. *Evagrius and His Legacy*. South
 
 Konstantinovsky, Julia.* Evagrius Ponticus: The Making of a Gnostic.* Ashgate New Critical Thinking in Religion, Theology, and Biblical Studies. Farnham and Burlington: Ashgate, 2009.
 
-Tobon, Monica. *Apatheia and Anthropology in Evagrius of Pontus: Restoring the Image of God*. Routledge, 2020.`,
+Tobon, Monica. [*Apatheia and Anthropology in Evagrius of Pontus: Restoring the Image of God*](https://www.academia.edu/36477352/Apatheia_and_Anthropology_in_Evagrius_of_Pontus_Restoring_the_Image_of_God._Routledge_2020). Routledge, 2020.`,
   166: `### Works Cited in this Episode:
 
 ### Primary:
@@ -6929,7 +6929,7 @@ For Recommended Reading**, see the notes to the previous episode.`,
 
 Our two main (and conflicting) Christian accounts of Constantine's vision before the battle of the Milvian Bridge are found in Lactantius (earlier: *De mortibus persecutorum* 44.5) and Eusebius (later: *Life of Constantine* 1.28-29).
 
-Plato's ascent-myth in the *Phædrus*: 246d-247e. See Episode 34. Plato's allegory of the sun: *Republic* 508a-509d. See Episode 31.
+Plato's ascent-myth in the *Phædrus*: 246d-247e. See [Episode 34](https://shwep.net/podcast/mystery-and-initiation-in-plato/). Plato's allegory of the sun: *Republic* 508a-509d. See [Episode 31](https://shwep.net/podcast/sun-line-cave-platos-inner-republic/).
 
 Julian on the need for his priests to outcompete the Christians on their own turf, the turf of *philanthropia*: Fragment of a Letter to a Priest (in vol. 2 of Wright's Loeb edition). Law of Julian in the Theodosian Code, that the state must approve teachers: *CTh*.13.3.5:
 
@@ -7031,7 +7031,7 @@ Eunapius on Sallustius: see Wilmer Cave Wright. *Philostratus and Eunapius: The 
 
 ### Secondary:
 
-Thomas Taylor's translation of* On the Gods and the World* can be found in many places online; here, for example.
+Thomas Taylor's translation of* On the Gods and the World* can be found in many places online; [here](https://en.wikisource.org/wiki/Sallust_On_the_Gods_and_the_World/Sallust_on_the_Gods_and_the_World), for example.
 
 Article on numismatic evidence for the identity of Sallustius: see Densnier 1983 below.
 
@@ -7041,7 +7041,7 @@ Cumont thinks our author is Flavius Sallustius: see Cumont 1892 below.
 
 Robert Étienne. Flavius Sallustius et Secundus Salutius.* Revue des études anciennes*, 65(1):104–113, 1963.
 
-M. Lenain de Tillermond. *Histoire des empereurs &c.* Charles Robustel, Paris, 1700 (available online through Gallica).
+M. Lenain de Tillermond. *Histoire des empereurs &c.* Charles Robustel, Paris, 1700 (available [online](https://gallica.bnf.fr/ark:/12148/bpt6k97352811/f11.item) through Gallica).
 
 ### Recommended Reading:
 
@@ -7085,7 +7085,7 @@ Ilinca. Tanaseanu-Döbler. Religious Education in Late Antique Paganism. In I.Ta
 
 ### Practitioner-Bibliography
 
-Unsurprisingly, Sallustius' tract has found a following among modern practitioners of *Hellenismos* and adjacent polytheist forms of religiosity. There is some excellent philological and exegetical work being done by some of these practitioners. See the Sartrix project (the name is a Thomas Taylor tribute), which features a new English translation of *On the Gods and the World.*
+Unsurprisingly, Sallustius' tract has found a following among modern practitioners of *Hellenismos* and adjacent polytheist forms of religiosity. There is some excellent philological and exegetical work being done by some of these practitioners. See the Sartrix project (the name is a Thomas Taylor tribute), which features a [new English translation](https://sartrix.miraheze.org/wiki/Sallustius_the_Philosopher) of *On the Gods and the World.*
 
 Also of interest:
 
@@ -7096,11 +7096,11 @@ Edward Butler. The theological interpretation of myth. *The Pomegranate: The Int
 
 Ammianus on the embassy to Shapur: XVII.5.15. Eustathius is sent as a ‘master of persuasion’ (*opifex suadendi*).
 
-Gregory of Nyssa's* Life of Macrina*.
+Gregory of Nyssa's[* Life of Macrina*](https://sourcebooks.fordham.edu/basis/macrina.asp).
 
 ### Secondary:
 
-Our main episode on Porphyry's* On the Cave of the Nymphs* can be found here (plus a Storytime on the same text here and here); our discussion of the ‘How many Origens?’ question can be found here.
+Our main episode on Porphyry's* On the Cave of the Nymphs* can be found [here](https://shwep.net/podcast/nilufer-akcay-on-porphyrys-on-the-cave-of-the-nymphs/) (plus a Storytime on the same text [here](https://shwep.net/podcast/storytime-a-cavern-pleasant-though-involvd-in-night-reading-porphyrys-on-the-cave-of-the-nymphs-part-i/) and [here](https://shwep.net/podcast/storytime-a-cavern-pleasant-though-involvd-in-night-reading-porphyrys-on-the-cave-of-the-nymphs-part-ii/)); our discussion of the ‘How many Origens?’ question can be found [here](https://shwep.net/podcast/ammonius-origen-and-plotinus-exploring-an-enigma/).
 
 Averil Cameron. *Christianity and the Rhetoric of Empire: The Development of Christian Discourse.* University of California Press, Berkeley, 1991.
 
@@ -7176,9 +7176,9 @@ Socrates of Constantinople:
 
 The *Suda*
 
-- on Theon of Alexandria (thanks to David Whitehead and the Suda online project for the translation): The man from the Mouseion, [1] an Egyptian, a philosopher, a contemporary of Pappos the philosopher who was also an Alexandrian.[2] Both of them happened to live during the reign of the elder Theodosius. He wrote works on mathematics and arithmetic, *On Signs and Observation of Birds and the Sound of Crows*, *On the Rising of the Dog[-Star]*, *On the Inundation of the Nile*, [a commentary] on Ptolemy's *Handy Table*, and a commentary on the small astrolabe.[3]
+- on Theon of Alexandria (thanks to David Whitehead and the [Suda online](https://www.cs.uky.edu/~raphael/sol/sol-cgi-bin/search.cgi) project for the translation): The man from the Mouseion, [1] an Egyptian, a philosopher, a contemporary of Pappos the philosopher who was also an Alexandrian.[2] Both of them happened to live during the reign of the elder Theodosius. He wrote works on mathematics and arithmetic, *On Signs and Observation of Birds and the Sound of Crows*, *On the Rising of the Dog[-Star]*, *On the Inundation of the Nile*, [a commentary] on Ptolemy's *Handy Table*, and a commentary on the small astrolabe.[3]
 
-- The longer entry on Hypatia can be read here.
+- The longer entry on Hypatia can be read [here](https://www.cs.uky.edu/~raphael/sol/sol-cgi-bin/search.cgi?login=guest&enlogin=guest&db=REAL&field=adlerhw_gr&searchstr=upsilon,166).
 
 Synesius of Cyrene: Letters 10, 15, 16, 33, 81, 124, 154 are to Hypatia. Letter 137 discusses the *orgia* of philosophy.
 
@@ -7186,7 +7186,7 @@ Synesius of Cyrene: Letters 10, 15, 16, 33, 81, 124, 154 are to Hypatia. Letter 
 
 *Agora*, dir. Alejandro Amenábar, 2009.
 
-*Hypatia: A Journal of Feminist Philosophy* is a peer-reviewed academic journal published quarterly by Cambridge University Press.
+[*Hypatia: A Journal of Feminist Philosophy*](https://www.cambridge.org/core/journals/hypatia) is a peer-reviewed academic journal published quarterly by Cambridge University Press.
 
 Charles Kingsley. *Hypatia, or New Foes with an Old Face. Reprinted from Fraser’s Magazine.* London, 1853.
 
@@ -7241,7 +7241,7 @@ Edward J. Watts. *City and School in Late Antique Athens and Alexandria.* Univer
 
 ### Recommended Reading:
 
-For a quick exploration of Synesius' writings, check out the beautiful list of English translations culled from various sources, to be found on Livius.
+For a quick exploration of Synesius' writings, check out the beautiful list of English translations culled from various sources, to be found [on Livius](http://org.https://www.livius.org/articles/person/synesius-of-cyrene/synesius-texts/).
 
 Jay Bregman. Synesius of Cyrene. In Lloyd P. Gerson, editor,* The Cambridge History of Philosophy in Late Antiquity, volume 2*, pages 520–37. The University Press, Cambridge, 2010.
 
@@ -7270,7 +7270,7 @@ Synesius:
 
 ### Secondary:
 
-Our special episode on the *Anonymous Commentary on the Parmenides* can be found here.
+Our special episode on the *Anonymous Commentary on the Parmenides* can be found [here](https://shwep.net/podcast/the-anonymous-commentary-on-the-parmenides-porphyry-and-the-sethian-gnostics/).
 
 Gibbon on Synesius' ancestry: ‘Such a pure and illustrious pedigree of seventeen hundred years  cannot be equalled in the history of mankind.’ Edward Gibbon. *The History of the Decline and Fall of the Roman Empire*. Strahan & Cadell, London, 1776–1789, I 667, n. 117.
 
@@ -7286,11 +7286,11 @@ U. von Wilamowitz-Möllendorff. *Die Hymnes des Synesios und Proklos*. Sitzungsb
 
 ### Primary Access
 
-For a quick exploration of Synesius' writings, check out the beautiful list of English translations culled from various sources, to be found on Livius. An English translation of the Letters is available in Augustine Fitzgerald. *The Letters of Synesius of Cyrene.* Oxford University Press, Oxford, 1926. Of the essays and hymns, Augustine Fitzgerald. *Synesius of Cyrene. The Essays and Hymns*. Oxford University Press, Oxford, 1930.For more serious work, you'll want to check out the most recent critical edition:
+For a quick exploration of Synesius' writings, check out the beautiful list of English translations culled from various sources, to be found [on Livius](http://org.https://www.livius.org/articles/person/synesius-of-cyrene/synesius-texts/). An English translation of the Letters is available in Augustine Fitzgerald. *The Letters of Synesius of Cyrene.* Oxford University Press, Oxford, 1926. Of the essays and hymns, Augustine Fitzgerald. *Synesius of Cyrene. The Essays and Hymns*. Oxford University Press, Oxford, 1930.For more serious work, you'll want to check out the most recent critical edition:
 
 - Lacombrade, Garzya, and Lamoureux, editors. *Synésios de Cyrène.* Les Belles Lettres, Paris, 1978–2008.
 
-A new translation (with the Greek) of the* On Dreams* with commentary, notes, and interpretive essays can be found in Donald A. Russell and Heinz-Günther Nesselrath, editors. *On Prophecy, Dreams and Human Imagination: Synesius, De insomniis*. Mohr Siebeck, Tübingen, 2014. Highly recommended, and available online via open access!
+A new translation (with the Greek) of the* On Dreams* with commentary, notes, and interpretive essays can be found in Donald A. Russell and Heinz-Günther Nesselrath, editors. *On Prophecy, Dreams and Human Imagination: Synesius, De insomniis*. Mohr Siebeck, Tübingen, 2014. Highly recommended, and available online via [open access](https://www.jstor.org/stable/j.ctv9b2wvp)!
 
 ### Secondary Studies
 
@@ -7385,7 +7385,7 @@ Victorinus' grandaughter's tombstone: *CIL* 6.31934. The inscription indicates s
 
 ### Secondary:
 
-Our special episode on the Anonymous Commentary on the Parmenides can be found here. Our Episode 25 on the esoteric Plato is here.
+Our special episode on the Anonymous Commentary on the Parmenides can be found [here](https://shwep.net/podcast/the-anonymous-commentary-on-the-parmenides-porphyry-and-the-sethian-gnostics/). Our Episode 25 on the esoteric Plato is [here](https://shwep.net/podcast/the-esoteric-plato/).
 
 Timothy D. Barnes. *Athanasius and Constantius: Theology and Politics in the Constantinian Empire.* Harvard University Press, Cambridge, MA, 1993.
 
@@ -7425,7 +7425,7 @@ Edwin M. Yamauchi. *Pre-Christian Gnosticism: A Survey of the Proposed Evidences
 
 ### Recommended Reading:
 
-Prof Cooper has provided us with a superb *catalogue raisonné*, which you can download here: Marius Victorinus Bibliography for SHWEPe.`,
+Prof Cooper has provided us with a superb *catalogue raisonné*, which you can download here: [Marius Victorinus Bibliography for SHWEP](https://media.shwep.net/wp-content/uploads/2023/11/15112321/Marius-Victorinus-Bibliography-for-SHWEP.docx)e.`,
   179: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7450,7 +7450,7 @@ Gedaliahu G. Stroumsa. The Manichaean Challenge to Egyptian Christianity. In B. 
 
 ### General
 
-The Augustine-industry is phenomenally-vast; ridiculous amounts are published about this man, his thought, and his enduring legacy within Catholic and Protestant Christianities. We are thus not even pretending to give a proper covering-all-the-bases bibliography. We include a couple of good books and suchlike on specific topics addressed in this episode. For more, try the bibliography to the Stanford Online Encyclopedia of Philosophy article on Augustine, which is a superb and manageable starting-point.  For in-depth and regularly–updated bibliography, the Revue des Études Augustiniennes publishing-project is the chief resource.
+The Augustine-industry is phenomenally-vast; ridiculous amounts are published about this man, his thought, and his enduring legacy within Catholic and Protestant Christianities. We are thus not even pretending to give a proper covering-all-the-bases bibliography. We include a couple of good books and suchlike on specific topics addressed in this episode. For more, try the bibliography to the Stanford Online Encyclopedia of Philosophy [article on Augustine](https://plato.stanford.edu/entries/augustine/), which is a superb and manageable starting-point.  For in-depth and regularly–updated bibliography, the[Revue des Études Augustiniennes](https://www.brepols.net/series/rea) publishing-project is the chief resource.
 
 ### On Augy and Manichæism
 
@@ -7469,9 +7469,9 @@ Augustine:
 
 - De doct. Christ*. I, 6. This passage perhaps echoes Plot. *Enn*. V.3[49]14.16-19: ἀλλά τι κρεῖττον τούτου, ὃ λέγομεν «ὄν», ἀλλὰ καὶ πλέον καὶ μεῖζον ἢ λεγόμενον, ὅτι καὶ αὐτὸς κρείττων λόγου καὶ νοῦ καὶ αἰσθήσεως, παρασχὼν ταῦτα, οὐκ αὐτὸς ὢν ταῦτα.
 
-- Sermons on the Gospel of John: the Gibbs and Innes translation is available online. Evil magical arts: 97.3; the allure of secrecy: 97.2. Hiding certain doctrines from the catechumens isn't really secrecy: 96.3 *ad fin*.
+- Sermons on the Gospel of John: the Gibbs and Innes translation is available [online](https://www.ccel.org/ccel/schaff/npnf107.iii.xcvii.html). Evil magical arts: 97.3; the allure of secrecy: 97.2. Hiding certain doctrines from the catechumens isn't really secrecy: 96.3 *ad fin*.
 
-- ‘Physician-argument’ fior religious coercion: (summary by Christian Tornau in the Stanford Internet Encyclopædia of Philosophy: ‘Augustine’s intentionalism also provides him with arguments in favor of religious coercion. As the objective of right fraternal love is not the neighbor’s temporal well-being but his eternal happiness or salvation, we must not passively tolerate our fellow-humans’ sins but should actively correct them if we can; otherwise, our motivation would be inertia rather than love (In epistulam Iohannis ad Parthos tractatus decem 7.11; cf. Letter 151.11; Ad Simplicianum 1.2.18). Catholic bishops are therefore obliged to compel heretics and schismatics to re-enter the Catholic church even forcibly, just as a father beats his children when he sees them playing with snakes or as we bind a madman who otherwise would fling himself down a precipice (Letter 93.8; 185.7; and Letter 93.1–10 in general). Obviously, this is a paternalistic argument that presupposes superior insight in those who legitimately wield coercive power. While this may be acceptable in the case of the Church, which according to Augustine’s ecclesiology is the body of Christ and the embodiment of fraternal love, it turns out to be problematic when it is transferred to secular rulers (Augustine rarely does this, but cf. Letter 138.14–15). And as even the Church in this world is a mixed body of sinners and saints (see 8. History and Political Philosophy), it may be asked how individual bishops can be sure of their good intentions when they use religious force (Rist 1994: 242–245). Augustine does not address this problem, presumably because most of his relevant texts are propagandistic defenses of coercion against the Donatists.’
+- ‘Physician-argument’ fior religious coercion: (summary by Christian Tornau in the [Stanford Internet Encyclopædia of Philosophy](https://plato.stanford.edu/entries/augustine/): ‘Augustine’s intentionalism also provides him with arguments in favor of religious coercion. As the objective of right fraternal love is not the neighbor’s temporal well-being but his eternal happiness or salvation, we must not passively tolerate our fellow-humans’ sins but should actively correct them if we can; otherwise, our motivation would be inertia rather than love (In epistulam Iohannis ad Parthos tractatus decem 7.11; cf. Letter 151.11; Ad Simplicianum 1.2.18). Catholic bishops are therefore obliged to compel heretics and schismatics to re-enter the Catholic church even forcibly, just as a father beats his children when he sees them playing with snakes or as we bind a madman who otherwise would fling himself down a precipice (Letter 93.8; 185.7; and Letter 93.1–10 in general). Obviously, this is a paternalistic argument that presupposes superior insight in those who legitimately wield coercive power. While this may be acceptable in the case of the Church, which according to Augustine’s ecclesiology is the body of Christ and the embodiment of fraternal love, it turns out to be problematic when it is transferred to secular rulers (Augustine rarely does this, but cf. Letter 138.14–15). And as even the Church in this world is a mixed body of sinners and saints (see 8. History and Political Philosophy), it may be asked how individual bishops can be sure of their good intentions when they use religious force (Rist 1994: 242–245). Augustine does not address this problem, presumably because most of his relevant texts are propagandistic defenses of coercion against the Donatists.’
 
 ### Secondary:
 
@@ -7486,7 +7486,7 @@ Guy Stroumsa. Milk and Meat: Augustine and the End of Ancient Esotericism. In *H
 
 *Codex Theodosianus*: references to various Macrobii: XVI.10.15; VIII.5.61 and XI.18.6; VI.8.1.
 
-Libanius's defense of the temples is *Oration 30*.
+Libanius's defense of the temples is [*Oration 30*](https://www.tertullian.org/fathers/libanius_pro_templis_02_trans.htm).
 
 Macrobius:
 
@@ -7553,7 +7553,7 @@ D. Shanzer, *A Philosophical and Literary Commentary on Martianus Capella’s De
 
 A. Cullhed, “Martianus Capella: A Hopeless Mess”, *The Shadow of Creusa: Negotiating Fictionality in Late Antique Latin Literature*, De Gruyter 2015, pp. 369–401.
 
-J.-B. Guillaumin, “Martianus Capella mythographe?”, 2009.
+J.-B. Guillaumin, “[Martianus Capella mythographe?](http://URL: http://www.normalesup.org/~jguillau/Martianus_mythographe-JBGuillaumin-2009.pdf)”, 2009.
 
 F. J. LeMoine, “Judging the Beauty of Diversity: A Critical Approach to Martianus Capella”, in: *The Classics Journal* 67.3 (February–March 1972), pp. 209–215.
 
@@ -7606,7 +7606,7 @@ Athenian Academy:
 
 ### Secondary:
 
-The relevant Storytime episodes on Eunapius can be found here and here. The Oddcast interview with Tzvi Langermann on the *Sefer Yetsira* can be found here. The special SHWEPisode ‘Was Plotinus a Platonist? Lineage, Identity, and Scholarship’ can be found here. The special episode on the question, ‘How many Origens, how many Ammonii?’ can be found here.
+The relevant Storytime episodes on Eunapius can be found [here](https://shwep.net/podcast/storytime-reading-eunapius-part-ii-the-emperor-and-the-thaumaturge/) and [here](https://shwep.net/podcast/storytime-reading-eunapius-part-iii-the-diviners-purge-and-the-end-of-the-theurgic-revolution/). The Oddcast interview with Tzvi Langermann on the *Sefer Yetsira* can be found [here](https://shwep.net/oddcast/tzvi-langermann-on-the-sefer-yetsira-cosmology-science-and-kabbala/). The special SHWEPisode ‘Was Plotinus a Platonist? Lineage, Identity, and Scholarship’ can be found [here](https://shwep.net/podcast/was-plotinus-a-platonist-lineage-identity-and-scholarship/). The special episode on the question, ‘How many Origens, how many Ammonii?’ can be found [here](https://shwep.net/podcast/ammonius-origen-and-plotinus-exploring-an-enigma/).
 
 Alan Cameron and Jacqueline Long. *Barbarians and Politics at the Court of Arcadius*. Number 19 in The Transformation of the Classical Heritage. University of California Press, Berkeley/Los Angeles/Oxford, 1993 [we quote pp. 49-50].
 
@@ -7620,7 +7620,7 @@ Clyde Pharr, Theresa Sherrer Davidson, and Mary Brown Pharr, editors. *The Theod
 
 If, like us, you have trouble keeping all your late Platonists straight, have a look at this handy chart we put together. Never mind the typos, but please do get in touch with any additions or substantive corrections (we know that Horapollon's school is missing, as are the Elias/David/Stephanos continuators; this is for simplicity's sake).
 
-*
+[*](http://shwep.net/wp-content/uploads/2024/02/Golden-Chain-Athens-and-Alexandria-4th-6th-Centuries-scaled.jpg)
 
 ### General
 
@@ -7689,7 +7689,7 @@ Schibli 2010 [see below]: we quote p. 444 on creation *e nihilo.*
 
 ### Recommended Reading:
 
-A chart of the Athenian and Alexandrian schools in late antiquity.
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)
 
 ### On Hierocles
 
@@ -7728,11 +7728,11 @@ Dodds suggests similarities between Proclus and Gnosticism: this is a reference 
 
 ### Proclus' Works and Where to Find Them:
 
-The Proclus-entry at the Stanford Encyclopedia of Philosophy by Christoph Helmig and Carlos Steel has a list of Proclus' extant works and where to find them edited, and a truly-sexy list of all his known works, extant, lost, and spurious. The *Plato Transformed *project at the University of Leuven maintains an ongoing Proclus-bibliography, which is killer.
+The Proclus-entry at the Stanford Encyclopedia of Philosophy by Christoph Helmig and Carlos Steel has a [list of Proclus' extant works](https://plato.stanford.edu/entries/proclus/#ProExtWorEdiTra) and where to find them edited, and a [truly-sexy list](https://plato.stanford.edu/entries/proclus/supplement2.html) of all his known works, extant, lost, and spurious. The *Plato Transformed *project at the University of Leuven maintains an [ongoing Proclus-bibliography](https://hiw.kuleuven.be/dwmc/research/ancientphilosophy/proclus/proclusbiblio.html), which is killer.
 
 ### Recommended Reading:
 
-For the philosophical side of things, the article cited just above is a great starting-point, as is Chlup 2012 (cited below). For a well-rounded topic-by topic coverage of Proclus, one could do no better than the collection Pieter d'Hoine and Marije Martijn, editors. *All From One: A Guide to Proclus.* Oxford University Press, Oxford, 2017, from which we cite a few particularly-relevant chapters below. For a chart of the various Platonist teaching-lineages of late antiquity, see this document.
+For the philosophical side of things, the article cited just above is a great starting-point, as is Chlup 2012 (cited below). For a well-rounded topic-by topic coverage of Proclus, one could do no better than the collection Pieter d'Hoine and Marije Martijn, editors. *All From One: A Guide to Proclus.* Oxford University Press, Oxford, 2017, from which we cite a few particularly-relevant chapters below. For a chart of the various Platonist teaching-lineages of late antiquity, see [this document.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)
 
 - Luc Brisson. Proclus' Theology. In Pieter d'Hoine and Marije Martijn, editors,* All From One: A Guide to Proclus*, pages 207-22. Oxford University Press, Oxford, 2017.
 
@@ -7779,7 +7779,7 @@ Proclus, various:
 
 - Theurgic ascent results in immortalisation:* In R.* I.152.10.
 
-- The best Greek MS of the *Parmenides* commentary is available online from Gallica.
+- The best Greek MS of the *Parmenides* commentary is available [online](https://gallica.bnf.fr/ark:/12148/btv1b10507219n) from Gallica.
 
 Proclus, Metaphysics/Physics (this is meant as a handy list for further reading: not every entity listed below is discussed in the episode):
 
@@ -7815,9 +7815,9 @@ David T. Runia and Michael Share, editors. *Proclus: Commentary on Plato's Timæ
 
 ### Recommended Reading:
 
-Episode 186 Recommended Reading
+[Episode 186 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/04/24085805/Episode-186-Recommended-Reading-1.pdf)
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   187: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7862,11 +7862,11 @@ Proclus:
 
 - Faith bridges the gap between the soul (of those who are blessed) and the Good: PT I 25, 110.6-12.
 
-The *Suda* on Proclus: s.v. Πρόκλου. Suda Online entry on Proclus
+The *Suda* on Proclus: s.v. Πρόκλου. [Suda Online entry on Proclus](https://media.shwep.net/wp-content/uploads/2024/05/14113453/Suda-Online-entry-on-Proclus.pdf)
 
 ### Secondary:
 
-Our special episode Plato's *Cratylus*: esoteric Etymology and the Language of the Gods can be found here.
+Our special episode Plato's *Cratylus*: esoteric Etymology and the Language of the Gods can be found [here](https://shwep.net/podcast/platos-cratylus-esoteric-etymology-and-the-language-of-the-gods/).
 
 John Finamore, Proclus on Plato’s Images of the Good and the Sun, the Divided Line, and the Cave in Books VI and VII of the Republic, forthcoming.
 
@@ -7912,7 +7912,7 @@ As any she belied with false compare.
 
 ### Recommended Reading:
 
-SHWEPisode 187 Recommended Reading`,
+[SHWEPisode 187 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/05/14120011/SHWEPisode-187-Recommended-Reading.pdf)`,
   188: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7937,7 +7937,7 @@ Robert Lamberton.* Homer the Theologian: Neoplatonist Allegorical Reading and th
 
 ### Recommended Reading:
 
-SHWEP Episode 188 Recommended Reading`,
+[SHWEP Episode 188 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/05/22104005/SHWEP-Episode-188-Recommended-Reading.pdf)`,
   189: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7952,7 +7952,7 @@ Proclus:
 
 - The hymns: see R.M. van den Berg. *Proclus' Hymns: Essays, Translations, Commentary*. Brill, Leiden, 2001.
 
-- ‘The sunflower prays when it turns to the god’: a reference to *On the Hieratic Art of the Hellenes*, a short piece preserved by Psellos. Until Eleni Pachoumi's upcoming volume appears with Brill your best bet still would seem to be Stephen Ronan's able translation, first published in Stephen Ronan, editor. *Iamblichus of Chalcis On the Mysteries (De mysteriis Ægyptiorum). Edited by Stephen Ronan with the Translations of Thomas Taylor and Alexander Wilder.* Cthonios Books, Hastings, 1989, but widely available online. The Greek can be found (of all places) in *De Sacrificio*, 148.10–18, 149.12 in Catalogue des manuscrits alchimques grecs, vol. 6, ed. Joseph Bidez (Bruxelles: Lamertin, 1928) pp. 148–151.
+- ‘The sunflower prays when it turns to the god’: a reference to *On the Hieratic Art of the Hellenes*, a short piece preserved by Psellos. Until [Eleni Pachoumi's upcoming volume appears with Brill](https://brill.com/display/title/69653) your best bet still would seem to be Stephen Ronan's able translation, first published in Stephen Ronan, editor. *Iamblichus of Chalcis On the Mysteries (De mysteriis Ægyptiorum). Edited by Stephen Ronan with the Translations of Thomas Taylor and Alexander Wilder.* Cthonios Books, Hastings, 1989, but widely available online. The Greek can be found (of all places) in *De Sacrificio*, 148.10–18, 149.12 in Catalogue des manuscrits alchimques grecs, vol. 6, ed. Joseph Bidez (Bruxelles: Lamertin, 1928) pp. 148–151.
 
 - ‘Glowing contact’ with the god through prayer: *In Tim.* 1.211.29–212.5: καὶ τοῦτο πέρας ἐστὶ τὸ ἄριστον τῆς ἀληθινῆς εὐχῆς, ἵνα ἐπισυν-άψῃ τὴν ἐπιστροφὴν τῇ μονῇ καὶ πᾶν τὸ προελθὸν ἀπὸ τοῦ τῶν θεῶν ἑνὸς αὖθις ἐνιδρύσῃ τῷ ἑνὶκαὶ τὸ ἐν ἡμῖν φῶς τῷ τῶν θεῶν φωτὶ περιλάβῃ. οὐκ ἄρα σμικρόν τι μόριόν ἐστιν ἡ εὐχὴ τῆς ὅληςἀνόδου τῶν ψυχῶν, οὐδὲ ὁ τὴν ἀρετὴν ἔχων ἀπροσδεής ἐστι τῶν ἀγαθῶν τῶν ἀπὸ τῆς εὐχῆς προσγινομένων ἀλλὰ πᾶν τοὐναντίον ἡ ἄνοδος δι’ αὐτῆς ἐπιτελεῖται καὶ μετὰ ταύτης καὶ τὸ κεφάλαιοντῆς ἀρετῆς ἡ περὶ θεούς ἐστιν ὁσιότης.
 
@@ -7968,7 +7968,7 @@ Luce Irigaray. *Ce sexe qui n'en est pas un*. Éditions de Minuit, Paris, 1977.
 
 ### Recommended Reading:
 
-SHWEP Episode 189 Recommended Reading`,
+[SHWEP Episode 189 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/05/30103216/SHWEP-Episode-189-Recommended-Reading.pdf)`,
   190: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7979,7 +7979,7 @@ Malalas' *Chronographia* on the closing of the Athenian school: 18.47. See Hans 
 
 Proclus fund-raising: Marinus *VP* 16.
 
-On the Kom al-Dikka complex, a good primer is Tomasz Derda, Tomasz Markiewicz, and Ewa Wipszycka, editors. *Alexandria: Auditoria of Kom el-Dikka and Late Antique Education*. Warsaw, 2007.
+On [the Kom al-Dikka complex](https://en.wikipedia.org/wiki/Kom_El_Deka), a good primer is Tomasz Derda, Tomasz Markiewicz, and Ewa Wipszycka, editors. *Alexandria: Auditoria of Kom el-Dikka and Late Antique Education*. Warsaw, 2007.
 
 ### Secondary:
 
@@ -7987,11 +7987,11 @@ W. H. C. Frend. *The Rise of the Monophysite Movement*. The University Press, Ca
 
 ### Recommended Reading:
 
-SHWEP Episode 190 Recommended Reading
+[SHWEP Episode 190 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/07/25161457/SHWEP-Episode-190-Recommended-Reading.pdf)
 
-A chart of the Athenian and Alexandrian schools in late antiquity.
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)
 
-*Mosaic showing the Empress Theodora, from the Church of San Vitale in Ravenna, Justinian's Italian capital`,
+[*](https://media.shwep.net/wp-content/uploads/2024/07/16132746/Theodora-Ravenna-Mosaic.jpg)Mosaic showing the Empress Theodora, from the Church of San Vitale in Ravenna, Justinian's Italian capital`,
   191: `### Works Cited in this Episode:
 
 ### Primary, roughly in order of discussion:
@@ -8030,11 +8030,11 @@ Idem. *The Arabic Hermes: From Pagan Sage to Prophet of Science*. Oxford Univers
 
 ### Recommended Reading:
 
-SHWEP Episode 191 Recommended Reading
+[SHWEP Episode 191 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/07/10154508/SHWEP-Episode-191-Recommended-Reading.pdf)
 
-A chart of the Athenian and Alexandrian schools in late antiquity.
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)
 
-*`,
+[*](https://media.shwep.net/wp-content/uploads/2024/07/30230343/Sabians_-_Quran_5-69_wa-l-%E1%B9%A2abi%CA%BEun_cropped_from_Maghribi_script_c._1250%E2%80%931350_CE.jpeg)`,
   192: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8063,9 +8063,9 @@ The Great Pyramid at Giza:
 
 - As esoteric emblem in stone: see e.g. Athanasius Kircher, *Oedipus Ægyptiacus* (3 vols., Rome 1652–54).
 
-- In modern occultism: Aleister Crowley of course famously spent a night of his honeymoon in the King's Chamber of the Great Pyramid, where his wife first made contact with the strange entity who would later dictate the *Book of the Law* – see somewhere in his autohagiography. Compare e.g. Blavatsky, who saw the chambers in the pyramids as initiation-temples: Helena Petrovna Blavatsky. *The Secret Doctrine*. Theosophical University Press, New York, NY, 1888; II, pp. 462.
+- In modern occultism: Aleister Crowley of course famously spent a night of his honeymoon in the King's Chamber of the Great Pyramid, where his wife first made contact with the strange entity who would later dictate the *Book of the Law* – see somewhere in his [autohagiography](https://hermetic.com/crowley/confessions/index). Compare e.g. Blavatsky, who saw the chambers in the pyramids as initiation-temples: Helena Petrovna Blavatsky. *The Secret Doctrine*. Theosophical University Press, New York, NY, 1888; II, pp. 462.
 
-Westminster Abbey pavement: the inscription is now lost, but can be consulted in this article by Ellen Moran.
+Westminster Abbey pavement: the inscription is now lost, but can be consulted in [this article](https://www.academia.edu/3629202/Hic_finem_primi_mobilis_inveniet_The_Ordering_Power_of_the_Microcosm_and_the_Macrocosmic_in_the_Cosmatesque_Sanctuary_Pavement_at_Westminster_Abbey:) by Ellen Moran.
 
 For Phokas: See Lydos, *On the Magistracies* 3.76; A.C. Bandy, ed. and tr., *Ioannes Lydus On Powers, or, The Magistracies of the Roman State* (Philadelphia, PA, 1983); M. Dubuisson, J. Schamp, eds. and tr., *Jean Le Lydien: Des magistratures de l’État romain*, 2 vols. (Paris, 2006).
 
@@ -8091,19 +8091,19 @@ Dominic J. O'Meara. Geometry and the Divine in Proclus. In T. Koetsier and L. Be
 
 ### Recommended Reading:
 
-Listeners interested in the Hagia Sophia in her more exoteric dimensions might wish to consult the lavishly-illustrated scholarly coffee-table book Rowland J. Mainstone. *Hagia Sophia: Architecture, Structure, and Liturgy of Justinian's Great Church*. Thames & Hudson, London, 1988; Mango 1986 (cited above); the essays collected at Robert Mark and Ahmet Cakmak, editors. *Hagia Sophia from the Age of Justinian to the Present*. The University Press, Cambridge, 1992; there are many other fine studies from art-historical, architectural, and other historical perspectives. Check out the Dumbarton Oaks Hagia Sophia resources page here. This interview with Bob Ousterhout on Anthony Kaldellis' delicious* Byzantium and Friends* podcast explores some of the many ideological roles the Hag has played down the centuries.
+Listeners interested in the Hagia Sophia in her more exoteric dimensions might wish to consult the lavishly-illustrated scholarly coffee-table book Rowland J. Mainstone. *Hagia Sophia: Architecture, Structure, and Liturgy of Justinian's Great Church*. Thames & Hudson, London, 1988; Mango 1986 (cited above); the essays collected at Robert Mark and Ahmet Cakmak, editors. *Hagia Sophia from the Age of Justinian to the Present*. The University Press, Cambridge, 1992; there are many other fine studies from art-historical, architectural, and other historical perspectives. Check out the Dumbarton Oaks Hagia Sophia resources page [here](https://www.doaks.org/research/byzantine/resources/hagia-sophia). This [interview with Bob Ousterhout](https://byzantiumandfriends.podbean.com/e/29-the-many-identities-of-hagia-sophia-past-and-present-with-bob-ousterhout/) on Anthony Kaldellis' delicious* Byzantium and Friends* podcast explores some of the many ideological roles the Hag has played down the centuries.
 
 For contemporary and later East-Roman appreciations of the church, see Gilbert Dagron. *Constantinople imaginaire. Études sur le recueil des Patria.* Gallimard, Paris, 1984; Cyril Mango. Byzantine Writers on the Fabric of Hagia Sophia. In Robert Mark and Ahmet Cakmak, editors, *Hagia Sophia from the Age of Justinian to the Present*, pages 41-56. The University Press, Cambridge, 1992.
 
-For the construction of Hagia Sophia *vis à vis* acoustics, light, and other *sensoria*, see e.g. Nadine Schibille. Astronomical and Optical Principles in the Architecture of Hagia Sophia in Constantinople. *Science in Context*, 22(1):27-46, March 2009; Bissera Pentcheva. Hagia Sophia and Multisensory Aesthetics. *Gesta*, 50:93-111, 2011 and Idem, *Hagia Sophia: Sound, Space, and Spirit in Byzantium* (Pennsylvania State University Press 2017). There is also an interview with Pentcheva on the sensory space of the Hag, which can be found here on the superb *Byzantium and Friends* podcast.
+For the construction of Hagia Sophia *vis à vis* acoustics, light, and other *sensoria*, see e.g. Nadine Schibille. Astronomical and Optical Principles in the Architecture of Hagia Sophia in Constantinople. *Science in Context*, 22(1):27-46, March 2009; Bissera Pentcheva. Hagia Sophia and Multisensory Aesthetics. *Gesta*, 50:93-111, 2011 and Idem, *Hagia Sophia: Sound, Space, and Spirit in Byzantium* (Pennsylvania State University Press 2017). There is also an interview with Pentcheva on the sensory space of the Hag, which can be found [here](https://byzantiumandfriends.podbean.com/e/8-hagia-sophia-rediscovered-with-bissera-pentcheva/) on the superb *Byzantium and Friends* podcast.
 
-This open letter from the International Association of Byzantine Studies to the Turkish authorities has some interesting things to say about the current religio-political-art-historical situation of Hagia Sophia.
+This [open letter](https://medium.com/@hagiasophia/an-open-letter-about-the-status-of-hagia-sophia-bea9afd1a62f) from the International Association of Byzantine Studies to the Turkish authorities has some interesting things to say about the current religio-political-art-historical situation of Hagia Sophia.
 
 ### For various esoteric Hagia Sophias, see this document:
 
-SHWEP Episode 192 Recommended Reading
+[SHWEP Episode 192 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/08/28154552/SHWEP-Episode-192-Recommended-Reading.pdf)
 
-*`,
+[*](https://media.shwep.net/wp-content/uploads/2024/08/28182053/Screenshot-from-2024-08-28-18-19-40.png)`,
   193: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8132,14 +8132,14 @@ The two books on Damascius' philosophy of time: Pantelis Golitsis. *Damascius' P
 
 ### Recommended Reading:
 
-The De Wulf – Mansion Centre for Ancient, Medieval and Renaissance Philosophy maintains a great online bibliography of important primary texts and studies of Damascius. It's a great first stop. We have put together a selected bibliography, found below, which focuses on the topics discussed in the episode.
+The De Wulf – Mansion Centre for Ancient, Medieval and Renaissance Philosophy maintains a great [online bibliography](https://hiw.kuleuven.be/dwmc/resources) of important primary texts and studies of Damascius. It's a great first stop. We have put together a selected bibliography, found below, which focuses on the topics discussed in the episode.
 
-SHWEP Damascius Recommended Reading
+[SHWEP Damascius Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/09/11113747/SHWEP-Damascius-Recommended-Reading.pdf)
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   194: `### Works Cited in this Episode:
 
-All citations from Damascius' *Philosophic History* are from Polymnia Athanassiadi, ed. and trans. *Damascius. The Philosophical History: Text with Translation and Notes*. Apameia, 1999. Citations of the *Life of Severus* by Zacharias Scholastikos come from M.A. Kugener, editor. *Zacharie le Scholastique, Vie de Sévère.* Number II.1.6 in Patrologia Orientalis. Brepols, Turnhout, 1993; references to the dialogue *Ammonios* are to M. Minniti Colonna, editor. *Zacaria Scolastico. Ammonio. Introduzione, testo critico, traduzione, commentario.* La buona stampa, Naples, 1973 = *PG* 85, *Ammonius sive de mundi opificio disputatio.*
+All citations from Damascius' *Philosophic History* are from Polymnia Athanassiadi, ed. and trans. *Damascius. The Philosophical History: Text with Translation and Notes*. Apameia, 1999. Citations of the *Life of Severus* by Zacharias Scholastikos come from M.A. Kugener, editor. *[Zacharie le Scholastique, Vie de Sévère](http://www.theologica.fr/!_Patrologie_Orientale/!%20Editions_BREPOLS/po_06_ii_1Vie%20de%20SEVERE.pdf).* Number II.1.6 in Patrologia Orientalis. Brepols, Turnhout, 1993; references to the dialogue *Ammonios* are to M. Minniti Colonna, editor. *Zacaria Scolastico. Ammonio. Introduzione, testo critico, traduzione, commentario.* La buona stampa, Naples, 1973 = *PG* 85, *Ammonius sive de mundi opificio disputatio.*
 
 ### Primary:
 
@@ -8159,7 +8159,7 @@ Damascius, *Philosophic History*:
 
 Justinian's extant anti-polytheist laws: *Cod. Iust*. 1.11.9 and 1.11.10. The latter explicitly denies ‘pagans’ the right to teach.
 
-See the Suda, Omega 159, on the two Horapollons.
+See the Suda, [Omega 159](https://www.cs.uky.edu/~raphael/sol/sol-cgi-bin/search.cgi?login=guest&enlogin=guest&db=REAL&field=adlerhw_gr&searchstr=omega,159), on the two Horapollons.
 
 Zacharias Scholastikos: Paralios disses Isis and is beat up by polytheist philosophers: *VS* 22-24. Christians destroy an Isis-shrine:*VS* 27-29.
 
@@ -8177,9 +8177,9 @@ Leendert Gerrit Westerink. Introduction. In *Anonymous Prolegomena to Platonic P
 
 ### Recommended Reading:
 
-SHWEP Episode 194 and 195 Recommended Reading
+[SHWEP Episode 194 and 195 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/10/17125835/SHWEP-Episode-194-and-195-Recommended-Reading.pdf)
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   195: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8228,7 +8228,7 @@ Simplicius
 
 ### Secondary:
 
-A lot of use has been made of the three relevant *Stanford Encyclopædia of Philosophy* entries, the one on Simplicius by Christoph Helmig and Philoponus and Olympiodorus by Christian Wildberg.
+A lot of use has been made of the three relevant *Stanford Encyclopædia of Philosophy* entries, the one on [Simplicius](https://plato.stanford.edu/entries/simplicius/) by Christoph Helmig and [Philoponus](https://plato.stanford.edu/entries/philoponus/) and [Olympiodorus](https://plato.stanford.edu/entries/olympiodorus/) by Christian Wildberg.
 
 Polymnia Athanassiadi. The Creation of Orthodoxy in Neoplatonism. In G. Clark and T. Rajak, editors, P*hilosophy and Power in the Graeco-Roman World: Essays in Honour of Miriam Griffin*, pages 27-92. Oxford University Press, Oxford, 2002.
 
@@ -8242,14 +8242,14 @@ Leendert Gerrit Westerink. Introduction. In *Anonymous Prolegomena to Platonic P
 
 ### Recommended Reading:
 
-Recommended Reading Bibliography
+[Recommended Reading Bibliography](https://media.shwep.net/wp-content/uploads/2024/10/17125835/SHWEP-Episode-194-and-195-Recommended-Reading.pdf)
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   196: `### Works Cited in this Episode:
 
-Matteo Martelli's AlchemEast project.
+Matteo Martelli's [AlchemEast project.](https://alchemeast.eu/)
 
-The ninth-century ‘Philosophical Collection’ mentioned in the interview is discussed in this article (see n. 65): Fabio Acerbi and Michele Trizio. Uprooting Byzantium. Ninth-Century Byzantine Books and the Græco-Arabic Translation Movement. Scandinavian Journal of Byzantine and Modern Greek Studies*, 8:105-54, 2023.
+The ninth-century ‘Philosophical Collection’ mentioned in the interview is discussed in this [article](https://hal.science/hal-04224988/document) (see n. 65): Fabio Acerbi and Michele Trizio. Uprooting Byzantium. Ninth-Century Byzantine Books and the Græco-Arabic Translation Movement. Scandinavian Journal of Byzantine and Modern Greek Studies*, 8:105-54, 2023.
 
 Edward Gibbon. *The History of the Decline and Fall of the Roman Empire.* Strahan & Cadell, London, 17761789.
 
@@ -8265,9 +8265,9 @@ Niketas Siniossoglou. *Radical Platonism in Byzantium: Illumination and Utopia i
 
 ### Recommended Reading:
 
-The Fondazione BEIC – Biblioteca Europea di Informazione e Cultura publishes a curated ‘Byzantine studies’ bibliography organised thematically. You can download it here.
+The Fondazione BEIC – Biblioteca Europea di Informazione e Cultura publishes a curated ‘Byzantine studies’ bibliography organised thematically. You can download it [here](https://www.yumpu.com/it/document/view/16215092/elenco-ragionato-di-risorse-per-la-bizantinistica-biblioteca-europea-).
 
-Also be sure to have a browse through Dumbarton Oaks' Resources for Byzantinists page.`,
+Also be sure to have a browse through Dumbarton Oaks' [Resources for Byzantinists page](https://www.doaks.org/research/byzantine/resources/).`,
   197: `### Works Cited in this Episode:
 
 Abbreviations: DN = *Divine Names*. MT =* Mystical Theology*. CH = *Celestial Hierarchy*. EH = *Ecclesiastical Hierarchy.*
@@ -8316,10 +8316,10 @@ Paul Rorem, editor, Colm Luibheid, trans. *Pseudo-Dionysius: The Complete Works*
 
 ### Recommended Reading:
 
-SHWEP Episode 197 Recommended Reading`,
+[SHWEP Episode 197 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/12/16181954/SHWEP-Episode-197-Recommended-Reading.pdf)`,
   198: `### Works Cited in this Episode:
 
-SHWEPisode 13 can be found here; 14 here. Our special episode on the esoteric in Paul can be found here.
+SHWEPisode 13 can be found [here](https://shwep.net/podcast/from-mystery-to-mysticism/); 14 [here](https://shwep.net/podcast/methodologies-for-the-study-of-mysticism/). Our special episode on the esoteric in Paul can be found [here](https://shwep.net/podcast/the-esoteric-new-testament-part-ii-paul-and-the-mysteries/).
 
 ### Primary:
 
@@ -8375,30 +8375,30 @@ Guy Stroumsa. *Hidden Wisdom: Esoteric Traditions and the Roots of Christian Mys
 
 On Hierotheos as Proclus, see: Ben Schomakers. An Unknown Elements of Theology? On Proclus as the Model for the Hierotheos in the Dionysian Corpus. In David D. Butorac and Danielle A. Layne, editors, *Proclus and his Legacy*, pages 183-98. De Gruyter, Berlin/Boston, MA, 2017.
 
-SHWEP Episode 198 Recommended Reading`,
+[SHWEP Episode 198 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/12/21195618/SHWEP-Episode-198-Recommended-Reading.pdf)`,
   199: `### Works Cited in this Episode:
 
 Translated passages read aloud are from Marsh 1928, cited below.
 
-Robin Darling Young, Joel Kalvesmaki, Columba Stewart, Charles M. Stang, and Fr. Luke Dysinger, editors and translators. *Evagrius of Pontus: The Gnostic Trilogy*. Oxford University Press, Oxford, 2024.
+Robin Darling Young, Joel Kalvesmaki, Columba Stewart, Charles M. Stang, and Fr. Luke Dysinger, editors and translators. [*Evagrius of Pontus: The Gnostic Trilogy*.](https://academic.oup.com/book/55302?login=false) Oxford University Press, Oxford, 2024.
 
-A.L. Frothingham. *Stephen Bar Sudhaili the Syrian Mystic and The Book of Hierotheo*s. Brill, Leiden, 1886.
+A.L. Frothingham. [*Stephen Bar Sudhaili the Syrian Mystic and The Book of Hierotheo*s](https://archive.org/details/stephenbarsudai00bargoog). Brill, Leiden, 1886.
 
 T. Jansma. Philoxenus' Letter to Abraham and Orestes Concerning Stephen bar Sudaili. Some Proposals with Regard to the Correction of the Syriac Text and the English Translation. *LM*, 87:79-86, 1974.
 
-F.S. Marsh, editor. *The Book which is Called The Book of the Holy Hierotheos, &c*. The Text and Translation Society/Williams & Norgate, London/Oxford, 1927.
+F.S. Marsh, editor. [*The Book which is Called The Book of the Holy Hierotheos, &c*](https://archive.org/details/marsh-f.-s.-the-book-of-the-holy-hierotheos). The Text and Translation Society/Williams & Norgate, London/Oxford, 1927.
 
 Karl Pinggéra. *All-Erlösung und All-Einheit. Studien zum \`Buch des heiligen Hierotheos' und seiner Rezeption in der syrisch-orthodoxen Theologie.* Number 10 in SKCO. 2002.
 
 S. Seppälä. In Speechless Ecstasy: Expression and Interpretation of Mystical Experience in Classical Syriac and Sufi Literature. In *Studia Orientalia*, volume 98. Finnish Oriental Society, Helsinki, 2003.
 
-Lucas von Rompey. Stephanos bar Ṣudayli . In *Gorgias Encyclopedic Dictionary of the Syriac Heritage*. 2011.
+Lucas von Rompey. Stephanos bar Ṣudayli . In [*Gorgias Encyclopedic Dictionary of the Syriac Heritage*](https://gedsh.bethmardutho.org/index.html). 2011.
 
 ### Recommended Reading:
 
 A good one-stop shop for the Holy Hierotheos is still Marsh's edition and translation, if you can find it. Frothingham's discussion is from the perspective that these ‘Syrian mystics’ are deeply wrong in their heresies (from, I guess, an acceptible Anglicanism? No idea.), so use with caution, but it still gives some good overview of what Hierotheos is doing; he accepts the attribution of the book to Stephen Bar Sudhaili which, as Pasquesi notes, isn't necessarily right.
 
-SHWEP Episode 199 Recommended Reading`,
+[SHWEP Episode 199 Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/12/27111925/SHWEP-Episode-199-Recommended-Reading.pdf)`,
   200: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8431,7 +8431,7 @@ Francis Yates. *Giordano Bruno and the Hermetic Tradition*. Routledge and Kegan 
 
 ### Recommended Reading:
 
-SHWEP Episode 200 Recommended Reading`,
+[SHWEP Episode 200 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/01/13101109/SHWEP-Episode-200-Recommended-Reading.pdf)`,
   201: `### Works Cited in this Episode:
 
 Shahab Ahmed. What Is Islam? The Importance of Being Islamic*. Princeton University Press, Princeton, NJ, 2016.
@@ -8448,7 +8448,7 @@ Wouter J. Hanegraaff. *Esotericism in Western Culture: Counter-Normativity and R
 
 ### Recommended Reading:
 
-SHWEP Episode 201 Recommended Reading`,
+[SHWEP Episode 201 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/01/29114339/SHWEP-Episode-201-Recommended-Reading.pdf)`,
   202: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8473,7 +8473,7 @@ Jack Tannous. *The Making of the Medieval Middle East: Religion, Society, and Si
 
 ### Recommended Reading:
 
-SHWEP Episode 202 Recommended Reading`,
+[SHWEP Episode 202 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/02/07102135/SHWEP-Episode-202-Recommended-Reading.pdf)`,
   203: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8482,11 +8482,11 @@ SHWEP Episode 202 Recommended Reading`,
 
 References to ‘the book’ referring (or quasi-referring) to the *qur'ān* itself: there are too many references to a ‘book’ or ‘books’ or ‘the book’ in the *qur'ān* to list. Try checking out this article, which breaks down some theme-clusters in a clear way: Danielle Madigan. Book. *Encyclopædia of the Qur'an*, ed. J.D. McAuliffe, 6 vols (Leiden: Brill 2001-2006).
 
-The ‘guarded tablet’ (*al-Lawḥ al-Maḥfūẓ*): Q 85:22; cf. 22: 70 and 57: 22, where references to Allah keeping a record of events have been taken in exegesis to refer to the Tablet.
+The ‘guarded tablet’ (*al-Lawḥ al-Maḥfūẓ*): Q [85:22](https://quran.com/85?startingVerse=22); cf. 22: 70 and 57: 22, where references to Allah keeping a record of events have been taken in exegesis to refer to the Tablet.
 
-God is closer to you than your jugular vein: Q 50:20.
+God is closer to you than your jugular vein: Q [50:20](https://quran.com/qaf/16).
 
-‘Recite, in the name of your lord who created man from a clot of clay ’: 6:1-2.
+‘Recite, in the name of your lord who created man from a clot of clay ’: [6:1-2](https://quran.com/al-alaq).
 
 ### Secondary:
 
@@ -8498,7 +8498,7 @@ John E. Wansbrough. *Quranic Studies: Sources and Methods of Scriptural Interpre
 
 ### Recommended Reading:
 
-SHWEP Episode 203 Recommended Reading`,
+[SHWEP Episode 203 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/03/16141727/SHWEP-Episode-203-Recommended-Reading.pdf)`,
   204: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8515,7 +8515,7 @@ Al-Tustari's *tafsīr*: We cite Annabel Keeler and Ali Keeler, editors. *Tafsir 
 
 Qur'ān:
 
-- *Mukamāt* and *Mutashabihāt*: Q 3:7.
+- *Mukamāt* and *Mutashabihāt*: [Q 3:7](https://legacy.quran.com/3/7).
 
 - The story of Adam's creation, the angels' reaction, and Iblīs' rebellion: *Sūrat al-Baqarah* (2:30–34); *Sūrat al-Aʿrāf* (7:11–18); *Sūrat al-Ḥijr* (15:28–44); *Sūrat al-Isrāʾ* (17:61–65);* Sūrat Ṣād* (38:71–85).
 
@@ -8532,23 +8532,23 @@ Michael A. Sells. *Approaching the Qur'an: The Early Revelations.* White Cloud P
 
 ### Primary:
 
-The ḥadith* on the different *aḥruf*: al-Bukharī, *Ṣaḥīḥ* VI, Book 66, *Kitāb faḍā’il al-Qur'ān*, numbers 4991, 4992, and 5062.
+The ḥadith* on the different *aḥruf*: al-Bukharī, *Ṣaḥīḥ* VI, Book 66, *Kitāb faḍā’il al-Qur'ān*, numbers [4991](https://sunnah.com/bukhari:4991), [4992](https://sunnah.com/bukhari:4992), and [5062](https://sunnah.com/bukhari:5062).
 
-*Ḥadith* transmitted by ‘Ā’isha about the Prophet remembering certain *ayāt*: Bukharī, *Ṣaḥīḥ* VI, Book 66, *Kitāb faḍā’il al-Qur'ān*, Cap 25, *ḥadith* 5037. Cf. 5037b, 5042. Online here, and scroll down.
+*Ḥadith* transmitted by ‘Ā’isha about the Prophet remembering certain *ayāt*: Bukharī, *Ṣaḥīḥ* VI, Book 66, *Kitāb faḍā’il al-Qur'ān*, Cap 25, *ḥadith* 5037. Cf. 5037b, 5042. Online [here](https://sunnah.com/bukhari/66), and scroll down.
 
 Umar on the loss of parts of the *Qur'ān*: transmitted by al-Suyūti, *Itqān fi ‘ulūm al-Qur'ān* (Cairo: Ḥalabī, 1354/1935) pt. 2, p. 25.
 
-Narration by ‘Abdullah about: Bukharī, *Ṣaḥīḥ* VI, Book 66, Kitāb faḍā’il al-Qur'ān, Cap. 37, *ḥadith* 5062. Online here, scroll right to the bottom.
+Narration by ‘Abdullah about: Bukharī, *Ṣaḥīḥ* VI, Book 66, Kitāb faḍā’il al-Qur'ān, Cap. 37, *ḥadith* 5062. Online [here](https://sunnah.com/bukhari/66), scroll right to the bottom.
 
 Muḥammad b. Isḥāq al Nadı̄m. See Bayard Dodge. trans. *The Fihrist of al-Nadim: A Tenth-Century Survey of Muslim Culture*. Columbia University Press, New York, NY, 1970, pp. 68 and ff.
 
 *Qur'ān*:
 
-- ‘Recite, in the name of your lord who created man from a clot of clay ’: Q. 6:1-2.
+- ‘Recite, in the name of your lord who created man from a clot of clay ’: Q. [6:1-2](https://quran.com/al-alaq).
 
-- ‘We shall make you recite, so that you do not forget unless Allah wills it’: Q. 97: 6-7.
+- ‘We shall make you recite, so that you do not forget unless Allah wills it’: Q. [97: 6-7](https://quran.com/87).
 
-- ‘By the clear book!’: Q. 43:1-4.
+- ‘By the clear book!’: Q. [43:1-4](https://quran.com/43).
 
 ### Secondary:
 
@@ -8564,7 +8564,7 @@ Behnam Sadeghi and Uwe Bergmann. The Codex of a Companion of the Prophet and the
 
 Nicolai Sinai. Beyond the Cairo Edition: On the Study of Early Quranic Codices. Journal of the American Oriental Society, 140(1):180–204, 2020; we quote pp. 191-2.
 
-SHWEP Episode 205 Recommended Reading`,
+[SHWEP Episode 205 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/05/06102833/SHWEP-Episode-205-Recommended-Reading.pdf)`,
   206: `### Works Cited in this Episode:
 
 Ehsan Afkande and Hamidreza Pashazanous. The Last Sasanians in Eastern Iran and China. *Anabasis: Studia Classica et Orientalia*, 5:139–54, 2014.
@@ -8588,11 +8588,11 @@ Ibn Qūlawayh, *Kāmil al-Ziyārāt* (Qum, 1996).
 
 ### Secondary:
 
-Patricia Crone, Ninth-Century Muslim Anarchists, in *Past and Present*, no. 167, pp. 3–28, May 2000.
+[Patricia Crone, Ninth-Century Muslim Anarchists, in *Past and Present*, no. 167, pp. 3–28, May 2000.](https://www.ias.edu/sites/default/files/hs/Crone_Articles/Crone_Ninth_Century_Muslim_Anarchists.pdf)
 
 ### Recommended Reading:
 
-SHWEP Episode 207 Recommended Reading`,
+[SHWEP Episode 207 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/07/10150911/SHWEP-Episode-Recommended-Reading-2.pdf)`,
   208: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8603,15 +8603,15 @@ Here is the English: A group said: Our Prophet Muḥammad (peace and blessings o
 
 *Qur'ān*:
 
-- ‘The straight path’ is from the first surah, *al-fātiḥah*: Q. 1:6.
+- ‘The straight path’ is from the first surah, *al-fātiḥah*: [Q. 1:6.](https://quran.com/1)
 
-- ‘He does not beget, nor is he begotten’, etc. is from right at the end, *surah al-ikhlāṣ*: Q. 112:1 ff.
+- ‘He does not beget, nor is he begotten’, etc. is from right at the end, *surah al-ikhlāṣ*: [Q. 112:1 ff.](https://quran.com/112)
 
-*Al-Kāfī* by al-Kulaynī is not yet fully translated. But you can find a good edition here. There is a partial English translation here.
+*Al-Kāfī* by al-Kulaynī is not yet fully translated. But you can find a good edition [here](http://alfeker.net/library.php?id=1429). There is a partial English translation [here](https://thaqalayn.net/book/1).
 
 Al-Sulaymī's *Tabakat al-sufiyya*: see Jawid A. Mojaddedi. *The Biographical Tradition in Sufism: The Tabaqat Genre from al-Sulami to Jami*. Routledge Studies in Asian Religion. Routledge, 2013.
 
-The writings attributed to ‘Alī ibn al-Ḥussayn, the fourth imām can be found in English online.
+The writings attributed to ‘Alī ibn al-Ḥussayn, the fourth imām can be found[in English online.](https://traditionalhikma.com/wp-content/uploads/2015/02/The-Psalms-of-Islam-Al-Sahifat-Al-Sajjadiyya-Ali-B.-Al-Husayn-and-Zayn-Al-Abidin-translated-by-William-C.-Chittick.pdf)
 
 ### Secondary:
 
@@ -8622,7 +8622,7 @@ Mohammad Ali Amir-Moezzi. *The Divine Guide in Early Shi‘ism: The Sources of E
 Annemarie Schimmel.* Mystical Dimensions of Islam*. University of North Carolina Press, Chapel Hill, NC, 1975.`,
   209: `### Works Cited in this Episode:
 
-The Zoroastrian scriptures can be accessed in a number of English versions. http://www.avesta.org/ is a huge resource, which includes English translations; we cannot vouch for the accuracy of everything here, though.
+The Zoroastrian scriptures can be accessed in a number of English versions.[http://www.avesta.org/](http://www.avesta.org/) is a huge resource, which includes English translations; we cannot vouch for the accuracy of everything here, though.
 
 For Kerdir's inscriptions, see Ph. Gignoux. Les quatre inscriptions du Mage Kirdîr. Studia Iranica*, 9, 1991; D. N. MacKenzie. Kerdir’s Inscription. In G. Herrmann, D.N. MacKenzie, and R. Howell, editors, *The Sasanian Rock Reliefs at Naqsh-i Rustam. Naqsh-i Rustam 6, The Triumph of Shapur I, Representation of Kerdir and Inscription*, number II, 13 in Iranische Denkmäler, pages 35–72. Berlin, 1989.`,
   210: `### Works Cited in this Episode:
@@ -8649,10 +8649,10 @@ Alexei M. Sivertsev. *Judaism and Imperial Ideology in Late Antiquity*. The Univ
 
 ### Recommended Reading:
 
-SHWEP Episode 210 Recommended Reading`,
+[SHWEP Episode 210 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/09/27120148/SHWEP-Episode-210-Recommended-Reading.pdf)`,
   211: `### Works Cited in this Episode:
 
-Episode 196 with Anthony Kaldellis can be found here.
+Episode 196 with Anthony Kaldellis can be found [here](https://shwep.net/podcast/one-empire-many-names-reading-byzantium-with-anthony-kaldellis/).
 
 Christopher J. Bonura. An Apocalyptic Pamphlet Printed During the Ottoman Siege of Vienna (1683): Prophetic Authority in the Early Modern Christian Confrontation with Islam. In P. Fuschlberger, R. Kaske, and S. Reichlin, editors, *Seismographen des Vertrauens? Positionsbestimmungen frühneuzeitlicher Bildpublizistik*, pages 299–44. Steiner, 2024.
 
@@ -8668,7 +8668,7 @@ Hanns Jacob Wagner von Wagenfels. *Ehren-Ruff Teutschlands.* University of Vienn
 
 ### Recommended Reading:
 
-SHWEP Episode 211 Recommended Reading`,
+[SHWEP Episode 211 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/10/13100524/SHWEP-Episode-211-Recommended-Reading.pdf)`,
   212: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8699,9 +8699,9 @@ Polycarp Sherwood. *The Earlier “Ambigua” of Saint Maximus the Confessor and
 
 ### Recommended Reading:
 
-SHWEP Episode 212 Recommended Reading 
+[SHWEP Episode 212 Recommended Reading](https://media.shwep.net/wp-content/uploads/2025/12/08115728/SHWEP-Episode-212-Recommended-Reading.pdf)
 
-*The reliquary allegedly containing Maximus' severed hand, kept at Mt Athos. Classy.
+[*](https://media.shwep.net/wp-content/uploads/2025/12/05130522/Maximus-the-confessors-hand-reliquary-mt-athos.jpg)The reliquary allegedly containing Maximus' severed hand, kept at Mt Athos. Classy.
 
 ###`,
   213: `### Works Cited in this Episode:
@@ -8716,10 +8716,10 @@ O. Neugebauer and H. B. van Hoesen. *Greek Horoscopes*. American Philosophical S
 
 ### Recommended Reading:
 
-SHWEP Episode 213-214 Recommended Reading`,
+[SHWEP Episode 213-214 Recommended Reading](https://media.shwep.net/wp-content/uploads/2026/02/27092418/SHWEP-Episode-213-Recommended-Reading.pdf)`,
   214: `### Works Cited in this Episode:
 
-Our special episode on the talismanic Constantinople can be listened to here, for Vettius Valens (and Apollonios of Tyana; in Part II we discuss Sopatros, the student of Iamblichos alleged to by John the Lydian to have aided Constantine through theurgic rituals).
+Our special episode on the talismanic Constantinople can be listened to [here](https://shwep.net/podcast/this-fortunate-city-constantinople-considered-as-talisman-part-i/), for Vettius Valens (and Apollonios of Tyana; in [Part II](https://shwep.net/podcast/this-fortunate-city-constantinople-considered-as-talisman-part-ii/) we discuss Sopatros, the student of Iamblichos alleged to by John the Lydian to have aided Constantine through theurgic rituals).
 
 We also cite Marcelin Berthelot and Ch.-Em. Ruelle, editors. *Collection des Anciens Alchimistes Grecs, texte et traduction.* Georges Steinheil, Paris, 1883-8.
 
@@ -8728,9 +8728,9 @@ We also cite Marcelin Berthelot and Ch.-Em. Ruelle, editors. *Collection des Anc
 
 ### Primary:
 
-*Marcianus Graecus* 299, the main alchemical compilation under discussion in this episode, is available online! You can find it here and browse its wonders for yourself in digital form. *Pinakes*, the online database of Greek manuscripts, gives a breakdown of the \`table of contents' here.
+*Marcianus Graecus* 299, the main alchemical compilation under discussion in this episode, is available online! You can find it [here](https://www.internetculturale.it/jmms/iccuviewer/iccu.jsp?id=oai%3A193.206.197.121%3A18%3AVE0049%3ACSTOR.240.9949) and browse its wonders for yourself in digital form. *Pinakes*, the online database of Greek manuscripts, gives a breakdown of the \`table of contents' [here](https://pinakes.irht.cnrs.fr/notices/cote/69770/).
 
-*Parisinus Graecus* 2327, another important compilation, can be accessed in digitised form here.
+*Parisinus Graecus* 2327, another important compilation, can be accessed in digitised form [here](https://gallica.bnf.fr/ark:/12148/btv1b10723905w/f3.item).
 
 The *Chronikon Paschale* on Herakleios’ new, debased silver currency:
 
@@ -8756,12 +8756,12 @@ In more detail and more assertively (e.g.: “In this case, whoever the author m
 
 ### Recommended Reading:
 
-SHWEP Episode 215-216 Recommended Reading`,
+[SHWEP Episode 215-216 Recommended Reading](https://media.shwep.net/wp-content/uploads/2026/03/30105716/SHWEP-Episode-215-216-Recommended-Reading-1.pdf)`,
   216: `### Works Cited in this Episode (in rough order-of-mention):
 
-Our interview with Martin Stadler on the Egyptian temple at Edfu (and matters economical relevant to the Egyptian temples) can be heard here.
+Our interview with Martin Stadler on the Egyptian temple at Edfu (and matters economical relevant to the Egyptian temples) can be heard [here](https://shwep.net/roots-of-magic/martin-stadler-on-the-magic-and-religion-at-the-ancient-egyptian-temple-of-edfu/).
 
-Ben Johnson, *The Alchemist*, first performed by the King's Players in 1610. The text can be read here.
+Ben Johnson, *The Alchemist*, first performed by the King's Players in 1610. The text can be read [here](https://www.gutenberg.org/files/4081/4081-h/4081-h.htm).
 
 John Malalas on the mountebank Ioannes Isthmeos: Hans Thurn, editor.* Ioannis Malalæ chronographia*. Number 35 in Corpus Fontium Historiæ Byzantinæ, Series Berolinensis. De Gruyter, Berlin/New York, NY, 2000, p. 323. English trans. by Elizabeth Jeffreys, Michael Jeffreys, and Roger Scott, *The Chronicle of John Malalas. A Translation* (Byzantina Australiensia 4). Melbourne: Australian Association for Byzantine Studies, 1986, p. 222.
 
@@ -8771,12 +8771,12 @@ Psellos’ later denouncement of Kerularios can be found at George T. Dennis, ed
 
 The *Book of the Eparch*: Johannes Koder, editor.* Das Eparchenbuch Leons des Weisen*, volume 33 of Corpus Fontium Historiae Byzantinae. Österreichische Akademie der Wissenschaften, Vienna, 1991. There is an English translation of the Book of the Eparch, which is easily accessible online (Edwin Hanson Freshfield, *Roman Law in the Later Roman Empire: Byzantine Guilds, Professional and Commercial.* Cambridge: Cambridge University Press, 1938). However, it should be used as an aid rather than as an authoritative philological basis (especially with regard to terminology). A more reliable partial translation is provided by Michael F. Hendy, *Studies in the Byzantine Monetary Economy c. 300–1450.* Cambridge: Cambridge University Press, 1985, pp. 251–253, particularly of the second chapter on the *argyropratai* (silversmiths, lit. ‘sellers of silver’, to be understood as goldsmiths and/or bankers), although it follows an earlier edition.
 
-Christianos, *Thirty Chapters on Gold-Making*: On the 135 kinds of alchemical productions and the method by which Christianos derives them through combinations of egg components, within a framework of division by species and genus, see Marcellin Berthelot and Charles-Émile Ruelle (ed. and French transl.), *Collection des anciens alchimistes grecs*, 3 vols. Paris: G. Steinheil, 1887–1888, vol. II, pp. 410,16 – 414,10 (accessible here). A much-needed new edition of Christianos’ work is currently being prepared by Marco Bellini, based on his doctoral dissertation (*L’opera alchemica del filosofo Cristiano. Edizione, traduzione e note di commento.* PhD Diss. Alma Mater Studiorum – Università di Bologna, 2023).
+Christianos, *Thirty Chapters on Gold-Making*: On the 135 kinds of alchemical productions and the method by which Christianos derives them through combinations of egg components, within a framework of division by species and genus, see Marcellin Berthelot and Charles-Émile Ruelle (ed. and French transl.), *Collection des anciens alchimistes grecs*, 3 vols. Paris: G. Steinheil, 1887–1888, vol. II, pp. 410,16 – 414,10 (accessible [here](https://archive.org/details/collectiondesanc23bert/page/n451/mode/2up)). A much-needed new edition of Christianos’ work is currently being prepared by Marco Bellini, based on his doctoral dissertation (*L’opera alchemica del filosofo Cristiano. Edizione, traduzione e note di commento.* PhD Diss. Alma Mater Studiorum – Università di Bologna, 2023).
 
 ### For recommended reading, see previous episode`,
   217: `### Works Cited in this Episode:
 
-Our episodes on the talismanic Constantinople: Part I here and Part II here.
+Our episodes on the talismanic Constantinople: Part I [here](https://shwep.net/podcast/this-fortunate-city-constantinople-considered-as-talisman-part-i/) and Part II [here](https://shwep.net/podcast/this-fortunate-city-constantinople-considered-as-talisman-part-ii/).
 
 ### Primary:
 
@@ -8784,7 +8784,7 @@ Our episodes on the talismanic Constantinople: Part I here and Part II here.
 
 For John Malalas' *Chronographia* in English, see Elizabeth Jeffreys and Michael Jeffreys and Roger Scott, trans. *The Chronicle of John Malalas*. Number 4 in Byzantina Australiensia. Brill, Leiden, 1986. For Apollonios and his talismans, see 10.263–266.
 
-*MS Harleianus* 5596: https://pinakes.irht.cnrs.fr/notices/cote/39555/
+*MS Harleianus* 5596: [https://pinakes.irht.cnrs.fr/notices/cote/39555/](https://pinakes.irht.cnrs.fr/notices/cote/39555/)
 
 Niketas Choniatēs cites a Solomonic work from the twelfth century: cited at Chester Charlton McCown. *The Testament of Solomon.* J. C. Hinrichs, Leipzig, 1922, pp. 101–2.
 
@@ -8806,7 +8806,7 @@ Alicia Walker. Magic in Medieval Byzantium. In David J. Collins, editor, *The Ca
 
 ### Recommended Reading:
 
-SHWEP Episode 217 East Roman Magic Recommended Reading`,
+[SHWEP Episode 217 East Roman Magic Recommended Reading](https://media.shwep.net/wp-content/uploads/2026/05/12101920/SHWEP-Episode-217-East-Roman-Magic-Recommended-Reading-1.pdf)`,
   218: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8831,7 +8831,7 @@ Paul Magdalino. Occult Science and Imperial Power in Byzantine History and Histo
 
 ### Recommended Reading:
 
-SHWEP Talismanic Constantinople Recommended Reading`,
+[SHWEP Talismanic Constantinople Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/08/14102840/SHWEP-Talismanic-Constantinople-Recommended-Reading.pdf)`,
   219: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8864,7 +8864,7 @@ Photios on Lydos: *Bibl*. 180 (ed. Henry 1960: 187-188).
 
 Elena N. Boeck. *The Bronze Horseman of Justinian in Constantinople: The Cross-Cultural Biography of a Mediterranean Monument.* Cambridge University Press, Cambridge, 2021.
 
-Mischa Hooker, editor. *On the Months (De mensibus).* 2nd edition, 2017.
+Mischa Hooker, editor. *[On the Months (De mensibus)](https://archive.org/details/JohnLydusOnTheMonthsTr.Hooker2ndEd.2017.URL).* 2nd edition, 2017.
 
 Maijastina Kahlos. *Vettius Agorius Praetextatus – A Senatorial Life in Between*. Rome, 2002.
 
@@ -8874,7 +8874,7 @@ Paul Magdalino. *L’Orthodoxie des astrologues: La science entre le dogme et la
 
 ### For Recommended Reading, see the previous episode
 
-*Constantine as Helios/Sol on a solidus* issued between 313 and 317`,
+[*](https://media.shwep.net/wp-content/uploads/2022/06/27141548/Constantinian-Sol-invictus-coin-313-17.png)Constantine as Helios/Sol on a solidus* issued between 313 and 317`,
   220: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8952,7 +8952,7 @@ On Agrippa's ‘magical alphabets’ see Karl Anton Nowotny. The Construction of
 
 Gregory the Great's discussion in exegesis of the Book of Job of the unicorn as representing the powers of the world: *Commentary on Job* 31.1-10, 31.29-35, in J.-P. Migne (ed.), *Patrologiae Latinae*, Paris, Garnier Fratres, 1878, vol. 76, p. 572-578, 589-594.
 
-Korshi's article in which this text is discussed: Korshi Dosoo. Suffering Doe and Sleeping Serpent: Animals in Christian Magical Texts from Late Roman and Early Islamic Egypt. In Jean-Charles Coulon and Korshi Dosoo, editors, *Magikon zōon: Animal et magie dans l’Antiquité et au Moyen Âge,* pages 495–544. Bibliothèque d’Histoire des Textes, Paris/Orleans, 2022a.
+Korshi's article in which this text is discussed: Korshi Dosoo. [Suffering Doe and Sleeping Serpent: Animals in Christian Magical Texts from Late Roman and Early Islamic Egypt](https://books.openedition.org/irht/757). In Jean-Charles Coulon and Korshi Dosoo, editors, *Magikon zōon: Animal et magie dans l’Antiquité et au Moyen Âge,* pages 495–544. Bibliothèque d’Histoire des Textes, Paris/Orleans, 2022a.
 
 The Miracles of St Mercurius: Orlandi, Tito. 1976. *Passione e miracoli di S. Mercurio.* Milan: Cisalpino, 49-119, or Budge, E.A. Wallis. 1915.* Miscellaneous Coptic Texts in the Dialect of Upper Egypt*. London: Trustees of the British Museum, 257-282. Unfortunately Budge was working from a MS missing the part of the story with the magician, a remedy addressed by the mini-edition of the text to be found on pp. 165-168 of Korshi Dosoo. Two Body Problems: Binding Effigies in Christian Egypt. In Jay Johnston and Iain Gardner, editors, *Drawing Spirit: The Role of Images and Design in the Magical Practice of Late Antiquity*, pages 135–84. De Gruyter, Berlin, 2022b.
 
@@ -8979,13 +8979,13 @@ British Library MS Or. 6796 (4) + MS Or 6796 (circa 600 CE)`,
 
 ### Primary:
 
-For the Manichæan materials mentioned, see notes to Episode 123.
+For the Manichæan materials mentioned, see notes to [Episode 123](https://shwep.net/podcast/jason-beduhn-on-mani-and-manichaeism/).
 
 Pasquesi cites a wide range of texts which early Christians were reading and sometimes debating the canonicity of; we do not cite them all below, but recommend the two volumes of Charlesworth as a good source for English translations, ideas about dating, and so forth: James H. Charlesworth.* The Old Testament Pseudepigrapha, Volume One: Apocalyptic Literature and Testaments, volume 1.* Hendrickson, Peabody, MA, 2021a. *Idem*. *The Old Testament Pseudepigrapha, Volume Two: Expansions of the ”Old Testament” and Legends, Wisdom and Philosophical Literature, Prayers, Psalms and Odes, Fragments of Lost Judeo-Hellenistic Works.* Hendrickson, Peabody, MA, 2021b.
 
 If you do not find something below (e.g. Mary Hansbury's or Sebastian Brock's editions of Syriac ascetic texts, or the German edition of the *Makarian Homilies*), please see the bibliography to the previous episode, where most of the primary sources discussed are listed in accessible editions/translations (when such exist!).
 
-The Kartir inscriptions can be found online.
+The Kartir inscriptions can be found [online](http://www.avesta.org/mp/kz.html).
 
 The *Odes of Solomon*: see Charlesworth (see above) vol. I, p. 725 ff.
 
@@ -9047,7 +9047,7 @@ Bink Hallum. *Zosimus Arabus. The Reception of Zosimos of Panopolis in the Arabi
 
 ### For Recommended Reading, see the previous episode, as well as:
 
-Hallum, Bink and Marcel Marée, ‘A Medieval Alchemical Book Reveals New Secrets’, The British Museum Blog (posted 5 February 2016).
+Hallum, Bink and Marcel Marée, ‘A Medieval Alchemical Book Reveals New Secrets’, [The British Museum Blog (posted 5 February 2016).](https://www.britishmuseum.org/blog/medieval-alchemical-book-reveals-new-secrets)
 
 ### Gallery:
 
@@ -9060,7 +9060,7 @@ Hallum, Bink and Marcel Marée, ‘A Medieval Alchemical Book Reveals New Secre
 
 The* Corpus Hermeticum* on the ‘twelve tormentors’: *CH* XIII.7.
 
-The ‘Apocalypse of Egypt’ in the Hermetic *Asclepius*: *Ascl*. 24-26 (see Episode 105).
+The ‘Apocalypse of Egypt’ in the Hermetic *Asclepius*: *Ascl*. 24-26 (see [Episode 105](https://shwep.net/podcast/other-hermetic-worlds-the-asclepius-and-kore-kosmou/)).
 
 Porphyry on evil *daimones* eating sacrifice: *Abst*. II 42.3; cf. II 39.2.
 
@@ -9190,7 +9190,7 @@ Eunapius (all refs. to Wilmer Cave Wright. *Philostratus and Eunapius: The Lives
 
 Maximus on katarchic astrology: see Nicola Zito, ed. and trans. *Perı̀ katarchôn* (*Des initiatives*). Les Belles Lettres, Paris, 2016.
 
-The *Suda* on Maximus' works: μ 174.
+The *Suda* on Maximus' works: [μ 174](https://www.cs.uky.edu/~raphael/sol/sol-entries/mu/174).
 
 ### Secondary:
 
@@ -9227,7 +9227,7 @@ Eunapius:
 
 Nicholas Marshall. *The Meaning of Theurgy: A Minimalistic Approach to Theurgy and Previous Understandings of the Term in the Study of Late Antique Religion*. PhD thesis, Aarhus Universitet, 2016.
 
-Anne Shephard in the Oxford Classical Dictionary, s.v. Maximus of Ephesus: accessed online.
+Anne Shephard in the Oxford Classical Dictionary, s.v. Maximus of Ephesus: accessed [online](https://oxfordre.com/classics/display/10.1093/acrefore/9780199381135.001.0001/acrefore-9780199381135-e-4025).
 
 Ilinca Tanaseanu-Döbler 2013 [see below].
 
@@ -9246,7 +9246,7 @@ Wilmer Cave Wright. *Philostratus and Eunapius: The Lives of the Sophists*. Will
 
 ### Primary:
 
-Donald A. Russell and Heinz-Günther Nesselrath, editors. *On Prophecy, Dreams and Human Imagination: Synesius, De insomniis*. Mohr Siebeck, Tübingen, 2014. Find it here for free on open access!
+Donald A. Russell and Heinz-Günther Nesselrath, editors. *On Prophecy, Dreams and Human Imagination: Synesius, De insomniis*. Mohr Siebeck, Tübingen, 2014. Find it [here](https://www.jstor.org/stable/j.ctv9b2wvp) for free on open access!
 
 ### Secondary:
 
@@ -9256,7 +9256,7 @@ Antoine Faivre.* Access to Western Esotericism*. State University of New York Pr
 
 ### Recommended Reading:
 
-Note: For a more general bibliography to do with the Platonist subtle body, *pneuma*, and so forth, see the extensive reading-list to Episode 131.
+Note: For a more general bibliography to do with the Platonist subtle body, *pneuma*, and so forth, see the extensive reading-list to[Episode 131](https://shwep.net/podcast/soul-flight-noetic-bodies-and-pneumatic-vehicles-toward-a-history-of-the-platonist-subtle-body/).
 
 Maria Di Pasquale Barbanti. *Ochema-pneuma e phantasia nel Neoplatonismo: aspetti psicologici e prospettive religiose*. Number 19 in Symbolon. Studi e testi di filosofia antica e medievale. CUECM, Catania, 1998.
 
@@ -9281,7 +9281,7 @@ G. Verbeke.* L’évolution de la doctrine du pneuma du Stoı̈cisme à S. Augus
 Gerard Watson. *Phantasia in Classical Thought.* Officina Typographica, Galway, 1988.`,
   259: `### Works Cited in this Episode:
 
-Our interview with Miguel Herrero de Jaregui on Orphism is here.
+Our interview with Miguel Herrero de Jaregui on Orphism is [here](https://shwep.net/podcast/miguel-herrero-de-jauregui-on-ancient-orphism/).
 
 Gennaro D'Ippolito. *Studi nonniani: l'epillio nelle Dionisiache*. Presso l'Accademia, 1964.
 
@@ -9297,7 +9297,7 @@ The *Quæstio Nonniana* – Who was this guy, a bishop, a private individual, wh
 
 ### Recommended Reading: Primary Access to Nonnus:
 
-Koechly's Teubner edition of the *Dionysiaka* is now way out of copyright, and available online here and here. The three volumes of W.H.D. Rouse's Loeb Greek/English edition are also freely available online here, here, and here.
+Koechly's Teubner edition of the *Dionysiaka* is now way out of copyright, and available online [here](https://www.digitale-sammlungen.de/de/view/bsb10233749?page=6) and [here](https://www.digitale-sammlungen.de/de/view/bsb10233750?page=6). The three volumes of W.H.D. Rouse's Loeb Greek/English edition are also freely available online [here](https://archive.org/details/dionysiaca01nonnuoft/page/n7/mode/2up), [here](https://archive.org/details/dionysiaca0002nonn), and [here](https://archive.org/details/dionysiaca0003nonn).
 
 A massive Budé edition is now complete: F. Vian et al., editors*. Nonnus de Panopolis: Les Dionysiaques*. Les Belles Lettres, Paris, 1976-2006.
 
@@ -9305,7 +9305,7 @@ The Gredos Greek/Spanish edition is also good: S. D. Manterola, L. M. Pinkler, a
 
 ### Relevant Secondary Studies:
 
-A bibliography for recent secondary work on Nonnus is maintained by Martine Cuypers here.
+A bibliography for recent secondary work on Nonnus is maintained by Martine Cuypers [here](https://sites.google.com/site/hellenisticbibliography/empire/nonnus.).
 
 Also of relevance to Nonnus and to our interview in particular:
 
@@ -9479,7 +9479,7 @@ Martin Nilsson. *Greek Piety.* Clarendon, Oxford, 1948, pp. 96-103, 109, 135; pp
 
 ### Primary:
 
-Apuleius: for bibliography, see notes to Episode 73.
+Apuleius: for bibliography, see [notes to Episode 73](https://shwep.net/podcast/ineffable-initiations-and-golden-asses-apuleius-of-madauros-and-the-metamorphoses/).
 
 Ovid: the mythological masterwork we refer to is the *Metamorphoses*.
 
@@ -9496,7 +9496,7 @@ Vivien Law. *Wisdom, Authority, and Grammar in the Seventh Century: Decoding Vir
 
 On the principle of ‘the stranger or more wrongheaded the myth, the deeper its esoteric significance’: see Jean Pépin. Porphyre, éxègete d'Homère. In *Porphyre*, volume 12 of Entretiens Hardt, pages 229-66. Fondation Hardt, Geneva, 1966, pp. 252-56 for a list of ancient sources.
 
-Heraclitus B123 DK, ‘nature loves to hide’ (φύσις κρύπτεσθαι φιλεῖ): See Episode 19.
+Heraclitus B123 DK, ‘nature loves to hide’ (φύσις κρύπτεσθαι φιλεῖ): See [Episode 19](https://shwep.net/podcast/riddle-me-this-heraclitus-of-ephesus/).
 
 Macrobius: Timæus can't have met Socrates in real life: Macrobius, *Saturnalia* 1.1.5.
 
@@ -9572,7 +9572,7 @@ Ilinca Tanaseanu-Döbler. *Theurgy in Late Antiquity: The Invention of a Ritual 
 
 Johan C. Thom. *The Pythagorean Golden Verses with Introduction and Commentary*. Number 123 in Religions in the Græco-Roman World. Brill, Leiden/New York, NY/Köln, 1995; we cite pp. 171-7.
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   275: `Ilsetraut Hadot. *Studies on the Neoplatonist Hierocles.* American Philosophical Society, Philadelphia, PA, 2004, pp. 47-56.
 Hermann Sadun Schibli. H*ierocles of Alexandria.* Oxford University Press, Oxford, 2002, pp. 115 ff.
 Ilinca Tanaseanu-Döbler. *Theurgy in Late Antiquity: The Invention of a Ritual Tradition*. Vandenhoeck & Ruprecht, Göttingen, 2013, pp. 175-85.
@@ -9603,7 +9603,7 @@ Proccy considers the number seven to be Athena's number:* In Tim.* 46e (i, 151 D
 
 ### Secondary:
 
-The special SHWEPisode on the possible identities of Origen, or is that Origens, of Alexandria can be found here.
+The special SHWEPisode on the possible identities of Origen, or is that Origens, of Alexandria can be found [here](https://shwep.net/podcast/ammonius-origen-and-plotinus-exploring-an-enigma/).
 
 Jonathan Barnes. Proclus and Politics. In Verity Harte and Melissa Lane, editors, *Politeia in Greek and Roman Philosophy*, pages 168-88. The University Press, Cambridge, 2013.
 
@@ -9613,7 +9613,7 @@ Christian Wildberg. Proclus of Athens: A Life. In Pieter d'Hoine and Marije Mart
 
 ### Recommended Reading:
 
-A chart of the Athenian and Alexandrian schools in late antiquity.
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)
 
 ### Marinus' *Life of Proclus*
 
@@ -9652,7 +9652,7 @@ Alexander P. D. Mourelatos. *The Route of Parmenides: A New Revised Edition with
 
 ### Recommended Reading:
 
-SHWEP Recommended Reading for Edward Butler on Proclus and the One`,
+[SHWEP Recommended Reading for Edward Butler on Proclus and the One](https://media.shwep.net/wp-content/uploads/2024/04/10133553/SHWEP-Recommended-Reading-for-Edward-Butler-on-Proclus-and-the-One.pdf)`,
   283: `### Works Cited in this Episode:
 
 ### Primary:
@@ -9667,7 +9667,7 @@ Eric D. Perl. Neither One nor Many: God and the Gods in Plotinus, Proclus, and A
 
 ### Recommended Reading:
 
-Edward Butler on the Metaphysics of Polytheism and Monotheism Recommended Reading`,
+[Edward Butler on the Metaphysics of Polytheism and Monotheism Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/06/10134457/Edward-Butler-on-the-Metaphysics-of-Polytheism-and-Monotheism-Recommended-Reading.pdf)`,
   284: `### Works Cited in this Episode:
 
 Translations used:
@@ -9678,7 +9678,7 @@ Translations used:
 
 - *Cratylus* commentary: Brian Duvick, editor and translator. *Proclus on Plato Cratylus*. Bloomsbury, London/New Delhi/New York, NY/Sydney, 2007.
 
-Lloyd Gerson's talk on ‘Taking Plato Seriously: Proclus as Exegete’ can be watched online.
+Lloyd Gerson's talk on ‘Taking Plato Seriously: Proclus as Exegete’ can be watched [online](https://youtu.be/ZLSNU_0L4MA?si=2tAQE0wRRdTISn9S).
 
 ### Recommended Reading:
 
@@ -9688,14 +9688,14 @@ Anne Sheppard. Proclus as Exegete. In Steven Gersh, editor, *Interpreting Proclu
 
 Nicola Spanu. *Proclus and the Chaldaean Oracles: A Study on Proclean Exegesis, with a Translation and Commentary of Proclus' Treatise on Chaldaean Philosophy*. Routledge, London, 2021.
 
-Here is a more in-depth bibliography for Parts One and Two: SHWEP Episode Recommended Reading.
+Here is a more in-depth bibliography for Parts One and Two: [SHWEP Episode Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/04/02085448/SHWEP-Episode-Recommended-Reading.pdf).
 
-Download Proclus'-Noetic-Cosmos
+[Download Proclus'-Noetic-Cosmos](https://media.shwep.net/wp-content/uploads/2024/04/24104221/Proclus-Noetic-Cosmos.pdf)
 
 More Spreadsheets to follow!`,
   285: `### Works Cited in this Episode:
 
-Our special episode on the anonymous *Commentary on the Parmenides* can be found here.
+Our special episode on the anonymous *Commentary on the Parmenides* can be found [here](https://shwep.net/podcast/the-anonymous-commentary-on-the-parmenides-porphyry-and-the-sethian-gnostics/).
 
 ### Primary:
 
@@ -9727,7 +9727,7 @@ Danielle Layne. Otherwise Than the Father: Night and the Maternal Causes in Proc
 
 There is a bibliography attached to Episode One.
 
-Proclus'-Noetic-Cosmos
+[Proclus'-Noetic-Cosmos](https://media.shwep.net/wp-content/uploads/2024/04/24104221/Proclus-Noetic-Cosmos.pdf)
 
 More spreadsheets to follow!`,
   289: `### Works Cited in this Episode:
@@ -9781,7 +9781,7 @@ David Frankfurter, editor. *Guide to the Study of Ancient Magic.* Brill, Leiden,
 
 Dan Levene. \` And by the name of Jesus ': An Unpublished Magic Bowl in Jewish Aramaic. *JSQ*, 6:283-308, 1999.
 
-Joseph E. Sanzo. *Ritual Boundaries: Magic and Differentiation in Late Antique Christianity.* Christianity in Late Antiquity. University of California, Oakland, CA, 2024 [available through open access!]
+Joseph E. Sanzo. *Ritual Boundaries: Magic and Differentiation in Late Antique Christianity.* Christianity in Late Antiquity. University of California, Oakland, CA, 2024 [available through [open access](https://www.ucpress.edu/books/ritual-boundaries/paper)!]
 
 Shaul Shaked. Jesus in the Magic Bowls: Apropos Dan Levene's \`. . . and by the name of Jesus . . .'. *JSQ*, 6:309-19, 1999.
 
@@ -9789,12 +9789,12 @@ Gary Vikan. *Byzantine Pilgrimage Art.* Dumbarton Oaks, Washington. DC, 1982.
 
 ### Recommended Reading:
 
-Sanzo_bibliography_SHWEP`,
+[Sanzo_bibliography_SHWEP](https://media.shwep.net/wp-content/uploads/2024/09/03190636/Sanzo_bibliography_SHWEP.docx)`,
   296: `### Works Cited in this Episode:
 
 ### Primary:
 
-The *Suda* entries citing Damascius are too many to list here, but do be aware that all of them can be handily accessed through the fantastic Suda Online project (text by Adler, comments by numerous scholars), often with an English translation.
+The *Suda* entries citing Damascius are too many to list here, but do be aware that all of them can be handily accessed through the fantastic [Suda Online](https://www.cs.uky.edu/~raphael/sol/sol-html/) project (text by Adler, comments by numerous scholars), often with an English translation.
 
 Damascius, *Philosophic History* (all numbers are citations of fragments in Athanassiadi's edition/translation. She includes a correspondence between her numbering and Zintzen's as an appendix, so if you want the Zintzen numbers, start with Athanassiadi and she will lead you to them).
 
@@ -9818,7 +9818,7 @@ Clemens Zintzen, editor. *Damascii vitæ Isidori reliquiæ*. Georg Olms Verlag, 
 
 ### Recommended Reading:
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   297: `### Works Cited in this Episode:
 
 ### Primary:
@@ -9837,18 +9837,18 @@ Richard Sorabji. Divine Names and Sordid Deals in Ammonius' Alexandria. In Andre
 
 ### Essential Reading to Follow Along with the Interview:
 
-Charts Illustrating the Virtues in Post-Iamblichean Platonism
+[Charts Illustrating the Virtues in Post-Iamblichean Platonism](https://media.shwep.net/wp-content/uploads/2024/11/19111618/Charts-Illustrating-the-Virtues-in-Post-Iamblichean-Platonism.pdf)
 
-Reading for SHWEP Special Episode Michæl Griffin on the Higher Virtues in Late Platonism
+[Reading for SHWEP Special Episode Michæl Griffin on the Higher Virtues in Late Platonism](https://media.shwep.net/wp-content/uploads/2024/11/19111648/Reading-for-SHWEP-Special-Episode-Michael-Griffin-on-the-Higher-Virtues-in-Late-Platonism.pdf)
 
 ### Recommended Reading:
 
-Michael Griffin on the Virtues Recommended Reading
+[Michael Griffin on the Virtues Recommended Reading](https://media.shwep.net/wp-content/uploads/2024/11/07120242/Michael-Griffin-on-the-Virtues-Recommended-Reading.pdf)
 
-Not essential, but maybe fun: A chart of the Athenian and Alexandrian schools in late antiquity.`,
+Not essential, but maybe fun:[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   298: `### Works Cited in this Episode:
 
-Our special episode David Hernández de la Fuente on Nonnus of Panopolis.
+Our[special episode](https://shwep.net/podcast/david-hernandez-de-la-fuente-on-nonnus-of-panopolis/) David Hernández de la Fuente on Nonnus of Panopolis.
 
 ### Primary:
 
@@ -9856,7 +9856,7 @@ Heliodorus' astrological writing: see Æ. Boer, O. Neugebauer, and D. D. Pingree
 
 Herodotos of Halikarnasos on the Egyptian and Orphic notion of *metempsychōsis*: Herodotos (2.81) makes the earliest surviving reference to Orphism, either to \`rites called Orphic and Bacchic' (although, he asserts, they are in fact Egyptian and Pythagorean) or, if the shorter version in the Florentine MS is preferred, to \`Orphics and Pythagoreans'.
 
-Nonnos' *Dionysiaka*: Koechly's Teubner edition of the *Dionysiaka* is now way out of copyright, and available online here and here. The three volumes of W.H.D. Rouse's Loeb Greek/English edition are also freely available online here, here, and here.
+Nonnos' *Dionysiaka*: Koechly's Teubner edition of the *Dionysiaka* is now way out of copyright, and available online [here](https://www.digitale-sammlungen.de/de/view/bsb10233749?page=6) and [here](https://www.digitale-sammlungen.de/de/view/bsb10233750?page=6). The three volumes of W.H.D. Rouse's Loeb Greek/English edition are also freely available online [here](https://archive.org/details/dionysiaca01nonnuoft/page/n7/mode/2up), [here](https://archive.org/details/dionysiaca0002nonn), and [here](https://archive.org/details/dionysiaca0003nonn).
 
 Plato on the antiquity of Egyptian culture: *Tim*. 21e, up to the ‘All the Greeks are children’ bit.
 
@@ -9870,7 +9870,7 @@ Ada Adler, ed.* Suidæ lexicon*. Teubner, Leipzig, 1928–1938.
 
 J. R. Martindale. *The Prosopography of the Later Roman Empire, Volume II: A.D. 395-527*. The University Press, Cambridge, 1980.
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   299: `### Works Cited in this Episode:
 
 ### Primary:
@@ -9893,7 +9893,7 @@ Idem. *Hellenism in Byzantium: The Transformation of Greek Identity and the Rece
 
 Pieter van der Horst. Silent Prayer in Late Antiquity. *Numen*, 41(1):1-25, Jan. 1994.
 
-A chart of the Athenian and Alexandrian schools in late antiquity.`,
+[A chart of the Athenian and Alexandrian schools in late antiquity.](https://shwep.net/podcast/the-great-god-pan-lives-introducing-the-athenian-academy/golden-chain-athens-and-alexandria-4th-6th-centuries/)`,
   300: `### Works Cited in this Episode:
 
 ### Primary:
@@ -9965,11 +9965,11 @@ Pseudo-Dionysios:
 
 ### Secondary:
 
-Our special episodes on Plotinus can be found here and here. Those with Stephen Rego on the complex structure of the Proclean *nous* can be listened to here and here.
+Our special episodes on Plotinus can be found [here](https://shwep.net/podcast/the-secret-life-of-the-undescended-self/) and [here](https://shwep.net/podcast/the-secret-life-of-the-one/). Those with Stephen Rego on the complex structure of the Proclean *nous* can be listened to [here](https://shwep.net/podcast/stephen-rego-on-the-nous-in-proclus-part-i-exegesis/) and [here](https://shwep.net/podcast/stephen-rego-on-the-nous-in-proclus-part-ii-metaphysics-and-myth/).
 
 Other works cited:
 
-Kevin Corrigan and L. Michael Harrington. Pseudo-Dionysius the Areopagite. In Edward N. Zalta and Uri Nodelman, editors, *The Stanford Encyclopedia of Philosophy.* Metaphysics Research Lab, Stanford University, Summer 2023 edition, 2023.
+Kevin Corrigan and L. Michael Harrington. [Pseudo-Dionysius the Areopagite](https://plato.stanford.edu/entries/pseudo-dionysius-areopagite/). In Edward N. Zalta and Uri Nodelman, editors, *The Stanford Encyclopedia of Philosophy.* Metaphysics Research Lab, Stanford University, Summer 2023 edition, 2023.
 
 E.R. Dodds, editor.* Proclus. The Elements of Theology*. Clarendon Press, Oxford, 1963. Edited with an introduction and notes by E.R. Dodds; we cite p. 259.
 
@@ -9982,7 +9982,7 @@ John Whittaker. Neopythagoreanism and the Transcendent Absolute. *Symbolae Osloe
 H. A. Wolfson. Albinus and Plotinus on Divine Attributes. *Harvard Theological Review*, 45(2):115–130, Apr. 1952.`,
   303: `### Works Cited in this Episode:
 
-Our special episode on the various possible Origens, Ammonii, etc. can be found here.
+Our special episode on the various possible Origens, Ammonii, etc. can be found [here](https://shwep.net/podcast/ammonius-origen-and-plotinus-exploring-an-enigma/).
 
 ### Primary:
 
@@ -10000,7 +10000,7 @@ George Pachymeres on Proclus' plagiarism of Dionysios: Georgius Pachymeres, *Par
 
 ### Secondary:
 
-*Orthodox Christianity Then and Now* argues for the first-century authenticity of the Areopagite e.g. here and here.
+*Orthodox Christianity Then and Now* argues for the first-century authenticity of the Areopagite e.g. [here](https://www.johnsanidopoulos.com/2009/10/apostolic-authorship-of-corpus.html) and [here](https://www.johnsanidopoulos.com/2009/10/genuiness-of-writings-of-dionysius.html).
 
 Ronald F. Hathaway. Hierarchy and the Definition of Order in the Letters of Pseudo-Dionysius:  A Study in the Form and Meaning of the Pseudo-Dionysian Writings. Martinus Nijhoff, Den Haag, 1969; we quote p. 27; list to be found pp. 31–5. Later we quote pp. 25-6 on the reasons Damascius is a likely candidate.
 
@@ -10025,7 +10025,7 @@ Beate Regina Suchla, editor. *Corpus Dionysiacum IV/1: Ioannis Scythopolitani pr
 J. Stiglmayr. Der Neuplatoniker Proclus als Vorlage des sogen. Dionysius Areopagita in der Lehre vom Übel. *Historisches Jahrbuch*, 16:253-73 and 17:72-148, 1895.`,
   307: `### Works Cited in this Episode:
 
-Our interview with Jason Josephson-Storm on the myth of disenchantment can be found here.
+Our interview with Jason Josephson-Storm on the myth of disenchantment can be found [here](https://shwep.net/oddcast/jason-josephson-storm-on-the-myth-of-disenchantment/).
 
 Richard W. Bulliet. The Sufi Fiddle: A Novel*. St Martin's Press, 1991.
 
@@ -10078,7 +10078,7 @@ Dimitris Kamakis, editor. *Die Kyraniden.* Number 76 in Beiträge zur klassische
 
 Klaus Alpers. Untersuchungen zum griechischen Physiologus und den Kyraniden. *Vestigia Bibliae: Jahrbuch des deutschen Bibel-Archivs*, 6:12–87, 1984., citing pp. 17 ff. on the dating of the Kyranis.
 
-Harland's translation of the introduction to Book I: https://www.philipharland.com/Blog/2023/01/assyrian-wisdom-the-kyranides-cyranides-on-a-journey-to-learn-from-a-foreign-inscription-fourth-century-ce-or-earlier/
+Harland's translation of the introduction to Book I: [https://www.philipharland.com/Blog/2023/01/assyrian-wisdom-the-kyranides-cyranides-on-a-journey-to-learn-from-a-foreign-inscription-fourth-century-ce-or-earlier/](https://www.philipharland.com/Blog/2023/01/assyrian-wisdom-the-kyranides-cyranides-on-a-journey-to-learn-from-a-foreign-inscription-fourth-century-ce-or-earlier/)
 
 M.D. Litwa. *Hermetica II*. Cambridge University Press, Cambridge, 2018, p. 286–7.
 
@@ -10088,10 +10088,10 @@ Charles-Émile Ruelle. Les Cyranides. In F. de Mély, editor, *Les lapidaires de
 
 ### Recommended Reading:
 
-SHWEP Storytime on the Kyranides Recommended Reading`,
+[SHWEP Storytime on the Kyranides Recommended Reading](https://media.shwep.net/wp-content/uploads/2026/06/10111447/SHWEP-Storytime-on-the-Kyranides-Recommended-Reading-1.pdf)`,
   322: `### Works Cited in this Episode:
 
-The Campbell-Bonner Magical Gems Database rocks the house.
+The Campbell-Bonner Magical Gems Database [rocks the house.](http://cbd.mfab.hu/object/search)
 
 ### Primary:
 
@@ -10113,18 +10113,18 @@ Maryse Waegeman. *Amulet and Alphabet: Magical Amulets in the First Book of Cyra
 
 Martin L. West. Magnus and Marcellinus: Unnoticed Acrostics in the Cyranides. *Classical Quarterley*, New Series, 32:480–81, 1982.
 
-*`,
+[*](https://media.shwep.net/wp-content/uploads/2026/06/10114409/hoopoe.jpeg)`,
   323: `### Works Cited in this Episode:
 
-Episode 26 with Peter Struck on symbols can be found here.
+Episode 26 with Peter Struck on symbols can be found [here](https://shwep.net/podcast/the-birth-of-the-symbol-peter-struck-on-ancient-greek-esoteric-hermeneutics/).
 
-Episode 38 on the Esoteric Aristotle, Part I, can be found here.
+Episode 38 on the Esoteric Aristotle, Part I, can be found [here](https://shwep.net/podcast/the-esoteric-aristotle/).
 
 Schechner, ‘an action twice performed’: Schechner, Richard. “Behavior, Performance, and Performance Space.” *Perspecta*, vol. 26, 1990, pp. 97–102. JSTOR, https://doi.org/10.2307/1567156. Accessed 16 June 2026.
 
 *A Game at Chess* by Thomas Middleton: first performed in London in 1624
 
-Augusto Boal Theatre of the Oppressed: https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed
+Augusto Boal Theatre of the Oppressed: [https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed](https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed)
 
 An eagle dropped a tortoise on Æschulus' head: e.g. Pliny, *H.N.* 10.3.`,
 };
