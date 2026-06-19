@@ -230,10 +230,13 @@ async function main() {
   const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 10 });
   const db = client.db('bookstore');
 
-  // Check processing_control pause
+  // Archiving is decoupled from the global `paused` (Gemini-spend) flag: archiving
+  // fetches source images into R2 and costs no Gemini, so it should keep running
+  // while OCR/translation are paused for spend. It has its own dedicated
+  // off-switch — `archiving_paused` — for when archiving specifically must stop.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
-    console.log(`[archive-ocr] Pipeline paused. Exiting.`);
+  if (control?.archiving_paused) {
+    console.log(`[archive-ocr] Archiving paused (archiving_paused flag set). Exiting.`);
     await client.close();
     process.exit(0);
   }
