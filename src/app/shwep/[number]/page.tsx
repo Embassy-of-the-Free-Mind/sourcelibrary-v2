@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { getEpisodeData, getAllEpisodeNumbers } from '../shwep-data';
 import type { MatchedBook } from '../shwep-data';
 
@@ -122,13 +124,34 @@ export default async function EpisodePage({ params }: Props) {
         </div>
       </div>
 
-      {/* Books */}
+      {/* Content */}
       <div className="max-w-5xl mx-auto px-6 py-8">
+        {/* Earl Fontainelle's reading list, scraped from the episode page on shwep.net */}
+        {episode.bibliography && (
+          <section className="mb-10">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-4">
+              <h2 className="text-xl font-serif text-stone-800">Reading List</h2>
+              <p className="text-xs text-stone-500">
+                Compiled by{' '}
+                <a href="https://shwep.net" target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">Earl Fontainelle</a>
+                {' '}for SHWEP ·{' '}
+                <a href={episode.url} target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">view on shwep.net</a>
+              </p>
+            </div>
+            <div className="rounded-xl bg-white border border-stone-200 shadow-sm p-6 md:p-7">
+              <ReadingList markdown={episode.bibliography} />
+            </div>
+          </section>
+        )}
+
         {episode.bookCount > 0 ? (
           <>
-            <h2 className="text-xl font-serif text-stone-800 mb-6">
-              Primary Sources
+            <h2 className="text-xl font-serif text-stone-800 mb-1">
+              Read in Source Library
             </h2>
+            <p className="text-sm text-stone-500 mb-6">
+              Primary sources from this episode that you can read here — {episode.bookCount} title{episode.bookCount !== 1 ? 's' : ''} in the collection.
+            </p>
             <div className="space-y-4">
               {episode.books.map(book => (
                 <BookCard key={book.id} book={book} />
@@ -137,7 +160,7 @@ export default async function EpisodePage({ params }: Props) {
           </>
         ) : (
           <div className="text-center py-12 text-stone-500">
-            <p className="text-lg mb-2">No matching source texts in the collection yet.</p>
+            <p className="text-lg mb-2">None of this episode&rsquo;s sources are in the collection yet.</p>
             <p className="text-sm">
               <Link href="/contribute" className="text-accent-rust underline">Suggest a book</Link> to help expand coverage.
             </p>
@@ -151,6 +174,32 @@ export default async function EpisodePage({ params }: Props) {
           </Link>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ReadingList({ markdown }: { markdown: string }) {
+  return (
+    <div className="text-[15px] leading-relaxed text-stone-700">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({ children }) => <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-5 mb-2 first:mt-0">{children}</h3>,
+          h2: ({ children }) => <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-5 mb-2 first:mt-0">{children}</h3>,
+          h3: ({ children }) => <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-5 mb-2 first:mt-0">{children}</h3>,
+          h4: ({ children }) => <h4 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-4 mb-2">{children}</h4>,
+          p: ({ children }) => <p className="my-2.5">{children}</p>,
+          ul: ({ children }) => <ul className="my-2.5 space-y-1.5 list-disc pl-5 marker:text-stone-300">{children}</ul>,
+          ol: ({ children }) => <ol className="my-2.5 space-y-1.5 list-decimal pl-5 marker:text-stone-300">{children}</ol>,
+          li: ({ children }) => <li className="pl-1">{children}</li>,
+          em: ({ children }) => <em className="italic">{children}</em>,
+          strong: ({ children }) => <strong className="font-semibold text-stone-800">{children}</strong>,
+          a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">{children}</a>,
+          hr: () => <hr className="my-4 border-stone-200" />,
+        }}
+      >
+        {markdown}
+      </ReactMarkdown>
     </div>
   );
 }

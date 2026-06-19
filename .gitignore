@@ -58,6 +58,7 @@ src/data/*
 !src/data/jung-bph-alignment-2026-05-22.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
+!src/data/shwep-bibliographies.ts
 
 # User uploads and test files
 public/uploads/
