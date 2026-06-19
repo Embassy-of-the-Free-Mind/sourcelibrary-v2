@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { logAiUsage } from '@/lib/log-ai-usage';
 
 export const preferredRegion = 'fra1';
 
@@ -52,6 +53,8 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  const _aiStart = Date.now();
+  const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || null;
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
@@ -135,6 +138,20 @@ The terms and image_terms are the most important part — they expand the search
             }
           }
         }
+
+        // Log AI usage + cost (usageMetadata is available once the stream drains)
+        try {
+          const meta = (await result.response)?.usageMetadata;
+          logAiUsage({
+            feature: 'ai_search_expand',
+            model: 'gemini-3.1-flash-lite',
+            inputTokens: meta?.promptTokenCount || 0,
+            outputTokens: meta?.candidatesTokenCount || 0,
+            ms: Date.now() - _aiStart,
+            ok: true,
+            country,
+          });
+        } catch { /* never block the stream on logging */ }
 
         // Parse everything from complete text — no streaming narration (avoids tag leaks)
         console.log('[ai-expand] Full output:', JSON.stringify(fullText));
