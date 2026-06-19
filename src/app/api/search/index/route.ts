@@ -65,6 +65,9 @@ export async function GET(request: NextRequest) {
       filters: { type, source: 'index' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      // Geo from the edge header (same source pageviews use) so search interests
+      // can be broken down by country. Forward-only — past searches have none.
+      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
       created_at: new Date(),
     }).catch(() => {});
 
