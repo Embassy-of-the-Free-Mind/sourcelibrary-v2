@@ -72,24 +72,34 @@ export function firstTranslationVerdict(
 }
 
 /**
- * The derived `is_first_translation` flag — the render gate for the badge.
+ * The bibliographic first-translation claim, WITHOUT render gates.
  *
- * A book badges as a first when:
- *  - its verdict is in the first-family, AND
- *  - if first_complete, our scanned item is actually complete, AND
- *  - it is visible and has translated pages (readers can read it).
+ * True when the verdict is in the first-family and the first_complete gate is
+ * satisfied. This is what the stored `is_first_translation` boolean should
+ * equal — the claim is set on hidden/untranslated books too (raw 6,908 vs
+ * public 5,732), so it must NOT depend on visibility or translated pages.
  *
- * This is the ONLY writer of `is_first_translation`. Reconcile jobs materialize
- * the boolean from this function; no script sets it directly.
+ * This is the ONLY writer of `is_first_translation`. The reconcile job
+ * materializes the boolean from this function; no script sets it directly.
  */
-export function isFirstTranslation(book: FirstTranslationBook): boolean {
+export function isFirstByVerdict(book: FirstTranslationBook): boolean {
   const ft = resolveFirstTranslation(book);
   if (!ft || !FIRST_FAMILY.has(ft.verdict)) return false;
   // first_complete is only honest if OUR item is the complete one.
   if (ft.verdict === 'first_complete' && ft.our_completeness !== 'complete') {
     return false;
   }
-  return !!book.visible && (book.pages_translated ?? 0) > 0;
+  return true;
+}
+
+/**
+ * The render gate for the public "First Translation" badge.
+ *
+ * The bibliographic claim ({@link isFirstByVerdict}) AND the book is visible
+ * and has translated pages (readers can actually read it).
+ */
+export function isFirstTranslation(book: FirstTranslationBook): boolean {
+  return isFirstByVerdict(book) && !!book.visible && (book.pages_translated ?? 0) > 0;
 }
 
 /**

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   isFirstTranslation,
+  isFirstByVerdict,
   isPublicFirst,
   firstTranslationVerdict,
   resolveFirstTranslation,
@@ -56,6 +57,24 @@ describe('isFirstTranslation — render gate', () => {
   it('returns false when there is no verdict at all', () => {
     expect(isFirstTranslation(book(null))).toBe(false);
     expect(isFirstTranslation({})).toBe(false);
+  });
+});
+
+describe('isFirstByVerdict — bibliographic claim (no render gate)', () => {
+  it('ignores visibility and translated-pages (claim set on hidden books too)', () => {
+    expect(isFirstByVerdict(book(FT({}), { visible: false }))).toBe(true);
+    expect(isFirstByVerdict(book(FT({}), { pages_translated: 0 }))).toBe(true);
+    // but the render gate still suppresses the badge on those:
+    expect(isFirstTranslation(book(FT({}), { visible: false }))).toBe(false);
+  });
+
+  it('still applies the first_complete completeness gate', () => {
+    expect(isFirstByVerdict(book(FT({ verdict: 'first_complete', our_completeness: 'partial' })))).toBe(false);
+  });
+
+  it('false for non-first verdicts', () => {
+    expect(isFirstByVerdict(book(FT({ verdict: 'not_first' })))).toBe(false);
+    expect(isFirstByVerdict(book(FT({ verdict: 'unverifiable' })))).toBe(false);
   });
 });
 
