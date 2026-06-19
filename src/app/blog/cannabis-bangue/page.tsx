@@ -51,9 +51,12 @@ export default function CannabisBanguePage() {
           rival, the man who gave biology the word <em>cell</em> &mdash; stood before the Fellows to describe
           a drug. He had been handed a sample six weeks earlier by an old friend, the sea-captain Robert Knox,
           over coffee in a London coffeehouse. Knox had spent nearly twenty years a captive in Ceylon and
-          credited the plant with keeping him well on foul water during his escape. Hooke called it by the
-          names the traders used: &ldquo;the intoxicating Leaf and Seed, by the Moors called <em>Ganges</em>,
-          in Portug. <em>Banga</em>.&rdquo;
+          credited the plant with keeping him well on foul water during his escape. Hooke gave the Society the
+          plant&apos;s names as the traders knew them:{' '}
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+            &ldquo;&apos;Tis call&apos;d, by the <em>Moors</em>, Gange; by the <em>Chingalese</em>, Comsa, and by
+            the <em>Portugals</em>, Bangue.&rdquo;
+          </Link>
         </p>
 
         <figure className="my-12">
@@ -77,10 +80,16 @@ export default function CannabisBanguePage() {
           <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
             <em>Philosophical Experiments and Observations</em>
           </Link>{' '}
-          (1726), is precise and a little astonished. The dose is &ldquo;about as much as may fill a common
-          Tobacco-Pipe.&rdquo; The patient grows &ldquo;unable to speak a Word of Sense, yet is he very merry,
-          and laughs, and sings.&rdquo; And his verdict: it might &ldquo;prove as considerable a Medicine in
-          Drugs, as any that is brought from the Indies.&rdquo; He even tried to grow the seeds in London.
+          (1726), is precise and a little astonished. The dose is{' '}
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+            &ldquo;about as much as may fill a common Tobacco-Pipe&rdquo;
+          </Link>; the patient grows{' '}
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/224" className="text-accent-rust hover:text-accent-rust underline">
+            &ldquo;unable to speak a Word of Sense, yet is he very merry, and laughs, and sings&rdquo;
+          </Link>. And his verdict: it might{' '}
+          <Link href="/book/philosophical-experiments-and-observations-hooke/page/226" className="text-accent-rust hover:text-accent-rust underline">
+            &ldquo;prove as considerable a Medicine in Drugs, as any that is brought from the Indies&rdquo;
+          </Link>. He even tried to grow the seeds in London.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -88,10 +97,13 @@ export default function CannabisBanguePage() {
           account of cannabis. But the historian Benjamin Breen, in <em>The Age of Intoxication</em> (2019),
           reads the same scene more sharply. Hooke knew nothing of this plant&apos;s effects until an imperial
           sailor handed it to him; the knowledge traveled along the arteries of the East India Company and was
-          then quietly relabeled as European discovery. Breen&apos;s argument is that early-modern science was
-          built on colonial knowledge networks while erasing the non-European people who supplied them &mdash;
-          and that &ldquo;every decision about intoxicants is, at root, a judgment about cultural difference.&rdquo;
-          A drug is medicine or vice depending on who is holding it.
+          then quietly relabeled as European discovery.{' '}
+          <a href="https://publicdomainreview.org/essay/how-the-english-found-cannabis" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">
+            Breen&apos;s argument
+          </a>{' '}
+          is that early-modern science was built on colonial knowledge networks while erasing the non-European
+          people who supplied them &mdash; and that every decision about intoxicants is, at root, a judgment
+          about cultural difference. A drug is medicine or vice depending on who is holding it.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -133,7 +145,7 @@ export default function CannabisBanguePage() {
               <em>Shennong Bencao Jing</em>
             </Link>{' '}
             (by ~200 BCE) already warns that eating cannabis flowers &ldquo;makes people see ghosts and run
-            wildly,&rdquo; and that long use &ldquo;communicates with the spirit.&rdquo; China knew the high at
+            wildly,&rdquo; and that long-term use &ldquo;connects with the divine light.&rdquo; China knew the high at
             the very dawn of its pharmacopeia &mdash; then set it aside, domesticating cannabis as a fibre
             staple. India did the opposite, sacralizing it as <em>vijayā</em>, &ldquo;the victorious&rdquo;;
             the Ayurvedic{' '}
