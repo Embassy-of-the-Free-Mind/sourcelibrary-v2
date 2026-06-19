@@ -874,7 +874,31 @@ Long and Sedley, as it is known, marked a seminal jumping off point for the mode
 
 - Papazian, M., 1999, "Stoic Ontology and the Reality of Time", *Ancient Philosophy* 19 : 105-119.
 
-- Mueller, I., 2004, “Remarks on Physics and Mathematic`,
+- Mueller, I., 2004, “Remarks on Physics and Mathematical Astronomy and Optics in Epicurus, Sextus Empiricus, and Some Stoics”, in *Apeiron* vol. 37, no. 4 : 57-87.
+
+- Reydams-Schils, G., 1999, *Demiurge and Providence: Stoic and Platonist Readings of Plato’s Timaeus*, Turnhout.
+
+- Sambursky, S., 1959, *The Physics of the Stoics*, London.
+
+- Sedley, D.N., 1982, “The Stoic Criterion of Identity”, in *Phronesis* 27: 255-275.
+
+- —————, 1985, “The Stoic Theory of Universals”, in* The Southern Journal of Philosophy* 23 Suppl., Memphis, TN, 87-92.
+
+- —————, 1993, “Chrysippus on Psychophysical Causality”, in Brunschwig and Nussbaum (eds.) 1993: 313-31
+
+- —————, 2002, “The Origins of Stoic God”, in Frede and Laks (eds.) 2002: 41-83.
+
+- —————, 2003, “The School, from Zeno to Arius Didymus”, in Inwood (ed.) 2003: 7-32.
+
+- —————, 2008, "Stoic Metaphysics at Rome", *In Metaphysics, Soul, and Ethics in Ancient Thought. Themes from the Work of Richard Sorabji*, edited by Salles, Ricardo, 117-142. Oxford.
+
+- Szaif, F. and Lutz-Bachman, M. (eds.), 2004,* Was ist fuer den Menschen Gute?/What is Good for a Human Being?*, Berlin/New York, NY.
+
+- White, N., 1985, “The Role of Physics in Stoic Ethics”, *The Southern Journal of Philosophy*, 23, Supplement (Proceedings of the Spindel Conference), 54-74.
+
+- White, M., 1992, *The Continuous and the Discrete: Ancient Physical Theories from a Contemporary Perspective*, Oxford.
+
+- ————, 2003, “Stoic Natural Philosophy (Physics and Cosmology)”, in Inwood (ed.) 2003: 124-152.`,
   46: `### Recommended Reading:
 
 - Baltes, M., 1972. *Timaios Lokros: Über die Natur des Kosmos und der Seele*. Brill, Leiden.
@@ -1530,7 +1554,7 @@ On ‘Egyptomania’ (Plutarch emphasising Egyptian authority) vs. ‘cultural a
 
 - Richter, D. S. “Plutarch on Isis and Osiris: Text, Cult, and Cultural Appropriation.” *Transactions of the American Philosophical Association* 131 (2001): 191–216.
 
-- Van Nuffelen, P. *Rethinking the Gods. Philosophical Readings o`,
+- Van Nuffelen, P. *Rethinking the Gods. Philosophical Readings of Religion in the Post-Hellenistic Period*. Cambridge, 2011.`,
   69: `### Works Cited in this Episode:
 
 Our three myths can be found in the following works in Plutarch's *Moralia*: *De sera numinis vindicta* (548c-368a); *De genio Socratis* (575b-598f); *De facie in orbe lunæ* (940f-945d).
@@ -1907,7 +1931,43 @@ Any additions or corrections to this selected bibliography are welcome.
 
 - Wilhelm Kroll. *De Oraculis Chaldaicis*. Wilhelm Koebner, Breslau, 1895. [The first modern critical edition of the text; this was actually Kroll's 1894 *Habilitationsschrift*].
 
-- Wynn Westcott. *The Chaldæan Oracles of Zoroaster*, volume 6 of *Collectanea Hermetica*. Theosophical Publishing Society, London, 1895. [In the same year as our first solid philological edition, the London occultist Wynn Westcott brought out this English translation of various *Oracles*`,
+- Wynn Westcott. *The Chaldæan Oracles of Zoroaster*, volume 6 of *Collectanea Hermetica*. Theosophical Publishing Society, London, 1895. [In the same year as our first solid philological edition, the London occultist Wynn Westcott brought out this English translation of various *Oracles* culled from Renaissance printed editions. A new generation of esotericists gets busy with the *Oracles*].
+
+- É. D. des Places. *Oracles chaldaïques*. Les Belles Lettres, Paris, 2003, first ed. 1971. [The scholarly standard. While much refinement and discussion has occurred in the mean time (and a few fragments been added and a few subtracted), des Places' edition, translation, and discussion set the bar high].
+
+- Ruth Majercik, editor. *The Chaldean Oracles*. Brill, Leiden, 1989. Greek text based on Des Places (1971) with translation and introduction. [Hugely useful, with good discussion of theurgy, metaphysics, and the Middle Platonist context of the *Oracles*. Not an edition *per se*, but an excellent work].
+
+### Recommended Reading:
+
+- Crystal Addey. *Divination and Theurgy in Neoplatonism: Oracles of the Gods*. Ashgate, Dorchester, 2014.
+
+- Dylan Burns. ‘The Chaldean Oracles of Zoroaster, Hekate’s Couch, and Platonic Orientalism in Psellos and Plethon’. *Aries*, 6(2):158–79, 2006.
+
+- Friedrich W. Cremer. *Die Chaldäischen Orakel und Iamblich de mysteriis*. Anton Hain, Meisenheim am Glan, 1969.
+
+- E. D. Des Places. *Oracles chaldaïques*. Les Belles Lettres, Paris, 2003.
+
+- E. R. Dodds. ‘New Light on the "Chaldæan Oracles"’. *Harvard Theological Review*, 54(4):263–273, Oct. 1961.
+
+- Wilhelm Kroll.* De Oraculis Chaldaicis*. Wilhelm Koebner, Breslau, 1895.
+
+- C. Lackeit. *Aion: Zeit und Ewigkeit in Sprache und Religion der Griechen, I Teil: Sprache*. PhD thesis, Königsberg, 1916 [for all kinds of lore about the figure and concept of *Aiôn*].
+
+- Arien Lecerf, Lucia Saudelli, and Helmut Seng, editors. *Oracles Chaldaïques: fragments **et philosophie*. Universitätsverlag Winter, Heidelberg, 2014 [lots of useful chapters].
+
+- Hans Lewy. *Chaldaean Oracles and Theurgy*. Études Augustiniennes, Paris, 1978.
+
+- Ruth Majercik, editor. *The Chaldean Oracles.* Brill, Leiden, 1989. Greek text based on Des Places (1971) with translation and introduction.
+
+- David Potter. ‘Review of *The Chaldæan Oracles* by Ruth Majercik’. *JRS*, 81:225–227, 1991.
+
+- Helmut Seng. *Un livre sacré se l'antiquité tardive: les Oracles Chaldaïques.* Brepols, Turnhout, 2016.
+
+- Helmut Seng and Michel Tardieu, editors. *Die chaldaischen Orakel*. Universitätsverlag, Heidelberg, 2010.
+
+- Willy Theiler. ‘Die Chaldäischen Orakel und die Hymnen des Synesios’. *Schriften der **Königsberger Gelehrten Gesellschaft*, 18:1–41, 1942.
+
+- Graham John Wheeler. Towards a Reception History of the Chaldaean Oracles. *International Journal of the Classical Tradition*, 2020.`,
   76: `### Works Cited in this Episode:
 
 ### Primary:
@@ -2158,7 +2218,69 @@ Two major research-projects are ongoing,
 
 ### Heresiological Primary Texts:
 
-- Irenæus of Lyon (c. 130–c. 202 CE): a very important figure who had a hand in deciding what the canonical scriptures of orthodox Christianity would be and who, through`,
+- Irenæus of Lyon (c. 130–c. 202 CE): a very important figure who had a hand in deciding what the canonical scriptures of orthodox Christianity would be and who, through his work *Against All Heresies*, helped decide who got to be considered Christian, and who were heretics. Significantly for the present topic, he railed against a group he called ‘Gnostics’ – a γνωστική αἵρεσις – identified by modern scholars as largely made up of various flavours of Valentinianism, and so immortalised ‘Gnosticism’ as a genre. A good French edition of *Against All Heresies* can be found in the Recommended Reading below.
+
+- Epiphanius of Salamis (c. 310 to 320–403): The bishop of the island of Salamis. His *Panarion* is a rabid anti-heretical (or pro-orthodox, if you prefer) book which, luckily for us, preserves some direct quotations of otherwise-lost heretical authors. Incidentally, Epiphanius was an early iconoclast and anti-Origenist, so we shall be encountering him again when we discuss the great esoteric church father Origen. See Frank Williams. *The Panarion of Epiphanius of Salamis. *Brill, Leiden/New York, NY, 1987.
+
+### Later Primary Stuff:
+
+- Henry More (1614-1687): More, one of the ‘Cambridge Platonists’, took up the term ‘Gnostic’ as an anti-Catholic polemical term in his 1664 *A Modest Enquiry into the Mystery of Iniquity*. This roughly marks the beginning of the modern use of the term to mean all sorts of interesting things.
+
+### Secondary:
+
+- Ioan P. Couliano.* The Tree of Gnosis: Gnostic Mythology from Early Christianity to Modern Nihilism*. Harper San Francisco, San Francisco, CA, 1990.
+
+- Hans Jonas. *The Gnostic Religion: The Message of the Alien God and the Beginnings of Christianity.* Beacon, Boston, 2001. [Translated and abridged from Jonas’s original two-volume work, *Die Gnosis* (1934)].
+
+- Karen L. King. *What Is Gnosticism?* Belknap, Cambridge, MA, 2003.
+
+- Bentley Layton: see Recommended Reading.
+
+- Christoph Markschies. *Gnosis: An Introduction*. T&T Clark, London and New York, 2003.
+
+- A.D. Nock's critique of Jonas: A.D. Nock. ‘Review of Hans Jonas, Gnosis und spätantiker Geist, 2, 1: Von der Mythologie zur mystischen Philosophie’. *Gnomon*, 28(2):124–26, 1956.
+
+- Birger Pearson 2007: see Recommended Reading.
+
+- Simone Petrement. *A Separate God: The Christian Origins of Gnosticism.* Harper SanFrancisco, San Francisco, CA, 1990.
+
+- Kurt Rudolph. *Gnosis: The Nature and History of Gnosticism*. Harper & Row, San Francisco, CA, 1983.
+
+- Geoffrey S. Smith. *Guilt by Association: Heresy Catalogues in Early Christianity*. Oxford University Press, Oxford/New York, NY, 2015 [on the ‘black list’ inherited by Irenæus].
+
+- Morton Smith. ‘The History of the Term *Gnostikos*’. In Bentley Layton, editor, *The Rediscovery of Gnosticism*, pages 796–807. Brill, Leiden, 1980.
+
+- John Turner: Professor Turner was alive at the time of recording this interview, but has since passed beyond the Archons into the Pleroma. His work and personality are remembered with deep gratitude by generations of scholars and friends, and he will be missed. He is mentioned at a number of junctures in the conversation, and his works will be discussed in some detail when the podcast turns to Sethianism.
+
+- Michael Williams 1999: see Recommended Reading.
+
+### Recommended Reading:
+
+Most of the works here are general introduction type materials; in light of the topic of this episode, nearly all of them suffer to some degree from the problems with the term Gnostic that we have been discussing! Nevertheless, those interested in The Artist Formerly Known as Gnosis will find much to interest them.
+
+- David Brakke.* The Gnostics: Myth, Ritual, and Diversity in Early Christianity*. Harvard University Press, Cambridge, MA, 2010.
+
+- Giovanni Filoramo.* A History of Gnosticism*. Blackwell, Cambridge, MA, 1990.
+
+- Irenæus. *Irenée: Contre les hérésies*. Éditions du Cerf, Paris, 1979.
+
+- Bentley Layton. *The Gnostic Scriptures: A New Translation with Annotations and Introductions*. Doubleday, New York, 1995.
+
+- Bentley Layton. ‘Prolegomenon to the Study of Gnosticism’. In Michael L. White and Larry O. Yarbrough, editors, *The Social World of the First Christians: Essays in Honor of Wayne A. Meeks*, pages 334–350. Fortress, Minneapolis, 1995b.
+
+- Antti Marjanen. *Was There a Gnostic Religion?* Finnish Exegetical Society, Helsinki, 2005.
+
+- Birger Pearson. *Ancient Gnosticism: Traditions and Literature*. Fortress, Minneapolis, 2007.
+
+- J.M. Robinson, editor. *The Nag Hammadi Library in English*. Brill, Leiden, 1977 [Great bedside reading].
+
+- Riemer Roukema. *Gnosis and Faith in Early Christianity: An Introduction to Gnosticism*. Trinity Press International, Harrisburg, PA, 1999.
+
+- Andrew Philip Smith. *A Dictionary of Gnosticism*. Quest, Wheaton, IL, 2009.
+
+- M. A. Williams.* Rethinking Gnosticism: An Argument for Dismantling a Dubious Category.* Princeton University Press, Princeton, NJ, 1999.
+
+- *Idem*. ‘Gnosticism Emergent: The Beginning of the Study of Gnosticism in the Academy’. In April DeConick, editor,* Religion: Secret Religion*, Macmillan Interdisciplinary Handbooks, pages 3–22. Macmillan Reference, Farmington Hills, MI, 2016.`,
   81: `### Works Cited in this Episode:
 
 ### Primary:
@@ -2307,7 +2429,9 @@ Most of the primary texts discussed in this episode can be found in English in B
 
 - G.C. Stead. 'In Search of Valentinus'. In Bentley Layton, editor, *The Rediscovery of Gnosticism, Volume One: The School of Valentinus*, pages 75–95. Brill, Leiden, 1980.
 
-- Einar Thomassen.* Th`,
+- Einar Thomassen.* The Spiritual Seed: The Church of the “Valentinians.”* . Brill, Leiden/Boston, MA, 2006.
+
+- Heinrich von Staden. ‘Hairesis and Heresy: The Case of the *haireseis iatrikai*’. In Ben F. Meyer and E.P. Sanders, editors, *Jewish and Christian Self-Definition: Self-Definition in the Greco-Roman World*, volume 3, pages 76–100. Fortress Press, Philadelphia, PA, 1982. [On the invention of a ‘rationalist school of thought’ (λογικὴ αἵρεσις) for polemical purposes within contemporary medicine].`,
   84: `### Works Cited in this Episode:
 
 ### Primary:
@@ -2670,7 +2794,79 @@ We quote the English translation of Casey 1934 (see below).
 
 - Ferguson, John (ed.), *Stromateis, Books One to Three*, The Fathers of the Church 85 (Washington, DC: The Catholic University of America Press, 1991).
 
-- Oulton, John E. L., and Henry Chadwick (eds.), *Alexandrian Christianity*, The Library of Christian Classics, 2 (Philadelphia, PA: The Westminster Press, 1954) [contains Stro`,
+- Oulton, John E. L., and Henry Chadwick (eds.), *Alexandrian Christianity*, The Library of Christian Classics, 2 (Philadelphia, PA: The Westminster Press, 1954) [contains Stromateis 3 and 7].
+
+- Robert Pierce Casey. *The Excerpta ex Theodoto of Clement of Alexandria*. Christophers,
+
+London, 1934 [remains the only scholarly English translation of this text; unfortunately, it is based on an older critical edition and needs updating. Any takers?].
+
+### **Other recommended works:**
+
+- Wilhelm Bousset. *Jüdisch-christlicher Schulbetrieb in Alexandria und Rom: Literarische*
+
+*Untersuchungen zu Philo und Clemens von Alexandria, Justin und Irenäus*. Vandenhoek and Ruprecht, Göttingen, 1915.
+
+- Bogdan Bucur. ‘The Other Clement of Alexandria: Cosmic Hierarchy and Interiorized Apocalypticism’. *Vigiliae Christianae*, 60:251–68, 2006.
+
+- *Idem*. *Angelomorphic Pneumatology: Clement of Alexandria and other Early*
+
+*Christian Witnesses*. Brill, Leiden/Boston, MA, 2009.
+
+- Denise Kimber Buell. *Making Christians: Clement of Alexandria and the Rhetoric of*
+
+*Legitimacy.* Princeton University Press, Princeton, NJ, 1999.
+
+- G.W. Butterworth. ‘The Deification of Man in Clement of Alexandria’. *JTS*, 17:157–69,
+
+1916.
+
+- D. Dawson. *Allegorical Readers and Cultural Revision in Ancient Alexandria*. University
+
+of California Press, Berkeley/Los Angeles, CA/Oxford, 1992 [pp.183–234 have an excellent discussion of Clement's interpretive strategies].
+
+- E.L. Fortin. ‘Clement of Alexandria and the Esoteric Tradition’. *Studia Patristica*, 9:41–56,
+
+1966.
+
+- Andrew Itter. *Esoteric Teaching in the Stromateis of Clement of Alexandria.* Number 97
+
+in Supplements to *Vigiliae Christianae*. Texts and Studies of Early Christian Life
+
+and Learning. Brill, Leiden/Boston, MA, 2009.
+
+- Salvatore Lilla. *Clement of Alexandria: A Study in Christian Platonism and Gnosticism.*
+
+Oxford University Press, Oxford, 1971.
+
+- Claude Mondésert. *Clément d’Alexandrie: Introduction á l’étude de sa pensée religieuse*
+
+*à partir de l’Écriture*. Édition Montaigne, Paris, 1944.
+
+- Pamela L. Mullins. ‘Text and Gnosis: The Exclusive Function of Written Instruction in
+
+Clement of Alexandria’. *Studia Patristica*, 41:213–215, 2006.
+
+- A. Méhat. ‘Les ordres d’enseignement chez Clément d’Alexandrie et Sénèque’. *Studia*
+
+*Patristica*, 2(2):351–57, 1957.
+
+- *Idem. Étude sur les ‘Stromates’ de Clément d’ Alexandrie*. Paris, 1966.
+
+- Pierre Nautin. ‘La fin des "Stromates" et les "Hypotyposes" de Clément d’Alexandrie’.
+
+*Vigiliae Christianae*, 30(4):268–302, Dec. 1976.
+
+- Christian Oeyen. *Eine frühchristliche Engelpneumatologie bei Klemens von Alexan-*
+
+*drien*. Bern, 1966.
+
+- Eric Osborn. *Clement of Alexandria*. Cambridge University Press, Cambridge, 2005.
+
+- A. van den Broek. ‘Juden und Christen in Alexandrien im 2. und 3. Jahrhundert’. In
+
+J. van Oort, editor, *Juden und Christen in der Antike*, pages 108–11. Kok, Kampen,
+
+1990.`,
   91: `### Works Cited in this Episode:
 
 ### Primary:
@@ -2772,7 +2968,23 @@ of California Press, Berkeley/Los Angeles, CA/Oxford, 1992.
 
 - J. Pépin. *Mythe et allégorie: les origines grecques et les contestations Judéo-Chrétiennes*. Études Augustiniennes, Paris, 1976. 2nd ed.
 
-- Ilaria Ramelli. Mystérion negli Stromateis di Clemente Alessandrino: Aspetti di c`,
+- Ilaria Ramelli. Mystérion negli Stromateis di Clemente Alessandrino: Aspetti di continuità con la tradizione allegorica greca. In Angela Maria Mazzanti, editor, *In volto del misterio: Misterio e rivelazione nella cultura religiosa tardoantica*, pages 83–120. Itaca Libri, Castel Bolognese, Italy, 2006.
+
+- Laura Rizzerio. L’accès à la transcendance divine selon Clément d’Alexandrie: Dialectique platonicienne ou expérience de “l’union chrétienne”?* Revue des Études Augustiniennes*, 44:159–179, 1998.
+
+- Manlio Simonetti. *Biblical Interpretation in the Early Church: A Historical Introduction to Patristic Exegesis*. T&T Clark, Edinburgh, 1994.
+
+- G. Stroumsa. Myth as Enigma: Cultural Hermeneutics in Late Antiquity. In Galit Hasan-Rokem and David Shulman, editors, *Untying the Knot: On Riddles and Other Enigmatic Modes*, pages 271–283. Oxford University Press, New York, NY, 1996a.
+
+- Thomas F. Torrance. The Hermeneutics of Clement of Alexandria. In Thomas F. Torrance, editor, *Divine Meaning: Studies in Patristic Hermeneutics*, pages 130–178. T & T Clark, Edinburgh, 1995.
+
+### On the question of the esoteric *paradosis* through the early church:
+
+- E.L. Fortin. Clement of Alexandria and the Esoteric Tradition. *Studia Patristica*, 9:41–56, 1966 [a crucial study].
+
+- Lilla 1971 (see above): pp. 142–158.
+
+- Guy Stroumsa. *Hidden Wisdom: Esoteric Traditions and the Roots of Christian Mysticism*. Brill, Leiden, 1996b.`,
   93: `### Works Cited in this Episode:
 
 ### Primary:
@@ -2890,7 +3102,33 @@ On Angels and Other Beings:
 
 - *Idem*. Revisiting Christian Oeyen: "The Other Clement" on Father, Son, and Angelomorphic Spirit. *Vigiliae Christianae*, 61:381–413, 2007.
 
-- *Idem*. *Angelomorphic Pneumatology: Clement of Alexandria and other Early Christian Witnesses.* Bril`,
+- *Idem*. *Angelomorphic Pneumatology: Clement of Alexandria and other Early Christian Witnesses.* Brill, Leiden/Boston, MA, 2009a.
+
+- *Idem*. The Place of the *Hypotyposeis* in the Clementine Corpus: An Apology for “The Other Clement of Alexandria”.* Journal of Early Christian Studies,* 17: 313–35, 2009b.
+
+- *Idem*. Hierarchy, Eldership, Isangelia: Clement of Alexandria and the Ascetic Tradition. In Doru Costache, Philip Kariatlis, and Mario Baghos, editors, *Alexandrian Legacy: A Critical Appraisal*, pages 2–45. Cambridge Scholars Publishing, Newcastle-on-Tyne, 2015.
+
+- G.W. Butterworth. The Deification of Man in Clement of Alexandria. *JTS*, 17:157–69, 1916.
+
+- Christian Oeyen. *Eine frühchristliche Engelpneumatologie bei Klemens von Alexandrien.* Bern, 1966.
+
+- Sami Yli-Karjanmaa. *Reincarnation in Clement of Alexandria : Salvific Cycles and Steps of Progress. *Brill, Leiden, 2025.
+
+On Cosmic Ascent in Clement:
+
+- G. Békés. *De continua oratione Clementis Alexandri doctrina*. Studia Anselmiana, 14, 1942. pp. 73-88.
+
+- D.W. Bousset. Die Himmelsreise der Seele. *Archiv fúr Religionswissenschaft*, pages 136–69, 220–71, 1901. pp. 148-9.
+
+- Salvatore Lilla. *Clement of Alexandria: A Study in Christian Platonism and Gnosticism.* Oxford University Press, Oxford, 1971. pp. 181-89.
+
+- A. Méhat. *Étude sur les ‘Stromates’ de Clément d’ Alexandrie.* Paris, 1966. pp. 456-75.
+
+On Angelification/Deification:
+
+- John J. Collins. A Throne in the Heavens: Apotheosis in Pre-Christian Judaism. In John J. Collins and Michael Fishbane, editors, *Death, Ecstasy, and Other Worldly Journeys*, pages 43–58. State University of New York Press, Albany, NY, 1995.
+
+- Andrei A. Orlov.* The Enoch-Metatron Tradition.* Mohr Siebeck, Tübingen, 2005.`,
   95: `### Works Cited in this Episode:
 
 - Glenn Bowersock. The Vanishing Paradigm of the Fall of Rome. Bulletin of the American Academy of Arts and Sciences*, 49(8):29–43, May 1996. We cite pp. 42-3.
@@ -3088,7 +3326,15 @@ J. Dillon. *The Middle Platonists: A Study of Platonism 80 BC to AD 220*. Duckwo
 
 - *Idem*. Celsus philosophus platonicus. *ANRW*, II, 36(7):5183–5213, 1994.
 
-- Stephen Goranson. Celsus of Pergamum: Locating a Critic of Early Christianity. In Douglas R. Edwards, C. Thomas McCollough, and E.M. Meyers, editors, *The Archaeology of Difference. Gender, Ethnicity, Class and the "oth`,
+- Stephen Goranson. Celsus of Pergamum: Locating a Critic of Early Christianity. In Douglas R. Edwards, C. Thomas McCollough, and E.M. Meyers, editors, *The Archaeology of Difference. Gender, Ethnicity, Class and the "other" in Antiquity. Studies in Honor of Eric M. Meyers,* pages 363–69. American Schools of Oriental Research, Boston, MA, 2007.
+
+- J.W. Hargis. *Against the Christians: The Rise of Early Anti-Christian Polemic*. Lang, New York, NY, 1999.
+
+- Ilaria L.E. Ramelli. Origen, Patristic Philosophy, and Christian Platonism: Re-Thinking the Christianisation of Hellenism. *Vigiliæ Christianæ*, 63(3):217–63, 2009.
+
+- *Idem*. Origen and the Platonic Tradition. *Religions*, 8(21), 2017.
+
+- David Rankin. From Clement to Origen: The Social and Historical Context of the Church Fathers. In David Ivan Rankin, editor, *Alexandria and the Fathers*, pages 113–142. Ashgate, Aldershot, UK, 2006.`,
   99: `### Works Cited in this Episode:
 
 ### *Contra Celsum*:
@@ -3214,7 +3460,49 @@ On the figure(s) of Hermes and his reception(s), Faivre 1995 is a great introduc
 
 - Thomas McAllister Scott. *Egyptian Elements in Hermetic Literature*. Thesis, Harvard Divinity School, 1987.
 
-- Anna van den Kerchove.* La voie d'Hermès: Pra`,
+- Anna van den Kerchove.* La voie d'Hermès: Pratiques rituelles et traités hermétiques*. Brill, Leiden, 2012.
+
+- Christian H. Bull. *The Tradition of Hermes Trismegistus: The Egyptian Priestly Figure as a Teacher of Hellenized Wisdom.* Brill, Leiden, 2018.
+
+### Generally Useful:
+
+- Brian P. Copenhaver, editor. *Hermetica*. Cambridge University Press, Cambridge, 1992.
+
+- Florian Ebeling. *The Secret History of Hermes Trismegistus: Hermeticism from Ancient to Modern Times.* Cornell University Press, Ithaca, NY, 2007.
+
+- Antoine Faivre. *The Eternal Hermes, from Greek God to Alchemical Magus.* Phanes Press, Grand Rapids, MI, 1995.
+
+- A.-J.  Festugière.* La révélation d’Hermes Trismegiste.* Les Belles Lettres, Paris, second edition, 1981. 4 vols. Recently republished 2014 as a single volume on onionskin paper with extra notes and appendices and other useful backmatter.
+
+- Garth Fowden. *The Egyptian Hermes: A Historical Approach to the Late Pagan Mind*. Cambridge University Press, Cambridge, 1986.
+
+- M.D. Litwa. *Hermetica II*. Cambridge University Press, Cambridge, 2018.
+
+### On the Figure and Origins of Hermes the God:
+
+- Walter Burkert. *Griechische Religion der archaischen und klassischen Epoche*. Kohlhammer, Stuttgart, 2011, pp. 241-45.
+
+- Samson Eitrem. Hermes 1. In Wilhelm Kroll, editor, *Realencyclopädie der classischen Altertumswissenschaft*, volume 8.1, col. 738–792. Alfred Druckenmüller Verlag, Stuttgart, 1912.
+
+- Karl Kerényi.* Hermes der Seelenführer. Das Mythologem vom männlichen Lebensursprung*. Rhein Verlag, Zurich, 1944.
+
+- Pierre Raingeard. *Hermès psychagogue. Essai sur les origins du culte d’Hermès*. Les Belles Lettres, Paris, 1935 [If you want a comprehensive survey of cultic sites, evidence for religious cult, and basically everything Græco-Hermes, this massive tome is the one-stop shop].
+
+- J. Toutain. Hermès, dieu social chez les Grecs. *Revue d’histoire et de philosophie religieuses*, 12:289–299, 1932.
+
+- Jean-Pierre Vernant. Hestia-Hermès: Sur l’expression religieuse de l’espace et du movement chez les Grecs. *L’Homme*, 3:12–50, 1963.
+
+### Later Hermetica and ‘The Hermetic Tradition’:
+
+The Hermetic tradition is an idea far broader in its scope than anything the ancients would have understood by ‘Hermetic’, and no recommended bibliography will do more than scratch the surface. Nevertheless, here are a few interesting and useful books, leaving alchemy for the most part to one side:
+
+- The Hermes Latinus series published by Brepols is a first-stop for the many Latin-language Hermetica of the middle ages.
+
+- F. van Lamoen, editor. *Hermes Trismegistus: Pater Philosophorum. Tekstgeschiedenis van het Corpus Hermeticum.* Bibliotheca Philosophica Hermetica, Amsterdam, 1990.
+
+- Francis E. Peters. Hermes and Harran: the Roots of Arabic-Islamic Occultism. In Emilie Savage-Smith, editor, *Magic and Divination in Early Islam*, pages 185–215. Variorum, Trowbridge, 2004.
+
+- Kevin van Bladel. *The Arabic Hermes: From Pagan Sage to Prophet of Science.* Oxford University Press, Oxford, 2009.`,
   101: `### Works Cited in this Episode:
 
 ### Primary:
@@ -3428,7 +3716,9 @@ On the question of esotericism in the teaching practices of the ancient Hermetis
 
 - *Idem*. Monkey Business: Magical Vowels and Cosmic Levels in the Discourse on the Eighth and the Ninth (NHC VI, 6). *Studi e materiali di Storia delle Religioni*, 83 (1):75–94, 2017b.
 
-- Jean-Pierre Mahé. Mental Faculties and Cosmic Levels in The Eighth and the Ninth (NH VI,6) and Related Hermetic Writings, in *The Nag Hammadi Texts in the History of Religions: Proceedings of the International Conference in Copenhagen, September 19-24, 1995, *2002.`,
+- Jean-Pierre Mahé. Mental Faculties and Cosmic Levels in The Eighth and the Ninth (NH VI,6) and Related Hermetic Writings, in *The Nag Hammadi Texts in the History of Religions: Proceedings of the International Conference in Copenhagen, September 19-24, 1995, *2002.
+
+- Renata-Gabriela Tatomir. Sacred Characters and Ritual Drama.The Synchretic Spiritual Background of The Discourse on the Eighth and Ninth, i.e. the Nag Hammadi Codex VI.6 (1 st century AD). *Classical Papers*, xi:167–80, 2012.`,
   107: `### Works Cited in this Episode:
 
 ### Primary:
@@ -3615,7 +3905,25 @@ In English (chronological):
 
 - MacKenna, S. *Plotinus. The Enneads*. Selected Treatises Revised with Notes by John M. Dillon. London: Penguin, 1991 [This is a greatest-hits selection of MacKenna's *Enneads*, chosen by John Dillon, a good one-volume Plotinus to carry with you on holiday].
 
-- Armstrong, A.H. *Plotinus: Enneads*. Harvard University Press, Cambridge, MA, 2003. Greek text based on Henry & Schwyzer (1951-73), with translation and introduct`,
+- Armstrong, A.H. *Plotinus: Enneads*. Harvard University Press, Cambridge, MA, 2003. Greek text based on Henry & Schwyzer (1951-73), with translation and introduction by A.H. Armstrong. 7 vols [still the standard in English, although translations of individual treatises to be found in the Parmenides Press series (see below) often improve on Armstrong].
+
+- Lloyd P. Gerson, editor.* Plotinus: The Enneads*. Cambridge University Press, Cambridge, 2018 [this is a one-volume mega-translation, the work of six top translators whose translations were then standardised by Gerson to match a one-size-fits-all glossary of terms-of-translation, given at the end of the book; i.e. the term νοῦς is always translated as ‘Intellect’. An interesting approach, which has benefits as well as drawbacks; to take one example of the latter, λόγος is always translated as ‘expressed principle’, a term which carries with it assumptions that Gerson's take on the Plotinian *logos* is the right take, and that Plotinus always means the same thing when he says λόγος, which one may doubt].
+
+In other tongues:
+
+- Bréhier, E. *Plotin Ennéades* (7 vols). Greek Text and French Translation with Introductions and Notes. Les Belles Lettres, Paris, 1924–38.
+
+- V. Cilento. *Plotino: Enneadi*. Laterza, Bari, 1947-9.
+
+- Harder, R., Beutler, R., and Theiler, W. *Plotin* (12 vols). Greek Text with German Translation and Commentary. Hamburg 1956–71.
+
+- J. Igal. *Plotino Enéadas* (3 vols). Gredos, Madrid, 1982-1998.
+
+- Paul Kalligas. Πλωτίνου: Εννεάδες (6 vols). Greek text with modern Greek translation and extensive commentary. Ακαδημία Αθηνών, Athens 1994-2018.
+
+### Series:
+
+A number of excellent series of translations-with-commentary of the *Enneads* are out there. The French have led the way, firstly with the du Cerf series (the Red Plotties) edited by the late Pierre Hadot, and more recently with the Flammarion series (the white Plotties)  edited by Bresson and Pradeau. But the Anglophone world is catching up with them through the Parmenides Press series, edited by John Dillon and Andrew Smith. Paul Kalligas' six-volume modern Greek commentary on the *Enneads *has set a new standard for thoroughness, importantly updating Henry and Schwyzer's *apparatus criticus* with many new suggested emendations, updating their* index fontium* with many new additions, and more. It is currently coming out in an English translation (utilising Armstrong's translation of the *Enneads* as a reference-point, rather than Kalligas' modern Greek translation) with Princeton. Find a review of the second volume by Lloyd Gerson here.`,
   112: `### Works Cited in this Episode:
 
 On the fascinating theory of the self in Plotinus, a few essential works are Blumenthal
@@ -3686,7 +3994,49 @@ Rappe 2000, 25-44; Mazur 2010, 33; Perl 2006.
 
 - Gwenaëlle Aubry. Un moi sans identité? Le hemeis Plotinien. In Gwenaëlle Aubry and Frédérique Ildefonse, editors, *Le moi et l’interiorité*, pages 107–125. Vrin, Paris, 2008.
 
-- Nicholas Banner. *Philosophic Silence and the`,
+- Nicholas Banner. *Philosophic Silence and the ‘One’ in Plotinus*. The University Press, Cambridge, 2018.
+
+- W. Beierwaltes. *Das wahre Selbst. Studien zu Plotins Begriff des Geistes und des Einen.* Vittorio Klostermann, Frankfurt, 2001.
+
+- H. J. Blumenthal. *Plotinus’ Psychology: His Doctrine of the Embodied Soul*. Martinus Nijhoff, Den Haag, 1971.
+
+- Emile Bréhier. *The Philosophy of Plotinus.* University of Chicago Press, Chicago, 1958. Translated by J. Thomas.
+
+- J. Bussanich. Mystical Elements in the Thought of Plotinus. *ANRW*, 36(7):5300–5330, 1997.
+
+- R. Chiaradonna. Sostanze intellegibili e unità numerica in Plotino. In Daniela P. Taormina, editor, *L’essere del pensiero. Saggi sulla filosofia di Plotino*, pages 121–136. Bibliopolis, Napoli, 2010.
+
+- Riccardo Chiaradonna. Plotino: Il "noi" e il "nous". In Gwenaëlle Aubry and Frédérique Ildefonse, editors, *Le moi et l’interiorité*, pages 277–293. Vrin, Paris, 2008.
+
+- Christian Girard.* L’identité de l’homme chez Plotin.* PhD thesis, Université Paris 1 – Panthéon-Sorbonne, 2013.
+
+- Pierre Hadot. Neoplatonist Spirituality: Plotinus and Porphyry. In A.H. Armstrong, editor, *Classical Mediterranean Spirituality*, pages 230–249. Routledge and Kegan Paul, London, 1986. translated by Jane Curran.
+
+- Alexander J. Mazur. *The Platonizing Sethian Gnostic Background of Plotinus’ Mysticism*. PhD thesis, University of Chicago, 2010.
+
+- G O’Daly. *Plotinus’ Philosophy of the Self*. Irish University Press, Shannon, 1973.
+
+- Eric D. Perl. The Togetherness of Thought and Being: A Phenomenological Reading of Plotinus’ Doctrine That the Intelligibles are not Outside the Intellect. In J. J. Cleary and G. M. S. Gurtler, editors, *Proceedings of the Boston Area Colloquium in Ancient Philosophy, Vol. XXII*, pages 1–26. Brill, Leiden, 2006.
+
+- R. Petty. *Fragments of Numenius of Apamea*. Number VII in Platonic Texts and Translations. Prometheus Trust, Hockley, 2012.
+
+- Sara Rappe. *Reading Neoplatonism: Non-Discursive Thinking in the Texts of Plotinus, Proclus and Damascius*. University of Michigan Press, Ann Arbor, MI, 2000.
+
+- P. Remes. *Plotinus on Self: the Philosophy of the 'We’*. Cambridge University Press, Cambridge, 2007.
+
+- J. Rist. Plotinus on Matter and Evil. *Phronesis*, 6(2):154–66, 1961.
+
+- J. H. Sleeman and Gilbert Pollet. *Lexicon Plotinianum*. Brill/Leuven University Press, Leiden/Leuven, 1980.
+
+- Andrew Smith. *Porphyry’s Place in the Neoplatonic Tradition: a Study in Post-Plotinian Neoplatonism*. Martinus Nijhoff, den Haag, 1974.
+
+- Andrew Smith. Unconsciousness and Quasi-Consciousness in Plotinus. *Phronesis*, 23 (3):292–301, 1978.
+
+- R. Wallis. Nous as Experience. In R. Baine Harris, editor, *The Significance of Neoplatonism*, pages 121–154. International Society for Neoplatonic Studies, Norfolk, VA, 1976.
+
+- J. Wilberding. Creeping Spatiality: The Location of Nous in Plotinus’ Universe. *Phronesis*, 50(4):315–334, 2005.
+
+###`,
   113: `### Recommended Reading:
 
 - N. Banner. The indeterminate self and its cultivation in plotinus. In Richard Seaford, John Wilkins, and Matthew Wright, editors,* Self and the Soul: Essays on Ancient Thought and Literature in Honour of Christopher Gill*, pages 139–159. Oxford Uni- versity Press, Oxford, 2017.
@@ -3841,7 +4191,17 @@ O'Brien 1992, O'Brien 1994. We cite 1992, 428-9.
 
 - M. J. Edwards. *Neoplatonic Saints: the Lives of Plotinus and Proclus by their Students*. Liverpool University Press, Liverpool, 2000.
 
-- Alain Éon. La notion`,
+- Alain Éon. La notion plotinienne d’exégèse. In *Revue international de philosophie: Plotin*, volume 2, pages 252–289. Fond, 1970.
+
+- R. Lamberton. *Homer the Theologian: Neoplatonist Allegorical Reading and the Growth of the Epic Tradition.* University of California Press, Berkeley, CA, 1989.
+
+- R. Mortley. *Plotinus, Self and the World*. Cambridge University Press, Cambridge, 2013.
+
+- D. O’Brien. Plotinus and the Secrets of Ammonius. *Hermathena*, (157):117–153, 1994.
+
+- Idem. Plotin et la Voeu de Silence. In L. Brisson et al., editors, *Porphyre: la Vie de Plotin*, volume II, pages 419–459. Vrin, Paris, 1992.
+
+- G. Stroumsa. Myth as Enigma: Cultural Hermeneutics in Late Antiquity. In Galit Hasan-Rokem and David Shulman, editors, *Untying the Knot: On Riddles and Other Enigmatic Modes,* pages 271–283. Oxford University Press, New York, NY, 1996.`,
   116: `### Works Cited in this Interview:
 
 Aside from *Enneads* III.1[3]. IV.4[28], and II.3[52], Marilynn mentions:
@@ -4082,7 +4442,15 @@ See also:
 
 - A. Schütze. *Mithras-Mysterien und Urchristentum*. Urachhaus, Stuttgart, 1972.
 
-- R. Turcan.`,
+- R. Turcan. *Mithras Platonicus: Recherches sur l’hellénisation philosophique de Mithra.* Number 47 in EPRO. Brill, Leiden, 1975.
+
+- Idem. *Mithras et le mithriacism*. Les Belles Lettres, Paris, 1981.
+
+- M.J. Vermaseren. *Corpus inscriptionum et monumentorum religionis Mithriacæ*. Martinus Nijhoff, The Hague, 1950-60. 2 vols.
+
+- Idem. *Mithras: The Secret God.* Chatto and Windus, London, 1963.
+
+- V.J. Walters. *The Cult of Mithras in the Roman Provinces of Gaul.* Number 41 in EPRO. Brill, Leiden, 1974.`,
   121: `### Works Cited in this Episode:
 
 ‘CIMRM’ refers to M.J. Vermaseren. Corpus inscriptionum et monumentorum religionis Mithriacæ*. Martinus Nijhoff, The Hague, 1950-60. 2 vols.
@@ -4135,7 +4503,13 @@ See also:
 
 - Idem. *Planetary Gods and Planetary Orders in the Mysteries of Mithras*, volume 109 of Études préliminaires aux religions orientales dans l’empire romain. Brill, Leiden, 1988.
 
-- F.H. Colson. The Week: An Essay on the Origin an`,
+- F.H. Colson. The Week: An Essay on the Origin and Development of the Seven-Day Cycle. Cambridge, 1926.
+
+- Radcliffe G. Edmonds. Did the Mithraists Inhale? – A Technique for Theurgic Ascent in the Mithras Liturgy, the Chaldaean Oracles, and some Mithraic Frescoes. *Ancient World*, 32(1):10, 2001.
+
+- Dragana Mladenović. Astral Path to Soul Salvation in Late Antiquity? The Orientation of Two Late Roman Imperial Mausolea from Eastern Serbia. *American Journal of Archaeology*, 113(1):81–97, Jan. 2009.
+
+- R. Pettazzoni. The Monstrous Figure of Time in Mithraism. In *Essays in the History of Religions*, Numen Book Series, pages 180–92. Brill, Leiden, 1967.`,
   122: `### Works Cited in this Episode:
 
 ### Primary:
@@ -4208,7 +4582,7 @@ State University Press, University Park, PA, 1995.
 
 - Reinhold Merkelbach and Maria Totti. *Abrasax: Ausgewählte papyri religiösen und magischen Inhalts*. Westdeutscher Verlag, Opladen, Germany, 1990.
 
-- Marvin Meyer. The "Mithras Liturgy" as Mystery and Magic. In Christian H. Bull, Liv Ingeborg Lied, and John D. Tur`,
+- Marvin Meyer. The "Mithras Liturgy" as Mystery and Magic. In Christian H. Bull, Liv Ingeborg Lied, and John D. Turner, editors, *Mystery and Secrecy in the Nag Hammadi Collection and Other Ancient Literature: Ideas and Practices*, pages 447– 64. Brill, Leiden, 2012.`,
   123: `### Works Cited in this Episode:
 
 Our knowledge of Manichæism is largely based on a number of important manuscripts which have appeared in the last hundred years or so. By no means all the sources have been discovered yet, and when they have, edited yet, and when they have, edited properly. If you want to get seriously thorough, check out Samuel Lieu. Working Catalogue of Published Manichæan Texts. In Manichaeism in Central Asia and China*, volume 45 of Nag Hammadi and Manichaean Studies, pages 196–246. Brill, Leiden, 2020.
@@ -4251,7 +4625,43 @@ Idem,* Uygur Manichaean Texts, 3: Ecclesiastical Texts*, 2016
 
 ### Secondary:
 
-- Ibn al-Nadīm, Fihrist: The *Kitāb al-Fihrist* (‘Book of the Catalogue’) is a late tenth-century treasure-trove of all kinds of lore current in ‘Abbasid Baghdad, including a section on the Ṣābians (see our interview with Michael Noble), under which heading (section 9.1) the beliefs of the Manichæans are discussed. The standard edition is Flüge`,
+- Ibn al-Nadīm, Fihrist: The *Kitāb al-Fihrist* (‘Book of the Catalogue’) is a late tenth-century treasure-trove of all kinds of lore current in ‘Abbasid Baghdad, including a section on the Ṣābians (see our interview with Michael Noble), under which heading (section 9.1) the beliefs of the Manichæans are discussed. The standard edition is Flügel's (*Muḥammad b. Isḥāq al-Nadı̄m. Kitāb al-fihrist*. F.C.W. Vogel, Leipzig, 1871-1872. 2 vols.), and the standard English translation is Bayard Dodge's (*The Fihrist of al-Nadim: A Tenth-Century Survey of Muslim Culture*. Columbia University Press, New York, NY, 1970).
+
+- Iain Gardner 2020: see below.
+
+- Zsuzsanna Gulácsi. *Mediaeval Manichaean Book Art: A Codicological Study of Iranian and Turkic Illuminated Book Fragments from 8th–11th Century East Central Asia*. Number 57 in Nag Hammadi and Manichaean Studies. Brill, Leiden/Boston, MA, 2005.
+
+### Recommended Reading:
+
+The International Association of Manichæan Studies is a good place to start any search for up-to-date work on Manichæism; their book series is ridiculously-rich, and they put out a newsletter. Also of central interest:
+
+- Jason BeDuhn and Paul Mirecki, editors. *The Light and the Darkness: Studies in Manichaeism and its World*. Brill, Leiden/Boston, MA/Köln, 2001.
+
+- Jason D. BeDuhn. *The Manichaean Body in Discipline and Ritual.* The Johns Hopkins University Press, Baltimore, MD/London, 2000.
+
+- Jason D. BeDuhn, editor. *New Light on Manichæism: Papers from the Sixth International Congress on Manichæism, Organised by the International Association of Manichæan Studies*. Brill, Leiden/Boston, MA, 2009.
+
+- J. Kevin Coyle. *Manichaeism and its Legacy*. Number 69 in Nag Hammadi and Manichaean Studies. Brill, Leiden/Boston, MA, 2009.
+
+- April DeConick, Gregory Shaw, and John D. Turner, editors. *Practicing Gnosis: Ritual, Magic, Theurgy and Liturgy in Nag Hammadi, Manichaean and Other Ancient Literature. Essays in Honor of Birger A. Pearson*. Number 85 in Nag Hammadi and Manichaean Studies. Brill, Leiden, 2013.
+
+- Iain Gardner, editor. *The Kephalaia of the Teacher: The Edited Coptic Manichaean Texts in Translation with Commentary*. Number 37 in Nag Hammadi and Manichaean Studies. Brill, Leiden/New York, NY/Köln, 1995.
+
+- Iain Gardner.* The Founder of Manichaeism: Rethinking the Life of Mani*. Cambridge University Press, Cambridge, 2020.
+
+- Iain Gardner and Samuel Nan-Chiang Lieu. *Manichaean Texts from the Roman Empire.* Cambridge University Press, Cambridge, 2004 [contains a good sampling of the Medinet Madi and Kellis material, along with the Cologne Mani Codex and materials from Greek and Latin in English translation].
+
+- Iain Gardner, Jason BeDuhn, and Paul Dilley. *Mani at the Court of the Persian Kings: Studies on the Chester Beatty Kephalaia Codex*. Number 87 in Nag Hammadi and Manichaean Studies. Brill, Leiden/Boston, MA, 2015.
+
+- Manfred Hutter. Der Manichäismus. *Vom Iran in den Mittelmeerraum und über die Seidenstraße nach Südchina Reihe.* Number 11 in Standorte in Antike und Christentum (STAC). Anton Hiersemann Verlag, 2023.
+
+- Samuel Lieu. *Manichaeism in the Later Roman Empire and Medieval China*. Manchester University Press, Manchester, 1985.
+
+- Rea Matsangou. *The Manichaeans of the Roman East: Manichaeism in Greek Anti-Manichaica and Roman Imperial Legislation*. Brill, Leiden, 2023.
+
+- Paul Mirecki and Jason BeDuhn, editors. *Frontiers of Faith: The Christian Encounter with Manichaeism in the Acts of Archilaus*. Number 61 in Nag Hammadi and Manichaean Studies. Brill, Leiden/Boston, MA, 2007.
+
+- Madeleine Scopello. *Femme, Gnose et Manichéisme: De l’espace mythique au territoire du réel*. Number 53 in Nag Hammadi and Manichaean Studies. Brill, Leiden/Boston, MA, 2005.`,
   124: `### Works Cited in this Episode:
 
 ### Primary:
@@ -4335,7 +4745,19 @@ Generally useful:
 
 - Heinrich Dörrie, Jan-Hendrik Waszink, Willy Theiler, Pierre Hadot, Angelo Raffaele Sodano, Jean Pépin, and Richard Walzer. *Porphyre*. Number XII in Entretiens sur l’Antiquité classique. Foundation Hardt, Vandœuvres-Genèv, 1966.
 
-- Mark Edwards. Porphyrios. In Christoph Riedweg, Christoph Horn, and Dietmar Wyrwa, editors, *Philosophie der Kaiserzeit und der Spätantike*, pages 1327–49, 1426– 34. Sc`,
+- Mark Edwards. Porphyrios. In Christoph Riedweg, Christoph Horn, and Dietmar Wyrwa, editors, *Philosophie der Kaiserzeit und der Spätantike*, pages 1327–49, 1426– 34. Schwabe, Basel, 2018.
+
+- Richard Goulet et al. Porphyre de Tyr. In Richard Goulet, editor, *Dictionnaire des philosophes antiques*, pages 1289–1468 (entry 263). CNRS Éditions, Paris, 2012.
+
+- Aaron P. Johnson. *Religion and Identity in Porphyry of Tyre: The Limits of Hellenism in Late Antiquity*. The University Press, Cambridge, 2013.
+
+- George E. Karamanolis and Anne Sheppard. *Studies on Porphyry*. Institute of Classical Studies, University of London, London, 2007.
+
+- John J. O’Meara. *Porphyry’s *Philosophy from Oracles* in Eusebius’ *Præparatio Evangelica *and Augustine’s *Dialogues of Cassiciacum. Paris, 1969.
+
+- Andrew Smith. *Porphyry’s Place in the Neoplatonic Tradition: a Study in Post-Plotinian Neoplatonism*. Martinus Nijhoff, den Haag, 1974.
+
+- Marco Zambon. *Porphyre et le moyen-platonisme*. Vrin, Paris, 2002.`,
   126: `### Works Cited in this Episode:
 
 ### Primary:
@@ -4394,9 +4816,7 @@ Porphyry: most of the works cited below are from Andrew Smith's Teubner edition 
 
 - Andrew Smith. *Porphyry’s Place in the Neoplatonic Tradition: a Study in Post-Plotinian Neoplatonism*. Martinus Nijhoff, den Haag, 1974.
 
-- Irini-Fotini Viltanioti. Divine Powers and Cult Statues in Porphyry of Tyre. In A. Marmodoro and I-F. Viltanioti, editors, *Divine Powers in Late Antiquity*, pages 61–74. Oxford University Press, Oxford, 2017.
-
-### Th`,
+- Irini-Fotini Viltanioti. Divine Powers and Cult Statues in Porphyry of Tyre. In A. Marmodoro and I-F. Viltanioti, editors, *Divine Powers in Late Antiquity*, pages 61–74. Oxford University Press, Oxford, 2017.`,
   127: `### Works Cited in this Episode:
 
 ### Primary:
@@ -4629,7 +5049,71 @@ Porphyry:
 
 - We obtain the *ochēma*, which is astral, during the descent (*Sent*. 32; Procl. *In Rem Publ*. II, p. 161).
 
-- We also obtain multiple bodies, which seem to be the same thing as the *ochēma*. There are several grades of body we can get; we need not descend all the way to the lowest (See *Sent*. 29.22-31. Cf. Porph. *apud* Proclus *In T`,
+- We also obtain multiple bodies, which seem to be the same thing as the *ochēma*. There are several grades of body we can get; we need not descend all the way to the lowest (See *Sent*. 29.22-31. Cf. Porph. *apud* Proclus *In Tim.* III, p. 234, 18-32, where the vehicle becomes progressively more material as it descends, which is probably the increasing moisture found in *De antro* 11.8-12.1 and *Sent*. 29.14.22).
+
+- The astral potencies have major effects on the *ochēma* (271F 68-71 Smith, *On What is Up to Us*).
+
+- The *ochēma* can survive the death of the material body – indeed, it is through it that we suffer posthumous punishments and through it that the soul can re-ascend (*Sent*. c. 32; Philoponus *In de anima* I) – but is eventually recycled into the universe (see Iamb. *de An*. §§10, 13 and 37; Proclus *In Tim.* 3.234,18-26).
+
+- The rainbow-coloured pillar in the Myth of Er (Pl. *R*. X 616b-c) is the *ochēma* of the Soul-of-All or World-Soul: 185aF Smith = Simplicius *in Phys.* (corell. de loco) 615,32-35.
+
+Macrobius: *luminosi corporis amictus*: *De somn*. I.12.13.
+
+### Secondary:
+
+- John Dillon shows that subtle-body ideas were around already in the second century: John Dillon. *Iamblichi Chalcidensis in Platonis dialogos commentariorum fragmenta*. Brill, Leiden, 1973, pp. 371-2.
+
+- Dodds on the Poseidonian origins of Plotinus' astral body: 1963 (see below) p. 366.
+
+- Kissling 1922 (see below) 318: ‘The theory of the ὄχημα-πνεῦμα, as met with in the Platonic writers, represents the reconciliation of Plato and Aristotle on a subject which the former never taught a latter was incapable of defining.’ Scholarship has mostly repeated this formula (E.g. Dodds 1963, 315-18; Schibli 1993, 163-5). Ibid. 322: It seems that the identification of Plato's *ochēma* and Aristotle's *pneuma* is posterior to Plotinus. Ibid. 318: ‘the melting-pot of Neo-Platonism’.
+
+### Recommended Reading:
+
+### Relevant to Specific Points Raised in the Episode:
+
+- H. J. Blumenthal. Neoplatonic Interpretations of Aristotle on "Phantasia". *Review of Metaphysics*, 31(2):242–57, 1977.
+
+- Anne Sheppard. Phantasia and Mental Images: Neoplatonist Interpretations of De Anima 3.3. In *Oxford Studies in Ancient Philosophy Supplement*, pages 165–74. Oxford University Press, Oxford, 1991.
+
+- Gerard Watson. *Phantasia in Classical Thought*. Officina Typographica, Galway, 1988.
+
+- G. Verbeke. *L’évolution de la doctrine du pneuma du Stoïcisme à S. Augustin*. Desclée de Brouwer, Paris, 1945, esp. pp. 359-85 on the *ochēma*.
+
+### On the Subtle Body in Antiquity Generally:
+
+- Crystal Addey. In the Light of the Sphere: The ’Vehicle of the Soul’ and Subtle-Body Practices in Neoplatonism. In Geoffrey Samuel and Jay Johnston, editors, *Religion and the Subtle Body in Asia and the West: Between Mind and Body*, pages 149–67. Routledge, London, 2013.
+
+- N. Aujoulat. De la phantasia et du pneuma stoı̈ciens, d’après Sextus Empiricus, au corps lumineux néo-platonicien (Synésios de Cyrène et Hiéroclés d’Alexandrie). *Pallas*, 34:123–46, 1988.
+
+- Ioan Petru Culianu. *Psychanodia I. A Survey of the Evidence Concerning the Ascension of the Soul and its Relevance*, volume 99 of Études préliminaires aux religions orientales dans l’empire romain. Brill, Leiden, 1983.
+
+- Idem.* Out of this World: Otherwordly Journeys from Gilgamesh to Albert Einstein*. Shambhala, Boston, MA/London, 1991.
+
+- W. Deuse. *Untersuchungen zur mittelplatonischen und neuplatonischen Seelenlehre*. Frank Steiner Verlag, Wiesbaden, 1983, esp. pp. 218-27.
+
+- Maria Di Pasquale Barbanti.* Ochema-pneuma e phantasia nel Neoplatonismo: aspetti psicologici e prospettive religiose.* CUECM, Catania, 1998.
+
+- E. R. Dodds. *Proclus: The Elements of Theology.* Clarendon Press, Oxford, 1963, pp. 315–18.
+
+- John Finamore.* Iamblichus and the Theory of the Vehicle of the Soul*. Scholars Press, Chico, CA, 1985.
+
+- Jens Halfwassen. Seelenwagen. *Historisches Wörterbuch der Philosophie*, 9:111–17, 1995.
+
+- Robert Christian Kissling. The OXHMA-ΠΝΕΥΜΑ of the Neo-Platonists and the *De insomniis* of Synesius of Cyrene. *American Journal of Philology*, 43(4):318–30, 1922.
+
+- Hans Lewy. *Chaldaean Oracles and Theurgy*. Études Augustiniennes, Paris, 1978, pp. 449-56.
+
+- J.J. Poortman. *Ochêma. Geschiedenis en zin van het hylisch pluralisme, VI-A.* van Gorcum, Assen, 1967.
+
+- H. S. Schibli. Xenocrates’ Daemons and the Irrational Soul. *Classical Quarterly*, 43: 143–67, 1993.
+
+- Andrew Smith. *Porphyry’s Place in the Neoplatonic Tradition: a Study in Post-Plotinian Neoplatonism*. Martinus Nijhoff, den Haag, 1974, pp. 152–8.
+
+- M. Stéphane Toulouse.* Les théories du véhicule de l’âme dans le néoplatonisme: genèse et évolution d’une doctrine de la médiation entre l’âme et le corps*. PhD thesis, École pratique des hautes études, 2001.
+
+- Idem. Le véhicule de l’âme chez Galien et le pséudo-Plutarque. Les linéaments physiologiques et eschatologiques d’une doctrine d’un corps intermédiaire. *Philosophie antique*, 2:145–68, 2002.
+
+- J. Trouillard. Réflexions sur l’Ochēma dans les ‘Élements de Théologie’ de Proclus. *REG*, LXX:102–107, 1957.`,
   132: `### Works Cited in this Episode:
 
 ### Primary:
@@ -4755,7 +5239,47 @@ Origen: The αὐγοειδὲς σῶμα responsible for apparitions: *Cels*. 
 
 - Lewy 1978 (see below) on the Platonists' citations of the *Oracles*: pp. 443 ff.
 
-- Georg Luck. Theurgy and Forms of Worship in Neoplatonism. In Jacob Neusner, Ernest S. Frerichs, and Paul V.M. Flesher, editors, *Religio`,
+- Georg Luck. Theurgy and Forms of Worship in Neoplatonism. In Jacob Neusner, Ernest S. Frerichs, and Paul V.M. Flesher, editors, *Religion, Science, and Magic: In Concert and in Conflict*, pages 185–225. Oxford University Press, New York, NY, 1989., we cite p. 185.
+
+- Marshall 2016 (see below), we cite p. 137.
+
+- Tanaseanu-Döbler 2013 (see below): we cite pp. 15-16.
+
+### Recommended Reading:
+
+For a literature-review and general orientation, see Sergio Knipe. Recycling the Refuse Heap of Magic: Scholarly Approaches to Theurgy Since 1963. In Peter Brown and Rita Lizzi Testa, editors, *Pagans and Christians in the Roman Empire: The Breaking of a Dialogue (IVth – Vth Century AD)*, pages 163–70. LIT Verlag, Berlin, 2011.
+
+Also of interest:
+
+- Crystal Addey. *Divination and Theurgy in Neoplatonism: Oracles of the Gods.* Ashgate, Dorchester, 2014.
+
+- E.R. Dodds. Theurgy and its Relationship to Neoplatonism. *Journal of Roman Studies*, 37(1+2):55–69, 1947.
+
+- John F. Finamore. Plotinus and Iamblichus on Magic and Theurgy. *Dionysius*, 17:83–94, 1999.
+
+- Alvaro Fernández-Fernández. *La teúrgia de los Oráculos caldeos: cuestiones de léxico y de contexto histórico*. PhD thesis, Universidad de Granada, 2011.
+
+- Sarah Iles Johnston. Rising to the Occasion: Theurgical Ascent in its Cultural Milieu. In P. Schäfer and H.G. Kippenberg, editors, *Envisioning Magic: A Princeton Seminar and Symposium*, pages 165–94. Brill, Leiden, 1997.
+
+- Sarah Iles Johnston. Animating statues: A Case Study in Ritual. *Arethusa*, 41:445–77, 2008.
+
+- Idem. Magic and Theurgy. In David Frankfurter, editor, *Guide to the Study of Ancient Magic*, pages 694–719. Brill, Leiden, 2019.
+
+- Hans Lewy. *Chaldaean Oracles and Theurgy.* Études Augustiniennes, Paris, 1978.
+
+- Ruth D. Majercik. *The Chaldean Oracles: Text, translation, and commentary.* Brill, Leiden, 1989.
+
+- Nicholas Marshall.* The Meaning of Theurgy: A Minimalistic Approach to Theurgy and Previous Understandings of the Term in the Study of Late Antique Religion*. PhD thesis, Aarhus Universitet, 2016.
+
+- Helmut Seng and Michel Tardieu, editors. *Die chaldaischen Orakel*. Universitätsverlag, Heidelberg, 2010.
+
+- Gregory Shaw. *Theurgy and the Soul: The Neoplatonism of Iamblichus.* Pennsylvania State University Press, University Park, PA, 1995.
+
+- Andrew Smith. *Porphyry’s Place in the Neoplatonic Tradition: a Study in Post-Plotinian Neoplatonism*. Martinus Nijhoff, den Haag, 1974.
+
+- Ilinca Tanaseanu-Döbler.* Theurgy in Late Antiquity: The Invention of a Ritual Tradition*. Vandenhoeck & Ruprecht, Göttingen, Germany, 2013.
+
+- Carine Van Liefferinge. *La théurgie: Des “Oracles chaldaïques” à Proclus*. Centre International d’Étude de la Religion Grecque Antique, Liège, Belgium, 1999.`,
   134: `### Works Cited in this Episode:
 
 ### Primary:
@@ -5360,7 +5884,9 @@ Analytic studies can be found in e.g:
 
 - Jens-Heinrich Niggemeyer, *Beschwörungsformeln aus dem “Buch der Geheimnisse” (Sefär ha-Razim): Zur Topologie der magischen Rede*, Judäistische Texte und Studien 3 (Hildesheim: Olms, 1975).
 
-- Naomi Janowitz,* Icons of Power: Ritual Practices in Late Antiquity, Magic in Hist`,
+- Naomi Janowitz,* Icons of Power: Ritual Practices in Late Antiquity, Magic in History* (University Park, PA: Penn State University Press, 2002), pp. 85–108.
+
+- Philip S. Alexander, “Sefer ha-Razim and the Problem of Black Magic in Early Judaism,” in *Magic in the Biblical World*, 170–190.`,
   147: `### Works Cited in this Episode:
 
 - Brill's Magical and Religious Literature of Late Antiquity (MRLA) series can be checked out here.
@@ -5624,7 +6150,7 @@ Smith 1978 (see below), we quote p. 105.
 
 - Morton Smith. *Jesus the Magician*. Harper & Row, San Francisco, CA, 1978 [a beautifully-written and accessible introduction for the ancient accusation that Jesus was a *goēs*, and an analysis of the Gospels and other early-Christian documents in terms of defence against this accusation].
 
-- E.G. Weltin. The Concept of* ex-opere-operato* Efficacy in the Fathers as Evidence of Magic in Early`,
+- E.G. Weltin. The Concept of* ex-opere-operato* Efficacy in the Fathers as Evidence of Magic in Early Christianity. *Greek, Roman and Byzantine Studies*, 3:74–100, 1960.`,
   153: `### Works Cited in this Episode:
 
 ### Primary:
@@ -5681,7 +6207,7 @@ Henk S. Versnel. Beyond Cursing: The Appeal to Justice in Judicial Prayers. In C
 
 ### Recommended Reading (and Listening):
 
-The Coptic Magic Project hosts ample online bibliographical resources, to which we refer the interested listener. The project also has an occasional podcast devoted to conversations between eminent scholars, which SHWEP`,
+The Coptic Magic Project hosts ample online bibliographical resources, to which we refer the interested listener. The project also has an occasional podcast devoted to conversations between eminent scholars, which SHWEP listeners will find to be of a ridiculously high-quality.`,
   154: `### Works Cited in this Episode:
 
 Paul Pasquesi cites a very wide range of literature in this interview; rather than mentioning each instance here, we refer the listener to the Recommended Reading below, where the most accessible translations, primary critical editions, and so forth for our Syrian friends have been gathered. As for the other stuff we talked about:
@@ -5744,7 +6270,53 @@ The Third & Fifth Parts:
 
 - *Mystical Treatises by Joseph Hazzaya (& ‘Abdisho‘ Hazzaya)* Alphonse Mingana, Early Christian Mystics (Woodbrooke Studies VII; Cambridge: Heffer & Sons, 1934), ET: 178—184, 148—175 (respectively), ST: 256—261, 262—281 (respectively).
 
-- *Joseph Hazzaya On Providence* text, t`,
+- *Joseph Hazzaya On Providence* text, translation, introduction Nestor Kavvadas (TSEC VIII; Leiden: Brill, 2016).
+
+### *Liber Graduum*
+
+- Kitchen, Robert A., *The Syriac Book of Steps. Fascicle 1*. TCLA 12; Piscataway, NJ: Gorgias Press, 2009.
+
+- ___ and Martien F.G. Parmentier, *The Syriac Book of Steps 2-3. Fascicles 2-3.* TCLA 12b-c; Piscataway, NJ: Gorgias Press, 2011.
+
+### Macarius-Symeon
+
+I:
+
+- Berthold, Heinz. *Makarios/Symeon, Reden und Briefe. Die Sammlung I des Vaticanus Greacus 694 (B)*, 2 vols. GCS 55-56; Berlin, 1973.
+
+- Fitschen, Klaus., *Pseudo-Makarios, Reden und Briefe: Eingeleitet, Übersetzt Und Mit Anmerkungen Verscen* (BGL 52; Stuttgart: Anton Hiersemann, 2000).
+
+II:
+
+- Dörries, Hermann, et al., *Die 50 Geistlichen Homilien Des Makarios.* PTS 4; Berlin, 1964.
+
+- Maloney, George A., S.J. *Pseudo-Macarius: The Fifty Spiritual Homilies and the Great Letter.* Mahwah, NY: Paulist Press, 1992.
+
+- Mason, A.J. *Fifty Spiritual Homilies of St. Macarius the Egyptian.* London, 1925.
+
+III:
+
+- Aleo, Francesco. *Pseudo-Macario, Discoursi: Introduzione, traduzione, note e indici a cura*. CDTP 206. Roma: Città Nuova, 2009.
+
+- Desprez, Vincent.* Pseudo-Macaire: Œvres Spirituelles, I: Homélies propes à la Collection III*. SC 275; Paris, 1980.
+
+- Klostermann, Erich and Heinz Berthold, *Neue Homilien des Makarios/Symeon, I: Aus Typus III.* TU 72; Berlin, 1961.
+
+*Epistula Magna:*
+
+- Staats, Reinhart.* Makarios-Symeon: Epistola Magna. Eine messalianische Mönchsregel und ihre Umschrift in Gregors von Nyssa “De Insitituto Christiano.”* Göttingen, 1984.
+
+### Theodoret of Cyrrhus
+
+- Canivet, P. and A. Leroy-Molinghen, *Historia Religiosa Sources Chrétiennes*; Paris: Éditions du Cerf, 1977-79.
+
+- Price, R.M. *A History of the Monks of Syria*. Cistercian Studies 88; Trappist, KY: Cistercian Publications, 1985.
+
+### Beh Ishoʿ (8th c.)
+
+Discourses
+
+- Text / Translation: Blanchard, M.J. 2011. ‘The Syriac Discourses of Beh Ishoʿ Kamulaya’. In: R.D. Young & M.J. Blanchard (eds),* To Train His Soul in Books: Syriac Asceticism in Early Christianity*. Washington, DC: Catholic University of America Press, pp. 176–188 [contains ET of some fragments based on Washington, Institute of Christian Oriental Research, Syriac 18].`,
   155: `### Works Cited in this Episode:
 
 Drower, E.S., Mandaeans of Iraq and Iran* (Oxford: Oxford University Press, 1937).
@@ -5819,7 +6391,21 @@ Burtea, B., ed. and trans., *Haran Gauaita* (Wiesbaden: Harrassowitz, 2020).
 
 — *„Zihrun, das verborgene Geheimnis“: Eine mandäische priesterliche Rolle. Edition, Übersetzung und Kommentierung der Handschrift DC 27 Zihrun Raza Kasia mit einer CD-ROM der Handschrift* (Wiesbaden: Harrassowitz, 2008).
 
-Drower, E.S., ed. and trans., *The Thousand and Twelve Questions (alf trisar šuialia): a Mandaean`,
+Drower, E.S., ed. and trans., *The Thousand and Twelve Questions (alf trisar šuialia): a Mandaean Text* (Berlin: Akademie, 1960).
+
+— *Canonical Prayerbook of the Mandaeans* (Leiden: E.J. Brill, 1959).
+
+— *The Haran Gawaita and the Baptism of Hibil-Ziwa* (Città del Vaticano: Biblioteca Apostolica Vaticana, 1953).
+
+— *Diwan Abatur or Progress through the Purgatories* (Città del Vaticano: Biblioteca Apostolica Vaticana, 1950).
+
+— *The Book of the Zodiac (Sfar Malwašia)* D.C. 31 (London: Royal Asiatic Society, 1949).
+
+Häberl, C.G., & McGrath, J., eds and transs, *The Mandaean Book of John: Critical Edition, Translation, and Commentary* (Berlin & Boston: Walter de Gruyter, 2020).
+
+Lidzbarski, M., ed. and trans., *Ginzā: das große Buch der Mandäer* (Göttingen: Vandenhoeck & Ruprecht, 1925).
+
+— *Das Johannesbuch der Mandäer* (Vol. 2; Berlin: de Gruyter, 1915).`,
   156: `### Works Cited in this Episode:
 
 ### Primary:
@@ -5963,7 +6549,41 @@ K. A. Fraser. ‘Zosimos of Panopolis and the Book of Enoch: Alchemy as Forbidde
 
 Idem. ‘Baptised in Gnosis: The spiritual alchemy of Zosimos of Panopolis’. *Dionysus*, 25 (2007): 33–54
 
-A. Giumlia-Mair. ‘Zosimos the Alchemis`,
+A. Giumlia-Mair. ‘Zosimos the Alchemist: Manuscript 6.29, Cambridge, metallurgical interpretation.’ In: A. Giumlia-Mair (ed.), *XV Congresso Internazionale sui Bronzi Antichi, Produzione e Tecnologia*. Montagnac: Éditions Monique Mergoil, 2002, pp. 317–323
+
+Sh. Grimes. *Becoming Gold. Zosimos of Panopolis and the Alchemical Arts in Roman Egypt*. Auckland: Rubedo Press, 2018
+
+S. Knipe. ‘Sacrifice and self-transformation in the alchemical writings of Zosimus of Panopolis.’ In: Ch. Kelly, R. Flower, M. S. Williams (eds), *Unclassical Traditions. Vol. 2: Perspectives from East and West in Late Antiquity*. Cambridge, Cambridge University Press, 2011, pp. 59–69
+
+J. Letrouit. ‘Chronologie des alchimistes grecs.’ In: D. Kahn, S. Matton (eds.), *Alchimie. Art, histoire et mythes.* Paris – Milano: S.É.H.A/Arché, 1995, pp. 9–93
+
+J. Lindsay.* The Origins of Alchemy in Graeco-Roman Egypt*. London: Frederick Muller Ltd., 1970, pp. 323–342
+
+M. Michèle. ‘Zosimos of Panopolis.’ In: N. Koertge (ed.), *New Dictionary of Scientific Biography*. Detroit: Charles Scribner’s Sons, 2008, pp. 405–408
+
+B. Hallum. ‘*Zosimus Arabus. The Reception of Zosimos of Panopolis in the Arabic/Islamic World.*’ Ph.D. diss.: Warburg Institute, 2008.
+
+Idem. ‘The Tome of Images: An Arabic Compilation of Texts by Zosimos of Panopolis and a Source for the *Turba Philosophorum*.’ *Ambix*, 56 (2009): 76–88
+
+W. J. Hanegraaff. *Hermetic Spirituality and the Historical Imagination: Altered States of Knowledge in Late Antiquity.* Cambridge: Cambridge University Press, 2022, pp. 77–100
+
+E. C. D. Hunter. ‘Beautiful Black Bronzes: Zosimos’ Treatises in Cam. Mm. 6.29.’ In: A. Giumlia-Mair (ed.), *XV Congresso Internazionale sui Bronzi Antichi, Produzione e Tecnologia*. Montagnac: Éditions Monique Mergoil, 2002, pp. 665–660.
+
+M. Martelli. ‘L’alchimie en syriaque et l’oeuvre de Zosime.’ In: É. Villey (ed.), *Les sciences en Syriaque.* Paris: Geuthner, 2014, pp. 191–214
+
+Idem. ‘The Alchemical Art of Dyeing: The Fourfold Division of Alchemy and the Enochian Tradition.’ In: S. Dupré (ed.), *Laboratories of Art. Alchemy and Art Technology from Antiquity to the 18th Century.* New York: Springer, 2014, pp. 1–22
+
+Idem. ‘Alchemy, Medicine and Religion: Zosimus of Panopolis and the Egyptian Priests.’ *Religion in the Roman Empire*, 3 (2017): 202–220
+
+L. Principe. *The Secrets of Alchemy*. Chicago: The Chicago University Press, 2013, pp. 15–24
+
+A. Rinotas. 2021. ‘Spiritual and Material Conversion in the Alchemical Work of Zosimus of Panopolis.’ *Religions*, 12 (2021): 1–13
+
+D. Stolzenberg. ‘Unpropitious Tinctures. Alchemy, Astrology and Gnosis According to Zosimos of Panopolis.’* Archives Internationales d’Histoire des Sciences*, 142 (1999): 3–31.
+
+C. Viano. ‘Une substance, deux natures: les alchimistes grecs et le Principe de la transmutation’. *Chôra: Revue d’études anciennes et médiévales*, 13 (2015): 309–325 (special issue: Dualismes. Doctrines Religieuses et Traditions Philosophiques, edited by F. Jourdan, A. Vasiliu)
+
+Idem. ‘Les alchimistes gréco-alexandrins et le Timée de Platon.’ In: C. Viano (ed.), *L’alchimie et ses racines philosophiques. La tradition grecque et la tradition arabe.* Paris: Vrin, 2005, pp. 91–111`,
   158: `### Works Cited in this Episode:
 
 ### Primary:
@@ -6028,7 +6648,19 @@ Idem, ‘Neilos (ca 250-300 ce)’, *Encyclopedia of Ancient Natural Scientists:
 
 Idem, ‘Theosebeia (ca 250-300 ce)’, *Encyclopedia of Ancient Natural Scientists: The Greek Tradition and Its Many Heirs*, ed. P.T. Keyser & G.L. Irby-Massie (London: Routledge, 2008), pp. 1810–11.
 
-Idem, *Zosimu`,
+Idem, *Zosimus Arabus. The Reception of Zosimos of Panopolis in the Arabic/Islamic World* (unpublished Ph.D. thesis, University of London, 2008).
+
+Idem, ‘Zōsimos of Panopolis (ca 250-300 ce)’, *Encyclopedia of Ancient Natural Scientists: The Greek Tradition and Its Many Heirs*, ed. P.T. Keyser & G.L. Irby-Massie (London: Routledge, 2008), pp. 1915–18.
+
+Idel, Moshe, 'The Origin of Alchemy According to Zosimus and a Hebrew Parallel', *Revue des études juives* 145.1–2 (1986), pp. 117–24.
+
+Stolzenberg, Daniel, ‘Unpropitious Tinctures: Alchemy, Astrology and Gnosis According to Zosimos of Panopolis’, *Archives Internationales d’Histoire des Sciences* 49 (1999), pp. 3–31.
+
+### Gallery:
+
+*‘Image of a golden man with a black head and red hands, hanging from the legs of a man with two wings who is flying away with him’ (صورة رجل مذهب أسود الرأس أحمر اليدين متعلق برجلي رجل عليه جناحان يطير به). İstanbul Arkeoloji Müzeleri Kütüphanesi, MS 1574, fols 102r (description) and 102v (image).
+'Image of Theosebeia holding with her right hand the forelock of a man in clothes of red with sheets of gold them, and with her left hand on the wing of a man with two wings on whose head is a crescent moon embracing a young man in clothes of green with sheets of gold on them, who is wrapped between his legs. And an image of Theosebeia carrying two men, one of whom has a Sun and the other has a Moon. And an image of a lake in which is water the colour of the sky.' (صورة يتوسانية آخذة بيدها اليمنى بناصية رجل عليه ثياب حمر عليها صفائح الذهب وبيدها اليسرى على جناح رجل له جناحان على رأسه هلال محتضنًا غلامًا عليه ثياب خضر عليها صفائح ذهب ملتفًا بين رجليه وصورة يتوسانية محتملة رجلين إحداهما على رأسه شمس والآخر على رأسه قمر وصورة بحيرة فيها ماء لون السّماء). İstanbul Arkeoloji Müzeleri Kütüphanesi, MS 1574, fols 128r (description) and 128v (image).
+‘Zosimus and Theosebeia standing, each of them pointing towards the other as we described at the beginning of the Tome (i.e. Muṣḥaf 7). And an image of three men in one body on whom are wings’ (زوسم ويتوسانية قائمين يشير احدهما إلى الآخر على ما وصفنا في رأس هذا المصحف وصورة ثلثة رجال في بدن واحد عليهم أجنحة). İstanbul Arkeoloji Müzeleri Kütüphanesi, MS 1574, fols 139v (description) and 140r (image).`,
   159: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7008,7 +7640,21 @@ Angela Longo. Plutarch of Athens. In Lloyd P. Gerson, editor, *The Cambridge His
 
 Idem. Syrianus. In Lloyd P. Gerson, editor, *The Cambridge History of Philosophy in Late Antiquity, Vol. II*, pages 616-29. The University Press, Cambridge, 2010b.
 
-Helen Saradi. Late Paganism and Christianisation in Greece. In Luke Lavan and Michael Mu`,
+Helen Saradi. Late Paganism and Christianisation in Greece. In Luke Lavan and Michael Mulryan, editors, *The Archæology of Late Antique ‘Paganism’*, pages 263-309. Brill, Leiden/Boston, MA, 2011 [for information on the ‘House of Proclus’ at Athens].
+
+D.P. Taormina. *Plutarco di Atene. L'uno, l'anima, le forme. Saggio introduttivo, fonti, traduzione e commento*. Catania, 1989.
+
+Edward J. Watts. *City and School in Late Antique Athens and Alexandria.* University of California Press, Berkeley/Los Angeles, CA/London, 2006.
+
+### Syrianus, Useful Primary Bibliography
+
+John Dillon and Dominic O'Meara, editors. *Syrianus: On Aristotle Metaphysics 3-4*. London, 2006.
+
+*Idem*, editors. *Syrianus: On Aristotle Metaphysics 13-14*. London, 2008.
+
+W. Kroll and G. Reimer, editors. *Syrianus, In Aristotelis \`Metaphysica' commentaria*. Berlin, 1902.
+
+H. Usener and G. Reimer, editors. *Syrianus, In Aristotelis \`Metaphysica' commentari*a. Berlin, 1870.`,
   184: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7445,7 +8091,19 @@ Dominic J. O'Meara. Geometry and the Divine in Proclus. In T. Koetsier and L. Be
 
 ### Recommended Reading:
 
-Listeners interested in the Hagia Sophia in her more exoteric dimensions might wish to consult the lavishly-illustrated scholarly coffee-table book Rowland J. Mainstone. *Hagia Sophia: Architecture, Structure, and Liturgy of Justinian's Great Church*. Thames & Hudson, London, 1988; Mango 1986 (cited above); the essays collected at Robert Mark and Ahmet Cakmak, editors. *Hagia Sophia from the Age of Justinian to the Present*. The University Press, Cambridge, 1992; there are many other fine studies from art-historical, architectural, and other historical perspectives. Check out the Dumbarton Oaks Hagia Sophia resources page here. This interview with`,
+Listeners interested in the Hagia Sophia in her more exoteric dimensions might wish to consult the lavishly-illustrated scholarly coffee-table book Rowland J. Mainstone. *Hagia Sophia: Architecture, Structure, and Liturgy of Justinian's Great Church*. Thames & Hudson, London, 1988; Mango 1986 (cited above); the essays collected at Robert Mark and Ahmet Cakmak, editors. *Hagia Sophia from the Age of Justinian to the Present*. The University Press, Cambridge, 1992; there are many other fine studies from art-historical, architectural, and other historical perspectives. Check out the Dumbarton Oaks Hagia Sophia resources page here. This interview with Bob Ousterhout on Anthony Kaldellis' delicious* Byzantium and Friends* podcast explores some of the many ideological roles the Hag has played down the centuries.
+
+For contemporary and later East-Roman appreciations of the church, see Gilbert Dagron. *Constantinople imaginaire. Études sur le recueil des Patria.* Gallimard, Paris, 1984; Cyril Mango. Byzantine Writers on the Fabric of Hagia Sophia. In Robert Mark and Ahmet Cakmak, editors, *Hagia Sophia from the Age of Justinian to the Present*, pages 41-56. The University Press, Cambridge, 1992.
+
+For the construction of Hagia Sophia *vis à vis* acoustics, light, and other *sensoria*, see e.g. Nadine Schibille. Astronomical and Optical Principles in the Architecture of Hagia Sophia in Constantinople. *Science in Context*, 22(1):27-46, March 2009; Bissera Pentcheva. Hagia Sophia and Multisensory Aesthetics. *Gesta*, 50:93-111, 2011 and Idem, *Hagia Sophia: Sound, Space, and Spirit in Byzantium* (Pennsylvania State University Press 2017). There is also an interview with Pentcheva on the sensory space of the Hag, which can be found here on the superb *Byzantium and Friends* podcast.
+
+This open letter from the International Association of Byzantine Studies to the Turkish authorities has some interesting things to say about the current religio-political-art-historical situation of Hagia Sophia.
+
+### For various esoteric Hagia Sophias, see this document:
+
+SHWEP Episode 192 Recommended Reading
+
+*`,
   193: `### Works Cited in this Episode:
 
 ### Primary:
@@ -7679,7 +8337,7 @@ The Pseudo-Dionysios:
 
 - *Theourgia* in Pseudo-D: EH 436C 41, 440B 27, 440C 29, 441 D 46, 445BC 22 & 28; as the incarnation: EH 429C 38 ff; 432B 18 & 22; 441C 34 & 39.
 
-- Epistle 9 on esotericism: *passim*, really, but see especially 1104B, from which we quote.
+- *Epistle 9* on esotericism: *passim*, really, but see especially 1104B, from which we quote.
 
 - Ascent into the hyperineffable: DN 592C-593A.
 
@@ -7857,8 +8515,6 @@ Al-Tustari's *tafsīr*: We cite Annabel Keeler and Ali Keeler, editors. *Tafsir 
 
 Qur'ān:
 
-- Our recitation can be found here. Thanks to the reciter.
-
 - *Mukamāt* and *Mutashabihāt*: Q 3:7.
 
 - The story of Adam's creation, the angels' reaction, and Iblīs' rebellion: *Sūrat al-Baqarah* (2:30–34); *Sūrat al-Aʿrāf* (7:11–18); *Sūrat al-Ḥijr* (15:28–44); *Sūrat al-Isrāʾ* (17:61–65);* Sūrat Ṣād* (38:71–85).
@@ -7871,9 +8527,7 @@ Qur'ān:
 
 Thomas Bauer. *A Culture of Ambiguity: An Alternative History of Islam*. Columbia University Press, New York, NY, 2021.
 
-Michael A. Sells. *Approaching the Qur'an: The Early Revelations.* White Cloud Press, Ashland, OR, 1999; we cite the translations of *Sūrah al-Qadr*, p. 100 [and the *abjād* value of the letter *qāf* is 100; what the heck is going on with all these correspondences??? If you do this job, get ready for the Book and the World to start blending in weird ways].
-
-### Recommended Reading to Follow`,
+Michael A. Sells. *Approaching the Qur'an: The Early Revelations.* White Cloud Press, Ashland, OR, 1999; we cite the translations of *Sūrah al-Qadr*, p. 100 [and the *abjād* value of the letter *qāf* is 100; what the heck is going on with all these correspondences? If you do this job, get ready for the Book and the World to start blending in weird ways].`,
   205: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8070,167 +8724,157 @@ Our special episode on the talismanic Constantinople can be listened to here, fo
 We also cite Marcelin Berthelot and Ch.-Em. Ruelle, editors. *Collection des Anciens Alchimistes Grecs, texte et traduction.* Georges Steinheil, Paris, 1883-8.
 
 ### For Recommended Reading, see notes to Part I`,
-  216: `### Works Cited in this Episode:
+  215: `### Works Cited in this Episode:
 
 ### Primary:
 
-Apuleius: Zatchlas the Egyptian priest raises a man from the dead: *Metamorph*. II.28. Tale of the miller killed by a ghost: *Metamorph*. IX 29-31.
+*Marcianus Graecus* 299, the main alchemical compilation under discussion in this episode, is available online! You can find it here and browse its wonders for yourself in digital form. *Pinakes*, the online database of Greek manuscripts, gives a breakdown of the \`table of contents' here.
 
-Church fathers reporting accusations that Jesus was a sorcerer: Eusebius (*Dem. ev*. 3.6), Arnobius of Sicca (*Adv. nat.* 1.43), Lactantius (*Inst*. 4.15), Augustine (*Cons*. 1.10.15; *Faust*. 29), Athanasius of Alexandria (*Inc*. 48).
+*Parisinus Graecus* 2327, another important compilation, can be accessed in digitised form here.
 
-New Testament:
+The *Chronikon Paschale* on Herakleios’ new, debased silver currency:
 
-- From Aune 1980 (see below), pp. 1523-4: ‘The miracle tradition of the gospels contains accounts of six exorcisms (The demoniac in the synagogue: Mk 1:23-27; Lk 4:33-36; The Gerasene Demoniac Mk. 5:1-20; Mt. 8;28-34, Lk. 8:26-39; the Daughter of the Syrophoenician woman: Mk. 7:24-30; Mt. 15:21-28; the ‘Epileptic’ Boy: Mk. 9:14-29; Mt. 17:14-21; Lk. 9:27-43; The Dumb Demoniac Mt. 9:32-34; the Blind and Dumb Demoniac: Mt. 12:22-23; Lk. 11:15), seventeen healings (Peter's mother-in-law: Mk. 1:29-31; Mt. 8:14-15; Lk. 4:38-39; the Leper: Mk. 1:40; Mt. 8:1-4; Lk. 5:12-16); the paralytic (Mk. 2:1-12; Mt. 9:1-8; Lk. 5:17-26); the man with the withered hand (Mk 3:1-6; Mt. 12:9-14; Lk. 6:6-11); the daughter of Jairus (Mk. 5:21-43; Mt. 9:18-26; Lk. 8:40-56); the deaf-mute (Mk. 7:31-36); the blind man near Bethsaida (Mk. 8:22-26); blind Bartimæus (Mk. 10:46-52; Mt. 9:27-34; Lk. 18:35-43; the young man at Nain (Lk. 7:11-17); the bent woman (Lk. 13:10-17); the ten lepers (Lk. 17:11-19); the man with dropsy (Lk. 14:1-6); the paralytic (Jn 5:1-9); the raising of Lazarus (Jn. 11); the man born blind (Jn. 9:1-41); the centurion's servant (Mt. 8:5-13; Jn. 4:46-54)), and eight so-called nature miracles (the stilling of the storm (Mk. 4:35-41; Mt. 8:23-27; Lk. 8:22-25); the feeding of the 5000 (Mk. 6:30-44; Mt. 14:13-21; Lk. 9:10-17); the feeding of the 4000 (Mk. 8:1-10; Mt. 15:32-39); walking on water (Mk. 6:45-52; Mt. 14:22-33; Jn. 6:16-21); the cursing of the fig tree (Mk. 11:12-14, 20-26; Mt. 21:18-22); the coin in the fish's mouth (Mt. 17:24-27); the miraculous catch of fish (Lk. 5:1-11; cf. Jn. 21:1-11); the transformation of water to wine (Jn. 2:1-11)).’
+- Ludwig Dindorf (ed.), Chronicon Paschale, vol. 1 (Corpus Scriptorum Historiae Byzantinae). Bonn: Weber, 1832, p. 706,9–11; transl. Michael Whitby and Mary Whitby,* Chronicon Paschale*, 284–628 AD (Translated Texts for Historians 7). Liverpool: Liverpool University Press, 1989, p. 158.
 
-- Jesus brings dead guy back to life: e.g. Mark 16:17–18; Jn. 11.
+Theophanes the Confessor on Herakleios’ ‘borrowing’ church vessels to make currency:
 
-- Jesus accused of exorcising through the power of Beelzebul: Mk. 3:22-30 and parallels.
-
-- Jesus possessed: Jn. 7:20; 8:48, 52; 10:20 etc.
-
-- The charge that Jesus was an impostor: Mt. 27:63 (πλάνος); cf. Jn. 7:12 (πλανᾷ τὸν ὄχλον), 47 (Μὴ καὶ ὑμεῖς πεπλάνησθε;).
-
-- Healing in the name of Jesus: Used by his disciples to perform exorcisms during Jesus' lifetime (Mt. 7:22; Lk. 10:17; cf. Mk. 16;17) as well as freelance Jews using the name for exorcisms without formal association with Jesus (Mk. 9:38 f; Lk. 9:49). Healings and exorcisms in Acts: 3:6, 16; 4:7, 10, 30; 9:34; 16:18; 19:13).
-
-Infancy Gospel of Thomas (where incidentally Jesus brings some clay statues of birds to life, as well as blasting loads of people with efficacious curses, killing kids left and right, and generally causing havoc): English translation in Wilhelm Schneemelcher. *New Testament Apocrypha, Vol. 1: Gospels and Related Writings*. James Clarke & Co., Louisville, KT/London, 1991, p. 444 ff.
+- Carl de Boor (ed.), *Theophanis Chronographia*, vol. 1. Leipzig: Teubner 1883, pp. 302,34–303,3; transl. Cyril Mango and Roger Scott, *The Chronicle of Theophanes Confessor*. Byzantine and Near Eastern History, AD 284–813. Oxford: Clarendon Press, 1997, p. 435.
 
 ### Secondary:
 
-Aune 1980 (see below); we cite p. 1508; pp. 1529-30 (on the historicity of the NT exorcism-accounts); pp: 1523-4 for the list of miraculous effects performed by Jesus.
+Marc D. Lauxtermann. *Byzantine Poetry from Pisides to Geometres. Texts and Contexts, Vol. II*, volume 24.2 of Wiener Byzantinistische Studien. Austrian Academy of Sciences Press, Vienna, 2019; we cite pp. 205–7.
 
-Samain 1923 (see below).
+Paul Magdalino. *L’Orthodoxie des astrologues: La science entre le dogme et la divination à Byzance (VIIe-XIVe siècle).* Number 12 in Réalités Byzantines. Lethielleux, Paris, 2006.
 
-Smith 1978: see below.
+Maria Papathanassiou argues that the four alchemical poets were all a single student of Stephanos: the attribution of the poems to a single author goes back beyond Papathanassiou. However, she argues that “[they] belonged to Stephanos’ close environment including his disciples”, here:
+
+- Maria K. Papathanassiou, “The Occult Sciences in Byzantium”, in Stavros Lazaris (ed.), *A Companion to Byzantine Science* (Brill’s Companions to the Byzantine World 6). Leiden and Boston, MA: Brill, 2020, pp. 464–495, on 492–493.
+
+In more detail and more assertively (e.g.: “In this case, whoever the author may have been – likely one among the four poets – belonged to Stephanus’ intellectual environment in Constantinople and was one of his close disciples”), here:
+
+- Maria K. Papathanassiou, “The Poet-Alchemists and Their Relation to Stephanus of Alexandria”, in Gerasimos Merianos (ed.), *Alchemy in Byzantium (Medical Traditions)*, Berlin and Boston, MA: De Gruyter 2026 (forthcoming).
 
 ### Recommended Reading:
 
-‘Magic’ in the *Brill Encyclopædia of Early Christianity* is a good introductory resource.
+SHWEP Episode 215-216 Recommended Reading`,
+  216: `### Works Cited in this Episode (in rough order-of-mention):
 
-D. E. Aune. Magic in Early Christianity. In *Aufstieg und Niedergang der Römischen Welt* 2, volume 23.2, pages 1507–557. de Gruyter, Berlin, 1980.
+Our interview with Martin Stadler on the Egyptian temple at Edfu (and matters economical relevant to the Egyptian temples) can be heard here.
 
-Campbell Bonner. Traces of Thaumaturgic Technique in the Miracles.* Harvard Theological Review*, 20:171–81, 1927.
+Ben Johnson, *The Alchemist*, first performed by the King's Players in 1610. The text can be read here.
 
-Campbell Bonner. The Technique of Exorcism. *Harvard Theological Review*, 36:39–49, 1943.
+John Malalas on the mountebank Ioannes Isthmeos: Hans Thurn, editor.* Ioannis Malalæ chronographia*. Number 35 in Corpus Fontium Historiæ Byzantinæ, Series Berolinensis. De Gruyter, Berlin/New York, NY, 2000, p. 323. English trans. by Elizabeth Jeffreys, Michael Jeffreys, and Roger Scott, *The Chronicle of John Malalas. A Translation* (Byzantina Australiensia 4). Melbourne: Australian Association for Byzantine Studies, 1986, p. 222.
 
-Jan-A Bühner. Jesus und die antike Magie.* Evangelische Theologie*, 43(2):156–75, 1983.
+Michæl Psellos’ letter on gold-making can be found at Joseph Bidez, editor. *Catalogue des manuscrites alchimiques grecs VI: Michel Psellus, Épître sur la Chrysopée, Opuscules et extraits sur l’alchimie, la météorologie et la démonologie.* 1928, Bruxelles. pp. 26–42. Italian translation: Francesca Albini, ed. and trans. *Michele Psello, La crisopoea ovvero come fabbricare l’oro. Traduzione, introduzione e commento.* Nuova Atlantide, I classici del pensiero magico, esoterico e simbolico. ECIG, Genova, 1988.
 
-Wendy Cotter. *Miracles in Greco-Roman Antiquity: A Sourcebook*. Routledge, London, 1999.
+Psellos’ later denouncement of Kerularios can be found at George T. Dennis, editor. *Michaelis Pselli Orationes forenses et acta.* Bibliotheca Scriptorum Graecorum et Romanorum Teubneriana. Teubner, Stuttgart/Leipzig, 1994., 1.2670–2733. For a French translation and commentary on the passages relating to alchemy, see Bidez, *Catalogue des manuscrits alchimiques grecs*, vol. VI, op. cit., pp. 76–89.
 
-John M. Hull. *Hellenistic Magic and the Synoptic Tradition. *SCM, London, 1974.
+The *Book of the Eparch*: Johannes Koder, editor.* Das Eparchenbuch Leons des Weisen*, volume 33 of Corpus Fontium Historiae Byzantinae. Österreichische Akademie der Wissenschaften, Vienna, 1991. There is an English translation of the Book of the Eparch, which is easily accessible online (Edwin Hanson Freshfield, *Roman Law in the Later Roman Empire: Byzantine Guilds, Professional and Commercial.* Cambridge: Cambridge University Press, 1938). However, it should be used as an aid rather than as an authoritative philological basis (especially with regard to terminology). A more reliable partial translation is provided by Michael F. Hendy, *Studies in the Byzantine Monetary Economy c. 300–1450.* Cambridge: Cambridge University Press, 1985, pp. 251–253, particularly of the second chapter on the *argyropratai* (silversmiths, lit. ‘sellers of silver’, to be understood as goldsmiths and/or bankers), although it follows an earlier edition.
 
-Helen Ingram. *Dragging Down Heaven: Jesus as Magician and Manipulator of Spirits. *PhD thesis, University of Birmingham, 2007 [a great thesis, and the section on Jesus' wand is particularly wonderful].
+Christianos, *Thirty Chapters on Gold-Making*: On the 135 kinds of alchemical productions and the method by which Christianos derives them through combinations of egg components, within a framework of division by species and genus, see Marcellin Berthelot and Charles-Émile Ruelle (ed. and French transl.), *Collection des anciens alchimistes grecs*, 3 vols. Paris: G. Steinheil, 1887–1888, vol. II, pp. 410,16 – 414,10 (accessible here). A much-needed new edition of Christianos’ work is currently being prepared by Marco Bellini, based on his doctoral dissertation (*L’opera alchemica del filosofo Cristiano. Edizione, traduzione e note di commento.* PhD Diss. Alma Mater Studiorum – Università di Bologna, 2023).
 
-Naomi Janowitz. *Magic in the Roman World: Pagans, Jews, and Christians*. Routledge, London, 2001.
-
-Bernd Kollmann.* Jesus und die Christen als Wundertäter: Studien zu Magie, Medizin und Schamanismus in Antike und Christentum*. Vandenhoeck & Ruprecht, Göttingen, 1996.
-
-P. Samain. L’Accusation de magie contre le Christ dans les Évangiles. *Ephemeride Theologicæ Louvanienses*, 15:449–90, 1938.
-
-Wilhelm Schneemelcher.* New Testament Apocrypha, Vol. 1: Gospels and Related Writings*. James Clarke & Co., Louisville, KT/London, 1991.
-
-Jonathan Z. Smith. Towards Interpreting Demonic Powers in Hellenistic and Roman Antiquity. In *Aufstieg und Niedergang der Rö`,
+### For recommended reading, see previous episode`,
   217: `### Works Cited in this Episode:
 
+Our episodes on the talismanic Constantinople: Part I here and Part II here.
+
 ### Primary:
 
-- The Carpocratians' esoteric claims: Irenæus *Adv. Hær.* I.25.5.
+‘The Book of Wisdom and of the Science of Talismans of Apollonios of Tyana’ (βίβλος σοφίας καὶ συνέσεως ἀποτελεσμάτων Ἀπολλονίου τοῦ Τυανέως): Franciscus Boll, editor. *Codices Germanici*, volume VII of *Catalogus Codicum Astrologorum Graecorum.* Bruxellis, 1908, pp. 175–81.
 
-- Clement of Alexandria on Valentinus' esoteric claims: *Strom*. VII.17.106.4; cf. *Extracts of Theodotus* LXVI.
+For John Malalas' *Chronographia* in English, see Elizabeth Jeffreys and Michael Jeffreys and Roger Scott, trans. *The Chronicle of John Malalas*. Number 4 in Byzantina Australiensia. Brill, Leiden, 1986. For Apollonios and his talismans, see 10.263–266.
 
-- Hippolytus on Basilides and Isidore's esoteric claims: *Elenchos* VII.20.1.
+*MS Harleianus* 5596: https://pinakes.irht.cnrs.fr/notices/cote/39555/
 
-- Josephus witnesses an exorcism: *Jewish Antiquities* VIII 2.5.
-
-*Gospel of Mark*:
-
-- Jesus withdraws from the crowd to go on secret trips with his disciples and teaches them: Mk. 4:10-13, 34; 7:17-23; 9:28 ff., 8:1; 9:31; 10:32-34; 13:3 ff.
-
-- The \`Messianic Secret' among demons: Mk. 1:25 (ἐν πνεύματι ἀκαθάρτῳ), 34 (δαιμόνια); 3:11-12; etc.
-
-- The \`Messianic Secret' among humans: Mk. 1:44 (cleansed leper); 5:43 (daughter of synagogue-chief brought back from dead with ‘magic words’ *talitha koumi* 5:41); etc.
-
-- Withdrawal from the crowd to go on secret trips with his disciples to give them private instruction: Mk. 4:10-13, 34; 7:17-23; 9:28 ff; 8:1; 9:31; 10:32-34; 13:3 ff.
+Niketas Choniatēs cites a Solomonic work from the twelfth century: cited at Chester Charlton McCown. *The Testament of Solomon.* J. C. Hinrichs, Leipzig, 1922, pp. 101–2.
 
 ### Secondary:
 
-*The Exorcist*, dir. William Friedkin, Warner Bros. 1973.
+Franz Cumont. Démetrios Chloros et la tradition des *Cyranides*. *Bulletin de la societé nationale des antiquaires de France*, pages 175–81, 1919.
 
-J. Schniewind. *Das Evangelium nach Markus*. Göttingen, 1949. We quote p. 41: ‘Dies Geheimnis steht hinter jeder einzelnen Perikope.’
+Garth Fowden. *The Egyptian Hermes: A Historical Approach to the Late Pagan Mind*. Cambridge University Press, Cambridge, 1986., quoting pp. 87-88 and citing p. 161.
 
-Morton Smith. *Clement of Alexandria and a Secret Gospel of Mark.* Harvard University Press, Cambridge, MA, 1973.
+Moshe Idel. Kabbalah in Byzantium. In Anthony Kaldellis and Niketas Siniossoglou, editors, *The Cambridge Intellectual History of Byzantium*, pages 524–41. The University Press, Cambridge, 2017.
 
-William Wrede. *Das Messiasgeheimnis in den Evangelien. Zugleich ein Beitrag zum Versta ̈ndnis des Markusevangeliums*. Vandenhoeck & Ruprecht, Göttingen, 1901.
+Ioannis Marathakis, editor.* The Magical Treatise of Solomon or Hygromanteia, also called the Apotelesmatikē Pragmateia, Epistle to Rehoboam, Solomōnikē*. Number 8 in Sourceworks of Ceremonial Magic Series. Golden Hoard Press, Singapore, 2011.
+
+David Pingree. Some of the Sources of the Ghāyat al-Ḥakīm. *Journal of the Warburg and Courtauld Institutes*, 43:1–15, 1980., quoting p. 9.
+
+Pablo A. Torijano. *Solomon the Esoteric King: From King to Magus, Development of a Tradition*. Brill, Leiden, 2002, quoting p. 174 on the MSS and dating of the *Hygromanteia*. Summary of the *Hygromanteia*: p. 164. Summary of the ‘magical treatise’: pp. 210–11.
+
+Alicia Walker. Magic in Medieval Byzantium. In David J. Collins, editor, *The Cambridge History of Magic and Witchcraft in the West From Antiquity to the Present*, pages 209–34. The University Press, Cambridge, 2015, quoting p. 210.
 
 ### Recommended Reading:
 
-David E. Aune. The Problem of the Messianic Secret. *Novum Testamentum*, 11:1–31, 1969.
-
-G.H. Boobyer. The Secrecy Motif in St Mark’s Gospel. *New Testament Studies*, 6(3): 225–35, April 1960 [starts with a nice point-by-point history of scholarly discussion of the messianic secret from Wrede onward].
-
-Adela Yarbro Collins. Messianic Secret and the Gospel of Mark: Secrecy in Jewish Apocalypticism, the Hellenic Mystery Religions and Magic. In E. R. Wolfson, editor, *Rending the Veil: Concealment and Secrecy in the History of Religions*, pages 11–30. Seven Bridges, Chappaqua, NY, 1999.
-
-H.J. Ebeling. *Das Messiasgeheimnis und die Botschaft des Marcusevangeliums*. Toepelmann, Berlin, 1939 [a very thorough discussion of the evidence and of previous theories about it pp. 1-113].
-
-C.L. Mearns. Parables, Secrecy and Eschatology in Mark’s Gospel. *Scottish Journal of Theology*, 44(4):423–42, 1991.
-
-Heikki Räisänen. The ‘Messianic Secret’ in Mark. Clark, Edinburgh, 1990.
-
-Albert Schweitzer. *The Quest of the Historical Jesus: A Critical Study of its Progress from Reimarus to Wrede*. A. and C. Black, 1910.
-
-G. Theissen. Die pragmatische Bedeutung der Geheimnismotive im Markusevangelium: ein wissensoziologischer Versuch. In Guy G. Stroumsa and Hans G. Kippenberg, editors, *Secrecy and Concealment: Studies in the History of Mediterranean and Near-Eastern Religions*, pages 225–46. Brill, Leiden, 1995.`,
+SHWEP Episode 217 East Roman Magic Recommended Reading`,
   218: `### Works Cited in this Episode:
 
 ### Primary:
 
-Parable of the Sower passage in the synoptic gospels: Mk. 4:10-12; Mt 13:10-15; Lk 8:9-10.
+The Parastaseis*: fifteen chapters discuss statues in relation to prophecies, portents, or astronomy/astrology: 27, 5a, 5d, 8, 16, 20, 21, 28, 40, 41, 54, 61, 64, 65, 69 (reference from Benjamin Anderson. Classified Knowledge: The Epistemology of Statuary in the *Parastaseis Syntomoi Chronikai. Byzantine and Modern Greek Studies*, 35:1–19, 2011., p. 6). The reference to Constantine's visions having occurred at Constantinople is also from this article, p. 13.
 
-*Acts of the Apostles*: The Spirit descends upon the Apostles: 2:2-4. Paul a Pharisee: 26:5. Paul a Roman: 16:37.
-
-Clement of Alexandria on the ineffable in Paul: *Strom*. V.12.79.
-
-Dead Sea Scrolls: dualist suffering to be followed by God's triumphant balancing of the books: 1QS 3.20-3; 4.18, cited at Brown 1958, p. 435.
-
-Hippolytus: the Naasenes claim to have the Pauline ‘unutterable sayings’: *Refutation* 5.8.25. So does Basilides: *Ibid*. 7.26.7.
-
-Paul on the *mysteria*: *2 Thessalonians* 2:7; *1 Corinthians* 1:10–4:21, 15, cf. *1 Thessalonians* 4:15–17 (not a *mysterion*, but by the word of the Lord (ἐν λόγῳ κυρίου); *Romans *11; *Colossians* 1:26-27 and 4:3; *Ephesians* (some deny its Pauline authorship) 1:9, 3. *Ephesians* 3 is probably the most complete treatment of *mysterion* in the epistles. Paul elsewhere on the spiritual resurrection-body: ‘waiting for the adoption, to wit, the redemption of our body’ (*Romans* 8:23). ‘We look for the Saviour, the Lord Jesus Christ: Who shall change our vile body, that it may be fashioned like unto His glorious body . . .’. (*Philippians* 3:20, 21). ‘But some man will say, How are the dead raised up? and with what body do they come?’ (*1 Corinthians* 15:35). ‘It is sown a natural body; it is raised a spiritual body’ (*1 Corinthians* 15:44).
-
-Philo of Alexandria's cosmic ascent account: see Episode 56.
+Manuel Komnenos to Michæl Glykas on astrology: see *Imperatoris Manuel Comneni et Michael Glycæ disputatio* in Franz Cumont e*t al.*, editors. *Catalogus Codicum Astrologorum Graecorum*, volume 12 vols. in 20 parts. Lamertin, Brussels, 1898–1953, V.1, 108–25 for Manuel's letter, 125–40 for Glykas' reply.
 
 ### Secondary:
 
-The actual John Lennon quote about Jesus is as follows: ‘Christianity will go. It will vanish and shrink. I needn't argue about that; I'm right and I'll be proved right. We're more popular than Jesus now; I don't know which will go first – rock 'n' roll or Christianity. Jesus was all right but his disciples were thick and ordinary.’ In *The Evening Standard*, 4 March 1966.
+Albrecht Berger. Das apokalyptische Konstantinopel. Topographisches in apokalyptischen Schriften der mittelbyzantinischen Zeit. In Wolfram Brandes and Felicitas Schmieder, editors, *Endzeiten. Eschatologie in den monotheistischen Weltreligionen*, number 16 in Millennium-Studien, pages 135–55. De Gruyter, Berlin/New York, NY, 2008. We quote p. 148. The original German: ‘Apollonios von Tyana spielt in der Konstantinopler Lokalsage schon seit den sechsten Jahrhundert eine gewisse Rolle als angeblicher Urheber von Zauberstatuen, durch die allerlei Unheil von der Stadt ferngehalten werden konnte, und als solcher tritt er auch noch in den Patria auf. Apollonios lebte tatsächlich im ersten Jahrhundert nach Christus, wird aber von einigen Quellen kurzerhand in die Zeit Konstantins des Großen versetzt, um sein Wirken in Konstantinopel plausibler zu machen.’
 
-Richard Reitzenstein.* Hellenistic Mystery-Religions: Their Basic Ideas and Significance*. Pickwick Press, Pittsburgh, 1979, we quote p. 84.
+Averil Cameron and Judith Herrin, editors. *Constantinople in the Early Eighth Century:* *The* Parastaseis Syntomoi Chronikai*. Introduction, Translation and Commentary*. Brill, Leiden, 1984; we quote pp. 36-7.
 
-J. Z. Smith. *Drudgery Divine: on the Comparison of Early Christianities and the Religions of Late Antiquity*. University of Chicago Press, Chicago, IL, 1990.
+Gilbert Dagron. *Constantinople imaginaire. Études sur le recueil des* Patria. Presses Universitaires de France, Paris, 1984; we quote pp. 107. On Apollonios' many talismans, see pp. 107–14.
 
-Tabor 1986: see below.
+Dorian Greenbaum. The Origins of Questions in Astrology. In Luís Campos Ribeiro and Charles Burnett, editors, *Astrologers at Work: Essays on the Practices and Techniques of Astrology in Memory of Helena Avelar,* pages 1–58. Brill, Leiden/Boston, MA, 2026.
+
+Stephan Heilen. Ancient Scholars on the Horoscope of Rome. *Culture and Cosmos*, 11:43–86, 2007.
+
+Paul Magdalino. Occult Science and Imperial Power in Byzantine History and Historiography (9th-12th Centuries). In Paul Magdalino and Maria Mavroudi, editors, *The Occult Sciences in Byzantium*, pages 119–62. La Pomme d’Or, Geneva, 2006.
 
 ### Recommended Reading:
 
-M.N.A. Bockmühl. *Revelation and Mystery in Ancient Judaism and Pauline Christianity*. Mohr Siebeck, Tübingen, 1990.
+SHWEP Talismanic Constantinople Recommended Reading`,
+  219: `### Works Cited in this Episode:
 
-Ron Cameron and Merrill P. Miller. *Redescribing Paul and the Corinthians*, volume 5 of Early Christianity and Its Literature. Society of Biblical Literature, Atlanta, 2011.
+### Primary:
 
-Guy Stroumsa. *Hidden Wisdom: Esoteric Traditions and the Roots of Christian Mysticism*. Brill, Leiden, 1996
+Sōpater of Syria/Apamea:
 
-### The Pauline ‘Mysteries’
+- See generally Richard Goulet, editor. *Dictionnaire des philosophes antiques*. CNRS Éditions, Paris, 1989-2018, vol. VI, pp. 459-463.
 
-B. M. Metzger. Methodology in the Study of Mystery Religions and Early Christianity. *Harvard Theological Review*, 48:1–20, 1955.
+- Iamblichos' letters to him: Stobæus, *Anth*. I 5, 18 (Ἐκ τῆς Ἰαμβλίχου πρὸς Σώπατρον ἐπιστολῆς) ; III 1, 17 et 49, III 31, 9, III 37, 32, IV 39, 23 (Ἐκ τῶν Ἰαμβλίχου πρὸς Σώπατρον περὶ ἀρετῆς) ; II 2, 6 (Ἐκ τῆς Ἰαμβλίχου ἐπιστολῆς πρὸς Σώπατρον περὶ διαλεκτικῆς) ; II 31, 122 (Ἐκ τῆς Ἰαμβλίχου ἐπιστολῆς Σωπάτρῳ Περὶ παίδων ἀγωγῆς) ; cf. II 46, 16 ; III 11, 35.
 
-Birger Pearson. Mystery and Secrecy in Paul. In Christian H. Bull, Liv Ingeborg Lied, and John D. Turner, editors, *Mystery and Secrecy in the Nag Hammadi Collection and Other Ancient Literature: Ideas and Practices: Studies for Einar Thomassen at Sixty*, volume 76, pages 287–302. Brill, Leiden, 2012., we quote p. 288.
+- The *Suda* on Sōpater: s.v. Σώπατρος, Σ 845.
 
-Benjamin Gladd. *Revealing the Mysterion: The Use of Mystery in Daniel and Second Temple Judaism with Its Bearing on First Corinthians*. De Gruyter, Berlin, 2008.
+- Libanios (maybe) on Sōpater: *Disc*. XVIII, § 187.
 
-Raymond E. Brown. The Semitic Background of the New Testament Mysterion (I). *Biblica*, 39(4):426–48, 1958 and *Idem*. The Semitic Background of the New Testament Mysterion (II). *Biblica*, 20(1):70–87, 1959.
+For the ‘pagan conversion of Constantine’ account: Sozomen:* Hist. eccl*. I 5; cf.  Zosimos, *Hist*. II 29.
 
-### Pauline Ascent
+Eustathios of Cappadocia:
 
-J. D. Tabor. *Things Unutterable: Paul’s Ascent to Paradise in its Greco-Roman, Judaic, and Early Christian Contexts.* University Press of America, Lanham, MD/New York, NY/London, 1986.
+- His embassy to Shapur: Eunapios *VS* 465, Ammianus *RG* XVII 5.
 
-### The Third Epistle to the Corinthians
+- His career at Constantine's court, and execution on charges of ‘fettering the winds’: Eunapios *VS* 462 Wright.
 
-An English translation of the *Acts of Paul*, including the Third Letter, by M.R. James (yes, he who wrote all those amazing ghost stories) is available online.`,
+Lydos on Julius Cæsar the theurge: *De mens*. IV 102 Wünsch.
+
+Constantine calls in Sōpater of Apamea for some specialist telestic consultation on his Constantinople-project: John Lydus *De mens.* p. 65, 2-66, 1 Wünsch.
+
+Photios on Lydos: *Bibl*. 180 (ed. Henry 1960: 187-188).
+
+### Secondary:
+
+Elena N. Boeck. *The Bronze Horseman of Justinian in Constantinople: The Cross-Cultural Biography of a Mediterranean Monument.* Cambridge University Press, Cambridge, 2021.
+
+Mischa Hooker, editor. *On the Months (De mensibus).* 2nd edition, 2017.
+
+Maijastina Kahlos. *Vettius Agorius Praetextatus – A Senatorial Life in Between*. Rome, 2002.
+
+Anthony Kaldellis. The Religion of Ioannes Lydos. *Phoenix*, 57(3/4):300–16, Autumn – Winter 2003.
+
+Paul Magdalino. *L’Orthodoxie des astrologues: La science entre le dogme et la divination à Byzance (VIIe-XIVe siècle).* Number 12 in Réalités Byzantines. Lethielleux, Paris, 2006.
+
+### For Recommended Reading, see the previous episode
+
+*Constantine as Helios/Sol on a solidus* issued between 313 and 317`,
   220: `### Works Cited in this Episode:
 
 ### Primary:
@@ -8289,7 +8933,13 @@ Christopher R. Smith. The Structure of the Book of Revelation in Light of Apocal
 
 John Sweet. Revelation. In John Barclay and John Sweet, editors, *Early Christian Thought in its Jewish Context*, pages 160–73. The University Press, Cambridge, 1996.
 
-Leonard`,
+Leonard L. Thompson. *The Book of Revelation: Apocalypse & Empire*. Oxford University Press, New York, NY, 1990 [politics].
+
+### On Reception of the *Apocalypse of John*
+
+Natasha O’Hear and Anthony O’Hear, *Picturing the Apocalypse: The Book of Revelation in the Arts over Two Millennia* (New York: Oxford University Press, 2015).
+
+James T. Palmer, *The Apocalypse in the Early Middle Ages* (New York: Cambridge University Press, 2014).`,
   221: `### Works Cited in this Episode:
 
 ### Primary:
@@ -9416,4 +10066,65 @@ The interview centres on the following two *Ambigua* of Maximus, to be found at:
 - *Ambiguum* 15 (vol. 1): one of the main texts some point to as supporting a doctrine of universal salvation.
 
 Leontius of Byzantium. 2017. *Leontius of Byzantium: Complete Works.* Edited and translated by Brian E. Daley. Oxford Early Christian Texts. Oxford University Press [on Christology, soul-body relation, mereological description of the soul-body].`,
+  321: `### Works Cited in this Episode:
+
+### Primary:
+
+Proklos on ‘Kyranos’ (maybe): *In R.* II p. 318 l. 22 Kroll.
+
+Dimitris Kamakis, editor. *Die Kyraniden.* Number 76 in Beiträge zur klassischen Philologie. Anton Hain, Meisenheim, 1976.
+
+### Secondary:
+
+Klaus Alpers. Untersuchungen zum griechischen Physiologus und den Kyraniden. *Vestigia Bibliae: Jahrbuch des deutschen Bibel-Archivs*, 6:12–87, 1984., citing pp. 17 ff. on the dating of the Kyranis.
+
+Harland's translation of the introduction to Book I: https://www.philipharland.com/Blog/2023/01/assyrian-wisdom-the-kyranides-cyranides-on-a-journey-to-learn-from-a-foreign-inscription-fourth-century-ce-or-earlier/
+
+M.D. Litwa. *Hermetica II*. Cambridge University Press, Cambridge, 2018, p. 286–7.
+
+Jean-Pierre Mahé, editor. *Hermès Trismégiste: Paralipomènes*. Les Belles Lettres, Paris, 2019.
+
+Charles-Émile Ruelle. Les Cyranides. In F. de Mély, editor, *Les lapidaires de l’antiquite et du moyen age*. Ernest Leroux, Paris, 1898-1899.
+
+### Recommended Reading:
+
+SHWEP Storytime on the Kyranides Recommended Reading`,
+  322: `### Works Cited in this Episode:
+
+The Campbell-Bonner Magical Gems Database rocks the house.
+
+### Primary:
+
+Pliny on the stones called ‘firestone’ (*pyritēs*): *H.N*. 36, 137–138. On *hephaistitis*: *ibid*. 166.
+
+*Hermes to Asclepios, the Book Called ‘Sacred’*: find it in pp. 140–143 of André-Jean Festugière. *La révélation d’Hermes Trismegiste.* J. Gabalda, Paris, 1944-1954. 4 vols, or pp. 156–159 in the new edition of 2014.
+
+*Corpus Hermeticum* XI, 19: ἀλλ’ οὐδὲ αὐτῇ οὐδὲν ἐμπόδιον, οὐ τοῦ ἡλίου πῦρ, οὐχ ὁ αἰθήρ, οὐχ ἡ δίνη, οὐχὶ τὰ τῶν ἄλλων ἀστέρων σώματα· πάντα δὲ διατεμοῦσα ἀναπτήσεται μέχρι τοῦ ἐσχάτου σώματος. εἰ δὲ βουληθείης καὶ αὐτὸ ὅλον διαρρήξασθαι καὶ τὰ ἐκτός (εἴ γέ τι ἐκτὸς τοῦ κόσμου) θεάσασθαι, ἔξεστί σοι.
+
+### Secondary:
+
+David Bain. ΜΕΛΑΝΙΤΙΣ ΓΗ in the Cyranides and Related Texts: New Evidence for the Origins and Etymology of Alchemy? In Todd Klutz, editor, *Magic in the Biblical World: From the Rod of Aaron to the Ring of Solomon*, number 245 in Journal of the Study of the New Testament Supplement Series, pages 191–218. T & T Clark, London/New York, NY, 2003, quoting p. 205.
+
+Hans Dieter Betz. *The Greek Magical Papyri in Translation, Including the Demotic Spells*, volume 1. University of Chicago Press, Chicago, IL, 1996.
+
+D’Arcy Thompson. *A Glossary of Greek Birds.* Oxford University Press, Oxford, 1895.
+
+Maryse Waegeman. *Amulet and Alphabet: Magical Amulets in the First Book of Cyranides.* J. C. Gieben, Amsterdam, 1987.
+
+Martin L. West. Magnus and Marcellinus: Unnoticed Acrostics in the Cyranides. *Classical Quarterley*, New Series, 32:480–81, 1982.
+
+*`,
+  323: `### Works Cited in this Episode:
+
+Episode 26 with Peter Struck on symbols can be found here.
+
+Episode 38 on the Esoteric Aristotle, Part I, can be found here.
+
+Schechner, ‘an action twice performed’: Schechner, Richard. “Behavior, Performance, and Performance Space.” *Perspecta*, vol. 26, 1990, pp. 97–102. JSTOR, https://doi.org/10.2307/1567156. Accessed 16 June 2026.
+
+*A Game at Chess* by Thomas Middleton: first performed in London in 1624
+
+Augusto Boal Theatre of the Oppressed: https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed
+
+An eagle dropped a tortoise on Æschulus' head: e.g. Pliny, *H.N.* 10.3.`,
 };
