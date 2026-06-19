@@ -121,3 +121,4 @@ backups/
 
 # Book ingestion staging (PDFs, page images, metadata waiting to be processed)
 incoming/
+scripts/eval/ft-tier2-bulk.workflow.js
