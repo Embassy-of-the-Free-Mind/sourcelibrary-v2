@@ -4,6 +4,7 @@ import { SHWEP_PERIODS } from '@/data/shwep-episodes';
 import { EPISODE_DESCRIPTIONS } from '@/data/shwep-descriptions';
 import { EPISODE_DATES } from '@/data/shwep-dates';
 import { SHWEP_BOOK_MATCHES } from '@/data/shwep-book-matches';
+import { SHWEP_BIBLIOGRAPHIES } from '@/data/shwep-bibliographies';
 
 export interface MatchedBook {
   id: string;
@@ -29,6 +30,8 @@ export interface EnrichedEpisode {
   tags: string[];
   description?: string;
   publishDate?: string;
+  /** Earl Fontainelle's reading list / works-cited for this episode (markdown), scraped from shwep.net. */
+  bibliography?: string;
   books: MatchedBook[];
   bookCount: number;
 }
@@ -247,6 +250,7 @@ export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpi
     ...episode,
     description: EPISODE_DESCRIPTIONS[episodeNumber] || undefined,
     publishDate: EPISODE_DATES[episodeNumber] || undefined,
+    bibliography: SHWEP_BIBLIOGRAPHIES[episodeNumber] || undefined,
     books,
     bookCount: books.length,
   };
