@@ -14,8 +14,34 @@
  */
 import { auth } from '@/lib/auth';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { getDb } from '@/lib/mongodb';
+import { anonymizeIp } from '@/lib/anonymize-ip';
 
 export const SIGNIN_URL = 'https://sourcelibrary.org/auth/signin';
+
+/**
+ * Record when an anonymous visitor hits the "sign in to continue" wall — the
+ * conversion trigger. One row per blocked attempt in analytics_events; pair
+ * with signups to see whether hitting the wall converts. Fire-and-forget.
+ */
+function logGateHit(request: Request, feature: string): void {
+  try {
+    const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
+    const ip = anonymizeIp(getClientIp(request) || 'unknown');
+    Promise.race([
+      (async () => {
+        const db = await getDb();
+        await db.collection('analytics_events').insertOne({
+          event: 'gate_hit', feature, country, ip,
+          timestamp: new Date(), created_at: new Date(),
+        });
+      })(),
+      new Promise((resolve) => setTimeout(resolve, 2000)),
+    ]).catch(() => {});
+  } catch {
+    /* never throw */
+  }
+}
 
 // Same list withApiAuth uses — UA substrings that get the SEO-crawler bypass so
 // indexing is never walled. Spoofable, but the worst case is a scraper getting
@@ -68,7 +94,9 @@ export async function anonActionGate(
     { name: opts.name, limit: opts.limit, windowSeconds: opts.windowSeconds ?? 3600 },
     getClientIp(request),
   );
-  return rl.allowed ? { allowed: true } : { allowed: false, retryAfter: rl.retryAfter };
+  if (rl.allowed) return { allowed: true };
+  logGateHit(request, opts.name);
+  return { allowed: false, retryAfter: rl.retryAfter };
 }
 
 // ── Distinct-query quota (search) ──────────────────────────────────────────
@@ -120,5 +148,7 @@ export async function anonSearchGate(
   limit = 5,
 ): Promise<GateResult> {
   if (await isExempt(request)) return { allowed: true };
-  return distinctQueryQuota(getClientIp(request), query, limit, 3600);
+  const result = distinctQueryQuota(getClientIp(request), query, limit, 3600);
+  if (!result.allowed) logGateHit(request, 'search');
+  return result;
 }
