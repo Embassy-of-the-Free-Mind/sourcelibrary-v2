@@ -282,7 +282,7 @@ function VoiceAgentInner() {
             )}
             {errorMsg && <p className="text-red-300 text-sm mt-5 font-sans max-w-[360px]">{errorMsg}</p>}
             {signInRequired && (
-              <Link href="/auth/signin?callbackUrl=/librarian/voice"
+              <Link href="/auth/signin?callbackUrl=/librarian/voice&reason=limit"
                 className="mt-3 inline-block px-5 py-2.5 rounded-full bg-[#c9a86c]/90 hover:bg-[#c9a86c] text-[#0e0c0a] text-sm font-sans font-medium transition-colors">
                 Sign in &mdash; free
               </Link>

@@ -1137,7 +1137,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             <p className="text-secondary mb-6">
               You&rsquo;ve used your free searches for now. Sign in &mdash; it&rsquo;s free &mdash; to keep exploring over 10,000 primary sources.
             </p>
-            <Link href="/auth/signin?callbackUrl=/search"
+            <Link href="/auth/signin?callbackUrl=/search&reason=limit"
               className="inline-block px-6 py-3 rounded-xl bg-accent-rust text-white font-medium hover:bg-accent-rust/90 transition-colors">
               Sign in &mdash; free
             </Link>

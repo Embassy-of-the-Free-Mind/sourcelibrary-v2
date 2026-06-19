@@ -15,12 +15,12 @@ import { anonymizeIp } from '@/lib/anonymize-ip';
  */
 
 const ALLOWED_EVENTS = new Set([
-  'cite', 'share', 'quote_copy', 'doi_view', 'download',
+  'cite', 'share', 'quote_copy', 'doi_view', 'download', 'signin_view',
 ]);
 
 // Only these prop keys are persisted; everything else is dropped.
 const ALLOWED_PROPS = new Set([
-  'bookId', 'format', 'channel', 'page', 'title', 'url', 'hasDoi', 'edition', 'source',
+  'bookId', 'format', 'channel', 'page', 'title', 'url', 'hasDoi', 'edition', 'source', 'reason',
 ]);
 
 const DB_TIMEOUT_MS = 3000;
