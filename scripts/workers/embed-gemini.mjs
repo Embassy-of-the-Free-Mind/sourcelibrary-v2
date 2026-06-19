@@ -34,6 +34,7 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import fs from 'node:fs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -60,6 +61,13 @@ const MISSING_ONLY = args.includes('--missing-only');
 const RESTALE = args.includes('--restale');
 const DRY_RUN = args.includes('--dry-run');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
+// --books-file PATH: embed pages for a fixed JSON array of book ids, skipping
+// pages already present in page_translations. Built for the OCR-tail backfill
+// (untranslated books never added to the table — --missing-only can't reach
+// them because it only scans books already present). Reuses the OCR fallback
+// (textToEmbed = ocrText when no translation), so untranslated originals get a
+// work-specific vector with an EMPTY translation column (no search pollution).
+const BOOKS_FILE = args.find((_, i, a) => a[i - 1] === '--books-file');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
@@ -170,7 +178,7 @@ async function getLastSyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
@@ -221,6 +229,32 @@ if (BOOK_ID) {
   globalThis.MISSING_PAGE_IDS = new Set(myRows.map(r => r.page_id));
   pageQuery.book_id = { $in: myBookIds };
   console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
+} else if (BOOKS_FILE) {
+  const targetIds = JSON.parse(fs.readFileSync(BOOKS_FILE, 'utf8'));
+  if (!Array.isArray(targetIds) || !targetIds.length) {
+    console.error(`--books-file ${BOOKS_FILE} is empty or not a JSON array`);
+    process.exit(1);
+  }
+  // Fetch page_ids already embedded for these books (REST, chunked) so we skip
+  // them in the loop and only embed the not-yet-present (untranslated) pages.
+  console.log(`Loading ${targetIds.length.toLocaleString()} target books; finding already-embedded pages...`);
+  const existing = new Set();
+  for (let i = 0; i < targetIds.length; i += 200) {
+    const chunk = targetIds.slice(i, i + 200);
+    let from = 0;
+    for (;;) {
+      const { data, error } = await supabase
+        .from('page_translations').select('page_id')
+        .in('book_id', chunk).range(from, from + 999);
+      if (error) { console.error('Supabase select error:', error.message); process.exit(1); }
+      for (const r of (data || [])) existing.add(r.page_id);
+      if (!data || data.length < 1000) break;
+      from += 1000;
+    }
+  }
+  globalThis.SKIP_PAGE_IDS = existing;
+  pageQuery.book_id = { $in: targetIds };
+  console.log(`${existing.size.toLocaleString()} pages already embedded — will embed the rest.`);
 } else if (RESTALE) {
   // Find rows whose Mongo source has moved past the Supabase mongo_updated_at
   // watermark — re-OCR or re-translation in Mongo without a re-embed. The
@@ -365,6 +399,12 @@ for await (const page of cursor) {
   // The MongoDB query is scoped to candidate books but most of their pages
   // are fine — skip the ones not in the set.
   if ((MISSING_ONLY || RESTALE) && !globalThis.MISSING_PAGE_IDS.has(page.id)) {
+    skipped++;
+    processed++;
+    continue;
+  }
+  // --books-file: skip pages already in page_translations; embed only the rest.
+  if (BOOKS_FILE && globalThis.SKIP_PAGE_IDS.has(page.id)) {
     skipped++;
     processed++;
     continue;
