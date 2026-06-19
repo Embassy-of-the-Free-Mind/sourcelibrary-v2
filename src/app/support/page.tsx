@@ -122,14 +122,15 @@ export default async function SupportPage() {
                   <span className="block text-sm font-semibold text-stone-900">Donate via EFM</span>
                   <span className="block text-xs text-stone-500 mt-1">ANBI-registered (NL)</span>
                 </a>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`}
-                  className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block sm:col-span-2"
-                >
-                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">Large gifts</span>
-                  <span className="block text-sm font-semibold text-stone-900">Contact us directly</span>
-                  <span className="block text-xs text-stone-500 mt-1">Wire, stock, or donor-advised fund</span>
-                </a>
+                <div className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 sm:col-span-2">
+                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">Large gifts — wire, stock, or donor-advised fund</span>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`}
+                    className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
+                </div>
               </div>
 
               <p className="mt-5 text-xs text-stone-500 leading-relaxed">
