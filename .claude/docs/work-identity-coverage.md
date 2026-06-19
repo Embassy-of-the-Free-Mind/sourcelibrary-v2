@@ -27,11 +27,9 @@ Cluster editions by a shared **`work_id`** and read coverage off the cluster.
 Hardened over many spot-checked passes against real failures. **Author anchor is
 the linchpin; a title match without author agreement is what burns you.**
 
-1. ~~**External-id bridge** (deterministic) — book already carries an
-   OpenLibrary-work / OCLC / LCCN → resolve to a Wikidata work QID.~~ **DEAD
-   (verified 2026-06-19): 0 books carry `openlibrary_work`/`oclc`/`lccn` under
-   those field names.** The earlier "~2.5k books carry one" claim was wrong. If
-   external work ids ever land, re-enable this; today it resolves nothing.
+1. ~~**External-id bridge** (deterministic).~~ **DEAD (verified 2026-06-19): 0
+   books carry `openlibrary_work`/`oclc`/`lccn`.** The "~2.5k carry one" claim
+   was wrong; this resolves nothing today.
 2. **Author-anchored title match** — resolve `author_id` → canonical author →
    authority id, look **only** at works by that author (collapses ~10–80k
    candidates to a handful), then match the title. Requirements that earn a HIGH:
@@ -80,15 +78,23 @@ language original mistagged `modern-translation` shows as a false gap (e.g.
 Āryabhaṭīya). Clean `text_role` before trusting the gap list.
 
 ## Open levers
-- **Embedding-based clustering (highest-leverage, free).** Reuse the 35,943
-  `book_embeddings` already in Supabase (one vector per book: title+author+
-  summary+entities). Same-work editions cluster tightly — probe 2026-06-19:
-  intra-work cos mean 0.88 vs cross-work 0.73. Design: embeddings as the recall
-  layer + the author-anchor fit-rule as the precision gate. Reaches the native-
-  script Tibetan/Chinese mass that title-matching can't, without re-embedding.
-  Script: `scripts/analysis/cluster-works-by-embedding.mjs`. Tracked in #1634.
-- ~~**Wire the external-id bridge** (OpenLibrary-work/OCLC).~~ DEAD — 0 books
-  carry those fields (see fit-rule #1 above).
+- **Embedding clustering = candidate generator, NOT an auto-writer (tested to
+  exhaustion 2026-06-19, #1634).** Reusing stored embeddings (`book_embeddings`
+  ~36K; `page_translations` ~4.3M incl. the OCR tail embedded that day, 4%→96%
+  labeled coverage) gives good cross-author *recall* (book-emb intra-work cos
+  0.88 vs cross 0.73) but **no aggregation reaches a precision-first (~95%)
+  within-author gate**: book mean-pool 62%, page mean-pool 70%, page max-pair
+  47% (boilerplate — title pages / series headers / shared prefaces — makes
+  *different* works by one author share max-cos=1.0 page pairs). So clustering
+  is a **review-queue generator** (embeddings recall → title-anchor gate →
+  human review), never blind auto-write. Tool:
+  `scripts/analysis/cluster-works-by-embedding.mjs`. Title-anchor resolvers
+  (#2539/#2545) stay the precision instrument. (The OCR embed was still worth
+  it as an independent *search*-coverage win — 35.5K original-language pages
+  now indexed.)
+- ~~**Wire the external-id bridge** (OpenLibrary-work/OCLC).~~ DEAD (verified
+  2026-06-19): 0 books carry `openlibrary_work`/`oclc`/`lccn`. The "~2.5k
+  carry one" claim was wrong.
 - **Title-direct path for Pali / anonymous works** (Tipiṭaka, Vedas, sutras).
 - **Transliterate-then-match** for Tibetan/Chinese/Pali catalogs (Gemini).
 - **`text_role` cleanup** so the gap side is as trustworthy as the covered side.
