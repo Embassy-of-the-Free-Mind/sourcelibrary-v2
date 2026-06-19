@@ -375,6 +375,12 @@ export default async function CatalogEntryPage({ params }: Props) {
             {showReviewLink && (
               <>
                 <a
+                  href="/catalog/new"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+                >
+                  + New record
+                </a>
+                <a
                   href="/catalog/review"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
                 >
@@ -388,6 +394,12 @@ export default async function CatalogEntryPage({ params }: Props) {
                 </a>
               </>
             )}
+            <a
+              href="/catalog/help"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+            >
+              Help
+            </a>
             <a
               href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"

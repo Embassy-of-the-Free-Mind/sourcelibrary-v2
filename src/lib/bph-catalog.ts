@@ -202,6 +202,9 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
   if (!current && changeType !== 'create') {
     throw new BphCatalogError(`bph_works row not found for ubn=${ubn}`);
   }
+  if (current && changeType === 'create') {
+    throw new BphCatalogError(`A catalogue entry with UBN "${ubn}" already exists — edit it instead`);
+  }
 
   const appliedAt = new Date().toISOString();
   const revisionId = crypto.randomUUID();
@@ -250,9 +253,10 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
 
   if (revErr) throw new BphCatalogError('insert bph_works_revisions failed', revErr);
 
-  // 3. Update bph_works. Merge provenance into the existing JSONB so other
-  //    writers' entries survive — Postgres does a deep merge with `||` only
-  //    at top level, which is exactly what we want here (per-field keys).
+  // 3. Write bph_works. For a create we INSERT a fresh row; for an edit we
+  //    UPDATE in place, merging provenance into the existing JSONB so other
+  //    writers' entries survive (Postgres `||` deep-merges at the top level,
+  //    which is exactly what we want for per-field keys).
   const existingProvenance = current?.field_provenance;
   const mergedProvenance = {
     ...(typeof existingProvenance === 'object' && existingProvenance !== null
@@ -261,20 +265,41 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     ...provenancePatch,
   };
 
-  const { error: updErr } = await supabaseAdmin
-    .from('bph_works')
-    .update({
-      ...updates,
-      field_provenance: mergedProvenance,
-    })
-    .eq('ubn', ubn);
+  if (changeType === 'create') {
+    // Brand-new record. Only `ubn` is required by the schema; everything else
+    // is nullable, so we insert just the supplied fields plus provenance and a
+    // created_at stamp. The record is marked Source-Library-originated so it's
+    // distinguishable from Memorix-synced rows (and won't be clobbered by a
+    // future Memorix upsert, which keys on numeric UBNs).
+    const { error: insErr } = await supabaseAdmin
+      .from('bph_works')
+      .insert({
+        ubn,
+        ...updates,
+        field_provenance: mergedProvenance,
+        created_at: appliedAt,
+        record_type: 'source-library',
+        acquisition_source: `source-library-editor:${editorEmail}`,
+      });
+    if (insErr) {
+      throw new BphCatalogError('insert bph_works failed (revision is orphaned)', insErr);
+    }
+  } else {
+    const { error: updErr } = await supabaseAdmin
+      .from('bph_works')
+      .update({
+        ...updates,
+        field_provenance: mergedProvenance,
+      })
+      .eq('ubn', ubn);
 
-  if (updErr) {
-    // Revision row is already in. Surface the error so the caller knows
-    // bph_works was NOT mutated, and the revision is a no-op record.
-    // Operationally rare — a later cleanup script can flag orphan revisions
-    // whose field_changes never landed.
-    throw new BphCatalogError('update bph_works failed (revision is orphaned)', updErr);
+    if (updErr) {
+      // Revision row is already in. Surface the error so the caller knows
+      // bph_works was NOT mutated, and the revision is a no-op record.
+      // Operationally rare — a later cleanup script can flag orphan revisions
+      // whose field_changes never landed.
+      throw new BphCatalogError('update bph_works failed (revision is orphaned)', updErr);
+    }
   }
 
   // 4. Best-effort Atlas mirror. The BPH row is canonical; Atlas books is
@@ -290,6 +315,36 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
   }
 
   return { revisionId, appliedAt };
+}
+
+/**
+ * Suggest the next Source-Library-originated UBN (`SL-000123`). New records
+ * created in the editor get an `SL-` prefixed id rather than a numeric one so
+ * they never collide with the BPH's authoritative numeric UBN namespace (the
+ * Memorix sync upserts on numeric UBNs). Editors can override the suggestion
+ * with a real BPH UBN if the record already has one — uniqueness is enforced
+ * by the primary key and the create guard in applyWorkRevision.
+ *
+ * Best-effort: on any lookup failure we fall back to a timestamp-free random
+ * suffix so the create page still renders a usable default.
+ */
+export async function suggestNewUbn(): Promise<string> {
+  const pad = (n: number) => `SL-${String(n).padStart(6, '0')}`;
+  if (!supabaseAdmin) return pad(1);
+  try {
+    const { data } = await supabaseAdmin
+      .from('bph_works')
+      .select('ubn')
+      .like('ubn', 'SL-%')
+      .order('ubn', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const last = (data as { ubn?: string } | null)?.ubn;
+    const n = last ? parseInt(last.replace(/^SL-/, ''), 10) : 0;
+    return pad(Number.isFinite(n) ? n + 1 : 1);
+  } catch {
+    return pad(1);
+  }
 }
 
 /**
