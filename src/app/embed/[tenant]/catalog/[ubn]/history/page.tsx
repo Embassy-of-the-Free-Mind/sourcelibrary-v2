@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { supabase } from '@/lib/supabase';
+import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { getDb } from '@/lib/mongodb';
 
 /**
  * BPH catalog entry revision history — append-only log of every change
@@ -61,6 +62,51 @@ function timeAgo(iso: string): string {
   return new Date(iso).toLocaleDateString();
 }
 
+/**
+ * Mask a personal email for public display: keep the first character of the
+ * local part and the domain, redact the rest. `jbouman@efm.amsterdam` →
+ * `j••@efm.amsterdam`. This page is reachable signed-out (robots-noindexed
+ * but HTTP 200), so we never render a cataloguer's full address on the open
+ * web — only their display name when we have one, or this masked fallback.
+ */
+function maskEmail(email: string): string {
+  const at = email.indexOf('@');
+  if (at <= 0) return '—';
+  const local = email.slice(0, at);
+  const domain = email.slice(at + 1);
+  return `${local[0]}••@${domain}`;
+}
+
+/**
+ * Resolve display names for a set of editor emails. Prefers the user's
+ * `name` from the Atlas `users` collection; falls back to a masked email so
+ * a missing profile name never leaks the full address. System writers
+ * (`system:<job>`) render as-is.
+ */
+async function resolveDisplayNames(emails: string[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  const real = [...new Set(emails.filter((e) => e && !e.startsWith('system:')))];
+  let names = new Map<string, string>();
+  if (real.length > 0) {
+    try {
+      const db = await getDb();
+      const users = await db
+        .collection('users')
+        .find({ email: { $in: real } }, { projection: { email: 1, name: 1 } })
+        .toArray();
+      names = new Map(users.map((u) => [u.email as string, (u.name as string) || '']));
+    } catch {
+      // Fall through to masked emails if the lookup fails.
+    }
+  }
+  for (const e of [...new Set(emails)]) {
+    if (!e) continue;
+    if (e.startsWith('system:')) out.set(e, e);
+    else out.set(e, names.get(e)?.trim() || maskEmail(e));
+  }
+  return out;
+}
+
 export default async function CatalogHistoryPage({ params }: Props) {
   const { tenant, ubn } = await params;
   if (tenant !== 'bph') notFound();
@@ -75,7 +121,14 @@ export default async function CatalogHistoryPage({ params }: Props) {
   const work = workRow as { ubn: string; title: string | null; parallel_title: string | null; uniform_title: string | null };
   const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
 
-  const { data, error } = await supabase
+  // `bph_works_revisions` is RLS-protected — the anon client returns zero
+  // rows with no error, which used to render as a permanently-empty history
+  // even when revisions existed. Read with the service-role client (this is a
+  // server component, so it never reaches the browser). Fall back to the anon
+  // client only if the service key is missing, so the page degrades rather
+  // than crashing.
+  const reader = supabaseAdmin ?? supabase;
+  const { data, error } = await reader
     .from('bph_works_revisions')
     .select('id, ubn, change_type, field_changes, editor_email, proposed_by, applied_at, note')
     .eq('ubn', ubn)
@@ -85,6 +138,12 @@ export default async function CatalogHistoryPage({ params }: Props) {
   const tableMissing = error?.message?.toLowerCase().includes('does not exist') || error?.message?.toLowerCase().includes('could not find');
 
   const rows = (data || []) as RevisionRow[];
+
+  // Resolve cataloguer display names so we never print raw emails publicly.
+  const editorNames = await resolveDisplayNames(
+    rows.flatMap((r) => [r.editor_email, r.proposed_by].filter(Boolean) as string[]),
+  );
+  const nameFor = (email: string | null) => (email ? editorNames.get(email) || maskEmail(email) : '—');
 
   return (
     <div className="bg-cream min-h-screen">
@@ -110,7 +169,7 @@ export default async function CatalogHistoryPage({ params }: Props) {
           </div>
         ) : rows.length === 0 ? (
           <div className="p-6 rounded-lg border border-border-light bg-white text-center text-muted text-sm">
-            No revisions recorded for this work yet. New edits (from PR-C onwards) will appear here.
+            No revisions recorded for this work yet. Once an editor saves a change to this entry, it will appear here.
           </div>
         ) : (
           <ol className="space-y-3">
@@ -127,9 +186,9 @@ export default async function CatalogHistoryPage({ params }: Props) {
                     </span>
                     <span className="text-xs text-muted">{timeAgo(rev.applied_at)}</span>
                     <span className="text-xs text-muted ml-auto">
-                      by {rev.editor_email}
+                      by {nameFor(rev.editor_email)}
                       {rev.proposed_by && rev.proposed_by !== rev.editor_email && (
-                        <span> · proposed by {rev.proposed_by}</span>
+                        <span> · proposed by {nameFor(rev.proposed_by)}</span>
                       )}
                     </span>
                   </header>

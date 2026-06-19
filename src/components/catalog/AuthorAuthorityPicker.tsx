@@ -51,6 +51,28 @@ interface Props {
   debounceMs?: number;
 }
 
+/**
+ * VIAF search can return several rows for the same VIAF cluster (e.g. one
+ * with life dates, one without). Collapse them to one row per VIAF id, keeping
+ * the richest record (prefer entries that carry birth/death years or a
+ * Wikidata id). Rows without a VIAF id pass through untouched.
+ */
+function dedupeByViaf(matches: AuthorAuthorityMatch[]): AuthorAuthorityMatch[] {
+  const byViaf = new Map<string, AuthorAuthorityMatch>();
+  const passthrough: AuthorAuthorityMatch[] = [];
+  const richness = (m: AuthorAuthorityMatch) =>
+    (m.birth_year || m.death_year ? 2 : 0) + (m.wikidata_qid ? 1 : 0);
+  for (const m of matches) {
+    if (!m.viaf_id) {
+      passthrough.push(m);
+      continue;
+    }
+    const existing = byViaf.get(m.viaf_id);
+    if (!existing || richness(m) > richness(existing)) byViaf.set(m.viaf_id, m);
+  }
+  return [...byViaf.values(), ...passthrough];
+}
+
 export default function AuthorAuthorityPicker({
   authorText,
   current,
@@ -100,7 +122,7 @@ export default function AuthorAuthorityPicker({
         setResults([]);
       } else {
         const json = (await res.json()) as AuthorAuthorityResult;
-        setResults(json.matches || []);
+        setResults(dedupeByViaf(json.matches || []));
       }
       setSearched(true);
     } catch (err) {
