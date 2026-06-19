@@ -28,7 +28,7 @@ const DELAY_MS = 500; // be respectful
 // ── Load episode URLs from TS file ──────────────────────────────────────────
 
 function loadEpisodes() {
-  const epPath = path.join(__dirname, '..', 'src', 'data', 'shwep-episodes.ts');
+  const epPath = path.join(__dirname, '..', '..', 'src', 'data', 'shwep-episodes.ts');
   const content = fs.readFileSync(epPath, 'utf-8');
   const episodes = [];
   const regex = /\{\s*number:\s*(\d+),\s*title:\s*"([^"]+)",\s*url:\s*"([^"]+)"/g;
@@ -155,9 +155,21 @@ function extractBibliography(html) {
     }
   }
 
-  // Truncate if very long (some episodes have huge reading lists)
-  if (bibliography.length > 5000) {
-    bibliography = bibliography.slice(0, 5000) + '\n[truncated]';
+  // The bibliography match runs to the end of the page, so it swallows the
+  // trailing site chrome (the "Themes" tag block and the members-only "Comments"
+  // section). Cut at the first such boundary BEFORE truncating, otherwise a long
+  // comment thread pushes the real bibliography past the length cap.
+  const cutMarkers = ['### Themes', '### Comments', 'Comments are open to SHWEP'];
+  let cut = bibliography.length;
+  for (const marker of cutMarkers) {
+    const i = bibliography.indexOf(marker);
+    if (i >= 0 && i < cut) cut = i;
+  }
+  bibliography = bibliography.slice(0, cut).trim();
+
+  // Cap only genuinely enormous reading lists (after chrome removal these are rare).
+  if (bibliography.length > 20000) {
+    bibliography = bibliography.slice(0, 20000) + '\n[truncated]';
   }
 
   return bibliography;
@@ -229,7 +241,7 @@ async function main() {
   console.log(`Scraping ${episodes.length} episode pages...`);
 
   // Load existing reading lists if available
-  const outputPath = path.join(__dirname, '..', 'src', 'data', 'shwep-reading-lists.ts');
+  const outputPath = path.join(__dirname, '..', '..', 'src', 'data', 'shwep-reading-lists.ts');
   const readingLists = {};
 
   let scraped = 0;
@@ -263,7 +275,7 @@ async function main() {
     console.log(`Written to ${outputPath}`);
 
     // Also write raw JSON for inspection
-    const jsonPath = path.join(__dirname, '..', 'src', 'data', 'shwep-reading-lists.json');
+    const jsonPath = path.join(__dirname, '..', '..', 'src', 'data', 'shwep-reading-lists.json');
     fs.writeFileSync(jsonPath, JSON.stringify(readingLists, null, 2));
     console.log(`JSON written to ${jsonPath}`);
   }
