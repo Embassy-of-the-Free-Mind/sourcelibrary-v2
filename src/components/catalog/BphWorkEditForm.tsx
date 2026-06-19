@@ -30,8 +30,13 @@ interface Props {
   editorEmail: string;
   /** 'editor' → Save applies directly via applyWorkRevision.
    *  'contributor' → Save queues a row in bph_works_pending_changes for
-   *  editor review. The form UI changes copy but is otherwise identical. */
-  mode: 'editor' | 'contributor';
+   *  editor review. The form UI changes copy but is otherwise identical.
+   *  'create' → brand-new record; the form shows a UBN field and POSTs to
+   *  the create endpoint. `initial` is empty so every filled field is a
+   *  change. */
+  mode: 'editor' | 'contributor' | 'create';
+  /** Create mode only: the pre-filled, editable catalogue id. */
+  suggestedUbn?: string;
 }
 
 // Mirrors EDITABLE_BPH_FIELDS in src/lib/bph-catalog.ts, organised into the
@@ -148,8 +153,9 @@ function isUnchanged(orig: unknown, next: unknown): boolean {
   return false;
 }
 
-export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _editorEmail, mode }: Props) {
+export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _editorEmail, mode, suggestedUbn }: Props) {
   const router = useRouter();
+  const isCreate = mode === 'create';
 
   // Form state — one entry per editable field, all strings (number-typed
   // fields are coerced at submit time so users can clear them by deleting).
@@ -164,6 +170,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
   }, [initial]);
 
   const [values, setValues] = useState<Record<string, string>>(initialFormValues);
+  const [createUbn, setCreateUbn] = useState(suggestedUbn || '');
   const [source, setSource] = useState('');
   const [evidence, setEvidence] = useState('');
   const [note, setNote] = useState('');
@@ -186,12 +193,20 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isCreate && !createUbn.trim()) {
+      setError('Give the new record a UBN (catalogue id).');
+      return;
+    }
     if (changedFields.length === 0) {
-      setError('No fields have changed — nothing to save.');
+      setError(isCreate ? 'Add at least a title before saving.' : 'No fields have changed — nothing to save.');
       return;
     }
     if (!source.trim()) {
-      setError('Please cite a source for this change (e.g. "title page, vol. I" or "USTC 12345").');
+      setError(
+        isCreate
+          ? 'Please cite a source for this record (e.g. "title page" or "BPH accession record").'
+          : 'Please cite a source for this change (e.g. "title page, vol. I" or "USTC 12345").',
+      );
       return;
     }
     setError(null);
@@ -214,10 +229,14 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
     }
 
     try {
-      const res = await fetch(`/api/${tenant}/catalog/${encodeURIComponent(ubn)}/edit`, {
+      const endpoint = isCreate
+        ? `/api/${tenant}/catalog/create`
+        : `/api/${tenant}/catalog/${encodeURIComponent(ubn)}/edit`;
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
+          ...(isCreate ? { ubn: createUbn.trim() } : {}),
           fieldChanges,
           ...(note.trim() ? { note: note.trim() } : {}),
         }),
@@ -228,7 +247,15 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         setSubmitting(false);
         return;
       }
-      const body = (await res.json()) as { mode?: 'applied' | 'queued'; pendingId?: string };
+      const body = (await res.json()) as { mode?: 'applied' | 'queued' | 'created'; pendingId?: string; ubn?: string };
+      if (body.mode === 'created') {
+        // New record is live. Land the cataloguer on it so they can see the
+        // entry they just made (and its first history row).
+        const newUbn = body.ubn || createUbn.trim();
+        router.push(`/catalog/${encodeURIComponent(newUbn)}`);
+        router.refresh();
+        return;
+      }
       if (body.mode === 'queued' && body.pendingId) {
         // Contributor flow: hold on the form, show a clear success banner,
         // and let the user navigate back when they're ready. Redirecting to
@@ -289,9 +316,32 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         </div>
       )}
 
+      {/* Create mode — new-record intro + the catalogue id. The UBN is
+          pre-filled with a safe Source-Library id (SL-…) but editors can
+          replace it with a real BPH UBN if the record already has one. */}
+      {isCreate && (
+        <div className="p-4 bg-white border border-border-light rounded-lg">
+          <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-3">New catalogue record</h2>
+          <FormField
+            label="UBN (catalogue id) *"
+            hint="Pre-filled with a Source-Library id. Replace it with the BPH UBN if this record already has one. Letters, numbers, dot, dash, underscore only."
+          >
+            <input
+              type="text"
+              value={createUbn}
+              onChange={(e) => setCreateUbn(e.target.value)}
+              className="w-full text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary font-mono focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
+              placeholder="SL-000001"
+            />
+          </FormField>
+        </div>
+      )}
+
       {/* Source citation — required, applies to every changed field. */}
       <div className="p-4 bg-white border border-border-light rounded-lg">
-        <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-3">Source for this change</h2>
+        <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-3">
+          {isCreate ? 'Source for this record' : 'Source for this change'}
+        </h2>
         <div className="space-y-3">
           <FormField label="Source citation *" hint="What did you consult to make this change? E.g. &ldquo;title page, vol. I, 1602&rdquo; or &ldquo;USTC 2024571&rdquo;.">
             <input
@@ -415,18 +465,18 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
       <div className="sticky bottom-3 z-10 flex items-center justify-between gap-3 p-3 bg-white border border-border-light rounded-lg shadow-sm">
         <div className="text-sm text-muted">
           {changedFields.length === 0 ? (
-            'No changes yet'
+            isCreate ? 'Add a title to begin' : 'No changes yet'
           ) : (
             <>
               <span className="font-medium text-primary">{changedFields.length}</span>{' '}
-              field{changedFields.length === 1 ? '' : 's'} changed
+              field{changedFields.length === 1 ? '' : 's'} {isCreate ? 'filled' : 'changed'}
             </>
           )}
           {error && <span className="ml-3 text-accent-rust">{error}</span>}
         </div>
         <div className="flex items-center gap-2">
           <a
-            href={`/catalog/${encodeURIComponent(ubn)}`}
+            href={isCreate ? '/catalog' : `/catalog/${encodeURIComponent(ubn)}`}
             className="px-3 py-1.5 text-sm text-muted hover:text-primary transition-colors"
           >
             Cancel
@@ -437,8 +487,8 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
             className="px-4 py-1.5 text-sm rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {submitting
-              ? mode === 'contributor' ? 'Submitting…' : 'Saving…'
-              : mode === 'contributor' ? 'Submit for review' : 'Save changes'}
+              ? isCreate ? 'Creating…' : mode === 'contributor' ? 'Submitting…' : 'Saving…'
+              : isCreate ? 'Create record' : mode === 'contributor' ? 'Submit for review' : 'Save changes'}
           </button>
         </div>
       </div>
