@@ -19,8 +19,8 @@ const LETTER_IMG1 = 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f04
 const LETTER_IMG2 =
   'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg';
 
-const PICO_QUOTE_URL =
-  '/book/ioannis-pici-mirandulae-omnia-opera-mirandola/page/695906974953388fe7ac6d15';
+// Pico, Oration on the Dignity of Man (Opera, Bologna 1496), p. 91 — verified passage
+const PICO_QUOTE_URL = 'https://sourcelibrary.org/q/Bek54SCHDUKr4EJMnM3';
 const CONTACT_EMAIL = 'derek@sourcelibrary.org';
 const TALK_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   'Source Library — let’s talk'
@@ -91,15 +91,29 @@ export default function VisionPage() {
           Mirandola.
         </p>
 
-        {/* Pico pull-quote */}
+        {/* Pico pull-quote — Latin original + translation, verified to p.91 */}
         <figure className="my-12 pl-8 border-l-2 border-accent-rust">
-          <blockquote className="font-serif italic text-2xl md:text-[1.625rem] text-primary leading-snug">
-            &ldquo;Magic is the absolute consummation of natural philosophy.&rdquo;
+          <blockquote
+            lang="la"
+            className="font-serif italic text-xl md:text-2xl text-primary/80 leading-snug mb-4"
+          >
+            &ldquo;&hellip;altera nihil est aliud, cum bene exploratur, quam naturalis
+            philosophi&aelig; absoluta consummatio.&rdquo;
+          </blockquote>
+          <blockquote className="font-serif text-2xl md:text-[1.625rem] text-primary leading-snug">
+            &ldquo;The second kind [of magic], when properly explored, is nothing other than the
+            absolute consummation of natural philosophy.&rdquo;
           </blockquote>
           <figcaption className="mt-4 text-sm tracking-wide uppercase text-muted">
-            <Link href={PICO_QUOTE_URL} className="hover:text-accent-rust underline">
-              Giovanni Pico della Mirandola &mdash; read it at the source
-            </Link>
+            <a
+              href={PICO_QUOTE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent-rust underline"
+            >
+              Giovanni Pico della Mirandola, <em>Oration on the Dignity of Man</em> (1496)
+              &mdash; read it at the source
+            </a>
           </figcaption>
         </figure>
 
