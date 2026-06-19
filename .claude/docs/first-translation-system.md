@@ -4,9 +4,21 @@
 
 **Related issues:** [#2567](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2567) (cluster map / tracking) · [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter — central gap) · [#2352](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2352) (work-keyed translation index) · [#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564) (measurement + effort-routing + single-writer) · [#2264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2264) (work resolver) · [#2453](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2453) (works catalog) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
 
-> **Refreshed 2026-06-19** with §0 (re-pinned numbers + skeptical findings), §14 (eval & validation), §15 (writer sprawl), §16 (architecture cluster). The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted — **§0 supersedes them.**
+> **Refreshed 2026-06-19** with the First Principle (below), §0 (re-pinned numbers + skeptical findings), §14 (eval & validation), §15 (writer sprawl), §16 (architecture cluster), §17 (process invariant). The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted — **§0 supersedes them.**
 
 ---
+
+## First principle — a claim's strength must equal its verification
+
+Everything in this system derives from one **asymmetry**: *"a prior English translation exists"* is settled by **one confirmed sighting** (a resolvable catalog record — monotonic, cheap, high-precision), whereas *"no prior exists"* is a claim about the **absence of evidence** — never absolute, only ever as strong as the breadth + documentation of the search ("first, as far as we looked, as of this date"). The whole architecture is consequences of this, not independent choices:
+
+- **A positive ("found") may be trusted only when the sighting is *real*** — not a self-match (prior = the book's own record), not an anthology/study, same source-language, complete-not-partial, person-disambiguated author. A *fake* found is the failure mode (§17). The guards are just "confirm the sighting is real," made executable.
+- **A negative ("first") is earned, not asserted** — its strength = documented search coverage: the effort tiers, the append-only attempt-log, and the bounded "none found in [sources] as of [date]." It is never "first, period."
+- **The pieces interlock under one rule:** the registry accumulates *verified positives* (the flywheel + the #1974 setter); the effort tiers spend verification proportional to difficulty (and the tier that resolves a book *is* its confidence); stratified sampling buys a corpus claim with a bounded amount of verification and lets the CI carry the residual (and you must measure the measurer); the single-writer derivation is safe **exactly when its source is verified and dangerous exactly when it isn't.**
+
+**Every first-translation error we've hit is the same error — a claim asserted beyond its verification:** the 155-book sweep trusted single-pass grounding-*absence* as a verified negative; the 125-conflict signal trusted a noisy script's *positives*; the 39-demotion trusted the disposition's *unverified positives* (and silently demoted a verified first — §17). 
+
+**The standing test for any change to this system:** *does the strength of what we assert match the verification we actually did — in both directions?* (Don't over-claim a "first" from a blind search; don't over-trust a "found" from an unverified match. Mass-restore is as dangerous as mass-demote.)
 
 ## 0. Update 2026-06-19 — re-pinned numbers + skeptical findings
 
