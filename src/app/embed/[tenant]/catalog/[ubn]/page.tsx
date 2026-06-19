@@ -46,6 +46,7 @@ interface BphWorkRow {
   author_entity_id: string | null;
   author_canonical_name: string | null;
   author_wikidata_qid: string | null;
+  author_viaf_id: string | null;
   place: string | null;
   printer: string | null;
   publisher: string | null;
@@ -112,7 +113,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   const select = `
       ubn, title, parallel_title, uniform_title,
       author, variant_author, pseudonym, editor, variant_editor,
-      author_entity_id, author_canonical_name, author_wikidata_qid,
+      author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
@@ -130,7 +131,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
     '',
   );
   const fallbackNoAuthority = fallbackSelect.replace(
-    'author_entity_id, author_canonical_name, author_wikidata_qid,\n      ',
+    'author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,\n      ',
     '',
   );
   const first = await supabase.from('bph_works').select(select).eq('ubn', ubn).maybeSingle();
@@ -588,18 +589,18 @@ export default async function CatalogEntryPage({ params }: Props) {
               actually linked. The label uses "Standard name (VIAF)" to mirror
               the terminology in the editor's picker, so cataloguers see the
               same wording on read and write. */}
-          {(work.author_canonical_name || work.author_entity_id || work.author_wikidata_qid) && (
+          {(work.author_canonical_name || work.author_viaf_id || work.author_wikidata_qid) && (
             <FieldRaw label="Standard name (VIAF)">
               <span className="flex flex-wrap items-baseline gap-x-2 text-primary">
                 {work.author_canonical_name && <span>{work.author_canonical_name}</span>}
-                {work.author_entity_id && (
+                {work.author_viaf_id && (
                   <a
-                    href={`https://viaf.org/viaf/${work.author_entity_id}`}
+                    href={`https://viaf.org/viaf/${work.author_viaf_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-secondary hover:underline text-xs"
                   >
-                    VIAF {work.author_entity_id}
+                    VIAF {work.author_viaf_id}
                   </a>
                 )}
                 {work.author_wikidata_qid && (
