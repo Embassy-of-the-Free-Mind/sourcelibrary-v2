@@ -1,16 +1,21 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { isInAppBrowser, preferredBrowser, inAppBrowserName } from '@/lib/in-app-browser';
+import { trackEvent } from '@/lib/track-event';
 
 function SignInContent() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
   const error = searchParams.get('error');
+  // 'limit' when arriving from an anon-gate wall (search/librarian/voice tag
+  // their sign-in links with reason=limit); 'direct' otherwise (nav, etc.).
+  // Lets us answer "do people sign in proactively or only when blocked?"
+  const reason = searchParams.get('reason') === 'limit' ? 'limit' : 'direct';
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,6 +28,14 @@ function SignInContent() {
   const [inApp, setInApp] = useState(false);
   const [browser, setBrowser] = useState<'Safari' | 'Chrome'>('Chrome');
   const [appName, setAppName] = useState<string | null>(null);
+  // Log the sign-in page view once, tagged with why they arrived.
+  const loggedView = useRef(false);
+  useEffect(() => {
+    if (loggedView.current) return;
+    loggedView.current = true;
+    trackEvent('signin_view', { reason, source: callbackUrl });
+  }, [reason, callbackUrl]);
+
   useEffect(() => {
     const ua = navigator.userAgent;
     setInApp(isInAppBrowser(ua));

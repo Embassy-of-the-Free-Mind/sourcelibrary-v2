@@ -405,7 +405,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
           // to sign in (free) to continue.
           updateLastAssistant(m => ({
             ...m,
-            content: 'You\'ve used your free questions for now. [Sign in](/auth/signin?callbackUrl=/librarian) (free) to keep talking with the Librarian — create an account or sign in with Google.',
+            content: 'You\'ve used your free questions for now. [Sign in](/auth/signin?callbackUrl=/librarian&reason=limit) (free) to keep talking with the Librarian — create an account or sign in with Google.',
           }));
         } else {
           updateLastAssistant(m => ({ ...m, content: err.error || 'Something went wrong. Please try again.' }));
