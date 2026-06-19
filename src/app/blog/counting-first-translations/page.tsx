@@ -112,7 +112,7 @@ export default function CountingFirstTranslationsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          In a random sample of this pool, <strong>about a quarter turned out to be genuine first translations</strong> &mdash; books with no prior English version anywhere we could find. A quarter of 8,300 is roughly <strong>2,000&ndash;2,300 first translations we simply never claimed.</strong>
+          In a random sample of this pool, <strong>just under a quarter turned out to be genuine first translations</strong> &mdash; books with no prior English version anywhere we could find. Scaled across the 8,300, that&apos;s on the order of <strong>1,900 first translations we simply never claimed</strong> (with a wide margin &mdash; somewhere between ~1,300 and ~2,800).
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -122,18 +122,18 @@ export default function CountingFirstTranslationsPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The surprise: the bigger error is the firsts we miss</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Put the two sides together and the headline flips. The badged set <em>over</em>-claims by roughly 1,900 books. But the never-assessed pool <em>under</em>-claims by more &mdash; an estimated <strong>~2,300 genuine firsts we never flagged.</strong> The total number of first translations in the library is therefore plausibly <em>higher</em> than the number we badge today, not lower.
+          Put the two sides together and the headline shifts. The badged set <em>over</em>-claims by roughly 1,900 books (containers, art, already-translated). But the never-assessed pool <em>under</em>-claims by a strikingly similar amount &mdash; an estimated <strong>~1,900 genuine firsts we never flagged.</strong> The two errors very nearly cancel: the true total lands close to the number we badge today, but it is made of <em>different books</em>. The system isn&apos;t mostly over-claiming &mdash; it is mis-aiming in both directions at once.
         </p>
 
         <div className="bg-white rounded-xl border border-border-light p-6 mb-8">
           <p className="text-primary font-semibold mb-2">Best current estimate</p>
           <p className="text-secondary leading-relaxed mb-0">
-Roughly <strong>6,000 genuine first English translations</strong> across the library &mdash; about <strong>3,800</strong> among the books we badge today plus about <strong>2,300</strong> we never flagged &mdash; against ~14,000 translated, non-English books in all. That&apos;s a first translation for something like <strong>two of every five</strong> eligible books.
+Roughly <strong>5,700 genuine first English translations</strong> across the library (95% interval ~4,800&ndash;6,700) &mdash; about <strong>3,800</strong> among the books we badge today plus another <strong>~1,900</strong> we never flagged &mdash; against ~14,000 translated, non-English books in all. That&apos;s a first translation for something like <strong>two of every five</strong> eligible books.
           </p>
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          So &ldquo;around six thousand first English translations&rdquo; turns out to be defensible &mdash; but its <em>composition</em> is different from what the badges currently show. The right move isn&apos;t to shrink the claim; it&apos;s to <em>re-balance</em> it: take the badge off the ~1,900 over-claims and put it on the ~2,300 genuine firsts we&apos;d overlooked. Net, the number barely moves &mdash; but every claim now has an evidence trail behind it.
+          So the round &ldquo;roughly six thousand first English translations&rdquo; turns out to be roughly defensible &mdash; but its <em>composition</em> is different from what the badges currently show. The right move isn&apos;t to shrink the claim; it&apos;s to <em>re-balance</em> it: take the badge off the ~1,900 over-claims and put it on the ~1,900 genuine firsts we&apos;d overlooked. The headline number barely moves &mdash; but every claim then has an evidence trail behind it.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Fame, not language</h2>
@@ -157,7 +157,7 @@ Roughly <strong>6,000 genuine first English translations</strong> across the lib
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 text-muted text-sm">
-          Methodology and code are tracked in our public repository (issue #2564). Figures as of 19 June 2026; sampling intervals are 95% Wilson. Numbers will shift as samples widen and the re-balancing runs.
+          Methodology and code are tracked in our public repository (issue #2564). Figures from a 462-book sample of badged firsts and a 73-book sample of the never-assessed pool, June 2026; sampling intervals are 95% Wilson. The recall sample is still widening and the re-balancing has not yet run, so these numbers will firm up.
         </p>
       </article>
 
