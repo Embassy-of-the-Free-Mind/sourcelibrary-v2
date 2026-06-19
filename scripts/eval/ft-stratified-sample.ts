@@ -39,10 +39,14 @@ const FAMILY = {
 const family = (l) => (!l ? 'unknown' : FAMILY[l] || 'western');
 const density = (n) => (n >= 5 ? 'canonical' : n >= 1 ? 'mid' : 'obscure');
 
+// Placeholder "authors" that must NOT pool into a single high-density key —
+// otherwise every Anonymous/Unknown work is mis-stratified as `canonical`.
+const PLACEHOLDER_AUTHORS = new Set(['anonymous', 'anon', 'unknown', 'various', 'anonymus', 'n a', 'unbekannt', 'sundry']);
 function normAuthor(a) {
   if (!a) return '';
   // surname-ish key: take the part before the first comma, lowercase, strip dates.
-  return a.split(',')[0].toLowerCase().replace(/[^a-zÀ-ɏ ]/g, '').trim();
+  const key = a.split(',')[0].toLowerCase().replace(/[^a-zÀ-ɏ ]/g, '').trim();
+  return PLACEHOLDER_AUTHORS.has(key) ? '' : key;
 }
 
 // Fisher-Yates with a tiny seeded PRNG so draws are reproducible per run.
@@ -80,9 +84,11 @@ for (const { _id, n } of catalogAgg) {
 }
 function catalogRowsFor(author) {
   if (!author) return 0;
+  const surnameKey = normAuthor(author); // '' for placeholder/anonymous authors
+  if (!surnameKey) return 0; // never pool Anonymous/Unknown into a density bucket
   const exact = byNormAuthor.get(author.toLowerCase().trim());
   if (exact) return exact;
-  return bySurname.get(normAuthor(author)) || 0;
+  return bySurname.get(surnameKey) || 0;
 }
 
 console.error('Loading public firsts…');

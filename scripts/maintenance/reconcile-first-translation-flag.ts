@@ -23,6 +23,9 @@ const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
 const ONLY_DEMOTIONS = args.includes('--only-demotions');
 const SAMPLE = parseInt(args.find((a) => a.startsWith('--sample='))?.split('=')[1] || '0', 10);
+/** Restrict the demotion write to books whose derived verdict is one of these. */
+const VERDICT_FILTER = (args.find((a) => a.startsWith('--verdict='))?.split('=')[1] || '')
+  .split(',').map((s) => s.trim()).filter(Boolean);
 
 interface BookDoc extends FirstTranslationBook {
   _id: unknown;
@@ -95,8 +98,16 @@ async function main() {
   }
 
   // ── WRITE PATH (single writer) ─────────────────────────────────────────
-  const toDemote = demotions.map((b) => b._id);
-  const toPromote = ONLY_DEMOTIONS ? [] : promotions.map((b) => b._id);
+  // When --verdict is given, restrict the write to that bucket (and skip
+  // promotions) — e.g. --verdict=not_first writes only the unambiguous demotions.
+  const demoteSet = VERDICT_FILTER.length
+    ? demotions.filter((b) => VERDICT_FILTER.includes(firstTranslationVerdict(b) ?? 'no-verdict'))
+    : demotions;
+  if (VERDICT_FILTER.length) {
+    console.log(`\n--verdict filter ${JSON.stringify(VERDICT_FILTER)} -> writing ${demoteSet.length} of ${demotions.length} demotions`);
+  }
+  const toDemote = demoteSet.map((b) => b._id);
+  const toPromote = (ONLY_DEMOTIONS || VERDICT_FILTER.length) ? [] : promotions.map((b) => b._id);
   let demoted = 0, promoted = 0;
   if (toDemote.length) {
     const r = await books.updateMany({ _id: { $in: toDemote as any[] } }, { $set: { is_first_translation: false } });
