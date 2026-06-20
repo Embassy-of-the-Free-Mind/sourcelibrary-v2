@@ -80,9 +80,9 @@ export const visionContent: VisionContent = {
     'I want our founding donors to feel that directly. Picture an evening in the Bibliotheca with the original volumes of Fludd and Ficino open in front of you; an expedition to scan a monastery’s manuscripts before they’re lost; a hand in deciding what humanity translates next; and your name on the work, in perpetuity. I want them in the room, not just on the donor wall.',
   ],
   image2: {
-    src: '/vision/gathering-room.jpg',
-    alt: 'People working together at a Source Library gathering in Amsterdam',
-    caption: 'People in the room with the original texts — a gathering in Amsterdam.',
+    src: '/vision/bibliotheca.jpg',
+    alt: 'Guests in the Bibliotheca Philosophica Hermetica, Amsterdam',
+    caption: 'An evening in the Bibliotheca Philosophica Hermetica — the rare-book library at the heart of Source Library.',
   },
   bodyConvener: [
     'And here is the real reason I’m writing to you. I’m not only hoping for your support — I’m hoping you’ll help us *gather* the founding circle, not just join it. If you’re someone who brings remarkable people together around bold ideas, then helping convene the people who will steward humanity’s wisdom for the next century is something you’d be extraordinary at. I’d love to do it with you.',
