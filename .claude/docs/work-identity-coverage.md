@@ -153,7 +153,7 @@ support). It runs on `ustc_editions.work_cluster_id` (Supabase, ~1.63M editions,
 
 | step | script | does |
 |---|---|---|
-| series | `series/i-tatti.json`, `series/brill-doml.json` | hand-built authoritative enumerations of scholarly translation series (I Tatti Renaissance Library 85 vols; Brill 9; Dumbarton Oaks Medieval Library 79) **with Latin titles** — the catalog rows for these series carry no surname/original-title, so they were near-unmatchable. |
+| series | `series/*.json` | hand-built authoritative enumerations of scholarly translation series (I Tatti Renaissance Library 98 vols; Brill 24; Dumbarton Oaks Medieval Library 79) **with Latin titles** — the catalog rows for these series carry no surname/original-title, so they were near-unmatchable. Phase 01 loads every `series/*.json` by schema (a `series` field ⇒ brill/doml channel; none ⇒ ITRL). |
 | 01 | `01-build-external-works.mjs` | assembles distinct ENGLISH-translated **works** from EXTERNAL evidence = curated series ∪ (`translation_catalogs` ⨝ the flash-lite enrichment `translation-census-enriched-2026-06-20.jsonl`), **excluding all SL-origin sources**. Emits `external-translation-works.jsonl` + a separate `quarantine-sl-works.jsonl`. |
 | 02 | `02-pull-ustc-clusters.mjs` | caches the denominator: every Latin 1400-1700 edition collapsed to `work_cluster_id` (keyset-paginated — `.range()` offset scans die past ~100k rows). |
 | 03 | `03-match-and-gap.mjs` | matches external works → clusters at **work level**, emits the gap + `cluster-external-priors.jsonl`. |
@@ -183,8 +183,8 @@ our work = our impact.
   clusters. *Caveat: USTC `year` is PRINT year, so this includes early-modern
   reprints of ancient/medieval works — an UPPER bound on the Renaissance-composed
   Latin corpus, not a pure Renaissance set.*
-- Clusters with an **external** English-translation prior: **9,808 (2.7%)**.
-- **Gap: 356,397 clusters (97.3%) have no external prior** — a *conservative*
+- Clusters with an **external** English-translation prior: **9,830 (2.7%)**.
+- **Gap: 356,375 clusters (97.3%) have no external prior** — a *conservative*
   figure (residual low-IDF false positives mark works as translated, never the
   reverse, so the true gap is ≥97.3%). Consistent with Shuger's citable "90%
   never translated."
@@ -211,7 +211,8 @@ false positives at the low-IDF boundary (admin/legal formulae like "ad perpetuam
 rei memoriam", neo-Latin school commentaries matched to the ancient work they
 gloss); composition-era classification of the USTC denominator itself (to get a
 pure Renaissance-composed subset, not print-year); and completing under-captured
-series (ITRL ~85/100 enumerated; Brill BTSI bot-blocked, partial).
+series (ITRL 98/~100 enumerated; Brill BTSI partial — publisher site bot-blocks
+automated access, enumerated via BMCR / Renaissance Quarterly reviews instead).
 
 ## Open levers
 - **Embedding clustering = candidate generator, NOT an auto-writer (tested to

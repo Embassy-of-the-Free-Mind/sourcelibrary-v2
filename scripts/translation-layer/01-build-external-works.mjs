@@ -86,47 +86,33 @@ async function main() {
   const external = new Map();
   const quarantine = new Map();
 
-  // --- (1) Curated series (high trust) ---
+  // --- (1) Curated series (high trust) — load every series/*.json by schema.
+  // Records WITH a `series` field use it as the source channel (brill/doml);
+  // records WITHOUT one are I Tatti (ITRL). The era is taken from the record
+  // if present, else derived from the composition year.
   let seriesCount = 0;
-  // I Tatti
-  const itatti = JSON.parse(fs.readFileSync(path.join(SERIES_DIR, 'i-tatti.json'), 'utf8'));
-  for (const v of itatti) {
-    const year = Number(v.orig_year) || null;
-    const era = eraFromYear(year);
-    const lang = v.orig_lang || 'latin';
-    add(external, {
-      work_key: workKey(v.author_surname, v.title_latin || v.title_en, year),
-      surname: extractSurname(v.author_surname) || v.author_surname.toLowerCase(),
-      author: v.author_en || v.author_surname,
-      title: v.title_latin || v.title_en,
-      title_en: v.title_en,
-      orig_year: year,
-      era,
-      orig_lang: lang,
-      is_target: era === 'renaissance_early_modern' && lang === 'latin',
-      sources: ['itrl_curated'],
-    });
-    seriesCount++;
-  }
-  // Brill + DOML
-  const bd = JSON.parse(fs.readFileSync(path.join(SERIES_DIR, 'brill-doml.json'), 'utf8'));
-  for (const v of bd) {
-    const year = Number(v.orig_year) || null;
-    const era = v.era || eraFromYear(year);
-    const lang = v.orig_lang || 'latin';
-    add(external, {
-      work_key: workKey(v.author_surname, v.title_latin || v.title_en, year),
-      surname: extractSurname(v.author_surname) || (v.author_surname || '').toLowerCase(),
-      author: v.author_en || v.author_surname,
-      title: v.title_latin || v.title_en,
-      title_en: v.title_en,
-      orig_year: year,
-      era,
-      orig_lang: lang,
-      is_target: era === 'renaissance_early_modern' && lang === 'latin',
-      sources: [`${v.series}_curated`],
-    });
-    seriesCount++;
+  const seriesFiles = fs.readdirSync(SERIES_DIR).filter((f) => f.endsWith('.json'));
+  for (const f of seriesFiles) {
+    const rows = JSON.parse(fs.readFileSync(path.join(SERIES_DIR, f), 'utf8'));
+    for (const v of rows) {
+      const year = Number(v.orig_year) || null;
+      const era = v.era || eraFromYear(year);
+      const lang = v.orig_lang || 'latin';
+      const channel = v.series ? `${v.series}_curated` : 'itrl_curated';
+      add(external, {
+        work_key: workKey(v.author_surname, v.title_latin || v.title_en, year),
+        surname: extractSurname(v.author_surname) || (v.author_surname || '').toLowerCase(),
+        author: v.author_en || v.author_surname,
+        title: v.title_latin || v.title_en,
+        title_en: v.title_en,
+        orig_year: year,
+        era,
+        orig_lang: lang,
+        is_target: era === 'renaissance_early_modern' && lang === 'latin',
+        sources: [channel],
+      });
+      seriesCount++;
+    }
   }
 
   // --- (2) translation_catalogs ⨝ enrichment ---

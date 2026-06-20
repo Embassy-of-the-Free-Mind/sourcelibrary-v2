@@ -1,0 +1,152 @@
+[
+  {
+    "series": "brill",
+    "author_en": "Arnold Geulincx",
+    "author_surname": "Geulincx",
+    "title_en": "Ethics (with Samuel Beckett's Notes)",
+    "title_latin": "Gnothi seauton, sive Ethica",
+    "orig_year": 1665,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "James of Viterbo",
+    "author_surname": "Iacobus Viterbiensis",
+    "title_en": "On Christian Government (De regimine Christiano): A Critical Edition and Translation",
+    "title_latin": "De regimine Christiano",
+    "orig_year": 1302,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "brill",
+    "author_en": "Angelo Poliziano",
+    "author_surname": "Politianus",
+    "title_en": "Angelo Poliziano's Lamia: Text, Translation, and Introductory Studies",
+    "title_latin": "Praelectio cui titulus Lamia",
+    "orig_year": 1492,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Lambert van Velthuysen",
+    "author_surname": "Velthusius",
+    "title_en": "A Letter on the Principles of Justness and Decency, Containing a Defence of the Treatise De Cive of the Learned Mr Hobbes",
+    "title_latin": "Epistolica dissertatio de principiis Justi et Decori, continens apologiam pro tractatu clarissimi Hobbaei De Cive",
+    "orig_year": 1651,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Giacomo Zabarella",
+    "author_surname": "Zabarella",
+    "title_en": "Giacomo Zabarella, De rebus naturalibus",
+    "title_latin": "De rebus naturalibus libri XXX",
+    "orig_year": 1589,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Justus Lipsius",
+    "author_surname": "Lipsius",
+    "title_en": "Ancient Libraries and Renaissance Humanism: The De bibliothecis of Justus Lipsius",
+    "title_latin": "De bibliothecis syntagma",
+    "orig_year": 1602,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Johann Ferdinand Hertodt",
+    "author_surname": "Hertodt",
+    "title_en": "Crocologia: A Detailed Study of Saffron, the King of Plants",
+    "title_latin": "Crocologia",
+    "orig_year": 1671,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Chrysostomus Javelli",
+    "author_surname": "Iavellus",
+    "title_en": "Chrysostomus Javelli's Epitome of Aristotle's Liber de bona fortuna: Examining Fortune in Early Modern Italy",
+    "title_latin": "Epitome libri de bona fortuna",
+    "orig_year": 1531,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Antonio da Rho",
+    "author_surname": "Antonius Raudensis",
+    "title_en": "Antonio da Rho, Three Dialogues against Lactantius",
+    "title_latin": "Dialogi tres in Lactantium",
+    "orig_year": 1445,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Giovanni Caroli",
+    "author_surname": "Caroli",
+    "title_en": "Humanism, Theology, and Spiritual Crisis in Renaissance Florence: Giovanni Caroli's Liber dierum lucensium",
+    "title_latin": "Liber dierum lucensium",
+    "orig_year": 1479,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Uberto Decembrio",
+    "author_surname": "Decembrio",
+    "title_en": "Uberto Decembrio, Four Books on the Commonwealth",
+    "title_latin": "De re publica libri IV",
+    "orig_year": 1420,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Giovanni Aurelio Augurello",
+    "author_surname": "Augurellus",
+    "title_en": "Giovanni Aurelio Augurello (1441-1524) and Renaissance Alchemy: A Critical Edition of Chrysopoeia and Other Alchemical Poems",
+    "title_latin": "Chrysopoeia",
+    "orig_year": 1515,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Helius Eobanus Hessus",
+    "author_surname": "Hessus",
+    "title_en": "The Poetic Works of Helius Eobanus Hessus, Vol. 3: King of Poets, 1514-1517",
+    "title_latin": "Operum poeticorum (1514-1517)",
+    "orig_year": 1517,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Helius Eobanus Hessus",
+    "author_surname": "Hessus",
+    "title_en": "The Poetic Works of Helius Eobanus Hessus, Vol. 4: Between Erasmus and Luther, 1518-1524",
+    "title_latin": "Operum poeticorum (1518-1524)",
+    "orig_year": 1524,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Helius Eobanus Hessus",
+    "author_surname": "Hessus",
+    "title_en": "The Poetic Works of Helius Eobanus Hessus, Vol. 5: A Veritable Proteus, 1524-1528",
+    "title_latin": "Operum poeticorum (1524-1528)",
+    "orig_year": 1528,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  }
+]
