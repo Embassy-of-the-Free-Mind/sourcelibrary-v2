@@ -24,7 +24,7 @@ export interface VisionContent {
   bodyAfterImage1: string[];
   buildHeading: string;
   bodyBuild: string[];
-  image2: { src: string; alt: string; caption: string };
+  montage: { images: { src: string; alt: string }[]; caption: string };
   bodyConvener: string[];
   signoff: string;
   signature: { name: string; role: string; email: string; photo: string };
@@ -79,10 +79,14 @@ export const visionContent: VisionContent = {
     'Everything so far has been made possible by a handful of people who believed in the work early. Now I want to build something lasting: a world-class humanist institution devoted to the stewardship of ancient wisdom — from books to oral histories to expeditions in the field. The wisdom, after all, is more than the books.',
     'I want our founding donors to feel that directly. Picture an evening in the Bibliotheca with the original volumes of Fludd and Ficino open in front of you; an expedition to scan a monastery’s manuscripts before they’re lost; a hand in deciding what humanity translates next; and your name on the work, in perpetuity. I want them in the room, not just on the donor wall.',
   ],
-  image2: {
-    src: '/vision/bibliotheca.jpg',
-    alt: 'Guests in the Bibliotheca Philosophica Hermetica, Amsterdam',
-    caption: 'An evening in the Bibliotheca Philosophica Hermetica — the rare-book library at the heart of Source Library.',
+  montage: {
+    images: [
+      { src: '/vision/embassy.jpg', alt: 'The Embassy of the Free Mind, Amsterdam' },
+      { src: '/vision/bibliotheca.jpg', alt: 'Guests in the Bibliotheca Philosophica Hermetica' },
+      { src: '/vision/ficino.jpg', alt: 'Bust of Marsilio Ficino at the Embassy of the Free Mind' },
+      { src: '/vision/embassy-crowd.jpg', alt: 'A gathering outside the Embassy of the Free Mind, Amsterdam' },
+    ],
+    caption: 'The Embassy of the Free Mind, Amsterdam — home of the Bibliotheca Philosophica Hermetica, and the community gathering around it.',
   },
   bodyConvener: [
     'And here is the real reason I’m writing to you. I’m not only hoping for your support — I’m hoping you’ll help us *gather* the founding circle, not just join it. If you’re someone who brings remarkable people together around bold ideas, then helping convene the people who will steward humanity’s wisdom for the next century is something you’d be extraordinary at. I’d love to do it with you.',
