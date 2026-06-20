@@ -24,6 +24,20 @@ interface Props {
   params: Promise<{ tenant: string; ubn: string }>;
 }
 
+// UBNs like "BPH 151" contain a space, which arrives URL-encoded ("BPH%20151")
+// in the route segment. The stored value in bph_works has a real space, so an
+// undecoded param never matches and the page 404s (the entire reason BPH-shelf-
+// mark catalogue links were dead). Numeric UBNs have nothing to encode, which
+// is why they always worked. Decode defensively — for already-decoded values
+// (no '%') this is a no-op, and a malformed escape sequence falls back to raw.
+function normalizeUbn(raw: string): string {
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
 interface FieldProvenance {
   source: string;
   evidence?: string;
@@ -269,7 +283,8 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { tenant, ubn } = await params;
+  const { tenant, ubn: rawUbn } = await params;
+  const ubn = normalizeUbn(rawUbn);
   const partner = getPartnerBySlug(tenant);
   if (partner && partner.providerKey !== 'bph' && partner.hasUnifiedCatalogue) {
     return generateGenericMetadata(tenant, ubn, partner) as Promise<Metadata>;
@@ -320,7 +335,8 @@ async function effectiveCatalogRole(
 }
 
 export default async function CatalogEntryPage({ params }: Props) {
-  const { tenant, ubn } = await params;
+  const { tenant, ubn: rawUbn } = await params;
+  const ubn = normalizeUbn(rawUbn);
 
   // Generic unified-catalogue tenants (kloss-collection, …) — render via the
   // shared component that reads library_catalog_records. BPH falls through.
