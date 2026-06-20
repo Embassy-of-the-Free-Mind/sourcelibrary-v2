@@ -63,7 +63,8 @@ export const visionContent: VisionContent = {
     linkLabel: 'read it at the source',
   },
   bodyBeforeImage1: [
-    'That is the whole idea behind Source Library: to go back to the source, and to make it possible for anyone — any reader, any scholar, any AI — to do the same. Today it is the world’s largest library of translated ancient texts. We have translated more than **15,000 books** from over fifty languages, more than half of them into English for the first time. Our word count has already passed English Wikipedia. Every translation sits beside the original scanned page, so any line can be verified, quoted, and trusted. It is almost entirely free, Creative Commons share-alike, and open by API and MCP — so that the AI you use can reach for the actual source.',
+    'That is the whole idea behind Source Library: to go back to the source, and to make it possible for anyone — any reader, any scholar, any AI — to do the same. Today it is the world’s largest library of translated ancient texts: more than **15,000 books** from over fifty languages, more than half of them into English for the first time. Our word count has already passed English Wikipedia.',
+    'Every translation sits beside the original scanned page, so any line can be verified, quoted, and trusted. It is almost entirely free, Creative Commons share-alike, and open by API and MCP — so that the AI you use can reach for the actual source.',
   ],
   image1: {
     src: 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg',
