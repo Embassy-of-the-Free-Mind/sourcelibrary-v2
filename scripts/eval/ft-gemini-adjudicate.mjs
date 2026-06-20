@@ -35,8 +35,16 @@ if (keys.length === 0) { console.error('No GEMINI_API_KEY found'); process.exit(
 let keyIdx = 0;
 const nextKey = () => keys[(keyIdx++) % keys.length];
 
-// flash-lite/preview pricing (approx, for cost logging only): $0.075/M in, $0.30/M out
-const costOf = (u) => ((u.promptTokenCount || 0) / 1e6) * 0.10 + ((u.candidatesTokenCount || 0) / 1e6) * 0.40;
+// flash pricing (approx, for cost logging only). genai usage fields vary by
+// version — fall back across the known names so the estimate isn't zero.
+const costOf = (u) => {
+  const inTok = u.promptTokenCount ?? u.promptTokens ?? u.inputTokenCount ?? 0;
+  const outTok = u.candidatesTokenCount ?? u.candidatesTokens ?? u.outputTokenCount ?? 0;
+  const tot = u.totalTokenCount ?? (inTok + outTok);
+  // if only total is present, assume ~85% input for grounded calls
+  const i = inTok || Math.round(tot * 0.85), o = outTok || Math.round(tot * 0.15);
+  return (i / 1e6) * 0.10 + (o / 1e6) * 0.40;
+};
 
 function sourcesFor(lang) {
   const l = (lang || '').toLowerCase();
