@@ -16,10 +16,16 @@
  *   node scripts/eval/ft-gemini-adjudicate.mjs <worklist.json> <out.json> [--concurrency=6]
  */
 import { GoogleGenAI } from '@google/genai';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, appendFileSync, existsSync } from 'fs';
 
-const MODEL = 'gemini-3-flash-preview';   // grounded search model (matches the working enrichment script)
+// model overridable via --model=; default keeps the build-lane's validated choice.
+// (Tested 2026-06-20: gemini-3-flash-preview grounds aggressively — 18 search queries on an
+// obscure probe vs flash-lite's 1 — so it's the better search instrument. The "62% structured-
+// output failure" previously blamed on this model was almost certainly the thinkingBudget:-1 +
+// grounding TRUNCATION bug fixed below, not the model itself.)
+const MODEL = process.argv.find(a => a.startsWith('--model='))?.split('=')[1] || 'gemini-3-flash-preview';
 const MAX_RETRIES = 3;
+const RUN_DATE = new Date().toISOString();   // stamped once; → attempt.date (plain node script, new Date ok)
 
 const worklistFile = process.argv[2];
 const outFile = process.argv[3];
@@ -75,7 +81,8 @@ RULES (apply in order; you MUST run searches before concluding absence):
 7. EVIDENCE STRENGTH: 'strong' ONLY if a prior was positively found, OR absence was confirmed in competent tradition-appropriate sources; 'moderate' for a well-searched but bounded absence; 'weak' if you could not search competent sources. Be conservative — a blind Western-catalogue miss on a non-Western text is 'weak', not proof of a first.
 
 Respond with ONLY a JSON object (you may wrap it in \`\`\`json fences):
-{"book_id":"${b.id}","verdict":"first_no_prior|first_from_source|first_complete|first_modern|not_first|not_applicable|unverifiable|needs_review","prior_relationship":"same_text|same_work_diff_edition|different_source_language|related_distinct_work|partial|adaptation|none","evidence_strength":"strong|moderate|weak","our_completeness":"complete|partial|unknown","match_key":"work_id|author_title|transliteration|none","prior_found":true|false,"confidence":"high|medium|low","reason":"<= 280 chars"}
+{"book_id":"${b.id}","work_identified":"<the work, disambiguated from parent/sibling/edition>","verdict":"first_no_prior|first_from_source|first_complete|first_modern|not_first|not_applicable|unverifiable|needs_review","prior_relationship":"same_text|same_work_diff_edition|different_source_language|related_distinct_work|partial|adaptation|null","evidence_strength":"strong|moderate|weak","our_completeness":"complete|partial|unknown","match_key":"work_id|author_title|transliteration|none","confidence":"high|medium|low","prior_translations_found":[{"english_title":"...","translator":"...","pub_year":"1976","publisher":"...","completeness":"complete|partial|excerpt|unknown","source_url":"<the grounding URL the claim rests on>"}],"reasoning":"<= 400 chars: why this verdict, citing the prior or the bounded absence"}
+RULES for the JSON: "prior_translations_found" is [] when no prior English exists. When non-empty, EVERY entry MUST carry a real translator and year you actually found in the search — never a placeholder, never a guess. (prior_found is derived downstream as length>0 — do not emit it.)
 evidence_strength: strong = prior positively found OR absence confirmed in competent sources; moderate = well-searched bounded absence; weak = only a blind/uncertain search.`;
 }
 
@@ -86,19 +93,32 @@ async function adjudicate(b) {
       const resp = await ai.models.generateContent({
         model: MODEL,
         contents: buildPrompt(b),
-        config: { tools: [{ googleSearch: {} }], temperature: 0.1, thinkingConfig: { thinkingBudget: -1 } },
+        // NB: do NOT set thinkingConfig:{thinkingBudget:-1} — it suppresses groundingMetadata
+        // (verified 2026-06-20), so we'd lose the search evidence. Default thinking + the
+        // parse-inside-retry loop below handles the occasional truncated JSON instead.
+        config: { tools: [{ googleSearch: {} }], temperature: 0.1 },
       });
       const text = resp.text || '';
       const usage = resp.usageMetadata || {};
+      // EVIDENCE (#2564): the *real* searching — Gemini's grounding metadata records the actual
+      // queries it issued and the web sources it retrieved. This is the auditable evidence-of-absence,
+      // not the model's self-report. Captured even on parse failure so we never lose the search trail.
+      const gm = resp.candidates?.[0]?.groundingMetadata || {};
+      const queries = Array.isArray(gm.webSearchQueries) ? gm.webSearchQueries : [];
+      // NB: c.web.uri is a vertexaisearch *redirect* for every chunk — useless to dedup on.
+      // The REAL source domain is in c.web.title (verified 2026-06-20: worldcat.org, abebooks.com…).
+      const sources_checked = [...new Set((gm.groundingChunks || [])
+        .map(c => c?.web?.title || c?.web?.uri).filter(Boolean))];
+      const evidence = { queries, sources_checked, model: MODEL, date: RUN_DATE };
       const m = text.match(/```(?:json)?\s*([\s\S]*?)```/) || text.match(/(\{[\s\S]*\})/);
       let parsed;
       try { parsed = JSON.parse((m ? m[1] : text).trim()); }
       catch { const mm = text.match(/\{[\s\S]*\}/); if (mm) { try { parsed = JSON.parse(mm[0]); } catch {} } }
       if (!parsed || !parsed.verdict) {
         if (attempt < MAX_RETRIES) continue;
-        return { book_id: b.id, verdict: 'needs_review', error: 'parse_failed', raw: text.slice(0, 200), cost_usd: costOf(usage) };
+        return { book_id: b.id, verdict: 'needs_review', error: 'parse_failed', raw: text.slice(0, 200), ...evidence, cost_usd: costOf(usage) };
       }
-      return { ...parsed, book_id: b.id, cost_usd: costOf(usage) };
+      return { ...parsed, book_id: b.id, ...evidence, cost_usd: costOf(usage) };
     } catch (err) {
       const msg = String(err.message || err);
       if (attempt < MAX_RETRIES && /fetch failed|ECONNRESET|timeout|503|500|overloaded|RESOURCE_EXHAUSTED|429/i.test(msg)) {
@@ -110,25 +130,47 @@ async function adjudicate(b) {
   }
 }
 
-// ── concurrency-limited run ─────────────────────────────────────────────────
+// ── concurrency-limited run, durable + resumable ────────────────────────────
+// DURABILITY (#2564): every result is appended to a JSONL sidecar the instant it
+// completes (appendFileSync is synchronous → atomic per line under Node's single
+// thread, safe across the concurrent workers). A crash/kill loses at most the
+// in-flight calls, not the whole run. On restart we read the sidecar and SKIP
+// already-done book_ids — so re-invoking the same command resumes. The consolidated
+// <out>.json is rebuilt from the sidecar at the end for downstream compatibility.
 const work = JSON.parse(readFileSync(worklistFile, 'utf8'));
-const results = new Array(work.length);
-let done = 0, cost = 0, next = 0;
-async function worker() {
-  while (next < work.length) {
-    const i = next++;
-    const r = await adjudicate(work[i]);
-    results[i] = r;
-    cost += r.cost_usd || 0;
-    done++;
-    if (done % 10 === 0 || done === work.length) console.error(`  ${done}/${work.length}  ($${cost.toFixed(2)})`);
+const jsonlFile = outFile.replace(/\.json$/i, '') + '.jsonl';
+
+const doneIds = new Set();
+if (existsSync(jsonlFile)) {
+  for (const line of readFileSync(jsonlFile, 'utf8').split('\n')) {
+    if (!line.trim()) continue;
+    try { const id = JSON.parse(line).book_id; if (id) doneIds.add(String(id)); } catch {}
   }
 }
-console.error(`Gemini adjudication: ${work.length} books, model=${MODEL}, concurrency=${CONC}`);
-await Promise.all(Array.from({ length: Math.min(CONC, work.length) }, worker));
+const todo = work.filter(b => !doneIds.has(String(b.id)));
+console.error(`Gemini adjudication: ${work.length} books (${doneIds.size} already done, ${todo.length} to do), model=${MODEL}, concurrency=${CONC}`);
+console.error(`  → evidence-bearing JSONL: ${jsonlFile}`);
 
+let done = 0, cost = 0, next = 0;
+async function worker() {
+  while (next < todo.length) {
+    const i = next++;
+    const r = await adjudicate(todo[i]);
+    appendFileSync(jsonlFile, JSON.stringify(r) + '\n');   // persist immediately
+    cost += r.cost_usd || 0;
+    done++;
+    if (done % 10 === 0 || done === todo.length) console.error(`  ${done}/${todo.length}  ($${cost.toFixed(2)})`);
+  }
+}
+await Promise.all(Array.from({ length: Math.min(CONC, todo.length || 1) }, worker));
+
+// consolidate the full sidecar → out.json (includes any resumed rows)
+const all = [];
 const tally = {};
-for (const r of results) if (r) tally[r.verdict] = (tally[r.verdict] || 0) + 1;
-writeFileSync(outFile, JSON.stringify(results.filter(Boolean), null, 0));
-console.error(`\nDONE. ${results.filter(Boolean).length}/${work.length} adjudicated. Total cost ~$${cost.toFixed(2)}`);
+for (const line of readFileSync(jsonlFile, 'utf8').split('\n')) {
+  if (!line.trim()) continue;
+  try { const r = JSON.parse(line); all.push(r); tally[r.verdict] = (tally[r.verdict] || 0) + 1; } catch {}
+}
+writeFileSync(outFile, JSON.stringify(all, null, 0));
+console.error(`\nDONE. ${all.length}/${work.length} adjudicated (this run +${done}). Run cost ~$${cost.toFixed(2)}`);
 console.error('tally:', JSON.stringify(tally));
