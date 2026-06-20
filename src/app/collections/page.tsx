@@ -245,10 +245,10 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
 
 const INITIAL_PATHWAYS = 12;
 
-// Static hero so the header/navbar render instantly instead of waiting on the
-// collections queries. The body streams in via <Suspense> below.
-const COLLECTIONS_HERO =
-  'https://images.sourcelibrary.org/gallery/69a5e476006a4098422172b0/69a5e476006a409842217474-0.jpg';
+// Hero is a single pre-composited mosaic of collection covers (one image to the
+// browser, built server-side at /collections/hero-mosaic). The dark gradient +
+// title overlay in ContentHeader render on top of it.
+const COLLECTIONS_HERO = '/collections/hero-mosaic';
 
 export default function CollectionsPage() {
   return (
