@@ -26,9 +26,13 @@
  * ~1-2 minutes wall time, $0 LLM spend.
  *
  * Usage:
- *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs           # dry-run
+ *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs           # dry-run (Mongo translation_verification)
  *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --apply
  *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --apply --limit 200
+ *
+ *   # Sink C (#2564) — harvest priors found by the grounded FT enumeration:
+ *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --from-enum <enum.jsonl>           # dry-run
+ *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --from-enum <enum.jsonl> --apply
  */
 
 import { MongoClient } from 'mongodb';
@@ -153,6 +157,99 @@ function buildRow(book, trans, source, skipReasons) {
   };
 }
 
+// ── Enumeration → catalog (Sink C, issue #2564) ─────────────────────
+//
+// Reads the grounded FT enumeration output (ft-gemini-adjudicate.mjs) and
+// harvests each FOUND prior translation into translation_catalogs as a
+// `sl_ft_llm_claim` row. A found prior is "a translation that exists in the
+// world", so it is a legitimate catalog row regardless of OUR verdict — even a
+// `not_first` book contributes the prior that defeated it. Books with an empty
+// `prior_translations_found` contribute nothing here (no prior to catalog —
+// their value is the badge via the Mongo verdict sink, not this one).
+//
+// Reuses buildRow()'s schema guards + processRow()'s dedup-on-write, so it is
+// subject to the same junk-translator / English-source protections as the
+// legacy passes. Dedup is bibliographic (surname+title+translator+year), not by
+// book id — translation_catalogs has no Source-Library foreign key.
+
+function readEnumRecords(file) {
+  const raw = fs.readFileSync(file, 'utf8').trim();
+  if (!raw) return [];
+  // Supports both the consolidated .json array and the .jsonl sidecar.
+  if (raw[0] === '[') return JSON.parse(raw);
+  return raw.split('\n').filter(Boolean).map((l) => JSON.parse(l));
+}
+
+async function harvestFromEnum(db, file, dryRun, limit) {
+  const records = readEnumRecords(file);
+  const withPriors = records.filter(
+    (r) => Array.isArray(r.prior_translations_found) && r.prior_translations_found.length > 0,
+  );
+  console.log(`Enum records: ${records.length}; with ≥1 prior: ${withPriors.length}`);
+
+  // Fetch the referenced books once. enum book_id is the string `id` field
+  // (NOT Mongo _id — see CLAUDE.md "books id field ≠ Mongo _id").
+  const ids = [...new Set(withPriors.map((r) => r.book_id))];
+  const books = await db.collection('books').find(
+    { id: { $in: ids } },
+    { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1 } },
+  ).toArray();
+  const bookById = new Map(books.map((b) => [b.id, b]));
+  const missing = ids.filter((id) => !bookById.has(id));
+  if (missing.length) console.log(`  ⚠️  ${missing.length} book_id(s) not found in Mongo (skipped), e.g. ${missing.slice(0, 3).join(', ')}`);
+
+  const skipReasons = { english_source: 0, junk_translator: 0, original_author: 0, author_eq_translator: 0, no_book: 0, no_title: 0 };
+  const rows = [];
+  for (const r of withPriors) {
+    const book = bookById.get(r.book_id);
+    if (!book) { skipReasons.no_book++; continue; }
+    const seen = new Set(); // dedup priors within a single book by english_title
+    for (const p of r.prior_translations_found) {
+      const key = normalize(p.english_title);
+      if (!key) { skipReasons.no_title++; continue; }
+      if (seen.has(key)) continue;
+      seen.add(key);
+      // Map the enum prior shape → buildRow's `trans` shape. source_url has no
+      // catalog column and is dropped (it lives in the Mongo attempts log).
+      const trans = {
+        english_title: p.english_title,
+        translator: p.translator,
+        pub_year: p.pub_year,
+        publisher: p.publisher,
+        series: p.series || null,
+        completeness: p.completeness,
+      };
+      const row = buildRow(book, trans, 'sl_ft_llm_claim', skipReasons);
+      if (row) rows.push(row);
+    }
+  }
+
+  if (limit) rows.splice(limit);
+  console.log(`\nCandidate sl_ft_llm_claim rows: ${rows.length}`);
+  console.log(`  skipped (guards): ${JSON.stringify(skipReasons)}`);
+  console.log('\nSample (first 5):');
+  for (const r of rows.slice(0, 5)) {
+    console.log(`  ${r.canonical_author} / "${(r.english_title || '').slice(0, 55)}" by ${r.translator || '?'} (${r.pub_year || '?'})`);
+  }
+
+  if (dryRun) {
+    console.log('\nDry-run complete. Re-run with --apply to write to Supabase translation_catalogs.');
+    return;
+  }
+
+  console.log('\n→ Writing (dedup-on-write: per-row SELECT before INSERT) ...');
+  const counts = { inserted: 0, skipped_existing: 0, error: 0 };
+  const errorSamples = [];
+  for (let i = 0; i < rows.length; i++) {
+    const res = await processRow(rows[i]);
+    counts[res.result]++;
+    if (res.result === 'error' && errorSamples.length < 5) errorSamples.push(res.error);
+    if ((i + 1) % 200 === 0) console.log(`  ${i + 1}/${rows.length} (ins=${counts.inserted} skip=${counts.skipped_existing} err=${counts.error})`);
+  }
+  console.log(`\nDone. inserted=${counts.inserted}, skipped_existing=${counts.skipped_existing}, errors=${counts.error}`);
+  if (errorSamples.length) console.log('  Error samples:\n   ' + errorSamples.join('\n   '));
+}
+
 // ── Supabase ────────────────────────────────────────────────────────
 
 async function existingRowId(row) {
@@ -209,9 +306,12 @@ async function main() {
   const args = process.argv.slice(2);
   const dryRun = !args.includes('--apply');
   const limit = args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1]) : null;
+  const fromEnumIdx = args.indexOf('--from-enum');
+  const fromEnum = fromEnumIdx >= 0 ? args[fromEnumIdx + 1] : null;
 
   console.log('=== Harvest FT findings → translation_catalogs ===');
   console.log('Mode:', dryRun ? 'DRY RUN' : 'APPLYING');
+  console.log('Source:', fromEnum ? `enumeration output (${fromEnum})` : 'Mongo translation_verification');
   console.log('Dedup strategy: per-row SELECT before INSERT');
   if (limit) console.log('Per-pass limit:', limit);
   console.log();
@@ -219,6 +319,13 @@ async function main() {
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 3, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db(MONGODB_DB);
+
+  // Sink C (#2564): harvest priors found by the grounded FT enumeration.
+  if (fromEnum) {
+    await harvestFromEnum(db, fromEnum, dryRun, limit);
+    await client.close();
+    return;
+  }
 
   // Pass 1: catalog-verified (highest sl_ft_* tier)
   const tier1Books = await db.collection('books').find({
