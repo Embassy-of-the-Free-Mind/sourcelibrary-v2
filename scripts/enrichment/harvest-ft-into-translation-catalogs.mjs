@@ -102,7 +102,7 @@ function canonicalWork(book) {
 // "unknown" is intentionally NOT in this list — anonymous early-modern
 // translations are legitimately catalogued with translator='unknown' (e.g.
 // 1688 Diogenes Laertius). Only block the clear LLM-placeholder forms.
-const JUNK_TRANSLATOR_RE = /^(n\/a|not specified|tbd|none|unknown|original author|original|various|multiple|several|ongoing)\b/i;
+const JUNK_TRANSLATOR_RE = /^(n\/a|not specified|tbd|none|original author|original|various|multiple|several|ongoing)\b/i;
 const ORIGINAL_AUTHOR_RE = /\b(original author|original compiler)\b/i;
 
 function isEnglishLanguage(language) {
