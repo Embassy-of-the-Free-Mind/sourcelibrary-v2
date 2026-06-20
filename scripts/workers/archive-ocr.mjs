@@ -15,6 +15,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { upgradeToFullRes } from '../lib/iiif-utils.mjs';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 
 const MAX_PAGES = 10_000;
 // MAX_PAGES_PER_DOMAIN caps how many pages from a single source make it into one
@@ -232,10 +233,21 @@ async function main() {
 
   // Check processing_control pause
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
+  if (!shouldBypassPause(control)) {
     console.log(`[archive-ocr] Pipeline paused. Exiting.`);
     await client.close();
     process.exit(0);
+  }
+  // Selective unpause: when globally paused but a scope is configured, proceed
+  // but confine archiving to the scoped books (free archiving must honor the
+  // same scope as the paid path, #2616, or scoped books strand at `queued` with
+  // no R2 images). SCOPE_FILTER spreads into every candidate query; it's empty
+  // in normal (unpaused) operation, so the full queue is unaffected.
+  let SCOPE_FILTER = {};
+  if (control?.paused && hasScope(control)) {
+    const scopeIds = [...await resolveScopeBookIds(db, control)];
+    SCOPE_FILTER = { id: { $in: scopeIds } };
+    console.log(`[archive-ocr] PAUSED globally, selective-unpause scope active — confining to ${scopeIds.length} allowlisted book(s).`);
   }
 
   console.log(`[archive-ocr] Looking for books with unarchived pages...`);
@@ -268,6 +280,7 @@ async function main() {
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $in: PRIORITY_PROVIDERS },
         ...NEEDS_ARCHIVE_EXPR,
+        ...SCOPE_FILTER,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
@@ -288,6 +301,7 @@ async function main() {
         // Routed to Mac-side via scripts/workers/archive-harvard.mjs.
         'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', 'harvard', ...PRIORITY_PROVIDERS] },
         ...NEEDS_ARCHIVE_EXPR,
+        ...SCOPE_FILTER,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
@@ -306,6 +320,7 @@ async function main() {
         'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $in: HETZNER_SAFE_PROVIDERS },
         ...NEEDS_ARCHIVE_EXPR,
+        ...SCOPE_FILTER,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1, language: 1, is_first_translation: 1 } }
     )
@@ -327,6 +342,7 @@ async function main() {
         'archive_metadata.bulk_unsuitable': true,
         'image_source.provider': 'internet_archive',
         ...NEEDS_ARCHIVE_EXPR,
+        ...SCOPE_FILTER,
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )

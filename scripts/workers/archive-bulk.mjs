@@ -29,6 +29,7 @@ import { pipeline } from 'stream/promises';
 import { createWriteStream } from 'fs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -491,10 +492,21 @@ async function main() {
   // should run regardless of the queue-level pause (matching the "bypassing the queue"
   // intent of --book-id). The pause only gates the automatic queue path.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused && !TARGET_BOOK_ID) {
+  if (!shouldBypassPause(control, { bookOverride: !!TARGET_BOOK_ID })) {
     console.log(`[archive-bulk] Pipeline paused. Exiting.`);
     await client.close();
     process.exit(0);
+  }
+  // Selective unpause: when globally paused but a scope is configured (and this
+  // isn't an explicit --book-id one-off), proceed but confine archiving to the
+  // scoped books — mirrors what the orchestrator does for the paid path (#2616),
+  // so the free archiving step doesn't strand scoped books at `queued` with no
+  // images on R2. SCOPE_IDS stays null in normal operation (full queue) and for
+  // a --book-id run (TARGET_BOOK_ID already confines).
+  let SCOPE_IDS = null;
+  if (control?.paused && !TARGET_BOOK_ID && hasScope(control)) {
+    SCOPE_IDS = [...await resolveScopeBookIds(db, control)];
+    console.log(`[archive-bulk] PAUSED globally, selective-unpause scope active — confining to ${SCOPE_IDS.length} allowlisted book(s).`);
   }
 
   // Find IA books with pages that may need archiving (regardless of pipeline status).
@@ -513,6 +525,8 @@ async function main() {
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
         ],
+        // Selective-unpause scope: confine to allowlisted books while paused.
+        ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS } } : {}),
       }};
   const iaBooks = await db.collection('books')
     .aggregate([
@@ -548,6 +562,7 @@ async function main() {
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
         ],
+        ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS } } : {}),
       }},
       { $addFields: {
         _priority: {
