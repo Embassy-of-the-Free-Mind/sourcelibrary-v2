@@ -3,6 +3,7 @@ import {
   isFirstTranslation,
   isFirstByVerdict,
   isPublicFirst,
+  canPromoteToFirst,
   firstTranslationVerdict,
   resolveFirstTranslation,
 } from '@/lib/first-translation/derive';
@@ -251,5 +252,38 @@ describe('resolve — effort-tier cascade', () => {
     const t1 = mkTier('t1', null, false);
     const { resolved } = await resolve(sampleBook, { tier0: t0, tier1: t1 }, { now: NOW });
     expect(resolved.verdict).toBe('needs_review');
+  });
+});
+
+describe('canPromoteToFirst — bidirectional hygiene gate (#2564)', () => {
+  it('promotes an evidence-backed adjudicated first', () => {
+    const b: FirstTranslationBook = {
+      visible: true, pages_translated: 10,
+      first_translation: { verdict: 'first_no_prior', evidence_strength: 'strong', our_completeness: 'complete', match_key: 'work_id', resolver: 'tier2_agent' },
+    };
+    expect(canPromoteToFirst(b)).toBe(true);
+  });
+
+  it('BLOCKS promotion from a bare legacy disposition (the ~53%-wrong shim)', () => {
+    // confirmed_first disposition with NO stored verdict object -> must not promote
+    const b: FirstTranslationBook = { visible: true, pages_translated: 10, translation_verification: { disposition: 'confirmed_first' } };
+    expect(isFirstByVerdict(b)).toBe(true);   // reads as first via the shim
+    expect(canPromoteToFirst(b)).toBe(false); // but cannot be auto-promoted
+  });
+
+  it('BLOCKS promotion when evidence is weak even with a stored verdict', () => {
+    const b: FirstTranslationBook = {
+      visible: true, pages_translated: 10,
+      first_translation: { verdict: 'first_no_prior', evidence_strength: 'weak', our_completeness: 'unknown', match_key: 'none', resolver: 'tier2_agent' },
+    };
+    expect(canPromoteToFirst(b)).toBe(false);
+  });
+
+  it('does not promote a non-first verdict', () => {
+    const b: FirstTranslationBook = {
+      visible: true, pages_translated: 10,
+      first_translation: { verdict: 'not_first', evidence_strength: 'strong', our_completeness: 'unknown', match_key: 'work_id', resolver: 'tier2_agent' },
+    };
+    expect(canPromoteToFirst(b)).toBe(false);
   });
 });

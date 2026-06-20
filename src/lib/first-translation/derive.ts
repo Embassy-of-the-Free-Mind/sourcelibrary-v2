@@ -134,3 +134,33 @@ export function isPublicFirst(book: FirstTranslationBook): boolean {
   const ft = resolveFirstTranslation(book)!;
   return ft.evidence_strength !== 'weak';
 }
+
+/**
+ * Bidirectional data-hygiene gate for the reconcile WRITE path (issue #2564,
+ * Derek's 323-contradiction finding: `disposition` is itself ~53% wrong, so
+ * promoting a currently-unbadged book purely from a stale `confirmed_first`
+ * shim would inject ~170 false positives while fixing ~150 false negatives).
+ *
+ * A PROMOTION (flag false→true) must rest on real evidence, not the legacy
+ * disposition shim. We allow it only when the verdict is first-family AND it
+ * was produced by a real adjudicator (tier1/tier2/human) with non-weak
+ * evidence — i.e. NOT the weak `tier1_catalog` legacy shim that
+ * resolveFirstTranslation synthesizes from a bare disposition.
+ *
+ * Demotions are not gated here — removing an unsupported badge is always safe
+ * (the evidence gate in resolveFirstTranslation already routes evidence-free
+ * `translation_found` to needs_review).
+ */
+export function canPromoteToFirst(book: FirstTranslationBook): boolean {
+  if (!isFirstByVerdict(book)) return false;
+  // Must be a real, stored verdict object — not the legacy-disposition shim.
+  const stored = book.first_translation;
+  if (!stored || !stored.verdict) return false;
+  if (stored.evidence_strength === 'weak') return false;
+  // A first_no_prior is an absence claim; require it came from an adjudicator
+  // that actually searched (tier1 catalog sweep, tier2 agent, or human),
+  // never a bare materialization.
+  return stored.resolver === 'tier1_catalog'
+    || stored.resolver === 'tier2_agent'
+    || stored.resolver === 'human';
+}
