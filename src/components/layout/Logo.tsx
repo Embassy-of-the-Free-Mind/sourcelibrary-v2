@@ -16,13 +16,13 @@ export default function Logo({ white, compact, mini }: LogoProps) {
     ? 'w-6 h-6'
     : compact
       ? 'w-8 h-8'
-      : 'w-10 h-10 md:w-12 md:h-12';
+      : 'w-8 h-8 md:w-[2.4rem] md:h-[2.4rem]';
 
   const textSize = mini
     ? 'text-sm'
     : compact
       ? 'text-lg'
-      : 'text-xl md:text-2xl';
+      : 'text-base md:text-[1.2rem]';
 
   return (
     <Link
