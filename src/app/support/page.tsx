@@ -79,7 +79,7 @@ export default async function SupportPage() {
               Support Source Library
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mb-8">
-              We digitize, translate, and freely publish rare historical texts — many in English for the first time. Your gift funds that work directly. Source Library is a project of the{' '}
+              Consider making a gift to support our work to digitize, translate, and freely publish rare historical texts. Source Library is a project of the{' '}
               <a
                 href="https://embassyofthefreemind.com"
                 target="_blank"
@@ -88,7 +88,7 @@ export default async function SupportPage() {
               >
                 Embassy of the Free Mind
               </a>{' '}
-              (ANBI-registered) in Amsterdam.
+              (ANBI-registered) in Amsterdam, with 501(c)(3) tax-deductible options.
             </p>
 
             {/* Inline stats */}
