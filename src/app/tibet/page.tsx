@@ -227,11 +227,13 @@ export default async function TibetPage() {
               models head to head.
             </p>
             <p>
-              The finding was clear. Cheap, fast tools quietly garble these handwritten manuscripts in
-              ways that still read smoothly — the most dangerous kind of error in a sacred text. A{' '}
-              <strong>high-quality model</strong> gets them right. For the handful of these texts that
-              already have published English translations, those translations give us a benchmark — and
-              the high-quality model holds up against them.
+              We took famous texts that already have published scholarly translations — Tsongkhapa&apos;s{' '}
+              <em>Essence of True Eloquence</em>, a Heart Sūtra commentary, Candrakīrti&apos;s{' '}
+              <em>Entering the Middle Way</em> — and ran a blind comparison. Two independent expert
+              reviewers judged the <strong>high-quality model</strong> translations to be on par with the
+              published editions. The cheap model they judged unusable — it fabricated citations and
+              dropped whole passages while still reading smoothly, the most dangerous kind of error in a
+              sacred text.
             </p>
             <p>
               The method is proven. What&apos;s left is to translate the rest — most for the first
