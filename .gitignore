@@ -123,3 +123,5 @@ incoming/
 scripts/eval/ft-tier2-bulk.workflow.js
 scripts/eval/ft-tier2-rerun.workflow.js
 scripts/eval/ft-recall.workflow.js
+scripts/eval/ft-reliability.workflow.js
+scripts/eval/ft-groundtruth.workflow.js
