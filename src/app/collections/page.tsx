@@ -192,12 +192,12 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
     <Link
       key={col.slug}
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
-      className="group relative block overflow-hidden rounded-lg aspect-[4/3] animate-fade-in-up"
+      className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
       <CollectionCardImage
         candidates={cardImageCandidates(col.featured_images)}
         alt={`Illustration from ${col.name}`}
-        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         priority={priority}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
@@ -220,7 +220,7 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
   return (
     <Link
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
-      className="group relative block overflow-hidden rounded-lg aspect-[3/2] animate-fade-in-up"
+      className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
       <CollectionCardImage
         candidates={cardImageCandidates(col.featured_images)}
@@ -312,7 +312,7 @@ async function CoreCollectionsSection() {
         <h2 className="font-display text-2xl text-primary">Core Collections</h2>
         <p className="text-stone-500 mt-1 text-sm">The main wings of the library</p>
       </div>
-      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {categories.map((col) => (
           <CollectionCard key={col.slug} col={col} tenantSlug={tenantSlug} />
         ))}
@@ -333,10 +333,10 @@ function SectionSkeleton({ heading, sub }: { heading: string; sub: string }) {
         <h2 className="font-display text-2xl text-primary">{heading}</h2>
         <p className="text-stone-500 mt-1 text-sm">{sub}</p>
       </div>
-      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 animate-pulse">
-        {Array.from({ length: 10 }).map((_, i) => (
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 animate-pulse">
+        {Array.from({ length: 8 }).map((_, i) => (
           <div key={i} className="rounded-xl overflow-hidden">
-            <div className="aspect-[4/3] bg-stone-200" />
+            <div className="aspect-square bg-stone-200" />
             <div className="h-4 w-3/4 bg-stone-200 rounded mt-2" />
           </div>
         ))}
