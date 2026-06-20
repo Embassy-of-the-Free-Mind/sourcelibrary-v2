@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { getReadDb } from '@/lib/mongodb';
-import { sanitizeThumbnail } from '@/lib/collections-utils';
+import { sanitizeThumbnail, coverOverride } from '@/lib/collections-utils';
 
 // Cache the composited mosaic hard — it changes rarely and is expensive to
 // build (Satori fetches every tile server-side). One image reaches the browser.
@@ -29,7 +29,7 @@ async function getTileUrls(): Promise<string[]> {
       .collection('collections')
       .find(
         { visible: true, featured_images: { $exists: true, $ne: [] } },
-        { projection: { featured_images: 1, order: 1 } },
+        { projection: { slug: 1, featured_images: 1, order: 1 } },
       )
       .sort({ order: 1 })
       .limit(120)
@@ -37,6 +37,13 @@ async function getTileUrls(): Promise<string[]> {
 
     const urls: string[] = [];
     for (const d of docs) {
+      // Curated cover wins; otherwise first usable featured image.
+      const override = sanitizeThumbnail(coverOverride(d.slug as string | undefined));
+      if (override && !urls.includes(override)) {
+        urls.push(override);
+        if (urls.length >= COUNT) break;
+        continue;
+      }
       const imgs = d.featured_images as Array<FeaturedImage | string> | undefined;
       if (!Array.isArray(imgs)) continue;
       for (const img of imgs) {

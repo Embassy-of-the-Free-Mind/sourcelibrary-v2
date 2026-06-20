@@ -3,7 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { sortCollections, sanitizeThumbnail, collectionCountLabel } from '@/lib/collections-utils';
+import { sortCollections, sanitizeThumbnail, collectionCountLabel, coverOverride } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
@@ -171,13 +171,14 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
  *  thumbnails, then extracted, then the raw page, across all featured images.
  *  The card renders these with a fallback chain so a single dead/slow source
  *  doesn't leave a broken thumbnail. */
-function cardImageCandidates(images: FeaturedImage[] | undefined): string[] {
-  if (!images?.length) return [];
+function cardImageCandidates(images: FeaturedImage[] | undefined, override?: string): string[] {
   const urls: string[] = [];
   const add = (u: string | undefined | null) => {
     const s = sanitizeThumbnail(u);
     if (s && !urls.includes(s)) urls.push(s);
   };
+  add(override); // curated cover wins over stored featured_images
+  if (!images?.length) return urls;
   for (const img of images) {
     if (typeof img === 'string') { add(img); continue; }
     add(img.thumbnail_url);
@@ -195,7 +196,7 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
       className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
       <CollectionCardImage
-        candidates={cardImageCandidates(col.featured_images)}
+        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug))}
         alt={`Illustration from ${col.name}`}
         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         priority={priority}
@@ -223,7 +224,7 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
       className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
       <CollectionCardImage
-        candidates={cardImageCandidates(col.featured_images)}
+        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug))}
         alt={`Illustration from ${col.name}`}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         priority={priority}
