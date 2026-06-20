@@ -106,6 +106,26 @@ if (process.env.RESEND_API_KEY) {
     from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
     sendVerificationRequest: async ({ identifier: email, url }) => {
       try {
+        // Prefetch-safe magic link. The raw `url` is the one-time-token GET
+        // callback (/api/auth/callback/nodemailer?...token=...). Email clients
+        // and security scanners (Gmail's com.google.android.gm especially)
+        // PREFETCH links to render previews / scan for malware — which fires
+        // that GET and burns the single-use token before the human ever clicks,
+        // surfacing as the dominant /auth/error?error=Verification failure.
+        //
+        // So the button instead points at /auth/confirm?next=<real url>: a
+        // static interstitial with a "Sign in" button. A prefetcher GETs the
+        // interstitial (harmless — no token consumed) and stops; only a human
+        // click follows through to the real callback. Token survives until then.
+        let confirmUrl = url;
+        try {
+          const origin = new URL(url).origin;
+          confirmUrl = `${origin}/auth/confirm?next=${encodeURIComponent(url)}`;
+        } catch {
+          // If url can't be parsed for some reason, fall back to the raw link
+          // rather than failing the whole sign-in.
+        }
+        const linkUrl = confirmUrl;
         await resend.emails.send({
           from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
           to: email,
@@ -120,7 +140,7 @@ if (process.env.RESEND_API_KEY) {
                 </p>
               </div>
               <div style="text-align: center; margin: 32px 0;">
-                <a href="${url}" style="display: inline-block; padding: 14px 40px; background: #9e4a3a; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px; font-family: -apple-system, sans-serif;">
+                <a href="${linkUrl}" style="display: inline-block; padding: 14px 40px; background: #9e4a3a; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px; font-family: -apple-system, sans-serif;">
                   Sign In
                 </a>
               </div>

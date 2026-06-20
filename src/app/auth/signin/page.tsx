@@ -28,20 +28,26 @@ function SignInContent() {
   const [inApp, setInApp] = useState(false);
   const [browser, setBrowser] = useState<'Safari' | 'Chrome'>('Chrome');
   const [appName, setAppName] = useState<string | null>(null);
-  // Log the sign-in page view once, tagged with why they arrived.
+  // Detect the host browser, then log the sign-in page view once — tagged with
+  // why they arrived AND whether they're trapped in an in-app browser, so we
+  // can measure how much of the funnel is webview traffic and whether the
+  // steer-to-email recovery is working.
   const loggedView = useRef(false);
   useEffect(() => {
-    if (loggedView.current) return;
-    loggedView.current = true;
-    trackEvent('signin_view', { reason, source: callbackUrl });
-  }, [reason, callbackUrl]);
-
-  useEffect(() => {
     const ua = navigator.userAgent;
-    setInApp(isInAppBrowser(ua));
+    const webview = isInAppBrowser(ua);
+    setInApp(webview);
     setBrowser(preferredBrowser(ua));
     setAppName(inAppBrowserName(ua));
-  }, []);
+
+    if (loggedView.current) return;
+    loggedView.current = true;
+    trackEvent('signin_view', {
+      reason,
+      source: callbackUrl,
+      channel: webview ? `in-app:${inAppBrowserName(ua) ?? 'unknown'}` : 'browser',
+    });
+  }, [reason, callbackUrl]);
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,9 +130,9 @@ function SignInContent() {
 
         {inApp && (
           <div className="mb-6 p-3 rounded-lg text-sm" style={{ background: '#fffbeb', color: '#92400e', border: '1px solid #fde68a' }}>
-            You&rsquo;re in {appName ? `${appName}’s` : 'an'} in-app browser, where Google sign-in usually fails.
-            Use <strong>email</strong> below — the link opens in your normal browser — or tap the{' '}
-            <strong>&#8230;</strong> menu and choose &ldquo;Open in {browser}&rdquo;.
+            You&rsquo;re in {appName ? `${appName}’s` : 'an'} in-app browser, where Google sign-in is usually blocked.
+            <strong> Use email below</strong> — we&rsquo;ll send a link that opens in your normal browser and signs you in.
+            (Or tap the <strong>&#8230;</strong> menu and choose &ldquo;Open in {browser}&rdquo;.)
           </div>
         )}
 
@@ -191,7 +197,7 @@ function SignInContent() {
             }}
             disabled={googleLoading}
             className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-medium)' }}
+            style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-medium)', opacity: inApp ? 0.6 : 1 }}
           >
             {googleLoading ? (
               <>
