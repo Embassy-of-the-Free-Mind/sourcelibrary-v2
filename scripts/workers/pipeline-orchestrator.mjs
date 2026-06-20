@@ -35,6 +35,7 @@ import os from 'os';
 import path from 'path';
 import { logUsage, logUsageAsync } from './lib/supabase-usage-logger.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
+import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -2464,7 +2465,29 @@ async function run() {
 
   // Emergency stop check — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
+
+  // ── Selective unpause ──────────────────────────────────────────────
+  // Process specific books even while globally paused. Driven by
+  // system_config.processing_control.allow_book_ids[] / allow_collections[].
+  // When a scope is set, the global pause is bypassed but EVERY phase is
+  // confined to the allowlisted books (via applyBookOverride below). An
+  // empty scope means the pause is a full stop, unchanged. The free
+  // archiving workers already do this per-book (archive-bulk --book-id,
+  // archive-iiif-local --ignore-pause); this brings the paid path in line.
+  const { bookIds: _scopeBookIds, collections: _scopeCollections } = getScopeConfig(control);
+  const _scopeIds = new Set(_scopeBookIds);
+  if (_scopeCollections.length) {
+    const scoped = await db.collection('books')
+      .find({ collections: { $in: _scopeCollections } }, { projection: { id: 1 } })
+      .toArray();
+    for (const b of scoped) _scopeIds.add(String(b.id));
+  }
+  const SCOPED_MODE = _scopeIds.size > 0;
+  // SCOPE_ACTIVE gates the per-phase applyBookOverride calls — true for either
+  // a single --book override (existing behavior) or a config-driven allowlist.
+  const SCOPE_ACTIVE = !!BOOK_OVERRIDE || SCOPED_MODE;
+
+  if (!shouldBypassPause(control, { bookOverride: !!BOOK_OVERRIDE })) {
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
     console.log(`[pipeline-orchestrator] PAUSED (${Math.round(pauseAgeMs / 60000)}min ago by ${control.paused_by || 'unknown'}). Exiting.`);
     await db.collection('cron_runs').insertOne({
@@ -2476,6 +2499,9 @@ async function run() {
     }).catch(() => {});
     await client.close();
     return;
+  }
+  if (control?.paused && SCOPED_MODE) {
+    console.log(`[pipeline-orchestrator] PAUSED globally, but selective-unpause scope is active — processing ONLY ${_scopeIds.size} allowlisted book(s) (allow_book_ids + allow_collections).`);
   }
 
   // DB health probe — adjusts submission limits based on Atlas load
@@ -2534,13 +2560,22 @@ async function run() {
    * Usage: `books = await applyBookOverride(db, books, { id: 1, title: 1 });`
    */
   async function applyBookOverride(db, normalBooks, projection) {
-    if (!BOOK_OVERRIDE) return normalBooks;
-    const bookId = _overrideBook.id || _overrideBook._id.toString();
-    const book = await db.collection('books').findOne(
-      { $or: [{ id: bookId }, { _id: _overrideBook._id }] },
-      projection ? { projection } : undefined
-    );
-    return book ? [book] : [];
+    // Single --book override: force exactly that book through the phase,
+    // re-fetched with the phase's projection (ignores normal status gating).
+    if (BOOK_OVERRIDE) {
+      const bookId = _overrideBook.id || _overrideBook._id.toString();
+      const book = await db.collection('books').findOne(
+        { $or: [{ id: bookId }, { _id: _overrideBook._id }] },
+        projection ? { projection } : undefined
+      );
+      return book ? [book] : [];
+    }
+    // Selective-unpause scope: keep the phase's own status-correct selection,
+    // but confine it to the allowlisted books so they flow through naturally.
+    if (SCOPED_MODE) {
+      return normalBooks.filter(b => _scopeIds.has(String(b.id || b._id)));
+    }
+    return normalBooks;
   }
 
   const log = {
@@ -2587,7 +2622,7 @@ async function run() {
         .project({ id: 1, language: 1 })
         .limit(ENROLL_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
+      if (SCOPE_ACTIVE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
 
       if (DRY_RUN) {
         console.log(`  Would enroll ${newBooks.length} books`);
@@ -2678,7 +2713,7 @@ async function run() {
           { $limit: ARCHIVE_LIMIT },
         ])
         .toArray();
-      if (BOOK_OVERRIDE) queuedBooks = await applyBookOverride(db, queuedBooks, { id: 1 });
+      if (SCOPE_ACTIVE) queuedBooks = await applyBookOverride(db, queuedBooks, { id: 1 });
 
       if (!DRY_RUN) {
         for (const book of queuedBooks) {
@@ -2711,7 +2746,7 @@ async function run() {
           { $limit: ARCHIVE_LIMIT },
         ])
         .toArray();
-      if (BOOK_OVERRIDE) archivingBooks = await applyBookOverride(db, archivingBooks, { id: 1, pages_count: 1 });
+      if (SCOPE_ACTIVE) archivingBooks = await applyBookOverride(db, archivingBooks, { id: 1, pages_count: 1 });
 
       let archiveCompleted = 0;
       for (const book of archivingBooks) {
@@ -2827,7 +2862,7 @@ async function run() {
         .project({ id: 1, title: 1, pages_count: 1 })
         .limit(SPLIT_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1 });
+      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1 });
 
       console.log(`  Candidates for split check: ${candidates.length}`);
 
@@ -3027,7 +3062,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.pre_split_retry_count': 1 })
         .limit(PRE_SPLIT_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyForPreSplit = await applyBookOverride(db, readyForPreSplit, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForPreSplit = await applyBookOverride(db, readyForPreSplit, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
 
       if (readyForPreSplit.length > 0) {
         console.log(`  Books ready for pre-OCR split: ${readyForPreSplit.length}`);
@@ -3090,7 +3125,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
         .limit(PREVIEW_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyForPreview = await applyBookOverride(db, readyForPreview, { id: 1, title: 1, language: 1, needs_splitting: 1 });
+      if (SCOPE_ACTIVE) readyForPreview = await applyBookOverride(db, readyForPreview, { id: 1, title: 1, language: 1, needs_splitting: 1 });
 
       console.log(`  Books ready for preview OCR: ${readyForPreview.length}`);
 
@@ -3279,7 +3314,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                    field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 });
+      if (SCOPE_ACTIVE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 });
 
       console.log(`  Books ready for AI metadata: ${readyForMetadata.length}`);
       let metadataEnriched = 0;
@@ -3850,7 +3885,7 @@ Rules:
             { $limit: ocrLimit },
           ])
           .toArray();
-        if (BOOK_OVERRIDE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
+        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
 
         const dedupedPreview = await filterDuplicateWorks(db, previewCandidates);
 
@@ -3955,7 +3990,7 @@ Rules:
           { $limit: ocrLimit },
         ])
         .toArray() : [];
-      if (BOOK_OVERRIDE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
 
       const dedupedFull = await filterDuplicateWorks(db, readyForOcr);
 
@@ -4050,7 +4085,7 @@ Rules:
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
         .project({ id: 1, title: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
-      if (BOOK_OVERRIDE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Books waiting for OCR: ${ocrPending.length}`);
 
@@ -4197,7 +4232,7 @@ Rules:
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_retry_count': 1 })
         .limit(SPLIT_BATCH_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyForSplit = await applyBookOverride(db, readyForSplit, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForSplit = await applyBookOverride(db, readyForSplit, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready for split: ${readyForSplit.length}`);
 
@@ -4265,7 +4300,7 @@ Rules:
         .project({ id: 1, title: 1, pages_count: 1, pages_ocr: 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyBooks = await applyBookOverride(db, readyBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1 });
+      if (SCOPE_ACTIVE) readyBooks = await applyBookOverride(db, readyBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1 });
 
       let gateRejected = 0;
       for (const book of readyBooks) {
@@ -4296,7 +4331,7 @@ Rules:
         .project({ id: 1, title: 1, language: 1 })
         .limit(TRANSLITERATE_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) nonLatinBooks = await applyBookOverride(db, nonLatinBooks, { id: 1, title: 1, language: 1 });
+      if (SCOPE_ACTIVE) nonLatinBooks = await applyBookOverride(db, nonLatinBooks, { id: 1, title: 1, language: 1 });
 
       console.log(`  Non-Latin books ready for transliteration: ${nonLatinBooks.length}`);
 
@@ -4477,7 +4512,7 @@ Rules:
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
-        if (BOOK_OVERRIDE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1, image_source: 1 });
+        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1, image_source: 1 });
 
         // If no fresh books, re-queue partially-translated books (gap-fill)
         // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.
@@ -4498,7 +4533,7 @@ Rules:
             { $sort: { _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
-          if (BOOK_OVERRIDE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1 });
+          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1 });
           if (partialBooks.length > 0) {
             console.log(`  No fresh books — gap-filling ${partialBooks.length} under-translated books`);
           }
@@ -4605,7 +4640,7 @@ Rules:
         .find({ 'pipeline_auto.status': 'translate_submitted' })
         .project({ id: 1, title: 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_job_name': 1 })
         .toArray();
-      if (BOOK_OVERRIDE) translatePending = await applyBookOverride(db, translatePending, { id: 1, title: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) translatePending = await applyBookOverride(db, translatePending, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Books in translate_submitted (legacy): ${translatePending.length}`);
 
@@ -4667,7 +4702,7 @@ Rules:
         .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1 })
         .limit(ENRICH_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyForEnrich = await applyBookOverride(db, readyForEnrich, { id: 1, title: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForEnrich = await applyBookOverride(db, readyForEnrich, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready for summary + index: ${readyForEnrich.length}`);
 
@@ -4730,7 +4765,7 @@ Rules:
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(CHAPTER_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyForChapters = await applyBookOverride(db, readyForChapters, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForChapters = await applyBookOverride(db, readyForChapters, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready for chapters: ${readyForChapters.length}`);
 
@@ -4817,7 +4852,7 @@ Rules:
             .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
             .toArray();
-          if (BOOK_OVERRIDE) readyForImages = await applyBookOverride(db, readyForImages, { id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 });
+          if (SCOPE_ACTIVE) readyForImages = await applyBookOverride(db, readyForImages, { id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 });
 
           // Catch-up: books processed outside pipeline with OCR but no image extraction
           const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
@@ -4959,7 +4994,7 @@ Rules:
             .project({ id: 1, title: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
             .toArray();
-          if (BOOK_OVERRIDE) readyForImages = await applyBookOverride(db, readyForImages, { id: 1, title: 1 });
+          if (SCOPE_ACTIVE) readyForImages = await applyBookOverride(db, readyForImages, { id: 1, title: 1 });
 
           const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
           if (remainingSlots > 0) {
@@ -5069,7 +5104,7 @@ Rules:
         .find({ 'pipeline_auto.status': 'images_submitted' })
         .project({ id: 1, pipeline_auto: 1 })
         .toArray();
-      if (BOOK_OVERRIDE) imagesPending = await applyBookOverride(db, imagesPending, { id: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) imagesPending = await applyBookOverride(db, imagesPending, { id: 1, pipeline_auto: 1 });
 
       for (const book of imagesPending) {
         const isBatch = book.pipeline_auto?.image_extraction_batch;
@@ -5141,7 +5176,7 @@ Rules:
         .project({ id: 1, title: 1, pipeline_auto: 1 })
         .limit(50)
         .toArray();
-      if (BOOK_OVERRIDE) staleBooks = await applyBookOverride(db, staleBooks, { id: 1, title: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) staleBooks = await applyBookOverride(db, staleBooks, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Stale books: ${staleBooks.length}`);
 
@@ -5209,7 +5244,7 @@ Rules:
         .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
         .limit(50)
         .toArray();
-      if (BOOK_OVERRIDE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
+      if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
 
       console.log(`  Books needing cover selection: ${coverBooks.length}`);
       let coversSelected = 0;
@@ -5288,7 +5323,7 @@ Rules:
         .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
-      if (BOOK_OVERRIDE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1 });
+      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1 });
 
       console.log(`  Books ready to finalize: ${readyToFinalize.length}`);
 
