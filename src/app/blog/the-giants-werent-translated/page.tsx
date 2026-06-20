@@ -118,25 +118,52 @@ export default function GiantsPage() {
         </p>
 
         <p>
-          We wanted to know what that means in books, so we counted. The Universal Short Title Catalogue records
-          about half a million Latin editions printed between 1450 and 1700. Reduce those to distinct works, set
-          aside the reprints of Cicero and Virgil, and you are left with a corpus of new Renaissance writing
-          numbering in the hundreds of thousands. Against it, the total stock of known English translations,
-          gathered from thirty catalogs, is a few thousand. The translated share rounds to{' '}
-          <strong>about one in fifty.</strong> You can search it yourself, author by author, at{' '}
+          We wanted to know what that means in books, so we counted &mdash; and the counting is most of the
+          story. Start with the <em>Universal Short Title Catalogue</em>, the union catalog of nearly everything
+          printed in Europe before 1700: about 1.6 million editions, of which roughly half a million are in
+          Latin. Editions are not works &mdash; a popular text was reprinted dozens of times &mdash; so collapse
+          them down to distinct titles, and you are left with on the order of{' '}
+          <strong>four hundred thousand distinct Latin works.</strong>
+        </p>
+
+        <p>
+          Now the other side of the ratio. We gathered every English translation we could find &mdash; thirty
+          catalogs, from the UNESCO Index Translationum to Harvard&rsquo;s I Tatti library to library holdings
+          worldwide &mdash; and matched them, work by work, against that corpus. The number that lands a
+          translation is <strong>fewer than nine thousand.</strong> About <strong>one in fifty.</strong> You can
+          search the whole census, author by author, at{' '}
           <Link href="/census" className="text-accent-rust hover:underline">/census</Link>.
         </p>
 
         <p>
+          We have tried hard to break that figure, in both directions, and it keeps its shape. The count of
+          translations is surely <em>too low</em> &mdash; catalogs are incomplete, and we already know we are
+          missing volumes of I Tatti and Brill. And the corpus is surely a little <em>too high</em> &mdash; some
+          of those &ldquo;works&rdquo; are reprints of antiquity that slipped the filter, and our
+          edition-to-work clustering is conservative. But push every lever as far as it will honestly go and the
+          translated share still comes out at a percent or two. The order of magnitude does not move. (The full
+          method, and exactly where it is shaky, is written up at{' '}
+          <Link href="/research/translation-gap" className="text-accent-rust hover:underline">
+            /research/translation-gap
+          </Link>
+          .)
+        </p>
+
+        <p>
           And the work is slow. We measured the pace of genuinely new translations &mdash; distinct works opened
-          for the first time &mdash; across the late twentieth century: roughly <strong>twenty to thirty a
-          year.</strong> It has been accelerating, which is the hopeful part. But run the arithmetic forward and
-          it is sobering: at the current human pace, finishing the untranslated Renaissance would take{' '}
-          <strong>on the order of twelve thousand years.</strong>
+          for the <em>first</em> time, with retranslations of Plato and Cicero stripped out &mdash; across the
+          late twentieth century: roughly <strong>twenty to thirty a year.</strong> It is accelerating, which is
+          the hopeful part. But divide the hundreds of thousands still untouched by a few dozen a year and the
+          arithmetic is brutal:{' '}
+          <Link href="/blog/how-long-to-translate" className="text-accent-rust hover:underline">
+            at the human pace
+          </Link>
+          , finishing the Latin Renaissance alone would take{' '}
+          <strong>on the order of ten thousand years.</strong>
         </p>
 
         <p className="text-xl text-secondary leading-relaxed my-8 font-body">
-          Twelve thousand years to read our own inheritance.
+          Ten thousand years to read our own inheritance.
         </p>
 
         <h2>Why we built this</h2>
@@ -150,8 +177,8 @@ export default function GiantsPage() {
 
         <p>
           It does not replace the scholars. The I Tatti volumes are masterpieces, and a careful human edition of
-          Fludd will always be worth more than a machine draft. But twelve thousand years is twelve thousand
-          years. The choice is not between a perfect translation and a quick one. It is between a quick one and{' '}
+          Fludd will always be worth more than a machine draft. But ten thousand years is ten thousand years.
+          The choice is not between a perfect translation and a quick one. It is between a quick one and{' '}
           <em>nothing at all, for centuries.</em>
         </p>
 
