@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import RegistryBrowser from './RegistryBrowser';
 import registryData from './registry-data.json';
@@ -70,7 +71,7 @@ export default function TranslationRegistryPage() {
         </div>
 
         <p>
-          The <a href="/research/translation-gap" className="text-amber-800 hover:underline">Translation Gap</a> measures
+          The <Link href="/research/translation-gap" className="text-amber-800 hover:underline">Translation Gap</Link> measures
           what has <em>not</em> been translated: of roughly 366,000 distinct Latin works printed in Europe between 1400
           and 1700, fewer than 3% have a known English translation. This page is the other half of that same count — the
           works that <em>have</em> been translated, and the people who translated them.
@@ -99,7 +100,7 @@ export default function TranslationRegistryPage() {
           </p>
           <p className="mt-4">
             The full method, the data sources, and the honest confidence levels behind every number are written up in the{' '}
-            <a href="/research/translation-gap" className="text-amber-800 hover:underline">Translation Gap</a> companion.
+            <Link href="/research/translation-gap" className="text-amber-800 hover:underline">Translation Gap</Link> companion.
             This registry grows as the pipeline reads more of the corpus.
           </p>
         </Section>
