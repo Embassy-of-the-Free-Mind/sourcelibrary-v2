@@ -260,7 +260,9 @@ export default function CollectionsPage() {
           title="Collections"
           subtitle="10,000+ books across three millennia of human knowledge."
           image={COLLECTIONS_HERO}
-          imageAlt="Historical illustration from the collection"
+          imageAlt="Mosaic of illustrations from the collection"
+          imageFit="tile"
+          heightClass="min-h-[260px] md:min-h-[40vh]"
         />
       }
     >

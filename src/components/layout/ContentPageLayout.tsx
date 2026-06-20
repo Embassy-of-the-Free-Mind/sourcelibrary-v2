@@ -11,11 +11,18 @@ interface ContentHeaderProps {
   /** Optional background image URL for the hero section */
   image?: string;
   imageAlt?: string;
+  /** How the hero image fills the banner.
+   *  'cover' (default): scale to cover, cropping as needed.
+   *  'tile': size to the image's own height (so a fixed-row mosaic shows all its
+   *  rows, never cropped top/bottom) and repeat horizontally to fill the width. */
+  imageFit?: 'cover' | 'tile';
+  /** Override the hero min-height classes (default 260px, 340px on md). */
+  heightClass?: string;
   /** Match the page's ContentPageLayout maxWidth so the hero aligns with the body. */
   maxWidth?: 'narrow' | 'standard' | 'wide' | 'full';
 }
 
-export function ContentHeader({ title, subtitle, children, image, imageAlt, maxWidth = 'standard' }: ContentHeaderProps) {
+export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard' }: ContentHeaderProps) {
   const headerWidthClass =
     maxWidth === 'full'
       ? ''
@@ -28,15 +35,29 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, maxW
     <>
       <SiteHeader variant="light" />
 
-      <div className={`relative overflow-hidden text-white ${image ? 'pt-16 pb-10 md:pt-24 md:pb-14 min-h-[260px] md:min-h-[340px] flex flex-col justify-end' : 'py-16 md:py-20'}`}>
+      <div className={`relative overflow-hidden text-white ${image ? `pt-16 pb-10 md:pt-24 md:pb-14 ${heightClass || 'min-h-[260px] md:min-h-[340px]'} flex flex-col justify-end` : 'py-16 md:py-20'}`}>
         {image ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={image}
-              alt={imageAlt || ''}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            {imageFit === 'tile' ? (
+              <div
+                role="img"
+                aria-label={imageAlt || ''}
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `url(${image})`,
+                  backgroundSize: 'auto 100%',
+                  backgroundRepeat: 'repeat-x',
+                  backgroundPosition: 'center',
+                }}
+              />
+            ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={image}
+                alt={imageAlt || ''}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(26,22,18,0.94) 0%, rgba(26,22,18,0.75) 35%, rgba(26,22,18,0.35) 65%, rgba(26,22,18,0.15) 100%)' }} />
           </>
         ) : (

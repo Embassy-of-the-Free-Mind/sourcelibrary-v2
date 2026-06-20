@@ -7,12 +7,16 @@ import { sanitizeThumbnail, coverOverride } from '@/lib/collections-utils';
 export const revalidate = 86400;
 export const runtime = 'nodejs';
 
-const WIDTH = 1600;
+// 3 rows tall — the hero renders this at background-size "auto 100%" so all 3
+// rows are always visible (never cropped top/bottom) and the strip repeats
+// horizontally. Wide enough (16 cols) that the repeat seam is off-screen on
+// typical desktops.
+const WIDTH = 2560;
 const HEIGHT = 480;
 const TILE = 160;
-const COLS = WIDTH / TILE; // 10
+const COLS = WIDTH / TILE; // 16
 const ROWS = HEIGHT / TILE; // 3
-const COUNT = COLS * ROWS; // 30 tiles
+const COUNT = COLS * ROWS; // 48 tiles
 
 interface FeaturedImage {
   thumbnail_url?: string;
