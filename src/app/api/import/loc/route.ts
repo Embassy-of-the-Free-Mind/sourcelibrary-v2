@@ -215,7 +215,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title: bookTitle, author: bookAuthor, display_title,
+      title: bookTitle, author: bookAuthor, display_title, published: bookPublished,
       image_source: { provider: 'loc', identifier: lccn, source_url: `https://www.loc.gov/item/${lccn}/` },
     });
     if (dedupResult.isDuplicate) {

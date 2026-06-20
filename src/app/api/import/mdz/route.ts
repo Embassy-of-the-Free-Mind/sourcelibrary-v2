@@ -128,6 +128,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       author,
       display_title,
+      year,
       mdz_id: normalizedId,
       bsb_id: normalizedId,
       image_source: {

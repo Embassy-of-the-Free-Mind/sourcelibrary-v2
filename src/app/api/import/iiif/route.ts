@@ -296,7 +296,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author, display_title,
+      title, author, display_title, year, published,
       image_source: { provider: 'iiif', iiif_manifest: manifest_url, source_url: manifest_url },
     });
     if (dedupResult.isDuplicate) {

@@ -7,6 +7,7 @@ import path from 'path';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { resolveLanguage } from '@/lib/resolve-language';
+import { checkDuplicate } from '@/lib/dedup';
 
 /**
  * Import a book from a local directory
@@ -69,17 +70,26 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const db = await getDb();
 
-    // Check if book already exists
-    const existing = await db.collection('books').findOne({
-      $or: [
-        { title },
-        { display_title: display_title || title }
-      ]
+    // Edition-aware dedup. The old exact `{ title }` check blocked distinct
+    // editions that share a title; checkDuplicate() lets a different year/volume
+    // through while still catching true duplicates by source + title+author.
+    const dedupResult = await checkDuplicate(db, {
+      title,
+      author,
+      display_title,
+      published,
+      ia_identifier,
+      dublin_core,
+      image_source,
     });
-
-    if (existing) {
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
       return NextResponse.json(
-        { error: 'Book already exists', existingId: existing.id || existing._id.toString() },
+        {
+          error: `Book already exists (${best.matchType}): matches "${best.matchedTitle}"`,
+          existingId: best.matchedBookId,
+          matches: dedupResult.matches,
+        },
         { status: 409 }
       );
     }
