@@ -339,24 +339,10 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-warm);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-medium);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
+/* Scrollbars: use the platform-native overlay scrollbar so it auto-hides and
+ * only appears while scrolling (normal macOS behavior). Defining custom
+ * ::-webkit-scrollbar rules opts out of the overlay/auto-hide and forces an
+ * always-visible track — so we intentionally leave scrollbars unstyled. */
 
 /* Search highlight */
 mark {
