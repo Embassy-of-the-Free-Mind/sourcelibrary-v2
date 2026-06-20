@@ -2608,6 +2608,21 @@ async function run() {
     errors: [],
   };
 
+  // Selective-unpause: in scoped mode every phase post-filters its candidate
+  // list down to the allowlist (applyBookOverride), so the per-phase limits
+  // would otherwise hide scoped books behind the larger backlog (e.g. ~200+
+  // un-enrolled imports ahead of them). Raise the limits past any realistic
+  // backlog — real work stays capped to the allowlist by the post-filter, so
+  // this only widens the candidate window, it does not widen what gets acted on.
+  // Done here, after all health-grade and limit_overrides adjustments.
+  if (SCOPED_MODE) {
+    const SCOPE_LIMIT = 100000;
+    ENROLL_LIMIT = ARCHIVE_LIMIT = OCR_SUBMIT_LIMIT = METADATA_ENRICH_LIMIT =
+      TRANSLATE_SUBMIT_LIMIT = ENRICH_LIMIT = CHAPTER_LIMIT = IMAGE_SUBMIT_LIMIT =
+      FINALIZE_LIMIT = TRANSLITERATE_LIMIT = PREVIEW_LIMIT = SCOPE_LIMIT;
+    console.log(`[pipeline-orchestrator] Scoped mode: per-phase candidate limits raised to ${SCOPE_LIMIT} (work still confined to ${_scopeIds.size} allowlisted book(s)).`);
+  }
+
   try {
     // ── Phase 0: Auto-enroll recently imported books ──
     if (shouldRun(0)) {
