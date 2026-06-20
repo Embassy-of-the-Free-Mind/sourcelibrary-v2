@@ -2,11 +2,10 @@
 
 **Status (2026-06-20):** changes #1–#2 (instrument: evidence capture + durability)
 **implemented** in the `feat+ft-rebuild` worktree (uncommitted; issue #2564 comment 17:37).
-Change #3 sink wiring: **Sink C (Supabase `translation_catalogs`) implemented — PR #2633**;
-**Sink A** (Mongo `first_translation_attempts` population) handed to #2573 as a ready-to-paste
-edit to `ft-ingest-verdicts.ts` (issue comment); **Sink B** already works under
-`--apply-verdicts`. The grounded re-run is unblocked once Sink A lands and a ~20-book
-validation pass confirms evidence density.
+Change #3 sink wiring: **Sink C (Supabase `translation_catalogs`) — PR #2633** (base main);
+**Sink A (Mongo `first_translation_attempts` population) — PR #2634** (stacked on #2573);
+**Sink B** already works under `--apply-verdicts`. The grounded re-run is unblocked once
+Sink A merges and a ~20-book validation pass confirms evidence density.
 **Owner of the worktree:** `feat+ft-rebuild` (PR #2573). **Sign-off gate:** Derek, on
 (a) any `book.first_translation` verdict flip and (b) the Supabase catalog write.
 **Author:** 2026-06-20. See [first-translation-system.md](./first-translation-system.md) §8 for the catalog layer.
