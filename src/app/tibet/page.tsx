@@ -411,6 +411,57 @@ export default async function TibetPage() {
         </div>
       </section>
 
+      {/* Credits — who digitized these */}
+      <section className="bg-white py-12 md:py-16 border-t border-stone-200">
+        <div className="px-6 md:px-12 max-w-3xl mx-auto">
+          <h2 className="text-xl md:text-2xl text-stone-900 mb-3 font-display">Digitized by</h2>
+          <p className="text-stone-600 leading-relaxed text-sm mb-6">
+            These manuscripts were rescued from loss by the archives that scanned them. Source Library
+            re-hosts and translates them with gratitude to:
+          </p>
+          <div className="space-y-4 text-sm">
+            <div>
+              <a
+                href="https://eap.bl.uk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-stone-900 hover:text-accent-rust underline underline-offset-2"
+              >
+                British Library — Endangered Archives Programme
+              </a>
+              <p className="text-stone-500 leading-relaxed mt-1">
+                The Bhutanese temple and monastery collections of Drametse &amp; Ogyen Choling
+                (EAP105), Thadrak, Tshamdrak &amp; Nyephug (EAP310), and Gangtey (EAP039) — the bulk
+                of this library.
+              </p>
+            </div>
+            <div>
+              <a
+                href="https://www.bdrc.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-stone-900 hover:text-accent-rust underline underline-offset-2"
+              >
+                Buddhist Digital Resource Center (BDRC)
+              </a>
+              <p className="text-stone-500 leading-relaxed mt-1">
+                Canonical Tibetan works, including several of the texts in our translation benchmark.
+              </p>
+            </div>
+            <div>
+              <a
+                href="https://archive.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-stone-900 hover:text-accent-rust underline underline-offset-2"
+              >
+                Internet Archive
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-white border-t border-stone-200 py-10">
         <div className="px-6 md:px-12 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-3 text-stone-500 text-sm">
