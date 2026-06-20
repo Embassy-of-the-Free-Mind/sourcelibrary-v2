@@ -65,24 +65,19 @@ function formatStat(n: number): string {
 }
 
 async function fetchStats() {
-  const fallback = { books: 1473, pagesOcr: 289989, pagesTranslated: 273500 };
+  const fallback = { books: 1470, pagesOcr: 289989, firstTranslations: 829 };
   try {
     const db = await getReadDb();
     const books = db.collection('books');
     const match = { language: 'Tibetan', visible: true, pages_translated: { $gt: 0 } };
-    const [count, agg] = await Promise.all([
+    const [count, firstTranslations, agg] = await Promise.all([
       books.countDocuments(match, { maxTimeMS: 15000 }),
+      books.countDocuments({ ...match, is_first_translation: true }, { maxTimeMS: 15000 }),
       books
         .aggregate(
           [
             { $match: match },
-            {
-              $group: {
-                _id: null,
-                ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-                translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-              },
-            },
+            { $group: { _id: null, ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } } } },
           ],
           { maxTimeMS: 15000 },
         )
@@ -91,7 +86,7 @@ async function fetchStats() {
     return {
       books: count || fallback.books,
       pagesOcr: agg[0]?.ocr || fallback.pagesOcr,
-      pagesTranslated: agg[0]?.translated || fallback.pagesTranslated,
+      firstTranslations: firstTranslations || fallback.firstTranslations,
     };
   } catch {
     return fallback;
@@ -127,9 +122,10 @@ export default async function TibetPage() {
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mb-8">
               {formatStat(stats.books)} sacred manuscripts — nearly{' '}
-              {formatStat(stats.pagesOcr)} pages of an endangered tradition — made readable in
-              English for the first time. We&apos;ve tested what it takes to make them{' '}
-              <em className="text-white not-italic font-display">faithful</em>.
+              {formatStat(stats.pagesOcr)} pages of an endangered tradition, most never read in
+              English. We are translating them for the first time with a high-quality model,{' '}
+              <em className="text-white not-italic font-display">proven faithful</em> to the
+              originals.
             </p>
 
             <div className="flex flex-wrap gap-x-10 gap-y-4 text-white/80 mb-9">
@@ -146,8 +142,10 @@ export default async function TibetPage() {
                 pages digitized
               </span>
               <span className="text-sm md:text-base">
-                <strong className="font-display text-white text-lg md:text-xl">~99%</strong>{' '}
-                translated to English
+                <strong className="font-display text-white text-lg md:text-xl">
+                  {formatStat(stats.firstTranslations)}+
+                </strong>{' '}
+                first-ever English translations
               </span>
             </div>
 
@@ -184,12 +182,11 @@ export default async function TibetPage() {
               other places on earth.
             </p>
             <p>
-              We have already made every one of them machine-readable and translated into English —
-              a reader anywhere in the world can open these texts today. That is real, and it
-              matters. But for sacred texts, making them <em>readable</em> and making them{' '}
-              <em>trustworthy</em> are not the same thing. A garbled line in a Dzogchen
-              pith-instruction or a Madhyamaka commentary is not a typo — it is a distortion of the
-              teaching.
+              We have already digitized and made machine-readable every one of these manuscripts.
+              The next step — the one that opens them to the world — is translating them faithfully
+              into English, most for the very first time. For sacred texts that means getting it
+              right: a garbled line in a Dzogchen pith-instruction or a Madhyamaka commentary is not
+              a typo, it is a distortion of the teaching.
             </p>
           </div>
         </div>
@@ -221,23 +218,24 @@ export default async function TibetPage() {
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-14 md:py-20">
         <div className="px-6 md:px-12 max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl text-stone-900 mb-5 font-display leading-tight">
-            A faithful edition needs a premium model
+            A high-quality model, proven faithful
           </h2>
           <div className="prose-content text-stone-700 leading-relaxed space-y-4 text-[1.05rem]">
             <p>
-              We didn&apos;t guess at this — we tested it. Independent AI reviewers checked the
-              transcriptions against the original page images across the collection.
+              We didn&apos;t guess at this — we tested it. Independent AI reviewers checked
+              transcriptions against the original page images across the collection, and we compared
+              models head to head.
             </p>
             <p>
-              The finding was clear. A fast, inexpensive model makes these texts{' '}
-              <em>readable</em>. But the handwritten manuscripts that fill this library need a{' '}
-              <strong>premium model</strong> to be transcribed and translated{' '}
-              <em>faithfully</em> — the cheaper one quietly garbles them in ways that still read
-              smoothly, the most dangerous kind of error in a sacred text.
+              The finding was clear. Cheap, fast tools quietly garble these handwritten manuscripts in
+              ways that still read smoothly — the most dangerous kind of error in a sacred text. A{' '}
+              <strong>high-quality model</strong> gets them right. For the handful of these texts that
+              already have published English translations, those translations give us a benchmark — and
+              the high-quality model holds up against them.
             </p>
             <p>
-              We have proven the premium model gets it right. What&apos;s left is simply to fund the
-              work.
+              The method is proven. What&apos;s left is to translate the rest — most for the first
+              time.
             </p>
           </div>
         </div>
@@ -266,9 +264,9 @@ export default async function TibetPage() {
               Help us complete the work
             </h2>
             <p className="text-stone-600 leading-relaxed text-[1.05rem]">
-              A premium AI model costs many times more per page than the fast one. Run across the
-              pages that need it — plus Tibetan-literate review — a faithful edition of all{' '}
-              {formatStat(stats.pagesOcr)} pages comes to about <strong>$10,000</strong>.
+              A high-quality AI model costs many times more per page than a basic one. Translating all{' '}
+              {formatStat(stats.pagesOcr)} pages this way — plus Tibetan-literate review — comes to
+              about <strong>$10,000</strong> for the whole library.
             </p>
           </div>
 
@@ -276,14 +274,14 @@ export default async function TibetPage() {
           <div className="max-w-3xl mb-12 rounded-2xl border border-stone-200 bg-[#faf8f5] overflow-hidden">
             {[
               {
-                label: 'Fast first pass',
-                detail: `All ${formatStat(stats.pagesOcr)} pages made readable`,
+                label: 'Digitized & scanned',
+                detail: `All ${formatStat(stats.pagesOcr)} pages, machine-readable`,
                 cost: 'Done',
                 muted: true,
               },
               {
-                label: 'Premium transcription & translation',
-                detail: 'A stronger AI model on the manuscripts that need it',
+                label: 'High-quality translation',
+                detail: 'A premium AI model across the full corpus',
                 cost: '~$7,000',
               },
               {
