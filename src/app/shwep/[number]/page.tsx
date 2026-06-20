@@ -176,6 +176,26 @@ export default async function EpisodePage({ params }: Props) {
           )
         )}
 
+        {/* On an inline-linked episode, the reading list links the works named in Earl's
+            discussion. Some held works are cited only via a dated edition (we hold a
+            different edition) or aren't named in the text — surface those here so no held
+            primary source is hidden behind the linked bibliography. */}
+        {episode.linkedBibliography && episode.supplementaryBooks && episode.supplementaryBooks.length > 0 && (
+          <section className="mt-10">
+            <h2 className="text-xl font-serif text-stone-800 mb-1">
+              Also in Source Library
+            </h2>
+            <p className="text-sm text-stone-500 mb-6">
+              More primary sources from this episode you can read here — held in the collection but not linked in the reading list above.
+            </p>
+            <div className="space-y-4">
+              {episode.supplementaryBooks.map(book => (
+                <BookCard key={book.id} book={book} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Back link */}
         <div className="mt-12 pt-8 border-t border-stone-200">
           <Link href="/shwep" className="text-sm text-stone-500 hover:text-stone-700 transition-colors">

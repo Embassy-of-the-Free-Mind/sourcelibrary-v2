@@ -6,6 +6,7 @@ import { EPISODE_DATES } from '@/data/shwep-dates';
 import { SHWEP_BOOK_MATCHES } from '@/data/shwep-book-matches';
 import { SHWEP_BIBLIOGRAPHIES } from '@/data/shwep-bibliographies';
 import { SHWEP_LINKED_BIBLIOGRAPHIES } from '@/data/shwep-linked-bibliographies';
+import { SHWEP_SUPPLEMENTARY_WORKS } from '@/data/shwep-supplementary-works';
 
 export interface MatchedBook {
   id: string;
@@ -37,6 +38,10 @@ export interface EnrichedEpisode {
   linkedBibliography?: string;
   books: MatchedBook[];
   bookCount: number;
+  /** Held works for this episode NOT reachable via an inline link (only cited via a dated
+   * edition, or not named in the bibliography). Shown as a "more in the library" grid
+   * beneath the inline-linked bibliography so no held work is hidden. */
+  supplementaryBooks?: MatchedBook[];
 }
 
 export interface EnrichedPeriod {
@@ -217,18 +222,24 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
 }
 
 export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpisode | null> {
-  // For single episode, only fetch the books matched to this episode
-  const bookIds = SHWEP_BOOK_MATCHES[episodeNumber];
-
   const episode = SHWEP_PERIODS
     .flatMap(p => p.episodes)
     .find(ep => ep.number === episodeNumber);
   if (!episode) return null;
 
-  let books: MatchedBook[] = [];
-  if (bookIds && bookIds.length > 0) {
+  const linkedBibliography = SHWEP_LINKED_BIBLIOGRAPHIES[episodeNumber] || undefined;
+  // Held editions matched to this episode (the "Read in Source Library" grid). When the
+  // episode renders an inline-linked bibliography, the grid is hidden — so we instead
+  // surface the SUPPLEMENTARY held works (held but not reachable via an inline link).
+  const bookIds = SHWEP_BOOK_MATCHES[episodeNumber] || [];
+  const suppIds = linkedBibliography ? (SHWEP_SUPPLEMENTARY_WORKS[episodeNumber] || []) : [];
+
+  // Fetch both sets in one query.
+  const allIds = [...new Set([...bookIds, ...suppIds])];
+  const byId = new Map<string, MatchedBook>();
+  if (allIds.length > 0) {
     const db = await getReadDb();
-    const objectIds = bookIds.map(id => {
+    const objectIds = allIds.map(id => {
       try { return new ObjectId(id); } catch { return null; }
     }).filter((id): id is ObjectId => id !== null);
 
@@ -243,20 +254,22 @@ export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpi
         },
       }
     ).toArray();
-
-    books = rawBooks
-      .map(toMatchedBook)
-      .sort((a, b) => (a.year || 9999) - (b.year || 9999));
+    for (const b of rawBooks) byId.set(b._id.toString(), toMatchedBook(b));
   }
+
+  const byYear = (a: MatchedBook, b: MatchedBook) => (a.year || 9999) - (b.year || 9999);
+  const books = bookIds.map(id => byId.get(id)).filter((b): b is MatchedBook => !!b).sort(byYear);
+  const supplementaryBooks = suppIds.map(id => byId.get(id)).filter((b): b is MatchedBook => !!b).sort(byYear);
 
   return {
     ...episode,
     description: EPISODE_DESCRIPTIONS[episodeNumber] || undefined,
     publishDate: EPISODE_DATES[episodeNumber] || undefined,
     bibliography: SHWEP_BIBLIOGRAPHIES[episodeNumber] || undefined,
-    linkedBibliography: SHWEP_LINKED_BIBLIOGRAPHIES[episodeNumber] || undefined,
+    linkedBibliography,
     books,
     bookCount: books.length,
+    supplementaryBooks: supplementaryBooks.length ? supplementaryBooks : undefined,
   };
 }
 
