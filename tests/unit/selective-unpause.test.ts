@@ -1,6 +1,23 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs helper, no types
-import { getScopeConfig, hasScope, shouldBypassPause } from '../../scripts/workers/lib/selective-unpause.mjs';
+import { getScopeConfig, hasScope, shouldBypassPause, resolveScopeBookIds } from '../../scripts/workers/lib/selective-unpause.mjs';
+
+// Minimal Mongo-ish stub: books.find({collections:{$in}}).toArray() returns the
+// rows whose `collections` intersect the queried slugs.
+function mockDb(booksByCollection: Record<string, string[]>) {
+  return {
+    collection() {
+      return {
+        find(query: any) {
+          const slugs: string[] = query?.collections?.$in ?? [];
+          const ids = new Set<string>();
+          for (const slug of slugs) for (const id of booksByCollection[slug] ?? []) ids.add(id);
+          return { toArray: async () => [...ids].map(id => ({ id })) };
+        },
+      };
+    },
+  };
+}
 
 describe('selective-unpause scope helpers', () => {
   describe('shouldBypassPause — the load-bearing invariant', () => {
@@ -38,6 +55,22 @@ describe('selective-unpause scope helpers', () => {
     it('is true when either list is non-empty', () => {
       expect(hasScope({ allow_book_ids: ['x'] })).toBe(true);
       expect(hasScope({ allow_collections: ['y'] })).toBe(true);
+    });
+  });
+
+  describe('resolveScopeBookIds — book ids ∪ collection-resolved ids', () => {
+    it('returns explicit allow_book_ids when no collections', async () => {
+      const ids = await resolveScopeBookIds(mockDb({}), { allow_book_ids: ['a', 'b'] });
+      expect([...ids].sort()).toEqual(['a', 'b']);
+    });
+    it('unions allow_book_ids with books in allow_collections (deduped)', async () => {
+      const db = mockDb({ 'cannabis-western-record': ['b', 'c'] });
+      const ids = await resolveScopeBookIds(db, { allow_book_ids: ['a', 'b'], allow_collections: ['cannabis-western-record'] });
+      expect([...ids].sort()).toEqual(['a', 'b', 'c']);
+    });
+    it('is empty when no scope is configured', async () => {
+      const ids = await resolveScopeBookIds(mockDb({}), {});
+      expect(ids.size).toBe(0);
     });
   });
 

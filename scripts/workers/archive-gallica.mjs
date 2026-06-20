@@ -16,6 +16,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -118,10 +119,19 @@ async function main() {
 
   // Check pause
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
+  if (!shouldBypassPause(control)) {
     console.log(`[archive-gallica] Pipeline paused. Exiting.`);
     await client.close();
     return;
+  }
+  // Selective unpause: confine to scoped books while globally paused (free
+  // archiving must honor the same scope as the paid path, #2616). Empty in
+  // normal operation.
+  let SCOPE_FILTER = {};
+  if (control?.paused && hasScope(control)) {
+    const scopeIds = [...await resolveScopeBookIds(db, control)];
+    SCOPE_FILTER = { id: { $in: scopeIds } };
+    console.log(`[archive-gallica] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
   }
 
   // Find Gallica books with unarchived pages
@@ -129,6 +139,7 @@ async function main() {
     .find({
       'image_source.provider': { $in: ['gallica', 'iiif'] },
       pages_count: { $gt: 0 },
+      ...SCOPE_FILTER,
     }, { projection: { id: 1, title: 1, pages_count: 1, pages_archived: 1 } })
     .limit(1000)
     .maxTimeMS(30_000)

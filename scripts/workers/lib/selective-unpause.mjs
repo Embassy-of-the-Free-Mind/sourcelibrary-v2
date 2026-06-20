@@ -41,3 +41,27 @@ export function shouldBypassPause(control, { bookOverride = false } = {}) {
   if (!control?.paused) return true;
   return Boolean(bookOverride) || hasScope(control);
 }
+
+/**
+ * Resolve the full set of book ids a selective-unpause scope covers:
+ * allow_book_ids[] ∪ (book ids in allow_collections[]). DB-backed, so it lives
+ * here rather than in the pure helpers above — callers confine their candidate
+ * queries to this set while the global pause is active. Mirrors the inline
+ * resolution the pipeline-orchestrator already does for the paid path (#2616);
+ * the archive workers reuse it so the FREE archiving step honors the same scope
+ * (otherwise scoped books never get their images to R2 and nothing downstream
+ * can run — the gap this closes).
+ *
+ * Returns a Set<string> of book ids (empty if no scope configured).
+ */
+export async function resolveScopeBookIds(db, control) {
+  const { bookIds, collections } = getScopeConfig(control);
+  const ids = new Set(bookIds);
+  if (collections.length) {
+    const scoped = await db.collection('books')
+      .find({ collections: { $in: collections } }, { projection: { id: 1 } })
+      .toArray();
+    for (const b of scoped) ids.add(String(b.id));
+  }
+  return ids;
+}
