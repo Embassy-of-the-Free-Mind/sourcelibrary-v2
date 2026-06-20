@@ -4,6 +4,8 @@
 
 **Related issues:** [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter for the flag — the central open gap) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill prior translations) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
 
+> **⚠️ Successor system in flight ([#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564), PR #2573 — not yet merged).** This doc describes the *2026-06-01* engines (8-tool agent + 3-catalog cron + the boolean flag). The #2564 rebuild replaces the loose `disposition` with a **graded verdict model** (`src/lib/first-translation/`: `types.ts`, `derive.ts`, `attempt-log.ts`) where `is_first_translation` becomes a *single-writer derived read* of the verdict, plus a cheap grounded **Gemini enumeration instrument** (`scripts/eval/ft-gemini-adjudicate.mjs`) and an append-only **`first_translation_attempts`** evidence log. Until #2573 merges, treat §2–§8 below as the live system and the rebuild as the target. The instrument→sinks write contract (Mongo verdict + attempts log + Supabase `translation_catalogs`) is specced in **[ft-enumeration-three-sink-spec.md](./ft-enumeration-three-sink-spec.md)**; the human review/audit layer in **[ft-gold-annotator-brief.md](./ft-gold-annotator-brief.md)**; the write-up in **[ft-first-translation-paper.md](./ft-first-translation-paper.md)**.
+
 ---
 
 ## 1. TL;DR — what to quote
