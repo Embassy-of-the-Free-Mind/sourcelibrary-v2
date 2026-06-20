@@ -44,8 +44,8 @@ export const visionContent: VisionContent = {
   hero: {
     title: 'Bringing ancient wisdom into the future',
     subtitle: 'A letter from Derek Lomas, founder of Source Library',
-    image: '/vision/hero-gathering.jpg',
-    imageAlt: 'A Source Library gathering in a garden in Amsterdam',
+    image: '/vision/hero.jpg',
+    imageAlt: 'Historical illustration from the Bibliotheca Philosophica Hermetica',
   },
   dateline: 'Amsterdam, June 2026',
   salutation: 'Dear friend,',

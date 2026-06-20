@@ -176,6 +176,8 @@ export default function VisionView({
           src={content.hero.image}
           alt={content.hero.imageAlt}
           className="absolute inset-0 w-full h-full object-cover"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0" style={{ background: HERO_GRADIENT }} />
         <div className="relative w-full max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
