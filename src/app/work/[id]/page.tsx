@@ -25,7 +25,7 @@ async function getWorkEditions(workId: string) {
         id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
         language: 1, original_language: 1, 'image_source.provider_name': 1,
         thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1, pages_count: 1, pages_ocr: 1,
-        pages_translated: 1, resource_type: 1,
+        pages_translated: 1, resource_type: 1, work_title: 1,
       },
       sort: { published: 1 },
     }
@@ -33,12 +33,21 @@ async function getWorkEditions(workId: string) {
   return editions as unknown as (Book & { image_source?: { provider_name?: string } })[];
 }
 
-// Derive a human-readable title from the work_id slug
-function workTitle(workId: string): string {
-  return workId
-    .split('-')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+// Derive a human-readable work title. Prefer the curated `work_title` carried on
+// the editions (set by the mint + merge writers — clean uniform titles like
+// "De occulta philosophia libri tres"); fall back to prettifying a legacy
+// clean-slug work_id. The new `local:{author_id}:{slug}` ids are NOT readable as
+// slugs, so the curated title is what makes the page presentable.
+function workTitleFromEditions(editions: { work_title?: string | null }[], workId: string): string {
+  const counts = new Map<string, number>();
+  for (const e of editions) {
+    const t = (e.work_title || '').trim();
+    if (t) counts.set(t, (counts.get(t) || 0) + 1);
+  }
+  if (counts.size) return [...counts.entries()].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length)[0][0];
+  // legacy clean-slug fallback (e.g. "turba-philosophorum"); never prettify a "local:…" id
+  const tail = workId.includes(':') ? workId.split(':').pop()! : workId;
+  return tail.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -55,7 +64,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
   if (editions.length === 0) return { title: 'Work Not Found', robots: { index: false, follow: true } };
 
-  const title = workTitle(id);
+  const title = workTitleFromEditions(editions as { work_title?: string | null }[], id);
   const libraries = new Set(editions.map(e => (e as unknown as { image_source?: { provider_name?: string } }).image_source?.provider_name).filter(Boolean));
 
   return {
@@ -71,7 +80,7 @@ export default async function WorkPage({ params }: PageProps) {
   const editions = await getWorkEditions(id);
   if (editions.length === 0) notFound();
 
-  const title = workTitle(id);
+  const title = workTitleFromEditions(editions as { work_title?: string | null }[], id);
   const libraries = [...new Set(
     editions.map(e => (e as unknown as { image_source?: { provider_name?: string } }).image_source?.provider_name).filter(Boolean)
   )];
