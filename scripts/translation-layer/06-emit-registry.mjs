@@ -52,6 +52,16 @@ async function main() {
   const catById = new Map(cat.map((r) => [r.id, r]));
   console.log(`  ${cat.length} catalog rows`);
 
+  // public confidence gate: credits shown to readers must be trustworthy.
+  // score = lib.titleFit IDF sum; ≥9 is multiple/strong rare tokens, ≥6 is the
+  // match floor. A named translator on a ≥7 match, or a curated scholarly series,
+  // is publishable; the rest stay in the full layer but off the public page.
+  const isPublic = (p, namedCount) => {
+    const s = p.best_title_score || 0;
+    const curated = (p.channels || []).includes('curated_series');
+    return s >= 9 || (s >= 7 && namedCount > 0) || curated;
+  };
+
   const registry = [];
   for (const p of priors) {
     const cluster = clusters.get(p.work_cluster_id);
@@ -86,6 +96,7 @@ async function main() {
       }
     }
     translations.sort((a, b) => (parseInt(a.year) || 9999) - (parseInt(b.year) || 9999));
+    const namedCount = translations.filter((t) => t.translator).length;
     registry.push({
       work_cluster_id: p.work_cluster_id,
       work: {
@@ -95,15 +106,64 @@ async function main() {
       },
       translations,
       n_translations: translations.length,
-      n_with_named_translator: translations.filter((t) => t.translator).length,
+      n_with_named_translator: namedCount,
       in_source_library: cluster.in_sl,
+      score: p.best_title_score || 0,
+      is_public: isPublic(p, namedCount),
     });
   }
 
-  // write registry
+  // write full registry (every match, for audit)
   const w = fs.createWriteStream(path.join(OUT, 'translation-registry.jsonl'));
   for (const r of registry) w.write(JSON.stringify(r) + '\n');
   w.end();
+
+  // --- compact, confidence-gated PUBLIC dataset (for the browsable page) ---
+  const cleanYear = (y) => { const n = parseInt(y); return n >= 1450 && n <= 2026 ? n : null; };
+  // short display title: the normalized title from the cluster id (surname::title),
+  // title-cased — far cleaner than the verbose early-modern title page.
+  const shortTitle = (clusterId, fallback) => {
+    const t = (clusterId.split('::')[1] || '').trim();
+    if (!t || t === 'untitled') return (fallback || '').slice(0, 60);
+    return titleCase(t).slice(0, 70);
+  };
+  const pub = registry.filter((r) => r.is_public).map((r) => {
+    // best single credit line: prefer a named translator, earliest real year
+    const named = r.translations.filter((t) => t.translator);
+    const credits = (named.length ? named : r.translations).map((t) => ({
+      tr: t.translator ? t.translator.replace(/,?\s*(tr\.|translator|ed\.|editor|illus\.|d\.\s*\d+|\d{4}-?\d{0,4}\??)/gi, '').replace(/[;,]\s*$/, '').trim() : null,
+      t: t.english_title || null,
+      pub: t.publisher || null,
+      y: cleanYear(t.year),
+      s: t.source,
+    })).filter((c, i, a) => a.findIndex((x) => x.tr === c.tr && x.y === c.y) === i).slice(0, 3);
+    return {
+      a: r.work.author,
+      w: shortTitle(r.work_cluster_id, r.work.title),
+      yp: r.work.year_first_printed,
+      c: credits,
+      sl: r.in_source_library || undefined,
+    };
+  });
+  // collapse USTC's edition-level over-splitting to work level for display:
+  // key = author + first 3 short-title tokens. Merge year (min), credits (union).
+  const merged = new Map();
+  for (const e of pub) {
+    const key = `${e.a.toLowerCase()}|${e.w.toLowerCase().split(' ').slice(0, 3).join(' ')}`;
+    const m = merged.get(key);
+    if (!m) { merged.set(key, e); continue; }
+    if (e.yp && (!m.yp || e.yp < m.yp)) m.yp = e.yp;
+    for (const c of e.c) if (!m.c.some((x) => x.tr === c.tr && x.y === c.y)) m.c.push(c);
+    m.c = m.c.slice(0, 3);
+    if (e.sl) m.sl = true;
+  }
+  const pubMerged = [...merged.values()].sort((a, b) => a.a.localeCompare(b.a) || (a.yp || 0) - (b.yp || 0));
+  fs.writeFileSync(path.join(OUT, 'translation-registry-public.json'), JSON.stringify({
+    generated: '2026-06-21',
+    note: 'Confidence-gated registry of early-modern Latin works with a known external English translation. The gap (works with NO entry here) is the untranslated corpus.',
+    count: pubMerged.length,
+    works: pubMerged,
+  }));
 
   // stats
   const named = registry.filter((r) => r.n_with_named_translator > 0).length;
