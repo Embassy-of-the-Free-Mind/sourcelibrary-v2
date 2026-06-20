@@ -285,19 +285,24 @@ export default function VisionView({
 
           {content.bodyBuild.map((p, i) => F({ as: 'p', path: `bodyBuild.${i}`, value: p, className: 'mb-6' }))}
 
-          {/* Image 2 */}
+          {/* Photo collage */}
           <figure className="my-12 -mx-2 md:-mx-8">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={content.image2.src}
-              alt={content.image2.alt}
-              className="w-full h-auto rounded-lg border border-primary/10 shadow-sm"
-              loading="lazy"
-            />
+            <div className="grid grid-cols-2 gap-2 md:gap-3">
+              {content.montage.images.map((im, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={i}
+                  src={im.src}
+                  alt={im.alt}
+                  className="w-full aspect-[4/3] object-cover rounded-lg border border-primary/10 shadow-sm"
+                  loading="lazy"
+                />
+              ))}
+            </div>
             {F({
               as: 'figcaption',
-              path: 'image2.caption',
-              value: content.image2.caption,
+              path: 'montage.caption',
+              value: content.montage.caption,
               className: 'mt-3 text-sm text-muted italic text-center block',
             })}
           </figure>
