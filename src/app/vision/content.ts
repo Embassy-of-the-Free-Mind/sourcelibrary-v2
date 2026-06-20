@@ -44,8 +44,8 @@ export const visionContent: VisionContent = {
   hero: {
     title: 'Bringing ancient wisdom into the future',
     subtitle: 'A letter from Derek Lomas, founder of Source Library',
-    image: 'https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg',
-    imageAlt: 'Historical illustration from the Bibliotheca Philosophica Hermetica',
+    image: '/vision/hero-gathering.jpg',
+    imageAlt: 'A Source Library gathering in a garden in Amsterdam',
   },
   dateline: 'Amsterdam, June 2026',
   salutation: 'Dear friend,',
@@ -80,9 +80,9 @@ export const visionContent: VisionContent = {
     'I want our founding donors to feel that directly. Picture an evening in the Bibliotheca with the original volumes of Fludd and Ficino open in front of you; an expedition to scan a monastery’s manuscripts before they’re lost; a hand in deciding what humanity translates next; and your name on the work, in perpetuity. I want them in the room, not just on the donor wall.',
   ],
   image2: {
-    src: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
-    alt: 'Robert Fludd, Integra Naturae — the mirror of all nature and the image of art',
-    caption: 'Robert Fludd’s *Integra Naturae* — the mirror of all nature, and the image of art.',
+    src: '/vision/gathering-room.jpg',
+    alt: 'People working together at a Source Library gathering in Amsterdam',
+    caption: 'People in the room with the original texts — a gathering in Amsterdam.',
   },
   bodyConvener: [
     'And here is the real reason I’m writing to you. I’m not only hoping for your support — I’m hoping you’ll help us *gather* the founding circle, not just join it. If you’re someone who brings remarkable people together around bold ideas, then helping convene the people who will steward humanity’s wisdom for the next century is something you’d be extraordinary at. I’d love to do it with you.',
