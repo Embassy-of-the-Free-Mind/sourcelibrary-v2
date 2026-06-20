@@ -1,3 +1,5 @@
+> ⚠️ **Superseded framing.** Current canonical plan: `~/sourcelibrary-ops/docs/fundraising-plan-2026-05.md` ($10M / 5yr / 250K books, global; Embassy of the Free Mind / Stichting Het Wereldhart — NL ANBI + US NAF). Live grant board: https://sourcelibrary-grants.vercel.app — use this file for tactics/templates, not scale/scope numbers.
+
 # Draft Letter to Patrick Collison — March 2026
 
 ---

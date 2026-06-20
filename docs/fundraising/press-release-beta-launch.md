@@ -1,3 +1,5 @@
+> ⚠️ **Superseded framing.** Current canonical plan: `~/sourcelibrary-ops/docs/fundraising-plan-2026-05.md` ($10M / 5yr / 250K books, global; Embassy of the Free Mind / Stichting Het Wereldhart — NL ANBI + US NAF). Live grant board: https://sourcelibrary-grants.vercel.app — use this file for tactics/templates, not scale/scope numbers.
+
 # PRESS RELEASE — FOR RELEASE MARCH 21, 2026
 
 ## AI Translates 10,000 Rare Books From Latin, Greek, and 13 Other Languages — All Free to Read Online
