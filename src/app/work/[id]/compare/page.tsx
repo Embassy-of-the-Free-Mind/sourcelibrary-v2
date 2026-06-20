@@ -53,7 +53,7 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
   const editions = await db
     .collection('books')
     .find(
-      { work_id: workId, visible: true },
+      { $or: [{ work_slug: workId }, { work_id: workId }], visible: true },
       {
         projection: {
           id: 1,

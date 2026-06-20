@@ -16,16 +16,17 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-async function getWorkEditions(workId: string) {
+async function getWorkEditions(idOrSlug: string) {
   const db = await getReadDb();
+  // resolve by the clean work_slug first, fall back to the raw work_id (back-compat)
   const editions = await db.collection('books').find(
-    { work_id: workId, visible: true },
+    { $or: [{ work_slug: idOrSlug }, { work_id: idOrSlug }], visible: true },
     {
       projection: {
         id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
         language: 1, original_language: 1, 'image_source.provider_name': 1,
         thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1, pages_count: 1, pages_ocr: 1,
-        pages_translated: 1, resource_type: 1, work_title: 1,
+        pages_translated: 1, resource_type: 1, work_title: 1, work_slug: 1,
       },
       sort: { published: 1 },
     }
@@ -70,7 +71,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${title} — ${editions.length} Editions | Source Library`,
     description: `${editions.length} editions and manuscripts of ${title} across ${libraries.size} libraries. Browse, compare, and read translations.`,
-    alternates: { canonical: `/work/${id}` },
+    alternates: { canonical: `/work/${(editions.find(e => (e as { work_slug?: string }).work_slug) as { work_slug?: string } | undefined)?.work_slug || id}` },
   };
 }
 
@@ -81,6 +82,7 @@ export default async function WorkPage({ params }: PageProps) {
   if (editions.length === 0) notFound();
 
   const title = workTitleFromEditions(editions as { work_title?: string | null }[], id);
+  const workSlug = (editions.find(e => (e as { work_slug?: string }).work_slug) as { work_slug?: string })?.work_slug || id;
   const libraries = [...new Set(
     editions.map(e => (e as unknown as { image_source?: { provider_name?: string } }).image_source?.provider_name).filter(Boolean)
   )];
@@ -114,7 +116,7 @@ export default async function WorkPage({ params }: PageProps) {
           <span>{editions.length} editions</span>
           {editions.filter(e => (e.pages_translated || 0) > 0).length >= 2 && (
             <Link
-              href={`/work/${id}/compare`}
+              href={`/work/${workSlug}/compare`}
               className="ml-auto text-xs border border-stone-300 hover:border-stone-400 rounded-full px-3 py-1 text-stone-600 hover:text-stone-800 transition-colors"
             >
               Compare translations
