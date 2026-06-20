@@ -246,13 +246,17 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
 
 const INITIAL_PATHWAYS = 12;
 
-// Hero is a single pre-composited mosaic of collection covers (one image to the
-// browser, built server-side at /collections/hero-mosaic). The dark gradient +
-// title overlay in ContentHeader render on top of it.
-const COLLECTIONS_HERO = '/collections/hero-mosaic';
+// Hero is a single pre-composited, compressed mosaic of collection covers
+// (~290KB JPEG) served as a static CDN asset — one fast request, no server-side
+// rendering. The dark gradient + title overlay in ContentHeader render on top.
+// Rebuild with scripts/build-collections-hero.py when the cover set changes.
+const COLLECTIONS_HERO = '/collections-hero.jpg';
 
 export default function CollectionsPage() {
   return (
+    <>
+    {/* Background images aren't seen by the preload scanner — hint it early. */}
+    <link rel="preload" as="image" href={COLLECTIONS_HERO} fetchPriority="high" />
     <ContentPageLayout
       maxWidth="wide"
       header={
@@ -282,6 +286,7 @@ export default function CollectionsPage() {
         <TimelineSection />
       </Suspense>
     </ContentPageLayout>
+    </>
   );
 }
 
