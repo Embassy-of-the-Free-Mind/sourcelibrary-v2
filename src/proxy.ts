@@ -8,6 +8,15 @@ import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-pre
 // scripts/maintenance/build-author-redirect-map.mjs when the authors thesaurus changes.
 const AUTHOR_CANONICAL_REDIRECTS = authorCanonicalRedirects as Record<string, string>;
 
+// Famous-text slugs that readers guess as a book URL but that we hold across
+// several editions (no single canonical book to land on). Map the guessed slug
+// to a library search so they see every edition and choose. `corpus-hermeticum`
+// itself is a hidden, empty stub book squatting the slug, so the /book route
+// would otherwise render "Book Not Found" (it arrives as direct-typed traffic).
+const BOOK_SLUG_SEARCH_REDIRECTS: Record<string, string> = {
+  'corpus-hermeticum': 'corpus hermeticum',
+};
+
 // --- Tenant routing ---
 
 // First-segment slugs that map to a subdomain tenant via path-based access
@@ -602,6 +611,23 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = `/book/${barePageMatch[1]}`;
     return NextResponse.redirect(url, 308);
+  }
+
+  // --- Guessed famous-text book slug → library search ---
+  // Single-segment /book/<slug> only; real book slugs aren't in the map, so
+  // they fall through to normal routing untouched. Pathname-only change keeps
+  // the redirect on-host on tenant subdomains (lands on that tenant's search).
+  const bookSlugMatch = pathname.match(/^\/book\/([^/]+)\/?$/);
+  if (bookSlugMatch) {
+    let slug = bookSlugMatch[1];
+    try { slug = decodeURIComponent(slug); } catch { /* keep raw */ }
+    const searchQuery = BOOK_SLUG_SEARCH_REDIRECTS[slug];
+    if (searchQuery) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/search';
+      url.search = `?q=${encodeURIComponent(searchQuery)}`;
+      return NextResponse.redirect(url, 308);
+    }
   }
 
   // --- Tenant subdomain rewrite ---
