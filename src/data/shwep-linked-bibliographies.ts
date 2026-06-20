@@ -66,4 +66,17 @@ export const SHWEP_LINKED_BIBLIOGRAPHIES: Record<number, string> = {
 - *Idem*. *Theurgy and the Soul: The Neoplatonism of Iamblichus.* Pennsylvania State University Press, University Park, PA, 1995.
 
 - Anne Sheppard. 'Proclus’ Attitude to Theurgy'. *CQ*, New Series 32(1):212–24, 1982.`,
+  323: `### Works Cited in this Episode:
+
+Episode 26 with Peter Struck on symbols can be found [here](https://shwep.net/podcast/the-birth-of-the-symbol-peter-struck-on-ancient-greek-esoteric-hermeneutics/).
+
+Episode 38 on the Esoteric Aristotle, Part I, can be found [here](https://shwep.net/podcast/the-esoteric-aristotle/).
+
+Schechner, ‘an action twice performed’: Schechner, Richard. “Behavior, Performance, and Performance Space.” *Perspecta*, vol. 26, 1990, pp. 97–102. JSTOR, https://doi.org/10.2307/1567156. Accessed 16 June 2026.
+
+*A Game at Chess* by Thomas Middleton: first performed in London in 1624
+
+Augusto Boal Theatre of the Oppressed: [https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed](https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed)
+
+An eagle dropped a tortoise on Æschulus' head: e.g. [Pliny, *H.N.*](/book/c-plinii-secundi-historiae-naturalis-libri-xxxvii-1510-elder) 10.3.`,
 };
