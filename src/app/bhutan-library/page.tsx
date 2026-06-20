@@ -8,19 +8,19 @@ export const revalidate = 3600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'The Tibetan & Bhutanese Buddhist Library — Source Library',
+  title: "The Bhutanese Buddhist Library — Source Library",
   description:
-    'A restoration of 1,473 endangered Tibetan and Bhutanese Buddhist manuscripts — nearly 290,000 pages — made faithfully readable in English. A digital offering to a living tradition.',
-  alternates: { canonical: '/tibet' },
+    "Bhutan's endangered Buddhist manuscripts — rescued from its monasteries, written in classical Tibetan — translated faithfully into English for the first time. Dedicated to His Majesty the King of Bhutan.",
+  alternates: { canonical: '/bhutan-library' },
   openGraph: {
-    title: 'The Tibetan & Bhutanese Buddhist Library',
+    title: 'The Bhutanese Buddhist Library',
     description:
-      '1,473 sacred manuscripts, nearly 290,000 pages, restored to a faithful English reading edition. Help us complete the work.',
-    url: '/tibet',
+      "Endangered manuscripts from Bhutan's monasteries, translated faithfully into English for the first time. Help us complete the work.",
+    url: '/bhutan-library',
     type: 'article',
     images: [{ url: 'https://images.sourcelibrary.org/pages/69e787904a6785cfd60cc297/0095.jpg' }],
   },
-  twitter: { card: 'summary_large_image', title: 'The Tibetan & Bhutanese Buddhist Library' },
+  twitter: { card: 'summary_large_image', title: 'The Bhutanese Buddhist Library' },
 };
 
 const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
@@ -93,7 +93,7 @@ async function fetchStats() {
   }
 }
 
-export default async function TibetPage() {
+export default async function BhutanLibraryPage() {
   const stats = await fetchStats();
 
   return (
@@ -114,16 +114,17 @@ export default async function TibetPage() {
 
           <div className="px-6 md:px-12 max-w-5xl mx-auto pt-12 pb-16 md:pt-20 md:pb-24">
             <p className="text-accent-gold/90 text-sm md:text-base uppercase tracking-[0.2em] mb-4">
-              A Restoration Campaign
+              Dedicated to His Majesty the King of Bhutan
             </p>
             <h1 className="text-3xl md:text-5xl lg:text-6xl text-white mb-5 leading-[1.1] font-display drop-shadow-sm">
-              The Tibetan &amp; Bhutanese
+              The Bhutanese
               <br className="hidden md:block" /> Buddhist Library
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mb-8">
               {formatStat(stats.books)} sacred manuscripts — nearly{' '}
-              {formatStat(stats.pagesOcr)} pages of an endangered tradition, most never read in
-              English. We are translating them for the first time with a high-quality model,{' '}
+              {formatStat(stats.pagesOcr)} pages — rescued from the monasteries of Bhutan and written
+              in classical Tibetan, most never read in English. We are translating them for the first
+              time with a high-quality model,{' '}
               <em className="text-white not-italic font-display">proven faithful</em> to the
               originals.
             </p>
@@ -157,7 +158,7 @@ export default async function TibetPage() {
                 Support this work
               </a>
               <Link
-                href="/collections/vajrayana"
+                href="/collections/bhutan"
                 className="bg-white/10 text-white font-medium py-3 px-7 rounded-full border border-white/30 hover:bg-white/20 transition-colors"
               >
                 Explore the texts
@@ -176,10 +177,11 @@ export default async function TibetPage() {
           <div className="prose-content text-stone-700 leading-relaxed space-y-4 text-[1.05rem]">
             <p>
               Most of these books are not famous printed editions. They are{' '}
-              <strong>hand-copied pecha</strong> — loose-leaf folios of Vajrayāna and Bhutanese
-              Buddhism, written by hand and digitized through endangered-archives efforts. Ninety-six
-              percent of the collection is handwritten. Many of these manuscripts survive in few
-              other places on earth.
+              <strong>hand-copied pecha</strong> — loose-leaf folios from the temple and monastery
+              collections of Bhutan: Drametse, Ogyen Choling, Gangtey, Thadrak, Tshamdrak and
+              Nyephug. Written by hand in classical Tibetan and digitized through endangered-archives
+              efforts, ninety-six percent of the collection is handwritten, and many of these
+              manuscripts survive in few other places on earth.
             </p>
             <p>
               We have already digitized and made machine-readable every one of these manuscripts.
@@ -247,13 +249,13 @@ export default async function TibetPage() {
       <section className="bg-stone-950 py-14 md:py-20">
         <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl text-white mb-5 font-display leading-tight">
-            An offering to a living tradition
+            Dedicated to His Majesty the King of Bhutan
           </h2>
           <p className="text-white/80 leading-relaxed text-[1.05rem] max-w-2xl mx-auto">
-            These teachings belong to a living lineage and its keepers. Our aim is to return them —
-            faithfully, freely, and openly — to the Tibetan Buddhist community and to scholars
-            everywhere, in honor of His Holiness the Dalai Lama and all who have preserved these
-            words across centuries of exile and care.
+            This work is offered in honor of His Majesty Jigme Khesar Namgyel Wangchuck, Druk Gyalpo,
+            and the people of Bhutan. We aim to return these teachings — faithfully, freely, and
+            openly — to the monasteries and temples that preserved them, and to scholars and
+            practitioners everywhere who cherish Bhutan&apos;s living Buddhist heritage.
           </p>
         </div>
       </section>
@@ -353,7 +355,7 @@ export default async function TibetPage() {
                     Sponsor the campaign — wire, stock, or donor-advised fund
                   </span>
                   <a
-                    href={`mailto:${CONTACT_EMAIL}?subject=Tibetan%20Library%20Restoration%20%E2%80%94%20Donation%20Inquiry`}
+                    href={`mailto:${CONTACT_EMAIL}?subject=Bhutan%20Library%20Restoration%20%E2%80%94%20Donation%20Inquiry`}
                     className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all"
                   >
                     {CONTACT_EMAIL}
