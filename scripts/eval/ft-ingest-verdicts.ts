@@ -1,8 +1,9 @@
 /**
  * Ingest Tier-2 adjudicator verdicts into the provenance log (issue #2564).
  *
- * Reads a JSON array of adjudicator outputs (the structured verdict + sources
- * each per-book agent returns) and:
+ * Reads the adjudicator output (a `.json` array OR the `.jsonl` evidence
+ * sidecar from ft-gemini-adjudicate.mjs — structured verdict + grounded search
+ * trail + priors found, per book) and:
  *   1. APPENDS one attempt per book to `first_translation_attempts` (safe —
  *      new, append-only collection; this is the evidence-of-absence record).
  *   2. REPORTS the proposed book.first_translation verdict changes WITHOUT
@@ -32,12 +33,23 @@ interface Verdict {
   match_key: 'work_id' | 'author_title' | 'transliteration' | 'none';
   prior_translations_found?: Array<Record<string, string>>;
   sources_checked?: string[];
+  queries?: string[];
   reasoning?: string;
   confidence?: string;
+  model?: string;
+  cost_usd?: number;
+}
+
+/** Accept both the consolidated `.json` array and the `.jsonl` evidence sidecar. */
+function readVerdicts(path: string): Verdict[] {
+  const raw = readFileSync(path, 'utf8').trim();
+  if (!raw) return [];
+  if (raw[0] === '[') return JSON.parse(raw);
+  return raw.split('\n').filter(Boolean).map((l) => JSON.parse(l));
 }
 
 async function main() {
-  const verdicts: Verdict[] = JSON.parse(readFileSync(file, 'utf8'));
+  const verdicts: Verdict[] = readVerdicts(file);
   const db = await getDb();
   const now = new Date().toISOString();
 
@@ -45,18 +57,27 @@ async function main() {
   const proposed: Array<{ id: string; verdict: string; was: string; firstFamily: boolean }> = [];
 
   for (const v of verdicts) {
-    const found = (v.prior_translations_found ?? []).length > 0;
+    const priors = v.prior_translations_found ?? [];
+    const found = priors.length > 0;
+    // Human-readable prior identity (translator/year/title). Lives in `notes`
+    // until the #2453 registry exists to give priors stable ids for found_refs.
+    const priorStr = priors
+      .map((p) => `${p.translator ?? '?'} ${p.pub_year ?? '?'} "${p.english_title ?? '?'}"`)
+      .join('; ');
     const attempt = {
-      attempt_id: makeAttemptId(v.book_id, 'tier2_agent', now),
+      attempt_id: makeAttemptId(v.book_id, 'gemini_verifier', now),
       book_id: v.book_id,
       date: now,
-      method: 'tier2_agent' as const,
+      method: 'gemini_verifier' as const, // AttemptMethod superset (not a Resolver)
       match_key: v.match_key,
-      sources_checked: v.sources_checked ?? [],
+      sources_checked: v.sources_checked ?? [], // best-effort (often sparse on true negatives)
+      queries: v.queries ?? [], // the actual searches issued — load-bearing absence evidence
       result: (found ? 'found' : 'none') as 'found' | 'none',
       found_refs: [], // registry ids assigned when #2453 registry exists
       evidence_strength: v.evidence_strength,
-      notes: `${v.work_identified ? `[${v.work_identified}] ` : ''}${v.reasoning ?? ''}`.trim(),
+      model: v.model,
+      cost_usd: v.cost_usd,
+      notes: `${v.work_identified ? `[${v.work_identified}] ` : ''}${v.reasoning ?? ''}${priorStr ? ` | priors: ${priorStr}` : ''}`.trim(),
     };
     await appendAttempt(db as any, attempt);
     attemptsWritten++;
@@ -93,8 +114,8 @@ async function main() {
             our_completeness: v.our_completeness,
             match_key: v.match_key,
             prior_relationship: v.prior_relationship || undefined,
-            resolver: 'tier2_agent',
-            best_attempt_id: makeAttemptId(v.book_id, 'tier2_agent', now),
+            resolver: 'tier2_agent', // the enum IS the tier-2 instrument (gemini_verifier is a method, not a Resolver)
+            best_attempt_id: makeAttemptId(v.book_id, 'gemini_verifier', now),
             resolved_at: now,
           },
         } },
