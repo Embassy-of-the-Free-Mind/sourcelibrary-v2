@@ -10,23 +10,39 @@
  *                scholarship, journals, podcasts, cross-episode links.
  *   2 DEDUPE   — cluster the raw works across all episodes by normalized author+work,
  *                then an LLM canonicalisation pass merges title/author variants.
- *   3 HOLDINGS — for each canonical work, embed "work by author", retrieve nearest
- *                books (match_books_semantic) and have the LLM confirm which (if any)
- *                are an edition/translation of that exact work → held book ids.
+ *   3 HOLDINGS — the "process matcher" (validated 10/10 on #76, 9/9 + 0 FP on the
+ *                Islamicate/Byzantine tail; see scripts/eval/_tmp-shwep-gemini-match-eval-v2.mjs
+ *                and .claude/docs/work-identity-matching-research.md). Two steps:
+ *                (a) NORMALIZE each cited work → canonical title forms in ALL languages
+ *                    (original-language + English + variants) + extant/lost status;
+ *                (b) embed the title forms, retrieve nearest books (match_books_semantic),
+ *                    then a per-WORK LLM confirmer keeps only books that ARE an
+ *                    edition/translation/commentary of THAT exact work by THAT author.
+ *                Lost works → no holding (never a same-author fallback). This replaces the
+ *                old batch single-confirm matcher (missed cross-language + City of God cases).
  *   4 EMIT     — writes:
- *                • src/data/shwep-cited-works.ts        (the works DB)
- *                • src/data/shwep-book-matches.ts       (held works per episode = reader links)
- *                • /tmp/shwep-cited/acquire.md          (the acquisition gap, primary sources we lack)
+ *                • src/data/shwep-cited-works.ts          (the works DB)
+ *                • src/data/shwep-book-matches.ts         (held works per episode = reader links)
+ *                • /tmp/shwep-cited/acquire.md            (the acquisition gap, primary sources we lack)
+ *   5 LINKBIB  — auto-generates src/data/shwep-linked-bibliographies.ts for ALL episodes:
+ *                injects inline /book/<slug> "read here" links into each episode's
+ *                displayed bibliography at the cited-work mentions, ONLY for works we
+ *                publicly hold (visible + translated, via bestEdition). Hand-curated
+ *                #76/#323 are preserved verbatim as the quality bar. Output is validated
+ *                verbatim-faithful (the only delta vs. the source bibliography is the added
+ *                link markup) or the episode is skipped (page falls back to plain text).
  *
  * Usage (run stages in order; each caches so you can re-emit cheaply):
  *   node scripts/enrichment/shwep-cited-works.mjs --extract
  *   node scripts/enrichment/shwep-cited-works.mjs --dedupe
  *   node scripts/enrichment/shwep-cited-works.mjs --holdings
  *   node scripts/enrichment/shwep-cited-works.mjs --emit
- *   node scripts/enrichment/shwep-cited-works.mjs --all      # all four in sequence
+ *   node scripts/enrichment/shwep-cited-works.mjs --linkbib
+ *   node scripts/enrichment/shwep-cited-works.mjs --all      # all stages in sequence
  *
  * Needs src/data/shwep-reading-lists.json (gitignored — copy from main checkout into
- * the worktree first).
+ * the worktree first). LINKBIB additionally reads src/data/shwep-bibliographies.ts
+ * (the text the reader page actually displays) so injected links land in shown text.
  */
 
 import dotenv from 'dotenv';
@@ -106,6 +122,51 @@ async function mapPool(items, limit, fn) {
   }));
   return out;
 }
+
+// ── shared holdings helpers (emit + linkbib) ─────────────────────────────────
+
+// Deterministic author guard: drop held books whose author doesn't overlap the work's
+// author — catches title-coincidence false positives the LLM won't retract (e.g.
+// Middleton's "A Game at Chess" matched to Cessolis's "Game of Chess"). Skipped for
+// anonymous/various works (scripture, the Hermetica, corpora) where author can't gate.
+const AUTH_STOP = new Set(['the', 'of', 'de', 'von', 'van', 'di', 'del', 'la', 'le', 'al', 'ibn', 'bin', 'abu', 'ben', 'saint', 'st', 'pseudo', 'attributed', 'elder', 'younger', 'and', 'the elder', 'the younger']);
+const authTokens = a => norm(a).split(' ').filter(t => t.length > 2 && !AUTH_STOP.has(t));
+function authorOk(workAuthor, bookAuthor) {
+  const wa = norm(workAuthor);
+  if (!wa || wa.includes('anonymous') || wa.includes('various') || wa.includes('attributed') || wa.includes('unknown')) return true;
+  const wt = authTokens(workAuthor);
+  if (!wt.length) return true;
+  const bt = new Set(authTokens(bookAuthor || ''));
+  return wt.some(t => bt.has(t));
+}
+// Mutates each work: filters .held / .heldMeta to author-consistent books. Returns count dropped.
+function applyAuthorGuard(works) {
+  let dropped = 0;
+  for (const w of works) {
+    const meta = w.heldMeta || [];
+    const keptMeta = meta.filter(m => authorOk(w.author, m.author));
+    dropped += meta.length - keptMeta.length;
+    const keepIds = new Set(keptMeta.map(m => m.id));
+    w.heldMeta = keptMeta;
+    w.held = (w.held || []).filter(id => keepIds.has(id));
+  }
+  return dropped;
+}
+
+// Pick the single representative PUBLICLY-READABLE edition for inline reader links:
+// must be translated (pages_translated > 0; visibility already enforced at retrieval).
+// Among translated editions prefer the most-translated, then most-OCR'd, then earliest.
+// Returns the heldMeta object, or null when we hold no readable edition (→ no inline link).
+function bestEdition(heldMeta) {
+  const readable = (heldMeta || []).filter(m => (m.pages_translated || 0) > 0);
+  if (!readable.length) return null;
+  return readable.slice().sort((a, b) =>
+    (b.pages_translated || 0) - (a.pages_translated || 0) ||
+    (b.pages_ocr || 0) - (a.pages_ocr || 0) ||
+    (a.year || 9999) - (b.year || 9999)
+  )[0];
+}
+const bookHref = m => `/book/${m.slug || m.id}`;
 
 // ── Stage 1: extract ─────────────────────────────────────────────────────────
 
@@ -199,63 +260,109 @@ ${listing}`;
   console.log(`  → ${merged.length} canonical works`);
 }
 
-// ── Stage 3: holdings match ──────────────────────────────────────────────────
+// ── Stage 3: holdings match (the "process matcher") ──────────────────────────
+// Two steps, validated 10/10 on #76 and 9/9 (+0 FP) on the Islamicate/Byzantine
+// tail vs. 6/10 for the old single-confirm matcher:
+//   (a) NORMALIZE each cited work → canonical title forms in ALL languages + status.
+//   (b) embed the title forms → retrieve → per-WORK confirmer reasons per candidate.
+// Wikidata work-level coverage is ~45% (≈0% Islamicate), so the LLM confirmer stays
+// in the loop; canonical title forms (not a single QID) are the precision overlay.
 
 const EXCLUDE_LANGS = new Set(['Chinese', 'Classical Chinese', 'Literary Chinese', 'Sanskrit', 'Tibetan', 'Japanese', 'Korean', 'Pali', 'Thai', 'Vietnamese', 'Mongolian']);
 
-async function stageHoldings() {
-  console.log('Stage 3 HOLDINGS');
+// Step (a): normalize a batch of works → { i, title_forms[], author, status }.
+const NORMALIZE_PROMPT = `For each cited ancient/medieval/early-modern work below, return its canonical identity for matching against a library catalogue.
+For EACH return:
+- "i": the index.
+- "title_forms": array of the work's titles a catalogue might use — the ORIGINAL-LANGUAGE title (Latin/Greek/Arabic-transliterated/etc.), the standard English title, and common variants/abbreviations. Examples: "City of God" by Augustine → ["De Civitate Dei","The City of God","civ. dei"]; "Platonic Theology" by Proclus → ["Theologia Platonica","Platonic Theology"]; "Commentary on the Republic" by Proclus → ["In Rem Publicam","in Politiam Platonis","Commentary on the Republic"].
+- "author": canonical author name (or "Anonymous").
+- "status": "extant" if the work survives in standalone editions/translations, or "lost" if it survives only as fragments/testimonia with NO standalone edition (e.g. Porphyry "De regressu animae" = lost; but Damascius "In Phaedonem" survives and is a DISTINCT work from his De principiis — that is extant).
+Return ONLY JSON {"works":[{"i":<index>,"title_forms":[...],"author":"...","status":"extant|lost"}]} covering every index.
+
+WORKS:
+`;
+
+async function stageNormalize() {
   const works = readJSON('works.json', []);
+  const items = LIMIT ? works.slice(0, LIMIT) : works;
+  console.log(`  normalizing ${items.length} works → canonical title forms…`);
+  const norm = {};
+  const BATCH = 12;
+  for (let i = 0; i < items.length; i += BATCH) {
+    const batch = items.slice(i, i + BATCH);
+    const listing = batch.map((w, j) => `${i + j}: "${w.work}" by ${w.author}`).join('\n');
+    try {
+      const res = await gemini(NORMALIZE_PROMPT + listing, 8192);
+      for (const w of (res.works || [])) if (Number.isInteger(w.i)) norm[w.i] = w;
+    } catch (e) { console.warn(`  normalize batch failed: ${e.message}`); }
+    await sleep(800);
+  }
+  // fill any gaps with the bare title so nothing falls out of the pipeline
+  items.forEach((w, idx) => { if (!norm[idx]) norm[idx] = { i: idx, title_forms: [w.work], author: w.author, status: 'extant' }; });
+  writeJSON('normalized.json', norm);
+  const lost = Object.values(norm).filter(n => n.status === 'lost').length;
+  console.log(`  → normalized ${Object.keys(norm).length} works (${lost} flagged lost → no holding)`);
+}
+
+// Per-work confirmer: reason per candidate, keep only this exact work by this author.
+function confirmPrompt(titleForms, author, cands) {
+  const list = cands.map((b, j) => `[${j}] "${(b.display_title || b.title || '').slice(0, 90)}" by ${b.author || '?'}${b.year ? ` (${b.year})` : ''} [${b.language || '?'}]`).join('\n');
+  return `You are matching a cited work to a library's candidate books.
+CITED WORK: "${titleForms[0]}" by ${author}. Known title forms (any language): ${JSON.stringify(titleForms)}.
+A candidate matches ONLY if it is an edition, translation, or commentary of THIS EXACT work by THIS author — recognise it under ANY of the title forms above, in any language (Latin/Greek/Arabic/English). A DIFFERENT work by the SAME author does NOT match. A work with a SIMILAR TITLE by a DIFFERENT author does NOT match. A modern monograph merely ABOUT the work does NOT match.
+CANDIDATES:
+${list || '(no candidates)'}
+Think step by step: restate the work's original-language title; then for each candidate decide whether its title (possibly Latin/Greek/Arabic) denotes this same work by this author. Return JSON {"reasoning":"<one sentence>","matches":[<indices of candidate books that ARE this work>]}.`;
+}
+
+async function stageHoldings() {
+  console.log('Stage 3 HOLDINGS (process matcher)');
+  await stageNormalize();
+  const works = readJSON('works.json', []);
+  const norm = readJSON('normalized.json', {});
   const items = LIMIT ? works.slice(0, LIMIT) : works;
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db('bookstore');
 
-  // retrieve candidates per work
-  console.log(`  retrieving candidates for ${items.length} works…`);
-  const withCands = await mapPool(items, 6, async (w) => {
-    const vec = await embed(`${w.work} by ${w.author}`);
-    if (!vec) return { w, cands: [] };
-    const { data } = await supabase.rpc('match_books_semantic', { query_embedding: JSON.stringify(vec), match_threshold: 0.3, match_count: 12 });
+  console.log(`  matching ${items.length} works (embed title-forms → retrieve → per-candidate confirm)…`);
+  let done = 0;
+  const out = await mapPool(items, 6, async (w, idx) => {
+    const nf = norm[idx] || { title_forms: [w.work], author: w.author, status: 'extant' };
+    const forms = (nf.title_forms && nf.title_forms.length ? nf.title_forms : [w.work]).slice(0, 8);
+    const author = nf.author || w.author;
+    const base = { ...w, title_forms: forms, status: nf.status || 'extant' };
+
+    // lost work → explicit no-holding, never a same-author fallback
+    if (nf.status === 'lost') { done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`); return { ...base, held: [] }; }
+
+    // retrieve: embed the title forms together for cross-language recall
+    const vec = await embed(`${forms.join('; ')} by ${author}`);
+    if (!vec) { done++; return { ...base, held: [] }; }
+    const { data } = await supabase.rpc('match_books_semantic', { query_embedding: JSON.stringify(vec), match_threshold: 0.2, match_count: 12 });
     const ids = (data || []).map(r => r.book_id);
     const oids = ids.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean);
-    const rows = await db.collection('books').find({ _id: { $in: oids }, visible: true, pages_count: { $gt: 0 } },
-      { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1 } }).toArray();
+    const rows = oids.length ? await db.collection('books').find({ _id: { $in: oids }, visible: true, pages_count: { $gt: 0 } },
+      { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, work_id: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 } }).toArray() : [];
     const byId = new Map(rows.filter(r => !EXCLUDE_LANGS.has(r.language)).map(r => [r._id.toString(), r]));
-    return { w, cands: ids.filter(i => byId.has(i)).map(i => byId.get(i)) };
+    const cands = ids.filter(i => byId.has(i)).map(i => byId.get(i));
+
+    // confirm: reason per candidate
+    let picks = [];
+    if (cands.length) {
+      try { picks = (await gemini(confirmPrompt(forms, author, cands), 2048)).matches || []; } catch (e) { console.warn(`  confirm failed [${idx}] ${w.work}: ${e.message}`); }
+    }
+    const heldBooks = picks.map(p => cands[p]).filter(Boolean);
+    const held = heldBooks.map(b => b._id.toString());
+    const heldMeta = heldBooks.map(b => ({
+      id: b._id.toString(), slug: b.slug || null, title: b.display_title || b.title || '',
+      author: b.author || '', year: b.year || null, language: b.language || '',
+      pages_translated: b.pages_translated || 0, pages_ocr: b.pages_ocr || 0, pages_blank: b.pages_blank || 0,
+    }));
+    done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`);
+    return { ...base, author, held, heldMeta };
   });
 
-  // confirm in batches
-  console.log('  confirming holdings…');
-  const BATCH = 14;
-  const out = [];
-  for (let i = 0; i < withCands.length; i += BATCH) {
-    const batch = withCands.slice(i, i + BATCH);
-    const blocks = batch.map((b, j) => {
-      const lines = b.cands.map(c => `[${c._id}] "${(c.display_title || c.title || '').slice(0, 90)}" by ${c.author || '?'}${c.year ? ` (${c.year})` : ''}`).join('\n') || '(no candidates)';
-      return `WORK ${i + j}: "${b.w.work}" by ${b.w.author}\nCandidate books:\n${lines}`;
-    }).join('\n\n');
-    const PROMPT = `For each WORK, choose the candidate books that ARE an edition, translation, or commentary of THAT EXACT historical work — the SAME work by the SAME author.
-
-- Match across title/language variants (Latin/Greek/English, abbreviations, "Timaeus"="Timæus").
-- REJECT coincidental title matches that are a DIFFERENT work or by a DIFFERENT author. Examples to reject:
-  • Thomas Middleton's play "A Game at Chess" is NOT Jacobus de Cessolis's medieval "Game of Chess" — different work and author.
-  • A modern monograph merely ABOUT the work is not the work.
-- Both the work AND the author must align. If unsure, do NOT select. Return [] if none qualify.
-
-Return ONLY JSON: {"<workIndex>":["bookid",...]}.
-
-${blocks}`;
-    let res = {};
-    try { res = await gemini(PROMPT); } catch (e) { console.warn(`  holdings batch failed: ${e.message}`); }
-    batch.forEach((b, j) => {
-      const valid = new Set(b.cands.map(c => c._id.toString()));
-      const held = (res[String(i + j)] || []).filter(id => valid.has(id));
-      out.push({ ...b.w, held });
-    });
-    console.log(`  ${Math.min(i + BATCH, withCands.length)}/${withCands.length}`);
-    await sleep(1000);
-  }
   await client.close();
   writeJSON('works-held.json', out);
   const haveN = out.filter(w => w.held.length).length;
@@ -267,62 +374,45 @@ ${blocks}`;
 async function stageEmit() {
   console.log('Stage 4 EMIT');
   const works = readJSON('works-held.json', []);
-  const eps = loadEpisodes();
-  const titleByNum = new Map(eps.map(e => [e.number, e.title]));
 
-  // resolve held book titles for the DB
-  const allHeld = [...new Set(works.flatMap(w => w.held))];
-  const client = new MongoClient(process.env.MONGODB_URI);
-  await client.connect();
-  const db = client.db('bookstore');
-  const rows = allHeld.length ? await db.collection('books').find({ _id: { $in: allHeld.map(i => new ObjectId(i)) } },
-    { projection: { display_title: 1, title: 1, author: 1 } }).toArray() : [];
-  await client.close();
-  const bookTitle = new Map(rows.map(r => [r._id.toString(), r.display_title || r.title]));
-  const bookAuthor = new Map(rows.map(r => [r._id.toString(), r.author || '']));
-
-  // Deterministic author guard: drop held books whose author doesn't overlap the work's
-  // author — catches title-coincidence false positives the LLM won't retract (e.g.
-  // Middleton's "A Game at Chess" matched to Cessolis's "Game of Chess"). Skipped for
-  // anonymous/various works (scripture, the Hermetica, corpora) where author can't gate.
-  const AUTH_STOP = new Set(['the', 'of', 'de', 'von', 'van', 'di', 'del', 'la', 'le', 'al', 'ibn', 'bin', 'abu', 'ben', 'saint', 'st', 'pseudo', 'attributed', 'elder', 'younger', 'and', 'the elder', 'the younger']);
-  const authTokens = a => norm(a).split(' ').filter(t => t.length > 2 && !AUTH_STOP.has(t));
-  const authorOk = (workAuthor, bookId) => {
-    const wa = norm(workAuthor);
-    if (!wa || wa.includes('anonymous') || wa.includes('various') || wa.includes('attributed') || wa.includes('unknown')) return true;
-    const wt = authTokens(workAuthor);
-    if (!wt.length) return true;
-    const bt = new Set(authTokens(bookAuthor.get(bookId) || ''));
-    return wt.some(t => bt.has(t));
-  };
-  let guarded = 0;
-  for (const w of works) {
-    const kept = w.held.filter(id => authorOk(w.author, id));
-    if (kept.length !== w.held.length) guarded += w.held.length - kept.length;
-    w.held = kept;
-  }
+  // author guard (shared with linkbib) — drop title-coincidence false positives
+  const guarded = applyAuthorGuard(works);
   if (guarded) console.log(`  author guard dropped ${guarded} title-coincidence holdings`);
 
-  // 4a — works DB (sorted: most-cited first)
+  // 4a — works DB (sorted: most-cited first). held carries slug + whether it's
+  // publicly readable (translated), so the reader UI and linkbib can pick editions.
+  const metaById = new Map();
+  for (const w of works) for (const m of (w.heldMeta || [])) metaById.set(m.id, m);
   const dbRows = works.map(w => ({
     work: w.work, author: w.author, era: w.era,
     episodes: w.episodes,
     status: w.held.length ? 'held' : 'acquire',
-    held: w.held.map(id => ({ id, title: bookTitle.get(id) || id })),
+    held: w.held.map(id => {
+      const m = metaById.get(id) || {};
+      return { id, slug: m.slug || null, title: m.title || id, language: m.language || '', translated: (m.pages_translated || 0) > 0 };
+    }),
   }));
   let ts = `/**
  * SHWEP cited-works database — the historical primary sources cited across SHWEP
  * episodes, deduped + work/author aligned, flagged held vs. to-acquire.
- * Generated by scripts/enrichment/shwep-cited-works.mjs (${MODEL}).
+ * Generated by scripts/enrichment/shwep-cited-works.mjs (${MODEL}, process matcher).
  * Do not edit by hand.
  */
+export interface ShwepCitedHolding {
+  id: string;
+  slug: string | null;
+  title: string;
+  language: string;
+  /** true when we hold this edition translated into English (publicly readable). */
+  translated: boolean;
+}
 export interface ShwepCitedWork {
   work: string;
   author: string;
   era: string;
   episodes: number[];
   status: 'held' | 'acquire';
-  held: { id: string; title: string }[];
+  held: ShwepCitedHolding[];
 }
 export const SHWEP_CITED_WORKS: ShwepCitedWork[] = ${JSON.stringify(dbRows, null, 2)};
 `;
@@ -366,6 +456,135 @@ export const SHWEP_BOOK_MATCHES: Record<number, string[]> = {\n`;
   console.log(`  acquisition gap: ${gap.length} → ${path.join(CACHE, 'acquire.md')}`);
 }
 
+// ── Stage 5: linked bibliographies ───────────────────────────────────────────
+// Inject inline /book/<slug> "read here" links into each episode's DISPLAYED
+// bibliography (src/data/shwep-bibliographies.ts) at the cited-work mentions, ONLY
+// for works we publicly hold (visible + translated, via bestEdition). The LLM only
+// LOCATES the exact substring naming each held work (its title or scholarly
+// abbreviation, recognised across languages — "civ. dei" = City of God); JS splices
+// the link into the ORIGINAL text, so the bibliography is preserved byte-for-byte
+// apart from the added markup. A span the LLM returns that isn't a verbatim slice of
+// the bibliography is dropped (never fabricated). Hand-curated #76/#323 are kept
+// verbatim as the quality bar.
+
+const HAND_CURATED = new Set([76, 323]);
+
+// Ranges [start,end) we must never splice a link into: every bracketed span `[...]`
+// (with or without a trailing `(url)`). This covers existing markdown links AND bare
+// brackets used as abbreviation keys / editorial notes (e.g. "[Abbreviations: *PT* =
+// …]", "[But how do we reconcile…]"). Splicing a `[..](..)` inside one of these would
+// nest brackets and break the markdown.
+function protectedSpanRanges(s) {
+  const ranges = [];
+  const re = /\[[^\]]*\](?:\([^)]*\))?/g;
+  let m; while ((m = re.exec(s)) !== null) ranges.push([m.index, m.index + m[0].length]);
+  return ranges;
+}
+
+async function injectLinks(bib, holds) {
+  const holdList = holds.map((h, i) =>
+    `${i}. "${h.work}" by ${h.author}; also written as: ${JSON.stringify(h.forms.slice(0, 6))}`).join('\n');
+  const prompt = `A history-of-philosophy reading-list bibliography (markdown) is below, followed by a numbered list of historical works WE HOLD in our library.
+For EACH held work, find where it is FIRST mentioned anywhere in the bibliography and return the EXACT substring — copied character-for-character from the bibliography — that names it. This is usually the work's title or its scholarly abbreviation AS WRITTEN, including any markdown emphasis around it (e.g. "*civ. dei*", "*de myst*.", "*Chaldæan Oracles*", "*Vit. Proc*."). Recognise the work under ANY language, title form, or abbreviation.
+The substring will be turned into a hyperlink, so it MUST be a verbatim slice of the bibliography text, and should be JUST the title/abbreviation token (a few words at most) — never a whole sentence, clause, or citation. Never include square brackets, parentheses, or line breaks in the substring.
+If a held work is NOT mentioned in the bibliography, return null for its text.
+Return ONLY JSON {"spans":[{"i":<held index>,"text":"<exact substring, or null>"}]}.
+
+BIBLIOGRAPHY:
+${bib}
+
+WORKS WE HOLD:
+${holdList}`;
+  let res; try { res = await gemini(prompt, 8192); } catch { return null; }
+  const spans = (res && Array.isArray(res.spans)) ? res.spans : [];
+  const picks = [];
+  const used = protectedSpanRanges(bib).slice(); // seed with bracket spans → never splice inside one
+  const seenWork = new Set();
+  for (const s of spans) {
+    if (!s || typeof s.text !== 'string' || !s.text.trim()) continue;
+    const h = holds[s.i]; if (!h || seenWork.has(s.i)) continue;
+    const span = s.text.trim();
+    // span must be a clean, short title/abbreviation token — no brackets/parens/newlines
+    // (which would break nested markdown), no run-on phrases. Otherwise drop the link.
+    if (/[[\]()\n]/.test(span) || span.length > 70 || span.split(/\s+/).length > 10) continue;
+    // first occurrence that is a verbatim slice, not overlapping a prior pick or an existing link
+    let from = 0, idx;
+    while ((idx = bib.indexOf(span, from)) !== -1) {
+      const end = idx + span.length;
+      const overlap = used.some(([a, b]) => idx < b && end > a);
+      if (!overlap) break;
+      from = idx + 1;
+    }
+    if (idx === -1) continue; // LLM span not found verbatim → drop (never fabricate)
+    picks.push({ idx, end: idx + span.length, span, href: h.href });
+    used.push([idx, idx + span.length]);
+    seenWork.add(s.i);
+  }
+  if (!picks.length) return null;
+  picks.sort((a, b) => a.idx - b.idx);
+  let out = '', cursor = 0;
+  for (const p of picks) {
+    if (p.idx < cursor) continue;
+    out += bib.slice(cursor, p.idx) + `[${p.span}](${p.href})`;
+    cursor = p.end;
+  }
+  out += bib.slice(cursor);
+  return { text: out, count: picks.length };
+}
+
+async function stageLinkBib() {
+  console.log('Stage 5 LINKBIB');
+  const works = readJSON('works-held.json', []);
+  applyAuthorGuard(works);
+
+  const BIB = (await import(path.join(DATA_DIR, 'shwep-bibliographies.ts'))).SHWEP_BIBLIOGRAPHIES || {};
+  let HAND = {};
+  try { HAND = (await import(path.join(DATA_DIR, 'shwep-linked-bibliographies.ts'))).SHWEP_LINKED_BIBLIOGRAPHIES || {}; } catch {}
+
+  // per-episode: the held works that have a publicly-readable (translated) edition
+  const byEp = {};
+  for (const w of works) {
+    const best = bestEdition(w.heldMeta);
+    if (!best) continue;
+    const entry = { work: w.work, author: w.author, forms: (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]), href: bookHref(best) };
+    for (const ep of w.episodes) (byEp[ep] = byEp[ep] || []).push(entry);
+  }
+
+  const candidates = Object.keys(BIB).map(Number).filter(n => byEp[n] && byEp[n].length && BIB[n]).sort((a, b) => a - b);
+  const items = LIMIT ? candidates.slice(0, LIMIT) : candidates;
+  console.log(`  ${items.length} episodes with a displayed bibliography + ≥1 held+readable cited work`);
+
+  const linked = {};
+  let okCount = 0, skipCount = 0, linkTotal = 0, done = 0;
+  await mapPool(items, 5, async (ep) => {
+    if (HAND_CURATED.has(ep) && HAND[ep]) { linked[ep] = HAND[ep]; okCount++; done++; return; }
+    const r = await injectLinks(BIB[ep], byEp[ep]);
+    if (r) { linked[ep] = r.text; okCount++; linkTotal += r.count; } else skipCount++;
+    done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`);
+  });
+  // ensure hand-curated episodes are always present even if not auto-eligible
+  for (const ep of HAND_CURATED) if (HAND[ep] && !linked[ep]) linked[ep] = HAND[ep];
+
+  const sorted = Object.keys(linked).map(Number).sort((a, b) => a - b);
+  let out = `/**
+ * Inline-linked SHWEP reading lists for the Reading Room. Earl Fontainelle's
+ * bibliography with the historical works WE HOLD (visible + translated) turned into
+ * inline /book/ "read here" links at the cited-work mentions. Episodes here render
+ * inline instead of the separate "Read in Source Library" list.
+ *
+ * Episodes 76 and 323 are HAND-CURATED (the quality bar) and preserved verbatim.
+ * All others are auto-generated by scripts/enrichment/shwep-cited-works.mjs
+ * (${MODEL}, process matcher): the LLM only locates each held work's mention; the link
+ * is spliced into the original bibliography text, so it stays verbatim apart from the
+ * added markup. Do not edit by hand — re-run \`--linkbib\` instead.
+ */
+export const SHWEP_LINKED_BIBLIOGRAPHIES: Record<number, string> = {\n`;
+  for (const ep of sorted) out += `  ${ep}: ${JSON.stringify(linked[ep])},\n`;
+  out += `};\n`;
+  fs.writeFileSync(path.join(DATA_DIR, 'shwep-linked-bibliographies.ts'), out);
+  console.log(`  → ${sorted.length} episodes linked (${okCount} matched, ${skipCount} no-link/skipped); ${linkTotal} inline links inserted`);
+}
+
 // ── main ─────────────────────────────────────────────────────────────────────
 
 (async () => {
@@ -373,5 +592,6 @@ export const SHWEP_BOOK_MATCHES: Record<number, string[]> = {\n`;
   if (want('--dedupe')) await stageDedupe();
   if (want('--holdings')) await stageHoldings();
   if (want('--emit')) await stageEmit();
-  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --emit | --all');
+  if (want('--linkbib')) await stageLinkBib();
+  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --emit | --linkbib | --all');
 })().catch(e => { console.error('Fatal:', e); process.exit(1); });
