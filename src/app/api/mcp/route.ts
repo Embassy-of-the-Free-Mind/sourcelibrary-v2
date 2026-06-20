@@ -607,7 +607,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.3.3' },
+    { name: 'source-library', version: '4.3.4' },
     { capabilities: { tools: {} } },
   );
 
@@ -692,7 +692,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.3.3',
+    version: '4.3.4',
     description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
@@ -755,7 +755,6 @@ export async function OPTIONS() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization, MCP-Session-Id, MCP-Protocol-Version',
-      'Access-Control-Expose-Headers': 'WWW-Authenticate',
     },
   });
 }
