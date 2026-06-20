@@ -109,6 +109,7 @@ function main() {
       work_cluster_id: id,
       external_translation_sources: [...p.sources].sort(),
       channels: [...p.channels].sort(),
+      work_keys: [...p.work_keys],            // join key for the credit registry (phase 06)
       n_works: p.work_keys.size,
       best_title_score: Number(p.best_score.toFixed(3)),
     }) + '\n');
