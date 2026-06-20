@@ -25,6 +25,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'the-giants-werent-translated',
+    title: 'The Giants Were Never Fully Translated',
+    subtitle:
+      'The most-read book on Source Library, Robert Fludd\'s Utriusque Cosmi Historia, has never been translated into English in full. Neither have the major works of Kircher; Ficino reached English only this century. On why "first full translation" is still a meaningful claim, and what the gap really looks like.',
+    date: '21 June 2026',
+    readTime: '6 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg',
+    imageAlt: 'Robert Fludd\'s Integra Naturae, from Utriusque Cosmi Historia, 1617',
+  },
+  {
     slug: 'cannabis-bangue',
     title: 'Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis',
     subtitle:
