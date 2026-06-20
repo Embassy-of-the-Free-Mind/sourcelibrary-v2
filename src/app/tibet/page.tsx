@@ -128,7 +128,7 @@ export default async function TibetPage() {
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mb-8">
               {formatStat(stats.books)} sacred manuscripts — nearly{' '}
               {formatStat(stats.pagesOcr)} pages of an endangered tradition — made readable in
-              English for the first time. Now we are going back, folio by folio, to make them{' '}
+              English for the first time. We&apos;ve tested what it takes to make them{' '}
               <em className="text-white not-italic font-display">faithful</em>.
             </p>
 
@@ -217,31 +217,27 @@ export default async function TibetPage() {
         </div>
       </section>
 
-      {/* Readable is not faithful — the work */}
+      {/* What we tested — the case for a premium model */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-14 md:py-20">
         <div className="px-6 md:px-12 max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl text-stone-900 mb-5 font-display leading-tight">
-            Readable is not the same as faithful
+            A faithful edition needs a premium model
           </h2>
           <div className="prose-content text-stone-700 leading-relaxed space-y-4 text-[1.05rem]">
             <p>
-              To make 290,000 pages readable quickly, we used a fast, inexpensive AI model. On clean
-              printed pages it does well. But on the handwritten manuscripts that make up the bulk of
-              this collection, a meaningful share of pages came out wrong — and wrong in a way that{' '}
-              <em>reads</em> convincingly.
+              We didn&apos;t guess at this — we tested it. Independent AI reviewers checked the
+              transcriptions against the original page images across the collection.
             </p>
             <p>
-              We audited it carefully: three independent AI reviewers examined the page images
-              against the transcriptions, alongside a corpus-wide scan. The failures were real and
-              specific — pages where the model silently repeated one folio across several, or
-              transcribed Tibetan in the wrong alphabet entirely. These are exactly the errors that a
-              casual reader could never catch.
+              The finding was clear. A fast, inexpensive model makes these texts{' '}
+              <em>readable</em>. But the handwritten manuscripts that fill this library need a{' '}
+              <strong>premium model</strong> to be transcribed and translated{' '}
+              <em>faithfully</em> — the cheaper one quietly garbles them in ways that still read
+              smoothly, the most dangerous kind of error in a sacred text.
             </p>
             <p>
-              The good news: we have already <strong>proven the fix</strong>. Separating each folio
-              and re-reading the hard pages with a stronger model corrects them. The plan is a careful
-              second pass — re-transcribe, re-translate, and have Tibetan-literate reviewers validate
-              the result — so that every page can be quoted with confidence.
+              We have proven the premium model gets it right. What&apos;s left is simply to fund the
+              work.
             </p>
           </div>
         </div>
@@ -265,16 +261,58 @@ export default async function TibetPage() {
       {/* Support */}
       <section id="support" className="bg-white py-14 md:py-20 border-t border-stone-200 scroll-mt-4">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <div className="max-w-3xl mb-10">
+          <div className="max-w-3xl mb-8">
             <h2 className="text-2xl md:text-3xl text-stone-900 mb-3 font-display leading-tight">
               Help us complete the work
             </h2>
             <p className="text-stone-600 leading-relaxed text-[1.05rem]">
-              We are raising <strong>$10,000</strong> to fund the faithful restoration of this entire
-              corpus — re-transcribing and re-translating every manuscript through a stronger,
-              carefully validated pipeline, with Tibetan-literate scholarly review. Every gift, of any
-              size, moves a sacred text closer to being read as it was written.
+              A premium AI model costs many times more per page than the fast one. Run across the
+              pages that need it — plus Tibetan-literate review — a faithful edition of all{' '}
+              {formatStat(stats.pagesOcr)} pages comes to about <strong>$10,000</strong>.
             </p>
+          </div>
+
+          {/* Cost breakdown */}
+          <div className="max-w-3xl mb-12 rounded-2xl border border-stone-200 bg-[#faf8f5] overflow-hidden">
+            {[
+              {
+                label: 'Fast first pass',
+                detail: `All ${formatStat(stats.pagesOcr)} pages made readable`,
+                cost: 'Done',
+                muted: true,
+              },
+              {
+                label: 'Premium transcription & translation',
+                detail: 'A stronger AI model on the manuscripts that need it',
+                cost: '~$7,000',
+              },
+              {
+                label: 'Scholarly review',
+                detail: 'Tibetan-literate validation of the result',
+                cost: '~$3,000',
+              },
+            ].map((row) => (
+              <div
+                key={row.label}
+                className="flex items-center justify-between gap-4 px-5 py-4 border-b border-stone-200/70"
+              >
+                <div>
+                  <span className="block text-sm font-semibold text-stone-900">{row.label}</span>
+                  <span className="block text-xs text-stone-500 mt-0.5">{row.detail}</span>
+                </div>
+                <span
+                  className={`text-sm font-semibold whitespace-nowrap ${
+                    row.muted ? 'text-stone-400' : 'text-stone-900'
+                  }`}
+                >
+                  {row.cost}
+                </span>
+              </div>
+            ))}
+            <div className="flex items-center justify-between gap-4 px-5 py-4 bg-stone-900">
+              <span className="text-sm font-semibold text-white">A faithful, citable edition</span>
+              <span className="text-base font-bold text-accent-gold whitespace-nowrap">~$10,000</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
