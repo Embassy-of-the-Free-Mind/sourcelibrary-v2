@@ -28,7 +28,7 @@ const translatorCount = (() => {
   return s.size;
 })();
 const renCount = works.filter((w) => w.tgt).length;
-const slCount = works.filter((w) => w.sl).length;
+const workHeld = works.filter((w) => w.h === 'work').length;
 
 function Stat({ n, unit, label }: { n: string; unit?: string; label: string }) {
   return (
@@ -67,7 +67,7 @@ export default function TranslationRegistryPage() {
           <Stat n={works.length.toLocaleString()} label="works with a known English translation" />
           <Stat n={translatorCount.toLocaleString()} label="translators credited" />
           <Stat n={renCount.toLocaleString()} label="Renaissance-Latin works" />
-          <Stat n={slCount.toLocaleString()} label="readable now on Source Library" />
+          <Stat n={workHeld.toLocaleString()} label="whose original we hold on Source Library" />
         </div>
 
         <p>
@@ -77,11 +77,17 @@ export default function TranslationRegistryPage() {
           works that <em>have</em> been translated, and the people who translated them.
         </p>
         <p className="mt-4">
-          Every entry below was found in an external source — a scholarly series like the I Tatti Renaissance Library or
-          Brill, or a bibliographic catalogue like the UNESCO Index Translationum and the Library of Congress — and matched
-          to its original in the Universal Short Title Catalogue at the level of the <em>work</em>, not the edition. We
-          only count translations made <em>independently</em> of Source Library, so this is a record of the field&rsquo;s
-          collective effort, not our own. Where we also hold the translation, you can read it here.
+          Every entry was found in an external source — a scholarly series like the I Tatti Renaissance Library or Brill,
+          or a bibliographic catalogue like the UNESCO Index Translationum and the Library of Congress — and matched to its
+          original in the Universal Short Title Catalogue at the level of the <em>work</em>, not the edition. We only count
+          translations made <em>independently</em> of Source Library, so this is a record of the field&rsquo;s collective
+          effort, not our own.
+        </p>
+        <p className="mt-4 text-base text-stone-600">
+          <strong className="text-stone-800">A note on &ldquo;in our library.&rdquo;</strong> These published translations
+          are mostly in copyright (Harvard, Brill, Loeb) and are <em>not</em> hosted here — follow the credit to find them.
+          What Source Library holds is the <em>original</em>: we have the source text for {workHeld.toLocaleString()} of
+          these works (read it via the <em>Read original</em> link), and other writings by the author for {works.filter((w) => w.h === 'author').length.toLocaleString()} more.
         </p>
       </div>
 
