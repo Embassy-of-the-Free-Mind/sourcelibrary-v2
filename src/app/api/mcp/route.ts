@@ -336,6 +336,7 @@ const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: 
 const TOOLS: Tool[] = [
   {
     name: 'search_library',
+    title: 'Search Library',
     description: 'Find BOOKS matching a topic. Searches titles, authors, subjects, and (as a secondary signal) translated text. Use this when you want a list of works on a subject. For locating specific passages inside books, use search_translations instead. ORIENTATION HINT: when the user has named a specific author or work, call get_book directly (or list_books to discover the ID) — the AI-generated book summary + chapter outline is often the right first answer and saves repeated passage hunting. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination.',
     annotations: { title: 'Search Library', ...READ_ONLY },
     inputSchema: {
@@ -355,6 +356,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_translations',
+    title: 'Search Translations',
     description: 'Find specific PASSAGES inside books — returns page-level snippets with citation URLs. Use this when you want a quote or evidence on a topic across the whole library. ORIENTATION HINT: if the user has named a specific author or work, prefer get_book (returns a summary + chapter outline) over passage hunting — every book in the corpus has an AI-generated summary that is usually the right first read. Use search_translations when sweeping across many books for evidence of a theme. For finding which BOOKS cover a topic, use search_library. Query tips: single distinctive terms ("memory palace", "wax tablet") work best; multi-word natural-English queries ("unity of the intellect") may return fewer results because matching is term-based, not phrase-based. Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination. Cross-cultural tip: for pre-modern or non-Western topics, search source-tradition vocabulary rather than modern English terms — e.g. for seminal economy search "jing" or "bindu" or "istimnāʾ", not "semen retention"; for female homoeroticism search "tribade" or "sahq", not "lesbian". The corpus is indexed via period translations that use tradition-internal terminology.',
     annotations: { title: 'Search Translations', ...READ_ONLY },
     inputSchema: {
@@ -374,6 +376,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_concept',
+    title: 'Search by Concept',
     description: 'Conceptual / semantic passage search across the whole library. Use when the modern term won\'t literally appear in historical texts — e.g. "distributed cognition" maps to passages about active intellect, art of memory, wax tablet metaphors; "social contract" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings (768d), so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. ORIENTATION HINT: if the user named a specific author or work, prefer get_book (returns the book\'s AI summary + chapter outline) — semantic search is expensive and best reserved for cross-corpus discovery. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Similarity calibration: 0.70+ is a strong match, 0.55–0.70 is worth reading but verify, below 0.55 is mostly conceptual drift. Set max_per_book to diversify results across many books rather than cluster on one source. Each passage carries a snippet_type — quote only "translation" snippets, never "summary". Cross-cultural tip: for pre-modern or non-Western topics, also try source-tradition vocabulary — e.g. for seminal economy try "jing preservation" or "bindu yoga" or "istimnāʾ"; for masturbation try "mollities" (Latin) or "hastamaithuna" (Sanskrit) or "shouyin" (Chinese). The corpus is indexed via period translations that use tradition-internal terminology, so adjacent/euphemistic terms often surface material that modern English keywords miss.',
     annotations: { title: 'Search by Concept', ...READ_ONLY },
     inputSchema: {
@@ -393,6 +396,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_within_book',
+    title: 'Search Within Book',
     description: 'Deep-dive inside a single book. Runs Atlas keyword search AND scoped semantic search in parallel against that book\'s pages, then merges results — so this works for both literal terms ("ouroboros") and conceptual queries ("the marriage of opposites"). Typical workflow: use search_library or search_concept to find a candidate book; then call this with that book_id to surface every relevant page. Faster than re-searching globally because it\'s scoped to one book\'s 100-500 pages. Returns OCR and translation snippets with page numbers, ready to cite.',
     annotations: { title: 'Search Within Book', ...READ_ONLY },
     inputSchema: {
@@ -406,6 +410,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'list_books',
+    title: 'List Books',
     description: 'Browse the catalog by metadata — filter by author/title fragment, language, category, or translation recency. Returns books with title, author, language, year, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content. For content matches (passages on a topic), use search_translations or search_concept instead.',
     annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
@@ -420,6 +425,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'get_book',
+    title: 'Get Book',
     description: 'Get a book\'s AI-generated summary, chapter list, edition metadata, DOI, and page counts. THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance, often answering the question without any further searching. Pair with get_book_text to read selected chapters, or search_within_book to locate passages inside it.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
@@ -430,6 +436,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'get_book_text',
+    title: 'Read Book Text',
     description: 'Read a book\'s text. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation) — call get_book first to get the chapter list. Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.',
     annotations: { title: 'Read Book Text', ...READ_ONLY },
     inputSchema: {
@@ -448,6 +455,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'get_quote',
+    title: 'Get Quote',
     description: 'Get exact text of a single page for quoting, with citation URL. ALWAYS use before putting text in quotation marks.',
     annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
@@ -461,6 +469,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_images',
+    title: 'Search Images',
     description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
     annotations: { title: 'Search Images', ...READ_ONLY },
     inputSchema: {
@@ -476,6 +485,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'submit_feedback',
+    title: 'Submit Feedback',
     description: 'Submit feedback, bug reports, or feature requests to the Source Library team.',
     annotations: { title: 'Submit Feedback', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
@@ -597,7 +607,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.3.2' },
+    { name: 'source-library', version: '4.3.3' },
     { capabilities: { tools: {} } },
   );
 
@@ -682,7 +692,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.3.2',
+    version: '4.3.3',
     description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),

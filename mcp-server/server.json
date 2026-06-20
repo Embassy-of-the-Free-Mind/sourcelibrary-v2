@@ -7,12 +7,12 @@
     "source": "github",
     "subfolder": "mcp-server"
   },
-  "version": "4.3.0",
+  "version": "4.3.3",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@source-library/mcp-server",
-      "version": "4.3.0",
+      "version": "4.3.3",
       "transport": {
         "type": "stdio"
       }
