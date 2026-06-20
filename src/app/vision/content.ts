@@ -20,7 +20,7 @@ export interface VisionContent {
   bodyBeforeQuote: string[];
   quote: { en: string; la: string; source: string; url: string; linkLabel: string };
   bodyBeforeImage1: string[];
-  image1: { src: string; alt: string; caption: string };
+  image1: { src: string; alt: string; caption: string; href: string };
   bodyAfterImage1: string[];
   buildHeading: string;
   bodyBuild: string[];
@@ -70,9 +70,10 @@ export const visionContent: VisionContent = {
     src: 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg',
     alt: "An emblem from Michael Maier's Atalanta Fugiens (1618)",
     caption: 'One of thousands of pages now readable and quotable — an emblem from Maier’s *Atalanta Fugiens*, 1618.',
+    href: '/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/19',
   },
   bodyAfterImage1: [
-    'We are embedded within one of the world’s great collections of ancient texts: the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status.',
+    'We are embedded within one of the world’s great collections of ancient texts: the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status. You can make a tax-deductible gift [here](/support).',
   ],
   buildHeading: 'What I want to build',
   bodyBuild: [

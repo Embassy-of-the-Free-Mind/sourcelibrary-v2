@@ -257,21 +257,32 @@ export default function VisionView({
             F({ as: 'p', path: `bodyBeforeImage1.${i}`, value: p, className: 'mb-6' })
           )}
 
-          {/* Image 1 */}
+          {/* Image 1 — links to the source page */}
           <figure className="my-12 -mx-2 md:-mx-8">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={content.image1.src}
-              alt={content.image1.alt}
-              className="w-full h-auto rounded-lg border border-primary/10 shadow-sm"
-              loading="lazy"
-            />
+            <Link
+              href={content.image1.href}
+              className="block group"
+              aria-label="Read this page on Source Library"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={content.image1.src}
+                alt={content.image1.alt}
+                className="w-full h-auto rounded-lg border border-primary/10 shadow-sm transition group-hover:opacity-95"
+                loading="lazy"
+              />
+            </Link>
             {F({
               as: 'figcaption',
               path: 'image1.caption',
               value: content.image1.caption,
               className: 'mt-3 text-sm text-muted italic text-center block',
             })}
+            <div className="text-center mt-1">
+              <Link href={content.image1.href} className="text-sm text-accent-rust hover:underline">
+                Read this page &rarr;
+              </Link>
+            </div>
           </figure>
 
           {content.bodyAfterImage1.map((p, i) =>
