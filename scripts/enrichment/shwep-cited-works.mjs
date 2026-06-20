@@ -481,6 +481,20 @@ function protectedSpanRanges(s) {
   return ranges;
 }
 
+// Does the bibliography entry (blank-line-delimited block) containing index `idx`
+// carry a publication year? A dated entry is a formal citation of a SPECIFIC edition
+// (e.g. "Proclus, Saffrey & Westerink (Ed.), 1997. Théologie Platonicienne. Les Belles
+// Lettres."). We must NOT wrap the title there: our "read here" link points at a
+// DIFFERENT edition we hold, so attaching it to that citation misattributes provenance.
+// Earl's in-discussion mentions ("*theol. Plat.* 1.25", "*civ. dei* X.9") carry no year,
+// so this cleanly keeps the #76-style links and drops the edition-citation ones.
+const PUB_YEAR = /\b(1[4-9]\d\d|20\d\d)\b/;
+function entryHasYear(s, idx) {
+  let start = s.lastIndexOf('\n\n', idx); start = start === -1 ? 0 : start + 2;
+  let end = s.indexOf('\n\n', idx); if (end === -1) end = s.length;
+  return PUB_YEAR.test(s.slice(start, end));
+}
+
 async function injectLinks(bib, holds) {
   const holdList = holds.map((h, i) =>
     `${i}. "${h.work}" by ${h.author}; also written as: ${JSON.stringify(h.forms.slice(0, 6))}`).join('\n');
@@ -512,10 +526,12 @@ ${holdList}`;
     while ((idx = bib.indexOf(span, from)) !== -1) {
       const end = idx + span.length;
       const overlap = used.some(([a, b]) => idx < b && end > a);
-      if (!overlap) break;
+      // accept only a clean, undated occurrence — never inside a bracket span or a
+      // dated edition citation (that would point our copy at someone else's edition)
+      if (!overlap && !entryHasYear(bib, idx)) break;
       from = idx + 1;
     }
-    if (idx === -1) continue; // LLM span not found verbatim → drop (never fabricate)
+    if (idx === -1) continue; // no clean, undated occurrence → drop (never misattribute)
     picks.push({ idx, end: idx + span.length, span, href: h.href });
     used.push([idx, idx + span.length]);
     seenWork.add(s.i);
