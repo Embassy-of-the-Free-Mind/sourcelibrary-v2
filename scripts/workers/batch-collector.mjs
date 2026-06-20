@@ -21,6 +21,7 @@ import { randomBytes } from 'crypto';
 import { GoogleGenAI } from '@google/genai';
 import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
+import { hasScope } from './lib/selective-unpause.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -1099,12 +1100,20 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause
+  // Check processing_control pause.
+  // Selective unpause: if a scope is configured (allow_book_ids / allow_collections),
+  // keep collecting — pulling already-generated batch results costs no Gemini spend,
+  // and the scoped books the orchestrator submitted while paused need their results
+  // ingested or the OCR/translation text never lands. Empty scope = full stop.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
+  const _scopeActive = hasScope(control);
+  if (control?.paused && !_scopeActive) {
     console.log(`[batch-collector] Pipeline paused. Exiting.`);
     await client.close();
     process.exit(0);
+  }
+  if (control?.paused && _scopeActive) {
+    console.log(`[batch-collector] Paused, but selective-unpause scope is active — collecting results (free) for in-flight jobs.`);
   }
 
   // ── Batch Health Probe: reconcile DB vs Gemini state ──
