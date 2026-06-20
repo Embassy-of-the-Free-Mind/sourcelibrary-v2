@@ -155,13 +155,27 @@ function applyAuthorGuard(works) {
 
 // Pick the single representative PUBLICLY-READABLE edition for inline reader links:
 // must be translated (pages_translated > 0; visibility already enforced at retrieval).
-// Among translated editions prefer the most-translated, then most-OCR'd, then earliest.
-// Returns the heldMeta object, or null when we hold no readable edition (→ no inline link).
+// Prefer translation COMPLETENESS over raw page count — a "read here" link that lands on
+// an edition translated 26/608 pages (mostly an untranslated facsimile) reads as a broken
+// promise, even though it has more absolute translated pages than a small but fully-done
+// edition. So bucket by translated ratio (translated / non-blank text pages) first, then
+// within a bucket prefer the most translated text (so a large ~complete edition beats a
+// tiny complete fragment), then most-OCR'd, then earliest. Returns null if nothing readable.
+// Coverage of the WHOLE work: translated pages / total non-blank pages. Use pages_count
+// (the real length) as the denominator, NOT pages_ocr — an edition with 608 pages but
+// only 26 OCR'd + 26 translated is 4% readable, even though 26/26 of what was OCR'd is done.
+function translatedRatio(m) {
+  const total = m.pages_count || m.pages_ocr || m.pages_translated || 0;
+  const denom = Math.max(1, total - (m.pages_blank || 0));
+  return Math.min(1, (m.pages_translated || 0) / denom);
+}
 function bestEdition(heldMeta) {
   const readable = (heldMeta || []).filter(m => (m.pages_translated || 0) > 0);
   if (!readable.length) return null;
+  const tier = m => { const r = translatedRatio(m); return r >= 0.6 ? 2 : r >= 0.25 ? 1 : 0; };
   return readable.slice().sort((a, b) =>
-    (b.pages_translated || 0) - (a.pages_translated || 0) ||
+    tier(b) - tier(a) ||                                     // substantially-translated first
+    (b.pages_translated || 0) - (a.pages_translated || 0) || // then most translated text
     (b.pages_ocr || 0) - (a.pages_ocr || 0) ||
     (a.year || 9999) - (b.year || 9999)
   )[0];
@@ -565,6 +579,20 @@ async function stageLinkBib() {
   console.log('Stage 5 LINKBIB');
   const works = readJSON('works-held.json', []);
   applyAuthorGuard(works);
+
+  // Enrich heldMeta with pages_count so bestEdition can score translation COMPLETENESS
+  // over the whole work (works-held.json only carries pages_ocr/translated/blank).
+  const allHeldIds = [...new Set(works.flatMap(w => (w.heldMeta || []).map(m => m.id)))];
+  if (allHeldIds.length) {
+    const client = new MongoClient(process.env.MONGODB_URI);
+    await client.connect();
+    const rows = await client.db('bookstore').collection('books').find(
+      { _id: { $in: allHeldIds.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean) } },
+      { projection: { pages_count: 1 } }).toArray();
+    await client.close();
+    const pcById = new Map(rows.map(r => [r._id.toString(), r.pages_count || 0]));
+    for (const w of works) for (const m of (w.heldMeta || [])) m.pages_count = pcById.get(m.id) || m.pages_count || 0;
+  }
 
   const BIB = (await import(path.join(DATA_DIR, 'shwep-bibliographies.ts'))).SHWEP_BIBLIOGRAPHIES || {};
   let HAND = {};
