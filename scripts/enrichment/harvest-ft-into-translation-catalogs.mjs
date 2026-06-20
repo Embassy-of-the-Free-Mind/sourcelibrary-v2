@@ -102,7 +102,7 @@ function canonicalWork(book) {
 // "unknown" is intentionally NOT in this list — anonymous early-modern
 // translations are legitimately catalogued with translator='unknown' (e.g.
 // 1688 Diogenes Laertius). Only block the clear LLM-placeholder forms.
-const JUNK_TRANSLATOR_RE = /^(n\/a|not specified|tbd|none|original author|original)$/i;
+const JUNK_TRANSLATOR_RE = /^(n\/a|not specified|tbd|none|unknown|original author|original|various|multiple|several|ongoing)\b/i;
 const ORIGINAL_AUTHOR_RE = /\b(original author|original compiler)\b/i;
 
 function isEnglishLanguage(language) {
@@ -150,10 +150,11 @@ function buildRow(book, trans, source, skipReasons) {
     original_title: book.title || '',
     canonical_work: work,
     translator: trans.translator || null,
-    pub_year: trans.pub_year || null,
+    pub_year: (trans.pub_year && !/various|ongoing|unknown|n\/a/i.test(String(trans.pub_year))) ? trans.pub_year : null,
     publisher: trans.publisher || null,
     series: trans.series || null,
     completeness: trans.completeness || 'unknown',
+    source_url: trans.source_url || null,
   };
 }
 
@@ -209,8 +210,9 @@ async function harvestFromEnum(db, file, dryRun, limit) {
       if (!key) { skipReasons.no_title++; continue; }
       if (seen.has(key)) continue;
       seen.add(key);
-      // Map the enum prior shape → buildRow's `trans` shape. source_url has no
-      // catalog column and is dropped (it lives in the Mongo attempts log).
+      // Map the enum prior shape → buildRow's `trans` shape. source_url is the
+      // grounding link to the actual translation (archive.org / Google Books / publisher),
+      // persisted to the new translation_catalogs.source_url column.
       const trans = {
         english_title: p.english_title,
         translator: p.translator,
@@ -218,6 +220,7 @@ async function harvestFromEnum(db, file, dryRun, limit) {
         publisher: p.publisher,
         series: p.series || null,
         completeness: p.completeness,
+        source_url: p.source_url || null,
       };
       const row = buildRow(book, trans, 'sl_ft_llm_claim', skipReasons);
       if (row) rows.push(row);
