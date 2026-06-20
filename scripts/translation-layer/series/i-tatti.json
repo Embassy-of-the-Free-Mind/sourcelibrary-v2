@@ -1,0 +1,776 @@
+[
+  {
+    "vol": 1,
+    "author_en": "Giovanni Boccaccio",
+    "author_surname": "Boccaccio",
+    "title_en": "Famous Women",
+    "title_latin": "De mulieribus claris",
+    "orig_year": 1362,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 2,
+    "author_en": "Leonardo Bruni",
+    "author_surname": "Bruni",
+    "title_en": "History of the Florentine People, Volume 1",
+    "title_latin": "Historiae Florentini populi",
+    "orig_year": 1442,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 3,
+    "author_en": "Marsilio Ficino",
+    "author_surname": "Ficino",
+    "title_en": "Platonic Theology, Volume 1",
+    "title_latin": "Theologia Platonica de immortalitate animorum",
+    "orig_year": 1474,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 4,
+    "author_en": "Various",
+    "author_surname": "Vergerio",
+    "title_en": "Humanist Educational Treatises",
+    "title_latin": "De ingenuis moribus et liberalibus adulescentiae studiis",
+    "orig_year": 1402,
+    "orig_lang": "latin",
+    "also": "Bruni De studiis et litteris; Pier Paolo Vergerio; Aeneas Silvius Piccolomini; Battista Guarino"
+  },
+  {
+    "vol": 5,
+    "author_en": "Polydore Vergil",
+    "author_surname": "Vergilius",
+    "title_en": "On Discovery",
+    "title_latin": "De inventoribus rerum",
+    "orig_year": 1499,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 6,
+    "author_en": "Giannozzo Manetti",
+    "author_surname": "Manetti",
+    "title_en": "Biographical Writings",
+    "title_latin": "Vitae Socratis et Senecae",
+    "orig_year": 1440,
+    "orig_lang": "latin",
+    "also": "Vita Dantis, Petrarchae et Boccaccii"
+  },
+  {
+    "vol": 7,
+    "author_en": "Leon Battista Alberti",
+    "author_surname": "Alberti",
+    "title_en": "Momus",
+    "title_latin": "Momus, sive De principe",
+    "orig_year": 1450,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 8,
+    "author_en": "Pius II",
+    "author_surname": "Piccolomini",
+    "title_en": "Commentaries, Volume 1",
+    "title_latin": "Commentarii rerum memorabilium quae temporibus suis contigerunt",
+    "orig_year": 1463,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 9,
+    "author_en": "Francesco Petrarca",
+    "author_surname": "Petrarca",
+    "title_en": "Invectives",
+    "title_latin": "Invectivae",
+    "orig_year": 1355,
+    "orig_lang": "latin",
+    "also": "Invectiva contra medicum; De ignorantia; Invectiva contra eum qui maledixit Italie"
+  },
+  {
+    "vol": 10,
+    "author_en": "Cyriac of Ancona",
+    "author_surname": "Ciriaco d'Ancona",
+    "title_en": "Later Travels",
+    "title_latin": "Itinerarium",
+    "orig_year": 1444,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 11,
+    "author_en": "Maffeo Vegio",
+    "author_surname": "Vegio",
+    "title_en": "Short Epics",
+    "title_latin": "Astyanax; Supplementum (Aeneidos liber XIII)",
+    "orig_year": 1428,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 12,
+    "author_en": "Angelo Poliziano",
+    "author_surname": "Politianus",
+    "title_en": "Silvae",
+    "title_latin": "Silvae",
+    "orig_year": 1491,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 13,
+    "author_en": "Various",
+    "author_surname": "Piccolomini",
+    "title_en": "Humanist Comedies",
+    "title_latin": "Chrysis; Philodoxus; Philogenia",
+    "orig_year": 1444,
+    "orig_lang": "latin",
+    "also": "Piccolomini Chrysis; Alberti Philodoxus; Pisani Philogenia; Mezzo Epirota; Frulovisi"
+  },
+  {
+    "vol": 14,
+    "author_en": "Flavio Biondo",
+    "author_surname": "Biondo",
+    "title_en": "Italy Illuminated, Volume 1: Books I-IV",
+    "title_latin": "Italia illustrata",
+    "orig_year": 1453,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 15,
+    "author_en": "Pietro Bembo",
+    "author_surname": "Bembo",
+    "title_en": "Lyric Poetry. Etna",
+    "title_latin": "Carmina; De Aetna",
+    "orig_year": 1496,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 16,
+    "author_en": "Giovanni Gioviano Pontano",
+    "author_surname": "Pontano",
+    "title_en": "Baiae",
+    "title_latin": "Baiae (Hendecasyllaborum libri)",
+    "orig_year": 1500,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 17,
+    "author_en": "Angelo Poliziano",
+    "author_surname": "Politianus",
+    "title_en": "Letters, Volume 1",
+    "title_latin": "Epistolae",
+    "orig_year": 1494,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 18,
+    "author_en": "Teofilo Folengo",
+    "author_surname": "Folengo",
+    "title_en": "Baldo, Volume 1",
+    "title_latin": "Baldus",
+    "orig_year": 1517,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 19,
+    "author_en": "Various",
+    "author_surname": "Pico della Mirandola",
+    "title_en": "Ciceronian Controversies",
+    "title_latin": "De imitatione",
+    "orig_year": 1512,
+    "orig_lang": "latin",
+    "also": "Gianfrancesco Pico / Bembo exchange; Cortesi / Poliziano; Giraldi"
+  },
+  {
+    "vol": 20,
+    "author_en": "Pietro Bembo",
+    "author_surname": "Bembo",
+    "title_en": "History of Venice, Volume 1",
+    "title_latin": "Historiae Venetae libri XII (Rerum Venetarum historia)",
+    "orig_year": 1530,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 21,
+    "author_en": "Lorenzo Valla",
+    "author_surname": "Valla",
+    "title_en": "On the Donation of Constantine",
+    "title_latin": "De falso credita et ementita Constantini donatione",
+    "orig_year": 1440,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 22,
+    "author_en": "Marsilio Ficino",
+    "author_surname": "Ficino",
+    "title_en": "Commentaries on Plato, Volume 1: Phaedrus and Ion",
+    "title_latin": "In Phaedrum; In Ionem (Commentaria in Platonem)",
+    "orig_year": 1484,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 23,
+    "author_en": "Bartolomeo Scala",
+    "author_surname": "Scala",
+    "title_en": "Essays and Dialogues",
+    "title_latin": "Dialogus de consolatione; Apologi; Dialogus de legibus et iudiciis",
+    "orig_year": 1483,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 24,
+    "author_en": "Bartolomeo Platina",
+    "author_surname": "Platina",
+    "title_en": "Lives of the Popes, Volume 1: Antiquity",
+    "title_latin": "Liber de vita Christi ac omnium pontificum",
+    "orig_year": 1479,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 25,
+    "author_en": "Cristoforo Landino",
+    "author_surname": "Landino",
+    "title_en": "Poems",
+    "title_latin": "Xandra (Carmina omnia)",
+    "orig_year": 1458,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 26,
+    "author_en": "Nicholas of Cusa",
+    "author_surname": "Cusanus",
+    "title_en": "Writings on Church and Reform",
+    "title_latin": "Reformatio generalis; De concordantia catholica (selections)",
+    "orig_year": 1433,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 27,
+    "author_en": "Marco Girolamo Vida",
+    "author_surname": "Vida",
+    "title_en": "Christiad",
+    "title_latin": "Christias",
+    "orig_year": 1535,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 28,
+    "author_en": "Jacopo Sannazaro",
+    "author_surname": "Sannazaro",
+    "title_en": "Latin Poetry",
+    "title_latin": "De partu Virginis; Eclogae piscatoriae; Elegiae; Epigrammata",
+    "orig_year": 1526,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 29,
+    "author_en": "Francesco Filelfo",
+    "author_surname": "Filelfo",
+    "title_en": "Odes",
+    "title_latin": "Odae",
+    "orig_year": 1455,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 30,
+    "author_en": "Aurelio Lippo Brandolini",
+    "author_surname": "Brandolini",
+    "title_en": "Republics and Kingdoms Compared",
+    "title_latin": "De comparatione rei publicae et regni",
+    "orig_year": 1490,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 31,
+    "author_en": "Florentius de Faxolis",
+    "author_surname": "Faxolis",
+    "title_en": "Book on Music",
+    "title_latin": "Liber musices",
+    "orig_year": 1485,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 32,
+    "author_en": "Antonio Beccadelli",
+    "author_surname": "Beccadelli",
+    "title_en": "The Hermaphrodite",
+    "title_latin": "Hermaphroditus",
+    "orig_year": 1425,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 33,
+    "author_en": "Federico Borromeo",
+    "author_surname": "Borromeo",
+    "title_en": "Sacred Painting. Museum",
+    "title_latin": "De pictura sacra; Musaeum",
+    "orig_year": 1624,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 34,
+    "author_en": "Giovanni Boccaccio",
+    "author_surname": "Boccaccio",
+    "title_en": "Genealogy of the Pagan Gods, Volume 1: Books I-V",
+    "title_latin": "Genealogia deorum gentilium",
+    "orig_year": 1360,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 35,
+    "author_en": "Various",
+    "author_surname": "Mussato",
+    "title_en": "Humanist Tragedies",
+    "title_latin": "Ecerinis; Achilleis; Progne; Fernandus servatus; Epirota",
+    "orig_year": 1315,
+    "orig_lang": "latin",
+    "also": "Mussato Ecerinis; Loschi Achilleis; Correr Progne; Verardi Fernandus servatus; Dati"
+  },
+  {
+    "vol": 36,
+    "author_en": "Bartolomeo Fonzio",
+    "author_surname": "Fonzio",
+    "title_en": "Letters to Friends",
+    "title_latin": "Epistolarum libri",
+    "orig_year": 1490,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 37,
+    "author_en": "Lilio Gregorio Giraldi",
+    "author_surname": "Giraldi",
+    "title_en": "Modern Poets",
+    "title_latin": "De poetis nostrorum temporum",
+    "orig_year": 1551,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 38,
+    "author_en": "Lorenzo Valla",
+    "author_surname": "Valla",
+    "title_en": "Dialectical Disputations, Volume 1: Book I",
+    "title_latin": "Repastinatio dialectice et philosophie (Dialecticae disputationes)",
+    "orig_year": 1439,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 39,
+    "author_en": "Giovanni Pontano",
+    "author_surname": "Pontano",
+    "title_en": "Dialogues, Volume 1: Charon and Antonius",
+    "title_latin": "Dialogi: Charon; Antonius",
+    "orig_year": 1491,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 40,
+    "author_en": "Michael Marullus",
+    "author_surname": "Marullus",
+    "title_en": "Poems",
+    "title_latin": "Epigrammata; Hymni naturales",
+    "orig_year": 1497,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 41,
+    "author_en": "Girolamo Fracastoro",
+    "author_surname": "Fracastoro",
+    "title_en": "Latin Poetry",
+    "title_latin": "Syphilis sive morbus Gallicus; Ioseph",
+    "orig_year": 1530,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 42,
+    "author_en": "Paolo Giovio",
+    "author_surname": "Giovio",
+    "title_en": "Notable Men and Women of Our Time",
+    "title_latin": "Dialogus de viris et feminis aetate nostra florentibus",
+    "orig_year": 1528,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 43,
+    "author_en": "Francesco Filelfo",
+    "author_surname": "Filelfo",
+    "title_en": "On Exile",
+    "title_latin": "Commentationes Florentinae de exilio",
+    "orig_year": 1440,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 44,
+    "author_en": "Jacopo Zabarella",
+    "author_surname": "Zabarella",
+    "title_en": "On Methods, Volume 1: Books I-II",
+    "title_latin": "De methodis",
+    "orig_year": 1578,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 45,
+    "author_en": "Coluccio Salutati",
+    "author_surname": "Salutati",
+    "title_en": "On the World and Religious Life",
+    "title_latin": "De seculo et religione",
+    "orig_year": 1381,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 46,
+    "author_en": "Giovanni Gioviano Pontano",
+    "author_surname": "Pontano",
+    "title_en": "On Married Life. Eridanus",
+    "title_latin": "De amore coniugali; Eridanus",
+    "orig_year": 1505,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 47,
+    "author_en": "Various",
+    "author_surname": "Gambara",
+    "title_en": "The Battle of Lepanto",
+    "title_latin": "Carmina de bello Lepantino",
+    "orig_year": 1571,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 48,
+    "author_en": "Coluccio Salutati",
+    "author_surname": "Salutati",
+    "title_en": "Political Writings",
+    "title_latin": "De tyranno; Invectiva in Antonium Luschum",
+    "orig_year": 1400,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 49,
+    "author_en": "Lorenzo Valla",
+    "author_surname": "Valla",
+    "title_en": "Correspondence",
+    "title_latin": "Epistolae",
+    "orig_year": 1445,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 50,
+    "author_en": "Cyriac of Ancona",
+    "author_surname": "Ciriaco d'Ancona",
+    "title_en": "Life and Early Travels",
+    "title_latin": "Vita; Commentaria",
+    "orig_year": 1435,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 51,
+    "author_en": "Marsilio Ficino",
+    "author_surname": "Ficino",
+    "title_en": "On Dionysius the Areopagite, Volume 1: Mystical Theology and The Divine Names, Part I",
+    "title_latin": "In Dionysium Areopagitam: De mystica theologia; De divinis nominibus",
+    "orig_year": 1492,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 52,
+    "author_en": "Girolamo Savonarola",
+    "author_surname": "Savonarola",
+    "title_en": "Apologetic Writings",
+    "title_latin": "Apologeticum (Scripta apologetica)",
+    "orig_year": 1497,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 53,
+    "author_en": "Ugolino Verino",
+    "author_surname": "Verino",
+    "title_en": "Fiammetta. Paradise",
+    "title_latin": "Flametta; Paradisus",
+    "orig_year": 1464,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 54,
+    "author_en": "Aldus Manutius",
+    "author_surname": "Manutius",
+    "title_en": "The Greek Classics",
+    "title_latin": "Praefationes (in graecos auctores)",
+    "orig_year": 1495,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 55,
+    "author_en": "Giannozzo Manetti",
+    "author_surname": "Manetti",
+    "title_en": "A Translator's Defense",
+    "title_latin": "Apologeticus (De interpretatione recta)",
+    "orig_year": 1456,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 56,
+    "author_en": "Petrarch",
+    "author_surname": "Petrarca",
+    "title_en": "My Secret Book",
+    "title_latin": "Secretum (De secreto conflictu curarum mearum)",
+    "orig_year": 1347,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 57,
+    "author_en": "Giovanni Marrasio",
+    "author_surname": "Marrasio",
+    "title_en": "Angelinetum and Other Poems",
+    "title_latin": "Angelinetum et carmina varia",
+    "orig_year": 1429,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 58,
+    "author_en": "Flavio Biondo",
+    "author_surname": "Biondo",
+    "title_en": "Rome in Triumph, Volume 1: Books I-II",
+    "title_latin": "Roma triumphans",
+    "orig_year": 1459,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 59,
+    "author_en": "Petrarch",
+    "author_surname": "Petrarca",
+    "title_en": "Selected Letters, Volume 1",
+    "title_latin": "Epistolae (Familiares; Seniles, selections)",
+    "orig_year": 1366,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 60,
+    "author_en": "Petrarch",
+    "author_surname": "Petrarca",
+    "title_en": "Selected Letters, Volume 2",
+    "title_latin": "Epistolae (Familiares; Seniles, selections)",
+    "orig_year": 1366,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 61,
+    "author_en": "Aldus Manutius",
+    "author_surname": "Manutius",
+    "title_en": "Humanism and the Latin Classics",
+    "title_latin": "Praefationes (in latinos auctores)",
+    "orig_year": 1495,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 62,
+    "author_en": "Giannozzo Manetti",
+    "author_surname": "Manetti",
+    "title_en": "Against the Jews and the Gentiles: Books I-IV",
+    "title_latin": "Adversus Iudaeos et gentes",
+    "orig_year": 1454,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 63,
+    "author_en": "Marsilio Ficino",
+    "author_surname": "Ficino",
+    "title_en": "Commentary on Plotinus, Volume 4: Ennead III, Part 1",
+    "title_latin": "In Plotini Enneades commentaria",
+    "orig_year": 1492,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 64,
+    "author_en": "Giovanni Boccaccio",
+    "author_surname": "Boccaccio",
+    "title_en": "Genealogy of the Pagan Gods, Volume 2: Books VI-X",
+    "title_latin": "Genealogia deorum gentilium",
+    "orig_year": 1360,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 65,
+    "author_en": "Marsilio Ficino",
+    "author_surname": "Ficino",
+    "title_en": "Commentary on Plotinus, Volume 5: Ennead III, Part 2, and Ennead IV",
+    "title_latin": "In Plotini Enneades commentaria",
+    "orig_year": 1492,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 66,
+    "author_en": "Ludovico Ariosto",
+    "author_surname": "Ariosto",
+    "title_en": "Latin Poetry",
+    "title_latin": "Carmina (Lyra)",
+    "orig_year": 1503,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 67,
+    "author_en": "Giannozzo Manetti",
+    "author_surname": "Manetti",
+    "title_en": "On Human Worth and Excellence",
+    "title_latin": "De dignitate et excellentia hominis",
+    "orig_year": 1452,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 68,
+    "author_en": "Angelo Poliziano",
+    "author_surname": "Politianus",
+    "title_en": "Greek and Latin Poetry",
+    "title_latin": "Epigrammata graeca et latina",
+    "orig_year": 1490,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 69,
+    "author_en": "Giovanni Pontano",
+    "author_surname": "Pontano",
+    "title_en": "The Virtues and Vices of Speech",
+    "title_latin": "De sermone",
+    "orig_year": 1502,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 70,
+    "author_en": "Pier Candido Decembrio",
+    "author_surname": "Decembrio",
+    "title_en": "Lives of the Milanese Tyrants",
+    "title_latin": "Vita Philippi Mariae; Vita Francisci Sfortiae",
+    "orig_year": 1447,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 71,
+    "author_en": "Angelo Poliziano",
+    "author_surname": "Politianus",
+    "title_en": "Miscellanies, Volume 1",
+    "title_latin": "Miscellaneorum centuria prima",
+    "orig_year": 1489,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 72,
+    "author_en": "Angelo Poliziano",
+    "author_surname": "Politianus",
+    "title_en": "Miscellanies, Volume 2",
+    "title_latin": "Miscellaneorum centuria secunda",
+    "orig_year": 1493,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 73,
+    "author_en": "Giovanni Pontano",
+    "author_surname": "Pontano",
+    "title_en": "Dialogues, Volume 2: Actius",
+    "title_latin": "Actius (Dialogi)",
+    "orig_year": 1499,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 74,
+    "author_en": "Giovanni Pontano",
+    "author_surname": "Pontano",
+    "title_en": "Dialogues, Volume 3: Aegidius and Asinus",
+    "title_latin": "Aegidius; Asinus (Dialogi)",
+    "orig_year": 1501,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 75,
+    "author_en": "Pius II",
+    "author_surname": "Piccolomini",
+    "title_en": "Commentaries, Volume 3: Books V-VII",
+    "title_latin": "Commentarii rerum memorabilium",
+    "orig_year": 1463,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 76,
+    "author_en": "Giovanni Francesco Pico della Mirandola",
+    "author_surname": "Pico della Mirandola",
+    "title_en": "Life of Giovanni Pico della Mirandola. Oration",
+    "title_latin": "Vita Ioannis Pici; Oratio de hominis dignitate",
+    "orig_year": 1496,
+    "orig_lang": "latin",
+    "also": "Oration = Giovanni Pico's Oratio de hominis dignitate (1486)"
+  },
+  {
+    "vol": 77,
+    "author_en": "Giovanni Pontano",
+    "author_surname": "Pontano",
+    "title_en": "Eclogues. Garden of the Hesperides",
+    "title_latin": "Eclogae; De hortis Hesperidum",
+    "orig_year": 1500,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 78,
+    "author_en": "Paolo Giovio",
+    "author_surname": "Giovio",
+    "title_en": "Portraits of Learned Men",
+    "title_latin": "Elogia virorum litteris illustrium",
+    "orig_year": 1546,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 79,
+    "author_en": "Leon Battista Alberti",
+    "author_surname": "Alberti",
+    "title_en": "Biographical and Autobiographical Writings",
+    "title_latin": "Vita (anonyma); Philodoxeos fabula; Vita S. Potiti",
+    "orig_year": 1438,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 80,
+    "author_en": "Various",
+    "author_surname": "Bracciolini",
+    "title_en": "On Leaders and Tyrants",
+    "title_latin": "De praestantia Caesaris et Scipionis (controversia)",
+    "orig_year": 1435,
+    "orig_lang": "latin",
+    "also": "Poggio Bracciolini; Guarino of Verona; Pietro del Monte"
+  },
+  {
+    "vol": 81,
+    "author_en": "Leon Battista Alberti",
+    "author_surname": "Alberti",
+    "title_en": "Dinner Pieces, Volume 1",
+    "title_latin": "Intercenales",
+    "orig_year": 1439,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 82,
+    "author_en": "Leon Battista Alberti",
+    "author_surname": "Alberti",
+    "title_en": "Dinner Pieces, Volume 2",
+    "title_latin": "Intercenales",
+    "orig_year": 1439,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 83,
+    "author_en": "Andrea Navagero",
+    "author_surname": "Naugerius",
+    "title_en": "Latin Pastoral Poetry",
+    "title_latin": "Lusus; Carmina",
+    "orig_year": 1530,
+    "orig_lang": "latin",
+    "also": "Marcantonio Flaminio, Carmina / Lusus pastorales"
+  },
+  {
+    "vol": 84,
+    "author_en": "Giovanni Pico della Mirandola",
+    "author_surname": "Pico della Mirandola",
+    "title_en": "900 Conclusions",
+    "title_latin": "Conclusiones nongentae (Conclusiones philosophicae, cabalisticae et theologicae)",
+    "orig_year": 1486,
+    "orig_lang": "latin"
+  },
+  {
+    "vol": 85,
+    "author_en": "Marsilio Ficino",
+    "author_surname": "Ficino",
+    "title_en": "Commentary on Plotinus, Volume 1: Ennead I",
+    "title_latin": "In Plotini Enneades commentaria",
+    "orig_year": 1492,
+    "orig_lang": "latin"
+  }
+]

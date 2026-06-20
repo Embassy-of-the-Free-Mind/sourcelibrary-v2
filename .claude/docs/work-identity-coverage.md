@@ -129,6 +129,90 @@ work — a natural Scholar-in-Residence deliverable.
 falsely cluster. Hand-adjudication catches them; the filter needs a fix to keep
 1-char numeric tokens when preceded by vol/band/tome.
 
+## The external-translation-prior layer (USTC gap) — issue #2626 (2026-06-20)
+A **separate** work-identity problem from `books.work_id` above: not "do *we*
+hold the original?" but **"how much of the early-modern Latin corpus has *ever*
+been translated to English — by anyone, before us?"** This is the denominator
+behind the public "90% never translated" / "millennia to finish" claims, which
+were back-of-envelope and overshot (a "12,000 years" figure the data doesn't
+support). It runs on `ustc_editions.work_cluster_id` (Supabase, ~1.63M editions,
+~503k Latin), not on `books`.
+
+**Two prior failures it fixes (both made the number untrustworthy):**
+- `ustc_editions.has_english_translation` (built by
+  `scripts/catalog-coverage/build.mjs::findTranslation`) is **author-level** —
+  it flags *every* edition by an author who has *any* translated work. Filelfo
+  63/63 clusters, Valla 183, Erasmus 1164. **Over-counts** the translated set.
+- The same matcher **name-match-fails** the other way: Pico della Mirandola
+  flagged 0/95 (catalogued "Pico della Mirandola", surname extraction took
+  "mirandola"; the translation index keyed "pico"). **Under-counts.**
+
+**The fix — a work-level layer with external provenance.** Pipeline in
+`scripts/translation-layer/` (self-contained; `set -a; source
+.env.production.local; set +a`):
+
+| step | script | does |
+|---|---|---|
+| series | `series/i-tatti.json`, `series/brill-doml.json` | hand-built authoritative enumerations of scholarly translation series (I Tatti Renaissance Library 85 vols; Brill 9; Dumbarton Oaks Medieval Library 79) **with Latin titles** — the catalog rows for these series carry no surname/original-title, so they were near-unmatchable. |
+| 01 | `01-build-external-works.mjs` | assembles distinct ENGLISH-translated **works** from EXTERNAL evidence = curated series ∪ (`translation_catalogs` ⨝ the flash-lite enrichment `translation-census-enriched-2026-06-20.jsonl`), **excluding all SL-origin sources**. Emits `external-translation-works.jsonl` + a separate `quarantine-sl-works.jsonl`. |
+| 02 | `02-pull-ustc-clusters.mjs` | caches the denominator: every Latin 1400-1700 edition collapsed to `work_cluster_id` (keyset-paginated — `.range()` offset scans die past ~100k rows). |
+| 03 | `03-match-and-gap.mjs` | matches external works → clusters at **work level**, emits the gap + `cluster-external-priors.jsonl`. |
+| 04 | `04-write-provenance.mjs` | (gated, dry-run default) writes the provenance into `ustc_editions.translation_sources` (currently NULL on all rows) so `translation_sources IS NOT NULL` becomes the trustworthy signal. **Not run** — large shared-table write; awaits a precision sign-off. |
+| 05 | `05-spotcheck.mjs` | the Filelfo/Pico/Valla/Erasmus regression check. |
+
+**The work-level fit rule** (`lib.titleFit`, same family as the §"fit rule"
+above): author-anchored by **surname-stem set** (multi-word names indexed under
+*every* significant word — `pico della mirandola` → {pic, mirandol} — which is
+what rescues Pico), then title fit requires shared tokens that are **rare**
+(IDF over the 366k cluster-title corpus: a single token in ≲900 clusters, or two
+in ≲2.5k, calibrated so `officiis`/`familiares`/`mulieribus`/`catiline` pass and
+`theologica`/`disputatio`/`christi` don't), with the **author name stripped from
+both titles first** (a match must rest on work tokens, not the shared surname).
+
+**INVARIANT — external priors only (issue #2626, echoes the #2564 FT incident).**
+A work counts as "already translated" (NOT a gap) **only** if a translation
+existed independent of Source Library. `sl_ft_llm_claim`, `sl_ft_catalog_verified`,
+`validated_additions`, `in_source_library`, `sl_translation_percent` are **never**
+priors — they ride a separate quarantine channel. Counting our own output as a
+prior circularly erases the gap we exist to fill. Two denominators, never
+conflated: (1) untranslated **before** SL = the gap; (2) untranslated **including**
+our work = our impact.
+
+**Numbers (2026-06-20, `translation-gap-report.json`):**
+- Denominator: **499,604** Latin 1400-1700 editions → **366,205** distinct work
+  clusters. *Caveat: USTC `year` is PRINT year, so this includes early-modern
+  reprints of ancient/medieval works — an UPPER bound on the Renaissance-composed
+  Latin corpus, not a pure Renaissance set.*
+- Clusters with an **external** English-translation prior: **9,808 (2.7%)**.
+- **Gap: 356,397 clusters (97.3%) have no external prior** — a *conservative*
+  figure (residual low-IDF false positives mark works as translated, never the
+  reverse, so the true gap is ≥97.3%). Consistent with Shuger's citable "90%
+  never translated."
+- Legacy author-level flag claimed 40,061 (10.9%) translated → the work-level
+  layer removes a **30,253-cluster over-count** (and *adds* the name-match
+  under-counts like Pico's 17).
+- SL channel, kept separate: 1,630 clusters in SL; 2,088 SL-only priors
+  quarantined; 1,253 clusters that SL translated with no external prior = our
+  measurable impact on the gap.
+- Validation: external is_target baseline **1,865** distinct Renaissance-Latin
+  works (the session's hand count was ~1,870); SL-only is_target quarantine
+  **451** (hand ~468). Spot-check: Filelfo 63→**1**, Erasmus 1164→**526**,
+  Pico 0→**17**.
+
+**Public-copy guidance:** keep it qualitative — "**thousands of years / millennia**"
+and Shuger's "90% never translated", NOT a "12,000 years" point estimate. The
+numerator (new external translations/yr, ~20 from the earlier per-decade series)
+and this denominator are both order-of-magnitude; the honest claim is *low
+thousands of years*, not a precise figure. The "~12,000 years" line should be
+retired wherever it appears (talk, the Internet Archive Europe article echoing it).
+
+**Open precision levers (before the phase-04 Supabase write):** residual ~10-15%
+false positives at the low-IDF boundary (admin/legal formulae like "ad perpetuam
+rei memoriam", neo-Latin school commentaries matched to the ancient work they
+gloss); composition-era classification of the USTC denominator itself (to get a
+pure Renaissance-composed subset, not print-year); and completing under-captured
+series (ITRL ~85/100 enumerated; Brill BTSI bot-blocked, partial).
+
 ## Open levers
 - **Embedding clustering = candidate generator, NOT an auto-writer (tested to
   exhaustion 2026-06-19, #1634).** Reusing stored embeddings (`book_embeddings`
