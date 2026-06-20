@@ -16,7 +16,7 @@
  *   npx tsx scripts/maintenance/reconcile-first-translation-flag.ts --apply    # WRITE (asks nothing — be sure)
  */
 import { getDb } from '@/lib/mongodb';
-import { isFirstByVerdict, firstTranslationVerdict } from '@/lib/first-translation/derive';
+import { isFirstByVerdict, firstTranslationVerdict, canPromoteToFirst } from '@/lib/first-translation/derive';
 import type { FirstTranslationBook } from '@/lib/first-translation/types';
 
 const args = process.argv.slice(2);
@@ -60,7 +60,8 @@ async function main() {
 
   let scanned = 0;
   const demotions: BookDoc[] = []; // flag:true but derived:false
-  const promotions: BookDoc[] = []; // flag:false/absent but derived:true
+  const promotions: BookDoc[] = []; // flag:false/absent AND evidence-backed first
+  const blockedPromotions: BookDoc[] = []; // first-by-verdict but NOT evidence-backed (hygiene gate)
   const demotionReasons: Record<string, number> = {};
 
   for await (const b of cursor) {
@@ -72,7 +73,12 @@ async function main() {
       const v = firstTranslationVerdict(b) ?? 'no-verdict';
       demotionReasons[v] = (demotionReasons[v] || 0) + 1;
     } else if (!stored && derived) {
-      promotions.push(b);
+      // Bidirectional hygiene gate (#2564): only promote on real evidence, not
+      // a stale `confirmed_first` shim — disposition is ~53% wrong, so blind
+      // promotion injects false positives. canPromoteToFirst requires a stored
+      // verdict from a real adjudicator with non-weak evidence.
+      if (canPromoteToFirst(b)) promotions.push(b);
+      else blockedPromotions.push(b);
     }
   }
 
@@ -87,9 +93,11 @@ async function main() {
   if (demotions.length > (SAMPLE || 40)) console.log(`  …and ${demotions.length - (SAMPLE || 40)} more`);
 
   if (!ONLY_DEMOTIONS) {
-    console.log(`\nPROMOTIONS (flag:false/absent -> derived:true): ${promotions.length}`);
+    console.log(`\nPROMOTIONS (evidence-backed, flag:false/absent -> first): ${promotions.length}`);
     for (const b of promotions.slice(0, SAMPLE || 20)) console.log(desc(b));
     if (promotions.length > (SAMPLE || 20)) console.log(`  …and ${promotions.length - (SAMPLE || 20)} more`);
+    console.log(`\nBLOCKED promotions (first-by-verdict but NOT evidence-backed — hygiene gate held): ${blockedPromotions.length}`);
+    console.log('  (these need a real Tier-1/Tier-2 adjudication before promotion; not written)');
   }
 
   if (!APPLY) {
