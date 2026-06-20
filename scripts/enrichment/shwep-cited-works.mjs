@@ -336,16 +336,29 @@ async function stageHoldings() {
     // lost work → explicit no-holding, never a same-author fallback
     if (nf.status === 'lost') { done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`); return { ...base, held: [] }; }
 
-    // retrieve: embed the title forms together for cross-language recall
-    const vec = await embed(`${forms.join('; ')} by ${author}`);
-    if (!vec) { done++; return { ...base, held: [] }; }
-    const { data } = await supabase.rpc('match_books_semantic', { query_embedding: JSON.stringify(vec), match_threshold: 0.2, match_count: 12 });
-    const ids = (data || []).map(r => r.book_id);
+    // retrieve: query the combined form string AND each individual title form, then
+    // UNION the candidates. A divergent-title / cross-language edition (e.g. an
+    // English-titled "Testament of Solomon" edition, or a Greek edition of a work cited
+    // in English) often ranks outside the top-12 of a single blended query; querying
+    // each form on its own and unioning recovers it. The per-candidate confirmer +
+    // author guard still gate every hit, so wider recall doesn't cost precision.
+    const queries = [...new Set([`${forms.join('; ')} by ${author}`, ...forms.slice(0, 4).map(f => `${f} by ${author}`)])];
+    const rank = new Map(); // book_id → best (lowest) retrieval rank across all queries
+    for (const q of queries) {
+      const vec = await embed(q);
+      if (!vec) continue;
+      const { data } = await supabase.rpc('match_books_semantic', { query_embedding: JSON.stringify(vec), match_threshold: 0.2, match_count: 12 });
+      (data || []).forEach((r, i) => { const cur = rank.get(r.book_id); if (cur === undefined || i < cur) rank.set(r.book_id, i); });
+    }
+    if (!rank.size) { done++; return { ...base, held: [] }; }
+    const ids = [...rank.keys()];
     const oids = ids.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean);
     const rows = oids.length ? await db.collection('books').find({ _id: { $in: oids }, visible: true, pages_count: { $gt: 0 } },
       { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, work_id: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 } }).toArray() : [];
     const byId = new Map(rows.filter(r => !EXCLUDE_LANGS.has(r.language)).map(r => [r._id.toString(), r]));
-    const cands = ids.filter(i => byId.has(i)).map(i => byId.get(i));
+    // keep the best-ranked unique candidates (cap the confirmer's candidate list)
+    const CAND_CAP = 16;
+    const cands = ids.filter(i => byId.has(i)).sort((a, b) => rank.get(a) - rank.get(b)).slice(0, CAND_CAP).map(i => byId.get(i));
 
     // confirm: reason per candidate
     let picks = [];
