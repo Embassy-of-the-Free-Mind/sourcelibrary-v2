@@ -628,7 +628,7 @@ export default async function HomePage() {
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
-                  className="group relative rounded-xl overflow-hidden aspect-[4/3] hover:shadow-lg transition-all hover:-translate-y-0.5"
+                  className="group relative rounded-xl overflow-hidden aspect-square hover:shadow-lg transition-all hover:-translate-y-0.5"
                 >
                   {col.hero_image ? (
                     <Image
@@ -657,7 +657,7 @@ export default async function HomePage() {
               {collections.length > 11 && (
                 <Link
                   href="/collections"
-                  className="group relative rounded-xl overflow-hidden aspect-[4/3] bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
+                  className="group relative rounded-xl overflow-hidden aspect-square bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
                 >
                   <div className="text-center px-4">
                     <p className="font-serif text-lg sm:text-xl text-white/90 group-hover:text-accent-gold transition-colors">
