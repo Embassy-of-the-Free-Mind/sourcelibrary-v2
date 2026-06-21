@@ -449,28 +449,47 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = ${JSON.stringify(dbRows, null
 `;
   fs.writeFileSync(path.join(DATA_DIR, 'shwep-cited-works.ts'), ts);
 
-  // 4b — per-episode held books (grounded reader links) → shwep-book-matches.ts.
-  // Cap editions-per-work so a common text (e.g. a Bible, Plato's complete works) cited
-  // in an episode doesn't flood the page with a dozen copies; the full holdings live in
-  // the works DB. Keep up to EDITIONS_PER_WORK per cited work per episode.
-  const EDITIONS_PER_WORK = 4;
+  // 4b — per-episode held works (the "Read in Source Library" grid) → shwep-book-matches.ts.
+  // WORK-centric: one card per cited held work (its bestEdition), not one per edition — so a
+  // common text doesn't flood the page with copies. When the best edition is a collected
+  // volume and the work matches a chapter, carry that chapter's pageId so the grid card
+  // deep-links to the PART (the treatise), mirroring the inline/supplementary links.
+  const allHeldIds2 = [...new Set(works.flatMap(w => (w.heldMeta || []).map(m => m.id)))];
+  const pcById2 = new Map(), chaptersById2 = new Map();
+  if (allHeldIds2.length) {
+    const client = new MongoClient(process.env.MONGODB_URI);
+    await client.connect();
+    const rows = await client.db('bookstore').collection('books').find(
+      { _id: { $in: allHeldIds2.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean) } },
+      { projection: { pages_count: 1, chapters: 1 } }).toArray();
+    await client.close();
+    for (const r of rows) { pcById2.set(r._id.toString(), r.pages_count || 0); chaptersById2.set(r._id.toString(), r.chapters || []); }
+    for (const w of works) for (const m of (w.heldMeta || [])) m.pages_count = pcById2.get(m.id) || m.pages_count || 0;
+  }
   const perEp = {};
   for (const w of works) {
     if (!w.held.length) continue;
-    const editions = w.held.slice(0, EDITIONS_PER_WORK);
+    const best = bestEdition(w.heldMeta) || (w.heldMeta || [])[0];
+    if (!best) continue;
+    let page = null;
+    if (isCollected(best)) { const ch = chapterMatch(w.title_forms || [w.work], chaptersById2.get(best.id)); if (ch && ch.pageId) page = ch.pageId; }
+    const card = page ? { id: best.id, page } : { id: best.id };
     for (const ep of w.episodes) {
-      (perEp[ep] = perEp[ep] || new Set());
-      editions.forEach(id => perEp[ep].add(id));
+      perEp[ep] = perEp[ep] || new Map();
+      if (!perEp[ep].has(best.id)) perEp[ep].set(best.id, card);
     }
   }
-  const matchSorted = Object.entries(perEp).map(([ep, set]) => [+ep, [...set]]).sort((a, b) => a[0] - b[0]);
+  const matchSorted = Object.entries(perEp).map(([ep, m]) => [+ep, [...m.values()]]).sort((a, b) => a[0] - b[0]);
   let mt = `/**
- * Held primary sources per SHWEP episode — the works Earl cites that we hold, shown
- * as "Read in Source Library" links. Derived from src/data/shwep-cited-works.ts by
+ * Held primary sources per SHWEP episode — the works Earl cites that we hold, shown as the
+ * "Read in Source Library" grid. WORK-centric (one representative edition per cited work);
+ * \`page\` is the chapter pageId when the work is a PART of a collected edition (deep-link to
+ * the treatise). Derived from src/data/shwep-cited-works.ts by
  * scripts/enrichment/shwep-cited-works.mjs. Do not edit by hand.
  */
-export const SHWEP_BOOK_MATCHES: Record<number, string[]> = {\n`;
-  for (const [ep, ids] of matchSorted) mt += `  ${ep}: ${JSON.stringify(ids)},\n`;
+export interface ShwepBookMatch { id: string; page?: string }
+export const SHWEP_BOOK_MATCHES: Record<number, ShwepBookMatch[]> = {\n`;
+  for (const [ep, cards] of matchSorted) mt += `  ${ep}: ${JSON.stringify(cards)},\n`;
   mt += `};\n`;
   fs.writeFileSync(path.join(DATA_DIR, 'shwep-book-matches.ts'), mt);
 
