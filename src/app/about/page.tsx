@@ -28,8 +28,8 @@ export default async function AboutPage() {
       header={
         <ContentHeader
           title="Source Library transforms 2500+ years of wisdom texts into a living archive, freely available to all."
-          image="https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg"
-          imageAlt="Historical illustration from the Embassy of the Free Mind collection"
+          image="https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg"
+          imageAlt="Robert Fludd's Anima Mundi — the World Soul binding the cosmos, from Utriusque Cosmi (1617)"
         />
       }
       bg="bg-cream"
@@ -198,9 +198,16 @@ export default async function AboutPage() {
           Who&apos;s Behind This
         </h2>
 
-        <p className="text-secondary mb-6 leading-relaxed">
-          Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English &mdash; and that AI was finally making it possible to change that. Read his <Link href="/vision" className="text-accent-rust hover:underline">founder&apos;s letter</Link> on where the project is headed.
-        </p>
+        <div className="flex flex-col sm:flex-row gap-6 items-start mb-6">
+          <img
+            src="/founder-derek.jpg"
+            alt="Derek Lomas, founder of Source Library"
+            className="w-32 h-40 object-cover rounded-lg border border-border-light shadow-sm flex-shrink-0"
+          />
+          <p className="text-secondary leading-relaxed">
+            Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English &mdash; and that AI was finally making it possible to change that. Read his <Link href="/vision" className="text-accent-rust hover:underline">founder&apos;s letter</Link> on where the project is headed.
+          </p>
+        </div>
 
         {/* Partners */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
