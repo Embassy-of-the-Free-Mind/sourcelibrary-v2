@@ -95,11 +95,11 @@ function toMatchedBook(b: any): MatchedBook {
   };
 }
 
-// Collect all unique book IDs from the LLM match table
+// Collect all unique book IDs from the match table (work-centric: {id, page?} entries)
 function getAllMatchedBookIds(): string[] {
   const ids = new Set<string>();
-  for (const bookIds of Object.values(SHWEP_BOOK_MATCHES)) {
-    for (const id of bookIds) ids.add(id);
+  for (const entries of Object.values(SHWEP_BOOK_MATCHES)) {
+    for (const e of entries) ids.add(e.id);
   }
   return [...ids];
 }
@@ -135,9 +135,13 @@ function enrichEpisodes(bookMap: Map<string, MatchedBook>) {
   return SHWEP_PERIODS.map(period => ({
     ...period,
     episodes: period.episodes.map(ep => {
-      const bookIds = SHWEP_BOOK_MATCHES[ep.number] || [];
-      const books = bookIds
-        .map(id => bookMap.get(id))
+      const entries = SHWEP_BOOK_MATCHES[ep.number] || [];
+      const books = entries
+        .map(e => {
+          const b = bookMap.get(e.id);
+          if (!b) return undefined;
+          return e.page ? { ...b, url: `https://sourcelibrary.org/book/${e.id}/page/${e.page}` } : b;
+        })
         .filter((b): b is MatchedBook => !!b)
         .sort((a, b) => (a.year || 9999) - (b.year || 9999));
 
@@ -231,11 +235,11 @@ export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpi
   // Held editions matched to this episode (the "Read in Source Library" grid). When the
   // episode renders an inline-linked bibliography, the grid is hidden — so we instead
   // surface the SUPPLEMENTARY held works (held but not reachable via an inline link).
-  const bookIds = SHWEP_BOOK_MATCHES[episodeNumber] || [];
+  const bookEntries = SHWEP_BOOK_MATCHES[episodeNumber] || [];
   const suppEntries = linkedBibliography ? (SHWEP_SUPPLEMENTARY_WORKS[episodeNumber] || []) : [];
 
   // Fetch both sets in one query.
-  const allIds = [...new Set([...bookIds, ...suppEntries.map(e => e.id)])];
+  const allIds = [...new Set([...bookEntries.map(e => e.id), ...suppEntries.map(e => e.id)])];
   const byId = new Map<string, MatchedBook>();
   if (allIds.length > 0) {
     const db = await getReadDb();
@@ -258,7 +262,12 @@ export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpi
   }
 
   const byYear = (a: MatchedBook, b: MatchedBook) => (a.year || 9999) - (b.year || 9999);
-  const books = bookIds.map(id => byId.get(id)).filter((b): b is MatchedBook => !!b).sort(byYear);
+  const deepLink = (e: { id: string; page?: string }) => {
+    const b = byId.get(e.id);
+    if (!b) return undefined;
+    return e.page ? { ...b, url: `https://sourcelibrary.org/book/${e.id}/page/${e.page}` } : b;
+  };
+  const books = bookEntries.map(deepLink).filter((b): b is MatchedBook => !!b).sort(byYear);
   // For a supplementary work that is a PART of a collected edition, deep-link the card to
   // that treatise's page (chapter pageId) instead of the volume front.
   const supplementaryBooks = suppEntries
