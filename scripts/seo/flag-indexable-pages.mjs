@@ -61,6 +61,14 @@ const db = client.db('bookstore');
 const pages = db.collection('pages');
 const books = db.collection('books');
 
+// Partial index on the flag — without it, the reconcile `$nin` below and the
+// sitemap's count/find on seo_indexable full-scan the millions-row pages
+// collection. Idempotent; only indexes the ~few-thousand flagged docs.
+await pages.createIndex(
+  { seo_indexable: 1 },
+  { partialFilterExpression: { seo_indexable: true }, name: 'seo_indexable_partial' }
+);
+
 if (CLEAR) {
   const before = await pages.countDocuments({ seo_indexable: true });
   if (DRY_RUN) {
