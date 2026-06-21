@@ -70,7 +70,42 @@ written to `/tmp/*proposals*.json`.
   without transliteration. (Gemini *can* transliterate Khmer/Tibetan/Hanzi Pali
   accurately — demonstrated — so a transliterate-then-match path is feasible.)
 
-## Current state (2026-06-20)
+## Current state (2026-06-21) — "more works" mint, 97% coverage
+**Textual work_id coverage is now 97.0%** (was decaying toward ~57% as imports
+arrived). The reader `/work/[slug]` layer is healthy: 100% of clustered books
+carry a `work_slug`, **0 slug collisions**, pages render (Agrippa *De occulta
+philosophia* 12 editions, Vesalius *Fabrica* 3, etc.; hidden-only works correctly
+404 on the public route — work_id exists for the catalog, visibility gates the
+page). Policy is now **"when in doubt, MORE works"** (under-cluster — a split work
+can be merged later; a fused pair is a false first-translation claim). What
+changed (`mint-local-work-ids.mjs`):
+- **Hidden books minted** (`--include-hidden`) — ~7.9k hidden/draft books now
+  carry a work_id for the #2453 ownership/catalog dedup (the Philo-16-hidden case).
+  Reader pages still gate on visibility — two separate predicates.
+- **Volume/series split** — single-digit volume numbers (Vol 8 / Series 1) are
+  kept, so multi-volume sets stop false-fusing (NPNF Vol 8 Basil ≠ Vol 9 Hilary).
+- **Parenthetical sigla split** — distinct compositions distinguished only by a
+  parenthetical (Sumerian *Šulgi C* vs *X*, *Balbale (ETCSL 4.07.1)* vs *(4.07.6)*)
+  now split. Sigla are read from the FULL `title` because `display_title` often
+  strips them. Only siglum-like tokens (single letters / numbers / catalog codes)
+  are kept — descriptive glosses are NOT, so cross-language clusters survive
+  (Aristotle *Secretum/Sirr al-Asrar* = 1 work; *Four Gospels* = 1 work, 17 MSS).
+- **Collected-works containers** ("Works of Plato") get a unique per-edition
+  work_id instead of fusing a whole corpus into one false work.
+- **`--remint-local`** re-derives existing local-mint ids in place (overwrites
+  ONLY local-mint; wikidata / work-merge / hand ids untouched). Backed up.
+- **Automated:** daily 02:30 Hetzner cron (incremental mint + `assign-work-slugs`)
+  so coverage no longer decays as books are imported. PRs #2665–#2667, #2670.
+
+**Known residual edges** (acceptable / separate): CJK multi-juan sets (Wubei Zhi,
+Bencao Gangmu) still fuse — their volume numbers are CJK-script and don't
+tokenize; "one work in N juan" is defensible, and the non-Western traditions have
+their own native-script work identity in the #2453 catalog. ~375 mintable-keyless
+books remain (titles that reduce to only stop/boilerplate words like Photius's
+"The Library", multi-author anthologies). 274 more are keyless by design (no
+language tag — the mint requires one).
+
+## Earlier state (2026-06-20) — the deterministic backbone
 **Textual work_id coverage 12.9% → 85.8%** after the deterministic local mint
 (`mint-local-work-ids.mjs`): 11,874 singleton work_ids written
 (`work_id_source:'local-mint'`, zero merge risk — every id unique). 2,020 books
