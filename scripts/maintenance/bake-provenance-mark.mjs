@@ -40,12 +40,14 @@
  */
 
 import { MongoClient } from 'mongodb';
+import sharp from 'sharp';
 import {
-  S3Client, GetObjectCommand, PutObjectCommand,
+  S3Client, GetObjectCommand, PutObjectCommand, HeadObjectCommand,
 } from '@aws-sdk/client-s3';
 import { NodeHttpHandler } from '@smithy/node-http-handler';
 import { Agent as HttpsAgent } from 'https';
 import { markImage } from '../lib/provenance-mark.mjs';
+sharp.concurrency(1);
 
 const APPLY = process.argv.includes('--apply');
 const ALL = process.argv.includes('--all');
@@ -58,9 +60,11 @@ const CONCURRENCY = parseInt(arg('--concurrency') || '10', 10);
 
 // Bump this string if the mark design changes and a re-bake is wanted; objects
 // tagged with the current version are skipped, so a new version re-marks all.
-// sl-v1 = old always-on visible logo; sl-v2 = EXIF + invisible watermark +
-// random ~1/10 visible logo (the scheme in scripts/lib/provenance-mark.mjs).
-const MARK_VERSION = 'sl-v2';
+// sl-v1 = old always-on visible logo; sl-v2 = mark-in-place (EXIF+watermark+logo);
+// sl-v3 = regenerate display variant from the clean original at <=2000px + full
+// mark (EXIF + LLM message + invisible watermark + random ~1/10 visible logo).
+const MARK_VERSION = 'sl-v3';
+const DISPLAY_MAX_W = 2000;  // regenerate display variants at min(this, native width)
 
 const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
 
@@ -103,18 +107,43 @@ const streamToBuffer = async (stream) => {
   return Buffer.concat(chunks);
 };
 
-async function markVariant({ key, bookId, pageNumber }) {
-  // Pull the existing pre-sized variant. The GET response carries the object's
-  // metadata, so we check idempotency here — no extra HeadObject round trip.
-  const obj = await r2.send(new GetObjectCommand({ Bucket: R2_BUCKET, Key: key }));
-  if (obj.Metadata && obj.Metadata.provenance === MARK_VERSION) return 'already';
-  const buf = await streamToBuffer(obj.Body);
+// R2 key for ANY images.sourcelibrary.org URL (archived/, pages/, …) — for READING
+// the clean source. (keyFromUrl above is stricter: pages/ only, for the WRITE target.)
+function anyR2Key(url) {
+  if (!url || typeof url !== 'string') return null;
+  const m = url.match(R2_PREFIX_RE);
+  return m ? m[1].split('?')[0] : null;
+}
 
-  // EXIF + invisible watermark (keyed by bookId) + random ~1/10 visible logo.
-  const out = await markImage(buf, { editionId: bookId, pageNumber, key: PROVENANCE_KEY });
+async function fetchSource(url) {
+  const key = anyR2Key(url);
+  if (key && r2) {
+    const o = await r2.send(new GetObjectCommand({ Bucket: R2_BUCKET, Key: key }));
+    return streamToBuffer(o.Body);
+  }
+  // External source (e.g. IIIF default.jpg) — fetch over HTTP.
+  const resp = await fetch(url, { signal: AbortSignal.timeout(45000) });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  return Buffer.from(await resp.arrayBuffer());
+}
+
+// Regenerate the display variant FROM THE CLEAN ORIGINAL at <=DISPLAY_MAX_W, then
+// mark it, and write it to the display_photo key. The original is never modified.
+async function regenVariant({ displayKey, sourceUrl, bookId, pageNumber }) {
+  // Idempotency: a light HEAD on the display object (metadata only).
+  try {
+    const h = await r2.send(new HeadObjectCommand({ Bucket: R2_BUCKET, Key: displayKey }));
+    if (h.Metadata && h.Metadata.provenance === MARK_VERSION) return 'already';
+  } catch { /* missing object → (re)generate it */ }
+
+  const srcBuf = await fetchSource(sourceUrl);
+  const meta = await sharp(srcBuf, { failOn: 'none' }).metadata();
+  const w = Math.min(DISPLAY_MAX_W, meta.width || DISPLAY_MAX_W);
+  const resized = await sharp(srcBuf, { failOn: 'none' }).resize({ width: w }).jpeg({ quality: 85 }).toBuffer();
+  const out = await markImage(resized, { editionId: bookId, pageNumber, key: PROVENANCE_KEY });
 
   await r2.send(new PutObjectCommand({
-    Bucket: R2_BUCKET, Key: key, Body: out, ContentType: 'image/jpeg',
+    Bucket: R2_BUCKET, Key: displayKey, Body: out, ContentType: 'image/jpeg',
     CacheControl: 'public, max-age=604800, s-maxage=604800',
     Metadata: { provenance: MARK_VERSION },
   }));
@@ -144,8 +173,7 @@ async function main() {
     scope = `ALL visible (${bookIds.length} books)`;
   }
 
-  const fields = ['display_photo', ...(INCLUDE_THUMBS ? ['image_thumb'] : [])];
-  console.log(`mode: ${APPLY ? 'APPLY' : 'DRY RUN'}  scope: ${scope}  fields: ${fields.join(', ')}  mark: ${MARK_VERSION}`);
+  console.log(`mode: ${APPLY ? 'APPLY' : 'DRY RUN'}  scope: ${scope}  target: display_photo @<=${DISPLAY_MAX_W}px  mark: ${MARK_VERSION}`);
 
   let scanned = 0, marked = 0, skipped = 0, alreadyDone = 0, failed = 0, notR2 = 0, collided = 0;
   const t0 = Date.now();
@@ -154,8 +182,8 @@ async function main() {
   const BOOK_CHUNK = 500;
   for (let i = 0; i < bookIds.length; i += BOOK_CHUNK) {
     const chunk = bookIds.slice(i, i + BOOK_CHUNK);
-    const proj = { _id: 0, id: 1, book_id: 1, page_number: 1, display_photo: 1, image_thumb: 1,
-      archived_photo: 1, photo_original: 1, cropped_photo: 1, photo: 1 };
+    const proj = { _id: 0, id: 1, book_id: 1, page_number: 1, display_photo: 1,
+      archived_photo: 1, photo_original: 1, cropped_photo: 1, photo: 1, split_from_spread: 1 };
     const cursor = pages.find({ book_id: { $in: chunk } }, { projection: proj });
 
     let queue = [];
@@ -163,41 +191,40 @@ async function main() {
       const batch = queue.splice(0, queue.length);
       await Promise.all(batch.map(async (item) => {
         try {
-          if (!APPLY) { marked++; if (marked <= 10) console.log(`  would mark ${item.key}`); return; }
-          const status = await markVariant(item);
+          if (!APPLY) { marked++; if (marked <= 10) console.log(`  would regen ${item.displayKey} from ${item.sourceUrl.split('/').slice(-2).join('/')}`); return; }
+          const status = await regenVariant(item);
           if (status === 'already') { alreadyDone++; return; }
           marked++;
           if (marked % 500 === 0) {
             const rate = (marked / ((Date.now() - t0) / 1000)).toFixed(0);
-            console.log(`  …${marked} marked, ${alreadyDone} already, ${failed} failed  (${rate}/s)`);
+            console.log(`  …${marked} regenerated, ${alreadyDone} already, ${failed} failed  (${rate}/s)`);
           }
-        } catch (e) { failed++; if (failed <= 15) console.warn(`  FAIL ${item.key}: ${e.message}`); }
+        } catch (e) { failed++; if (failed <= 15) console.warn(`  FAIL ${item.displayKey}: ${e.message}`); }
       }));
     };
 
     for await (const p of cursor) {
-      // Never overwrite a file that is also the page's OCR/original/zoom source.
-      // A genuine display/thumb derivative is byte-distinct from these; a
-      // collision means there's no separate variant and the field points at the
-      // source itself — marking it would contaminate OCR/download. Skip those.
-      const sourceUrls = new Set([p.archived_photo, p.photo_original, p.cropped_photo, p.photo].filter(Boolean));
-      for (const f of fields) {
-        const key = keyFromUrl(p[f]);
-        scanned++;
-        if (!p[f]) { skipped++; continue; }
-        if (!key) { notR2++; continue; }
-        if (sourceUrls.has(p[f])) { collided++; continue; }
-        queue.push({ key, bookId: p.book_id, pageNumber: p.page_number });
-        if (queue.length >= CONCURRENCY) await flush();
-      }
+      scanned++;
+      const displayKey = keyFromUrl(p.display_photo);     // pages/ key we may overwrite
+      if (!p.display_photo) { skipped++; continue; }
+      if (!displayKey) { notR2++; continue; }
+      // The clean source to regenerate FROM (split-aware, mirrors getPageSource).
+      const sourceUrl = p.cropped_photo
+        || (p.split_from_spread ? p.photo : null)
+        || p.archived_photo || p.photo_original || p.photo;
+      if (!sourceUrl) { skipped++; continue; }
+      // Never read-and-write the same key (would overwrite the source itself).
+      if (anyR2Key(sourceUrl) === displayKey) { collided++; continue; }
+      queue.push({ displayKey, sourceUrl, bookId: p.book_id, pageNumber: p.page_number });
+      if (queue.length >= CONCURRENCY) await flush();
       if (LIMIT && marked >= LIMIT && !APPLY) break;
     }
     await flush();
     if (LIMIT && marked >= LIMIT && !APPLY) break;
   }
 
-  console.log(`\nDone. scanned=${scanned} marked=${marked} already=${alreadyDone} skipped(no field)=${skipped} non-R2=${notR2} source-collision=${collided} failed=${failed}`);
-  if (APPLY && marked > 0) console.log('Now purge Cloudflare (see header) so the marked bytes are served.');
+  console.log(`\nDone. scanned=${scanned} regenerated=${marked} already=${alreadyDone} skipped(no display/source)=${skipped} non-R2=${notR2} source==target=${collided} failed=${failed}`);
+  if (APPLY && marked > 0) console.log('Now purge Cloudflare so the marked bytes are served.');
   await client.close();
 }
 
