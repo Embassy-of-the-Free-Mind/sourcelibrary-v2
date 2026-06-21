@@ -167,6 +167,28 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   }
 }
 
+/** Subtitle book count, read from the daily-refreshed `homepage_stats` cache
+ *  (the same value the homepage hero uses) — a single indexed `_id` lookup,
+ *  run only when this ISR page re-renders (≤ once/24h), so it adds no per-visit
+ *  load. Rounded down to the nearest 1,000 so the cached HTML changes only at
+ *  each new milestone, never on every import. Falls back to "Thousands of" if
+ *  the cache is unavailable. */
+async function fetchBookCountLabel(): Promise<string> {
+  try {
+    const db = await getReadDb();
+    const cached = await db.collection('system_config').findOne(
+      { _id: 'homepage_stats' } as never,
+      { projection: { totalBooks: 1 }, maxTimeMS: 2000 }
+    );
+    const total = Number(cached?.totalBooks) || 0;
+    if (total >= 1000) {
+      const rounded = Math.floor(total / 1000) * 1000;
+      return `${rounded.toLocaleString('en-US')}+ books`;
+    }
+  } catch { /* fall through to a safe, non-numeric default */ }
+  return 'Thousands of books';
+}
+
 /** Ordered, de-duped list of candidate image URLs for a card — prefer small
  *  thumbnails, then extracted, then the raw page, across all featured images.
  *  The card renders these with a fallback chain so a single dead/slow source
@@ -252,7 +274,8 @@ const INITIAL_PATHWAYS = 12;
 // Rebuild with scripts/build-collections-hero.py when the cover set changes.
 const COLLECTIONS_HERO = '/collections-hero.jpg';
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  const countLabel = await fetchBookCountLabel();
   return (
     <>
     {/* Background images aren't seen by the preload scanner — hint it early. */}
@@ -262,7 +285,7 @@ export default function CollectionsPage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Collections"
-          subtitle="10,000+ books across three millennia of human knowledge."
+          subtitle={`${countLabel} across three millennia of human knowledge.`}
           image={COLLECTIONS_HERO}
           imageAlt="Mosaic of illustrations from the collection"
           imageFit="tile"
