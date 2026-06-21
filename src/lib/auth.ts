@@ -31,7 +31,7 @@ export const ROLE_LEVEL: Record<Role, number> = {
 const WELCOME_HTML = `
 <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
   <div style="text-align: center; margin-bottom: 32px;">
-    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
+    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px; border-radius: 50%; border: 1px solid #e7ddcc;" />
     <h1 style="font-size: 26px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">Welcome to Source Library</h1>
     <p style="color: #6b6560; font-size: 15px; line-height: 1.6; margin: 0;">
       Your account is ready. Your likes and reading history will sync across all your devices.
@@ -133,7 +133,7 @@ if (process.env.RESEND_API_KEY) {
           html: `
             <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
               <div style="text-align: center; margin-bottom: 32px;">
-                <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
+                <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px; border-radius: 50%; border: 1px solid #e7ddcc;" />
                 <h1 style="font-size: 24px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">Sign in to Source Library</h1>
                 <p style="color: #6b6560; font-size: 15px; line-height: 1.6; margin: 0;">
                   Click the button below to access the collection.
