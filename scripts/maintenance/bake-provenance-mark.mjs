@@ -83,7 +83,9 @@ const r2 = (R2_ACCOUNT_ID && R2_ACCESS_KEY_ID && R2_SECRET_ACCESS_KEY)
       // then ride out any residual transient blip.
       maxAttempts: 6,
       requestHandler: new NodeHttpHandler({
-        httpsAgent: new HttpsAgent({ keepAlive: true, maxSockets: 32 }),
+        // Each page does HEAD+GET+PUT, so the socket pool must exceed --concurrency
+        // by ~3x to avoid starving. Kept well below a "connection storm".
+        httpsAgent: new HttpsAgent({ keepAlive: true, maxSockets: 128 }),
         connectionTimeout: 8000,
         requestTimeout: 60000,
       }),
