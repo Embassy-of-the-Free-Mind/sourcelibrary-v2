@@ -24,7 +24,7 @@ export default function AboutPage() {
     >
       <div className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica (recognized by UNESCO&apos;s Memory of the World Register), this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
+          Based at the <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> in Amsterdam, home to the Bibliotheca Philosophica Hermetica (recognized by UNESCO&apos;s Memory of the World Register), this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-12">
@@ -52,7 +52,7 @@ export default function AboutPage() {
           <div className="bg-white rounded-xl p-6 shadow-sm border border-border-light">
             <h3 className="font-semibold text-primary mb-2">Cite</h3>
             <p className="text-secondary">
-              DOI-backed scholarly editions via Zenodo, enabling proper academic citation of primary sources.
+              DOI-backed scholarly editions via <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Zenodo</a>, enabling proper academic citation of primary sources.
             </p>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function AboutPage() {
         </h2>
 
         <p className="text-secondary mb-6 leading-relaxed">
-          Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English &mdash; and that AI was finally making it possible to change that.
+          Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English &mdash; and that AI was finally making it possible to change that. Read his <Link href="/vision" className="text-accent-rust hover:underline">founder&apos;s letter</Link> on where the project is headed.
         </p>
 
         {/* Partners */}
@@ -157,17 +157,24 @@ export default function AboutPage() {
           The Embassy&apos;s <a href="https://embassyofthefreemind.com/en/research/281-staff" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Academic Advisory Board</a> includes leading international scholars in the fields covered by the collection:
         </p>
 
-        <ul className="text-secondary text-sm mb-8 space-y-1 ml-4">
-          <li>Wouter Hanegraaff (University of Amsterdam)</li>
-          <li>Lawrence Principe (Johns Hopkins University)</li>
-          <li>Bernard McGinn (University of Chicago, emer.)</li>
-          <li>Georgiana Hedesan (Oxford University)</li>
-          <li>Didier Kahn (CNRS, France)</li>
-          <li>Yuval Harari (Ben Gurion University of the Negev)</li>
-          <li>Matthew Melvin-Koushki (University of South Carolina)</li>
-          <li>Mike Driedger (Brock University, Canada)</li>
-          <li>Vladimir Urbanek (Academy of Sciences, Czech Republic)</li>
-        </ul>
+        <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-8">
+          {[
+            ['Wouter Hanegraaff', 'University of Amsterdam'],
+            ['Lawrence Principe', 'Johns Hopkins University'],
+            ['Bernard McGinn', 'University of Chicago, emer.'],
+            ['Georgiana Hedesan', 'Oxford University'],
+            ['Didier Kahn', 'CNRS, France'],
+            ['Yuval Harari', 'Ben Gurion University of the Negev'],
+            ['Matthew Melvin-Koushki', 'University of South Carolina'],
+            ['Mike Driedger', 'Brock University, Canada'],
+            ['Vladimir Urbanek', 'Academy of Sciences, Czech Republic'],
+          ].map(([name, institution]) => (
+            <div key={name} className="flex flex-col border-l-2 border-accent-gold/20 pl-3">
+              <span className="text-stone-800 text-sm font-medium">{name}</span>
+              <span className="text-muted text-xs">{institution}</span>
+            </div>
+          ))}
+        </div>
 
         <p className="text-secondary mb-8 leading-relaxed">
           Senior researcher <strong>Dr. Carlos Gilly</strong> (University of Basel), a pillar of the BPH for over thirty years and one of the world&apos;s foremost scholars of Rosicrucianism and early modern Hermetism, contributes to the Institute&apos;s research and curation.
@@ -182,8 +189,25 @@ export default function AboutPage() {
           Source Library and the Embassy of the Free Mind are made possible by the
           generosity of those who believe in this work. We gratefully acknowledge the{' '}
           <strong>Wisdom Frontiers Society</strong> of La Jolla, California, and the{' '}
-          <strong>Gambrell Foundation</strong> for their support.
+          <a href="https://gambrellfoundation.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline"><strong>Gambrell Foundation</strong></a>{' '}
+          of Charlotte, North Carolina, for their support.
         </p>
+
+        <div className="flex flex-wrap items-center gap-10 mb-8">
+          <a
+            href="https://gambrellfoundation.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="The Gambrell Foundation"
+            className="inline-block hover:opacity-80 transition-opacity"
+          >
+            <img
+              src="/partners/gambrell-foundation.svg"
+              alt="The Gambrell Foundation"
+              className="h-16 w-auto object-contain"
+            />
+          </a>
+        </div>
 
         {/* Links */}
         <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
