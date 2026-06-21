@@ -149,6 +149,56 @@ What has been Englished, by whom — and the gap of what hasn't.
    unlinked book — cluster by `work_id` and read coverage off the cluster; never
    guess "missing" from a half-filled `original_edition_id`.
 
+## Work hierarchy & aggregation (the model that fixes compilations)
+
+A `work_id` is not a flat label — a work is a node in a **part-of hierarchy**.
+The *Poimandres* is a work in its own right AND a constituent of the *Corpus
+Hermeticum*; Ficino's 1497 Aldine volume physically bundles independent works
+(Iamblichus *De Mysteriis* + Proclus + Porphyry…). A flat key can't say either,
+so it fragments (our *De Mysteriis* scattered across 5 ids). This is exactly the
+distinction the cataloguing standards (IFLA-LRM, RDA, BIBFRAME, CTS/DTS) spent
+two decades formalising — and **every documented catastrophe comes from erasing
+it.** Full literature + citations: `work-hierarchy-modeling-research.md`.
+
+**Two different edges — never one polymorphic `part_of`:**
+
+1. **Intrinsic work whole/part** (work ↔ work). The component was *conceived as
+   belonging to* the whole: *Poimandres* → *Corpus Hermeticum*, *Republic Book I*
+   → *Republic*. Model as `work_part_of` / `work_has_part` (with `order` and a
+   `dependent` flag — most treatises are independently citable, a single movement
+   is not). Mirror to Wikidata `P361`/`P527` — but assert it yourself; real
+   authorities are sparsely decomposed (Wikidata's *Corpus Hermeticum* doesn't
+   even list the *Poimandres*).
+
+2. **Editorial aggregation by a manifestation** (book → works). An editor *bound
+   together* independent works. The LRM insight: an **aggregate is a property of
+   the manifestation**, and the editorial selection-and-arrangement is **its own
+   "aggregating work"** that does NOT contain the works it gathers. Ficino's 1497
+   volume is its own aggregating-work; *De Mysteriis* is *embodied in* it, not a
+   `work_part_of` child of it. Model as `book.contained_works[]` (the
+   `manifestation_aggregates` edge), which the `resolve-contained-works.mjs`
+   prototype already extracts from `book.chapters[]` with page anchors.
+
+**Corpus Hermeticum → Poimandres is #1. Ficino-1497 → De Mysteriis is #2.** Same
+surface symptom ("one id holding many works"), opposite cause — keep them separate
+edges with separate names.
+
+This maps cleanly onto the existing chapter/DTS layer (CTS/DTS draw the same line):
+- the **work containment tree** (corpus → treatise → chapter as citeable units) = edge #1;
+- **collection membership** (an edition embodies several works) = edge #2;
+- a treatise is a citeable work-node that can be a member of *multiple* collections.
+
+**Why this is the keystone, not just another edge:** it resolves the tension in
+"more works." The fear with aggressive splitting is fragmentation (*Poimandres*
+floating free of its corpus); the part-of edge dissolves it — distinct works AND
+linked, so you get more works *and* one navigable whole. It also makes the
+per-work questions precise: "first English of the *Poimandres*" (a part) ≠ "first
+English of the *Corpus Hermeticum*" (the whole); holdings roll up (hold any part →
+"some of the corpus"). **Standards' named pitfalls to avoid:** treating a
+compilation as a work; demoting a treatise to "just a chapter"; assuming
+co-membership implies a work relationship; relying on `hasPart` transitivity
+(BIBFRAME's is non-transitive — declare corpus→chapter explicitly if you want it).
+
 ## How a work flows through, end to end
 
 1. A book is imported → gets `author_id` (thesaurus) and, on the daily mint,
@@ -197,13 +247,15 @@ What has been Englished, by whom — and the gap of what hasn't.
 | the #2453 catalog (schema, ingests, provenance) | `scripts/works-catalog/README.md`, `works-catalog-provenance.md`, `works-catalog-translation-census.md` |
 | translation gap / registry method + numbers | `translation-gap-methodology.md` |
 | work-dedup matching methods / research | `work-dedup-methods.md`, `work-identity-matching-research.md` |
+| work hierarchy / aggregation model + the standards (LRM/RDA/BIBFRAME/CTS) + novelty/publication | `work-hierarchy-modeling-research.md` |
 | first-translation system | `first-translation-system.md`, `ft-first-translation-paper.md` |
 
 ## Known frontier
 
 - **Omnibus / compilation editions are the mint's blind spot (the *De Mysteriis*
   case).** A single `book.work_id` can't represent a volume that bundles several
-  distinct works. Ficino's 1497 Aldine volume — catalogued in our data under the
+  distinct works. The *model* for this is now formalized (§"Work hierarchy &
+  aggregation"); what remains is *building* it. Ficino's 1497 Aldine volume — catalogued in our data under the
   title *"De Voluptate"* and one work_id — actually *contains* Iamblichus *De
   Mysteriis* (p5) + Proclus + Porphyry + Synesius + Psellus + Priscian + Plato,
   each in Ficino's Latin. The author+title key can only pick ONE contained work
