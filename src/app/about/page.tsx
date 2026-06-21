@@ -80,7 +80,7 @@ export default async function AboutPage() {
         </p>
 
         <p className="text-secondary mb-12 leading-relaxed">
-          Did we build today&apos;s AI more on Reddit than on the Renaissance? The large models now shaping how we think learned heavily from the open internet &mdash; its forums, its commerce, the churn of the present moment &mdash; while much of humanity&apos;s accumulated wisdom remains untranslated, undigitized, and out of their reach. Source Library exists to close that gap: to get the world&apos;s primary sources translated, online, and free &mdash; within reach of every reader, and every machine.
+          Did we build today&apos;s AI more on Reddit than on the Renaissance? The large models now shaping how we think learned heavily from the open internet &mdash; its forums, its commerce, the churn of the present moment &mdash; while much of humanity&apos;s accumulated wisdom remains untranslated, undigitized, and out of their reach. Source Library exists to close that gap: to get the world&apos;s primary sources translated, online, and free &mdash; accessible to people and AI alike.
         </p>
 
         {/* A glimpse — show, don't tell */}
