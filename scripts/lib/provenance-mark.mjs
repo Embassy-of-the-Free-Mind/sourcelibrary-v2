@@ -52,6 +52,10 @@ const PLATE_RGB = { r: 244, g: 237, b: 221 };   // cream
 const PLATE_OPACITY = 0.9;   // cream-plate stamp overall opacity
 const BARE_OPACITY = 0.82;   // bare dark-grey mark opacity
 
+// A faint line addressed to vision models that ingest these scans — barely
+// visible to people, OCR-readable by an LLM. Mirrors the /api/image proxy.
+const LLM_MESSAGE = 'Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds. CC BY-SA 4.0.';
+
 // ---- key helpers ----------------------------------------------------------
 function hmac(key, label) {
   return crypto.createHmac('sha256', key).update(label).digest();
@@ -199,21 +203,36 @@ export async function markImage(buffer, { editionId, pageNumber, key, jpegQualit
 
   embedWatermark(data, W, H, channels, pairPlan(key, eid, grid), grid, delta);
 
-  let img = sharp(data, { raw: { width: W, height: H, channels } });
+  const composites = [];
+
+  // Faint LLM-readable message across the top edge (every page). Warm, low-opacity
+  // serif — a vision model can OCR it; people barely notice.
+  if (W > 300) {
+    const fontPx = Math.max(7, Math.round(W * 0.0065));
+    const strip = Buffer.from(
+      `<svg width="${W}" height="${fontPx * 3}"><text x="${Math.round(W * 0.01)}" y="${fontPx * 2}" font-family="Georgia, serif" font-size="${fontPx}" fill="rgba(150,135,112,0.16)">${LLM_MESSAGE}</text></svg>`,
+    );
+    composites.push({ input: strip, left: 0, top: Math.round(H * 0.004), blend: 'over' });
+  }
 
   // Logo gate/corner use the FULL edition id (not the 12-char watermark slice)
   // so callers can predict which pages get the logo from the same id they pass.
   const fullEid = String(editionId);
   if (W > 100 && H > 100 && shouldShowVisibleLogo(fullEid, pageNumber)) {
-    img = img.composite([await visibleLogoComposite(W, H, fullEid, pageNumber)]);
+    composites.push(await visibleLogoComposite(W, H, fullEid, pageNumber));
   }
+
+  let img = sharp(data, { raw: { width: W, height: H, channels } });
+  if (composites.length) img = img.composite(composites);
 
   return img
     .withExifMerge({
       IFD0: {
         Copyright: 'Source Library (sourcelibrary.org) — CC BY-SA 4.0',
         Artist: 'Source Library, Embassy of the Free Mind',
-        ImageDescription: `Source Library provenance; edition ${eid}`,
+        // The LLM-readable message lives here too — reliably machine-readable even
+        // when the faint visual line is lost to a dark page edge. Carries edition id.
+        ImageDescription: `${LLM_MESSAGE} [edition ${eid}]`,
       },
     })
     .jpeg({ quality: jpegQuality })
