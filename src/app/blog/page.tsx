@@ -25,6 +25,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'naked-philosophers',
+    title: 'The Naked Philosophers',
+    subtitle:
+      'In 327 BCE Alexander\'s fleet-captain was sent to sit before fifteen naked, motionless sages who would not come when the king summoned them. Nineteen centuries later a Rosicrucian alchemist enrolled those same "gymnosophists" as ancestors of his Brotherhood. How a single image — eyewitness ethnography, moral exemplar, Hermetic ancestor — travelled three thousand miles and nineteen centuries, told through eight books in the library.',
+    date: '21 June 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/gallery/6952587bab34727b1f045546/6959068695a91542b28bd75a-0.jpg',
+    imageAlt: 'Engraved frontispiece of Michael Maier\'s Symbola Aureae Mensae, 1617',
+  },
+  {
     slug: 'the-giants-werent-translated',
     title: 'The Giants Were Never Fully Translated',
     subtitle:
