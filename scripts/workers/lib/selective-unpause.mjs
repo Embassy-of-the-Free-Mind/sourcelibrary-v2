@@ -2,27 +2,44 @@
 //
 // The pipeline pause (system_config.processing_control.paused) is a global
 // stop on the paid OCR/translation path. Selective unpause lets a chosen set
-// of books run *while the rest stay paused*, via:
-//   processing_control.allow_book_ids: string[]      // explicit book ids
-//   processing_control.allow_collections: string[]   // collection slugs
+// of books run *while the rest stay paused*. The scope is the UNION of:
+//   processing_control.allow_scopes: { '<tag>': { book_ids:[], collections:[] } }
+//       ← additive, namespaced per task/session — USE THIS (see below)
+//   processing_control.allow_book_ids: string[]      // legacy, still honored
+//   processing_control.allow_collections: string[]   // legacy, still honored
 //
 // When a scope is set, the global pause is bypassed but every pipeline phase
 // is confined to the allowlisted books. An empty scope means the pause is a
-// full stop (unchanged). Mirrors the per-book bypass the free archiving
-// workers already have (archive-bulk --book-id, archive-iiif-local --ignore-pause).
+// full stop (unchanged).
+//
+// WHY allow_scopes (namespaced): the legacy top-level arrays are a SINGLE shared
+// field. With ~10 concurrent Claude sessions on this DB, one session setting its
+// own books clobbers another's (this really happened 2026-06-20: a session
+// narrowed the scope to 3 books and silently knocked a 60-book collection out of
+// the allowlist for ~21h). allow_scopes fixes that: each task owns one key and
+// edits ONLY that key (`$set: {'allow_scopes.<tag>': {...}}` / `$unset`), so
+// scopes accumulate instead of overwriting. Manage it via
+// scripts/maintenance/unpause-scope.mjs, never by hand-overwriting the arrays.
 //
 // These helpers are intentionally pure (no DB) so the pause/bypass invariant
 // is unit-testable; collection-slug → book-id resolution is done by the caller.
 
 export function getScopeConfig(control) {
-  // filter falsy BEFORE coercing, so null/'' don't become the string "null"/""
-  const bookIds = Array.isArray(control?.allow_book_ids)
-    ? control.allow_book_ids.filter(Boolean).map(String)
-    : [];
-  const collections = Array.isArray(control?.allow_collections)
-    ? control.allow_collections.filter(Boolean).map(String)
-    : [];
-  return { bookIds, collections };
+  // filter falsy BEFORE coercing, so null/'' don't become the string "null"/"";
+  // dedupe via Set since legacy + namespaced scopes can overlap.
+  const bookIds = new Set();
+  const collections = new Set();
+  const add = (arr, set) => { if (Array.isArray(arr)) for (const x of arr) if (x) set.add(String(x)); };
+  add(control?.allow_book_ids, bookIds);          // legacy
+  add(control?.allow_collections, collections);   // legacy
+  const scopes = control?.allow_scopes;           // namespaced additive map
+  if (scopes && typeof scopes === 'object') {
+    for (const key of Object.keys(scopes)) {
+      add(scopes[key]?.book_ids, bookIds);
+      add(scopes[key]?.collections, collections);
+    }
+  }
+  return { bookIds: [...bookIds], collections: [...collections] };
 }
 
 /** Is a selective-unpause scope configured at all? */
