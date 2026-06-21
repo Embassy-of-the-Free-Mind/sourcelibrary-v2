@@ -60,6 +60,7 @@ src/data/*
 !src/data/carbon-ledger/*.json
 !src/data/shwep-bibliographies.ts
 !src/data/shwep-linked-bibliographies.ts
+!src/data/shwep-supplementary-works.ts
 
 # User uploads and test files
 public/uploads/
