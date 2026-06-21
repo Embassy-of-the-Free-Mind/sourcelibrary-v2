@@ -467,6 +467,8 @@ export default function TranslationEditor({
 
   // Translation request (guest users)
   const [translationRequested, setTranslationRequested] = useState(false);
+  // Optional email so we can notify the requester once the page is translated.
+  const [requestEmail, setRequestEmail] = useState('');
 
   // Reset split state
   const [showResetSplitConfirm, setShowResetSplitConfirm] = useState(false);
@@ -1794,31 +1796,45 @@ export default function TranslationEditor({
                         <AuthCheck fallback={
                           translationRequested ? (
                             <p className="text-sm font-medium" style={{ color: 'var(--accent-sage-dark)' }}>
-                              Thanks! We&apos;ll prioritize this book.
+                              {requestEmail.trim()
+                                ? "Thanks! We'll email you when this page is translated."
+                                : "Thanks! We'll prioritize this book."}
                             </p>
                           ) : (
-                            <button
-                              onClick={async () => {
-                                try {
-                                  await fetch('/api/feedback', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({
-                                      message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}) — page ${page.page_number}`,
-                                      page: `/book/${book.id}/page/${page.id}`,
-                                    }),
-                                  });
-                                } catch { /* best effort */ }
-                                setTranslationRequested(true);
-                              }}
-                              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90"
-                              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                              </svg>
-                              Request translation
-                            </button>
+                            <div className="flex flex-col items-center gap-2 max-w-xs">
+                              <input
+                                type="email"
+                                value={requestEmail}
+                                onChange={(e) => setRequestEmail(e.target.value)}
+                                placeholder="Email (optional) — we'll notify you"
+                                className="w-full px-3 py-1.5 rounded-lg text-sm border"
+                                style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)', borderColor: 'var(--border-subtle, #ddd)' }}
+                              />
+                              <button
+                                onClick={async () => {
+                                  const email = requestEmail.trim();
+                                  try {
+                                    await fetch('/api/feedback', {
+                                      method: 'POST',
+                                      headers: { 'Content-Type': 'application/json' },
+                                      body: JSON.stringify({
+                                        message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}) — page ${page.page_number}`,
+                                        page: `/book/${book.id}/page/${page.id}`,
+                                        email: email && email.includes('@') ? email : null,
+                                      }),
+                                    });
+                                  } catch { /* best effort */ }
+                                  setTranslationRequested(true);
+                                }}
+                                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90"
+                                style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                Request translation
+                              </button>
+                            </div>
                           )
                         }>
                           <button

@@ -40,7 +40,12 @@ export async function GET(request: NextRequest) {
     let books: Record<string, unknown>[] = [];
     if (pageIds.length > 0) {
       const db = await getReadDb();
-      const filter: Record<string, unknown> = { id: { $in: pageIds } };
+      // Re-apply visible:true at the Mongo fetch as a defensive gate. searchBookIds
+      // already filters visible:true in Supabase, but the catalog lags Mongo — a
+      // book hidden in Mongo but still visible in the stale catalog would otherwise
+      // surface here and then 404 in the reader (the "search returns a hidden book"
+      // class — e.g. the imageless Toltec artwork stub, 2026-06-21).
+      const filter: Record<string, unknown> = { id: { $in: pageIds }, visible: true };
       if (tenantContext.id) filter.tenantId = tenantContext.id;
       books = await db.collection('books').find(
         filter,
