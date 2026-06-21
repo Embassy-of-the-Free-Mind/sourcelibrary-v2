@@ -92,3 +92,25 @@ create table if not exists catalog_sources (
 
 -- per-item rights override (PD / CopyrightUndetermined / etc.) for scan & text rows
 alter table work_sources add column if not exists rights text;
+
+-- ── #2567 convergence: citation→work→holdings (SHWEP) + Latin translation registry ──
+-- Two producers now feed this catalog: the Latin/USTC translation layer (works resolve to
+-- 'latin:<author>:<title>' ids) and the SHWEP citation layer (cited works, heavily
+-- non-Western, ~0% Wikidata work_id). Rather than make work_holdings.work_id nullable —
+-- which would break the "every holding hangs off a work" invariant and complicate every
+-- query — the citation layer MINTS a provisional work row (id 'cite:<stable-key>',
+-- source_catalog 'shwep-citation') so work_id always resolves. #2264 later merges the
+-- provisional work into its canonical authority work and sets merged_into.
+alter table works add column if not exists provisional boolean not null default false;
+alter table works add column if not exists merged_into text references works(id);
+create index if not exists works_provisional_idx on works (provisional) where provisional;
+create index if not exists works_merged_into_idx on works (merged_into) where merged_into is not null;
+
+-- work_holdings: OWNERSHIP+PROCESSED state and the PUBLIC-LINK gate are SEPARATE predicates
+-- (do not collapse — visible-only ownership checks nearly re-acquired the Philo we own;
+-- see CLAUDE.md + #2632). And a holding may cover the work as a PART of a collected edition,
+-- so carry the chapter pageId for a page-precise deep link.
+alter table work_holdings add column if not exists status text
+  check (status is null or status in ('held_readable','held_unprocessed'));  -- ownership+processed; 'absent' = no row
+alter table work_holdings add column if not exists visible boolean;          -- public 'read here' eligibility (separate from status)
+alter table work_holdings add column if not exists page_id text;             -- chapter pageId when this holding is a PART of a collected edition (/book/<book_id>/page/<page_id>)
