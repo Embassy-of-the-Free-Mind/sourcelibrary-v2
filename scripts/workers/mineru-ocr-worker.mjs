@@ -205,7 +205,11 @@ async function processBook(db, book) {
 
   let candidates;
   if (ONE_BOOK) {
-    candidates = await books.find({ _id: (await import('mongodb')).ObjectId.createFromHexString(ONE_BOOK) }).toArray();
+    // id-space-agnostic lookup: this corpus mixes ObjectId `_id`s, string `_id`s,
+    // and a separate string `id` field. Match all so --book works on any book.
+    const or = [{ _id: ONE_BOOK }, { id: ONE_BOOK }];
+    try { or.push({ _id: (await import('mongodb')).ObjectId.createFromHexString(ONE_BOOK) }); } catch { /* not a valid ObjectId hex */ }
+    candidates = await books.find({ $or: or }).toArray();
   } else {
     candidates = await books.find({
       language: /english/i,
