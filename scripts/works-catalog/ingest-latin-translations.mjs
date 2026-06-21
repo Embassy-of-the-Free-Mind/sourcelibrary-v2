@@ -71,7 +71,7 @@ async function resolveHoldings(works) {
   const c = new MongoClient(uri);
   await c.connect();
   const books = await c.db('bookstore').collection('books').find({}, {
-    projection: { id: 1, slug: 1, author: 1, title: 1, display_title: 1,
+    projection: { id: 1, slug: 1, work_slug: 1, author: 1, title: 1, display_title: 1,
       pages_translated: 1, pages_count: 1, pages_ocr: 1, pages_blank: 1, visible: 1, hidden: 1 },
   }).toArray();
   await c.close();
@@ -85,6 +85,7 @@ async function resolveHoldings(works) {
   }
 
   const holdingRows = [];
+  const workSlugByWork = new Map();   // catalog work id → dominant reader work_slug (the layer join)
   for (const w of works) {
     const id = workIdOf(w);
     if (id === 'latin::') continue;
@@ -97,6 +98,7 @@ async function resolveHoldings(works) {
       const t = b.title || b.display_title;
       return titleFit(w.wl || w.w, t).match || (w.wl && titleFit(w.w, t).match);
     });
+    const wsTally = new Map();
     for (const b of matched) {
       holdingRows.push({
         work_id: id,
@@ -107,9 +109,13 @@ async function resolveHoldings(works) {
         translated_pct: Number((translatedRatio(b) * 100).toFixed(1)),
         matched_by: 'registry-worklevel',
       });
+      if (b.work_slug) wsTally.set(b.work_slug, (wsTally.get(b.work_slug) || 0) + 1);
     }
+    // dominant reader-layer work_slug among the held editions → cross-reference
+    const dom = [...wsTally.entries()].sort((a, b) => b[1] - a[1])[0];
+    if (dom) workSlugByWork.set(id, dom[0]);
   }
-  return holdingRows;
+  return { holdingRows, workSlugByWork };
 }
 
 async function upsertHoldings(client, rows, batch = 500) {
@@ -185,12 +191,20 @@ async function main() {
   const pd = sourceRows.filter((s) => s.rights === 'public-domain').length;
 
   console.log('Resolving SL holdings from Mongo (full catalog)…');
-  const holdingRows = await resolveHoldings(data.works);
+  const { holdingRows, workSlugByWork } = await resolveHoldings(data.works);
   const readable = holdingRows.filter((h) => h.status === 'held_readable').length;
   const visible = holdingRows.filter((h) => h.visible).length;
 
+  // join the census layer to the reader layer: store the dominant reader
+  // work_slug on the catalog work so #2453 cross-references /work/[slug].
+  let joined = 0;
+  for (const r of workRows) {
+    const ws = workSlugByWork.get(r.id);
+    if (ws) { r.authority_ids = { ...r.authority_ids, work_slug: ws }; joined++; }
+  }
+
   console.log(`registry works: ${data.works.length}`);
-  console.log(`  → works rows:          ${workRows.length}`);
+  console.log(`  → works rows:          ${workRows.length} (${joined} cross-linked to a reader /work page)`);
   console.log(`  → translation sources: ${sourceRows.length} (${pd} public-domain — importable)`);
   console.log(`  → status updates:      ${statusUpdates.length}`);
   console.log(`  → work_holdings rows:  ${holdingRows.length} (${readable} readable, ${visible} visible)`);
