@@ -47,7 +47,7 @@ async function main() {
   // shared holdings-resolver). Pull the fields bestEdition/holdingStatus need.
   const books = await db.collection('books').find(
     {},
-    { projection: { id: 1, slug: 1, author: 1, title: 1, display_title: 1, text_role: 1,
+    { projection: { id: 1, slug: 1, work_slug: 1, author: 1, title: 1, display_title: 1, text_role: 1,
         pages_translated: 1, pages_count: 1, pages_ocr: 1, pages_blank: 1, visible: 1, hidden: 1 } },
   ).toArray();
   await c.close();
@@ -85,7 +85,7 @@ async function main() {
       w.hstatus = status;
       // the public "Read original" link points at the best VISIBLE readable edition
       const link = bestEdition(matched.filter(editionVisible));
-      if (link) { w.slug = link.slug; workLinkable++; }
+      if (link) { w.slug = link.slug; if (link.work_slug) w.wslug = link.work_slug; workLinkable++; }
       work++;
     } else {
       // author held — link a visible readable edition by this author, if any

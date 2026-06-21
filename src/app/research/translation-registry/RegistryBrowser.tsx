@@ -7,7 +7,7 @@ import { BookOpen, User, Search } from 'lucide-react';
 type Credit = { tr: string | null; t: string | null; pub: string | null; y: number | null; s: string };
 type Work = {
   a: string; w: string; wl?: string; y: number | null; era: string; tgt?: boolean;
-  c: Credit[]; ed: number; h: 'work' | 'author' | 'none'; slug?: string; asl?: string;
+  c: Credit[]; ed: number; h: 'work' | 'author' | 'none'; slug?: string; wslug?: string; asl?: string;
   hstatus?: 'held_readable' | 'held_unprocessed'; tmin?: number; tmax?: number;
 };
 
@@ -179,8 +179,8 @@ export default function RegistryBrowser() {
                 <td className="py-2.5 px-3 text-stone-500 tabular-nums whitespace-nowrap">{yearLabel(w.y)}</td>
                 <td className="py-2.5 px-3 text-stone-700 border-l border-stone-100"><Credits credits={w.c} /></td>
                 <td className="py-2.5 px-3 text-center border-l border-stone-100">
-                  {w.h === 'work' && w.slug ? (
-                    <Link href={`/book/${w.slug}`} className="inline-flex items-center gap-1 text-xs bg-stone-800 text-white px-2 py-1 rounded hover:bg-stone-900 whitespace-nowrap">
+                  {w.h === 'work' && (w.wslug || w.slug) ? (
+                    <Link href={w.wslug ? `/work/${w.wslug}` : `/book/${w.slug}`} className="inline-flex items-center gap-1 text-xs bg-stone-800 text-white px-2 py-1 rounded hover:bg-stone-900 whitespace-nowrap" title={w.wslug ? 'Read the original — all editions we hold' : 'Read the original'}>
                       <BookOpen className="w-3 h-3" /> Read original
                     </Link>
                   ) : w.h === 'work' ? (
