@@ -101,6 +101,7 @@ async function main() {
       is_target: w.is_target,
       credits: credits.slice(0, 4),
       n_named: credits.filter((c) => c.tr).length,
+      nrec: (w.catalog_ids || []).length,   // raw translation records resolving here
       n_ustc_editions: m.clusters.size,
       in_sl: m.in_sl,
       score: m.best_score,
@@ -124,6 +125,7 @@ async function main() {
     m.credits = m.credits.slice(0, 4);
     m.n_named = m.credits.filter((c) => c.tr).length;
     m.n_ustc_editions += r.n_ustc_editions;
+    m.nrec += r.nrec;
     if (r.in_sl) m.in_sl = true;
     if (r.score > m.score) m.score = r.score;
     if (r.curated) m.curated = true;
@@ -135,10 +137,16 @@ async function main() {
   const pub = rows.filter((r) => r.score >= 9 || (r.score >= 7 && r.n_named > 0) || r.curated)
     .sort((a, b) => a.author.localeCompare(b.author) || (a.orig_year || 0) - (b.orig_year || 0));
 
+  const totalRecords = pub.reduce((s, r) => s + (r.nrec || 0), 0);
+  const tmaxOf = (r) => { const ys = r.credits.map((c) => c.y).filter((y) => y != null); return ys.length ? Math.max(...ys) : null; };
+  const noModern = pub.filter((r) => { const t = tmaxOf(r); return t != null && t < 1900; }).length;
+
   fs.writeFileSync(path.join(OUT, 'translation-registry-public.json'), JSON.stringify({
     generated: '2026-06-21',
     note: 'Confidence-gated, work-level registry of early-modern Latin (and adjacent) works with a known external English translation. Keyed on the work, not the edition. The gap = works with no entry here.',
     count: pub.length,
+    total_records: totalRecords,   // raw translation-catalogue rows resolving to these works
+    no_modern: noModern,           // works whose newest translation predates 1900
     works: pub.map((r) => {
       const yrs = r.credits.map((c) => c.y).filter((y) => y != null);
       return {

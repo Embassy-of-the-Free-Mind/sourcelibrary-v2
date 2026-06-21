@@ -31,6 +31,7 @@ const translatorCount = (() => {
 const renCount = works.filter((w) => w.tgt).length;
 const workHeld = works.filter((w) => w.h === 'work').length;
 const authorHeld = works.filter((w) => w.h === 'author').length;
+const totalRecords = (registryData as { total_records?: number }).total_records ?? 0;
 
 function Stat({ n, unit, label }: { n: string; unit?: string; label: string }) {
   return (
@@ -66,11 +67,17 @@ export default function TranslationRegistryPage() {
     >
       <div className="max-w-3xl mx-auto font-body text-stone-700 text-lg leading-relaxed">
         <div className="grid grid-cols-2 md:grid-cols-4 border border-stone-200 rounded-lg my-8 text-center">
-          <Stat n={works.length.toLocaleString()} label="works with a known English translation" />
+          <Stat n={totalRecords.toLocaleString()} label="translation records in our database" />
+          <Stat n={works.length.toLocaleString()} label="distinct works they resolve to" />
           <Stat n={translatorCount.toLocaleString()} label="translators credited" />
-          <Stat n={renCount.toLocaleString()} label="Renaissance-Latin works" />
           <Stat n={workHeld.toLocaleString()} label="whose original we hold on Source Library" />
         </div>
+        <p className="-mt-4 mb-6 text-base text-stone-500">
+          {totalRecords.toLocaleString()} published-translation records — across the UNESCO Index Translationum, the Library
+          of Congress, scholarly series, and more — collapse to <strong className="text-stone-700">{works.length.toLocaleString()} distinct
+          works</strong> once reprints and re-catalogued editions of the same translation are merged. {renCount.toLocaleString()} are
+          Renaissance Latin.
+        </p>
 
         <p>
           The <Link href="/research/translation-gap" className="text-amber-800 hover:underline">Translation Gap</Link> measures

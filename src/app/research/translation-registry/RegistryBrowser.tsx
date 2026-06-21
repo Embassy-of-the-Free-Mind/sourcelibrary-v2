@@ -102,8 +102,8 @@ export default function RegistryBrowser() {
   const pageCount = Math.ceil(total / 50);
   const eraButtons: [EraFilter, string, string][] = useMemo(() => [
     ['all', 'All', 'Translations of any era'],
-    ['modern', 'Modern', 'A 20th–21st-century translation exists'],
-    ['historical', 'Pre-1900', 'Only an 18th–19th-century translation on record'],
+    ['modern', 'Modern', 'We have a 20th–21st-century translation on record'],
+    ['historical', 'Pre-1900', 'The newest translation we have catalogued predates 1900 — a modern one may exist but be uncatalogued'],
     ['period', 'Period', 'A contemporaneous translation (made by 1700)'],
   ], []);
 
@@ -146,7 +146,7 @@ export default function RegistryBrowser() {
           ))}
         </div>
         <span className="text-stone-400 text-xs">
-          <span className="text-emerald-700">modern</span> = 1900+ · <span className="text-stone-500">historical</span> = 1700–1900 · <span className="text-amber-700">period</span> = contemporaneous
+          <span className="text-emerald-700">modern</span> = 1900+ · <span className="text-stone-500">historical</span> = 1700–1900 · <span className="text-amber-700">period</span> = contemporaneous (≤1700). Dates are the catalogue&rsquo;s — a missing modern tag may mean uncatalogued, not untranslated.
         </span>
         <span className="text-stone-400 tabular-nums ml-auto">{loading ? '…' : `${total.toLocaleString()} works`}</span>
       </div>
