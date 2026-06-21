@@ -43,7 +43,7 @@ const WM_Z_THRESHOLD = 5;   // z-score above which we call it "ours" (noise floo
 const STD_FLOOR = 5;
 const STD_SCALE = 12;
 const VISIBLE_RATE = 10;    // ~1 in N pages gets the visible logo
-const LOGO_HEIGHT_FRAC = 0.07;   // clearly visible corner stamp (not a hidden mark)
+const LOGO_HEIGHT_FRAC = 0.035;  // discreet but visible corner stamp (Derek, 2026-06-21)
 const LOGO_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--512h.png');
 // Period-sympathetic palette (not stark black/white): warm dark-grey mark, cream
 // plate. Some pages get a cream-plate stamp, some a bare dark-grey mark.
