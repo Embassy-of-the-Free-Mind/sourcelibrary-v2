@@ -712,6 +712,74 @@ export const SHWEP_SUPPLEMENTARY_WORKS: Record<number, string[]> = {\n`;
   console.log(`  → ${suppSorted.length} linked episodes carry ${suppTotal} supplementary held works (kept reachable as cards)`);
 }
 
+// ── Stage 6: gap audit (full-catalog, read-only) ─────────────────────────────
+// The main matcher retrieves over the VISIBLE + embedded catalog only, so its
+// "acquire" list conflates two very different things: works we genuinely don't own,
+// and works we DO own but that are hidden/unprocessed (no translation yet → not in the
+// embedding index → invisible to retrieval). This stage re-checks each currently-"acquire"
+// work LEXICALLY against the FULL Mongo catalog (incl. hidden/draft/untranslated), confirms
+// with the same flash-lite judge, and splits the gap into three honest buckets:
+//   held_readable    — we missed a visible+translated edition (recall bonus → should link)
+//   held_unprocessed — we own it but it's hidden and/or untranslated (publish/process queue)
+//   absent           — genuinely not in the catalog (acquire)
+// Read-only: writes /tmp/shwep-cited/gap-audit.{json,md}; touches no .ts data files.
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+async function stageGapAudit() {
+  console.log('Stage 6 GAP AUDIT (full catalog, read-only)');
+  const works = readJSON('works-held.json', []);
+  applyAuthorGuard(works);
+  const acquire = works.filter(w => !(w.held || []).length && (w.status || 'extant') !== 'lost');
+  const items = LIMIT ? acquire.slice(0, LIMIT) : acquire;
+  console.log(`  re-checking ${items.length} "acquire" works against the full catalog…`);
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const db = client.db('bookstore');
+  const PROJ = { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, visible: 1, status: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1 };
+
+  let done = 0;
+  const out = await mapPool(items, 6, async (w) => {
+    const forms = (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]).slice(0, 6);
+    const author = w.author || '';
+    // lexical retrieval over the FULL catalog (no visible filter) — title forms (≥4 chars) ∪ author
+    const titleRx = forms.filter(f => f && f.length >= 4).map(reEsc).join('|');
+    const orClauses = [];
+    if (titleRx) { orClauses.push({ title: { $regex: titleRx, $options: 'i' } }, { display_title: { $regex: titleRx, $options: 'i' } }); }
+    const authToks = !/anonymous|various|unknown|attributed/i.test(author) ? authTokens(author).filter(t => t.length >= 4) : [];
+    let rows = orClauses.length ? await db.collection('books').find({ $or: orClauses, pages_count: { $gt: 0 } }, { projection: PROJ }).limit(25).toArray() : [];
+    // narrow to author-plausible when we have an author (keeps confirm prompt focused)
+    if (authToks.length) { const a = rows.filter(r => { const bt = new Set(authTokens(r.author || '')); return authToks.some(t => bt.has(t)); }); if (a.length) rows = a; }
+    rows = rows.filter(r => !EXCLUDE_LANGS.has(r.language)).slice(0, 16);
+    if (!rows.length) { done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`); return { work: w.work, author, era: w.era, episodes: w.episodes, bucket: 'absent', evidence: [] }; }
+    let picks = [];
+    try { picks = (await gemini(confirmPrompt(forms, author, rows), 2048)).matches || []; } catch {}
+    const matched = picks.map(p => rows[p]).filter(Boolean);
+    const readable = matched.filter(m => m.visible && (m.pages_translated || 0) > 0);
+    const ownedUnready = matched.filter(m => !(m.visible && (m.pages_translated || 0) > 0));
+    const bucket = readable.length ? 'held_readable' : ownedUnready.length ? 'held_unprocessed' : 'absent';
+    const evidence = (readable.length ? readable : ownedUnready).slice(0, 3).map(m => ({
+      slug: m.slug, title: (m.display_title || m.title || '').slice(0, 50), visible: !!m.visible,
+      tr: m.pages_translated || 0, pc: m.pages_count || 0, lang: m.language || '',
+    }));
+    done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`);
+    return { work: w.work, author, era: w.era, episodes: w.episodes, bucket, evidence };
+  });
+  await client.close();
+
+  const by = b => out.filter(x => x.bucket === b).sort((a, c) => c.episodes.length - a.episodes.length);
+  const readable = by('held_readable'), unproc = by('held_unprocessed'), absent = by('absent');
+  writeJSON('gap-audit.json', { generated: 'shwep-cited-works.mjs --gap-audit', held_readable: readable, held_unprocessed: unproc, absent });
+  let md = `# SHWEP gap audit — the matcher's "acquire" list, re-checked against the FULL catalog\n\n`;
+  md += `Of ${items.length} works the visible-only matcher called "acquire": **${readable.length} are actually held & readable** (recall miss — should link), **${unproc.length} we own but hidden/unprocessed** (publish/process), **${absent.length} genuinely absent** (acquire).\n\n`;
+  for (const [title, set] of [['Held & readable (matcher missed — fix recall)', readable], ['Held but hidden/unprocessed (publish or process)', unproc], ['Genuinely absent (acquire)', absent]]) {
+    md += `## ${title} — ${set.length}\n\n| Work | Author | Eps | Evidence |\n|---|---|---|---|\n`;
+    for (const x of set) md += `| ${x.work} | ${x.author} | ${x.episodes.length} | ${x.evidence.map(e => `${e.slug || '?'} (${e.visible ? 'vis' : 'hid'}, tr${e.tr}/${e.pc})`).join('; ') || '—'} |\n`;
+    md += `\n`;
+  }
+  fs.writeFileSync(path.join(CACHE, 'gap-audit.md'), md);
+  console.log(`  → held_readable ${readable.length} | held_unprocessed ${unproc.length} | absent ${absent.length}`);
+  console.log(`  → ${path.join(CACHE, 'gap-audit.md')}`);
+}
+
 // ── main ─────────────────────────────────────────────────────────────────────
 
 (async () => {
@@ -720,5 +788,6 @@ export const SHWEP_SUPPLEMENTARY_WORKS: Record<number, string[]> = {\n`;
   if (want('--holdings')) await stageHoldings();
   if (want('--emit')) await stageEmit();
   if (want('--linkbib')) await stageLinkBib();
-  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --emit | --linkbib | --all');
+  if (args.includes('--gap-audit')) await stageGapAudit();
+  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --emit | --linkbib | --gap-audit | --all');
 })().catch(e => { console.error('Fatal:', e); process.exit(1); });
