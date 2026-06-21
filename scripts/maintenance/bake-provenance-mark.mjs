@@ -180,30 +180,30 @@ async function main() {
   let scanned = 0, marked = 0, skipped = 0, alreadyDone = 0, failed = 0, notR2 = 0, collided = 0;
   const t0 = Date.now();
 
-  // Process per-book to keep the cursor bounded and progress legible.
+  // Streaming concurrency pool: keep CONCURRENCY items in flight, refilling as
+  // each finishes (NO batch barrier — a slow source-fetch can't stall the rest).
+  const inFlight = new Set();
+  const handle = async (item) => {
+    try {
+      if (!APPLY) { marked++; if (marked <= 10) console.log(`  would regen ${item.displayKey} from ${item.sourceUrl.split('/').slice(-2).join('/')}`); return; }
+      const status = await regenVariant(item);
+      if (status === 'already') { alreadyDone++; return; }
+      marked++;
+      if (marked % 500 === 0) {
+        const rate = (marked / ((Date.now() - t0) / 1000)).toFixed(0);
+        console.log(`  …${marked} regenerated, ${alreadyDone} already, ${failed} failed  (${rate}/s)`);
+      }
+    } catch (e) { failed++; if (failed <= 15) console.warn(`  FAIL ${item.displayKey}: ${e.message}`); }
+  };
+
+  // Process per-book to keep each Mongo cursor bounded; the pool spans chunks.
   const BOOK_CHUNK = 500;
+  outer:
   for (let i = 0; i < bookIds.length; i += BOOK_CHUNK) {
     const chunk = bookIds.slice(i, i + BOOK_CHUNK);
     const proj = { _id: 0, id: 1, book_id: 1, page_number: 1, display_photo: 1,
       archived_photo: 1, photo_original: 1, cropped_photo: 1, photo: 1, split_from_spread: 1 };
     const cursor = pages.find({ book_id: { $in: chunk } }, { projection: proj });
-
-    let queue = [];
-    const flush = async () => {
-      const batch = queue.splice(0, queue.length);
-      await Promise.all(batch.map(async (item) => {
-        try {
-          if (!APPLY) { marked++; if (marked <= 10) console.log(`  would regen ${item.displayKey} from ${item.sourceUrl.split('/').slice(-2).join('/')}`); return; }
-          const status = await regenVariant(item);
-          if (status === 'already') { alreadyDone++; return; }
-          marked++;
-          if (marked % 500 === 0) {
-            const rate = (marked / ((Date.now() - t0) / 1000)).toFixed(0);
-            console.log(`  …${marked} regenerated, ${alreadyDone} already, ${failed} failed  (${rate}/s)`);
-          }
-        } catch (e) { failed++; if (failed <= 15) console.warn(`  FAIL ${item.displayKey}: ${e.message}`); }
-      }));
-    };
 
     for await (const p of cursor) {
       scanned++;
@@ -217,13 +217,15 @@ async function main() {
       if (!sourceUrl) { skipped++; continue; }
       // Never read-and-write the same key (would overwrite the source itself).
       if (anyR2Key(sourceUrl) === displayKey) { collided++; continue; }
-      queue.push({ displayKey, sourceUrl, bookId: p.book_id, pageNumber: p.page_number });
-      if (queue.length >= CONCURRENCY) await flush();
-      if (LIMIT && marked >= LIMIT && !APPLY) break;
+
+      const pr = handle({ displayKey, sourceUrl, bookId: p.book_id, pageNumber: p.page_number });
+      inFlight.add(pr);
+      pr.finally(() => inFlight.delete(pr));
+      if (inFlight.size >= CONCURRENCY) await Promise.race(inFlight);
+      if (LIMIT && marked >= LIMIT && !APPLY) break outer;
     }
-    await flush();
-    if (LIMIT && marked >= LIMIT && !APPLY) break;
   }
+  await Promise.all(inFlight);
 
   console.log(`\nDone. scanned=${scanned} regenerated=${marked} already=${alreadyDone} skipped(no display/source)=${skipped} non-R2=${notR2} source==target=${collided} failed=${failed}`);
   if (APPLY && marked > 0) console.log('Now purge Cloudflare so the marked bytes are served.');
