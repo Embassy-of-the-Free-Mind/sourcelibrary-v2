@@ -1,0 +1,882 @@
+[
+  {
+    "series": "brill",
+    "author_en": "Justus Lipsius",
+    "author_surname": "Lipsius",
+    "title_en": "Ancient Libraries and Renaissance Humanism: The De bibliothecis of Justus Lipsius",
+    "title_latin": "De bibliothecis syntagma",
+    "orig_year": 1602,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Angelo Poliziano",
+    "author_surname": "Politianus",
+    "title_en": "Angelo Poliziano's Lamia: Text, Translation, and Introductory Studies",
+    "title_latin": "Lamia",
+    "orig_year": 1492,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Chrysostomus Javelli",
+    "author_surname": "Javellus",
+    "title_en": "Chrysostomus Javelli's Epitome of Aristotle's Liber de bona fortuna",
+    "title_latin": "Epitome libri de bona fortuna",
+    "orig_year": 1531,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Hadriaan Beverland",
+    "author_surname": "Beverland",
+    "title_en": "On Original Sin: An Annotated Edition and Translation",
+    "title_latin": "De Peccato Originali",
+    "orig_year": 1679,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Antonio da Rho",
+    "author_surname": "Raudensis",
+    "title_en": "Three Dialogues against Lactantius",
+    "title_latin": "Dialogi tres in Lactantium",
+    "orig_year": 1445,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Giovanni Caroli",
+    "author_surname": "Caroli",
+    "title_en": "The Book of My Days in Lucca (in Humanism, Theology, and Spiritual Crisis in Renaissance Florence)",
+    "title_latin": "Liber dierum lucensium",
+    "orig_year": 1479,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Juan Luis Vives",
+    "author_surname": "Vives",
+    "title_en": "On Assistance to the Poor",
+    "title_latin": "De subventione pauperum sive de humanis necessitatibus libri duo",
+    "orig_year": 1526,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Juan Luis Vives",
+    "author_surname": "Vives",
+    "title_en": "The Education of a Christian Woman",
+    "title_latin": "De institutione feminae christianae",
+    "orig_year": 1524,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "brill",
+    "author_en": "Juan Luis Vives",
+    "author_surname": "Vives",
+    "title_en": "The Office and Duty of a Husband",
+    "title_latin": "De officio mariti",
+    "orig_year": 1529,
+    "orig_lang": "latin",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "doml",
+    "author_en": "Saint Jerome (translator); Vulgate",
+    "author_surname": "Hieronymus",
+    "title_en": "The Vulgate Bible, Volume I: The Pentateuch",
+    "title_latin": "Biblia Vulgata",
+    "orig_year": 400,
+    "orig_lang": "latin",
+    "era": "antiquity"
+  },
+  {
+    "series": "doml",
+    "author_en": "Saint Jerome (translator); Vulgate",
+    "author_surname": "Hieronymus",
+    "title_en": "The Vulgate Bible, Volume II: The Historical Books (Parts A and B)",
+    "title_latin": "Biblia Vulgata",
+    "orig_year": 400,
+    "orig_lang": "latin",
+    "era": "antiquity"
+  },
+  {
+    "series": "doml",
+    "author_en": "Saint Jerome (translator); Vulgate",
+    "author_surname": "Hieronymus",
+    "title_en": "The Vulgate Bible, Volume III: The Poetical Books",
+    "title_latin": "Biblia Vulgata",
+    "orig_year": 400,
+    "orig_lang": "latin",
+    "era": "antiquity"
+  },
+  {
+    "series": "doml",
+    "author_en": "Saint Jerome (translator); Vulgate",
+    "author_surname": "Hieronymus",
+    "title_en": "The Vulgate Bible, Volume IV: The Major Prophetical Books",
+    "title_latin": "Biblia Vulgata",
+    "orig_year": 400,
+    "orig_lang": "latin",
+    "era": "antiquity"
+  },
+  {
+    "series": "doml",
+    "author_en": "Saint Jerome (translator); Vulgate",
+    "author_surname": "Hieronymus",
+    "title_en": "The Vulgate Bible, Volume V: The Minor Prophetical Books and Maccabees",
+    "title_latin": "Biblia Vulgata",
+    "orig_year": 400,
+    "orig_lang": "latin",
+    "era": "antiquity"
+  },
+  {
+    "series": "doml",
+    "author_en": "Saint Jerome (translator); Vulgate",
+    "author_surname": "Hieronymus",
+    "title_en": "The Vulgate Bible, Volume VI: The New Testament",
+    "title_latin": "Biblia Vulgata",
+    "orig_year": 400,
+    "orig_lang": "latin",
+    "era": "antiquity"
+  },
+  {
+    "series": "doml",
+    "author_en": "Hugh Primas; Arundel poet",
+    "author_surname": "Primas",
+    "title_en": "The Arundel Lyrics; The Poems of Hugh Primas",
+    "title_latin": "Carmina Arundelliana; Carmina Hugonis Primatis",
+    "orig_year": 1150,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Sextus Amarcius; Eupolemius",
+    "author_surname": "Amarcius",
+    "title_en": "Satires; Eupolemius",
+    "title_latin": "Sermones; Eupolemius",
+    "orig_year": 1100,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Richer of Saint-Remi",
+    "author_surname": "Richerus",
+    "title_en": "Histories, Volumes I-II",
+    "title_latin": "Historiarum libri quatuor",
+    "orig_year": 998,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Pseudo-Methodius",
+    "author_surname": "Pseudo-Methodius",
+    "title_en": "Apocalypse; An Alexandrian World Chronicle",
+    "title_latin": "Apocalypsis (Pseudo-Methodii)",
+    "orig_year": 700,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (medieval hymnodists)",
+    "author_surname": "Anonymi",
+    "title_en": "One Hundred Latin Hymns: Ambrose to Aquinas",
+    "title_latin": "Hymni Latini centum",
+    "orig_year": 800,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Alan of Lille",
+    "author_surname": "Alanus de Insulis",
+    "title_en": "Literary Works",
+    "title_latin": "Opera (De planctu Naturae; Anticlaudianus)",
+    "orig_year": 1180,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Egbert of Liege",
+    "author_surname": "Egbertus Leodiensis",
+    "title_en": "The Well-Laden Ship",
+    "title_latin": "Fecunda ratis",
+    "orig_year": 1023,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Nivardus of Ghent (attrib.)",
+    "author_surname": "Nivardus",
+    "title_en": "Ysengrimus",
+    "title_latin": "Ysengrimus",
+    "orig_year": 1148,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Henry of Avranches",
+    "author_surname": "Henricus Abrincensis",
+    "title_en": "Saints' Lives, Volumes I-II",
+    "title_latin": "Vitae sanctorum metricae",
+    "orig_year": 1230,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Amalar of Metz",
+    "author_surname": "Amalarius Mettensis",
+    "title_en": "On the Liturgy, Volumes I-II",
+    "title_latin": "Liber officialis",
+    "orig_year": 823,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Bernardus Silvestris",
+    "author_surname": "Bernardus Silvestris",
+    "title_en": "Poetic Works",
+    "title_latin": "Cosmographia; Mathematicus",
+    "orig_year": 1147,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Gregory of Tours",
+    "author_surname": "Gregorius Turonensis",
+    "title_en": "Lives and Miracles",
+    "title_latin": "Liber vitae patrum; Libri miraculorum",
+    "orig_year": 590,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Calcidius",
+    "author_surname": "Calcidius",
+    "title_en": "On Plato's Timaeus",
+    "title_latin": "Commentarius in Timaeum Platonis",
+    "orig_year": 350,
+    "orig_lang": "latin",
+    "era": "antiquity"
+  },
+  {
+    "series": "doml",
+    "author_en": "Venantius Fortunatus",
+    "author_surname": "Venantius Fortunatus",
+    "title_en": "Poems",
+    "title_latin": "Carmina",
+    "orig_year": 576,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (Goliardic poets)",
+    "author_surname": "Anonymi",
+    "title_en": "Carmina Burana, Volumes I-II",
+    "title_latin": "Carmina Burana",
+    "orig_year": 1230,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Yolles and Weiss (eds.)",
+    "author_surname": "Anonymi",
+    "title_en": "Medieval Latin Lives of Muhammad",
+    "title_latin": "Vitae Mahometis (Latinae medievales)",
+    "orig_year": 1100,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous (Magister)",
+    "author_surname": "Anonymus",
+    "title_en": "Tria sunt: An Art of Poetry and Prose",
+    "title_latin": "Tria sunt",
+    "orig_year": 1256,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Johannes de Hauvilla",
+    "author_surname": "Johannes de Hauvilla",
+    "title_en": "Architrenius",
+    "title_latin": "Architrenius",
+    "orig_year": 1184,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Geoffrey of Monmouth",
+    "author_surname": "Galfridus Monemutensis",
+    "title_en": "The History of the Kings of Britain",
+    "title_latin": "De gestis Britonum (Historia regum Britanniae)",
+    "orig_year": 1136,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various; ascribed to Ovid",
+    "author_surname": "Pseudo-Ovidius",
+    "title_en": "Appendix Ovidiana: Latin Poems Ascribed to Ovid in the Middle Ages",
+    "title_latin": "Appendix Ovidiana",
+    "orig_year": 1150,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "John of Garland",
+    "author_surname": "Johannes de Garlandia",
+    "title_en": "Parisiana poetria",
+    "title_latin": "Parisiana poetria",
+    "orig_year": 1220,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Ekkehard IV of Saint Gall",
+    "author_surname": "Ekkehardus IV",
+    "title_en": "Fortune and Misfortune at Saint Gall",
+    "title_latin": "Casus sancti Galli",
+    "orig_year": 1040,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Aelred of Rievaulx",
+    "author_surname": "Aelredus Rievallensis",
+    "title_en": "Writings on Body and Soul",
+    "title_latin": "Dialogus de anima; De institutione inclusarum",
+    "orig_year": 1160,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Alcimus Avitus",
+    "author_surname": "Alcimus Avitus",
+    "title_en": "Biblical and Pastoral Poetry",
+    "title_latin": "De spiritalis historiae gestis",
+    "orig_year": 500,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Nigel of Canterbury (Wireker)",
+    "author_surname": "Nigellus Wireker",
+    "title_en": "Miracles of the Virgin; Tract on Abuses",
+    "title_latin": "Miracula sancte Dei genitricis Virginis Marie; Tractatus contra curiales et officiales clericos",
+    "orig_year": 1190,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Honorius Augustodunensis",
+    "author_surname": "Honorius Augustodunensis",
+    "title_en": "Jewel of the Soul, Volumes I-II",
+    "title_latin": "Gemma animae",
+    "orig_year": 1120,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Pierre Bersuire",
+    "author_surname": "Petrus Berchorius",
+    "title_en": "The Moralized Ovid",
+    "title_latin": "Ovidius moralizatus",
+    "orig_year": 1340,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Gervase of Melkley",
+    "author_surname": "Gervasius de Saltu Lacteo",
+    "title_en": "The Art of Making Verses",
+    "title_latin": "Ars versificaria (Ars poetica)",
+    "orig_year": 1216,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Hrotsvit of Gandersheim",
+    "author_surname": "Hrotsvitha",
+    "title_en": "The Works of Hrotsvit of Gandersheim",
+    "title_latin": "Opera Hrotsvithae",
+    "orig_year": 965,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "The Book of Miracles of Saint Louis, Bishop of Toulouse",
+    "title_latin": "Liber miraculorum sancti Ludovici episcopi Tolosani",
+    "orig_year": 1320,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Saint Benedict of Nursia",
+    "author_surname": "Benedictus",
+    "title_en": "The Rule of Saint Benedict",
+    "title_latin": "Regula sancti Benedicti",
+    "orig_year": 540,
+    "orig_lang": "latin",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (Byzantine hagiography)",
+    "author_surname": "Anonymi",
+    "title_en": "Miracle Tales from Byzantium",
+    "title_latin": null,
+    "orig_year": 900,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Michael Attaleiates",
+    "author_surname": "Attaleiates",
+    "title_en": "The History",
+    "title_latin": null,
+    "orig_year": 1080,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Niketas Stethatos",
+    "author_surname": "Stethatos",
+    "title_en": "The Life of Saint Symeon the New Theologian",
+    "title_latin": null,
+    "orig_year": 1050,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (Patria of Constantinople)",
+    "author_surname": "Anonymi",
+    "title_en": "Accounts of Medieval Constantinople: The Patria",
+    "title_latin": null,
+    "orig_year": 995,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Maximos the Confessor",
+    "author_surname": "Maximus Confessor",
+    "title_en": "On Difficulties in the Church Fathers: The Ambigua, Volumes I-II",
+    "title_latin": null,
+    "orig_year": 630,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Laonikos Chalkokondyles",
+    "author_surname": "Chalkokondyles",
+    "title_en": "The Histories, Volumes I-II",
+    "title_latin": null,
+    "orig_year": 1465,
+    "orig_lang": "greek",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "doml",
+    "author_en": "John Tzetzes",
+    "author_surname": "Tzetzes",
+    "title_en": "Allegories of the Iliad",
+    "title_latin": null,
+    "orig_year": 1145,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (Mount Athos hagiography)",
+    "author_surname": "Anonymi",
+    "title_en": "Holy Men of Mount Athos",
+    "title_latin": null,
+    "orig_year": 1050,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Nikephoros Basilakes",
+    "author_surname": "Basilakes",
+    "title_en": "The Rhetorical Exercises",
+    "title_latin": null,
+    "orig_year": 1150,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Symeon Metaphrastes",
+    "author_surname": "Metaphrastes",
+    "title_en": "Christian Novels from the Menologion",
+    "title_latin": null,
+    "orig_year": 980,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (Greek saints' lives)",
+    "author_surname": "Anonymi",
+    "title_en": "Saints of Ninth- and Tenth-Century Greece",
+    "title_latin": null,
+    "orig_year": 950,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Michael Panaretos; Bessarion",
+    "author_surname": "Panaretos",
+    "title_en": "Two Works on Trebizond",
+    "title_latin": null,
+    "orig_year": 1426,
+    "orig_lang": "greek",
+    "era": "renaissance_early_modern"
+  },
+  {
+    "series": "doml",
+    "author_en": "Christopher of Mytilene; John Mauropous",
+    "author_surname": "Christophoros Mytilenaios",
+    "title_en": "The Poems of Christopher of Mytilene and John Mauropous",
+    "title_latin": null,
+    "orig_year": 1050,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "John Tzetzes",
+    "author_surname": "Tzetzes",
+    "title_en": "Allegories of the Odyssey",
+    "title_latin": null,
+    "orig_year": 1145,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Theodore Metochites",
+    "author_surname": "Metochites",
+    "title_en": "On Morals or Concerning Education",
+    "title_latin": null,
+    "orig_year": 1325,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Sophronios of Jerusalem",
+    "author_surname": "Sophronios",
+    "title_en": "Homilies",
+    "title_latin": null,
+    "orig_year": 635,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (Byzantine epigram)",
+    "author_surname": "Anonymi",
+    "title_en": "Saints at the Limits: Seven Byzantine Popular Legends",
+    "title_latin": null,
+    "orig_year": 900,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "John Geometres",
+    "author_surname": "Geometres",
+    "title_en": "Life of the Virgin Mary",
+    "title_latin": null,
+    "orig_year": 990,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Michael Andreopoulos",
+    "author_surname": "Andreopoulos",
+    "title_en": "The Byzantine Sinbad",
+    "title_latin": null,
+    "orig_year": 1075,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (Theodore of Stoudios dossier)",
+    "author_surname": "Anonymi",
+    "title_en": "The Life and Death of Theodore of Stoudios",
+    "title_latin": null,
+    "orig_year": 868,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Romanos the Melodist",
+    "author_surname": "Romanos",
+    "title_en": "Songs about Women",
+    "title_latin": null,
+    "orig_year": 540,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Sabas (hagiographer)",
+    "author_surname": "Sabas",
+    "title_en": "The Life of Saint Peter of Atroa",
+    "title_latin": null,
+    "orig_year": 847,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "The Menologion of Basil II",
+    "title_latin": null,
+    "orig_year": 1000,
+    "orig_lang": "greek",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "The Beowulf Manuscript",
+    "title_latin": null,
+    "orig_year": 1000,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "Old Testament Narratives",
+    "title_latin": null,
+    "orig_year": 1000,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "Old English Shorter Poems, Volume I: Religious and Didactic",
+    "title_latin": null,
+    "orig_year": 950,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous (after Boethius)",
+    "author_surname": "Anonymus",
+    "title_en": "The Old English Boethius",
+    "title_latin": null,
+    "orig_year": 890,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Cynewulf",
+    "author_surname": "Cynewulf",
+    "title_en": "The Old English Poems of Cynewulf",
+    "title_latin": null,
+    "orig_year": 850,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "Old English Poems of Christ and His Saints",
+    "title_latin": null,
+    "orig_year": 950,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "Old English Shorter Poems, Volume II: Wisdom and Lyric",
+    "title_latin": null,
+    "orig_year": 950,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "Old English Psalms",
+    "title_latin": null,
+    "orig_year": 950,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous (after Orosius)",
+    "author_surname": "Anonymus",
+    "title_en": "The Old English History of the World",
+    "title_latin": null,
+    "orig_year": 900,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Aelfric of Eynsham",
+    "author_surname": "Aelfricus",
+    "title_en": "Old English Lives of Saints, Volumes I-III",
+    "title_latin": null,
+    "orig_year": 998,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "Anonymous Old English Lives of Saints",
+    "title_latin": null,
+    "orig_year": 1000,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Wulfstan of York",
+    "author_surname": "Wulfstanus",
+    "title_en": "Old English Legal Writings",
+    "title_latin": null,
+    "orig_year": 1010,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various",
+    "author_surname": "Anonymi",
+    "title_en": "The Old English and Anglo-Latin Riddle Tradition",
+    "title_latin": "Aenigmata (Anglo-Latina)",
+    "orig_year": 700,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Augustine (Old English version)",
+    "author_surname": "Augustinus",
+    "title_en": "Augustine's Soliloquies in Old English and in Latin",
+    "title_latin": "Soliloquia",
+    "orig_year": 387,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous (after Gregory the Great)",
+    "author_surname": "Anonymus",
+    "title_en": "The Old English Pastoral Care",
+    "title_latin": "Regula pastoralis",
+    "orig_year": 890,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Various (medical compilations)",
+    "author_surname": "Anonymi",
+    "title_en": "Medical Writings from Early Medieval England, Volume I",
+    "title_latin": null,
+    "orig_year": 1000,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Aelfric of Eynsham",
+    "author_surname": "Aelfricus",
+    "title_en": "The Old English Catholic Homilies, The First Series",
+    "title_latin": null,
+    "orig_year": 990,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Anonymous",
+    "author_surname": "Anonymus",
+    "title_en": "The Old English Chronicle, Volume I",
+    "title_latin": null,
+    "orig_year": 900,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  },
+  {
+    "series": "doml",
+    "author_en": "Aelfric of Eynsham",
+    "author_surname": "Aelfricus",
+    "title_en": "The Old English Catholic Homilies, The Second Series",
+    "title_latin": null,
+    "orig_year": 992,
+    "orig_lang": "old_english",
+    "era": "medieval"
+  }
+]
