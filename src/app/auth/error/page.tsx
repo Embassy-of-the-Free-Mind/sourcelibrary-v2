@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { isInAppBrowser as detectInApp, preferredBrowser } from '@/lib/in-app-browser';
+import AuthErrorCapture from './AuthErrorCapture';
 
 // NextAuth (Auth.js v5) redirects here with ?error=<code>. The codes we
 // actually see in production (PostHog, 60d): `Verification` (single-use
@@ -73,6 +74,7 @@ export default async function AuthErrorPage({
       />
       <div className="absolute inset-0 bg-black/50" />
 
+      <AuthErrorCapture code={error} />
       <div className="relative z-10 w-full max-w-md p-8 rounded-2xl text-center bg-white/95 backdrop-blur-sm border border-white/20 mx-4">
         <svg className="w-12 h-12 mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
