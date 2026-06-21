@@ -1,0 +1,1376 @@
+{
+  "generated": "2026-06-21",
+  "n": 40,
+  "target": 40,
+  "works": [
+    {
+      "key": "T32",
+      "pipeline_label": "translated",
+      "author": "Melanchthon, Philipp",
+      "title": "Annotationes in epistolas Pauli ad Rhomanos et Corinthios",
+      "print_year": 1522,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "partial",
+        "prior": "Donnelly's Marquette translation (1995) covers only the 1 Corinthians annotations, not the Romans or 2 Corinthians portions of this combined 1522 volume.",
+        "url": "https://www.marquette.edu/mupress/Melanchthon.shtml",
+        "strength": "moderate",
+        "sources": [
+          "https://www.marquette.edu/mupress/Melanchthon.shtml",
+          "https://philological.cal.bham.ac.uk/BIBLIOGRAPHY/melanchthon.html",
+          "https://play.google.com/store/books/details/Annotationes_Philippi_Melanchthonis_in_Epistolas_P?id=EkNdAAAAcAAJ",
+          "https://jps.library.utoronto.ca/index.php/renref/article/download/21281/17348/50829",
+          "https://en.wikipedia.org/wiki/Philip_Melanchthon"
+        ],
+        "reasoning": "The 1522 work is a combined Romans + 1&2 Corinthians lecture set composed by Melanchthon (1520–21), so it is renaissance/early modern, not a print of an ancient author. Only the 1 Corinthians portion has an English translation (Donnelly, Marquette 1995); the Romans and 2 Corinthians portions remain untranslated, and the existing English Romans commentary is the later, separately rewritten 1540 Commentarii (a different work), so the full combined work is only partially rendered."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "partial",
+        "prior": "John Patrick Donnelly, 1995, Annotations on the First Epistle to the Corinthians",
+        "url": "https://www.marquette.edu/university-press/donnelly-melanchthon.php",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The 1522 work is a collection of Melanchthon's lecture notes on Romans and both Corinthian epistles published by Luther. John Patrick Donnelly translated the First Corinthians portion in 1995, but the Romans and Second Corinthians portions of this specific 1522 edition remain untranslated."
+      },
+      "human": null
+    },
+    {
+      "key": "G25",
+      "pipeline_label": "gap",
+      "author": "unknown",
+      "title": "Josuae imperatoris historia illustrata atque explicata",
+      "print_year": 1574,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "partial",
+        "prior": "Only the work's bibliography section was rendered into English (Dunkelgrün, Studia Rosenthaliana 42-43, 2010-11); the full polyglot Joshua edition and Masius's Latin commentary have never been published in English.",
+        "url": "https://research.library.fordham.edu/emw/emw2009/emw2009/14/",
+        "strength": "strong",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Andreas_Masius",
+          "https://www.academia.edu/26328648/The_Hebrew_Library_of_a_Renaissance_Humanist_Andreas_Masius_and_the_Bibliography_to_his_Iosuae_Imperatoris_Historia_1574_with_a_Latin_Edition_and_an_Annotated_English_Translation",
+          "https://research.library.fordham.edu/emw/emw2009/emw2009/14/",
+          "https://books.google.com/books/about/Josuae_imperatoris_historia_illustrata_a.html?id=iKHZzgEACAAJ"
+        ],
+        "reasoning": "The work is an original Renaissance biblical-scholarship monument by humanist Andreas Masius (1514-1573), his own polyglot edition and Latin commentary on the Book of Joshua, composed in his final years and printed posthumously by Plantin in 1574. The only English rendering is Dunkelgrün's annotated translation of just the bibliography (the list of Hebrew books Masius used), not the complete edition/commentary, so the full work remains untranslated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "partial",
+        "prior": "Theodor Dunkelgrün, 2010, The Hebrew Library of a Renaissance Humanist: The bibliography to Andreas Masius' edition of the book of Joshua",
+        "url": "https://www.jstor.org/stable/41482641",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElODHx2XDtplh7Ebzf_gIbnMbJpuwgvcfp2vyfGuZN0i22a9j7ETzgjbHxWg6ffVd9UoCtexn0uAuC-kL0_2NuabDhaaqftInHdh8t8UDZduwx1YG0qhdfsLeSpZbPUf9rq0vvN1YdNgV4PiaRewMjPA8="
+        ],
+        "reasoning": "The work is a monumental scholarly commentary by the Flemish humanist Andreas Masius (1514–1573), published posthumously in 1574. While the extensive Latin commentary remains untranslated, the work's significant appendix (the bibliography of Hebrew sources) was translated into English by Theodor Dunkelgrün in 2010. No full English translation of the main text or commentary has been identified in major bibliographic databases."
+      },
+      "human": null
+    },
+    {
+      "key": "T5",
+      "pipeline_label": "translated",
+      "author": "Thomas a Kempis",
+      "title": "Tractatus de imitatione Christi cum tractatulo de meditatione cordis",
+      "print_year": 1503,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "First English rendering: William Atkinson (Books 1-3, 1502) and Lady Margaret Beaufort (Book 4, 1503), with hundreds of later English editions.",
+        "url": "https://en.wikipedia.org/wiki/The_Imitation_of_Christ",
+        "strength": "strong",
+        "sources": [
+          "https://www.themorgan.org/incunables/146924",
+          "https://en.wikipedia.org/wiki/The_Imitation_of_Christ",
+          "https://www.textmanuscripts.com/medieval/thomas-kempis-gerson--illuminated-60533",
+          "https://data.cerl.org/istc/ii00027000",
+          "https://www.ccel.org/ccel/kempis/imitation.html"
+        ],
+        "reasoning": "The headline work is Thomas a Kempis's Imitatio Christi, a medieval text composed c.1418-1427 and printed (not authored) in 1503; this 1503 volume is a multi-work container that binds it with a separate \"tractatulus de meditatione cordis\" by Jean Gerson (per the Morgan and other catalog records). The Imitatio is among the most-translated books ever and has had published English translations since 1502-1503, so the work is unambiguously translated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "William Atkynson and Margaret Beaufort, 1504, The Imitation of Christ",
+        "url": "https://www.bl.uk/collection-items/the-imitation-of-christ-by-thomas-a-kempis",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5rGhe-o_Su4La6ohEIRgIr7_KcHoiRgIse9Yv5fpZUpHxBZqlijh-devCqptM1vxLe1ZOCJCNJkIRmuZoZWdzXLXNzENHQlxHbeXh_852J39f2MJvcZvOcl3bhHtuQRriVWCgWV-PaS6y",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGoE_u7u2zFRMLSlMjeXDCKRJ387bce-2rYGdtPxWX7TeWTolZP5CteuyWBzXFlcYZuDmKk0D0HeyhUJFrc_uHCQCNXN0b1Ylb4rg-g40VDjWV1LvKcSQfJ8dgJzMAyReeYmI_YTsOuQAtsBCw=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7u53nLpTlYhB8H1oTd0UzHZCTzr_QIH9KyUrVLyrfJHwmpFXlDHXG7ARYWUgKDzqtHO0CqUivRTboexTlHNXaP2oenVbxEUpl1h0Dlwlrur_iRN5zkWcEtfcgz6wXDKIOMpPLhNHTyuJ42S9WB91n8lvzDbZ1B0haEdzfL1Q8ROz9wcQ-V8BmiC6EkpKKCmwA_w=="
+        ],
+        "reasoning": "The text was composed c. 1418–1427 during the late medieval period. The 1503 Latin edition is a container of the 'Imitation' and Jean Gerson's 'Meditation of the Heart'; both were first published in English translation by William Atkynson and Margaret Beaufort in 1504 (printed by Richard Pynson)."
+      },
+      "human": null
+    },
+    {
+      "key": "T42",
+      "pipeline_label": "translated",
+      "author": "Poliziano, Angelo",
+      "title": "Epistolarum libri XII. Miscellaneorum centuria I",
+      "print_year": 1567,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Both component works are in English: Letters (Shane Butler, I Tatti vol. 21, 2006) and Miscellanies first century (Dyck & Cottrell, I Tatti vols. 89-90, 2020).",
+        "url": "https://bmcr.brynmawr.edu/2022/2022.03.27/",
+        "strength": "strong",
+        "sources": [
+          "https://bmcr.brynmawr.edu/2022/2022.03.27/",
+          "https://www.cambridge.org/core/journals/renaissance-quarterly/article/angelo-poliziano-miscellanies-andrew-r-dyck-and-alan-cottrell-eds-and-trans-2-vols-the-i-tatti-renaissance-library-8990-cambridge-ma-harvard-university-press-2020-xxviii-640-pp-vol-1-418-pp-vol-2-35-per-volume/77FF5BE47D1798AB33AB7E058E3A9EBD",
+          "https://www.cambridge.org/core/journals/renaissance-quarterly/article/abs/angelo-poliziano-letters-volume-1-books-14-ed-and-trans-shane-butler-the-i-tatti-renaissance-library-21-cambridge-ma-harvard-university-press-2006-xiii-362-pp-2995-isbn-9780674021969/8D34F70CE799EFA435DB4ECD0716BB41",
+          "https://www.amazon.com/Angelo-Poliziano-Letters-Renaissance-Library/dp/0674021967",
+          "https://en.olschki.it/libro/9788822222817"
+        ],
+        "reasoning": "This 1567 composite print bundles two works by the humanist Poliziano (1454-1494) — his Latin Letters (12 books) and the Miscellaneorum centuria prima (first published 1489) — both composed in the late Quattrocento, hence renaissance_early_modern. Each constituent has a published English translation in the I Tatti Renaissance Library (Butler 2006 for the Letters; Dyck & Cottrell 2020 for the Miscellanies first century), so the volume's contents are translated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Andrew R. Dyck & Alan Cottrell, 2020, Miscellanies; Shane Butler, 2006, Letters",
+        "url": "https://www.hup.harvard.edu/books/9780674915947",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwS32Ji-3h5O1le4jtGkmRb3AHuh8SkM05kQvG3RBQmPZXcD1QgQghvQwcrhdQOHWQTVVBPNxiW9YYSYhOQW1IPERK4yGSRPoS4xfkG6B4pCDiWNoCfW-YmLy1ae487z0="
+        ],
+        "reasoning": "The 1567 edition is a container of two major Renaissance works: the 12 books of letters (first published 1498) and the first century of Miscellanea (1489). The Miscellanea (Centuria I) was fully translated by Dyck and Cottrell (2020), while the Letters (Books I-IV) were translated by Shane Butler (2006) in the I Tatti Renaissance Library series."
+      },
+      "human": null
+    },
+    {
+      "key": "G101",
+      "pipeline_label": "gap",
+      "author": "Stigel, Johann",
+      "title": "Poematum Joannis Stigelii Gothani ... Volumen ... Teil: 3 Praeter caetera libro Adoptiuo Epistolarum a Phil. Melanchtone ad Stigelium scriptarum adauctum ",
+      "print_year": 1601,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "No prior English translation found; only the original Neo-Latin collected-poems editions appear in catalogues.",
+        "url": "https://catalog.folger.edu/record/194436",
+        "strength": "moderate",
+        "sources": [
+          "https://catalog.folger.edu/record/194436",
+          "http://www.prdl.org/author_view.php?a_id=7456",
+          "https://www.deutsche-biographie.de/sfz81435.html",
+          "https://www.biblicalcyclopedia.com/S/stigel-johann.html",
+          "https://www.wikidata.org/wiki/Q1539176"
+        ],
+        "reasoning": "Johann Stigel (1515-1562) was a contemporary German Neo-Latin poet, so this collected-poems volume is original Renaissance/early-modern composition (mid-16th c.), not a print of an ancient/medieval author. The 1601 \"Poematum Stigelii\" is a posthumous multi-book Opera/anthology of his Latin verse with no English translation surfacing in Folger, WorldCat, PRDL, or Neo-Latin scholarship."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "",
+        "url": "https://www.google.com/books/edition/Poematum_Joannis_Stigelii_Gothani/6_9AAAAAcAAJ",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "Johann Stigel (1515–1562) was a prominent 16th-century German Neo-Latin poet and humanist; the 1601 Jena edition is a posthumous collection of his verse and correspondence with Philipp Melanchthon. No English translation of this specific volume or the 'libro Adoptiuo' of letters exists, though isolated poems like 'De cucolo et philomela' were translated by Charleton Lewis in 1861. The work is a multi-genre anthology (container) comprising various books of poetry and epistolary prose."
+      },
+      "human": null
+    },
+    {
+      "key": "G14",
+      "pipeline_label": "gap",
+      "author": "unknown",
+      "title": "Orationes X. Quarum aliæ In Actu Examinis Anniversarii: Aliae In Inauguratione Novæ Curiæ, Eiusdemq[ue] Operarum inchoatione, Habitae in Gymnasio Thoruniensi",
+      "print_year": 1594,
+      "composition_era": "unknown",
+      "claude": {
+        "verdict": "uncertain",
+        "relationship": "none",
+        "prior": "No search result tied an English translation to this specific anonymous \"Orationes X.\" (1594), so I cannot assert one exists.",
+        "url": "https://www.amazon.com/Providentia-Orationes-Decem-Latin/dp/1166057208",
+        "strength": "weak",
+        "sources": [
+          "https://www.amazon.com/Providentia-Orationes-Decem-Latin/dp/1166057208",
+          "http://www.documentacatholicaomnia.eu/04z/z_0393-0466__Theodoretus_Cyrrhi_Episcopus__De_providentia_orationes_decem__MGR.pdf.html",
+          "https://www.deutsche-digitale-bibliothek.de/item/KDDLXUTWSV6UUUTB5FRESEGAIVIEWQMF",
+          "https://bp16.bnf.fr/ark:/12148/cb418796290/",
+          "https://blogs.bodleian.ox.ac.uk/history/2014/02/04/new-frankfurt-and-leipzig-book-fair-catalogues-1594-1860/"
+        ],
+        "reasoning": "\"Orationes X.\" (= \"Ten Orations\") with an unknown author and a bare 1594/2-editions catalog stub could not be disambiguated to a specific work despite targeted searches across plausible candidates (Theodoret's De providentia orationes decem, Themistius, Lysias, Gregory Nazianzen, Aristides, Cicero, Isocrates); none confirmed the identity, era, or any English translation. I decline to guess an era or assert a translation absent a confirming source."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "",
+        "url": "https://www.zapiskihistoryczne.pl/files/issues/87.2/ZH_87-2_02_Augustyn_PL.pdf",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The work is a collection of 10 Latin orations delivered in 1594 by various faculty and officials (including Heinrich Stroband and Ulrich Schober) at the Gymnasium in Toruń to mark its elevation to an Academic Gymnasium. It was composed in 1594 and printed in 1594/1595 by Andreas Cotenius, placing it firmly in the early modern period. No English translation of this specific anthology or its constituent orations has been identified in any major bibliography or scholarly database."
+      },
+      "human": null
+    },
+    {
+      "key": "G84",
+      "pipeline_label": "gap",
+      "author": "Arnoldus (de Villa Nova)",
+      "title": "Opera omnia",
+      "print_year": 1585,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "Some constituent works (notably the Regimen sanitatis commentary, Englished by Thomas Paynell) appeared in English, but the collected Opera omnia as a whole never has.",
+        "url": "https://en.wikipedia.org/wiki/Arnaldus_de_Villa_Nova",
+        "strength": "moderate",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Arnaldus_de_Villa_Nova",
+          "https://search.library.wisc.edu/catalog/999567683802121",
+          "https://www.encyclopedia.com/people/philosophy-and-religion/early-christianity-biographies/arnald-villanova",
+          "https://archive.org/details/b30337525",
+          "https://en.wikipedia.org/wiki/Regimen_sanitatis_Salernitanum"
+        ],
+        "reasoning": "The 1585 Basel \"Opera omnia\" collects the writings of the medieval physician Arnaldus de Villa Nova (c. 1240–1311), so the text is medieval though printed in the early-modern period. As a multi-work collected edition it is a container for which \"a translation\" is ill-defined; no complete English rendering of the whole Opera exists, only partial English versions of individual constituent works."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "",
+        "url": "https://www.worldcat.org/title/14302551",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFTOvTUT3pVmhS62-yfCguJJE-B_xkGybWgFw-puxf3N-1iuKVaqzch18AV4huddJ3l2BLSgMQNus04RyCGnik_93kX3X-zBR9sJJRs_JVuJxesG2jzrJQ_ZYmlrdtL12U_A2B-Bt8KZMx1gLDOj7WKXFHWJHnnkK0bdiaGpsB3m6W38CzWxwnt6gs_Rws5NJMR7i2hxqEzifvJ3qO5LRhukl9JZJkFp1BBH7favQKD6x12PPgECLlAfqwI5XovZvc98g6gUAqHfQnRndOkj4Spyng3a5hpxZ-oWEj4TWZ9VEKf9jOy_f2U-KUmME3EG6uRwaXT7TJLKsZAYvUa5vwRP_G0_CLUrASakqLjKFgLxz64PhwHOwtPCKYvQrTkqA==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFXOtoUFYFVJzXJr4hPVEpUcgTLdJQeJEfJCc0aEI6xxtiTIyVxZUIBs8ciRU1XQokrGIcSfXrzIQ_v-JeFWPvBozV1FUAIe6QxnEajDcHMI7tHRvgt1PENLJzHAwn9fTRi1NZM8u3AXjkI_nmimDCrHblWg==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmgBRZEv-2hmgRS4Y-1krBMKUu9J1KLohOrecbpxK5rloRzMAstPv40oM46JxXgWhYkNcyjiWXT5pn8YjyCmj2s96r5gbbXO5XtwAUvsKzuWL_3UWA8fq42GRj5klMu1P6k_fJqgQ3jMkYlxTqxOuS"
+        ],
+        "reasoning": "Arnaldus de Villanova (d. 1311) was a medieval physician and alchemist; the 1585 Basel edition is a massive Latin folio collecting his diverse medical and chymical treatises. While individual works within this container (such as the Regimen Sanitatis or De vinis) have been translated into English, the complete Opera omnia has never been translated as a single unit."
+      },
+      "human": null
+    },
+    {
+      "key": "G78",
+      "pipeline_label": "gap",
+      "author": "Biondo, Michelangelo",
+      "title": "Compendiosa de medicamentis, quae apud pharmacopolas comperiuntur, quorum usus est Romanis, tam in propellendis languoribus, quam in servanda sanitate authore Michaeleangelo Blondo medentium celeberrimo",
+      "print_year": 1544,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "No English translation is attested in any catalogue, bibliography, or archive search; only the 1544 Latin original surfaces.",
+        "url": "https://archive.org/details/hin-wel-all-00002141-001",
+        "strength": "moderate",
+        "sources": [
+          "https://archive.org/details/hin-wel-all-00002141-001",
+          "https://www.treccani.it/enciclopedia/michelangelo-biondo_(Enciclopedia-Italiana)/",
+          "https://data.bnf.fr/fr/12463020/michelangelo_biondo/",
+          "https://en.wikipedia.org/wiki/Michelangelo_Biondo",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC9158931/"
+        ],
+        "reasoning": "Biondo (1497–1565), a Venetian physician, composed this Latin pharmacological treatise himself, printed in Rome by Girolama Cartolari in 1544, so the text is a contemporary Renaissance work. Multiple searches (Google Books, archive.org/Wellcome, WorldCat-style, scholarly PMC articles) return only the Latin original with no English translation by anyone at any date."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://edit16.iccu.sbn.it/resultset-titoli/-/titoli/detail/CNCE6112",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFKIbUOD702LgmhL6Zvk4sLFxIBPJVPAUSn-WSw_xVblVOaPGI7GdUk2pOL2Hp_1ZCwmNITi9h9U2sdzAwOP6oXI6HrTki2Mjg6HQyJbZIt7_-ulsdoazsUfXQVePSO4dqEfPin-CRe88jwJSCjFMSmhtmc",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiQXqPaFLp2hfXzzDHgmFJmMJwDm7-UJHBo7igascm2FHPCRNZhuGIUd1Zgmt6l00bVC47dpu27RR1nxEpDGV1R3dSlEbEVwUb89XVq4IrrdlS6Fx34ZJ-AF7sygV3tW02d-3tSBRxp5JhH9Oh9zEI7i_1iEURMpcylw=="
+        ],
+        "reasoning": "Michelangelo Biondo (1497–1565) was a 16th-century Italian physician; this work was first published in Rome in 1544 by Girolama Cartolari. Extensive searches in WorldCat, the Wellcome Collection, and EDIT16 confirm the work exists only in its original Latin editions (1544 and 1546) and has no recorded English translation."
+      },
+      "human": null
+    },
+    {
+      "key": "G2",
+      "pipeline_label": "gap",
+      "author": "Erasmus, Desiderius",
+      "title": "Axiomata pro Luthero. Oecolampadii judicium de doctore Martino Luthero. Quidam aphorismi Lutheri rem continentes, praeclaris apophtegmatis, insertis. Item responsum principis Friderici ducis Saxoniae datum legatis Romani pontificis, apud Coloniam agrippinam. Judicium de doctore Martino Luthero",
+      "print_year": 1521,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Published in English as \"Brief Notes of Erasmus for the Cause of Luther\" in Collected Works of Erasmus vol. 71 (Controversies), University of Toronto Press, 1993.",
+        "url": "https://www.degruyterbrill.com/document/doi/10.3138/9781442673434-006/html?lang=en",
+        "strength": "strong",
+        "sources": [
+          "https://www.degruyterbrill.com/document/doi/10.3138/9781442673434-006/html?lang=en",
+          "https://www.jstor.org/stable/10.3138/9781442673434",
+          "https://www.degruyterbrill.com/document/doi/10.3138/9781442673434/html?lang=en",
+          "https://link.springer.com/chapter/10.1007/978-94-017-6218-2_11",
+          "https://www.worldcat.org/title/oecolampadii-iudicium-de-doctore-martino-luthero/oclc/83754998"
+        ],
+        "reasoning": "The work is Erasmus's \"Axiomata pro causa Lutheri,\" written by the contemporary humanist Erasmus c.1520-21 to guide Elector Frederick the Wise (the 1521 print bundles it with Oecolampadius's separate judgment of Luther). A complete English translation appears as \"Brief Notes of Erasmus for the Cause of Luther\" in Collected Works of Erasmus vol. 71, confirmed by the De Gruyter/UTP record and JSTOR contents."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Hans J. Hillerbrand, 1964, The Reformation: A Narrative History (contains 'Axioms on Behalf of Luther')",
+        "url": "https://books.google.com/books?id=0_0_AQAAIAAJ",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The 1521 work is a pamphlet collection of early Reformation documents; the primary text, Erasmus's 'Axiomata pro Luthero,' was composed in November 1520 for Frederick the Wise. It has been translated into English by Hans J. Hillerbrand (1964, pp. 88-89) and appears as 'Brief Notes of Erasmus for the Cause of Luther' in the Collected Works of Erasmus, Vol. 71 (1993)."
+      },
+      "human": null
+    },
+    {
+      "key": "T109",
+      "pipeline_label": "translated",
+      "author": "Burmeister, Joachim",
+      "title": "Musica Poetica : Definitionibus Et Divisionibus Breviter Delineata, quibus in singulis capitibus sunt hypomnemata praeceptionum instar synoptikōs addita, edita studio [et] opera, M. Joachimi Burmeisteri, Lunaeburg. Scholae Rostoch,. Collegae Claßici",
+      "print_year": 1606,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Complete English translation: \"Musical Poetics,\" trans. Benito V. Rivera, Yale University Press, 1993 (Music Theory Translation Series).",
+        "url": "https://yalebooks.yale.edu/book/9780300051100/musical-poetics/",
+        "strength": "strong",
+        "sources": [
+          "https://yalebooks.yale.edu/book/9780300051100/musical-poetics/",
+          "https://www.cambridge.org/core/journals/renaissance-quarterly/article/abs/joachim-burmeister-musical-poetics-trans-intro-and-annot-benito-v-rivera-music-theory-translation-series-new-haven-and-london-yale-university-press-1993-lxiv-306-pp-50/053432F3C6B0822FB2A2F419F974C671",
+          "https://academic.oup.com/mts/article-abstract/17/1/119/1064354",
+          "https://mtosmt.org/issues/mto.95.1.5/mto.95.1.5.schubert.html",
+          "https://www.amazon.com/Musical-Poetics-Music-Theory-Translation/dp/0300051107"
+        ],
+        "reasoning": "Burmeister (1564–1629) was a contemporary author who wrote this treatise for its 1606 Rostock printing, so it is a renaissance/early-modern composition. A full English translation with facing-page Latin edition was published by Yale (Rivera, 1993) and is confirmed by multiple scholarly reviews."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Benito V. Rivera, 1993, Musical Poetics",
+        "url": "https://yalebooks.yale.edu/book/9780300051100/musical-poetics/",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHZ9wHQ-R3JTFHij4P4Gp86MQiqc6Faye1O2LjXuCr1d8hf44nyjLau5bYz4hFHSU-Pcs0otF8Abe1ztare1fyS5fxqfdKomRLJqVDGpThAE2Y0K0VVoppHXpvrmpTi6FIMTVSZxGEpQZQwQ==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0ZNn9oPd6DD0b-fgtGI-U2BB7AW6yXsV7jcoZ1uRhZYWN8GfYFYgHDW1ArYns4YahI-pZLNiB_rxo-jJtaABENzzO-g7EREW07MUqAvKFXsG3eOVT47G7PXF2asZtflhTmvPcwzNAjMH8miC6T2-d0Q=="
+        ],
+        "reasoning": "Joachim Burmeister (1564–1629) was a contemporary German theorist; the 1606 text is the final, expanded version of his earlier 1599 and 1601 treatises. A complete English translation by Benito V. Rivera was published by Yale University Press in 1993 as part of the Music Theory Translation Series."
+      },
+      "human": null
+    },
+    {
+      "key": "T115",
+      "pipeline_label": "translated",
+      "author": "Lipsius, Justus",
+      "title": "Epistolarum centuriae duae: quarum prior innovata, altera nova. Institutio epistolica. Epistola ad Jacobum Monavium, cum duabus ad Abrahamum Ortelium",
+      "print_year": 1590,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "partial",
+        "prior": "No published verdict assumed; investigated fresh — this is a container of letters plus a treatise.",
+        "url": "https://www.siupress.com/9780809319589/justus-lipsius-principles-of-letter-writing/",
+        "strength": "strong",
+        "sources": [
+          "https://www.siupress.com/9780809319589/justus-lipsius-principles-of-letter-writing/",
+          "https://www.abebooks.com/9780809319589/Justus-Lipsius-Principles-Letter-Writing-Bilingal-0809319586/plp",
+          "https://archive.org/details/bub_gb_Ru7KFOEKSLAC",
+          "https://philpapers.org/rec/LIPILE-4",
+          "https://www.libreriagovi.com/en/15th-16th-century/epistolica-institutio-exepta-e-dictantis-eius-ore-anno-i-lxxxvii-mense-iunio-adiunctuum-est-demetrij"
+        ],
+        "reasoning": "The title bundles Lipsius's own 200 published Latin letters (Centuriae duae) with his Institutio epistolica treatise, all written by Lipsius (1547-1606) c.1586-1590 (the Institutio from his June 1587 Leiden lectures). Only the treatise component has a complete English translation (Young & Hester, Principles of Letter-Writing, SIU Press, 1996); the two centuries of letters have no full published English translation, so the container as a whole is untranslated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "R. V. Young and M. Thomas Hester, 1996, Principles of Letter-Writing: A Bilingual Text of Justus Lipsius' Epistolica Institutio",
+        "url": "https://www.google.com/books/edition/Principles_of_Letter_writing/0_8_AQAAIAAJ",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The 1590 volume is a compilation containing the 'Institutio epistolica' and two centuries of letters; while the 'Institutio' was translated in full by Young and Hester in 1996, the letters remain largely untranslated in English except for specific excerpts (e.g., Stradling's 1592 translation of the letter on travel)."
+      },
+      "human": null
+    },
+    {
+      "key": "T24",
+      "pipeline_label": "translated",
+      "author": "Thomas Aquinas, St",
+      "title": "Commentaria in octo Physicorum Aristotelis libros, ex vetustissimo ac fidelissimo manu scripto exemplari, diligentissime castigata, & locis quamplurimis integritati restituita: cum duplici textus tralatione, antiqua, et Argyropoli, recognitis. Ad haec accessit Roberti Linconiensis in eosdem Summa. Quibus etiam sunt additi sancti Thomae infrascripti libelli ad negocium physicum spectantes, ac Thomae De Vio cardinalis Caietani Quaestiones duae Duo item indices",
+      "print_year": 1566,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Complete English translation published 1963 (Blackwell, Spath & Thirlkel), Yale UP / reprinted Dumb Ox Books 1999.",
+        "url": "https://www.cambridge.org/core/journals/classical-review/article/abs/aquinas-on-the-phsics-stthomas-aquinas-commentary-on-aristotles-physics-translated-by-r-j-blackwell-r-j-spath-and-w-e-thirlkel-with-an-introduction-by-v-j-bourke-pp-xxxii-599-london-routledge-1963-cloth-70s-net/EC3D0BDF3400799A8EC4F48DDDFAEE0B",
+        "strength": "strong",
+        "sources": [
+          "https://www.cambridge.org/core/journals/classical-review/article/abs/aquinas-on-the-phsics-stthomas-aquinas-commentary-on-aristotles-physics-translated-by-r-j-blackwell-r-j-spath-and-w-e-thirlkel-with-an-introduction-by-v-j-bourke-pp-xxxii-599-london-routledge-1963-cloth-70s-net/EC3D0BDF3400799A8EC4F48DDDFAEE0B",
+          "https://www.abebooks.com/first-edition/Commentary-Aristotles-Physics-Thomas-Aquinas-Richard/6061084415/bd",
+          "https://wellcomecollection.org/works/faamruxu",
+          "https://isidore.co/aquinas/english/Physics1.htm",
+          "https://archive.org/details/inoctolibrosphys0000thom"
+        ],
+        "reasoning": "The title is Aquinas's commentary on Aristotle's Physics (Sentencia super Physicam), composed by Aquinas c. 1268-69, so a 1566 print is medieval. A complete English translation by Blackwell, Spath and Thirlkel was published in 1963 (Yale UP), reviewed in The Classical Review and reprinted by Dumb Ox Books."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Richard J. Blackwell, Richard J. Spath, and W. Edmund Thirlkel, 1963, Commentary on Aristotle's Physics",
+        "url": "https://archive.org/details/commentaryonaris0000thom",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFy8Cxvf-ubstu8LHgxW95QXHaHOt2wbOUbeXxg5DCRpGBj5zWENykIkd6DpQyJd22OArF5xi7DXmJYlSSfQNQJGLlgPr0Fz-aBX2eZioBFRD1HxaMyjFTJxZ4t",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1z3zQlMmmB3qAPauSlNAq0VN68r0g9cTnvWBAm0n8RjOR_HbI9JJvzZryC8cY5Ag-ek2pOH4V3xKsEwHLJHgw0WqON32t8_-YME1ZUzgWku0Xikf0rFb7Mq5lD9_3tWtsIlmgT3PN38_rX-zuDQqbFljLc1sEz72XmEt3e9xKtuRt34257XXDD2akJi1Riew93FQr7hGHrAwM3EClqAl3B-v_tEcwL-9HlGQp95N7OsU7RaaFwEwvzBcn3w==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPgImxpqGiYfayPn-9ELbENMA6B-mCIBh732fbgXNuT9ByRw6xgYHRS4oeIjHHSgBuFFtPpejVp_yULXvHH1V39IM5Jfxy9uaBsymi6nL3yoq0pTNAm-kzyZLLjLdL5nDfAzyUF9AgH0lEjdV45xtk11-Hu4DrBoPxrmy1zWnWI4f1DDIMIsPScZxBeGvgCVqZZ-Om-B4K8AYyEQWKtW3m2DTck3WQB-LRjpc=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2AmcoODHiA0Aq3U_Udd0MGfjKLXSsnE2v86vV2mYSpIsRYEW1ArNv6PHWYhT5hvkKoSN1WpNIYKT_Znbwox2Exb2pqVKWVLikCo74rc7LKxuHUDqQrqQTwrTC0lIugYOHAfOFiDs7Xg=="
+        ],
+        "reasoning": "The 1566 Giunta edition is a container featuring Aquinas's medieval commentary (composed c. 1268–1270) alongside works by Grosseteste and Cajetan. While the full anthology remains untranslated as a unit, the primary work was translated into English by Blackwell, Spath, and Thirlkel in 1963. Several included opuscula by Aquinas have also been translated independently."
+      },
+      "human": null
+    },
+    {
+      "key": "T84",
+      "pipeline_label": "translated",
+      "author": "unknown",
+      "title": "Biblia magna. Biblia cum concordantiis Veteris et Novi Testamenti et sacrorum canonum necnon et additione in marginibus varietatis diversorum textuum ac etiam canonibus antiquis quatuor evangeliorum insertis",
+      "print_year": 1520,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "No English translation of this specific Vulgate-with-concordances edition exists; the underlying biblical text is the Latin Vulgate.",
+        "url": "https://www.bibliorare.com/lot/358385/",
+        "strength": "strong",
+        "sources": [
+          "https://www.bibliorare.com/lot/358385/",
+          "https://www.bonhams.com/auctions/11940/lot/349/",
+          "https://latinbibles.com/1500s/",
+          "https://en.wikipedia.org/wiki/Vulgate",
+          "https://en.wikipedia.org/wiki/Douay%E2%80%93Rheims_Bible"
+        ],
+        "reasoning": "The 1520 Lyon imprint (Moylin/Sacon for Gueynard/Koberger) is a complete Latin Vulgate Bible bundled with concordances of the Old/New Testaments and sacred canons — an early-modern PRINT of Jerome's late-4th-century Vulgate, so the text is antiquity. As a whole-Bible-plus-apparatus container, \"a translation of this work\" is ill-defined; the Vulgate's biblical text itself was Englished (Douay-Rheims, 1582/1610) but this edition's specific concordance apparatus was not."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://www.newberry.org/printed-latin-bibles",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "This is a 1520 Lyon edition of the Latin Vulgate (composed c. 405 AD) featuring the scholarly apparatus of Alberto Castellano (first published 1511). While the biblical text itself has numerous English translations, this specific editorial 'work'—including its unique concordances, marginal variants, and canons—has never been published in an English translation."
+      },
+      "human": null
+    },
+    {
+      "key": "G83",
+      "pipeline_label": "gap",
+      "author": "Nevo, Alexander de",
+      "title": "Consilia Alexandri de Neuo Adiectis insuper summariis repertorio alphabetico serie materias copiosissime complectens d. Nicolao Pignolato authore. Nunc primum in lucem edito",
+      "print_year": 1561,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "No prior — searches found only Latin incunabula/16th-c. editions and English-language scholarly paraphrase, never a published English translation.",
+        "url": "https://blogs.loc.gov/law/2016/05/the-consilia-of-alessandro-nievo-on-jews-and-usury-in-15th-century-italy/",
+        "strength": "strong",
+        "sources": [
+          "https://blogs.loc.gov/law/2016/05/the-consilia-of-alessandro-nievo-on-jews-and-usury-in-15th-century-italy/",
+          "http://legalhistorysources.com/Bologna2001/Biobiblio/1298A-B.html",
+          "https://www.lawbookexchange.com/pages/books/69639/nicolaus-de-ausmo-alexander-de-nevo/supplementum-summae-pisanellae-consilia-contra-judaeos-venice-1482",
+          "https://data.cerl.org/thesaurus/cnp00870936",
+          "https://www.cambridge.org/core/journals/law-and-history-review/article/abs/once-the-jews-have-been-expelled-intent-and-interpretation-in-late-medieval-canon-law/AE89635FA56E1FA9CBA1B39B107E2FCF"
+        ],
+        "reasoning": "The 1561 print is a posthumous Latin edition of Alessandro Nievo's (c.1419–1485) \"Consilia contra Judaeos foenerantes,\" a set of legal opinions on Jewish usury composed in Padua c.1440–1455, so the text is medieval/15th-century though printed in the early modern era. Multiple catalogues and the LOC law-library essay confirm only Latin editions plus English-language scholarly summaries; no complete or excerpt English translation is documented."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://blogs.loc.gov/law/2016/05/the-consilia-of-alessandro-nievo-on-jews-and-usury-in-15th-century-italy/",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrMcdfh59akPAgo-NQLK9_o678a6XHzFqTfhIg6be-ESoocerP2sUyyF0ugD-IqSr95Vzv61aCYYRvN5kxPWULCehEmUb_Fp_ZQMT3USkKYbVXvtG452Rrg5D6MDCYTQ-ltkQET2pPRHc8BxojaTo=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGIM5ng1ClvUyY8OsUAMljPwm2kNWgm_28SVz82UOpqkI6jBiXL4x6Q4xqFHbv7dfgHpP5gEMEuPXYJDPrJY7uQEkSseVlCdclBW4pd9dXMrsGMw1ix1fiO39oDxSfLZvYObGIUGhYH_UTZMFai",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH81u6FLe-5Q4I0nS8WRgj1vU5VXhVE85hCwRK48HxTHJfko4oFqtHIs2cCVyShgfcHTZN9hUhTYUnzb7X5TwCqCGXOrt6mwwc-5_8ootXWK7NiXVFKS8scEagR071Zm6g34rNmqHmlWxCm5OnSHyb4i6vjKMNMRMMZtfPUMB6Yqs4kWzhU8M6sHoQpD7uBV9LL9_yxXglGoES9pYQFoiRivbjLAuZroeh3tg==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxu8RApqmSMs4yphVGcelroW69pYijQAke8zYo4_bZhumapPZDECF6UARVotfcjbonzpNoizSixYwUpUB6H8jRM0HOc0b2FNK-WjI-EE7VNlMKCSPveC0TqQtbjGBOsyC0mrKH8JxCeC1kxMZYjvkESjH8s66rEK_0",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEswtGEeEQ3AYvbAVT8NWm4lA9ePpbtWMS3APWATwS26m1JiICFGxFGJlnIYk-P_TEN6sfH7w-2ACrXkn8wcj72GSwpOSqH_Su9XCuOuzIt1467Lr22iZGAvnYAU61i-uC12oLiwKpiFwfdH6aP8jhpo48u-JzJF-bBLD-f4ekFt6gybv3JcI73t4ABpOLzuIFYtrhCz5kn2gLJkXKhL1dnuFsnEV4h8a2uIWSpz4pFybS6unCcBTijR4TgAh1t5mSXa7wz89ef"
+        ],
+        "reasoning": "Alexander de Nevo (Alessandro Nievo, 1417–1484) was a 15th-century Italian jurist who composed his 'Consilia' (legal opinions) in the mid-1400s, notably the 'Consilia contra Judaeos foenerantes' in 1441. The 1561 edition is a later printing of his collected legal advice with added summaries by Nicolaus Pignolatus. No English translation of this work or its constituent consilia has been published, though it is frequently cited in scholarly studies of medieval usury and Jewish history."
+      },
+      "human": null
+    },
+    {
+      "key": "G108",
+      "pipeline_label": "gap",
+      "author": "Lycurgus (Atheniensis)",
+      "title": "Oratio lycurgi contra leocraten, desertorem patrie, dulcissime de officiis patriae debitis disserens. Cum praefatione phi.melanth.",
+      "print_year": 1545,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "different_source_language",
+        "prior": "Lycurgus's Against Leocrates has multiple published English translations (J.O. Burtt's Loeb \"Minor Attic Orators\" 1954/1962; Edwards in Roisman, Oxford 2020).",
+        "url": "https://www.loebclassics.com/view/lycurgus-leocrates/1954/pb_LCL395.11.xml",
+        "strength": "strong",
+        "sources": [
+          "https://www.loebclassics.com/view/lycurgus-leocrates/1954/pb_LCL395.11.xml",
+          "http://classics.mit.edu/Lycurgus/lyc.1.html",
+          "https://global.oup.com/academic/product/lycurgus-against-leocrates-9780198830177",
+          "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0152",
+          "https://archive.org/details/bub_gb_qaCiZZnkN04C"
+        ],
+        "reasoning": "\"Against Leocrates\" is the sole surviving oration of Lycurgus of Athens, delivered c.330 BCE; the 1545 item is an early-modern Latin translation of that ancient Greek speech. The Greek original has been published in English many times, so the underlying work is firmly translated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Mitchell Carroll, 1900, The World's Orators, Vol. 2: Orators of Ancient Greece",
+        "url": "https://books.google.com/books?id=f_8-AAAAYAAJ",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The work is the only extant speech of the ancient Greek orator Lycurgus of Athens, delivered in 330 BC. The first full English translation was published in 1900 by Mitchell Carroll in 'The World's Orators' series (Vol. 2), which explicitly claimed it as the first English rendering of the speech."
+      },
+      "human": null
+    },
+    {
+      "key": "G28",
+      "pipeline_label": "gap",
+      "author": "unknown",
+      "title": "philosophia nec nec tolerat",
+      "print_year": 1590,
+      "composition_era": "unknown",
+      "claude": {
+        "verdict": "uncertain",
+        "relationship": "none",
+        "prior": "No catalogue, library, or scholarly source matches this title, so no English translation can be confirmed or ruled out.",
+        "strength": "weak",
+        "sources": [],
+        "reasoning": "The string \"philosophia nec nec tolerat\" is an unresolvable, scrambled title fragment (doubled \"nec nec\", dangling verb \"tolerat\") with no author and zero matches across Google Books, archive.org, USTC/VD16 framing, WorldCat-style and bibliographic searches. With the work unidentifiable, neither its composition era nor any prior English translation can be established."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Thomas Lodge, 1614, The Workes of Lucius Annæus Seneca",
+        "url": "https://archive.org/details/workesofluciusann00sene",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The phrase is a known maxim from Seneca's Epistulae Morales (108.38). The work was composed in the 1st century AD and first appeared in a complete English translation by Thomas Lodge in 1614."
+      },
+      "human": null
+    },
+    {
+      "key": "T70",
+      "pipeline_label": "translated",
+      "author": "Thomas (von Kempen)",
+      "title": "Brevis regula tironis spiritualis",
+      "print_year": 1571,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "Catalog assigns it to Thomas a Kempis (d.1471), but the exact title is the signature tract of Louis de Blois/Blosius (d.1566) — either way a 15th–16th-c. devotio-moderna author, not antiquity.",
+        "url": "https://en.wikipedia.org/wiki/Louis_de_Blois",
+        "strength": "moderate",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Louis_de_Blois",
+          "https://www.ccel.org/ccel/blois/spiritual.toc.html",
+          "https://en.wikipedia.org/wiki/Thomas_%C3%A0_Kempis",
+          "https://archive.org/details/sermonstonovices05thom",
+          "https://www.newadvent.org/cathen/14661a.htm"
+        ],
+        "reasoning": "The work is a short ascetic \"rule for a spiritual novice\" by a late-medieval/early-modern Devotio Moderna author (Thomas a Kempis per the catalog, or more likely Louis de Blois whose corpus carries this exact title), so its text predates the 1571 print. Standard English translations of both authors (Wilberforce's Blosius set; the CCEL \"Rule of the Spiritual Life / Spiritual Mirror / String of Spiritual Jewels\"; Kempis's Imitation, Sermons to the Novices, etc.) cover other works — no search surfaced this specific \"Brevis regula tironis spiritualis\" in English under any title."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Dom Vincent Scully, 1907, \"A Manual for the Little Ones\"",
+        "url": "https://archive.org/details/worksofthomasake05thom",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The 1571 Dillingen edition 'Brevis regula tironis spiritualis' (VD16 T 1046/1047) is a 16th-century title for the medieval treatise 'Manualis parvulorum' by Thomas à Kempis (c. 1380–1471). This work was translated into English by Dom Vincent Scully in 1907 as 'A Manual for the Little Ones' in the fifth volume of his 'Works of Thomas à Kempis' series."
+      },
+      "human": null
+    },
+    {
+      "key": "G12",
+      "pipeline_label": "gap",
+      "author": "Faber, Heinrich",
+      "title": "Compendiolum musicae, pro pueris incipientibus. Per M. Heinricum fabrum conscriptum, ac nunc denuo, cum additione alterius compendioli recognitum.",
+      "print_year": 1566,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "partial",
+        "prior": "No complete published English translation; only a partial scholarly rendering exists in a 2024 dissertation.",
+        "url": "https://en.wikipedia.org/wiki/Heinrich_Faber",
+        "strength": "moderate",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Heinrich_Faber",
+          "https://imslp.org/wiki/Compendiolum_musicae_(Faber,_Heinrich)",
+          "https://knowledge.uchicago.edu/record/12313",
+          "https://archive.org/details/imslp-musicae-faber-heinrich",
+          "https://www.digitale-sammlungen.de/en/view/bsb10187574"
+        ],
+        "reasoning": "Heinrich Faber (d. 1552) wrote this beginners' music textbook in 1548, making him a contemporary 16th-century author (renaissance_early_modern). Searches across Wikipedia, IMSLP, Internet Archive, and scholarly sources show period translations only into German (1572) and a partial English rendering inside Patrick S. Fitzgibbon's 2024 University of Chicago dissertation — no complete standalone English translation."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Patrick S. Fitzgibbon, 2020, \"The Art of Brevity: Music Theory and the German Reformation\"",
+        "url": "https://amsmusicology.org/page/SanAntonio2018Abstracts",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGnMIA_3G4jGCB-O3rh7-_VoCw5pCIUdiJ7uU9Cz5DFkxkbPRoY-kdZ_SVljfBT5f1EiFmGqfUunA7TOCXwMwpH1_PaXet5YjT4NI182yF_l8kB2q7WFlprlogU4oq3vPNxnBRmEpIDM29Cu1DspXGbOfPWX1ZDmFMHwb1FrZ7ZIHk=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEEI-PKLedYknDGUU1xoeewrZQj_WD8mMd7IBkhz1TlY5-01G0w0-TJMjKnQ3ftArcVGIH8Nc0A54dKypfypiRyh9R5K4_f6FPGc92vZG-sugG4DYJXoL3L2Dlx3POnSJ2zQDrn_lxEBOy3ug=="
+        ],
+        "reasoning": "Heinrich Faber's 'Compendiolum musicae' was first published in 1548 and became the most widely used music textbook in 16th-century Lutheran schools. The first complete English translation was produced by Patrick S. Fitzgibbon in his 2020 dissertation (University of Chicago), following a premiere of the translation at the 2018 AMS/SMT conference in San Antonio. Prior to this, only partial excerpts appeared in scholarly works such as John Butt's 'Music Education and the Art of Performance' (1994)."
+      },
+      "human": null
+    },
+    {
+      "key": "T37",
+      "pipeline_label": "translated",
+      "author": "Euripides",
+      "title": "Hecvba et Iphigenia in Avlide, Evripidis tragœdiæ in latinum tralatæ Erasmo Roterodamo interprete ; Eivsdem Ode de laudibus Britanniæ, regisq[?] Henrici Septimi ... Eivsdem Ode de senectutis incommodis ...",
+      "print_year": 1511,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "uncertain",
+        "relationship": "container",
+        "prior": "No prior English translation of *Erasmus's Latin* Euripides was confirmed; the underlying Greek plays are heavily Englished, but that is a different source language.",
+        "url": "https://jps.library.utoronto.ca/index.php/renref/article/view/28743",
+        "strength": "moderate",
+        "sources": [
+          "https://jps.library.utoronto.ca/index.php/renref/article/view/28743",
+          "https://en.wikipedia.org/wiki/Jane_Lumley,_Baroness_Lumley",
+          "https://en.wikipedia.org/wiki/Works_of_Erasmus",
+          "https://www.drouotonline.com/l/13111169--euripides-hecuba-et-iphigenia",
+          "https://academic.oup.com/crj/article-abstract/12/3/279/5714183"
+        ],
+        "reasoning": "The text is Euripides' Greek tragedies Hecuba (~424 BCE) and Iphigenia in Aulide (~405 BCE); this 1511 book is Erasmus's pioneering Latin verse translation (first printed 1506), so by the \"print of an ancient author\" rule the composition era is antiquity. It bundles two distinct plays (container); no search result confirmed an English rendering of Erasmus's specific Latin version — Jane Lumley's c.1555 English Iphigenia is debated and partial, and the many English Euripides translations render the Greek original, a different source language."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Christopher Wortham & Colin Mayrhofer (plays), Clarence H. Miller (poems), 1993-1995, Collected Works of Erasmus Vols 58 & 85",
+        "url": "https://utorontopress.com/9780802006530/euripides/",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The work is a Renaissance collection of Erasmus's Latin translations of Euripides (composed 1503-1506) and his original poems (1499-1506). The plays were translated into English in CWE Vol. 58 (1995), and the poems in CWE Vol. 85 (1993). As a multi-work anthology, it is classified as a container."
+      },
+      "human": null
+    },
+    {
+      "key": "T64",
+      "pipeline_label": "translated",
+      "author": "Platina",
+      "title": "De vitis maxi. pont.; De falso et vero bono dialogus ad Sistum IV; Contra amore, dialogus ad Lodovicum Stellam Mantuanum; De optimo ciue, dialogus ad Laurentio Medicem; Raphaelli Volterrani, Historia de vita quattuor maxi. pont.; Platyne Panegiricus; Oratio de pace Italiae confirmanda et bello Thurcis incendio",
+      "print_year": 1509,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Platina's Lives of the Popes (the dominant component) was Englished by Sir Paul Rycaut in 1685 and again in the D'Elia/Harvard ITRL edition (2008).",
+        "url": "https://en.wikipedia.org/wiki/Bartolomeo_Platina",
+        "strength": "strong",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Bartolomeo_Platina",
+          "https://elfinspell.com/ChurchHistory/Platina/LivesOfThePopes-Vol-1/Benham-MyIntro.html",
+          "https://www.hup.harvard.edu/books/9780674028197",
+          "https://link.springer.com/rwe/10.1007/978-3-319-02848-4_358-1",
+          "https://archive.org/details/livesofpopes0000plat"
+        ],
+        "reasoning": "All three texts are original works by the 15th-century humanist Bartolomeo Platina (1421–1481) — De vitis pontificum composed ca.1471–1475 and the dialogues De falso et vero bono (1468–69) and Contra amores — so this is a renaissance/early-modern composition, not a reprint of an ancient author. The 1509 print is a multi-work container whose principal work, the Lives of the Popes, has a documented complete English translation (Rycaut 1685; Harvard/D'Elia 2008)."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Paul Rycaut, 1685, The Lives of the Popes; Renee Neu Watkins, 1978, Humanism and Liberty (partial)",
+        "url": "https://archive.org/details/livesofpopes0000plat",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The 1509 edition is a humanist anthology containing Platina's 'Lives of the Popes' (composed c. 1471–1475) and several minor dialogues. The primary work was translated by Paul Rycaut (1685) and Anthony D'Elia (2008), while 'De optimo cive' was partially translated by Renee Neu Watkins (1978). The other works in this specific container, including the continuation by Volaterranus and the minor dialogues, remain largely untranslated into English."
+      },
+      "human": null
+    },
+    {
+      "key": "G29",
+      "pipeline_label": "gap",
+      "author": "Egenolff, Paul",
+      "title": "Funebres in obitus illustrium personarum panegyrici academiae Marpurgensis: hoc est: selectae aliquot oration es, in publicis illius academiae congressibus ab eiusdem professoribus habitae. Opusculum omnium doctrinarum studiosis lectu jucundum et utile futurum.",
+      "print_year": 1590,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "No prior English translation found; one constituent oration (Goclenius's De natura sagarum) is discussed in scholarship but not published in English translation.",
+        "url": "https://digitale.bibliothek.uni-halle.de/vd16/content/pageview/7792209",
+        "strength": "moderate",
+        "sources": [
+          "https://digitale.bibliothek.uni-halle.de/vd16/content/pageview/7792209",
+          "https://en.wikipedia.org/wiki/Rudolph_Goclenius",
+          "http://worldcat.org/identities/nc-egenolff%20paul/",
+          "https://mateo.uni-mannheim.de/camenaref/teissier/teissier1/bd2/Teissier_catalogus_2.html"
+        ],
+        "reasoning": "VD16 confirms this is the \"Panegyrici Academiae Marpurgensis\" (1590), a multi-author anthology of selected funeral and ceremonial orations delivered by contemporary Marburg professors and printed by Paul Egenolff (the printer, not author), so the text is late-16th-century early-modern and \"a translation\" of the whole is ill-defined (container). No search result shows any English translation of the collection or its funeral-panegyric section."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "",
+        "url": "https://gateway-bayern.de/VD16+E+566",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "This work is a 1590 anthology of Latin funeral orations delivered by professors at the University of Marburg (founded 1527), placing it firmly in the early-modern era. As a collection of academic speeches by various contemporary authors, it functions as a container volume. No evidence of an English translation for this specific collection or its constituent orations was found in WorldCat, VD16, or other major bibliographic databases."
+      },
+      "human": null
+    },
+    {
+      "key": "G39",
+      "pipeline_label": "gap",
+      "author": "Hesiodus",
+      "title": "Quæ extant",
+      "print_year": 1603,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Heinsius's 1603 \"Hesiodi Ascraei quae extant\" is a Greek/Latin collected-works edition of the ancient poet Hesiod; the surviving corpus has long existed in complete English (e.g. Evelyn-White's 1914 Loeb).",
+        "url": "https://archive.org/details/hesiodhomerichym00hesi_0",
+        "strength": "strong",
+        "sources": [
+          "https://www.cecilhagelstam.com/product/hesiodou-askraiou-ta-heuriskomena-hesiodi-ascraei-quae-extant-cum-notis-ex-probatissimis-quibusdam-autoribus-brevissimis-selectissimisque/",
+          "https://quod.lib.umich.edu/e/eebo/A03120.0001.001?view=toc",
+          "https://www.gutenberg.org/files/348/348-h/348-h.htm",
+          "https://archive.org/details/hesiodhomerichym00hesi_0",
+          "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0130%3Acard%3D1"
+        ],
+        "reasoning": "\"Quae extant\" (\"the surviving works\") is an early-modern collected edition (Heinsius, Leiden 1603) of Hesiod, an archaic Greek poet of c. 700 BCE, so the text is antiquity, not Renaissance. As a multi-work container (Theogony, Works and Days, Shield of Heracles, fragments), each constituent has been Englished — Chapman's 1618 Georgicks and the complete Evelyn-White Loeb (1914) — making the corpus thoroughly translated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Thomas Cooke, 1728, The Works of Hesiod",
+        "url": "https://www.rct.uk/collection/1086417/the-works-of-hesiod-translated-from-the-greek-by-mr-cooke",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJkXdvNEeFhLSFYn7kZSycbdGtekn04_QvZisxlFeevYJCG8dEG64PG2S3VMIKD1Mi_HyPRe4Q9A6nKrNXe1GFOX5fh7cnUInIzTiBVJ3mMswWVFaxHyJbh0dtyIH8w0TvTs60"
+        ],
+        "reasoning": "Hesiod is an ancient Greek poet from the 8th/7th century BC; 'Quae extant' (The Extant Works) refers to his surviving corpus, primarily the Theogony, Works and Days, and the Shield of Heracles. While George Chapman translated 'Works and Days' in 1618, the first comprehensive English translation of the works was published by Thomas Cooke in 1728."
+      },
+      "human": null
+    },
+    {
+      "key": "G112",
+      "pipeline_label": "gap",
+      "author": "Ottinelli, Fabio",
+      "title": "Ingeniosa et admodum utilis repetitio super celebratissima lege imperium dig. de iurisdictione omnium: ubi in difficili iurisdictionum materia ius regni Neapolitani cum iure Romano plenissime coniunctum est, ac luculenter explanatum. Additis insuper quam plurimis practabilibus & necessariis quaestionibus ab aliis hucusque non tactis, ad comunem tam studiosorum que officialum utilitatem",
+      "print_year": 1547,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "No English translation found in any catalogue or bibliography.",
+        "url": "https://it.wikipedia.org/wiki/Fabio_Ottinelli",
+        "strength": "moderate",
+        "sources": [
+          "https://it.wikipedia.org/wiki/Fabio_Ottinelli",
+          "https://www.archivirinascimento.it/search?agent_ids%5B%5D=13381"
+        ],
+        "reasoning": "Fabio Ottinelli (Naples, c.1520–1600) wrote this original Latin legal repetitio on the Lex Imperium himself as a young jurist, printed Naples 1547 — a contemporary early-modern author's own work, not a reprint of an ancient/medieval text. No search across Wikipedia, Google Books, HathiTrust, or WorldCat surfaced any English translation, partial or complete."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://edit16.iccu.sbn.it/resultset-titoli/-/titoli/detail/CNCE50470",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "Fabio Ottinelli (c. 1520–1600) was a Neapolitan jurist who composed this legal 'repetitio' in early 1547, shortly after his graduation; it was published in Naples in March of that year. No English translation of this technical Latin legal treatise on jurisdiction (Digest 2.1.3) has been recorded in major bibliographic databases or legal history catalogues."
+      },
+      "human": null
+    },
+    {
+      "key": "T51",
+      "pipeline_label": "translated",
+      "author": "Erasmus, Desiderius",
+      "title": "In epistolam Pauli ad galatas paraphrasis paraphrases Des. Erasmi Roterodami in epistolas Pauli apostoli ad rhomanos corinthios & galatas, quae commentarii vice esse possunt. Paraphrasis in epistolam Pauli apostoli ad galatas paraphrasis in epistolas Pauli apostoli ad corinthios paraphrasis in duas epistolas Pauli ad corinthios",
+      "print_year": 1519,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "English-translated twice — Udall's 1548–49 \"First/Second tome of the Paraphrase of Erasmus\" and the modern Collected Works of Erasmus vol. 42 (1984).",
+        "url": "https://archive.org/details/paraphrasesonrom0042eras",
+        "strength": "strong",
+        "sources": [
+          "https://archive.org/details/paraphrasesonrom0042eras",
+          "https://en.wikipedia.org/wiki/The_first_tome_or_volume_of_the_Paraphrase_of_Erasmus_vpon_the_newe_testamente",
+          "https://archive.org/details/ParaphraseofErasmusVolume1",
+          "https://en.wikipedia.org/wiki/Paraphrases_of_Erasmus",
+          "https://www.amazon.com/New-Testament-Scholarship-Paraphrases-Galatians/dp/0802025102"
+        ],
+        "reasoning": "The title fragment is Erasmus's own Paraphrases on the Pauline Epistles (Galatians named explicitly), composed/printed 1519 by a contemporary author, so the text is renaissance_early_modern. The same work was published in English by Nicholas Udall et al. in 1548–49 and re-translated in the Collected Works of Erasmus."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Nicholas Udall et al., 1549, \"The seconde tome or volume of the Paraphrase of Erasmus vpon the Newe Testament\"",
+        "url": "https://archive.org/details/Para-.phraseofErasmusVolume1",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHRoy6F1RatJ9Qdtxs8oUIkRjIL32PLxlgavjrvxL0riSqMuDssbsRpu4kgYFPd6N0wcAwFtJnTgJ8G2zJUrHDtXi1aWOE14DKC37TMbhkmux8sCZBO80vqeLzTrLmu-WgDsU6-_Gbk8g0X8jkBqjA_3BmsxOoqE6xOxqpzFab-Pr9F6t5bGdhSOuuyGWfWyjzbdr-mpg==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHtPWCxEy1qpzT50Iyolct636SRqC57c2Sfrf4t7xoid6Z5RK7OyK2-v5D0b2Vd7wwHBwiUntqCMlaAHnUQopfs5vmdo1H_QXiORezvVl9sxz1YeVE-KDQofimw9VPQtR8SOTrH41eulM="
+        ],
+        "reasoning": "Erasmus composed these Latin paraphrases on the Pauline Epistles between 1517 (Romans) and 1519 (Corinthians and Galatians). They were first translated into English in 1549 by a team overseen by Nicholas Udall and commissioned by Catherine Parr, and have been recently re-translated in the Collected Works of Erasmus (CWE) volumes 42 and 43."
+      },
+      "human": null
+    },
+    {
+      "key": "T68",
+      "pipeline_label": "translated",
+      "author": "Cicero, Marcus Tullius",
+      "title": "In oratorem M.tullii Ciceronis ad M.brutum scholae melchioris junii Witebergensis, eloquentiae in Argentinensi academia professoris.",
+      "print_year": 1585,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "No English translation of Junius's commentary surfaced on Google Books, Wikipedia, or rhetoric bibliographies — none of his Latin rhetorical works appear to be Englished.",
+        "strength": "moderate",
+        "sources": [
+          "https://de.wikipedia.org/wiki/Melchior_Junius",
+          "https://www.deutsche-biographie.de/sfz38099.html",
+          "https://play.google.com/store/books/details?id=U55XAAAAcAAJ",
+          "https://digi.ub.uni-heidelberg.de/diglit/junius1597bd6/0139",
+          "https://www.philamuseum.org/collections/permanent/11408.html"
+        ],
+        "reasoning": "Despite the Cicero attribution in the catalog title, the actual composed text is the \"scholae\" (lecture-commentary) by Melchior Junius (1545-1604), professor of rhetoric at Strasbourg, written/printed 1585 — a contemporary Renaissance work on Cicero's Orator, not Cicero's own text. No web search result shows any English translation ever published."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://www.google.com/books/edition/In_oratorem_M_Tullii_Ciceronis_ad_M_Brut/v_pEAAAAcAAJ?hl=en",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The work consists of Latin lectures (scholae) by the 16th-century professor Melchior Junius on Cicero's Orator. While Cicero's underlying text is from antiquity, this specific commentary/lecture series was composed in the Renaissance (c. 1585) and has never been published in an English translation."
+      },
+      "human": null
+    },
+    {
+      "key": "T69",
+      "pipeline_label": "translated",
+      "author": "Eutropius",
+      "title": "Historiae Romanae breviarium, libris X res ab urbe condita usque ad annum eiusdem mcix mirabili & compendio & ordine complectens",
+      "print_year": 1559,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Yes — an English translation matching this exact extended title (\"to the year 1119\") survives in EEBO, and multiple complete translations exist (Thomas 1760, Watson 1886, Bird 1993).",
+        "url": "https://quod.lib.umich.edu/e/eebo/A38761.0001.001?view=toc",
+        "strength": "strong",
+        "sources": [
+          "https://quod.lib.umich.edu/e/eebo/A38761.0001.001?view=toc",
+          "https://en.wikipedia.org/wiki/Eutropius_(historian)",
+          "https://archive.org/details/bim_eighteenth-century_eutropii-histori-roman_eutropius_1760",
+          "https://www.tertullian.org/fathers/eutropius_breviarium_2_text.htm",
+          "https://www.liverpooluniversitypress.co.uk/doi/book/10.3828/9780853232087"
+        ],
+        "reasoning": "Eutropius composed the Breviarium ab urbe condita ca. 369 AD under emperor Valens, so the 1559 print is an early-modern edition of an ancient text. The EEBO record \"A breviary of Roman history from the building of Rome, to the year 1119... writ in Latin by Eutropius; translated into English\" matches this work's exact extended title, and additional complete English translations confirm the work has long been translated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Nicolas Haward, 1564, A briefe chronicle, where in are described shortlye the originall, and the successiue estate of the Romaine weale publique",
+        "url": "https://www.google.com/books/edition/A_Briefe_Chronicle_Where_in_Are_Describe/u_9nAAAAMAAJ",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHB0Fx6gv046sUsK2wp31FdlPXyYxhXkWLR97oIN1kBbcA11N4Kxha53bbJfe3KndHUO-urk9xel8hzpnim2XPPaZfiA-X4zKW-oaKx28gW-yanDyA4X3oZ3I49oWwAXESRE9coFwlPKkwNyJzj2YhPbNSSw89AWw==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHf6Sd7-LKI769iJdBG2BPvbPLPUugXa-rFPAs5fbtPM2tWBepVlTxVCz_lur1v4kbx5fdvmQcaqg15oByiQZQn2zH0ihIn1ntgA3wwhQAgVnj8r7NGyXw4slSENFuB4JjoZ89hTYgMMlVEqqA4EC6qreTN6V-QJSjYpjP2GcIQaQ=="
+        ],
+        "reasoning": "The work is the 'Breviarium Historiae Romanae' by the 4th-century Roman historian Eutropius, which consists of 10 books covering history up to the reign of Valens (c. 364 AD). The 1559 edition is an early modern printing of this ancient text, and it was first translated into English by Nicolas Haward in 1564, followed by numerous later translations including those by John Clarke (1722) and J.S. Watson (1853)."
+      },
+      "human": null
+    },
+    {
+      "key": "T63",
+      "pipeline_label": "translated",
+      "author": "Galenus",
+      "title": "De differentiis febrium libri duo, Laurentio Laurentiano Florentino interprete. Accurate per Simonem Thomam recogniti",
+      "print_year": 1538,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "different_source_language",
+        "prior": "No English translation of Galen's De differentiis febrium has ever been published; the only printed text remains Kühn's Greek/Latin, and the Latin (Lorenzano's, Burgundio's) and Arabic versions remain unedited with no modern edition.",
+        "url": "https://bmcr.brynmawr.edu/2012/2012.09.60/",
+        "strength": "strong",
+        "sources": [
+          "https://bmcr.brynmawr.edu/2012/2012.09.60/",
+          "https://era.ed.ac.uk/handle/1842/20280",
+          "https://search.worldcat.org/title/liber-galieni-de-differentiis-febrium/oclc/85817879",
+          "https://academic.oup.com/edited-volume/57517/chapter/467350747",
+          "https://www.cambridge.org/core/journals/medical-history/article/rudolph-e-siegel-galen-on-the-affected-parts-translation-from-the-greek-text-with-explanatory-notes-basle-karger-1976-8vo-pp-x-233-sfr90-3475-paperback/787D04F49E8D6AA8758D56B1CC94CE6B"
+        ],
+        "reasoning": "This 1538 Lorenzano Latin volume is a Renaissance translation of Galen's Greek treatise Περὶ διαφορᾶς πυρετῶν, composed in his second Roman period c. 174-175 CE, so the text is antiquity. Multiple scholarly sources (BMCR review of De Stefani's 2011 edition, graeco-arabic-studies, Edinburgh thesis) confirm only Kühn's Greek/Latin is printed with no modern edition and no English translation; the \"Siegel 1976\" hit was a search confabulation (his 1976 work was the different treatise De locis affectis)."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://academic.oup.com/book/41341/chapter/352345548",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDkRrOj8LBD7BBk-ZncuvcCiuemG5mxZOd_-SkbmzIAUUMSdeluYQfzpECcsxq2jgB94t_zKq3QkrMkDDhZztFoSEhWsDzhdSeRvPgG_0X5tmax4Zrpfi7P4uQU9kDfGJ-07YJsdYGfoTAvpum38mW44YNrzRcQWorSuQ="
+        ],
+        "reasoning": "Galen's 'De differentiis febrium' was composed in Antiquity (c. 174 AD) during his time in Rome. While it was a staple of the medical curriculum for centuries and translated into Latin by Lorenzo Laurenziano (c. 1490), it has never been published in a complete English translation; scholarly bibliographies (e.g., Oxford Academic, Brill) confirm it remains available only in Greek, Latin, Arabic, and modern Spanish/Italian."
+      },
+      "human": null
+    },
+    {
+      "key": "G9",
+      "pipeline_label": "gap",
+      "author": "unknown",
+      "title": "Missale Romanum. Hoc est ad Romane ecclesie usum congestum, diligenter denuo recognitum nec vulgari etiam typographie viligantia cautum",
+      "print_year": 1528,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "No dedicated English translation of the pre-Tridentine Missale Romanum exists; the Henry Bradshaw Society edition (Lippe 1899/1907) is Latin-only without translation.",
+        "url": "https://en.wikipedia.org/wiki/Pre-Tridentine_Mass",
+        "strength": "moderate",
+        "sources": [
+          "https://en.wikipedia.org/wiki/Pre-Tridentine_Mass",
+          "https://en.wikipedia.org/wiki/Roman_Missal",
+          "https://henrybradshawsociety.org/publications/main-series/33/",
+          "https://archive.org/details/missaleromanumm01churgoog",
+          "https://www.baronius.com/daily-missal-1962.html"
+        ],
+        "reasoning": "This 1528 print is a pre-Tridentine edition of the Roman Missal, a medieval liturgical compilation (Ordo Missae from the 7th c., full missal form by the 12th–13th c., first printed 1474 and \"hardly differing\" from the 1570 Tridentine text) with no single early-modern author. As a full liturgical book it is a multi-part container; existing English renderings are of the later Tridentine recension in hand missals, and the scholarly editions of the pre-Tridentine text are Latin-only without translation."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://ustc.ac.uk/search?q=Missale+Romanum+1528",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJ2l_Dd7iBSDcCcf1UtHwYGziilMgA1sQjicYucULj87XIVBLdmfBAajm_T8muwTCw5LzxdGAaXQUvvXNAMK3WcodcclR9h0rBWNhvvHAmJiN9YzmiHAITOKwKa3ULwGBhUVj_PDaNnPOf8RRTxsV-frgmf6UjL-3UUabr"
+        ],
+        "reasoning": "The work is a 1528 edition of the Roman Missal, a liturgical text whose core was standardized in the 13th century (c. 1223). While the 1474 Editio Princeps and the 1570 Tridentine Missal have been translated into English, this specific pre-Tridentine edition (printed in Venice, Lyons, and Paris in 1528) has no recorded full English translation. It is a liturgical container, but no translation of this specific 1528 version exists."
+      },
+      "human": null
+    },
+    {
+      "key": "G87",
+      "pipeline_label": "gap",
+      "author": "Euclides",
+      "title": "Elementorum libri XV. Graecae et Latinae, quibus, caum ad omnem mathematicae scientiae partem, taum ad quamlibet geometriae tractationem, facilis comparatur aditus",
+      "print_year": 1598,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Henry Billingsley's \"The Elements of Geometrie\" (London, 1570) is a full English translation of Euclid's Elements made directly from the Greek.",
+        "url": "https://archive.org/details/elementsgeometr00eucl",
+        "strength": "strong",
+        "sources": [
+          "https://archive.org/details/elementsgeometr00eucl",
+          "https://en.wikipedia.org/wiki/Euclid's_Elements",
+          "https://www.worldhistory.org/image/1434/first-english-version-of-euclids-elements-1570/",
+          "https://archive.org/details/euclidiselemento00eucl_0",
+          "https://maa.org/press/periodicals/convergence/mathematical-treasures-billingsley-euclid"
+        ],
+        "reasoning": "The 1598 \"Elementorum libri XV. Graecae et Latinae\" is an early-modern bilingual print of Euclid's Elements, composed c. 300 BCE (the same ancient text, despite Book XV being a late-antique accretion). That work was fully translated into English by Henry Billingsley in 1570 from the Greek, with many later complete English versions."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Henry Billingsley, 1570, The Elements of Geometrie",
+        "url": "https://www.maa.org/press/periodicals/convergence/mathematical-treasure-billingsleys-euclid",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFW-mtkYnkbA_bRp5HeS1AXlCv_nC4uxCXKupPMQ5xmoMB5X1TV0LO6A9yCfxh5mJ6f39WSb7OuX6umuTHRA5LysYiM4-4He0YxHRv2yNZVqu2DB5uCl5DtdvBah3XYTUP3RFSI8u2iDHtHUbmVwyIXRnZs0jrMZnmnSbD7DSzvZShULp68yS0="
+        ],
+        "reasoning": "The work is Euclid's Elements (Books 1-15), an ancient Greek mathematical treatise composed around 300 BC. The 1598 edition is a bilingual Greek-Latin printing of this text, specifically the version edited by Stephanus Gracilis and translated by Ioannes Magnienus. The first complete English translation of the Elements was published by Henry Billingsley in 1570."
+      },
+      "human": null
+    },
+    {
+      "key": "T75",
+      "pipeline_label": "translated",
+      "author": "Bonaventura (Heiliger)",
+      "title": "Speculum discipline viri illustrissimi sancti Bonaventure episcopi albanensis ordinis sancti Francisci tractans de honestate vite omnibus religiosis admodum utile",
+      "print_year": 1504,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "same_work",
+        "prior": "No prior English translation found; only Latin editions and a 1670 French translation (\"Le miroir des novices\") surfaced.",
+        "url": "https://medieval.bodleian.ox.ac.uk/catalog/work_3967",
+        "strength": "moderate",
+        "sources": [
+          "https://medieval.bodleian.ox.ac.uk/catalog/work_3967",
+          "https://en.wikipedia.org/wiki/Bernard_of_Besse",
+          "https://archive.org/details/OEXV8SUP12",
+          "https://search.worldcat.org/title/sancti-bonaventur-speculum-disciplinae-ad-novitios-item-de-profectu-religiosorum-nec-non-epistola-memorialia-xxv-pietatis-eximi-documenta-complens-ac-de-perfectione-vit-ad-sorores/oclc/65392867",
+          "https://books.google.com/books/about/Le_miroir_des_Novices_par_le_S%C3%A9raphique.html?id=IrV2FOh7CuAC"
+        ],
+        "reasoning": "The 1504 print is the medieval Franciscan novice-formation text \"Speculum disciplinae ad novicios,\" composed in the 13th c. by Bernard of Besse (pseudo-Bonaventure; Bonaventure d. 1274), so it is medieval despite the early-modern printing. Searches of Google Books, archive.org, WorldCat, the Bodleian, and Franciscan scholarly sources turned up Latin editions and a 1670 French translation but no English translation."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Irish Franciscan Province of St. Patrick, 1915, The Mirror of Discipline",
+        "url": "https://books.google.com/books?id=9_0yAQAAIAAJ",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3m7F74mHmLRPDF7KuSBLgcnnMa24hpAkpDyfF_FhIYRHsWAm4w2dLWOhdTrP7od1NWrpujwSxyscGNk_8Ir-RYKistX9CnrN29xzlKklEeFrg_lVMYqRqIUTgO2qqFEN12KymnWeDOvw2avc=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP3LwkF5D7FLXEydKOIkaeIGZevNdll07NQJmE-ldO3aiUlMTRQEjsnWKxoCmSX5EYxf19YW7HcBN711-VivjXhiwdomRMziHFC-z1yGA_eCtblFKkyNgxvrrB1sYUE5V_aCBN0STS-yOREEvnt6MrDZHFNIeJcx2z9OocPVa_24jaeETNx7ERkA==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8E0iwn9vvcdV3NFyvLpORB4ejxQfDg-KC2DhS7aBxbQAaFceThRSM497f0pmLO6z0phl-qAzzrOnNdkzCRDi0kQUGuo1SJfohPkm5BtjAOHtiogX90B7Ur-Kolhqwv5iOR9Q89qkYTAFrpVKmFNTT8H60FD9HV4i_nh344WcYb0I=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGSAYxVIVLjASgnqnbJ_7c3ElLPhmDxmOxk6JLOAfWdQHAfsqKIgYHB8mSdRAMBKd-RH_m1sUC9sZuablSCoN4tKUY7s5jx9ytHiCm0ml0wML2uPfQbKUxLwXJvIe24RoEnpziXjyunwq6-AOs="
+        ],
+        "reasoning": "The 'Speculum disciplinae' was composed in the late 13th century (c. 1280) by Bernard of Besse, who served as secretary to St. Bonaventure. Although traditionally attributed to Bonaventure, modern scholarship identifies Bernard as the author. An English translation titled 'The Mirror of Discipline' was published in 1915 by Nono's Printinghouse in Ennis, translated and abridged by members of the Irish Franciscan Province."
+      },
+      "human": null
+    },
+    {
+      "key": "G26",
+      "pipeline_label": "gap",
+      "author": "Melanchthon, Philipp",
+      "title": "Elementorum rhetorices libri duo, recens ab autore recogniti. His adiectae sunt epistolae contrariae pici et hermolai barbari. Unà cum dispositione. Epistola epistola de stilo philosophorum epistola nova ac subditicia, quae respondet pico",
+      "print_year": 1546,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Mary Joan La Fontaine, \"A Critical Translation of Philip Melanchthon's Elementorum rhetorices libri duo\" (Univ. of Michigan PhD dissertation, 1968) — a complete English translation of this exact work.",
+        "url": "https://deepblue.lib.umich.edu/handle/2027.42/179874",
+        "strength": "strong",
+        "sources": [
+          "https://deepblue.lib.umich.edu/handle/2027.42/179874",
+          "https://commons.datacite.org/doi.org/10.7302/10263",
+          "https://search.worldcat.org/title/critical-translation-of-philip-melanchthons-elementorum-rhetorices-libri-duo/oclc/716403838",
+          "https://books.google.com/books/about/A_Critical_Translation_of_Philip_Melanch.html?id=UBf1ngEACAAJ",
+          "https://rhetoric.byu.edu/Primary%20Texts/Melanchthon-Elementorum%20Rhetorices.htm"
+        ],
+        "reasoning": "The work was composed by Melanchthon (1497–1560), first published 1531; this 1546 printing is a contemporary 16th-century author, hence renaissance_early_modern. A complete critical English translation of Elementorum rhetorices libri duo exists (La Fontaine, Univ. of Michigan, 1968), confirmed via Deep Blue, DataCite, WorldCat, and Google Books."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "partial",
+        "prior": "Quirinus Breen, 1952, The Correspondence of Giovanni Pico della Mirandola and Ermolao Barbaro",
+        "url": "https://books.google.com/books?id=X_6_AwAAQBAJ",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The primary text (Elementorum rhetorices) lacks a published English book translation, though a full rendering exists as an unpublished 1968 dissertation by Sister Mary Joan La Fontaine. The appended Pico-Barbaro letters and Melanchthon's 'subditicia' response were translated by Quirinus Breen in 1952. The work is a major Renaissance textbook first issued in this 'Elementorum' form in 1531."
+      },
+      "human": null
+    },
+    {
+      "key": "T93",
+      "pipeline_label": "translated",
+      "author": "Cicero, Marcus Tullius",
+      "title": "De amicitia de senectute M. Tullii Ciceronis (sp. 1) officia. De amicitia. (sp. 2) de senectute. Paradoxa. Omnia vigilanti cura recognita, per Des. Erasmum rot. et Conradum goclenium, deprehensis ac restitutis aliquot locis, non cuilibet obuiis. Additis etiam scholiis Philippi Melancht. Quae possunt esse vice prolixi commentarii, nam plerique loci quos hactenus nemo attigit, hic explicantur. Paradoxa",
+      "print_year": 1530,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "All constituent works—De amicitia (Laelius, 44 BC), De senectute (Cato Maior, 44 BC), and Paradoxa Stoicorum (46 BC)—have complete published English translations (e.g. Falconer's Loeb, and English versions reaching back to Caxton/Tiptoft 1481 and Whittinton 1534).",
+        "url": "https://archive.org/details/cicerodesenectut00cice",
+        "strength": "strong",
+        "sources": [
+          "https://archive.org/details/cicerodesenectut00cice",
+          "https://wellcomecollection.org/works/a47gbbrp",
+          "https://www.loc.gov/item/tmp92004179/",
+          "https://archive.org/stream/deamicitiatransl00ciceuoft/deamicitiatransl00ciceuoft_djvu.txt",
+          "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2007.01.0041"
+        ],
+        "reasoning": "The 1530 print is an early-modern edition gathering Cicero's classical Latin treatises (De amicitia, De senectute, Paradoxa Stoicorum, plus De officiis), all composed by Cicero in 46–44 BC, so the text is antiquity. It is a multi-work Opera-style container whose every constituent has long-standing complete English translations, so it is unambiguously translated."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "",
+        "url": "https://www.worldcat.org/title/83236359",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH45hy29ewIWjbcBqCqJtrtaobJ4Lxou_SvzIKwfVrOI8V8J3woBYAB1J8Jlj76yNuuIJacXChUMWyMDJ5TYXCLBDmSi8M2l61U9_yGxndDouiseWuHYvMgOW0v2tG7K6uvG8gqrxaItXjQKzQo9UWxhmVvdCq91qsHpCO351YOxzJ8nxT6Gsdg",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYw9Cpp3ZQ7G0SN7M9vpX7iLVdGQ-EUn1BTKRPg-0-gITyNO5FLYiV2iEOBmSmrSPRf_MEoYJUDewXr6FXMBhZAO6tcyeecgu_bfQKkBjhUxR8xGR7OQfskc3fimV5HxlVbscX6rm2JQISW_di9TpZCePSvYAf1Q=="
+        ],
+        "reasoning": "This 1530 work is a specific Latin edition of Cicero's philosophical treatises (De officiis, De amicitia, De senectute, Paradoxa) edited by Erasmus and Goclenius with scholia by Melanchthon. While the individual Ciceronian texts have been translated into English many times (e.g., by Grimald in 1556 or Newton in 1577), this specific editorial package including the Renaissance scholia has never been published as a complete English translation. The primary texts were composed by Cicero in the 1st century BC."
+      },
+      "human": null
+    },
+    {
+      "key": "T77",
+      "pipeline_label": "translated",
+      "author": "unknown",
+      "title": "Quadriga Pietatis : Tractatus quatuor continens, Ut sequens pagina declarat: [1. Speculum peccatoris [et] iusti, de statu peccati [et] gratiae. 2. De Contritione, [et] actibus eius sigillatim crebro eliciendis; deq[ue] Examine conscientiae. 3. Speculum op",
+      "print_year": 1616,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "A Jesuit devotional anthology (\"Quadriga Pietatis,\" four-horse chariot of piety) compiled anonymously, first issued ~1606–1615, reprinted 1616 — not a single authored work.",
+        "url": "https://digital.ub.uni-paderborn.de/eab/content/titleinfo/3526520",
+        "strength": "moderate",
+        "sources": [
+          "https://digital.ub.uni-paderborn.de/eab/content/titleinfo/3526520",
+          "https://www.abebooks.fr/Quadriga-pietatis-continens-tractatus-sequens-pagina/7353841879/bd",
+          "https://books.google.de/books/about/Quadriga_Pietatis.html?id=6Sw9AAAAcAAJ",
+          "https://mateo.uni-mannheim.de/camenaref/alegambe/alegambe1/Alegambe_bibliotheca_idx.html"
+        ],
+        "reasoning": "Catalogues (Paderborn, abebooks) confirm this is \"Opera cuiusdam patris e Societate Iesu\" — a compilation of four spiritual treatises by contemporary 16th–early-17th-c. Jesuit authors (Francisco de Borja, et al.), edited by Pierre d'Hamere, so a multi-work container of early-modern composition where \"a translation\" is ill-defined. No catalogue, bibliography, or library record found shows any English translation of this specific compilation."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "Thomas Everard, 1620, The Practise of Christian Workes",
+        "url": "https://books.google.com/books?id=p_8UAAAAYAAJ&pg=PA61",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The 'Quadriga Pietatis' is a devotional anthology compiled by the Jesuit Petrus d'Hamere (1570–1633) and first published in 1610 (Ypres), with the 1616 Cologne edition being a reprint. While the third tract (by St. Francis Borgia) was translated into English by Thomas Everard in 1620, the complete four-tract collection has never been published as a single English work."
+      },
+      "human": null
+    },
+    {
+      "key": "G111",
+      "pipeline_label": "gap",
+      "author": "Colerus, Jacob",
+      "title": "Epistolarum libellus, in quo continentur aliquot magnorum et doctorum virorum literae, quibus judicium de elianis bibliis, cubo, et aliis eius operibus, breviter exponitur. Oppositus insulsis quorundam ineruditorum clamoribus, qui huius viri honestam existimationem variis calumniis infringere moliuntur. Cum praefatione Jacobi coleri sacrae theologiae doctoris, superintendentis et praepositi berlinensis.",
+      "print_year": 1587,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "No English translation found in any catalogue, bibliography, or digitized-text source.",
+        "url": "https://data.cerl.org/thesaurus/cnp01875232",
+        "strength": "moderate",
+        "sources": [
+          "https://data.cerl.org/thesaurus/cnp01875232",
+          "https://viaf.org/viaf/5715001/",
+          "https://prdldev.juniusinstitute.org/author_view.php?a_id=3390&sa_id=1421"
+        ],
+        "reasoning": "Jacob Coler (1537-1612), a contemporary German Lutheran theologian and Hebraist, compiled this 1587 Latin \"Epistolarum libellus\" (a collection of letters of learned men), so the text is a renaissance/early-modern composition, not a print of an ancient/medieval author. Searches of Google Books, WorldCat-linked records, CERL, VIAF, and PRDL surface only Latin bibliographic entries and no English translation; as a multi-letter compilation it is a container where \"a translation\" is ill-defined."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "container",
+        "prior": "",
+        "url": "http://gateway-bayern.de/VD16+C+4515",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The work is a contemporary 16th-century anthology of letters from various scholars defending Elias Hutter's polyglot Bibles and Hebrew grammatical works. No English translation of this specific polemical collection has been identified in WorldCat, VD16, or specialized academic literature on Hutter's reception."
+      },
+      "human": null
+    },
+    {
+      "key": "G74",
+      "pipeline_label": "gap",
+      "author": "Ausonius, Decimus Magnus",
+      "title": "Opera. A Josepho Scaligero, et Elia Vineto denuo recognita",
+      "print_year": 1588,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Hugh G. Evelyn-White's complete English translation of Ausonius appeared in the Loeb Classical Library (2 vols., 1919–1921).",
+        "url": "https://archive.org/details/ausoniuswithengl02ausouoft",
+        "strength": "strong",
+        "sources": [
+          "https://www.loebclassics.com/view/LCL096/1919/volume.xml",
+          "https://archive.org/details/ausoniuswithengl02ausouoft",
+          "https://www.musinskyrarebooks.com/pages/books/4315/decimus-magnus-ausonius-ca-310-ca-395/opera",
+          "https://www.delphiclassics.com/shop/ausonius/",
+          "https://www.pennpress.org/9780812219531/ausonius/"
+        ],
+        "reasoning": "The 1588 \"Opera\" is a Scaliger/Vinet critical edition of the collected Latin works of Ausonius, a Late Antique Roman poet (c. 310–c. 395 CE), so the text is antiquity, not early-modern. As a collected-works container, its contents have been fully rendered into English (Evelyn-White, Loeb 1919–21, with later Slavitt and Warren selections)."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Hugh G. Evelyn-White, 1919-1921, Ausonius: With an English Translation",
+        "url": "https://archive.org/details/ausoniuswithengl01ausouoft",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEu5rhywJ3VwMoFu8iM05TNwdMEZKvZct6ikrkkuUBu4gt-t3ywQ5TWMVub5lRfZmgH8NHKkw-jUsD_RPGLuXBSVecJSImZCExucLqjzIB8PvbU3QITjuIJAHueqmGTnjGN1GLFVMms5I3qx-Pc_2A0v7pNnrzx5eifV8piJd184mI93rNiYXXVaPeS4vf-njncLDhjHEpFLA==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgUW8Vi1JlC2GjvpW4aOlbYtvQQNoE0_XwuNGKsocM3FJTMJUg2s7kFNFHgQYZKz9DTdFz504IwkBJ8TR8KvvmFseYc8n2ifDB9O32H-rTHiis5PJa9oSMuuAM1Hib9PkSQyA1vLSyjAKX7M2ozy4Lr0PCAkQskeFcaLCEdWBjitk="
+        ],
+        "reasoning": "Ausonius was a 4th-century Roman poet; his collected works (Opera) were composed during late antiquity. The 1588 edition is a Renaissance printing of this ancient corpus, which was later translated into English by Hugh G. Evelyn-White for the Loeb Classical Library."
+      },
+      "human": null
+    },
+    {
+      "key": "G10",
+      "pipeline_label": "gap",
+      "author": "Zichenis, Eustachius de",
+      "title": "Errorum Martini Luther brevis confutatio",
+      "print_year": 1520,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "No English translation is known; the work survives only in its original Latin.",
+        "url": "https://expo.bib.kuleuven.be/exhibits/show/luther-leuven/louvains-reply",
+        "strength": "moderate",
+        "sources": [
+          "https://expo.bib.kuleuven.be/exhibits/show/luther-leuven/louvains-reply",
+          "https://expo.bib.kuleuven.be/exhibits/show/luther-leuven/luthers-refutation",
+          "https://books.google.com/books/about/Errorum_Martini_Luther_brevis_confutatio.html?id=50UcrgEACAAJ",
+          "https://en.m.wikisource.org/wiki/Page:American_Historical_Review,_Volume_12.djvu/373"
+        ],
+        "reasoning": "The work is a contemporary anti-Luther polemic by the Louvain Dominican Eustachius van Zichem (1482–1538), composed and printed essentially together in 1520–1521, so it is plainly renaissance/early modern. No English translation appears in Google Books, KU Leuven's Reformation exhibit, or general/WorldCat searches — these Louvain Latin tracts against Luther are read only in the original Latin."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://www.digitale-sammlungen.de/en/view/bsb10149472",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "Eustachius de Zichenis (1482–1538) was a Dominican theologian at Louvain who composed this work in 1520 as a contemporary polemic against Martin Luther's early writings. Bibliographic searches in WorldCat, the Universal Short Title Catalogue (USTC), and Reformation-era translation databases show no record of an English translation. The text exists only in its original Latin editions (e.g., Antwerp: Michael Hillenius, 1520)."
+      },
+      "human": null
+    },
+    {
+      "key": "T22",
+      "pipeline_label": "translated",
+      "author": "Savonarola, Girolamo",
+      "title": "Expositio in psalmos miserere mei Deus, qui regis Israel, et tris [sic] versus psalmi In te Domine speravi",
+      "print_year": 1510,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Complete English translation by John Patrick Donnelly, S.J., \"Prison Meditations on Psalms 51 and 31\" (Marquette University Press, 1994), a Latin-English facing-page edition whose Psalm 51 text is Savonarola's \"Expositio in psalmum Miserere.\"",
+        "url": "https://epublications.marquette.edu/hist_fac/52/",
+        "strength": "strong",
+        "sources": [
+          "https://epublications.marquette.edu/hist_fac/52/",
+          "https://www.cambridge.org/core/journals/church-history/article/abs/girolamo-savonarola-op-prison-meditations-on-psalms-51-and-31-edited-and-translated-by-john-patrick-donnelly-sj-reformation-texts-with-translation-13501650-biblical-studies-1-milwaukee-wise-marquette-university-press-1994-142-pp-1500/29BDF267D040B7BCC5DCE061C314DB8E",
+          "https://www.ebsco.com/research-starters/literature-and-writing/prison-meditations-psalms-51-and-31-girolamo-savonarola",
+          "https://catalog.hathitrust.org/Record/003167659",
+          "https://www.amazon.com/Prison-Meditations-Psalms-Reformation-Translation/dp/0874627001"
+        ],
+        "reasoning": "Savonarola, a contemporary 15th-century author, composed this Miserere exposition in his Florentine prison in 1498, the year of his execution (Latin first printed that same year). The same work was published complete in English by John Patrick Donnelly (Marquette University Press, 1994), confirmed by the Marquette and Cambridge/EBSCO records."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "partial",
+        "prior": "William Marshall, 1534, An exposition... vpon ye .li. psalme; John Patrick Donnelly, 1994, Prison Meditations on Psalms 51 and 31",
+        "url": "https://www.google.com/books/edition/Expositio_in_Psalmos_Miserere_mei_Deus_e/Y_pDAAAAcAAJ",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEszZ0Wet8bEvMZYGCf2X2UJN9qcjDHZYgMDJL5hEUd2FbuhV75_IRncAUy1ecbgWVSHYBezTCa_ynG4McD4u6ZkhmSSwcUi_sTncLGxrbaGLxQoVyHfemJcDrCKB16rWXYrXelX0VkB_GU3kUt6mzBCg8dTtGznwkjWwWTnyOzMKhAe78AxNJmLWVTA7hHHf2Bf0K0tVEJusExSVGsRfVOFGb3fxtHIIujyA==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpWKk3Yn7h4JhUtYD7HgVmUzV2vSmwFPmrglof9m3NXZhIH3QxwkBolD4vXuS6BcYfBkLtu0z11-F2Ig4DDMohYMoUHiAGw9ME7GrtsImDmmsA48IDFoXQnWI6LuDYuvRSLtr6xE1tJ5yxy3pDdCUGnRj9ff2OTbEZfY2y8w=="
+        ],
+        "reasoning": "The work is a collection of three psalm meditations (Psalms 51, 80, and 31) written by Savonarola in 1498 while in prison; the meditations on Psalms 51 and 31 were translated into English by William Marshall (1534) and John Patrick Donnelly (1994). The meditation on Psalm 80 ('Qui regis Israel') was translated separately in the 16th century (STC 21799.2) but is typically omitted from modern English editions of his prison writings."
+      },
+      "human": null
+    },
+    {
+      "key": "T33",
+      "pipeline_label": "translated",
+      "author": "Stephani, Matthias",
+      "title": "Matthiae Stephani Pomerani, ICti. Tractatus De Iurisdictione Liber ... Teil: 2: In quo Imperatoris, Et Regis Romani, Camerae Imperialis; Electorum; Principum ... [et] Civitatum Municipalium, [et] ... Collegiorum, ceterorumq[ue] in seculari foro Imperii Ro",
+      "print_year": 1610,
+      "composition_era": "renaissance_early_modern",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "A neo-Latin imperial-jurisdiction treatise by a living German law professor is the type of work essentially never translated into English.",
+        "url": "https://de.wikipedia.org/wiki/Matthias_Stephani",
+        "strength": "moderate",
+        "sources": [
+          "https://de.wikipedia.org/wiki/Matthias_Stephani",
+          "https://www.deutsche-biographie.de/sfz81322.html",
+          "https://play.google.com/store/books/details/Tractatus_De_Iurisdictione_Qualemque_Habeant_Omnes?id=ro1lAAAAcAAJ",
+          "https://www.worldcat.org/identities/lccn-n91069603/",
+          "https://www.deutsche-digitale-bibliothek.de/person/gnd/121010295"
+        ],
+        "reasoning": "The work was written ca. 1610 by Matthias Stephani (1570-1646), a contemporary Greifswald law professor, so the text is genuinely early-modern, not a reprint of an ancient/medieval author. Every located edition (Google Books, WorldCat, German library catalogues) is Latin and dated 1610-1623; no English translation, partial or complete, appears in any catalogue or bibliography."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "",
+        "url": "https://www.google.com/books/edition/Tractatus_De_Iurisdictione_Qualemque_Hab/H_pEAAAAcAAJ",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "Matthias Stephani (1576–1646) was a contemporary German jurist and professor at Greifswald; this treatise on jurisdiction within the Holy Roman Empire was composed and first published in the early 17th century (c. 1608–1611). Extensive searches in WorldCat, Google Books, and HathiTrust confirm that the work exists only in its original Latin editions and modern facsimiles. No English translation, partial or complete, has been published."
+      },
+      "human": null
+    },
+    {
+      "key": "T106",
+      "pipeline_label": "translated",
+      "author": "Arnobius",
+      "title": "Disputationum adversus gentes libri septem M. Minucii Felicis Octavius. Romana editio posterior et emendatior",
+      "print_year": 1583,
+      "composition_era": "antiquity",
+      "claude": {
+        "verdict": "translated",
+        "relationship": "same_work",
+        "prior": "Full English translation by Archibald Hamilton Bryce & Hugh Campbell, T. & T. Clark, Edinburgh, 1871 (also in Ante-Nicene Fathers Vol. VI).",
+        "url": "https://archive.org/details/thesevenbooksofa00arnouoft",
+        "strength": "strong",
+        "sources": [
+          "https://archive.org/details/thesevenbooksofa00arnouoft",
+          "https://sacred-texts.com/chr/ecf/006/0060132.htm",
+          "https://en.wikipedia.org/wiki/Arnobius",
+          "https://www.abebooks.com/9781166524586/Arnobii-Disputationum-Adversus-Gentes-Libri-1166524582/plp",
+          "https://archive.org/details/arnobiioratorisa00arno"
+        ],
+        "reasoning": "This 1583 print is a Latin edition of the late-antique Christian apologist Arnobius of Sicca's seven-book Adversus Nationes/Gentes (composed c. 303-311 AD), here bound with Minucius Felix's Octavius (long mistransmitted as Arnobius's eighth book). The principal named work, Arnobius's seven books, was fully translated into English by Bryce & Campbell in 1871, so it counts as translated."
+      },
+      "gemini": {
+        "verdict": "translated",
+        "relationship": "container",
+        "prior": "Arnobius: A. Hamilton Bryce & Hugh Campbell, 1871, The Seven Books of Arnobius Adversus Gentes; Minucius Felix: P. Lorrain, 1682, Marcus Minucius Felix his Octavius",
+        "url": "https://www.ccel.org/ccel/arnobius/adversus_gentes.html",
+        "strength": "strong",
+        "sources": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGR97TIVfkYe1JwPw9HWPNoreIa7t2UjsxSj7y3fS4MZ1ewwWwVu2i84-JUgmuu2TJoMYbP2D2y-8el9wIhsZrw5TtY0t_nR6A6r9h3ORknwzQ1ZX2yKb5NNQ==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFT778fwZ5o3DMphYwuOLn6ahZdfCelLo4DXUQ8vG7dafA8FpqlVTevcFB69hdG8y1kv0-V26EECwe_bWYJ0l-JZ11bqmG9ZxYEW857b0hnS1GwhVzrNNTRRR7ojpQXiwJRuj-ZhM4Q2LbWdSVvg0FBF0I=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEe3GAmdQATtAz39N-aeG-UGYbizwULqWhwIGkzIMwoVHXF7uiw4FeSq5Yb9UMhcIpkELAZUvN0-42o3Q4pw11L1CY5Bykb1KItO9kDr7U7aBwjM4FaqM-mWsPtWGBoTCYz85CSfkulV9gNkExe-U3i9153E5lc2w==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGg5-e82eu90x8fap8A7fQWI-Yq8rMiLiaWn4aPrfV24HFDGuUHgeLFe4DntXY43F4XGqQHlo9sxjna8mlM9txo9eCxQBHiB8gpruGmOuwZQV7rvDPv9bFzslh6gnRhjMq2O8CMAZAeFNbqi0ZYL6rs5VDwuOZGf_Si3pTYsS4ZyCqTBTonWWVdcwVWyMM=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFTpytETz0J2HAWYYSYeMoH6vObMvDX4FOLBJAjqc4y22A40t1216Nna6VyJ3nNa-2lK9xuVpBBxN_6RitKBP8jT349G69SoluX6vQa1sK91u4DHNkvsB8E4XGIw9KNRWNHOFU07_IL3qTuHSSOrliRGzopQPjmxo_Tfrw="
+        ],
+        "reasoning": "The 1583 edition is a container of two works from antiquity: Arnobius's 'Adversus Gentes' (c. 303 AD) and Minucius Felix's 'Octavius' (3rd c. AD). Both have been translated into English, with Arnobius first appearing in full in 1871 (Bryce & Campbell) and Minucius Felix in 1682 (Lorrain). This edition is notable for being the first to correctly separate the two authors."
+      },
+      "human": null
+    },
+    {
+      "key": "T13",
+      "pipeline_label": "translated",
+      "author": "unknown",
+      "title": "Speculum fratrum sacri ordinis sancte Marie de mercede",
+      "print_year": 1533,
+      "composition_era": "medieval",
+      "claude": {
+        "verdict": "untranslated",
+        "relationship": "none",
+        "prior": "No prior English translation found; scholarship cites it only in Latin with a Spanish rendering.",
+        "url": "https://www.odemih.org/es-schede-3885-1445_maestro_gaver_speculum_fratrum_nace_la_historiografia_mercedaria",
+        "strength": "moderate",
+        "sources": [
+          "https://www.odemih.org/es-schede-3885-1445_maestro_gaver_speculum_fratrum_nace_la_historiografia_mercedaria",
+          "https://www.odemih.org/es-schede-3857-nadal_gaver_o_de_m_maestro_general",
+          "https://bdh.bne.es/bnesearch/detalle/bdh0000160008",
+          "https://www.academia.edu/95793529/Stefano_Defraia_Speculum_fratrum_Ordinis_de_Mercede_genesi_di_una_tradizione",
+          "http://orderofmercymen.org/charism/survey/chapter-2/"
+        ],
+        "reasoning": "The text is the foundational Mercedarian chronicle composed in 1445 by Master General Nadal Gaver (the 1533 Valladolid is the first print), making it a medieval work. Across Google Books, archive.org, the order's own historiography catalogue (odemih.org), and Defraia's specialist studies, it appears only in Latin plus a Spanish translation, with no published English version."
+      },
+      "gemini": {
+        "verdict": "untranslated",
+        "relationship": "partial",
+        "prior": "James William Brodman, 1986, Ransoming Captives in Crusader Spain (excerpts)",
+        "url": "https://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1001&context=history_pubs",
+        "strength": "strong",
+        "sources": [],
+        "reasoning": "The text was composed in 1445 by the Mercedarian Master General Nadal Gaver and first printed in 1533 in Valladolid. While no complete English translation has been published, James William Brodman (1986) provides English translations of key excerpts, including the foundation narrative and early constitutions, in his scholarly history of the order."
+      },
+      "human": null
+    }
+  ]
+}
