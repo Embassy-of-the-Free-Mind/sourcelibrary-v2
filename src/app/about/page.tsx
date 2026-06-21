@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { getSiteStats } from '@/lib/site-stats';
 
 export const metadata: Metadata = {
   title: 'About - Source Library',
@@ -10,7 +11,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const stats = await getSiteStats();
+  const fmt = (n: number) => n.toLocaleString('en-US');
+
+  const headlineStats: { value: string; label: string; href?: string }[] = [
+    { value: fmt(stats.totalBooks), label: 'books digitized', href: '/search' },
+    { value: `${stats.languageCount}+`, label: 'languages' },
+    { value: fmt(stats.translatedToEnglish), label: 'translated to English', href: '/search?has_translation=true' },
+    { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true' },
+    { value: fmt(stats.illustrationCount), label: 'illustrations cataloged', href: '/gallery' },
+  ];
+
   return (
     <ContentPageLayout
       header={
@@ -23,17 +35,71 @@ export default function AboutPage() {
       bg="bg-cream"
     >
       <div className="prose-content max-w-none">
-        <p className="text-xl text-secondary leading-relaxed mb-8">
-          Based at the <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> in Amsterdam, home to the Bibliotheca Philosophica Hermetica (recognized by UNESCO&apos;s Memory of the World Register), this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
+        {/* The big idea */}
+        <p className="text-2xl md:text-3xl text-primary leading-snug mb-8 font-serif">
+          The last time the world translated its ancient wisdom, it set off the Renaissance. We think we can do it again &mdash; this time for the age of AI.
+        </p>
+
+        <p className="text-xl text-secondary leading-relaxed mb-6">
+          Source Library is a digital library of historical primary sources &mdash; works on Hermetic philosophy, alchemy, Neoplatonist mysticism, Rosicrucianism, Kabbalah, early science, and the wisdom traditions of every civilization. We digitize rare books and manuscripts, translate them with AI alongside the original scanned page, and make them free to read, quote, and cite.
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-12">
-          We seek to preserve heritage while enabling new research and interpretation through digital innovation. By digitizing, connecting, and reanimating these works through technology, we aim to spark a new renaissance in the study of philosophy, mysticism, and free thought.
+          Based at the <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> in Amsterdam &mdash; home to the Bibliotheca Philosophica Hermetica, a rare-book library inscribed on UNESCO&apos;s Memory of the World register &mdash; we work to preserve this heritage while opening it to new research, new readers, and a new renaissance in the study of philosophy, mysticism, and free thought.
         </p>
+
+        {/* Stats band */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-border-light rounded-xl overflow-hidden border border-border-light mb-16">
+          {headlineStats.map((s) => {
+            const inner = (
+              <div className="bg-cream h-full p-5 text-center flex flex-col justify-center transition-colors group-hover:bg-white">
+                <div className="text-2xl md:text-3xl font-semibold text-primary tabular-nums">{s.value}</div>
+                <div className="text-xs md:text-sm text-muted mt-1 leading-tight">{s.label}</div>
+              </div>
+            );
+            return s.href ? (
+              <Link key={s.label} href={s.href} className="group block">
+                {inner}
+              </Link>
+            ) : (
+              <div key={s.label} className="group">{inner}</div>
+            );
+          })}
+        </div>
+
+        {/* Why it matters */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Why It Matters
+        </h2>
+
+        <p className="text-secondary mb-6 leading-relaxed">
+          The Renaissance itself was written largely in Latin. As the UCLA Renaissance scholar Debora Shuger has observed, <a href="https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">&ldquo;90 percent of the Latin texts from the Renaissance have never been available in translation.&rdquo;</a> The rest is legible only to specialists. And beyond Latin lie thousands upon thousands of texts in Chinese, Sanskrit, Arabic, Hebrew, and Egyptian &mdash; most of this inheritance missing even from the data that trains today&apos;s AI.
+        </p>
+
+        <p className="text-secondary mb-12 leading-relaxed">
+          As we enter an uncertain age, a strong foundation in wisdom &mdash; and the preservation of our full inheritance &mdash; has never felt more pressing. Translating the world&apos;s ancient wisdom may make a global renaissance more likely than its opposite. That is the work.
+        </p>
+
+        {/* A glimpse — show, don't tell */}
+        <figure className="mb-16">
+          <Link
+            href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/69520c46ab34727b1f044154"
+            className="block group overflow-hidden rounded-xl border border-border-light shadow-sm"
+          >
+            <img
+              src="https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg"
+              alt="An alchemical emblem from Michael Maier's Atalanta Fugiens (1618)"
+              className="w-full h-auto object-contain bg-white transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </Link>
+          <figcaption className="text-sm text-muted mt-3 text-center">
+            One of millions of pages now readable and quotable &mdash; an emblem from Michael Maier&apos;s <em>Atalanta Fugiens</em>, 1618. Every translation sits beside the original scan, so any line can be verified, quoted, and trusted.
+          </figcaption>
+        </figure>
 
         {/* Mission Section */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Our Mission
+          What We Do
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -97,7 +163,7 @@ export default function AboutPage() {
 
         {/* Technology Section */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Technology
+          How It Works
         </h2>
 
         <p className="text-secondary mb-6">
@@ -123,7 +189,7 @@ export default function AboutPage() {
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1">•</span>
-            <span><strong>API & MCP:</strong> Programmatic access for researchers and AI systems</span>
+            <span><strong>API & MCP:</strong> <Link href="/developers" className="text-accent-rust hover:underline">Programmatic access</Link> for researchers and AI systems</span>
           </li>
         </ul>
 
@@ -209,14 +275,36 @@ export default function AboutPage() {
           </a>
         </div>
 
-        {/* Links */}
+        {/* Closing call to action */}
+        <div className="bg-stone-900 text-cream rounded-2xl p-8 md:p-10 mt-16 mb-12">
+          <h2 className="text-2xl md:text-3xl text-white mb-3">Join the work</h2>
+          <p className="text-stone-300 leading-relaxed mb-6 max-w-2xl">
+            We are building a lasting institution for the stewardship of humanity&apos;s wisdom &mdash; from books to oral histories to expeditions in the field. Read the vision, explore the library, or help make the next translation possible.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/vision"
+              className="px-5 py-2.5 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-colors font-medium"
+            >
+              Read the vision
+            </Link>
+            <Link
+              href="/support"
+              className="px-5 py-2.5 bg-accent-rust text-white rounded-full hover:opacity-90 transition-opacity font-medium"
+            >
+              Support the project
+            </Link>
+            <Link
+              href="/"
+              className="px-5 py-2.5 border border-stone-600 text-cream rounded-full hover:bg-stone-800 transition-colors"
+            >
+              Browse the library
+            </Link>
+          </div>
+        </div>
+
+        {/* Secondary links */}
         <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
-          <Link
-            href="/"
-            className="px-5 py-2.5 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-colors"
-          >
-            Browse the Library
-          </Link>
           <Link
             href="/census"
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
@@ -246,12 +334,6 @@ export default function AboutPage() {
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
             API & MCP Server
-          </Link>
-          <Link
-            href="/support"
-            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-          >
-            Support the Project
           </Link>
         </div>
       </div>
