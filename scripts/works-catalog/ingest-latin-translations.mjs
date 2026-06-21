@@ -30,7 +30,10 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { MongoClient } from 'mongodb';
 import { pgClient, upsertWorks, upsertSources } from './lib.mjs';
+import { surnameStems, titleFit } from '../translation-layer/lib.mjs';
+import { editionVisible, editionReadable, translatedRatio } from '../lib/holdings-resolver.mjs';
 
 const __dir = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY = path.join(__dir, '../../src/app/research/translation-registry/registry-data.json');
@@ -52,10 +55,92 @@ const sourceName = (s) => SOURCE_MAP[s] || s.replace(/_/g, '-');
 const rightsFor = (y) => (y && y < 1930 ? 'public-domain' : y ? 'in-copyright' : null);
 const centuryOf = (y) => (y == null ? null : y < 0 ? Math.floor(y / 100) : Math.floor((y - 1) / 100) + 1);
 
+// the work's catalog id — shared by buildRows() and resolveHoldings() so the
+// work_holdings rows reference the same works.id we mint.
+const workIdOf = (w) => `latin:${slug(w.a)}:${slug(w.w || w.wl)}`;
+
+/**
+ * Resolve our SL holdings for each registry work directly from Mongo — the
+ * OWNERSHIP truth (full catalog incl. hidden/draft). One work_holdings row per
+ * held edition. status/visible are the two SEPARATE predicates (#2567): status =
+ * ownership+processed (visibility-agnostic), visible = public-link gate.
+ */
+async function resolveHoldings(works) {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) throw new Error('MONGODB_URI required for work_holdings resolution');
+  const c = new MongoClient(uri);
+  await c.connect();
+  const books = await c.db('bookstore').collection('books').find({}, {
+    projection: { id: 1, slug: 1, author: 1, title: 1, display_title: 1,
+      pages_translated: 1, pages_count: 1, pages_ocr: 1, pages_blank: 1, visible: 1, hidden: 1 },
+  }).toArray();
+  await c.close();
+
+  const byStem = new Map();
+  for (const b of books) {
+    for (const s of surnameStems(b.author)) {
+      if (!byStem.has(s)) byStem.set(s, []);
+      byStem.get(s).push(b);
+    }
+  }
+
+  const holdingRows = [];
+  for (const w of works) {
+    const id = workIdOf(w);
+    if (id === 'latin::') continue;
+    const seen = new Set();
+    const cands = [];
+    for (const s of surnameStems(w.a)) for (const b of (byStem.get(s) || [])) {
+      if (!seen.has(b._id)) { seen.add(b._id); cands.push(b); }
+    }
+    const matched = cands.filter((b) => {
+      const t = b.title || b.display_title;
+      return titleFit(w.wl || w.w, t).match || (w.wl && titleFit(w.w, t).match);
+    });
+    for (const b of matched) {
+      holdingRows.push({
+        work_id: id,
+        book_id: String(b._id),
+        status: editionReadable(b) ? 'held_readable' : 'held_unprocessed',
+        visible: editionVisible(b),
+        pages: b.pages_count ?? null,
+        translated_pct: Number((translatedRatio(b) * 100).toFixed(1)),
+        matched_by: 'registry-worklevel',
+      });
+    }
+  }
+  return holdingRows;
+}
+
+async function upsertHoldings(client, rows, batch = 500) {
+  // dedupe by (work_id, book_id)
+  const seen = new Set();
+  rows = rows.filter((r) => { const k = `${r.work_id}|${r.book_id}`; return !seen.has(k) && seen.add(k); });
+  let n = 0;
+  for (let i = 0; i < rows.length; i += batch) {
+    const chunk = rows.slice(i, i + batch);
+    const cols = ['work_id', 'book_id', 'pages', 'translated_pct', 'matched_by', 'status', 'visible'];
+    const values = [], params = [];
+    chunk.forEach((r, j) => {
+      const base = j * cols.length;
+      values.push(`(${cols.map((_, k) => `$${base + k + 1}`).join(',')})`);
+      params.push(r.work_id, r.book_id, r.pages, r.translated_pct, r.matched_by, r.status, r.visible);
+    });
+    const res = await client.query(
+      `insert into work_holdings (${cols.join(',')}) values ${values.join(',')}
+       on conflict (work_id, book_id) do update set
+         pages = excluded.pages, translated_pct = excluded.translated_pct,
+         matched_by = excluded.matched_by, status = excluded.status, visible = excluded.visible`,
+      params);
+    n += res.rowCount;
+  }
+  return n;
+}
+
 function buildRows(works) {
   const workRows = [], sourceRows = [], statusUpdates = [];
   for (const w of works) {
-    const id = `latin:${slug(w.a)}:${slug(w.w || w.wl)}`;
+    const id = workIdOf(w);
     if (id === 'latin::') continue;
     workRows.push({
       id,
@@ -99,16 +184,24 @@ async function main() {
   const { workRows, sourceRows, statusUpdates } = buildRows(data.works);
   const pd = sourceRows.filter((s) => s.rights === 'public-domain').length;
 
+  console.log('Resolving SL holdings from Mongo (full catalog)…');
+  const holdingRows = await resolveHoldings(data.works);
+  const readable = holdingRows.filter((h) => h.status === 'held_readable').length;
+  const visible = holdingRows.filter((h) => h.visible).length;
+
   console.log(`registry works: ${data.works.length}`);
-  console.log(`  → works rows:        ${workRows.length}`);
+  console.log(`  → works rows:          ${workRows.length}`);
   console.log(`  → translation sources: ${sourceRows.length} (${pd} public-domain — importable)`);
-  console.log(`  → status updates:    ${statusUpdates.length}`);
+  console.log(`  → status updates:      ${statusUpdates.length}`);
+  console.log(`  → work_holdings rows:  ${holdingRows.length} (${readable} readable, ${visible} visible)`);
 
   if (!WRITE) {
     fs.writeFileSync(OUT, [...workRows.map((r) => ({ t: 'work', ...r })),
-      ...sourceRows.map((r) => ({ t: 'source', ...r }))].map((r) => JSON.stringify(r)).join('\n'));
+      ...sourceRows.map((r) => ({ t: 'source', ...r })),
+      ...holdingRows.map((r) => ({ t: 'holding', ...r }))].map((r) => JSON.stringify(r)).join('\n'));
     console.log(`\nDRY-RUN. Sample work: ${JSON.stringify(workRows[0])}`);
     console.log(`Sample source: ${JSON.stringify(sourceRows.find((s) => s.extra.translator))}`);
+    console.log(`Sample holding: ${JSON.stringify(holdingRows[0])}`);
     console.log(`wrote ${OUT}\n(pass --write on Hetzner — SUPABASE_DB_URL — to upsert into the #2453 catalog)`);
     return;
   }
@@ -124,6 +217,7 @@ async function main() {
         `update work_sources set rights = $1 where work_id = $2 and source = $3 and source_id = $4 and rights is null`,
         [s.rights, s.work_id, s.source, s.source_id]);
     }
+    const nH = await upsertHoldings(client, holdingRows);
     // evidenced translation_status — never downgrade a hand-verified one
     let nU = 0;
     for (const u of statusUpdates) {
@@ -134,7 +228,7 @@ async function main() {
         [u.id, u.evidence]);
       nU += r.rowCount;
     }
-    console.log(`\nupserted: ${nW} works, ${nS} translation sources, ${nU} status rows.`);
+    console.log(`\nupserted: ${nW} works, ${nS} translation sources, ${nH} holdings, ${nU} status rows.`);
   } finally {
     await client.end();
   }
