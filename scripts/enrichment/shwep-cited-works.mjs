@@ -52,7 +52,7 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { COLLECTED_RX, bestEdition, editionReadable, editionVisible } from '../lib/holdings-resolver.mjs';
+import { COLLECTED_RX, isCollected, bestEdition, editionReadable, editionVisible } from '../lib/holdings-resolver.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', '..', 'src', 'data');
@@ -579,22 +579,50 @@ ${holdList}`;
   return { text: out, count: picks.length };
 }
 
+// Match a cited work to a CHAPTER (a part) of a collected edition by English-title token
+// overlap — both chapter.titleEn and the work's title_forms carry English forms, so no LLM
+// is needed. Conservative: requires ~all of the work's distinctive tokens to appear in the
+// chapter title, so we deep-link only on a confident match and otherwise fall back to the
+// volume front (never a wrong-page link). Returns the chapter (with .pageId) or null.
+const TITLE_STOP = new Set(['the', 'a', 'an', 'of', 'on', 'de', 'to', 'and', 'or', 'in', 'book', 'treatise', 'concerning', 'being', 'first', 'second', 'third', 'fourth', 'vol', 'volume', 'part', 'against', 'que', 'qui']);
+const titleToks = s => norm(s).split(' ').filter(t => t.length > 2 && !TITLE_STOP.has(t));
+function chapterMatch(titleForms, chapters) {
+  if (!chapters || !chapters.length) return null;
+  const wantSets = (titleForms || []).map(f => new Set(titleToks(f))).filter(s => s.size);
+  if (!wantSets.length) return null;
+  let best = null, bestScore = 0;
+  for (const ch of chapters) {
+    if (!ch || !ch.pageId) continue;
+    const ct = new Set(titleToks(ch.titleEn || ch.title || ''));
+    if (!ct.size) continue;
+    for (const want of wantSets) {
+      const inter = [...want].filter(t => ct.has(t)).length;
+      const score = inter / want.size; // fraction of the work's distinctive tokens in the chapter
+      if (score > bestScore) { bestScore = score; best = ch; }
+    }
+  }
+  return bestScore >= 0.8 ? best : null;
+}
+
 async function stageLinkBib() {
   console.log('Stage 5 LINKBIB');
   const works = readJSON('works-held.json', []);
   applyAuthorGuard(works);
 
-  // Enrich heldMeta with pages_count so bestEdition can score translation COMPLETENESS
-  // over the whole work (works-held.json only carries pages_ocr/translated/blank).
+  // Enrich heldMeta with pages_count (so bestEdition can score completeness) and capture
+  // each held book's chapters (so a cited work can be deep-linked to the PART of a collected
+  // edition that contains it — chapter.pageId is the reader-route page id).
   const allHeldIds = [...new Set(works.flatMap(w => (w.heldMeta || []).map(m => m.id)))];
+  const chaptersById = new Map();
   if (allHeldIds.length) {
     const client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
     const rows = await client.db('bookstore').collection('books').find(
       { _id: { $in: allHeldIds.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean) } },
-      { projection: { pages_count: 1 } }).toArray();
+      { projection: { pages_count: 1, chapters: 1 } }).toArray();
     await client.close();
     const pcById = new Map(rows.map(r => [r._id.toString(), r.pages_count || 0]));
+    for (const r of rows) chaptersById.set(r._id.toString(), r.chapters || []);
     for (const w of works) for (const m of (w.heldMeta || [])) m.pages_count = pcById.get(m.id) || m.pages_count || 0;
   }
 
@@ -612,11 +640,20 @@ async function stageLinkBib() {
     if (!meta.length) continue;
     const best = bestEdition(meta);
     const rep = best || meta[0];
+    // Page-precise deep link: if the chosen edition is a collected/omnibus volume and the
+    // cited work matches one of its chapters (a PART of the book), link straight to that
+    // treatise's page instead of the 800-page volume front.
+    let href = best ? bookHref(best) : null;
+    let chapterPage = null;
+    if (best && isCollected(best)) {
+      const ch = chapterMatch(w.title_forms || [w.work], chaptersById.get(best.id));
+      if (ch && ch.pageId) { href = `/book/${best.slug || best.id}/page/${ch.pageId}`; chapterPage = ch.pageId; }
+    }
     const entry = {
       work: w.work, author: w.author,
       forms: (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]),
-      linkable: !!best, href: best ? bookHref(best) : null,
-      repId: rep.id, repSlug: rep.slug || null,
+      linkable: !!best, href,
+      repId: rep.id, repSlug: rep.slug || null, chapterPage,
     };
     for (const ep of w.episodes) (byEp[ep] = byEp[ep] || []).push(entry);
   }
@@ -636,8 +673,16 @@ async function stageLinkBib() {
       // works whose representative edition wasn't linked inline still need a path →
       // emit them as supplementary cards so a held work mentioned only in a dated
       // citation (e.g. Eunapius' Lives of the Sophists via the 1922 Loeb) stays reachable.
-      const targets = new Set([...r.text.matchAll(/\(\/book\/([^)]+)\)/g)].map(m => m[1]));
-      const supp = [...new Set(byEp[ep].filter(e => !targets.has(e.repSlug) && !targets.has(e.repId)).map(e => e.repId))];
+      // bare slug/id of each inline target (strip any /page/<id> suffix) so page-precise
+      // inline links still dedupe against the supplementary cards
+      const targets = new Set([...r.text.matchAll(/\/book\/([^)/]+)/g)].map(m => m[1]));
+      const seen = new Set();
+      const supp = [];
+      for (const e of byEp[ep]) {
+        if (targets.has(e.repSlug) || targets.has(e.repId) || seen.has(e.repId)) continue;
+        seen.add(e.repId);
+        supp.push(e.chapterPage ? { id: e.repId, page: e.chapterPage } : { id: e.repId });
+      }
       if (supp.length) supplementary[ep] = supp;
     } else skipCount++;
     done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`);
@@ -670,12 +715,14 @@ export const SHWEP_LINKED_BIBLIOGRAPHIES: Record<number, string> = {\n`;
   let so = `/**
  * Held primary sources for an inline-linked SHWEP episode that are NOT reachable via an
  * inline /book/ link (their only mention sits in a dated edition citation, or they aren't
- * named in the bibliography text at all). Representative edition id per held work. The
- * reader page shows these as a "more from this episode in the library" grid beneath the
- * inline-linked bibliography, so no held work is hidden. Generated by
- * scripts/enrichment/shwep-cited-works.mjs. Do not edit by hand.
+ * named in the bibliography text at all). One representative edition per held work; \`page\`
+ * is the chapter pageId when the work is a PART of a collected edition (deep-link straight
+ * to that treatise). The reader page shows these as a "more from this episode in the
+ * library" grid beneath the inline-linked bibliography, so no held work is hidden.
+ * Generated by scripts/enrichment/shwep-cited-works.mjs. Do not edit by hand.
  */
-export const SHWEP_SUPPLEMENTARY_WORKS: Record<number, string[]> = {\n`;
+export interface ShwepSupplementaryWork { id: string; page?: string }
+export const SHWEP_SUPPLEMENTARY_WORKS: Record<number, ShwepSupplementaryWork[]> = {\n`;
   for (const ep of suppSorted) so += `  ${ep}: ${JSON.stringify(supplementary[ep])},\n`;
   so += `};\n`;
   fs.writeFileSync(path.join(DATA_DIR, 'shwep-supplementary-works.ts'), so);
