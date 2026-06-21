@@ -43,8 +43,18 @@ const INCLUDE_ANON = process.argv.includes('--include-anon');
 // size 1). Mathematically zero merge risk — a unique label on one book. The
 // multi-edition clusters are held for the human-gated merge review instead.
 const SINGLETONS_ONLY = process.argv.includes('--singletons-only');
+// Multi-volume sets / periodical issues ("Vol. 8", "No. 6", juan slices) cannot
+// be safely fused by uniform title — "one work in N volumes" vs "N works in a
+// series" (Wubei Zhi vols = one work; Nicene & Post-Nicene Fathers Vol 8 Basil
+// vs Vol 9 Hilary = different works) is a curatorial call, and the single-digit
+// volume number drops out of the token filter, so they falsely cluster. So by
+// DEFAULT we HOLD any multi-edition cluster whose members carry a part/volume
+// marker (singletons are always safe). Pass --include-parts to mint them anyway.
+const INCLUDE_PARTS = process.argv.includes('--include-parts');
 
 const deacc = s => (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const PART_RX = /(\bvol\b|\bvolume\b|\bno\b|\bnos\b|\bband\b|\btome\b|\btomus\b|\bteil\b|\bheft\b|\bpt\b|\bpart\b|\blivre\b|\bfasc\b|\bser\b|\bseries\b|\bjuan\b|slice|卷|册|巻)\.?\s*[ivxlcdm0-9]/i;
+const clusterHasParts = bks => bks.length > 1 && bks.some(x => PART_RX.test(deacc(x.display_title || x.title || '')));
 // Apparatus / edition words ONLY — pure publication-process words. We do NOT
 // strip numbers, roman numerals, or volume LETTERS: those distinguish works
 // (Proverbs collection 25 vs 15; Kanjur mDo sde Ka vs Kha). Bias is hard toward
@@ -150,11 +160,18 @@ console.log(`\nProposal -> ${outDir}local-work-mint-proposals.json`);
 if (APPLY) {
   // SINGLETONS_ONLY: write only books whose mint is unique (cluster size 1) —
   // zero merge risk. Multi-edition clusters are held for the human-gated merge.
-  const toWrite = SINGLETONS_ONLY ? writes.filter(w => clusters.get(w.work_id).length === 1) : writes;
+  let toWrite = SINGLETONS_ONLY ? writes.filter(w => clusters.get(w.work_id).length === 1) : writes;
+  // hold ambiguous multi-volume / series / periodical clusters unless --include-parts
+  let heldParts = 0;
+  if (!INCLUDE_PARTS) {
+    const before = toWrite.length;
+    toWrite = toWrite.filter(w => !clusterHasParts(clusters.get(w.work_id)));
+    heldParts = before - toWrite.length;
+  }
   const heldClusters = writes.length - toWrite.length;
   const backup = `${outDir}local-work-mint-backup-${toWrite.length}.json`;
-  fs.writeFileSync(backup, JSON.stringify({ when: 'apply', singletonsOnly: SINGLETONS_ONLY, count: toWrite.length, writes: toWrite }, null, 2));
-  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} cluster-member books for merge review)` : ''} (backup ${backup})`);
+  fs.writeFileSync(backup, JSON.stringify({ when: 'apply', singletonsOnly: SINGLETONS_ONLY, holdParts: !INCLUDE_PARTS, heldParts, count: toWrite.length, writes: toWrite }, null, 2));
+  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}${INCLUDE_PARTS ? ' --include-parts' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} for review${heldParts ? `, of which ${heldParts} are volume/series-marked` : ''})` : ''} (backup ${backup})`);
   let done = 0;
   for (const w of toWrite) {
     const r = await b.updateOne(
