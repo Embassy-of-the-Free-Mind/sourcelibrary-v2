@@ -586,13 +586,19 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       };
     });
 
-  // Fetch curated exhibition data (if available)
+  // Fetch curated exhibition data (if available).
+  // This decides the WHOLE page layout: when a draft exists, ExhibitionLayout renders
+  // and the standard Featured/highlights/gallery/description bands are suppressed
+  // (they all gate on `!exhibition?.layout`). A timeout here therefore silently FLIPS
+  // a curated collection (e.g. /collections/yoga) back to the generic layout — so this
+  // fetch must be reliable. Backed by the `collection_slug_status_idx` index (IXSCAN,
+  // ~1ms), with a generous timeout so a transient slow read never drops the exhibition.
   const curationDraft = await withTimeout(
     db.collection('curation_drafts').findOne(
       { collection_slug: id, status: 'draft' },
       { projection: { curation: 1 } },
     ),
-    5000, null,
+    12000, null,
   );
 
   // Resolve book references in curation layout — attach thumbnails and slugs
