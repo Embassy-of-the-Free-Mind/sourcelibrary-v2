@@ -24,8 +24,8 @@ export default function NakedPhilosophersPage() {
         <ContentHeader
           title="The Naked Philosophers"
           subtitle="How Alexander&rsquo;s India became the Rosicrucians&rsquo; ancestor"
-          image="https://images.sourcelibrary.org/pages/69b2217608069e96e842fd0d/0001.jpg"
-          imageAlt="Title page of the 1504 Aldine edition of Philostratus' Life of Apollonius of Tyana, printed in Venice by Aldus Manutius"
+          image="https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468107-0.jpg"
+          imageAlt="Alexander the Great, crowned and enthroned, in dialogue with three naked top-knotted gymnosophists — a 1544 Armenian manuscript miniature from the Romance of Alexander"
         >
           <p className="text-stone-400 text-sm mt-4">21 June 2026 &middot; 8 min read</p>
         </ContentHeader>
@@ -296,6 +296,10 @@ export default function NakedPhilosophersPage() {
             <li>
               J. W. McCrindle, <em>Ancient India as Described by Megasthenes and Arrian</em> (1877) &mdash; Calanus &amp; Dandamis.{' '}
               <Link href="/book/ancient-india-as-described-by-megasthenes-and-arrian-mccrindle" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
+            </li>
+            <li>
+              <em>Romance of Alexander</em> (Armenian manuscript, 1544) &mdash; the medieval legend; source of the header miniature of Alexander and the three gymnosophists.{' '}
+              <Link href="/book/romance-of-alexander-anonymous/page/69c1bd308522835be8468107" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
             </li>
             <li>
               García de Orta, <em>History of Aromatics&hellip; of the Indies</em> (Clusius, 1567).{' '}
