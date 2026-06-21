@@ -78,7 +78,12 @@ function uniformTitle(title, authorStr) {
   // a "Vol. 77" / "collection 25" tail is a distinguisher, not apparatus).
   let s = deacc(title).replace(/[\(\[].*?[\)\]]/g, ' ');
   const toks = s.replace(/[^a-z0-9 ]/g, ' ').split(/\s+/)
-    .filter(w => w.length >= 2 && !STOP.has(w) && !BOILER.has(w) && !at.has(w));
+    // keep single-DIGIT numbers (volume / issue / series distinguishers: "Vol 8",
+    // "No 6", "Series 1") — they were dropping out of the length>=2 filter, which
+    // false-fused multi-volume sets into one work. Policy: when in doubt, MORE
+    // works (under-cluster) — a split work can be merged later; a fused pair is a
+    // false first-translation claim. Single LETTERS still drop (noise).
+    .filter(w => (w.length >= 2 || /^[0-9]+$/.test(w)) && !STOP.has(w) && !BOILER.has(w) && !at.has(w));
   const uniq = [...new Set(toks)].sort();           // alphabetical -> word-order-invariant key
   return uniq.slice(0, 12);                           // longer cap: keep distinguishers
 }
@@ -88,7 +93,12 @@ const mc = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 
 await mc.connect();
 const b = mc.db('bookstore').collection('books');
 
-const TEXT = { visible: true, pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] } };
+// --include-hidden: also mint hidden/draft books (ownership truth for the #2453
+// catalog dedup — the Philo-16-hidden-editions case). Reader /work pages still
+// gate on visibility downstream; this only assigns the work_id join key.
+const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
+const TEXT = { pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] },
+  ...(INCLUDE_HIDDEN ? {} : { visible: true }) };
 const total = await b.countDocuments(TEXT);
 const already = await b.countDocuments({ ...TEXT, work_id: { $exists: true, $ne: null } });
 
