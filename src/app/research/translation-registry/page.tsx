@@ -19,9 +19,10 @@ export const metadata: Metadata = {
   },
 };
 
-const works = registryData.works as Parameters<typeof RegistryBrowser>[0]['works'];
-
-// Distinct translators credited (deduped on cleaned name) — computed at build.
+// Stats are computed server-side from the full dataset; only these numbers reach
+// the client. The browse rows are fetched a page at a time from the API route,
+// so the ~1,600-work dataset is never serialized into the page.
+const works = registryData.works;
 const translatorCount = (() => {
   const s = new Set<string>();
   for (const w of works) for (const c of w.c) if (c.tr) s.add(c.tr.toLowerCase());
@@ -29,6 +30,7 @@ const translatorCount = (() => {
 })();
 const renCount = works.filter((w) => w.tgt).length;
 const workHeld = works.filter((w) => w.h === 'work').length;
+const authorHeld = works.filter((w) => w.h === 'author').length;
 
 function Stat({ n, unit, label }: { n: string; unit?: string; label: string }) {
   return (
@@ -87,12 +89,12 @@ export default function TranslationRegistryPage() {
           <strong className="text-stone-800">A note on &ldquo;in our library.&rdquo;</strong> These published translations
           are mostly in copyright (Harvard, Brill, Loeb) and are <em>not</em> hosted here — follow the credit to find them.
           What Source Library holds is the <em>original</em>: we have the source text for {workHeld.toLocaleString()} of
-          these works (read it via the <em>Read original</em> link), and other writings by the author for {works.filter((w) => w.h === 'author').length.toLocaleString()} more.
+          these works (read it via the <em>Read original</em> link), and other writings by the author for {authorHeld.toLocaleString()} more.
         </p>
       </div>
 
       <div className="max-w-3xl mx-auto mt-10">
-        <RegistryBrowser works={works} />
+        <RegistryBrowser />
       </div>
 
       <div className="max-w-3xl mx-auto font-body text-stone-700 text-lg leading-relaxed">

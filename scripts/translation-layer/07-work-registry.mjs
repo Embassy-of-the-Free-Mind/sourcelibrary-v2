@@ -139,7 +139,18 @@ async function main() {
     generated: '2026-06-21',
     note: 'Confidence-gated, work-level registry of early-modern Latin (and adjacent) works with a known external English translation. Keyed on the work, not the edition. The gap = works with no entry here.',
     count: pub.length,
-    works: pub.map((r) => ({ a: r.author, w: r.work, wl: r.work_latin || undefined, y: r.orig_year, era: r.era, tgt: r.is_target || undefined, c: r.credits, ed: r.n_ustc_editions, sl: r.in_sl || undefined })),
+    works: pub.map((r) => {
+      const yrs = r.credits.map((c) => c.y).filter((y) => y != null);
+      return {
+        a: r.author, w: r.work, wl: r.work_latin || undefined, y: r.orig_year, era: r.era,
+        tgt: r.is_target || undefined, c: r.credits, ed: r.n_ustc_editions, sl: r.in_sl || undefined,
+        // translation-era span: earliest/latest English translation on record.
+        // ≥1900 = a modern (readable) translation exists; <1900-only = historical;
+        // ≤1700 = a contemporaneous period translation.
+        tmin: yrs.length ? Math.min(...yrs) : undefined,
+        tmax: yrs.length ? Math.max(...yrs) : undefined,
+      };
+    }),
   }));
 
   const named = pub.filter((r) => r.n_named > 0).length;
