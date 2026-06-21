@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const revalidate = false;
@@ -181,6 +182,20 @@ export default function TranslationGapPage() {
             The ~2% is approximately real. The vast majority of the early-modern Latin corpus is{' '}
             <strong>genuinely untranslated</strong> — not a measurement failure, but the size of the opportunity.
           </div>
+        </Section>
+
+        <Section kicker="The other side of the count" title="What has been translated — and by whom">
+          <p className="mb-5">
+            The same census that measures the gap also records the works that <em>have</em> been Englished, and credits the
+            translators who did it. The companion <strong>Translation Registry</strong> is a searchable, work-level catalogue
+            of those translations — period, historical, and modern — linking to the original where Source Library holds it.
+          </p>
+          <Link
+            href="/research/translation-registry"
+            className="inline-block font-body text-sm font-semibold bg-stone-800 hover:bg-stone-900 text-stone-50 px-6 py-3 rounded-sm transition-colors"
+          >
+            Browse the Translation Registry →
+          </Link>
         </Section>
 
         <Section kicker="Help close it" title="Collaborate">
