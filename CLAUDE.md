@@ -137,6 +137,10 @@ encodes that:
 - **Read-path** (`/author/[slug]` → `src/lib/author-thesaurus.ts`) is flag-gated by `AUTHOR_THESAURUS_READPATH` and redirects every variant slug to the canonical one. Full design, provenance, and migration status: **`.claude/docs/author-identity-system.md`**.
 
 ## Work identity & "do we have the original?" (read before reasoning about gaps)
+**Start with the architecture map: `.claude/docs/translation-works-architecture.md`**
+— it ties together work identity, the #2453 catalog, the translation gap/registry,
+holdings, and first-translation into one stack (coordination home: #2567).
+
 The **work** layer (sibling to the author thesaurus). "Is *this* translation a
 work we also hold the source-language original of?" is answered by clustering
 editions under a shared **`books.work_id`** (Wikidata QID or works-catalog id),

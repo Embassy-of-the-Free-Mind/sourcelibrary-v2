@@ -5,6 +5,10 @@ import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+// No-login giving link — Embassy of the Free Mind Stripe donation page.
+// Lets a logged-out reader give without creating an account first.
+const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
+
 export default function FicinoSocietyPage() {
   return (
     <Suspense>
@@ -29,6 +33,33 @@ function FicinoSocietyContent() {
   const [joining, setJoining] = useState(false);
   const [contributing, setContributing] = useState(false);
   const [activating, setActivating] = useState(false);
+
+  // No-login email signup (logged-out visitors). One field, straight into the list.
+  const [email, setEmail] = useState('');
+  const [subscribing, setSubscribing] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState('');
+
+  const handleEmailJoin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || subscribing) return;
+    setSubscribing(true);
+    setSubscribeError('');
+    try {
+      const res = await fetch('/api/beta/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'ficino_society' }),
+      });
+      const data = await res.json();
+      if (res.ok) setSubscribed(true);
+      else setSubscribeError(data.error || 'Something went wrong');
+    } catch {
+      setSubscribeError('Something went wrong');
+    } finally {
+      setSubscribing(false);
+    }
+  };
 
   useEffect(() => {
     if (session?.user && !success) {
@@ -216,13 +247,44 @@ function FicinoSocietyContent() {
               >
                 {joining ? 'Joining...' : 'Join'}
               </button>
+            ) : subscribed ? (
+              <p className="text-white/60 text-[15px] font-body">
+                You&apos;re in. Welcome to the circle — check your inbox.
+              </p>
             ) : (
-              <Link
-                href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
-                className="inline-block px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 bg-[#9e4a3a]"
-              >
-                Sign in to join
-              </Link>
+              <>
+                <form onSubmit={handleEmailJoin} className="flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@email.com"
+                    aria-label="Email address"
+                    className="flex-1 px-4 py-3.5 rounded bg-white/5 border border-white/15 text-white placeholder-white/30 text-[15px] font-body focus:outline-none focus:border-[#9e4a3a] transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    disabled={subscribing}
+                    className="px-8 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-50 bg-[#9e4a3a]"
+                  >
+                    {subscribing ? 'Joining...' : 'Join'}
+                  </button>
+                </form>
+                {subscribeError && (
+                  <p className="mt-3 text-[#d98a7a] text-sm font-body">{subscribeError}</p>
+                )}
+                <p className="mt-4 text-white/25 text-xs font-body">
+                  Just your email — no account needed.{' '}
+                  <Link
+                    href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
+                    className="underline hover:text-white/50 transition-colors"
+                  >
+                    Sign in
+                  </Link>{' '}
+                  for the forums.
+                </p>
+              </>
             )}
           </div>
         </section>
@@ -248,12 +310,14 @@ function FicinoSocietyContent() {
               {isContributor ? 'Thank you' : contributing ? 'Redirecting...' : 'Contribute $100/year'}
             </button>
           ) : (
-            <Link
-              href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
+            <a
+              href={EFM_STRIPE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block px-8 py-3 rounded text-sm font-sans tracking-wide border border-[#1a1612]/20 text-[#1a1612] hover:brightness-110 transition-all"
             >
-              Sign in to contribute
-            </Link>
+              Contribute
+            </a>
           )}
           <p className="mt-6 text-[12px] text-[#8a8480] font-body">
             Any amount welcome &mdash;{' '}
