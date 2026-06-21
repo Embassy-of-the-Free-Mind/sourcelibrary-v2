@@ -282,67 +282,72 @@ export default async function AboutPage() {
           </a>
         </div>
 
-        {/* Closing call to action */}
-        <div className="bg-stone-900 text-cream rounded-2xl p-8 md:p-10 mt-16 mb-12">
-          <h2 className="text-2xl md:text-3xl text-white mb-3">Join the work</h2>
-          <p className="text-stone-300 leading-relaxed mb-6 max-w-2xl">
-            We are building a lasting institution for the stewardship of humanity&apos;s wisdom &mdash; from books to oral histories to expeditions in the field. Read the vision, explore the library, or help make the next translation possible.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="/vision"
-              className="px-5 py-2.5 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-colors font-medium"
-            >
-              Read the vision
-            </Link>
-            <Link
-              href="/support"
-              className="px-5 py-2.5 bg-accent-rust text-white rounded-full hover:opacity-90 transition-opacity font-medium"
-            >
-              Support the project
-            </Link>
-            <Link
-              href="/"
-              className="px-5 py-2.5 border border-stone-600 text-cream rounded-full hover:bg-stone-800 transition-colors"
-            >
-              Browse the library
-            </Link>
-          </div>
-        </div>
+      </div>
 
-        {/* Secondary links */}
-        <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
+      {/* Navigation blocks live OUTSIDE .prose-content: `.prose-content a` forces
+          link color to accent-rust, which would make button labels (e.g. white-on-rust)
+          invisible. Keeping them out lets the Tailwind text-* utilities win. */}
+
+      {/* Closing call to action */}
+      <div className="bg-stone-900 text-cream rounded-2xl p-8 md:p-10 mt-16 mb-12">
+        <h2 className="text-2xl md:text-3xl text-white mb-3">Join the work</h2>
+        <p className="text-stone-300 leading-relaxed mb-6 max-w-2xl">
+          We are building a lasting institution for the stewardship of humanity&apos;s wisdom &mdash; from books to oral histories to expeditions in the field. Read the vision, explore the library, or help make the next translation possible.
+        </p>
+        <div className="flex flex-wrap gap-4">
           <Link
-            href="/census"
-            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+            href="/vision"
+            className="px-5 py-2.5 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-colors font-medium"
           >
-            Translation Census
+            Read the vision
           </Link>
           <Link
-            href="/about/progress"
-            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+            href="/support"
+            className="px-5 py-2.5 bg-accent-rust text-white rounded-full hover:opacity-90 transition-opacity font-medium"
           >
-            Our Progress
+            Support the project
           </Link>
           <Link
-            href="/about/sources"
-            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+            href="/"
+            className="px-5 py-2.5 border border-stone-600 text-cream rounded-full hover:bg-stone-800 transition-colors"
           >
-            Source Libraries
-          </Link>
-          <Link
-            href="/about/faq"
-            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-          >
-            FAQ
-          </Link>
-          <Link
-            href="/developers"
-            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-          >
-            API & MCP Server
+            Browse the library
           </Link>
         </div>
+      </div>
+
+      {/* Secondary links */}
+      <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
+        <Link
+          href="/census"
+          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+        >
+          Translation Census
+        </Link>
+        <Link
+          href="/about/progress"
+          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+        >
+          Our Progress
+        </Link>
+        <Link
+          href="/about/sources"
+          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+        >
+          Source Libraries
+        </Link>
+        <Link
+          href="/about/faq"
+          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+        >
+          FAQ
+        </Link>
+        <Link
+          href="/developers"
+          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+        >
+          API & MCP Server
+        </Link>
       </div>
     </ContentPageLayout>
   );
