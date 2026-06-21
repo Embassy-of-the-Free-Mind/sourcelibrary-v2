@@ -41,7 +41,7 @@ export default async function AboutPage() {
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-6">
-          Source Library is a digital library of historical primary sources &mdash; works on Hermetic philosophy, alchemy, Neoplatonist mysticism, Rosicrucianism, Kabbalah, early science, and the wisdom traditions of every civilization. We digitize rare books and manuscripts, translate them with AI alongside the original scanned page, and make them free to read, quote, and cite.
+          Source Library is a digital library of historical primary sources &mdash; the foundational works of philosophy, science, religion, and mysticism from cultures across the world, in more than 160 languages. It spans the Sanskrit and Tibetan canons, the Chinese classics, the sciences of the Arabic and Hebrew worlds, the Hermetic and Neoplatonist currents of the Renaissance, and far beyond. We digitize rare books and manuscripts, translate them with AI alongside the original scanned page, and make them free to read, quote, and cite.
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-12">
