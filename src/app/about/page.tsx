@@ -173,6 +173,18 @@ export default function AboutPage() {
           Senior researcher <strong>Dr. Carlos Gilly</strong> (University of Basel), a pillar of the BPH for over thirty years and one of the world&apos;s foremost scholars of Rosicrucianism and early modern Hermetism, contributes to the Institute&apos;s research and curation.
         </p>
 
+        {/* Supporters */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          With the Generous Support Of
+        </h2>
+
+        <p className="text-secondary mb-8 leading-relaxed">
+          Source Library and the Embassy of the Free Mind are made possible by the
+          generosity of those who believe in this work. We gratefully acknowledge the{' '}
+          <strong>Wisdom Frontiers Society</strong> of La Jolla, California, and the{' '}
+          <strong>Gambrell Foundation</strong> for their support.
+        </p>
+
         {/* Links */}
         <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
           <Link

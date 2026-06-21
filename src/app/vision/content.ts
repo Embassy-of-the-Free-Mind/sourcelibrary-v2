@@ -73,7 +73,7 @@ export const visionContent: VisionContent = {
     href: '/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/19',
   },
   bodyAfterImage1: [
-    'We are embedded within one of the world’s great collections of ancient texts: the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status. You can make a tax-deductible gift [here](/support).',
+    'We are embedded within one of the world’s great collections of ancient texts: the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and the Gambrell Foundation, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status. You can make a tax-deductible gift [here](/support).',
   ],
   buildHeading: 'What I want to build',
   bodyBuild: [
