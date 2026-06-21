@@ -52,6 +52,7 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { COLLECTED_RX, bestEdition, editionReadable, editionVisible } from '../lib/holdings-resolver.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', '..', 'src', 'data');
@@ -155,36 +156,8 @@ function applyAuthorGuard(works) {
 
 // Pick the single representative PUBLICLY-READABLE edition for inline reader links:
 // must be translated (pages_translated > 0; visibility already enforced at retrieval).
-// Prefer translation COMPLETENESS over raw page count — a "read here" link that lands on
-// an edition translated 26/608 pages (mostly an untranslated facsimile) reads as a broken
-// promise, even though it has more absolute translated pages than a small but fully-done
-// edition. So bucket by translated ratio (translated / non-blank text pages) first, then
-// within a bucket prefer the most translated text (so a large ~complete edition beats a
-// tiny complete fragment), then most-OCR'd, then earliest. Returns null if nothing readable.
-// Coverage of the WHOLE work: translated pages / total non-blank pages. Use pages_count
-// (the real length) as the denominator, NOT pages_ocr — an edition with 608 pages but
-// only 26 OCR'd + 26 translated is 4% readable, even though 26/26 of what was OCR'd is done.
-function translatedRatio(m) {
-  const total = m.pages_count || m.pages_ocr || m.pages_translated || 0;
-  const denom = Math.max(1, total - (m.pages_blank || 0));
-  return Math.min(1, (m.pages_translated || 0) / denom);
-}
-// Titles that denote a collected/complete-works edition (used for omnibus recall AND to
-// prefer a dedicated edition of the cited work over a big collected dump when both exist).
-const COLLECTED_RX = /opera|omnia|complete works|works of|collected|exegetical|surviving works|dialogues of|tutte le opere|gesammelte|sämtliche/i;
-const isCollected = m => COLLECTED_RX.test(m.title || '');
-function bestEdition(heldMeta) {
-  const readable = (heldMeta || []).filter(m => (m.pages_translated || 0) > 0);
-  if (!readable.length) return null;
-  const tier = m => { const r = translatedRatio(m); return r >= 0.6 ? 2 : r >= 0.25 ? 1 : 0; };
-  return readable.slice().sort((a, b) =>
-    tier(b) - tier(a) ||                                     // substantially-translated first
-    (isCollected(a) - isCollected(b)) ||                     // a DEDICATED edition beats a collected dump
-    (b.pages_translated || 0) - (a.pages_translated || 0) || // then most translated text
-    (b.pages_ocr || 0) - (a.pages_ocr || 0) ||
-    (a.year || 9999) - (b.year || 9999)
-  )[0];
-}
+// Holdings primitives live in the shared resolver so the works-catalog / translation
+// registry (#2453/#2567) imports the same logic instead of reinventing it.
 const bookHref = m => `/book/${m.slug || m.id}`;
 
 // ── Stage 1: extract ─────────────────────────────────────────────────────────
@@ -753,10 +726,13 @@ async function stageGapAudit() {
     let picks = [];
     try { picks = (await gemini(confirmPrompt(forms, author, rows), 2048)).matches || []; } catch {}
     const matched = picks.map(p => rows[p]).filter(Boolean);
-    const readable = matched.filter(m => m.visible && (m.pages_translated || 0) > 0);
-    const ownedUnready = matched.filter(m => !(m.visible && (m.pages_translated || 0) > 0));
-    const bucket = readable.length ? 'held_readable' : ownedUnready.length ? 'held_unprocessed' : 'absent';
-    const evidence = (readable.length ? readable : ownedUnready).slice(0, 3).map(m => ({
+    // reader-facing cut: a "recall miss" is held + readable + VISIBLE (link-eligible now);
+    // anything owned but hidden or untranslated is the publish/process queue. (Ownership-only
+    // status — visibility-agnostic — is holdingStatus() in the shared lib, for #2453.)
+    const linkable = matched.filter(m => editionReadable(m) && editionVisible(m));
+    const ownedUnready = matched.filter(m => !(editionReadable(m) && editionVisible(m)));
+    const bucket = linkable.length ? 'held_readable' : ownedUnready.length ? 'held_unprocessed' : 'absent';
+    const evidence = (linkable.length ? linkable : ownedUnready).slice(0, 3).map(m => ({
       slug: m.slug, title: (m.display_title || m.title || '').slice(0, 50), visible: !!m.visible,
       tr: m.pages_translated || 0, pc: m.pages_count || 0, lang: m.language || '',
     }));
