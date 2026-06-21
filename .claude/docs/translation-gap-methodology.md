@@ -144,11 +144,63 @@ numbers and never mix them:
 | claim | status | why |
 |---|---|---|
 | 503k Latin editions; 366k Latin work-clusters 1400–1700 | **solid** | direct counts from USTC |
-| ~97% of those clusters have no external English translation | **conservative floor** | residual ~10–15% false-positive matches mark some untranslated works as translated → the *true* gap is ≥97% |
-| "~2.7% translated" / "90%+ untranslated" | **solid, agrees with Shuger** | independent scholarly estimate corroborates |
-| denominator = *Renaissance-composed* works | **upper bound only** | USTC year is print year; includes ancient/medieval reprints |
+| ~97% of USTC-print clusters have no external English translation | **overstates the Renaissance gap** | validation: the raw figure inflates because the print-year denominator includes *translated* ancient/medieval reprints (3/5 of the sampled misses) |
+| **~85–90% of genuinely Renaissance-composed Latin works untranslated** | **validated (pilot, 95% CI 60–96%, n=30)** | blind stratified independent-verification eval (see Validation); now *measured*, agrees with Shuger's "90%" |
+| translation-match precision ~92% | **validated** | 11/12 of "translated" confirmed by independent grounded search |
+| denominator = *Renaissance-composed* works | **upper bound only** | USTC year is print year; includes ancient/medieval reprints — confirmed by the eval |
 | "~20 new works translated per year" (the rate) | **order-of-magnitude** | from the per-decade first-translation series; gross retranslation removed |
 | "X years to finish" | **deliberately not stated** | numerator and denominator are both order-of-magnitude; honest answer is "millennia" |
+
+## Validation against ground truth (pilot, 2026-06-21)
+
+The figures above come from our matching pipeline. To convert them from a
+*hypothesis* into a *defensible estimate with error bars*, we ran a **blind,
+stratified, independently-verified** pilot — the eval that closes the loop the
+novelty review flagged (a self-published number is a hypothesis until validated).
+
+**Design.** Drew a random sample of 30 Latin works in two strata — 12 the
+pipeline calls **translated**, 18 it calls **gap (untranslated)** — stripped the
+labels, and handed each to one of three **independent grounded-search agents**
+(blind to our label) that searched WorldCat/Google Books/archive.org/scholarly
+bibliographies for any published English translation, with strict rules (a modern
+Latin reprint or a critical edition *without* a translation does not count).
+Artifact: `scripts/analysis/eval-data/translation-gap-validation-2026-06-21.json`.
+
+**Results.**
+- **Translated-stratum precision = 11/12 (92%).** When the pipeline says
+  "translated," it is right ~92% of the time. The one false positive — Ziegler's
+  *Schondia* — exists only in Latin; a stray catalog match flagged it.
+- **Gap-stratum: 13/18 (72%) genuinely untranslated; 5 false negatives (28%)** —
+  works we called "gap" that *do* have a translation we missed.
+- **The denominator caveat, now measured:** **3 of those 5 false negatives are
+  ancient/medieval works** (Themistius 4th c., Theophylact 11th c., Sacrobosco
+  13th c.) merely *reprinted* in the 1480–1620 Latin window — exactly the
+  print-year-not-composition-year inflation we flagged. These classics are
+  translated *because they're ancient classics*, not because the Renaissance gap
+  is smaller.
+- **Restricted to genuinely Renaissance-composed works, the gap holds up:
+  12/14 (86%) untranslated** (95% Wilson CI 60–96%). The only two real misses
+  (Dickson's *De umbra rationis*, tr. Ferguson 2013; Haedus's Malta description,
+  tr. Vella 1980) are obscure works with a *single* recent scholarly translation —
+  the long-tail under-capture we already named.
+
+**What it means for the headline.** Two corrections, opposite signs, both small:
+the pipeline slightly *over*-counts translations (92% precision ⇒ a few "translated"
+are not) and slightly *under*-counts them on the gap side (recall ~86% on
+Renaissance works ⇒ the true translated fraction is a little higher than 2.7%).
+Net: the honest estimate for **genuinely Renaissance-composed Latin works is
+~85–90% untranslated** — squarely consistent with Shuger's "90%," now *measured*
+rather than asserted, but with an explicit (and, at n=30, wide) confidence band.
+The raw "97% of USTC-print clusters" overstates the Renaissance gap because the
+denominator includes translated ancient/medieval reprints.
+
+**Caveats on the eval itself.** n=30 is a *pilot* — the CIs are wide, and a
+publishable figure needs n≈200–300 stratified, ideally with a human-adjudicated
+gold-standard subset and a Rogan–Gladen correction for adjudicator
+sensitivity/specificity (the framework already used for the first-translation
+badge audit — see `ft-first-translation-paper.md`). The pilot's value is that it
+(a) confirms the *direction and rough magnitude*, (b) quantifies the two error
+channels, and (c) proves the print-vs-composition denominator effect with data.
 
 ## Known limitations (stated plainly)
 
