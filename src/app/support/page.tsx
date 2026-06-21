@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
 import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
+import QuickSubscribe from '@/components/donate/QuickSubscribe';
 import { getReadDb } from '@/lib/mongodb';
 
 export const revalidate = 600;
@@ -177,6 +178,18 @@ export default async function SupportPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Not ready to give? Follow the work. */}
+      <section className="bg-white border-t border-stone-200 py-12 md:py-16">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <h2 className="text-xl md:text-2xl text-stone-900 mb-2 font-display">Follow the work</h2>
+          <p className="text-stone-600 text-sm leading-relaxed mb-6 max-w-md">
+            Not ready to give? Leave your email and we&apos;ll send word as new
+            first-ever translations come online. No account needed.
+          </p>
+          <QuickSubscribe source="support" />
         </div>
       </section>
 
