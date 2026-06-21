@@ -201,6 +201,28 @@ What has been Englished, by whom — and the gap of what hasn't.
 
 ## Known frontier
 
+- **Omnibus / compilation editions are the mint's blind spot (the *De Mysteriis*
+  case).** A single `book.work_id` can't represent a volume that bundles several
+  distinct works. Ficino's 1497 Aldine volume — catalogued in our data under the
+  title *"De Voluptate"* and one work_id — actually *contains* Iamblichus *De
+  Mysteriis* (p5) + Proclus + Porphyry + Synesius + Psellus + Priscian + Plato,
+  each in Ficino's Latin. The author+title key can only pick ONE contained work
+  (so the same *De Mysteriis* fragments across `Q3359785` / `iamblichus-de-mysteriis`
+  / `corpus-hermeticum`) or mash the whole table of contents into a slug. This is
+  also where the *work vs expression* question bites: is Ficino's heavily-mediated
+  Latin a translation-expression of Iamblichus' work, or a new Ficinian work? The
+  mint has no signal for it.
+  - **The fix is the contained-works layer**, not a better string key. The
+    contained works ARE in `book.chapters[]` — each chapter names its author
+    ("*Proclus on the Platonic Alcibiades*", "*Porphyry's On Abstinence*").
+    **Prototype: `scripts/analysis/resolve-contained-works.mjs`** extracts them
+    (14 compilations, 60 contained works on the Neoplatonic cluster), groups
+    same-author chapter runs into one work with a page range, and best-effort
+    resolves each to an existing standalone `work_id` (so `/book/<id>/page/<pageId>`
+    is the deep link and FT/registry can ask "is THIS contained work translated").
+    Resolution precision still needs work (author-anchored title match is loose);
+    productionising means writing `book.contained_works[]` and teaching the
+    `/work` + registry surfaces to read it. Pairs with the DTS navigation API.
 - **CJK multi-juan** sets (Wubei Zhi, Bencao Gangmu) still fuse in the local mint
   — volume numbers are CJK-script and don't tokenize. Defensible as "one work in N
   juan," and the #2453 native-script ingests handle CJK work identity properly.
