@@ -44,6 +44,40 @@ describe('selective-unpause scope helpers', () => {
     it('proceeds when paused but a single --book override is active', () => {
       expect(shouldBypassPause({ paused: true }, { bookOverride: true })).toBe(true);
     });
+
+    it('proceeds when paused but a namespaced allow_scopes entry is set', () => {
+      expect(shouldBypassPause({ paused: true, allow_scopes: { cannabis: { collections: ['cannabis-western-record'] } } })).toBe(true);
+      expect(shouldBypassPause({ paused: true, allow_scopes: { hall: { book_ids: ['x'] } } })).toBe(true);
+    });
+  });
+
+  describe('allow_scopes — additive, multi-session-safe union', () => {
+    it('unions legacy fields AND every namespaced scope, deduped', () => {
+      const control = {
+        allow_book_ids: ['legacy1'],
+        allow_collections: ['legacy-coll'],
+        allow_scopes: {
+          cannabis: { collections: ['cannabis-western-record'], book_ids: ['legacy1'] }, // overlaps legacy → deduped
+          hall: { book_ids: ['hall1', 'hall2'] },
+          augustinus: { book_ids: ['aug1'] },
+        },
+      };
+      const { bookIds, collections } = getScopeConfig(control);
+      expect(bookIds.sort()).toEqual(['aug1', 'hall1', 'hall2', 'legacy1']);
+      expect(collections.sort()).toEqual(['cannabis-western-record', 'legacy-coll']);
+    });
+
+    it('removing one scope key does not affect the others (the collision fix)', () => {
+      const after = { allow_scopes: { hall: { book_ids: ['hall1'] }, augustinus: { book_ids: ['aug1'] } } };
+      // simulate `remove cannabis` having $unset only its key
+      expect(hasScope(after)).toBe(true);
+      expect(getScopeConfig(after).bookIds.sort()).toEqual(['aug1', 'hall1']);
+    });
+
+    it('empty allow_scopes map = no scope = full stop', () => {
+      expect(hasScope({ paused: true, allow_scopes: {} })).toBe(false);
+      expect(shouldBypassPause({ paused: true, allow_scopes: {} })).toBe(false);
+    });
   });
 
   describe('hasScope', () => {
