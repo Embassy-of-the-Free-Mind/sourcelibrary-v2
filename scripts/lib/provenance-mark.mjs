@@ -34,8 +34,14 @@ sharp.concurrency(1); // JS-level concurrency drives parallelism in the backfill
 // downscale, and is visually clean (9px blocks at ±3 luminance = imperceptible,
 // no margin banding). Sparse pages detect far more strongly.
 const GRID = 128;           // GRID x GRID blocks. More pairs → higher detection z (∝ √pairs)
-const WM_DELTA = 3;         // luminance nudge per block (0-255). ~invisible, JPEG-robust
+const WM_DELTA = 5;         // luminance nudge per block (0-255), scaled per-block by texture mask
 const WM_Z_THRESHOLD = 5;   // z-score above which we call it "ours" (noise floor <1 → tiny FP rate)
+// Perceptual mask: only embed where there's local texture to hide the mark.
+// A block's std below STD_FLOOR is treated as flat → no mark (invisible on blank
+// paper/margins); full strength by STD_FLOOR+STD_SCALE. Detection counts only
+// textured pairs, matching the embedding.
+const STD_FLOOR = 5;
+const STD_SCALE = 12;
 const VISIBLE_RATE = 10;    // ~1 in N pages gets the visible logo
 const LOGO_HEIGHT_FRAC = 0.045;
 const LOGO_OPACITY = 0.5;
@@ -95,20 +101,43 @@ async function visibleLogoComposite(W, H, editionId, pageNumber) {
   return { input: logo, left: Math.max(0, pos.left), top: Math.max(0, pos.top), blend: 'over' };
 }
 
+// ---- block statistics (green channel as luma proxy) -----------------------
+function blockStats(data, W, H, channels, grid) {
+  const bw = Math.floor(W / grid), bh = Math.floor(H / grid);
+  const means = new Float64Array(grid * grid);
+  const stds = new Float64Array(grid * grid);
+  for (let idx = 0; idx < grid * grid; idx++) {
+    const gx = idx % grid, gy = Math.floor(idx / grid);
+    let sum = 0, sumSq = 0, cnt = 0;
+    for (let y = gy * bh; y < gy * bh + bh; y++) {
+      let off = (y * W + gx * bw) * channels;
+      for (let x = 0; x < bw; x++) { const v = data[off + 1]; sum += v; sumSq += v * v; off += channels; cnt++; }
+    }
+    const m = sum / cnt;
+    means[idx] = m;
+    stds[idx] = Math.sqrt(Math.max(0, sumSq / cnt - m * m));
+  }
+  return { means, stds, bw, bh };
+}
+
+/** Per-block texture mask in [0,1]: 0 where flat (no mark), 1 where textured. */
+function maskFactor(std) {
+  return Math.max(0, Math.min(1, (std - STD_FLOOR) / STD_SCALE));
+}
+
 // ---- watermark embed ------------------------------------------------------
-/** Apply the keyed block-pair luminance nudge to a raw RGB(A) buffer in place. */
+/** Apply the keyed, texture-masked block-pair luminance nudge to raw RGB(A) in place. */
 function embedWatermark(data, W, H, channels, pairs, grid = GRID, delta = WM_DELTA) {
   const bw = Math.floor(W / grid), bh = Math.floor(H / grid);
   if (bw < 2 || bh < 2) return; // too small to watermark meaningfully
-  const blockBounds = (idx) => {
-    const gx = idx % grid, gy = Math.floor(idx / grid);
-    return { x0: gx * bw, y0: gy * bh, x1: gx * bw + bw, y1: gy * bh + bh };
-  };
+  const { stds } = blockStats(data, W, H, channels, grid);
   const nudge = (idx, d) => {
-    const { x0, y0, x1, y1 } = blockBounds(idx);
-    for (let y = y0; y < y1; y++) {
+    if (d === 0) return;
+    const gx = idx % grid, gy = Math.floor(idx / grid);
+    const x0 = gx * bw, y0 = gy * bh;
+    for (let y = y0; y < y0 + bh; y++) {
       let off = (y * W + x0) * channels;
-      for (let x = x0; x < x1; x++) {
+      for (let x = 0; x < bw; x++) {
         for (let c = 0; c < 3; c++) {
           const v = data[off + c] + d;
           data[off + c] = v < 0 ? 0 : v > 255 ? 255 : v;
@@ -117,7 +146,13 @@ function embedWatermark(data, W, H, channels, pairs, grid = GRID, delta = WM_DEL
       }
     }
   };
-  for (const [a, b] of pairs) { nudge(a, +delta); nudge(b, -delta); }
+  for (const [a, b] of pairs) {
+    // amplitude limited by the flatter of the two blocks → never marks flat areas
+    const f = Math.min(maskFactor(stds[a]), maskFactor(stds[b]));
+    if (f <= 0) continue;
+    const d = delta * f;
+    nudge(a, +d); nudge(b, -d);
+  }
 }
 
 // ---- public: mark one image ----------------------------------------------
@@ -160,28 +195,20 @@ export async function detectWatermark(buffer, { editionId, key, grid = GRID }) {
   const eid = String(editionId).slice(0, 12);
   const { data, info } = await sharp(buffer, { failOn: 'none' }).raw().toBuffer({ resolveWithObject: true });
   const { width: W, height: H, channels } = info;
-  const bw = Math.floor(W / grid), bh = Math.floor(H / grid);
-  if (bw < 2 || bh < 2) return { present: false, z: 0 };
+  if (Math.floor(W / grid) < 2 || Math.floor(H / grid) < 2) return { present: false, z: 0 };
 
-  // mean luminance per block (use green channel as a luma proxy — fast, fine)
-  const means = new Float64Array(grid * grid);
-  for (let idx = 0; idx < grid * grid; idx++) {
-    const gx = idx % grid, gy = Math.floor(idx / grid);
-    let sum = 0, cnt = 0;
-    for (let y = gy * bh; y < gy * bh + bh; y++) {
-      let off = (y * W + gx * bw) * channels;
-      for (let x = 0; x < bw; x++) { sum += data[off + 1]; off += channels; cnt++; }
-    }
-    means[idx] = sum / cnt;
+  const { means, stds } = blockStats(data, W, H, channels, grid);
+  // Count only textured pairs — the same ones the embedder marked. Flat pairs
+  // carry no signal; including them only dilutes z.
+  const diffs = [];
+  for (const [a, b] of pairPlan(key, eid, grid)) {
+    if (maskFactor(stds[a]) > 0 && maskFactor(stds[b]) > 0) diffs.push(means[a] - means[b]);
   }
-
-  const pairs = pairPlan(key, eid, grid);
-  const diffs = pairs.map(([a, b]) => means[a] - means[b]);
   const n = diffs.length;
+  if (n < 16) return { present: false, z: 0, pairs: n }; // too few textured pairs (near-blank page)
   const mean = diffs.reduce((s, d) => s + d, 0) / n;
   const variance = diffs.reduce((s, d) => s + (d - mean) ** 2, 0) / n;
   const sd = Math.sqrt(variance) || 1e-9;
-  // z-score of the mean pair-difference against 0 (standard error = sd/sqrt(n))
   const z = mean / (sd / Math.sqrt(n));
-  return { present: z > WM_Z_THRESHOLD, z: Math.round(z * 100) / 100 };
+  return { present: z > WM_Z_THRESHOLD, z: Math.round(z * 100) / 100, pairs: n };
 }
