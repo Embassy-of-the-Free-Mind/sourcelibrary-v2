@@ -30,6 +30,7 @@ const translatorCount = (() => {
 })();
 const renCount = works.filter((w) => w.tgt).length;
 const workHeld = works.filter((w) => w.h === 'work').length;
+const workLinkable = works.filter((w) => w.h === 'work' && w.slug).length;
 const authorHeld = works.filter((w) => w.h === 'author').length;
 const totalRecords = (registryData as { total_records?: number }).total_records ?? 0;
 
@@ -95,8 +96,9 @@ export default function TranslationRegistryPage() {
         <p className="mt-4 text-base text-stone-600">
           <strong className="text-stone-800">A note on &ldquo;in our library.&rdquo;</strong> These published translations
           are mostly in copyright (Harvard, Brill, Loeb) and are <em>not</em> hosted here — follow the credit to find them.
-          What Source Library holds is the <em>original</em>: we have the source text for {workHeld.toLocaleString()} of
-          these works (read it via the <em>Read original</em> link), and other writings by the author for {authorHeld.toLocaleString()} more.
+          What Source Library holds is the <em>original</em>: we own the source text for {workHeld.toLocaleString()} of
+          these works ({workLinkable.toLocaleString()} of them publicly readable now via the <em>Read original</em> link; the
+          rest are held but still processing), and other writings by the author for {authorHeld.toLocaleString()} more.
         </p>
       </div>
 

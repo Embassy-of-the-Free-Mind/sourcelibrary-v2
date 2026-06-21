@@ -8,7 +8,7 @@ type Credit = { tr: string | null; t: string | null; pub: string | null; y: numb
 type Work = {
   a: string; w: string; wl?: string; y: number | null; era: string; tgt?: boolean;
   c: Credit[]; ed: number; h: 'work' | 'author' | 'none'; slug?: string; asl?: string;
-  tmin?: number; tmax?: number;
+  hstatus?: 'held_readable' | 'held_unprocessed'; tmin?: number; tmax?: number;
 };
 
 const SOURCE_LABEL: Record<string, string> = {
@@ -183,6 +183,10 @@ export default function RegistryBrowser() {
                     <Link href={`/book/${w.slug}`} className="inline-flex items-center gap-1 text-xs bg-stone-800 text-white px-2 py-1 rounded hover:bg-stone-900 whitespace-nowrap">
                       <BookOpen className="w-3 h-3" /> Read original
                     </Link>
+                  ) : w.h === 'work' ? (
+                    <span className="inline-flex items-center gap-1 text-xs text-stone-500 whitespace-nowrap" title="We hold the original, but it is not yet publicly readable (processing or not yet published).">
+                      <BookOpen className="w-3 h-3" /> In library
+                    </span>
                   ) : w.h === 'author' && w.asl ? (
                     <Link href={`/book/${w.asl}`} className="inline-flex items-center gap-1 text-xs text-stone-500 hover:text-stone-800 whitespace-nowrap" title="We hold other writings by this author">
                       <User className="w-3 h-3" /> Author held
