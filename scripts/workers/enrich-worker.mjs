@@ -40,6 +40,11 @@ import { logUsage as logUsageToSupabase } from './lib/supabase-usage-logger.mjs'
 import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+
+// Selective-unpause scope confinement, set in main() after the pause check.
+// Empty {} in normal operation so the full enrich queue is unaffected.
+let SCOPE_FILTER = {};
 
 /** Trigger on-demand revalidation for a book page after enrichment completes. */
 async function revalidateBookPage(bookId) {
@@ -1415,8 +1420,10 @@ async function main() {
 
   // Check pause status
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused || control?.paused_phases?.includes('enrichment')) {
-    const reason = control?.paused ? 'pipeline paused' : 'enrichment phase paused';
+  // Selective unpause: scoped books enrich while globally paused; the explicit
+  // enrichment-phase pause still hard-stops regardless of scope.
+  if (control?.paused_phases?.includes('enrichment') || !shouldBypassPause(control)) {
+    const reason = control?.paused_phases?.includes('enrichment') ? 'enrichment phase paused' : 'pipeline paused';
     console.log(`[ENRICH] ${reason}, exiting`);
     await db.collection('cron_runs').insertOne({
       cron: 'hetzner-enrich-worker', timestamp: new Date(),
@@ -1426,6 +1433,12 @@ async function main() {
     }).catch(() => {});
     await client.close();
     return;
+  }
+  // When globally paused with a scope, confine every candidate query to it.
+  if (control?.paused && hasScope(control)) {
+    const scopeIds = [...await resolveScopeBookIds(db, control)];
+    SCOPE_FILTER = { id: { $in: scopeIds } };
+    console.log(`[ENRICH] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
   }
 
   let enriched = 0;
@@ -1461,7 +1474,7 @@ async function main() {
 
       // Priority: first translations first, then by retry count (fewer retries first)
       books = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'translate_complete' })
+        .find({ 'pipeline_auto.status': 'translate_complete', ...SCOPE_FILTER })
         .sort({ is_first_translation: -1, pages_count: 1, 'pipeline_auto.retry_count': 1 })  // First translations first, then small books
         .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
@@ -1521,7 +1534,7 @@ async function main() {
       books = book ? [book] : [];
     } else {
       books = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'summary_indexed' })
+        .find({ 'pipeline_auto.status': 'summary_indexed', ...SCOPE_FILTER })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(PHASE_7_LIMIT)
@@ -1601,6 +1614,7 @@ async function main() {
         ],
         hidden: { $ne: true },
         pages_count: { $gt: 0 },
+        ...SCOPE_FILTER,
       })
       .sort({ read_count: -1 })
       .project({
@@ -1788,6 +1802,7 @@ NO explanation, just the JSON array.`;
             'pipeline_auto.status': status,
             pages_count: { $gt: 0 },
             hidden: { $ne: true },
+            ...SCOPE_FILTER,
           })
           .project({
             id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, categories: 1,

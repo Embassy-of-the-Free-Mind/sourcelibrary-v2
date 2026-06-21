@@ -20,6 +20,7 @@ import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -985,17 +986,25 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing control
+  // Check processing control. Selective unpause: scoped books extract while
+  // globally paused; SCOPE_FILTER confines every candidate query (empty {} in
+  // normal operation).
   const ctrl = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (ctrl?.paused) {
+  if (!shouldBypassPause(ctrl)) {
     console.log('[IMAGE-EXTRACT] Pipeline paused, exiting');
     await client.close();
     return;
   }
+  let SCOPE_FILTER = {};
+  if (ctrl?.paused && hasScope(ctrl)) {
+    const scopeIds = [...await resolveScopeBookIds(db, ctrl)];
+    SCOPE_FILTER = { id: { $in: scopeIds } };
+    console.log(`[IMAGE-EXTRACT] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
+  }
 
   // Find books ready for image extraction
   const books = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'chapters_complete' })
+    .find({ 'pipeline_auto.status': 'chapters_complete', ...SCOPE_FILTER })
     .sort({ processing_priority: -1, hidden: 1 })
     .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
     .limit(BOOKS_PER_RUN)
@@ -1011,6 +1020,7 @@ async function main() {
         ],
         pages_ocr: { $gt: 0 },
         detected_images_count: { $exists: false },
+        ...SCOPE_FILTER,
       })
       .sort({ visible: -1, pages_count: -1 })
       .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
