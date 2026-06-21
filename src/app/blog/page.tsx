@@ -33,8 +33,8 @@ const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Research',
     tagColor: 'bg-blue-50 text-blue-700',
-    image: 'https://images.sourcelibrary.org/gallery/6952587bab34727b1f045546/6959068695a91542b28bd75a-0.jpg',
-    imageAlt: 'Engraved frontispiece of Michael Maier\'s Symbola Aureae Mensae, 1617',
+    image: 'https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468107-0.jpg',
+    imageAlt: 'Alexander the Great enthroned before three naked gymnosophists, a 1544 Armenian Romance of Alexander miniature',
   },
   {
     slug: 'the-giants-werent-translated',
