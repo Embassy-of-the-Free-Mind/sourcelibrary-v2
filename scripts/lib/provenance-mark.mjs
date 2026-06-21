@@ -43,9 +43,14 @@ const WM_Z_THRESHOLD = 5;   // z-score above which we call it "ours" (noise floo
 const STD_FLOOR = 5;
 const STD_SCALE = 12;
 const VISIBLE_RATE = 10;    // ~1 in N pages gets the visible logo
-const LOGO_HEIGHT_FRAC = 0.045;
-const LOGO_OPACITY = 0.5;
+const LOGO_HEIGHT_FRAC = 0.07;   // clearly visible corner stamp (not a hidden mark)
 const LOGO_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--512h.png');
+// Period-sympathetic palette (not stark black/white): warm dark-grey mark, cream
+// plate. Some pages get a cream-plate stamp, some a bare dark-grey mark.
+const MARK_RGB = { r: 58, g: 54, b: 48 };       // warm dark grey
+const PLATE_RGB = { r: 244, g: 237, b: 221 };   // cream
+const PLATE_OPACITY = 0.9;   // cream-plate stamp overall opacity
+const BARE_OPACITY = 0.82;   // bare dark-grey mark opacity
 
 // ---- key helpers ----------------------------------------------------------
 function hmac(key, label) {
@@ -81,24 +86,49 @@ export function shouldShowVisibleLogo(editionId, pageNumber) {
 
 // ---- visible logo ---------------------------------------------------------
 let rawLogo = null;
+/** Multiply a PNG buffer's alpha by `opacity` (via a dest-in tile). */
+async function applyOpacity(pngBuf, opacity) {
+  return sharp(pngBuf).composite([{ input: Buffer.from([0, 0, 0, Math.round(255 * opacity)]), raw: { width: 1, height: 1, channels: 4 }, tile: true, blend: 'dest-in' }]).png().toBuffer();
+}
+
 async function visibleLogoComposite(W, H, editionId, pageNumber) {
   if (!rawLogo) rawLogo = fs.readFileSync(LOGO_PATH);
-  const h = Math.max(14, Math.min(64, Math.round(H * LOGO_HEIGHT_FRAC)));
-  const resized = await sharp(rawLogo).resize({ height: h }).ensureAlpha().png().toBuffer();
-  const { width: w } = await sharp(resized).metadata();
-  const alphaTile = { input: Buffer.from([0, 0, 0, Math.round(255 * LOGO_OPACITY)]), raw: { width: 1, height: 1, channels: 4 }, tile: true, blend: 'dest-in' };
-  const logo = await sharp(resized).composite([alphaTile]).png().toBuffer();
-  // Corner varies by content hash (like the old /api/image proxy), biased away
-  // from the top (page numbers/headers usually live there).
+  const h = Math.max(24, Math.min(200, Math.round(H * LOGO_HEIGHT_FRAC)));
+
+  // Dark-grey mark: recolor the black-on-transparent icon by masking a warm-grey
+  // fill with the icon's own alpha.
+  const icon = await sharp(rawLogo).resize({ height: h }).ensureAlpha().png().toBuffer();
+  const { width: lw, height: lh } = await sharp(icon).metadata();
+  const greyMark = await sharp({ create: { width: lw, height: lh, channels: 4, background: { ...MARK_RGB, alpha: 1 } } })
+    .composite([{ input: icon, blend: 'dest-in' }]).png().toBuffer();
+
+  // Style varies by hash: ~half cream-plate stamp, ~half bare dark-grey mark.
+  const usePlate = hmac('logo-style', `${editionId}:${pageNumber}`)[0] % 2 === 0;
+  let mark, mw, mh;
+  if (usePlate) {
+    const inset = Math.round(h * 0.3);
+    mw = lw + inset * 2; mh = lh + inset * 2;
+    const radius = Math.round(mh * 0.16);
+    const roundMask = Buffer.from(`<svg width="${mw}" height="${mh}"><rect width="${mw}" height="${mh}" rx="${radius}" ry="${radius}" fill="#fff"/></svg>`);
+    const creamPlate = await sharp({ create: { width: mw, height: mh, channels: 4, background: { ...PLATE_RGB, alpha: 1 } } })
+      .composite([{ input: roundMask, blend: 'dest-in' }]).png().toBuffer();
+    const composited = await sharp(creamPlate).composite([{ input: greyMark, left: inset, top: inset, blend: 'over' }]).png().toBuffer();
+    mark = await applyOpacity(composited, PLATE_OPACITY);
+  } else {
+    mw = lw; mh = lh;
+    mark = await applyOpacity(greyMark, BARE_OPACITY);
+  }
+
+  // Corner varies by content hash (like the old /api/image proxy).
   const sel = hmac('logo-corner', `${editionId}:${pageNumber}`)[0] % 4;
-  const pad = Math.max(6, Math.min(28, Math.round(H * 0.02)));
+  const pad = Math.max(8, Math.min(34, Math.round(H * 0.02)));
   const pos = [
-    { left: pad, top: H - h - pad },               // BL
-    { left: W - w - pad, top: H - h - pad },        // BR
-    { left: pad, top: pad },                        // TL
-    { left: W - w - pad, top: pad },                // TR
+    { left: pad, top: H - mh - pad },          // BL
+    { left: W - mw - pad, top: H - mh - pad },  // BR
+    { left: pad, top: pad },                    // TL
+    { left: W - mw - pad, top: pad },           // TR
   ][sel];
-  return { input: logo, left: Math.max(0, pos.left), top: Math.max(0, pos.top), blend: 'over' };
+  return { input: mark, left: Math.max(0, pos.left), top: Math.max(0, pos.top), blend: 'over' };
 }
 
 // ---- block statistics (green channel as luma proxy) -----------------------
