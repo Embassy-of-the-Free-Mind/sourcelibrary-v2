@@ -10,10 +10,12 @@
  * itself means the mark travels with the file: it survives direct hotlinks,
  * copy-image-address, and screenshots, with zero recurring serve cost.
  *
- * It overlays a subtle darkened corner logo on the EXISTING variant (preserving
- * exactly what's displayed, split crops included) and overwrites the SAME R2 key,
- * so no DB pointer changes and no churn. Idempotent: it stamps each object's R2
+ * It marks the EXISTING variant via scripts/lib/provenance-mark.mjs — invisible
+ * EXIF (Copyright/Source/edition id) + an invisible keyed watermark on every page
+ * + a subtle visible logo on ~1-in-10 pages — and overwrites the SAME R2 key, so
+ * no DB pointer changes and no churn. Idempotent: it stamps each object's R2
  * metadata with `provenance: <MARK_VERSION>` and skips anything already marked.
+ * Requires PROVENANCE_SECRET_KEY (the watermark key, shared with the text imprimatur).
  *
  * The originals used for OCR / download / deep-zoom (`archived_photo`,
  * `photo_original`, `original`/`hires` tiers) are NOT touched — only the
@@ -37,13 +39,13 @@
  *   node scripts/maintenance/bake-provenance-mark.mjs --all --include-thumbs --apply
  */
 
-import fs from 'fs';
-import path from 'path';
 import { MongoClient } from 'mongodb';
-import sharp from 'sharp';
 import {
-  S3Client, GetObjectCommand, PutObjectCommand, HeadObjectCommand,
+  S3Client, GetObjectCommand, PutObjectCommand,
 } from '@aws-sdk/client-s3';
+import { NodeHttpHandler } from '@smithy/node-http-handler';
+import { Agent as HttpsAgent } from 'https';
+import { markImage } from '../lib/provenance-mark.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const ALL = process.argv.includes('--all');
@@ -56,15 +58,11 @@ const CONCURRENCY = parseInt(arg('--concurrency') || '10', 10);
 
 // Bump this string if the mark design changes and a re-bake is wanted; objects
 // tagged with the current version are skipped, so a new version re-marks all.
-const MARK_VERSION = 'sl-v1';
+// sl-v1 = old always-on visible logo; sl-v2 = EXIF + invisible watermark +
+// random ~1/10 visible logo (the scheme in scripts/lib/provenance-mark.mjs).
+const MARK_VERSION = 'sl-v2';
 
-// Source logo — the highest-res black-on-transparent icon, downscaled per image
-// for a crisp edge. Same brand mark the /api/image proxy uses.
-const LOGO_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--512h.png');
-const LOGO_OPACITY = 0.55;        // baked into the mark's alpha — subtle, readable
-const LOGO_HEIGHT_FRAC = 0.04;    // logo height as a fraction of image height
-const LOGO_MIN = 14, LOGO_MAX = 64;
-const PAD_FRAC = 0.02, PAD_MIN = 6, PAD_MAX = 28;
+const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
 
 const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
 const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
@@ -75,6 +73,16 @@ const r2 = (R2_ACCOUNT_ID && R2_ACCESS_KEY_ID && R2_SECRET_ACCESS_KEY)
       region: 'auto',
       endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
       credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
+      // Pool a bounded set of keep-alive connections rather than opening a new
+      // socket per request — a connection storm (hundreds of fresh SYNs) trips
+      // R2's per-IP connection throttling and wedges the run. Timeouts + retries
+      // then ride out any residual transient blip.
+      maxAttempts: 6,
+      requestHandler: new NodeHttpHandler({
+        httpsAgent: new HttpsAgent({ keepAlive: true, maxSockets: 32 }),
+        connectionTimeout: 8000,
+        requestTimeout: 60000,
+      }),
     })
   : null;
 
@@ -95,59 +103,29 @@ const streamToBuffer = async (stream) => {
   return Buffer.concat(chunks);
 };
 
-let rawLogo = null;
-async function logoForHeight(h) {
-  if (!rawLogo) rawLogo = fs.readFileSync(LOGO_PATH);
-  // Resize to target height, then multiply alpha by LOGO_OPACITY via a 1px
-  // black tile composited with `dest-in` (keeps the logo shape, scales its alpha).
-  const resized = await sharp(rawLogo).resize({ height: h }).ensureAlpha().png().toBuffer();
-  const { width } = await sharp(resized).metadata();
-  const alphaTile = { input: Buffer.from([0, 0, 0, Math.round(255 * LOGO_OPACITY)]), raw: { width: 1, height: 1, channels: 4 }, tile: true, blend: 'dest-in' };
-  const marked = await sharp(resized).composite([alphaTile]).png().toBuffer();
-  return { buffer: marked, width: width || h };
-}
-
-async function alreadyMarked(key) {
-  try {
-    const head = await r2.send(new HeadObjectCommand({ Bucket: R2_BUCKET, Key: key }));
-    return head.Metadata && head.Metadata.provenance === MARK_VERSION;
-  } catch { return false; }
-}
-
-async function markVariant(key) {
-  // Pull the existing pre-sized variant.
+async function markVariant({ key, bookId, pageNumber }) {
+  // Pull the existing pre-sized variant. The GET response carries the object's
+  // metadata, so we check idempotency here — no extra HeadObject round trip.
   const obj = await r2.send(new GetObjectCommand({ Bucket: R2_BUCKET, Key: key }));
+  if (obj.Metadata && obj.Metadata.provenance === MARK_VERSION) return 'already';
   const buf = await streamToBuffer(obj.Body);
-  const img = sharp(buf, { failOn: 'none' });
-  const meta = await img.metadata();
-  const h = meta.height || 0, w = meta.width || 0;
-  if (!h || !w) throw new Error('no dimensions');
 
-  const logoH = Math.max(LOGO_MIN, Math.min(LOGO_MAX, Math.round(h * LOGO_HEIGHT_FRAC)));
-  const pad = Math.max(PAD_MIN, Math.min(PAD_MAX, Math.round(h * PAD_FRAC)));
-  const { buffer: logo, width: logoW } = await logoForHeight(logoH);
-
-  // Bottom-right corner: away from headers / page numbers (usually top).
-  const left = Math.max(0, w - logoW - pad);
-  const top = Math.max(0, h - logoH - pad);
-
-  const out = await img
-    .composite([{ input: logo, left, top, blend: 'over' }])
-    .jpeg({ quality: 82, mozjpeg: true })
-    .toBuffer();
+  // EXIF + invisible watermark (keyed by bookId) + random ~1/10 visible logo.
+  const out = await markImage(buf, { editionId: bookId, pageNumber, key: PROVENANCE_KEY });
 
   await r2.send(new PutObjectCommand({
     Bucket: R2_BUCKET, Key: key, Body: out, ContentType: 'image/jpeg',
     CacheControl: 'public, max-age=604800, s-maxage=604800',
     Metadata: { provenance: MARK_VERSION },
   }));
+  return 'marked';
 }
 
 async function main() {
   if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set.'); process.exit(1); }
   if (APPLY && !r2) { console.error('R2 creds required for --apply.'); process.exit(1); }
+  if (APPLY && !PROVENANCE_KEY) { console.error('PROVENANCE_SECRET_KEY required for --apply (watermark key).'); process.exit(1); }
   if (!BOOK_ID && !PROVIDER && !ALL) { console.error('Pass --book <id>, --provider <name>, or --all.'); process.exit(1); }
-  if (!fs.existsSync(LOGO_PATH)) { console.error(`Logo asset missing: ${LOGO_PATH}`); process.exit(1); }
 
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 0 });
   await client.connect();
@@ -183,17 +161,17 @@ async function main() {
     let queue = [];
     const flush = async () => {
       const batch = queue.splice(0, queue.length);
-      await Promise.all(batch.map(async (key) => {
+      await Promise.all(batch.map(async (item) => {
         try {
-          if (!APPLY) { marked++; if (marked <= 10) console.log(`  would mark ${key}`); return; }
-          if (await alreadyMarked(key)) { alreadyDone++; return; }
-          await markVariant(key);
+          if (!APPLY) { marked++; if (marked <= 10) console.log(`  would mark ${item.key}`); return; }
+          const status = await markVariant(item);
+          if (status === 'already') { alreadyDone++; return; }
           marked++;
-          if (marked % 2000 === 0) {
+          if (marked % 500 === 0) {
             const rate = (marked / ((Date.now() - t0) / 1000)).toFixed(0);
             console.log(`  …${marked} marked, ${alreadyDone} already, ${failed} failed  (${rate}/s)`);
           }
-        } catch (e) { failed++; if (failed <= 15) console.warn(`  FAIL ${key}: ${e.message}`); }
+        } catch (e) { failed++; if (failed <= 15) console.warn(`  FAIL ${item.key}: ${e.message}`); }
       }));
     };
 
@@ -209,8 +187,8 @@ async function main() {
         if (!p[f]) { skipped++; continue; }
         if (!key) { notR2++; continue; }
         if (sourceUrls.has(p[f])) { collided++; continue; }
-        queue.push(key);
-        if (queue.length >= CONCURRENCY * 4) await flush();
+        queue.push({ key, bookId: p.book_id, pageNumber: p.page_number });
+        if (queue.length >= CONCURRENCY) await flush();
       }
       if (LIMIT && marked >= LIMIT && !APPLY) break;
     }
