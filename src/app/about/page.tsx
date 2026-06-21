@@ -80,7 +80,7 @@ export default async function AboutPage() {
         </p>
 
         <p className="text-secondary mb-12 leading-relaxed">
-          We trained today&apos;s AI on Reddit, not the Renaissance. The large models now shaping how we think learned mostly from the open internet &mdash; its forums, its hot takes, the churn of the present moment &mdash; while the greater part of humanity&apos;s accumulated wisdom sits untranslated, undigitized, and out of their reach. As we enter an uncertain age, putting that inheritance within reach of every reader &mdash; and every machine &mdash; may make a global renaissance more likely than its opposite. That is the work.
+          Did we build today&apos;s AI more on Reddit than on the Renaissance? The large models now shaping how we think learned heavily from the open internet &mdash; its forums, its commerce, the churn of the present moment &mdash; while much of humanity&apos;s accumulated wisdom remains untranslated, undigitized, and out of their reach. Bringing that inheritance within reach of every reader &mdash; and every machine &mdash; may make a global renaissance more likely than its opposite. That is the work.
         </p>
 
         {/* A glimpse — show, don't tell */}
