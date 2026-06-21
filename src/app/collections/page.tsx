@@ -8,6 +8,7 @@ import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTime
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { getLibraryStats, roundedCountLabel } from '@/lib/library-stats';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -167,28 +168,6 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   }
 }
 
-/** Subtitle book count, read from the daily-refreshed `homepage_stats` cache
- *  (the same value the homepage hero uses) — a single indexed `_id` lookup,
- *  run only when this ISR page re-renders (≤ once/24h), so it adds no per-visit
- *  load. Rounded down to the nearest 1,000 so the cached HTML changes only at
- *  each new milestone, never on every import. Falls back to "Thousands of" if
- *  the cache is unavailable. */
-async function fetchBookCountLabel(): Promise<string> {
-  try {
-    const db = await getReadDb();
-    const cached = await db.collection('system_config').findOne(
-      { _id: 'homepage_stats' } as never,
-      { projection: { totalBooks: 1 }, maxTimeMS: 2000 }
-    );
-    const total = Number(cached?.totalBooks) || 0;
-    if (total >= 1000) {
-      const rounded = Math.floor(total / 1000) * 1000;
-      return `${rounded.toLocaleString('en-US')}+ books`;
-    }
-  } catch { /* fall through to a safe, non-numeric default */ }
-  return 'Thousands of books';
-}
-
 /** Ordered, de-duped list of candidate image URLs for a card — prefer small
  *  thumbnails, then extracted, then the raw page, across all featured images.
  *  The card renders these with a fallback chain so a single dead/slow source
@@ -275,7 +254,8 @@ const INITIAL_PATHWAYS = 12;
 const COLLECTIONS_HERO = '/collections-hero.jpg';
 
 export default async function CollectionsPage() {
-  const countLabel = await fetchBookCountLabel();
+  const stats = await getLibraryStats();
+  const countLabel = stats ? `${roundedCountLabel(stats.books)} books` : 'Thousands of books';
   return (
     <>
     {/* Background images aren't seen by the preload scanner — hint it early. */}
