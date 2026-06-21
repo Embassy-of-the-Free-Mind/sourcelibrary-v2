@@ -169,12 +169,17 @@ function translatedRatio(m) {
   const denom = Math.max(1, total - (m.pages_blank || 0));
   return Math.min(1, (m.pages_translated || 0) / denom);
 }
+// Titles that denote a collected/complete-works edition (used for omnibus recall AND to
+// prefer a dedicated edition of the cited work over a big collected dump when both exist).
+const COLLECTED_RX = /opera|omnia|complete works|works of|collected|exegetical|surviving works|dialogues of|tutte le opere|gesammelte|sämtliche/i;
+const isCollected = m => COLLECTED_RX.test(m.title || '');
 function bestEdition(heldMeta) {
   const readable = (heldMeta || []).filter(m => (m.pages_translated || 0) > 0);
   if (!readable.length) return null;
   const tier = m => { const r = translatedRatio(m); return r >= 0.6 ? 2 : r >= 0.25 ? 1 : 0; };
   return readable.slice().sort((a, b) =>
     tier(b) - tier(a) ||                                     // substantially-translated first
+    (isCollected(a) - isCollected(b)) ||                     // a DEDICATED edition beats a collected dump
     (b.pages_translated || 0) - (a.pages_translated || 0) || // then most translated text
     (b.pages_ocr || 0) - (a.pages_ocr || 0) ||
     (a.year || 9999) - (b.year || 9999)
@@ -323,7 +328,9 @@ function confirmPrompt(titleForms, author, cands) {
   const list = cands.map((b, j) => `[${j}] "${(b.display_title || b.title || '').slice(0, 90)}" by ${b.author || '?'}${b.year ? ` (${b.year})` : ''} [${b.language || '?'}]`).join('\n');
   return `You are matching a cited work to a library's candidate books.
 CITED WORK: "${titleForms[0]}" by ${author}. Known title forms (any language): ${JSON.stringify(titleForms)}.
-A candidate matches ONLY if it is an edition, translation, or commentary of THIS EXACT work by THIS author — recognise it under ANY of the title forms above, in any language (Latin/Greek/Arabic/English). A DIFFERENT work by the SAME author does NOT match. A work with a SIMILAR TITLE by a DIFFERENT author does NOT match. A modern monograph merely ABOUT the work does NOT match.
+A candidate matches if it is an edition, translation, or commentary of THIS EXACT work by THIS author — recognise it under ANY of the title forms above, in any language (Latin/Greek/Arabic/English).
+ALSO a match: a COMPLETE-WORKS / OPERA OMNIA / "Works of <author>" edition of THIS SAME author that would CONTAIN this work. But be careful with a TITLED SUBSET ("Philosophical Works", "Theological Works", "Letters", "Poems", "Orations", "Sermons", "Exegetical Works"): it counts ONLY if the cited work fits that genre — e.g. an ALCHEMICAL "Epistle on Chrysopoeia" is NOT in a "Philosophical Works" of Psellos; a single oration is not in a "Letters". When unsure whether the collection includes this specific work, do NOT match.
+NOT a match: a DIFFERENT work by the same author (when the candidate is a single specific other work); a work or collected-works of a DIFFERENT author (watch name collisions — Philo of Alexandria ≠ Philoponus ≠ Philostratus; Plato's dialogue ≠ a commentary ON it); a modern monograph merely ABOUT the work.
 CANDIDATES:
 ${list || '(no candidates)'}
 Think step by step: restate the work's original-language title; then for each candidate decide whether its title (possibly Latin/Greek/Arabic) denotes this same work by this author. Return JSON {"reasoning":"<one sentence>","matches":[<indices of candidate books that ARE this work>]}.`;
@@ -339,7 +346,24 @@ async function stageHoldings() {
   await client.connect();
   const db = client.db('bookstore');
 
-  console.log(`  matching ${items.length} works (embed title-forms → retrieve → per-candidate confirm)…`);
+  // Author-anchored recall pool. Embedding retrieval ranks a specific treatise title
+  // ("De Cherubim") poorly against a generically-titled collected edition ("Complete
+  // Works of Philo"), so omnibus editions that DO contain a cited work get missed — we
+  // hold 16 readable Philo editions but the matcher saw only one. Pre-fetch all visible,
+  // readable collected/complete-works editions, index by author token, and offer them as
+  // extra candidates per (non-anonymous) work; the flash-lite confirmer judges containment.
+  const collected = await db.collection('books').find(
+    { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 },
+      $or: [{ title: { $regex: COLLECTED_RX } }, { display_title: { $regex: COLLECTED_RX } }] },
+    { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, work_id: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 } }).toArray();
+  const collectedByToken = new Map();
+  for (const b of collected) {
+    if (EXCLUDE_LANGS.has(b.language)) continue;
+    for (const t of authTokens(b.author)) { if (!collectedByToken.has(t)) collectedByToken.set(t, []); collectedByToken.get(t).push(b); }
+  }
+  console.log(`  author-anchored pool: ${collected.length} collected-works editions across ${collectedByToken.size} author tokens`);
+
+  console.log(`  matching ${items.length} works (embed title-forms + author-anchored → retrieve → per-candidate confirm)…`);
   let done = 0;
   const out = await mapPool(items, 6, async (w, idx) => {
     const nf = norm[idx] || { title_forms: [w.work], author: w.author, status: 'extant' };
@@ -364,15 +388,22 @@ async function stageHoldings() {
       const { data } = await supabase.rpc('match_books_semantic', { query_embedding: JSON.stringify(vec), match_threshold: 0.2, match_count: 12 });
       (data || []).forEach((r, i) => { const cur = rank.get(r.book_id); if (cur === undefined || i < cur) rank.set(r.book_id, i); });
     }
-    if (!rank.size) { done++; return { ...base, held: [] }; }
     const ids = [...rank.keys()];
     const oids = ids.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean);
     const rows = oids.length ? await db.collection('books').find({ _id: { $in: oids }, visible: true, pages_count: { $gt: 0 } },
       { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, work_id: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 } }).toArray() : [];
     const byId = new Map(rows.filter(r => !EXCLUDE_LANGS.has(r.language)).map(r => [r._id.toString(), r]));
-    // keep the best-ranked unique candidates (cap the confirmer's candidate list)
+    // best-ranked embedding candidates (cap), then add author-anchored collected-works
     const CAND_CAP = 16;
     const cands = ids.filter(i => byId.has(i)).sort((a, b) => rank.get(a) - rank.get(b)).slice(0, CAND_CAP).map(i => byId.get(i));
+    const authToks = author && !/anonymous|various|unknown|attributed/i.test(author) ? authTokens(author) : [];
+    if (authToks.length) {
+      const seen = new Set(cands.map(b => b._id.toString()));
+      const extra = [];
+      for (const t of authToks) for (const b of (collectedByToken.get(t) || [])) { const id = b._id.toString(); if (!seen.has(id)) { seen.add(id); extra.push(b); } }
+      cands.push(...extra.slice(0, 8)); // cap omnibus extras per work
+    }
+    if (!cands.length) { done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`); return { ...base, held: [] }; }
 
     // confirm: reason per candidate
     let picks = [];
