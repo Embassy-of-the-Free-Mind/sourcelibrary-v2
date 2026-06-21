@@ -17,7 +17,10 @@ export default async function AboutPage() {
 
   const headlineStats: { value: string; label: string; href?: string }[] = [
     { value: fmt(stats.totalBooks), label: 'books digitized', href: '/search' },
-    { value: `${stats.languageCount}+`, label: 'languages' },
+    // Conservative floor: ~50 languages have 5+ translated books each. The raw
+    // distinct-language count (stats.languageCount) is higher but padded with
+    // singletons, compound strings, and junk tokens — not a defensible claim.
+    { value: '50+', label: 'languages' },
     { value: fmt(stats.translatedToEnglish), label: 'translated to English', href: '/search?has_translation=true' },
     { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true' },
     { value: fmt(stats.illustrationCount), label: 'illustrations cataloged', href: '/gallery' },
@@ -41,7 +44,7 @@ export default async function AboutPage() {
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-6">
-          Source Library is a digital library of historical primary sources &mdash; the foundational works of philosophy, science, religion, and mysticism from cultures across the world, in more than 160 languages. It spans the Sanskrit and Tibetan canons, the Chinese classics, the sciences of the Arabic and Hebrew worlds, the Hermetic and Neoplatonist currents of the Renaissance, and far beyond. We digitize rare books and manuscripts, translate them with AI alongside the original scanned page, and make them free to read, quote, and cite.
+          Source Library is a digital library of historical primary sources &mdash; the foundational works of philosophy, science, religion, and mysticism from cultures across the world, in more than 50 languages. It spans the Sanskrit and Tibetan canons, the Chinese classics, the sciences of the Arabic and Hebrew worlds, the Hermetic and Neoplatonist currents of the Renaissance, and far beyond. We digitize rare books and manuscripts, translate them with AI alongside the original scanned page, and make them free to read, quote, and cite.
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-12">
@@ -77,7 +80,7 @@ export default async function AboutPage() {
         </p>
 
         <p className="text-secondary mb-12 leading-relaxed">
-          As we enter an uncertain age, a strong foundation in wisdom &mdash; and the preservation of our full inheritance &mdash; has never felt more pressing. Translating the world&apos;s ancient wisdom may make a global renaissance more likely than its opposite. That is the work.
+          We trained today&apos;s AI on Reddit, not the Renaissance. The large models now shaping how we think learned mostly from the open internet &mdash; its forums, its hot takes, the churn of the present moment &mdash; while the greater part of humanity&apos;s accumulated wisdom sits untranslated, undigitized, and out of their reach. As we enter an uncertain age, putting that inheritance within reach of every reader &mdash; and every machine &mdash; may make a global renaissance more likely than its opposite. That is the work.
         </p>
 
         {/* A glimpse — show, don't tell */}
