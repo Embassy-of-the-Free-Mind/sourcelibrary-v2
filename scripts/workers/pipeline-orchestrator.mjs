@@ -2871,7 +2871,11 @@ async function run() {
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (AR screen → Gemini confirm) ---');
 
-      const SPLIT_LIMIT = 100; // Max books per cycle
+      // Scoped mode raises the window so allowlisted books behind the backlog
+      // aren't stranded (work stays confined by applyBookOverride below). The
+      // module-level phase limits get this raise already; phase-local consts
+      // like this one were missed — the selective-unpause stall bug.
+      const SPLIT_LIMIT = SCOPED_MODE ? 100000 : 100; // Max books per cycle
       const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
 
       // Find archive_complete books that haven't been split-checked yet
@@ -3067,7 +3071,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     if (shouldRun(1.3)) {
       console.log('\n--- Phase 1.3: Pre-OCR spread split (gutter-only) ---');
 
-      const PRE_SPLIT_LIMIT = 8; // each book downloads + crops + uploads all its images
+      const PRE_SPLIT_LIMIT = SCOPED_MODE ? 100000 : 8; // each book downloads + crops + uploads all its images (scoped mode raises the window; work confined by applyBookOverride below)
 
       let readyForPreSplit = await db.collection('books')
         .find({
@@ -3760,13 +3764,18 @@ Rules:
     // Independently pausable via paused_phases:[1.97]. When paused, Phase 2's
     // dedup_complete gate is relaxed (see below) so books flow straight to OCR.
     if (shouldRun(1.97)) {
-      const DEDUP_LIMIT = 50;        // per tick — bounds runtime (~30+ R2 HEADs/book); drains backlog across ticks
+      const DEDUP_LIMIT = SCOPED_MODE ? 100000 : 50;  // per tick — bounds runtime (~30+ R2 HEADs/book); drains backlog across ticks. Scoped mode raises the window so allowlisted books behind the backlog aren't stranded (work confined by the scope filter below).
       const DEDUP_MAX_ATTEMPTS = 3;  // transient-failure giveup; release the book so Phase 2 isn't blocked forever
-      const candidates = await db.collection('books').find({
+      let candidates = await db.collection('books').find({
         'pipeline_auto.status': 'archive_complete',
         'pipeline_auto.dedup_complete': { $ne: true },
       }).project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
         .limit(DEDUP_LIMIT).toArray();
+      // Selective-unpause: confine dedup to the allowlist, like every other phase.
+      // This phase previously had NO scope filter, so when globally paused with a
+      // scope set, scoped books behind the backlog never got dedup_complete and
+      // stalled at Phase 2's dedup gate (never reaching OCR).
+      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 });
 
       if (candidates.length > 0) {
         console.log('\n--- Phase 1.97: Trailing-dupe dedup ---');
@@ -4242,7 +4251,7 @@ Rules:
     if (shouldRun(3.1) || shouldRun(3)) {
       console.log('\n--- Phase 3.1: Post-OCR spread split ---');
 
-      const SPLIT_BATCH_LIMIT = 10; // Books per cycle (each book is heavy: downloads + crops + uploads)
+      const SPLIT_BATCH_LIMIT = SCOPED_MODE ? 100000 : 10; // Books per cycle (each book is heavy: downloads + crops + uploads; scoped mode raises the window, work confined by applyBookOverride below)
 
       let readyForSplit = await db.collection('books')
         .find({
