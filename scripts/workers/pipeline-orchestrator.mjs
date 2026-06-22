@@ -24,6 +24,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -2028,6 +2029,59 @@ MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer see
 
 Return ONLY a valid JSON array. If no significant illustrations, return: []`;
 
+// Per-page text grounding for the batch image-extraction path (#2707), mirroring
+// the realtime worker. Returns Map<pageId, groundingString>. Reads each candidate
+// page's own OCR/translation, a ±radius window of neighbour pages (usually text/
+// blank pages not in the candidate set), and the book summary as the isolated-
+// plate fallback. One window query per book.
+const BATCH_GROUNDING_RADIUS = 3;
+async function buildGroundingByPageId(db, book, candidatePages) {
+  const ids = candidatePages.map(p => p.id);
+  const cps = await db.collection('pages')
+    .find({ id: { $in: ids } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
+    .toArray();
+
+  const windowNumbers = new Set();
+  for (const p of cps) {
+    if (typeof p.page_number !== 'number') continue;
+    for (let d = -BATCH_GROUNDING_RADIUS; d <= BATCH_GROUNDING_RADIUS; d++) windowNumbers.add(p.page_number + d);
+  }
+  const pagesByNumber = new Map();
+  if (windowNumbers.size > 0) {
+    const wp = await db.collection('pages')
+      .find({ book_id: book.id, page_number: { $in: [...windowNumbers] } }, { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
+      .toArray();
+    for (const p of wp) pagesByNumber.set(p.page_number, p);
+  }
+
+  let bookSummary = book.summary;
+  if (bookSummary === undefined) {
+    const b = await db.collection('books').findOne({ id: book.id }, { projection: { summary: 1 } });
+    bookSummary = b?.summary || '';
+  }
+
+  const map = new Map();
+  for (const p of cps) {
+    const neighbors = [];
+    if (typeof p.page_number === 'number') {
+      for (let n = p.page_number - BATCH_GROUNDING_RADIUS; n <= p.page_number + BATCH_GROUNDING_RADIUS; n++) {
+        if (n === p.page_number) continue;
+        const np = pagesByNumber.get(n);
+        if (np) neighbors.push({ page_number: n, ocr: np.ocr?.data, translation: np.translation?.data });
+      }
+    }
+    map.set(p.id, buildPageGrounding({
+      ocr: p.ocr?.data,
+      translation: p.translation?.data,
+      pageNumber: p.page_number,
+      neighbors,
+      bookSummary,
+      radius: BATCH_GROUNDING_RADIUS,
+    }));
+  }
+  return map;
+}
+
 async function submitImageExtractionBatch(db, book, candidatePages) {
   // Guard: check for existing active batch_jobs for this book
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
@@ -2071,14 +2125,12 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
   const contextPrefix = contextParts.length > 0
     ? `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image — a book about a subject does not mean every illustration depicts it):\n${contextParts.join(' | ')}\n\n`
     : '';
-  // TODO(image-grounding): feed each page's own OCR `<image-desc>` / `<summary>` into
-  // the per-item prompt here, the way src/lib/image-extraction.ts and
-  // scripts/workers/image-extract-worker.mjs (buildPageGrounding) now do. The batch
-  // builders below assemble one prompt per page, so add ocr.data/translation.data to
-  // the `pages` projection and append buildPageGrounding(page) per item. Until then,
-  // the softened BOOK CONTEXT above is what keeps this batch path from confabulating a
-  // subject from the book's topic (e.g. wrestlers → "gymnosophists").
   const prompt = contextPrefix + IMAGE_EXTRACTION_PROMPT;
+
+  // Per-page text grounding (#2707): subject identity comes from the page's own
+  // OCR <image-desc>/<summary> + nearby text, not the book's topic. Appended per
+  // item below so each page's prompt carries its own grounding.
+  const groundingByPageId = await buildGroundingByPageId(db, book, candidatePages);
 
   const useFileBased = downloaded.length > IMAGE_EXTRACTION_INLINE_SIZE;
   const batchSize = useFileBased ? IMAGE_EXTRACTION_BATCH_SIZE : IMAGE_EXTRACTION_INLINE_SIZE;
@@ -2100,7 +2152,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         request: {
           contents: [{
             parts: [
-              { text: prompt },
+              { text: prompt + (groundingByPageId.get(item.pageId) || '') },
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
@@ -2171,7 +2223,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         request: {
           contents: [{
             parts: [
-              { text: prompt },
+              { text: prompt + (groundingByPageId.get(item.pageId) || '') },
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
@@ -2308,8 +2360,10 @@ async function submitCrossBookImageBatches(db, bookItems) {
     console.log(`    Downloaded ${downloaded.length}/${pages.length} images for ${book.title}`);
 
     const prompt = buildPagePrompt(book);
+    // Per-page text grounding (#2707) for each book in the cross-book pool.
+    const groundingByPageId = await buildGroundingByPageId(db, book, candidatePages);
     for (const item of downloaded) {
-      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id });
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, grounding: groundingByPageId.get(item.pageId) || '', bookId: book.id });
     }
   }
 
@@ -2334,7 +2388,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
       request: {
         contents: [{
           parts: [
-            { text: item.prompt },
+            { text: item.prompt + (item.grounding || '') },
             { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
           ],
         }],
