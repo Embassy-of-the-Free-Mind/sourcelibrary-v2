@@ -46,9 +46,23 @@ const NAV_COLUMNS = [
   },
 ] as const;
 
-const PARTNERS = [
-  { name: 'Embassy of the Free Mind', src: '/partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 800, height: 352, invert: false },
-  { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 373, height: 174, invert: false },
+type Partner = {
+  name: string;
+  href: string;
+  src?: string;
+  width?: number;
+  height?: number;
+  invert?: boolean;
+  /** Render the partner's text wordmark instead of an image (e.g. Frond Studio). */
+  wordmark?: boolean;
+};
+
+// Logo PNGs are trimmed to their content (no internal transparent padding) so
+// every logo fills the shared h-12/h-16 box and they all appear equally tall.
+const PARTNERS: Partner[] = [
+  { name: 'Embassy of the Free Mind', src: '/partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 770, height: 326, invert: false },
+  { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 299, height: 117, invert: false },
+  { name: 'Frond Studio', href: 'https://frond-studio.com', wordmark: true },
 ];
 
 export default function GlobalFooter() {
@@ -156,18 +170,26 @@ export default function GlobalFooter() {
                 href={partner.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-50 hover:opacity-80 transition-opacity"
+                className="flex items-center h-12 md:h-16 opacity-50 hover:opacity-80 transition-opacity"
                 title={partner.name}
               >
-                <Image
-                  src={partner.src}
-                  alt={partner.name}
-                  width={partner.width}
-                  height={partner.height}
-                  sizes="auto"
-                  className={`h-12 md:h-16 w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
-                  unoptimized
-                />
+                {partner.wordmark ? (
+                  // Frond Studio's logo is a stacked text wordmark (no image asset).
+                  <span className="flex flex-col leading-none gap-[3px] text-white">
+                    <span className="font-sans font-light tracking-tight text-[1.75rem] md:text-[2.25rem]">Frond</span>
+                    <span className="font-sans font-medium uppercase tracking-[0.44em] text-[0.6rem] md:text-[0.7rem] text-white/70 pl-px">Studio</span>
+                  </span>
+                ) : (
+                  <Image
+                    src={partner.src!}
+                    alt={partner.name}
+                    width={partner.width}
+                    height={partner.height}
+                    sizes="auto"
+                    className={`h-12 md:h-16 w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
+                    unoptimized
+                  />
+                )}
               </a>
             ))}
           </div>
