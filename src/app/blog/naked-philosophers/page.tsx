@@ -163,8 +163,31 @@ export default function NakedPhilosophersPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           It is the same ethic Onesicritus had watched in silence &mdash; endurance, indifference to the body, freedom
           from need &mdash; now put in the sages&rsquo; own mouths and bound into a book that Christian Armenian scribes
-          were still copying fourteen centuries after the meeting it describes. The naked philosophers had become a
-          story Europe could not stop retelling.
+          were still copying fourteen centuries after the meeting it describes.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          And the manuscript keeps the exchange the legend was really about. Having conquered Porus and reached the
+          gymnosophists in their tents, Alexander offers to grant them anything they ask &mdash; and they ask for the
+          one thing he cannot give:
+        </p>
+
+        <blockquote className="border-l-2 border-accent-rust/40 pl-6 my-8 text-secondary italic leading-relaxed font-body">
+          &ldquo;They all praised him and said, &lsquo;Give us immortality so that we do not die.&rsquo; And Alexander said,
+          &lsquo;I do not possess that power, for I am but a mortal man.&rsquo; They said, &lsquo;Then, being a mortal man,
+          why do you wage so many wars and suffer so much, spilling so much blood, so that you may take the possessions
+          of all by your will? And where will you take these, since you cannot leave them behind for others to
+          keep?&rsquo;&rdquo;
+          <span className="block mt-3 text-sm not-italic text-muted">
+            &mdash; <em>Romance of Alexander</em>, Armenian manuscript, 1544.{' '}
+            <Link href="/book/romance-of-alexander-anonymous/page/69c1bd308522835be8468182" className="text-accent-rust hover:text-accent-rust">Read the page &rarr;</Link>
+          </span>
+        </blockquote>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          It is Dandamis&rsquo;s refusal turned into a question, and it is the whole tradition in miniature: power offers
+          the naked philosophers everything it owns, and the philosophers ask it why it bothers. No wonder Europe could
+          not stop retelling them.
         </p>
 
         <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">The Renaissance meets India again</h2>
