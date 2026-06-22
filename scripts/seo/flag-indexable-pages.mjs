@@ -12,15 +12,19 @@
  * fields. Fully reversible: `--clear` unsets the flag everywhere.
  *
  * Eligibility (a page must have substantial text AND one of):
- *   - read >= MIN_READS in analytics_pageviews (rolling ~90d TTL window), OR
+ *   - pages.read_count >= MIN_READS — the *all-time* human read counter
+ *     (incremented by /api/analytics/track on page_read; populated for
+ *     anonymous main-site readers, not just editors — verified 99.9% coverage
+ *     on the read-proven set). Unlike analytics_pageviews (90d TTL), this never
+ *     ages out, so the indexable set is stable and needs no refresh cron.
  *   - (--include-ft) the book is is_first_translation + translated and the
  *     page itself is translated. This arm is ~1.4M pages — OFF by default;
  *     ramp it deliberately (--ft-language=Latin, --ft-cap=N per book).
  *
  * Usage:
  *   node scripts/seo/flag-indexable-pages.mjs --dry-run        # size only
- *   node scripts/seo/flag-indexable-pages.mjs                  # apply (read>=5)
- *   node scripts/seo/flag-indexable-pages.mjs --min-reads=3
+ *   node scripts/seo/flag-indexable-pages.mjs                  # apply (read_count>=3)
+ *   node scripts/seo/flag-indexable-pages.mjs --min-reads=5
  *   node scripts/seo/flag-indexable-pages.mjs --include-ft --ft-language=Latin
  *   node scripts/seo/flag-indexable-pages.mjs --clear          # revert
  */
@@ -35,7 +39,7 @@ const val = (f, d) => {
 
 const DRY_RUN = has('--dry-run');
 const CLEAR = has('--clear');
-const MIN_READS = parseInt(val('--min-reads', '5'), 10);
+const MIN_READS = parseInt(val('--min-reads', '3'), 10);
 const INCLUDE_FT = has('--include-ft');
 const FT_LANGUAGE = val('--ft-language', null); // restrict FT arm to one language
 const FT_CAP = parseInt(val('--ft-cap', '0'), 10); // 0 = no per-book cap
@@ -68,6 +72,16 @@ await pages.createIndex(
   { seo_indexable: 1 },
   { partialFilterExpression: { seo_indexable: true }, name: 'seo_indexable_partial' }
 );
+// Partial index on the read counter so Arm 1's candidate query doesn't
+// full-scan the millions-row pages collection (an unindexed count/find here
+// times out). Filter is constant at 3 (our default floor); --min-reads below 3
+// falls back to a scan, which is fine for an occasional manual run.
+if (!CLEAR) {
+  await pages.createIndex(
+    { read_count: 1 },
+    { partialFilterExpression: { read_count: { $gte: 3 } }, name: 'read_count_ge3_partial' }
+  );
+}
 
 if (CLEAR) {
   const before = await pages.countDocuments({ seo_indexable: true });
@@ -84,18 +98,10 @@ if (CLEAR) {
   process.exit(0);
 }
 
-// --- Arm 1: demand (analytics_pageviews, human reads, rolling ~90d) ---
-console.log(`Arm 1 — readership: collecting reader-page URLs with read >= ${MIN_READS}...`);
-const readAgg = await db.collection('analytics_pageviews').aggregate([
-  { $match: { path: { $regex: '^/book/[^/]+/page/[^/]+$' } } },
-  // last path segment is the pageId (book-id form — slug vs hex — is irrelevant)
-  { $project: { pageId: { $arrayElemAt: [{ $split: ['$path', '/'] }, 4] } } },
-  { $group: { _id: '$pageId', reads: { $sum: 1 } } },
-  { $match: { reads: { $gte: MIN_READS } } },
-  { $project: { _id: 1 } },
-], { maxTimeMS: 120000, allowDiskUse: true }).toArray();
-const readPageIds = new Set(readAgg.map((r) => r._id).filter(Boolean));
-console.log(`  ${readPageIds.size} pageIds meet the read threshold`);
+// --- Arm 1: demand (pages.read_count — all-time human reads) ---
+// No analytics window: read_count accumulates for the life of the page, so the
+// indexable set is stable. The candidate query below matches it directly.
+console.log(`Arm 1 — readership: pages with all-time read_count >= ${MIN_READS}`);
 
 // --- Arm 2 (optional): first-translation long tail ---
 let ftBookIds = new Set();
@@ -120,19 +126,13 @@ async function slugFor(bookId) {
 }
 
 // Build the qualifying set by streaming candidate pages.
-// Candidates = pages whose id is in readPageIds, OR (FT) book_id in ftBookIds.
-const orClauses = [];
-if (readPageIds.size) orClauses.push({ id: { $in: [...readPageIds] } });
+// Candidates = pages with read_count >= MIN_READS, OR (FT) book_id in ftBookIds.
+const orClauses = [{ read_count: { $gte: MIN_READS } }];
 if (ftBookIds.size) orClauses.push({ book_id: { $in: [...ftBookIds] }, 'translation.data': { $exists: true, $ne: '' } });
-if (!orClauses.length) {
-  console.log('No candidates — nothing to do.');
-  await client.close();
-  process.exit(0);
-}
 
 const cursor = pages.find(
   { $or: orClauses, page_number: { $gte: 0 } },
-  { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, 'translation.data': 1, 'ocr.data': 1 } }
+  { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, read_count: 1, 'translation.data': 1, 'ocr.data': 1 } }
 ).batchSize(500);
 
 const ftPerBook = new Map(); // book_id -> count (for --ft-cap)
@@ -144,7 +144,7 @@ for await (const page of cursor) {
   if (page.page_type === 'digitizer-insert' || page.page_type === 'archived-spread') { skippedType++; continue; }
   if (!hasSubstantialText(page)) { skippedThin++; continue; }
 
-  const viaRead = readPageIds.has(page.id);
+  const viaRead = (page.read_count || 0) >= MIN_READS;
   const viaFt = ftBookIds.has(page.book_id) && (page.translation?.data || '').trim().length > 0;
   if (!viaRead && !viaFt) continue;
 
