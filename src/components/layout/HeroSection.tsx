@@ -1,15 +1,15 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { useHeroLang, HERO_STRINGS, type HeroStrings } from '@/lib/hero-i18n';
+import { HOME_STRINGS, type HomeLang, type HomeStrings } from '@/lib/home-i18n';
 
-function HeroSignUp({ t }: { t: HeroStrings }) {
+function HeroSignUp({ t }: { t: HomeStrings }) {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -89,12 +89,52 @@ function HeroSignUp({ t }: { t: HeroStrings }) {
   );
 }
 
-export default function HeroSection() {
+/**
+ * Suggestion banner shown only on the English `/` page to visitors whose device
+ * language is Spanish, pointing them at the fully-localized `/es` page. Renders
+ * after mount (so it never affects the edge-cached English HTML) and respects a
+ * dismissal flag. This is the auto-detect path for Instagram/mobile traffic,
+ * done without any cache-busting SSR branch on Accept-Language.
+ */
+function LangSuggestBanner({ t }: { t: HomeStrings }) {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('sl_lang_dismissed') === '1') return;
+      const nav = (navigator.language || '').toLowerCase();
+      if (nav.startsWith('es')) setShow(true);
+    } catch {
+      // navigator/localStorage unavailable — show nothing
+    }
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div className="mt-4 inline-flex items-center gap-3 rounded-lg bg-white/10 px-4 py-2 text-sm backdrop-blur-sm">
+      <Link href="/es" className="text-white font-medium hover:underline">
+        {t.suggestSpanish} &rarr;
+      </Link>
+      <button
+        onClick={() => {
+          setShow(false);
+          try { localStorage.setItem('sl_lang_dismissed', '1'); } catch { /* ignore */ }
+        }}
+        aria-label={t.dismiss}
+        className="text-white/50 hover:text-white/90 transition-colors"
+      >
+        &times;
+      </button>
+    </div>
+  );
+}
+
+export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
   const { status } = useStableSession();
   const hasRecorded = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
-  const [lang, setLang] = useHeroLang();
-  const t = HERO_STRINGS[lang];
+  const t = HOME_STRINGS[lang];
 
   const handleVideoLoad = () => {
     setVideoReady(true);
@@ -135,10 +175,10 @@ export default function HeroSection() {
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display text-balance"
           >
-            {t.title}
+            {t.heroTitle}
           </h1>
           <p className="text-xl md:text-2xl lg:text-3xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            {t.subtitleLine1}<br /> {t.subtitleLine2}
+            {t.heroSubtitleLine1}<br /> {t.heroSubtitleLine2}
           </p>
 
           {/* Reserve min-height to prevent layout shift while session loads */}
@@ -157,25 +197,27 @@ export default function HeroSection() {
             )}
           </div>
 
-          {/* Language toggle — lets anyone the navigator.language guess got wrong
-              switch in one tap; the choice persists via localStorage. */}
+          {/* Language switch — real routes (`/` ↔ `/es`) so each language is a
+              distinct, indexable page rather than a client-only string swap. */}
           <div className="mt-6 flex items-center gap-2 text-sm">
-            <button
-              onClick={() => setLang('en')}
-              aria-pressed={lang === 'en'}
+            <Link
+              href="/"
+              aria-current={lang === 'en' ? 'page' : undefined}
               className={`transition-colors ${lang === 'en' ? 'text-white font-medium' : 'text-white/50 hover:text-white/80'}`}
             >
-              English
-            </button>
+              {t.langEnglish}
+            </Link>
             <span className="text-white/30">·</span>
-            <button
-              onClick={() => setLang('es')}
-              aria-pressed={lang === 'es'}
+            <Link
+              href="/es"
+              aria-current={lang === 'es' ? 'page' : undefined}
               className={`transition-colors ${lang === 'es' ? 'text-white font-medium' : 'text-white/50 hover:text-white/80'}`}
             >
-              Español
-            </button>
+              {t.langSpanish}
+            </Link>
           </div>
+
+          {lang === 'en' && <LangSuggestBanner t={t} />}
         </div>
         </div>
       </div>
