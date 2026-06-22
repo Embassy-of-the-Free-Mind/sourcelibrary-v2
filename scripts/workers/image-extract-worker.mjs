@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
@@ -745,6 +746,7 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
 
   return {
     pageId: page.id,
+    page, // carry the page doc forward so the gallery materializer can read photo fields + page_number
     text,
     characteristics,
     inputTokens: usage.promptTokenCount || 0,
@@ -763,7 +765,7 @@ async function processBook(db, book) {
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
         { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
       ],
-    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1, 'translation.data': 1 } })
+    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1, 'translation.data': 1 } })
     .toArray();
 
   // Pre-filter: drop pages where OCR has already classified all illustrations
@@ -825,7 +827,7 @@ async function processBook(db, book) {
         continue;
       }
 
-      const { pageId, text, characteristics, inputTokens, outputTokens } = settled.value;
+      const { pageId, page, text, characteristics, inputTokens, outputTokens } = settled.value;
       totalInputTokens += inputTokens;
       totalOutputTokens += outputTokens;
       pagesProcessed++;
@@ -874,32 +876,10 @@ async function processBook(db, book) {
         // Threshold is under review; coordinate any change with the SQS path
         // and scripts/workers/batch-collector.mjs.
         const QUALITY_THRESHOLD = 0.5;
-        for (let di = 0; di < detectedImages.length; di++) {
-          const img = detectedImages[di];
-          if (!img.bbox) continue;
-          if (typeof img.gallery_quality !== 'number') continue;
-          if (img.gallery_quality < QUALITY_THRESHOLD) continue;
-          const galleryDoc = {
-            id: `${pageId}-${di}`,
-            page_id: pageId,
-            book_id: book.id,
-            detection_index: di,
-            description: img.description,
-            type: img.type,
-            bbox: img.bbox,
-            gallery_quality: img.gallery_quality,
-            gallery_rationale: img.gallery_rationale,
-            museum_description: img.museum_description,
-            metadata: img.metadata,
-            detected_at: now,
-            detection_source: 'vision_model',
-            model: MODEL,
-            updated_at: now,
-          };
-          // Inherit page-level scan quality so the gallery_image carries it standalone.
-          // Per-crop sharpness can be added later in a separate pass on extracted_url.
-          if (pageScanQuality) {
-            galleryDoc.scan_quality = {
+        // Inherit page-level scan quality so the gallery_image carries it standalone.
+        // Per-crop sharpness can be added later in a separate pass on extracted_url.
+        const inheritedScanQuality = pageScanQuality
+          ? {
               score: pageScanQuality.scan_score,
               scan_class: pageScanQuality.scan_class,
               illustration_fidelity: pageScanQuality.illustration_fidelity,
@@ -908,17 +888,34 @@ async function processBook(db, book) {
               source: 'page_inherited',
               version: SCAN_QUALITY_VERSION,
               assessed_at: now,
-            };
-          }
-          if (characteristics) {
-            galleryDoc.page_image_characteristics = {
+            }
+          : null;
+        const pageImageCharacteristics = characteristics
+          ? {
               megapixels: characteristics.megapixels,
               sharpness_var: characteristics.sharpness_var,
               chroma_spread: characteristics.chroma_spread,
               flags: characteristics.flags,
-            };
-          }
-          galleryDocs.push(galleryDoc);
+            }
+          : null;
+        for (let di = 0; di < detectedImages.length; di++) {
+          const img = detectedImages[di];
+          if (!img.bbox) continue;
+          if (typeof img.gallery_quality !== 'number') continue;
+          if (img.gallery_quality < QUALITY_THRESHOLD) continue;
+          // Build the fully-denormalized doc via the shared helper so the field
+          // set stays identical across all writers (#2531). `page` is the source
+          // page doc with photo fields + page_number; `book` carries visible/
+          // hidden/provider so the image is gallery-visible without a sync pass.
+          galleryDocs.push(buildGalleryDoc({
+            page,
+            book,
+            detectedImage: img,
+            index: di,
+            now,
+            scanQuality: inheritedScanQuality,
+            pageImageCharacteristics,
+          }));
         }
       }
 
@@ -1024,7 +1021,7 @@ async function main() {
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'chapters_complete', ...SCOPE_FILTER })
     .sort({ processing_priority: -1, hidden: 1 })
-    .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
+    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
     .limit(BOOKS_PER_RUN)
     .toArray();
 
@@ -1041,7 +1038,7 @@ async function main() {
         ...SCOPE_FILTER,
       })
       .sort({ visible: -1, pages_count: -1 })
-      .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
+      .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
       .limit(BOOKS_PER_RUN - books.length)
       .toArray();
     if (catchUp.length > 0) {

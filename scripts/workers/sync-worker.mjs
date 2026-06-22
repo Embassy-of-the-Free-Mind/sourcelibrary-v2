@@ -331,14 +331,24 @@ async function syncGalleryImages(db) {
         rotation: '$detected_images.rotation',
         gallery_quality: '$detected_images.gallery_quality',
         confidence: '$detected_images.confidence',
+        gallery_rationale: '$detected_images.gallery_rationale',
         museum_description: '$detected_images.museum_description',
         detection_source: '$detected_images.detection_source',
+        // AI provenance — must be carried so re-sync doesn't strip model/date
+        // (the #2406 / lesson_gallery_images_provenance_sync gap).
+        model: '$detected_images.model',
+        detected_at: '$detected_images.detected_at',
         metadata: '$detected_images.metadata',
+        dhash: '$detected_images.dhash',
         book_title: { $ifNull: ['$book.display_title', { $ifNull: ['$book.title', 'Unknown'] }] },
         book_author: '$book.author',
         book_year: '$book.year',
         book_language: '$book.language',
+        // book_visible is what the gallery read path filters on — omitting it
+        // here is what left freshly-synced images invisible (#2531).
+        book_visible: { $ifNull: ['$book.visible', false] },
         book_hidden: '$book.hidden',
+        book_provider: '$book.image_source.provider',
         book_rank: { $literal: 0 },
         updated_at: new Date(),
       },
