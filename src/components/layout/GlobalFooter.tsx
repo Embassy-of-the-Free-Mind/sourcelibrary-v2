@@ -170,14 +170,14 @@ export default function GlobalFooter() {
                 href={partner.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center h-12 md:h-16 opacity-50 hover:opacity-80 transition-opacity"
+                className="flex items-center h-[2.4rem] md:h-[3.2rem] opacity-50 hover:opacity-80 transition-opacity"
                 title={partner.name}
               >
                 {partner.wordmark ? (
                   // Frond Studio's logo is a stacked text wordmark (no image asset).
                   <span className="flex flex-col leading-none gap-[3px] text-white">
-                    <span className="font-sans font-light tracking-tight text-[2.5rem] md:text-[3.25rem]">Frond</span>
-                    <span className="font-sans font-medium uppercase tracking-[0.44em] text-[0.7rem] md:text-[0.875rem] text-white/70 pl-px">Studio</span>
+                    <span className="font-sans font-light tracking-tight text-[2rem] md:text-[2.6rem]">Frond</span>
+                    <span className="font-sans font-medium uppercase tracking-[0.44em] text-[0.56rem] md:text-[0.7rem] text-white/70 pl-px">Studio</span>
                   </span>
                 ) : (
                   <Image
@@ -186,7 +186,7 @@ export default function GlobalFooter() {
                     width={partner.width}
                     height={partner.height}
                     sizes="auto"
-                    className={`h-12 md:h-16 w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
+                    className={`h-[2.4rem] md:h-[3.2rem] w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
                     unoptimized
                   />
                 )}
