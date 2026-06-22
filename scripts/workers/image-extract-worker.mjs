@@ -18,6 +18,7 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
+import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
@@ -688,25 +689,24 @@ async function revalidateBookPage(bookId) {
 }
 
 // ── Process one page ──
-/** Context-grounded page description from the OCR/translation pass (which read the
- *  whole page). Feeding the captioner its `<image-desc>` / `<summary>` stops it
- *  inventing a subject from the book's topic alone (e.g. wrestlers → "gymnosophists").
- *  ~100-150 tokens; the data is already on the page doc. */
-function buildPageGrounding(page) {
-  const ocr = page?.ocr?.data || '';
-  const tr = page?.translation?.data || '';
-  const imgDesc = (ocr.match(/<image-desc[^>]*>([\s\S]*?)<\/image-desc>/i)
-    || tr.match(/<image-desc[^>]*>([\s\S]*?)<\/image-desc>/i))?.[1]?.trim();
-  const summary = (tr.match(/<summary>([\s\S]*?)<\/summary>/i)
-    || ocr.match(/<summary>([\s\S]*?)<\/summary>/i))?.[1]?.trim();
-  const lines = [];
-  if (imgDesc) lines.push(`Illustration on this page, transcribed FROM the page itself: ${imgDesc}`);
-  if (summary) lines.push(`Page summary: ${summary}`);
-  if (lines.length === 0) return '';
-  return `\nPAGE TEXT CONTEXT — written with the page's full text and any caption/label in view. Trust it over the book's general subject; do NOT name a figure or scene it contradicts:\n${lines.join('\n')}\n`;
+const GROUNDING_RADIUS = 3; // pages each side scanned for substantive neighbour text
+
+/** Window of nearby page docs (page_number ± GROUNDING_RADIUS) for a page,
+ *  shaped for buildPageGrounding(). Neighbours need NOT be illustration pages —
+ *  they supply the surrounding narrative (or, when blank, trigger the book-summary
+ *  fallback). */
+function neighborsFor(pageNumber, pagesByNumber) {
+  if (typeof pageNumber !== 'number') return [];
+  const out = [];
+  for (let n = pageNumber - GROUNDING_RADIUS; n <= pageNumber + GROUNDING_RADIUS; n++) {
+    if (n === pageNumber) continue;
+    const p = pagesByNumber.get(n);
+    if (p) out.push({ page_number: n, ocr: p.ocr?.data, translation: p.translation?.data });
+  }
+  return out;
 }
 
-async function extractImagesFromPage(page, prompt, db, bookId) {
+async function extractImagesFromPage(page, prompt, groundingCtx) {
   const url = getPageImageUrl(page);
   if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
 
@@ -734,8 +734,17 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
     },
   });
 
+  const grounding = buildPageGrounding({
+    ocr: page?.ocr?.data,
+    translation: page?.translation?.data,
+    pageNumber: page?.page_number,
+    neighbors: neighborsFor(page?.page_number, groundingCtx?.pagesByNumber || new Map()),
+    bookSummary: groundingCtx?.bookSummary || '',
+    radius: GROUNDING_RADIUS,
+  });
+
   const result = await model.generateContent([
-    { text: prompt + buildPageGrounding(page) },
+    { text: prompt + grounding },
     { inlineData: { mimeType: image.mimeType, data: image.data } },
   ]);
 
@@ -804,6 +813,29 @@ async function processBook(db, book) {
     : '';
   const prompt = contextPrefix + IMAGE_EXTRACTION_PROMPT;
 
+  // Surrounding-text grounding (#2707): fetch the page window around each
+  // illustration so the captioner can read the narrative the picture sits in.
+  // Neighbours are usually NOT illustration pages (text / blank), so they need a
+  // separate light fetch. One query per book over the union of windows. When an
+  // illustration is isolated among blanks, buildPageGrounding falls back to the
+  // book summary instead.
+  const candidateNumbers = candidatePages.map(p => p.page_number).filter(n => typeof n === 'number');
+  const windowNumbers = new Set();
+  for (const n of candidateNumbers) {
+    for (let d = -GROUNDING_RADIUS; d <= GROUNDING_RADIUS; d++) windowNumbers.add(n + d);
+  }
+  const pagesByNumber = new Map();
+  if (windowNumbers.size > 0) {
+    const windowPages = await db.collection('pages')
+      .find(
+        { book_id: book.id, page_number: { $in: [...windowNumbers] } },
+        { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } },
+      )
+      .toArray();
+    for (const wp of windowPages) pagesByNumber.set(wp.page_number, wp);
+  }
+  const groundingCtx = { pagesByNumber, bookSummary: book.summary || '' };
+
   const now = new Date();
   let totalImages = 0;
   let pagesProcessed = 0;
@@ -816,7 +848,7 @@ async function processBook(db, book) {
   for (let i = 0; i < candidatePages.length; i += PAGE_CONCURRENCY) {
     const chunk = candidatePages.slice(i, i + PAGE_CONCURRENCY);
     const results = await Promise.allSettled(
-      chunk.map(page => extractImagesFromPage(page, prompt, db, book.id))
+      chunk.map(page => extractImagesFromPage(page, prompt, groundingCtx))
     );
 
     for (const settled of results) {
@@ -1021,7 +1053,7 @@ async function main() {
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'chapters_complete', ...SCOPE_FILTER })
     .sort({ processing_priority: -1, hidden: 1 })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
+    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, summary: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
     .limit(BOOKS_PER_RUN)
     .toArray();
 
@@ -1038,7 +1070,7 @@ async function main() {
         ...SCOPE_FILTER,
       })
       .sort({ visible: -1, pages_count: -1 })
-      .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
+      .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, summary: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
       .limit(BOOKS_PER_RUN - books.length)
       .toArray();
     if (catchUp.length > 0) {

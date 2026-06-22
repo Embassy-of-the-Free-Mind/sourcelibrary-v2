@@ -6,6 +6,7 @@
 import Replicate from 'replicate';
 import { images } from '@/lib/api-client';
 import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
+import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
 
 export const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
 
@@ -86,21 +87,11 @@ function buildContextPrefix(ctx: BookContext): string {
 /** Pull the transcription pipeline's own page/illustration context. Unlike this
  *  image-only captioner, the OCR pass read the whole page (text, captions, marginal
  *  labels), so its `<image-desc>` / `<summary>` are context-grounded — feeding them
- *  here stops the captioner inventing a subject from the book's topic alone.
- *  Cheap: ~100-150 tokens, already stored on the page. */
+ *  here stops the captioner inventing a subject from the book's topic alone (#2707).
+ *  Delegates to the shared grounding builder (page-only mode; the realtime worker
+ *  additionally supplies neighbour + book-summary context). */
 function buildPageGrounding(ocrData?: string): string {
-  if (!ocrData) return '';
-  const imgDesc = ocrData.match(/<image-desc[^>]*>([\s\S]*?)<\/image-desc>/i)?.[1]?.trim();
-  const summary = ocrData.match(/<summary>([\s\S]*?)<\/summary>/i)?.[1]?.trim();
-  const lines: string[] = [];
-  if (imgDesc) lines.push(`Illustration on this page, transcribed FROM the page itself: ${imgDesc}`);
-  if (summary) lines.push(`Page summary: ${summary}`);
-  if (lines.length === 0) {
-    const txt = ocrData.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 1200);
-    if (txt) lines.push(`Page text (transcribed): ${txt}`);
-  }
-  if (lines.length === 0) return '';
-  return `\nPAGE TEXT CONTEXT — written with the page's full text and any caption/label in view. Trust it over the book's general subject; do NOT name a figure or scene it contradicts:\n${lines.join('\n')}\n`;
+  return buildGroundingBlock({ ocr: ocrData });
 }
 
 export interface ImageMetadata {
