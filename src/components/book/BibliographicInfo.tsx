@@ -503,9 +503,15 @@ export default function BibliographicInfo({
                     )}
                   </div>
                 )}
-                {book.image_source.contributing_library && (
+                {book.image_source.digitized_by && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">Digitized by:</span>
+                    <span className="text-stone-200">{book.image_source.digitized_by}</span>
+                  </div>
+                )}
+                {book.image_source.contributing_library && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Provided by:</span>
                     <span className="text-stone-200">{book.image_source.contributing_library}</span>
                   </div>
                 )}
