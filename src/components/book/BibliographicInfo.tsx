@@ -613,7 +613,7 @@ export default function BibliographicInfo({
                 {adopting ? 'Starting…' : 'Adopt this book →'}
               </button>
               <p className="text-xs text-stone-500 mt-1">
-                Support its digitization and have your name credited here, from €222.22.
+                Support its digitization and have your name credited here, from €250.
               </p>
             </div>
           ) : null}

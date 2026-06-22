@@ -17,9 +17,9 @@ import { getDb } from '@/lib/mongodb';
  * needed. The specific book is tracked via session metadata + the return URL.
  */
 
-const MIN_ADOPT_CENTS = 22222; // €222.22 minimum; donors may give more
+const MIN_ADOPT_CENTS = 25000; // €250 minimum; donors may give more
 const ADOPT_CURRENCY = 'eur';
-const ADOPT_PRICE_LOOKUP_KEY = 'adopt_book_eur';
+const ADOPT_PRICE_LOOKUP_KEY = 'adopt_book_eur_250';
 
 let cachedPriceId: string | null = null;
 
