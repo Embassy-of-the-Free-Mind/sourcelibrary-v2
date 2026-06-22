@@ -50,10 +50,13 @@ export async function generateSitemaps() {
   const bookChunks = Math.ceil(bookCount / BOOKS_PER_CHUNK);
 
   // Count indexable reader pages (issue #2688) for their own chunk range.
+  // Generous timeout: if this times out it falls back to 0 and silently drops
+  // EVERY page chunk from the index (the seo_indexable_id_partial index makes
+  // the count ~50ms, but Atlas can be slow mid-build).
   const pageCount = await safeQuery('indexable-page-count', async (db) => {
     return db.collection('pages').countDocuments(
       { seo_indexable: true },
-      { maxTimeMS: 10000 }
+      { maxTimeMS: 30000 }
     );
   }, 0);
   const pageChunks = Math.ceil(pageCount / PAGES_PER_CHUNK);
@@ -232,6 +235,9 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
 // (`/book/<slug>/page/<id>`) so no per-page book join is needed here.
 async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
   return safeQuery('indexable-pages', async (db) => {
+    // sort by _id so skip/limit pagination is stable across chunks; served by
+    // the seo_indexable_id_partial compound index (a single-field index on
+    // seo_indexable alone makes the planner full-scan in _id order → timeout).
     const pages = await db.collection('pages').find(
       { seo_indexable: true, seo_url: { $exists: true, $ne: null } },
       {
@@ -239,7 +245,7 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
         sort: { _id: 1 },
         skip: chunkIndex * PAGES_PER_CHUNK,
         limit: PAGES_PER_CHUNK,
-        maxTimeMS: 25000,
+        maxTimeMS: 60000,
       }
     ).toArray();
 
