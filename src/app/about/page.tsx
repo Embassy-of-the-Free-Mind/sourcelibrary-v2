@@ -76,11 +76,11 @@ export default async function AboutPage() {
         </h2>
 
         <p className="text-secondary mb-6 leading-relaxed">
-          The Renaissance itself was written largely in Latin. As the UCLA Renaissance scholar Debora Shuger has observed, <a href="https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">&ldquo;90 percent of the Latin texts from the Renaissance have never been available in translation.&rdquo;</a> The rest is legible only to specialists. And beyond Latin lie thousands upon thousands of texts in Chinese, Sanskrit, Arabic, Hebrew, and Egyptian &mdash; most of this inheritance missing even from the data that trains today&apos;s AI.
+          The Renaissance itself was written largely in Latin. As the UCLA Renaissance scholar Debora Shuger has observed, <a href="https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">&ldquo;90 percent of the Latin texts from the Renaissance have never been available in translation.&rdquo;</a> The rest is legible only to specialists. And beyond Latin lie thousands upon thousands of texts in Chinese, Sanskrit, Arabic, Hebrew, and Egyptian &mdash; much of it never digitized, let alone translated.
         </p>
 
         <p className="text-secondary mb-12 leading-relaxed">
-          Did we build today&apos;s AI more on Reddit than on the Renaissance? The large models now shaping how we think learned heavily from the open internet &mdash; its forums, its commerce, the churn of the present moment &mdash; while much of humanity&apos;s accumulated wisdom remains untranslated, undigitized, and out of their reach. Source Library exists to close that gap: to get the world&apos;s primary sources translated, online, and free &mdash; accessible to people and AI alike.
+          And this is about more than what AI was trained on. Give a capable model real access to primary sources at scale &mdash; the actual texts, every line checkable against the original scan &mdash; and it becomes a serious instrument of research and synthesis. Ask how older thinkers imagined the cosmos as a single living whole, and it can follow the thread from Plato&apos;s Greek through Ficino&apos;s Latin to a seventeenth-century Arabic translation of Paracelsus, quoting each passage and linking to the page it sits on. Source Library is built for exactly that: a library both people and AI can actually read and cite, open through a public API and MCP.
         </p>
 
         {/* A glimpse — show, don't tell */}
