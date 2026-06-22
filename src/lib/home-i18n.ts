@@ -8,7 +8,9 @@
 // language — the corpus is overwhelmingly translated to English, so `/es` is an
 // honest Spanish gateway into the library, not a promise of Spanish content.
 
-export type HomeLang = 'en' | 'es';
+import type { Locale } from './i18n';
+
+export type HomeLang = Locale;
 
 export interface HomeStrings {
   // <html lang> + number formatting

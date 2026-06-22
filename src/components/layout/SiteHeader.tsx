@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
+import { useLocale, NAV_STRINGS, type NavStrings } from '@/lib/i18n';
 
 interface NavLink {
   label: string;
@@ -14,22 +15,26 @@ interface NavLink {
   children?: { label: string; href: string }[];
 }
 
-const NAV_LINKS: NavLink[] = [
-  { label: 'Collections', href: '/collections' },
-  { label: 'Gallery', href: '/gallery' },
-  {
-    label: 'Browse',
-    href: '/browse',
-    activePrefix: '/browse',
-    children: [
-      { label: 'Browse', href: '/browse' },
-      { label: 'Catalogue', href: '/catalog' },
-    ],
-  },
-  { label: 'Map', href: '/explore/map', activePrefix: '/explore' },
-  { label: 'Librarian', href: '/librarian' },
-  { label: 'Podcast', href: '/podcast' },
-];
+// Hrefs are constant; labels are resolved per-locale from NAV_STRINGS so the
+// nav stays in one place as languages are added.
+function buildNavLinks(t: NavStrings): NavLink[] {
+  return [
+    { label: t.collections, href: '/collections' },
+    { label: t.gallery, href: '/gallery' },
+    {
+      label: t.browse,
+      href: '/browse',
+      activePrefix: '/browse',
+      children: [
+        { label: t.browse, href: '/browse' },
+        { label: t.catalogue, href: '/catalog' },
+      ],
+    },
+    { label: t.map, href: '/explore/map', activePrefix: '/explore' },
+    { label: t.librarian, href: '/librarian' },
+    { label: t.podcast, href: '/podcast' },
+  ];
+}
 
 interface Breadcrumb {
   label: string;
@@ -54,6 +59,9 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const menuRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = NAV_STRINGS[locale];
+  const NAV_LINKS = buildNavLinks(t);
 
   // Close menus on route change
   useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
@@ -173,7 +181,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 ? (isWhiteText ? 'text-white bg-white/10' : 'text-primary bg-warm')
                 : (isWhiteText ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-secondary hover:text-primary hover:bg-warm/50')
             }`}
-            aria-label="Search"
+            aria-label={t.search}
           >
             <Search className="w-4 h-4" />
           </Link>
@@ -185,7 +193,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               className={`p-1.5 rounded transition-colors ${
                 isWhiteText ? 'text-white/70 hover:text-white' : 'text-secondary hover:text-primary'
               }`}
-              aria-label="Navigation menu"
+              aria-label={t.menu}
               aria-expanded={menuOpen}
             >
               {menuOpen ? (
@@ -241,7 +249,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                   href="/search"
                   className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-warm/50 transition-colors"
                 >
-                  Search
+                  {t.search}
                 </Link>
               </div>
             )}
