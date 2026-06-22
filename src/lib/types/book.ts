@@ -102,6 +102,13 @@ export interface Book {
   // Image source and licensing (for scans/digitizations)
   image_source?: ImageSource;
 
+  // Digitization sponsor — an individual/donor who funded the digitization of THIS book
+  // through the "adopt a book" programme. Distinct from image_source.sponsor (institutional
+  // digitization funders such as Google/Sloan). Rendered on the book page as a gracious
+  // "Digitized thanks to ___" credit. Set via scripts/maintenance/set-digitization-sponsor.mjs.
+  digitization_sponsor?: string;       // Display name (e.g., "Jane Smith", "In memory of …")
+  digitization_sponsor_url?: string;   // Optional link (donor page / tribute), shown only when external links are allowed
+
   // Internet Archive identifier (for reimport)
   ia_identifier?: string;
 

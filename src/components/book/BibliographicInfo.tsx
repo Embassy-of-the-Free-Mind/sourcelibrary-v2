@@ -559,6 +559,29 @@ export default function BibliographicInfo({
             </div>
           ) : null}
 
+          {/* Digitization sponsor credit — "adopt a book" donor acknowledgement */}
+          {book.digitization_sponsor && (
+            <div className="mt-4 pt-4 border-t border-stone-700">
+              <p className="text-sm text-stone-300">
+                Digitized thanks to{' '}
+                {showExternalLinks && book.digitization_sponsor_url ? (
+                  <a
+                    href={book.digitization_sponsor_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent-gold hover:text-accent-gold font-medium inline-flex items-center gap-1"
+                  >
+                    {book.digitization_sponsor}
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                ) : (
+                  <span className="text-accent-gold font-medium">{book.digitization_sponsor}</span>
+                )}
+                .
+              </p>
+            </div>
+          )}
+
           {/* Translation credit */}
           {hasTranslations && (
             <div className="mt-4 pt-4 border-t border-stone-700">
