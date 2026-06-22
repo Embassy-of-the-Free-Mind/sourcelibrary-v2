@@ -22,6 +22,7 @@ import { GoogleGenAI } from '@google/genai';
 import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
+import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -512,29 +513,15 @@ async function processOneJob(db, job) {
           // and scripts/workers/image-extract-worker.mjs.
           const QUALITY_THRESHOLD = 0.5;
           if (!galleryDocs) galleryDocs = [];
+          // Collect the gated detections; the full denormalized docs are built
+          // after the loop (once page + book metadata is fetched) via the shared
+          // buildGalleryDoc helper so the field set matches every other writer.
           for (let di = 0; di < detectedImages.length; di++) {
             const img = detectedImages[di];
             if (!img.bbox) continue;
             if (typeof img.gallery_quality !== 'number') continue;
             if (img.gallery_quality < QUALITY_THRESHOLD) continue;
-            galleryDocs.push({
-              id: `${pageId}-${di}`,
-              page_id: pageId,
-              book_id: job.book_id,
-              detection_index: di,
-              description: img.description,
-              type: img.type,
-              bbox: img.bbox,
-              gallery_quality: img.gallery_quality,
-              gallery_rationale: img.gallery_rationale,
-              museum_description: img.museum_description,
-              metadata: img.metadata,
-              detected_at: now,
-              detection_source: 'vision_model',
-              model: job.model,
-              batch_job_id: jobIdStr,
-              updated_at: now,
-            });
+            galleryDocs.push({ pageId, detectedImage: img, index: di });
           }
         } else {
           // No images detected — still mark as processed
@@ -594,34 +581,33 @@ async function processOneJob(db, job) {
     if (galleryDocs && galleryDocs.length > 0) {
       try {
         // Fetch page numbers + image URLs for gallery docs
-        const pageIdsForGallery = [...new Set(galleryDocs.map(d => d.page_id))];
+        const pageIdsForGallery = [...new Set(galleryDocs.map(d => d.pageId))];
         const pageInfoMap = new Map();
         const pageInfos = await db.collection('pages')
           .find({ id: { $in: pageIdsForGallery } })
-          .project({ id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+          .project({ id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, crop: 1 })
           .toArray();
         for (const p of pageInfos) pageInfoMap.set(p.id, p);
 
-        // Fetch book metadata for gallery docs
+        // Fetch book metadata for gallery docs (incl. visible/hidden/provider so
+        // batch-collected images are gallery-visible without a separate sync — #2531).
         const bookDoc = await db.collection('books').findOne(
           { id: job.book_id },
-          { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1 } }
+          { projection: { id: 1, display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1, 'image_source.provider': 1 } }
         );
 
-        for (const doc of galleryDocs) {
-          const pageInfo = pageInfoMap.get(doc.page_id);
-          if (pageInfo) {
-            doc.page_number = pageInfo.page_number;
-            // Image URL fallback chain (same as image-extraction-processor)
-            doc.image_url = pageInfo.cropped_photo || pageInfo.archived_photo || pageInfo.photo_original || pageInfo.photo;
-          }
-          if (bookDoc) {
-            doc.book_title = bookDoc.display_title || bookDoc.title;
-            doc.book_author = bookDoc.author;
-            doc.book_year = bookDoc.year;
-            doc.book_language = bookDoc.language;
-          }
-        }
+        // Build the full denormalized docs via the shared helper; override the
+        // provenance fields the batch path owns (model / detected_at / batch id).
+        const builtDocs = galleryDocs.map(({ pageId: pid, detectedImage, index }) => {
+          const pageInfo = pageInfoMap.get(pid) || { id: pid, book_id: job.book_id };
+          const doc = buildGalleryDoc({ page: pageInfo, book: bookDoc, detectedImage, index, now });
+          doc.model = job.model;
+          doc.detected_at = now;
+          doc.detection_source = 'vision_model';
+          doc.batch_job_id = jobIdStr;
+          return doc;
+        });
+        galleryDocs = builtDocs;
 
         const galleryOps = galleryDocs.map(doc => ({
           updateOne: {
