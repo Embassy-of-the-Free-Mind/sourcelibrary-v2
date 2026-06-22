@@ -192,7 +192,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author: authorForLookup,
+      title, author: authorForLookup, published,
       image_source: { provider: 'e-rara', identifier: numericId, iiif_manifest: manifestUrl },
     });
     if (dedupResult.isDuplicate) {

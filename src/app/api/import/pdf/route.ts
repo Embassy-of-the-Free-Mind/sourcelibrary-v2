@@ -109,7 +109,7 @@ export const POST = withCuratorAuth(async (request) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author,
+      title, author, published,
       image_source: { provider, identifier: identifier || undefined, pdf_url, source_url: source_url || pdf_url },
     });
     if (dedupResult.isDuplicate) {

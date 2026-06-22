@@ -112,7 +112,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author, display_title, gallica_ark: ark,
+      title, author, display_title, gallica_ark: ark, published,
       image_source: { provider: 'gallica', identifier: ark, iiif_manifest: manifestUrl, source_url: `https://gallica.bnf.fr/ark:/12148/${ark}` },
     });
     if (dedupResult.isDuplicate) {

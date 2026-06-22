@@ -97,7 +97,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author, display_title, ia_identifier, google_books_id,
+      title, author, display_title, ia_identifier, google_books_id, published,
       image_source: { provider: 'google_books', identifier: google_books_id, source_url: `https://books.google.com/books?id=${google_books_id}` },
     });
     if (dedupResult.isDuplicate) {
