@@ -24,8 +24,8 @@ export default function NakedPhilosophersPage() {
         <ContentHeader
           title="The Naked Philosophers"
           subtitle="How Alexander&rsquo;s India became the Rosicrucians&rsquo; ancestor"
-          image="https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468107-0.jpg"
-          imageAlt="Alexander the Great, crowned and enthroned, in dialogue with three naked top-knotted gymnosophists — a 1544 Armenian manuscript miniature from the Romance of Alexander"
+          image="https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468180-0.jpg"
+          imageAlt="Alexander the Great, crowned and haloed, gesturing toward three naked bearded philosophers among flowering plants — labelled in the manuscript's Armenian as 'the Brahmans who speak.' A 1544 Armenian Romance of Alexander miniature"
         >
           <p className="text-stone-400 text-sm mt-4">21 June 2026 &middot; 8 min read</p>
         </ContentHeader>
@@ -134,6 +134,37 @@ export default function NakedPhilosophersPage() {
           </Link>{' '}
           The sage who went over to power and burned, against the one who stayed in the forest and won: it is the
           tradition&rsquo;s central argument about what wisdom is worth.
+        </p>
+
+        <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">The sages in their own voice</h2>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The encounter did not stay in the Greek libraries. All through the Middle Ages the{' '}
+          <Link href="/book/romance-of-alexander-anonymous/page/69c1bd308522835be8468180" className="text-accent-rust hover:text-accent-rust underline">
+            <em>Romance of Alexander</em>
+          </Link>{' '}
+          &mdash; the wildly embroidered legend of the conqueror, copied in every language from Latin to Armenian &mdash;
+          kept retelling the meeting with the naked philosophers, and illustrating it. The miniature at the head of
+          this essay comes from a 1544 Armenian copy in the library: Alexander, crowned and haloed, faces three naked
+          sages among flowering stalks, captioned in the margin in Armenian &mdash; &ldquo;the Brahmans who speak,&rdquo;
+          &ldquo;they are naked philosophers.&rdquo; Here, uniquely, the gymnosophists are given their own lines:
+        </p>
+
+        <blockquote className="border-l-2 border-accent-rust/40 pl-6 my-8 text-secondary italic leading-relaxed font-body">
+          &ldquo;We were born naked philosophers and we remain naked in this world. We enter the earth as naked members;
+          we have no great needs in this world. If we die tomorrow or the day after, we are invited to our own
+          earth.&rdquo;
+          <span className="block mt-3 text-sm not-italic text-muted">
+            &mdash; <em>Romance of Alexander</em>, Armenian manuscript, 1544.{' '}
+            <Link href="/book/romance-of-alexander-anonymous/page/69c1bd308522835be8468180" className="text-accent-rust hover:text-accent-rust">Read the page &rarr;</Link>
+          </span>
+        </blockquote>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          It is the same ethic Onesicritus had watched in silence &mdash; endurance, indifference to the body, freedom
+          from need &mdash; now put in the sages&rsquo; own mouths and bound into a book that Christian Armenian scribes
+          were still copying fourteen centuries after the meeting it describes. The naked philosophers had become a
+          story Europe could not stop retelling.
         </p>
 
         <h2 className="text-2xl font-semibold text-primary mt-12 mb-4 font-display">The Renaissance meets India again</h2>
@@ -298,8 +329,8 @@ export default function NakedPhilosophersPage() {
               <Link href="/book/ancient-india-as-described-by-megasthenes-and-arrian-mccrindle" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
             </li>
             <li>
-              <em>Romance of Alexander</em> (Armenian manuscript, 1544) &mdash; the medieval legend; source of the header miniature of Alexander and the three gymnosophists.{' '}
-              <Link href="/book/romance-of-alexander-anonymous/page/69c1bd308522835be8468107" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
+              <em>Romance of Alexander</em> (Armenian manuscript, 1544) &mdash; the medieval legend; source of the header miniature of Alexander and the three naked philosophers.{' '}
+              <Link href="/book/romance-of-alexander-anonymous/page/69c1bd308522835be8468180" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
             </li>
             <li>
               García de Orta, <em>History of Aromatics&hellip; of the Indies</em> (Clusius, 1567).{' '}
