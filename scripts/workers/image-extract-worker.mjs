@@ -687,6 +687,24 @@ async function revalidateBookPage(bookId) {
 }
 
 // ── Process one page ──
+/** Context-grounded page description from the OCR/translation pass (which read the
+ *  whole page). Feeding the captioner its `<image-desc>` / `<summary>` stops it
+ *  inventing a subject from the book's topic alone (e.g. wrestlers → "gymnosophists").
+ *  ~100-150 tokens; the data is already on the page doc. */
+function buildPageGrounding(page) {
+  const ocr = page?.ocr?.data || '';
+  const tr = page?.translation?.data || '';
+  const imgDesc = (ocr.match(/<image-desc[^>]*>([\s\S]*?)<\/image-desc>/i)
+    || tr.match(/<image-desc[^>]*>([\s\S]*?)<\/image-desc>/i))?.[1]?.trim();
+  const summary = (tr.match(/<summary>([\s\S]*?)<\/summary>/i)
+    || ocr.match(/<summary>([\s\S]*?)<\/summary>/i))?.[1]?.trim();
+  const lines = [];
+  if (imgDesc) lines.push(`Illustration on this page, transcribed FROM the page itself: ${imgDesc}`);
+  if (summary) lines.push(`Page summary: ${summary}`);
+  if (lines.length === 0) return '';
+  return `\nPAGE TEXT CONTEXT — written with the page's full text and any caption/label in view. Trust it over the book's general subject; do NOT name a figure or scene it contradicts:\n${lines.join('\n')}\n`;
+}
+
 async function extractImagesFromPage(page, prompt, db, bookId) {
   const url = getPageImageUrl(page);
   if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
@@ -716,7 +734,7 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
   });
 
   const result = await model.generateContent([
-    { text: prompt },
+    { text: prompt + buildPageGrounding(page) },
     { inlineData: { mimeType: image.mimeType, data: image.data } },
   ]);
 
@@ -745,7 +763,7 @@ async function processBook(db, book) {
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
         { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
       ],
-    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1 } })
+    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1, 'translation.data': 1 } })
     .toArray();
 
   // Pre-filter: drop pages where OCR has already classified all illustrations

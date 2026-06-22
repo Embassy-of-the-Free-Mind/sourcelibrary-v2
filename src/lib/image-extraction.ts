@@ -80,7 +80,27 @@ function buildContextPrefix(ctx: BookContext): string {
   if (ctx.language) parts.push(`Language: ${ctx.language}`);
   if (ctx.subjects?.length) parts.push(`Subjects: ${ctx.subjects.join(', ')}`);
   if (parts.length === 0) return '';
-  return `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${parts.join(' | ')}\n\n`;
+  return `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image or named in the PAGE TEXT below — a book about a subject does not mean every illustration depicts it):\n${parts.join(' | ')}\n\n`;
+}
+
+/** Pull the transcription pipeline's own page/illustration context. Unlike this
+ *  image-only captioner, the OCR pass read the whole page (text, captions, marginal
+ *  labels), so its `<image-desc>` / `<summary>` are context-grounded — feeding them
+ *  here stops the captioner inventing a subject from the book's topic alone.
+ *  Cheap: ~100-150 tokens, already stored on the page. */
+function buildPageGrounding(ocrData?: string): string {
+  if (!ocrData) return '';
+  const imgDesc = ocrData.match(/<image-desc[^>]*>([\s\S]*?)<\/image-desc>/i)?.[1]?.trim();
+  const summary = ocrData.match(/<summary>([\s\S]*?)<\/summary>/i)?.[1]?.trim();
+  const lines: string[] = [];
+  if (imgDesc) lines.push(`Illustration on this page, transcribed FROM the page itself: ${imgDesc}`);
+  if (summary) lines.push(`Page summary: ${summary}`);
+  if (lines.length === 0) {
+    const txt = ocrData.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 1200);
+    if (txt) lines.push(`Page text (transcribed): ${txt}`);
+  }
+  if (lines.length === 0) return '';
+  return `\nPAGE TEXT CONTEXT — written with the page's full text and any caption/label in view. Trust it over the book's general subject; do NOT name a figure or scene it contradicts:\n${lines.join('\n')}\n`;
 }
 
 export interface ImageMetadata {
@@ -126,13 +146,14 @@ export interface DetectedImage {
   model: string;
 }
 
-/** Build the complete prompt with book context + classification system context. */
-function buildFullPrompt(bookContext?: BookContext, customPrompt?: string): string {
+/** Build the complete prompt with book context + page grounding + classification context. */
+function buildFullPrompt(bookContext?: BookContext, customPrompt?: string, ocrData?: string): string {
   const base = customPrompt || IMAGE_EXTRACTION_PROMPT;
   const prefix = bookContext ? buildContextPrefix(bookContext) : '';
+  const grounding = buildPageGrounding(ocrData);
   const systems = getClassificationSystems(bookContext);
   const classificationSuffix = buildClassificationPrompt(systems);
-  return prefix + base + classificationSuffix;
+  return prefix + base + grounding + classificationSuffix;
 }
 
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
@@ -197,7 +218,7 @@ export async function extractWithGemini(
       body: JSON.stringify({
         contents: [{
           parts: [
-            { text: buildFullPrompt(options?.bookContext, options?.promptText) },
+            { text: buildFullPrompt(options?.bookContext, options?.promptText, options?.ocrData) },
             { inline_data: { mime_type: mimeType, data: base64Image } }
           ]
         }],
