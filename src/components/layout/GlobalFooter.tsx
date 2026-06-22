@@ -176,8 +176,8 @@ export default function GlobalFooter() {
                 {partner.wordmark ? (
                   // Frond Studio's logo is a stacked text wordmark (no image asset).
                   <span className="flex flex-col leading-none gap-[3px] text-white">
-                    <span className="font-sans font-light tracking-tight text-[1.75rem] md:text-[2.25rem]">Frond</span>
-                    <span className="font-sans font-medium uppercase tracking-[0.44em] text-[0.6rem] md:text-[0.7rem] text-white/70 pl-px">Studio</span>
+                    <span className="font-sans font-light tracking-tight text-[2.5rem] md:text-[3.25rem]">Frond</span>
+                    <span className="font-sans font-medium uppercase tracking-[0.44em] text-[0.7rem] md:text-[0.875rem] text-white/70 pl-px">Studio</span>
                   </span>
                 ) : (
                   <Image
