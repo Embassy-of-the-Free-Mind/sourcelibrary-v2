@@ -67,10 +67,13 @@ const books = db.collection('books');
 
 // Partial index on the flag — without it, the reconcile `$nin` below and the
 // sitemap's count/find on seo_indexable full-scan the millions-row pages
-// collection. Idempotent; only indexes the ~few-thousand flagged docs.
+// collection. Compound on _id so the sitemap's `sort({_id:1})` paginated
+// query is served by the index (a single-field {seo_indexable:1} index makes
+// the planner full-scan in _id order to satisfy the sort → timeout → empty
+// page chunks). Idempotent; only indexes the ~tens-of-thousands flagged docs.
 await pages.createIndex(
-  { seo_indexable: 1 },
-  { partialFilterExpression: { seo_indexable: true }, name: 'seo_indexable_partial' }
+  { seo_indexable: 1, _id: 1 },
+  { partialFilterExpression: { seo_indexable: true }, name: 'seo_indexable_id_partial' }
 );
 // Partial index on the read counter so Arm 1's candidate query doesn't
 // full-scan the millions-row pages collection (an unindexed count/find here
