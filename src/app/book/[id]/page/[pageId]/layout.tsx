@@ -17,7 +17,7 @@ const BOOK_META_PROJECTION = {
 };
 const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
-  'translation.data': 1, 'ocr.data': 1,
+  'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
 };
 
 async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
@@ -52,10 +52,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
   if (!book || !page) {
     // Self-referential canonical so this URL isn't seen as a duplicate of '/'
-    // (inherited root canonical). Per-page URLs are already noindex via the
-    // page-level metadata export.
+    // (inherited root canonical).
     return {
       title: 'Page Not Found - Source Library',
+      robots: { index: false, follow: true },
       alternates: { canonical: `/book/${id}/page/${pageId}` },
     };
   }
@@ -79,9 +79,19 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   const bookPath = (book as unknown as { slug?: string }).slug || id;
   const pageUrl = `/book/${bookPath}/page/${pageId}`;
 
+  // Reader pages are noindex by default (they outnumber book URLs ~100:1 and
+  // are thin on their own). Demand-proven pages — read >=5 in the rolling 90d
+  // window, or translated first-translations — are opened to indexing by
+  // scripts/seo/flag-indexable-pages.mjs (issue #2688), which sets
+  // `seo_indexable` on the page doc. Canonical is already self-referential, so
+  // an opened page indexes on its own URL. See robots.ts (crawling stays open
+  // for all; this gate controls *indexing*).
+  const indexable = (page as unknown as { seo_indexable?: boolean }).seo_indexable === true;
+
   return {
     title: `${title} - Source Library`,
     description,
+    robots: { index: indexable, follow: true },
     alternates: {
       canonical: pageUrl,
     },
