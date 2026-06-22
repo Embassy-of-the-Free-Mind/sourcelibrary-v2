@@ -33,8 +33,8 @@ const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Research',
     tagColor: 'bg-blue-50 text-blue-700',
-    image: 'https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468107-0.jpg',
-    imageAlt: 'Alexander the Great enthroned before three naked gymnosophists, a 1544 Armenian Romance of Alexander miniature',
+    image: 'https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468180-0.jpg',
+    imageAlt: 'Alexander the Great gesturing toward three naked philosophers among flowering plants, a 1544 Armenian Romance of Alexander miniature',
   },
   {
     slug: 'the-giants-werent-translated',
