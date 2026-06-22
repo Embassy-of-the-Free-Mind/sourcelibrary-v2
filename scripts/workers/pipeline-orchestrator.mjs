@@ -2069,8 +2069,15 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
   if (book.language) contextParts.push(`Language: ${book.language}`);
   if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
   const contextPrefix = contextParts.length > 0
-    ? `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${contextParts.join(' | ')}\n\n`
+    ? `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image — a book about a subject does not mean every illustration depicts it):\n${contextParts.join(' | ')}\n\n`
     : '';
+  // TODO(image-grounding): feed each page's own OCR `<image-desc>` / `<summary>` into
+  // the per-item prompt here, the way src/lib/image-extraction.ts and
+  // scripts/workers/image-extract-worker.mjs (buildPageGrounding) now do. The batch
+  // builders below assemble one prompt per page, so add ocr.data/translation.data to
+  // the `pages` projection and append buildPageGrounding(page) per item. Until then,
+  // the softened BOOK CONTEXT above is what keeps this batch path from confabulating a
+  // subject from the book's topic (e.g. wrestlers → "gymnosophists").
   const prompt = contextPrefix + IMAGE_EXTRACTION_PROMPT;
 
   const useFileBased = downloaded.length > IMAGE_EXTRACTION_INLINE_SIZE;
@@ -2247,7 +2254,7 @@ function buildPagePrompt(book) {
   if (book.language) contextParts.push(`Language: ${book.language}`);
   if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
   const contextPrefix = contextParts.length > 0
-    ? `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${contextParts.join(' | ')}\n\n`
+    ? `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image — a book about a subject does not mean every illustration depicts it):\n${contextParts.join(' | ')}\n\n`
     : '';
   return contextPrefix + IMAGE_EXTRACTION_PROMPT;
 }
