@@ -107,5 +107,5 @@ console.log(`DEBIASED gap — RENAISSANCE-composed only:    ${f(ci.gap_ren)}  (t
 console.log(`\nWell-posed sub-rates (translated-stratum precision / gap-stratum missed):`);
 console.log(`  translated-stratum precision: all ${desc.translated_stratum.all.translated}/${desc.translated_stratum.all.n}, ren ${desc.translated_stratum.ren.translated}/${desc.translated_stratum.ren.n}, anc/med ${desc.translated_stratum.ancmed.translated}/${desc.translated_stratum.ancmed.n}`);
 console.log(`  gap-stratum translated(missed): all ${desc.gap_stratum.all.translated}/${desc.gap_stratum.all.n}, ren ${desc.gap_stratum.ren.translated}/${desc.gap_stratum.ren.n}, anc/med ${desc.gap_stratum.ancmed.translated}/${desc.gap_stratum.ancmed.n}`);
-console.log(`  ill-posed/uncertain excluded: ${out.excluded_illposed}/250`);
+console.log(`  ill-posed/uncertain excluded: ${out.excluded_illposed}/${results.rows.length}`);
 console.log(`\nwrote gap-validation-n250-estimate.json`);

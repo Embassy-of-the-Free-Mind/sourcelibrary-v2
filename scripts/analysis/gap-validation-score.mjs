@@ -187,7 +187,7 @@ function main() {
 
   // console summary
   const pct = (w) => (w.p == null ? 'n/a' : `${(100 * w.p).toFixed(1)}% [${(100 * w.lo).toFixed(0)}–${(100 * w.hi).toFixed(0)}] n=${w.n}`);
-  console.log('\n=== TRANSLATION-GAP VALIDATION n≈250 ===');
+  console.log(`\n=== TRANSLATION-GAP VALIDATION n=${frame.works.length} (Gemini primary; Claude on overlap) ===`);
   console.log(`Translated-stratum PRECISION (real prior exists): ${pct(precision)}`);
   console.log(`Gap-stratum UNTRANSLATED — all print denominator:  ${pct(gapAll)}`);
   console.log(`Gap-stratum UNTRANSLATED — Renaissance-composed:   ${pct(gapRenaissance)}`);

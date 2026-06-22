@@ -1,4 +1,4 @@
-# Translation-gap validation (n=250) — dataset & runbook
+# Translation-gap validation (n=1000) — dataset & runbook
 
 The released dataset and reproducible pipeline behind the validated Latin
 translation-gap figure (issue #2684, scaling the #2626 pilot). Plain-language
@@ -8,9 +8,10 @@ write-up: `.claude/docs/translation-gap-methodology.md`. Full method + results:
 
 ## The validated headline
 
-Of genuinely **Renaissance-composed** Latin works, **~96% [92–99]** have no prior
-English translation (debiased, n=250, dual grounded adjudicators κ=0.88). For the
-**all-print** USTC denominator the gap is **~82% [76–88]** — *lower* than the raw
+Of genuinely **Renaissance-composed** Latin works, **~93% [91–95]** have no prior
+English translation (debiased, n=1000, Gemini primary + independent Claude cross-check
+on a 294-work overlap κ=0.82; fully-dual n=250 core κ=0.88). For the
+**all-print** USTC denominator the gap is **~85% [82–87]** — *lower* than the raw
 97%, because translated ancient/medieval classics reprinted in the window hide in
 the "gap". **The denominator is the story; never quote the bare 97%.**
 

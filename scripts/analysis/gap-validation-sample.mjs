@@ -40,8 +40,8 @@ const EVAL = path.join(__dir, 'eval-data');
 fs.mkdirSync(EVAL, { recursive: true });
 
 const WINDOW = [1480, 1620];
-const N_TRANSLATED = 120;
-const N_GAP = 130;
+const N_TRANSLATED = 300;
+const N_GAP = 700;
 const SEED = 2684; // issue number — reproducible draw
 
 const readJsonl = (f) =>

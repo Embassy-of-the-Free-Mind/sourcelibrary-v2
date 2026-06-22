@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-21",
+  "generated": "2026-06-22",
   "window": [
     1480,
     1620
@@ -17,55 +17,55 @@
   },
   "debiased": {
     "gap_allprint": {
-      "point": 0.8242,
-      "lo": 0.7607,
-      "hi": 0.8824
+      "point": 0.8492,
+      "lo": 0.8233,
+      "hi": 0.8728
     },
     "gap_ren": {
-      "point": 0.956,
-      "lo": 0.9155,
-      "hi": 0.9873
+      "point": 0.9328,
+      "lo": 0.9131,
+      "hi": 0.9519
     },
     "translated_allprint": {
-      "point": 0.1758,
-      "lo": 0.1176,
-      "hi": 0.2393
+      "point": 0.1508,
+      "lo": 0.1272,
+      "hi": 0.1767
     },
     "translated_ren": {
-      "point": 0.044,
-      "lo": 0.0127,
-      "hi": 0.0845
+      "point": 0.0672,
+      "lo": 0.0481,
+      "hi": 0.087
     }
   },
   "well_posed_subrates": {
     "translated_stratum": {
       "all": {
-        "n": 92,
-        "translated": 72
+        "n": 216,
+        "translated": 170
       },
       "ren": {
-        "n": 38,
-        "translated": 23
+        "n": 82,
+        "translated": 47
       },
       "ancmed": {
-        "n": 54,
-        "translated": 49
+        "n": 134,
+        "translated": 123
       }
     },
     "gap_stratum": {
       "all": {
-        "n": 120,
-        "translated": 18
+        "n": 630,
+        "translated": 78
       },
       "ren": {
-        "n": 95,
-        "translated": 3
+        "n": 553,
+        "translated": 32
       },
       "ancmed": {
-        "n": 24,
-        "translated": 14
+        "n": 76,
+        "translated": 45
       }
     }
   },
-  "excluded_illposed": 38
+  "excluded_illposed": 154
 }

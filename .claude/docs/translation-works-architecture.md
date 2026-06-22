@@ -125,9 +125,10 @@ What has been Englished, by whom — and the gap of what hasn't.
   `has_english_translation` over-flag (Filelfo 63→1) and name-match under-flag
   (Pico 0→17). Emits the **registry** (works that HAVE been translated, with
   translators credited) and the **gap** (clusters with no external prior; raw
-  2.7% matched). **Validated (n=250, #2684):** the raw 2.7%/97% is a *print-year*
-  figure — debiased, the gap is **~82% [76–88] all-print** but **~96% [92–99] for
-  genuinely Renaissance-composed Latin** (dual grounded adjudicators, κ=0.88, era
+  2.7% matched). **Validated (n=1000, #2684):** the raw 2.7%/97% is a *print-year*
+  figure — debiased, the gap is **~85% [82–87] all-print** but **~93% [91–95] for
+  genuinely Renaissance-composed Latin** (Gemini primary over 1000 + independent
+  Claude cross-check on a 294-work overlap κ=0.82; n=250 fully-dual core κ=0.88; era
   post-stratification). Quote the *validated* figure with its denominator, never
   the bare 97%. Converged into #2453 as `tradition='latin'` works +
   `work_sources(kind='translation')`. Docs: `translation-gap-methodology.md`
