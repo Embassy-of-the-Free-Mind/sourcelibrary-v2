@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, 
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
 import { IMAGE_LICENSES } from '@/lib/types';
 import BookEditModal from './BookEditModal';
+import AdoptBookPanel from './AdoptBookPanel';
 import { useRouter } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
@@ -130,29 +131,6 @@ export default function BibliographicInfo({
   const [copied, setCopied] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [provenanceExpanded, setProvenanceExpanded] = useState(false);
-  const [adopting, setAdopting] = useState(false);
-
-  // Adopt-a-book: start a Stripe checkout for this book, then redirect to it.
-  async function handleAdopt() {
-    setAdopting(true);
-    try {
-      const res = await fetch('/api/adopt/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bookId: book.slug || book.id }),
-      });
-      const data = await res.json();
-      if (data?.url) {
-        window.location.href = data.url;
-        return;
-      }
-      setAdopting(false);
-      alert(data?.error || 'Could not start checkout. Please try again.');
-    } catch {
-      setAdopting(false);
-      alert('Could not start checkout. Please try again.');
-    }
-  }
 
   // Format a bibliographic citation
   const formatCitation = () => {
@@ -604,18 +582,7 @@ export default function BibliographicInfo({
               </p>
             </div>
           ) : showExternalLinks ? (
-            <div className="mt-4 pt-4 border-t border-stone-700">
-              <button
-                onClick={handleAdopt}
-                disabled={adopting}
-                className="text-sm text-accent-gold hover:underline disabled:opacity-60 disabled:no-underline"
-              >
-                {adopting ? 'Starting…' : 'Adopt this book →'}
-              </button>
-              <p className="text-xs text-stone-500 mt-1">
-                Support its digitization and have your name credited here, from €250.
-              </p>
-            </div>
+            <AdoptBookPanel book={book} />
           ) : null}
 
           {/* Translation credit */}

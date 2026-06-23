@@ -1,69 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { getDb } from '@/lib/mongodb';
+import { ADOPT_TIERS, ADOPT_MAX_CENTS, resolveAdoptTier, formatEuros } from '@/lib/adopt-tiers';
+import type { Book } from '@/lib/types';
 
 /**
  * Adopt-a-book checkout.
  *
- * Creates a Stripe Checkout Session for a single book. The donor names a gift
- * (minimum €222.22, open-ended above) and, on success, the Stripe webhook
- * (src/app/api/stripe/webhook/route.ts → checkout.session.completed, kind=adopt_book)
- * attaches their credit to the book as `digitization_sponsor`, which renders as
+ * Creates a Stripe Checkout Session for a single book at the donor-chosen
+ * amount (validated server-side against the book's tier minimum). On success
+ * the Stripe webhook (src/app/api/stripe/webhook/route.ts → checkout.session.completed,
+ * kind=adopt_book) attaches their credit as `digitization_sponsor`, rendered as
  * "Digitized thanks to ___" on the book page.
- *
- * Pay-what-you-want with a minimum requires a real Stripe Price with
- * `custom_unit_amount` (inline price_data does not support it). We create one
- * reusable Price lazily, keyed by a stable lookup_key, so no dashboard setup is
- * needed. The specific book is tracked via session metadata + the return URL.
  */
 
-const MIN_ADOPT_CENTS = 25000; // €250 minimum; donors may give more
 const ADOPT_CURRENCY = 'eur';
-const ADOPT_PRICE_LOOKUP_KEY = 'adopt_book_eur_250';
-
-let cachedPriceId: string | null = null;
-
-async function getAdoptPriceId(): Promise<string> {
-  if (cachedPriceId) return cachedPriceId;
-  const existing = await stripe!.prices.list({
-    lookup_keys: [ADOPT_PRICE_LOOKUP_KEY],
-    active: true,
-    limit: 1,
-  });
-  if (existing.data[0]) {
-    cachedPriceId = existing.data[0].id;
-    return cachedPriceId;
-  }
-  const price = await stripe!.prices.create({
-    currency: ADOPT_CURRENCY,
-    custom_unit_amount: { enabled: true, minimum: MIN_ADOPT_CENTS },
-    lookup_key: ADOPT_PRICE_LOOKUP_KEY,
-    product_data: { name: 'Adopt a book — Embassy of the Free Mind' },
-  });
-  cachedPriceId = price.id;
-  return cachedPriceId;
-}
 
 export async function POST(request: NextRequest) {
   if (!stripe) {
     return NextResponse.json({ error: 'Payments not configured' }, { status: 503 });
   }
 
-  let bookRef: string | undefined;
+  let bookRef: unknown;
+  let amount: unknown;
   try {
     const body = await request.json();
     bookRef = body?.bookId;
+    amount = body?.amount;
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
   if (!bookRef || typeof bookRef !== 'string') {
     return NextResponse.json({ error: 'bookId is required' }, { status: 400 });
   }
+  if (!Number.isInteger(amount)) {
+    return NextResponse.json({ error: 'A valid amount is required' }, { status: 400 });
+  }
+  const amountCents = amount as number;
 
   const db = await getDb();
   const book = await db.collection('books').findOne(
     { $or: [{ id: bookRef }, { slug: bookRef }] },
-    { projection: { id: 1, slug: 1, title: 1, display_title: 1, visible: 1, hidden: 1, digitization_sponsor: 1 } }
+    { projection: { id: 1, slug: 1, title: 1, display_title: 1, visible: 1, hidden: 1, resource_type: 1, adopt_tier: 1, digitization_sponsor: 1 } }
   );
 
   if (!book || book.visible === false || book.hidden === true) {
@@ -73,16 +51,36 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'This book has already been adopted' }, { status: 409 });
   }
 
+  const tier = resolveAdoptTier(book as { adopt_tier?: 'standard' | 'rare'; resource_type?: Book['resource_type'] });
+  const minCents = ADOPT_TIERS[tier].minCents;
+  if (amountCents < minCents || amountCents > ADOPT_MAX_CENTS) {
+    return NextResponse.json(
+      { error: `Amount must be between ${formatEuros(minCents)} and ${formatEuros(ADOPT_MAX_CENTS)}` },
+      { status: 400 }
+    );
+  }
+
   const title = (book.display_title || book.title || 'a book') as string;
   const bookPath = `/book/${book.slug || book.id}`;
   const origin = request.nextUrl.origin;
 
   try {
-    const priceId = await getAdoptPriceId();
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       submit_type: 'donate',
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [
+        {
+          quantity: 1,
+          price_data: {
+            currency: ADOPT_CURRENCY,
+            unit_amount: amountCents,
+            product_data: {
+              name: `Adopt a book: ${title}`.slice(0, 250),
+              description: 'Digitize this book in your name, with a lasting credit on its page.',
+            },
+          },
+        },
+      ],
       custom_fields: [
         {
           key: 'creditname',
@@ -92,9 +90,16 @@ export async function POST(request: NextRequest) {
         },
       ],
       custom_text: {
-        submit: { message: `You are adopting "${title}". It will be digitized with your name credited on its page.`.slice(0, 1200) },
+        submit: {
+          message: `You are adopting "${title}". It will be digitized with your name credited on its page.`.slice(0, 1200),
+        },
       },
-      metadata: { kind: 'adopt_book', bookId: String(book.id), bookSlug: (book.slug as string) || '' },
+      metadata: {
+        kind: 'adopt_book',
+        bookId: String(book.id),
+        bookSlug: (book.slug as string) || '',
+        tier,
+      },
       success_url: `${origin}${bookPath}?adopted=1`,
       cancel_url: `${origin}${bookPath}`,
     });
