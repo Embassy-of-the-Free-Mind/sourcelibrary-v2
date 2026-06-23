@@ -89,6 +89,12 @@ export interface HomeStrings {
   byYear: string;
   byImages: string;
 
+  // Spanish podcast feature (rendered only on /es)
+  podcastEyebrow: string;
+  podcastListen: string;
+  podcastSourcesLabel: string;
+  podcastFullEpisode: string;
+
   // Footer essay
   inSpiritOf: string;
   ficinoRole: string;
@@ -171,6 +177,11 @@ const en: HomeStrings = {
   byAuthor: 'author',
   byYear: 'year',
   byImages: 'images',
+
+  podcastEyebrow: 'Spanish podcast',
+  podcastListen: 'Listen to the episode',
+  podcastSourcesLabel: 'The four books in this episode',
+  podcastFullEpisode: 'Full episode & transcript',
 
   inSpiritOf: 'In the spirit of',
   ficinoRole: '1433–1499 · Philosopher & Translator',
@@ -256,6 +267,11 @@ const es: HomeStrings = {
   byAuthor: 'autor',
   byYear: 'año',
   byImages: 'imágenes',
+
+  podcastEyebrow: 'Pódcast en español',
+  podcastListen: 'Escuchar el episodio',
+  podcastSourcesLabel: 'Los cuatro libros de este episodio',
+  podcastFullEpisode: 'Episodio completo y transcripción',
 
   inSpiritOf: 'En el espíritu de',
   ficinoRole: '1433–1499 · Filósofo y traductor',
