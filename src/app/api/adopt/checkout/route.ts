@@ -41,13 +41,13 @@ export async function POST(request: NextRequest) {
   const db = await getDb();
   const book = await db.collection('books').findOne(
     { $or: [{ id: bookRef }, { slug: bookRef }] },
-    { projection: { id: 1, slug: 1, title: 1, display_title: 1, visible: 1, hidden: 1, resource_type: 1, adopt_tier: 1, digitization_sponsor: 1 } }
+    { projection: { id: 1, slug: 1, title: 1, display_title: 1, visible: 1, hidden: 1, resource_type: 1, adopt_tier: 1, digitization_sponsor: 1, digitization_adopted_at: 1 } }
   );
 
   if (!book || book.visible === false || book.hidden === true) {
     return NextResponse.json({ error: 'Book not found' }, { status: 404 });
   }
-  if (book.digitization_sponsor) {
+  if (book.digitization_sponsor || book.digitization_adopted_at) {
     return NextResponse.json({ error: 'This book has already been adopted' }, { status: 409 });
   }
 
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       custom_fields: [
         {
           key: 'creditname',
-          label: { type: 'custom', custom: 'How to credit you (blank = your name)' },
+          label: { type: 'custom', custom: 'Name or dedication to show (blank = anonymous)' },
           type: 'text',
           optional: true,
         },

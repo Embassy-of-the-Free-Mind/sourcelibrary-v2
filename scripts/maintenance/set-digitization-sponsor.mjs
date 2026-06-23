@@ -55,9 +55,9 @@ await withMongo(async (db) => {
 
   let update;
   if (clear) {
-    update = { $unset: { digitization_sponsor: '', digitization_sponsor_url: '' } };
+    update = { $unset: { digitization_sponsor: '', digitization_sponsor_url: '', digitization_adopted_at: '' } };
   } else {
-    update = { $set: { digitization_sponsor: name } };
+    update = { $set: { digitization_sponsor: name, digitization_adopted_at: new Date() } };
     if (url) update.$set.digitization_sponsor_url = url;
     else update.$unset = { digitization_sponsor_url: '' };
   }

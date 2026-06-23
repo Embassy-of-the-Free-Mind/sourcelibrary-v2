@@ -581,6 +581,10 @@ export default function BibliographicInfo({
                 .
               </p>
             </div>
+          ) : book.digitization_adopted_at ? (
+            <div className="mt-4 pt-4 border-t border-stone-700">
+              <p className="text-sm text-stone-400">Digitization supported by an anonymous patron.</p>
+            </div>
           ) : showExternalLinks ? (
             <AdoptBookPanel book={book} />
           ) : null}

@@ -5,6 +5,7 @@ import { sendMembershipWelcomeEmail } from '@/lib/membership-email';
 import { recordPurchase, PurchaseType } from '@/lib/purchases';
 import Stripe from 'stripe';
 import { getDb } from '@/lib/mongodb';
+import { sendAdoptionThankYou } from '@/lib/adoption-email';
 
 /**
  * Look up the Source Library userId from a Stripe customer ID.
@@ -71,32 +72,63 @@ export async function POST(request: NextRequest) {
           console.log(`[stripe] Purchase recorded: ${purchaseType} ${purchaseItemId} for user ${userId}`);
         }
 
-        // Adopt-a-book — attach the donor's credit to the book
+        // Adopt-a-book — record the adoption, attach the credit (or keep anonymous), email a certificate
         if (session.metadata?.kind === 'adopt_book' && session.payment_status === 'paid') {
           const adoptBookId = session.metadata.bookId;
-          const creditField = session.custom_fields?.find((f) => f.key === 'creditname');
-          const creditName = (creditField?.text?.value || session.customer_details?.name || '').trim();
-          if (adoptBookId && creditName) {
+          if (adoptBookId) {
             const db = await getDb();
-            await db.collection('books').updateOne(
+            const creditField = session.custom_fields?.find((f) => f.key === 'creditname');
+            // Blank = anonymous. Never publish the payer's card name as the public credit.
+            const publicCredit = (creditField?.text?.value || '').trim();
+            const payerName = session.customer_details?.name || null;
+            const email = session.customer_details?.email || null;
+            const now = new Date();
+
+            const bookDoc = await db.collection('books').findOne(
               { id: adoptBookId },
-              { $set: { digitization_sponsor: creditName, updated_at: new Date() } }
+              { projection: { title: 1, display_title: 1, slug: 1 } }
             );
-            // Audit trail — a reversible record of who adopted what
+            const bookTitle = (bookDoc?.display_title || bookDoc?.title || 'a book') as string;
+            const bookSlug = (session.metadata.bookSlug || bookDoc?.slug || adoptBookId) as string;
+
+            // Mark adopted (hides the CTA, even when anonymous); set the public credit only if given.
+            const set: Record<string, unknown> = { digitization_adopted_at: now, updated_at: now };
+            if (publicCredit) set.digitization_sponsor = publicCredit;
+            await db.collection('books').updateOne({ id: adoptBookId }, { $set: set });
+
             await db.collection('book_adoptions').insertOne({
               bookId: adoptBookId,
-              bookSlug: session.metadata.bookSlug || null,
-              sponsor: creditName,
+              bookSlug,
+              bookTitle,
+              sponsor: publicCredit || null,
+              anonymous: !publicCredit,
+              payer_name: payerName,
+              email,
               amount_total: session.amount_total,
               currency: session.currency,
-              email: session.customer_details?.email || null,
+              tier: session.metadata.tier || null,
               stripe_session_id: session.id,
               payment_intent: (session.payment_intent as string) || null,
-              created_at: new Date(),
+              created_at: now,
             });
-            console.log(`[stripe] Book adopted: ${adoptBookId} → "${creditName}" (${session.amount_total} ${session.currency})`);
+            console.log(`[stripe] Book adopted: ${adoptBookId} → "${publicCredit || 'anonymous'}" (${session.amount_total} ${session.currency})`);
+
+            if (email) {
+              const amountLabel = typeof session.amount_total === 'number'
+                ? `€${Math.round(session.amount_total / 100).toLocaleString('en-IE')}`
+                : undefined;
+              sendAdoptionThankYou({
+                to: email,
+                payerName,
+                publicCredit: publicCredit || null,
+                bookTitle,
+                bookPath: `/book/${bookSlug}`,
+                sessionId: session.id,
+                amountLabel,
+              }).catch((e) => console.error('[stripe] adoption thank-you email failed:', e));
+            }
           } else {
-            console.warn(`[stripe] adopt_book session ${session.id} missing bookId or credit name`);
+            console.warn(`[stripe] adopt_book session ${session.id} missing bookId`);
           }
         }
         break;
