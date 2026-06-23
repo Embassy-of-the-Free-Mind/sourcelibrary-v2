@@ -5,13 +5,13 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // 1 hour
 
 /**
- * GET /api/podcast/feed.xml — English podcast RSS 2.0 feed.
- * Spanish episodes are served separately at /api/podcast/feed.es.xml so each
- * show is labeled with the correct <language> for Apple/Spotify.
+ * GET /api/podcast/feed.es.xml — Spanish-language podcast RSS 2.0 feed.
+ * Only episodes tagged language === 'es', with <language>es</language> so it
+ * registers as a Spanish show on Apple Podcasts / Spotify.
  */
 export async function GET() {
-  const episodes = (await getPublishedEpisodes(50)).filter((ep) => ep.language !== 'es');
-  const xml = buildPodcastFeed(episodes, 'en');
+  const episodes = (await getPublishedEpisodes(50)).filter((ep) => ep.language === 'es');
+  const xml = buildPodcastFeed(episodes, 'es');
 
   return new Response(xml, {
     headers: {

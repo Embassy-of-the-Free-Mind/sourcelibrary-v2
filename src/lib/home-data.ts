@@ -597,6 +597,49 @@ const BLOG_POSTS: HomeBlogPost[] = [
   },
 ];
 
+// ---------- Spanish podcast (featured on /es) ----------
+
+export interface SpanishPodcastSource {
+  bookId: string;
+  slug?: string;
+  title: string;
+  author?: string;
+  origin?: string;
+}
+
+export interface SpanishPodcast {
+  threadId: string;
+  title: string;
+  topic: string;
+  audioUrl: string;
+  heroImageUrl: string | null;
+  sources: SpanishPodcastSource[];
+}
+
+// Latest published Spanish-language deep-dive episode, for the /es feature.
+async function getSpanishPodcast(): Promise<SpanishPodcast | null> {
+  const db = await getReadDb();
+  const thread = await db.collection('embassy_threads').findOne(
+    { language: 'es', 'podcasts.deep-dive.published': true, 'podcasts.deep-dive.audioUrl': { $exists: true } },
+    {
+      projection: { title: 1, heroImage: 1, 'podcasts.deep-dive': 1 },
+      sort: { 'podcasts.deep-dive.generatedAt': -1 },
+      maxTimeMS: 5000,
+    } as any,
+  );
+  const p = thread?.podcasts?.['deep-dive'];
+  if (!thread || !p?.audioUrl) return null;
+
+  return {
+    threadId: thread._id.toString(),
+    title: thread.title || p.topic || '',
+    topic: p.topic || '',
+    audioUrl: p.audioUrl,
+    heroImageUrl: thread.heroImage?.url || null,
+    sources: Array.isArray(p.sources) ? p.sources : [],
+  };
+}
+
 // ---------- Aggregate ----------
 
 export interface HomeData {
@@ -606,16 +649,18 @@ export interface HomeData {
   counts: HomeCounts;
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
+  spanishPodcast: SpanishPodcast | null;
 }
 
 export async function getHomeData(): Promise<HomeData> {
-  const [featuredItems, discoverBooks, showcase, counts, collections] = await Promise.all([
+  const [featuredItems, discoverBooks, showcase, counts, collections, spanishPodcast] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getCollectionShowcase(), 20000, [] as any[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
+    withTimeout(getSpanishPodcast(), 8000, null),
   ]);
 
-  return { featuredItems, discoverBooks, showcase, counts, collections, blogPosts: BLOG_POSTS };
+  return { featuredItems, discoverBooks, showcase, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
 }

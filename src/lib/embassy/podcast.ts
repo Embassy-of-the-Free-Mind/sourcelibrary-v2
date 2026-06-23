@@ -66,6 +66,15 @@ export interface PodcastResult {
   duration?: number;
 }
 
+/** A curated source book linked from an episode (no quotes — links only). */
+export interface PodcastSource {
+  bookId: string;
+  slug?: string;
+  title: string;
+  author?: string;
+  origin?: string;
+}
+
 export interface PodcastMetadata {
   audioUrl: string;
   r2Key: string;
@@ -75,6 +84,10 @@ export interface PodcastMetadata {
   topic: string;
   findingCount: number;
   published?: boolean;
+  /** ISO 639 language of the episode audio (e.g. 'es'); defaults to English. */
+  language?: string;
+  /** Curated source books, used when no research-notebook findings exist. */
+  sources?: PodcastSource[];
 }
 
 /**
@@ -448,6 +461,7 @@ export async function getPublishedEpisodes(limit = 50): Promise<Array<{
   threadId: string;
   threadTitle: string;
   creatorName: string;
+  language: string;
   podcast: PodcastMetadata;
 }>> {
   const db = await getDb();
@@ -464,13 +478,14 @@ export async function getPublishedEpisodes(limit = 50): Promise<Array<{
     })
     .sort({ 'podcasts.deep-dive.generatedAt': -1 })
     .limit(limit)
-    .project({ title: 1, creatorName: 1, podcasts: 1 })
+    .project({ title: 1, creatorName: 1, language: 1, podcasts: 1 })
     .toArray();
 
   const episodes: Array<{
     threadId: string;
     threadTitle: string;
     creatorName: string;
+    language: string;
     podcast: PodcastMetadata;
   }> = [];
 
@@ -482,6 +497,7 @@ export async function getPublishedEpisodes(limit = 50): Promise<Array<{
           threadId: thread._id.toString(),
           threadTitle: thread.title || p.topic,
           creatorName: thread.creatorName || 'Anonymous',
+          language: thread.language || p.language || 'en',
           podcast: p,
         });
       }

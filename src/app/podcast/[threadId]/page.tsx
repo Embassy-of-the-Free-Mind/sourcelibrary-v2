@@ -90,7 +90,7 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
     );
     if (!thread) return null;
 
-    let podcast: { topic: string; audioUrl: string; findingCount?: number; generatedAt: string; script?: string } | null = null;
+    let podcast: { topic: string; audioUrl: string; findingCount?: number; generatedAt: string; script?: string; sources?: Array<{ bookId: string; slug?: string; title: string; author?: string; origin?: string }> } | null = null;
     let format = 'deep-dive';
     for (const f of ['deep-dive', 'brief', 'critique', 'guided-reading']) {
       const p = thread.podcasts?.[f];
@@ -126,6 +126,30 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
           findingCount: rawFindings.filter(f => f.source?.bookId === bid).length,
         };
       }).sort((a, b) => b.findingCount - a.findingCount);
+    }
+
+    // Fallback: episodes without research-notebook findings can carry a curated
+    // `sources` list (links only). Use it for the Sources section + thumbnails.
+    if (sourceBooks.length === 0 && Array.isArray(podcast.sources) && podcast.sources.length > 0) {
+      const curatedIds = podcast.sources.map(s => s.bookId).filter(Boolean);
+      const bookDocs = curatedIds.length > 0
+        ? await db.collection('books')
+            .find({ id: { $in: curatedIds } })
+            .project({ id: 1, slug: 1, thumbnail: 1, thumbnail_blob: 1 })
+            .toArray()
+        : [];
+      const bookMap = new Map(bookDocs.map(b => [b.id, b]));
+      sourceBooks = podcast.sources.map(s => {
+        const b = bookMap.get(s.bookId);
+        return {
+          id: s.bookId,
+          title: s.title,
+          author: [s.author, s.origin].filter(Boolean).join(' · '),
+          slug: s.slug || b?.slug,
+          thumbnail: b?.thumbnail_blob || b?.thumbnail || null,
+          findingCount: 0,
+        };
+      });
     }
 
     // Load gallery images for referenced books — for page-level matching and gallery
