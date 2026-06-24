@@ -62,6 +62,8 @@ export const EDITABLE_BPH_FIELDS = [
   'variant_printer',
   'variant_publisher',
   'year',
+  // Verbatim original imprint line as printed on the title page (Paul D.).
+  'impressum_original',
   // Series / volume
   'series_title',
   'volume_title',
@@ -81,8 +83,10 @@ export const EDITABLE_BPH_FIELDS = [
   // Notes
   'bibliography',
   'remarks',
-  // Provenance
+  // Provenance (ownership history) + collection (named collection the copy
+  // belongs to) — kept as two distinct fields per Paul D. (2026-06-24).
   'provenance',
+  'collection',
   // External identifiers — contributors can correct/add a USTC or IA match
   'ustc_sn',
   'ia_identifier',

@@ -82,6 +82,9 @@ const SECTIONS: Array<{
       { name: 'variant_printer', label: 'Printer (variant)' },
       { name: 'publisher', label: 'Publisher' },
       { name: 'variant_publisher', label: 'Publisher (variant)' },
+      // Verbatim original imprint line as printed (Paul D., 2026-06-24):
+      // e.g. "Getruckt vnd verlegt zu Schw. Hall, bey Johann Lentzen, 1641".
+      { name: 'impressum_original', label: 'Original impressum (verbatim from title page)', type: 'textarea' },
     ],
   },
   {
@@ -107,7 +110,10 @@ const SECTIONS: Array<{
       { name: 'present_location', label: 'Present location' },
       { name: 'shelf_mark', label: 'Shelf mark' },
       { name: 'state_shelf_mark', label: 'State Collection shelf mark' },
-      { name: 'provenance', label: 'Provenance / collection', type: 'textarea' },
+      // Provenance (ownership history) and collection (which named collection
+      // the copy belongs to) are distinct — split per Paul D. (2026-06-24).
+      { name: 'provenance', label: 'Provenance (ownership history)', type: 'textarea' },
+      { name: 'collection', label: 'Collection', type: 'textarea' },
     ],
   },
   {
@@ -334,6 +340,16 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
               placeholder="SL-000001"
             />
           </FormField>
+        </div>
+      )}
+
+      {/* Edit mode — surface the UBN (catalogue id) read-only so the cataloguer
+          always sees which record they're editing (Paul D., 2026-06-24). The
+          UBN is the primary key and isn't changed through this form. */}
+      {!isCreate && (
+        <div className="p-4 bg-white border border-border-light rounded-lg">
+          <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-1">UBN (catalogue id)</h2>
+          <p className="font-mono text-sm text-primary">{ubn}</p>
         </div>
       )}
 
