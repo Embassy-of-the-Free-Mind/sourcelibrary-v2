@@ -102,6 +102,16 @@ export interface Book {
   // Image source and licensing (for scans/digitizations)
   image_source?: ImageSource;
 
+  // Digitization sponsor — an individual/donor who funded the digitization of THIS book
+  // through the "adopt a book" programme. Distinct from image_source.sponsor (institutional
+  // digitization funders such as Google/Sloan). Rendered on the book page as a gracious
+  // "Digitized thanks to ___" credit. Set via scripts/maintenance/set-digitization-sponsor.mjs.
+  digitization_sponsor?: string;       // Public credit name (e.g., "Jane Smith", "In memory of …"). Absent = adopted anonymously.
+  digitization_sponsor_url?: string;   // Optional link (donor page / tribute), shown only when external links are allowed
+  digitization_adopted_at?: string;    // Set when the book is adopted (even anonymously) — hides the "Adopt this book" CTA
+  // Adopt-a-book pricing tier. Defaults by resource_type (manuscripts → 'rare'); set explicitly to override.
+  adopt_tier?: 'standard' | 'rare';
+
   // Internet Archive identifier (for reimport)
   ia_identifier?: string;
 
