@@ -17,6 +17,11 @@ import type { Book } from '@/lib/types';
 const ADOPT_CURRENCY = 'eur';
 
 export async function POST(request: NextRequest) {
+  // Feature flag — adopt-a-book stays dark until NEXT_PUBLIC_ADOPT_ENABLED=true,
+  // so the merged code is safe to ship before the Stripe/donation side is ready.
+  if (process.env.NEXT_PUBLIC_ADOPT_ENABLED !== 'true') {
+    return NextResponse.json({ error: 'Adopt-a-book is not yet available' }, { status: 503 });
+  }
   if (!stripe) {
     return NextResponse.json({ error: 'Payments not configured' }, { status: 503 });
   }
