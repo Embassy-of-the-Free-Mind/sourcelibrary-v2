@@ -191,24 +191,57 @@ export async function countBooks(filter: {
 /**
  * Get distinct language counts for a provider or collection.
  */
+/**
+ * Fetch ALL visible, processed books_catalog rows for the given columns,
+ * paginating past PostgREST's hard 1000-row response cap.
+ *
+ * CRITICAL: `.limit(20000)` does NOT raise this cap — PostgREST clamps every
+ * response to its server-side `db-max-rows` (1000 here), so any code that pulls
+ * rows to aggregate in JS must page with `.range()`. Counting from a single
+ * 1000-row page silently undercounts everything (e.g. Chinese once read 49 of
+ * its real 683). `apply` adds per-call filters (provider, collection, …).
+ */
+export async function fetchAllVisibleCatalogRows<T = Record<string, unknown>>(
+  columns: string,
+  apply?: (q: any) => any,
+): Promise<T[]> {
+  const PAGE = 1000;
+  const all: T[] = [];
+  let offset = 0;
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    let query = supabase
+      .from('books_catalog')
+      .select(columns)
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .range(offset, offset + PAGE - 1);
+    if (apply) query = apply(query);
+
+    const { data, error } = await query;
+    if (error) throw new Error(`books_catalog page query failed: ${error.message}`);
+    if (!data || data.length === 0) break;
+    all.push(...(data as T[]));
+    if (data.length < PAGE) break;
+    offset += PAGE;
+  }
+  return all;
+}
+
 export async function getLanguageCounts(filter: {
   provider?: string;
   collection?: string;
 }): Promise<{ lang: string; count: number }[]> {
-  let query = supabase
-    .from('books_catalog')
-    .select('language')
-    .eq('visible', true)
-    .gt('pages_count', 0);
+  const rows = await fetchAllVisibleCatalogRows<{ language: string | null }>('language', (q) => {
+    let query = q;
+    if (filter.provider) query = query.eq('image_source_provider', filter.provider);
+    if (filter.collection) query = query.contains('collections', [filter.collection]);
+    return query;
+  });
 
-  if (filter.provider) query = query.eq('image_source_provider', filter.provider);
-  if (filter.collection) query = query.contains('collections', [filter.collection]);
-
-  // Supabase default limit is 1000 — need explicit limit for 17K+ books.
-  // Only fetching the language column, so this is lightweight.
-  const { data } = await query.limit(20000);
   const counts = new Map<string, number>();
-  for (const row of (data || [])) {
+  for (const row of rows) {
     if (row.language) counts.set(row.language, (counts.get(row.language) || 0) + 1);
   }
   return [...counts.entries()]
