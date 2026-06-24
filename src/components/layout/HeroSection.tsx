@@ -165,8 +165,9 @@ export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
 
       <div className="absolute inset-0 bg-black/40 z-0" />
 
-      {/* Header */}
-      <SiteHeader variant="transparent" />
+      {/* Header — pass the known locale so the EN/ES toggle is server-rendered
+          on the statically-prerendered homepage (usePathname is null at build). */}
+      <SiteHeader variant="transparent" homeLocale={lang} />
 
       {/* Hero Content */}
       <div className="relative z-10 h-full flex items-center animate-fade-in-up">
