@@ -62,6 +62,10 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const locale = useLocale();
   const t = NAV_STRINGS[locale];
   const NAV_LINKS = buildNavLinks(t);
+  // The EN/ES toggle only appears where a Spanish route exists — i.e. the
+  // homepage (`/` ↔ `/es`). Deep pages have no `/es` equivalent (thin i18n),
+  // so a global toggle there would dead-end on a 404.
+  const isHome = pathname === '/' || pathname === '/es';
 
   // Close menus on route change
   useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
@@ -172,6 +176,35 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               );
             })}
           </nav>
+
+          {/* Language toggle (homepage only — `/es` exists only for the home front door) */}
+          {isHome && (
+            <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
+              <Link
+                href="/"
+                aria-current={locale === 'en' ? 'page' : undefined}
+                className={
+                  locale === 'en'
+                    ? (isWhiteText ? 'text-white' : 'text-primary')
+                    : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
+                }
+              >
+                EN
+              </Link>
+              <span className={isWhiteText ? 'text-white/30' : 'text-stone-300'}>·</span>
+              <Link
+                href="/es"
+                aria-current={locale === 'es' ? 'page' : undefined}
+                className={
+                  locale === 'es'
+                    ? (isWhiteText ? 'text-white' : 'text-primary')
+                    : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
+                }
+              >
+                ES
+              </Link>
+            </div>
+          )}
 
           {/* Desktop search icon */}
           <Link
