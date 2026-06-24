@@ -58,6 +58,11 @@ export async function sendAdoptionThankYou(p: AdoptionEmailParams): Promise<void
           Because of you, this book will be digitized, translated, and made freely readable by anyone, anywhere &mdash; permanently.
         </p>
         <p>${creditLine}</p>
+        <p style="font-size:14px; color:#4a4138;">
+          Your gift is tax-deductible &mdash; ANBI in the Netherlands, and (for US donors) via our 501(c)(3) partner,
+          the Netherland-America Foundation. Your Stripe receipt is your record; just reply to this email if you need
+          anything further for your taxes.
+        </p>
       </div>
 
       <div style="text-align:center; margin: 30px 0;">

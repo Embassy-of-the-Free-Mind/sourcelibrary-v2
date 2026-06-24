@@ -121,6 +121,9 @@ export default function AdoptBookPanel({
       <p className="text-xs text-stone-500 mt-2">
         You&apos;ll be credited on this book&apos;s page, forever. Minimum {formatEuros(cfg.minCents)}.
       </p>
+      <p className="text-xs text-stone-500 mt-1">
+        Tax-deductible: ANBI (Netherlands) · 501(c)(3) (US, via the NAF).
+      </p>
     </div>
   );
 }

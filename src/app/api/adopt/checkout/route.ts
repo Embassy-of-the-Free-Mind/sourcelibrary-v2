@@ -93,6 +93,9 @@ export async function POST(request: NextRequest) {
         submit: {
           message: `You are adopting "${title}". It will be digitized with your name credited on its page.`.slice(0, 1200),
         },
+        after_submit: {
+          message: 'Tax-deductible: ANBI (Netherlands) and, for US donors, 501(c)(3) via the Netherland-America Foundation.',
+        },
       },
       metadata: {
         kind: 'adopt_book',
