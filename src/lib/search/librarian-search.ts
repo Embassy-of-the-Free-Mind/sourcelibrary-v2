@@ -21,6 +21,7 @@ import {
   semanticPageSearchGlobal,
 } from '@/lib/semantic-search';
 import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
+import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -39,6 +40,15 @@ export interface SearchBook {
   id: string;
   title: string;
   author?: string;
+  /**
+   * Resolvable slug for the author's page (`/author/<authorSlug>`). Prefers the
+   * canonical thesaurus id (`books.author_id`); falls back to the slug of the
+   * exact stored author name, which the `/author/[name]` route resolves via its
+   * name→slug cache. Undefined only when the book has no author. The Librarian
+   * MUST link authors with this — never by slugifying a name form it chose in
+   * prose (Latinized/anglicized variants like "Robert Bellarmine" 404).
+   */
+  authorSlug?: string;
   year?: number;
   slug?: string;
 }
@@ -295,13 +305,14 @@ async function findBooks(query: string, opts: HybridSearchOptions, limit: number
       stage,
       { $match: filter },
       { $limit: limit },
-      { $project: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 } },
+      { $project: { id: 1, title: 1, display_title: 1, author: 1, author_id: 1, year: 1, slug: 1 } },
     ])
     .toArray();
   return rows.map(b => ({
     id: b.id,
     title: b.display_title || b.title,
     author: b.author,
+    authorSlug: b.author ? (b.author_id || toAuthorSlug(b.author)) : undefined,
     year: b.year,
     slug: b.slug,
   }));
