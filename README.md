@@ -9,6 +9,7 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)](https://www.mongodb.com/cloud/atlas)
+[![Postgres Supabase](https://img.shields.io/badge/Supabase-green)](https://supabase.com)
 [![Gemini API](https://img.shields.io/badge/AI-Google%20Gemini-red)](https://ai.google.dev)
 
 [🌐 Visit Library](https://sourcelibrary.org) • [📖 Docs](./docs) • [🗺️ System Map](./.claude/docs/system-map.md) • [🤝 Contribute](#contributing)
@@ -41,7 +42,7 @@ Source Library is an open digital library dedicated to making early printed book
 
 - ✨ **Originals First** — Read the original language text with AI-enhanced translations alongside
 - 🎓 **Citable Scholarship** — Every book gets a DOI and scholarly metadata (USTC alignment, edition tracking)
-- 🏛️ **Partner Subdomains** — Institutions like the [Brotherhood of the Hermetic Arts](https://bph.sourcelibrary.org) curate reading rooms on their own domains
+- 🏛️ **Partner Subdomains** — Institutions like the [Bibliotheca Philosophica Hermetica](https://bph.sourcelibrary.org) curate reading rooms on their own domains
 - 🔍 **Discovery** — Collections, galleries of illustrations, and semantic search surface overlooked texts
 - ✅ **Rigorous QA** — Manual verification, image quality scoring, and OCR validation before publication
 
@@ -55,8 +56,8 @@ The platform ingests **~15K pages monthly** from Internet Archive, Gallica, Bodl
 
 ```bash
 # 🍴 Clone and install
-git clone https://github.com/embassy-of-the-free-mind/source-library.git
-cd source-library
+git clone https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2.git
+cd sourcelibrary-v2
 npm install
 
 # ⚙️ Configure environment (see .env.example for required variables)
@@ -91,7 +92,7 @@ Open [http://localhost:3000](http://localhost:3000)
 </tr>
 <tr>
   <td><strong>🗂️ Storage</strong></td>
-  <td>Vercel Blob (images), AWS S3 (archive)</td>
+  <td>Vercel Blob (images), AWS S3 (archive), Cloudflare R2 (archive)</td>
 </tr>
 <tr>
   <td><strong>🔐 Auth</strong></td>
@@ -295,7 +296,7 @@ Pretty-printing with `jq` is optional; omit `| jq .` to see raw JSON.
 4. Leave **Auth** as *No Auth* for the public endpoints above.
 5. Send — expect `200` with JSON body.
 
-![Get Books](public/images/get-books.jpg)
+![Get Books](public/images/readme/postman-get-books.jpg)
 
 #### Browser
 
@@ -550,7 +551,7 @@ We welcome contributions! Please follow our [development workflow](./CLAUDE.md#d
 
 - 🐛 **Bugs** — Include reproduction steps, expected vs. actual behavior
 - 💡 **Feature requests** — Explain the use case and user impact
-- ❓ **Questions** — Check [discussions](https://github.com/embassy-of-the-free-mind/source-library/discussions) first
+- ❓ **Questions** — [Open an issue](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues)
 
 ---
 
@@ -579,7 +580,7 @@ See [CLAUDE.md Security](./CLAUDE.md#security---critical) for detailed security 
 - 💰 Batch API for 50% cost reduction
 
 **🏢 Platform Tenants:**
-- 🔮 [Brotherhood of the Hermetic Arts](https://bph.sourcelibrary.org) — Hermetica & esoterica
+- 🔮 [Bibliotheca Philosophica Hermetica](https://bph.sourcelibrary.org) — Hermetica & esoterica
 - ⚗️ [Kloss Collection](https://kloss-collection.sourcelibrary.org) — Medical alchemy
 - 🤝 Additional partners in development
 
@@ -594,10 +595,8 @@ See [LICENSING.md](./LICENSING.md) for details on third-party licenses and attri
 ---
 
 ## 📞 Support & Community
-
-- 💬 **Questions?** Check [GitHub Discussions](https://github.com/embassy-of-the-free-mind/source-library/discussions)
-- 🐛 **Found a bug?** [Open an issue](https://github.com/embassy-of-the-free-mind/source-library/issues)
-- 🤝 **Want to collaborate?** Email us or open a discussion
+- 🐛 **Found a bug?** [Open an issue](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues)
+- 🤝 **Want to collaborate?** [Contribute](https://sourcelibrary.org/contribute)
 - 🌐 **Visit the site** — [sourcelibrary.org](https://sourcelibrary.org)
 
 ---
