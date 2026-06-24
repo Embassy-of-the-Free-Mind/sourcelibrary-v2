@@ -41,14 +41,18 @@ export async function GET(req: NextRequest) {
     .limit(40)
     .toArray()) as unknown as AuthorDoc[];
 
-  // Rank: prefix match on the canonical name first, then by corpus weight.
+  // Rank: exact name match, then a prefix match on the canonical name OR any
+  // variant (so a surname query like "Kircher" still scores "Athanasius
+  // Kircher" via its "Kircher, Athanasius" variant), then by corpus weight so
+  // the real person outranks title-fragment author stubs ("Kircher Oedipus").
   const ql = q.toLowerCase();
-  rows.sort((a, b) => {
-    const ap = (a.canonical_name || a._id).toLowerCase().startsWith(ql) ? 1 : 0;
-    const bp = (b.canonical_name || b._id).toLowerCase().startsWith(ql) ? 1 : 0;
-    if (ap !== bp) return bp - ap;
-    return (b.book_count || 0) - (a.book_count || 0);
-  });
+  const score = (r: AuthorDoc) => {
+    const names = [r.canonical_name || r._id, ...(r.variants || [])].map((s) => s.toLowerCase());
+    const exact = names.some((n) => n === ql) ? 1 : 0;
+    const prefix = names.some((n) => n.startsWith(ql)) ? 1 : 0;
+    return exact * 1e9 + prefix * 1e6 + (r.book_count || 0);
+  };
+  rows.sort((a, b) => score(b) - score(a));
 
   const matches = rows.slice(0, 12).map((r) => ({
     author_id: r._id,
