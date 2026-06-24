@@ -55,6 +55,11 @@ export const EDITABLE_BPH_FIELDS = [
   'author_canonical_name',
   'author_wikidata_qid',
   'author_viaf_id',
+  // Repeatable authors/contributors (Paul D., 2026-06-24) — a JSONB array of
+  // BphContributor, each optionally linked to a canonical authors._id. The
+  // primary `author` above stays the lead author (display/search/Atlas mirror);
+  // this is the additive "Add author" layer for co-authors, editors, etc.
+  'contributors',
   // Imprint
   'place',
   'printer',
@@ -93,6 +98,13 @@ export const EDITABLE_BPH_FIELDS = [
 ] as const;
 
 export type EditableBphField = (typeof EDITABLE_BPH_FIELDS)[number];
+
+// Contributor type + role vocabulary live in a client-safe module (no server
+// deps) so 'use client' components can import them without pulling this
+// mongodb/supabase-bound module into the browser bundle. Re-exported here for
+// server-side callers.
+export { BPH_CONTRIBUTOR_ROLES } from './bph-contributors';
+export type { BphContributor, BphContributorRole } from './bph-contributors';
 
 /** Subset of bph_works that mirrors back to Atlas `books` (one-way). */
 const ATLAS_MIRROR_FIELDS: Record<string, string> = {

@@ -9,6 +9,7 @@ import { isPublishedFirstTranslation } from '@/lib/book';
 import { getPartnerBySlug } from '@/lib/library-partners';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
+import type { BphContributor } from '@/lib/bph-catalog';
 import { AISection } from '@/components/embed/AISection';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 
@@ -82,6 +83,9 @@ interface BphWorkRow {
   binding: string | null;
   bound_with: string | null;
   provenance: string | null;
+  collection: string | null;
+  impressum_original: string | null;
+  contributors: BphContributor[] | null;
   ia_identifier: string | null;
   ustc_sn: string | null;
   sl_book_id: string | null;
@@ -133,17 +137,20 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       keywords, language, series_title, volume_title,
       bibliography, remarks, number_of_copies, object_size_cm, bibliographic_format,
       binding, bound_with,
-      provenance, ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
+      provenance, collection, impressum_original, contributors,
+      ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
       sl_external_book_id, sl_external_slug, sl_external_source,
       field_provenance
     `;
-  // Two stacked fallbacks: drop external-link columns if not migrated, then
-  // drop author-authority columns. Each migration runs independently in
-  // different environments — the page renders if either is missing.
-  const fallbackSelect = select.replace(
-    'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
-    '',
-  );
+  // Stacked fallbacks: drop newer columns (collection/impressum/contributors),
+  // then external-link columns, then author-authority columns. Each migration
+  // runs independently per environment — the page renders if any are missing.
+  const fallbackSelect = select
+    .replace('provenance, collection, impressum_original, contributors,', 'provenance,')
+    .replace(
+      'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
+      '',
+    );
   const fallbackNoAuthority = fallbackSelect.replace(
     'author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,\n      ',
     '',
@@ -657,6 +664,25 @@ export default async function CatalogEntryPage({ params }: Props) {
               </span>
             </FieldRaw>
           )}
+          {work.contributors && work.contributors.length > 0 && (
+            <FieldRaw label="Other contributors">
+              <ul className="space-y-1 text-primary">
+                {work.contributors.map((c, i) => (
+                  <li key={i} className="flex flex-wrap items-baseline gap-x-2">
+                    <span className="text-muted text-xs uppercase tracking-wide">{c.role}</span>
+                    {c.author_id ? (
+                      <a href={`/author/${c.author_id}`} className="text-accent-rust hover:underline">
+                        {c.name || c.canonical_name}
+                      </a>
+                    ) : (
+                      <span>{c.name}</span>
+                    )}
+                    {c.variant_name && <span className="text-secondary text-xs">(&ldquo;{c.variant_name}&rdquo;)</span>}
+                  </li>
+                ))}
+              </ul>
+            </FieldRaw>
+          )}
         </Section>
 
         <Section title="Imprint">
@@ -666,6 +692,7 @@ export default async function CatalogEntryPage({ params }: Props) {
           <Field label="Printer (variant)" value={work.variant_printer} />
           <Field label="Publisher" value={work.publisher} />
           <Field label="Publisher (variant)" value={work.variant_publisher} />
+          <Field label="Original impressum" value={work.impressum_original} />
         </Section>
 
         <Section title="Subject & Language">
@@ -695,7 +722,8 @@ export default async function CatalogEntryPage({ params }: Props) {
           <Field label="Present location" value={work.present_location} />
           <Field label="Shelf mark" value={work.shelf_mark} mono />
           <Field label="State Collection shelf mark" value={work.state_shelf_mark?.trim().toLowerCase() === 'neen' ? null : work.state_shelf_mark} mono />
-          <Field label="Provenance / collection" value={work.provenance} />
+          <Field label="Provenance" value={work.provenance} />
+          <Field label="Collection" value={work.collection} />
         </Section>
 
         <Section title="Notes">

@@ -102,7 +102,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   // from 20260624000000), retry without them. The form silently shows those
   // fields empty, and a save would fail at write time with the same error —
   // the right behaviour (don't pretend to save what we can't write).
-  const maybeMissingCols = ['author_entity_id', 'author_canonical_name', 'author_wikidata_qid', 'collection', 'impressum_original'];
+  const maybeMissingCols = ['author_entity_id', 'author_canonical_name', 'author_wikidata_qid', 'collection', 'impressum_original', 'contributors'];
   const cols = ['ubn', ...EDITABLE_BPH_FIELDS, 'field_provenance', 'sl_book_id'].join(', ');
   const fallbackCols = ['ubn', ...EDITABLE_BPH_FIELDS.filter((c) => !maybeMissingCols.includes(c)), 'field_provenance', 'sl_book_id'].join(', ');
   let { data, error } = await supabase
