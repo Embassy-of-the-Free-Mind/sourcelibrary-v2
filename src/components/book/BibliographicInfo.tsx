@@ -585,7 +585,7 @@ export default function BibliographicInfo({
             <div className="mt-4 pt-4 border-t border-stone-700">
               <p className="text-sm text-stone-400">Digitization supported by an anonymous patron.</p>
             </div>
-          ) : showExternalLinks ? (
+          ) : showExternalLinks && process.env.NEXT_PUBLIC_ADOPT_ENABLED === 'true' ? (
             <AdoptBookPanel book={book} />
           ) : null}
 
