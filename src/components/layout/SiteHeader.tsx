@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, NAV_STRINGS, type NavStrings } from '@/lib/i18n';
+import { useLocale, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 
 interface NavLink {
   label: string;
@@ -50,22 +50,33 @@ interface SiteHeaderProps {
   sticky?: boolean;
   /** Additional className for the header element */
   className?: string;
+  /**
+   * Set by the homepage (`/` and `/es`) to its known locale. The homepage is
+   * statically prerendered, where `usePathname()` is null at build time — so
+   * relying on it leaves the EN/ES toggle out of the static HTML and it only
+   * appears after hydration. Passing the locale explicitly makes the toggle
+   * (and nav strings) server-rendered on the homepage.
+   */
+  homeLocale?: Locale;
 }
 
-export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '' }: SiteHeaderProps) {
+export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '', homeLocale }: SiteHeaderProps) {
   const isWhiteText = variant === 'transparent';
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const locale = useLocale();
+  const pathnameLocale = useLocale();
+  // Prefer the homepage's explicit locale (server-known) over the pathname-
+  // derived one (null during static prerender).
+  const locale = homeLocale ?? pathnameLocale;
   const t = NAV_STRINGS[locale];
   const NAV_LINKS = buildNavLinks(t);
   // The EN/ES toggle only appears where a Spanish route exists — i.e. the
   // homepage (`/` ↔ `/es`). Deep pages have no `/es` equivalent (thin i18n),
   // so a global toggle there would dead-end on a 404.
-  const isHome = pathname === '/' || pathname === '/es';
+  const isHome = homeLocale != null || pathname === '/' || pathname === '/es';
 
   // Close menus on route change
   useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
