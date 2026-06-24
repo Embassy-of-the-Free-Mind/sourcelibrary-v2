@@ -7,44 +7,52 @@ import Image from 'next/image';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import FeedbackCallout from '@/components/feedback/FeedbackCallout';
 import { clearConsent } from '@/lib/consent';
+import { useLocale, FOOTER_STRINGS, type FooterStrings } from '@/lib/i18n';
 
-const NAV_COLUMNS = [
+// Labels are resolved per-locale from FOOTER_STRINGS via `key`; hrefs are
+// constant and point at the English pages (deep pages have no `/es` route).
+type FooterLinkKey = Exclude<keyof FooterStrings, 'colLibrary' | 'colAbout' | 'colParticipate'>;
+
+const NAV_COLUMNS: ReadonlyArray<{
+  titleKey: keyof FooterStrings;
+  links: ReadonlyArray<{ key: FooterLinkKey; href: string }>;
+}> = [
   {
-    title: 'Library',
+    titleKey: 'colLibrary',
     links: [
-      { label: 'Browse Books', href: '/' },
-      { label: 'Browse A–Z', href: '/browse' },
-      { label: 'Gallery', href: '/gallery' },
-      { label: 'Collections', href: '/collections' },
-      { label: 'Explore', href: '/explore' },
-      { label: 'Search', href: '/search' },
+      { key: 'browseBooks', href: '/' },
+      { key: 'browseAZ', href: '/browse' },
+      { key: 'gallery', href: '/gallery' },
+      { key: 'collections', href: '/collections' },
+      { key: 'explore', href: '/explore' },
+      { key: 'search', href: '/search' },
     ],
   },
   {
-    title: 'About',
+    titleKey: 'colAbout',
     links: [
-      { label: 'About', href: '/about' },
-      { label: 'Our Vision', href: '/vision' },
-      { label: 'Translation Census', href: '/census' },
-      { label: 'Progress', href: '/about/progress' },
-      { label: 'Research Notes', href: '/blog' },
-      { label: 'Privacy', href: '/privacy' },
-      { label: 'Cookie Settings', href: '#cookie-settings' },
-      { label: 'Terms', href: '/terms' },
-      { label: 'Copyright & DMCA', href: '/dmca' },
+      { key: 'about', href: '/about' },
+      { key: 'vision', href: '/vision' },
+      { key: 'census', href: '/census' },
+      { key: 'progress', href: '/about/progress' },
+      { key: 'researchNotes', href: '/blog' },
+      { key: 'privacy', href: '/privacy' },
+      { key: 'cookieSettings', href: '#cookie-settings' },
+      { key: 'terms', href: '/terms' },
+      { key: 'copyright', href: '/dmca' },
     ],
   },
   {
-    title: 'Participate',
+    titleKey: 'colParticipate',
     links: [
-      { label: 'Libraries', href: '/libraries' },
-      { label: 'Contribute', href: '/contribute' },
-      { label: 'Support', href: '/support' },
-      { label: 'Corporate Sponsorship', href: '/sponsors' },
-      { label: 'Developers', href: '/developers' },
+      { key: 'libraries', href: '/libraries' },
+      { key: 'contribute', href: '/contribute' },
+      { key: 'support', href: '/support' },
+      { key: 'sponsorship', href: '/sponsors' },
+      { key: 'developers', href: '/developers' },
     ],
   },
-] as const;
+];
 
 type Partner = {
   name: string;
@@ -67,6 +75,7 @@ const PARTNERS: Partner[] = [
 
 export default function GlobalFooter() {
   const pathname = usePathname();
+  const t = FOOTER_STRINGS[useLocale()];
   const [hasFavorites, setHasFavorites] = useState(false);
 
   useEffect(() => {
@@ -108,52 +117,52 @@ export default function GlobalFooter() {
         {/* Zone 2: Navigation Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 py-10 border-b border-white/[0.08]">
           {NAV_COLUMNS.map((col) => (
-            <div key={col.title}>
+            <div key={col.titleKey}>
               <h3 className="text-accent-gold text-xs font-semibold uppercase tracking-[0.15em] mb-4">
-                {col.title}
+                {t[col.titleKey]}
               </h3>
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    {link.label === 'Support' ? (
+                    {link.key === 'support' ? (
                       <Link
                         href={link.href}
                         className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
                       >
-                        {link.label}
+                        {t[link.key]}
                         <span className="text-[11px] bg-accent-rust/20 text-accent-rust px-2 py-0.5 rounded-full font-bold">
-                          Donate
+                          {t.donate}
                         </span>
                       </Link>
-                    ) : link.label === 'Cookie Settings' ? (
+                    ) : link.key === 'cookieSettings' ? (
                       <button
                         onClick={() => clearConsent()}
                         className="text-sm text-white/50 hover:text-white transition-colors"
                       >
-                        {link.label}
+                        {t[link.key]}
                       </button>
                     ) : (
                       <Link
                         href={link.href}
                         className="text-sm text-white/50 hover:text-white transition-colors"
                       >
-                        {link.label}
+                        {t[link.key]}
                       </Link>
                     )}
                   </li>
                 ))}
                 {/* Conditional personal links under Library */}
-                {col.title === 'Library' && hasFavorites && (
+                {col.titleKey === 'colLibrary' && hasFavorites && (
                   <li>
                     <Link href="/favorites" className="text-sm text-white/50 hover:text-white transition-colors">
-                      Favorites
+                      {t.favorites}
                     </Link>
                   </li>
                 )}
                 {/* Feedback widget under Participate */}
-                {col.title === 'Participate' && (
+                {col.titleKey === 'colParticipate' && (
                   <li>
-                    <FeedbackWidget label="Give Feedback" className="text-sm font-bold text-accent-rust hover:text-white transition-colors" />
+                    <FeedbackWidget label={t.giveFeedback} className="text-sm font-bold text-accent-rust hover:text-white transition-colors" />
                   </li>
                 )}
               </ul>

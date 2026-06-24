@@ -197,26 +197,8 @@ export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
             )}
           </div>
 
-          {/* Language switch — real routes (`/` ↔ `/es`) so each language is a
-              distinct, indexable page rather than a client-only string swap. */}
-          <div className="mt-6 flex items-center gap-2 text-sm">
-            <Link
-              href="/"
-              aria-current={lang === 'en' ? 'page' : undefined}
-              className={`transition-colors ${lang === 'en' ? 'text-white font-medium' : 'text-white/50 hover:text-white/80'}`}
-            >
-              {t.langEnglish}
-            </Link>
-            <span className="text-white/30">·</span>
-            <Link
-              href="/es"
-              aria-current={lang === 'es' ? 'page' : undefined}
-              className={`transition-colors ${lang === 'es' ? 'text-white font-medium' : 'text-white/50 hover:text-white/80'}`}
-            >
-              {t.langSpanish}
-            </Link>
-          </div>
-
+          {/* Language switch lives in the site header now (top-right EN · ES),
+              so it's discoverable above the fold on every homepage visit. */}
           {lang === 'en' && <LangSuggestBanner t={t} />}
         </div>
         </div>
