@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Loader2, Search, Plus, X, Link2, Check } from 'lucide-react';
-import { BPH_CONTRIBUTOR_ROLES, type BphContributor } from '@/lib/bph-catalog';
+import { BPH_CONTRIBUTOR_ROLES, type BphContributor } from '@/lib/bph-contributors';
 
 /**
  * Repeatable "Add author" editor for the catalogue (Paul D., 2026-06-24).

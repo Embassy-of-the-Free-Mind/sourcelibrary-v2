@@ -99,38 +99,12 @@ export const EDITABLE_BPH_FIELDS = [
 
 export type EditableBphField = (typeof EDITABLE_BPH_FIELDS)[number];
 
-/**
- * Contributor roles for early-modern books, anticipating a book-historian's
- * needs (Paul Dijstelberge). The lead author still lives in the scalar `author`
- * field; this vocabulary covers the repeatable additional contributors.
- */
-export const BPH_CONTRIBUTOR_ROLES = [
-  'Author',
-  'Editor',
-  'Translator',
-  'Commentator',
-  'Compiler',
-  'Engraver',
-  'Illustrator',
-  'Dedicatee',
-  'Contributor',
-  'Other',
-] as const;
-
-export type BphContributorRole = (typeof BPH_CONTRIBUTOR_ROLES)[number];
-
-/** One entry in `bph_works.contributors` (JSONB array). */
-export interface BphContributor {
-  role: string;
-  /** Name as catalogued (standard form). */
-  name: string;
-  /** Name as printed on the title page, if it differs. */
-  variant_name?: string;
-  /** Canonical `authors._id` (slug) when linked to our thesaurus. */
-  author_id?: string | null;
-  /** Denormalised canonical name for display without a join. */
-  canonical_name?: string | null;
-}
+// Contributor type + role vocabulary live in a client-safe module (no server
+// deps) so 'use client' components can import them without pulling this
+// mongodb/supabase-bound module into the browser bundle. Re-exported here for
+// server-side callers.
+export { BPH_CONTRIBUTOR_ROLES } from './bph-contributors';
+export type { BphContributor, BphContributorRole } from './bph-contributors';
 
 /** Subset of bph_works that mirrors back to Atlas `books` (one-way). */
 const ATLAS_MIRROR_FIELDS: Record<string, string> = {

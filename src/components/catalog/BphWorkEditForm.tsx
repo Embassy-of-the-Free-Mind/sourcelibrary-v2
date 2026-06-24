@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import AuthorAuthorityPicker, { type AuthorAuthoritySelection } from '@/components/catalog/AuthorAuthorityPicker';
 import ContributorsEditor from '@/components/catalog/ContributorsEditor';
-import type { BphContributor } from '@/lib/bph-catalog';
+import type { BphContributor } from '@/lib/bph-contributors';
 
 /**
  * BPH catalogue entry edit form. Renders every whitelisted editable field
