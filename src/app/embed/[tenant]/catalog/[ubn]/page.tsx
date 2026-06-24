@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { BookMarked, ExternalLink, BookOpen, Pencil } from 'lucide-react';
+import { BookMarked, ExternalLink, BookOpen, Pencil, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
 // tenantBookUrl removed - using inline URL construction with embed path
@@ -380,6 +380,19 @@ export default async function CatalogEntryPage({ params }: Props) {
   return (
     <div className="bg-cream">
       <div className="max-w-2xl mx-auto px-6 py-8">
+        {/* Back to the catalogue search start screen — visible to everyone, not
+            just editors (Paul D., 2026-06-24: no way to start a new search from
+            a record). `/catalog` is rewritten by the proxy to the tenant's
+            catalogue search view. */}
+        <div className="mb-3">
+          <a
+            href="/catalog"
+            className="inline-flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors"
+          >
+            <Search className="w-3.5 h-3.5" />
+            New search
+          </a>
+        </div>
         {showEditButton && (
           <div className="flex justify-end flex-wrap gap-2 mb-2">
             <a
