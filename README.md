@@ -123,7 +123,6 @@ Open [http://localhost:3000](http://localhost:3000)
 ## 📚 Core Features
 
 ### 📖 Reading & Navigation
-- **Parallel text reader** (`/book/[id]/read`) — Original language + translation side-by-side
 - **⚡ Page pagination** — Instant navigation between 100+ pages
 - **🔍 Full-text search** — Query across OCR'd text and translations
 - **📌 Quote generation** — Copy and cite passages with DOI links
@@ -176,7 +175,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ### 🎨 Image Tier System
 
-All page images are resized on-demand via `/api/image`:
+All page images are resized on-demand via ``/api/image``:
 
 | Tier | Dimensions | Quality | 📱 Use Case |
 |------|-----------|---------|----------|
@@ -203,18 +202,108 @@ Batch endpoints process up to 5 pages/request using Gemini Batch API (50% cheape
 
 ### 🔌 API Routes (Key)
 
-| Endpoint | Method | 🎯 Purpose |
-|----------|--------|----------|
-| `/api/books` | GET | 📚 List all books (paginated, filterable) |
-| `/api/books/[id]` | GET/PATCH | 📖 Fetch or update book metadata |
-| `/api/books/[id]/batch-ocr-async` | POST | ✍️ Batch OCR (Gemini Batch API) |
-| `/api/books/[id]/batch-translate-async` | POST | 🗣️ Batch translate (Gemini Batch API) |
-| `/api/pages/[id]` | PATCH | 📄 Update page OCR/translation |
-| `/api/image` | GET | 🖼️ Resize & crop images (on-demand) |
-| `/api/books/[id]/quote` | POST | 📌 Generate citable quote with DOI |
-| `/api/search` | GET | 🔍 Full-text search + semantic search |
-| `/api/[tenant]/books` | GET | 🏢 Tenant-scoped book listing |
-| `/api/jobs/[id]/process` | POST | ⚙️ Async job processor (Lambda) |
+**Base URL:** `https://sourcelibrary.org` (production) or `http://localhost:3000` (local dev with `.env.local` configured).
+
+> **Common 404 mistake:** paths like `/api/bph/books` or `/api/bph/books/[id]` **do not exist**. BPH catalogue APIs live under `/api/embed/bph/...`. There is also **no** top-level `/api/[tenant]/books` route — tenant book listings use `/api/books/library` or the embed routes below.
+
+#### Public read APIs (no auth required today)
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/search?q=<query>` | GET | Full-text search across books and page translations |
+| `/api/books?limit=100&offset=0` | GET | Simple book list (global catalogue; `visible: true`, indexed only) |
+| `/api/books/library?limit=100&skip=0` | GET | Rich browse API — search, sort, filters, collections |
+| `/api/books/[id]` | GET | Book metadata (accepts Mongo `id` or `slug`) |
+| `/api/books/[id]/quote?page=<n>` | GET | Citable quote + formatted citations (inline, footnote, BibTeX, DOI) |
+| `/api/gallery?limit=24` | GET | Illustration / artwork search |
+| `/api/image?url=<encoded-url>&w=400` | GET | On-demand image resize & crop |
+| `/api/embed/bph/books?limit=24` | GET | BPH catalogue (paginated, searchable) |
+| `/api/embed/bph/books/[slug]` | GET | Single BPH book detail |
+| `/api/embed/bph/featured` | GET | Featured BPH books |
+| `/api/embed/bph/collections` | GET | BPH collection list |
+| `/api/embed/bph/languages` | GET | BPH language facets |
+| `/api/embed/bph/suggest?q=alch` | GET | BPH search autocomplete |
+| `/api/embed/bph/stats` | GET | BPH catalogue stats |
+
+#### Tenant-scoped listing (not `/api/bph/...`)
+
+Use one of these patterns to filter by partner tenant (e.g. BPH):
+
+| Approach | Example |
+|----------|---------|
+| **Embed prefix (recommended for BPH)** | `GET /api/embed/bph/books?limit=24` |
+| **Library API + query param** | `GET /api/books/library?tenant_slug=bph&limit=24` |
+| **Host header (subdomain)** | Call `https://bph.sourcelibrary.org/api/books/library?limit=24` — the proxy injects tenant context |
+| **Manual header (advanced)** | `curl -H "x-tenant-slug: bph" https://sourcelibrary.org/api/books/library?limit=24` |
+
+The `/api/[tenant]/books/[id]/...` paths that exist in the codebase are **editor/processing** routes (batch OCR, index rebuild, etc.) — not public catalogue listings.
+
+#### Authenticated / internal APIs
+
+These require a signed-in session cookie, editor role, or (for some dataset endpoints) a Bearer API key. Calling them without auth returns `401` or `403`.
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/books` | POST | Create a new book (editor) |
+| `/api/books/[id]` | PATCH | Update book metadata (curator+) |
+| `/api/books/[id]/batch-ocr-async` | POST | Queue batch OCR job |
+| `/api/books/[id]/batch-translate-async` | POST | Queue batch translation job |
+| `/api/pages/[id]` | PATCH | Update page OCR/translation |
+| `/api/jobs/[id]/process` | POST | Async job processor (Lambda) |
+
+Full narrative API walkthrough: [`docs/blog-source-library-api.md`](./docs/blog-source-library-api.md). MCP tools (search, quote, read): [`mcp-server/README.md`](./mcp-server/README.md).
+
+### 🧪 Trying the API (curl, Postman, browser)
+
+All examples below hit **production** and need no API key. Replace the base URL with `http://localhost:3000` when running locally (MongoDB + env vars required).
+
+#### curl
+
+```bash
+# Search translated text
+curl -s "https://sourcelibrary.org/api/search?q=quintessence&limit=5" | jq .
+
+# List books (global catalogue)
+curl -s "https://sourcelibrary.org/api/books?limit=5" | jq .
+
+# Browse with filters and sort
+curl -s "https://sourcelibrary.org/api/books/library?limit=5&sort=recent-translation&has_translation=true" | jq .
+
+# BPH catalogue — note /api/embed/bph/, NOT /api/bph/
+curl -s "https://sourcelibrary.org/api/embed/bph/books?limit=5&translated=true" | jq .
+
+# BPH via tenant_slug on the library endpoint
+curl -s "https://sourcelibrary.org/api/books/library?tenant_slug=bph&limit=5" | jq .
+
+# Book metadata (id or slug)
+curl -s "https://sourcelibrary.org/api/books/know-thyself-reger-von-ehrenhart" | jq .
+
+# Citable quote for a page
+curl -s "https://sourcelibrary.org/api/books/6836f8ee811c8ab472a49e36/quote?page=57" | jq .
+
+# Gallery search
+curl -s "https://sourcelibrary.org/api/gallery?subject=alchemy&limit=5" | jq .
+```
+
+Pretty-printing with `jq` is optional; omit `| jq .` to see raw JSON.
+
+#### Postman
+
+1. Create a new **GET** request.
+2. Set URL to e.g. `https://sourcelibrary.org/api/embed/bph/books`
+3. On the **Params** tab add query keys: `limit` = `24`, `sort` = `title`, `translated` = `true`
+4. Leave **Auth** as *No Auth* for the public endpoints above.
+5. Send — expect `200` with JSON body.
+
+![Get Books](public/images/get-books.jpg)
+
+#### Browser
+
+Public GET endpoints can be opened directly:
+
+- [Search: quintessence](https://sourcelibrary.org/api/search?q=quintessence&limit=5)
+- [BPH books](https://sourcelibrary.org/api/embed/bph/books?limit=5)
+- [Global library browse](https://sourcelibrary.org/api/books/library?limit=5)
 
 ### 📁 Directory Structure
 
@@ -223,9 +312,8 @@ src/
 ├── app/                         # 🎨 Next.js App Router
 │   ├── book/[id]/               # 📖 Book detail, reading, processing
 │   │   ├── page.tsx             # Main book hub
-│   │   ├── read/page.tsx        # Parallel text reader
 │   │   ├── split/page.tsx       # Split detection workflow
-│   │   └── [page]/page.tsx      # Individual page view
+│   │   └── page/[pageId]/page.tsx      # Individual page view
 │   ├── api/                     # 🔌 All API routes
 │   │   ├── books/               # Book CRUD & batch ops
 │   │   ├── pages/               # Page processing
@@ -236,25 +324,15 @@ src/
 │   ├── gallery/                 # 🖼️ Illustration browsing
 │   ├── collections/             # 📑 Collection pages
 │   └── admin/                   # ⚙️ Admin dashboard
-├── components/                  # 🧩 Reusable React components
-│   ├── BookDetail.tsx           # Main book page
-│   ├── PageReader.tsx           # Parallel text display
-│   ├── SplitModeOverlay.tsx     # Split line adjustment
-│   ├── TranslationEditor.tsx    # OCR/translation editor
-│   └── Gallery*.tsx             # Gallery components
 ├── hooks/                       # 🎣 Reusable React hooks
-├── lib/                         # 🛠️ Business logic & utilities
-│   ├── mongodb.ts               # Database operations
-│   ├── gemini.ts                # AI API integration
-│   ├── types.ts                 # TypeScript interfaces
-│   ├── image-extraction.ts      # Illustration detection
-│   └── auth-helpers.ts          # Authentication utilities
-└── styles/                      # 🎨 TailwindCSS config
+└── lib/                         # 🛠️ Business logic & utilities
+    ├── mongodb.ts               # Database operations
+    ├── image-extraction.ts      # Illustration detection
+    └── auth-helpers.ts          # Authentication utilities
 
 scripts/
 ├── workers/                     # ⚙️ Lambda worker functions
 │   ├── pipeline-orchestrator.mjs # Main processing pipeline
-│   ├── ocr-worker.mjs           # OCR batch processor
 │   ├── image-extract-worker.mjs # Gallery extraction
 │   └── ...
 ├── maintenance/                 # 🔧 One-off maintenance scripts
@@ -263,13 +341,12 @@ scripts/
 
 tests/
 ├── unit/                        # ✔️ Vitest unit tests
-├── integration/                 # 🔗 Integration tests
-└── e2e/                         # 🎭 Playwright end-to-end tests
+└── integration/                 # 🔗 Integration tests
 
 prompts/                        # 🤖 AI system prompts
 ├── ocr/
 ├── translation/
-├── image-extraction/
+├── split-detection/
 └── ...
 
 .claude/                        # 🧠 AI agent context
