@@ -101,7 +101,7 @@ export function renderDigestHtml(content: DigestContent): string {
 <body style="margin: 0; padding: 0; background: #fdfcf9; -webkit-font-smoothing: antialiased;">
 <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
   <div style="text-align: center; margin-bottom: 32px;">
-    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
+    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px; border-radius: 50%; border: 1px solid #e7ddcc;" />
     <h1 style="font-size: 26px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">${content.subject}</h1>
   </div>
   <div style="font-size: 15px; line-height: 1.7; margin-bottom: 24px; color: #1a1612;">
@@ -144,7 +144,7 @@ export function wrapInEmailShell(subject: string, bodyHtml: string): string {
 <body style="margin: 0; padding: 0; background: #fdfcf9; -webkit-font-smoothing: antialiased;">
 <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
   <div style="text-align: center; margin-bottom: 32px;">
-    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
+    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px; border-radius: 50%; border: 1px solid #e7ddcc;" />
     <h1 style="font-size: 26px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">${subject}</h1>
   </div>
   <div style="font-size: 15px; line-height: 1.7; color: #1a1612;">

@@ -14,12 +14,16 @@ When making product decisions, lead with: who reads this, what experience are th
 - **NEVER push directly to main.** All changes go through PRs.
 - **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
 - The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
+- **Merging a PR does NOT deploy production.** `sourcelibrary.org` is served by a manual prod deploy (not git-integrated). To ship a merged frontend change: in the main directory on `main`, `git pull origin main` then **`npm run deploy:prod`** (see below). **Exception:** pipeline/worker scripts (`scripts/**`) need no Vercel deploy — the Hetzner box auto-pulls `main` every ~5 min, so script changes go live on their own. Tell: a merged frontend behavior that's absent on prod = not deployed yet.
+- **Deploy prod with `npm run deploy:prod`, NOT bare `vercel --prod`.** A bare `vercel --prod` ships new asset hashes and purges the previous deploy's CSS/JS chunks, but does NOT clear the CDN-cached HTML. `next.config.ts` caches rendered HTML at the edge for 24h (`CDN-Cache-Control: max-age=86400`) on `/collections/*`, `/book/*`, `/author/*`, `/gallery/*`, `/browse/*`, etc. So any page cached just before a deploy then points at a now-404'd `/_next/static/chunks/*.css` and renders **fully unstyled** (cards collapse, images lose their frame — it reads as "broken images / junk content") for up to 24h. `scripts/deploy-prod.sh` (= `npm run deploy:prod`) does deploy → Cloudflare `purge_everything` → re-warm, closing that gap. The automated `post-deploy-warm.yml` only fires on **push-to-main**, which does NOT deploy prod — it can't cover a manual deploy. **Tell that you hit this:** a page's referenced `/_next/static/chunks/*.css` returns 404 while the homepage's returns 200 → it's stale-HTML/dead-CSS, NOT a data or curation problem. Emergency unstick without a redeploy: `set -a; source .env.production.local; set +a; curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" --data '{"purge_everything":true}'`. (Purge needs `CLOUDFLARE_API_TOKEN` — `CF_API_TOKEN` is WAF-scoped only.)
 
 ## PR Conventions
 Lessons from PR #1980 (see `.claude/handoffs/2026-05-25-pr1980-split.md`). Apply to all contributors — internal, external, and AI-assisted.
 
 - **One concern per PR.** Don't bundle dead-code removal with tooling adoption, or refactors with feature work. The two halves of #1980 had very different risk profiles; bundled, they couldn't be reviewed cleanly. If the diff has more than one "why," split it.
 - **Verify before deleting.** Static analysis (graph audits, IDE "find unused") can confidently miss dynamic requires, framework conventions (Next.js routing, cron triggers, server actions), and recent additions. Always `grep -rn '<name>' src/` for every deletion. `InputWidget.tsx` in #1980 was flagged dead but actively imported by `/founding-donors` — one grep would have caught it.
+- **Verify a flagged bug against current code + data before "fixing" it.** Audits, manifests, migration plans, and stale comments drift from the code — a "bug" they surface may not exist, or the code may already be correct. Read the actual code at the line and run a quick data query to confirm the failure case is real and non-negligible before adding a branch or a fix. Don't kill long-but-finite queries and mistake them for timeouts. Sometimes the documentation is the bug, not the code — fix the doc too.
+- **On PRs, trust `test`/DCO, not the first Vercel result.** The Vercel check often shows "fail" on the first build, then an automatic retry flips it to pass (the deployment is frequently still "Building" when GitHub reports the fail). Wait for the retry to settle; don't bail or assume a real failure while `test`/DCO are green.
 - **Run `npx tsc --noEmit` locally before opening a PR that touches dependencies.** It's the #1 source of wasted deploy cycles.
 - **Tooling additions need provenance + opt-in + install docs.** A PR that adds a third-party CLI, MCP server, or `*ToolUse` hook must include: source link, install command, what network/telemetry access it has, an opt-out path. The default must be "if not installed, repo still works."
 - **Doctrine lives in `CLAUDE.md`, not six files.** No appending the same instructions to `AGENTS.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.kiro/steering/`, etc. One source of truth; cross-tool agents can read `CLAUDE.md` directly.
@@ -43,6 +47,7 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - `EnterWorktree` — creates an isolated checkout with its own branch
 - Active worktrees: `git worktree list`
 - Worktrees live in `.claude/worktrees/`
+- **Fresh worktrees fail the pre-commit `check-imports` hook** because `src/lib/vendor/lamejs-bundle.js` is gitignored and absent from a new checkout. Before your first commit, copy it from the main checkout: `cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`.
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
@@ -92,9 +97,16 @@ encodes that:
    `/collections/<slug>`. Never `/internet-archive/book/foo`,
    `/gallica/gallery`, or any other `/<provider-slug>/*` prefix for content.
    This was patched in two waves: PR #1918 dropped the tenant prefix from
-   book-page gallery links; PR #2025 added a proxy-level strip for any
-   `kind:'provider'` first segment so every provider-prefixed URL 308s to its
-   global equivalent. Don't reintroduce provider-prefixed content paths.
+   book-page gallery links; PR #2025 added a proxy-level strip so every
+   provider-prefixed URL 308s to its global equivalent. The strip's original
+   Mongo lookup (`kind:'provider'` rows in `tenants`) was removed in commit
+   8e348991 (providers were wrongly resolving as tenants), which silently
+   killed the redirect for ~2 weeks (~770 404s/week in `not_found_reports`).
+   PR #2505 restored it as a static lookup in `src/lib/provider-prefix.ts`,
+   keyed off `LIBRARY_PARTNERS` with routing tenants excluded — a guard test
+   (`tests/unit/provider-prefix-redirect.test.ts`) now pins the proxy wiring.
+   Don't reintroduce provider-prefixed content paths, and don't replace the
+   static lookup with a `tenants`-collection query.
 2. **Each contributing library has its own page on Source Library at
    `/libraries/<slug>`.** The page credits the institution (name, description,
    hero image), shows the books we have from them, and may link out to the
@@ -109,10 +121,44 @@ encodes that:
 4. **The `tenants` Mongo collection is for subdomain partners, not for
    contributing libraries.** Subdomain tenants (`bph`, `kloss-collection`,
    `bhutan`) have their own scoped UI under a partner subdomain. The 29
-   provider rows that also live there are legacy from when routing tried to
-   double as an attribution registry — they're no longer used for routing
-   after PR #2025 and are candidates for deletion. New contributing libraries
-   go in `LIBRARY_PARTNERS`, not in the `tenants` collection.
+   legacy `kind:'provider'` rows (from when routing doubled as an attribution
+   registry) were **deleted on 2026-06-10** — backup at
+   `scripts/output/tenants-provider-rows-backup-2026-06-10.json` in Derek's
+   main checkout. Don't recreate them (`create-all-provider-tenants.mjs` is
+   the legacy writer — don't run it). New contributing libraries go in
+   `LIBRARY_PARTNERS`, not in the `tenants` collection.
+
+## Author identity — the `authors` thesaurus (read this before touching author code)
+"Who wrote this, and is *this* Andreas the same as *that* Andreas?" is answered by the canonical **`authors`** collection — one doc per person, `_id` = canonical slug, with `variants[]` / `variant_slugs[]` / `viaf_id` / `wikidata_id`. It **supersedes** the legacy `entities` layer. Umbrella issue #2179.
+
+- **Read `books.author_id` → `authors._id`, not `author_entity_id`.** `author_id` is the canonical FK (~74% of live books linked); `author_entity_id` → `entities` is transitional and being retired. Both are written during migration.
+- **Don't render `authors.book_count`** — it's a stale build snapshot. The true count is the read-path union query.
+- **Build/enrich scripts:** `scripts/maintenance/build-authors-collection.mjs` writes the collection (deterministic name-key ∪ VIAF ∪ Wikidata, #2202); `reconcile-authors-grounded.mjs` anchors the tail to Wikidata/VIAF using each author's books as evidence (#2218). The similarly-named `build-canonical-authors.mjs` is a read-only sizer that does NOT write — don't run it to rebuild.
+- **Read-path** (`/author/[slug]` → `src/lib/author-thesaurus.ts`) is flag-gated by `AUTHOR_THESAURUS_READPATH` and redirects every variant slug to the canonical one. Full design, provenance, and migration status: **`.claude/docs/author-identity-system.md`**.
+
+## Work identity & "do we have the original?" (read before reasoning about gaps)
+**Start with the architecture map: `.claude/docs/translation-works-architecture.md`**
+— it ties together work identity, the #2453 catalog, the translation gap/registry,
+holdings, and first-translation into one stack (coordination home: #2567).
+
+The **work** layer (sibling to the author thesaurus). "Is *this* translation a
+work we also hold the source-language original of?" is answered by clustering
+editions under a shared **`books.work_id`** (Wikidata QID or works-catalog id),
+NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
+
+- **CRITICAL invariant:** `text_role:'modern-translation'` does **not** mean we
+  lack the original — it usually sits as a separate, *unlinked* book. **Never
+  infer a gap from an unlinked translation.** Cluster by `work_id` and read
+  coverage with `scripts/analysis/work-coverage.mjs`, which reports anything
+  without a `work_id` as "unknown coverage," never a gap. (Inferring gaps the
+  wrong way once claimed Plato/Zohar/Avicenna "missing" when we hold them.)
+- **Assigning `work_id`** (the "fit" rule): author-anchor + title **containment**
+  + **specificity** (reject generic stubs/containers like "Fragments"/"Muhūrta")
+  + rare-token fallback for anonymous works. HIGH-confidence only is auto-written,
+  always with a backup. Resolvers: `resolve-work-ids.mjs` (local `works` catalog —
+  Sanskrit) and `resolve-work-ids-wikidata.mjs` (Wikidata P50 — Greek/Latin).
+- Full design, tool list, per-tradition candidate coverage, and open levers:
+  **`.claude/docs/work-identity-coverage.md`**.
 
 ## Authentication across subdomains
 
@@ -142,6 +188,29 @@ Image extraction emits two separate quality signals in the **same Gemini call**.
 
 A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine or microfilmed; the same diagram on microfilm has `scan_quality.scan_class: bitonal_microfilm` regardless of how gallery-worthy it is. See `/blog/what-makes-a-good-scan` for the user-facing version.
 
+**Bbox coordinate-space invariant (PRs #2516/#2517):** `detected_images[].bbox` / `gallery_images.bbox` are normalized to the image returned by `getPageSource()` (`scripts/lib/page-image-url.mjs`; TS twin `getPageImageUrl()` in `src/lib/utils.ts`) — on split pages that's the half, NOT `archived_photo` (the full spread). Every crop writer (extracted/thumbnail/hires generators, current: `generate-thumbnails.mjs`, `backfill-hires-gallery.mjs`, `gallery-image-gen.ts` callers) must resolve its source with that same function, never an ad-hoc `archived_photo || cropped_photo` priority. Symptom of getting it wrong: gutter-spanning junk crops in the gallery, and the `/gallery/image/[id]` magnifier showing different content than the displayed image (the lens crops on-the-fly from the correct source — check the data before debugging lens math). Repair sweep: `scripts/maintenance/regen-split-gallery-images.mjs` (`--dry-run` / `--clear` / `--regenerate`).
+
+## Quote & snippet integrity — CRITICAL
+Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
+
+OCR/translation text in `pages.{ocr,translation}.data` is wrapped in AI-written **editorial annotation blocks**. There are **two distinct families**: the translation-side page descriptions `<meta>`, `<summary>`, `<keywords>`, `<vocab>`, and the OCR-side page-level metadata envelope `<language>`, `<scan-quality>`, `<script>`, `<page-type>`, `<columns>`, `<warning>` (the tags `enrich-worker.mjs:1125` already skips). Both *describe* the page/scan and routinely name content from **adjacent** pages ("the previous page focused on perpetual motion wheels using mercury…"). They are **never verbatim source** — quoting or embedding them fabricates citations to words that aren't on the page, which strikes at the core "read and quote the original" promise.
+
+- **Never serve any of those wrapper blocks as quotable text.** Strip the *content*, not just the tag. The classic bug is `replace(/<[^>]+>/g, '')` — it deletes the tag but keeps the editorial prose. Use `stripEditorialWrappers()` from `src/lib/strip-editorial-wrappers.ts` (it knows **both** wrapper families) **before** any generic tag strip.
+- **Every search/snippet surface reads its own copy of the page text — fixes do NOT propagate.** Known text-cleaning paths: `/api/search`, `/api/books/[id]/search`, `src/lib/search/librarian-search.ts`, `src/lib/semantic-alignment.ts`, `scripts/workers/embed-gemini.mjs` (`cleanText`), `/api/likes/{popular,mine}` (+ tenant), `/api/learn`, the **quote API** `/api/books/[id]/quote` (+ tenant twin, PR #2420 — was missed in the #2232 sweep and served raw `<meta>` blocks as quotable text until 2026-06-03), and the **IIIF surfaces** `/api/iiif/[id]/canvas/[n]/{ocr,translation}` + `/api/iiif/[id]/search` (PR #2323/#2327). Route them all through `stripEditorialWrappers`. When you add a new surface that snippets page text, wire it through too. (See [[project_search_three_surfaces]] and `.claude/docs/iiif-api.md`.)
+- **Inline glosses (`<note>`/`<term>`/`<margin>`/`<gloss>`/`<unclear>`/`<insert>`) and real page marks (`<header>`/`<catchword>`/`<sig>`/`<page-num>`) are NOT editorial wrappers** — they sit on / are real body text. Keep their content; they aid recall and reading.
+- **The leak is frozen into stored artifacts.** `page_translations.translation` (the semantic-search snippet column) and the embedding vectors were written by the old `cleanText`, so the editorial prose is baked in with the tags already gone — a read-time re-strip can't recover it. Re-derive the snippet column from Mongo with `scripts/maintenance/backfill-clean-snippets.mjs` (UPDATE-only, zero Gemini cost — does NOT touch embeddings). Re-embedding (paid) is separate and only changes *ranking*; decide it on an eval, not reflexively.
+
+### House style: quoting sources in authored editorial content
+The rules above protect the *rendering pipeline*. These cover *authored* prose — blog posts (`src/app/blog/<slug>/page.tsx`), collection `description`/`expanded_description`, exhibition and library pages, anywhere a human or AI writes text that quotes a source. Lessons from the cannabis essay (`/blog/cannabis-bangue`, 2026-06-19; PRs #2584/#2587), where **three of the published quotes were wrong until a validation pass caught them**.
+
+- **Validate every quotation before publishing — no exceptions.** Anything inside quotation marks must be checked verbatim against the source with the `get_quote` MCP tool (or `get_book_text`) first. The tool exists for exactly this ("ALWAYS use before putting text in quotation marks") and returns wrapper-stripped, page-exact text plus a citation URL. Copy it exactly; never paraphrase *inside* quote marks, never hand-transcribe from memory or from a search snippet.
+- **Every quote hyperlinks to its exact source page.** Verify the **page, not just the book** — in the cannabis essay the "considerable a Medicine…Indies" quote sat on p226 while the surrounding link pointed at p224.
+- **The reader page route takes a page ID, NOT a page number: `/book/<slug>/page/<pageId>`.** `/book/<slug>/page/<number>` returns HTTP 200 with a "Page Not Found" body (a Next.js soft-404 — `notFound()`), so a page-number link looks fine but is broken. Get the id from `get_quote` (`citation.url`) or `pages.id`. (All 10 deep links in the cannabis essay shipped broken this way, 2026-06-20.)
+- **Validate links by grepping the response body for a not-found marker, NOT by status code.** `curl -w '%{http_code}'` returns 200 for these soft-404s. Real check: `curl -s "$URL" | grep -ci "page not found"` must be 0. A 200 from any Next.js dynamic route is never proof the page exists.
+- **Quote the words on the page you link to — not a retelling of them.** The Hooke "Indian hemp" lede was the historian Breen's rendering of Hooke's *private diary*, quoted as if it came from our facsimile of his *Philosophical Experiments*. Quoting a source's paraphrase as the primary text is a fabricated citation — the exact failure mode of the #2232 misquote, in authored form.
+- **Secondary sources (scholars' sentences) get quote marks only if verified.** If you can't confirm a historian's exact wording, paraphrase (no quote marks) and link out to the source. Don't dress a paraphrase as a direct quote.
+- **`get_quote` already strips editorial wrappers**, so quoting from its output keeps you compliant with the wrapper rules above for free. When in doubt, the data is truth — read the page, don't trust the prose you remember.
+
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
@@ -156,10 +225,10 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
 - **MCP server/CLI:** read `memory/mcp-server.md`
 - **Embeddings / semantic search:** read `.claude/docs/embeddings.md` — five Supabase tables (`page_translations`, `book_embeddings`, `artwork_embeddings`, `gallery_text_embeddings`, `clip_embeddings`), three workers, five RPCs.
-- **Book acquisition / curation:** `/curator` or `/library-curator`
+- **Book acquisition / curation:** `/curator` or `/library-curator`. For importing at scale without duplicates, follow the canonical loop in `.claude/docs/import-workflow.md` (enumerate → dedupe → subject-filter → source → import hidden → process → QA → visible). Dedup runs in `src/lib/dedup.ts` (matches hidden books too — don't reintroduce a `visible:true` filter); reusable tool `scripts/import/enumerate-dedupe-source.ts`; sources that 429 datacenter IPs (Harvard, likely Gallica) use the residential direct-insert pattern (`scripts/import/harvard-wuzhen-direct.mjs`). Work-level dedup is not yet automatic — issue #2318.
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
-- **Handoffs:** `.claude/handoffs/` (read by date/topic)
+- **Handoffs:** `.claude/handoffs/` (read by date/topic). **This repo is PUBLIC (AGPL).** New handoffs and all operational/business material (fundraising, contacts, outreach, budgets, donors, sponsors) go in the **private** repo `Embassy-of-the-Free-Mind/sourcelibrary-ops` (clone at `~/sourcelibrary-ops`), which is gitignored here — never commit them to this repo. Only genuinely public-worthy *technical* postmortems (no PII/secrets/business strategy) belong in `.claude/handoffs/` here, and only by deliberate `git add -f`.
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 
 ### Optional: code-review-graph

@@ -11,28 +11,59 @@ interface ContentHeaderProps {
   /** Optional background image URL for the hero section */
   image?: string;
   imageAlt?: string;
+  /** How the hero image fills the banner.
+   *  'cover' (default): scale to cover, cropping as needed.
+   *  'tile': size to the image's own height (so a fixed-row mosaic shows all its
+   *  rows, never cropped top/bottom) and repeat horizontally to fill the width. */
+  imageFit?: 'cover' | 'tile';
+  /** Override the hero min-height classes (default 260px, 340px on md). */
+  heightClass?: string;
+  /** Match the page's ContentPageLayout maxWidth so the hero aligns with the body. */
+  maxWidth?: 'narrow' | 'standard' | 'wide' | 'full';
 }
 
-export function ContentHeader({ title, subtitle, children, image, imageAlt }: ContentHeaderProps) {
+export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard' }: ContentHeaderProps) {
+  const headerWidthClass =
+    maxWidth === 'full'
+      ? ''
+      : maxWidth === 'narrow'
+        ? 'max-w-[var(--container-narrow)]'
+        : maxWidth === 'wide'
+          ? 'max-w-[var(--container-wide)]'
+          : 'max-w-[var(--container-standard)]';
   return (
     <>
       <SiteHeader variant="light" />
 
-      <div className={`relative overflow-hidden text-white ${image ? 'pt-16 pb-10 md:pt-24 md:pb-14 min-h-[260px] md:min-h-[340px] flex flex-col justify-end' : 'py-16 md:py-20'}`}>
+      <div className={`relative overflow-hidden text-white ${image ? `pt-16 pb-10 md:pt-24 md:pb-14 ${heightClass || 'min-h-[260px] md:min-h-[340px]'} flex flex-col justify-end` : 'py-16 md:py-20'}`}>
         {image ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={image}
-              alt={imageAlt || ''}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            {imageFit === 'tile' ? (
+              <div
+                role="img"
+                aria-label={imageAlt || ''}
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `url(${image})`,
+                  backgroundSize: 'auto 100%',
+                  backgroundRepeat: 'repeat-x',
+                  backgroundPosition: 'center',
+                }}
+              />
+            ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={image}
+                alt={imageAlt || ''}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(26,22,18,0.94) 0%, rgba(26,22,18,0.75) 35%, rgba(26,22,18,0.35) 65%, rgba(26,22,18,0.15) 100%)' }} />
           </>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
         )}
-        <div className="relative max-w-[var(--container-standard)] mx-auto px-6">
+        <div className={`relative w-full ${headerWidthClass} mx-auto px-6 md:px-12 animate-fade-in-up`}>
           <h1 className={`font-serif text-4xl md:text-5xl tracking-tight ${subtitle ? 'mb-4' : ''} ${image ? 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]' : ''}`}>{title}</h1>
           {subtitle && (
             <p className={`text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed ${image ? 'drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]' : ''}`}>{subtitle}</p>
@@ -44,7 +75,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt }: Co
       {/* Date/byline below hero when image is present */}
       {image && children && (
         <div className="bg-cream">
-          <div className="max-w-[var(--container-standard)] mx-auto px-6 pt-6">
+          <div className={`${headerWidthClass} mx-auto px-6 md:px-12 pt-6`}>
             {children}
           </div>
         </div>
@@ -126,7 +157,7 @@ export default function ContentPageLayout({
   return (
     <div className={`min-h-screen ${bg}`}>
       {header}
-      <main className={`${widthClass} ${widthClass ? 'mx-auto' : ''} ${noPadding ? '' : 'px-6 py-12'} ${className}`}>
+      <main className={`${widthClass} ${widthClass ? 'mx-auto' : ''} ${noPadding ? '' : 'px-6 md:px-12 py-12'} ${className}`}>
         {children}
       </main>
     </div>

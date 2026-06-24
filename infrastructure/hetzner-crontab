@@ -63,8 +63,9 @@
 # Archive OCR: standalone Hetzner worker (every 30 min)
 */30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-ocr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-ocr.mjs" >> /var/log/sourcelibrary/archive-ocr.log 2>&1
 
-# Resize worker: generate display-size images from full-res (every 30 min)
-*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-resize.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/resize-worker.mjs --limit 500 --concurrency 10" >> /var/log/sourcelibrary/resize.log 2>&1
+# (resize-worker.mjs retired in #1814 — broken no-op for the real gap. The
+#  split-aware display-variant backfill runs as the scheduler's display-backfill
+#  entry: scripts/migration/backfill-display-images.mjs)
 
 # ── Vercel cron proxies (called from Hetzner to avoid Vercel cold starts) ──
 

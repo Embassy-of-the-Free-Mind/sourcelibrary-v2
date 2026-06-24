@@ -43,6 +43,7 @@ vi.mock('@/lib/mongodb', async () => {
 // Import route handlers
 import { POST as chatPost } from '@/app/api/embassy/chat/route';
 import { GET as threadsGet } from '@/app/api/embassy/threads/route';
+import { GET as threadDetailGet } from '@/app/api/embassy/threads/[id]/route';
 import { GET as roomsGet, POST as roomsPost } from '@/app/api/embassy/rooms/route';
 
 function makeRequest(url: string, body?: object): Request {
@@ -102,16 +103,29 @@ describe('Embassy API', () => {
       expect(messages[1].authorName).toBe('The Librarian');
     });
 
-    it('rejects unauthenticated requests', async () => {
+    it('allows unauthenticated requests as an anonymous, unlisted thread', async () => {
       const { auth } = await import('@/lib/auth');
       (auth as any).mockResolvedValueOnce(null);
 
       const req = makeRequest('/api/embassy/chat', {
         message: 'Hello',
+        visibility: 'public',
       });
 
       const res = await chatPost(req as any);
-      expect(res.status).toBe(401);
+      const data = await res.json();
+      expect(res.status).toBe(200);
+      expect(data.threadId).toBeDefined();
+
+      // Anonymous threads carry a null creatorId and are 'unlisted' — they
+      // never surface in the public Recent feed or anyone's "mine" list, even
+      // when the request asked for 'public'.
+      const db = getTestDb();
+      const thread = await db.collection('embassy_threads').findOne({
+        _id: new ObjectId(data.threadId),
+      });
+      expect(thread!.creatorId).toBeNull();
+      expect(thread!.visibility).toBe('unlisted');
     });
 
     it('validates message length', async () => {
@@ -121,6 +135,46 @@ describe('Embassy API', () => {
 
       const res = await chatPost(req as any);
       expect(res.status).toBe(400);
+    });
+
+    it('clips oversized history instead of rejecting the follow-up', async () => {
+      // The Librarian's own answers can exceed 10k chars; the client sends
+      // them back verbatim as history. Rejecting made every follow-up in such
+      // a thread fail with "Invalid request" — the thread looked dead.
+      const db = getTestDb();
+      await db.collection('users').insertOne({
+        _id: new ObjectId(TEST_USER_ID),
+        name: 'Test User',
+      });
+
+      const req = makeRequest('/api/embassy/chat', {
+        message: 'And where can I read that book?',
+        history: [
+          { role: 'user', content: 'Tell me about Jung' },
+          { role: 'assistant', content: 'x'.repeat(12000) },
+        ],
+      });
+
+      const res = await chatPost(req as any);
+      expect(res.status).toBe(200);
+    });
+
+    it('rejects an overlong message with a human-readable error and logs it', async () => {
+      const req = makeRequest('/api/embassy/chat', {
+        message: 'x'.repeat(5001),
+      });
+
+      const res = await chatPost(req as any);
+      expect(res.status).toBe(400);
+      const data = await res.json();
+      // The client renders this string verbatim as the Librarian's reply.
+      expect(data.error).toMatch(/too long/i);
+
+      const logged = await getTestDb()
+        .collection('embassy_errors')
+        .findOne({ kind: 'invalid_request' });
+      expect(logged).toBeTruthy();
+      expect(logged!.messageLength).toBe(5001);
     });
 
     it('continues an existing thread', async () => {
@@ -270,6 +324,57 @@ describe('Embassy API', () => {
       const data = await res.json();
 
       expect(data.threads).toHaveLength(0);
+    });
+  });
+
+  describe('GET /api/embassy/threads/[id]', () => {
+    it('returns unlisted (anonymous) threads to anyone holding the id', async () => {
+      // The chat client restores anonymous conversations via
+      // /librarian?thread=<id> after back-navigation — unlisted means
+      // "not in the Recent feed", not "creator-only".
+      const db = getTestDb();
+      const threadId = new ObjectId();
+      await db.collection('embassy_threads').insertOne({
+        _id: threadId,
+        type: 'chat',
+        title: 'Anon question',
+        creatorId: null,
+        creatorName: 'A visitor',
+        visibility: 'unlisted',
+        messageCount: 2,
+        createdAt: new Date(),
+        lastMessageAt: new Date(),
+      });
+      await db.collection('embassy_messages').insertMany([
+        { threadId, authorType: 'human', authorName: 'A visitor', content: 'Where do I start with Jung?', createdAt: new Date() },
+        { threadId, authorType: 'ai', authorName: 'The Librarian', content: 'Start with the Red Book.', sources: [], createdAt: new Date() },
+      ]);
+
+      const req = makeRequest(`/api/embassy/threads/${threadId}`);
+      const res = await threadDetailGet(req as any, { params: Promise.resolve({ id: threadId.toString() }) });
+      expect(res.status).toBe(200);
+      const data = await res.json();
+      expect(data.messages).toHaveLength(2);
+    });
+
+    it('still hides private threads from non-creators', async () => {
+      const db = getTestDb();
+      const threadId = new ObjectId();
+      await db.collection('embassy_threads').insertOne({
+        _id: threadId,
+        type: 'chat',
+        title: 'Private research',
+        creatorId: 'someone-else',
+        creatorName: 'Scholar',
+        visibility: 'private',
+        messageCount: 2,
+        createdAt: new Date(),
+        lastMessageAt: new Date(),
+      });
+
+      const req = makeRequest(`/api/embassy/threads/${threadId}`);
+      const res = await threadDetailGet(req as any, { params: Promise.resolve({ id: threadId.toString() }) });
+      expect(res.status).toBe(404);
     });
   });
 

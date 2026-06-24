@@ -92,16 +92,55 @@ export async function GET(
         return NextResponse.json({ books, total: books.length });
       }
 
-      const { books: sbBooks, total } = await browseBooks({
-        collection: id,
-        hasTranslation: !skipTranslationFilter,
-        hasPages: isArtCollection ? false : undefined,
-        hasResourceType: isArtCollection || undefined,
-        sort: sbSort,
-        limit: 1000, // manifest wants everything
-        exactCount: true,
-        provider: provider || undefined,
-      });
+      let sbBooks: Awaited<ReturnType<typeof browseBooks>>['books'] = [];
+      let total = 0;
+      try {
+        ({ books: sbBooks, total } = await browseBooks({
+          collection: id,
+          hasTranslation: !skipTranslationFilter,
+          hasPages: isArtCollection ? false : undefined,
+          hasResourceType: isArtCollection || undefined,
+          sort: sbSort,
+          limit: 1000, // manifest wants everything
+          exactCount: true,
+          provider: provider || undefined,
+        }));
+      } catch {
+        // Supabase unavailable (local dev, etc.) — fall back to MongoDB
+        console.warn(`[Collection ${id}] Supabase manifest query failed, falling back to MongoDB`);
+        const mongoFilter: Record<string, unknown> = {
+          collections: id,
+          visible: true,
+          ...(skipTranslationFilter ? {} : { pages_translated: { $gt: 0 } }),
+          ...(provider ? { $or: [{ held_by: provider }, { 'image_source.provider': provider }] } : {}),
+        };
+        const mongoDocs = await db.collection('books')
+          .find(mongoFilter, {
+            projection: {
+              _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
+              language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
+              thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
+              is_first_translation: 1, resource_type: 1,
+            },
+            maxTimeMS: 15000,
+          })
+          .sort({ year: 1, title: 1 })
+          .limit(1000)
+          .toArray();
+        const mongoBooks = mongoDocs.map(b => ({
+          id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
+          author: b.author, year: b.year, language: b.language,
+          pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+          pages_translated: b.pages_translated, pages_blank: b.pages_blank,
+          published: b.published, read_count: b.read_count,
+          thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+          is_first_translation: b.is_first_translation,
+          created_at: null, last_translation_at: null,
+          resource_type: b.resource_type || null, medium: null, enrichment: null,
+          relevance: 0,
+        }));
+        return NextResponse.json({ books: mongoBooks, total: mongoBooks.length });
+      }
 
       const books = sbBooks.map(b => ({
         id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,

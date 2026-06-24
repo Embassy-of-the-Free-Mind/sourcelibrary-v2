@@ -23,7 +23,7 @@ Sampled from a 100K-page snapshot of `pages.archived_photo`:
 | Pattern | Share | Where it comes from |
 |---|---|---|
 | `archived/{bookId}/{N}.jpg` | 77.4% | Pre-`pagePaths()` archiver. Unpadded `N`, no `-full` suffix. The dominant pattern in the corpus. Still actively read; reader code at `src/lib/utils.ts:101` rewrites it to `pages/{bookId}/{NNNN}.jpg` for display. |
-| `pages/{bookId}/{NNNN}-full.jpg` | 6.8% | Canonical `pagePaths(...).full`. Used by new pipeline writers — uploads (`src/lib/uploads/processing.ts`), split pages (`src/lib/page-split/split-processing.ts`), the resize worker (`scripts/workers/resize-worker.mjs`), BPH split worker, and bulk-import scripts. |
+| `pages/{bookId}/{NNNN}-full.jpg` | 6.8% | Canonical `pagePaths(...).full`. Used by new pipeline writers — uploads (`src/lib/uploads/processing.ts`), split pages (`src/lib/page-split/split-processing.ts`), BPH split worker, and bulk-import scripts. |
 | `books/{bookId}/pages/{NNNN}.jpg` | 1.8% | Used by **kloss, IDP, CCAG, and PDF imports**. Writers: `scripts/import/import-kloss-collection.mjs`, `scripts/import/import-idp-batch.mjs`, `scripts/import/ccag-vii-pdf-direct.mjs`, `src/app/api/import/pdf/route.ts`. Single high-res file per page — NO display or thumb variants generated. |
 | `cropped/{bookId}/{objectId}.jpg` | (subset of "other", ~11%) | Split-page crops with ObjectId filenames. |
 | `uploads/{bookId}/{objectId}.jpg` | (subset of "other") | Raw user uploads with ObjectId filenames. |
@@ -145,7 +145,7 @@ R2_PUBLIC_URL        → https://images.sourcelibrary.org
 ## Key Files
 
 - `src/lib/storage.ts` — storagePut(), path helpers, R2 client
-- `scripts/workers/resize-worker.mjs` — display-size generation (Hetzner cron)
+- `scripts/migration/backfill-display-images.mjs` — split-aware display+thumb variant backfill (Hetzner cron; #1814, replaced the retired `resize-worker.mjs`)
 - `scripts/maintenance/repoint-blob-to-r2-fast.mjs` — bulk pointer migration
 - `scripts/maintenance/migrate-blob-stragglers.mjs` — file transfer for stragglers
 - `scripts/migration/bulk-import-to-r2.mjs` — BPH bulk import

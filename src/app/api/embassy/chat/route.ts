@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -11,12 +12,19 @@ export const maxDuration = 120;
 
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
-  content: z.string().max(10000), // Allow empty for assistant messages (e.g., choices-only responses)
+  // History is context, not content of record — clip rather than reject. The
+  // Librarian's own answers regularly exceed 10k chars, and the client sends
+  // them back verbatim as history; rejecting here made every follow-up in such
+  // a thread fail with a bare "Invalid request" (the thread looked dead to the
+  // reader). Allow empty for assistant messages (e.g., choices-only responses).
+  content: z.string().transform(s => s.slice(0, 10000)),
 });
 
 const chatRequestSchema = z.object({
   threadId: z.string().nullable().optional(),
-  message: z.string().min(1, 'Message cannot be empty').max(5000, 'Message too long'),
+  message: z.string()
+    .min(1, 'Message cannot be empty')
+    .max(5000, 'That message is too long for the Librarian — please keep it under 5,000 characters, or share the text a section at a time.'),
   history: z.array(messageSchema).max(50).optional(),
   visibility: z.enum(['public', 'private']).optional(),
   stream: z.boolean().optional(),
@@ -38,16 +46,52 @@ const chatRequestSchema = z.object({
  *   error      — something went wrong
  */
 export async function POST(request: NextRequest) {
+  // The Librarian is open to everyone — no login required. Signed-in users get
+  // their threads tied to their account; anonymous visitors get ephemeral
+  // public threads. We rate-limit anonymous traffic per-IP because this is an
+  // expensive agentic endpoint (multiple tool calls, up to maxDuration each).
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
+  const userId = session?.user?.id ?? null;
+
+  if (!userId) {
+    const rl = checkRateLimit(
+      { name: 'librarian-chat', limit: 5, windowSeconds: 3600 },
+      getClientIp(request),
+    );
+    if (!rl.allowed) {
+      return NextResponse.json(
+        {
+          error: 'You\'ve used your 5 free questions this hour. Sign in (free) to keep talking with the Librarian.',
+          code: 'SIGNIN_REQUIRED',
+        },
+        { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+      );
+    }
   }
 
   const body = await request.json();
   const parsed = chatRequestSchema.safeParse(body);
   if (!parsed.success) {
+    const fieldErrors = parsed.error.flatten().fieldErrors;
+    // The client renders `error` verbatim as the Librarian's reply, so it must
+    // read like a sentence, not a status code. Surface the first real issue.
+    const firstIssue = parsed.error.issues[0]?.message;
+    const friendly = firstIssue && firstIssue !== 'Required'
+      ? firstIssue
+      : 'I couldn\'t read that request — please refresh the page and try again.';
+    try {
+      const db = await getDb();
+      await db.collection('embassy_errors').insertOne({
+        kind: 'invalid_request',
+        fieldErrors,
+        messagePreview: typeof body?.message === 'string' ? body.message.slice(0, 500) : null,
+        messageLength: typeof body?.message === 'string' ? body.message.length : null,
+        historyLength: Array.isArray(body?.history) ? body.history.length : null,
+        createdAt: new Date(),
+      });
+    } catch { /* best effort */ }
     return NextResponse.json(
-      { error: 'Invalid request', details: parsed.error.flatten().fieldErrors },
+      { error: friendly, details: fieldErrors },
       { status: 400 },
     );
   }
@@ -55,21 +99,26 @@ export async function POST(request: NextRequest) {
   const { threadId, message, history = [], visibility = 'public', stream = false } = parsed.data;
   const db = await getDb();
 
-  // Get user display name
-  const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
-    { projection: { name: 1, membership: 1 } },
-  );
+  // Get user display name (anonymous visitors skip the lookup)
+  const user = userId
+    ? await db.collection('users').findOne(
+        { _id: userId as any },
+        { projection: { name: 1, membership: 1 } },
+      )
+    : null;
   const displayName = user?.membership?.profile?.displayName || user?.name || 'A visitor';
 
   const now = new Date();
   let activeThreadId: string;
 
   if (threadId) {
-    // Continue existing thread — verify ownership
+    // Continue existing thread — verify ownership. Signed-in users may only
+    // continue their own threads; anonymous visitors may only continue
+    // anonymous (creatorId: null) threads, so they can't append to a
+    // logged-in user's conversation.
     const thread = await db.collection('embassy_threads').findOne({
       _id: new ObjectId(threadId),
-      creatorId: session.user.id,
+      creatorId: userId,
     });
     if (!thread) {
       return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
@@ -79,19 +128,22 @@ export async function POST(request: NextRequest) {
     await db.collection('embassy_messages').insertOne({
       threadId: new ObjectId(threadId),
       authorType: 'human',
-      authorId: session.user.id,
+      authorId: userId,
       authorName: displayName,
       content: message,
       createdAt: now,
     });
   } else {
-    // Create new thread
+    // Create new thread. Anonymous threads are 'unlisted' (null creatorId,
+    // so they can't be claimed via the "mine" filter and aren't surfaced in
+    // the public Recent feed) — the conversation still continues in-session
+    // via threadId. Signed-in users keep their public/private choice.
     const result = await db.collection('embassy_threads').insertOne({
       type: 'chat',
       title: message.slice(0, 120),
-      creatorId: session.user.id,
+      creatorId: userId,
       creatorName: displayName,
-      visibility,
+      visibility: userId ? visibility : 'unlisted',
       aiEnabled: true,
       messageCount: 0,
       createdAt: now,
@@ -102,16 +154,17 @@ export async function POST(request: NextRequest) {
     await db.collection('embassy_messages').insertOne({
       threadId: result.insertedId,
       authorType: 'human',
-      authorId: session.user.id,
+      authorId: userId,
       authorName: displayName,
       content: message,
       createdAt: now,
     });
   }
 
-  // Collect full text + sources for DB write
+  // Collect full text + sources + token usage for DB write
   let fullText = '';
   let allSources: SourceCard[] = [];
+  let turnUsage: LibrarianStep['usage'] | null = null;
 
   const saveAiResponse = async () => {
     if (!fullText && allSources.length === 0) return;
@@ -132,6 +185,7 @@ export async function POST(request: NextRequest) {
           snippet: s.snippet,
           inCollection: s.inCollection,
         })),
+        usage: turnUsage,
         createdAt: aiMessageTime,
       });
 
@@ -151,10 +205,21 @@ export async function POST(request: NextRequest) {
           fullText += step.text || '';
         } else if (step.type === 'sources') {
           allSources = step.sources || [];
+        } else if (step.type === 'usage') {
+          turnUsage = step.usage ?? null;
         }
       }
     } catch (err) {
       console.error('[Embassy] Agentic response error:', err);
+      try {
+        await db.collection('embassy_errors').insertOne({
+          kind: 'agent_error',
+          threadId: activeThreadId,
+          message: message.slice(0, 500),
+          error: (err instanceof Error ? `${err.message}\n${err.stack}` : String(err)).slice(0, 5000),
+          createdAt: new Date(),
+        });
+      } catch { /* best effort */ }
       return NextResponse.json(
         { error: 'The Librarian was interrupted. Please try again.' },
         { status: 500 },
@@ -245,6 +310,12 @@ export async function POST(request: NextRequest) {
 
           case 'notebook_update':
             await send({ type: 'notebook_update', notebook: step.notebook });
+            break;
+
+          case 'usage':
+            // Internal accounting only — persisted with the AI message, not
+            // sent to the client.
+            turnUsage = step.usage ?? null;
             break;
         }
       }

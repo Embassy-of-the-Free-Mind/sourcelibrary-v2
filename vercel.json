@@ -17,6 +17,10 @@
     {
       "path": "/api/cron/sync-catalog-sl-book-ids",
       "schedule": "30 */6 * * *"
+    },
+    {
+      "path": "/api/cron/enrich-entities",
+      "schedule": "15 2 * * *"
     }
   ]
 }

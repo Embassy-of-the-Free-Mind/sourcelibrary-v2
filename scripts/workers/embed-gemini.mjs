@@ -15,11 +15,17 @@
  *   --full        Process all pages with OCR or translation
  *   --incremental Process pages newer than latest in Supabase (default)
  *   --missing-only Process only books that have pages with embedding IS NULL (~3-4h vs 85h for --full)
+ *   --restale     Re-embed rows whose Mongo source is newer than the
+ *                 Supabase mongo_updated_at watermark (catches re-OCR /
+ *                 re-translation in Mongo without re-embed). Requires the
+ *                 watermark column + backfill (see add-page-translations-
+ *                 watermark.sql and backfill-page-translations-watermark.mjs).
  *   --book ID     Process a single book
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
  *
- * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL, GEMINI_API_KEY
+ * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL,
+ *      GEMINI_API_KEY_TIER3 (preferred, no training opt-in) or GEMINI_API_KEY
  *
  * Run on Hetzner:
  *   set -a; source .env.production.local; set +a
@@ -28,6 +34,7 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import fs from 'node:fs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -35,18 +42,32 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const SUPABASE_URL = (process.env.SUPABASE_URL || '').trim();
 const SUPABASE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 const SUPABASE_DB_URL = process.env.SUPABASE_DB_URL;
-const GEMINI_KEY = process.env.GEMINI_API_KEY;
+// Prefer paid Tier 3 (no training opt-in) for content-bearing translations;
+// fall back to default key for local/dev. Cron explicitly exports TIER3 too
+// (crontab.production), so this is belt-and-suspenders for ad-hoc runs.
+const GEMINI_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 
 if (!MONGODB_URI || !SUPABASE_KEY || !GEMINI_KEY) {
-  console.error('Missing env: MONGODB_URI, SUPABASE_SERVICE_ROLE_KEY, or GEMINI_API_KEY');
+  console.error('Missing env: MONGODB_URI, SUPABASE_SERVICE_ROLE_KEY, or GEMINI_API_KEY[_TIER3]');
   process.exit(1);
 }
 
 const args = process.argv.slice(2);
 const FULL_MODE = args.includes('--full');
 const MISSING_ONLY = args.includes('--missing-only');
+// --restale: re-embed rows where the source Mongo page is newer than the
+// stored mongo_updated_at watermark. Catches OCR/translation updates that
+// would otherwise leave Supabase silently stale.
+const RESTALE = args.includes('--restale');
 const DRY_RUN = args.includes('--dry-run');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
+// --books-file PATH: embed pages for a fixed JSON array of book ids, skipping
+// pages already present in page_translations. Built for the OCR-tail backfill
+// (untranslated books never added to the table — --missing-only can't reach
+// them because it only scans books already present). Reuses the OCR fallback
+// (textToEmbed = ocrText when no translation), so untranslated originals get a
+// work-specific vector with an EMPTY translation column (no search pollution).
+const BOOKS_FILE = args.find((_, i, a) => a[i - 1] === '--books-file');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
@@ -130,7 +151,13 @@ async function embedBatch(texts) {
 function cleanText(text) {
   if (!text || typeof text !== 'string') return '';
   return text
-    .replace(/<[^>]+>/g, ' ')    // strip HTML/XML tags
+    // Drop EDITORIAL page-level wrappers content-and-all. These are Gemini's
+    // "what this page is about" descriptions — they routinely name content from
+    // ADJACENT pages (e.g. a page-89 <meta> mentioning the "mercury" wheel that
+    // is actually on page 88). Embedding/quoting them mislocates the source and
+    // produces citations to words that aren't on the page. (Nirmal, 2026-05-30.)
+    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')    // strip remaining tags, keep inner body text
     .replace(/\s+/g, ' ')        // collapse whitespace
     .trim()
     .slice(0, 8000);             // Gemini embedding-2 supports 8192 tokens
@@ -151,14 +178,16 @@ async function getLastSyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : MISSING_ONLY ? 'missing-only' : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
 
-// Build query — need pages with OCR or translation
+// Build query — need pages with OCR or translation.
+// page_number > 0 skips hidden/deduped trailing pages (page_number ≤ 0).
 const pageQuery = {
+  page_number: { $gt: 0 },
   $or: [
     { 'ocr.data': { $exists: true, $type: 'string' } },
     { 'translation.data': { $exists: true, $type: 'string' } },
@@ -200,6 +229,102 @@ if (BOOK_ID) {
   globalThis.MISSING_PAGE_IDS = new Set(myRows.map(r => r.page_id));
   pageQuery.book_id = { $in: myBookIds };
   console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
+} else if (BOOKS_FILE) {
+  const targetIds = JSON.parse(fs.readFileSync(BOOKS_FILE, 'utf8'));
+  if (!Array.isArray(targetIds) || !targetIds.length) {
+    console.error(`--books-file ${BOOKS_FILE} is empty or not a JSON array`);
+    process.exit(1);
+  }
+  // Fetch page_ids already embedded for these books (REST, chunked) so we skip
+  // them in the loop and only embed the not-yet-present (untranslated) pages.
+  console.log(`Loading ${targetIds.length.toLocaleString()} target books; finding already-embedded pages...`);
+  const existing = new Set();
+  for (let i = 0; i < targetIds.length; i += 200) {
+    const chunk = targetIds.slice(i, i + 200);
+    let from = 0;
+    for (;;) {
+      const { data, error } = await supabase
+        .from('page_translations').select('page_id')
+        .in('book_id', chunk).range(from, from + 999);
+      if (error) { console.error('Supabase select error:', error.message); process.exit(1); }
+      for (const r of (data || [])) existing.add(r.page_id);
+      if (!data || data.length < 1000) break;
+      from += 1000;
+    }
+  }
+  globalThis.SKIP_PAGE_IDS = existing;
+  pageQuery.book_id = { $in: targetIds };
+  // Scope the stream to UNtranslated OCR pages only — the embeddable tail.
+  // Without this we'd drag every already-embedded page (full ocr.data text)
+  // of these partially-translated books over the wire just to skip it. The
+  // skip-set above stays as a correctness backstop for the rare untranslated
+  // page that was somehow already embedded.
+  delete pageQuery.$or;
+  pageQuery['ocr.data'] = { $exists: true, $type: 'string' };
+  pageQuery['translation.data'] = { $exists: false };
+  console.log(`${existing.size.toLocaleString()} pages already embedded — streaming only untranslated OCR pages.`);
+} else if (RESTALE) {
+  // Find rows whose Mongo source has moved past the Supabase mongo_updated_at
+  // watermark — re-OCR or re-translation in Mongo without a re-embed. The
+  // scan is per-book to keep the working set small.
+  const pg = await getPgClient();
+  if (!pg) {
+    console.error('SUPABASE_DB_URL required for --restale (per-book scans need many round-trips)');
+    process.exit(1);
+  }
+
+  console.log('Scanning for stale rows (Mongo updated_at > Supabase mongo_updated_at)...');
+  const { rows: bookRows } = await pg.query(`SELECT DISTINCT book_id FROM page_translations ORDER BY book_id`);
+  let allBookIds = bookRows.map(r => r.book_id);
+  if (WORKER_COUNT > 1) {
+    allBookIds = allBookIds.filter((_, i) => i % WORKER_COUNT === WORKER_ID);
+    console.log(`Worker ${WORKER_ID}/${WORKER_COUNT}: scanning ${allBookIds.length.toLocaleString()} books`);
+  }
+
+  const stalePageIds = new Set();
+  const staleBookIds = new Set();
+  let scannedBooks = 0;
+  for (const bookId of allBookIds) {
+    const { rows: ptRows } = await pg.query(
+      `SELECT page_id, mongo_updated_at FROM page_translations WHERE book_id = $1`,
+      [bookId],
+    );
+    if (ptRows.length === 0) continue;
+
+    const watermarks = new Map(ptRows.map(r => [r.page_id, r.mongo_updated_at]));
+
+    const mongoPages = await db.collection('pages')
+      .find({ book_id: bookId })
+      .project({ _id: 1, 'translation.updated_at': 1, 'ocr.updated_at': 1, updated_at: 1 })
+      .toArray();
+
+    for (const p of mongoPages) {
+      const pageId = String(p._id);
+      if (!watermarks.has(pageId)) continue; // not in Supabase yet (--missing-only's job)
+      const mongoTs = p.translation?.updated_at || p.ocr?.updated_at || p.updated_at;
+      if (!mongoTs) continue;
+      const watermark = watermarks.get(pageId);
+      if (!watermark || new Date(mongoTs).getTime() > new Date(watermark).getTime()) {
+        stalePageIds.add(pageId);
+        staleBookIds.add(bookId);
+      }
+    }
+
+    scannedBooks++;
+    if (scannedBooks % 100 === 0) {
+      console.log(`  scanned ${scannedBooks}/${allBookIds.length} books — ${stalePageIds.size} stale pages found`);
+    }
+  }
+
+  if (stalePageIds.size === 0) {
+    console.log('No stale rows found. All caught up.');
+    await mongoClient.close();
+    process.exit(0);
+  }
+
+  console.log(`Found ${stalePageIds.size.toLocaleString()} stale pages across ${staleBookIds.size.toLocaleString()} books`);
+  globalThis.MISSING_PAGE_IDS = stalePageIds; // reuse the same per-page gate as --missing-only
+  pageQuery.book_id = { $in: [...staleBookIds] };
 } else if (!FULL_MODE) {
   const lastSync = await getLastSyncTime();
   if (lastSync) {
@@ -260,6 +385,7 @@ const cursor = db.collection('pages')
     'translation.data': 1,
     'translation.updated_at': 1,
     'ocr.updated_at': 1,
+    updated_at: 1, // fallback for the mongo_updated_at watermark when sub-doc timestamps are missing
     translation_summary: 1,
     translation_keywords: 1,
   })
@@ -276,10 +402,17 @@ let supabaseBackoff = 0;
 for await (const page of cursor) {
   if (LIMIT && processed >= LIMIT) break;
 
-  // In --missing-only mode, only embed pages that actually lack an embedding
-  // (the MongoDB query is scoped to candidate books, but most of their pages
-  // already have valid embeddings — skip those)
-  if (MISSING_ONLY && !globalThis.MISSING_PAGE_IDS.has(page.id)) {
+  // In --missing-only / --restale modes, only embed pages identified by the
+  // pre-scan (missing embedding, or Mongo newer than Supabase watermark).
+  // The MongoDB query is scoped to candidate books but most of their pages
+  // are fine — skip the ones not in the set.
+  if ((MISSING_ONLY || RESTALE) && !globalThis.MISSING_PAGE_IDS.has(page.id)) {
+    skipped++;
+    processed++;
+    continue;
+  }
+  // --books-file: skip pages already in page_translations; embed only the rest.
+  if (BOOKS_FILE && globalThis.SKIP_PAGE_IDS.has(page.id)) {
     skipped++;
     processed++;
     continue;
@@ -384,8 +517,8 @@ async function upsertToSupabase(rows) {
     // (pg doesn't support multi-row upsert with vector columns easily)
     for (const row of rows) {
       await client.query(
-        `INSERT INTO page_translations (page_id, book_id, page_number, translation, embedding, book_title, book_author, book_language, book_year, updated_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        `INSERT INTO page_translations (page_id, book_id, page_number, translation, embedding, book_title, book_author, book_language, book_year, updated_at, embedding_model, mongo_updated_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
          ON CONFLICT (page_id) DO UPDATE SET
            book_id = EXCLUDED.book_id,
            page_number = EXCLUDED.page_number,
@@ -395,12 +528,15 @@ async function upsertToSupabase(rows) {
            book_author = EXCLUDED.book_author,
            book_language = EXCLUDED.book_language,
            book_year = EXCLUDED.book_year,
-           updated_at = EXCLUDED.updated_at`,
+           updated_at = EXCLUDED.updated_at,
+           embedding_model = EXCLUDED.embedding_model,
+           mongo_updated_at = EXCLUDED.mongo_updated_at`,
         [
           row.page_id, row.book_id, row.page_number,
           row.translation, row.embedding,
           row.book_title, row.book_author, row.book_language, row.book_year,
           row.updated_at,
+          row.embedding_model, row.mongo_updated_at,
         ]
       );
     }
@@ -422,18 +558,26 @@ async function processBatch(items) {
     const texts = items.map(i => i.text);
     const embeddings = await embedBatch(texts);
 
-    const rows = items.map((item, i) => ({
-      page_id: item.page.id,
-      book_id: item.page.book_id,
-      page_number: item.page.page_number,
-      translation: (item.hasTranslation ? item.text : '').slice(0, 50000),
-      embedding: JSON.stringify(embeddings[i]),
-      book_title: item.book.title,
-      book_author: item.book.author,
-      book_language: item.book.language,
-      book_year: item.book.year,
-      updated_at: item.page.translation?.updated_at || item.page.ocr?.updated_at || new Date(),
-    }));
+    const rows = items.map((item, i) => {
+      const mongoTs = item.page.translation?.updated_at || item.page.ocr?.updated_at || item.page.updated_at;
+      return {
+        page_id: item.page.id,
+        book_id: item.page.book_id,
+        page_number: item.page.page_number,
+        translation: (item.hasTranslation ? item.text : '').slice(0, 50000),
+        embedding: JSON.stringify(embeddings[i]),
+        book_title: item.book.title,
+        book_author: item.book.author,
+        book_language: item.book.language,
+        book_year: item.book.year,
+        updated_at: mongoTs || new Date(),
+        embedding_model: MODEL,
+        // Watermark of the Mongo source's freshness at embed time. The
+        // --restale mode compares this against current Mongo updated_at to
+        // detect drift (re-OCR / re-translation in Mongo without re-embed).
+        mongo_updated_at: mongoTs || null,
+      };
+    });
 
     // Upsert in small sub-batches to avoid overwhelming Supabase
     let batchErrors = 0;

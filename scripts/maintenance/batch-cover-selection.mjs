@@ -18,6 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildCoverUpdate } from '../lib/cover-write.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -80,15 +81,7 @@ Confidence levels: "high" = clear frontispiece, "medium" = decent title page, "l
 
 // --- Helpers ---
 
-function getPageImageUrl(page) {
-  const isUsable = (u) => u && (u.startsWith('http://') || u.startsWith('https://'));
-  if (isUsable(page.cropped_photo)) return page.cropped_photo;
-  if (isUsable(page.archived_photo)) return page.archived_photo;
-  if (page.archived_photo?.startsWith('failed:')) return null;
-  if (isUsable(page.photo)) return page.photo;
-  if (isUsable(page.photo_original)) return page.photo_original;
-  return null;
-}
+// getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
 
 async function fetchImageBase64(url, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {

@@ -17,7 +17,7 @@
  *   node scripts/maintenance/archive-ia-bulk.mjs --dry-run           # count only
  */
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
 import { execSync } from 'child_process';
 import { execFile as execFileCb } from 'child_process';
@@ -311,7 +311,7 @@ async function processBook(book, db) {
       const photoUrl = page.photo_original || page.photo;
 
       try {
-        const jpegBuffer = await fetchPageImage(photoUrl, iaId);
+        const jpegBuffer = await fetchPageImage(photoUrl, sourceId);
 
         // Upload to R2
         const key = `archived/${page.book_id}/${page.page_number}.jpg`;
@@ -371,7 +371,7 @@ async function main() {
         { 'image_source.provider': { $in: ['ia', 'internet_archive'] } },
       ]}
     : { 'image_source.provider': { $exists: true, $ne: null, $nin: ['wikimedia_commons', 'rijksmuseum', 'met', 'nga'] } };
-  if (BOOK_ID) bookQuery._id = BOOK_ID;
+  if (BOOK_ID) bookQuery._id = /^[a-f0-9]{24}$/i.test(BOOK_ID) ? ObjectId.createFromHexString(BOOK_ID) : BOOK_ID;
 
   const iaBooks = await db.collection('books')
     .find(bookQuery, { projection: { _id: 1, id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1 } })

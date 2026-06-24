@@ -12,7 +12,12 @@ import type { ReactNode } from 'react';
  * failure mode: the toggle silently misses that surface.
  */
 interface AISectionProps {
-  kind?: 'ai-summary' | 'reading-guide';
+  // 'ai-summary' and 'reading-guide' hide under both the explicit and the
+  // BPH-default "Hide AI" states. 'ai-summary-catalog' is shown under the BPH
+  // default and hides only on an explicit opt-out (catalogue works are
+  // editorially reviewed) — see VIEW_MODE_INIT_SCRIPT in src/app/layout.tsx
+  // and the globals.css rules.
+  kind?: 'ai-summary' | 'reading-guide' | 'ai-summary-catalog';
   className?: string;
   children: ReactNode;
 }

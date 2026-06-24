@@ -27,8 +27,14 @@ export interface BudgetCheck {
   tier: 'apikey' | 'session' | 'anon';
 }
 
-const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || 50);
-const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || 500);
+// Tuned 2026-05-11 from 16h of log-only data: only one caller exceeded 50/day
+// (philosophers-corpus, an AI research agent at 65 pages). Bumping anon to 100
+// gives borderline cases room while still flagging real scrapers. Session was
+// wildly oversized — heaviest signed-in user did 13 hits in 16h, zero close
+// to 500 pages — but a research session reading parallel translations could
+// plausibly need 200.
+const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || 100);
+const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || 200);
 
 function pickLimit(identity: ApiIdentity): { limit: number; tier: BudgetCheck['tier'] } {
   if (identity.kind === 'apikey' || identity.kind === 'bot') {

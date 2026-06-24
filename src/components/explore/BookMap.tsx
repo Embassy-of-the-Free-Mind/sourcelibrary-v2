@@ -9,7 +9,7 @@ export interface BookLocation {
   country: string | null;
   lat: number;
   lng: number;
-  type: 'publication' | 'author_birth' | 'author_death';
+  type: 'publication' | 'author_birth' | 'author_death' | 'origin';
   books: Array<{
     id: string;
     title: string;
@@ -33,6 +33,7 @@ const TYPE_CONFIG: Record<string, { color: string; label: string; lightBg: strin
   publication:  { color: '#9e4a3a', label: 'Published here',  lightBg: 'rgba(158,74,58,0.1)' },
   author_birth: { color: '#5a7d8b', label: 'Author born here', lightBg: 'rgba(90,125,139,0.1)' },
   author_death: { color: '#8b7d5a', label: 'Author died here', lightBg: 'rgba(139,125,90,0.1)' },
+  origin:       { color: '#6a8a5a', label: 'Tradition origin', lightBg: 'rgba(106,138,90,0.1)' },
 };
 
 function createLocationIcon(type: string, bookCount: number) {
@@ -59,7 +60,7 @@ export default function BookMap({ locations }: BookMapProps) {
 
   const [selected, setSelected] = useState<BookLocation | null>(null);
   const [filters, setFilters] = useState({
-    types: new Set(['publication', 'author_birth', 'author_death']),
+    types: new Set(['publication', 'author_birth', 'author_death', 'origin']),
     minBooks: 1,
     yearFrom: 800,
     yearTo: 2025,
@@ -147,7 +148,8 @@ export default function BookMap({ locations }: BookMapProps) {
     for (const pin of cityPins) {
       if (pin.totalBooks < minBooksForZoom) continue;
       const dominantType = pin.types.has('publication') ? 'publication'
-        : pin.types.has('author_birth') ? 'author_birth' : 'author_death';
+        : pin.types.has('author_birth') ? 'author_birth'
+        : pin.types.has('author_death') ? 'author_death' : 'origin';
 
       const marker = L.marker([pin.lat, pin.lng], {
         icon: createLocationIcon(dominantType, pin.totalBooks),
@@ -203,7 +205,7 @@ export default function BookMap({ locations }: BookMapProps) {
         </h1>
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          {(['publication', 'author_birth', 'author_death'] as const).map((type) => {
+          {(['publication', 'author_birth', 'author_death', 'origin'] as const).map((type) => {
             const active = filters.types.has(type);
             const config = TYPE_CONFIG[type];
             return (

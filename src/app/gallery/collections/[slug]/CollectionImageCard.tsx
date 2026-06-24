@@ -18,16 +18,18 @@ export interface CollectionImageProps {
   likeCount?: number;
 }
 
-export default function CollectionImageCard({ item, priority = false }: { item: CollectionImageProps; priority?: boolean }) {
+export default function CollectionImageCard({ item, priority = false, collectionSlug }: { item: CollectionImageProps; priority?: boolean; collectionSlug?: string }) {
   const [imageError, setImageError] = useState(false);
   const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
   // Only bypass Next.js optimization for pre-generated R2 thumbnails (already small).
   // Fallback URLs (extractedUrl, imageUrl) can be 2MB+ and need optimization.
   const isPreGenerated = !!item.thumbnailUrl;
+  // Forward the gallery-collection slug so the viewer scopes prev/next to this curated set.
+  const imageHref = `/gallery/image/${item.id}${collectionSlug ? `?gcollection=${encodeURIComponent(collectionSlug)}` : ''}`;
 
   return (
     <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={`/gallery/image/${item.id}`}>
+      <Link href={imageHref}>
         <div className="relative aspect-square bg-stone-100">
           {!imageError ? (
             <Image

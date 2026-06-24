@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import { trackEvent } from '@/lib/track-event';
 import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 
@@ -68,10 +69,20 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const isNcFreeFormat = (f: BookDownloadFormats) =>
     imageAccess === 'nc-free' && isImageFormat(f);
 
+  const goToSignIn = () => {
+    window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+  };
+
   const handleDownload = async (format: BookDownloadFormats) => {
-    // Anonymous → send to sign-in
+    // Anonymous → explain the gate, then offer sign-in. A bare redirect here
+    // read as "the download errored" (real feedback, 2026-06-19): the page just
+    // jumped to a login screen with no reason given. The toast names the gate
+    // at the moment of the click and lets them choose to continue.
     if (!session?.user) {
-      window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+      toast('Sign in to download', {
+        description: 'Members download every format. Sign in to get started.',
+        action: { label: 'Sign in', onClick: goToSignIn },
+      });
       return;
     }
 
@@ -88,7 +99,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
       if (response.status === 401) {
         setDownloading(null);
-        window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+        goToSignIn();
         return;
       }
       if (response.status === 402) {
@@ -112,6 +123,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
+      trackEvent('download', { bookId, format });
       setIsOpen(false);
     } catch (error) {
       console.error('Download error:', error);
@@ -123,7 +135,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
   const handlePurchase = async () => {
     if (!session?.user) {
-      window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
+      goToSignIn();
       return;
     }
     setPurchasing(true);
@@ -181,9 +193,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           {isAnonymous && (
             <div className="px-3 py-3 border-b border-stone-100">
               <button
-                onClick={() => {
-                  window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
-                }}
+                onClick={goToSignIn}
                 className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors"
               >
                 Sign in to download

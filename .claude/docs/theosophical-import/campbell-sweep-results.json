@@ -1,0 +1,831 @@
+{
+ "imported": [
+  {
+   "author": "Alcyone (J. Krishnamurti)",
+   "title": "At the Feet of the Master",
+   "year": 1910,
+   "ia": "in.ernet.dli.2015.219710"
+  },
+  {
+   "author": "George S. Arundale",
+   "title": "Nirvana: A Study in Synthetic Consciousness",
+   "year": 1926,
+   "ia": "in.ernet.dli.2015.111980"
+  },
+  {
+   "author": "George S. Arundale",
+   "title": "Thoughts on At the Feet of the Master",
+   "year": 1918,
+   "ia": "thoughtsonatfeet00arunrich"
+  },
+  {
+   "author": "J. D. Buck",
+   "title": "The Nature and Aim of Theosophy",
+   "year": 1889,
+   "ia": "natureaimoftheos00buck"
+  },
+  {
+   "author": "Gyanendra Nath Chakravarti",
+   "title": "Spirituality and Psychism",
+   "year": 1900,
+   "ia": "spiritualitypsyc00chak"
+  },
+  {
+   "author": "Bhagavan Das",
+   "title": "Indian Ideals of Women's Education",
+   "year": 1929,
+   "ia": "dli.csl.7895"
+  },
+  {
+   "author": "Bhagavan Das",
+   "title": "The Psychology of Conversion",
+   "year": 1917,
+   "ia": "in.ernet.dli.2015.367624"
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "Art As a Factor in the Soul's Evolution",
+   "year": 1905,
+   "ia": "artasfactorinsou00jina"
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "The Early Teachings of the Masters 1881-1883",
+   "year": 1923,
+   "ia": "in.ernet.dli.2015.202410"
+  },
+  {
+   "author": "William Kingsland",
+   "title": "Christos: The Religion of the Future",
+   "year": 1929,
+   "ia": "christosreligion0000will_z0m7"
+  },
+  {
+   "author": "Jiddu Krishnamurti (Alcyone)",
+   "title": "Education as Service",
+   "year": 1912,
+   "ia": "educationasservi00krisrich"
+  },
+  {
+   "author": "Hans Martensen",
+   "title": "Jacob Boehme: His Life and Teaching, or, Studies in Theosophy",
+   "year": 1885,
+   "ia": "jacobboehmehisli00martiala"
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis, Vol. I: The Gnosis of the Mind",
+   "year": 1906,
+   "ia": "echoesfromgnosis01mead"
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis: The Hymn of Jesus",
+   "year": 1907,
+   "ia": "echoesfromgnosis00mead"
+  },
+  {
+   "author": "James M. Pryse",
+   "title": "Reincarnation in the New Testament",
+   "year": 1904,
+   "ia": "reincarnationinn00prysrich"
+  },
+  {
+   "author": "L.W. Rogers",
+   "title": "Hints to Young Students of Occultism",
+   "year": 1911,
+   "ia": "hintstoyoungstu00rogegoog"
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "Expanded Theosophical Knowledge",
+   "year": 1918,
+   "ia": "expanded-theosophical-knowledge"
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "In the Next World",
+   "year": 1918,
+   "ia": "innextworld0000apsi"
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "Incidents in the Life of Madame Blavatsky",
+   "year": 1886,
+   "ia": "cu31924029172983"
+  },
+  {
+   "author": "Katherine Tingley",
+   "title": "A Nosegay of Everlastings",
+   "year": 1913,
+   "ia": "nosegayofeverlas00ting"
+  }
+ ],
+ "exists": [
+  {
+   "author": "Paul Deussen",
+   "title": "The Philosophy of the Vedanta",
+   "year": 1893,
+   "ia": "outlineofvedanta00deus"
+  },
+  {
+   "author": "Gerald Massey",
+   "title": "Ancient Egypt: The Light of the World (in 12 Books)",
+   "year": 1907,
+   "ia": "ult.ancientegyptligh0000gera_v7d9vol1"
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis: The Gnosis of the Mind",
+   "year": 1906,
+   "ia": "echoesfromgnosis01mead",
+   "note": "dup-in-batch"
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis: The Hymns of Hermes",
+   "year": 1906,
+   "ia": "echoesfromgnosis01mead",
+   "note": "dup-in-batch"
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis, Vol. V: The Mysteries of Mithra",
+   "year": 1907,
+   "ia": "echoesfromgnosis00mead",
+   "note": "dup-in-batch"
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "The Gnosis of the Mind",
+   "year": 1906,
+   "ia": "echoesfromgnosis01mead",
+   "note": "dup-in-batch"
+  },
+  {
+   "author": "T. Subba Row (or Rao)",
+   "title": "Philosophy of the Bhagavad-Gita - Four Lectures",
+   "year": 1886,
+   "ia": "philosophyofbhag00subbiala"
+  }
+ ],
+ "noMatch": [
+  {
+   "author": "Adyar",
+   "title": "Adyar Pamphlets - 212 titles",
+   "year": 1911
+  },
+  {
+   "author": "Anonymous",
+   "title": "A Turkish Effendi on Christendom and Islam",
+   "year": 1880
+  },
+  {
+   "author": "Francesca Arundale and Karl Heckel",
+   "title": "The Idea of Re-birth",
+   "year": 1890
+  },
+  {
+   "author": "George S. Arundale",
+   "title": "Indian Students and Politics",
+   "year": 1914
+  },
+  {
+   "author": "George S. Arundale",
+   "title": "Man's Waking Consciousness",
+   "year": 1916
+  },
+  {
+   "author": "Roger Bacon",
+   "title": "Friar Bacon His Discovery of the Miracles of Art, Nature, and Magick",
+   "year": 1659
+  },
+  {
+   "author": "A. Trevor Barker",
+   "title": "The Letters of H. P. Blavatsky to A. P. Sinnett",
+   "year": 1925
+  },
+  {
+   "author": "N Bhashyacharya",
+   "title": "The Age of Patanjali",
+   "year": 1915
+  },
+  {
+   "author": "N Bhashyacharya",
+   "title": "The Age of Sri Sankaracharya",
+   "year": 1915
+  },
+  {
+   "author": "Helen Bourchier",
+   "title": "The Crown of Asphodels",
+   "year": 1904
+  },
+  {
+   "author": "Robert Bowen",
+   "title": "The Secret Doctrine and Its Study",
+   "year": 1891
+  },
+  {
+   "author": "Robert Bowen",
+   "title": "The &quot;Secret Doctrine&quot; and Its Study",
+   "year": 1888
+  },
+  {
+   "author": "J. D. Buck",
+   "title": "The Old Wisdom Religion\", Now Called \"Theosophy\"",
+   "year": 1889
+  },
+  {
+   "author": "J. D. Buck",
+   "title": "The Old Wisdom Religion&quot;, Now Called &quot;Theosophy&quot;",
+   "year": 1889
+  },
+  {
+   "author": "J. D. Buck",
+   "title": "The Secret Doctrine and the Higher Evolution of Man",
+   "year": 1892
+  },
+  {
+   "author": "Edward Bulwer-Lytton",
+   "title": "Arasmanes or The Seeker",
+   "year": 1905
+  },
+  {
+   "author": "Gyanendra Nath Chakravarti",
+   "title": "The Influence of Theosophy on the Life and Teachings of Modern India",
+   "year": 1905
+  },
+  {
+   "author": "Daniel Ross Chandler",
+   "title": "On the Higher Aspect of Theosophic Studies",
+   "year": 1885
+  },
+  {
+   "author": "Daniel Ross Chandler",
+   "title": "Qualifications for Chelaship",
+   "year": 1884
+  },
+  {
+   "author": "Daniel Ross Chandler",
+   "title": "Theories in Comparative Mythology",
+   "year": 1887
+  },
+  {
+   "author": "Alice Leighton Cleather and Basil Crump",
+   "title": "The Pseudo-Occultism of Mrs Alice Bailey",
+   "year": 1929
+  },
+  {
+   "author": "Alice Leighton Cleather and Basil Crump",
+   "title": "The Septenary Nature of Consciousness - Macrocosmic and Microcosmic",
+   "year": 1891
+  },
+  {
+   "author": "Robert Crosbie",
+   "title": "Because - For the Children Who Ask Why",
+   "year": 1916
+  },
+  {
+   "author": "Bhagavan Das",
+   "title": "A Few Truths about Theosophy",
+   "year": 1889
+  },
+  {
+   "author": "Bhagavan Das",
+   "title": "The Fundamental Idea of Theosophy",
+   "year": 1912
+  },
+  {
+   "author": "Bhagavan Das",
+   "title": "The Religion of Theosophy",
+   "year": 1911
+  },
+  {
+   "author": "Bhagavan Das",
+   "title": "The Superphysics of the Great War",
+   "year": 1916
+  },
+  {
+   "author": "D. N. Dunlop",
+   "title": "The Path of Attainment",
+   "year": 1916
+  },
+  {
+   "author": "Henry T. Edge",
+   "title": "H.P. Blavatsky on the Mission of Theosophy",
+   "year": 1914
+  },
+  {
+   "author": "Henry T. Edge",
+   "title": "Theosophy and Modern Science",
+   "year": 1893
+  },
+  {
+   "author": "E Douglas Fawcett",
+   "title": "The Case for Reincarnation",
+   "year": 1889
+  },
+  {
+   "author": "S.E. Gopalacharlu",
+   "title": "An Introduction to the \"Mantra Sastra\",",
+   "year": 1891
+  },
+  {
+   "author": "Alma Kunz Gulick",
+   "title": "The Book of Real Fairies",
+   "year": 1918
+  },
+  {
+   "author": "Franz Hartmann",
+   "title": "The Dweller of the Threshold",
+   "year": 1920
+  },
+  {
+   "author": "Franz Hartmann",
+   "title": "Yoga-Practice in the Roman Catholic Church",
+   "year": 1918
+  },
+  {
+   "author": "Richard Hodgson",
+   "title": "The Theosophical Society: Russian Intrigue or Religious Evolution?",
+   "year": 1885
+  },
+  {
+   "author": "Geoffrey Hodson",
+   "title": "The Kingdom of Faerie",
+   "year": 1927
+  },
+  {
+   "author": "Geoffrey Hodson",
+   "title": "The Miracle of Birth: A Clairvoyant Study of Prenatal Life",
+   "year": 1929
+  },
+  {
+   "author": "Geoffrey Hodson",
+   "title": "The World Teacher (chapters X to XII of \"Thus Have I Heard\")",
+   "year": 1929
+  },
+  {
+   "author": "A.O. Hume",
+   "title": "Fragments of Occult Truth, No. 1",
+   "year": 1881
+  },
+  {
+   "author": "T. Sadashiva Iyer",
+   "title": "Evidences of Truth",
+   "year": 1911
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "How We Remember Our Past Lives",
+   "year": 1915
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "The Nature of Mysticism",
+   "year": 1917
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "The Ritual Unity of Roman Catholicism and Hinduism",
+   "year": 1915
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "The Smaller Buddhist Catechism,",
+   "year": 1901
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "A Talk to Prisoners",
+   "year": 1929
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "The Vision of the Spirit",
+   "year": 1911
+  },
+  {
+   "author": "N. D. K.",
+   "title": "The Iranian Oannes",
+   "year": 1885
+  },
+  {
+   "author": "Anna Kamensky",
+   "title": "Beauty in the Light of Theosophy",
+   "year": 1913
+  },
+  {
+   "author": "Anna Kamensky",
+   "title": "The Harmonious Development of a Child",
+   "year": 1914
+  },
+  {
+   "author": "Bertram Keightley",
+   "title": "The Objects of the Theosophical Society",
+   "year": 1890
+  },
+  {
+   "author": "Bertram Keightley",
+   "title": "A Summary of Bertram Keightley's Lectures in America",
+   "year": 1890
+  },
+  {
+   "author": "Bertram Keightley",
+   "title": "A Synopsis of Baron Du Prel's \"Philosophie der Mystik\"",
+   "year": 1888
+  },
+  {
+   "author": "Anna Kingsford and Edward Maitland",
+   "title": "The Credo of Christendom - and Other Addresses and Essays on Esoteric Christianity",
+   "year": 1916
+  },
+  {
+   "author": "William Kingsland",
+   "title": "Freewill and Karma",
+   "year": 1893
+  },
+  {
+   "author": "William Kingsland",
+   "title": "The Mission of Theosophy",
+   "year": 1892
+  },
+  {
+   "author": "William Kingsland",
+   "title": "Theosophy and Dogma",
+   "year": 1889
+  },
+  {
+   "author": "Emily Kislingbury",
+   "title": "Spiritualism in its Relation to Theosophy",
+   "year": 1892
+  },
+  {
+   "author": "B.K. Laheri",
+   "title": "The Uttara Gita or The Initiation of Arjuna by Sri Krishna into Yoga and Jnana",
+   "year": 1892
+  },
+  {
+   "author": "Eliphas Levi",
+   "title": "The Magical Evocation of Apollonius of Tyana",
+   "year": 1882
+  },
+  {
+   "author": "Edward Bulwer Lytton",
+   "title": "The Dweller on the Threshold",
+   "year": 1842
+  },
+  {
+   "author": "Reginald Machel",
+   "title": "The Legend of the Grail",
+   "year": 1893
+  },
+  {
+   "author": "The Mahatmas",
+   "title": "The Early Teachings of the Masters 1881-1883",
+   "year": 1923
+  },
+  {
+   "author": "The Mahatmas",
+   "title": "The Great Master's Letter",
+   "year": 1896
+  },
+  {
+   "author": "The Mahatmas",
+   "title": "A Tibetan Initiate on World Problems",
+   "year": 1883
+  },
+  {
+   "author": "The Mahatmas",
+   "title": "View of the Chohan on the T. S./ The Great Master's letter",
+   "year": 1896
+  },
+  {
+   "author": "The Mahatmas",
+   "title": "What is Matter and What is Force?",
+   "year": 1882
+  },
+  {
+   "author": "Edward Maitland and Anna Kingsford",
+   "title": "Anna Kingsford, Madame Blavatsky and the Theosophists",
+   "year": 1913
+  },
+  {
+   "author": "C.C. Massey",
+   "title": "True and False Personality",
+   "year": 1880
+  },
+  {
+   "author": "Damodar K. Mavalankar",
+   "title": "Castes in India",
+   "year": 1880
+  },
+  {
+   "author": "Damodar K. Mavalankar",
+   "title": "The Swami of Akalkot",
+   "year": 1880
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Apollonius of Tyana - The Philosopher, Explorer and Social Reformer",
+   "year": 1901
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Concerning the Mortification of the Flesh",
+   "year": 1904
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Did Jesus Live 100 B.C.? An Inquiry into the Talmud Jesus Stories, the Toldoth Jeschu, and Some Curious Statements of Epiphanius",
+   "year": 1903
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis, Vol. VIII: The Chaldaean Oracles vol. 1",
+   "year": 1908
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Facts about \"The Secret Doctrine\"",
+   "year": 1927
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "An Introduction to Marcion",
+   "year": 1900
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "A Measure of What Theosophy Means to Me",
+   "year": 1907
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Some Mystical Adventures",
+   "year": 1910
+  },
+  {
+   "author": "Roy Mitchell",
+   "title": "Theosophy in Action",
+   "year": 1923
+  },
+  {
+   "author": "Godolphin Mitford (?)",
+   "title": "The \"Elixer of Life\" - from a Chela's Diary",
+   "year": 1882
+  },
+  {
+   "author": "William Stainton Moses",
+   "title": "The Early Story of The Theosophical Society",
+   "year": 1875
+  },
+  {
+   "author": "Talbot Mundy",
+   "title": "A Beginner's Concept of Theosophy",
+   "year": 1925
+  },
+  {
+   "author": "Oswald Murray",
+   "title": "Man's Relation to the Phenomenal World - As Viewed by Transcendental Philosophy and by Occultism",
+   "year": 1892
+  },
+  {
+   "author": "Walter R. Old (Scrutator)",
+   "title": "Madame Blavatsky: A Personal Reminiscence",
+   "year": 1914
+  },
+  {
+   "author": "Barbara Poushkine (Princess Galiztzine)",
+   "title": "Prison Work on Theosophical Lines",
+   "year": 1913
+  },
+  {
+   "author": "Arthur. E. Powell",
+   "title": "The Astral Body - and other Astral Phenomena, Part-1",
+   "year": 1927
+  },
+  {
+   "author": "Arthur. E. Powell",
+   "title": "The Etheric Double, The Health Aura of Man",
+   "year": 1925
+  },
+  {
+   "author": "T. Subba Row (or Rao)",
+   "title": "The Occultism of Southern India",
+   "year": 1892
+  },
+  {
+   "author": "T. Subba Row (or Rao)",
+   "title": "Places of Pilgrimage in India",
+   "year": 1885
+  },
+  {
+   "author": "T. Subba Row (or Rao)",
+   "title": "The Twelve Signs of the Zodiac",
+   "year": 1881
+  },
+  {
+   "author": "T. Subba Row (or Rao)",
+   "title": "What Is Occultism?",
+   "year": 1905
+  },
+  {
+   "author": "Sankaracharya (or Shankaracharya, or Sankara, the Teacher)",
+   "title": "The Crest-Jewel of Wisdom and other Writings of Sankaracharya",
+   "year": 1894
+  },
+  {
+   "author": "F. Otto Schrader",
+   "title": "The Religion of Goethe",
+   "year": 1914
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "\"The Brothers\" of Theosophy I",
+   "year": 1883
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "Do the Mahatmas Exist?",
+   "year": 1894
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "The Early Days of Theosophy in Europe",
+   "year": 1922
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "Nature's Mysteries - And How Theosophy Illuminates Them",
+   "year": 1913
+  },
+  {
+   "author": "A.P. Sinnett",
+   "title": "The Vicissitudes of Theosophy",
+   "year": 1907
+  },
+  {
+   "author": "Society for Psychical Research",
+   "title": "Report of the General Meeting of the SPR on May 29, 1885: Hodgson's Report on Madame Blavatsky (Meeting I)",
+   "year": 1885
+  },
+  {
+   "author": "Society for Psychical Research",
+   "title": "Report of the General Meeting of the SPR on June 26, 1885: Hodgson's Report on Madame Blavatsky (Meeting II)",
+   "year": 1885
+  },
+  {
+   "author": "Some of Her Pupils",
+   "title": "HPB: In Memory of Helena Petrovna Blavatsky",
+   "year": 1891
+  },
+  {
+   "author": "H. N. Stokes",
+   "title": "The \"Memory\" of Mr G.R.S. Mead",
+   "year": 1927
+  },
+  {
+   "author": "H. N. Stokes",
+   "title": "Mr Mead's \"Facts about 'The Secret Doctrine'\"",
+   "year": 1927
+  },
+  {
+   "author": "Kasinath Tryambak Telang",
+   "title": "Sankaracharya: Philosopher and Mystic",
+   "year": 1879
+  },
+  {
+   "author": "W. Dallas TenBroeck",
+   "title": "Robert Crosbie: The Friendly Philosopher",
+   "year": 1849
+  },
+  {
+   "author": "Katherine Tingley",
+   "title": "The Splendor of the Soul",
+   "year": 1927
+  },
+  {
+   "author": "Katherine Tingley",
+   "title": "Theosophical Manuals - Katherine Tingley Series",
+   "year": 1907
+  },
+  {
+   "author": "Katherine Tingley",
+   "title": "Theosophy and Some of the Vital Problems of the Day",
+   "year": 1915
+  },
+  {
+   "author": "Elsa-Brita Titchenell",
+   "title": "Once Round the Sun",
+   "year": 1881
+  }
+ ],
+ "lowConf": [
+  {
+   "author": "George S. Arundale",
+   "title": "The Way of Service",
+   "year": 1919,
+   "ia": "theosophist0037unse",
+   "iaTitle": "The Theosophist",
+   "score": 0.09
+  },
+  {
+   "author": "William Emmette Coleman",
+   "title": "The Sources of Madame Blavatsky's Writings",
+   "year": 1895,
+   "ia": "amodernpriestes01britgoog",
+   "iaTitle": "A modern priestess of Isis;",
+   "score": 0.28
+  },
+  {
+   "author": "J. C. Grumbine",
+   "title": "Melchizedek, or The Secret Doctrine of the Bible",
+   "year": 1919,
+   "ia": "melchizedek00grum",
+   "iaTitle": "Melchizedek;",
+   "score": 0.55
+  },
+  {
+   "author": "Geoffrey Hodson",
+   "title": "Thus Have I Heard",
+   "year": 1928,
+   "ia": "TB_Reed_The_Boys_of_Templeton",
+   "iaTitle": "The Boys of Templeton; or, \"Follow my Leader\"",
+   "score": 0.03
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "The Divine Vision",
+   "year": 1927,
+   "ia": "divinevision0000jina",
+   "iaTitle": "The divine vision",
+   "score": 0.7
+  },
+  {
+   "author": "C. Jinarajadasa",
+   "title": "Gautama the Buddha",
+   "year": 1908,
+   "ia": "pampletsbuddhism00unknuoft",
+   "iaTitle": "Pamphlets on Buddhism",
+   "score": 0.09
+  },
+  {
+   "author": "N. D. K.",
+   "title": "The Legend of the Fish",
+   "year": 1885,
+   "ia": "RML_1913122001",
+   "iaTitle": "The Raymond leader (1913-12-20)",
+   "score": 0.03
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis, Vol. III: The Vision of Aridaeus",
+   "year": 1907,
+   "ia": "echoesfromgnosis00mead",
+   "iaTitle": "Echoes from the Gnosis",
+   "score": 0.66
+  },
+  {
+   "author": "G.R.S. Mead",
+   "title": "Echoes from the Gnosis, Vol. X: Hymn of the Robe of Glory",
+   "year": 1908,
+   "ia": "echoesfromgnosis00mead",
+   "iaTitle": "Echoes from the Gnosis",
+   "score": 0.65
+  },
+  {
+   "author": "Gilbert Murray",
+   "title": "The Soul as It is and How to Deal with It",
+   "year": 1918,
+   "ia": "essaysaddresses00murriala",
+   "iaTitle": "Essays & addresses",
+   "score": 0.39
+  },
+  {
+   "author": "R. Heber Newton",
+   "title": "The Influence of the East on Religion",
+   "year": 1913,
+   "ia": "EuropeanCivilisation",
+   "iaTitle": "European civilisation : protestantism and catholicity compared",
+   "score": 0
+  },
+  {
+   "author": "H. T. Patterson",
+   "title": "The Theosophical Society and HPB",
+   "year": 1890,
+   "ia": "barker-elsa-last-letters-from-a-living-dead-man",
+   "iaTitle": "Last Letters From A Living Dead Man",
+   "score": 0.03
+  },
+  {
+   "author": "L.W. Rogers",
+   "title": "Self-Development and the Way to Power",
+   "year": 1922,
+   "ia": "internationalli09tickgoog",
+   "iaTitle": "The International library of famous literature : selections from the world's great writers, ancient, mediaeval, and modern, with biographical and explanatory notes and with introductions",
+   "score": 0.04
+  }
+ ],
+ "failed": []
+}

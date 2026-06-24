@@ -19,6 +19,7 @@
 
 import { MongoClient } from 'mongodb';
 import { scorePageForCover } from '../lib/cover-scoring.mjs';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const SKIP_MANUAL = process.argv.includes('--skip-manual');
@@ -49,15 +50,7 @@ const client = new MongoClient(process.env.MONGODB_URI, {
 await client.connect();
 const db = client.db('bookstore');
 
-function getPageImageUrl(page) {
-  const isUsable = (u) => u && (u.startsWith('http://') || u.startsWith('https://'));
-  if (isUsable(page.cropped_photo)) return page.cropped_photo;
-  if (isUsable(page.archived_photo)) return page.archived_photo;
-  if (page.archived_photo?.startsWith('failed:')) return null;
-  if (isUsable(page.photo)) return page.photo;
-  if (isUsable(page.photo_original)) return page.photo_original;
-  return null;
-}
+// getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
 
 // --- Main ---
 console.log(`\n=== Smart Cover Selection (OCR-based) ===`);
@@ -104,7 +97,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
       {
         projection: {
           book_id: 1, page_number: 1, page_type: 1,
-          photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1,
+          photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1,
           'ocr.data': 1,
         }
       }

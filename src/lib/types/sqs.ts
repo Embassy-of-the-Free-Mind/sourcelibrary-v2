@@ -87,6 +87,8 @@ export interface OcrWriteResult extends WriteResultBase {
     columns?: number;
     scriptType?: 'printed' | 'handwritten' | 'mixed';
     detectedImages?: unknown[];
+    sourceUrl?: string;          // Exact image URL sent to the model (provenance, #2297)
+    codeVersion?: string;        // Git SHA / release of the producing code (#2297)
   };
   geminiUsage?: GeminiUsagePayload;
 }

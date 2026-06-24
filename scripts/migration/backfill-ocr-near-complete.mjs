@@ -16,6 +16,7 @@
 
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 
 // ── Config ──
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -81,11 +82,7 @@ function getOcrModelForBook(book) {
 }
 
 // ── Image helpers ──
-function getPageImageUrl(page) {
-  if (page.crop && page.cropped_photo) return page.cropped_photo;
-  if (page.archived_photo && !page.archived_photo.startsWith('failed:')) return page.archived_photo;
-  return page.photo_original || page.photo || null;
-}
+// getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
 
 async function fetchImageBase64(url) {
   try {
@@ -273,7 +270,7 @@ async function main() {
         ]}],
       })
       .sort({ page_number: 1 })
-      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
       .toArray();
 
     if (pages.length === 0) {

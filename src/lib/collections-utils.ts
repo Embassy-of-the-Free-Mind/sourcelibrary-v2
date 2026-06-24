@@ -69,6 +69,30 @@ export function sanitizeThumbnail(url: string | undefined | null): string | unde
   return undefined;
 }
 
+// ---------- Editorial cover overrides ----------
+
+/**
+ * Pin a specific representative image for a collection by slug, independent of
+ * its stored `featured_images`. Used when a collection has no usable cover, or
+ * when a stronger image exists than the auto-picked first featured image.
+ * These are hand-curated and take precedence over `featured_images`.
+ * (Curation lives in code so it ships/previews with the branch rather than
+ * mutating the shared production DB.)
+ */
+export const COLLECTION_COVER_OVERRIDES: Record<string, string> = {
+  // A princely-patron portrait — fits "rulers who collected alchemists".
+  'courts-of-wonder':
+    'https://images.sourcelibrary.org/gallery/695201adab34727b1f0419c7/695201adab34727b1f0419cc-0.jpg',
+  // "An Account of the Plant" had no cover at all; a botanical scene from its books.
+  'cannabis-western-record':
+    'https://images.sourcelibrary.org/gallery/69e9618b2beefe2f6f72bcd1/69e9618b2beefe2f6f72bd7d-0.jpg',
+};
+
+/** The override URL for a collection slug, if one is curated. */
+export function coverOverride(slug: string | undefined | null): string | undefined {
+  return slug ? COLLECTION_COVER_OVERRIDES[slug] : undefined;
+}
+
 // ---------- Book display title ----------
 
 /** Returns display_title if valid, otherwise falls back to title. */

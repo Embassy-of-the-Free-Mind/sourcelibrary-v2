@@ -31,7 +31,7 @@ export const ROLE_LEVEL: Record<Role, number> = {
 const WELCOME_HTML = `
 <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
   <div style="text-align: center; margin-bottom: 32px;">
-    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
+    <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px; border-radius: 50%; border: 1px solid #e7ddcc;" />
     <h1 style="font-size: 26px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">Welcome to Source Library</h1>
     <p style="color: #6b6560; font-size: 15px; line-height: 1.6; margin: 0;">
       Your account is ready. Your likes and reading history will sync across all your devices.
@@ -106,6 +106,26 @@ if (process.env.RESEND_API_KEY) {
     from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
     sendVerificationRequest: async ({ identifier: email, url }) => {
       try {
+        // Prefetch-safe magic link. The raw `url` is the one-time-token GET
+        // callback (/api/auth/callback/nodemailer?...token=...). Email clients
+        // and security scanners (Gmail's com.google.android.gm especially)
+        // PREFETCH links to render previews / scan for malware — which fires
+        // that GET and burns the single-use token before the human ever clicks,
+        // surfacing as the dominant /auth/error?error=Verification failure.
+        //
+        // So the button instead points at /auth/confirm?next=<real url>: a
+        // static interstitial with a "Sign in" button. A prefetcher GETs the
+        // interstitial (harmless — no token consumed) and stops; only a human
+        // click follows through to the real callback. Token survives until then.
+        let confirmUrl = url;
+        try {
+          const origin = new URL(url).origin;
+          confirmUrl = `${origin}/auth/confirm?next=${encodeURIComponent(url)}`;
+        } catch {
+          // If url can't be parsed for some reason, fall back to the raw link
+          // rather than failing the whole sign-in.
+        }
+        const linkUrl = confirmUrl;
         await resend.emails.send({
           from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
           to: email,
@@ -113,14 +133,14 @@ if (process.env.RESEND_API_KEY) {
           html: `
             <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
               <div style="text-align: center; margin-bottom: 32px;">
-                <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
+                <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px; border-radius: 50%; border: 1px solid #e7ddcc;" />
                 <h1 style="font-size: 24px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em;">Sign in to Source Library</h1>
                 <p style="color: #6b6560; font-size: 15px; line-height: 1.6; margin: 0;">
                   Click the button below to access the collection.
                 </p>
               </div>
               <div style="text-align: center; margin: 32px 0;">
-                <a href="${url}" style="display: inline-block; padding: 14px 40px; background: #9e4a3a; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px; font-family: -apple-system, sans-serif;">
+                <a href="${linkUrl}" style="display: inline-block; padding: 14px 40px; background: #9e4a3a; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px; font-family: -apple-system, sans-serif;">
                   Sign In
                 </a>
               </div>
@@ -232,6 +252,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         } catch (error) {
           console.error('[auth] Resend audience sync failed:', error);
         }
+      }
+    },
+    // Stamp lastLogin on every actual authentication (fires on real sign-in,
+    // not on every JWT validation / page load — so it measures returning
+    // members who re-authenticate, e.g. after their session expires). Pairs
+    // with createdAt so we can tell new sign-ups from returning ones.
+    async signIn({ user }) {
+      if (!user?.email) return;
+      try {
+        const client = await clientPromise;
+        const db = client.db(dbName);
+        await db.collection('users').updateOne(
+          { email: user.email.toLowerCase() },
+          { $set: { lastLogin: new Date() }, $inc: { loginCount: 1 } }
+        );
+      } catch (error) {
+        console.error('[auth] Failed to stamp lastLogin:', error);
       }
     },
   },

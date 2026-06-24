@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { applyTextRole } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
+import { resolveLanguage } from '@/lib/resolve-language';
+import { checkDuplicate } from '@/lib/dedup';
 
 /**
  * Import a book from a local directory
@@ -67,17 +70,26 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const db = await getDb();
 
-    // Check if book already exists
-    const existing = await db.collection('books').findOne({
-      $or: [
-        { title },
-        { display_title: display_title || title }
-      ]
+    // Edition-aware dedup. The old exact `{ title }` check blocked distinct
+    // editions that share a title; checkDuplicate() lets a different year/volume
+    // through while still catching true duplicates by source + title+author.
+    const dedupResult = await checkDuplicate(db, {
+      title,
+      author,
+      display_title,
+      published,
+      ia_identifier,
+      dublin_core,
+      image_source,
     });
-
-    if (existing) {
+    if (dedupResult.isDuplicate) {
+      const best = dedupResult.matches[0];
       return NextResponse.json(
-        { error: 'Book already exists', existingId: existing.id || existing._id.toString() },
+        {
+          error: `Book already exists (${best.matchType}): matches "${best.matchedTitle}"`,
+          existingId: best.matchedBookId,
+          matches: dedupResult.matches,
+        },
         { status: 409 }
       );
     }
@@ -88,6 +100,11 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const slug = await generateUniqueBookSlug(db, title, author, display_title);
 
+    // #2185: normalise the caller's language (codes → display names) and stamp
+    // provenance. Local-directory imports have no source metadata, so the caller
+    // is the only signal — but it's no longer stored raw and unattributed.
+    const lang = resolveLanguage({ callerLanguage: language });
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
@@ -95,7 +112,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       display_title: display_title || null,
       author,
-      language: language || 'Unknown',
+      language: lang.language,
+      ...(lang.original_language ? { original_language: lang.original_language } : {}),
+      field_provenance: { language: lang.provenance },
       published: published || 'Unknown',
       categories: categories || [],
       ia_identifier: ia_identifier || null,
@@ -109,6 +128,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       updated_at: new Date()
     };
 
+    // Classify original-vs-translation at import (issue #2395).
+    applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
 
     // Create pages

@@ -137,7 +137,7 @@ export default async function CuratedCollectionsPage() {
       <SiteHeader variant="light" />
       {/* Hero */}
       <div className="bg-warm border-b border-border-light">
-        <div className="max-w-7xl mx-auto px-6 pt-8 pb-10 sm:pb-12">
+        <div className="max-w-[1500px] mx-auto px-6 pt-8 pb-10 sm:pb-12">
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-primary font-semibold leading-tight mb-3 font-display">
             Curated Collections
           </h1>
@@ -149,7 +149,7 @@ export default async function CuratedCollectionsPage() {
       </div>
 
       {/* Published collections */}
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-[1500px] mx-auto px-6 py-10">
         {published.length > 0 && (
           <div className="mb-14">
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">

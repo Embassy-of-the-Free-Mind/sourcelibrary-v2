@@ -5,7 +5,7 @@ import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Open API over 12,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. 9 research tools, REST endpoints, CLI.',
+  description: 'Open API over 15,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. 9 research tools, REST endpoints, CLI.',
   alternates: {
     canonical: '/developers',
   },
@@ -17,7 +17,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Open API over 12,000+ rare pre-modern texts translated to English. No auth needed to start — sign in for a free key to lift rate limits and help us see what you're building."
+          subtitle="Open API over 15,000+ rare pre-modern texts translated to English. No auth needed to start — sign in for a free key to lift rate limits and help us see what you're building."
         />
       }
     >
@@ -136,7 +136,7 @@ export default function DevelopersPage() {
         <h2 className="text-2xl font-semibold text-primary mb-2">MCP Server</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           Gives Claude (and any MCP client) direct access to the full collection &mdash;
-          search, read, quote, and browse 90,000+ illustrations. The endpoint is plain JSON-RPC
+          search, read, quote, and browse 150,000+ illustrations. The endpoint is plain JSON-RPC
           over HTTP, so you can also call it from any HTTP client without an MCP library
           (see the snippets above). Pick whichever path fits.
         </p>
@@ -154,8 +154,11 @@ export default function DevelopersPage() {
 
         <div className="space-y-4 mb-8">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
               <span className="text-sm font-medium text-stone-700">Claude Code (remote &mdash; no install)</span>
+              <span className="text-xs text-muted">
+                Add <code className="text-stone-700">-H &quot;Authorization: Bearer YOUR_KEY&quot;</code> for higher limits
+              </span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`claude mcp add source-library https://sourcelibrary.org/api/mcp`}
@@ -163,8 +166,9 @@ export default function DevelopersPage() {
           </div>
 
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
               <span className="text-sm font-medium text-stone-700">Claude Code (local via npm)</span>
+              <span className="text-xs text-muted">Legacy &mdash; prefer remote above</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`claude mcp add source-library -- npx -y @source-library/mcp-server`}
@@ -223,6 +227,10 @@ export default function DevelopersPage() {
                 <td className="py-2.5 text-secondary">Search inside translated text across the whole library</td>
               </tr>
               <tr>
+                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_concept</td>
+                <td className="py-2.5 text-secondary">Semantic / conceptual passage search &mdash; matches paraphrases and adjacent ideas, not just keywords</td>
+              </tr>
+              <tr>
                 <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_within_book</td>
                 <td className="py-2.5 text-secondary">Search inside a specific book&apos;s pages</td>
               </tr>
@@ -244,7 +252,7 @@ export default function DevelopersPage() {
               </tr>
               <tr>
                 <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_images</td>
-                <td className="py-2.5 text-secondary">Search 90,000+ historical illustrations by subject, symbol, type</td>
+                <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations by subject, symbol, type</td>
               </tr>
             </tbody>
           </table>
@@ -288,10 +296,10 @@ source-library search "Paracelsus" --language=German
 source-library translations "harmony of the spheres"
 
 # Read a book
-source-library text fludd-utriusque --from=1 --to=50
+source-library text history-of-both-worlds-macrocosm-fludd --from=1 --to=50
 
 # Get exact text for quoting
-source-library quote fludd-utriusque 57
+source-library quote history-of-both-worlds-macrocosm-fludd 57
 
 # Browse illustrations
 source-library images --subject=alchemy --type=emblem
@@ -382,7 +390,7 @@ source-library search "alchemy" --json | jq .results`}
                 </tbody>
               </table>
               <div className="mt-4 bg-stone-900 rounded-lg p-3">
-                <code className="text-stone-300 text-sm">GET /books/fludd-utriusque/text?content=translation&amp;from=1&amp;to=50</code>
+                <code className="text-stone-300 text-sm">GET /books/history-of-both-worlds-macrocosm-fludd/text?content=translation&amp;from=1&amp;to=50</code>
               </div>
             </div>
           </div>
@@ -413,7 +421,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search 90,000+ historical illustrations</td>
+                  <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
@@ -444,11 +452,11 @@ source-library search "alchemy" --json | jq .results`}
         <div className="bg-white rounded-xl border border-border-light p-6 space-y-4">
           <div>
             <span className="text-sm font-medium text-muted">Page</span>
-            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque?page=57</p>
+            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd?page=57</p>
           </div>
           <div>
             <span className="text-sm font-medium text-muted">Book</span>
-            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque</p>
+            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd</p>
           </div>
           <div>
             <span className="text-sm font-medium text-muted">With DOI</span>

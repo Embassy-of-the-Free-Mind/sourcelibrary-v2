@@ -194,74 +194,77 @@ export default function IndexCatalogSection({ catalogs }: Props) {
         </div>
       ) : (
         <>
-          <ul className="divide-y divide-stone-200 border-t border-b border-stone-200">
-            {loading && entries.length === 0 ? (
-              <li className="py-8 text-center text-stone-500 text-sm">Loading…</li>
-            ) : entries.length === 0 ? (
-              <li className="py-8 text-center text-stone-500 text-sm">No matching entries.</li>
-            ) : entries.map(e => (
-              <li key={e.id} className="py-4 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
-                <div className="flex-grow min-w-0">
-                  <div className="font-display text-base text-stone-900 leading-snug">
-                    {e.sl_book_slug ? (
-                      <Link href={`/book/${e.sl_book_slug}`} className="hover:underline">{e.title}</Link>
-                    ) : (
-                      <span>{e.title}</span>
-                    )}
-                  </div>
-                  <div className="text-sm text-stone-600 mt-0.5">
-                    {e.author && <span>{e.author}</span>}
-                    {e.publication_date && <span className="text-stone-400"> · {e.publication_date}</span>}
-                    {e.scope === 'opera_omnia' && (
-                      <span className="ml-2 inline-block text-[10px] uppercase tracking-wider bg-red-100 text-red-900 px-1.5 py-0.5 rounded">
-                        Opera omnia
-                      </span>
-                    )}
-                    {e.scope === 'donec_corrigatur' && (
-                      <span className="ml-2 inline-block text-[10px] uppercase tracking-wider bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded">
-                        Donec corrigatur
-                      </span>
-                    )}
-                    {e.scope === 'expurgated' && (
-                      <span className="ml-2 inline-block text-[10px] uppercase tracking-wider bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded">
-                        Expurgated
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  {e.sl_book_slug ? (
-                    <Link
-                      href={`/book/${e.sl_book_slug}`}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-stone-800 text-white rounded hover:bg-stone-900"
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      Read at Source Library
-                    </Link>
-                  ) : e.author_held_count && e.author_held_count > 0 && e.author_held_sample_slug ? (
-                    <Link
-                      href={`/book/${e.author_held_sample_slug}`}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-900 border border-amber-300 rounded hover:bg-amber-200"
-                      title={`Source Library holds ${e.author_held_count} book${e.author_held_count === 1 ? '' : 's'} by this author, but not this specific work`}
-                    >
-                      <User className="w-3.5 h-3.5" />
-                      {e.author_held_count} {e.author_held_count === 1 ? 'book' : 'books'} by author
-                    </Link>
-                  ) : e.ustc_sn ? (
-                    <a
-                      href={`https://www.ustc.ac.uk/editions/${e.ustc_sn}`}
-                      target="_blank"
-                      rel="noopener"
-                      className="inline-flex items-center gap-1 px-3 py-1.5 border border-stone-400 text-stone-700 rounded hover:bg-stone-100"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      USTC {e.ustc_sn}
-                    </a>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="overflow-x-auto rounded-lg border border-stone-200 bg-white">
+            <table className="w-full text-sm">
+              <thead className="bg-stone-50 text-left">
+                <tr className="text-stone-700">
+                  <th className="px-3 py-2 font-medium">Author</th>
+                  <th className="px-3 py-2 font-medium">Work</th>
+                  <th className="px-3 py-2 font-medium whitespace-nowrap">Condemned</th>
+                  <th className="px-3 py-2 font-medium">Scope</th>
+                  <th className="px-3 py-2 font-medium">In the library</th>
+                  <th className="px-3 py-2 font-medium">Source</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100">
+                {loading && entries.length === 0 ? (
+                  <tr><td colSpan={6} className="py-8 text-center text-stone-500">Loading…</td></tr>
+                ) : entries.length === 0 ? (
+                  <tr><td colSpan={6} className="py-8 text-center text-stone-500">No matching entries.</td></tr>
+                ) : entries.map(e => {
+                  const scopeBadge =
+                    e.scope === 'opera_omnia' ? { label: 'Opera omnia', cls: 'bg-red-100 text-red-900' } :
+                    e.scope === 'donec_corrigatur' ? { label: 'Donec corrigatur', cls: 'bg-amber-100 text-amber-900' } :
+                    e.scope === 'expurgated' ? { label: 'Expurgated', cls: 'bg-amber-100 text-amber-900' } :
+                    e.scope === 'single_work' ? { label: 'Banned', cls: 'bg-stone-100 text-stone-700' } : null;
+                  return (
+                    <tr key={e.id} className="align-top hover:bg-stone-50/60">
+                      <td className="px-3 py-2.5 text-stone-700 whitespace-nowrap">{e.author || <span className="text-stone-400">—</span>}</td>
+                      <td className="px-3 py-2.5 font-display text-stone-900 min-w-[14rem]">
+                        {e.sl_book_slug
+                          ? <Link href={`/book/${e.sl_book_slug}`} className="hover:underline">{e.title}</Link>
+                          : <span>{e.title}</span>}
+                      </td>
+                      <td className="px-3 py-2.5 text-stone-500 whitespace-nowrap">{e.condemnation_year ?? e.publication_date ?? '—'}</td>
+                      <td className="px-3 py-2.5">
+                        {scopeBadge && (
+                          <span className={`inline-block text-[10px] uppercase tracking-wider ${scopeBadge.cls} px-1.5 py-0.5 rounded`}>
+                            {scopeBadge.label}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-3 py-2.5 whitespace-nowrap">
+                        {e.sl_book_slug ? (
+                          <Link href={`/book/${e.sl_book_slug}`} className="inline-flex items-center gap-1 text-stone-800 hover:underline">
+                            <BookOpen className="w-3.5 h-3.5" /> Read
+                          </Link>
+                        ) : e.author_held_count && e.author_held_count > 0 && e.author_held_sample_slug ? (
+                          <Link href={`/book/${e.author_held_sample_slug}`} className="inline-flex items-center gap-1 text-amber-800 hover:underline"
+                            title={`We hold ${e.author_held_count} book${e.author_held_count === 1 ? '' : 's'} by this author, not this specific work`}>
+                            <User className="w-3.5 h-3.5" /> {e.author_held_count} by author
+                          </Link>
+                        ) : e.ustc_sn ? (
+                          <a href={`https://www.ustc.ac.uk/editions/${e.ustc_sn}`} target="_blank" rel="noopener"
+                            className="inline-flex items-center gap-1 text-stone-500 hover:underline">
+                            <ExternalLink className="w-3.5 h-3.5" /> USTC
+                          </a>
+                        ) : <span className="text-stone-300">—</span>}
+                      </td>
+                      <td className="px-3 py-2.5 whitespace-nowrap">
+                        {e.source_book_slug && e.source_page != null ? (
+                          <Link href={`/book/${e.source_book_slug}/page-number/${e.source_page}`}
+                            className="inline-flex items-center gap-1 text-stone-500 hover:underline"
+                            title="See this entry on the original scanned page of the printed Index">
+                            <BookMarked className="w-3.5 h-3.5" /> p.{e.source_page}
+                          </Link>
+                        ) : <span className="text-stone-300">—</span>}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
 
           {totalPages > 1 && (
             <nav className="flex items-center justify-between mt-6 text-sm">

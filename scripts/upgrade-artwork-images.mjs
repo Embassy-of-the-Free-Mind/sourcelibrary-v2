@@ -39,6 +39,10 @@ const s3 = new S3Client({
 async function findHigherResOnCommons(title, author, currentMaxDim) {
   // Search Commons for alternate uploads of the same artwork
   // Prioritize Google Art Project versions (often 10000+ px)
+  // NOTE: this is a FREE-TEXT search — results are candidates, not matches.
+  // Every candidate MUST pass verifyCandidateDepicts() before being used
+  // (2026-06-04: an unverified run served a 2013 concert photo as El Greco's
+  // "Angelic Concert" — see scripts/maintenance/audit-upgraded-artwork-images.mjs).
   const searchTerms = `${author} ${title}`.replace(/[^\w\s]/g, '').substring(0, 100);
   const url = `https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(searchTerms)}&srnamespace=6&srlimit=15&format=json`;
 
@@ -60,7 +64,7 @@ async function findHigherResOnCommons(title, author, currentMaxDim) {
   let best = null;
   for (const r of imageResults) {
     try {
-      const infoUrl = `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(r.title)}&prop=imageinfo&iiprop=url|size&format=json`;
+      const infoUrl = `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(r.title)}&prop=imageinfo&iiprop=url|size&iiurlwidth=600&format=json`;
       const infoRes = await fetch(infoUrl, {
         headers: { 'User-Agent': UA },
         signal: AbortSignal.timeout(10000),
@@ -80,6 +84,7 @@ async function findHigherResOnCommons(title, author, currentMaxDim) {
         best = {
           title: r.title,
           url: info.url,
+          thumbUrl: info.thumburl || info.url,
           width: info.width,
           height: info.height,
           maxDim,
@@ -91,6 +96,58 @@ async function findHigherResOnCommons(title, author, currentMaxDim) {
   }
 
   return best;
+}
+
+// ─── Candidate verification (REQUIRED before any upgrade) ────────────────────
+// Free-text Commons search returns plausible-sounding but wrong files (a
+// "concert" query matches concert photos). Vision-check that the candidate
+// actually depicts the recorded artwork. Fails CLOSED: any error → reject.
+
+async function verifyCandidateDepicts(candidateThumbUrl, title, author, description) {
+  if (!process.env.GEMINI_API_KEY) {
+    console.error('GEMINI_API_KEY missing — cannot verify candidates, rejecting all upgrades');
+    return false;
+  }
+  try {
+    const imgRes = await fetch(candidateThumbUrl, {
+      headers: { 'User-Agent': UA },
+      signal: AbortSignal.timeout(30000),
+    });
+    if (!imgRes.ok) return false;
+    const b64 = Buffer.from(await imgRes.arrayBuffer()).toString('base64');
+
+    const prompt = `You are verifying a candidate replacement image for a digital art library.
+
+The catalog record is:
+Title: ${title}
+Artist: ${author || 'Unknown'}
+${description ? `Catalog description: ${description.substring(0, 600)}` : ''}
+
+Does the attached image plausibly depict THIS artwork (or a detail/crop/engraving/photographic reproduction of it)?
+Different reproductions, crops, details, or black-and-white versions of the same work are MATCHES.
+A clearly different subject (a different artwork, a modern photograph, an unrelated book page) is NOT a match.
+
+Respond with JSON only: {"match": true|false}`;
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [
+          { inline_data: { mime_type: 'image/jpeg', data: b64 } },
+          { text: prompt },
+        ] }],
+        generationConfig: { responseMimeType: 'application/json', temperature: 0 },
+      }),
+      signal: AbortSignal.timeout(60000),
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    return JSON.parse(text)?.match === true;
+  } catch {
+    return false;
+  }
 }
 
 // ─── Strategy 3: Museum IIIF ─────────────────────────────────────────────────
@@ -163,22 +220,39 @@ async function main() {
     commons_height: { $lt: MIN_UPGRADE_PX },
     'image_source.provider': 'wikimedia_commons',
   };
+  // --resume: skip docs a previous (crashed) run already concluded — both
+  // "no upgrade found" and gate-rejected docs get `upgrade_available` set.
+  if (process.argv.includes('--resume')) query.upgrade_available = { $exists: false };
 
-  // noCursorTimeout: each artwork takes 1.5–30s (Commons API + image download
-  // + R2 upload), and a full sweep is ~12h. The default 10-minute idle timeout
-  // would expire the cursor mid-run; this keeps it open until we close it.
-  const cursor = books.find(query, {
-    projection: {
-      _id: 1, slug: 1, title: 1, author: 1,
-      commons_title: 1, commons_full_url: 1,
-      commons_width: 1, commons_height: 1,
-    },
-    noCursorTimeout: true,
-  }).limit(LIMIT);
+  // _id-paginated batches instead of one long-lived cursor: each artwork takes
+  // 1.5–30s (Commons API + vision check + image download + R2 upload) and a
+  // full sweep is ~12h. Even with noCursorTimeout, Atlas kills the server-side
+  // session after ~30 min and the run dies with CursorNotFound (happened
+  // 2026-06-05 at item ~1100). Short-lived 25-doc batches can't expire.
+  const projection = {
+    _id: 1, slug: 1, title: 1, author: 1,
+    commons_title: 1, commons_full_url: 1,
+    commons_width: 1, commons_height: 1,
+    description: 1, summary: 1,
+  };
+  async function* batchedDocs() {
+    let lastId = null;
+    let yielded = 0;
+    for (;;) {
+      const q = lastId ? { ...query, _id: { $gt: lastId } } : query;
+      const batch = await books.find(q, { projection }).sort({ _id: 1 }).limit(25).toArray();
+      if (!batch.length) return;
+      for (const doc of batch) {
+        if (yielded++ >= LIMIT) return;
+        yield doc;
+      }
+      lastId = batch[batch.length - 1]._id;
+    }
+  }
 
   let upgraded = 0, flagged = 0, noUpgrade = 0, errors = 0, processed = 0;
 
-  for await (const doc of cursor) {
+  for await (const doc of batchedDocs()) {
     processed++;
     const maxDim = Math.max(doc.commons_width || 0, doc.commons_height || 0);
     const label = `[${processed}] ${doc.author} — ${doc.title?.substring(0, 40)} (${maxDim}px)`;
@@ -190,6 +264,21 @@ async function main() {
       );
 
       if (better && better.maxDim >= MIN_UPGRADE_PX) {
+        // REQUIRED gate: the search result must actually depict this artwork.
+        const verified = await verifyCandidateDepicts(
+          better.thumbUrl, doc.title, doc.author, doc.description || doc.summary
+        );
+        if (!verified) {
+          console.log(`${label} → REJECTED candidate (failed vision check: ${better.title.substring(5, 60)})`);
+          if (!DRY_RUN) {
+            await books.updateOne({ _id: doc._id }, {
+              $set: { low_res: true, upgrade_available: null }
+            });
+          }
+          noUpgrade++;
+          await new Promise(r => setTimeout(r, 1500));
+          continue;
+        }
         const src = better.isGAP ? 'Google Art Project' : 'Commons alternate';
         console.log(`${label} → UPGRADE via ${src} (${better.maxDim}px — ${better.title.substring(5, 60)})`);
 

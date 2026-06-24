@@ -27,6 +27,14 @@ import { createHash, randomBytes } from 'crypto';
 import { nanoid } from 'nanoid';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+
+// Selective-unpause scope confinement, set in main() after the pause check and
+// read by the candidate queries (incl. selfDispatch). In normal operation
+// SCOPE_IDS is null and SCOPE_FILTER is {} so nothing is confined.
+let SCOPE_IDS = null;          // string[] of allowlisted book ids, or null
+let SCOPE_SET = null;          // Set form for cheap membership tests
+let SCOPE_FILTER = {};         // { id: { $in: SCOPE_IDS } } for collision-free queries
 
 // ── Config ──
 const CONCURRENCY = 40;          // Max books translating simultaneously
@@ -313,6 +321,40 @@ async function translatePage(db, page, book, prevTranslation) {
   };
 }
 
+// ── Collapse guard ──
+// flash-lite occasionally COLLAPSES a substantial page: when a page begins
+// mid-sentence and ends on a printer's catchword, the model mistakes the whole
+// page for a continuation fragment and emits only its boundary <note> + the
+// <summary>/<keywords> page-description wrapper, dropping the entire body. The
+// batch path's 15%-of-raw-length check misses this (the wrapper padding clears
+// 15%); the single-page path had no check at all. Detect a near-empty body on a
+// substantial OCR page and retry once, keeping whichever attempt has more prose.
+// Corpus detector + bulk fixer: scripts/maintenance/{detect-translation-collapse,
+// retranslate-pages}.mjs.
+const COLLAPSE_OCR_FLOOR = 800; // only guard substantial pages
+const COLLAPSE_BODY_CAP = 300;  // body this short on a big page = collapse
+function strippedBodyLen(text) {
+  if (!text) return 0;
+  return String(text)
+    .replace(/<(meta|image-desc|vocab|summary|keywords|warning|note|scan-quality|language|page-type|page-num|header|sig|insert|columns|script)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ').trim().length;
+}
+function looksCollapsed(ocrData, text) {
+  return (ocrData || '').length > COLLAPSE_OCR_FLOOR && strippedBodyLen(text) < COLLAPSE_BODY_CAP;
+}
+async function translatePageGuarded(db, page, book, prevTranslation) {
+  let result = await translatePage(db, page, book, prevTranslation);
+  if (looksCollapsed(page.ocr?.data, result.text)) {
+    const retry = await translatePage(db, page, book, prevTranslation);
+    if (strippedBodyLen(retry.text) > strippedBodyLen(result.text)) result = retry;
+    if (looksCollapsed(page.ocr?.data, result.text)) {
+      console.log(`  [collapse-guard] ${book.id} p${page.page_number}: still thin after retry (${strippedBodyLen(result.text)} body chars)`);
+    }
+  }
+  return result;
+}
+
 // ── Translate a batch of pages in one API call ──
 async function translateBatch(db, pages, book, prevTranslation) {
   const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
@@ -538,6 +580,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
   const pages = await db.collection('pages')
     .find({
       book_id: book.id,
+      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
       'ocr.data': { $exists: true, $nin: [null, ''] },
       page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
@@ -671,7 +714,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       // ── Single-page path ──
       const page = batch[0];
       try {
-        const result = await translatePage(db, page, book, prevTranslation);
+        const result = await translatePageGuarded(db, page, book, prevTranslation);
         prevTranslation = result.text;
         await writePageTranslation(db, page, result.text, book, result.promptRef);
 
@@ -772,7 +815,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           } else {
             // Missing from batch — fall back to single page
             try {
-              const singleResult = await translatePage(db, page, book, prevTranslation);
+              const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
               await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
               batchTranslated++;
@@ -848,7 +891,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           consecutiveBatchFailures++;
           for (const page of batch) {
             try {
-              const singleResult = await translatePage(db, page, book, prevTranslation);
+              const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
               await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
               translated++;
@@ -919,9 +962,11 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
   // If complete, advance pipeline and sync page counts
   if (isComplete) {
-    // Count actual translated + blank pages from source of truth
+    // Count actual translated + blank pages from source of truth.
+    // page_number > 0 excludes hidden/deduped trailing pages so this rollup
+    // doesn't re-inflate pages_count after Phase 1.97 decremented it.
     const [countAgg] = await db.collection('pages').aggregate([
-      { $match: { book_id: book.id } },
+      { $match: { book_id: book.id, page_number: { $gt: 0 } } },
       { $group: {
         _id: null,
         total: { $sum: 1 },
@@ -1048,7 +1093,13 @@ async function selfDispatch(db, limit) {
   // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
-    { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
+    // Spread guard (#2449): never translate a book that still needs splitting —
+    // Phase 3.1 must crop the spreads first, or readers get two-page translations.
+    { $match: {
+      'pipeline_auto.status': { $in: ['ocr_complete'] },
+      $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+      ...SCOPE_FILTER,
+    } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
         { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -1069,7 +1120,12 @@ async function selfDispatch(db, limit) {
   let candidates = fresh;
   if (fresh.length === 0) {
     candidates = await db.collection('books').aggregate([
-      { $match: { 'pipeline_auto.status': 'translate_partial' } },
+      { $match: {
+        'pipeline_auto.status': 'translate_partial',
+        // Spread guard (#2449)
+        $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+        ...SCOPE_FILTER,
+      } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] } } },
       { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
@@ -1163,7 +1219,10 @@ async function main() {
   // Check pause status — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   const translationPhasePaused = control?.paused_phases?.includes('translation');
-  if (control?.paused || translationPhasePaused) {
+  // Selective unpause: a configured scope (allow_book_ids/allow_collections)
+  // lets scoped books translate while globally paused. The translation-phase
+  // pause still hard-stops regardless of scope.
+  if (translationPhasePaused || !shouldBypassPause(control)) {
     const reason = translationPhasePaused ? 'translation phase paused' : 'pipeline paused';
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
     console.log(`[TRANSLATE] ${reason} (${Math.round(pauseAgeMs / 60000)}min ago), exiting`);
@@ -1176,6 +1235,14 @@ async function main() {
     await client.close();
     return;
   }
+  // When globally paused with a scope, confine candidate selection to it
+  // (module-level SCOPE_FILTER read by selfDispatch).
+  if (control?.paused && hasScope(control)) {
+    SCOPE_IDS = [...await resolveScopeBookIds(db, control)];
+    SCOPE_SET = new Set(SCOPE_IDS);
+    SCOPE_FILTER = { id: { $in: SCOPE_IDS } };
+    console.log(`[TRANSLATE] PAUSED globally, scope active — confining to ${SCOPE_IDS.length} allowlisted book(s).`);
+  }
 
   // Find books — fresh (0 translated) first, then partials sorted by most remaining pages.
   // Grouping similar workloads per batch minimizes convoy tail waste.
@@ -1185,7 +1252,7 @@ async function main() {
 
   // Auto-complete near-zero books — job setup overhead exceeds the work
   const nearZero = await db.collection('books').aggregate([
-    { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] } } },
+    { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, ...SCOPE_FILTER } },
     { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
     { $match: { _remaining: { $lt: MIN_REMAINING } } },
     { $limit: 100 },
@@ -1208,7 +1275,7 @@ async function main() {
   // Priority: fresh (untranslated) books first, then any % partials to finish them off.
   // All partials are eligible when no fresh books remain.
   let books = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
+    .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }], ...SCOPE_FILTER })
     .project(proj).limit(CONCURRENCY).toArray();
 
   // Only allow any % translated partials to fill remaining slots
@@ -1216,7 +1283,7 @@ async function main() {
     const needed = CONCURRENCY - books.length;
     const freshIds = new Set(books.map(b => b.id));
     const nearComplete = await db.collection('books').aggregate([
-      { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 } } },
+      { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 }, ...SCOPE_FILTER } },
       { $addFields: {
         _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] },
         _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] },
@@ -1245,7 +1312,7 @@ async function main() {
       const DONE_STATUSES = ['needs_attention', 'complete', 'failed', 'translate_complete', 'summarizing', 'summary_indexed', 'chapters', 'chapters_complete'];
       const orphanBookIds = orphanJobs.map(j => j.book_id);
       const orphanBooks = await db.collection('books')
-        .find({ id: { $in: orphanBookIds }, 'pipeline_auto.status': { $nin: DONE_STATUSES } })
+        .find({ id: { $in: SCOPE_SET ? orphanBookIds.filter(i => SCOPE_SET.has(i)) : orphanBookIds }, 'pipeline_auto.status': { $nin: DONE_STATUSES } })
         .project(proj).toArray();
       const resumedIds = new Set(orphanBooks.map(b => b.id));
       books = [...books, ...orphanBooks.filter(b => !bookIds.has(b.id))].slice(0, CONCURRENCY);
@@ -1343,13 +1410,14 @@ async function main() {
   // Fetch more books for the queue (excluding already processed)
   async function fetchMoreBooks(limit) {
     const excludeIds = [...processedIds];
+    const excludeSet = new Set(excludeIds);
     const fresh = await db.collection('books')
-      .find({ 'pipeline_auto.status': 'translate_submitted', id: { $nin: excludeIds } })
+      .find({ 'pipeline_auto.status': 'translate_submitted', id: SCOPE_IDS ? { $in: SCOPE_IDS.filter(i => !excludeSet.has(i)) } : { $nin: excludeIds } })
       .project(proj).limit(limit).toArray();
     // Only backfill with any % translated partials
     if (fresh.length < limit) {
       const partial = await db.collection('books').aggregate([
-        { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 }, id: { $nin: [...excludeIds, ...fresh.map(b => b.id)] } } },
+        { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 }, ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS.filter(i => !excludeSet.has(i) && !fresh.some(b => b.id === i)) } } : { id: { $nin: [...excludeIds, ...fresh.map(b => b.id)] } }) } },
         { $addFields: {
           _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] },
           _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] },

@@ -3,7 +3,7 @@
 import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Settings } from 'lucide-react';
+import { Settings, Search, X } from 'lucide-react';
 
 // On tenant subdomains, /auth/* and /account are caught by the proxy.ts
 // rewrite (it sends every non-/embed/, non-/api/, non-/_next/ path to
@@ -84,6 +84,23 @@ function readHideAi(): boolean {
   return isBphSurface();
 }
 
+// Build the catalogue-search destination. On the tenant subdomain (proxy
+// rewrites every path to /embed/<tenant>) a relative /catalog?cq= resolves
+// on-host and the proxy maps it to ?view=catalog. When we're rendering the
+// raw /embed/<tenant> path (e.g. a sourcelibrary.org preview), a relative
+// /catalog would escape to the GLOBAL search — a tenant-lockdown leak — so we
+// target the explicit embed route instead. Either way the search stays within
+// the tenant's own catalogue.
+function catalogSearchUrl(query: string): string {
+  const q = encodeURIComponent(query.trim());
+  if (typeof window === 'undefined') return '/catalog';
+  const embedMatch = window.location.pathname.match(/^\/embed\/([^/]+)/);
+  if (embedMatch) {
+    return `/embed/${embedMatch[1]}?view=catalog${q ? `&cq=${q}` : ''}`;
+  }
+  return `/catalog${q ? `?cq=${q}` : ''}`;
+}
+
 // Persist an explicit choice. We always write '0'/'1' (never delete) so an
 // opt-in-to-show on BPH survives reload instead of falling back to the
 // default-hidden state.
@@ -98,8 +115,19 @@ export default function EmbedUserMenu() {
   const [imgError, setImgError] = useState(false);
   const [hideAi, setHideAi] = useState(false);
   const [hideGuide, setHideGuide] = useState(false);
+  // Catalogue search is a BPH affordance (the /catalog?cq= flow). Hydrated
+  // after mount to keep the server HTML host-agnostic (ISR-safe).
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const handleImgError = useCallback(() => setImgError(true), []);
+
+  const submitSearch = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    window.location.assign(catalogSearchUrl(searchQuery));
+  }, [searchQuery]);
 
   // Hydrate toggle state from cookies after mount. The server has already
   // rendered the book page using whatever the cookie said at request time;
@@ -107,7 +135,13 @@ export default function EmbedUserMenu() {
   useEffect(() => {
     setHideAi(readHideAi());
     setHideGuide(readCookie(COOKIE_HIDE_GUIDE));
+    setShowSearch(isBphSurface());
   }, []);
+
+  // Focus the field as it expands.
+  useEffect(() => {
+    if (searchOpen) searchInputRef.current?.focus();
+  }, [searchOpen]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -141,7 +175,7 @@ export default function EmbedUserMenu() {
     document.documentElement.dataset.slHideGuide = next ? '1' : '';
   };
 
-  const containerCls = 'fixed top-3 right-3 z-50 print:hidden';
+  const containerCls = 'fixed top-3 right-3 z-50 print:hidden flex items-center gap-2';
 
   const name = session?.user?.name || session?.user?.email || 'Account';
   const initials = session?.user?.name
@@ -153,9 +187,65 @@ export default function EmbedUserMenu() {
 
   return (
     <div ref={menuRef} className={containerCls}>
+      {showSearch && (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitSearch();
+          }}
+          className="flex items-center"
+        >
+          {searchOpen ? (
+            <div className="flex items-center bg-white/90 backdrop-blur-sm border border-border-light shadow-sm rounded-full pl-3 pr-1 py-0.5">
+              <input
+                ref={searchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    setSearchOpen(false);
+                    setSearchQuery('');
+                  }
+                }}
+                placeholder="Search the catalogue…"
+                aria-label="Search the catalogue"
+                className="w-44 bg-transparent text-sm text-primary placeholder:text-muted focus:outline-none"
+              />
+              <button
+                type="submit"
+                aria-label="Search"
+                className="w-7 h-7 rounded-full flex items-center justify-center text-secondary hover:text-primary"
+              >
+                <Search className="w-4 h-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                aria-label="Close search"
+                onClick={() => {
+                  setSearchOpen(false);
+                  setSearchQuery('');
+                }}
+                className="w-7 h-7 rounded-full flex items-center justify-center text-muted hover:text-primary"
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              aria-label="Search the catalogue"
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center justify-center w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm hover:bg-white transition-colors text-secondary hover:text-primary"
+            >
+              <Search className="w-4 h-4" aria-hidden="true" />
+            </button>
+          )}
+        </form>
+      )}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-2 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm hover:bg-white transition-colors"
+        className="flex items-center justify-center w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm hover:bg-white transition-colors"
         aria-label={session ? 'Account & view options' : 'View options'}
       >
         {session ? (

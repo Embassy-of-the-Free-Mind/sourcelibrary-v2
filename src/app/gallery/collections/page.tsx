@@ -37,7 +37,9 @@ async function getCollections(): Promise<CollectionListItem[]> {
 
     const collections = await db
       .collection('gallery_collections')
-      .find({}, { projection: { id: 1, slug: 1, title: 1, description: 1, image_ids: 1, featured: 1, cover_image_id: 1 } })
+      // Hide collections with no resolvable cover (their backing gallery_images
+      // were deleted) — flagged `hidden: true` by backfill-gallery-collection-covers.mjs.
+      .find({ hidden: { $ne: true } }, { projection: { id: 1, slug: 1, title: 1, description: 1, image_ids: 1, featured: 1, cover_image_id: 1 } })
       .sort({ sort_order: 1, created_at: -1 })
       .toArray();
 
@@ -81,15 +83,17 @@ async function resolveCoverImages(db: any, imageIds: string[]) {
     .collection('gallery_images')
     .find(
       { id: { $in: imageIds } },
-      { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } }
+      { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1 } }
     )
     .toArray();
 
   const result = new Map<string, { url: string; description: string }>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   for (const doc of docs as any[]) {
+    // Fall back to image_url (full archived page) — some gallery_images have
+    // only image_url populated, which would otherwise render a blank cover.
     result.set(doc.id, {
-      url: doc.extracted_url || doc.thumbnail_url || '',
+      url: doc.extracted_url || doc.thumbnail_url || doc.image_url || '',
       description: doc.description || '',
     });
   }
@@ -102,9 +106,9 @@ export default async function CollectionsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Intro */}
         <div className="text-center mb-10">
           <h2 className="text-2xl font-serif text-stone-800 mb-2">Curated Image Collections</h2>

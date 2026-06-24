@@ -3,8 +3,10 @@ import { getReadDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { withApiAuth } from '@/lib/api-auth';
+import { isBookReadable } from '@/lib/book-access';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -80,32 +82,50 @@ function generateCitations(
     ? `${authorParts[1]} ${authorParts[0]}`
     : author;
 
+  // Original-edition imprint (place, publisher, format, USTC) of the source
+  // printing being translated — the bibliographic record of the original work,
+  // distinct from the Source Library translation credit. Mirrors the "Cite"
+  // dropdown (CiteButton) and the bibliographic panel (BibliographicInfo).
+  const pubImprint = [book.place_published, book.publisher].filter(Boolean).join(': ');
+  const imprint = [pubImprint, book.format, book.ustc_id ? `USTC ${book.ustc_id}` : ''].filter(Boolean).join('. ');
+  const imprintStr = imprint ? `${imprint}. ` : '';
+
   // Inline citation
   const inline = `(${authorParts[0]} ${year}, p. ${pageNumber})`;
 
   // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
+  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
 
   // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
+  const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
 
-  // BibTeX
+  // BibTeX — original imprint (address/publisher) + translation credit (note)
   const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${year}`;
-  const bibtex = `@book{${bibtexKey},
-  author = {${authorLastFirst}},
-  title = {${title}},
-  year = {${year}},
-  translator = {Source Library},
-  note = {Translation published ${translationYear}}${doi ? `,
-  doi = {${doi}},
-  url = {${doiUrl}}` : ''}
-}`;
+  const bibtexLines = [
+    `@book{${bibtexKey},`,
+    `  author = {${authorLastFirst}},`,
+    `  title = {${title}},`,
+    `  year = {${year}},`,
+  ];
+  if (book.place_published) bibtexLines.push(`  address = {${book.place_published}},`);
+  bibtexLines.push(`  publisher = {${book.publisher || 'Source Library'}},`);
+  bibtexLines.push(`  translator = {Source Library},`);
+  if (doi) {
+    bibtexLines.push(`  doi = {${doi}},`);
+    bibtexLines.push(`  url = {${doiUrl}},`);
+  }
+  const bibtexNote = [`Translation published ${translationYear}`];
+  if (book.format) bibtexNote.push(book.format);
+  if (book.ustc_id) bibtexNote.push(`USTC ${book.ustc_id}`);
+  bibtexLines.push(`  note = {${bibtexNote.join('; ')}}`);
+  bibtexLines.push(`}`);
+  const bibtex = bibtexLines.join('\n');
 
   // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
+  const chicago = `${authorLastFirst}. ${year}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
 
   // MLA
-  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
+  const mla = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
 
   // Direct URL to page in Source Library (pinned to edition version).
   // baseUrl is derived from the request host so quotes returned from
@@ -158,6 +178,12 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
+    // Hidden (visible:false) books are not public — 404 unless the caller is an
+    // editor session or carries CRON_SECRET (pipeline / Claude Code).
+    if (!(await isBookReadable(book, request))) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
     // Bot page gating: only allow quotes from the first 20% of pages
     const resolvedBookId = book.id;
     if (isBot(request) && !(await isTrustedBot(request))) {
@@ -194,7 +220,10 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // Build response
     const response: QuoteResponse = {
       quote: {
-        translation: markForExport(page.translation.data, book.id),
+        // Editorial annotation blocks (<meta>/<summary>/… and the OCR page
+        // envelope) describe the page — they are never verbatim source text
+        // and must not be served as quotable content (PR #2232).
+        translation: markForExport(stripEditorialWrappers(page.translation.data).trim(), book.id),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,
@@ -214,7 +243,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
 
     // Include original text if requested
     if (includeOriginal && page.ocr?.data) {
-      response.quote.original = page.ocr.data;
+      response.quote.original = stripEditorialWrappers(page.ocr.data).trim();
     }
 
     // Include context (adjacent pages) if requested
@@ -233,8 +262,8 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       const prevText = (prevPage as unknown as Page | null)?.translation?.data;
       const nextText = (nextPage as unknown as Page | null)?.translation?.data;
       response.context = {
-        previous_page: prevText ? markForExport(prevText, book.id) : undefined,
-        next_page: nextText ? markForExport(nextText, book.id) : undefined,
+        previous_page: prevText ? markForExport(stripEditorialWrappers(prevText).trim(), book.id) : undefined,
+        next_page: nextText ? markForExport(stripEditorialWrappers(nextText).trim(), book.id) : undefined,
       };
     }
 

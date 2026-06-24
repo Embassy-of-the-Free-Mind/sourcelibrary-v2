@@ -33,13 +33,19 @@ interface EditionForCompare {
   }>;
   thumbnail?: string;
   thumbnail_blob?: string;
+  work_title?: string;
 }
 
+// Slug fallback for the <title> tag (no editions in scope yet). Strips the
+// `local:{author_id}:` prefix of minted ids so it never reads "Local:a:…";
+// the visible heading uses the curated work_title from the editions instead.
 function workTitle(workId: string): string {
-  return workId
-    .split('-')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+  const tail = workId.includes(':') ? workId.split(':').pop()! : workId;
+  return tail.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+function workTitleFromEditions(editions: { work_title?: string }[], workId: string): string {
+  const t = editions.find((e) => (e.work_title || '').trim())?.work_title;
+  return (t && t.trim()) || workTitle(workId);
 }
 
 async function getEditionsForCompare(workId: string): Promise<EditionForCompare[]> {
@@ -47,7 +53,7 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
   const editions = await db
     .collection('books')
     .find(
-      { work_id: workId, visible: true },
+      { $or: [{ work_slug: workId }, { work_id: workId }], visible: true },
       {
         projection: {
           id: 1,
@@ -62,6 +68,7 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
           chapters: 1,
           thumbnail: 1, image_display: 1,
           thumbnail_blob: 1, image_thumb: 1,
+          work_title: 1,
         },
         sort: { published: 1 },
       }
@@ -85,11 +92,14 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
     })),
     thumbnail: e.thumbnail as string | undefined,
     thumbnail_blob: e.thumbnail_blob as string | undefined,
+    work_title: e.work_title as string | undefined,
   }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params;
+  const { id: rawId } = await params;
+  // Decode non-ASCII work_id (CJK / accented) before use — see /work/[id]/page.tsx.
+  const id = decodeURIComponent(rawId);
   const title = workTitle(id);
   return {
     title: `Compare Translations — ${title} | Source Library`,
@@ -100,11 +110,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CompareWorkPage({ params }: PageProps) {
-  const { id } = await params;
+  const { id: rawId } = await params;
+  const id = decodeURIComponent(rawId);
   const editions = await getEditionsForCompare(id);
   if (editions.length < 2) notFound();
 
-  const title = workTitle(id);
+  const title = workTitleFromEditions(editions, id);
   const translatedEditions = editions.filter((e) => e.pages_translated > 0);
 
   return (

@@ -8,7 +8,7 @@
 export interface Contributor {
   name: string;
   role: 'translator' | 'editor' | 'reviewer' | 'transcriber';
-  type: 'ai' | 'human';
+  type: 'ai' | 'human' | 'org'; // 'org' = institutional/partner; maps to a Zenodo organizational creator (no family_name)
   orcid?: string;              // e.g., "0000-0002-1825-0097"
   affiliation?: string;        // e.g., "University of Example"
   model?: string;              // For AI: "gemini-2.0-flash"

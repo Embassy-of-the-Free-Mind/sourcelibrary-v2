@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { applyTextRole } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
@@ -6,6 +7,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import type { ImageSourceProvider } from '@/lib/types/image-source';
 
 export const maxDuration = 300;
@@ -192,6 +194,7 @@ function parseLicense(licenseUrl: string | null, attribution: string | null, pro
  *   language?: string,
  *   published?: string,
  *   categories?: string[],
+ *   collections?: string[],  // Source Library collection slugs to tag the book with
  *   provider?: string,       // e.g., "Vatican", "IRHT", "Bodleian"
  *   start_page?: number,     // 1-indexed start page (for extracting portion of manifest)
  *   end_page?: number        // 1-indexed end page (inclusive)
@@ -208,7 +211,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       author,
       language,
       published,
+      year,
       categories,
+      collections: requestCollections,
       work_id,
       provider,
       start_page,
@@ -291,7 +296,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author, display_title,
+      title, author, display_title, year, published,
       image_source: { provider: 'iiif', iiif_manifest: manifest_url, source_url: manifest_url },
     });
     if (dedupResult.isDuplicate) {
@@ -493,7 +498,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       author,
       language: language || 'Unknown',
       published: published || 'Unknown',
+      ...(typeof year === 'number' ? { year } : /^\d{3,4}$/.test(String(published || '')) ? { year: parseInt(String(published), 10) } : {}),
       categories: categories || [],
+      ...(requestCollections?.length ? { collections: requestCollections } : {}),
       ...(work_id ? { work_id } : {}),
       ...(contributing_library ? { contributing_library } : providerName !== 'IIIF Source' ? { contributing_library: providerName } : {}),
       thumbnail: pageImages[0]?.thumbnail || '',
@@ -536,6 +543,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       updated_at: new Date()
     };
 
+    // Classify original-vs-translation at import (issue #2395).
+    applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
 
     // Create pages
@@ -558,6 +567,14 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     await db.collection('pages').insertMany(pageDocs);
+
+    // Persist the IIIF manifest we already fetched (provenance, #2416; non-blocking)
+    storeImportedManifest(db, {
+      manifest,
+      manifest_url,
+      book_id: bookIdStr,
+      source: (provider as string) || 'iiif',
+    }).catch((e) => console.warn(`[IIIF Import] manifest store failed for ${bookIdStr}: ${e?.message}`));
 
     // Queue preview OCR for early metadata enrichment (non-blocking)
     queuePreviewOcr(bookIdStr, title).catch(() => {});

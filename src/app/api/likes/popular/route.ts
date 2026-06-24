@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getReadDb } from '@/lib/mongodb';
 import { LikeTargetType } from '@/lib/types';
 import { buildCropUrl } from '@/lib/social-image-selector';
@@ -236,7 +237,7 @@ export async function GET(request: NextRequest) {
           const book = booksMap.get(page.book_id);
           const rawText = page.translation?.data || page.ocr?.data || '';
           // Strip XML tags (e.g. <meta>, <page-type>, <columns>) for clean excerpts
-          const text = rawText.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+          const text = stripEditorialWrappers(rawText).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
           return {
             id: page.id,
             pageNumber: page.page_number,

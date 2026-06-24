@@ -26,12 +26,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  Loader2
+  Loader2,
+  Eye
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
+import AiBadge, { formatModelName } from '@/components/ui/AiBadge';
 import { BookLoader } from '@/components/ui/BookLoader';
-import { gallery } from '@/lib/api-client';
+import { gallery, views } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import type { GalleryImageDetail, GalleryItem, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
@@ -101,6 +103,23 @@ export default function ImageDetailPage({
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [imageOpacity, setImageOpacity] = useState(1);
 
+  // Collection scope for prev/next navigation. When the viewer is opened from a
+  // collection (via ?collection=<book-collection-slug> from the /gallery listing,
+  // or ?gcollection=<gallery-collection-slug> from a curated gallery collection),
+  // the prev/next list is built from that collection's image set instead of every
+  // image in the book. This mirrors the artwork fix (PR #2363) so paging left/right
+  // stays inside the set the reader is browsing. When neither is present, navigation
+  // stays book-scoped (unchanged).
+  const [collectionScope, setCollectionScope] = useState<{ collection?: string; gcollection?: string } | null>(null);
+  const collectionQuery = collectionScope?.collection
+    ? `?collection=${encodeURIComponent(collectionScope.collection)}`
+    : collectionScope?.gcollection
+    ? `?gcollection=${encodeURIComponent(collectionScope.gcollection)}`
+    : '';
+  useEffect(() => {
+    collectionQueryRef.current = collectionQuery;
+  }, [collectionQuery]);
+
   // Ref to prevent stale closures in keyboard handler
   const navRef = useRef({ bookImageIds: [] as string[], currentIndex: -1 });
   const isNavigatingRef = useRef(false);
@@ -108,10 +127,23 @@ export default function ImageDetailPage({
     navRef.current = { bookImageIds, currentIndex };
   }, [bookImageIds, currentIndex]);
 
+  // Ref so the (empty-deps) navigateTo callback always reads the live collection query.
+  const collectionQueryRef = useRef('');
+
   // Resolve params
   useEffect(() => {
     params.then(p => setImageId(p.id));
   }, [params]);
+
+  // Read collection scope from the URL once on mount (kept stable across in-page
+  // navigation, which only mutates the path via replaceState — see navigateTo).
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const sp = new URLSearchParams(window.location.search);
+    const collection = sp.get('collection') || undefined;
+    const gcollection = sp.get('gcollection') || undefined;
+    if (collection || gcollection) setCollectionScope({ collection, gcollection });
+  }, []);
 
   // Fetch image data (initial load only — navigation handles its own fetching)
   useEffect(() => {
@@ -131,6 +163,7 @@ export default function ImageDetailPage({
         preload.onerror = () => requestAnimationFrame(() => setImageOpacity(1));
         preload.src = json.imageUrl;
         sendGAEvent({ action: 'view_item', category: 'gallery', label: imageId!, content_type: 'image' });
+        views.record('image', imageId!);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
       } finally {
@@ -164,30 +197,82 @@ export default function ImageDetailPage({
     if (data?.rotation != null) setRotation(data.rotation as 0 | 90 | 180 | 270);
   }, [data?.description, data?.galleryQuality, data?.museumDescription, data?.metadata, data?.bbox, data?.rotation]);
 
-  // Fetch all images for this book (for navigation)
+  // Fetch the prev/next navigation list. Default scope is "all images in this book"
+  // (sorted by page number). When opened from a collection, scope to that collection's
+  // image set instead, preserving its native ordering so paging stays inside the set
+  // the reader is browsing (mirrors the artwork fix, PR #2363).
   useEffect(() => {
-    if (!data?.book?.id) return;
+    // Collection-scoped navigation doesn't depend on the loaded book, so it can run
+    // as soon as the scope is known. Book-scoped navigation waits for the book id.
+    if (!collectionScope && !data?.book?.id) return;
 
-    gallery.list({
-      bookId: data.book.id,
-      limit: 500,
-      includeArchive: true,
-      maxPerBook: 500,
-      minQuality: 0,
-    }).then(res => {
-      const items = [...res.items].sort((a, b) => a.pageNumber - b.pageNumber);
+    let cancelled = false;
+
+    async function loadNav(): Promise<{
+      ids: string[];
+      thumbs: Map<string, { thumb: string; desc: string }>;
+    }> {
+      // Curated gallery collection (ordered image_ids list) — use its own ordering.
+      if (collectionScope?.gcollection) {
+        const coll = await gallery.collections.get(collectionScope.gcollection);
+        const items = (coll?.items || []) as Array<{
+          id: string;
+          thumbnailUrl?: string;
+          extractedUrl?: string;
+          imageUrl?: string;
+          description?: string;
+        }>;
+        const ids = items.map(item => item.id);
+        const thumbs = new Map<string, { thumb: string; desc: string }>();
+        items.forEach(item => {
+          thumbs.set(item.id, {
+            thumb: item.thumbnailUrl || item.extractedUrl || item.imageUrl || '',
+            desc: item.description || '',
+          });
+        });
+        return { ids, thumbs };
+      }
+
+      // Book-collection slug — same source the /gallery listing uses; keep the API's
+      // native ordering (quality, year, book, page) rather than re-sorting by page,
+      // since a collection can span multiple books.
+      const res = await gallery.list({
+        collection: collectionScope?.collection,
+        bookId: collectionScope ? undefined : data!.book.id,
+        limit: 500,
+        includeArchive: true,
+        maxPerBook: 500,
+        minQuality: 0,
+      });
+      // Book scope keeps its original page-number ordering for backward compatibility.
+      const items = collectionScope
+        ? res.items
+        : [...res.items].sort((a, b) => a.pageNumber - b.pageNumber);
       const ids = items.map(item => `${item.pageId}-${item.detectionIndex}`);
       const thumbs = new Map<string, { thumb: string; desc: string }>();
       items.forEach(item => {
         const id = `${item.pageId}-${item.detectionIndex}`;
         thumbs.set(id, { thumb: item.thumbnailUrl || item.extractedUrl || item.imageUrl, desc: item.description });
       });
+      return { ids, thumbs };
+    }
+
+    loadNav().then(({ ids, thumbs }) => {
+      if (cancelled) return;
+      // If the current image isn't in the scoped set (e.g. a stale link), fall back to
+      // book scope so navigation still works rather than showing a single-image set.
+      if (collectionScope && imageId && !ids.includes(imageId) && data?.book?.id) {
+        setCollectionScope(null);
+        return;
+      }
       setBookImageIds(ids);
       setBookThumbnails(thumbs);
       const idx = ids.indexOf(imageId!);
       setCurrentIndex(idx >= 0 ? idx : 0);
     });
-  }, [data?.book?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return () => { cancelled = true; };
+  }, [data?.book?.id, collectionScope]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update currentIndex when imageId changes (after navigation)
   useEffect(() => {
@@ -250,9 +335,10 @@ export default function ImageDetailPage({
     setImageOpacity(0);
     await new Promise(r => setTimeout(r, 280));
 
-    // Update URL and reset editing state while screen is black
+    // Update URL and reset editing state while screen is black. Preserve the collection
+    // scope query param so a reload / share keeps prev/next inside the collection.
     setCurrentIndex(index);
-    window.history.replaceState(null, '', `/gallery/image/${imgId}`);
+    window.history.replaceState(null, '', `/gallery/image/${imgId}${collectionQueryRef.current}`);
     setEditingTitle(false);
     setEditingQuality(false);
     setEditingDescription(false);
@@ -278,6 +364,7 @@ export default function ImageDetailPage({
       setImageId(imgId);
       setData(json);
       sendGAEvent({ action: 'view_item', category: 'gallery', label: imgId, content_type: 'image' });
+      views.record('image', imgId);
       requestAnimationFrame(() => setImageOpacity(1));
     } catch {
       // On error, fade back in with old content
@@ -608,7 +695,7 @@ export default function ImageDetailPage({
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <BookLoader size="md" variant="dark" />
+        <BookLoader size="md" variant="light" />
       </div>
     );
   }
@@ -628,6 +715,15 @@ export default function ImageDetailPage({
 
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < bookImageIds.length - 1;
+
+  // AI provenance: title, museum description, and Details metadata are all
+  // generated by a vision model (recorded per-image at extraction time); book
+  // title/author/year/page number are catalog records.
+  const modelLabel = data.model ? formatModelName(data.model) : null;
+  const detectedDate = data.detectedAt
+    ? new Date(data.detectedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+    : null;
+  const aiBadgeTitle = `${modelLabel ? `Generated by ${data.model}` : 'AI-generated'}${detectedDate ? ` in ${detectedDate}` : ''} — may contain errors`;
 
   return (
     <div className="bg-black text-white max-w-[100vw] overflow-x-hidden">
@@ -650,6 +746,15 @@ export default function ImageDetailPage({
             )}
 
             <div className="flex items-center gap-1 flex-shrink-0 overflow-x-auto">
+              {(data?.viewCount ?? 0) > 0 && (
+                <span
+                  className="hidden sm:inline-flex items-center gap-1 px-1.5 text-sm text-stone-500 tabular-nums flex-shrink-0"
+                  title={`${data!.viewCount!.toLocaleString()} views`}
+                >
+                  <Eye className="w-4 h-4" />
+                  {data!.viewCount!.toLocaleString()}
+                </span>
+              )}
               {imageId && (
                 <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0">
                   <LikeButton
@@ -844,9 +949,9 @@ export default function ImageDetailPage({
 
               {/* Museum Description */}
               {(data.museumDescription || isAdmin) && (
-                <div className="bg-stone-800 rounded-lg p-5">
+                <div className="bg-stone-800 rounded-lg p-5" data-view-section="ai-summary">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-medium text-stone-300">About this image</h3>
+                    <h3 className="text-base font-medium text-stone-300">About this image <AiBadge className="ml-1" title={aiBadgeTitle} /></h3>
                     {isAdmin && !editingDescription && (
                       <button onClick={() => setEditingDescription(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
                     )}
@@ -874,9 +979,9 @@ export default function ImageDetailPage({
 
               {/* Metadata Tags */}
               {(metadataValues.subjects?.length || metadataValues.figures?.length || metadataValues.symbols?.length || metadataValues.style || metadataValues.technique || isAdmin) && (
-                <div className="bg-stone-800 rounded-lg p-5">
+                <div className="bg-stone-800 rounded-lg p-5" data-view-section="ai-summary">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-medium text-stone-300">Details</h3>
+                    <h3 className="text-base font-medium text-stone-300">Details <AiBadge className="ml-1" title={aiBadgeTitle} /></h3>
                     {isAdmin && !editingMetadata && (
                       <button onClick={() => setEditingMetadata(true)} className="text-sm text-accent-gold hover:text-accent-gold">Edit</button>
                     )}
@@ -934,6 +1039,16 @@ export default function ImageDetailPage({
                   )}
                 </div>
               )}
+
+              {/* AI provenance / data attribution */}
+              <p className="flex items-start gap-2 text-xs text-stone-500 leading-relaxed px-1" data-view-section="ai-summary">
+                <AiBadge className="mt-0.5 flex-shrink-0" title={aiBadgeTitle} />
+                <span>
+                  The image title, description, and details above were {modelLabel ? `generated by ${modelLabel}` : 'AI-generated'}
+                  {detectedDate ? ` (${detectedDate})` : ''} from the page scan and may contain errors.
+                  Book title, author, date, and page number come from the library catalog.
+                </span>
+              </p>
 
               {/* Citation + Sharing */}
               <div className="bg-stone-800 rounded-lg p-5">
@@ -1139,12 +1254,25 @@ export default function ImageDetailPage({
                 </div>
               </div>
 
-              {/* More pictures from this book */}
+              {/* More pictures — from this collection when collection-scoped, else this book */}
               {bookImageIds.length > 1 && (
                 <div className="bg-stone-800 rounded-lg p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-base font-medium text-stone-300">More pictures from this book</h3>
-                    <Link href={data.galleryUrl} className="text-sm text-accent-gold hover:text-accent-gold">See all</Link>
+                    <h3 className="text-base font-medium text-stone-300">
+                      {collectionScope ? 'More pictures from this collection' : 'More pictures from this book'}
+                    </h3>
+                    <Link
+                      href={
+                        collectionScope?.gcollection
+                          ? `/gallery/collections/${collectionScope.gcollection}`
+                          : collectionScope?.collection
+                          ? `/gallery?collection=${encodeURIComponent(collectionScope.collection)}`
+                          : data.galleryUrl
+                      }
+                      className="text-sm text-accent-gold hover:text-accent-gold"
+                    >
+                      See all
+                    </Link>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     {bookImageIds
@@ -1156,7 +1284,7 @@ export default function ImageDetailPage({
                         return (
                           <Link
                             key={id}
-                            href={`/gallery/image/${id}`}
+                            href={`/gallery/image/${id}${collectionQuery}`}
                             onClick={(e) => {
                               e.preventDefault();
                               const idx = bookImageIds.indexOf(id);

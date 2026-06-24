@@ -275,9 +275,13 @@ async function flushToPostgres(client, rows) {
   const params = [];
   let paramIdx = 1;
 
+  // Model identifier as reported by clip-server.mjs:25 (MODEL_ID) / :87 (/health endpoint).
+  // Kept inline so this script is self-contained even when the CLIP server is unreachable.
+  const CLIP_MODEL = 'Xenova/clip-vit-base-patch32';
+
   for (const row of rows) {
     const embeddingStr = `[${row._embedding.join(',')}]`;
-    values.push(`($${paramIdx}, $${paramIdx + 1}, $${paramIdx + 2}, $${paramIdx + 3}, $${paramIdx + 4}::vector, $${paramIdx + 5}, $${paramIdx + 6}, $${paramIdx + 7}, $${paramIdx + 8})`);
+    values.push(`($${paramIdx}, $${paramIdx + 1}, $${paramIdx + 2}, $${paramIdx + 3}, $${paramIdx + 4}::vector, $${paramIdx + 5}, $${paramIdx + 6}, $${paramIdx + 7}, $${paramIdx + 8}, $${paramIdx + 9})`);
     params.push(
       row.id,
       row.source_type,
@@ -288,12 +292,13 @@ async function flushToPostgres(client, rows) {
       row.author,
       row.resource_type,
       row.thumbnail_url,
+      CLIP_MODEL,
     );
-    paramIdx += 9;
+    paramIdx += 10;
   }
 
   const sql = `
-    INSERT INTO clip_embeddings (id, source_type, book_id, image_url, embedding, title, author, resource_type, thumbnail_url)
+    INSERT INTO clip_embeddings (id, source_type, book_id, image_url, embedding, title, author, resource_type, thumbnail_url, embedding_model)
     VALUES ${values.join(', ')}
     ON CONFLICT (id) DO UPDATE SET
       embedding = EXCLUDED.embedding,
@@ -301,6 +306,7 @@ async function flushToPostgres(client, rows) {
       title = EXCLUDED.title,
       author = EXCLUDED.author,
       thumbnail_url = EXCLUDED.thumbnail_url,
+      embedding_model = EXCLUDED.embedding_model,
       created_at = NOW()
   `;
 

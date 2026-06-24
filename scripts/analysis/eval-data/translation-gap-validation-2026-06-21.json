@@ -1,0 +1,246 @@
+{
+ "generated": "2026-06-21",
+ "method": "blind stratified sample, 3 independent grounded-search agents",
+ "works": [
+  {
+   "key": "T0",
+   "label": "translated_claim",
+   "author": "Ziegler Jacob",
+   "title": "Schondia",
+   "century": 16,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "T1",
+   "label": "translated_claim",
+   "author": "Barclay John",
+   "title": "The mirror of minds",
+   "century": 17,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T2",
+   "label": "translated_claim",
+   "author": "Catholic Church",
+   "title": "Catechism of the Catholic Church",
+   "century": 16,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T3",
+   "label": "translated_claim",
+   "author": "Desiderius Erasmus",
+   "title": "Paraphrase on Matthew",
+   "century": 16,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T4",
+   "label": "translated_claim",
+   "author": "Erasmus, Desiderius",
+   "title": "The education of a Christian prince",
+   "century": 16,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T5",
+   "label": "translated_claim",
+   "author": "Francis Bacon",
+   "title": "Essays, including his moral and historical works",
+   "century": 17,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T6",
+   "label": "translated_claim",
+   "author": "Giovanni Aurelio Augurello",
+   "title": "Giovanni Aurelio Augurello (1441-1524) and Renaissance Alchemy: A Critical Edition of Chrysopoeia and Other Alchemical Poems",
+   "century": 16,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T7",
+   "label": "translated_claim",
+   "author": "Heinrich Nollius",
+   "title": "The Birthing Bed of the Philosophers' Stone",
+   "century": 17,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T8",
+   "label": "translated_claim",
+   "author": "Jean Calvin",
+   "title": "Concerning Scandals",
+   "century": 16,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T9",
+   "label": "translated_claim",
+   "author": "John Calvin",
+   "title": "Institutes of the Christian religion",
+   "century": 16,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T10",
+   "label": "translated_claim",
+   "author": "Leon Battista Alberti",
+   "title": "On the Art of Building",
+   "century": 15,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "T11",
+   "label": "translated_claim",
+   "author": "Marlorat, Augustin",
+   "title": "A catholike exposition upon the Revelation of Sainct Iohn",
+   "century": 16,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "G0",
+   "label": "gap_claim",
+   "author": "Matthaeus, Johann",
+   "title": "Oratio de passione Christi / scripta a Johanne Mattaei ... publice nec non memoriter in Ac",
+   "year": 1614,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G1",
+   "label": "gap_claim",
+   "author": "Pétau, Denis",
+   "title": "Opera poetica",
+   "year": 1620,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G2",
+   "label": "gap_claim",
+   "author": "Paul V, Pope",
+   "title": "S.D.N. Pauli papae quinti Indictio quatuor decimarum super fructibus omnium ecclesiasticor",
+   "year": 1607,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G3",
+   "label": "gap_claim",
+   "author": "Spee, Sibert",
+   "title": "Positiones Juris Ex Tit. FF. C. Et Inst. Si Quadrupedes Pauperiem Fecisse Dicatur Et L. Aq",
+   "year": 1608,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G4",
+   "label": "gap_claim",
+   "author": "Chaves, Tomás de",
+   "title": "Summa sacramentorum Ecclesiae, ex doctrina reverendi patris fratris Francisci a Victoria. ",
+   "year": 1584,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G5",
+   "label": "gap_claim",
+   "author": "Herold, Philipp",
+   "title": "Carmen heroicum Philippi heroldi Lipsici, de laudibus musarum.",
+   "year": 1558,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G6",
+   "label": "gap_claim",
+   "author": "Carboni, Ludovico",
+   "title": "De officio oratoris libri V In quorum tribus, qua ratione orator docere, delectare, ac mov",
+   "year": 1596,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G7",
+   "label": "gap_claim",
+   "author": "Beleth, Jean",
+   "title": "Rationale divinorum officiorum Ioanne Beletho authore opus nunc demum operae [!] Cornelii ",
+   "year": 1563,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G8",
+   "label": "gap_claim",
+   "author": "Negri, Giacomo",
+   "title": "Repetitio super rubrica et lege prima digesti de legatis I. edita in gymnasio Romano",
+   "year": 1530,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G9",
+   "label": "gap_claim",
+   "author": "Dickson, Alexander",
+   "title": "De umbra rationis et judicii, sive de memoriae virtute prosopoeia",
+   "year": 1597,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "G10",
+   "label": "gap_claim",
+   "author": "Themistius",
+   "title": "Paraphrasis in duodecimum librum Aristotelis de prima philosophia. Mose Finzio interprete",
+   "year": 1576,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "G11",
+   "label": "gap_claim",
+   "author": "Theophylactus Achridensis",
+   "title": "In quatuor domini nostri Jesu Christi evangelia enarrationes luculentissimae",
+   "year": 1543,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "G12",
+   "label": "gap_claim",
+   "author": "Stephanius, Hans",
+   "title": "De fallaciis theses",
+   "year": 1606,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G13",
+   "label": "gap_claim",
+   "author": "L'Oulmeau, Conrad de",
+   "title": "De advocati studio libri quinque",
+   "year": 1537,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G14",
+   "label": "gap_claim",
+   "author": "Haedus, Joannes Quintinus",
+   "title": "Insulae Melitae descriptio ex commentariis rerum quotidianorum",
+   "year": 1536,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "G15",
+   "label": "gap_claim",
+   "author": "Petrejus, Paul",
+   "title": "Locus Doctrinae Christianae De Naturis, Persona Et Officio Jesu Christi : In Theses resolu",
+   "year": 1606,
+   "independent_verdict": "untranslated"
+  },
+  {
+   "key": "G16",
+   "label": "gap_claim",
+   "author": "Sacro Bosco, Johannes de",
+   "title": "Algorismus Magistri Joannis De sacro busto ex vetustissimis [..] exemplaribus collectus & ",
+   "year": 1511,
+   "independent_verdict": "translated"
+  },
+  {
+   "key": "G17",
+   "label": "gap_claim",
+   "author": "Finck, Kaspar",
+   "title": "De Natura Et Conditione Corporum Glorificatorum Disputatio Scholastica , Ad cuius subiecta",
+   "year": 1607,
+   "independent_verdict": "untranslated"
+  }
+ ]
+}

@@ -10,6 +10,21 @@
 
 import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 
+/**
+ * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
+ * The curated category ids (LIBRARY_CATEGORIES) are all canonical, but the
+ * AI-assigned `categories` array historically drifted into mixed casings/forms
+ * ("Philosophy", "Natural Philosophy") — and `categories @> [x]` matching is
+ * exact + case-sensitive, so those books silently dropped out of their category
+ * page/search (e.g. ~813 "Freemasonry" books missing from /categories/freemasonry).
+ * Apply this to both the stored values (backfill + write path) and the query
+ * param so they always meet. Keep in sync with the .mjs writer canonicalizer in
+ * scripts/workers/pipeline-orchestrator.mjs.
+ */
+export function canonicalizeCategory(cat: string): string {
+  return cat.toLowerCase().trim().replace(/\s+/g, '-');
+}
+
 export interface CatalogBook {
   id: string;
   slug: string | null;
@@ -33,6 +48,8 @@ export interface CatalogBook {
   categories: string[];
   collections: string[];
   resource_type: string | null;
+  /** original | period-translation | modern-translation — see src/lib/text-role.ts (#2395) */
+  text_role: string | null;
 }
 
 /** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
@@ -59,7 +76,7 @@ export interface CatalogBookDetail extends CatalogBook {
   updated_at: string | null;
 }
 
-const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type';
+const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
@@ -125,7 +142,7 @@ export async function browseBooks(opts: {
   if (opts.hasResourceType) query = query.not('resource_type', 'is', null);
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);
-  if (opts.category) query = query.contains('categories', [opts.category]);
+  if (opts.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
   if (opts.provider) query = query.eq('image_source_provider', opts.provider);
   if (opts.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
   if (opts.firstTranslation) query = query.eq('is_first_translation', true);
@@ -400,7 +417,7 @@ export async function searchBooksCatalog(
     .limit(limit);
 
   if (opts?.language) query = query.eq('language', opts.language);
-  if (opts?.category) query = query.contains('categories', [opts.category]);
+  if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
   if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts?.hasTranslation) query = query.gt('pages_translated', 0);
   if (opts?.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
@@ -491,19 +508,32 @@ export async function searchBookIds(
  * Unnests the categories array and counts occurrences.
  */
 export async function getCategoryCounts(): Promise<Map<string, number>> {
-  const { data } = await supabase
-    .from('books_catalog')
-    .select('categories')
-    .eq('visible', true)
-    .gt('pages_count', 0);
-
+  // Paginate — a bare select is capped at 1000 rows by Supabase, which
+  // undercounted every category (philosophy showed 193 of 3,743) and dropped
+  // whole categories whose books all sat past row 1000. Counts are keyed by
+  // canonical form so casing variants fold into one bucket.
   const counts = new Map<string, number>();
-  for (const row of (data || [])) {
-    if (Array.isArray(row.categories)) {
-      for (const cat of row.categories) {
-        counts.set(cat, (counts.get(cat) || 0) + 1);
+  const PAGE = 1000;
+  let from = 0;
+  for (;;) {
+    const { data, error } = await supabase
+      .from('books_catalog')
+      .select('categories')
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .range(from, from + PAGE - 1);
+    if (error) throw new Error(`getCategoryCounts failed: ${error.message}`);
+    if (!data || data.length === 0) break;
+    for (const row of data) {
+      if (Array.isArray(row.categories)) {
+        for (const cat of row.categories) {
+          const key = canonicalizeCategory(cat);
+          counts.set(key, (counts.get(key) || 0) + 1);
+        }
       }
     }
+    if (data.length < PAGE) break;
+    from += PAGE;
   }
   return counts;
 }
@@ -511,6 +541,7 @@ export async function getCategoryCounts(): Promise<Map<string, number>> {
 // All fields needed for the book detail page shell
 const BOOK_DETAIL_SELECT = [
   BOOK_SELECT,
+  'visible', // needed by the /book/[id] hidden-book gate (book-access.ts)
   'contributing_library',
   'summary_text',
   'publisher',

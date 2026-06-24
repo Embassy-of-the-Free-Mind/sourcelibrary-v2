@@ -1,34 +1,49 @@
 #!/usr/bin/env node
 /**
- * Align modern English translations (translation_catalogs, 23K rows) with
+ * Align modern English translations (translation_catalogs, ~26K rows) with
  * the early-modern source editions they translate (ustc_editions, 1.6M
  * rows covering 1450-1650 European printing). Result: a populated
  * translation_catalog_ustc_links join table.
  *
- * The heavy lifting (pg_trgm join across 23K × 1.6M candidate space) is
- * server-side via the RPCs defined in
- * 20260528000001_translation_catalog_ustc_links.sql, so this script just
- * orchestrates: call the auto-link RPC at high threshold, report what
- * landed, fetch the ambiguous-zone report for the next round of LLM/curator
- * judgement.
+ * Per-translation loop with N concurrent pg connections — the original
+ * single-statement INSERT...SELECT ran for 6h with 0 rows because the
+ * planner picked a row-by-row plan anyway; the bounded per-row queries
+ * give visible progress, error isolation, and saturate the GIN trigram
+ * index on lower(ustc_editions.title).
  *
- * Cost: zero LLM spend at this stage. The ambiguous report drives a
- * follow-up LLM judging pass which is a separate (cheap) script.
+ * Matching strategy:
+ *   - Author: word-boundary regex on surname (translation_catalogs stores
+ *     bare surnames like "aquinas"; USTC stores "Thomas Aquinas, St" —
+ *     trigram similarity at 0.85 misses these almost entirely, ~0.47 is
+ *     typical, see _tmp-diag.mjs probe results).
+ *   - Title: pg_trgm similarity >= 0.5 (catches Latin renamings like
+ *     "consolation of philosophy" ↔ "Consolatio philosophiae" at ~0.63;
+ *     misses radical renamings like "Aeneid" ↔ "Aeneis" which need an
+ *     aliases table — out of scope here).
+ *
+ * Measured 2026-05-29 run: 17,660 eligible translations, 14.6% hit rate,
+ * 34,293 links written across 6,038 distinct USTC editions, ~2 hours.
+ * Top hits are the canon: Kempis Imitatio (3,081), Boccaccio Decameron
+ * (1,440), Boethius De Consolatione (1,287), Ovid Metamorphoses (1,272),
+ * Aquinas Summa (850).
+ *
+ * Idempotent: ON CONFLICT (translation_id, ustc_edition_id) DO NOTHING.
+ *
+ * Local IPv6 routing to Supabase is flaky; run from Hetzner or anywhere
+ * with working IPv6 to Supabase.
  *
  * Usage:
- *   node scripts/enrichment/align-translations-to-ustc.mjs                       # report only (no insert)
- *   node scripts/enrichment/align-translations-to-ustc.mjs --apply               # high threshold (0.85/0.85)
- *   node scripts/enrichment/align-translations-to-ustc.mjs --apply --loose       # 0.80/0.65
- *   node scripts/enrichment/align-translations-to-ustc.mjs --ambiguous           # show pairs needing review
+ *   node scripts/enrichment/align-translations-to-ustc.mjs               # full apply
+ *   node scripts/enrichment/align-translations-to-ustc.mjs --dry-run     # report counts only
  */
 
+import pg from 'pg';
 import fs from 'fs';
 
 function loadEnv() {
   const env = {};
   try {
-    const content = fs.readFileSync('.env.production.local', 'utf8');
-    for (const line of content.split('\n')) {
+    for (const line of fs.readFileSync('.env.production.local', 'utf8').split('\n')) {
       const m = line.match(/^([^=#]+)=(.*)$/);
       if (m) {
         let v = m[2].trim();
@@ -41,115 +56,134 @@ function loadEnv() {
 }
 
 const env = loadEnv();
-const SUPABASE_URL = env.SUPABASE_URL;
-const SUPABASE_KEY = env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error('Missing SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY in env');
+if (!env.SUPABASE_DB_URL) {
+  console.error('Missing SUPABASE_DB_URL in env');
   process.exit(1);
 }
 
-async function callRpc(name, args) {
-  const resp = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
-    method: 'POST',
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(args || {}),
-  });
-  if (!resp.ok) {
-    const body = await resp.text();
-    throw new Error(`RPC ${name} failed: ${resp.status} ${body.slice(0, 300)}`);
-  }
-  return resp.json();
+const TITLE_THRESHOLD = 0.5;
+const CONCURRENCY = 5;
+const BATCH_INSERT = 100;
+const dryRun = process.argv.includes('--dry-run');
+
+async function withClient(cb) {
+  const c = new pg.Client({ connectionString: env.SUPABASE_DB_URL });
+  await c.connect();
+  await c.query('SET statement_timeout = 60000');
+  try { return await cb(c); } finally { await c.end(); }
 }
 
-async function countLinks() {
-  const resp = await fetch(
-    `${SUPABASE_URL}/rest/v1/translation_catalog_ustc_links?select=count`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Prefer: 'count=exact',
-        Range: '0-0',
-      },
+async function getCandidates() {
+  return withClient(async c => {
+    const r = await c.query(`
+      SELECT id, author_surname_lower, canonical_work_lower
+      FROM translation_catalogs
+      WHERE author_surname_lower IS NOT NULL AND author_surname_lower <> ''
+        AND canonical_work_lower IS NOT NULL AND canonical_work_lower <> ''
+        AND char_length(author_surname_lower) >= 3
+        AND char_length(canonical_work_lower) >= 5
+      ORDER BY id
+    `);
+    return r.rows;
+  });
+}
+
+async function findMatches(c, t) {
+  const r = await c.query(`
+    SELECT u.id AS ustc_id,
+      similarity($1::text, lower(u.author_1))::numeric(4,3) AS a_sim,
+      similarity($2::text, lower(u.title))::numeric(4,3) AS t_sim
+    FROM ustc_editions u
+    WHERE lower(u.author_1) ~ ('\\m' || $1::text || '\\M')
+      AND $2::text % lower(u.title)
+      AND similarity($2, lower(u.title)) >= $3::numeric
+    LIMIT 200
+  `, [t.author_surname_lower, t.canonical_work_lower, TITLE_THRESHOLD]);
+  return r.rows.map(row => ({
+    translation_id: t.id,
+    ustc_edition_id: row.ustc_id,
+    author_sim: row.a_sim,
+    title_sim: row.t_sim,
+  }));
+}
+
+async function insertBatch(c, rows) {
+  if (!rows.length) return 0;
+  const values = [];
+  const params = [];
+  let p = 1;
+  for (const r of rows) {
+    values.push(`($${p++}, $${p++}, $${p++}, $${p++}, 'trigram_word_boundary', 'medium')`);
+    params.push(r.translation_id, r.ustc_edition_id, r.author_sim, r.title_sim);
+  }
+  const sql = `INSERT INTO translation_catalog_ustc_links
+    (translation_id, ustc_edition_id, author_sim, title_sim, link_method, link_confidence)
+    VALUES ${values.join(',')}
+    ON CONFLICT (translation_id, ustc_edition_id) DO NOTHING`;
+  const r = await c.query(sql, params);
+  return r.rowCount;
+}
+
+async function worker(idx, queue, stats) {
+  await withClient(async c => {
+    let pending = [];
+    while (true) {
+      const t = queue.next();
+      if (!t) break;
+      try {
+        const matches = await findMatches(c, t);
+        if (matches.length) pending.push(...matches);
+        stats.processed++;
+        if (matches.length > 0) stats.withMatches++;
+        if (!dryRun && pending.length >= BATCH_INSERT) {
+          stats.inserted += await insertBatch(c, pending);
+          pending = [];
+        }
+      } catch (e) {
+        stats.errors++;
+        if (stats.errors < 5) console.error(`w${idx} t${t.id} err: ${e.message}`);
+      }
     }
-  );
-  const range = resp.headers.get('content-range') || '';
-  const m = range.match(/\/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
+    if (!dryRun && pending.length) {
+      stats.inserted += await insertBatch(c, pending);
+    } else if (dryRun) {
+      stats.wouldInsert = (stats.wouldInsert || 0) + pending.length;
+    }
+  });
 }
 
 async function main() {
-  const args = process.argv.slice(2);
-  const apply = args.includes('--apply');
-  const loose = args.includes('--loose');
-  const showAmbiguous = args.includes('--ambiguous');
+  console.log(dryRun ? '=== DRY RUN ===' : '=== APPLY ===');
+  console.log('Loading candidate translations…');
+  const candidates = await getCandidates();
+  console.log(`${candidates.length.toLocaleString()} eligible translations.`);
 
-  const before = await countLinks();
-  console.log(`Existing link rows: ${before.toLocaleString()}`);
+  let i = 0;
+  const queue = { next: () => i < candidates.length ? candidates[i++] : null };
+  const stats = { processed: 0, withMatches: 0, inserted: 0, errors: 0 };
 
-  if (apply) {
-    const authThr = loose ? 0.80 : 0.85;
-    const titThr  = loose ? 0.65 : 0.85;
-    const CHUNK = 2000; // translations per RPC call — small enough to stay under statement_timeout
+  const t0 = Date.now();
+  const reporter = setInterval(() => {
+    const dur = (Date.now() - t0) / 1000;
+    const rate = stats.processed / dur;
+    const eta = ((candidates.length - stats.processed) / rate / 60).toFixed(1);
+    console.log(`  ${stats.processed}/${candidates.length} (${rate.toFixed(1)}/s) matches=${stats.withMatches} inserted=${stats.inserted} err=${stats.errors} eta=${eta}m`);
+  }, 30000);
 
-    // Find max id so we know how many chunks we need
-    const maxIdResp = await callRpc('translation_catalogs_max_id', {});
-    const maxId = maxIdResp ?? 30000;
-    const totalChunks = Math.ceil(maxId / CHUNK);
-    console.log(`\n→ Chunked alignment: ${totalChunks} chunks of ${CHUNK} ids each (max_id=${maxId}, thresholds: author=${authThr}, title=${titThr})`);
+  await Promise.all(Array.from({ length: CONCURRENCY }, (_, i) => worker(i, queue, stats)));
+  clearInterval(reporter);
 
-    let totalIns = 0;
-    let totalProcessed = 0;
-    const t0 = Date.now();
-    for (let start = 0; start < maxId; start += CHUNK) {
-      const end = start + CHUNK;
-      const ct0 = Date.now();
-      try {
-        const result = await callRpc('align_translations_to_ustc_auto', {
-          author_threshold: authThr,
-          title_threshold: titThr,
-          id_start: start,
-          id_end: end,
-        });
-        const r = Array.isArray(result) ? result[0] : result;
-        const ins = parseInt(r?.inserted_links || 0);
-        const proc = parseInt(r?.processed_translations || 0);
-        totalIns += ins;
-        totalProcessed += proc;
-        const cdur = ((Date.now() - ct0) / 1000).toFixed(1);
-        console.log(`  chunk [${start}-${end}): processed=${proc} inserted=${ins} (${cdur}s)`);
-      } catch (e) {
-        console.error(`  chunk [${start}-${end}) FAILED: ${e.message}`);
-      }
-    }
-    const dur = ((Date.now() - t0) / 1000).toFixed(1);
-    console.log(`\nDone in ${dur}s.`);
-    console.log(`Total translations processed: ${totalProcessed.toLocaleString()}`);
-    console.log(`Total links inserted: ${totalIns.toLocaleString()}`);
-    const after = await countLinks();
-    console.log(`Link rows in table: ${after.toLocaleString()} (+${(after - before).toLocaleString()})`);
-  } else {
-    console.log('(Dry-run mode: re-run with --apply to insert high-confidence links.)');
-  }
+  const dur = ((Date.now() - t0) / 1000).toFixed(1);
+  console.log(`\nDONE in ${dur}s`);
+  console.log(`Processed: ${stats.processed}/${candidates.length}`);
+  console.log(`Translations with matches: ${stats.withMatches}`);
+  console.log(`Total inserted: ${stats.inserted}`);
+  console.log(`Errors: ${stats.errors}`);
 
-  if (showAmbiguous) {
-    console.log('\n→ Fetching ambiguous-zone pairs (0.55-0.85 similarity)...');
-    const pairs = await callRpc('align_translations_to_ustc_ambiguous', {
-      lower_bound: 0.55,
-      upper_bound: 0.85,
-      per_translation_limit: 2,
-    });
-    console.log(`Ambiguous pairs: ${pairs.length}`);
-    for (const p of pairs.slice(0, 20)) {
-      console.log(`  [a=${p.author_sim} t=${p.title_sim}] ${p.trans_author?.slice(0, 35)} / ${p.trans_work?.slice(0, 40)}`);
-      console.log(`                            ↔ ${p.ustc_author?.slice(0, 35)} / ${p.ustc_title?.slice(0, 40)} (${p.ustc_year || '?'})`);
-    }
-    if (pairs.length > 20) console.log(`  ... and ${pairs.length - 20} more`);
-  }
+  await withClient(async c => {
+    const r = await c.query('SELECT count(*) FROM translation_catalog_ustc_links');
+    console.log(`Final link count: ${r.rows[0].count}`);
+  });
 }
 
-main().catch(err => { console.error('FATAL:', err.message); process.exit(1); });
+main().catch(err => { console.error('FATAL:', err); process.exit(1); });

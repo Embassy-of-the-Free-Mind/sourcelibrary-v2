@@ -1,0 +1,182 @@
+language,total_works,total_editions,works_with_translation,editions_with_translation,pct_works_translated,distinct_authors,authors_with_translation
+Latin,444120,502554,8644,14862,1.95,46734,402
+German,295566,336870,419,549,0.14,17050,80
+French,194874,232848,1615,2985,0.83,12164,175
+English,149462,162857,553,654,0.37,8130,130
+Italian,101335,110090,576,783,0.57,11822,96
+Dutch,82651,113658,462,649,0.56,6720,75
+Spanish,76472,83534,340,517,0.44,9569,64
+Greek,8509,9677,132,168,1.55,1988,56
+Swedish,7026,7860,7,11,0.1,914,6
+Portuguese,6598,6979,18,20,0.27,962,12
+Czech,5645,5888,45,48,0.8,1067,15
+Polish,4002,4268,35,39,0.87,1248,21
+Hebrew,3827,4107,2,2,0.05,1064,2
+Catalan,3704,3861,15,20,0.4,545,10
+Danish,1882,2058,8,10,0.43,432,5
+Hungarian,1639,1738,7,7,0.43,423,4
+Low German,1473,1516,8,8,0.54,311,4
+Finnish,370,410,0,0,0.0,63,0
+mixed,282,292,3,3,1.06,142,3
+Icelandic,261,278,0,0,0.0,72,0
+Aramaic,204,219,0,0,0.0,76,0
+Arabic,191,209,0,0,0.0,96,0
+Church Slavonic,190,212,0,0,0.0,26,0
+Welsh,185,192,1,1,0.54,60,1
+Greek/Latin,103,103,5,5,4.85,55,4
+Romansh,81,82,0,0,0.0,32,0
+Armenian,80,82,2,2,2.5,22,2
+Multilingual,73,82,1,1,1.37,38,1
+Sicilian,72,72,1,1,1.39,41,1
+Latin/German,70,70,0,0,0.0,52,0
+Croatian,63,63,0,0,0.0,33,0
+Breton,61,69,0,0,0.0,12,0
+Nahuatl,50,53,0,0,0.0,25,0
+Estonian,49,60,0,0,0.0,6,0
+Basque,47,51,0,0,0.0,21,0
+Law French,40,43,1,1,2.5,7,1
+Lithuanian,38,43,0,0,0.0,20,0
+Latvian,33,46,0,0,0.0,7,0
+German/Latin,32,32,2,2,6.25,23,2
+Yiddish,31,31,0,0,0.0,14,0
+Provençal,26,28,0,0,0.0,12,0
+French/German,26,26,0,0,0.0,11,0
+Romanian,25,39,0,0,0.0,2,0
+Hebrew/Latin,23,23,0,0,0.0,14,0
+French/Latin,21,28,2,2,9.52,9,2
+Russian,20,20,0,0,0.0,6,0
+Irish,18,20,0,0,0.0,8,0
+Occitan,18,18,0,0,0.0,10,0
+Latin/French,18,19,2,2,11.11,9,2
+Slovenian,17,17,0,0,0.0,4,0
+Gascon,16,16,0,0,0.0,5,0
+Latin/Spanish,15,15,0,0,0.0,2,0
+Greek and Latin,15,15,0,0,0.0,9,0
+Sami,12,13,0,0,0.0,4,0
+Japanese,12,12,0,0,0.0,7,0
+Ruthenian,11,11,0,0,0.0,5,0
+Spanish/Latin,10,10,0,0,0.0,2,0
+Gaelic,9,9,0,0,0.0,2,0
+Algonquian,9,9,0,0,0.0,4,0
+Mixed,8,8,0,0,0.0,4,0
+Albanian,8,8,0,0,0.0,2,0
+Poitevin,7,7,0,0,0.0,4,0
+Aymara,7,8,0,0,0.0,3,0
+Illyrian,7,7,0,0,0.0,6,0
+Ethiopic,6,6,0,0,0.0,4,0
+Latin/Italian,6,6,2,2,33.33,2,2
+Béarnais,6,6,0,0,0.0,3,0
+Purépecha,6,6,0,0,0.0,2,0
+Syriac,6,6,0,0,0.0,0,0
+German/Italian,5,5,0,0,0.0,3,0
+Mexican,5,5,0,0,0.0,4,0
+Tagalog,5,5,0,0,0.0,4,0
+Amharic,5,5,0,0,0.0,2,0
+Italian/Latin,5,5,1,1,20.0,4,1
+Malay,5,5,0,0,0.0,1,0
+Guarani,4,4,0,0,0.0,2,0
+German/French,4,4,0,0,0.0,2,0
+Bosnian,4,4,0,0,0.0,4,0
+Quechuan,4,4,0,0,0.0,3,0
+Latin/Dutch,3,3,0,0,0.0,2,0
+Quichua,3,3,0,0,0.0,3,0
+Scots,3,3,0,0,0.0,2,0
+Slovak,3,3,0,0,0.0,2,0
+Provencal,3,3,0,0,0.0,1,0
+other,3,3,0,0,0.0,3,0
+French/Italian,3,3,0,0,0.0,2,0
+Arabic/Latin,3,3,0,0,0.0,2,0
+Dutch/French,3,3,0,0,0.0,2,0
+Dutch/Latin,3,3,0,0,0.0,3,0
+Latin/Greek,3,3,0,0,0.0,2,0
+Pangasinan,2,2,0,0,0.0,2,0
+Swedish/Latin,2,2,0,0,0.0,1,0
+Judaeo-Spanish,2,2,0,0,0.0,2,0
+Spanish/Italian,2,2,0,0,0.0,2,0
+Serbo-Croatian,2,2,0,0,0.0,0,0
+Konkani,2,2,0,0,0.0,2,0
+Spanish/French,2,2,0,0,0.0,2,0
+French and German,2,2,0,0,0.0,0,0
+Allentiac,2,2,0,0,0.0,1,0
+Latin/Polish,2,2,0,0,0.0,2,0
+Latin/Catalan,2,2,1,1,50.0,1,1
+Scottish Gaelic,2,2,0,0,0.0,2,0
+Quechua,2,2,0,0,0.0,2,0
+French and Dutch,2,2,0,0,0.0,0,0
+Farsi,2,2,0,0,0.0,2,0
+Georgian,2,2,0,0,0.0,2,0
+Sorbian,2,2,0,0,0.0,1,0
+French/Spanish,2,2,0,0,0.0,2,0
+Frisian,2,2,0,0,0.0,1,0
+Coptic,2,2,0,0,0.0,0,0
+French/Dutch,2,2,0,0,0.0,1,0
+,1,1,0,0,0.0,0,0
+Anglo-Saxon,1,1,0,0,0.0,1,0
+Armenian and Italian,1,1,0,0,0.0,1,0
+Bantu,1,1,0,0,0.0,1,0
+Bergamasque,1,1,0,0,0.0,0,0
+Bikol,1,1,0,0,0.0,1,0
+Bisaya,1,1,0,0,0.0,1,0
+Bisayan,1,1,0,0,0.0,1,0
+Bramana Marasta,1,1,0,0,0.0,1,0
+Carib,1,1,0,0,0.0,1,0
+Catalan and Latin,1,1,0,0,0.0,0,0
+Catalan/Spanish,1,1,0,0,0.0,0,0
+Chiapaneca,1,1,0,0,0.0,1,0
+Chilean,1,1,0,0,0.0,1,0
+Chinese,1,1,0,0,0.0,0,0
+Corsican,1,1,0,0,0.0,1,0
+Cumanagoto,1,1,0,0,0.0,1,0
+Czech/German,1,1,0,0,0.0,0,0
+Danish/Latin,1,1,0,0,0.0,1,0
+Dutch Low Saxon,1,1,0,0,0.0,0,0
+English and French,1,1,0,0,0.0,0,0
+English and Latin,1,1,0,0,0.0,1,0
+French and Latin,1,1,0,0,0.0,0,0
+"French, Italian, Spanish, German",1,1,0,0,0.0,1,0
+French/German/Latin,1,1,0,0,0.0,1,0
+Geʽez,1,1,0,0,0.0,1,0
+German and French,1,1,0,0,0.0,0,0
+German and Latin,1,1,0,0,0.0,0,0
+German/Polish,1,1,0,0,0.0,0,0
+German/Slovenian,1,1,0,0,0.0,1,0
+German/Spanish,1,1,0,0,0.0,0,0
+Greek/Italian,1,1,0,0,0.0,1,0
+Hebrew/German,1,1,0,0,0.0,1,0
+Huasteca,1,1,0,0,0.0,1,0
+Italian & Latin,1,1,0,0,0.0,1,0
+Italian/French,1,1,0,0,0.0,1,0
+Kapampangan,1,1,0,0,0.0,1,0
+Kiriri,1,1,0,0,0.0,1,0
+Latin and Dutch,1,1,0,0,0.0,1,0
+Latin and French,1,3,0,0,0.0,1,0
+Latin/Arabic,1,1,0,0,0.0,1,0
+Latin/Danish,1,1,0,0,0.0,1,0
+Latin/Dutch/French,1,1,0,0,0.0,0,0
+Latin/English,1,1,1,1,100.0,1,1
+Latin/French/German,1,1,0,0,0.0,1,0
+Latin/German/Italian,1,1,0,0,0.0,1,0
+Latin/Hungarian,1,1,0,0,0.0,1,0
+Malay/Latin,1,1,0,0,0.0,1,0
+Mame,1,1,0,0,0.0,1,0
+Manx,1,1,0,0,0.0,0,0
+Matlatzinca,1,1,0,0,0.0,1,0
+Mayan,1,1,0,0,0.0,1,0
+Mazahua,1,1,0,0,0.0,1,0
+Middle German,1,1,0,0,0.0,0,0
+Mixtec,1,1,0,0,0.0,1,0
+Nahuatl (Mexicano),1,1,0,0,0.0,1,0
+Native American (Algonquian),1,1,0,0,0.0,0,0
+Old English,1,1,0,0,0.0,1,0
+Old Gothic,1,1,0,0,0.0,1,0
+Old Prussian,1,1,0,0,0.0,1,0
+Old Prussian/German,1,1,0,0,0.0,1,0
+Other,1,1,0,0,0.0,1,0
+Panayana,1,1,0,0,0.0,1,0
+Philippino,1,1,0,0,0.0,1,0
+Polish/German,1,1,0,0,0.0,1,0
+"Spanish, Latin",1,1,0,0,0.0,1,0
+Spanish/Basque,1,1,0,0,0.0,0,0
+Swedish/Greek,1,1,0,0,0.0,1,0
+Turkish,1,1,0,0,0.0,0,0
+,1,1,0,0,0.0,0,0

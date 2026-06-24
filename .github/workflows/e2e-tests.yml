@@ -69,13 +69,14 @@ jobs:
               per_page: 1,
             });
             if (existing.length > 0) {
-              // Add a comment to the existing issue instead
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: existing[0].number,
-                body: `Still failing as of ${date}.\n**Run:** ${runUrl}`,
-              });
+              // An open tracking issue already exists. Do NOT append a daily
+              // "Still failing as of …" comment — that churn emailed every
+              // subscriber once a day with zero new signal (24 such comments
+              // on #1582 before this change). The daily run still executes and
+              // the playwright-report artifact is still attached to this run,
+              // so nothing is lost; we just stop the inbox spam. The run page
+              // is the source of truth while the issue stays open.
+              core.notice(`E2E still failing; tracking issue #${existing[0].number} already open. Suppressing daily comment. Run: ${runUrl}`);
               return;
             }
 

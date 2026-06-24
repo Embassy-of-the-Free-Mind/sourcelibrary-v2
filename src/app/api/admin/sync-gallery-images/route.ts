@@ -101,8 +101,13 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
           rotation: '$detected_images.rotation',
           gallery_quality: '$detected_images.gallery_quality',
           confidence: '$detected_images.confidence',
+          gallery_rationale: '$detected_images.gallery_rationale',
           museum_description: '$detected_images.museum_description',
           detection_source: '$detected_images.detection_source',
+          // AI provenance — carry model/detected_at so a re-sync doesn't strip
+          // them (the #2406 / lesson_gallery_images_provenance_sync gap).
+          model: '$detected_images.model',
+          detected_at: '$detected_images.detected_at',
           metadata: '$detected_images.metadata',
           dhash: '$detected_images.dhash',
           book_title: { $ifNull: ['$book.display_title', { $ifNull: ['$book.title', 'Unknown'] }] },
@@ -130,12 +135,15 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
       });
     }
 
-    // Write to gallery_images via $merge (upsert by id)
+    // Write to gallery_images via $merge (upsert by id).
+    // `merge` (not `replace`) so a re-sync updates the projected fields without
+    // wiping worker-only fields the aggregation can't reconstruct — page-level
+    // scan_quality / page_image_characteristics (#2531).
     pipeline.push({
       $merge: {
         into: 'gallery_images',
         on: 'id',
-        whenMatched: 'replace',
+        whenMatched: 'merge',
         whenNotMatched: 'insert',
       },
     });

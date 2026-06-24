@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { getPageSource, getPageImageUrl as resolvePageImage } from '@/lib/page-image-url';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -57,30 +58,49 @@ export function getBookThumbnailUrl(
   book: { thumbnail?: string | null; thumbnail_blob?: string | null; image_display?: string | null; image_thumb?: string | null },
   size: 'display' | 'thumb' = 'display'
 ): string | null {
-  // Prefer canonical image_* fields, fall back to legacy thumbnail/thumbnail_blob
+  // Prefer canonical image_* fields, fall back to legacy thumbnail/thumbnail_blob.
+  //
+  // Artwork exception: ~98% of artworks store a 150px `book-thumbnails/{id}-thumb.jpg`
+  // in `image_thumb` while their real high-res lives at `artwork/art-*.jpg`
+  // (which has a 600px `-thumb.jpg` variant). Card grids render ~300px CSS cells —
+  // ~600px on a 2x-DPR display — so the 150px thumb upscales ~4x and looks badly
+  // pixelated (reported on /collections/hermetic-image, 2026-06-03). When an
+  // artwork source URL is available, derive the thumb from it (→ 600px) instead
+  // of the 150px `book-thumbnails/` variant. (#1727 cost policy: still a tier-1
+  // R2 variant, never /_next/image.)
+  const artworkSource = (book.image_display?.includes('/artwork/') && book.image_display)
+    || (book.thumbnail?.includes('/artwork/') && book.thumbnail)
+    || null;
   const raw = size === 'display'
     ? (book.image_display || book.thumbnail || book.thumbnail_blob || null)
-    : (book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
+    : (artworkSource || book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
 
-  // Wikimedia Commons: rewrite to thumb.php for CDN-cached resized images.
-  // Loading full-res Wikimedia files (3000-8000px) directly causes 429 rate-limits
-  // and wastes bandwidth. thumb.php serves fast, CDN-cached thumbnails.
+  // Wikimedia Commons images: serve the upload.wikimedia.org CDN URL as-is.
+  // We must NOT rewrite to commons.wikimedia.org/w/thumb.php — the site CSP
+  // `img-src` whitelists upload.wikimedia.org but not commons.wikimedia.org,
+  // so a thumb.php URL loads via curl yet is blocked by the browser. Manually
+  // constructing /thumb/.../<w>px- URLs is also unreliable (Wikimedia 400s
+  // widths it hasn't pre-rendered), so we keep the canonical CDN URL. Only ~43
+  // legacy books still reference these; new imports rehost to R2.
   if (raw.includes('upload.wikimedia.org/wikipedia/commons/')) {
-    const filename = raw.split('/').pop();
-    if (filename) {
-      const w = size === 'thumb' ? 400 : 800;
-      return `https://commons.wikimedia.org/w/thumb.php?f=${filename}&w=${w}`;
-    }
+    return raw;
   }
 
   if (!raw.includes('images.sourcelibrary.org/')) return raw;
 
   // Artwork URLs: use thumb variants for 'thumb' size, full for 'display'.
+  // Three R2 variants exist per artwork: `-thumb.jpg` (600px), `.jpg` (2000px),
+  // `-full.jpg` (original, 3-4MB). Card grids want the 600px thumb; detail/hero
+  // wants full. Normalize whichever suffix `raw` carries to the requested one.
   if (raw.includes('/artwork/')) {
     if (size === 'thumb') {
-      // Prefer -thumb.jpg for card grids
+      // Prefer -thumb.jpg (600px) for card grids — map both -full and the bare
+      // 2000px display variant down to it (the bare-.jpg case is the common one,
+      // since image_display / thumbnail hold the 2000px URL).
+      if (raw.endsWith('-thumb.jpg')) return raw;
       if (raw.endsWith('-full.jpg')) return raw.replace(/-full\.jpg$/, '-thumb.jpg');
+      if (raw.endsWith('.jpg')) return raw.replace(/\.jpg$/, '-thumb.jpg');
       return raw;
     }
     // Display size: prefer -full.jpg
@@ -158,62 +178,27 @@ export function formatAuthor(author: string | undefined | null): { name: string;
 }
 
 /**
- * Resolve the best source image URL for a page.
+ * Resolve the best source image URL for a page (the file to OCR, download, or
+ * resize from).
  *
- * IMPORTANT: All image resolution in the app should go through this function
- * or one of its variants (getPageDisplayUrl, getPageThumbUrl) to ensure
- * consistent behavior. In particular, split-from-spread pages bypass the
- * legacy fallback chain entirely — see `.claude/docs/page-system.md`.
- *
- * Legacy chain (non-split pages): cropped_photo > archived_photo > photo_original > photo
- * Split pages: photo directly (no fallback)
+ * Delegates to the canonical {@link getPageSource} (`@/lib/page-image-url`,
+ * issue #1727). Kept as a named export for back-compat with existing callers;
+ * for the size axis use `getPageImageUrl(page, size)` from that module, or the
+ * `getPageDisplayUrl`/`getPageThumbUrl` variants below.
  */
 export function getPageImageUrl(page: Record<string, any>): string | null {
-  // Split-from-spread pages: photo is the single source of truth.
-  // NEVER fall through to photo_original/archived_photo — those point to the unsplit spread.
-  if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
-
-  if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
-  if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
-  // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
-  // Don't try photo/photo_original — archiving already proved those URLs don't work.
-  if (isArchiveFailed(page.archived_photo)) return null;
-  if (isUsableImageUrl(page.photo_original)) return page.photo_original;
-  if (isUsableImageUrl(page.photo)) return page.photo;
-  return null;
+  return getPageSource(page);
 }
 
 /**
- * Get the best display-size (1200px) URL for a page.
- * Prefers pre-rendered display_photo from R2 CDN (no proxy needed).
- * Falls back to /api/image proxy for pages without display variants.
- *
- * Split pages (with crop) always go through the proxy since the display
- * variant is generated from the full spread, not the cropped half.
+ * Best display-size (~1200px) URL for a page. Back-compat wrapper over the
+ * canonical `getPageImageUrl(page, 'display')` (`@/lib/page-image-url`, #1727),
+ * which handles split-era source selection, the R2 variant → IIIF → proxy tiers,
+ * and crop-coords pages.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quality = 80): string | null {
-  // Split-from-spread pages have clean photo — use directly
-  if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
-
-  // Split pages need server-side cropping — always use proxy
-  if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-    const baseUrl = page.archived_photo || page.photo_original || page.photo;
-    if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-  }
-
-  // Pre-rendered display photo — direct from R2 CDN, no proxy
-  if (isUsableImageUrl(page.display_photo)) return page.display_photo;
-
-  // Fallback: derive display URL from new path convention (handles sp prefix)
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(-full)?\.jpg$/);
-  if (newPathMatch) return `${newPathMatch[1]}.jpg`;
-
-  // Legacy fallback: proxy for resize
-  const baseUrl = page.archived_photo || page.photo_original || page.photo;
-  if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
+export function getPageDisplayUrl(page: Record<string, any>): string | null {
+  return resolvePageImage(page, 'display');
 }
 
 /**
@@ -242,34 +227,7 @@ export function getPageGridUrl(page: Record<string, any>): string | null {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPageThumbUrl(page: Record<string, any>): string | null {
-  // Split-from-spread pages have clean photo/thumbnail — skip legacy fallback chain
-  if (page.split_from_spread) {
-    if (isUsableImageUrl(page.thumbnail)) return page.thumbnail;
-    if (isUsableImageUrl(page.photo)) return `/api/image?url=${encodeURIComponent(page.photo)}&w=150&q=60`;
-    return null;
-  }
-
-  // Split pages with crop coordinates need proxy
-  if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-    const baseUrl = page.archived_photo || page.photo_original || page.photo;
-    if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-  }
-
-  // Pre-rendered thumbnail
-  if (isUsableImageUrl(page.thumbnail_blob)) return page.thumbnail_blob;
-
-  // Derive from new path convention (handles sp prefix for split pages)
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(-full)?\.jpg$/);
-  if (newPathMatch) return `${newPathMatch[1]}-thumb.jpg`;
-
-  // Existing thumbnail field
-  if (isUsableImageUrl(page.thumbnail)) return page.thumbnail;
-
-  // Legacy fallback: proxy
-  const baseUrl = page.archived_photo || page.photo_original || page.photo;
-  if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
+  return resolvePageImage(page, 'thumb');
 }
 
 /**

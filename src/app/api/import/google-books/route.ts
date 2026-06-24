@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { applyTextRole } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
@@ -7,6 +8,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { resolveLanguage, resolveDate, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
 
@@ -95,7 +97,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author, display_title, ia_identifier, google_books_id,
+      title, author, display_title, ia_identifier, google_books_id, published,
       image_source: { provider: 'google_books', identifier: google_books_id, source_url: `https://books.google.com/books?id=${google_books_id}` },
     });
     if (dedupResult.isDuplicate) {
@@ -160,6 +162,19 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const slug = await generateUniqueBookSlug(db, title, author, display_title);
 
+    // #2185: prefer IA's empirical language signals (the GBooks scan is mirrored
+    // via IA) over the caller's work-language hint. Same precedence as /import/ia.
+    const gbLangCollection = (Array.isArray(iaMetadata.collection) ? iaMetadata.collection : [iaMetadata.collection])
+      .map((c: unknown) => /^booksbylanguage_(.+)$/i.exec(String(c || ''))?.[1])
+      .find(Boolean) || null;
+    const sourceSignals: LanguageSignal[] = [
+      { value: Array.isArray(iaMetadata.ocr_detected_lang) ? iaMetadata.ocr_detected_lang[0] : iaMetadata.ocr_detected_lang, source: 'ia_ocr_detected' },
+      { value: Array.isArray(iaMetadata.language) ? iaMetadata.language[0] : iaMetadata.language, source: 'ia_metadata' },
+      { value: gbLangCollection, source: 'ia_collection' },
+    ];
+    const lang = resolveLanguage({ callerLanguage: language, sourceSignals });
+    const dateRes = resolveDate({ callerPublished: published, sourceDate: iaMetadata.date || null });
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
@@ -167,8 +182,13 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       display_title: display_title || null,
       author,
-      language: language || 'Unknown',
-      published: published || 'Unknown',
+      language: lang.language,
+      ...(lang.original_language ? { original_language: lang.original_language } : {}),
+      ...(lang.is_translation ? { is_translation: true } : {}),
+      ...(lang.language_review ? { language_review: true } : {}),
+      published: dateRes.published || 'Unknown',
+      ...(dateRes.original_work_year ? { original_work_year: dateRes.original_work_year } : {}),
+      field_provenance: { language: lang.provenance },
       categories: categories || [],
       ...(work_id ? { work_id } : {}),
       ia_identifier,
@@ -202,6 +222,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       updated_at: new Date(),
     };
 
+    // Classify original-vs-translation at import (issue #2395).
+    applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
 
     // Create pages

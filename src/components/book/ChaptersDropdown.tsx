@@ -31,9 +31,9 @@ export default function ChaptersDropdown({ chapters, bookSlug }: { chapters: Cha
       {open && (
         <div className="px-5 pb-5 border-t border-stone-200 dark:border-stone-700">
           <nav className="mt-3 space-y-0.5">
-            {chapters.map((ch, i) => (
+            {chapters.map((ch) => (
               <Link
-                key={i}
+                key={`${ch.pageNumber}-${ch.title}`}
                 href={embedHref(`/book/${bookSlug}/page-number/${ch.pageNumber}`)}
                 className="flex items-baseline gap-2 py-1.5 px-2 -mx-2 rounded hover:bg-stone-100 dark:hover:bg-stone-800/50 transition-colors group"
                 style={{ paddingLeft: `${(ch.level - 1) * 1.25 + 0.5}rem` }}

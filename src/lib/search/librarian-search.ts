@@ -62,6 +62,14 @@ export interface HybridSearchOptions {
 function tenantBookFilter(tenantId: string | null | undefined) {
   return {
     hidden: { $ne: true },
+    // Match the reader gate (isHiddenBook → visible === false). The reader page
+    // and content APIs 404 any book with visible:false (PR #2522), but ~1.1k
+    // books drifted into visible:false while hidden stayed unset — so a
+    // hidden-only filter surfaced them in the librarian and they 404'd on click
+    // (Rainsford "Mytho-Hermetic Dictionary", etc.). Gate on visible too so the
+    // librarian only returns books the reader will actually open. Narrow scope:
+    // only explicit visible:false is excluded; null/missing stays public.
+    visible: { $ne: false },
     // Main-site convention: tenantId null/undefined.
     // For specific tenants, equality.
     ...(tenantId
@@ -306,7 +314,13 @@ function stripAnnotations(text: string): string {
     .replace(/\[\[[^\]]+\]\]/g, '')
     .replace(/^```(?:markdown)?\s*\n?/i, '')
     .replace(/\n?```\s*$/i, '')
-    .replace(/<meta>[^<]*<\/meta>/g, '')
+    // Drop editorial page-level wrappers content-and-all (multiline, any of
+    // meta/summary/keywords/vocab). These describe the page — often naming
+    // content from neighbouring pages — and must never be quoted as source
+    // text. Old regex (<meta>[^<]*</meta>) missed multiline + the other tags
+    // and was the root of the "mercury on page 89" misquote (Nirmal, 2026-05-30).
+    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/\s{2,}/g, ' ')
     .trim();
 }
 

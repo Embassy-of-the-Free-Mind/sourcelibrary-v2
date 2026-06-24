@@ -27,8 +27,11 @@ export async function GET(
     return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
   }
 
-  // Private threads require auth from the creator
-  if (thread.visibility !== 'public') {
+  // Private threads require auth from the creator. 'unlisted' threads
+  // (anonymous conversations — never surfaced in the Recent feed) stay
+  // readable by anyone holding the id: the chat client restores them via
+  // /librarian?thread=<id> when an anonymous visitor navigates back.
+  if (thread.visibility === 'private') {
     const session = await auth();
     if (!session?.user?.id || thread.creatorId !== session.user.id) {
       return NextResponse.json({ error: 'Thread not found' }, { status: 404 });

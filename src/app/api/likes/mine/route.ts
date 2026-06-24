@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
 import { LikeTargetType } from '@/lib/types';
@@ -139,7 +140,7 @@ export async function GET(request: NextRequest) {
           if (!page) return null;
           const book = booksMap.get(page.book_id);
           const rawText = page.translation?.data || page.ocr?.data || '';
-          const text = rawText.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+          const text = stripEditorialWrappers(rawText).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
           return {
             id: page.id,
             pageNumber: page.page_number,

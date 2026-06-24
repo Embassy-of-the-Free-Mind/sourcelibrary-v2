@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 
 export const preferredRegion = 'fra1';
 
@@ -16,8 +19,8 @@ const MAX_PAGE_RESULTS = 25;
 
 /** Strip XML/HTML tags and clean up OCR artifacts for display */
 function cleanText(text: string): string {
-  return text
-    .replace(/<[^>]+>/g, '')        // strip all XML/HTML tags
+  return stripEditorialWrappers(text) // drop <meta>/<summary>/<keywords>/<vocab> prose first
+    .replace(/<[^>]+>/g, '')        // strip remaining tags, keep inner body text
     .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
     .replace(/\s+/g, ' ')           // collapse whitespace
     .trim();
@@ -69,6 +72,25 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const searchContent = searchParams.get('search_content') !== 'false'; // Default true — only skip page search if explicitly disabled
     const pagesOnly = searchParams.get('pages_only') === 'true'; // Return only page-level results (for MCP passage search)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
+    // Ranking strategy for the relevance sort:
+    //   'auto'  (default) — route by query shape: navigational queries (1–2
+    //            words, ~84% of real traffic) keep the curated ladder, which is
+    //            strong for title/author lookups and original-edition ordering;
+    //            conceptual queries (3+ words, the ~16% tail) use RRF, which the
+    //            eval shows wins niche-passage/concept recall there. Captures
+    //            RRF's upside without risking the navigational majority.
+    //   'ladder' / 'rrf' — force a single strategy (used by the compare page A/B
+    //            and for debugging).
+    // SEARCH_RANKING_DEFAULT can override the default without a code change.
+    const rankingParam = (searchParams.get('ranking') || process.env.SEARCH_RANKING_DEFAULT || 'auto').toLowerCase();
+    // Optional LLM-classified intent from /api/search/ai-expand. When present it
+    // routes 'auto' better than word count: only 'navigational' (known
+    // book/author/title lookup) wants the ladder; 'conceptual' and 'verbatim'
+    // both do better with RRF (the eval shows semantic finds the English-quote
+    // passage in a Latin original that keyword/ladder miss).
+    const intentParam = (searchParams.get('intent') || '').toLowerCase();
+    const llmIntent = ['navigational', 'conceptual', 'verbatim'].includes(intentParam) ? intentParam : '';
+    const rrfK = Math.max(1, parseInt(searchParams.get('rrf_k') || '60') || 60);
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 500);
     const offset = parseInt(searchParams.get('offset') || '0');
 
@@ -83,6 +105,22 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Strip surrounding quotes for matching (phrase detection handled by subsystems)
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
+
+    // Resolve the ranking strategy for 'auto': prefer the LLM intent when the
+    // client passed one (navigational → ladder, else → RRF); otherwise fall back
+    // to query word count (1–2 words → ladder, 3+ → RRF) so 'auto' still works
+    // with zero added latency when no intent is supplied.
+    const queryWordCount = matchQuery.trim().split(/\s+/).filter(w => w.length >= 2).length;
+    const useRrf = rankingParam === 'rrf'
+      ? true
+      : rankingParam === 'ladder'
+        ? false
+        : llmIntent
+          ? llmIntent !== 'navigational'
+          : queryWordCount >= 3;
+    const rankingApplied = rankingParam === 'auto'
+      ? `${useRrf ? 'auto-rrf' : 'auto-ladder'}:${llmIntent || 'words'}`
+      : rankingParam;
 
     const db = await getReadDb();
     const results: SearchResult[] = [];
@@ -160,6 +198,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       };
       // Transient field for work-level dedup (stripped before response)
       if ((typedBook as any).work_id) (result as any)._work_id = (typedBook as any).work_id;
+      if ((typedBook as any).text_role) (result as any)._text_role = (typedBook as any).text_role;
       return result;
     }
 
@@ -193,7 +232,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, text_role: 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -380,6 +419,19 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Surface if the page lane hit its 8s ceiling — likely degraded results.
     const pageSearchHitTimeout = pageResult.ms >= 8000 && pageDocs.length === 0;
 
+    // Reciprocal Rank Fusion scores, keyed by the same result.id scheme used
+    // when results are built below (books → book.id, pages → `${book_id}-p${n}`).
+    // Each lane contributes its own ranked order; a book/page surfaced by
+    // several lanes gets summed reciprocal-rank credit. Only used when
+    // ?ranking=rrf — computed unconditionally (cheap, pure) so it's available
+    // to log/compare even on ladder requests.
+    const rrf = rrfScores([
+      bookDocs.map(b => (b as any).id as string),                              // keyword book lane
+      pageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
+      semanticDocs.map(s => (s as any).book_id as string),                    // semantic book lane
+      semanticPageDocs.map(s => `${(s as any).book_id}-p${(s as any).page_number}`), // semantic page lane
+    ], rrfK);
+
     // Process book results
     for (const book of bookDocs) {
       results.push(bookToResult(book as unknown as Book));
@@ -395,7 +447,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const pageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, text_role: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -418,8 +470,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // Prefer translation highlights over OCR
           const translationHL = highlights.find(h => h.path === 'translation.data');
           const hl = translationHL || highlights[0];
-          snippet = cleanText(hl.texts.map(t => t.value).join(''));
           snippetType = hl.path === 'translation.data' ? 'translation' : 'ocr';
+          // Center on the Atlas hit but extract from the FULL field, not the
+          // highlight fragments. Fragments are a window around the hit, so a hit
+          // inside a <meta>/<summary>/<keywords>/<vocab> block arrives WITHOUT
+          // its wrapper tags and stripEditorialWrappers can't remove it — that
+          // leaked the AI page-description as a quote ("mercury on page 89").
+          // extractSnippet runs cleanText over the complete field (tags intact),
+          // so the block is stripped; if the hit was editorial-only it falls back
+          // to real body text rather than the description.
+          const fullData = (snippetType === 'translation' ? page.translation?.data : page.ocr?.data) as string || '';
+          const hitText = hl.texts.find(t => t.type === 'hit')?.value || matchQuery;
+          snippet = extractSnippet(fullData || hl.texts.map(t => t.value).join(''), hitText);
         } else {
           // Fallback to full text extraction
           const translationText = page.translation?.data as string || '';
@@ -453,6 +515,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail_blob: (book as any).thumbnail_blob,
         };
         if ((book as any).work_id) (pageResult as any)._work_id = (book as any).work_id;
+        if ((book as any).text_role) (pageResult as any)._text_role = (book as any).text_role;
         results.push(pageResult);
       }
     }
@@ -485,7 +548,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -524,6 +587,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             quality_score: (book as any).quality_score,
           };
           if ((book as any).work_id) (semResult as any)._work_id = (book as any).work_id;
+          if ((book as any).text_role) (semResult as any)._text_role = (book as any).text_role;
           results.push(semResult);
         }
       }
@@ -557,7 +621,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               ...(languages.length > 0 ? { language: { $in: languages } } : {}),
               ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -596,6 +660,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail_blob: book.thumbnail_blob,
         };
         if (book.work_id) (spResult as any)._work_id = book.work_id;
+        if ((book as any).text_role) (spResult as any)._text_role = (book as any).text_role;
         results.push(spResult);
       }
     }
@@ -619,16 +684,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       // Priority: books > pages, title match, original language, older editions, quality
       const ENGLISH = 'English';
       const queryLower = matchQuery.toLowerCase();
+      const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
 
-      results.sort((a, b) => {
+      // The legacy heuristic ladder. Used directly for ranking=ladder, and as
+      // the tiebreaker when ranking=rrf (so equal fused scores still get a
+      // deterministic, sensible order).
+      const ladderCompare = (a: SearchResult, b: SearchResult): number => {
         // 1. Books before pages
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
 
         // 2. Title/author match (strongest signal)
         // Check both title and display_title, and for multi-word queries
         // count how many query words appear across title+author fields
-        const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
-
         const aAllText = `${(a.display_title || '').toLowerCase()} ${a.title.toLowerCase()} ${(a.author || '').toLowerCase()}`;
         const bAllText = `${(b.display_title || '').toLowerCase()} ${b.title.toLowerCase()} ${(b.author || '').toLowerCase()}`;
 
@@ -643,11 +710,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const bTitleExact = bTitle.includes(queryLower);
         if (aTitleExact !== bTitleExact) return aTitleExact ? -1 : 1;
 
-        // 3. Original language beats modern English translations
-        // A Latin "De Occulta Philosophia" should rank above an English reprint
-        const aOriginal = a.language !== ENGLISH ? 1 : 0;
-        const bOriginal = b.language !== ENGLISH ? 1 : 0;
-        if (aOriginal !== bOriginal) return bOriginal - aOriginal;
+        // 3. Closeness to the source (#2395): original-language texts beat
+        // period translations beat modern translations. text_role is the
+        // classified signal; language is the fallback proxy for pages and
+        // unclassified imports (see src/lib/text-role.ts).
+        const aRank = textRoleRank((a as any)._text_role, a.language);
+        const bRank = textRoleRank((b as any)._text_role, b.language);
+        if (aRank !== bRank) return aRank - bRank;
 
         // 4. Older editions rank higher (earlier = closer to source)
         const aYear = parseInt(a.published?.match(/\d{3,4}/)?.[0] || '9999');
@@ -658,7 +727,34 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aScore = (a as any).quality_score || 0;
         const bScore = (b as any).quality_score || 0;
         return bScore - aScore;
-      });
+      };
+
+      if (useRrf) {
+        // Reciprocal Rank Fusion: primary sort by fused lane score (desc),
+        // ladder as the deterministic tiebreaker. Unlike the ladder, this lets
+        // a strongly-cross-confirmed page outrank a weakly-matched book.
+        //
+        // text_role demotion (#2395): the ladder tier only breaks RRF ties, so
+        // a popular old translation (Evans-Wentz, Jowett) still outranked the
+        // original via lane cross-confirmation. Scale the fused score down for
+        // CLASSIFIED translations only — unclassified results are untouched,
+        // so this is surgical (265 books + their pages), not a filter.
+        const rrfAdjusted = (r: SearchResult) => {
+          const s = rrf.get(r.id) ?? 0;
+          const tr = (r as any)._text_role;
+          if (tr === 'modern-translation') return s / 1.5;
+          if (tr === 'period-translation') return s / 1.2;
+          return s;
+        };
+        results.sort((a, b) => {
+          const sa = rrfAdjusted(a);
+          const sb = rrfAdjusted(b);
+          if (sb !== sa) return sb - sa;
+          return ladderCompare(a, b);
+        });
+      } else {
+        results.sort(ladderCompare);
+      }
     }
 
     // Dedup by work_id: keep the first (best-ranked) edition of each work.
@@ -677,7 +773,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
 
     // Apply offset and strip transient fields
     const paginatedResults = dedupedResults.slice(offset, offset + limit)
-      .map(r => { const { _work_id, ...clean } = r as any; return clean as SearchResult; });
+      .map(r => { const { _work_id, _text_role, ...clean } = r as any; return clean as SearchResult; });
 
     // For exact year searches, find nearby books (within 5 years)
     let nearby: SearchResult[] = [];
@@ -724,6 +820,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       filters: { language, category, year, bookId, library, source: 'global' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      // Geo from the edge header (same source pageviews use) so search interests
+      // can be broken down by country. Forward-only — past searches have none.
+      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
       created_at: new Date(),
     }).catch(() => {});
 
@@ -736,7 +835,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,
         has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
-        pages_only: pagesOnly, sort: sortBy,
+        pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
       },
     });
     return NextResponse.json({
@@ -751,6 +850,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       offset,
       limit,
       sort: sortBy,
+      ranking: rankingApplied,
       license: {
         spdx: 'CC-BY-SA-4.0',
         url: 'https://creativecommons.org/licenses/by-sa/4.0/',

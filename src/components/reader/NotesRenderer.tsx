@@ -292,6 +292,28 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
   return result;
 }
 
+// Handle <term> vocabulary chips when notes are hidden.
+// A trailing glossary entry is a <term> immediately followed by its defining <note>
+// (e.g. `<term>bite</term> <note>original: "morsus."</note>`). With notes off the
+// <note> renders as null, leaving the term chip dangling with no definition. Remove
+// the whole pair. Any remaining <term> is inline within running prose — unwrap it to
+// plain text so the sentence stays intact, just without the highlight chip.
+function preprocessTerms(text: string, showNotes: boolean): string {
+  if (showNotes) return text;
+  return text
+    .replace(/<term>[\s\S]*?<\/term>\s*<note>[\s\S]*?<\/note>/gi, '')
+    .replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
+}
+
+// On description-only pages (illustrations, diagrams, etc.) the entire "translation"
+// is AI-generated description. The model wraps some of it in <note>/<image-desc> and
+// leaves the rest as plain prose, producing inconsistent half-highlighting. Since
+// there is no source text to distinguish from, unwrap those tags so the whole
+// description reads uniformly as plain text.
+function unwrapDescriptionNotes(text: string): string {
+  return text.replace(/<(note|image-desc)>([\s\S]*?)<\/\1>/gi, '$2');
+}
+
 // Convert markdown bold/italic to HTML tags.
 // Used inside HTML block elements (divs, headings) where the markdown parser won't process inline syntax.
 function inlineMarkdownToHtml(text: string): string {
@@ -756,11 +778,20 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
 export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
 
-  // For non-text page types (frontispiece, illustration, etc.), all content is AI description
-  const isDescriptionOnly = pageType ? DESCRIPTION_ONLY_PAGE_TYPES.has(pageType) : false;
+  // For non-text page types (frontispiece, illustration, etc.), all content is AI description.
+  // Check the prop and the model's own <page-type> tag (captured into metadata).
+  const isDescriptionOnly = DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
+    DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '');
 
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
-  const withGreek = useMemo(() => preprocessLatexGreek(withBracketTags), [withBracketTags]);
+  // Drop dangling vocabulary chips when notes are off (see preprocessTerms).
+  const withTerms = useMemo(() => preprocessTerms(withBracketTags, showNotes), [withBracketTags, showNotes]);
+  // On description-only pages, render the whole AI description uniformly (no half-highlighting).
+  const withDescription = useMemo(
+    () => (isDescriptionOnly && showNotes ? unwrapDescriptionNotes(withTerms) : withTerms),
+    [withTerms, isDescriptionOnly, showNotes]
+  );
+  const withGreek = useMemo(() => preprocessLatexGreek(withDescription), [withDescription]);
   const withLatex = useMemo(() => preprocessLatexSuperscripts(withGreek), [withGreek]);
   const withAnnotationMd = useMemo(() => preprocessAnnotationInlineMarkdown(withLatex), [withLatex]);
   const withCentering = useMemo(() => preprocessCentering(withAnnotationMd), [withAnnotationMd]);

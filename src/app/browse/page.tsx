@@ -29,7 +29,7 @@ export default async function BrowsePage() {
   return (
     <>
       <SiteHeader variant="light" />
-      <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
+      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-12 md:py-20">
         <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
           Browse the Collection
         </h1>

@@ -81,7 +81,7 @@
      Narrow: focused reading, forms, text-heavy pages */
   --container-narrow: 672px;   /* ≈ max-w-2xl */
   --container-standard: 1024px; /* ≈ max-w-5xl */
-  --container-wide: 1280px;    /* ≈ max-w-7xl */
+  --container-wide: 1500px;    /* widened from 1280px (#232) */
 }
 
 /* Base styles */
@@ -339,24 +339,10 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-warm);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-medium);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
+/* Scrollbars: use the platform-native overlay scrollbar so it auto-hides and
+ * only appears while scrolling (normal macOS behavior). Defining custom
+ * ::-webkit-scrollbar rules opts out of the overlay/auto-hide and forces an
+ * always-visible track — so we intentionally leave scrollbars unstyled. */
 
 /* Search highlight */
 mark {
@@ -406,6 +392,34 @@ mark {
 }
 .animate-fade-in-slow {
   animation: fade-in 0.7s ease-out forwards;
+}
+
+/* Page-load entrance: opacity-only (a transform here would break sticky
+   headers inside the page). Slightly longer + a soft ease so it's noticeable. */
+.animate-page-enter {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+/* Scroll-into-view section reveal (driven by ScrollReveal.tsx). Only
+   off-screen sections get [data-reveal-item], so above-the-fold content never
+   flashes. Easing/translate mirror the Embassy (Webflow IX2) reveal. */
+[data-reveal-item] {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: opacity, transform;
+}
+[data-reveal-item].is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal-item] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Pulse glow animation for loading spinner */
@@ -651,6 +665,14 @@ body:has(.embed-mode) {
    Apply outside .embed-mode too — root-domain book pages should respect
    the same preferences. */
 html[data-sl-hide-ai="1"] [data-view-section="ai-summary"],
+html[data-sl-hide-ai="default"] [data-view-section="ai-summary"],
 html[data-sl-hide-guide="1"] [data-view-section="reading-guide"] {
+  display: none !important;
+}
+
+/* Catalogue summaries (BphCatalogEntry) are editorially reviewed, so they
+   show under the BPH default ("default") and hide only on an EXPLICIT opt-out
+   ("1") via the gear menu. See VIEW_MODE_INIT_SCRIPT in src/app/layout.tsx. */
+html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
   display: none !important;
 }

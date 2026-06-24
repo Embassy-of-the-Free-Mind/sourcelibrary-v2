@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
@@ -6,17 +5,16 @@ import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
+import { isHiddenBook } from '@/lib/book-access';
 
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
 export const revalidate = 86400;
 
-// Per-page URLs are thin content (one scanned page) and outnumber book URLs
-// 100:1. Keeping them out of the index concentrates Google's attention on the
-// book-level URL (richer metadata, title, description) and avoids soft-404 /
-// duplicate-canonical noise in GSC. They remain crawlable and follow links.
-export const metadata: Metadata = {
-  robots: { index: false, follow: true },
-};
+// robots (index/noindex) is decided per-page in this route's layout.tsx
+// generateMetadata, gated on the page's `seo_indexable` flag (issue #2688).
+// Per-page URLs outnumber book URLs ~100:1, so they stay noindex by default;
+// only demand-proven pages (read >=5, or translated first-translations) open
+// to indexing. They remain crawlable + follow links regardless.
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;
@@ -26,10 +24,10 @@ interface PageProps {
 const BOOK_NAV_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
-  cdli_witnesses: 1, etcsl_id: 1,
+  cdli_witnesses: 1, etcsl_id: 1, visible: 1,
 };
 
-export default async function PageEditorPage({ params }: PageProps) {
+export default async function PageEditorPage({ params, allowHidden = false }: PageProps & { allowHidden?: boolean }) {
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const db = await getReadDb();
@@ -65,6 +63,15 @@ export default async function PageEditorPage({ params }: PageProps) {
   }
 
   const book = bookResult.book as unknown as Book;
+
+  // Hidden (visible:false) books are not public. This per-page route is ISR
+  // (highest-volume URL set — must stay statically cacheable), so it gates
+  // uniformly: hidden → 404 for everyone. Editors read hidden books in-browser
+  // via the dynamic /book/[id]/page/[pageId]/preview route (allowHidden).
+  if (isHiddenBook(book as any) && !allowHidden) {
+    notFound();
+  }
+
   const scopedBookId = (book.id || (book as any)._id?.toString()) as string;
   if ((currentPage.book_id as string) !== scopedBookId) {
     notFound();

@@ -58,6 +58,9 @@ src/data/*
 !src/data/jung-bph-alignment-2026-05-22.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
+!src/data/shwep-bibliographies.ts
+!src/data/shwep-linked-bibliographies.ts
+!src/data/shwep-supplementary-works.ts
 
 # User uploads and test files
 public/uploads/
@@ -102,6 +105,19 @@ src/lib/vendor/lamejs-bundle.js
 .claude/docs/dedup-proposals-staging/
 .claude/docs/dedup-review-queue/
 .claude/docs/dedup-review-queue-resolved/
+
+# Operational content is PRIVATE — lives in Embassy-of-the-Free-Mind/sourcelibrary-ops.
+# This repo is public (AGPL). Handoffs and business docs must not be committed here.
+# (Older technical handoffs already in history stay tracked until a coordinated scrub.)
+.claude/handoffs/
+.claude/docs/fundraising*
+.claude/docs/*outreach*
+.claude/docs/*contact*
+.claude/docs/*budget*
+.claude/docs/*donor*
+.claude/docs/*sponsor*
+# Local scratch (per-machine, never shared)
+.claude/stash-archive/
 backups/
 
 # Book ingestion staging (PDFs, page images, metadata waiting to be processed)

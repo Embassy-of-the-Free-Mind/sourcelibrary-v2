@@ -14,10 +14,17 @@
  *   node scripts/workers/sync-worker.mjs --gallery-only
  */
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
+
+// Supabase is the source of truth for gemini_usage since 2026-04-10 (Issue #567).
+// MongoDB now only catches ~half the writes, so the daily rollup must read from
+// Supabase. We reuse the same env vars as scripts/workers/lib/supabase-usage-logger.mjs.
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_PAGE_SIZE = 1000; // PostgREST hard cap per request — paginate beyond it.
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -176,6 +183,72 @@ async function syncPageCounts(db) {
   return { books_checked: books.length, mismatches: mismatchCount, updated };
 }
 
+// ── Sync Collection Counts ──
+//
+// Restores the collections.book_count / artwork_count cache sync that lived in
+// the archived Vercel cron (src/app/api/cron/_archived/sync-page-counts). When
+// the cron routes were archived (45fb98fb) this block was never ported into
+// sync-worker, so the cached counts drifted on 271/359 collections (found
+// 2026-06-04 via the eastern-erotic-literature "0 books" header — the
+// collection page header at src/app/collections/[id]/page.tsx reads this
+// cached field while the book grid does a live query, so they disagreed).
+
+async function syncCollectionCounts(db) {
+  console.log('\n--- Sync Collection Counts ---');
+  const start = Date.now();
+
+  // One pass over books per counter, instead of 2 countDocuments per collection.
+  // book_count uses the canonical "readable book" filter from the archived cron;
+  // artwork_count counts resource_type-bearing entries regardless of visibility.
+  const [bookCounts, artworkCounts] = await Promise.all([
+    db.collection('books').aggregate([
+      { $match: { status: { $ne: 'deleted' }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, resource_type: { $exists: false } } },
+      { $unwind: '$collections' },
+      { $group: { _id: '$collections', n: { $sum: 1 } } },
+    ]).toArray(),
+    db.collection('books').aggregate([
+      { $match: { resource_type: { $exists: true } } },
+      { $unwind: '$collections' },
+      { $group: { _id: '$collections', n: { $sum: 1 } } },
+    ]).toArray(),
+  ]);
+  const bookMap = new Map(bookCounts.map(r => [r._id, r.n]));
+  const artMap = new Map(artworkCounts.map(r => [r._id, r.n]));
+
+  const collections = await db.collection('collections')
+    .find({}, { projection: { _id: 1, slug: 1, book_count: 1, artwork_count: 1 } })
+    .toArray();
+
+  const ops = [];
+  let mismatchCount = 0;
+  for (const col of collections) {
+    const liveBookCount = bookMap.get(col.slug) || 0;
+    const liveArtworkCount = artMap.get(col.slug) || 0;
+    if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount) {
+      mismatchCount++;
+      if (!DRY_RUN) {
+        ops.push({
+          updateOne: {
+            filter: { _id: col._id },
+            update: { $set: { book_count: liveBookCount, artwork_count: liveArtworkCount, updated_at: new Date() } },
+          },
+        });
+      }
+    }
+  }
+
+  let updated = 0;
+  if (ops.length > 0) {
+    const result = await db.collection('collections').bulkWrite(ops);
+    updated = result.modifiedCount;
+  }
+
+  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  console.log(`  Collections checked: ${collections.length} | Mismatches: ${mismatchCount} | Updated: ${updated} | ${elapsed}s`);
+
+  return { collections_checked: collections.length, mismatches: mismatchCount, updated };
+}
+
 // ── Sync Gallery Images ──
 
 async function syncGalleryImages(db) {
@@ -234,6 +307,8 @@ async function syncGalleryImages(db) {
         'detected_images.bbox': { $exists: true },
         'detected_images.detection_source': { $in: ['vision_model', 'manual', 'ocr_tag'] },
         'detected_images.gallery_quality': { $gte: 0.5 },
+        // Ownership bookplates / ex-libris are provenance, not content — never materialize them
+        'detected_images.type': { $nin: ['exlibris', 'bookplate'] },
       },
     },
     {
@@ -256,14 +331,24 @@ async function syncGalleryImages(db) {
         rotation: '$detected_images.rotation',
         gallery_quality: '$detected_images.gallery_quality',
         confidence: '$detected_images.confidence',
+        gallery_rationale: '$detected_images.gallery_rationale',
         museum_description: '$detected_images.museum_description',
         detection_source: '$detected_images.detection_source',
+        // AI provenance — must be carried so re-sync doesn't strip model/date
+        // (the #2406 / lesson_gallery_images_provenance_sync gap).
+        model: '$detected_images.model',
+        detected_at: '$detected_images.detected_at',
         metadata: '$detected_images.metadata',
+        dhash: '$detected_images.dhash',
         book_title: { $ifNull: ['$book.display_title', { $ifNull: ['$book.title', 'Unknown'] }] },
         book_author: '$book.author',
         book_year: '$book.year',
         book_language: '$book.language',
+        // book_visible is what the gallery read path filters on — omitting it
+        // here is what left freshly-synced images invisible (#2531).
+        book_visible: { $ifNull: ['$book.visible', false] },
         book_hidden: '$book.hidden',
+        book_provider: '$book.image_source.provider',
         book_rank: { $literal: 0 },
         updated_at: new Date(),
       },
@@ -334,7 +419,33 @@ async function syncAuthorSlugs(db) {
     author: { $exists: true, $ne: null, $nin: ['Unknown', 'Anonymous', 'Various'] },
   });
   const slugs = {};
-  for (const a of authors) slugs[authorSlugFn(a)] = a;
+  for (const a of authors) { const s = authorSlugFn(a); if (s) slugs[s] = a; }
+
+  // Canonical-name aliases: an author's books may all be stored under a
+  // name-order variant ("Bruno, Giordano") while links point at the entity's
+  // canonical form ("Giordano Bruno"). Register slug(canonical) → a stored
+  // variant so /author/<canonical-slug> resolves (the page loads by entity and
+  // displays the canonical name). Don't overwrite a base entry. Unblocks the
+  // collection-description author linker (#2176/#2179).
+  let aliases = 0;
+  const ents = await db.collection('books').aggregate([
+    { $match: { visible: true, author: { $type: 'string', $ne: '' }, author_entity_id: { $nin: [null, ''] } } },
+    { $group: { _id: '$author_entity_id', sample: { $first: '$author' } } },
+  ], { allowDiskUse: true }).toArray();
+  const sampleOf = new Map(ents.map(e => [String(e._id), e.sample]));
+  const objIds = [...sampleOf.keys()].filter(s => ObjectId.isValid(s)).map(s => new ObjectId(s));
+  for (let i = 0; i < objIds.length; i += 2000) {
+    const docs = await db.collection('entities').find(
+      { _id: { $in: objIds.slice(i, i + 2000) } },
+      { projection: { canonical_name: 1, name: 1 } }).toArray();
+    for (const e of docs) {
+      const canon = e.canonical_name || e.name;
+      if (!canon) continue;
+      const s = authorSlugFn(canon);
+      const rep = sampleOf.get(String(e._id));
+      if (s && rep && !slugs[s]) { slugs[s] = rep; aliases++; }
+    }
+  }
 
   if (!DRY_RUN) {
     await db.collection('system_config').updateOne(
@@ -344,7 +455,7 @@ async function syncAuthorSlugs(db) {
     );
   }
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-  console.log(`  ${Object.keys(slugs).length} author slugs synced | ${elapsed}s`);
+  console.log(`  ${Object.keys(slugs).length} author slugs synced (${aliases} canonical aliases) | ${elapsed}s`);
   return { author_slugs: Object.keys(slugs).length };
 }
 
@@ -448,6 +559,116 @@ async function refreshAnalyticsSnapshot(db) {
 
 // ── Sync Gemini Usage Daily ──
 
+/**
+ * Fetch every gemini_usage row whose timestamp falls in [dayStart, dayEnd)
+ * from Supabase, paginating past PostgREST's 1000-row cap. Returns an array
+ * of rows (each with the columns from supabase-usage-logger.mjs).
+ */
+async function fetchSupabaseUsageRows(dayStart, dayEnd) {
+  const gte = dayStart.toISOString();
+  const lt = dayEnd.toISOString();
+  const rows = [];
+  let from = 0;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const to = from + SUPABASE_PAGE_SIZE - 1;
+    const url = `${SUPABASE_URL}/rest/v1/gemini_usage`
+      + `?select=type,mode,model,endpoint,status,error_category,error_message,`
+      + `cost_usd,input_tokens,output_tokens,page_count`
+      + `&timestamp=gte.${encodeURIComponent(gte)}`
+      + `&timestamp=lt.${encodeURIComponent(lt)}`
+      + `&order=timestamp.asc`;
+    const resp = await fetch(url, {
+      headers: {
+        apikey: SUPABASE_SERVICE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+        Range: `${from}-${to}`,
+        'Range-Unit': 'items',
+      },
+    });
+    if (!resp.ok) {
+      const text = await resp.text().catch(() => '');
+      throw new Error(`Supabase gemini_usage fetch failed (${resp.status}): ${text}`);
+    }
+    const page = await resp.json();
+    rows.push(...page);
+    if (page.length < SUPABASE_PAGE_SIZE) break; // short page → done
+    from += SUPABASE_PAGE_SIZE;
+  }
+  return rows;
+}
+
+/**
+ * Compute the same rollup shape as aggregateDay() (Mongo path) from an array
+ * of Supabase rows. Keeps every field downstream consumers may read.
+ */
+function aggregateRows(rows) {
+  if (!rows || rows.length === 0) return null;
+
+  let totalCost = 0;
+  let totalInputTokens = 0;
+  let totalOutputTokens = 0;
+  const byType = {};
+  const byModel = {};
+  const byEndpoint = {};
+  const byErrorCategory = {};
+
+  for (const r of rows) {
+    const cost = r.cost_usd ?? 0;
+    const inTok = r.input_tokens ?? 0;
+    const outTok = r.output_tokens ?? 0;
+    const pages = r.page_count ?? 0;
+    totalCost += cost;
+    totalInputTokens += inTok;
+    totalOutputTokens += outTok;
+
+    const typeKey = r.type || 'unknown';
+    const t = byType[typeKey] || (byType[typeKey] = {
+      count: 0, cost: 0, inputTokens: 0, outputTokens: 0,
+      successCount: 0, failedCount: 0, pageCount: 0,
+    });
+    t.count += 1;
+    t.cost += cost;
+    t.inputTokens += inTok;
+    t.outputTokens += outTok;
+    t.pageCount += pages;
+    if (r.status === 'success') t.successCount += 1;
+    if (r.status === 'failed') t.failedCount += 1;
+
+    const modelKey = r.model || 'unknown';
+    const m = byModel[modelKey] || (byModel[modelKey] = { count: 0, cost: 0 });
+    m.count += 1;
+    m.cost += cost;
+
+    if (r.endpoint) byEndpoint[r.endpoint] = (byEndpoint[r.endpoint] || 0) + 1;
+
+    if (r.status === 'failed' && r.error_category) {
+      const e = byErrorCategory[r.error_category] || (byErrorCategory[r.error_category] = {
+        count: 0, lastMessage: '',
+      });
+      e.count += 1;
+      if (r.error_message) e.lastMessage = String(r.error_message).substring(0, 200);
+    }
+  }
+
+  return {
+    totalCost,
+    totalInputTokens,
+    totalOutputTokens,
+    totalRecords: rows.length,
+    byType, byModel, byEndpoint, byErrorCategory,
+  };
+}
+
+/**
+ * Supabase-backed day aggregation. Returns the rollup summary, or null if the
+ * day has no rows.
+ */
+async function aggregateDayFromSupabase(dayStart, dayEnd) {
+  const rows = await fetchSupabaseUsageRows(dayStart, dayEnd);
+  return aggregateRows(rows);
+}
+
 async function aggregateDay(db, dayStart, dayEnd) {
   const [result] = await db.collection('gemini_usage').aggregate([
     { $match: { timestamp: { $gte: dayStart, $lt: dayEnd } } },
@@ -529,6 +750,16 @@ async function syncUsageDaily(db) {
   console.log('\n--- Sync Gemini Usage Daily ---');
   const start = Date.now();
 
+  // Source of truth is Supabase since 2026-04-10 (Issue #567). Mongo only
+  // catches ~half the writes, so reading it undercounts spend ~2x. Fall back
+  // to the legacy Mongo aggregation only if the Supabase key is missing.
+  const useSupabase = Boolean(SUPABASE_SERVICE_KEY);
+  if (!useSupabase) {
+    console.warn('  [warn] SUPABASE_SERVICE_ROLE_KEY not set — falling back to MongoDB gemini_usage (undercounts ~2x)');
+  } else {
+    console.log('  Source: Supabase gemini_usage (paginated)');
+  }
+
   // Aggregate today and the past 2 days (covers late-arriving records)
   const now = new Date();
   let daysUpdated = 0;
@@ -540,7 +771,18 @@ async function syncUsageDaily(db) {
     const dayStart = new Date(dateStr + 'T00:00:00Z');
     const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
 
-    const summary = await aggregateDay(db, dayStart, dayEnd);
+    let summary;
+    if (useSupabase) {
+      try {
+        summary = await aggregateDayFromSupabase(dayStart, dayEnd);
+      } catch (err) {
+        console.warn(`  [warn] Supabase aggregation failed for ${dateStr} (${err.message}) — falling back to MongoDB for this day`);
+        summary = await aggregateDay(db, dayStart, dayEnd);
+      }
+    } else {
+      summary = await aggregateDay(db, dayStart, dayEnd);
+    }
+
     if (summary) {
       if (!DRY_RUN) {
         await db.collection('gemini_usage_daily').updateOne(
@@ -586,6 +828,14 @@ async function run() {
     } catch (err) {
       console.error(`[sync-worker] Page counts phase FAILED: ${err.message}`);
       phaseErrors.push({ phase: 'counts', error: err.message });
+    }
+
+    try {
+      await syncCollectionCounts(db);
+      phasesCompleted.push('collection_counts');
+    } catch (err) {
+      console.error(`[sync-worker] Collection counts phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'collection_counts', error: err.message });
     }
   }
 

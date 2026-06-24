@@ -87,6 +87,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [viewMode, setViewMode] = useState<ViewMode>(initialMode);
   const [loading, setLoading] = useState(false);
+  // Anonymous visitors get 5 free searches/hour; past that the API 401s and we
+  // show a sign-in wall instead of results.
+  const [signInRequired, setSignInRequired] = useState(false);
 
   // Unified results
   const [bookResults, setBookResults] = useState<SearchResult[]>([]);
@@ -186,6 +189,43 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   const [displayHint, setDisplayHint] = useState<'images_first' | 'books_first' | 'not_in_collection'>('books_first');
   const displayHintLocked = useRef(false); // lock once results render to prevent layout shift
   const aiAbortRef = useRef<(() => void) | null>(null);
+
+  // Search-click telemetry context — read by the delegated click listener below.
+  // Updated on each search so a result click can be attributed to the query +
+  // ranking strategy that produced it (closes the search measurement loop).
+  const clickCtx = useRef<{ query: string; ranking: string | null; results: SearchResult[]; view: string; total: number }>({ query: '', ranking: null, results: [], view: 'all', total: 0 });
+
+  // Delegated capture-phase listener: any click on a /book/ link while a search
+  // is active beacons {query, ranking, slug, rank, …} to /api/search/click. One
+  // listener, no per-card wiring; non-result /book/ links won't match a current
+  // result and are recorded with rank undefined (or skipped if no active query).
+  useEffect(() => {
+    function onResultClick(e: MouseEvent) {
+      const anchor = (e.target as HTMLElement)?.closest?.('a[href*="/book/"]') as HTMLAnchorElement | null;
+      if (!anchor) return;
+      const ctx = clickCtx.current;
+      if (!ctx.query) return; // only track within an active search (not browse)
+      const href = anchor.getAttribute('href') || '';
+      const pageMatch = href.match(/\/book\/([^/?#]+)\/page-number\/(\d+)/);
+      const bookMatch = href.match(/\/book\/([^/?#]+)/);
+      const slug = (pageMatch?.[1] || bookMatch?.[1] || '').toLowerCase();
+      if (!slug) return;
+      const idx = ctx.results.findIndex(r =>
+        (r.slug || '').toLowerCase() === slug || (r.book_id || '').toLowerCase() === slug);
+      const payload = {
+        query: ctx.query, ranking: ctx.ranking, slug,
+        page_number: pageMatch ? Number(pageMatch[2]) : undefined,
+        rank: idx >= 0 ? idx + 1 : undefined, view: ctx.view, total: ctx.total,
+      };
+      try {
+        const body = JSON.stringify(payload);
+        if (navigator.sendBeacon) navigator.sendBeacon('/api/search/click', new Blob([body], { type: 'application/json' }));
+        else fetch('/api/search/click', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true });
+      } catch { /* never block the click */ }
+    }
+    document.addEventListener('click', onResultClick, true);
+    return () => document.removeEventListener('click', onResultClick, true);
+  }, []);
 
   // Load filter options + collections (independent so one failure doesn't block others)
   useEffect(() => {
@@ -346,6 +386,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
       return;
     }
     setLoading(true);
+    setSignInRequired(false);
 
     try {
       if (mode === 'unified') {
@@ -382,6 +423,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
           const bTotal = data.books?.total || 0;
           const index = (data.index?.results || []).slice(0, PREVIEW_INDEX);
           const iTotal = data.index?.total || 0;
+          clickCtx.current = { query: q, ranking: (data.books as any)?.ranking || null, results: books, view: 'all', total: bTotal };
 
           // Map unified gallery + visual + artwork results to GalleryItem shape
           // Merge all image sources, deduped by id
@@ -469,8 +511,23 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             if (oldest) searchCache.current.delete(oldest[0]);
           }
         } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          // Anonymous free-search allowance exhausted — show the sign-in wall
+          // and stop (don't fire the parallel agents or report an error).
+          if (/free searches this hour/i.test(msg) || /SIGNIN_REQUIRED/.test(msg)) {
+            setSignInRequired(true);
+            setBookResults([]); setBookTotal(0);
+            setIndexResults([]); setIndexTotal(0);
+            setImageResults([]); setImageTotal(0);
+            setCollectionResults([]); setSemanticResults([]);
+            // Stop the parallel AI-expand stream so nothing leaks past the wall.
+            aiAbortRef.current?.();
+            setAiResults([]); setAiNarration(''); setAiStreaming(false);
+            setLoading(false);
+            return;
+          }
           reportError({
-            message: `Unified search failed: ${err instanceof Error ? err.message : String(err)}`,
+            message: `Unified search failed: ${msg}`,
             source: 'search_query',
           });
         }
@@ -563,6 +620,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         });
         setBookResults(data.results || []);
         setBookTotal(data.total || 0);
+        clickCtx.current = { query: q, ranking: (data as any).ranking || null, results: data.results || [], view: 'books', total: data.total || 0 };
       } else if (mode === 'index') {
         const data = await searchApi.index(q, { type: indexType || undefined });
         setIndexResults(data.results || []);
@@ -730,7 +788,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
-  const noResults = query.length >= 2 && !loading && !semanticLoading && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
+  const noResults = !signInRequired && query.length >= 2 && !loading && !semanticLoading && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
   useEffect(() => {
     if (!noResults || query.length < 3) { setSuggestion(null); return; }
     let cancelled = false;
@@ -782,11 +840,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   return (
     <div className="bg-cream">
-      {!embed && <SiteHeader variant="dark" />}
+      {!embed && <SiteHeader variant="light" />}
 
       {/* Search Bar */}
-      <div className="bg-white border-b border-border-light sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-4">
+      <div className="bg-white border-b border-border-light sticky top-0 z-30">
+        <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
@@ -1070,7 +1128,21 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
       </div>
 
       {/* Results */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
+        {/* Anonymous free-search wall — shown after 5 searches/hour */}
+        {signInRequired && (
+          <div className="text-center py-16 max-w-lg mx-auto">
+            <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
+            <h2 className="text-2xl font-serif font-medium text-primary mb-2">Sign in to keep searching</h2>
+            <p className="text-secondary mb-6">
+              You&rsquo;ve used your free searches for now. Sign in &mdash; it&rsquo;s free &mdash; to keep exploring over 10,000 primary sources.
+            </p>
+            <Link href="/auth/signin?callbackUrl=/search&reason=limit"
+              className="inline-block px-6 py-3 rounded-xl bg-accent-rust text-white font-medium hover:bg-accent-rust/90 transition-colors">
+              Sign in &mdash; free
+            </Link>
+          </div>
+        )}
         {/* Browse gallery — shown when no query + images tab */}
         {isBrowseMode && viewMode === 'images' && (
           <div>
@@ -1330,7 +1402,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         )}
 
         {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
-        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
+        {!signInRequired && viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
           const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
@@ -1626,7 +1698,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         )}
 
         {/* AI-expanded related results — shows for all searches with results */}
-        {!noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
+        {!signInRequired && !noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
           <section className="mt-12 pt-8 border-t border-border-light">
             <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
             <div className="space-y-3">

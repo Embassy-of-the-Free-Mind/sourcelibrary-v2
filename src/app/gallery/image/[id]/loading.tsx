@@ -3,7 +3,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 export default function GalleryImageLoading() {
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
 
       {/* Image hero */}
       <div className="bg-stone-900">

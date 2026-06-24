@@ -1,0 +1,3588 @@
+{
+  "total": 447,
+  "tally": {
+    "REVIEW_REFERENCE": 18,
+    "KEEP_FALSE": 45,
+    "NEEDS_REVIEW": 373,
+    "LANG_MISTAG_SUSPECT": 11
+  },
+  "note": "NOT auto-actionable. confirmed_first is unreliable (applied to English originals + minor works); language mis-tags present. Per-work human review required. No flag was written.",
+  "candidates": [
+    {
+      "id": "69a5edcc96d6dd816a56b8af",
+      "title": "Bibliotheca Orientalis Clementino-Vaticana vol. 2",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69a5edce96d6dd816a56bb8b",
+      "title": "Bibliotheca Orientalis Clementino-Vaticana vol. 3 pars 1: De Scriptoribus Syris ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69a6845e7ab725b59be40ee1",
+      "title": "Opticae thesaurus: Alhazeni Arabis libri septem",
+      "disposition": "first_complete_translation",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_complete_translation)"
+    },
+    {
+      "id": "69ac8e62e54b190acc1d3f13",
+      "title": "Systema theologicum ex Prae-Adamitarum hypothesi",
+      "disposition": "first_modern_translation",
+      "translations_found": 2,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (2)"
+    },
+    {
+      "id": "69aea755b4861a2a73847bc2",
+      "title": "Opera Omnia (Complete Works — Elegantiae, Declamatio, De Voluptate)",
+      "disposition": "first_complete_translation",
+      "translations_found": 3,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (3)"
+    },
+    {
+      "id": "69aea7fad9729ce38747ee57",
+      "title": "Speculum Historiale (Mirror of History)",
+      "disposition": "first_complete_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69aea803d9729ce38747f75c",
+      "title": "De Sacramento Eucharistiae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aea805d9729ce38747f875",
+      "title": "Orationes contra Turcos",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aea808d9729ce38747f9c0",
+      "title": "De Re Dialectica Liber",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aea8741cbf28a363a4fad7",
+      "title": "Iamblichus De Mysteriis; Psellus De Daemonibus",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69aea88e1cbf28a363a50346",
+      "title": "Opera Omnia (Aldine)",
+      "disposition": "first_complete_translation",
+      "translations_found": 6,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (6)"
+    },
+    {
+      "id": "69aeac2bce3ea0f6a5a79909",
+      "title": "Epistolarum Libri XII et Praelectiones",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aebe72a103e42dc941438e",
+      "title": "An Essay to the Advancement of Musick",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69aec0f0dd3c98abc0da80ce",
+      "title": "Nicephori Gregorae Byzantina Historia vol. I",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec307f7a3be06a67e66f4",
+      "title": "De romanis piscibus libellus",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec79a2bb3df12d9b41eeb",
+      "title": "Dialectica breuis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0ab86ff9e48a393c20bc",
+      "title": "Anatome Plantarum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0bdaa16c6f12e8767727",
+      "title": "Arca Noë",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0bdafd75e3c62284c4ce",
+      "title": "In Sphaeram Joannis de Sacrobosco Commentarius",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0d172705dcc541045751",
+      "title": "Traites et Notes d'Alchimie (al-Kindi Alchemy MSS)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0d30ca8f47eb1206aeb2",
+      "title": "Herbarum Vivae Eicones (Vol. 2)",
+      "disposition": "first_complete_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69af0d30acdbcba89ba1cedf",
+      "title": "De Medicatis Aquis atque de Fossilibus",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0d34be5fc7f3635458eb",
+      "title": "Opera Genuina Omnia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0d35067c0c26ee26d2bc",
+      "title": "Rariorum Stirpium per Pannoniam Historia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0d55ca8f47eb1206b704",
+      "title": "De Alchemia Dialogi II (On Geber's Alchemy)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0d64ca8f47eb1206b78c",
+      "title": "Verae Alchemiae Doctrina (True Alchemy Anthology)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0dab9f13b61d0a6c6105",
+      "title": "Cogitata Physico-Mathematica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0de6067c0c26ee26d8f3",
+      "title": "Commentarii in Libros Sex Pedacii Dioscoridis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0ed3be5fc7f363546b2f",
+      "title": "Libri de Piscibus Marinis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0f42af16a5a1d2280246",
+      "title": "Poemata Omnia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b00a0ec42435fcd0cf9acb",
+      "title": "Claudii Galeni Opera Omnia, Vol. 18 Pt. 2",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b00e9e312120db3b488d41",
+      "title": "L. Annaei Senecae Opera Philosophica, Vol. 1",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b00f6ce485bbb15c6b29cb",
+      "title": "Pedanii Dioscoridis De Medica Materia Libri Quinque (1546)",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b1d9ecd3979b7aedf4d96d",
+      "title": "Chiromantia medica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b220f356715b0e32473bd0",
+      "title": "Cornucopiae Linguae Latinae (Aldine Press)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b2214d08069e96e842f4d3",
+      "title": "Orthographia Dictionum Graecarum apud Statium (Aldine Press)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b2217608069e96e842fd0d",
+      "title": "Philostratus, Life of Apollonius of Tyana (Aldine Press)",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b2218b08069e96e843034c",
+      "title": "Xenophon, Opera — Cyropaedia, Hunting, Spartan Constitution, Agesilaus (Aldine P",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b221d008069e96e843147d",
+      "title": "Institutionum Grammaticarum Libri Quatuor (Aldine Press)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b269769c47116e2114d998",
+      "title": "Pontani De Fortitudine; De Principe; Dialogus Charon; De Obedientia",
+      "disposition": "first_complete_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69b2f3b221208ea9dc27884b",
+      "title": "Biblia (Robert Estienne Bible)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b2f47c5ef23d31023f7535",
+      "title": "Iuris Orientalis Libri III",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b2ff5f5545150b61b47b54",
+      "title": "Opera Omnia Vol. 4",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b2ffc95545150b61b49756",
+      "title": "Opera Pars Secunda",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b2ffdc5545150b61b4a290",
+      "title": "Apophthegmatum Opus",
+      "disposition": "first_complete_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69b3001c5545150b61b4bc01",
+      "title": "Scripta (1550)",
+      "disposition": "first_complete_translation",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_complete_translation)"
+    },
+    {
+      "id": "69b30089e28f56bd74941c98",
+      "title": "De Natura Stirpium",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b30094e5d6d64d8e199966",
+      "title": "Notitia Dignitatum (cum Orientis tum Occidentis)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b30097e5d6d64d8e199c53",
+      "title": "Opera Omnia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b300a7e28f56bd74942755",
+      "title": "Biblia Integra (1491)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b301ecc22956d8a0de5299",
+      "title": "Aristarchus Sacer",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b302cddf2b658a33e9b550",
+      "title": "Comus sive Phagesiposia Cimmeria",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b303b15facc83a9a3da55c",
+      "title": "Historia Pacis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b62f4d1c1c21a3737f449b",
+      "title": "Epitome omnium operum divi Aurelii Augustini Hipponensis episcopi, In qua quidqu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69c4ec33a3a4a7c546ee610c",
+      "title": "Philaletha illustratus",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db84dcf4c595498deb9459",
+      "title": "A Treatise of the Natural Grounds and Principles of Harmony",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69db84dcf4c595498deb945f",
+      "title": "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hierogl",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db84dcf4c595498deb945b",
+      "title": "Athanasii Kircheri ... Magneticum Naturae Regnum Sive Disceptatio Physiologica D",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db84dcf4c595498deb945c",
+      "title": "Athanasii Kircheri Fvldensis E Soc. Iesv Presbyteri Mvsvrgia Vniversalis Sive Ar",
+      "disposition": "first_complete_translation",
+      "translations_found": 2,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (2)"
+    },
+    {
+      "id": "69db84dcf4c595498deb9463",
+      "title": "Athanasii Kircheri Ars magnesia : hoc est disquisitio bipartita empeirica seu ex",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db854cf4c595498deb948e",
+      "title": "Secreta secretorvm Raymvndi Lvllii et Hermetis philosophorvm : in libros tres di",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db854cf4c595498deb949a",
+      "title": "Operis Mineralis Pars .... 3, In Qua Titulo Commentarii in libellum Paracelsi Co",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db854cf4c595498deb949b",
+      "title": "Bibliotheca Chimica. Seu Catalogus Librorum Philosophicorum Hermeticorum : In Qu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db854cf4c595498deb94a8",
+      "title": "Hermetis Trismegisti de dei providentia a L. - BSB Clm 18971(1",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db85bdf4c595498deb94b5",
+      "title": "Theatrum machinarum. 2",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db85bdf4c595498deb94b6",
+      "title": "Theatrum machinarum. 4",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db85bdf4c595498deb94b7",
+      "title": "Theatrum machinarum. 3",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db8613f4c595498deb94cf",
+      "title": "Index Librorvm Prohibitorvm : Actorum XIX. Mvlti Avtem Ex Eis Qvi Fverant Curios",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db8613f4c595498deb94d1",
+      "title": "Index librorum quorundam ex omni elegantiori litteratura selectorum atque maxima",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db8613f4c595498deb94d2",
+      "title": "Supplementum ad catalogum librorum a commissione aulica prohibitorum : de annis ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db8654f4c595498deb94f1",
+      "title": "Diss. ... de cognitione naturali existentiae angelicae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db88e6f4c595498deb9575",
+      "title": "Sophiae cum Moria Certamen",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db88e6f4c595498deb9580",
+      "title": "Le Tonnelier : Opéra Comique, Meslée D'Ariettes",
+      "disposition": "first_from_source",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69db88e6f4c595498deb9585",
+      "title": "On Ne S'Avise Jamais De Tout : Opera Comique En Un Acte En Prose, Mêlé De Musiqu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db88e6f4c595498deb9581",
+      "title": "L' Isle Sonnante : Opera Comique En Trois Actes",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db88e6f4c595498deb9582",
+      "title": "Le Jardinier Et Son Seigneur : Opéra Comique En Un Acte en Prose, mêlé de morcea",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db88e6f4c595498deb9583",
+      "title": "Le Maréchal Ferrant : Opéra Comique En Un Acte",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db88e6f4c595498deb9587",
+      "title": "Le Faucon : Opera-Comique, En Un Acte, En Prose Mêlée D'Ariettes",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db88e6f4c595498deb9588",
+      "title": "Le Soldat Magicien : Opera-Comique En Un Acte",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864db0",
+      "title": "Introductio in divinam Chemiae artem",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864db1",
+      "title": "Compendium chymicum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864db3",
+      "title": "Aurum non aurum ...",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e10",
+      "title": "Johannis Danielis Mylii Vetterani Hassi M. C. Opus Medico-Chymicum : Continens t",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e12",
+      "title": "Viatorium",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e13",
+      "title": "Rerum Chymicarum Epistolica Forma Ad Philosophos Et Medicos Quosdam In Germania ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e20",
+      "title": "Anatomia Mercurii spagirica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e23",
+      "title": "Themis aurea",
+      "disposition": "first_modern_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69db92818ee26ccc99864e2c",
+      "title": "Rosarium secretissimum philosophorum arcanum comprehendens",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e2e",
+      "title": "Operis Mineralis Pars .... 2, De Ortu & origine omnium Metallorum & Mineralium, ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e2f",
+      "title": "Operis Mineralis Pars .... 1, Ubi docetur separatio auri e silicibus, arena, arg",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e30",
+      "title": "Prosperitatis Germaniae pars .... 1, In qua de vini, frumenti & ligni concentrat",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e35",
+      "title": "Prosperitatis Germaniae pars .... 3, In qua Salpetrae ex variis ubiq, obviis sub",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e36",
+      "title": "Prosperitatis Germaniae pars .... 2, Mineralia per nitrum condensandi, aut conce",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e32",
+      "title": "Lexicon Chymicum : Cum Obscuriorum verborum et rerum hermeticarum ...",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e37",
+      "title": "Prosperitatis Germaniae pars .... 4, In qua multa praeclara, utilia, patriaeque ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e39",
+      "title": "Prosperitatis Germaniae pars .... 5, Dilucide & solide demonstrans, ac quasi dig",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e3f",
+      "title": "Basilii Valentini Tractatus Chymico-Philosophicus De Rebus Naturalibus & Superna",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e41",
+      "title": "Tractatus chymico-philosophicus de rebus naturalibus",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e42",
+      "title": "Eröffnetes philosophische Vaterhertz",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e48",
+      "title": "Manuscriptum ad sereniss. Holsatiae Ducem olim transmissum res alchymicorum obsc",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e46",
+      "title": "Scrutinium philosophicum de vero elixire vitae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e79",
+      "title": "Otium Friedrichstadiense seu Tantalus chemicus : i. e. Commentarius phys.-chem. ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e78",
+      "title": "Johannis Ludovici Hannemanni Otium Fridrichstadiense, seu Tantalus chemicus : i.",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db92818ee26ccc99864e8e",
+      "title": "Compendium Alchymisticum Novum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db93e78ee26ccc99864e93",
+      "title": "Origines Antwerpianae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db93e78ee26ccc99864ea3",
+      "title": "Disputatio Inauguralis Physico-Medica, De Magnetismis Macro- Et Microcosmi : tam",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db94428ee26ccc99864ea6",
+      "title": "Absconditorum a constitutione mundi clavis : qua mens humana tam in divinis, qua",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db94428ee26ccc99864ea7",
+      "title": "De foenicum literis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db94428ee26ccc99864ea8",
+      "title": "[...] Bechinath Happeruschim Hoc est Examinis Commentationum Rabbinicarum in Mos",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db94428ee26ccc99864eb2",
+      "title": "De Originibus seu de Hebraicae linguae antiquitate Liber",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db94428ee26ccc99864eb4",
+      "title": "Absconditorvm À Constitutione mundi Clauis, qua mens humana tam in diuinis quàm ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db94428ee26ccc99864eb5",
+      "title": "Panthenōsia, Compositio Omnivm Dissidiorum circa aeternam ueritatem aut uerisimi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db950f8ee26ccc99864ecc",
+      "title": "Eiusdem Iamblichi in epistolam Porphyrii - BSB Cod.graec. 361 b",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69db950f8ee26ccc99864ed1",
+      "title": "Theatrum sympatheticum, in quo symphatiae actiones variae singulares et admirand",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db950f8ee26ccc99864ed0",
+      "title": "Simonides Redivivus, siue Ars Memoriæ, Et Oblivionis, (Quam hodie complures peni",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db950f8ee26ccc99864ed6",
+      "title": "Apodixis Promantica Ex Numero Quarto Felicitatem, Gloriam, Salutem, Et Pacem Fer",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db950f8ee26ccc99864ed7",
+      "title": "In Caii Plinii Secundi Naturalis historiae argutissimi scriptoris I. & II. cap. ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db950f8ee26ccc99864edd",
+      "title": "Alberti Magni De Secretis Mulierum Libellus : Scholiis Auctus, & a mendis repurg",
+      "disposition": "first_modern_translation",
+      "translations_found": 2,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (2)"
+    },
+    {
+      "id": "69db957a8ee26ccc99864ef7",
+      "title": "Alcorani seu legis Mahometi et Evangelistarum concordiae Liber : in quo de calam",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864ef8",
+      "title": "Cosmographicae disciplinae compendium : Libri duo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864efa",
+      "title": "Varii Historiae Romanae Scriptores",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864efb",
+      "title": "Elementorum rhetorices libri duo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864efc",
+      "title": "Guillelmi Postelli De universitate libri duo : in quibus astronomiae, doctrinaev",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864efd",
+      "title": "De rationibus Spiritus sancti Lib. II",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f09",
+      "title": "Commentarii Linguae Graecae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f08",
+      "title": "Dictionarium Latinogallicum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f0a",
+      "title": "Opera Omnia Vol. 3",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f10",
+      "title": "Viridarium iuris feudalis theorico-practicum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f11",
+      "title": "Theatrum fati",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f12",
+      "title": "Curieuse Studenten-Bibliothec",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f14",
+      "title": "Delineatio rei numismaticae antiquae et recentioris in usum praelectionum academ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f16",
+      "title": "Opera Dionysii : Veteris et noue translationis. etiam nouissime ip[s]ius Marsili",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f13",
+      "title": "Henrici Johannis Bytemeister Delineatio rei numismaticae antiquae et recentioris",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f19",
+      "title": "Henrici Cornelii Agrippae, Ab Nettesheym ... Apologia aduersus calumnias propter",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f1e",
+      "title": "Platōnōs Erastai, Ē Peri Philosophias : = Platonis Dialogvs De Philosophia Vel A",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f21",
+      "title": "Dissertatio Physica Prima De Vinculo Animam Et Corpus Conjungente",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f25",
+      "title": "Io. Francisci Bvddei Compendivm Historiae Philosophicae, Observationibvs Illvstr",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f2f",
+      "title": "Ioannis Reuchlin Phorcensis ... Liber congestorum de arte praedicandi ...",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f30",
+      "title": "Ioannis Francisci Pici Mirandulæ de morte Christi & propria cogitanda libri tres",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f31",
+      "title": "Joannis Francisci Pici Mira[n]dulae domini & co[n]cordise comitis Sthavrostichon",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f33",
+      "title": "Doctissimi Viri Ioannis Pici Mirandulae, Concordiae comitis: Exactissima exposit",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f34",
+      "title": "Libro de Magistrati de gli Atheniesi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f35",
+      "title": "Sacrarum apodixeon, seu Euclidis Christiani lib. II",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f3b",
+      "title": "De universitate liber",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f3e",
+      "title": "Le prime nove del altro mondo : cioe ... La Vergine Venetiana",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f45",
+      "title": "De universitate liber",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f52",
+      "title": "Notae Historico-Politicae in vitam Oliverii Cronwellii, Protectoris Angliae, Sco",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f59",
+      "title": "Ars brevis : cum Approbatione",
+      "disposition": "first_complete_translation",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_complete_translation)"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f5c",
+      "title": "Pantosophiae sacro-profanae in Raymundo Lullio in artem redactae nunc olimatae a",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f61",
+      "title": "Homēru Exēgētēs : Cvm Indice locupletissimo = Homeri Interpres",
+      "disposition": "first_from_source",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69db957a8ee26ccc99864f67",
+      "title": "Illustrium controversiarum aliarumque usu frequentium Pars prima, tres priores l",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db96168ee26ccc99864f9b",
+      "title": "Procli philosophi Platonici opera : E codd. mss. biblioth. reg. Parisiensis. 2, ",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69db96168ee26ccc99864fb8",
+      "title": "Dispvtatio Historica Solennis De Rosaecrvcianis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db96168ee26ccc99864fc1",
+      "title": "Catalogus Codicum Arabicorum Persicorum Turcicorum Bibliothecae Palatinae Vindob",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db96168ee26ccc99864fd0",
+      "title": "Den ... Trap Tot De Bekeeringe. 1",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db96178ee26ccc99864fdc",
+      "title": "Panathenaea : sive de Minervae illo gemino festo liber singularis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db96178ee26ccc99864fdf",
+      "title": "Disp. hist. de Abaride",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db96178ee26ccc99864fe0",
+      "title": "Disp. hist. de Abaride cum alia dedicat.",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db96178ee26ccc99864fe2",
+      "title": "Porphyriu Peri Tu En Tē Odysseia Tōn Nymphōn Antru : = Porphyrius De Antro Nymph",
+      "disposition": "first_from_source",
+      "translations_found": 2,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (2)"
+    },
+    {
+      "id": "69db97108ee26ccc99865016",
+      "title": "Johannis-Jacobi Wissenbachii, Nassovii, JC. & Antecessoris Frisii, Ad Duos Postr",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc9986501a",
+      "title": "Novum in Platonis Timaeum et Critiam coniecturam atque emendationum Specimen",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc9986501c",
+      "title": "Bibliotheca Firmiana Sive Thesaurus Lirbrorum Quem Excellentiss. Comes Carolus A",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db97108ee26ccc99865034",
+      "title": "Historia de Bello Svecico",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc99865037",
+      "title": "Geographiae universae tum veteris, tum novae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc9986503a",
+      "title": "Sigalion in Croesiaden Hyperaspisten seu dialogus apologeticus pro mysterio Sync",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc99865040",
+      "title": "Platone in Italia. T. 2",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc9986504a",
+      "title": "Dissertatio Solemnis, De Philosophia Silentii",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc9986504c",
+      "title": "Observationes De Imperatore Mortvo Ex Annalibvs Et Legibvs Conqvisitae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc99865055",
+      "title": "Sub Rectoratu Magnicentissimo, Reverendissimi & Illustrissimi Domini, Domini Phi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc99865060",
+      "title": "Diss. theol. II. de theologumenois Macarii Magnetis : ex fragmentis operis deper",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc9986505b",
+      "title": "Diss. I. philol. F. I. Frontonis ... de virginitate honorata, erudita, adorata, ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc9986505d",
+      "title": "Dispvtatio Historica De Abaride",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db97108ee26ccc99865065",
+      "title": "Bibliothecae Samuelis S.R.I. Com. Teleki de Szék. 1, Auctores Classicos Graecos ",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69db9add8ee26ccc998650f5",
+      "title": "Friderici Boerneri Lipsiensis Medicinae Doctoris Academiae Caesareae Naturae Cur",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db9add8ee26ccc99865114",
+      "title": "Dissertatio Inauguralis Medica De Haemorrhoidibus Caecis & Apertis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db9add8ee26ccc99865116",
+      "title": "Promptuarium rerum naturalium et artificialium Vratislaviense",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db9add8ee26ccc9986511f",
+      "title": "Bibliotheca Academiae Caesareae Leopoldino-Carolinae naturae curiosorum : biblio",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db9add8ee26ccc9986511c",
+      "title": "Viridarium Florentinum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db9add8ee26ccc99865121",
+      "title": "Bibliotheca Sive Catalogvs Librorvm Qvibvs Vtitvr Georgius Septimus Dieterichs. ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db9add8ee26ccc99865125",
+      "title": "Guilielmi Antonii Ficker ... Commentatio de temperamentis hominum quatenus ex fa",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db9add8ee26ccc99865130",
+      "title": "Friderici Boerneri Lipsiensis Medicinae Doctoris Academiae Caesariae Naturae Cur",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db9add8ee26ccc99865137",
+      "title": "Catalogus Librorum Medicorum in Officina Wolffgangi Mauritii Endteriana",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69db9add8ee26ccc9986513b",
+      "title": "Vita longa, ars brevis ostenditur : diss. inaug.",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69db9add8ee26ccc99865145",
+      "title": "Talpae europaeae anatome : dissertatio ; cum 3 tabulis aeneis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aea399484fa5533b660e29",
+      "title": "Hermeneia tes Zographikes Technes",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b51e74768235dc65993b08",
+      "title": "De Jacobi Andreae Vita Et Missionibus Pro Reformanda Ecclesia Lutherana Suscepti",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e6bcf111105c429c9a6",
+      "title": "Martini à S. Brunone Austriaci Viennensis E Scholis Piis: Vertumnus Vanitatis : ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e4bcf111105c429a0ea",
+      "title": "Bibliotheca Pontificia Dvobvs Libris Distincta",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69b51ec4ff09e4fe943b4713",
+      "title": "Duarum epistolarum à Georgio Morlaeo et Episcapo Wintoniensi ad Ianum Ulitium da",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b3005de5d6d64d8e1990d7",
+      "title": "Opera Omnia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69ae904414cd71fa8cd873c6",
+      "title": "Sappho: Memoir, Text, Selected Renderings and a Literal Translation",
+      "disposition": "first_from_source",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69b51dedefd8df28f2dada91",
+      "title": "Viridarium Cliffortianum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec89ef24f28c970822764",
+      "title": "Epistolae familiares",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0be1bc67baee10860ec1",
+      "title": "Opera Chirurgica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec50d3b6ebce5e0ee87d0",
+      "title": "Ethical Writings of Cicero: De Officiis, De Senectute, De Amicitia",
+      "disposition": "first_modern_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69aec5053b6ebce5e0ee8644",
+      "title": "Outlines of an Historical View of the Progress of the Human Mind (John Adams's C",
+      "disposition": "first_from_source",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69aebe64a103e42dc9414056",
+      "title": "Magia Universalis Naturae et Artis, Vol. I",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0c1d0b28ecdd1331d5e2",
+      "title": "Gnomonices Libri Octo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69ae952e7b20cd7c9bfcbcb9",
+      "title": "Nicomachus of Gerasa: Introduction to Arithmetic",
+      "disposition": "first_from_source",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69af0bfaf2e68add0cf21eec",
+      "title": "Musaeum Metallicum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0a1c5c5d25dbf81c824d",
+      "title": "Primitiae Gnomonicae Catoptricae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0bdea3e283c6b4d27730",
+      "title": "De Visione, Voce, Auditu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec44d3b6ebce5e0ee5ba8",
+      "title": "Notes on the State of Virginia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69aebe61c0472fef6455aa53",
+      "title": "Mercury, or The Secret and Swift Messenger",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69aec1eece4dead60877abde",
+      "title": "The Natural History of Oxfordshire",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69af0c7c067c0c26ee26b5da",
+      "title": "De Scientia Stellarum (Zij al-Sabi)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69ae907014cd71fa8cd87edc",
+      "title": "Enquiry into Plants, Vol. 1 (Loeb)",
+      "disposition": "first_from_source",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69af0c89067c0c26ee26bcaf",
+      "title": "Elementa Astronomica (Jawami Ilm al-Nujum)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0bfad52f95654dfadf69",
+      "title": "Ornithologiae, Libri XII",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0ca0067c0c26ee26bf37",
+      "title": "Colliget Libri VII (Kitab al-Kulliyyat)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0a9068bf0754164e4558",
+      "title": "Musaeum Regalis Societatis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0cfe067c0c26ee26cfa9",
+      "title": "Tabulae Stellarum Fixarum (Zij-i Sultani)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec5353b6ebce5e0ee916d",
+      "title": "An Inquiry into the Human Mind on the Principles of Common Sense",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69aec4973b6ebce5e0ee6d85",
+      "title": "Washington's Farewell Address to the People of the United States",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69af0d05be5fc7f363545789",
+      "title": "Examen Philosophiae Novae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec144b87be1eef391ddab",
+      "title": "Procopii Caesariensis Opera omnia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec157b87be1eef391ea55",
+      "title": "The Faerie Queene, Vol. 1 (Kent Illustrations)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69af0d04067c0c26ee26d0cf",
+      "title": "Syntagma Selectorum Arcanorum Chymicorum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69af0d072705dcc541045424",
+      "title": "Appendix Necessaria Syntagmatis Arcanorum Chymicorum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69aec1f00767ad23dd0affb0",
+      "title": "An Essay towards a Real Character and a Philosophical Language",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69ae937b6b104a7f50564bfe",
+      "title": "Notice sur le Papyrus Gnostique Bruce",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69ae668db3b0e7bf712d66a9",
+      "title": "Meteorologica",
+      "disposition": "first_from_source",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69b300e7e28f56bd74942c48",
+      "title": "Biblia cum Glossa Ordinaria (with Nicholas of Lyra)",
+      "disposition": "first_complete_translation",
+      "translations_found": 2,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (2)"
+    },
+    {
+      "id": "69b4d63ef22c8341a90ba06b",
+      "title": "Viridarium mathematicorum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b32d015a396b236494be3c",
+      "title": "De Republica Ecclesiastica libri X (Vol. 1)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b0106ae485bbb15c6b5110",
+      "title": "Gemini Elementa Astronomiae (Manitius 1898)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b32d6e5a396b236494c5c9",
+      "title": "De Republica Ecclesiastica libri X (Vol. 2)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b32d745a396b236494c9f7",
+      "title": "De Republica Ecclesiastica libri X (Vol. 3)",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51dd5261c58d63664b05b",
+      "title": "Johannis Fechneri Viridarium idylliorum sacrorum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51dd3768235dc659887e2",
+      "title": "Catalogi librorum in bibliopolio Argentinensi Simonis Paulli venalium. 3. Insign",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51dcf768235dc659882e2",
+      "title": "Viridarium Epistolicum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51deccf111105c4293799",
+      "title": "Viridarium Marianum Antiquo-Novum Seu Exempla Varia Ad Superanda Vitia, Et Aquir",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51df0efd8df28f2dadf28",
+      "title": "Delineatio rei numismaticae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e1f768235dc6598c9e7",
+      "title": "Ioan. Ernesti Burggravii Neost. Palatini Biolychnium seu Lvcerna : Cvm Vita Eivs",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e23efd8df28f2db17ba",
+      "title": "Analysis Aequationum universalis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e24cf111105c42977f9",
+      "title": "Dissertatio Historico-Politica De Nummis cum usu valentibus, tum memorialibus, Q",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e0a47b06ecd58188f0b",
+      "title": "Codices arabicos, persicos, turcicos, bibliothecae Caesareo-regio-palatinae Vind",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69b51e28768235dc6598d227",
+      "title": "Il Giordano overo il cittadino gentiluomo : commedia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e2cefd8df28f2db2159",
+      "title": "De episcopis Eugubinis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e2e47b06ecd5818b5a1",
+      "title": "Catalogus codicum saeculo XV. impressorum, qui in publica Bibliotheca Magliabech",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69b51e46cf111105c4299cb9",
+      "title": "Orationes solennes duae in laudem Diuorum Principum Electorum Saxoniae, &c. D. M",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e53ff09e4fe943abd4e",
+      "title": "Breviarium Romanum. 4",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51e6f47b06ecd58190199",
+      "title": "Commentatio De Splendore Archiofficiorvm In Caroli VII., Mariae Amaliae Et Franc",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51eb4cf111105c42a3669",
+      "title": "Jean de Paris : opéra comique en deux actes",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b51eac9a81ef7feb3d940d",
+      "title": "Blaise, Le Savetier : Opéra Comique, Mêlé D'Ariettes",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51ea647b06ecd58194cbb",
+      "title": "Arbor Scientiae Boni, Et Mali In solo Paradiso S. Cathol. Apost. Romanae Ecclesi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51eaa9a81ef7feb3d936f",
+      "title": "Arbor scientiae boni et mali secundum Scripturas S. ... exposita",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51ec6ff09e4fe943b4853",
+      "title": "De Dionysio Areopagita : Scriptisque Eidem Suppositis Contra Godof. Arnoldum",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51ebf768235dc659983ec",
+      "title": "De carnium abstinentia disputatio",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51ed4cf111105c42a46f7",
+      "title": "Alphabetarius (Abstinentia - Zelus). Fol. 89 De B. Maria. Fol. 96 Quadragesimale",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b51ece9a81ef7feb3dafe3",
+      "title": "Jo. Georgii Walchii bibliotheca theologica selecta litterariis adnotationibus in",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69b51ec69a81ef7feb3dacae",
+      "title": "Dissertatio Juridica De Abstinentia Juris Naturæ A Fallacibus Regulis Putativi P",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b62fa91c1c21a3737f85ab",
+      "title": "Enarrationis Psalmorum Davidis, ex praelectionibus D. Henrici Molleri Hamburgens",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b62fc71c1c21a3737fa5f9",
+      "title": "Commentarii in Epistolas D. Pauli ad Timoth. ad Titum, et ad Philem. facili et p",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b62fcf1c1c21a3737faf5a",
+      "title": "Commentarii in Evangelium Domini nostri Jesu Christi secundum Marcum, facili, et",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b62f861c1c21a3737f6a83",
+      "title": "Novi Testamenti catholica expositio ecclesiastica, ex probatis theologis, quos D",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "REVIEW_REFERENCE",
+      "reason": "reference/catalogue work"
+    },
+    {
+      "id": "69b62fd61c1c21a3737fb3f3",
+      "title": "Commentarii in sacram Actuum Apostolicorum historiam, facili et perspicua method",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b62fd91c1c21a3737fb4fb",
+      "title": "Isagoge ad lectionem epistolarum divi Pauli apostoli, qua compositionis oeconomi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6301a1c1c21a3737fdec2",
+      "title": "Selecta ex Aeliano : in usum scholae quartae Turicensis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630301c1c21a3737fe842",
+      "title": "[Titre de départ :] Conjuctiones titulorum sive rubricarum utriusque juris recte",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b62fff1c1c21a3737fd436",
+      "title": "Juris civilis initia et progressus. Ad leges XII. Tabularum brevis commentatio. ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630091c1c21a3737fd7b8",
+      "title": "Grammaticae latinae elementa prima : primae classis scholae Tigurinae discipulo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630131c1c21a3737fd9ca",
+      "title": "Commentarii in Epistolam D. Pauli ad Ephesios, facili et perspicua methodo consc",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630891c1c21a373802a9a",
+      "title": "Abbreviata species facti in causa abbatis Anselmi in Monte S. Michaëlis prope Ba",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630761c1c21a373802885",
+      "title": "Descriptio et examen scalae pro reducendis ad horizontem angulis inclinatis a To",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630ba1c1c21a373803e35",
+      "title": "[Scriptum compendiosum Psalterii intentionem declarans]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630571c1c21a373800f52",
+      "title": "Gallicae grammatices libellus.",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630291c1c21a3737fe6da",
+      "title": "Disputatio physica expendens rationes & caussas, cur plurimi ab esu casei abhorr",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6301c1c1c21a3737fdefc",
+      "title": "Phoenomena solis a luna tecti lunae per umbram telluris obscuratae : in orthogra",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630a91c1c21a373803934",
+      "title": "De cometis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630b71c1c21a373803e10",
+      "title": "[Copiae indulgentiarum de institutione festi Praesentationis beatae Mariae virgi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630181c1c21a3737fde30",
+      "title": "Selecta capita ex scriptoribus Graecis in usum classis quintae Carolinae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630f71c1c21a373804e23",
+      "title": "[De veritate dicenda aut tacenda]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630fe1c1c21a373804e88",
+      "title": "[De epidemia et peste]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631421c1c21a37380600b",
+      "title": "[Modus legendi abbreviaturas] : [cum aliis tractatibus iuridicis]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631331c1c21a373805e37",
+      "title": "[Dicta de arbore quae dicitur Imago hominis]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630d91c1c21a373804981",
+      "title": "[Meditationes seu Contemplationes devotissimae]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630d71c1c21a37380495f",
+      "title": "[Meditationes seu Contemplationes devotissimae]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631471c1c21a373806271",
+      "title": "[Liber sextus Decretalium]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631401c1c21a373805f27",
+      "title": "[Iustiniani Institutiones] : ; [mit der Glossa ordinaria des Franciscus Accursiu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630e81c1c21a373804cce",
+      "title": "[Donatus moralisatus]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6314f1c1c21a3738064d8",
+      "title": "[Decisiones rotae Romanae]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631511c1c21a3738066c6",
+      "title": "[Rationale divinorum officiorum]",
+      "disposition": "first_complete_translation",
+      "translations_found": 2,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (2)"
+    },
+    {
+      "id": "69b6313b1c1c21a373805eb3",
+      "title": "Oratio lamentabilis ... Iohannes Savageti Constantiensis et Basiliensis ... supe",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631541c1c21a37380686e",
+      "title": "[Biblia latina]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631291c1c21a373805807",
+      "title": "[Biblia latina]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631051c1c21a373804f50",
+      "title": "[De articulis fidei] : ; [De periculis contingentibus circa sacramentum eucharis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631071c1c21a373804f7e",
+      "title": "[De horis canonicis]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630fb1c1c21a373804e64",
+      "title": "[De communione et conversatione Iudaeorum et Christianorum]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6315b1c1c21a373806c60",
+      "title": "[De contemptu mundi]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630de1c1c21a373804a01",
+      "title": "[Vocabularius utriusque iuris]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631651c1c21a3738070c0",
+      "title": "[Sermones de eucharistiae sacramento]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b630f21c1c21a373804dee",
+      "title": "[Centones Vergilii]",
+      "disposition": "first_complete_translation",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_complete_translation)"
+    },
+    {
+      "id": "69b630cd1c1c21a37380454f",
+      "title": "[De duobus amantibus Euryalo et Lucretia] : ; daran ; [Epistola retractatoria ad",
+      "disposition": "first_modern_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69b631ce1c1c21a37380aeed",
+      "title": "[Biblia latina]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631791c1c21a373807cfa",
+      "title": "[Casus longi super V libros decretalium]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631b41c1c21a373809d1a",
+      "title": "[Constitutiones synodales ecclesiae Constantiensis, 1481]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631a81c1c21a373809577",
+      "title": "Horae beatae Mariae virginis",
+      "disposition": "first_complete_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69b6316c1c1c21a373807498",
+      "title": "[Iustiniani Institutiones] : ; [mit der Glossa ordinaria des Franciscus Accursiu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6316f1c1c21a373807576",
+      "title": "[Agenda Herbipolensis]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631f61c1c21a37380beda",
+      "title": "[Tractatus plurimi iuris]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631d81c1c21a37380b2b9",
+      "title": "[Decretales]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631bf1c1c21a37380a556",
+      "title": "Quaestiones Evangeliorum de tempore et de sanctis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631c91c1c21a37380ad07",
+      "title": "Opus elementorum Euclidis megarensis in geometriam artem in id quoque Campani pe",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b632071c1c21a37380c672",
+      "title": "Sermones dominicales super evangelia et epistolas",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6317e1c1c21a373808160",
+      "title": "Speculum amatorum mundi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b632051c1c21a37380c438",
+      "title": "Formularium instrumentorum ad usum Curiae Romanae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b631671c1c21a373807130",
+      "title": "[Novellae constitutiones] : ; [Libri feudorum] ; [Codicis libri X–XII]. [mit der",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b64f9818b87551bfc96192",
+      "title": "Explicatio gravis et eruditae cuiusdam Quaestionis peri prognōstikou di' astrono",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6519d18b87551bfcab404",
+      "title": "Epithalamion pii ac eruditi iuvenis M. Alberti Sulceri, Ecclesiae Christi apud B",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6501818b87551bfc9b872",
+      "title": "Exempla literarum augustalium quibus comprobatur Ius Familiaritatis Augustalis a",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6523118b87551bfcb0916",
+      "title": "... Epitome troporum ac schematum et grammaticorum & rhetorum, ad authores tum p",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6522c18b87551bfcb07b0",
+      "title": "Brevis admonitio Joannis Calvini ad fratres Polonos, ne triplicem in Deo essenti",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6519f18b87551bfcab414",
+      "title": "Epistola Sebast. Curionis ad amplissimum Collegium Iurisconsult. Patavinae civit",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6508318b87551bfc9ef24",
+      "title": "Iudicium D. Philippi Melanchthonis De controversia Coenae Domini : ad illustriss",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6454618b87551bfc3a2a6",
+      "title": "... Epitome troporum ac schematum et grammaticorum & rhetorum, ad autores tum pr",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b64f9018b87551bfc9606f",
+      "title": "Verba et locutiones oratoriae decerptae ex libris oratoriis M. T. Ciceronis : qu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b640d81c1c21a37387f583",
+      "title": "... Sententiarum sive capitum, theologicorum praecipue, ex sacris & profanis lib",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6320f1c1c21a37380cc38",
+      "title": "[Sermones \"Dormi secure\" de tempore]",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6522718b87551bfcb0461",
+      "title": "De providentia divina liber",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b651a418b87551bfcab4f6",
+      "title": "Ex libris XXIII commentariorum in vetera imperatorum Romanorum numismata Aeneae ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b651fd18b87551bfcae738",
+      "title": "Responsio ad maledicum Francisci Stancari Mantuani librum adversus Tigurinae ecc",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b653c018b87551bfcc1216",
+      "title": "Ioannis Vuieri medicarum observationum rararum Liber I : De Scorbuto. De Quartan",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6543318b87551bfcc6a6d",
+      "title": "Hymenaeus, in nuptias nobilis, et generosi domini, et sponsi domini Ioannis Iaco",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6542618b87551bfcc6072",
+      "title": "Caelii Augustini Curionis Sarracenicae historiae libri III : In quibus Sarraceno",
+      "disposition": "first_modern_translation",
+      "translations_found": 1,
+      "action": "KEEP_FALSE",
+      "reason": "prior translation found (1)"
+    },
+    {
+      "id": "69b6566018b87551bfcdf6c5",
+      "title": "Cosmographiae totius compendiosa et dilucida explicatio : nunc primum latine in ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6586a18b87551bfcf37ee",
+      "title": "In C. Plinii Majoris capita aliquot, ut difficilima, ita pulcherrima et utilissi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6554418b87551bfcd33b7",
+      "title": "Pauli principis de la Scala et Hun ... primi tomi miscellaneorum, de rerum causs",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b657ec18b87551bfced361",
+      "title": "Francisci Hotomani iurisconsulti observationum liber IIII",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6576518b87551bfce93bb",
+      "title": "Ex gratiosi ordinis Med. Bas. decreto M. Jacobus Seidelius Olaviensis Silesius .",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b655e318b87551bfcd9c00",
+      "title": "Stephani de Malescot Iuriscos. ac Belarborensis Theophilologi, de Nuptiis Liber ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b655b518b87551bfcd7079",
+      "title": "Francisci Hotomani iurisconsulti observationum, liber primus",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b654ae18b87551bfccc8c9",
+      "title": "De syllabarum et carminum ratione libri duo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b657d518b87551bfcebfc8",
+      "title": "De certa electorum salute, theses sexaginta",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b654c418b87551bfccddd9",
+      "title": "Literae illustriss. principis, Ludovici Borbonii, principis Condaei, etc. ad Car",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b658da18b87551bfcf6cea",
+      "title": "Peri ermēneías : seu de enuntiationibus, quas propositiones vocant, in quibus ve",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b658df18b87551bfcf6dab",
+      "title": "Vita clarissimi viri D. Iosiae Simleri Tigurini, S. Theologiae in Schola Tigurin",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b658d018b87551bfcf6709",
+      "title": "Disputatio de melancholia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b658e118b87551bfcf6dd5",
+      "title": "Callimachi Cyrenaei Hymni, cum suis scholiis Graecis : et Epigrammata",
+      "disposition": "first_from_source",
+      "translations_found": 0,
+      "action": "KEEP_FALSE",
+      "reason": "qualified-first (first_from_source)"
+    },
+    {
+      "id": "69b6585b18b87551bfcf314e",
+      "title": "Articuli de coena dominica, ministris ecclesiarum et scholarum Marchiticarum man",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6577118b87551bfce96e8",
+      "title": "Apologia modesta et christiana, ad acta conventus quindecim theologorum Torgae n",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6576f18b87551bfce96b6",
+      "title": "Erasmi Roterodami Civilitas morum in succinctas quaestiones digesta, ac per Rein",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b656f218b87551bfce50ff",
+      "title": "Exegesis perspicua et ferme integra controversiae de Sacra Coena, scripta ut pri",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b656c218b87551bfce3160",
+      "title": "Lucae Paeti ... de mensuris, et ponderibus Romanis, et Graecis : cum his quae ho",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6592b18b87551bfcf9eb8",
+      "title": "... Positiones, de, rerum divisione, et adquirendo earundem iure gentium dominio",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b655c818b87551bfcd80ea",
+      "title": "Theses logicae : quas ante studiorum instaurationem, in Academia Dilingiana",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6565518b87551bfcdee97",
+      "title": "Alae seu scalae mathematicae, quibus visibilium remotissima coelorum theatra con",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6596118b87551bfcfb3c7",
+      "title": "De dentium affectibus",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6595f18b87551bfcfb3b3",
+      "title": "Gratulationes d. Martino Aichmanno Schorndorffensi, viro virtute, & doctrina pra",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6552f18b87551bfcd2728",
+      "title": "Supplicatio Carolo IX. Gal. regi exhibita post collectas coniunctasque copias et",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ae018b87551bfd05ad8",
+      "title": "Theses de corde et eius vitiis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65b6f18b87551bfd0c2fe",
+      "title": "Theses ex materia successionis ab intestato",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6596f18b87551bfcfb45b",
+      "title": "Theses hasce",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65a6f18b87551bfd02a55",
+      "title": "Isagoge ad lectionem Epistolarum Divi Pauli apostoli, qua compositionis oeconomi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6597218b87551bfcfb465",
+      "title": "De anodinis medicamentis eorumque causis et usibus Physica & Medica consideratio",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65b6c18b87551bfd0c2ee",
+      "title": "Conclusiones ex tit. D. de rei vindicatione",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65a7818b87551bfd02b7d",
+      "title": "XL. enunciata, et controversa iuris responsa",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65a7618b87551bfd02b73",
+      "title": "De arbitris compromisso receptis conclusiones",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65adb18b87551bfd05ac4",
+      "title": "Theses de pestilentia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6597418b87551bfcfb477",
+      "title": "De prodigiosa specie, naturaq[ue] cometae, qui nobis effulsit altior lunae sedib",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6596818b87551bfcfb415",
+      "title": "De tabe et phthisi pronunciata",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6596a18b87551bfcfb42f",
+      "title": "Disputationis medicae de hydrope theses inaugurales LXV",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65bdd18b87551bfd0f70a",
+      "title": "Has de humoribus theses",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65bdf18b87551bfd0f718",
+      "title": "Amplissimi ordinis Academiae Basiliensis decreto, theses has inaugurales proponi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65b5c18b87551bfd0c29b",
+      "title": "De transactionibus axiomata",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65be418b87551bfd0f72c",
+      "title": "Propositiones medicae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65b6a18b87551bfd0c2e4",
+      "title": "De restitutione minorum conclusiones",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65be618b87551bfd0f73a",
+      "title": "Theses de sudore",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65a7b18b87551bfd02b87",
+      "title": "Authoritate et iussu amplissimi ordinis Iuridicae Facultatis in celeberrima Basi",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65a7d18b87551bfd02b91",
+      "title": "De legatis positiones",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65a7418b87551bfd02b65",
+      "title": "De acquirenda, retinenda, et amittenda possessione enunciationes C",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ad718b87551bfd05ab0",
+      "title": "Theses medicae de dysenteria",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65beb18b87551bfd0f756",
+      "title": "Apotherapeia iatrikē",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c8718b87551bfd1491a",
+      "title": "Theses theologicae de sacrosancta trinitate contra antitrinitarios",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65cdeb3f4fc0441515650",
+      "title": "Apo kōpēs eis to bēma: Positiones Peri tēs tōn katamēniōn epochēs",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c6c18b87551bfd147ca",
+      "title": "Disputatio de tutelis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65cefb3f4fc04415156ae",
+      "title": "De somno et vigilia theses ad disputandum propositae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c7318b87551bfd147f4",
+      "title": "Impetrato consensu amplissimi ordinis Iuridicae Facultatis, in inclyta Academia ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c7118b87551bfd147e2",
+      "title": "De feudis theses LVI",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e00b3f4fc044151e195",
+      "title": "Theses de pleuritide",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c5818b87551bfd13d89",
+      "title": "D. Benedicti Aretii bernensis theologi, Lectiones septem de Coena Domini, ex var",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65df8b3f4fc044151e16f",
+      "title": "Ex amplissimi gratiosissimique Collegii Medici Inclytae Academiae Basiliensis de",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65de7b3f4fc044151d9c6",
+      "title": "Baronatus et armorum insignium melioratio pro Rodulpho de Salis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65dfbb3f4fc044151e179",
+      "title": "Theses has subsequentes de artis medicae definitione & divisione Praeside Viro C",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65d03b3f4fc04415163d1",
+      "title": "De hydrope theses",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65cffb3f4fc0441516293",
+      "title": "Propositiones de lithiasi tōn nephrōn",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ce5b3f4fc044151567a",
+      "title": "De epilepsia theses",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65d76b3f4fc0441517c45",
+      "title": "De pignoribus et hypothecis theses",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c7618b87551bfd147fe",
+      "title": "De sententia, re iudicata, appellationibus, & executione rei iudicatae, Theses L",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c6f18b87551bfd147d8",
+      "title": "Christo auspice: Impetrato consensu amplissimi ordinis facultatis Iuridicae, in ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c7a18b87551bfd14816",
+      "title": "De dotibus positiones L",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c6218b87551bfd14472",
+      "title": "De ischuria theses",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c6518b87551bfd1447c",
+      "title": "Theses medicae de divina et admiranda hominis in utero formatione",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e02b3f4fc044151e19f",
+      "title": "Theses de dolore",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e04b3f4fc044151e1ad",
+      "title": "Theses de lienteria",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65df6b3f4fc044151e15d",
+      "title": "Theses inaugurales et medicae de podagrica affectione",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65defb3f4fc044151deaa",
+      "title": "Propositiones de lithiasi tōn nephrōn",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65d7ab3f4fc0441517caa",
+      "title": "Praestanti viro, dn. Andr. Ruinellae Ioannis f. Praegallo Rheto, philosophiae & ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65d71b3f4fc0441517c2b",
+      "title": "Ex communi clariss. et consultiss. iuris professorum ordinis, in inclyta Basilie",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65d60b3f4fc0441517be1",
+      "title": "De transactionibus theses LXIV",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65cfcb3f4fc0441516281",
+      "title": "... Theses de pleuritide",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65d6cb3f4fc0441517c17",
+      "title": "Themata iuridica, ex titulo C. D. et Instit. de iniuriis",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ce8b3f4fc0441515688",
+      "title": "De dysenteria theses",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65cedb3f4fc04415156a0",
+      "title": "De podagra et podagricorum curatione doctrina",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c7818b87551bfd1480c",
+      "title": "[Theses de usuris, desumptae ex L. Eos. C. de usuris: & l.1.C. de nautico foenor",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c7d18b87551bfd14824",
+      "title": "De testibus et testimoniis theses L",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e6cb3f4fc0441521aae",
+      "title": "A. C. ex decreto et autoritate amplissimi Iurisconsultorum Ordinis in celeberrim",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65c6a18b87551bfd147c0",
+      "title": "De iureiurando theses XL",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66084b3f4fc044153308b",
+      "title": "De muliebribus naturalibus Disputatio medica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65efbb3f4fc0441525906",
+      "title": "Isagoge ad lectionem epistolarum D. Pauli apostoli : qua compositiones oeconomia",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65f54b3f4fc0441528075",
+      "title": "Justitia Britannica : per quam liquet perspicue ...",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "69b65ed9b3f4fc0441524ec6",
+      "title": "Peri tōn periptōmatōn tēs prōtēs pepseōs disputatio",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6608bb3f4fc04415330ab",
+      "title": "Theou megaloio hekēti, Ad theses hasce de locorum affectorum cognitione generali",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65edeb3f4fc0441524eee",
+      "title": "Disputatio medica, de cibo et potu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65edbb3f4fc0441524ed8",
+      "title": "De epilepsia disputatio",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66177b3f4fc044153c0d0",
+      "title": "De caritate annonae ac fame conciones tres",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e74b3f4fc0441521e69",
+      "title": "De mediatoris invocatione : theses theologicae, oppositae Iesuitarum, de Mariae ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6607fb3f4fc0441533067",
+      "title": "Theses philosophicae et medicae De rebus secundum & praeter naturam aurium : in ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66101b3f4fc0441536cd1",
+      "title": "Rudimenta prima grammatices, ex eruditissimis quibusque grammaticis excerpta",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ff3b3f4fc044152dbd5",
+      "title": "Claudii Alberii Triuncuriani De concordia medicorum disputatio exoterica : ad Ve",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65fe1b3f4fc044152c723",
+      "title": "Apologia brevis et necessaria Marci Beumleri Tigurini, in qua primo exponuntur c",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65f67b3f4fc0441528995",
+      "title": "Via ac ratio scholae illustrium d.d. Rhaetorum qui nomine Trium Foederum nuncupa",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6606ab3f4fc044153229f",
+      "title": "Pro Calendario Gregoriano Dispvtatio Apologetica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ee0b3f4fc0441524efc",
+      "title": "De hepatis inflammatione theses",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ee7b3f4fc0441524f3a",
+      "title": "Endoxa philosophica & medica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ed7b3f4fc0441524eb8",
+      "title": "Theses de febre hectica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ef6b3f4fc0441525693",
+      "title": "Francisci Porti Cretensis... In omnes Sophoclis tragoedias prolegomena, ut vulgo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e79b3f4fc0441521e7d",
+      "title": "De iustificatione, quae fit per fidem, sacrae syzētēseōs capita",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e7bb3f4fc0441521e87",
+      "title": "De tribus capitibus christianae religionis, nempe arbitrio hominis, quomodo sit ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6617ab3f4fc044153c16e",
+      "title": "Ternio sacrorum theorematum, de uno Deo, de uno mediatore, et de Iesu, qui est C",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6617cb3f4fc044153c184",
+      "title": "Quaestio illustris: an'ne renati de sua ipsorum et de aliorum Piorum aeterna ele",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66163b3f4fc044153b5c8",
+      "title": "... De pacto revenditionis sive restitutionis conclusiones",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b6617fb3f4fc044153c196",
+      "title": "Didaskalia De nobili dicto Davidis : Iustus ut palma florebit: tanquam Cedrus in",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66089b3f4fc044153309f",
+      "title": "Theses medicae de renum calculo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66181b3f4fc044153c1ac",
+      "title": "Problema de veritatis et pacis tē syzygia : quo explicatur Zachariae Vatis dictu",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ffbb3f4fc044152e34c",
+      "title": "Ad Gilberti Genebrardi accusationem Theodori Bezae defensio",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65fd6b3f4fc044152c073",
+      "title": "Chronologia sive De tempore et eius mutationibus ecclesiasticis tractatio theolo",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66183b3f4fc044153c1c2",
+      "title": "Pyrobolia, seu de ignitis Sathanae telis, commonefactio theologica",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65ee2b3f4fc0441524f0e",
+      "title": "De causis curatricibus Theses Progymnasticae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b66186b3f4fc044153c1e0",
+      "title": "Analyticae Quaestiones & Responsiones de pane vitae",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65f00b3f4fc0441525a34",
+      "title": "Meditationes in psalmum XXXII",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "69b65e7eb3f4fc0441521e99",
+      "title": "Disputationis contra Ebionitas, Iesu Christi Domini nostri deitatem negantes & p",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "6a1008e8f717292950966e31",
+      "title": "Bibliothèque des philosophes chimiques / Tome premier.",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "6a1008f9f717292950967524",
+      "title": "Gemma gemmarum alchimistarum oder Erleuterung der parabolischen und philosophisc",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "6a10091ff717292950967cc7",
+      "title": "An  Enquiry into the Nature of the Human Soul : wherein the Immateriality of the",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "LANG_MISTAG_SUSPECT",
+      "reason": "English-looking title tagged Latin — likely not a translation"
+    },
+    {
+      "id": "6a10092ff7172929509680b9",
+      "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des ",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    },
+    {
+      "id": "6a100a2af71729295096e40f",
+      "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Keze",
+      "disposition": "confirmed_first",
+      "translations_found": 0,
+      "action": "NEEDS_REVIEW",
+      "reason": "confirmed_first + nothing found — disposition unreliable, manual check"
+    }
+  ]
+}

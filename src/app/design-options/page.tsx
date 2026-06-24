@@ -285,7 +285,7 @@ export default async function DesignOptionsPage() {
     <div className="min-h-screen bg-bg-cream">
       {/* Page header */}
       <div className="bg-white border-b border-border-light">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-8">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8">
           <Link href="/" className="text-sm text-muted hover:text-accent-rust transition-colors">
             &larr; Back to home
           </Link>
@@ -303,7 +303,7 @@ export default async function DesignOptionsPage() {
           EXISTING VERSIONS
       ═══════════════════════════════════════════════════════════════ */}
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-12 mb-6">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12 mt-12 mb-6">
         <div className="border-b-2 border-accent-rust/20 pb-2 mb-2">
           <h2 className="text-xl font-display text-accent-rust uppercase tracking-wider">Existing Versions</h2>
         </div>
@@ -311,7 +311,7 @@ export default async function DesignOptionsPage() {
       </div>
 
       {/* Existing 1: FeaturedCollectionCarousel (current home page) */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-10 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 1</span>
           <h2 className="text-2xl font-display text-primary mt-1">Dark Carousel (current home page)</h2>
@@ -324,7 +324,7 @@ export default async function DesignOptionsPage() {
       {carouselItems.length > 0 && <FeaturedCollectionCarousel items={carouselItems} />}
 
       {/* Existing 2: Layout FeaturedCollections (file-based card grid) */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 2</span>
           <h2 className="text-2xl font-display text-primary mt-1">Category Card Grid</h2>
@@ -337,7 +337,7 @@ export default async function DesignOptionsPage() {
       <LayoutFeaturedCollections />
 
       {/* Existing 3: CollectionsShowcase (image-heavy two-tier) */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 3</span>
           <h2 className="text-2xl font-display text-primary mt-1">Image Showcase (two-tier)</h2>
@@ -352,7 +352,7 @@ export default async function DesignOptionsPage() {
       </div>
 
       {/* Existing 4: Noon version (gallery hero + 2 side squares) */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 4 &mdash; Yesterday ~12:00</span>
           <h2 className="text-2xl font-display text-primary mt-1">Gallery Hero + Side Squares</h2>
@@ -366,7 +366,7 @@ export default async function DesignOptionsPage() {
       <FeaturedCollectionNoon items={carouselItems} />
 
       {/* Existing 5: 4pm version (text | tall hero | book list) */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 5 &mdash; Yesterday ~16:00</span>
           <h2 className="text-2xl font-display text-primary mt-1">Three-Column: Text | Hero Illustration | Book List</h2>
@@ -382,7 +382,7 @@ export default async function DesignOptionsPage() {
           NEW OPTIONS
       ═══════════════════════════════════════════════════════════════ */}
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-8 mb-6">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12 mt-8 mb-6">
         <div className="border-b-2 border-accent-rust/20 pb-2 mb-2">
           <h2 className="text-xl font-display text-accent-rust uppercase tracking-wider">New Options</h2>
         </div>
@@ -391,7 +391,7 @@ export default async function DesignOptionsPage() {
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
 
         {/* ═══════════════════════════════════════════════════════════════
             OPTION A — "Editorial Spread"
@@ -425,7 +425,7 @@ export default async function DesignOptionsPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+        <div className="relative max-w-[1500px] mx-auto px-6 md:px-12 py-16 md:py-24">
           <div className="max-w-xl">
             <span className="text-xs uppercase tracking-[0.2em] text-accent-gold/80 mb-4 block">
               Featured Collection
@@ -455,7 +455,7 @@ export default async function DesignOptionsPage() {
 
         {/* Book strip at the bottom */}
         <div className="relative border-t border-white/10 bg-black/60 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 py-6">
+          <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-6">
             <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin">
               {books.slice(0, 8).map((book) => {
                 const thumb = book.thumbnail_blob || book.thumbnail;
@@ -493,7 +493,7 @@ export default async function DesignOptionsPage() {
           Clean, light background with staggered book grid and text beside it.
           Museum-like, calm, lets the books speak for themselves.
       ═══════════════════════════════════════════════════════════════ */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-20 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-accent-rust font-medium">Option B</span>
           <h2 className="text-2xl font-display text-primary mt-1">Gallery Wall</h2>
@@ -505,7 +505,7 @@ export default async function DesignOptionsPage() {
       </div>
 
       <section className="bg-white border-y border-border-light">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-14 md:py-20">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-14 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
             {/* Left: text */}
             <div className="lg:col-span-4 flex flex-col justify-center">
@@ -584,7 +584,7 @@ export default async function DesignOptionsPage() {
           Dark, intimate layout with a featured "hero book" and supporting cast.
           Evokes the feeling of opening a scholar's private collection.
       ═══════════════════════════════════════════════════════════════ */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-20 mb-6">
           <span className="text-xs uppercase tracking-[0.2em] text-accent-rust font-medium">Option C</span>
           <h2 className="text-2xl font-display text-primary mt-1">Cabinet of Curiosities</h2>
@@ -596,7 +596,7 @@ export default async function DesignOptionsPage() {
       </div>
 
       <section className="bg-[#1c1917]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-14 md:py-20">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-14 md:py-20">
           {/* Header */}
           <div className="flex items-center justify-between mb-10">
             <div>

@@ -7,6 +7,9 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { computeProcessingPriority } from '@/lib/processing-priority';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { resolveLanguage, resolveDate } from '@/lib/resolve-language';
+import { storeImportedManifest } from '@/lib/iiif-manifest-store';
+import { applyTextRole } from '@/lib/text-role';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -358,6 +361,14 @@ export async function importBookFromIIIF(
 
   const slug = await generateUniqueBookSlug(db, config.title, config.author, config.display_title);
 
+  // #2185: normalise the caller's language and record provenance. IIIF manifests
+  // carry no reliable structured language field across providers, so the caller
+  // hint is the only signal here — but it's normalised (codes → display names)
+  // and stamped with provenance so a later source signal can slot in and flag
+  // conflicts. The manifest date is treated as the edition (manifestation) date.
+  const lang = resolveLanguage({ callerLanguage: config.language });
+  const dateRes = resolveDate({ callerPublished: config.published, sourceDate: manifestDate });
+
   const bookDoc = {
     _id: bookId,
     id: bookIdStr,
@@ -365,8 +376,13 @@ export async function importBookFromIIIF(
     title: config.title,
     display_title: config.display_title || manifestLabel || null,
     author: config.author,
-    language: config.language || 'Unknown',
-    published: config.published || manifestDate || 'Unknown',
+    language: lang.language,
+    ...(lang.original_language ? { original_language: lang.original_language } : {}),
+    ...(lang.is_translation ? { is_translation: true } : {}),
+    ...(lang.language_review ? { language_review: true } : {}),
+    published: dateRes.published || 'Unknown',
+    ...(dateRes.original_work_year ? { original_work_year: dateRes.original_work_year } : {}),
+    field_provenance: { language: lang.provenance },
     categories: config.categories || [],
     ...(config.identifier_field || {}),
     ...(config.work_id ? { work_id: config.work_id } : {}),
@@ -420,6 +436,10 @@ export async function importBookFromIIIF(
   if (manifestPublisher) (bookDoc as Record<string, unknown>).publisher = manifestPublisher;
   if (manifestPlace) (bookDoc as Record<string, unknown>).place_of_publication = manifestPlace;
 
+  // Classify original-vs-translation at import (issue #2395) so the book gets a
+  // real text_role immediately instead of the language-proxy fallback.
+  applyTextRole(bookDoc as Record<string, unknown>);
+
   await db.collection('books').insertOne(bookDoc);
 
   // Create pages
@@ -435,7 +455,7 @@ export async function importBookFromIIIF(
       thumbnail: pageImages[i]?.thumbnail || '',
       photo_original: pageImages[i]?.photo || '',
       ocr: {
-        language: config.language || 'Unknown',
+        language: lang.language,
         model: null,
         data: '',
       },
@@ -459,6 +479,14 @@ export async function importBookFromIIIF(
     pages_affected: pageDocs.length,
     metadata: { provider: config.provider, identifier: config.identifier },
   });
+
+  // Persist the IIIF manifest we already fetched (provenance, #2416; non-blocking)
+  storeImportedManifest(db, {
+    manifest,
+    manifest_url: config.manifest_url,
+    book_id: bookIdStr,
+    source: config.provider,
+  }).catch((e) => console.warn(`[Import] manifest store failed for ${bookIdStr}: ${e?.message}`));
 
   // Queue preview OCR for early metadata enrichment (non-blocking)
   queuePreviewOcr(bookIdStr, config.title).catch(() => {});

@@ -33,6 +33,10 @@ import { sendWriteResult } from '@/lib/sqs-client';
 
 import { getPageImageUrl, isArchiveFailed } from '@/lib/utils';
 
+// Git SHA of the producing code, for OCR provenance (#2297). Same convention as
+// /api/status; 'dev' when unset (local/uncommitted).
+const CODE_VERSION = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8) || 'dev';
+
 /**
  * Build a GeminiUsagePayload for the write queue.
  */
@@ -234,6 +238,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         ...(columns && { columns }),
         ...(scriptType && { scriptType }),
         ...(detectedImages.length > 0 && { detectedImages }),
+        sourceUrl: imageUrl,        // provenance: the exact image OCR'd (#2297)
+        codeVersion: CODE_VERSION,
       },
       geminiUsage: buildUsagePayload({
         model: modelId, bookId, pageId, jobId, durationMs,
@@ -293,6 +299,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
               ...(retryPageType && { pageType: retryPageType }),
               ...(retryColumns && { columns: retryColumns }),
               ...(retryImages.length > 0 && { detectedImages: retryImages }),
+              sourceUrl: imageUrl,        // provenance: the exact image OCR'd (#2297)
+              codeVersion: CODE_VERSION,
             },
             geminiUsage: buildUsagePayload({
               model: nextModel, bookId, pageId, jobId, durationMs: retryDuration,

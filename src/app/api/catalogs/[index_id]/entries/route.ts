@@ -52,7 +52,7 @@ export async function GET(
   let query = supabase
     .from('index_catalog_entries')
     .select(
-      'id, source_id, title, author, publication_date, condemnation_year, condemnation_period, scope, reason, ustc_sn, sl_book_id, sl_book_slug, author_held_count, author_held_sample_slug',
+      'id, source_id, title, author, publication_date, condemnation_year, condemnation_period, scope, reason, ustc_sn, sl_book_id, sl_book_slug, author_held_count, author_held_sample_slug, source_book_slug, source_page',
       { count: 'exact' },
     )
     .eq('index_id', index_id);

@@ -5,13 +5,17 @@ import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation } from '@/components/explore/BookMap';
 
-export const revalidate = false;
+// Daily ISR so the page re-reads the system_config.map_data cache that the
+// Hetzner cron rebuilds at 05:45 — `revalidate = false` froze the rendered
+// page at deploy time, hiding every cache refresh. The layout chain uses no
+// headers()/cookies(), so ISR is safe here (cf. explore/page.tsx).
+export const revalidate = 86400;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Map — Explore — Source Library',
   description:
-    'Interactive map of 7,000+ books plotted by publication city and author birthplace from Wikidata coordinates.',
+    'Interactive map of 10,000+ books plotted by publication city, author birthplace, and the heartland of each text’s tradition.',
   openGraph: {
     title: 'Map — Explore — Source Library',
     description:
@@ -115,9 +119,9 @@ export default async function MapPage() {
     return (
       <ContentPageLayout
         header={
-          <ContentHeader
+          <ContentHeader maxWidth="wide"
             title="Map"
-            subtitle={`${locationCount.toLocaleString('en-US')} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
+            subtitle={`${locationCount.toLocaleString('en-US')} locations worldwide — publication cities, author birthplaces, and the heartlands of the traditions we hold`}
           >
             <div className="mt-5">
               <ExploreTabBar />
@@ -135,7 +139,7 @@ export default async function MapPage() {
     return (
       <ContentPageLayout
         header={
-          <ContentHeader title="Map" subtitle="Map data is temporarily unavailable. Please try again shortly." >
+          <ContentHeader maxWidth="wide" title="Map" subtitle="Map data is temporarily unavailable. Please try again shortly." >
             <div className="mt-5">
               <ExploreTabBar />
             </div>

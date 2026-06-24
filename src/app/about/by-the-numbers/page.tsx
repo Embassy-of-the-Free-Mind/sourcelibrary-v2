@@ -167,7 +167,7 @@ export default function ByTheNumbersPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Source Library, by the Numbers"
           subtitle="A snapshot of the corpus — what's in it, where it came from, and what it takes to hold it together."
           image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"

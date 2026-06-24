@@ -5,7 +5,7 @@ export default function AuthorLoading() {
     <div className="min-h-screen bg-cream">
       <SiteHeader variant="light" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 py-8">
         {/* Breadcrumb */}
         <div className="h-4 w-40 bg-stone-200 rounded animate-pulse mb-6" />
 

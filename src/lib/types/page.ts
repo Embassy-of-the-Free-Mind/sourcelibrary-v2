@@ -1,4 +1,6 @@
 import { PromptReference } from "./prompt";
+import { DeepZoomManifest } from "./book";
+import { getPageSource } from "@/lib/page-image-url";
 
 export interface Page {
   id: string;
@@ -55,6 +57,20 @@ export interface Page {
   // Image dimensions (populated during archiving)
   image_width?: number;         // Full-res image width in pixels
   image_height?: number;        // Full-res image height in pixels
+
+  // Deep-zoom (issue #2411) — illustrated pages only.
+  // `fullres_master`: native-res master harvested to R2, separate from archived_photo
+  // (the display copy), so OCR/gallery/splitter stay undisturbed.
+  // `deepzoom`: DZI tile-pyramid manifest, written LAST after tiles are verified — the
+  // only field the reader branches on. See scripts/workers/deepzoom-{harvest,tile}-page*.mjs.
+  fullres_master?: {
+    url: string;
+    width: number;
+    height: number;
+    source_url?: string;
+    harvested_at?: Date;
+  };
+  deepzoom?: DeepZoomManifest;
 
   // Split/crop workflow (legacy — stale on split_from_spread pages)
   photo_original?: string;      // Original S3 URL before cropping
@@ -224,7 +240,7 @@ export interface ImageMetadata {
 export interface DetectedImage {
   id?: string;                  // Unique ID for this detection
   description: string;          // What the image depicts (brief)
-  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'emblem' | 'engraving' | 'portrait' | 'frontispiece' | 'musical_score' | 'unknown';
+  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'emblem' | 'engraving' | 'portrait' | 'frontispiece' | 'musical_score' | 'exlibris' | 'bookplate' | 'unknown';
   // Bounding box (0-1 normalized coordinates, for future extraction)
   bbox?: {
     x: number;      // Left edge (0-1)
@@ -254,18 +270,13 @@ export interface DetectedImage {
 }
 
 /**
- * Get the best available image URL for a page.
- * Prefers enhanced > cropped > archived > photo_original > photo.
- * For split-from-spread pages, uses photo directly (skip legacy fallback).
+ * Get the best available source image URL for a page.
+ *
+ * Delegates to the canonical {@link getPageSource} (`@/lib/page-image-url`,
+ * issue #1727), which prefers the cropped half for split pages (old-era
+ * `cropped_photo` or new-era `sp…` `photo`) and drops the dead `enhanced_photo`
+ * field. Returns '' on a miss to preserve this helper's string contract.
  */
 export function pageImageUrl(page: Partial<Page>): string {
-  // Split pages: use photo directly (the cropped half), skip legacy fallback
-  // which would show the full spread via archived_photo/photo_original
-  if ((page as any).split_from_spread || (page as any).crop) return page.photo || '';
-  return (page as any).enhanced_photo
-    || (page as any).cropped_photo
-    || page.archived_photo
-    || page.photo_original
-    || page.photo
-    || '';
+  return getPageSource(page) ?? '';
 }

@@ -51,7 +51,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
           <Link
             key={collection.id}
             href={`/gallery/collections/${collection.slug}`}
-            className="group relative rounded-xl overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5 aspect-[4/3]"
+            className="group relative rounded-xl overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5 aspect-square"
           >
             {collection.coverImage?.url ? (
               <Image

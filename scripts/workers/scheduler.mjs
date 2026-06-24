@@ -20,6 +20,7 @@
 import { MongoClient } from 'mongodb';
 import { execSync, spawn } from 'child_process';
 import { existsSync, readFileSync, writeFileSync, openSync, closeSync, appendFileSync } from 'fs';
+import { shouldBypassPause, hasScope } from './lib/selective-unpause.mjs';
 
 // ── Config ──
 
@@ -208,19 +209,11 @@ const WORKERS = [
   },
 
   // Tier 5: Image processing — R2/sharp bound, light on Atlas
-  {
-    name: 'resize-worker',
-    cmd: 'node scripts/workers/resize-worker.mjs --limit 500 --concurrency 10',
-    lock: '/tmp/sl-resize.lock',
-    connections: 5,
-    tier: 5,
-    interval: 1800,     // every 30 min
-    healthMin: 'healthy',
-    log: '/var/log/sourcelibrary/resize.log',
-  },
+  // (resize-worker.mjs retired in #1814 — it was a broken no-op for the real
+  //  gap; display-backfill below is the split-aware variant backfill.)
   {
     name: 'display-backfill',
-    cmd: 'node scripts/migration/backfill-display-images.mjs --limit=10000 --concurrency=10 --book-concurrency=2',
+    cmd: 'node scripts/migration/backfill-display-images.mjs --limit=10000 --concurrency=10',
     lock: '/tmp/sl-display-backfill.lock',
     connections: 5,
     tier: 5,
@@ -366,8 +359,14 @@ async function main() {
     const db = client.db('bookstore');
 
     // 1. Check pause state — NO auto-resume. The scheduler does not second-guess manual pauses.
+    // Selective unpause: when globally paused but a scope is configured
+    // (allow_book_ids / allow_collections), the scheduler still runs and
+    // dispatches the workers — each scope-aware worker confines itself to the
+    // allowlisted books. Without this the scheduler short-circuits before
+    // dispatching anything, so the orchestrator's and archive workers' scope
+    // logic (#2616/#2641) never executes and the whole scope stays frozen.
     const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-    if (control?.paused) {
+    if (!shouldBypassPause(control)) {
       const ageMin = control.paused_at
         ? Math.round((Date.now() - new Date(control.paused_at).getTime()) / 60000)
         : '?';
@@ -381,6 +380,9 @@ async function main() {
 
       await client.close();
       return;
+    }
+    if (control?.paused && hasScope(control)) {
+      console.log('[scheduler] PAUSED globally, but selective-unpause scope is active — dispatching workers; each confines to the allowlisted books.');
     }
 
     // 2. Probe DB health

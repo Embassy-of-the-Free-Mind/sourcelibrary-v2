@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { getEpisodeData, getAllEpisodeNumbers } from '../shwep-data';
 import type { MatchedBook } from '../shwep-data';
 
@@ -122,26 +124,76 @@ export default async function EpisodePage({ params }: Props) {
         </div>
       </div>
 
-      {/* Books */}
+      {/* Content */}
       <div className="max-w-5xl mx-auto px-6 py-8">
-        {episode.bookCount > 0 ? (
-          <>
-            <h2 className="text-xl font-serif text-stone-800 mb-6">
-              Primary Sources
+        {/* Earl Fontainelle's reading list, scraped from the episode page on shwep.net */}
+        {(episode.linkedBibliography || episode.bibliography) && (
+          <section className="mb-10">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-2">
+              <h2 className="text-xl font-serif text-stone-800">Reading List</h2>
+              <p className="text-xs text-stone-500">
+                Compiled by{' '}
+                <a href="https://shwep.net" target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">Earl Fontainelle</a>
+                {' '}for SHWEP ·{' '}
+                <a href={episode.url} target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">view on shwep.net</a>
+              </p>
+            </div>
+            {episode.linkedBibliography && (
+              <p className="text-sm text-stone-500 mb-4">
+                The works <span className="text-accent-rust font-medium">underlined in rust</span> are in Source Library — click any to read the original.
+              </p>
+            )}
+            <div className="rounded-xl bg-white border border-stone-200 shadow-sm p-6 md:p-7">
+              <ReadingList markdown={episode.linkedBibliography || episode.bibliography!} />
+            </div>
+          </section>
+        )}
+
+        {/* When the bibliography has inline "read here" links, it IS the integrated experience —
+            skip the separate book list. Otherwise fall back to the matched-books list. */}
+        {!episode.linkedBibliography && (
+          episode.bookCount > 0 ? (
+            <>
+              <h2 className="text-xl font-serif text-stone-800 mb-1">
+                Read in Source Library
+              </h2>
+              <p className="text-sm text-stone-500 mb-6">
+                Primary sources from this episode that you can read here — {episode.bookCount} title{episode.bookCount !== 1 ? 's' : ''} in the collection.
+              </p>
+              <div className="space-y-4">
+                {episode.books.map(book => (
+                  <BookCard key={book.id} book={book} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-12 text-stone-500">
+              <p className="text-lg mb-2">None of this episode&rsquo;s sources are in the collection yet.</p>
+              <p className="text-sm">
+                <Link href="/contribute" className="text-accent-rust underline">Suggest a book</Link> to help expand coverage.
+              </p>
+            </div>
+          )
+        )}
+
+        {/* On an inline-linked episode, the reading list links the works named in Earl's
+            discussion. Some held works are cited only via a dated edition (we hold a
+            different edition) or aren't named in the text — surface those here so no held
+            primary source is hidden behind the linked bibliography. */}
+        {episode.linkedBibliography && episode.supplementaryBooks && episode.supplementaryBooks.length > 0 && (
+          <section className="mt-10">
+            <h2 className="text-xl font-serif text-stone-800 mb-1">
+              Also in Source Library
             </h2>
+            <p className="text-sm text-stone-500 mb-6">
+              More primary sources from this episode you can read here — held in the collection but not linked in the reading list above.
+            </p>
             <div className="space-y-4">
-              {episode.books.map(book => (
+              {episode.supplementaryBooks.map(book => (
                 <BookCard key={book.id} book={book} />
               ))}
             </div>
-          </>
-        ) : (
-          <div className="text-center py-12 text-stone-500">
-            <p className="text-lg mb-2">No matching source texts in the collection yet.</p>
-            <p className="text-sm">
-              <Link href="/contribute" className="text-accent-rust underline">Suggest a book</Link> to help expand coverage.
-            </p>
-          </div>
+          </section>
         )}
 
         {/* Back link */}
@@ -151,6 +203,47 @@ export default async function EpisodePage({ params }: Props) {
           </Link>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ReadingList({ markdown }: { markdown: string }) {
+  return (
+    <div className="text-[15px] leading-relaxed text-stone-700">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({ children }) => <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-5 mb-2 first:mt-0">{children}</h3>,
+          h2: ({ children }) => <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-5 mb-2 first:mt-0">{children}</h3>,
+          h3: ({ children }) => <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-5 mb-2 first:mt-0">{children}</h3>,
+          h4: ({ children }) => <h4 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mt-4 mb-2">{children}</h4>,
+          p: ({ children }) => <p className="my-2.5">{children}</p>,
+          ul: ({ children }) => <ul className="my-2.5 space-y-1.5 list-disc pl-5 marker:text-stone-300">{children}</ul>,
+          ol: ({ children }) => <ol className="my-2.5 space-y-1.5 list-decimal pl-5 marker:text-stone-300">{children}</ol>,
+          li: ({ children }) => <li className="pl-1">{children}</li>,
+          em: ({ children }) => <em className="italic">{children}</em>,
+          strong: ({ children }) => <strong className="font-semibold text-stone-800">{children}</strong>,
+          a: ({ href, children }) => {
+            // Internal /book/ links are works we hold — render as a same-tab Source Library
+            // link with a "read here" book affordance. External refs (Earl's own links,
+            // JSTOR, Wikipedia, cross-episode) open in a new tab as before.
+            if (href?.startsWith('/')) {
+              return (
+                <Link href={href} className="text-accent-rust underline decoration-accent-rust/40 underline-offset-2 hover:decoration-accent-rust font-medium whitespace-nowrap">
+                  {children}
+                  <svg className="inline-block w-3.5 h-3.5 ml-0.5 -mt-0.5 align-middle" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </Link>
+              );
+            }
+            return <a href={href} target="_blank" rel="noopener noreferrer" className="text-stone-500 underline decoration-stone-300 underline-offset-2 hover:text-stone-700">{children}</a>;
+          },
+          hr: () => <hr className="my-4 border-stone-200" />,
+        }}
+      >
+        {markdown}
+      </ReactMarkdown>
     </div>
   );
 }

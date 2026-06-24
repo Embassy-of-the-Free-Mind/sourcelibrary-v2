@@ -36,9 +36,15 @@ export async function POST(
     // Cap at 20 pages per request
     const limitedIds = ids.slice(0, 20);
 
+    // Default tenant = the main library: untagged (global) pages are in scope.
+    // Subdomain tenants stay strict. Mirrors the [id] GET route and
+    // findTenantBookByIdOrSlug() — keeps reader prefetch working on untagged
+    // books instead of silently returning an empty batch.
+    const tenantFilter = tenant === 'default' ? { $in: [tenantId, null] } : tenantId;
+
     const db = await getDb();
     const pages = await db.collection('pages').find(
-      { id: { $in: limitedIds }, tenantId },
+      { id: { $in: limitedIds }, tenantId: tenantFilter },
       { projection: { detected_images: 0 } }
     ).toArray();
 

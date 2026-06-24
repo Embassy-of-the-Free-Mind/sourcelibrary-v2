@@ -17,7 +17,12 @@
  */
 export async function ensureIndexes(db) {
   const col = db.collection('import_candidates');
-  await col.createIndex({ manifest_url: 1 }, { unique: true });
+  // Sparse, NON-unique — matches the deployed `manifest_url_lookup` index.
+  // manifest_url is intentionally not unique: the collection retains duplicate-
+  // manifest rows from overlapping sources and resolves them via dedupe-candidates.mjs
+  // (FRBR clustering → mark non-primary `skipped`), not by deletion. ~91K rows also
+  // have a null manifest_url, so a plain unique index can't build (it threw before).
+  await col.createIndex({ manifest_url: 1 }, { name: 'manifest_url_lookup', sparse: true });
   await col.createIndex({ source: 1, status: 1 });
   await col.createIndex({ status: 1, date_earliest: 1 });
   await col.createIndex({ source: 1, source_id: 1 });

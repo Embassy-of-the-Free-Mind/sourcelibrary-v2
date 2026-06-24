@@ -6,10 +6,12 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
+import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import EarlyAccessGate from '@/components/book/EarlyAccessGate';
@@ -22,7 +24,9 @@ import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
+import OriginalEditionNotice from '@/components/book/OriginalEditionNotice';
 import RelatedEditions from '@/components/book/RelatedEditions';
+import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
 import PublishEditionButton from '@/components/editions/PublishEditionButton';
@@ -70,6 +74,10 @@ interface PageProps {
   // read from searchParams here, because this page is ISR/static (revalidate)
   // and reading request-time query params would force a render error.
   previewProposed?: boolean;
+  // Allow rendering a hidden (visible:false) book. Set ONLY by the dynamic,
+  // editor-gated /book/[id]/preview route. The public ISR route leaves this
+  // false so hidden books 404 uniformly (cache-safe — no per-user branch).
+  allowHidden?: boolean;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -188,6 +196,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!book) {
     // Self-referential canonical (not the inherited root '/') so Google doesn't
     // see this as a duplicate of the homepage while it's still 200/noindex.
+    return {
+      title: 'Book Not Found - Source Library',
+      robots: { index: false, follow: false },
+      alternates: { canonical: `/book/${id}` },
+    };
+  }
+
+  // Hidden books (visible:false) are not public. Emit not-found/noindex metadata
+  // on the public ISR route — matches the notFound() the page body returns.
+  // Editors reach hidden books via /book/[id]/preview (dynamic, auth-gated).
+  if (isHiddenBook(book)) {
     return {
       title: 'Book Not Found - Source Library',
       robots: { index: false, follow: false },
@@ -507,7 +526,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
 function BookInfoSkeleton() {
   return (
     <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
           <div className="flex-shrink-0 flex justify-center sm:justify-start">
             <div className="w-32 sm:w-48 aspect-[3/4] rounded-lg overflow-hidden bg-stone-700">
@@ -541,7 +560,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; previewProposed?: boolean }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed = false, allowHidden = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; previewProposed?: boolean; allowHidden?: boolean }) {
   let data;
   try {
     data = await getBook(id, tenantId, tenantSlug);
@@ -565,6 +584,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
 
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
 
+  // Hidden books (visible:false) are not public — defense in depth alongside
+  // the early gate in BookDetailPage. allowHidden is set only by the dynamic,
+  // editor-gated /book/[id]/preview route.
+  if (isHiddenBook(book as any) && !allowHidden) {
+    notFound();
+  }
+
   // Enforce tenant isolation: book must belong to the tenant in the URL.
   // Books are stored with EITHER `tenantId` (UUID) or `tenant_id` (slug) — sometimes both.
   // Match against whichever form is present so legacy artwork docs (slug-only) don't 404.
@@ -582,6 +608,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
     (bookTenantSlug && tenantSlug && bookTenantSlug === tenantSlug);
   if (hasTenantContext && hasTenantField && !matchesTenant) {
     notFound();
+  }
+
+  // Text-only works (e.g. romanized Javanese from Wikisource): no page scans,
+  // so render a dedicated text layout instead of the image+OCR reader. Must come
+  // before isVisualArt (a 'text' resource_type would otherwise route to artwork).
+  if ((book as { content_type?: string }).content_type === 'text') {
+    const textDb = await getReadDb();
+    const textPages = await textDb.collection('pages')
+      .find({ book_id: book.id, page_number: { $gte: 0 } }, {
+        projection: { _id: 0, page_number: 1, part_title: 1, 'transliteration.data': 1, 'translation.data': 1, 'ocr.data': 1 },
+        maxTimeMS: 5000,
+      })
+      .sort({ page_number: 1 }).limit(1000).toArray();
+    return <TextReader book={book as any} pages={JSON.parse(JSON.stringify(textPages))} collections={bookCollections} />;
   }
 
   // Empty shell books (0 pages from failed imports) should 404
@@ -700,7 +740,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
 
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-8">
             {/* Thumbnail - clickable to change */}
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
@@ -739,7 +779,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 );
               })()}
               {authorEntity && (
-                <AuthorAuthority entity={authorEntity} bookAuthor={book.author} />
+                <AuthorAuthority entity={authorEntity} />
               )}
               <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
               {book.display_title && book.title !== book.display_title && (
@@ -887,16 +927,51 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
               </div>
 
+              {/* Historical-translation notice — never let an old English
+                  translation silently present as the source (#2395). Cross-link
+                  to the held original is tenant-gated like RelatedEditions. */}
+              {['modern-translation', 'period-translation'].includes((book as any).text_role) && (
+                <Suspense fallback={null}>
+                  <OriginalEditionNotice
+                    textRole={(book as any).text_role}
+                    originalEditionId={(book as any).original_edition_id ?? null}
+                    originalInScan={(book as any).original_in_scan ?? false}
+                    originalLanguage={(book as any).original_language ?? null}
+                    year={Number((book as any).year || book.published) || null}
+                    showCrossLink={embedPolicy.showRelatedEditions}
+                  />
+                </Suspense>
+              )}
+
               {/* Read This Book — first chapter > endpaper-skip fallback */}
               {embedPolicy.showBookReadCta && (() => {
                 if (pages.length === 0) return null;
                 const bookSlug = book.slug || book.id;
-                // Prefer first chapter page if available
-                const firstChapterPageId = book.chapters?.length ? (book.chapters as { pageId?: string }[])[0]?.pageId : null;
-                const firstChapterPage = firstChapterPageId ? pages.find(p => p.id === firstChapterPageId) : null;
-                // Fallback: skip endpapers (2-4 blank pages before title page)
+                // Prefer the first chapter's starting page. Route through the
+                // resilient page-number redirect (/page-number/<n>) rather than a
+                // stored pageId: ~716 books have a stale chapters[0].pageId (pages
+                // were re-imported/re-IDed) and a stale pageId 404s. The
+                // page-number route resolves to the nearest current page
+                // (see src/lib/page-number-resolve.ts), so the CTA always lands.
+                const firstChapterPageNumber = book.chapters?.length
+                  ? (book.chapters as { pageNumber?: number }[])[0]?.pageNumber
+                  : null;
+                if (typeof firstChapterPageNumber === 'number') {
+                  return (
+                    <div className="mt-5">
+                      <Link
+                        href={`/book/${bookSlug}/page-number/${firstChapterPageNumber}`}
+                        className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
+                      >
+                        <BookOpen className="w-5 h-5" />
+                        Read This Book
+                      </Link>
+                    </div>
+                  );
+                }
+                // No chapters: skip endpapers (2-4 blank pages before title page).
                 const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
-                const readPage = firstChapterPage || pages[skipTo] || pages[0];
+                const readPage = pages[skipTo] || pages[0];
                 return (
                   <div className="mt-5">
                     <Link
@@ -941,6 +1016,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                       year={book.published}
                       publisher={book.publisher}
                       placePublished={book.place_published}
+                      format={book.format}
+                      ustcId={book.ustc_id}
                       language={book.language}
                       doi={book.doi}
                       editionVersion={currentEdition?.version}
@@ -986,6 +1063,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
                     <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                  </Suspense>
+                )}
+                {embedPolicy.showIndexCatalogStatus && (
+                  <Suspense fallback={null}>
+                    <IndexCatalogChip
+                      bookIds={[(book as unknown as { _id?: string })._id, book.id]}
+                      authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null}
+                    />
                   </Suspense>
                 )}
               </BibliographicInfo>
@@ -1179,7 +1264,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
       })()}
 
       {/* Stats + Pages Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
+      <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
         {/* Overview link — Pages heading is rendered by PagesGrid */}
         {pages.length > 0 && (
           <div className="flex items-center justify-end">
@@ -1216,7 +1301,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   );
 }
 
-export default async function BookDetailPage({ params, tenantContext, previewProposed = false }: PageProps) {
+export default async function BookDetailPage({ params, tenantContext, previewProposed = false, allowHidden = false }: PageProps) {
   const { id } = await params;
   const ctx = tenantContext ?? null;
   const embedPolicy = getEmbedUiPolicy(ctx);
@@ -1241,6 +1326,13 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     notFound();
   }
 
+  // Hidden books (visible:false) 404 on the public route. allowHidden is set
+  // only by the dynamic, editor-gated /book/[id]/preview route. Gating here
+  // (not on a session check) keeps the public route statically cacheable.
+  if (isHiddenBook(earlyBook) && !allowHidden) {
+    notFound();
+  }
+
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
       {!isEmbedded && <ConditionalSiteHeader variant="light" />}
@@ -1249,13 +1341,13 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       <Suspense fallback={
         <>
           <BookInfoSkeleton />
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <h2 className="text-xl font-semibold text-stone-900 mb-6">Pages</h2>
             <PagesGridSkeleton />
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} previewProposed={previewProposed} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} previewProposed={previewProposed} allowHidden={allowHidden} />
       </Suspense>
       {!isEmbedded && <SignUpCTA />}
     </div>

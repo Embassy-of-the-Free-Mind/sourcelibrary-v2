@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { applyTextRole } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
@@ -108,7 +109,7 @@ export const POST = withCuratorAuth(async (request) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author,
+      title, author, published,
       image_source: { provider, identifier: identifier || undefined, pdf_url, source_url: source_url || pdf_url },
     });
     if (dedupResult.isDuplicate) {
@@ -240,6 +241,8 @@ export const POST = withCuratorAuth(async (request) => {
       updated_at: now,
     };
 
+    // Classify original-vs-translation at import (issue #2395).
+    applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
 
     // 5. Create page records — each page traces back to source PDF

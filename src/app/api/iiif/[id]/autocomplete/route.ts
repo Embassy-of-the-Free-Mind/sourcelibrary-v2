@@ -12,6 +12,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { isBookReadable } from '@/lib/book-access';
 
 const BASE = 'https://sourcelibrary.org';
 const MAX_TERMS = 20;
@@ -52,10 +53,15 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
 
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { id: 1 } }
+      { projection: { id: 1, visible: 1 } }
     );
 
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor / CRON_SECRET.
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

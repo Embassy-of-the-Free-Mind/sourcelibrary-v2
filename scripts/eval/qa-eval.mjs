@@ -92,7 +92,7 @@ async function cmdConsistency() {
 
   // Sample pages
   console.log('Sampling pages...');
-  const pages = await samplePages(corpus, sampleSize);
+  const pages = await samplePages(corpus, sampleSize, { requireOcr: !args['no-require-ocr'] });
   console.log(`  Got ${pages.length} pages from ${new Set(pages.map(p => p.bookId)).size} books\n`);
 
   // Build list of (model, temp) combos — keyed as "model@temp[+thinking][+res]"

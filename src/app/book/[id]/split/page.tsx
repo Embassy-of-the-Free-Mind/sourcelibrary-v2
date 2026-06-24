@@ -560,7 +560,7 @@ export default function SplitPage({ params }: PageProps) {
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link href={`/book/${bookId}`} className="text-stone-600 hover:text-stone-900">
@@ -584,7 +584,7 @@ export default function SplitPage({ params }: PageProps) {
 
         {/* Explanation */}
         <div className="border-t border-stone-100 bg-blue-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-blue-800">
@@ -598,7 +598,7 @@ export default function SplitPage({ params }: PageProps) {
 
         {/* Stats */}
         <div className="border-t border-stone-100 bg-stone-50/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <div className="flex items-center gap-8 text-sm">
               <span className="text-stone-600">
                 <strong>{pages.length}</strong> total pages
@@ -616,7 +616,7 @@ export default function SplitPage({ params }: PageProps) {
 
       {/* Action Bar */}
       <div className="bg-white border-b border-stone-200 sticky top-[157px] z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium text-accent-rust">
@@ -719,7 +719,7 @@ export default function SplitPage({ params }: PageProps) {
       </div>
 
       {/* Pages Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
+      <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {allDisplayPages.map((page, index) => {
             const isRightHalf = !!page.split_from;

@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Book as BookIcon } from 'lucide-react';
 import type { Book } from '@/lib/types';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { bookUrl } from '@/lib/slugify';
@@ -11,6 +10,7 @@ import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
+import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
 import { getEffectiveByline } from '@/lib/byline';
 
 interface BookCardProps {
@@ -101,7 +101,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
   };
 
   return (
-    <Link href={bookUrl(book)} className="group relative">
+    <Link href={bookUrl(book)} className="group relative animate-fade-in-up">
       <div
         ref={cardRef}
         className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 h-full flex flex-col"
@@ -152,9 +152,10 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjQiIGZpbGw9IiNlN2UyZGUiLz48L3N2Zz4="
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <BookIcon className="w-16 h-16 text-stone-300" />
-            </div>
+            <BookCoverPlaceholder
+              title={book.display_title || book.title}
+              author={book.author}
+            />
           )}
 
           {isPublishedFirstTranslation(book) && (

@@ -119,6 +119,9 @@ export async function GET(
           galleryQuality: galleryDoc.gallery_quality ?? null,
           museumDescription: galleryDoc.museum_description ?? null,
           metadata: galleryDoc.metadata ?? null,
+          model: galleryDoc.model ?? null,
+          detectionSource: galleryDoc.detection_source ?? null,
+          detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
           book: {
             id: galleryDoc.book_id,
@@ -129,7 +132,7 @@ export async function GET(
           pageNumber: galleryDoc.page_number,
           readUrl: tenantPath(`/book/${galleryDoc.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${galleryDoc.book_id}`),
-          citation: `${galleryDoc.book_author || ''}, "${galleryDoc.book_title || 'Unknown'}", p. ${galleryDoc.page_number}, Source Library`,
+          citation: `${galleryDoc.book_author || ''}, "${galleryDoc.book_title || 'Unknown'}", p. ${galleryDoc.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
           orphaned: true, // Signal to UI that source page is gone
         }, {
           headers: tenantResponseHeaders,
@@ -169,6 +172,9 @@ export async function GET(
           galleryQuality: galleryDoc.gallery_quality ?? null,
           museumDescription: galleryDoc.museum_description ?? null,
           metadata: galleryDoc.metadata ?? null,
+          model: galleryDoc.model ?? null,
+          detectionSource: galleryDoc.detection_source ?? null,
+          detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
           book: {
             id: pageData.book_id,
@@ -179,7 +185,7 @@ export async function GET(
           pageNumber: pageData.page_number,
           readUrl: tenantPath(`/book/${pageData.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
-          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
           stale: true, // Signal that detection index is stale
         }, {
           headers: tenantResponseHeaders,
@@ -214,6 +220,9 @@ export async function GET(
           galleryQuality: galleryDoc.gallery_quality ?? null,
           museumDescription: galleryDoc.museum_description ?? null,
           metadata: galleryDoc.metadata ?? null,
+          model: galleryDoc.model ?? null,
+          detectionSource: galleryDoc.detection_source ?? null,
+          detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
           book: {
             id: pageData.book_id,
@@ -224,7 +233,7 @@ export async function GET(
           pageNumber: pageData.page_number,
           readUrl: tenantPath(`/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
-          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
           corrupt: true,
         }, {
           headers: tenantResponseHeaders,
@@ -300,6 +309,13 @@ export async function GET(
     // wrong side of a spread. extracted_url is the authoritative crop.
     const croppedUrl = detection.extracted_url || detection.hires_url || cropUrl || imageUrl;
 
+    // Durable first-party view counter (written by POST /api/views; keyed the
+    // same hyphen-form id as likes)
+    const viewsDoc = await db.collection('views').findOne(
+      { target_type: 'image', target_id: `${pageId}-${detectionIndex}` },
+      { projection: { count: 1 } }
+    );
+
     // Build the response
     const response = {
       // Identity
@@ -321,13 +337,17 @@ export async function GET(
       description: detection.description,
       type: detection.type,
       confidence: detection.confidence,
-      model: detection.model,
-      detectionSource: detection.detection_source,
+      model: detection.model ?? null,
+      detectionSource: detection.detection_source ?? null,
+      detectedAt: detection.detected_at ?? null,
 
       // Gallery curation
       galleryQuality: detection.gallery_quality ?? null,
       galleryRationale: detection.gallery_rationale ?? null,
       featured: detection.featured ?? false,
+
+      // Engagement
+      viewCount: viewsDoc?.count ?? 0,
 
       // Rich metadata
       metadata: detection.metadata ?? null,
@@ -557,46 +577,51 @@ export async function PATCH(
     }
 
     // Sync changes to materialized gallery_images collection
-    let gallerySyncStatus: 'ok' | 'removed_low_quality' | 'no_change' | { error: string } = 'no_change';
+    let gallerySyncStatus: 'ok' | 'hidden_low_quality' | 'no_change' | { error: string } = 'no_change';
     try {
       const galleryImageId = `${pageId}-${detectionIndex}`;
 
-      // If quality dropped below materialization threshold, remove from gallery
-      if (typeof body.galleryQuality === 'number' && body.galleryQuality < 0.5) {
-        await db.collection('gallery_images').deleteOne({ id: galleryImageId, ...tenantGalleryFilter });
-        gallerySyncStatus = 'removed_low_quality';
-      } else {
-        const galleryUpdate: Record<string, unknown> = {};
-        if (typeof body.galleryQuality === 'number') {
-          galleryUpdate.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
-        }
-        if (typeof body.featured === 'boolean') galleryUpdate.featured = body.featured;
-        if (typeof body.museumDescription === 'string') galleryUpdate.museum_description = body.museumDescription;
-        if (typeof body.description === 'string') galleryUpdate.description = body.description;
-        if (body.metadata && typeof body.metadata === 'object') galleryUpdate.metadata = body.metadata;
-        if (typeof body.rotation === 'number') galleryUpdate.rotation = body.rotation;
-        if (body.bbox) galleryUpdate.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
+      // Always upsert — never delete. When a curator lowers quality below the
+      // 0.5 materialization threshold the row is HIDDEN from the public gallery
+      // by the gallery_quality >= minQuality read-filter gate (see
+      // api/gallery/route.ts), not destroyed. It stays recoverable: raising
+      // quality back ≥ 0.5 makes it reappear, and admin/curation views
+      // (minQuality=0) can still see it. (Source of truth
+      // pages.detected_images[].gallery_quality was already updated above.)
+      const galleryUpdate: Record<string, unknown> = {};
+      if (typeof body.galleryQuality === 'number') {
+        galleryUpdate.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
+      }
+      if (typeof body.featured === 'boolean') galleryUpdate.featured = body.featured;
+      if (typeof body.museumDescription === 'string') galleryUpdate.museum_description = body.museumDescription;
+      if (typeof body.description === 'string') galleryUpdate.description = body.description;
+      if (body.metadata && typeof body.metadata === 'object') galleryUpdate.metadata = body.metadata;
+      if (typeof body.rotation === 'number') galleryUpdate.rotation = body.rotation;
+      if (body.bbox) galleryUpdate.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
 
-        if (Object.keys(galleryUpdate).length > 0) {
-          galleryUpdate.updated_at = new Date();
-          // Upsert: if a prior edit dropped quality < 0.5 the row was deleted
-          // (line above). Without upsert, raising quality back ≥ 0.5 would leave
-          // the gallery list view permanently out of sync with pages.detected_images.
-          // On insert, also write the foreign-key fields needed for queries.
-          const result = await db.collection('gallery_images').updateOne(
-            { id: galleryImageId, ...tenantGalleryFilter },
-            {
-              $set: galleryUpdate,
-              $setOnInsert: {
-                id: galleryImageId,
-                page_id: pageId,
-                detection_index: detectionIndex,
-              },
+      const lowQuality = typeof body.galleryQuality === 'number' && body.galleryQuality < 0.5;
+
+      if (Object.keys(galleryUpdate).length > 0) {
+        galleryUpdate.updated_at = new Date();
+        // Upsert (never delete): keeps the gallery list view in sync with
+        // pages.detected_images and preserves the row when quality drops < 0.5.
+        // On insert, also write the foreign-key fields needed for queries.
+        const result = await db.collection('gallery_images').updateOne(
+          { id: galleryImageId, ...tenantGalleryFilter },
+          {
+            $set: galleryUpdate,
+            $setOnInsert: {
+              id: galleryImageId,
+              page_id: pageId,
+              detection_index: detectionIndex,
             },
-            { upsert: true },
-          );
-          gallerySyncStatus = result.upsertedCount > 0 || result.modifiedCount > 0 ? 'ok' : 'no_change';
-        }
+          },
+          { upsert: true },
+        );
+        const changed = result.upsertedCount > 0 || result.modifiedCount > 0;
+        gallerySyncStatus = lowQuality ? 'hidden_low_quality' : changed ? 'ok' : 'no_change';
+      } else if (lowQuality) {
+        gallerySyncStatus = 'hidden_low_quality';
       }
     } catch (syncErr) {
       console.error('Gallery images sync failed:', syncErr);
@@ -637,5 +662,16 @@ function buildCitation(page: Record<string, unknown>, detection: Record<string, 
     parts.push(`DOI: ${book.doi}`);
   }
 
+  parts.push(aiCitationNote(detection.model));
+
   return parts.join(', ');
+}
+
+/**
+ * Provenance note appended to citations: the image description/title quoted in
+ * the citation is AI-generated, so the citation must carry that disclaimer
+ * (and the generating model, when recorded) wherever it gets pasted.
+ */
+function aiCitationNote(model: unknown): string {
+  return `[Image description AI-generated${typeof model === 'string' && model ? ` (${model})` : ''}]`;
 }

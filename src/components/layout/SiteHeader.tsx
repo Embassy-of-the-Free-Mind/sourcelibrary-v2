@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
+import { useLocale, NAV_STRINGS, type NavStrings } from '@/lib/i18n';
 
 interface NavLink {
   label: string;
@@ -14,22 +15,26 @@ interface NavLink {
   children?: { label: string; href: string }[];
 }
 
-const NAV_LINKS: NavLink[] = [
-  { label: 'Collections', href: '/collections' },
-  { label: 'Gallery', href: '/gallery' },
-  {
-    label: 'Browse',
-    href: '/browse',
-    activePrefix: '/browse',
-    children: [
-      { label: 'Browse', href: '/browse' },
-      { label: 'Catalogue', href: '/catalog' },
-    ],
-  },
-  { label: 'Explore', href: '/explore/map', activePrefix: '/explore' },
-  { label: 'Librarian', href: '/librarian' },
-  { label: 'Podcast', href: '/podcast' },
-];
+// Hrefs are constant; labels are resolved per-locale from NAV_STRINGS so the
+// nav stays in one place as languages are added.
+function buildNavLinks(t: NavStrings): NavLink[] {
+  return [
+    { label: t.collections, href: '/collections' },
+    { label: t.gallery, href: '/gallery' },
+    {
+      label: t.browse,
+      href: '/browse',
+      activePrefix: '/browse',
+      children: [
+        { label: t.browse, href: '/browse' },
+        { label: t.catalogue, href: '/catalog' },
+      ],
+    },
+    { label: t.map, href: '/explore/map', activePrefix: '/explore' },
+    { label: t.librarian, href: '/librarian' },
+    { label: t.podcast, href: '/podcast' },
+  ];
+}
 
 interface Breadcrumb {
   label: string;
@@ -37,8 +42,8 @@ interface Breadcrumb {
 }
 
 interface SiteHeaderProps {
-  /** 'transparent' for hero overlays, 'light' for cream pages, 'dark' for dark-bg pages (gallery) */
-  variant?: 'transparent' | 'light' | 'dark';
+  /** 'transparent' for the homepage hero overlay, 'light' (default) for all other pages */
+  variant?: 'transparent' | 'light';
   /** Optional breadcrumb trail after the logo (e.g. "Image Gallery") */
   breadcrumbs?: Breadcrumb[];
   /** Make header sticky */
@@ -48,12 +53,15 @@ interface SiteHeaderProps {
 }
 
 export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '' }: SiteHeaderProps) {
-  const isWhiteText = variant === 'transparent' || variant === 'dark';
+  const isWhiteText = variant === 'transparent';
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = NAV_STRINGS[locale];
+  const NAV_LINKS = buildNavLinks(t);
 
   // Close menus on route change
   useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
@@ -76,7 +84,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const variantClasses = {
     transparent: 'relative z-50 py-4',
     light: 'bg-cream border-b border-border-light py-3',
-    dark: 'bg-stone-900 text-white py-3',
   }[variant];
 
   const linkClass = isWhiteText
@@ -91,7 +98,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     <header
       className={`${variantClasses} ${sticky ? 'sticky top-0 z-20' : ''} ${className}`}
     >
-      <div className={`flex items-center justify-between px-6 md:px-12 ${variant !== 'transparent' ? 'max-w-[var(--container-wide)] mx-auto' : ''}`}>
+      <div className="flex items-center justify-between px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
         <div className="flex items-center gap-3">
           <Logo white={isWhiteText} compact={!!breadcrumbs} />
           {breadcrumbs?.map((crumb) => (
@@ -174,7 +181,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 ? (isWhiteText ? 'text-white bg-white/10' : 'text-primary bg-warm')
                 : (isWhiteText ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-secondary hover:text-primary hover:bg-warm/50')
             }`}
-            aria-label="Search"
+            aria-label={t.search}
           >
             <Search className="w-4 h-4" />
           </Link>
@@ -186,7 +193,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               className={`p-1.5 rounded transition-colors ${
                 isWhiteText ? 'text-white/70 hover:text-white' : 'text-secondary hover:text-primary'
               }`}
-              aria-label="Navigation menu"
+              aria-label={t.menu}
               aria-expanded={menuOpen}
             >
               {menuOpen ? (
@@ -242,7 +249,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                   href="/search"
                   className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-warm/50 transition-colors"
                 >
-                  Search
+                  {t.search}
                 </Link>
               </div>
             )}

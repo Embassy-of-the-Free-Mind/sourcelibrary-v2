@@ -118,6 +118,17 @@ export interface Book {
   commons_description?: string; // Description from Commons metadata
   commons_categories?: string[]; // Categories from Commons
 
+  // Deep-zoom tile pyramid (issue #2411). Written LAST by the tile worker after
+  // the tiles are verified in R2 — this is the only field the viewer branches on,
+  // so its presence guarantees the tiles exist. See scripts/workers/deepzoom-tile-worker.mjs.
+  deepzoom?: DeepZoomManifest;
+  deepzoom_gate?: {              // Set when a master is below the tiling MP gate (so sweeps skip it)
+    mp: number;
+    below_gate: boolean;
+    gate_mp: number;
+    checked_at: Date;
+  };
+
   // Wikidata alignment (for Wikipedia/Wikidata outreach)
   wikidata_id?: string;           // Q item for the work (e.g., "Q457894")
   wikidata_label?: string;        // Wikidata label for verification
@@ -364,6 +375,20 @@ export interface TranslationEvidence {
   validated?: boolean;
   notes?: string;
   url?: string;
+}
+
+// Deep-zoom tile-pyramid manifest (issue #2411). Stored on the book doc by the
+// tile worker; the public viewer reads it to mount OpenSeadragon over R2 tiles.
+export interface DeepZoomManifest {
+  width: number;        // master pixel dimensions
+  height: number;
+  tile_size: number;    // px, 256
+  overlap: number;      // px, 1
+  format: string;       // tile extension, e.g. 'jpeg'
+  prefix: string;       // R2 key prefix, e.g. 'deepzoom/<book_id>'
+  tile_count: number;
+  source_url?: string;  // master the pyramid was generated from
+  generated_at?: Date;
 }
 
 // Pre-computed related book entry

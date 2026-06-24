@@ -51,7 +51,7 @@ export default async function ArtworkLandingPage() {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="relative bg-stone-900 text-white overflow-hidden">

@@ -18,6 +18,12 @@
  *   - An HTTP redirect (302/301) to a non-tenant host on the first hop is
  *     flagged. The /gallery → sourcelibrary.org bug we shipped early on
  *     was exactly this.
+ *   - A 200 response whose body carries Next.js's `NEXT_HTTP_ERROR_FALLBACK`
+ *     marker is flagged. That's the silent-failure mode that bit the Bhutan
+ *     promotion: the route called notFound() inside a streaming Suspense
+ *     boundary, so the response status was already 200 by the time Next.js
+ *     decided to render the not-found UI. From outside, it looks like a
+ *     working page; the only signal is the marker baked into the HTML.
  *
  * Out of scope (manual audit needed): verifying that every book.id rendered
  * on a page belongs to the tenant. Doable by parsing /book/<id> links and
@@ -87,7 +93,14 @@ const visited = new Set();
 const queue = [];
 const leaks = [];        // { fromUrl, href, resolved }
 const redirectLeaks = []; // { fromUrl, redirectedTo }
+const silentNotFounds = []; // { url } — 200 response carrying notFound() fallback
 let pagesFetched = 0;
+
+// Next.js stamps this digest into the streamed HTML when a server component
+// inside a Suspense boundary throws notFound() after the response status was
+// already committed. The body shows the not-found UI but the status stays 200,
+// so a normal crawler thinks everything is fine.
+const NEXT_NOTFOUND_MARKER = 'NEXT_HTTP_ERROR_FALLBACK;404';
 
 // Seed paths to probe explicitly. The BPH UI doesn't render anchors for some
 // of these (e.g. /gallery), so a pure link-crawler would miss the redirect bug.
@@ -145,6 +158,14 @@ while (queue.length > 0 && pagesFetched < MAX_PAGES) {
     continue;
   }
 
+  // Silent 200-body-with-404-inside check. Has to run on every page because
+  // a route can render fine on the surface (real title, real meta tags) while
+  // the actual page body is the not-found fallback skeleton. Skip pages we
+  // didn't actually fetch (e.g. redirect leaks).
+  if (!page.skipped && page.html && page.html.includes(NEXT_NOTFOUND_MARKER)) {
+    silentNotFounds.push({ url: page.finalUrl || url });
+  }
+
   const hrefs = extractHrefs(page.html);
   for (const href of hrefs) {
     const classified = classifyHref(href, page.finalUrl);
@@ -159,11 +180,13 @@ while (queue.length > 0 && pagesFetched < MAX_PAGES) {
 }
 
 const totalLeaks = leaks.length + redirectLeaks.length;
+const totalIssues = totalLeaks + silentNotFounds.length;
 process.stdout.write(`\nBPH lockdown audit\n`);
-process.stdout.write(`  base:    ${TARGET}\n`);
-process.stdout.write(`  pages:   ${pagesFetched} (visited)\n`);
-process.stdout.write(`  depth:   ${MAX_DEPTH}\n`);
-process.stdout.write(`  leaks:   ${totalLeaks}\n`);
+process.stdout.write(`  base:           ${TARGET}\n`);
+process.stdout.write(`  pages:          ${pagesFetched} (visited)\n`);
+process.stdout.write(`  depth:          ${MAX_DEPTH}\n`);
+process.stdout.write(`  leaks:          ${totalLeaks}\n`);
+process.stdout.write(`  silent 404s:    ${silentNotFounds.length}\n`);
 
 if (redirectLeaks.length > 0) {
   process.stdout.write(`\nRedirect leaks (${redirectLeaks.length}):\n`);
@@ -190,10 +213,22 @@ if (leaks.length > 0) {
   }
 }
 
-if (totalLeaks === 0) {
-  process.stdout.write(`\nNo leaks detected. The BPH subdomain stays inside ${TENANT_HOST}.\n`);
+if (silentNotFounds.length > 0) {
+  process.stdout.write(`\nSilent 404s (${silentNotFounds.length}):\n`);
+  process.stdout.write(`  Pages that returned HTTP 200 but rendered Next.js's not-found fallback.\n`);
+  process.stdout.write(`  Likely cause: a Suspense child called notFound() after streaming started.\n`);
+  for (const s of silentNotFounds.slice(0, 50)) {
+    process.stdout.write(`  ${s.url}\n`);
+  }
+  if (silentNotFounds.length > 50) {
+    process.stdout.write(`  … and ${silentNotFounds.length - 50} more\n`);
+  }
+}
+
+if (totalIssues === 0) {
+  process.stdout.write(`\nNo issues detected. The subdomain stays inside ${TENANT_HOST}.\n`);
   process.exit(0);
 } else {
-  process.stdout.write(`\nLeaks detected. Patch each one before shipping.\n`);
+  process.stdout.write(`\nIssues detected. Patch each before shipping.\n`);
   process.exit(1);
 }

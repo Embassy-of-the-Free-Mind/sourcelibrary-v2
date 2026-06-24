@@ -78,6 +78,8 @@ export const GET = withAdminAuth(async () => {
   // --- Run remaining checks in parallel ---
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
   const fourHoursAgo = new Date(Date.now() - 4 * 60 * 60 * 1000);
+  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000);
 
   const [
     activeJobs,
@@ -88,6 +90,9 @@ export const GET = withAdminAuth(async () => {
     sqsDepths,
     recentCronRuns,
     supabaseSync,
+    notFound404s,
+    librarianErrors,
+    librarianTurns,
   ] = await Promise.all([
     // Active Lambda jobs
     db.collection('jobs').aggregate([
@@ -162,6 +167,60 @@ export const GET = withAdminAuth(async () => {
 
     // Supabase sync health
     getSupabaseSyncHealth().catch(() => null),
+
+    // 404 reports: last 24h vs previous 24h, plus top URL buckets.
+    // not_found_reports is otherwise write-only — the provider-prefix strip
+    // regression (8e348991, ~770 404s/week) sat unnoticed for two weeks
+    // because nothing read it. A day-over-day spike here is the alarm.
+    db.collection('not_found_reports').aggregate([
+      { $match: { created_at: { $gte: twoDaysAgo } } },
+      { $facet: {
+        last24h: [
+          { $match: { created_at: { $gte: oneDayAgo } } },
+          { $group: { _id: null, hits: { $sum: { $ifNull: ['$hit_count', 1] } } } },
+        ],
+        prev24h: [
+          { $match: { created_at: { $lt: oneDayAgo } } },
+          { $group: { _id: null, hits: { $sum: { $ifNull: ['$hit_count', 1] } } } },
+        ],
+        topUrls: [
+          { $match: { created_at: { $gte: oneDayAgo } } },
+          { $group: { _id: '$url', hits: { $sum: { $ifNull: ['$hit_count', 1] } } } },
+          { $sort: { hits: -1 } },
+          { $limit: 10 },
+        ],
+        topPrefixes: [
+          { $match: { created_at: { $gte: oneDayAgo } } },
+          { $group: {
+            _id: { $arrayElemAt: [{ $split: ['$url', '/'] }, 1] },
+            hits: { $sum: { $ifNull: ['$hit_count', 1] } },
+          } },
+          { $sort: { hits: -1 } },
+          { $limit: 8 },
+        ],
+      } },
+    ], { maxTimeMS: 10000 }).toArray().catch(() => null),
+
+    // Librarian errors by kind (last 24h) — embassy_errors was also
+    // write-only until 2026-06-10.
+    db.collection('embassy_errors').aggregate([
+      { $match: { createdAt: { $gte: oneDayAgo } } },
+      { $group: { _id: '$kind', count: { $sum: 1 } } },
+    ], { maxTimeMS: 10000 }).toArray().catch(() => null),
+
+    // Librarian turns + token usage (last 24h) — usage is persisted per AI
+    // message since PR #2508; this is the cost/cache-hit trend line.
+    db.collection('embassy_messages').aggregate([
+      { $match: { authorType: 'ai', createdAt: { $gte: oneDayAgo } } },
+      { $group: {
+        _id: null,
+        turns: { $sum: 1 },
+        promptTokens: { $sum: { $ifNull: ['$usage.promptTokens', 0] } },
+        outputTokens: { $sum: { $ifNull: ['$usage.outputTokens', 0] } },
+        cachedTokens: { $sum: { $ifNull: ['$usage.cachedTokens', 0] } },
+        turnsWithUsage: { $sum: { $cond: [{ $gt: ['$usage.promptTokens', 0] }, 1, 0] } },
+      } },
+    ], { maxTimeMS: 10000 }).toArray().catch(() => null),
   ]);
 
   // --- 2. Active jobs ---
@@ -260,9 +319,65 @@ export const GET = withAdminAuth(async () => {
     checks.supabase_sync = { status: 'warning', error: 'sync_health RPC unavailable' };
   }
 
+  // --- 10. 404 reports (last 24h vs previous 24h) ---
+  if (notFound404s?.[0]) {
+    const nf = notFound404s[0] as {
+      last24h: Array<{ hits: number }>;
+      prev24h: Array<{ hits: number }>;
+      topUrls: Array<{ _id: string; hits: number }>;
+      topPrefixes: Array<{ _id: string | null; hits: number }>;
+    };
+    const last24h = nf.last24h[0]?.hits || 0;
+    const prev24h = nf.prev24h[0]?.hits || 0;
+    // Baseline is ~200/day. Warn on a genuine spike, not normal jitter:
+    // doubling day-over-day above a 300-hit floor, or 600+ outright.
+    const spiking = last24h >= 600 || (last24h >= 300 && last24h > prev24h * 2);
+    checks.not_found_404s = {
+      status: spiking ? 'warning' : 'ok',
+      last_24h: last24h,
+      prev_24h: prev24h,
+      top_urls: nf.topUrls.map(u => ({ url: u._id, hits: u.hits })),
+      top_prefixes: nf.topPrefixes.map(p => ({ prefix: `/${p._id ?? ''}`, hits: p.hits })),
+    };
+  } else {
+    checks.not_found_404s = { status: 'warning', error: '404-report query failed' };
+  }
+
+  // --- 11. Librarian (embassy chat) errors + usage (last 24h) ---
+  {
+    const errByKind: Record<string, number> = {};
+    for (const e of (librarianErrors || []) as Array<{ _id: string; count: number }>) {
+      errByKind[e._id || 'unknown'] = e.count;
+    }
+    const totalLibErrors = Object.values(errByKind).reduce((a, b) => a + b, 0);
+    const turns = (librarianTurns?.[0] || null) as {
+      turns: number; promptTokens: number; outputTokens: number;
+      cachedTokens: number; turnsWithUsage: number;
+    } | null;
+    const turnCount = turns?.turns || 0;
+    checks.librarian = {
+      // Errors on a meaningful share of turns = something is broken for
+      // real readers, not a one-off.
+      status: totalLibErrors > Math.max(5, turnCount * 0.2) ? 'warning' : 'ok',
+      errors_24h: totalLibErrors,
+      errors_by_kind: errByKind,
+      turns_24h: turnCount,
+      ...(turns && turns.turnsWithUsage > 0 ? {
+        avg_prompt_tokens: Math.round(turns.promptTokens / turns.turnsWithUsage),
+        avg_output_tokens: Math.round(turns.outputTokens / turns.turnsWithUsage),
+        cached_token_share: turns.promptTokens > 0
+          ? Math.round((turns.cachedTokens / turns.promptTokens) * 1000) / 10 + '%'
+          : '0%',
+      } : {}),
+    };
+  }
+
   // --- Overall health ---
   const hasAnyCritical = Object.values(checks).some(c => c.status === 'critical');
-  const healthy = !hasAnyCritical && !paused;
+  // A deliberate pause is an operator choice, not an incident — the system is
+  // healthy, just paused. The pause stays visible as the system_paused
+  // warning above; only critical checks flip the overall flag.
+  const healthy = !hasAnyCritical;
 
   return NextResponse.json({
     healthy,

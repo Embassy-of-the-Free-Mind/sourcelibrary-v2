@@ -127,7 +127,7 @@ export default function BookCollectionsAdmin() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       <header className="bg-stone-900 text-white py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <Link
               href="/collections"
@@ -160,7 +160,7 @@ export default function BookCollectionsAdmin() {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading && (
           <div className="py-20">
             <BookLoader size="xs" />

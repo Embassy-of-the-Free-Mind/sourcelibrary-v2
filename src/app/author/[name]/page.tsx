@@ -8,9 +8,10 @@ import { bookUrl, authorSlug, artistUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorBibliography from '@/components/browse/AuthorBibliography';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
-import { ObjectId, type Db } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
+import { authorThesaurusReadpathEnabled, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -50,6 +51,10 @@ function isArtworkRecord(b: Pick<Book, 'content_type' | 'resource_type'>): boole
   // have only one. Treat either as artwork to avoid leaks during slow
   // backfills, mirroring the /artist/[slug] page (which keys off
   // resource_type).
+  // An explicit content_type:'book' always wins: a textual book that happens to
+  // carry a resource_type (e.g. a digitized papyrus text tagged 'papyrus_fragment')
+  // must never be treated as artwork, or it routes to /artwork/ instead of /book/.
+  if (b.content_type === 'book') return false;
   return b.content_type === 'artwork' || !!b.resource_type;
 }
 
@@ -65,37 +70,6 @@ interface AuthorEntity {
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   portrait_url?: string;
-}
-
-/** Fetch portrait thumbnail URL from Wikidata P18 claim, cache on entity */
-async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<string | null> {
-  if (!entity) return null;
-  if (entity.portrait_url) return entity.portrait_url;
-  if (!entity.wikidata_id) return null;
-
-  try {
-    const res = await fetch(
-      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
-      { next: { revalidate: 86400 } } // cache 24h
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
-    if (!filename) return null;
-
-    // Use thumb.php API — more reliable than direct commons URL (avoids 429s)
-    const thumbUrl = `https://commons.wikimedia.org/w/thumb.php?f=${encodeURIComponent(filename)}&w=300`;
-
-    // Cache on entity (fire-and-forget)
-    db.collection('entities').updateOne(
-      { _id: entity._id },
-      { $set: { portrait_url: thumbUrl } }
-    ).catch(() => {});
-
-    return thumbUrl;
-  } catch {
-    return null;
-  }
 }
 
 // dynamicParams + generateStaticParams: generate on first request, not at build time
@@ -133,6 +107,17 @@ function computeBooks(raw: any[]): Book[] {
       ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
       : 0,
   }));
+}
+
+/**
+ * Partition a computed book set into texts (bibliography) and artworks.
+ * Shared by the legacy entity path and the canonical-thesaurus path.
+ */
+function partitionAuthorBooks(books: Book[]): { works: Book[]; artworks: Book[] } {
+  return {
+    works: books.filter(b => !isArtworkRecord(b)),
+    artworks: books.filter(b => isArtworkRecord(b)),
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -230,15 +215,39 @@ async function loadAuthorData(db: any, slug: string): Promise<{
 
   // Partition the record set: texts go to the bibliography, artworks get
   // their own preview strip + link to the dedicated /artist/[name] page.
-  const computed = computeBooks(books);
-  const works = computed.filter(b => !isArtworkRecord(b));
-  const artworks = computed.filter(b => isArtworkRecord(b));
+  const { works, artworks } = partitionAuthorBooks(computeBooks(books));
 
   return {
     authorName: displayName,
     entity,
     works,
     artworks,
+  };
+}
+
+/**
+ * Canonical-thesaurus author load (GitHub #2250), gated by
+ * AUTHOR_THESAURUS_READPATH. Resolves the slug to ONE canonical person via the
+ * `authors` collection and returns the deduplicated book set. The second return
+ * value is the canonical slug — when it differs from the requested slug, the
+ * page 301-redirects so every variant URL collapses to one.
+ */
+async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // eslint-disable-line @typescript-eslint/no-explicit-any
+  authorName: string;
+  entity: AuthorEntity | null;
+  works: Book[];
+  artworks: Book[];
+  canonicalSlug: string;
+} | null> {
+  const resolved = await resolveCanonicalAuthor(db, slug, BOOK_PROJECTION);
+  if (!resolved || resolved.books.length === 0) return null;
+  const { works, artworks } = partitionAuthorBooks(computeBooks(resolved.books));
+  return {
+    authorName: resolved.canonicalName,
+    entity: (resolved.entity as AuthorEntity | null),
+    works,
+    artworks,
+    canonicalSlug: resolved.canonicalSlug,
   };
 }
 
@@ -279,7 +288,21 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   }
 
   const db = await getReadDb();
-  const data = await loadAuthorData(db, name);
+
+  // Canonical-thesaurus path (flag-gated): one URL per person, variant slugs 301
+  // to the canonical slug. Falls back to the legacy entity/string path on a miss
+  // so no author page regresses while the thesaurus tail is still being linked.
+  let data: Awaited<ReturnType<typeof loadAuthorData>> = null;
+  if (authorThesaurusReadpathEnabled()) {
+    const canonical = await loadCanonicalAuthorData(db, name);
+    if (canonical) {
+      if (canonical.canonicalSlug && canonical.canonicalSlug !== name) {
+        redirect(`/author/${canonical.canonicalSlug}`);
+      }
+      data = canonical;
+    }
+  }
+  if (!data) data = await loadAuthorData(db, name);
   if (!data) notFound();
 
   const { authorName, entity, works, artworks } = data;
@@ -294,7 +317,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
-  // Life dates from entity
+  // Life dates + portrait are a static read of the entity. Enrichment from
+  // Wikidata happens OFFLINE (cron + link hook, see wikidata-enrichment.ts) —
+  // never on render, since these are immutable facts.
   const birthYear = entity?.wikidata_birth_date?.split('-')[0];
   const deathYear = entity?.wikidata_death_date?.split('-')[0];
   const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
@@ -308,8 +333,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     { projection: { name: 1 } }
   );
 
-  // Portrait image from Wikidata
-  const portraitUrl = await getPortraitUrl(db, entity);
+  // Portrait image — static read (enriched offline; CSP-safe CDN URL).
+  const portraitUrl = entity?.portrait_url ?? null;
 
   // Derive Wikipedia URL from entity
   const wikipediaUrl = entity?.wikipedia_url
@@ -521,7 +546,10 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {artworks.slice(0, 12).map(art => {
-                const thumb = art.image_thumb || art.image_display || getBookThumbnailUrl(art);
+                // Route through the resolver (size 'thumb') so artwork URL
+                // normalization applies — reading image_thumb raw re-introduces
+                // the 150px-upscaled blur if an import ever writes a small thumb.
+                const thumb = getBookThumbnailUrl(art, 'thumb') || art.image_display;
                 return (
                   <Link
                     key={art.id}

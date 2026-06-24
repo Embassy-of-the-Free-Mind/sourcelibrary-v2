@@ -33,6 +33,18 @@ const INSCRIBED_CLASSIFICATIONS = [
   'coffin', 'sarcophagus', 'scarab', 'amulet', 'temple',
 ];
 
+// Textual artifacts (papyri, ostraca, inscribed stelae, cuneiform tablets) carry readable
+// text and belong in the BOOK pipeline — like the Egyptian Book-of-the-Dead papyri.
+// Everything else this importer touches (statue, relief, coffin, scarab, amulet, …) is a
+// single-object ARTWORK. content_type is AUTHORITATIVE downstream — a 'book' is never
+// reclassified as artwork (see pipeline-orchestrator ARTWORK_MATCH).
+const TEXTUAL_TYPES = ['papyrus', 'ostracon', 'stela', 'cuneiform', 'tablet'];
+function classifyContentType(obj) {
+  const s = `${obj.objectName || ''} ${obj.classification || ''}`.toLowerCase();
+  const t = TEXTUAL_TYPES.find(x => s.includes(x));
+  return t ? { content_type: 'book', resource_type: t } : { content_type: 'artwork', resource_type: 'object' };
+}
+
 // ── Helpers ──
 function slugify(text) {
   return text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
@@ -217,9 +229,10 @@ async function main() {
 
     const language = mapLanguage(obj);
     const year = obj.objectBeginDate || null;
+    const { content_type: contentType, resource_type: resourceType } = classifyContentType(obj);
 
     if (DRY_RUN) {
-      console.log(`  [DRY] ${title} | ${obj.objectName || obj.classification} | ${language} | ${year || '?'} | ${images.length} images`);
+      console.log(`  [DRY] ${title} | ${obj.objectName || obj.classification} | ${contentType} | ${language} | ${year || '?'} | ${images.length} images`);
       imported++;
       if (checked % 50 === 0) logProgress();
       continue;
@@ -243,6 +256,8 @@ async function main() {
         published: year ? String(year) : 'Unknown',
         categories: [],
         collections: ['middle-east-africa', 'ancient-egyptian'],
+        content_type: contentType,
+        resource_type: resourceType,
         thumbnail: obj.primaryImageSmall || obj.primaryImage,
         pages_count: images.length,
         pages_ocr: 0,
@@ -268,13 +283,17 @@ async function main() {
         status: 'draft',
         hidden: false,
         visible: true,
-        pipeline_auto: {
-          status: 'archiving',
-          source: 'import',
-          queued_at: new Date(),
-          last_updated: new Date(),
-          retry_count: 0,
-        },
+        // Textual artifacts enter the book pipeline (OCR the inscription); single-object
+        // artworks terminalize immediately (no text to OCR/translate).
+        pipeline_auto: contentType === 'artwork'
+          ? { status: 'complete', skipped: 'artwork', source: 'import', last_updated: new Date() }
+          : {
+              status: 'archiving',
+              source: 'import',
+              queued_at: new Date(),
+              last_updated: new Date(),
+              retry_count: 0,
+            },
         source_fingerprint: `met:${objectID}`,
         normalized_title: normalizedT,
         normalized_author: normalizeAuthor(author),

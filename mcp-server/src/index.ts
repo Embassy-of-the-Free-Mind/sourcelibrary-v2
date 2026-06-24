@@ -28,6 +28,7 @@ const TOOLS: Tool[] = [
   // ── Discovery & Browse ──
   {
     name: "search_library",
+    title: "Search Library",
     description:
       "Full-text search across Source Library's 22,000+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs. ORIENTATION HINT: when the user has named a specific author or work, call get_book directly (or list_books to find the ID first) — the AI-generated book summary is usually the right first answer and saves repeated passage hunting.",
     annotations: { title: "Search Library", readOnlyHint: true },
@@ -77,6 +78,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: "list_books",
+    title: "List Books",
     description:
       "Browse the catalog by metadata — filter by author/title fragment, language, category, or translation recency. Returns books with title, author, language, year, page counts, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content; for content matches (passages on a topic) use search_translations or search_concept.",
     annotations: { title: "List Books", readOnlyHint: true },
@@ -114,6 +116,7 @@ const TOOLS: Tool[] = [
 
   {
     name: "search_translations",
+    title: "Search Translations",
     description:
       "Search inside translated page text across the entire library. THE tool for sweeping across many books for evidence on a theme. Unlike search_library (which matches titles/authors), this searches inside the actual text. Returns passage snippets with page numbers, book info, and citation URLs. ORIENTATION HINT: if the user has named a specific author or work, prefer get_book first — every book has an AI-generated summary + chapter outline that is usually the right first read. Use search_translations when looking for evidence across multiple books. (Also available as 'search_passages'.)",
     annotations: { title: "Search Translations", readOnlyHint: true },
@@ -126,7 +129,17 @@ const TOOLS: Tool[] = [
         },
         language: {
           type: "string",
-          description: "Filter by book's original language (e.g., 'Latin', 'German', 'Greek')",
+          description: "Filter by a single original language (e.g., 'Latin', 'German', 'Greek')",
+        },
+        languages: {
+          type: "array",
+          items: { type: "string" },
+          description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.',
+        },
+        exclude_languages: {
+          type: "array",
+          items: { type: "string" },
+          description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.',
         },
         year_from: {
           type: "number",
@@ -151,6 +164,7 @@ const TOOLS: Tool[] = [
 
   {
     name: "search_concept",
+    title: "Semantic Concept Search",
     description:
       "Conceptual / semantic passage search across the whole library. Use when the modern term won't literally appear in historical texts — e.g. \"distributed cognition\" maps to passages about active intellect, art of memory, wax tablet metaphors; \"social contract\" maps to pre-Hobbesian discussions of consent and authority. Ranks passages by cosine similarity on Gemini embeddings, so paraphrases and conceptually adjacent phrasings match even when no keyword overlaps. ORIENTATION HINT: if the user named a specific author or work, prefer get_book first — semantic search is expensive and best reserved for cross-corpus discovery. Prefer search_translations for literal phrases or distinctive single terms; use search_concept when the concept matters more than the wording. Similarity calibration: 0.70+ strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly conceptual drift.",
     annotations: { title: "Semantic Concept Search", readOnlyHint: true },
@@ -163,7 +177,17 @@ const TOOLS: Tool[] = [
         },
         language: {
           type: "string",
-          description: "Filter by original language (e.g., Latin, German, Greek, Arabic, Chinese, Sanskrit, Hebrew, Persian, Tibetan). Use this filter when you want passages from a specific tradition — unfiltered English queries skew toward Latin/German/English results, so set language=Chinese/Arabic/etc. explicitly to surface those texts.",
+          description: "Filter by a single original language (e.g., Latin, German, Greek, Arabic, Chinese, Sanskrit, Hebrew, Persian, Tibetan). Use this filter when you want passages from a specific tradition — unfiltered English queries skew toward Latin/German/English results, so set language=Chinese/Arabic/etc. explicitly to surface those texts.",
+        },
+        languages: {
+          type: "array",
+          items: { type: "string" },
+          description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.',
+        },
+        exclude_languages: {
+          type: "array",
+          items: { type: "string" },
+          description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.',
         },
         year_from: {
           type: "number",
@@ -184,6 +208,7 @@ const TOOLS: Tool[] = [
 
   {
     name: "search_within_book",
+    title: "Search Within Book",
     description:
       "Search inside a specific book's pages (OCR and translations). Returns matching pages with snippets and citation URLs. Use after finding a book to locate specific passages.",
     annotations: { title: "Search Within Book", readOnlyHint: true },
@@ -206,6 +231,7 @@ const TOOLS: Tool[] = [
   // ── Reading & Text ──
   {
     name: "get_book",
+    title: "Get Book",
     description:
       "Get a book's AI-generated summary, chapter list, index stats, edition metadata, DOI, page counts, and processing status. THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book's argument, structure, and significance, often answering the question without any further searching. Pair with get_book_text to read selected chapters, or search_within_book to locate passages inside it.",
     annotations: { title: "Get Book", readOnlyHint: true },
@@ -222,6 +248,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: "get_book_text",
+    title: "Read Book Text",
     description:
       "READ A BOOK — start here. Preferred: use 'chapter' param to read one chapter at a time (includes page markers like [Page 42] for citation). Or use page ranges (from/to) for focused reading. Call get_book first to see the chapter list. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; always check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.",
     annotations: { title: "Read Book Text", readOnlyHint: true },
@@ -270,6 +297,7 @@ const TOOLS: Tool[] = [
   // ── Quoting ──
   {
     name: "get_quote",
+    title: "Get Quote",
     description:
       "Get the exact translated text of a single page for quoting. Returns the full translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response. Do not paraphrase or reconstruct from memory.",
     annotations: { title: "Get Quote", readOnlyHint: true },
@@ -292,6 +320,7 @@ const TOOLS: Tool[] = [
   // ── Gallery ──
   {
     name: "search_images",
+    title: "Search Images",
     description:
       "Search the visual collection: 50,000+ illustrations extracted from book pages PLUS 23,000+ standalone artworks (paintings, frescoes, prints, sculptures from Met, Rijksmuseum, Wikimedia, NGA). Filter by type, subject, figure, symbol, year, book, or text query. Each result has a `source` field — `gallery` (illustration in a book) or `artwork` (standalone museum work). Use `type=painting` or `type=fresco` to find standalone works; `type=woodcut`, `type=engraving`, `type=emblem` etc. surface mostly book illustrations. The `source` parameter narrows the search: 'all' (default), 'gallery' (illustrations only), or 'artworks' (standalone works only).",
     annotations: { title: "Search Images", readOnlyHint: true },
@@ -349,6 +378,7 @@ const TOOLS: Tool[] = [
   // ── Curation ──
   {
     name: "check_duplicate",
+    title: "Check Duplicate",
     description:
       "Check if a book already exists in Source Library before importing. Uses 4-tier matching: source fingerprint, title+author normalization, keyword search, and semantic similarity. Returns confidence level, matches with URLs, and a suggestion (safe to import / review matches / likely duplicate). Use this BEFORE every import to avoid duplicates.",
     annotations: { title: "Check Duplicate", readOnlyHint: true },
@@ -387,6 +417,7 @@ const TOOLS: Tool[] = [
   // ── Feedback ──
   {
     name: "submit_feedback",
+    title: "Submit Feedback",
     description:
       "Submit feedback, bug reports, feature requests, or comments to the Source Library team. Messages go directly to the maintainers.",
     annotations: {

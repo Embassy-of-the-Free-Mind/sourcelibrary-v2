@@ -224,7 +224,7 @@ export default function DetectionReviewPage() {
     <div className="min-h-screen bg-stone-100">
       {/* Header */}
       <header className="bg-stone-900 text-white py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-serif">Detection Review</h1>
@@ -245,7 +245,7 @@ export default function DetectionReviewPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Status counts */}
         {data && (
           <div className="flex items-center gap-4 mb-6">

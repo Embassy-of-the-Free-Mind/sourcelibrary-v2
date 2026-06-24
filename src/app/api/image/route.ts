@@ -12,6 +12,19 @@ const CACHE_DURATION = 60 * 60 * 24 * 7;
 // Internet Archive and other IIIF servers can be slow
 const FETCH_TIMEOUT_IN_MS = 150000;
 
+// Input caps — guard the serverless function against OOM/timeout from a
+// genuinely huge source (multi-hundred-MB scan, full-res IIIF tile). The
+// resolver's fallback chain can route uncovered/oversized images here.
+//   - MAX_INPUT_BYTES: hard cap on bytes we'll buffer before decode. 150 MB
+//     comfortably covers legitimate page scans (JPEG/JP2 masters are typically
+//     <30 MB) while rejecting pathological inputs. Enforced both during the
+//     fetch (axios maxContentLength) and on local files / the final buffer.
+//   - MAX_INPUT_PIXELS: cap passed to sharp's `limitInputPixels`. 100 megapixels
+//     (~10000×10000) covers high-res book pages; above that sharp throws rather
+//     than allocating a multi-GB decode buffer, and we return 413.
+const MAX_INPUT_BYTES = 150 * 1024 * 1024;
+const MAX_INPUT_PIXELS = 100_000_000;
+
 // Provenance mark — the Source Library icon, loaded once at startup
 const MARK_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--48h.png');
 let provenanceMarkBuffer: Buffer | null = null;
@@ -111,9 +124,12 @@ export async function GET(request: NextRequest) {
           const response = await axios.get(url, {
             responseType: 'arraybuffer',
             timeout: FETCH_TIMEOUT_IN_MS,
-            // Axios timeout includes both connection and response timeouts
-            maxContentLength: Infinity,
-            maxBodyLength: Infinity,
+            // Axios timeout includes both connection and response timeouts.
+            // Cap the response body so an oversized source aborts the download
+            // instead of buffering hundreds of MB into the function (throws
+            // ERR_FR_MAX_CONTENT_LENGTH_EXCEEDED, handled below as 413).
+            maxContentLength: MAX_INPUT_BYTES,
+            maxBodyLength: MAX_INPUT_BYTES,
           });
 
           buffer = Buffer.from(response.data);
@@ -129,6 +145,12 @@ export async function GET(request: NextRequest) {
 
           if (!isRetryable || attempt === maxRetries) {
             // No more retries or non-retryable error
+            if (fetchError.code === 'ERR_FR_MAX_CONTENT_LENGTH_EXCEEDED') {
+              return NextResponse.json(
+                { error: 'Source image exceeds size limit', limitBytes: MAX_INPUT_BYTES },
+                { status: 413 }
+              );
+            }
             if (fetchError.code === 'ECONNABORTED' || fetchError.message?.includes('timeout')) {
               return NextResponse.json({ error: 'Image fetch timeout' }, { status: 504 });
             }
@@ -162,7 +184,18 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to load image buffer' }, { status: 500 });
     }
 
-    let sharpInstance = sharp(buffer);
+    // Byte cap — catches local files (readFileSync is uncapped) and any source
+    // that slipped past the fetch-time limit (e.g. no Content-Length header).
+    if (buffer.length > MAX_INPUT_BYTES) {
+      return NextResponse.json(
+        { error: 'Source image exceeds size limit', limitBytes: MAX_INPUT_BYTES },
+        { status: 413 }
+      );
+    }
+
+    // Pixel cap — sharp throws "Input image exceeds pixel limit" above this,
+    // preventing a multi-GB decode allocation. Caught below and returned as 413.
+    let sharpInstance = sharp(buffer, { limitInputPixels: MAX_INPUT_PIXELS });
 
     // Auto-rotate based on EXIF orientation for sources that have correct EXIF data
     // Skip for S3 images which have incorrect/missing EXIF orientation
@@ -286,6 +319,14 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
+    // sharp throws when the decoded image would exceed limitInputPixels —
+    // respond gracefully rather than letting it surface as a generic failure.
+    if (error instanceof Error && /pixel limit/i.test(error.message)) {
+      return NextResponse.json(
+        { error: 'Source image exceeds pixel limit', limitPixels: MAX_INPUT_PIXELS },
+        { status: 413 }
+      );
+    }
     console.error('Image resize error:', error);
     return NextResponse.json(
       { error: 'Image processing failed' },

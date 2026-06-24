@@ -29,6 +29,7 @@ import {
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
+import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
@@ -466,6 +467,8 @@ export default function TranslationEditor({
 
   // Translation request (guest users)
   const [translationRequested, setTranslationRequested] = useState(false);
+  // Optional email so we can notify the requester once the page is translated.
+  const [requestEmail, setRequestEmail] = useState('');
 
   // Reset split state
   const [showResetSplitConfirm, setShowResetSplitConfirm] = useState(false);
@@ -525,11 +528,17 @@ export default function TranslationEditor({
 
   // Page Assistant state
 
-  // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden)
+  // English-source books need no translation — the OCR (the original English text) IS
+  // the reading view. Show OCR by default and hide the redundant "English" translation
+  // panel/toggle, so an English book presents one reading column, not two identical ones.
+  const isEnglishSource = (book.language || '').trim().toLowerCase() === 'english';
+
+  // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden;
+  // for English-source books, image + OCR visible, translation hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
   const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
-  const [showOcrPanel, setShowOcrPanel] = useState(false);
-  const [showTranslationPanel, setShowTranslationPanel] = useState(true);
+  const [showOcrPanel, setShowOcrPanel] = useState(isEnglishSource);
+  const [showTranslationPanel, setShowTranslationPanel] = useState(!isEnglishSource);
   const [showTransliterationPanel, setShowTransliterationPanel] = useState(false);
   const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
@@ -546,8 +555,21 @@ export default function TranslationEditor({
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
+  // Jump-to-page: the counter ("18/864") doubles as an editable input
+  const [isEditingPage, setIsEditingPage] = useState(false);
+  const [pageInputValue, setPageInputValue] = useState('');
+
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
+
+  const commitJumpToPage = () => {
+    const n = parseInt(pageInputValue, 10);
+    setIsEditingPage(false);
+    if (Number.isNaN(n)) return;
+    const clamped = Math.min(Math.max(n, 1), pages.length);
+    const target = pages[clamped - 1];
+    if (target && target.id !== page.id) onNavigate(target.id);
+  };
 
   // Build image URLs at different quality tiers
   // Tier 1: Thumbnail (150px) - for navigation, grid views
@@ -1014,8 +1036,40 @@ export default function TranslationEditor({
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
-              <div className="flex flex-col items-center px-1 sm:px-2">
-                <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
+              <div className="flex items-center px-1 sm:px-2">
+                {isEditingPage ? (
+                  <form
+                    onSubmit={(e) => { e.preventDefault(); commitJumpToPage(); }}
+                    className="flex items-center gap-1"
+                  >
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      min={1}
+                      max={pages.length}
+                      autoFocus
+                      value={pageInputValue}
+                      onChange={(e) => setPageInputValue(e.target.value)}
+                      onBlur={commitJumpToPage}
+                      onKeyDown={(e) => { if (e.key === 'Escape') setIsEditingPage(false); }}
+                      className="w-12 text-sm font-medium text-center bg-transparent border-b focus:outline-none"
+                      style={{ color: 'var(--text-primary)', borderColor: 'var(--accent-rust)' }}
+                      aria-label={`Jump to page (1 to ${pages.length})`}
+                    />
+                    <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>/{pages.length}</span>
+                  </form>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => { setPageInputValue(String(currentIndex + 1)); setIsEditingPage(true); }}
+                    className="text-sm font-medium rounded px-1 hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none transition-colors"
+                    style={{ color: 'var(--text-muted)' }}
+                    aria-label={`Page ${currentIndex + 1} of ${pages.length}. Click to jump to a page`}
+                    title="Jump to page"
+                  >
+                    {currentIndex + 1}/{pages.length}
+                  </button>
+                )}
               </div>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
@@ -1089,19 +1143,21 @@ export default function TranslationEditor({
                   <span className="hidden sm:inline">Deutsch</span>
                 </button>
               )}
-              <button
-                onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
-                style={{
-                  background: showTranslationPanel ? 'var(--accent-rust)' : 'transparent',
-                  color: showTranslationPanel ? '#fff' : 'var(--text-muted)',
-                }}
-                aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
-                aria-pressed={showTranslationPanel}
-              >
-                <Languages className="w-4 h-4" aria-hidden="true" />
-                <span className="hidden sm:inline">English</span>
-              </button>
+              {!isEnglishSource && (
+                <button
+                  onClick={() => setShowTranslationPanel(!showTranslationPanel)}
+                  className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
+                  style={{
+                    background: showTranslationPanel ? 'var(--accent-rust)' : 'transparent',
+                    color: showTranslationPanel ? '#fff' : 'var(--text-muted)',
+                  }}
+                  aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
+                  aria-pressed={showTranslationPanel}
+                >
+                  <Languages className="w-4 h-4" aria-hidden="true" />
+                  <span className="hidden sm:inline">English</span>
+                </button>
+              )}
             </div>
 
             {/* Right side: Mode toggle + Like + extras on desktop */}
@@ -1243,6 +1299,8 @@ export default function TranslationEditor({
                   year={book.published}
                   publisher={book.publisher}
                   placePublished={book.place_published}
+                  format={book.format}
+                  ustcId={book.ustc_id}
                   language={book.language}
                   doi={book.doi}
                   pageNumber={page.page_number}
@@ -1316,6 +1374,9 @@ export default function TranslationEditor({
                         <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                           No image available
                         </div>
+                      )}
+                      {page.deepzoom && (
+                        <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
                       )}
                     </div>
                     {/* Image metadata + download */}
@@ -1584,8 +1645,8 @@ export default function TranslationEditor({
                 </div>
               )}
 
-              {/* Translation Panel */}
-              {showTranslationPanel && (
+              {/* Translation Panel — suppressed for English-source books (OCR is the reading view) */}
+              {showTranslationPanel && !isEnglishSource && (
                 <div id={showOcrPanel ? undefined : 'reader-text'} className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
@@ -1735,31 +1796,45 @@ export default function TranslationEditor({
                         <AuthCheck fallback={
                           translationRequested ? (
                             <p className="text-sm font-medium" style={{ color: 'var(--accent-sage-dark)' }}>
-                              Thanks! We&apos;ll prioritize this book.
+                              {requestEmail.trim()
+                                ? "Thanks! We'll email you when this page is translated."
+                                : "Thanks! We'll prioritize this book."}
                             </p>
                           ) : (
-                            <button
-                              onClick={async () => {
-                                try {
-                                  await fetch('/api/feedback', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({
-                                      message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}) — page ${page.page_number}`,
-                                      page: `/book/${book.id}/page/${page.id}`,
-                                    }),
-                                  });
-                                } catch { /* best effort */ }
-                                setTranslationRequested(true);
-                              }}
-                              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90"
-                              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                              </svg>
-                              Request translation
-                            </button>
+                            <div className="flex flex-col items-center gap-2 max-w-xs">
+                              <input
+                                type="email"
+                                value={requestEmail}
+                                onChange={(e) => setRequestEmail(e.target.value)}
+                                placeholder="Email (optional) — we'll notify you"
+                                className="w-full px-3 py-1.5 rounded-lg text-sm border"
+                                style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)', borderColor: 'var(--border-subtle, #ddd)' }}
+                              />
+                              <button
+                                onClick={async () => {
+                                  const email = requestEmail.trim();
+                                  try {
+                                    await fetch('/api/feedback', {
+                                      method: 'POST',
+                                      headers: { 'Content-Type': 'application/json' },
+                                      body: JSON.stringify({
+                                        message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}) — page ${page.page_number}`,
+                                        page: `/book/${book.id}/page/${page.id}`,
+                                        email: email && email.includes('@') ? email : null,
+                                      }),
+                                    });
+                                  } catch { /* best effort */ }
+                                  setTranslationRequested(true);
+                                }}
+                                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90"
+                                style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                Request translation
+                              </button>
+                            </div>
                           )
                         }>
                           <button
@@ -2038,6 +2113,9 @@ export default function TranslationEditor({
             </div>
             <div className="flex-1 overflow-auto p-4" data-reader-panel>
               <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
+                {page.deepzoom && (
+                  <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
+                )}
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
                 ) : hasWitnessPhotos && currentWitness ? (

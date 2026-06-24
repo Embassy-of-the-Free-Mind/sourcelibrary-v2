@@ -20,6 +20,7 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
+import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -177,17 +178,6 @@ First translation assessment rules:
 - Most pre-1800 Latin, German, and other non-English texts on alchemy, Hermeticism, Kabbalah, astrology, and natural philosophy were NEVER translated to English. Be aware of this baseline.
 - For well-known classical authors (Plato, Aristotle, Virgil, Ovid, Galen, etc.), their major works have translations, but minor/obscure works often do not.
 - If the book IS already in English or is a modern translation of another work, set status to "not_applicable"`;
-}
-
-// ── Image URL resolution ─────────────────────────────────────────────
-
-function getPageImageUrl(page) {
-  // Skip failed URLs (e.g. "failed:HTTP 403")
-  const candidates = [page.cropped_photo, page.archived_photo, page.photo, page.photo_original];
-  for (const url of candidates) {
-    if (url && url.startsWith('http')) return url;
-  }
-  return null;
 }
 
 // ── Core classification ──────────────────────────────────────────────
@@ -440,7 +430,9 @@ async function main() {
         .find({ book_id: book.id })
         .sort({ page_number: 1 })
         .limit(pagesPerBook)
-        .project({ page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1 })
+        // split_from_spread is required by getPageSource() to pick the new-era
+        // sp… cropped half; omitting it silently routes ~all splits to the spread.
+        .project({ page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1 })
         .toArray();
 
       if (pages.length === 0) {

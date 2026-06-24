@@ -166,7 +166,7 @@ export default function OcrDiffPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-stone-50 p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-stone-50 p-6 max-w-[1500px] mx-auto">
       <h1 className="text-2xl font-bold text-stone-900 mb-1">OCR Consistency Diff</h1>
       <p className="text-stone-500 text-sm mb-6">
         Compare raw OCR output across editions of the same work. Differences reveal OCR errors,

@@ -88,6 +88,11 @@ export const getEntity = cache(async (name: string) => {
     );
     if (!entity) return null;
 
+    // Life dates are a static read. Wikidata enrichment happens OFFLINE
+    // (cron + link hook, see src/lib/wikidata-enrichment.ts) — never on render.
+    const birthDate = entity.wikidata_birth_date as string | undefined;
+    const deathDate = entity.wikidata_death_date as string | undefined;
+
     // Fetch related entities (same books)
     const bookIds = entity.books?.map((b: { book_id: string }) => b.book_id) || [];
     const related = bookIds.length > 0
@@ -110,8 +115,8 @@ export const getEntity = cache(async (name: string) => {
       description: entity.description as string | undefined,
       wikipedia_url: entity.wikipedia_url as string | undefined,
       wikidata_id: entity.wikidata_id as string | undefined,
-      wikidata_birth_date: entity.wikidata_birth_date as string | undefined,
-      wikidata_death_date: entity.wikidata_death_date as string | undefined,
+      wikidata_birth_date: birthDate,
+      wikidata_death_date: deathDate,
       wikidata_coordinates: entity.wikidata_coordinates as { lat: number; lng: number } | undefined,
       books: (entity.books || []) as Array<{ book_id: string; book_title: string; book_author: string; pages: number[] }>,
       total_mentions: (entity.total_mentions || 0) as number,

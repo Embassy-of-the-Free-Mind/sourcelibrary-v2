@@ -507,7 +507,7 @@ function AskWhileListening({ threadId }: { threadId: string }) {
       <audio ref={audioRef} className="hidden" />
       {loading && (
         <p className="mt-2 text-[12px] text-[#8a8480] font-sans animate-pulse">
-          Elena and Marcus are thinking... <span className="opacity-60">(~15 seconds)</span>
+          Elena and Marcus are thinking... <span className="opacity-60">(this can take up to a minute)</span>
         </p>
       )}
       {exchanges.map((ex, i) => (

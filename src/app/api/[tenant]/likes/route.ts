@@ -45,14 +45,19 @@ export async function POST(
     }
 
     const db = await getDb();
-    const filter = { target_type, target_id, visitor_id, tenantId };
+    // Toggle key matches the unique index (target_type, target_id,
+    // visitor_id) — tenantId is scoping metadata, not part of a like's
+    // identity. Including it in the delete filter would miss a like the same
+    // visitor filed from a global URL (tenantId: null) and then hit a
+    // duplicate-key error on insert.
+    const filter = { target_type, target_id, visitor_id };
 
     // Atomic toggle: try delete first. If no deletion occurred, insert new like.
     const deleted = await db.collection('likes').deleteOne(filter);
     const liked = deleted.deletedCount === 0;
 
     if (liked) {
-      await db.collection('likes').insertOne({ ...filter, created_at: new Date() });
+      await db.collection('likes').insertOne({ ...filter, tenantId, created_at: new Date() });
     }
 
     const count = await db.collection('likes').countDocuments({

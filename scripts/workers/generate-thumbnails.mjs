@@ -22,6 +22,7 @@ import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { computeDHash } from '../lib/dhash.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 // ── Config ──
 
@@ -54,6 +55,7 @@ async function storagePut(key, body, contentType = 'application/octet-stream') {
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const ARCHIVED_ONLY = args.includes('--archived-only');
+const INCLUDE_SENSITIVE = args.includes('--include-sensitive');
 
 function getArg(name, defaultVal) {
   const arg = args.find(a => a.startsWith(`--${name}=`));
@@ -202,17 +204,46 @@ async function main() {
     },
   };
 
+  // Require a source image to crop from. Pages with no archived/cropped/photo
+  // can't be thumbnailed — the work-item loop skips them — but without this
+  // they still match the filter and re-appear in every `--limit` batch, so a
+  // front cluster of source-less pages stalls the batch loop before it reaches
+  // processable pages further back (and the loop never terminates).
+  matchFilter.$or = [
+    { archived_photo: { $ne: null } },
+    { cropped_photo: { $ne: null } },
+    { photo_original: { $ne: null } },
+    { photo: { $ne: null } },
+  ];
+
   if (ARCHIVED_ONLY) {
     matchFilter.archived_photo = { $exists: true, $ne: '' };
   }
   if (BOOK_ID) {
     matchFilter.book_id = BOOK_ID;
+  } else if (!INCLUDE_SENSITIVE) {
+    // Sensitive-content hold (issue #2431): the global gallery/feed/search
+    // currently have NO sensitive gate — erotic books' images stay out of
+    // those surfaces only because their crops were never materialized.
+    // Until the read-path gate ships, do not materialize crops for books
+    // flagged `sensitive: true` (set from erotic-collection membership by
+    // scripts/maintenance/flag-sensitive-books.mjs). Explicit --book-id or
+    // --include-sensitive overrides for deliberate, scoped runs.
+    const sensitiveIds = await db.collection('books').distinct('id', { sensitive: true });
+    if (sensitiveIds.length > 0) {
+      matchFilter.book_id = { $nin: sensitiveIds };
+      console.log(`Skipping ${sensitiveIds.length} sensitive books (#2431; --include-sensitive to override)`);
+    }
   }
 
-  const totalNeeding = await pagesCol.countDocuments(matchFilter);
-  console.log(`\nPages needing thumbnail generation: ${totalNeeding}`);
-
+  // countDocuments(matchFilter) is a full COLLSCAN over the pages collection
+  // (the $elemMatch on detected_images isn't indexed) and at backlog scale
+  // (tens of thousands matching) it can take many minutes — pointless to pay
+  // in apply mode where it's only an informational log. The limited find below
+  // stops early once it hits LIMIT matches, so skip the count unless dry-run.
   if (DRY_RUN) {
+    const totalNeeding = await pagesCol.countDocuments(matchFilter);
+    console.log(`\nPages needing thumbnail generation: ${totalNeeding}`);
     // Count individual detections
     const detectionCount = await pagesCol.aggregate([
       { $match: matchFilter },
@@ -239,6 +270,7 @@ async function main() {
       id: 1, book_id: 1,
       detected_images: 1,
       archived_photo: 1, cropped_photo: 1, photo_original: 1, photo: 1,
+      enhanced_photo: 1, split_from_spread: 1,
     })
     .toArray();
 
@@ -247,12 +279,16 @@ async function main() {
   // Flatten to individual work items
   const workItems = [];
   for (const page of pages) {
-    const sourceUrl = page.archived_photo || page.cropped_photo || page.photo_original || page.photo;
+    // MUST match the source the detection bboxes were computed against
+    // (image-extract-worker resolves it via getPageSource). On split pages
+    // archived_photo is the full two-page spread — cropping it with a
+    // cropped_photo-space bbox produces a gutter-spanning junk crop.
+    const sourceUrl = getPageSource(page);
     if (!sourceUrl) continue;
 
     for (let idx = 0; idx < (page.detected_images || []).length; idx++) {
       const det = page.detected_images[idx];
-      if (!det.bbox) continue;
+      if (!det || !det.bbox) continue;
       if (det.extracted_url) continue; // already has thumbnail
       if (!['vision_model', 'manual', 'ocr_tag'].includes(det.detection_source)) continue;
       if (MIN_QUALITY > 0 && (det.gallery_quality || 0) < MIN_QUALITY) continue;

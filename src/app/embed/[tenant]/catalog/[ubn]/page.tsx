@@ -24,6 +24,20 @@ interface Props {
   params: Promise<{ tenant: string; ubn: string }>;
 }
 
+// UBNs like "BPH 151" contain a space, which arrives URL-encoded ("BPH%20151")
+// in the route segment. The stored value in bph_works has a real space, so an
+// undecoded param never matches and the page 404s (the entire reason BPH-shelf-
+// mark catalogue links were dead). Numeric UBNs have nothing to encode, which
+// is why they always worked. Decode defensively — for already-decoded values
+// (no '%') this is a no-op, and a malformed escape sequence falls back to raw.
+function normalizeUbn(raw: string): string {
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
 interface FieldProvenance {
   source: string;
   evidence?: string;
@@ -46,6 +60,7 @@ interface BphWorkRow {
   author_entity_id: string | null;
   author_canonical_name: string | null;
   author_wikidata_qid: string | null;
+  author_viaf_id: string | null;
   place: string | null;
   printer: string | null;
   publisher: string | null;
@@ -112,7 +127,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   const select = `
       ubn, title, parallel_title, uniform_title,
       author, variant_author, pseudonym, editor, variant_editor,
-      author_entity_id, author_canonical_name, author_wikidata_qid,
+      author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
@@ -130,7 +145,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
     '',
   );
   const fallbackNoAuthority = fallbackSelect.replace(
-    'author_entity_id, author_canonical_name, author_wikidata_qid,\n      ',
+    'author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,\n      ',
     '',
   );
   const first = await supabase.from('bph_works').select(select).eq('ubn', ubn).maybeSingle();
@@ -268,7 +283,8 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { tenant, ubn } = await params;
+  const { tenant, ubn: rawUbn } = await params;
+  const ubn = normalizeUbn(rawUbn);
   const partner = getPartnerBySlug(tenant);
   if (partner && partner.providerKey !== 'bph' && partner.hasUnifiedCatalogue) {
     return generateGenericMetadata(tenant, ubn, partner) as Promise<Metadata>;
@@ -319,7 +335,8 @@ async function effectiveCatalogRole(
 }
 
 export default async function CatalogEntryPage({ params }: Props) {
-  const { tenant, ubn } = await params;
+  const { tenant, ubn: rawUbn } = await params;
+  const ubn = normalizeUbn(rawUbn);
 
   // Generic unified-catalogue tenants (kloss-collection, …) — render via the
   // shared component that reads library_catalog_records. BPH falls through.
@@ -374,6 +391,12 @@ export default async function CatalogEntryPage({ params }: Props) {
             {showReviewLink && (
               <>
                 <a
+                  href="/catalog/new"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+                >
+                  + New record
+                </a>
+                <a
                   href="/catalog/review"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
                 >
@@ -387,6 +410,12 @@ export default async function CatalogEntryPage({ params }: Props) {
                 </a>
               </>
             )}
+            <a
+              href="/catalog/help"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+            >
+              Help
+            </a>
             <a
               href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
@@ -490,7 +519,7 @@ export default async function CatalogEntryPage({ params }: Props) {
                 </dl>
 
                 {slBook.reading_summary?.overview && (
-                  <AISection>
+                  <AISection kind="ai-summary-catalog">
                     <p className="text-sm text-secondary leading-relaxed mb-4 italic">
                       {slBook.reading_summary.overview.length > 380
                         ? slBook.reading_summary.overview.slice(0, 380) + '…'
@@ -588,18 +617,18 @@ export default async function CatalogEntryPage({ params }: Props) {
               actually linked. The label uses "Standard name (VIAF)" to mirror
               the terminology in the editor's picker, so cataloguers see the
               same wording on read and write. */}
-          {(work.author_canonical_name || work.author_entity_id || work.author_wikidata_qid) && (
+          {(work.author_canonical_name || work.author_viaf_id || work.author_wikidata_qid) && (
             <FieldRaw label="Standard name (VIAF)">
               <span className="flex flex-wrap items-baseline gap-x-2 text-primary">
                 {work.author_canonical_name && <span>{work.author_canonical_name}</span>}
-                {work.author_entity_id && (
+                {work.author_viaf_id && (
                   <a
-                    href={`https://viaf.org/viaf/${work.author_entity_id}`}
+                    href={`https://viaf.org/viaf/${work.author_viaf_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-secondary hover:underline text-xs"
                   >
-                    VIAF {work.author_entity_id}
+                    VIAF {work.author_viaf_id}
                   </a>
                 )}
                 {work.author_wikidata_qid && (

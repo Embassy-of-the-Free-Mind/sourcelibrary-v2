@@ -8,6 +8,12 @@ import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
 import { sendWriteResult } from '@/lib/sqs-client';
+import {
+  buildGalleryDoc,
+  type GalleryDocPage,
+  type GalleryDocBook,
+  type GalleryDocDetection,
+} from '@/lib/gallery-doc';
 
 /**
  * Image Extraction Processor - processes one page at a time
@@ -281,11 +287,10 @@ async function buildGalleryDocs(
     // Fetch book metadata for denormalization
     const book = await db.collection('books').findOne(
       { id: bookId },
-      { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1 } }
+      { projection: { id: 1, display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1, 'image_source.provider': 1 } }
     );
 
-    const imageUrl = (page as any).enhanced_photo || page.cropped_photo || page.archived_photo || page.photo_original || page.photo || '';
-
+    const now = new Date();
     const docs = images
       .map((img, idx) => {
         if (!img.bbox) return null;
@@ -298,34 +303,18 @@ async function buildGalleryDocs(
         // Re-check threshold after adjustment — low-res scans may drop below 0.5
         if (adjustedQuality < 0.5) return null;
 
-        return {
-          id: `${pageId}-${idx}`,
-          page_id: pageId,
-          book_id: bookId,
-          page_number: page.page_number,
-          detection_index: idx,
-          image_url: imageUrl,
-          thumbnail_url: img.thumbnail_url || null,
-          extracted_url: img.extracted_url || null,
-          description: img.description || '',
-          type: img.type || null,
-          bbox: img.bbox,
-          rotation: img.rotation || null,
-          gallery_quality: adjustedQuality,
-          confidence: img.confidence || null,
-          museum_description: img.museum_description || null,
-          detection_source: img.detection_source || null,
-          metadata: img.metadata || null,
-          dhash: img.dhash || null,
-          book_title: book?.display_title || book?.title || 'Unknown',
-          book_author: book?.author || null,
-          book_year: book?.year || null,
-          book_language: book?.language || null,
-          book_visible: book?.visible ?? false,
-          book_hidden: book?.hidden || null,
-          book_rank: 0,
-          updated_at: new Date(),
-        };
+        // Shared builder so the field set stays identical across all four
+        // gallery_images writers (#2531). Preserve this path's provisional
+        // book_rank: 0 (the dedicated rank pass overwrites it).
+        return buildGalleryDoc({
+          page: page as unknown as GalleryDocPage,
+          book: book as unknown as GalleryDocBook,
+          detectedImage: img as unknown as GalleryDocDetection,
+          index: idx,
+          now,
+          galleryQuality: adjustedQuality,
+          bookRank: 0,
+        });
       })
       .filter((d): d is NonNullable<typeof d> => d !== null);
 

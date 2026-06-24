@@ -109,7 +109,7 @@ export interface GalleryImageUpdateResponse {
   extractedUrl?: string;
   thumbnailUrl?: string;
   /** Diagnostic info for the materialized gallery_images sync. */
-  gallerySync?: 'ok' | 'removed_low_quality' | 'no_change' | { error: string };
+  gallerySync?: 'ok' | 'hidden_low_quality' | 'no_change' | { error: string };
 }
 
 export interface GalleryImageDetail {
@@ -126,11 +126,14 @@ export interface GalleryImageDetail {
   description: string;
   type?: string;
   confidence?: number;
-  model?: string;
-  detectionSource?: string;
+  model?: string | null;
+  detectionSource?: string | null;
+  /** ISO timestamp of the AI extraction run that produced description/metadata. */
+  detectedAt?: string | null;
   galleryQuality?: number | null;
   galleryRationale?: string | null;
   featured?: boolean;
+  viewCount?: number;
   metadata?: ImageMetadata | null;
   museumDescription?: string | null;
   bbox?: BBox;

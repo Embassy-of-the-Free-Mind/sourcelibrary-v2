@@ -1,10 +1,12 @@
 import { NextRequest } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { logAiUsage } from '@/lib/log-ai-usage';
 
 export const preferredRegion = 'fra1';
 
 // Cache full responses (narration + terms + display hint + image terms) to avoid repeated AI calls
-const responseCache = new Map<string, { display: string; narration: string; terms: string[]; imageTerms: string[]; timestamp: number }>();
+const responseCache = new Map<string, { display: string; strategy: string; narration: string; terms: string[]; imageTerms: string[]; timestamp: number }>();
+const STRATEGIES = ['navigational', 'conceptual', 'verbatim'];
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
 /**
@@ -33,6 +35,7 @@ export async function POST(request: NextRequest) {
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     const lines = [
       `event: display\ndata: ${JSON.stringify(cached.display)}\n`,
+      ...(cached.strategy ? [`event: strategy\ndata: ${JSON.stringify(cached.strategy)}\n`] : []),
       `event: narration\ndata: ${JSON.stringify(cached.narration)}\n`,
       `event: terms\ndata: ${JSON.stringify(cached.terms)}\n`,
       ...(cached.imageTerms.length > 0 ? [`event: image_terms\ndata: ${JSON.stringify(cached.imageTerms)}\n`] : []),
@@ -50,6 +53,8 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  const _aiStart = Date.now();
+  const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || null;
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
@@ -84,6 +89,7 @@ Your job: help the visitor FIND more. Not explain — guide.
 
 Reply in this EXACT XML format:
 <display>HINT</display>
+<strategy>STRATEGY</strategy>
 <narration>One sentence (max 20 words). Point toward what to look for — a name, a title, a tradition. Not a definition or explanation. Think: "Try searching for X" or "The key figure here is X" or "Look in the Y tradition."</narration>
 <terms>["term1","term2","term3","term4","term5"]</terms>
 <image_terms>["artwork1","artwork2","artwork3"]</image_terms>
@@ -92,6 +98,11 @@ HINT = images_first | books_first | not_in_collection
 - images_first: visual art, painting, diagram, illustration
 - books_first: texts, concepts, authors, traditions
 - not_in_collection: outside scope OR post-1900 figure whose sources we have
+
+STRATEGY = navigational | conceptual | verbatim — how search should rank results
+- navigational: looking for a specific known book/author/title (e.g. "boehme", "de occulta philosophia", "agrippa")
+- conceptual: a theme, idea, or question spanning many works (e.g. "alchemy and the transformation of the soul")
+- verbatim: hunting an exact phrase or quotation to locate its source
 
 TERMS = 3-5 search terms the visitor wouldn't think of — period-appropriate synonyms, Latin titles, original-language names, specific authors. These DRIVE additional searches.
 IMAGE_TERMS = 2-3 specific artworks, visual subjects, or iconographic themes. These DRIVE gallery image searches.
@@ -128,11 +139,32 @@ The terms and image_terms are the most important part — they expand the search
           }
         }
 
+        // Log AI usage + cost (usageMetadata is available once the stream drains)
+        try {
+          const meta = (await result.response)?.usageMetadata;
+          logAiUsage({
+            feature: 'ai_search_expand',
+            model: 'gemini-3.1-flash-lite',
+            inputTokens: meta?.promptTokenCount || 0,
+            outputTokens: meta?.candidatesTokenCount || 0,
+            ms: Date.now() - _aiStart,
+            ok: true,
+            country,
+          });
+        } catch { /* never block the stream on logging */ }
+
         // Parse everything from complete text — no streaming narration (avoids tag leaks)
         console.log('[ai-expand] Full output:', JSON.stringify(fullText));
 
         if (!sentDisplay) {
           controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
+        }
+
+        // Extract retrieval strategy (drives ladder-vs-RRF routing in /api/search).
+        const strategyRaw = fullText.match(/<strategy>(.*?)<\/strategy>/)?.[1]?.trim() || '';
+        const strategy = STRATEGIES.includes(strategyRaw) ? strategyRaw : '';
+        if (strategy) {
+          controller.enqueue(encoder.encode(`event: strategy\ndata: ${JSON.stringify(strategy)}\n\n`));
         }
 
         // Extract narration — clean, complete, no tag fragments
@@ -172,7 +204,7 @@ The terms and image_terms are the most important part — they expand the search
 
         // Cache
         const displayHint = fullText.match(/<display>(.*?)<\/display>/)?.[1]?.trim() || 'books_first';
-        responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
+        responseCache.set(normalized, { display: displayHint, strategy, narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
 
         controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
         controller.close();

@@ -178,7 +178,7 @@ export default async function SacredTextsPortal() {
     <div className="min-h-screen bg-cream">
       {/* Hero */}
       <div className="bg-dark">
-        <div className="max-w-7xl mx-auto px-6 pt-8 pb-14 sm:pb-16">
+        <div className="max-w-[1500px] mx-auto px-6 pt-8 pb-14 sm:pb-16">
           <Link
             href="/#library"
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-10"
@@ -209,7 +209,7 @@ export default async function SacredTextsPortal() {
       </div>
 
       {/* Traditions grid */}
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-[1500px] mx-auto px-6 py-10">
         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
           {traditionsWithBooks.map(tradition => (
             <TraditionCard key={tradition.slug} tradition={tradition} />

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { getLibraryStats, roundedCountLabel } from '@/lib/library-stats';
 
 export const metadata: Metadata = {
   title: 'FAQ — Source Library',
@@ -13,7 +14,8 @@ interface FAQItem {
   answer: React.ReactNode;
 }
 
-const faqs: FAQItem[] = [
+function getFaqs(bookCount: string): FAQItem[] {
+  return [
   {
     question: 'Are the translations reliable?',
     answer: (
@@ -111,7 +113,7 @@ const faqs: FAQItem[] = [
         <p>
           The economics are prohibitive. Professional scholarly translation from Latin, Greek,
           or Arabic costs $0.20&ndash;$0.30 per word. An average book in the collection runs
-          50,000&ndash;80,000 words. Even for the 10,000+ books currently visible, that&apos;s
+          50,000&ndash;80,000 words. Even for the {bookCount} books currently visible, that&apos;s
           roughly <strong>$100&ndash;$200 million</strong> and over <strong>1,000 translator-years</strong> of
           full-time work &mdash; assuming you could find enough specialists in medieval Latin
           paleography, polytonic Greek, classical Arabic, and early modern German to even
@@ -256,9 +258,13 @@ const faqs: FAQItem[] = [
       </>
     ),
   },
-];
+  ];
+}
 
-export default function FAQPage() {
+export default async function FAQPage() {
+  const stats = await getLibraryStats();
+  const bookCount = stats ? roundedCountLabel(stats.books) : '10,000+';
+  const faqs = getFaqs(bookCount);
   return (
     <ContentPageLayout
       header={

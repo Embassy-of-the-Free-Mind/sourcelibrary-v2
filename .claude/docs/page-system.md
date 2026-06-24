@@ -11,28 +11,60 @@
 | `page_number` | number | Sequential position in the book. 1-indexed. NOT the visible printed page number. |
 | `tenant_id` | string | Always `'default'`. Legacy multi-tenant field. |
 
-### Images — The Priority Chain
+### Images — resolved through ONE function (issue #1727)
 
-The page has 6 image-related fields accumulated over time. The frontend checks them in priority order, which means setting `photo` alone may not change what's displayed.
+A page has ~8 image fields accumulated over time. **Do not re-implement the
+precedence in consumers** — every image URL goes through the canonical resolver
+`getPageImageUrl(page, size)` in `src/lib/page-image-url.ts` (pipeline scripts use
+the JS twin `scripts/lib/page-image-url.mjs`). The legacy helpers
+(`getPageDisplayUrl`, `getPageThumbUrl`, `utils.getPageImageUrl`,
+`page.ts:pageImageUrl`) are now thin wrappers over it. This section is the single
+declared source of truth — when in doubt, the resolver wins.
 
-| Field | What it is | Set by | Frontend priority |
-|---|---|---|---|
-| `photo` | Primary display image (1200px) | Standard pipeline, split pipeline | Last (after all others) |
-| `photo_original` | Original source URL before processing | Import pipeline | 3rd |
-| `archived_photo` | Locally cached copy of source image | Archiving pipeline | 2nd |
-| `cropped_photo` | Cropped version from old split detection | Legacy split pipeline | 1st |
-| `thumbnail` | 150px grid thumbnail | Standard pipeline, split pipeline | 4th in thumb chain |
-| `thumbnail_blob` | Vercel Blob era thumbnail | Legacy import | 2nd in thumb chain |
-| `display_photo` | 1200px display JPEG with provenance marks | Provenance pipeline | Not in standard chain |
-| `compressed_photo` | Compressed version | Legacy | Not used |
+Two orthogonal axes:
 
-**The rule**: For split-from-spread pages (`split_from_spread: true`), the frontend bypasses this chain entirely and uses `photo`/`thumbnail` directly. See PR #719.
+**1. Size (universal):** `size ∈ thumb (~150px) | display (~1200px) | original
+(full-res; OCR/download) | hires (~4000px; zoom)`. Tiers, cheapest → fallback:
+pre-sized R2 variant (`display_photo` / `-thumb.jpg`, free egress) → IIIF-native
+resize (`/full/{w},/`) → `/api/image` proxy → raw original (`original`/`hires`
+only). **Never `/_next/image`** (metered). `display`/`thumb` are always
+browser-safe (never `.jp2`/`.tif`) and size-bounded.
 
-**For all other pages**, the chain is:
-- Thumbnails: `thumbnail_blob` → derive from `photo` path → `thumbnail` → proxy fallback
-- Display: `cropped_photo` → `archived_photo` → `photo_original` → `photo`
+**2. Source identity (`getPageSource`, split-aware):** which file *is* this page.
+Precedence:
+1. `cropped_photo` — **old-era split**: the materialized cropped half
+2. `split_from_spread` + `photo` — **new-era split**: `photo` is the `sp…` half
+3. archiving failed (`failed:` prefix) → `null` (source URLs proven dead)
+4. `enhanced_photo` — contrast/brightness-enhanced copy; preferred when present
+   (a cover-selection pref, ~0% populated; placed *after* split handling so it
+   can't reintroduce the spread)
+5. `archived_photo` → `photo_original` → `photo`
 
-**When modifying page images**: always `$unset` fields you're not using, or they'll override your changes.
+**Split pages are the only non-trivial source case (~10%).** For split pages the
+half lives in `cropped_photo` (old-era) or the `sp…` `photo` (new-era); the
+`archived_photo`/`photo` for old-era split is the **full spread** — resolving to
+it shows/OCRs the wrong image. The resolver handles this; consumers must not
+hand-roll it.
+
+**Crop-coords pages (~0.04%):** `crop.{xStart,xEnd}` set, no materialized
+`cropped_photo`, not split → the resolver proxy-crops the source (a pre-sized
+variant would be the *uncropped* image). Verified rare-but-real; preserved.
+
+| Field | Role | Set by |
+|---|---|---|
+| `photo` | primary source URL (often the canonical `pages/…` path or external) | pipeline / import |
+| `archived_photo` | R2 copy of the source (full image; the spread for old-era split) | archiving |
+| `photo_original` | original source URL before processing | import |
+| `cropped_photo` | the cropped half (old-era split only) | legacy split |
+| `display_photo` | 1200px display variant on R2 | provenance/backfill |
+| `image_thumb` | 150px thumbnail on R2 (canonical; supersedes `thumbnail_blob`) | provenance/backfill |
+| `thumbnail_blob` | legacy 150px thumbnail | legacy import |
+| `thumbnail` | s3-hosted 150px thumbnail (fallback) | pipeline |
+| `enhanced_photo` | contrast-enhanced copy (rare) | enhancement |
+| `compressed_photo` | legacy, unused | — |
+
+**When modifying page images**: `$unset` fields you're not using, and prefer
+writing the canonical `display_photo` / `image_thumb` (not `thumbnail_blob`).
 
 ### R2 Storage Path Conventions
 
@@ -62,6 +94,8 @@ CDN cache: `Cache-Control: max-age=31536000` (1 year). You cannot invalidate by 
 | `ocr.output_tokens` | number | Gemini output tokens |
 | `ocr.batch_job_id` | string | Batch job that produced this OCR |
 | `ocr.updated_at` | Date | When OCR was last updated |
+| `ocr.source_url` | string | **Provenance (#2297/#2302):** the exact image URL sent to the model. Compare to `getPageSource(page)` (`@/lib/page-image-url`) to find pages OCR'd on the wrong image — e.g. a split page OCR'd on the full spread. Pages OCR'd before #2302 lack this. |
+| `ocr.code_version` | string | **Provenance:** git SHA / release tag of the producing code, so a buggy run is identifiable and reversible as a set. |
 
 ### OCR Metadata Tags
 
@@ -98,6 +132,7 @@ The OCR text contains inline XML tags that serve dual purposes:
 | `translation.target_language` | string | Always `'English'` |
 | `translation.prompt_version` | string | Translation prompt version |
 | `translation.source` | string | `'batch_api'`, `'hetzner'`, `'realtime'` |
+| `translation.code_version` | string | **Provenance (#2302):** git SHA / release of the producing code. Note: translation has **no** `source_url` — its input is the OCR *text*, not an image; image lineage is recoverable via the same page's `ocr.source_url`. |
 
 ### Page Classification
 
@@ -176,14 +211,13 @@ The page reader (`src/app/book/[id]/page/[pageId]`) shows:
 4. **Notes panel** — metadata extracted from OCR tags by NotesRenderer
 5. **Navigation** — prev/next by page_number, with page count from book
 
-The reader uses `getPageImageUrl()` in `src/lib/utils.ts` for hi-res display images. This has a DIFFERENT priority chain than `getPageThumbUrl()`:
-
-```typescript
-export function getPageImageUrl(page) {
-  // For hi-res: prefer archived → photo_original → photo
-  // Split pages: photo directly (via split_from_spread check)
-}
-```
+The reader resolves images through the canonical `getPageImageUrl(page, size)`
+(`src/lib/page-image-url.ts`) — `'display'` for the page image, `'hires'` for
+zoom/magnifier, `'thumb'` for the grid. There is no longer a separate priority
+chain per surface: size and source-identity are the only axes (see *Images —
+resolved through ONE function* above). The `utils.ts` `getPageDisplayUrl` /
+`getPageThumbUrl` are back-compat wrappers that call `getPageImageUrl(page,
+'display'|'thumb')`.
 
 ## Common Pitfalls
 

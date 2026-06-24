@@ -20,6 +20,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -118,10 +119,19 @@ async function main() {
 
   // Check pause
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
+  if (!shouldBypassPause(control)) {
     console.log(`[archive-harvard] Pipeline paused. Exiting.`);
     await client.close();
     return;
+  }
+  // Selective unpause: confine to scoped books while globally paused (free
+  // archiving must honor the same scope as the paid path, #2616). Empty in
+  // normal operation.
+  let SCOPE_FILTER = {};
+  if (control?.paused && hasScope(control)) {
+    const scopeIds = [...await resolveScopeBookIds(db, control)];
+    SCOPE_FILTER = { id: { $in: scopeIds } };
+    console.log(`[archive-harvard] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
   }
 
   // Find Harvard books with unarchived pages. Books with pages_archived < pages_count
@@ -132,6 +142,7 @@ async function main() {
       pages_count: { $gt: 0 },
       $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
       'archive_metadata.blocked': { $ne: true },
+      ...SCOPE_FILTER,
     }, { projection: { id: 1, title: 1, pages_count: 1, pages_archived: 1 } })
     .limit(1000)
     .maxTimeMS(30_000)

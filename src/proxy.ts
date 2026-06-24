@@ -1,5 +1,21 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
+import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
+
+// Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
+// Bundled because the proxy runs at the edge with no DB access; regenerate with
+// scripts/maintenance/build-author-redirect-map.mjs when the authors thesaurus changes.
+const AUTHOR_CANONICAL_REDIRECTS = authorCanonicalRedirects as Record<string, string>;
+
+// Famous-text slugs that readers guess as a book URL but that we hold across
+// several editions (no single canonical book to land on). Map the guessed slug
+// to a library search so they see every edition and choose. `corpus-hermeticum`
+// itself is a hidden, empty stub book squatting the slug, so the /book route
+// would otherwise render "Book Not Found" (it arrives as direct-typed traffic).
+const BOOK_SLUG_SEARCH_REDIRECTS: Record<string, string> = {
+  'corpus-hermeticum': 'corpus hermeticum',
+};
 
 // --- Tenant routing ---
 
@@ -8,8 +24,8 @@ import { getDb } from '@/lib/mongodb';
 // .claude/docs/tenant-architecture-migration.md), every other route is a
 // global root — tenant context is supplied by the proxy via x-tenant-* headers
 // when a subdomain or this set matches, and the dynamic [tenant] segment
-// rejects everything else.
-const TENANT_ROOT_PATHS = new Set(['bph', 'kloss-collection', 'bhutan']);
+// rejects everything else. Defined in provider-prefix.ts so the provider
+// strip below stays mutually exclusive with tenant routing.
 
 // Domains that enable the Ficino Society social layer
 const SOCIETY_DOMAINS = [
@@ -561,6 +577,59 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
+  // --- Canonical author URL redirect (#2250) ---
+  // One person = one /author/ URL. Variant slugs (name-order, Latinized, or
+  // title-contaminated forms) 308 to the canonical slug from the authors
+  // thesaurus. Done HERE rather than in the page because a server redirect()
+  // inside the ISR/streamed /author/[name] RSC page never emits a 307 — the 200
+  // shell commits before the redirect resolves. Cheap pathname check, no DB.
+  // Single-segment only (/author/<slug>), so sub-paths like .../opengraph-image
+  // are untouched; falls through on any miss so author routing can't break.
+  const authorMatch = pathname.match(/^\/author\/([^/]+)\/?$/);
+  if (authorMatch) {
+    const raw = authorMatch[1];
+    let decoded = raw;
+    try { decoded = decodeURIComponent(raw); } catch { /* keep raw */ }
+    const canonical = AUTHOR_CANONICAL_REDIRECTS[decoded] ?? AUTHOR_CANONICAL_REDIRECTS[raw];
+    if (canonical && canonical !== decoded && canonical !== raw) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/author/${canonical}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
+  // --- Bare /book/<id>/page redirect ---
+  // A page link with the page number missing — arrives steadily from AI-chat
+  // citations and hand-truncated URLs (~230 404s/week in not_found_reports,
+  // real browser UAs). No route matches the bare segment. Redirected HERE for
+  // the same reason as the author block above: a redirect() inside the
+  // streamed /book RSC tree commits a 200 shell before the redirect resolves,
+  // so crawlers would index the junk URL. Pathname-only change, so on tenant
+  // subdomains the redirect stays on-host.
+  const barePageMatch = pathname.match(/^\/book\/([^/]+)\/page\/?$/);
+  if (barePageMatch) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/book/${barePageMatch[1]}`;
+    return NextResponse.redirect(url, 308);
+  }
+
+  // --- Guessed famous-text book slug → library search ---
+  // Single-segment /book/<slug> only; real book slugs aren't in the map, so
+  // they fall through to normal routing untouched. Pathname-only change keeps
+  // the redirect on-host on tenant subdomains (lands on that tenant's search).
+  const bookSlugMatch = pathname.match(/^\/book\/([^/]+)\/?$/);
+  if (bookSlugMatch) {
+    let slug = bookSlugMatch[1];
+    try { slug = decodeURIComponent(slug); } catch { /* keep raw */ }
+    const searchQuery = BOOK_SLUG_SEARCH_REDIRECTS[slug];
+    if (searchQuery) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/search';
+      url.search = `?q=${encodeURIComponent(searchQuery)}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
   // --- Tenant subdomain rewrite ---
   //
   // Only a handful of tenant-specific routes still live under /embed/<tenant>/:
@@ -614,6 +683,23 @@ export async function proxy(request: NextRequest) {
     // tenant and stamps x-tenant-* headers on the global route.
   }
 
+  // --- Source-provider URL strip (PR #2025, restored) ---
+  // Contributing libraries (Internet Archive, Gallica, Bodleian, …) credit
+  // books but never own URL space — content is tenant-agnostic (/book/...,
+  // /gallery/...). Old provider-prefixed links are still indexed and cited,
+  // so 308 them to the global equivalent. Static LIBRARY_PARTNERS lookup,
+  // no DB — the earlier Mongo-backed version (kind:'provider' rows in
+  // `tenants`) was removed in 8e348991 because providers were wrongly
+  // resolving as tenants; this one is keyed off library-partners.ts and
+  // excludes real routing tenants, so the two can't collide. On a tenant
+  // subdomain only the pathname changes, so the redirect stays on-host.
+  const providerRedirectPath = getProviderPrefixRedirect(pathname);
+  if (providerRedirectPath) {
+    const url = request.nextUrl.clone();
+    url.pathname = providerRedirectPath;
+    return NextResponse.redirect(url, 308);
+  }
+
   // Tenant-prefix canonicalizers (/{tenant}/book → /book, /{tenant}/collections
   // → /collections, /{tenant}/explore → /explore) used to live here. After
   // Phase Final book/collections/gallery/explore are all global routes, and
@@ -662,8 +748,15 @@ export async function proxy(request: NextRequest) {
     if (looksLikeId) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
-      url.searchParams.set('id', segment);
-      return NextResponse.rewrite(url);
+      url.search = '';
+      // Pass the id via a request header (not a query param). Next's dev
+      // runtime drops query params added to an internal rewrite target, so the
+      // handler would hit its "no id → 302 /" branch and bounce every
+      // /book/<id> link to the homepage. Headers survive the rewrite — this
+      // mirrors the ?page=N redirect above.
+      const headers = new Headers(request.headers);
+      headers.set('x-redirect-book', segment);
+      return NextResponse.rewrite(url, { request: { headers } });
     }
   }
 

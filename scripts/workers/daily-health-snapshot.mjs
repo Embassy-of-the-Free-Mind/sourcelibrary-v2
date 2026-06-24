@@ -214,7 +214,10 @@ async function run() {
     // Gemini usage gives a proxy for AI activity.
     const geminiToday = await db.collection('gemini_usage_daily').findOne({ date: todayStr });
     const geminiYest = await db.collection('gemini_usage_daily').findOne({ date: yestStr });
-    const geminiDoc = geminiToday || geminiYest;
+    // Prefer yesterday's COMPLETE day over today's partial one (today is still
+    // accumulating, so its total would read as a near-zero floor). The printed
+    // line includes the date, so the chosen day stays visible.
+    const geminiDoc = geminiYest || geminiToday;
 
     let userLine = 'User sessions: not tracked (no web analytics in DB)';
     if (geminiDoc) {

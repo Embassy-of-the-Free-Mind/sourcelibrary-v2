@@ -6,6 +6,7 @@ import LikeButton from '@/components/ui/LikeButton';
 import { BookShare } from '@/components/ui/ShareButton';
 import SiteHeader from '@/components/layout/SiteHeader';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
+import AiBadge from '@/components/ui/AiBadge';
 
 /** Medium labels for display */
 const TYPE_LABELS: Record<string, string> = {
@@ -23,18 +24,10 @@ function ProvenanceRow({ label, value, mono, provenance }: { label: string; valu
     <div>
       <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>
         {label}
-        {provenance === 'ai' && <AiBadge />}
+        {provenance === 'ai' && <AiBadge className="ml-1" title="AI-inferred — may require verification" />}
       </span>
       <p className={`mt-0.5 ${mono ? 'font-mono text-xs break-all' : ''}`}>{value}</p>
     </div>
-  );
-}
-
-function AiBadge() {
-  return (
-    <span className="inline-flex items-center ml-1 px-1 py-px text-[9px] font-medium rounded bg-amber-100 text-amber-700 align-middle" title="AI-inferred — may require verification">
-      AI
-    </span>
   );
 }
 
@@ -64,12 +57,14 @@ interface ArtworkInfoProps {
   collections: Array<{ slug: string; name: string; subtitle?: string; color?: string }>;
   prevWork?: ArtworkNavItem | null;
   nextWork?: ArtworkNavItem | null;
+  /** Per-collection prev/next pairs — ArtworkHero picks the one matching ?from=<collection>. */
+  navByCollection?: Record<string, { prev: ArtworkNavItem | null; next: ArtworkNavItem | null }>;
   relatedBooks?: RelatedBookPreview[];
   /** When true, hide cross-tenant widgets (AuthorCrossReference renders unfiltered global data). */
   isEmbedded?: boolean;
 }
 
-export default function ArtworkInfo({ book, collections, prevWork, nextWork, relatedBooks = [], isEmbedded = false }: ArtworkInfoProps) {
+export default function ArtworkInfo({ book, collections, prevWork, nextWork, navByCollection, relatedBooks = [], isEmbedded = false }: ArtworkInfoProps) {
   const displayImage = book.thumbnail || (book as any).thumbnail_blob || '';
   const thumbImage = (book as any).thumbnail_blob || '';
   const commonsUrl = (book as any).commons_url || '';
@@ -120,7 +115,9 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
           isLandscape={isLandscape}
           prevWork={prevWork}
           nextWork={nextWork}
+          navByCollection={navByCollection}
           institution={holdingMuseum}
+          deepZoom={(book as any).deepzoom || null}
         />
       )}
 

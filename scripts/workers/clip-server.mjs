@@ -46,7 +46,16 @@ console.log(`CLIP model loaded in ${((Date.now() - t) / 1000).toFixed(1)}s`);
 async function embedImage(source) {
   let image;
   if (source.url) {
-    image = await RawImage.fromURL(source.url);
+    // Fetch the bytes ourselves with a proper User-Agent — RawImage.fromURL
+    // sends none, and Wikimedia 429s UA-less clients (13 artworks were
+    // permanently unembeddable until 2026-06-05 because of this).
+    const res = await fetch(source.url, {
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot' },
+      signal: AbortSignal.timeout(60000),
+    });
+    if (!res.ok) throw new Error(`fetch ${res.status} for ${source.url}`);
+    const buf = Buffer.from(await res.arrayBuffer());
+    image = await RawImage.fromBlob(new Blob([buf], { type: res.headers.get('content-type') || 'image/jpeg' }));
   } else if (source.base64) {
     const buf = Buffer.from(source.base64, 'base64');
     image = await RawImage.fromBlob(new Blob([buf], { type: source.mime_type || 'image/jpeg' }));

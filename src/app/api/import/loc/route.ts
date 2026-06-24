@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { applyTextRole } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
@@ -214,7 +215,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title: bookTitle, author: bookAuthor, display_title,
+      title: bookTitle, author: bookAuthor, display_title, published: bookPublished,
       image_source: { provider: 'loc', identifier: lccn, source_url: `https://www.loc.gov/item/${lccn}/` },
     });
     if (dedupResult.isDuplicate) {
@@ -280,6 +281,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       updated_at: new Date(),
     };
 
+    // Classify original-vs-translation at import (issue #2395).
+    applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
 
     // Create pages

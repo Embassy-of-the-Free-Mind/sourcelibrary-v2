@@ -62,34 +62,6 @@ interface ArtistEntity {
   portrait_url?: string;
 }
 
-async function getPortraitUrl(db: Db, entity: ArtistEntity | null): Promise<string | null> {
-  if (!entity) return null;
-  if (entity.portrait_url) return entity.portrait_url;
-  if (!entity.wikidata_id) return null;
-
-  try {
-    const res = await fetch(
-      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
-      { next: { revalidate: 86400 } }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
-    if (!filename) return null;
-
-    const thumbUrl = `https://commons.wikimedia.org/w/thumb.php?f=${encodeURIComponent(filename)}&w=300`;
-
-    db.collection('entities').updateOne(
-      { _id: entity._id },
-      { $set: { portrait_url: thumbUrl } }
-    ).catch(() => {});
-
-    return thumbUrl;
-  } catch {
-    return null;
-  }
-}
-
 interface ArtistPageProps {
   params: Promise<{ name: string }>;
 }
@@ -218,11 +190,13 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
+  // Life dates + portrait are a static read of the entity. Enrichment from
+  // Wikidata happens OFFLINE (cron + link hook) — never on render.
   const birthYear = entity?.wikidata_birth_date?.split('-')[0];
   const deathYear = entity?.wikidata_death_date?.split('-')[0];
   const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
-  const portraitUrl = await getPortraitUrl(db, entity);
+  const portraitUrl = entity?.portrait_url ?? null;
 
   const wikipediaUrl = entity?.wikipedia_url
     || (entity?.wikidata_id ? `https://www.wikidata.org/wiki/Special:GoToLinkedPage/enwiki/${entity.wikidata_id}` : null);

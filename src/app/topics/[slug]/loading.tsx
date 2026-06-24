@@ -3,7 +3,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 export default function TopicDetailLoading() {
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="relative overflow-hidden text-white py-12">

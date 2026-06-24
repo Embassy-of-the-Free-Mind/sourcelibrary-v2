@@ -5,6 +5,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { getChapterTexts } from '@/lib/chapter-text';
 import { z } from 'zod';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { isBookReadable } from '@/lib/book-access';
 
 // Validation schema for chat messages
 const messageSchema = z.object({
@@ -363,6 +364,11 @@ export async function GET(
 
     const book = await db.collection('books').findOne({ id, tenantId });
     if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Hidden (visible:false) books are not public — 404 unless editor / CRON_SECRET.
+    if (!(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 

@@ -3,6 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { semanticPageSearchScoped } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { isBookReadable } from '@/lib/book-access';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -22,8 +24,8 @@ function escapeRegex(str: string): string {
 
 /** Strip XML/HTML tags and clean up formatting artifacts */
 function cleanText(text: string): string {
-  return text
-    .replace(/<[^>]+>/g, '')                    // strip all XML/HTML tags
+  return stripEditorialWrappers(text)           // drop <meta>/<summary>/<keywords>/<vocab> prose first
+    .replace(/<[^>]+>/g, '')                    // strip remaining tags, keep inner body text
     .replace(/\*\*([^*]+)\*\*/g, '$1')          // strip markdown bold
     .replace(/\*([^*]+)\*/g, '$1')              // strip markdown italic
     .replace(/original:\s*[^;]+;?\s*/gi, '')    // strip "original: Latin;" annotations
@@ -91,6 +93,18 @@ export async function GET(
     const matchQuery = isPhrase ? trimmedQuery.slice(1, -1) : trimmedQuery;
     const db = await getDb();
 
+    // Hidden (visible:false) books are not public — gate before searching their
+    // text. 404 unless editor session or CRON_SECRET (pipeline / Claude Code).
+    // A book is only "hidden" if its books doc exists with visible:false; if no
+    // doc is found we preserve prior behavior (just search pages) rather than 404.
+    const gateBook = await db.collection('books').findOne(
+      { $or: [{ id: bookId }, { slug: bookId }] },
+      { projection: { id: 1, visible: 1 } }
+    );
+    if (gateBook && !(await isBookReadable(gateBook, request))) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
     // Run keyword search and semantic search in parallel
     const [keywordResults, semanticResults] = await Promise.all([
       // --- Keyword search (Atlas Search with regex fallback) ---
@@ -141,26 +155,26 @@ export async function GET(
           const matches: SearchMatch[] = [];
 
           if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
+            // Generate the snippet from the FULL field text, not from the Atlas
+            // highlight fragments. The fragments are a window around the hit, so
+            // when the hit lands inside a <meta>/<summary>/<keywords>/<vocab>
+            // block the fragment carries the editorial prose WITHOUT its wrapper
+            // tags — stripEditorialWrappers (which needs the tags) then can't
+            // remove it, and the AI page-description gets served as a quote (the
+            // "mercury on page 89" leak; PRs #2232/#2233 only fixed the full-field
+            // path). generateSnippet runs cleanText over the complete field, where
+            // both tags are present, so the block is stripped. If the only hit was
+            // inside an editorial block it's now gone, generateSnippet finds
+            // nothing, and the page correctly drops out of results.
+            const ocr = page.ocr as { data?: string } | undefined;
+            const translation = page.translation as { data?: string } | undefined;
             for (const hl of page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }>) {
               const field: 'ocr' | 'translation' = hl.path === 'translation.data' ? 'translation' : 'ocr';
-              const raw = cleanText(hl.texts.map(t => t.value).join(''));
-              // Cap highlight length — Atlas Search can return entire page content
-              const MAX_SNIPPET = 300;
-              let snippet = raw;
-              if (raw.length > MAX_SNIPPET) {
-                // Find the highlight hit (marked by type: 'hit') and center around it
-                const hitText = hl.texts.find(t => t.type === 'hit')?.value?.toLowerCase() || matchQuery.toLowerCase();
-                const hitPos = raw.toLowerCase().indexOf(hitText);
-                if (hitPos >= 0) {
-                  const half = Math.floor(MAX_SNIPPET / 2);
-                  const start = Math.max(0, hitPos - half);
-                  const end = Math.min(raw.length, hitPos + hitText.length + half);
-                  snippet = (start > 0 ? '...' : '') + raw.slice(start, end) + (end < raw.length ? '...' : '');
-                } else {
-                  snippet = raw.slice(0, MAX_SNIPPET) + '...';
-                }
-              }
-              matches.push({ field, snippet, position: 0 });
+              const fullData = (field === 'translation' ? translation?.data : ocr?.data) || '';
+              if (!fullData) continue;
+              const hitText = hl.texts.find(t => t.type === 'hit')?.value || matchQuery;
+              const snips = generateSnippet(fullData, hitText);
+              matches.push(...snips.map(m => ({ ...m, field })));
             }
           } else {
             const ocr = page.ocr as { data?: string } | undefined;

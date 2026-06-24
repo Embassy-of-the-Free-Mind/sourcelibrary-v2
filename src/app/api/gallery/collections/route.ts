@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const featured = searchParams.get('featured') === 'true';
     const type = searchParams.get('type'); // 'visual' | 'thematic'
+    const includeHidden = searchParams.get('includeHidden') === 'true'; // admin manager
 
     // Tenant scoping. Proxy.ts sets x-tenant-id for tenant-subdomain SSR;
     // the browser apiClient sets X-Tenant-Slug for client-side calls under
@@ -30,6 +31,7 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
     const filter: Record<string, unknown> = {};
+    if (!includeHidden) filter.hidden = { $ne: true }; // public surfaces hide cover-less collections
     if (featured) filter.featured = true;
     if (type === 'visual' || type === 'thematic') filter.type = type;
     if (tenantId) filter.tenantId = tenantId;

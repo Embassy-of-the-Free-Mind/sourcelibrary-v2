@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Quote, Copy, Check } from 'lucide-react';
+import { trackEvent } from '@/lib/track-event';
 
 function getRuntimeOrigin(): string {
   if (typeof window !== 'undefined' && window.location?.origin) {
@@ -68,6 +69,10 @@ interface CiteButtonProps {
   year?: string;
   publisher?: string;
   placePublished?: string;
+  /** Original edition format (folio, quarto, octavo, …) */
+  format?: string;
+  /** USTC catalog number of the source edition */
+  ustcId?: string;
   language?: string;
   doi?: string;
   pageNumber?: number;
@@ -83,8 +88,18 @@ function formatAccessedDate(): string {
   return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
+// Original-edition imprint: place of publication, publisher, format, and USTC
+// number of the source printing being translated. This is the bibliographic
+// record of the original work — distinct from the Source Library translation/
+// access credit. Mirrors BibliographicInfo.formatCitation() so the "Cite"
+// dropdown carries the same scholarly detail as the bibliographic panel.
+function originalImprint(props: CiteButtonProps): string {
+  const pub = [props.placePublished, props.publisher].filter(Boolean).join(': ');
+  return [pub, props.format, props.ustcId ? `USTC ${props.ustcId}` : ''].filter(Boolean).join('. ');
+}
+
 function generateApa(props: CiteButtonProps, origin: string): string {
-  const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion } = props;
+  const { author, title, displayTitle, year, doi, pageNumber, editionVersion } = props;
   const url = buildCitableUrl(props, origin);
   const displayName = displayTitle || title;
   const yearStr = year || 'n.d.';
@@ -92,15 +107,17 @@ function generateApa(props: CiteButtonProps, origin: string): string {
   const version = editionVersion ? `, v${editionVersion}` : '';
   const page = pageNumber ? `, p. ${pageNumber}` : '';
   const accessed = formatAccessedDate();
+  const imprint = originalImprint(props);
+  const imprintStr = imprint ? `${imprint}. ` : '';
 
   if (doi) {
-    return `${authorStr}. ${displayName}, trans. Source Library (${yearStr})${version}${page}. https://doi.org/${doi}`;
+    return `${authorStr}. ${displayName}. ${imprintStr}Trans. Source Library (${yearStr})${version}${page}. https://doi.org/${doi}`;
   }
-  return `${authorStr}. (${yearStr}). ${displayName}. Source Library${page}. Retrieved ${accessed}, from ${url}`;
+  return `${authorStr}. (${yearStr}). ${displayName}. ${imprintStr}Source Library${page}. Retrieved ${accessed}, from ${url}`;
 }
 
 function generateBibtex(props: CiteButtonProps, origin: string): string {
-  const { author, title, year, doi, language, pageNumber, editionVersion } = props;
+  const { author, title, year, doi, language, pageNumber, editionVersion, publisher, placePublished, format, ustcId } = props;
   const authorStr = author || 'Anonymous';
 
   const authorKey = authorStr.split(',')[0].split(' ').pop()?.toLowerCase().replace(/[^a-z]/g, '') || 'unknown';
@@ -115,13 +132,19 @@ function generateBibtex(props: CiteButtonProps, origin: string): string {
     `  translator = {{Source Library}},`,
   ];
   if (year) lines.push(`  year = {${year}},`);
-  lines.push(`  publisher = {Source Library},`);
+  // Original imprint: address = place of publication, publisher = source printer.
+  // Falls back to Source Library as publisher only when no original is known.
+  if (placePublished) lines.push(`  address = {${placePublished}},`);
+  lines.push(`  publisher = {${publisher || 'Source Library'}},`);
   if (editionVersion) lines.push(`  edition = {${editionVersion}},`);
   if (language) lines.push(`  language = {${language}},`);
   if (doi) lines.push(`  doi = {${doi}},`);
   if (pageNumber) lines.push(`  pages = {${pageNumber}},`);
   lines.push(`  url = {${buildCitableUrl(props, origin)}},`);
-  lines.push(`  note = {AI-assisted English translation via Source Library}`);
+  const noteParts = ['AI-assisted English translation via Source Library'];
+  if (format) noteParts.push(format);
+  if (ustcId) noteParts.push(`USTC ${ustcId}`);
+  lines.push(`  note = {${noteParts.join('; ')}}`);
   lines.push(`}`);
   return lines.join('\n');
 }
@@ -134,6 +157,8 @@ export default function CiteButton({
   year,
   publisher,
   placePublished,
+  format,
+  ustcId,
   language,
   doi,
   pageNumber,
@@ -145,11 +170,12 @@ export default function CiteButton({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const origin = getRuntimeOrigin();
 
-  const props = { bookId, title, displayTitle, author, year, publisher, placePublished, language, doi, pageNumber, editionVersion, tenantSlug };
+  const props = { bookId, title, displayTitle, author, year, publisher, placePublished, format, ustcId, language, doi, pageNumber, editionVersion, tenantSlug };
 
   const copyToClipboard = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedId(id);
+    trackEvent('cite', { bookId, format: id, page: pageNumber, hasDoi: !!doi });
     setTimeout(() => setCopiedId(null), 2000);
   };
 

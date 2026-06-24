@@ -40,14 +40,11 @@ export const PODCAST_FORMATS: Record<PodcastFormat, { label: string; description
 
 // Gemini TTS audio tags for natural delivery
 const AUDIO_TAG_GUIDE = `
-Audio delivery tags (use sparingly for naturalness):
-- [laughs] — brief, genuine laughter at a surprising discovery
-- [enthusiasm] — when revealing something exciting
-- [thoughtful] — when considering a complex idea
-- [whispers] — for dramatic effect when quoting something secret or forbidden
-- Short affirmations: "Mm-hmm", "Right", "Exactly", "Oh interesting"
-- Disfluencies: "I mean...", "So like...", "Wait, actually..."
-- False starts: beginning a thought, pausing, restarting with better framing
+Audio delivery tags (use VERY sparingly — at most 2-3 in the whole script):
+- [thoughtful] — when weighing a complex idea
+- Short affirmations: "Mm-hmm", "Right", "I see"
+Do NOT use [enthusiasm], [laughs], or [whispers]. No gasps, no breathless reactions —
+the register is a well-produced history documentary, not a reaction video.
 `.trim();
 
 interface NotebookFinding {
@@ -69,6 +66,15 @@ export interface PodcastResult {
   duration?: number;
 }
 
+/** A curated source book linked from an episode (no quotes — links only). */
+export interface PodcastSource {
+  bookId: string;
+  slug?: string;
+  title: string;
+  author?: string;
+  origin?: string;
+}
+
 export interface PodcastMetadata {
   audioUrl: string;
   r2Key: string;
@@ -78,6 +84,10 @@ export interface PodcastMetadata {
   topic: string;
   findingCount: number;
   published?: boolean;
+  /** ISO 639 language of the episode audio (e.g. 'es'); defaults to English. */
+  language?: string;
+  /** Curated source books, used when no research-notebook findings exist. */
+  sources?: PodcastSource[];
 }
 
 /**
@@ -179,7 +189,7 @@ async function generateScript(
 // ── Format-Specific Prompts ──────────────────────────────────────────
 
 const FORMAT_PROMPTS: Record<PodcastFormat, (topic: string, findings: string, raw: NotebookFinding[]) => string> = {
-  'deep-dive': (topic, findings) => `You are a scriptwriter for "Source Library Deep Dive," a scholarly podcast about rare books and the Western esoteric tradition. Write a natural two-person conversation between ${HOST_A} (lead host, enthusiastic and deeply knowledgeable) and ${HOST_B} (co-host, asks sharp questions and draws unexpected connections).
+  'deep-dive': (topic, findings) => `You are a scriptwriter for "Source Library Deep Dive," a scholarly podcast about rare books and the Western esoteric tradition. Write a natural two-person conversation between ${HOST_A} (lead host, clear and deeply knowledgeable) and ${HOST_B} (co-host, asks the grounding questions a curious newcomer would ask).
 
 ## Topic: ${topic}
 
@@ -189,14 +199,14 @@ ${findings}
 
 ## Guidelines:
 - This is a 3-5 minute podcast episode (roughly 600-900 words of dialogue)
-- Open with an engaging hook — jump straight into why this matters, don't say "welcome to the show"
-- **Cite sources in speech naturally:** "In Agrippa's Three Books of Occult Philosophy, on page 42, he writes..." or "Ficino puts it beautifully in De Voluptate..." — always name the book and author, mention page numbers when quoting directly
+- **Anchor the subject in its time within the first minute:** who the author was, where and when the work appeared, and what was happening around it. A listener who knows nothing should have a real grasp of the work by the end — the episode is a summary first, a conversation second
+- Open by situating, not by gushing — no "welcome to the show," and no breathless hook
+- **Cite sources in speech naturally:** "In Agrippa's Three Books of Occult Philosophy, on page 42, he writes..." — always name the book and author, mention page numbers when quoting directly
 - Weave actual quotes into conversation — paraphrase some, read others aloud with gravity
-- ${HOST_A} drives the narrative arc and reveals findings; ${HOST_B} reacts genuinely, asks clarifying questions, and connects ideas across sources
-- **Sound like real people:** Include natural disfluencies — "I mean...", "Wait, actually...", "Hmm", false starts, brief laughter at surprising discoveries, short affirmations ("Right", "Exactly", "Oh that's fascinating")
-- ${HOST_B} should occasionally interrupt or finish ${HOST_A}'s thought
-- End with a thought-provoking insight or open question, not a summary
-- Tone: two scholars at a wine bar, genuinely excited about what they've found in old books
+- ${HOST_A} carries the narrative arc; ${HOST_B} asks clarifying questions ("Two worlds meaning what?", "Did anyone push back at the time?") and keeps the explanation honest
+- Sound like real people, but measured: an occasional "Hmm" or brief false start is fine; avoid stacked exclamations, superlatives ("incredible", "wild", "I love that"), and reaction-video energy
+- End with why the work matters — its place in history — not an artificial cliffhanger
+- Tone: a well-produced history documentary; two knowledgeable colleagues, engaged but never breathless. Let the material carry the weight
 
 ${AUDIO_TAG_GUIDE}
 
@@ -304,10 +314,10 @@ ${draft}
 
 ## Critique checklist:
 1. **Robotic turns:** If any line sounds like an AI wrote it (too formal, too complete, no hesitation), rewrite it with natural speech patterns.
-2. **Missing reactions:** After a surprising quote or revelation, there should be a genuine reaction before moving on.
+2. **Gushing:** Remove breathless superlatives, stacked exclamations, and fan reactions ("incredible!", "wild", "I love that"). A measured "that's a striking claim" beats an "[enthusiasm] Exactly!". The register is a history documentary, not a reaction video.
 3. **Citation quality:** Every direct quote MUST name the book and author. Page numbers mentioned naturally.
-4. **Pacing:** Opening grabs attention in 1-2 lines. Middle builds. Ending lands with weight.
-5. **Audio tags:** Add [enthusiasm], [thoughtful], [laughs], or [whispers] where they'd enhance delivery. Max 6-8 tags.
+4. **Pacing:** Opening situates the subject in 1-2 lines. Middle builds. Ending lands with weight.
+5. **Audio tags:** At most 2-3 [thoughtful] tags in the whole script. Strip any [enthusiasm], [laughs], or [whispers].
 6. **Length:** Keep within the target word count. Cut filler, add depth.
 
 ## Output:
@@ -339,9 +349,10 @@ async function generateAudio(
         },
   };
 
+  const styleNote = 'Style: calm, measured, thoughtful — a well-produced history documentary. Engaged but never breathless or gushing.';
   const prompt = multiSpeaker
-    ? `TTS the following conversation between ${HOST_A} and ${HOST_B}:\n\n${script}`
-    : `TTS the following narration by ${NARRATOR}:\n\n${script}`;
+    ? `TTS the following conversation between ${HOST_A} and ${HOST_B}. ${styleNote}\n\n${script}`
+    : `TTS the following narration by ${NARRATOR}. ${styleNote}\n\n${script}`;
 
   const response = await ai.models.generateContent({
     model: TTS_MODEL,
@@ -450,6 +461,7 @@ export async function getPublishedEpisodes(limit = 50): Promise<Array<{
   threadId: string;
   threadTitle: string;
   creatorName: string;
+  language: string;
   podcast: PodcastMetadata;
 }>> {
   const db = await getDb();
@@ -466,13 +478,14 @@ export async function getPublishedEpisodes(limit = 50): Promise<Array<{
     })
     .sort({ 'podcasts.deep-dive.generatedAt': -1 })
     .limit(limit)
-    .project({ title: 1, creatorName: 1, podcasts: 1 })
+    .project({ title: 1, creatorName: 1, language: 1, podcasts: 1 })
     .toArray();
 
   const episodes: Array<{
     threadId: string;
     threadTitle: string;
     creatorName: string;
+    language: string;
     podcast: PodcastMetadata;
   }> = [];
 
@@ -484,6 +497,7 @@ export async function getPublishedEpisodes(limit = 50): Promise<Array<{
           threadId: thread._id.toString(),
           threadTitle: thread.title || p.topic,
           creatorName: thread.creatorName || 'Anonymous',
+          language: thread.language || p.language || 'en',
           podcast: p,
         });
       }

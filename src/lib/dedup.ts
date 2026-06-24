@@ -17,6 +17,12 @@ export interface DedupMatch {
   matchedTitle: string;
   matchType: 'source_fingerprint' | 'title_author' | 'iiif_manifest';
   confidence: 'exact' | 'high' | 'medium';
+  /** Whether the already-existing match is public. Hidden matches still count as
+   * duplicates — this lets callers/auditors distinguish a live dup from a backlog one. */
+  matchedVisible?: boolean;
+  /** Which collection the match was found in: 'books' (live) or 'books_warehouse'
+   * (acquired+archived, awaiting promotion). Both count as duplicates. */
+  matchedCollection?: 'books' | 'books_warehouse';
 }
 
 export interface DedupResult {
@@ -70,6 +76,67 @@ export function normalizeAuthor(author: string): string {
     .trim();
   // Sort words alphabetically to handle "Last, First" vs "First Last"
   return cleaned.split(' ').filter(w => w.length > 0).sort().join(' ');
+}
+
+/**
+ * Latin ordinals and roman numerals used to mark volumes ("Tomus primus",
+ * "Tom. II"). Kept small and explicit — we only resolve them when a volume
+ * KEYWORD precedes them, so false positives are unlikely.
+ */
+const LATIN_ORDINALS: Record<string, number> = {
+  primus: 1, prima: 1, secundus: 2, secunda: 2, tertius: 3, tertia: 3,
+  quartus: 4, quarta: 4, quintus: 5, quinta: 5, sextus: 6, septimus: 7,
+  octavus: 8, nonus: 9, decimus: 10,
+};
+
+function romanToInt(s: string): number | null {
+  const map: Record<string, number> = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
+  let total = 0;
+  for (let i = 0; i < s.length; i++) {
+    const cur = map[s[i]];
+    const next = map[s[i + 1]];
+    if (cur == null) return null;
+    total += next != null && cur < next ? -cur : cur;
+  }
+  return total > 0 ? total : null;
+}
+
+/**
+ * Extract a volume/part number from a raw title, when one is explicitly marked.
+ * Returns null if no marker is present (callers then fall back to other
+ * discriminators). `normalizeTitle()` STRIPS these markers, so vol. 1 and vol. 2
+ * of the same set collapse to the same `normalized_title` — extracting the
+ * volume from the raw title is how we tell two volumes of one work apart.
+ * Handles arabic ("Vol. 2", "(Vol 2)", "Tome 3"), roman ("Tomus II"), and
+ * common Latin ordinals ("Tomus primus").
+ */
+export function extractVolume(title?: string | null): number | null {
+  if (!title) return null;
+  const t = title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const KW = '(?:vol(?:ume)?|tom(?:us|o|e)?|band|part|pt|liber|deel|teil)\\.?\\s*\\(?\\s*';
+  // keyword + arabic number
+  let m = t.match(new RegExp(`\\b${KW}(\\d{1,3})\\b`));
+  if (m) return parseInt(m[1], 10);
+  // keyword + Latin ordinal word
+  m = t.match(new RegExp(`\\b${KW}(${Object.keys(LATIN_ORDINALS).join('|')})\\b`));
+  if (m) return LATIN_ORDINALS[m[1]] ?? null;
+  // keyword + roman numeral (whole token must be roman letters)
+  m = t.match(new RegExp(`\\b${KW}([ivxlcdm]{1,6})\\b`));
+  if (m) return romanToInt(m[1]);
+  return null;
+}
+
+/**
+ * Best-effort publication year for edition comparison. Prefers a numeric
+ * `year`, else parses the first 3–4 digit run out of `published`.
+ */
+export function editionYear(book: { year?: number | null; published?: string | null }): number | null {
+  if (typeof book.year === 'number' && book.year > 0) return book.year;
+  if (book.published) {
+    const m = String(book.published).match(/\b(\d{3,4})\b/);
+    if (m) return parseInt(m[1], 10);
+  }
+  return null;
 }
 
 /**
@@ -142,6 +209,11 @@ export async function checkDuplicate(
     title: string;
     author: string;
     display_title?: string;
+    /** Edition discriminators — two records that share a normalized title+author
+     * but differ in publication year (or volume, parsed from the title) are
+     * distinct editions, NOT duplicates. Pass these so Tier 2 can tell them apart. */
+    year?: number;
+    published?: string;
     ia_identifier?: string;
     gallica_ark?: string;
     bodleian_uuid?: string;
@@ -162,68 +234,110 @@ export async function checkDuplicate(
 ): Promise<DedupResult> {
   const matches: DedupMatch[] = [];
 
-  // Tier 1: Source fingerprint match
+  // NOTE: dedup does NOT filter on `visible`. A duplicate is a duplicate whether
+  // or not the existing copy is public — and imports land hidden, so a
+  // visible-only check is blind to the entire hidden backlog (the regime we now
+  // import into at volume). We surface the match's visibility instead of hiding it.
+  const VIS_PROJ = { id: 1, title: 1, display_title: 1, year: 1, published: 1, visible: 1, hidden: 1 };
+
+  // Check BOTH the live library and the warehouse. `books_warehouse` holds books
+  // we've already acquired + archived that are awaiting promotion to `books`
+  // (pipeline Phase 1.95). A duplicate there is still a duplicate — skipping the
+  // warehouse re-acquires ~items we already hold. (issue: warehouse dedup gap)
+  const COLLECTIONS: Array<'books' | 'books_warehouse'> = ['books', 'books_warehouse'];
+  const seen = (id: string) => matches.some(m => m.matchedBookId === id);
+
+  // Tier 1: Source fingerprint match (exact)
   const fp = sourceFingerprint(book);
   if (fp) {
-    const fpMatch = await db.collection('books').findOne(
-      { source_fingerprint: fp, visible: true },
-      { projection: { id: 1, title: 1 } }
-    );
-    if (fpMatch) {
-      matches.push({
-        matchedBookId: fpMatch.id || fpMatch._id.toString(),
-        matchedTitle: fpMatch.title,
-        matchType: 'source_fingerprint',
-        confidence: 'exact',
-      });
-    }
-  }
-
-  // Tier 2: Normalized title+author match
-  const normTitle = normalizeTitle(book.title);
-  const normAuthor = normalizeAuthor(book.author);
-
-  if (normTitle.length >= 5) {
-    // Use regex to find books with similar normalized titles
-    // This is a fallback — the primary path uses the stored normalized fields
-    const titleMatches = await db.collection('books').find(
-      {
-        normalized_title: normTitle,
-        normalized_author: normAuthor,
-        visible: true,
-      },
-      { projection: { id: 1, title: 1 } }
-    ).limit(5).toArray();
-
-    for (const tm of titleMatches) {
-      // Don't double-count fingerprint matches
-      if (!matches.some(m => m.matchedBookId === (tm.id || tm._id.toString()))) {
-        matches.push({
-          matchedBookId: tm.id || tm._id.toString(),
-          matchedTitle: tm.title,
-          matchType: 'title_author',
-          confidence: 'high',
+    for (const cn of COLLECTIONS) {
+      const fpMatch = await db.collection(cn).findOne(
+        { source_fingerprint: fp },
+        { projection: VIS_PROJ }
+      );
+      if (fpMatch) {
+        const id = fpMatch.id || fpMatch._id.toString();
+        if (!seen(id)) matches.push({
+          matchedBookId: id,
+          matchedTitle: fpMatch.title,
+          matchType: 'source_fingerprint',
+          confidence: 'exact',
+          matchedVisible: fpMatch.visible === true,
+          matchedCollection: cn,
         });
       }
     }
   }
 
-  // Tier 3: IIIF manifest URL match
+  // Tier 2: Normalized title+author match (high)
+  //
+  // Holding multiple EDITIONS of one work is a first-class case here (the
+  // work_id / original_edition_id / text_role layers exist for exactly this).
+  // A normalized title+author collision is therefore only a duplicate when the
+  // candidate and the match are the SAME edition. Two records that differ in
+  // publication year — or in volume, which normalizeTitle() strips out — are
+  // distinct editions and must be allowed through. (Tiers 1 and 3 still
+  // hard-block a true same-item re-import regardless of year.)
+  const normTitle = normalizeTitle(book.title);
+  const normAuthor = normalizeAuthor(book.author);
+  const candYear = editionYear(book);
+  const candVol = extractVolume(book.display_title) ?? extractVolume(book.title);
+
+  if (normTitle.length >= 5) {
+    for (const cn of COLLECTIONS) {
+      const titleMatches = await db.collection(cn).find(
+        {
+          normalized_title: normTitle,
+          normalized_author: normAuthor,
+        },
+        { projection: VIS_PROJ }
+      ).limit(5).toArray();
+
+      for (const tm of titleMatches) {
+        const id = tm.id || tm._id.toString();
+        if (seen(id)) continue;
+
+        // Different edition? Only conclude so when BOTH sides carry the signal —
+        // a missing year/volume can't distinguish editions, so fall back to
+        // treating the title+author collision as a duplicate (the safe error).
+        const tmYear = editionYear(tm as { year?: number | null; published?: string | null });
+        const tmVol = extractVolume(tm.display_title) ?? extractVolume(tm.title);
+        const differentYear = candYear != null && tmYear != null && candYear !== tmYear;
+        const differentVolume = candVol != null && tmVol != null && candVol !== tmVol;
+        if (differentYear || differentVolume) continue;
+
+        matches.push({
+          matchedBookId: id,
+          matchedTitle: tm.title,
+          matchType: 'title_author',
+          confidence: 'high',
+          matchedVisible: tm.visible === true,
+          matchedCollection: cn,
+        });
+      }
+    }
+  }
+
+  // Tier 3: IIIF manifest URL match (exact)
   if (book.image_source?.iiif_manifest) {
-    const iiifMatch = await db.collection('books').findOne(
-      {
-        'image_source.iiif_manifest': book.image_source.iiif_manifest,
-        visible: true,
-      },
-      { projection: { id: 1, title: 1 } }
-    );
-    if (iiifMatch && !matches.some(m => m.matchedBookId === (iiifMatch.id || iiifMatch._id.toString()))) {
-      matches.push({
-        matchedBookId: iiifMatch.id || iiifMatch._id.toString(),
-        matchedTitle: iiifMatch.title,
-        matchType: 'iiif_manifest',
-        confidence: 'exact',
-      });
+    for (const cn of COLLECTIONS) {
+      const iiifMatch = await db.collection(cn).findOne(
+        {
+          'image_source.iiif_manifest': book.image_source.iiif_manifest,
+        },
+        { projection: VIS_PROJ }
+      );
+      if (iiifMatch) {
+        const id = iiifMatch.id || iiifMatch._id.toString();
+        if (!seen(id)) matches.push({
+          matchedBookId: id,
+          matchedTitle: iiifMatch.title,
+          matchType: 'iiif_manifest',
+          confidence: 'exact',
+          matchedVisible: iiifMatch.visible === true,
+          matchedCollection: cn,
+        });
+      }
     }
   }
 
@@ -234,11 +348,15 @@ export async function checkDuplicate(
 }
 
 /**
- * Backfill normalized fields and source fingerprints on all books.
- * Run once to populate, then maintained at import time.
+ * Backfill normalized fields and source fingerprints on a collection.
+ * Run once to populate, then maintained at import time. Defaults to `books`;
+ * pass 'books_warehouse' to populate the warehouse so dedup can match it.
  */
-export async function backfillDedupFields(db: Db): Promise<{ updated: number; skipped: number }> {
-  const cursor = db.collection('books').find(
+export async function backfillDedupFields(
+  db: Db,
+  collectionName: 'books' | 'books_warehouse' = 'books'
+): Promise<{ updated: number; skipped: number }> {
+  const cursor = db.collection(collectionName).find(
     { $or: [
       { source_fingerprint: { $exists: false } },
       { normalized_title: { $exists: false } },
@@ -277,14 +395,14 @@ export async function backfillDedupFields(db: Db): Promise<{ updated: number; sk
     });
 
     if (bulk.length >= 500) {
-      await db.collection('books').bulkWrite(bulk);
+      await db.collection(collectionName).bulkWrite(bulk);
       updated += bulk.length;
       bulk.length = 0;
     }
   }
 
   if (bulk.length > 0) {
-    await db.collection('books').bulkWrite(bulk);
+    await db.collection(collectionName).bulkWrite(bulk);
     updated += bulk.length;
   }
 
@@ -292,8 +410,9 @@ export async function backfillDedupFields(db: Db): Promise<{ updated: number; sk
 }
 
 /**
- * Scan all visible books for duplicates and return groups.
- * Used for periodic auditing.
+ * Scan ALL books (visible AND hidden) for duplicates and return groups.
+ * Used for periodic auditing. Scans hidden too: the import backlog is hidden,
+ * and that is exactly where unnoticed duplicates accumulate.
  */
 export async function scanForDuplicates(db: Db): Promise<{
   fingerprintDupes: Array<{ fingerprint: string; count: number; bookIds: string[]; titles: string[] }>;
@@ -301,7 +420,7 @@ export async function scanForDuplicates(db: Db): Promise<{
 }> {
   // Find duplicate fingerprints
   const fpDupes = await db.collection('books').aggregate([
-    { $match: { visible: true, source_fingerprint: { $exists: true, $ne: null } } },
+    { $match: { source_fingerprint: { $exists: true, $ne: null } } },
     { $group: {
       _id: '$source_fingerprint',
       count: { $sum: 1 },
@@ -315,7 +434,6 @@ export async function scanForDuplicates(db: Db): Promise<{
   // Find duplicate title+author combos
   const taDupes = await db.collection('books').aggregate([
     { $match: {
-      visible: true,
       normalized_title: { $exists: true, $nin: [null, ''] },
       // Exclude generic titles
       title: { $nin: ['Unknown', 'Untitled'] },

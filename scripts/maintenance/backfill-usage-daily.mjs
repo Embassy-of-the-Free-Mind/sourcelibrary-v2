@@ -14,6 +14,15 @@
  *   Options:
  *     --dry-run    Show what would be written without writing
  *     --since      Only backfill from this date (YYYY-MM-DD), default: all time
+ *
+ * STALE SOURCE WARNING (2026-04-10, Issue #567): this still aggregates the
+ * MongoDB `gemini_usage` collection, but the source of truth moved to the
+ * Supabase `gemini_usage` table — Mongo now misses most writes (especially
+ * batch-mode OCR/translation), so these backfilled totals UNDERCOUNT spend
+ * (~10x on batch-heavy days). The live daily rollup in
+ * scripts/workers/sync-worker.mjs (syncUsageDaily) now reads Supabase with
+ * pagination; prefer re-running that. Repoint this util to Supabase the same
+ * way before trusting its output for recent dates.
  */
 
 import { MongoClient } from 'mongodb';

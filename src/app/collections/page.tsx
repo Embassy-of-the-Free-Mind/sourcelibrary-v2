@@ -1,12 +1,14 @@
+import { Suspense } from 'react';
 import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
-import Image from 'next/image';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { sortCollections, sanitizeThumbnail, collectionCountLabel } from '@/lib/collections-utils';
+import { sortCollections, sanitizeThumbnail, collectionCountLabel, coverOverride } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
+import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { getLibraryStats, roundedCountLabel } from '@/lib/library-stats';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -166,40 +168,40 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   }
 }
 
-/** Pick the best image URL for a card: prefer small thumbnails, fall back to extracted, then raw page. */
-function pickCardImage(images: FeaturedImage[] | undefined): string | undefined {
-  if (!images?.length) return undefined;
+/** Ordered, de-duped list of candidate image URLs for a card — prefer small
+ *  thumbnails, then extracted, then the raw page, across all featured images.
+ *  The card renders these with a fallback chain so a single dead/slow source
+ *  doesn't leave a broken thumbnail. */
+function cardImageCandidates(images: FeaturedImage[] | undefined, override?: string): string[] {
+  const urls: string[] = [];
+  const add = (u: string | undefined | null) => {
+    const s = sanitizeThumbnail(u);
+    if (s && !urls.includes(s)) urls.push(s);
+  };
+  add(override); // curated cover wins over stored featured_images
+  if (!images?.length) return urls;
   for (const img of images) {
-    // Guard against raw strings stored instead of objects
-    if (typeof img === 'string') return img;
-    const url = img.thumbnail_url || img.extracted_url || img.image_url;
-    if (url) return url;
+    if (typeof img === 'string') { add(img); continue; }
+    add(img.thumbnail_url);
+    add(img.extracted_url);
+    add(img.image_url);
   }
-  return undefined;
+  return urls;
 }
 
 function CollectionCard({ col, tenantSlug, priority = false }: { col: CollectionDoc; tenantSlug?: string | null; priority?: boolean }) {
-  const heroUrl = sanitizeThumbnail(pickCardImage(col.featured_images));
-
   return (
     <Link
       key={col.slug}
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
-      className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
+      className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
-      {heroUrl ? (
-        <Image
-          src={heroUrl}
-          alt={`Illustration from ${col.name}`}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-        />
-      ) : (
-        <div className="absolute inset-0 bg-warm" />
-      )}
+      <CollectionCardImage
+        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug))}
+        alt={`Illustration from ${col.name}`}
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        priority={priority}
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-[11px] mb-1 hidden sm:block">
@@ -217,26 +219,17 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
 
 
 function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc; tenantSlug?: string | null; priority?: boolean }) {
-  const heroUrl = sanitizeThumbnail(pickCardImage(col.featured_images));
-
   return (
     <Link
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
-      className="group relative block overflow-hidden rounded-lg aspect-[3/2]"
+      className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
-      {heroUrl ? (
-        <Image
-          src={heroUrl}
-          alt={`Illustration from ${col.name}`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          priority={priority}
-          loading={priority ? 'eager' : 'lazy'}
-        />
-      ) : (
-        <div className="absolute inset-0 bg-warm" />
-      )}
+      <CollectionCardImage
+        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug))}
+        alt={`Illustration from ${col.name}`}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        priority={priority}
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
         <h3 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight mb-1 group-hover:text-accent-gold transition-colors">
@@ -252,72 +245,113 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
   );
 }
 
+const INITIAL_PATHWAYS = 12;
+
+// Hero is a single pre-composited, compressed mosaic of collection covers
+// (~290KB JPEG) served as a static CDN asset — one fast request, no server-side
+// rendering. The dark gradient + title overlay in ContentHeader render on top.
+// Rebuild with scripts/build-collections-hero.py when the cover set changes.
+const COLLECTIONS_HERO = '/collections-hero.jpg';
+
 export default async function CollectionsPage() {
-  const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
-
-  const [categories, pathways, timeline] = await Promise.all([
-    fetchCollections(tenantId),
-    fetchCuratedPathways(tenantId),
-    fetchTimelineDecades(),
-  ]);
-
-  const INITIAL_PATHWAYS = 12;
-
-  // Pick a hero background from the first collection with a usable image
-  const allCols = [...pathways, ...categories];
-  const heroBg = sanitizeThumbnail(
-    allCols.flatMap(c => c.featured_images || [])
-      .find(img => img.extracted_url || img.image_url)
-      ?.extracted_url || allCols.flatMap(c => c.featured_images || [])
-        .find(img => img.image_url)?.image_url
-  );
-
+  const stats = await getLibraryStats();
+  const countLabel = stats ? `${roundedCountLabel(stats.books)} books` : 'Thousands of books';
   return (
+    <>
+    {/* Background images aren't seen by the preload scanner — hint it early. */}
+    <link rel="preload" as="image" href={COLLECTIONS_HERO} fetchPriority="high" />
     <ContentPageLayout
       maxWidth="wide"
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="Collections"
-          subtitle="10,000+ books across three millennia of human knowledge."
-          image={heroBg}
-          imageAlt="Historical illustration from the collection"
+          subtitle={`${countLabel} across three millennia of human knowledge.`}
+          image={COLLECTIONS_HERO}
+          imageAlt="Mosaic of illustrations from the collection"
+          imageFit="tile"
+          heightClass="min-h-[260px] md:min-h-[40vh]"
         />
       }
     >
+      {/* Each section streams on its own so the fast Curated Pathways query
+          isn't blocked behind the heavy timeline aggregation over all books. */}
+      <Suspense fallback={<SectionSkeleton heading="Curated Pathways" sub="Thematic journeys through the collection" />}>
+        <CuratedPathwaysSection />
+      </Suspense>
 
-      {/* Curated pathways — the hooks, shown first */}
-      {pathways.length > 0 && (
-        <div>
-          <div className="mb-4">
-            <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
-            <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
-          </div>
-          <ShowMorePathways
-            initialCount={INITIAL_PATHWAYS}
-            totalCount={pathways.length}
-          >
-            {pathways.map((col, i) => (
-              <CuratedCard key={col.slug} col={col} tenantSlug={tenantSlug} priority={i < 4} />
-            ))}
-          </ShowMorePathways>
-        </div>
-      )}
-
-      {/* Core collections */}
       <div className="mt-12">
-        <div className="mb-4">
-          <h2 className="font-display text-2xl text-primary">Core Collections</h2>
-          <p className="text-stone-500 mt-1 text-sm">The main wings of the library</p>
-        </div>
-        <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {categories.map((col, i) => (
-            <CollectionCard key={col.slug} col={col} tenantSlug={tenantSlug} />
-          ))}
-        </div>
+        <Suspense fallback={<SectionSkeleton heading="Core Collections" sub="The main wings of the library" />}>
+          <CoreCollectionsSection />
+        </Suspense>
       </div>
 
-      {/* Era timeline — full-bleed dark section */}
-      <EraTimeline decades={timeline.decades} total={timeline.total} />
+      <Suspense fallback={null}>
+        <TimelineSection />
+      </Suspense>
     </ContentPageLayout>
+    </>
+  );
+}
+
+async function CuratedPathwaysSection() {
+  const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
+  const pathways = await fetchCuratedPathways(tenantId);
+  if (pathways.length === 0) return null;
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
+        <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
+      </div>
+      <ShowMorePathways initialCount={INITIAL_PATHWAYS} totalCount={pathways.length}>
+        {pathways.map((col, i) => (
+          <CuratedCard key={col.slug} col={col} tenantSlug={tenantSlug} priority={i < 4} />
+        ))}
+      </ShowMorePathways>
+    </div>
+  );
+}
+
+async function CoreCollectionsSection() {
+  const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
+  const categories = await fetchCollections(tenantId);
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-primary">Core Collections</h2>
+        <p className="text-stone-500 mt-1 text-sm">The main wings of the library</p>
+      </div>
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {categories.map((col) => (
+          <CollectionCard key={col.slug} col={col} tenantSlug={tenantSlug} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+async function TimelineSection() {
+  const timeline = await fetchTimelineDecades();
+  return <EraTimeline decades={timeline.decades} total={timeline.total} />;
+}
+
+function SectionSkeleton({ heading, sub }: { heading: string; sub: string }) {
+  return (
+    <div>
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-primary">{heading}</h2>
+        <p className="text-stone-500 mt-1 text-sm">{sub}</p>
+      </div>
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 animate-pulse">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="rounded-xl overflow-hidden">
+            <div className="aspect-square bg-stone-200" />
+            <div className="h-4 w-3/4 bg-stone-200 rounded mt-2" />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

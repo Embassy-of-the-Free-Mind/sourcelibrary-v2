@@ -1,10 +1,12 @@
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
+import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
 import { supabase } from '@/lib/supabase';
 import { ObjectId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { CLIP_URL } from '@/lib/clip';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -66,7 +68,7 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage';
   text?: string;
   name?: string;
   query?: string;
@@ -75,7 +77,33 @@ export interface LibrarianStep {
   options?: string[];
   descriptions?: (string | undefined)[];
   sources?: SourceCard[];
-  notebook?: { findingCount: number; topic?: string };
+  // Token accounting for the whole turn (all agent rounds summed). Emitted
+  // last and persisted on the AI message; never rendered to the user.
+  usage?: TurnUsage;
+  notebook?: {
+    findingCount: number;
+    topic?: string;
+    // The finding just saved — lets the client render the notebook live
+    // instead of only exposing a count badge.
+    finding?: {
+      quote: string;
+      note: string;
+      bookId: string;
+      bookTitle: string;
+      bookAuthor: string;
+      bookSlug?: string;
+      pageNumber: number;
+    };
+  };
+}
+
+export interface TurnUsage {
+  model: string;
+  rounds: number;
+  promptTokens: number;
+  outputTokens: number;
+  thinkingTokens: number;
+  cachedTokens: number;
 }
 
 interface ConversationMessage {
@@ -218,7 +246,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: 'present_choices',
-    description: 'Present 2-3 research directions when a topic genuinely branches into different angles. Only use on the first message when choices would help the user pick a direction they haven\'t signaled. Skip this tool if the user\'s question already has clear intent, specific constraints, or an actionable task — just search directly instead. Each option has a short label and a 1-2 sentence description. The user clicks one or types their own direction.',
+    description: 'Offer 2-3 deeper research directions AFTER you have already searched and delivered a substantive answer (overview, quotes, links, images). Choices are a follow-up that points the user toward where to go next — never a gate that blocks them from getting help first. Use this rarely, only when your answer surfaced genuinely divergent threads worth pursuing and the user hasn\'t already signaled which one they want. Do NOT use it to ask the user to disambiguate before searching — just search with your best interpretation. Each option has a short label and a 1-2 sentence description. The user clicks one or types their own direction.',
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -345,15 +373,18 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
   };
 }
 
-async function executeSearchImages(query: string, bookId?: string): Promise<
-  Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>
-> {
+async function executeSearchImages(query: string, bookId?: string): Promise<{
+  images: Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>;
+  clipUnavailable: boolean;
+}> {
   // Use CLIP visual search via the gallery API for text-to-image matching
   const db = await getDb();
-  const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
-  // Try CLIP text-to-image search first
+  // Try CLIP text-to-image search first. Distinguish "CLIP searched and found
+  // nothing" (reachable, fall back to keyword search) from "CLIP is down"
+  // (unreachable — we must NOT let the model imply no illustrations exist).
   let clipIds = new Map<string, number>();
+  let clipUnavailable = false;
   try {
     const resp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
@@ -376,9 +407,18 @@ async function executeSearchImages(query: string, bookId?: string): Promise<
             }
           }
         }
+      } else {
+        clipUnavailable = true; // responded without an embedding
       }
+    } else {
+      clipUnavailable = true; // non-2xx from the CLIP service
     }
-  } catch { /* CLIP unavailable — fall back to text search */ }
+  } catch {
+    clipUnavailable = true; // network error / timeout — CLIP is down
+  }
+  if (clipUnavailable) {
+    console.warn(`[Librarian] CLIP visual search unavailable (${CLIP_URL}); falling back to keyword image search`);
+  }
 
   // Fetch gallery_images by CLIP IDs or text search fallback
   let images;
@@ -407,16 +447,19 @@ async function executeSearchImages(query: string, bookId?: string): Promise<
       .toArray();
   }
 
-  return images.slice(0, 6).map(img => ({
-    id: img._id.toString(),
-    imageUrl: img.image_url,
-    description: (img.museum_description || img.description || '').slice(0, 300),
-    bookTitle: img.book_title || 'Unknown',
-    bookAuthor: img.book_author || 'Unknown',
-    bookSlug: img.book_slug,
-    pageNumber: img.page_number,
-    type: img.type,
-  }));
+  return {
+    images: images.slice(0, 6).map(img => ({
+      id: img._id.toString(),
+      imageUrl: img.image_url,
+      description: (img.museum_description || img.description || '').slice(0, 300),
+      bookTitle: img.book_title || 'Unknown',
+      bookAuthor: img.book_author || 'Unknown',
+      bookSlug: img.book_slug,
+      pageNumber: img.page_number,
+      type: img.type,
+    })),
+    clipUnavailable,
+  };
 }
 
 // ── Tool Router ───────────────────────────────────────────────────────
@@ -505,7 +548,7 @@ async function executeTool(
     case 'search_images': {
       const query = args.query as string;
       const bookId = args.book_id as string | undefined;
-      const images = await executeSearchImages(query, bookId);
+      const { images, clipUnavailable } = await executeSearchImages(query, bookId);
 
       let context = '';
       if (images.length > 0) {
@@ -517,14 +560,18 @@ async function executeTool(
           context += `  Gallery: ${url}\n`;
           context += `  Image: ${img.imageUrl}\n`;
         }
+      } else if (clipUnavailable) {
+        // CLIP is down and the keyword fallback found nothing. Do NOT let the
+        // model conclude the library has no illustrations on this topic.
+        context = 'Visual search is temporarily unavailable, so illustrations could not be searched for this query. Do not claim the library has no images on this topic — say image search is briefly unavailable and offer to look again later.';
       } else {
         context = 'No matching images found in the gallery.';
       }
 
       return {
-        result: { found: images.length, context, images: images.map(i => ({ id: i.id, url: i.imageUrl, description: i.description.slice(0, 100), bookTitle: i.bookTitle })) },
+        result: { found: images.length, clipUnavailable, context, images: images.map(i => ({ id: i.id, url: i.imageUrl, description: i.description.slice(0, 100), bookTitle: i.bookTitle })) },
         step: { type: 'tool_result', name: 'search_images', query, found: images.length,
-          summary: images.length > 0 ? `Found ${images.length} illustrations` : 'No images found' },
+          summary: images.length > 0 ? `Found ${images.length} illustrations` : (clipUnavailable ? 'Visual search unavailable' : 'No images found') },
       };
     }
 
@@ -593,7 +640,19 @@ async function executeTool(
       return {
         result: { saved: true, findingCount: count },
         step: { type: 'notebook_update', name: 'add_to_notebook', summary: `Saved finding #${count}`,
-          notebook: { findingCount: count, topic: args.topic as string | undefined } },
+          notebook: {
+            findingCount: count,
+            topic: args.topic as string | undefined,
+            finding: {
+              quote: finding.quote,
+              note: finding.note,
+              bookId: finding.source.bookId,
+              bookTitle: finding.source.bookTitle,
+              bookAuthor: finding.source.bookAuthor,
+              bookSlug: finding.source.bookSlug,
+              pageNumber: finding.source.pageNumber,
+            },
+          } },
       };
     }
 
@@ -633,28 +692,14 @@ This is message #${messageIndex} in the thread.${messageIndex >= 3 ? ' The user 
 **Step 1: Lead with substance — briefly.**
 Before calling any tools, write 1-3 sentences (max 50 words) that name the key tradition, author, or concept. This streams immediately while searches run. Keep it SHORT — the user wants results, not a lecture. NEVER open with pleasantries like "It is a pleasure to assist you" or "What a fascinating question" — just start with substance. Save exposition for AFTER you have sources.
 
-**Step 2: Consider whether the user needs research directions.**
-Before searching, think: does this question have genuinely divergent angles where choosing wrong would waste the user's time? If so, present 2-3 focused research directions via present_choices. If the user's intent is already clear enough to search productively, skip choices and go straight to Step 3.
+**Step 2: Default to helping first — don't gate the user behind a choice.**
+Your job is to deliver a real answer, not to interview the user before lending a hand. For almost every question, pick the most useful interpretation and go straight to research (Step 4). Even when a topic could branch several ways, the right move is to search your best guess, give an overview with quotes, links, and images, and THEN — if genuinely divergent threads emerged — offer a couple of next directions via present_choices at the end.
 
-The test: imagine the 2-3 choices you'd offer. Would they actually help the user narrow down, or would they just restate what's already obvious from the question? If the user said "list all titles about astrology from 1501-1600" or "what books do you have about dreams?", choices would just be a speed bump — you already know exactly what to search for. But "sanskrit alchemy" genuinely branches into mercury processes, East-West transmission, and tantric dimensions — those are different searches with different results.
+Do NOT open with present_choices. Asking the user to disambiguate before you've searched is almost always a speed bump. If "sanskrit alchemy" could mean mercury processes, East-West transmission, or tantric dimensions, don't ask which — search, surface a bit of all three, and let the user pull the thread they care about (you can offer those three as follow-up directions once they're grounded in real results).
 
-On follow-up messages (message #3+), always skip choices — the user has already established their direction. Check "Conversation state" above for the current message number.
+The only time to skip the answer-first pattern is when the request is truly unanswerable without one missing fact (e.g. the user names a person who could be two completely different historical figures, and the searches would be entirely disjoint). Even then, take your best shot and note the ambiguity rather than stalling.
 
-When you DO present choices:
-- Your preamble should demonstrate real domain knowledge (not generic "there are several approaches")
-- IMPORTANT: Do NOT list or number the choices in your text. The UI renders them as clickable buttons automatically from present_choices. If you also list them in text, they appear doubled.
-- No search tools in the first round — just preamble + present_choices
-
-Examples where choices add value:
-- "sanskrit alchemy" → "Mercury processes in Rasashastra texts", "East-West alchemical transmission", "Tantric dimensions of rasa"
-- "tell me about resonance" → "Sympathetic magic & occult virtues (Agrippa)", "Musical cosmology & spiritus (Ficino)", "Acoustic experiments (Kircher)"
-
-Examples where choices would just slow things down — search directly:
-- "What did Agrippa write about planetary seals?" → clear target, search
-- "Find passages about the philosopher's stone in the Rosarium" → clear target, search
-- "List all titles published 1501-1600 about astrology" → clear task with constraints, search
-- "What books do you have about dreams?" → one topic, just show results
-- User clicked a choice from a previous message → search on that angle
+On follow-up messages (message #3+), never present choices — the user has established their direction.
 
 **Step 4: Deep, focused research.**
 Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use the **search** tool for everything text-based — it fuses keyword and semantic matching so you don't have to choose between them. Use search_wikipedia for outside context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
@@ -671,13 +716,15 @@ Every mention of a book should link to it. Every mention of an author should lin
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
 
 **Step 6: Show images and suggest next steps.**
-When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — fabricated URLs render as broken thumbnails for the user. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all. After answering, suggest what to explore next.
+When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — fabricated URLs render as broken thumbnails for the user. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all.
+
+After you've delivered the answer, suggest what to explore next. Usually this is a sentence or two of prose ("You might follow this into Ficino's musical cosmology, or compare it with Kircher's acoustic experiments"). Only reach for present_choices here — at the very end, after the substantive answer — and only on an early message when your research genuinely opened up 2-3 distinct threads worth a dedicated search each. If a prose suggestion does the job, prefer it. Never replace the answer with choices.
 
 Be honest about gaps — if a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
 
-## Deciding: choices or immediate search?
+## Choices are a last-resort follow-up, not a greeting
 
-Imagine the choices you'd present. Would they genuinely help the user pick a direction, or would they just repackage what the user already said? If the question contains a clear task ("list", "find", "show", "compare"), specific constraints (dates, authors, subjects), or a single focused topic — skip choices and search. Choices are for genuinely branching topics where the user hasn't signaled a preference.
+Default answer to "should I present choices?" is NO. Search first, answer with real sources, and only consider offering directions at the very end. Before calling present_choices, all of these must hold: (1) you've already delivered a substantive answer this turn, (2) it's an early message (not #3+), (3) your research surfaced 2-3 genuinely divergent threads, each needing a different search, and (4) a one-line prose "you might explore X or Y" wouldn't serve just as well. If any fail, skip the tool. When you do present choices, do NOT also list or number them in your text — the UI renders them as clickable buttons automatically, so listing them too makes them appear doubled.
 ${notebookContext}
 ## Know when to stop searching
 
@@ -721,6 +768,8 @@ export async function* streamAgenticResponse(
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
+  const _t0 = Date.now();
+
   const ai = new GoogleGenAI({ apiKey });
 
   // Load research notebook if thread exists
@@ -742,6 +791,12 @@ export async function* streamAgenticResponse(
 
   const allSources: SourceCard[] = [];
   const seenSourceKeys = new Set<string>();
+  // `${bookId}:${page}` for every page the model actually retrieved this turn
+  // (search hits + get_book_page + read_nearby_pages). Used to ground the
+  // page citations in the final answer — see verifyCitations.
+  const retrievedPageKeys = new Set<string>();
+  let choicesPresented = false;
+  const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
 
   function collectSources(sources?: SourceCard[]) {
     if (!sources) return;
@@ -751,6 +806,7 @@ export async function* streamAgenticResponse(
         seenSourceKeys.add(key);
         allSources.push(s);
       }
+      if (s.pageNumber) retrievedPageKeys.add(`${s.book_id}:${s.pageNumber}`);
     }
   }
 
@@ -767,8 +823,13 @@ export async function* streamAgenticResponse(
     const allParts: Array<Record<string, unknown>> = [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const functionCalls: Array<any> = [];
+    // usageMetadata is cumulative within one generateContentStream call —
+    // keep the last chunk's value, then sum across rounds.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let roundUsage: any = null;
 
     for await (const chunk of stream) {
+      if (chunk.usageMetadata) roundUsage = chunk.usageMetadata;
       const candidate = chunk.candidates?.[0];
       if (!candidate?.content?.parts) continue;
       for (const part of candidate.content.parts) {
@@ -781,6 +842,14 @@ export async function* streamAgenticResponse(
           yield { type: 'text', text: p.text };
         }
       }
+    }
+
+    usage.rounds++;
+    if (roundUsage) {
+      usage.promptTokens += roundUsage.promptTokenCount ?? 0;
+      usage.outputTokens += roundUsage.candidatesTokenCount ?? 0;
+      usage.thinkingTokens += roundUsage.thoughtsTokenCount ?? 0;
+      usage.cachedTokens += roundUsage.cachedContentTokenCount ?? 0;
     }
 
     if (allParts.length === 0) break;
@@ -819,17 +888,28 @@ export async function* streamAgenticResponse(
       yield step;
       collectSources(sources);
 
-      if (fc.name === 'present_choices') {
-        if (allSources.length > 0) yield { type: 'sources', sources: allSources };
-        responseParts.push({ functionResponse: { name: fc.name, response: result } });
-        contents.push({ role: 'user', parts: responseParts });
-        return;
+      // Pages read directly (not via search) also count as grounded.
+      if (fc.name === 'get_book_page' && fc.args?.book_id != null && fc.args?.page_number != null) {
+        retrievedPageKeys.add(`${fc.args.book_id}:${Number(fc.args.page_number)}`);
+      } else if (fc.name === 'read_nearby_pages' && fc.args?.book_id != null && fc.args?.center_page != null) {
+        const center = Number(fc.args.center_page);
+        const r = Math.min(Number(fc.args.range) || 2, 3);
+        for (let p = center - r; p <= center + r; p++) retrievedPageKeys.add(`${fc.args.book_id}:${p}`);
       }
 
       responseParts.push({ functionResponse: { name: fc.name, response: result } });
+
+      // present_choices ends the turn: the model has delivered its answer and is
+      // now offering follow-up directions. Stop after this round so the post-loop
+      // source dedup + link verification still run over the answer text.
+      if (fc.name === 'present_choices') {
+        choicesPresented = true;
+      }
     }
 
     contents.push({ role: 'user', parts: responseParts });
+
+    if (choicesPresented) break;
   }
 
   if (allSources.length > 0) {
@@ -844,37 +924,113 @@ export async function* streamAgenticResponse(
     .map((p: Record<string, unknown>) => p.text as string)
     .join('');
 
-  const brokenLinks = await verifySourceLinks(fullText);
-  if (brokenLinks.length > 0) {
+  const { brokenBooks, unverifiedPages } = await verifyCitations(fullText, retrievedPageKeys);
+  const clauses: string[] = [];
+  if (brokenBooks.length > 0) {
+    clauses.push(
+      `${brokenBooks.length === 1 ? 'a book link that points' : `${brokenBooks.length} book links that point`} to a record not in the collection (${brokenBooks.map(b => `\`${b}\``).join(', ')}) — these may be books we don't yet hold`,
+    );
+  }
+  if (unverifiedPages.length > 0) {
+    clauses.push(
+      `${unverifiedPages.length === 1 ? 'a page citation' : `${unverifiedPages.length} page citations`} I couldn't confirm against the source (${unverifiedPages.map(p => `\`${p}\``).join(', ')}) — please open the linked page to check the quote before relying on it`,
+    );
+  }
+  if (clauses.length > 0) {
+    console.warn('[Librarian] citation check flagged', { brokenBooks, unverifiedPages });
     yield {
       type: 'text',
-      text: `\n\n---\n*Note: ${brokenLinks.length === 1 ? 'One link' : `${brokenLinks.length} links`} could not be verified — ${brokenLinks.map(l => `\`${l}\``).join(', ')}. These may reference books not yet in the collection.*`,
+      text: `\n\n---\n*A note on sourcing: this answer contains ${clauses.join('; and ')}.*`,
     };
   }
+
+  // Persist AI cost for the librarian — the heaviest request-path AI feature
+  // (agentic, several Gemini calls per turn). usage is already summed across
+  // rounds; thinking tokens bill at the output rate, so fold them in for cost.
+  logAiUsage({
+    feature: 'librarian',
+    model: usage.model,
+    inputTokens: usage.promptTokens,
+    outputTokens: usage.outputTokens + usage.thinkingTokens,
+    ms: Date.now() - _t0,
+    ok: true,
+  });
+
+  yield { type: 'usage', usage };
 }
 
 /**
- * Extract sourcelibrary.org/book/ URLs from text and verify they exist in the DB.
- * Returns the list of broken URLs.
+ * Verify the book + page citations in a response against the library.
+ *
+ * Two failure modes matter for a scholarly tool:
+ *  - brokenBooks: links to /book/<slug> for a book that doesn't exist.
+ *  - unverifiedPages: a specific page the model never actually retrieved this
+ *    turn AND that doesn't exist in the page store (or is out of range) — the
+ *    signature of a fabricated or misremembered page number.
+ *
+ * `retrievedPageKeys` holds `${bookId}:${page}` for every page the model read
+ * (via search, get_book_page, or read_nearby_pages) during this turn; anything
+ * it actually saw is trusted and not re-checked.
  */
-async function verifySourceLinks(text: string): Promise<string[]> {
-  const urlPattern = /https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)/g;
-  const slugs = new Set<string>();
+export async function verifyCitations(
+  text: string,
+  retrievedPageKeys: Set<string>,
+): Promise<{ brokenBooks: string[]; unverifiedPages: string[] }> {
+  // /book/<slug>, optionally followed by ?page=N, /page-number/N, or /page/N.
+  const citePattern = /sourcelibrary\.org\/book\/([a-z0-9-]+)(?:(?:\/page-number\/|\/page\/|\?page=)(\d+))?/g;
+  const citedPages = new Map<string, Set<number>>();
+  const allSlugs = new Set<string>();
   let match;
-  while ((match = urlPattern.exec(text)) !== null) {
-    slugs.add(match[1]);
+  while ((match = citePattern.exec(text)) !== null) {
+    const slug = match[1];
+    allSlugs.add(slug);
+    if (match[2]) {
+      if (!citedPages.has(slug)) citedPages.set(slug, new Set());
+      citedPages.get(slug)!.add(Number(match[2]));
+    }
   }
-
-  if (slugs.size === 0) return [];
+  if (allSlugs.size === 0) return { brokenBooks: [], unverifiedPages: [] };
 
   const db = await getDb();
-  const existing = await db.collection('books')
-    .find({ slug: { $in: [...slugs] } })
-    .project({ slug: 1 })
+  const books = await db.collection('books')
+    .find({ slug: { $in: [...allSlugs] } })
+    .project({ slug: 1, id: 1, pages_count: 1 })
     .toArray();
 
-  const existingSlugs = new Set(existing.map(b => b.slug));
-  return [...slugs].filter(s => !existingSlugs.has(s)).map(s => `sourcelibrary.org/book/${s}`);
+  const slugToBook = new Map(
+    books.map(b => [b.slug as string, { id: b.id as string, pagesCount: b.pages_count as number | undefined }]),
+  );
+  const brokenBooks = [...allSlugs].filter(s => !slugToBook.has(s)).map(s => `sourcelibrary.org/book/${s}`);
+
+  // A cited page is trusted if the model read it this turn; otherwise it must
+  // exist in the page store and sit within the book's range.
+  const unverified = new Set<string>();
+  const toCheck: Array<{ slug: string; bookId: string; page: number }> = [];
+  for (const [slug, pages] of citedPages) {
+    const book = slugToBook.get(slug);
+    if (!book) continue; // already counted as a broken book link
+    for (const page of pages) {
+      if (retrievedPageKeys.has(`${book.id}:${page}`)) continue;
+      if (book.pagesCount && (page < 1 || page > book.pagesCount)) {
+        unverified.add(`${slug} p.${page}`);
+        continue;
+      }
+      toCheck.push({ slug, bookId: book.id, page });
+    }
+  }
+
+  if (toCheck.length > 0) {
+    const existing = await db.collection('pages')
+      .find({ $or: toCheck.map(c => ({ book_id: c.bookId, page_number: c.page })) })
+      .project({ book_id: 1, page_number: 1 })
+      .toArray();
+    const existingKeys = new Set(existing.map(p => `${p.book_id}:${p.page_number}`));
+    for (const c of toCheck) {
+      if (!existingKeys.has(`${c.bookId}:${c.page}`)) unverified.add(`${c.slug} p.${c.page}`);
+    }
+  }
+
+  return { brokenBooks, unverifiedPages: [...unverified] };
 }
 
 function deduplicateSources(sources: SourceCard[]): SourceCard[] {

@@ -33,13 +33,32 @@ const BATCH_SIZE = 200;
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } });
 
 function extractSummaryText(book) {
-  // Priority: index.bookSummary.brief > reading_summary.overview > summary.data
-  const indexBrief = book.index?.bookSummary?.brief;
-  if (indexBrief) return indexBrief;
+  // Prefer the fields the current enrich/promote pipeline actually maintains:
+  // book.summary.data (the brief) and book.reading_summary.overview. The embedded
+  // book.index.bookSummary is LEGACY — the worker writes the dedicated book_indexes
+  // collection (merged onto book.index only at book-page render time), so reading
+  // the embed first served stale text: the #2153/#2163 plain-encyclopedic rewrite
+  // updated summary.data/reading_summary but NOT the embed, so browse/search kept
+  // showing the old ad-copy voice for ~5k books. Keep the embed as a last resort
+  // for old books that predate book.summary.data.
+  if (typeof book.summary === 'string' && book.summary) return book.summary;
+  if (book.summary?.data) return book.summary.data;
   const readingOverview = book.reading_summary?.overview;
   if (readingOverview) return readingOverview;
-  if (typeof book.summary === 'string') return book.summary;
-  if (book.summary?.data) return book.summary.data;
+  const indexBrief = book.index?.bookSummary?.brief;
+  if (indexBrief) return indexBrief;
+  return null;
+}
+
+// Many importers only set the `published` string ("1578", "ca. 1576-1577"),
+// not a numeric `year` — a null year renders as "—" in collection tables.
+// Fall back to the first plausible year found in `published` (2026-06-05).
+function deriveYear(book) {
+  if (typeof book.year === 'number') return book.year;
+  if (typeof book.published === 'string') {
+    const m = book.published.match(/\b([1-9][0-9]{2,3})\b/);
+    if (m) return parseInt(m[1], 10);
+  }
   return null;
 }
 
@@ -53,7 +72,7 @@ function transformBook(book) {
     thumbnail: book.thumbnail || null,
     thumbnail_blob: book.thumbnail_blob || null,
     language: book.language || null,
-    year: typeof book.year === 'number' ? book.year : null,
+    year: deriveYear(book),
     published: book.published || null,
     pages_count: book.pages_count || 0,
     pages_ocr: book.pages_ocr || 0,
@@ -79,7 +98,10 @@ function transformBook(book) {
     place_published: book.place_published || null,
     doi: book.doi || null,
     work_id: book.work_id || null,
-    resource_type: book.resource_type || null,
+    text_role: book.text_role || null,
+    // content_type:'book' wins — never expose a resource_type for a book, or the catalog
+    // grid (CollectionBookCard) routes it to /artwork/ instead of /book/.
+    resource_type: book.content_type === 'book' ? null : (book.resource_type || null),
     source_url: book.image_source?.source_url || null,
     provider_name: book.image_source?.provider_name || null,
     image_attribution: book.image_source?.attribution || null,
@@ -161,7 +183,7 @@ const projection = {
   // Book detail fields
   summary: 1, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1,
   publisher: 1, place_published: 1, doi: 1, work_id: 1,
-  resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1,
+  resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1, text_role: 1,
   source_work_dates: 1,
   'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
   'ai_metadata.description': 1, description: 1, subject_keywords: 1,

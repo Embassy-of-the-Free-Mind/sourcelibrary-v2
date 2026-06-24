@@ -132,8 +132,8 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | `pages_warehouse` | Archived pages (~6.4M) | Same schema |
 | `deleted_books` | Soft-deleted books | Same as books, recoverable |
 | `collections` | Book groupings | `slug`, `name`, `hidden`, `collection_type` |
-| `entities` | Encyclopedia entries | People, places, concepts |
-| `authors` | Normalized author entities | Aliases, Wikipedia, enrichment |
+| `entities` | Legacy per-string author/encyclopedia layer (people, places, concepts). **Being retired for authorship** — superseded by `authors`. | linked via `books.author_entity_id` |
+| `authors` | **Canonical person thesaurus** — one doc per person, `_id`=slug. Books FK via `books.author_id`. | variants, variant_slugs, viaf_id, wikidata_id, entity_ids · see `.claude/docs/author-identity-system.md` |
 
 ### Processing
 | Collection | Purpose |
@@ -186,6 +186,7 @@ src/
 │   │   ├── books/[id]/     # 60 book operations
 │   │   ├── admin/          # 60 admin endpoints
 │   │   ├── import/         # 26 IIIF source importers
+│   │   ├── iiif/[id]/      # IIIF we EXPOSE (manifest/canvas/search) → .claude/docs/iiif-api.md
 │   │   ├── pages/[id]/     # 15 page operations
 │   │   ├── cron/           # 6 active cron routes (7 scheduled in vercel.json)
 │   │   ├── search/         # 8 search endpoints (main, unified, visual, semantic, suggest, etc.)

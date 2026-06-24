@@ -21,6 +21,8 @@ import { randomBytes } from 'crypto';
 import { GoogleGenAI } from '@google/genai';
 import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
+import { hasScope } from './lib/selective-unpause.mjs';
+import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -270,6 +272,46 @@ async function processOneJob(db, job) {
     console.log(`  Collecting: ${job.book_id} | ${job.type} | ${state}`);
     if (DRY_RUN) return { status: 'would_collect', bookId: job.book_id };
 
+    // ── Generation guard (#2449) ──
+    // If a book's OCR was deliberately reset after this job was submitted
+    // (scripts/maintenance/reset-book-ocr.mjs bumps pipeline_auto.ocr_generation),
+    // these results are stale: saving them would resurrect cleared marker-less
+    // text and silently undo the reset. Jobs submitted before this shipped have
+    // no ocr_generation field and are exempt.
+    let staleDropPages = null; // Set of pageIds to skip (cross-book partial staleness)
+    if (job.type === 'ocr' && job.ocr_generation !== undefined) {
+      const genBookIds = job.book_ids?.length ? job.book_ids : [job.book_id];
+      const genDocs = await db.collection('books').find(
+        { id: { $in: genBookIds } },
+        { projection: { id: 1, 'pipeline_auto.ocr_generation': 1 } }
+      ).toArray();
+      const jobGens = job.book_generations || { [job.book_id]: job.ocr_generation };
+      const staleBooks = new Set();
+      for (const b of genDocs) {
+        const current = b.pipeline_auto?.ocr_generation || 0;
+        const submitted = jobGens[b.id] ?? job.ocr_generation ?? 0;
+        if (current !== submitted) staleBooks.add(b.id);
+      }
+      if (staleBooks.size >= genBookIds.length) {
+        // Every book in the job was reset — nothing to save.
+        await db.collection('batch_jobs').updateOne(
+          { _id: job._id },
+          { $set: { status: 'superseded', error: `OCR generation advanced after submit (job gen ${job.ocr_generation})`, updated_at: new Date() } }
+        );
+        console.log(`  SUPERSEDED (generation guard): ${jobName} (book: ${job.book_id})`);
+        return { status: 'superseded', bookId: job.book_id };
+      }
+      if (staleBooks.size > 0 && job.page_ids?.length) {
+        // Cross-book job, some books reset: drop only their pages.
+        const stalePages = await db.collection('pages').find(
+          { id: { $in: job.page_ids }, book_id: { $in: [...staleBooks] } },
+          { projection: { id: 1 } }
+        ).toArray();
+        staleDropPages = new Set(stalePages.map(pg => pg.id));
+        console.log(`  Generation guard: dropping ${staleDropPages.size} pages from ${staleBooks.size} reset book(s) in cross-book job ${jobName}`);
+      }
+    }
+
     const responses = await extractResults(sdkJob, workingKey);
     let successCount = 0;
     let failCount = 0;
@@ -383,7 +425,15 @@ async function processOneJob(db, job) {
     let totalInputTokens = 0;
     let totalOutputTokens = 0;
 
+    // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
+    // fetched + sent, recorded on the batch job at submit. Lets us stamp
+    // ocr.source_url so `ocr.source_url ≠ getPageSource(page)` becomes a query
+    // (the #2298 re-OCR set) instead of an aspect-ratio guess. Empty for jobs
+    // submitted before this shipped — those pages stay pre-provenance (null).
+    const sourceUrlByPage = new Map((job.page_sources || []).map(s => [s.page_id, s.source_url]));
+
     for (const { pageId, text, usage } of pageResults) {
+      if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
 
       const inputTokens = usage?.promptTokenCount || 0;
@@ -411,6 +461,11 @@ async function processOneJob(db, job) {
           'ocr.output_tokens': outputTokens,
           updated_at: now,
         };
+        // Provenance (#2297) — only stamp when present, so older jobs without
+        // page_sources don't write null and look like a drift mismatch.
+        const srcUrl = sourceUrlByPage.get(pageId);
+        if (srcUrl) setObj['ocr.source_url'] = srcUrl;
+        if (job.code_version) setObj['ocr.code_version'] = job.code_version;
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
         if (pageType) setObj.page_type = pageType;
         if (columns) setObj.columns = columns;
@@ -458,29 +513,15 @@ async function processOneJob(db, job) {
           // and scripts/workers/image-extract-worker.mjs.
           const QUALITY_THRESHOLD = 0.5;
           if (!galleryDocs) galleryDocs = [];
+          // Collect the gated detections; the full denormalized docs are built
+          // after the loop (once page + book metadata is fetched) via the shared
+          // buildGalleryDoc helper so the field set matches every other writer.
           for (let di = 0; di < detectedImages.length; di++) {
             const img = detectedImages[di];
             if (!img.bbox) continue;
             if (typeof img.gallery_quality !== 'number') continue;
             if (img.gallery_quality < QUALITY_THRESHOLD) continue;
-            galleryDocs.push({
-              id: `${pageId}-${di}`,
-              page_id: pageId,
-              book_id: job.book_id,
-              detection_index: di,
-              description: img.description,
-              type: img.type,
-              bbox: img.bbox,
-              gallery_quality: img.gallery_quality,
-              gallery_rationale: img.gallery_rationale,
-              museum_description: img.museum_description,
-              metadata: img.metadata,
-              detected_at: now,
-              detection_source: 'vision_model',
-              model: job.model,
-              batch_job_id: jobIdStr,
-              updated_at: now,
-            });
+            galleryDocs.push({ pageId, detectedImage: img, index: di });
           }
         } else {
           // No images detected — still mark as processed
@@ -540,34 +581,33 @@ async function processOneJob(db, job) {
     if (galleryDocs && galleryDocs.length > 0) {
       try {
         // Fetch page numbers + image URLs for gallery docs
-        const pageIdsForGallery = [...new Set(galleryDocs.map(d => d.page_id))];
+        const pageIdsForGallery = [...new Set(galleryDocs.map(d => d.pageId))];
         const pageInfoMap = new Map();
         const pageInfos = await db.collection('pages')
           .find({ id: { $in: pageIdsForGallery } })
-          .project({ id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+          .project({ id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, crop: 1 })
           .toArray();
         for (const p of pageInfos) pageInfoMap.set(p.id, p);
 
-        // Fetch book metadata for gallery docs
+        // Fetch book metadata for gallery docs (incl. visible/hidden/provider so
+        // batch-collected images are gallery-visible without a separate sync — #2531).
         const bookDoc = await db.collection('books').findOne(
           { id: job.book_id },
-          { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1 } }
+          { projection: { id: 1, display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1, 'image_source.provider': 1 } }
         );
 
-        for (const doc of galleryDocs) {
-          const pageInfo = pageInfoMap.get(doc.page_id);
-          if (pageInfo) {
-            doc.page_number = pageInfo.page_number;
-            // Image URL fallback chain (same as image-extraction-processor)
-            doc.image_url = pageInfo.cropped_photo || pageInfo.archived_photo || pageInfo.photo_original || pageInfo.photo;
-          }
-          if (bookDoc) {
-            doc.book_title = bookDoc.display_title || bookDoc.title;
-            doc.book_author = bookDoc.author;
-            doc.book_year = bookDoc.year;
-            doc.book_language = bookDoc.language;
-          }
-        }
+        // Build the full denormalized docs via the shared helper; override the
+        // provenance fields the batch path owns (model / detected_at / batch id).
+        const builtDocs = galleryDocs.map(({ pageId: pid, detectedImage, index }) => {
+          const pageInfo = pageInfoMap.get(pid) || { id: pid, book_id: job.book_id };
+          const doc = buildGalleryDoc({ page: pageInfo, book: bookDoc, detectedImage, index, now });
+          doc.model = job.model;
+          doc.detected_at = now;
+          doc.detection_source = 'vision_model';
+          doc.batch_job_id = jobIdStr;
+          return doc;
+        });
+        galleryDocs = builtDocs;
 
         const galleryOps = galleryDocs.map(doc => ({
           updateOne: {
@@ -1046,12 +1086,20 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause
+  // Check processing_control pause.
+  // Selective unpause: if a scope is configured (allow_book_ids / allow_collections),
+  // keep collecting — pulling already-generated batch results costs no Gemini spend,
+  // and the scoped books the orchestrator submitted while paused need their results
+  // ingested or the OCR/translation text never lands. Empty scope = full stop.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
+  const _scopeActive = hasScope(control);
+  if (control?.paused && !_scopeActive) {
     console.log(`[batch-collector] Pipeline paused. Exiting.`);
     await client.close();
     process.exit(0);
+  }
+  if (control?.paused && _scopeActive) {
+    console.log(`[batch-collector] Paused, but selective-unpause scope is active — collecting results (free) for in-flight jobs.`);
   }
 
   // ── Batch Health Probe: reconcile DB vs Gemini state ──
@@ -1210,22 +1258,24 @@ async function run() {
 
   // RECITATION recovery: mark affected books for retry with a different model.
   // The batch API with gemini-3-flash-preview triggers RECITATION on some historical
-  // texts. Orchestrator retries these with gemini-2.5-flash (modelOverride).
-  // If a book that already had recitation_retry=true fails RECITATION again,
-  // it means even the fallback model can't handle this content — mark as
-  // pipeline_auto.recitation_blocked=true so both Pass 1 and Pass 2 permanently skip it.
+  // texts. Three-tier escalation before a permanent block:
+  //   1. First failure  -> recitation_retry      -> orchestrator retries with gemini-2.5-flash.
+  //   2. Second failure -> recitation_retry_lite -> orchestrator retries with gemini-3.1-flash-lite
+  //                        (proven to bypass RECITATION on famous texts where 2.5-flash also fails).
+  //   3. Third failure  -> recitation_blocked    -> permanently skip (all 3 models failed).
   if (recitationBooks.size > 0) {
     console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
     for (const bookId of recitationBooks) {
       try {
         const book = await db.collection('books').findOne(
           { id: bookId },
-          { projection: { 'pipeline_auto.recitation_retry': 1 } }
+          { projection: { 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1 } }
         );
-        const alreadyRetried = book?.pipeline_auto?.recitation_retry === true;
+        const retriedFallback = book?.pipeline_auto?.recitation_retry === true;
+        const retriedLite = book?.pipeline_auto?.recitation_retry_lite === true;
 
-        if (alreadyRetried) {
-          // Second RECITATION failure: fallback model also blocked. Permanently skip.
+        if (retriedLite) {
+          // Third RECITATION failure: flash-lite also blocked. Permanently skip.
           await db.collection('books').updateOne(
             { id: bookId },
             {
@@ -1236,10 +1286,25 @@ async function run() {
                 'pipeline_auto.recitation_blocked_at': new Date(),
                 updated_at: new Date(),
               },
+              $unset: { 'pipeline_auto.recitation_retry_lite': '' },
+            }
+          );
+          console.log(`  RECITATION permanently blocked ${bookId} -> needs_attention (all 3 models failed)`);
+        } else if (retriedFallback) {
+          // Second RECITATION failure: gemini-2.5-flash also blocked. Escalate to gemini-3.1-flash-lite.
+          await db.collection('books').updateOne(
+            { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
+            {
+              $set: {
+                'pipeline_auto.status': 'archive_complete',
+                'pipeline_auto.last_updated': new Date(),
+                'pipeline_auto.recitation_retry_lite': true,
+                updated_at: new Date(),
+              },
               $unset: { 'pipeline_auto.recitation_retry': '' },
             }
           );
-          console.log(`  RECITATION permanently blocked ${bookId} -> needs_attention (both models failed)`);
+          console.log(`  RECITATION escalate to flash-lite ${bookId} -> archive_complete (recitation_retry_lite)`);
         } else {
           // First RECITATION failure: reset to archive_complete for retry with fallback model.
           await db.collection('books').updateOne(
@@ -1258,6 +1323,8 @@ async function run() {
       } catch (e) { console.error(`  RECITATION reset error ${bookId}: ${e.message}`); }
     }
   }
+  // NOTE: Translation-side RECITATION is a separate per-page mechanism in translate-worker.mjs
+  // and is NOT handled here. A parallel flash-lite translation-retry tier is a possible follow-up.
 
   // ── Recovery sweep: re-check recently-failed jobs against Gemini ──
   // Race condition: collector marks a job as "failed" (stale PENDING), but Gemini
@@ -1411,6 +1478,44 @@ async function run() {
   if (zombiesReaped > 0) console.log(`Zombies reaped: ${zombiesReaped}`);
   if (notFoundCount > 0) console.log(`Gemini 404 (gone): ${notFoundCount}`);
   if (ghostsCleaned > 0) console.log(`Ghosts cleaned: ${ghostsCleaned}`);
+
+  // ── 404-on-all-keys alert (#2455) ──
+  // A burst of jobs that 404 on EVERY key almost always means key drift between
+  // the submitting host (Vercel) and this collector — the jobs exist, we just
+  // can't see them (348 jobs were falsely failed this way on 2026-06-05). Email
+  // instead of failing silently. 12h cooldown so a drift doesn't spam.
+  const NOT_FOUND_ALERT_THRESHOLD = 10;
+  if (notFoundCount >= NOT_FOUND_ALERT_THRESHOLD && process.env.RESEND_API_KEY && !DRY_RUN) {
+    try {
+      const COOLDOWN_MS = 12 * 60 * 60 * 1000;
+      const state = await db.collection('system_config').findOne({ _id: 'collector_404_alert_state' });
+      const elapsed = state?.last_sent_at ? Date.now() - new Date(state.last_sent_at).getTime() : Infinity;
+      if (elapsed >= COOLDOWN_MS) {
+        const { Resend } = await import('resend');
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: 'Source Library <noreply@sourcelibrary.org>',
+          to: process.env.ALERT_EMAIL || 'derek@sourcelibrary.org',
+          subject: `[COLLECTOR] ${notFoundCount} batch jobs 404 on all Gemini keys — likely key drift`,
+          html: [
+            '<h2>Batch jobs invisible to every collector key</h2>',
+            `<p><strong>${notFoundCount}</strong> jobs this run returned 404 from <code>batches.get</code> on all ${ALL_KEYS.length} keys and were marked failed.</p>`,
+            '<p>This pattern almost always means the submitting host (Vercel) holds a Gemini key this box does not — the jobs exist and their results are recoverable. See memory/pipeline-ops.md (2026-06-05 key-drift lesson): mirror the missing key into the Hetzner env, reset the jobs to pending, and re-run the collector.</p>',
+          ].join('\n'),
+        });
+        await db.collection('system_config').updateOne(
+          { _id: 'collector_404_alert_state' },
+          { $set: { last_sent_at: new Date(), last_count: notFoundCount } },
+          { upsert: true },
+        );
+        console.log(`[collector] 404-drift alert emailed (${notFoundCount} jobs)`);
+      } else {
+        console.log(`[collector] 404-drift alert suppressed (cooldown, ${notFoundCount} jobs)`);
+      }
+    } catch (e) {
+      console.error(`[collector] 404-drift alert failed: ${e.message}`);
+    }
+  }
   console.log(`Total time: ${totalElapsed}s`);
 
   // Write cron_runs record for observability

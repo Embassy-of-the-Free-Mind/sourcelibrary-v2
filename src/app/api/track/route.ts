@@ -1,15 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { anonymizeIp } from '@/lib/anonymize-ip';
+import { classifyTraffic, type TrafficClass } from '@/lib/traffic-classification';
 
 const SITE_HOST = 'sourcelibrary.org';
 
-// Bot detection patterns
-const BOT_PATTERNS = /bot|crawler|spider|headlesschrome|googleother|vercel-screenshot|slurp|bingpreview|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegrambot|applebot|yandexbot|baiduspider|duckduckbot|semrush|ahrefs|mj12bot|dotbot|petalbot|bytespider/i;
+// Normalize the request host into a tenant-identifying key. Strips port and a
+// leading www.; falls back to the canonical site host.
+function resolveHost(request: NextRequest): string {
+  const raw = (request.headers.get('x-forwarded-host') || request.headers.get('host') || SITE_HOST)
+    .split(',')[0]
+    .trim()
+    .toLowerCase();
+  return raw.replace(/:\d+$/, '').replace(/^www\./, '') || SITE_HOST;
+}
 
-function isBot(userAgent: string | null | undefined): boolean {
-  if (!userAgent) return false;
-  return BOT_PATTERNS.test(userAgent);
+// Increment the compact per-day/host/class counter. This is the ONLY place
+// non-human traffic is recorded (bots/AI are not stored as full pageviews), and
+// because it's tiny + aggregated it carries no TTL — it's our long-term
+// human-vs-bot-vs-AI history, surviving the 90-day pageview TTL.
+async function recordClass(
+  db: Awaited<ReturnType<typeof getDb>>,
+  host: string,
+  cls: TrafficClass
+): Promise<void> {
+  const day = new Date().toISOString().slice(0, 10);
+  await db.collection('analytics_traffic_class').updateOne(
+    { _id: `${day}|${host}|${cls}` } as never,
+    { $inc: { count: 1 }, $setOnInsert: { day, host, class: cls } },
+    { upsert: true }
+  );
 }
 
 // Rate limiting: in-memory dedup cache (persists within a single serverless instance)
@@ -62,16 +82,6 @@ function exceedsIpCap(ip: string, ua: string): boolean {
   return s.count > IP_DAILY_CAP && s.uas.size <= 1;
 }
 
-// Cloudflare bot-management signals (we're behind CF). cf-verified-bot is
-// true for legit crawlers we don't want either; cf-threat-score is 0-100
-// (higher = worse). Drop anything CF already classifies as a bot.
-function isCloudflareBot(request: NextRequest): boolean {
-  if (request.headers.get('cf-verified-bot') === 'true') return true;
-  const threat = parseInt(request.headers.get('cf-threat-score') || '', 10);
-  if (Number.isFinite(threat) && threat >= 30) return true;
-  return false;
-}
-
 // DB write timeout — analytics is fire-and-forget, don't hold a serverless slot for 30s+
 const DB_TIMEOUT_MS = 3000;
 
@@ -84,22 +94,34 @@ export async function POST(request: NextRequest) {
     // Use server-side UA header as authoritative (client can be spoofed)
     const serverUA = request.headers.get('user-agent');
     const effectiveUA = serverUA || userAgent;
+    const host = resolveHost(request);
 
-    // Drop bot traffic entirely — no DB write
-    if (isBot(effectiveUA) || isCloudflareBot(request)) {
-      return NextResponse.json({ success: true });
-    }
+    // Cloudflare bot-management signals (we're behind CF).
+    const cfVerifiedBot = request.headers.get('cf-verified-bot') === 'true';
+    const cfThreat = parseInt(request.headers.get('cf-threat-score') || '', 10);
 
     const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
     const ip = anonymizeIp(rawIp);
 
-    // Rate limit: same IP + path within 60s = skip
-    if (path && isDuplicate(ip, path)) {
+    // Spoofed-UA scrapers that pass the UA check are caught by the per-IP cap.
+    const rateCapped = exceedsIpCap(ip, effectiveUA || '');
+
+    const cls = classifyTraffic(effectiveUA, {
+      verifiedBot: cfVerifiedBot,
+      threatScore: Number.isFinite(cfThreat) ? cfThreat : undefined,
+      rateCapped,
+    });
+
+    // Non-human traffic: record the compact class counter only, no pageview.
+    if (cls !== 'human') {
+      const counted = (async () => { await recordClass(await getDb(), host, cls); })();
+      const timeout = new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), DB_TIMEOUT_MS));
+      await Promise.race([counted, timeout]);
       return NextResponse.json({ success: true });
     }
 
-    // Per-IP daily cap with UA-diversity check (drops spoofed-UA scrapers)
-    if (exceedsIpCap(ip, effectiveUA || '')) {
+    // Human: rate-limit same IP + path within 60s (don't double-count reloads).
+    if (path && isDuplicate(ip, path)) {
       return NextResponse.json({ success: true });
     }
 
@@ -124,14 +146,18 @@ export async function POST(request: NextRequest) {
     // don't hold a serverless function slot during DB degradation
     const dbWrite = (async () => {
       const db = await getDb();
-      await db.collection('analytics_pageviews').insertOne({
-        path,
-        referrer: referrerDomain,
-        country,
-        userAgent: (effectiveUA || userAgent)?.substring(0, 200),
-        timestamp: new Date(),
-        ip,
-      });
+      await Promise.all([
+        db.collection('analytics_pageviews').insertOne({
+          path,
+          referrer: referrerDomain,
+          country,
+          host,
+          userAgent: (effectiveUA || userAgent)?.substring(0, 200),
+          timestamp: new Date(),
+          ip,
+        }),
+        recordClass(db, host, 'human'),
+      ]);
     })();
 
     const timeout = new Promise<'timeout'>((resolve) =>

@@ -2,7 +2,7 @@ import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { collectionCountLabel } from '@/lib/collections-utils';
+import { collectionCountLabel, coverOverride } from '@/lib/collections-utils';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -91,7 +91,7 @@ async function fetchWings(): Promise<Wing[]> {
         artwork_count: sub.artwork_count || 0,
         visible: sub.visible !== false,
         type: sub.type,
-        image: pickImage(sub.featured_images),
+        image: coverOverride(sub.slug) || pickImage(sub.featured_images),
       });
     }
   }
@@ -107,7 +107,7 @@ async function fetchWings(): Promise<Wing[]> {
     name: w.name,
     book_count: w.book_count || 0,
     artwork_count: w.artwork_count || 0,
-    image: pickImage(w.featured_images),
+    image: coverOverride(w.slug) || pickImage(w.featured_images),
     children: childMap.get(w.slug) || [],
   }));
 }
@@ -151,7 +151,7 @@ export default async function AllCollectionsPage() {
     <ContentPageLayout
       maxWidth="wide"
       header={
-        <ContentHeader
+        <ContentHeader maxWidth="wide"
           title="All Collections"
           subtitle="Every wing and sub-collection in the library."
           image={wings.find(w => w.image)?.image}

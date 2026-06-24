@@ -2,7 +2,7 @@
 /**
  * Geocode place_of_publication strings to lat/lng coordinates.
  *
- * 1. Collect all distinct place_of_publication values
+ * 1. Collect all distinct place strings from place_of_publication AND place_published
  * 2. Query Wikidata for coordinates (batch via SPARQL)
  * 3. Build city→coords lookup and cache in system_config
  * 4. Write locations[] array to books
@@ -39,6 +39,74 @@ const MANUAL_OVERRIDES = {
   'Königsberg':   { city: 'Königsberg', lat: 54.7104, lng: 20.4522, country: 'Russia', wikidata_id: 'Q1773' },
   'Girard':       null, // Small US town, not a historical publishing center — skip
 };
+
+/**
+ * Old-spelling / variant → modern label that Wikidata's English label index
+ * knows. Only for forms that fail to resolve as written (verified empirically).
+ */
+const ARCHAIC_NORMALIZE = {
+  leyden: 'Leiden', leiden: 'Leiden',
+  haerlem: 'Haarlem',
+  neuremberg: 'Nuremberg', nuremberg: 'Nuremberg', nurnberg: 'Nuremberg', nürnberg: 'Nuremberg',
+  wittemberg: 'Wittenberg',
+  francfort: 'Frankfurt', franckfurt: 'Frankfurt', franckfort: 'Frankfurt',
+  coln: 'Cologne', colln: 'Cologne', cölln: 'Cologne', cöln: 'Cologne', keulen: 'Cologne',
+  edimbourg: 'Edinburgh', edimburgh: 'Edinburgh',
+  liegnitz: 'Legnica', brieg: 'Brzeg', breslau: 'Wrocław', wroclaw: 'Wrocław',
+  wittemberga: 'Wittenberg', argentorati: 'Strasbourg', argentina: 'Strasbourg',
+  lugduni: 'Lyon', lutetiae: 'Paris', basileae: 'Basel', venetiis: 'Venice',
+  köln: 'Cologne', munchen: 'Munich', münchen: 'Munich',
+  strassbourg: 'Strasbourg', strassburg: 'Strasbourg',
+  stpetersburg: 'Saint Petersburg', sintpetersburg: 'Saint Petersburg', leningrad: 'Saint Petersburg',
+  pressburg: 'Bratislava', dantzig: 'Gdańsk', gdansk: 'Gdańsk',
+  parijs: 'Paris', londen: 'London', weenen: 'Vienna', wien: 'Vienna',
+  freyberg: 'Freiberg', buedingen: 'Büdingen', antwerpen: 'Antwerp',
+};
+
+/** Placeless / non-geographic imprint markers — return null (no dot). */
+const PLACELESS = [
+  /^n\.?\s*p\.?$/i, /^s\.?\s*l\.?$/i, /^z\.?\s*p\.?$/i, /^s\.?\s*n\.?$/i,
+  /^sans lieu$/i, /^unknown$/i, /^onbekend$/i, /^that year$/i, /^by\b/i, /^\?+$/,
+];
+
+/**
+ * Normalize a raw imprint string to a single geocodable city, or null to skip.
+ * Handles bracketed editorial places, false imprints (real city in brackets,
+ * fictitious city quoted), Dutch/Latin prepositions, multi-city lists, and
+ * archaic spellings. See scope notes — recovers ~250 books the naive cleaner
+ * left unmapped.
+ */
+function cleanPlaceName(raw) {
+  if (!raw || typeof raw !== 'string') return null;
+  let s = raw.trim();
+
+  // 1. Prefer a bracketed editorial place: "Fake" [Real], [=Real], X [Real].
+  const br = s.match(/\[\s*=?\s*([^\][?]+?)\s*\??\s*\]/);
+  if (br && br[1].trim().length > 1) s = br[1].trim();
+  else s = s.replace(/[[\]]/g, ' ');
+
+  // 2. Dutch contraction t'/'t (before quote-stripping eats the apostrophe).
+  s = s.replace(/^\s*'?t'\s*/i, ' ').replace(/^\s*'t\s+/i, ' ');
+
+  // 3. Strip quotes, question marks, colons, semicolons.
+  s = s.replace(/["'`?:;]/g, ' ');
+
+  // 4. Strip leading place-prepositions (Dutch te/tot, Latin ad/apud, à/a/in/zu).
+  s = s.replace(/^\s*(te|tot|in|ad|apud|à|a|zu|zur|au)\s+/i, ' ');
+
+  // 5. "Oldname = Modernname" → modern; then multi-city lists → first city.
+  s = s.split('=').pop().split('|')[0]
+       .split(/\s+en\s+/i)[0].split(/\s+and\s+/i)[0].split(/\s+et\s+/i)[0]
+       .split('/')[0].split('&')[0].split(',')[0]
+       .split(/\s{2,}/)[0]           // double-space-separated multi-imprint
+       .trim();
+
+  if (!s || s.length < 2) return null;
+  if (PLACELESS.some((p) => p.test(s))) return null;
+
+  const key = s.toLowerCase().replace(/[^a-zà-ÿ]/g, '');
+  return ARCHAIC_NORMALIZE[key] || s;
+}
 
 /** Query Wikidata SPARQL for city coordinates — prefer large cities */
 async function geocodeViaWikidata(cityName) {
@@ -142,11 +210,18 @@ async function main() {
     console.log(`Loaded ${Object.keys(cache).length} cached cities`);
   }
 
-  // Step 2: Get all distinct place_of_publication values
-  const places = await db.collection('books').distinct('place_of_publication', {
-    visible: true,
-    place_of_publication: { $exists: true, $ne: null, $ne: '' },
-  });
+  // Step 2: Get all distinct place strings. Books record their imprint city in
+  // EITHER `place_of_publication` OR the legacy `place_published` field; geocode
+  // the union of both so neither set of books is silently left off the map.
+  const [placesA, placesB] = await Promise.all([
+    db.collection('books').distinct('place_of_publication', {
+      visible: true, place_of_publication: { $exists: true, $ne: null, $ne: '' },
+    }),
+    db.collection('books').distinct('place_published', {
+      visible: true, place_published: { $exists: true, $ne: null, $ne: '' },
+    }),
+  ]);
+  const places = [...new Set([...placesA, ...placesB])];
 
   // Filter out non-place values
   const skipPatterns = [/^n\.p\.?$/i, /^s\.l\.?$/i, /^\?$/, /^unknown$/i, /^—$/];
@@ -183,18 +258,10 @@ async function main() {
     const place = uncached[i];
     if (i > 0 && i % 10 === 0) console.log(`  ${i}/${uncached.length}...`);
 
-    // Clean up place name: strip brackets, take first city from multi-city
-    let primaryPlace = place
-      .replace(/^\[+/, '').replace(/\]+$/, '')  // strip [brackets]
-      .replace(/^\"+/, '').replace(/\"+$/, '')  // strip "quotes"
-      .replace(/^`+/, '').replace(/'+$/, '')    // strip backticks
-      .split('|')[0]                            // first city from multi-city
-      .split(/\s+en\s+/i)[0]                   // Dutch "en" = "and"
-      .split(/\s+and\s+/i)[0]                  // English "and"
-      .split(',')[0]                            // before comma (strip state/country qualifier)
-      .trim();
-    // Skip if empty or looks like a pseudonym place
-    if (!primaryPlace || primaryPlace.length < 2) { cache[place] = null; continue; }
+    // Normalize the raw imprint string to a single geocodable city (handles
+    // brackets, false imprints, Dutch/Latin prepositions, archaic spellings).
+    const primaryPlace = cleanPlaceName(place);
+    if (!primaryPlace) { cache[place] = null; continue; }
 
     // Check manual overrides first, then SPARQL, then search API
     let result = null;
@@ -251,16 +318,19 @@ async function main() {
 
     if (DRY_RUN) continue;
 
+    // A book matches this place via either imprint field.
+    const placeMatch = { $or: [{ place_of_publication: place }, { place_published: place }] };
+
     if (FIX_OVERRIDES) {
       // When fixing overrides: replace existing publication location
       const result = await db.collection('books').updateMany(
-        { visible: true, place_of_publication: place, 'locations.type': 'publication' },
+        { visible: true, ...placeMatch, 'locations.type': 'publication' },
         { $set: { 'locations.$[elem]': location } },
         { arrayFilters: [{ 'elem.type': 'publication' }] }
       );
       // Also add to books that don't have one yet
       const result2 = await db.collection('books').updateMany(
-        { visible: true, place_of_publication: place, 'locations.type': { $ne: 'publication' } },
+        { visible: true, ...placeMatch, 'locations.type': { $ne: 'publication' } },
         { $push: { locations: location } }
       );
       updated += result.modifiedCount + result2.modifiedCount;
@@ -269,7 +339,7 @@ async function main() {
       const result = await db.collection('books').updateMany(
         {
           visible: true,
-          place_of_publication: place,
+          ...placeMatch,
           'locations.type': { $ne: 'publication' }, // don't add if already has one
         },
         {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
@@ -7,10 +8,9 @@ import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-
-// CLIP server on Hetzner for visual text→image search
-const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+import { CLIP_URL } from '@/lib/clip';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -68,6 +68,23 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const tenantContext = getTenantContextFromRequest(request.headers);
     const query = searchParams.get('q') || '';
+
+    // Anonymous visitors get 5 distinct searches/hour, then a sign-in prompt.
+    // Counts distinct query strings (not raw requests) so typeahead and filter
+    // refinement of one search don't burn the allowance. Signed-in users, SEO
+    // crawlers, and internal warmers are exempt (see anon-gate.ts).
+    const gate = await anonSearchGate(request, query);
+    if (!gate.allowed) {
+      return NextResponse.json(
+        {
+          error: 'You\'ve used your 5 free searches this hour. Sign in (free) to keep searching.',
+          code: 'SIGNIN_REQUIRED',
+          sign_in: SIGNIN_URL,
+        },
+        { status: 401, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : {} },
+      );
+    }
+
     const limit = Math.min(parseInt(searchParams.get('limit') || '8'), 12);
     const galleryLimit = Math.min(parseInt(searchParams.get('gallery_limit') || '6'), 12);
 
@@ -376,6 +393,9 @@ export async function GET(request: NextRequest) {
       filters: { language, category, library, source: 'unified', tenantId: tenantContext.id || null },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      // Geo from the edge header (same source pageviews use) so search interests
+      // can be broken down by country. Forward-only — past searches have none.
+      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
       created_at: new Date(),
     }).catch(() => {});
 
@@ -426,10 +446,11 @@ async function searchBooks(
     const bTitleMatch = bTitle.includes(queryLower);
     if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
 
-    // 2. Original language beats English translations
-    const aOriginal = a.language !== 'English' ? 1 : 0;
-    const bOriginal = b.language !== 'English' ? 1 : 0;
-    if (aOriginal !== bOriginal) return bOriginal - aOriginal;
+    // 2. Closeness to the source (#2395): originals beat period translations
+    // beat modern translations; language is the fallback for unclassified rows.
+    const aRank = textRoleRank(a.text_role, a.language);
+    const bRank = textRoleRank(b.text_role, b.language);
+    if (aRank !== bRank) return aRank - bRank;
 
     // 3. Older editions rank higher (earlier = closer to source)
     const aYear = parsePublishedYear(a.published);

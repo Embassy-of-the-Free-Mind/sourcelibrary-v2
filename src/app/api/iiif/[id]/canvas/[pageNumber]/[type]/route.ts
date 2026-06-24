@@ -11,6 +11,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { aiGenerator } from '@/lib/iiif-provenance';
+import { isBookReadable } from '@/lib/book-access';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -59,11 +62,23 @@ export async function GET(
 
     const db = await getReadDb();
 
+    // Hidden (visible:false) books are not public — gate before serving any
+    // page transcription. 404 unless editor session or CRON_SECRET.
+    // A book is only "hidden" if its books doc exists with visible:false; if no
+    // doc is found we preserve prior behavior (the page lookup below 404s).
+    const gateBook = await db.collection('books').findOne(
+      { $or: [{ id }, { slug: id }] },
+      { projection: { id: 1, visible: 1 } }
+    );
+    if (gateBook && !(await isBookReadable(gateBook, request))) {
+      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
     // Fetch only the field we need
     const projection =
       type === 'ocr'
-        ? { 'ocr.data': 1, 'ocr.language': 1, page_number: 1 }
-        : { 'translation.data': 1, 'translation.language': 1, page_number: 1 };
+        ? { 'ocr.data': 1, 'ocr.language': 1, 'ocr.model': 1, page_number: 1 }
+        : { 'translation.data': 1, 'translation.language': 1, 'translation.model': 1, page_number: 1 };
 
     const page = await db.collection('pages').findOne(
       { book_id: id, page_number: pageNum },
@@ -76,6 +91,16 @@ export async function GET(
 
     const content = type === 'ocr' ? page.ocr : page.translation;
     if (!content?.data) {
+      return NextResponse.json({ error: `No ${type} data for this page` }, { status: 404 });
+    }
+
+    // Strip AI editorial wrapper blocks (<meta>/<summary>/<keywords>/<vocab>)
+    // before serving as a transcription/translation. These describe the page
+    // (often naming content from ADJACENT pages) and are never verbatim source —
+    // overlaying them in a viewer fabricates citations to words not on the page
+    // (the "mercury on page 89" misquote, PR #2232). Strip content, not just tags.
+    const value = stripEditorialWrappers(content.data).trim();
+    if (!value) {
       return NextResponse.json({ error: `No ${type} data for this page` }, { status: 404 });
     }
 
@@ -94,10 +119,13 @@ export async function GET(
           motivation: 'supplementing',
           body: {
             type: 'TextualBody',
-            value: content.data,
+            value,
             format: 'text/plain',
             language,
           },
+          // Machine origin made explicit so AI text is never mistaken for a
+          // human-verified transcript.
+          generator: aiGenerator(type, content.model),
           target: canvasId,
         },
       ],

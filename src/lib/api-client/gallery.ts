@@ -101,7 +101,7 @@ export const gallery = {
    * Collection operations
    */
   collections: {
-    list: async (featured?: boolean): Promise<{
+    list: async (featured?: boolean, includeHidden?: boolean): Promise<{
       collections: Array<{
         id: string;
         slug: string;
@@ -113,7 +113,10 @@ export const gallery = {
       }>;
       total: number;
     }> => {
-      const params = featured ? '?featured=true' : '';
+      const qs = new URLSearchParams();
+      if (featured) qs.set('featured', 'true');
+      if (includeHidden) qs.set('includeHidden', 'true');
+      const params = qs.toString() ? `?${qs.toString()}` : '';
       return await apiClient.get(`/api/gallery/collections${params}`);
     },
 

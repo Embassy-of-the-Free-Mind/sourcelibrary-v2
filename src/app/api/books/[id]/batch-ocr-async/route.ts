@@ -215,7 +215,33 @@ export const POST = withAuth(async (request, session, context) => {
 
     // Get the main OCR prompt with language substituted
     const ocrPromptResult = await getOcrPrompt();
-    const prompt = ocrPromptResult.text;
+
+    // Spread guard (#2449): flagged spread books must be OCR'd with the spread
+    // prefix so <split-position>/<page-break/> markers survive for Phase 3.1's
+    // split. The bare prompt silently produces marker-less text that wedges the
+    // book as an unsplit spread. Mirrors pipeline-orchestrator submitOcrDirectly.
+    const needsSpreadPrompt = book.needs_splitting === true && book.split_completed !== true;
+    // Generation guard (#2449): stamp the book's current OCR generation on every
+    // job so batch-collector refuses results submitted before a deliberate reset.
+    const ocrGeneration = book.pipeline_auto?.ocr_generation || 0;
+    const spreadPrefix = `**TWO-PAGE SPREAD HANDLING:**
+This image is a two-page spread (open book scan). Process BOTH pages separately.
+
+CRITICAL: Each page may have its own multi-column layout. Handle columns WITHIN each page:
+- If a page has 2+ columns, use <column-break/> between columns ON THAT PAGE
+- Each page MUST include its own <vocab> tag with key terms from THAT page only.
+- Use ISO 639-1 language codes (de, fr, la, en, nl, he, grc — NOT "German", "Latin", etc.)
+
+If this is NOT a two-page spread (single page), set split_position to null and process normally.
+
+Output structure:
+1. <split-position>N</split-position> (0-1000, or null if single page) at the very top
+2. All metadata and content for LEFT page
+3. <page-break/> on its own line
+4. All metadata and content for RIGHT page
+
+`;
+    const prompt = needsSpreadPrompt ? spreadPrefix + ocrPromptResult.text : ocrPromptResult.text;
     const promptRef = ocrPromptResult.reference;
     const promptProvenance = {
       prompt_id: promptRef.id,
@@ -372,6 +398,7 @@ export const POST = withAuth(async (request, session, context) => {
         language,
         force,
         ...promptProvenance,
+        ocr_generation: ocrGeneration, // #2449 generation guard
         page_ids: allPageIds,
         page_count: allPageIds.length,
         pages_per_request: effectivePPR,
@@ -468,6 +495,7 @@ export const POST = withAuth(async (request, session, context) => {
         language,
         force,
         ...promptProvenance,
+        ocr_generation: ocrGeneration, // #2449 generation guard
         page_ids: child.batchPageIds,
         page_count: child.batchPageIds.length,
         pages_per_request: effectivePPR,
@@ -488,6 +516,7 @@ export const POST = withAuth(async (request, session, context) => {
       language,
       force,
       ...promptProvenance,
+      ocr_generation: ocrGeneration, // #2449 generation guard
       page_ids: allPageIds,
       page_count: allPageIds.length,
       total_pages: allPageIds.length,

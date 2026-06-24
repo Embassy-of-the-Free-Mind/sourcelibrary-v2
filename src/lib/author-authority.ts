@@ -29,6 +29,7 @@
  */
 
 import { getDb } from '@/lib/mongodb';
+import { enrichEntity } from '@/lib/wikidata-enrichment';
 
 export interface AuthorAuthorityMatch {
   /** VIAF cluster id (numeric string), e.g. "22156484". */
@@ -198,6 +199,18 @@ export async function linkAuthorToEntity(
     if (!existingDoc?.wikidata_death_date && match.death_year) updateFields.wikidata_death_date = String(match.death_year);
     if (!existingDoc?.aliases?.length && match.alternate_names?.length) updateFields.aliases = match.alternate_names;
     await col.updateOne({ _id: existing._id }, { $set: updateFields });
+    // Enrich portrait + precise life dates from Wikidata now, so the entity's
+    // pages are a static read (see wikidata-enrichment.ts). Best-effort.
+    const wikidataId = (existingDoc?.wikidata_id as string) || match.wikidata_qid || undefined;
+    if (wikidataId) {
+      await enrichEntity(db, {
+        _id: existing._id,
+        wikidata_id: wikidataId,
+        portrait_url: existingDoc?.portrait_url as string | undefined,
+        wikidata_birth_date: (existingDoc?.wikidata_birth_date as string | undefined) ?? (updateFields.wikidata_birth_date as string | undefined),
+        wikidata_death_date: (existingDoc?.wikidata_death_date as string | undefined) ?? (updateFields.wikidata_death_date as string | undefined),
+      }).catch(() => {});
+    }
     return { entity_id: String(existing._id) };
   }
 
@@ -220,6 +233,15 @@ export async function linkAuthorToEntity(
   };
   Object.keys(doc).forEach((k) => doc[k] === undefined && delete doc[k]);
   const inserted = await col.insertOne(doc);
+  // Enrich portrait + precise life dates from Wikidata now (best-effort).
+  if (match.wikidata_qid) {
+    await enrichEntity(db, {
+      _id: inserted.insertedId,
+      wikidata_id: match.wikidata_qid,
+      wikidata_birth_date: doc.wikidata_birth_date as string | undefined,
+      wikidata_death_date: doc.wikidata_death_date as string | undefined,
+    }).catch(() => {});
+  }
   return { entity_id: String(inserted.insertedId) };
 }
 

@@ -11,6 +11,10 @@ export default function FeedbackWidget({ className, style, initialMessage, label
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [wantsToHelp, setWantsToHelp] = useState(false);
+  // Tracks whether the just-sent submission opted in to helping, so the success
+  // state can route them to /welcome (the real onboarding capture) instead of
+  // dead-ending at "we'll be in touch".
+  const [submittedAsVolunteer, setSubmittedAsVolunteer] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -44,8 +48,11 @@ export default function FeedbackWidget({ className, style, initialMessage, label
       setName('');
       setEmail('');
       const sentWithVolunteer = wantsToHelp;
+      setSubmittedAsVolunteer(sentWithVolunteer);
       setWantsToHelp(false);
-      setTimeout(() => { setOpen(false); setStatus('idle'); }, sentWithVolunteer ? 2400 : 2000);
+      // Volunteers get a persistent success state with a link to /welcome — don't
+      // auto-close it out from under them. Plain feedback still auto-dismisses.
+      if (!sentWithVolunteer) setTimeout(() => { setOpen(false); setStatus('idle'); }, 2000);
     } catch {
       setStatus('error');
     }
@@ -60,9 +67,28 @@ export default function FeedbackWidget({ className, style, initialMessage, label
         {status === 'sent' ? (
           <div className="text-center py-4">
             <p className="text-lg font-medium text-stone-800">Thank you!</p>
-            <p className="text-sm text-stone-500 mt-1">
-              {wantsToHelp ? "We'll be in touch about helping out." : 'Your feedback has been received.'}
-            </p>
+            {submittedAsVolunteer ? (
+              <>
+                <p className="text-sm text-stone-500 mt-1">
+                  We&rsquo;d love your help. Tell us a little about yourself and how you&rsquo;d like to contribute.
+                </p>
+                <a
+                  href="/welcome"
+                  className="inline-block mt-4 px-5 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
+                  style={{ background: 'var(--accent-rust, #9e4a3a)' }}
+                >
+                  Tell us how you&rsquo;d like to help →
+                </a>
+                <button
+                  onClick={() => { setOpen(false); setStatus('idle'); setSubmittedAsVolunteer(false); }}
+                  className="block w-full mt-3 text-xs text-stone-400 hover:text-stone-600"
+                >
+                  Maybe later
+                </button>
+              </>
+            ) : (
+              <p className="text-sm text-stone-500 mt-1">Your feedback has been received.</p>
+            )}
           </div>
         ) : (
           <>
@@ -120,14 +146,14 @@ export default function FeedbackWidget({ className, style, initialMessage, label
               />
             )}
 
-            <div className="flex items-center justify-between gap-3 mt-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4 w-full">
               <p className="text-xs text-stone-400 truncate min-w-0 flex-1">
                 Sent from {typeof window !== 'undefined' ? window.location.pathname : '/'}
               </p>
               <button
                 onClick={submit}
                 disabled={!message.trim() || status === 'sending' || needsEmailForVolunteer}
-                className="flex-shrink-0 px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
+                className="w-full sm:w-auto flex-shrink-0 px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
               >
                 {status === 'sending' ? 'Sending...' : status === 'error' ? 'Try again' : 'Send'}
               </button>
@@ -143,7 +169,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
     <>
       <button
         ref={buttonRef}
-        onClick={() => { if (initialMessage && !message) setMessage(initialMessage); setOpen(true); }}
+        onClick={() => { if (initialMessage && !message) setMessage(initialMessage); setStatus('idle'); setSubmittedAsVolunteer(false); setOpen(true); }}
         className={className || "text-accent-rust hover:text-accent-gold transition-colors"}
         style={style}
       >

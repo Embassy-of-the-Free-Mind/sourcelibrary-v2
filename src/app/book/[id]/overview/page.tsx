@@ -4,9 +4,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Metadata } from 'next';
 import BookOverview from '@/components/reader/BookOverview';
-
-// ISR: 24h background revalidation + on-demand via pipeline
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return [];
@@ -82,7 +80,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
   // Use a generous limit but cap at 2000 for sanity
   const pagesRaw = await db.collection('pages')
     .find(
-      { book_id: bookId },
+      { book_id: bookId, page_number: { $gt: 0 } },
       { projection: PAGE_PROJECTION, maxTimeMS: 10000 },
     )
     .sort({ page_number: 1 })

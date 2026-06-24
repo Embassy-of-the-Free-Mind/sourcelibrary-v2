@@ -1,20 +1,53 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { BookLoader } from '@/components/ui/BookLoader';
+import { isInAppBrowser, preferredBrowser, inAppBrowserName } from '@/lib/in-app-browser';
+import { trackEvent } from '@/lib/track-event';
 
 function SignInContent() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
   const error = searchParams.get('error');
+  // 'limit' when arriving from an anon-gate wall (search/librarian/voice tag
+  // their sign-in links with reason=limit); 'direct' otherwise (nav, etc.).
+  // Lets us answer "do people sign in proactively or only when blocked?"
+  const reason = searchParams.get('reason') === 'limit' ? 'limit' : 'direct';
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  // Detect in-app browsers (Instagram/FB/TikTok webviews) client-side after
+  // mount. These break Google OAuth, so we warn up front and steer to email —
+  // whose magic link opens in the device's real browser, escaping the webview.
+  const [inApp, setInApp] = useState(false);
+  const [browser, setBrowser] = useState<'Safari' | 'Chrome'>('Chrome');
+  const [appName, setAppName] = useState<string | null>(null);
+  // Detect the host browser, then log the sign-in page view once — tagged with
+  // why they arrived AND whether they're trapped in an in-app browser, so we
+  // can measure how much of the funnel is webview traffic and whether the
+  // steer-to-email recovery is working.
+  const loggedView = useRef(false);
+  useEffect(() => {
+    const ua = navigator.userAgent;
+    const webview = isInAppBrowser(ua);
+    setInApp(webview);
+    setBrowser(preferredBrowser(ua));
+    setAppName(inAppBrowserName(ua));
+
+    if (loggedView.current) return;
+    loggedView.current = true;
+    trackEvent('signin_view', {
+      reason,
+      source: callbackUrl,
+      channel: webview ? `in-app:${inAppBrowserName(ua) ?? 'unknown'}` : 'browser',
+    });
+  }, [reason, callbackUrl]);
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +128,14 @@ function SignInContent() {
           </p>
         </div>
 
+        {inApp && (
+          <div className="mb-6 p-3 rounded-lg text-sm" style={{ background: '#fffbeb', color: '#92400e', border: '1px solid #fde68a' }}>
+            You&rsquo;re in {appName ? `${appName}’s` : 'an'} in-app browser, where Google sign-in is usually blocked.
+            <strong> Use email below</strong> — we&rsquo;ll send a link that opens in your normal browser and signs you in.
+            (Or tap the <strong>&#8230;</strong> menu and choose &ldquo;Open in {browser}&rdquo;.)
+          </div>
+        )}
+
         {(error || emailError) && (
           <div className="mb-6 p-3 rounded-lg text-sm" style={{ background: '#fef2f2', color: '#991b1b' }}>
             {emailError
@@ -156,7 +197,7 @@ function SignInContent() {
             }}
             disabled={googleLoading}
             className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-medium)' }}
+            style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-medium)', opacity: inApp ? 0.6 : 1 }}
           >
             {googleLoading ? (
               <>
@@ -178,6 +219,11 @@ function SignInContent() {
               </>
             )}
           </button>
+          {inApp && (
+            <p className="text-center text-xs" style={{ color: 'var(--text-faint)' }}>
+              Often blocked in in-app browsers — email is more reliable here.
+            </p>
+          )}
         </div>
 
         <p className="mt-6 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
