@@ -55,6 +55,11 @@ export const EDITABLE_BPH_FIELDS = [
   'author_canonical_name',
   'author_wikidata_qid',
   'author_viaf_id',
+  // Repeatable authors/contributors (Paul D., 2026-06-24) — a JSONB array of
+  // BphContributor, each optionally linked to a canonical authors._id. The
+  // primary `author` above stays the lead author (display/search/Atlas mirror);
+  // this is the additive "Add author" layer for co-authors, editors, etc.
+  'contributors',
   // Imprint
   'place',
   'printer',
@@ -93,6 +98,39 @@ export const EDITABLE_BPH_FIELDS = [
 ] as const;
 
 export type EditableBphField = (typeof EDITABLE_BPH_FIELDS)[number];
+
+/**
+ * Contributor roles for early-modern books, anticipating a book-historian's
+ * needs (Paul Dijstelberge). The lead author still lives in the scalar `author`
+ * field; this vocabulary covers the repeatable additional contributors.
+ */
+export const BPH_CONTRIBUTOR_ROLES = [
+  'Author',
+  'Editor',
+  'Translator',
+  'Commentator',
+  'Compiler',
+  'Engraver',
+  'Illustrator',
+  'Dedicatee',
+  'Contributor',
+  'Other',
+] as const;
+
+export type BphContributorRole = (typeof BPH_CONTRIBUTOR_ROLES)[number];
+
+/** One entry in `bph_works.contributors` (JSONB array). */
+export interface BphContributor {
+  role: string;
+  /** Name as catalogued (standard form). */
+  name: string;
+  /** Name as printed on the title page, if it differs. */
+  variant_name?: string;
+  /** Canonical `authors._id` (slug) when linked to our thesaurus. */
+  author_id?: string | null;
+  /** Denormalised canonical name for display without a join. */
+  canonical_name?: string | null;
+}
 
 /** Subset of bph_works that mirrors back to Atlas `books` (one-way). */
 const ATLAS_MIRROR_FIELDS: Record<string, string> = {
