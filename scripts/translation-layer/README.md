@@ -17,6 +17,7 @@ node scripts/translation-layer/02-pull-ustc-clusters.mjs     # denominator (slow
 node scripts/translation-layer/03-match-and-gap.mjs          # work-level match + gap report
 node scripts/translation-layer/05-spotcheck.mjs              # Filelfo/Pico/Valla regression
 node scripts/translation-layer/04-write-provenance.mjs       # DRY-RUN; add --write to mutate Supabase
+node scripts/translation-layer/09-scan-coverage.mjs          # evidence-backed scan coverage (IIIF) + scanned x translated 2x2
 ```
 
 Outputs land in `scripts/output/` (gitignored, regenerable):

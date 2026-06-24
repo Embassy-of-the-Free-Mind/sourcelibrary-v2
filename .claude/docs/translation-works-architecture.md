@@ -131,7 +131,16 @@ What has been Englished, by whom — and the gap of what hasn't.
   Claude cross-check on a 294-work overlap κ=0.82; n=250 fully-dual core κ=0.88; era
   post-stratification). Quote the *validated* figure with its denominator, never
   the bare 97%. Converged into #2453 as `tradition='latin'` works +
-  `work_sources(kind='translation')`. Docs: `translation-gap-methodology.md`
+  `work_sources(kind='translation')`.
+- **Scan (digitization) coverage — the third axis** (`scripts/translation-layer/09-scan-coverage.mjs`,
+  #2684): matches the ~364k harvested Latin IIIF manifests (`import_candidates`,
+  real `manifest_url`s) to the same clusters (author-anchor + title + u/v,i/j orth
+  norm). **~58% of early-modern Latin work-clusters are scanned (evidence-backed)** —
+  the `has_iiif_scan` flag *under*-counts at 28% (provenance-free, no manifest_url —
+  don't quote it; mirror of the translation flag's over-count). Yields the 2×2:
+  **~56% scanned-but-untranslated = the actionable translate-queue.** A FLOOR
+  (misses anonymous/un-harvested) and not yet blind-validated (title-match precision
+  unmeasured) — see `scan-coverage-report.json`. Docs: `translation-gap-methodology.md`
   (plain-language), `translation-gap-paper.md` (method + dataset + validation),
   and §"external-translation-prior layer" in `work-identity-coverage.md`.
 - **First-translation** is the same question with a date: the first English

@@ -15,6 +15,30 @@ on a 294-work overlap κ=0.82; fully-dual n=250 core κ=0.88). For the
 97%, because translated ancient/medieval classics reprinted in the window hide in
 the "gap". **The denominator is the story; never quote the bare 97%.**
 
+## The third axis: scan (digitization) coverage
+
+`scan-coverage-report.json` (built by `scripts/translation-layer/09-scan-coverage.mjs`)
+adds the *exists / scanned / translated* picture by matching the ~364k harvested
+Latin IIIF manifests (Mongo `import_candidates`, real `manifest_url`s) to the same
+366k USTC clusters — author-anchor + rare-token title containment + Latin u/v,i/j
+orthography normalization. Evidence-backed, deterministic, no AI.
+
+| Latin 1400–1700 (366,205 clusters) | |
+|---|---|
+| **Scanned (evidence-backed)** | **58.3%** (vs `has_iiif_scan` flag's 28.3%) |
+| Translated (external prior) | 2.7% |
+| **Scanned but NOT translated** | **~56%** — the actionable translate-queue |
+| Neither (acquire first) | ~42% |
+
+Key finding: the `has_iiif_scan` flag *under*-counts scans by half (no `manifest_url`
+behind it — provenance-free, don't quote it), the mirror of the translation flag's
+over-count. **Caveats:** scan coverage is (a) a FLOOR — author-anchored matching
+misses anonymous works + un-harvested libraries; and (b) **not yet blind-validated**
+the way the translation gap was, so the title-match false-positive rate is unmeasured
+(true coverage likely ~50–60%). Spot-check is credible (all famous classics resolve
+scanned; 74% of the validation frame). Next: a blind precision sample of scan matches
++ a manifest-URL-bearing export of the scanned-not-translated queue.
+
 ## Files in this directory
 
 | file | what it is |
