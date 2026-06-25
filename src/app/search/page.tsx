@@ -452,8 +452,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
               type: g.type,
             } as GalleryItem);
           }
-          // Merge artwork semantic results as image cards (cap at 3 to avoid flooding)
-          const maxArtworks = 3;
+          // Merge artwork results as image cards. With lexical recall (#2735) a
+          // term like "tarot" now matches many artworks by title — show a real
+          // set of them, not just the 3 nearest by vector.
+          const maxArtworks = 8;
           let artworkCount = 0;
           for (const a of artworkResults) {
             if (artworkCount >= maxArtworks) break;
