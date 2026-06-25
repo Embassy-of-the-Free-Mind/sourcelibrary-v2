@@ -1,0 +1,11 @@
+{
+  "work": "Zhuangzi 1",
+  "book_id": "69e72c60a409200ea79f46f6",
+  "page_number": 46,
+  "script": "cjk",
+  "language": "Chinese",
+  "source": "ctext",
+  "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh",
+  "anchor": "北冥有魚",
+  "ocr_ground_truth": "北冥有魚，其名為鯤。鯤之大，不知其幾千里也。化而為鳥，其名為鵬。鵬之背，不知其幾千里也；怒而飛，其翼若垂天之雲。是鳥也，海運則將徙於南冥。"
+}

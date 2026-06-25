@@ -1,0 +1,11 @@
+{
+  "work": "Han Feizi (Nan Yan)",
+  "book_id": "69e8b2742ff2a8dc09e77bdb",
+  "page_number": 549,
+  "script": "cjk",
+  "language": "Chinese",
+  "source": "ctext",
+  "source_url": "https://ctext.org/hanfeizi/nan-yan/zh",
+  "anchor": "臣非非難言也",
+  "ocr_ground_truth": "臣非非難言也，所以難言者：言順比滑澤，洋洋纚纚然，則見以為華而不實。敦祗恭厚，鯁固慎完，則見以為掘而不倫。多言繁稱，連類比物，則見以為虛而無用。"
+}
