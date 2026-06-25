@@ -66,4 +66,29 @@ describe('stripEditorialWrappers', () => {
     const out = stripEditorialWrappers(t).replace(/\s+/g, ' ').trim();
     expect(out).toBe('Lorem ipsum dolor sit amet');
   });
+
+  // ── Markdown table flattening (Vasari "tavola"/index pages) ──────────────
+  it('flattens an empty-header markdown table to readable lines, no pipe-soup', () => {
+    // The Vasari Vol.1 1568 index, p.42 — leaked into a search snippet as
+    // "# TABLE OF | | | |---|---| | Luigi Pulci s. | 493 | ...".
+    const t = `# TABLE OF\n\n| | |\n|---|---|\n| Luigi Pulci s. | 493 |\n| Gaddo Gaddi p. | 13 |`;
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/\|/);          // no raw pipes survive
+    expect(out).not.toMatch(/---/);         // no separator scaffolding
+    expect(out).toContain('Luigi Pulci s.  493');
+    expect(out).toContain('Gaddo Gaddi p.  13');
+  });
+
+  it('flattens aligned separator rows and multi-cell rows', () => {
+    const t = `| Name | Page |\n| :--- | ---: |\n| Thomas Aquinas, saint p. | 187 |`;
+    const out = stripEditorialWrappers(t).trim();
+    expect(out).not.toMatch(/[|]|:---|---:/);
+    expect(out).toContain('Name  Page');
+    expect(out).toContain('Thomas Aquinas, saint p.  187');
+  });
+
+  it('leaves prose containing an inline pipe untouched', () => {
+    const t = 'the choice of good | evil is the soul’s';
+    expect(stripEditorialWrappers(t)).toBe(t);
+  });
 });
