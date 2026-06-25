@@ -103,6 +103,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   // Semantic results (parallel search agent)
   const [semanticResults, setSemanticResults] = useState<any[]>([]);
   const [semanticLoading, setSemanticLoading] = useState(false);
+  // True when the semantic lane errored/timed out (vs. genuinely returned nothing).
+  // Without this, a degraded 6s lane silently collapses to [] and the page presents
+  // "no related results" as if it were a fact — the "looks like 1 result" bug, where
+  // held editions catalogued under another name (Pimander ≈ Corpus Hermeticum) vanish.
+  const [semanticDegraded, setSemanticDegraded] = useState(false);
 
   // Page-content passage results (for quoted phrase searches)
   const [passageResults, setPassageResults] = useState<SearchResult[]>([]);
@@ -452,8 +457,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
               type: g.type,
             } as GalleryItem);
           }
-          // Merge artwork semantic results as image cards (cap at 3 to avoid flooding)
-          const maxArtworks = 3;
+          // Merge artwork results as image cards. With lexical recall (#2735) a
+          // term like "tarot" now matches many artworks by title — show a real
+          // set of them, not just the 3 nearest by vector.
+          const maxArtworks = 8;
           let artworkCount = 0;
           for (const a of artworkResults) {
             if (artworkCount >= maxArtworks) break;
@@ -519,7 +526,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             setBookResults([]); setBookTotal(0);
             setIndexResults([]); setIndexTotal(0);
             setImageResults([]); setImageTotal(0);
-            setCollectionResults([]); setSemanticResults([]);
+            setCollectionResults([]); setSemanticResults([]); setSemanticDegraded(false);
             // Stop the parallel AI-expand stream so nothing leaks past the wall.
             aiAbortRef.current?.();
             setAiResults([]); setAiNarration(''); setAiStreaming(false);
@@ -534,19 +541,25 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
         // Fire semantic search in parallel (independent agent)
         setSemanticLoading(true);
+        setSemanticDegraded(false);
         const semanticParams = new URLSearchParams({ q, limit: '8' });
         if (language) semanticParams.set('language', language);
         if (dateFrom) semanticParams.set('year_min', dateFrom);
         if (dateTo) semanticParams.set('year_max', dateTo);
         fetch(`/api/search/semantic?${semanticParams.toString()}`)
-          .then(r => r.json())
+          .then(r => {
+            // A non-200 (timeout, 5xx) must NOT be parsed as an empty result set —
+            // r.json() on an error body yields {} → [], silently hiding held editions.
+            if (!r.ok) throw new Error(`semantic ${r.status}`);
+            return r.json();
+          })
           .then(data => {
             // Dedup against keyword book results
             const keywordIds = new Set(bookResults.map(b => b.id || b.book_id));
             const deduped = (data.results || []).filter((s: any) => !keywordIds.has(s.book_id));
             setSemanticResults(deduped);
           })
-          .catch(() => setSemanticResults([]))
+          .catch(() => { setSemanticResults([]); setSemanticDegraded(true); })
           .finally(() => setSemanticLoading(false));
 
         // Fire BPH catalog metadata search in parallel — only on a BPH tenant.
@@ -788,7 +801,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
-  const noResults = !signInRequired && query.length >= 2 && !loading && !semanticLoading && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
+  // Don't declare "no results" when the semantic lane errored out — that empty set
+  // is a failure, not a fact, and the page would otherwise claim nothing exists.
+  const noResults = !signInRequired && query.length >= 2 && !loading && !semanticLoading && !semanticDegraded && !passageLoading && !catalogLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0 && catalogResults.length === 0;
   useEffect(() => {
     if (!noResults || query.length < 3) { setSuggestion(null); return; }
     let cancelled = false;
@@ -1469,6 +1484,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
           const bookSection = (
             <>
+              {semanticDegraded && !semanticLoading && (
+                <p className="text-xs text-muted italic mt-2">
+                  Related results couldn&apos;t be loaded just now — you may be seeing fewer matches than we hold. Try again in a moment.
+                </p>
+              )}
               {hasBoth && (
                 <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
