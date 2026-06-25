@@ -15,6 +15,7 @@ export type ImageSourceProvider =
   | 'vatlib'         // Vatican Library (alternative endpoint)
   | 'europeana'      // Europeana aggregator
   | 'bl'             // British Library
+  | 'imslp'          // IMSLP / Petrucci Music Library (public-domain scores; re-host)
   | 'sbb'            // Staatsbibliothek zu Berlin
   | 'onb'            // Austrian National Library (Österreichische Nationalbibliothek)
   | 'loc'            // Library of Congress
