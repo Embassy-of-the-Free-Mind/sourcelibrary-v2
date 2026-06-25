@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
-interface BlogPost {
+export interface BlogPost {
   slug: string;
   title: string;
   subtitle: string;
@@ -23,7 +23,8 @@ interface BlogPost {
   imageAlt?: string;
 }
 
-const posts: BlogPost[] = [
+// Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
+export const posts: BlogPost[] = [
   {
     slug: 'reading-classical-chinese',
     title: 'Can AI Read Classical Chinese?',
@@ -575,6 +576,19 @@ export default function BlogPage() {
       }
       bg="bg-cream"
     >
+      <div className="flex justify-end mb-6">
+        <a
+          href="/api/feed/blog"
+          className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent-rust transition-colors"
+          title="Subscribe to Research Notes via RSS"
+        >
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 11a9 9 0 0 1 9 9h2.5A11.5 11.5 0 0 0 4 8.5V11zm0 4a5 5 0 0 1 5 5h2.5A7.5 7.5 0 0 0 4 12.5V15zm1.6 2.4A1.6 1.6 0 1 0 4 19a1.6 1.6 0 0 0 1.6-1.6z" />
+          </svg>
+          RSS
+        </a>
+      </div>
+
       {/* Hero post — editorial side-by-side feature */}
       <Link
         href={`/blog/${hero.slug}`}
