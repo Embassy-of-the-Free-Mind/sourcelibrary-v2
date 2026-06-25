@@ -13,7 +13,7 @@
  * warmers (which send `X-Warm-Ping`).
  */
 import { auth } from '@/lib/auth';
-import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { getDb } from '@/lib/mongodb';
 import { anonymizeIp } from '@/lib/anonymize-ip';
 
@@ -90,7 +90,10 @@ export async function anonActionGate(
   opts: { name: string; limit: number; windowSeconds?: number },
 ): Promise<GateResult> {
   if (await isExempt(request)) return { allowed: true };
-  const rl = checkRateLimit(
+  // Shared (cross-instance) cap — these actions are Gemini-backed, so the limit
+  // has to be a real global cap, not a per-lambda soft cap. Falls back to the
+  // in-memory limiter automatically if Mongo is slow/unavailable.
+  const rl = await checkRateLimitShared(
     { name: opts.name, limit: opts.limit, windowSeconds: opts.windowSeconds ?? 3600 },
     getClientIp(request),
   );
