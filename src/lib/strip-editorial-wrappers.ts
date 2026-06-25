@@ -59,14 +59,44 @@ function flattenMarkdownTables(text: string): string {
     .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
 }
 
+/**
+ * Strip residual markdown *markup* (not content) that leaks into plain-text
+ * snippets/quotes alongside tables: ATX heading markers ("# TABLE OF" → "TABLE
+ * OF", "### G" → "G"), paired asterisk emphasis ("**B**" → "B"), and the
+ * "->centered<-" markers the reader pre-processes (e.g. "->THE END.<-"). The
+ * reader renders these properly; only the plain-text path needs them gone.
+ *
+ * Deliberately conservative: emphasis must hug non-whitespace (real markdown
+ * rule) so spaced-out literal asterisks survive, and underscore emphasis is left
+ * alone — "_" appears too often as a literal in OCR/transliteration to strip safely.
+ */
+function stripMarkdownMarkers(text: string): string {
+  return text
+    // ATX headings: drop the leading #'s + space, keep the heading text.
+    .replace(/^[ \t]*#{1,6}[ \t]+/gm, '')
+    // Thematic-break rules (a whole line of only --- or ***). Underscore rules
+    // are left alone to honour the "never touch _" guarantee below.
+    .replace(/^[ \t]*(?:-{3,}|\*{3,})[ \t]*$/gm, '')
+    // ->centered<- markers (content kept).
+    .replace(/->\s*(.+?)\s*<-/g, '$1')
+    // Paired bold/italic asterisks (content must start & end non-space).
+    .replace(/\*\*\*(\S(?:[^*]*?\S)?)\*\*\*/g, '$1')
+    .replace(/\*\*(\S(?:[^*]*?\S)?)\*\*/g, '$1')
+    .replace(/\*(\S(?:[^*]*?\S)?)\*/g, '$1')
+    // Collapse blank lines left by removed headings/rules.
+    .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
+}
+
 export function stripEditorialWrappers(text: string): string {
   if (!text) return text;
-  return flattenMarkdownTables(
-    text
-      // Paired blocks, content and all (multiline). Backreference keeps it from
-      // swallowing text between two different wrapper types.
-      .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
-      // Any orphan opening/closing wrapper tag left by malformed AI output.
-      .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+  return stripMarkdownMarkers(
+    flattenMarkdownTables(
+      text
+        // Paired blocks, content and all (multiline). Backreference keeps it from
+        // swallowing text between two different wrapper types.
+        .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+        // Any orphan opening/closing wrapper tag left by malformed AI output.
+        .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+    ),
   );
 }
