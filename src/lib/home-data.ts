@@ -556,6 +556,16 @@ export interface HomeBlogPost {
 
 const BLOG_POSTS: HomeBlogPost[] = [
   {
+    slug: 'reading-classical-chinese',
+    title: 'Can AI Read Classical Chinese? An OCR and Translation Benchmark',
+    subtitle: 'Measured against ctext.org, our OCR reads canonical Chinese at ~98.5%; measured against James Legge, the translations match or beat the standard editions.',
+    date: '25 June 2026',
+    readTime: '13 min read',
+    tagKey: 'deepDive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg',
+  },
+  {
     slug: 'hidden-engineers',
     title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy',
     subtitle: 'Before engineering was a discipline, its knowledge lived inside alchemy, natural magic, and mystical philosophy.',
