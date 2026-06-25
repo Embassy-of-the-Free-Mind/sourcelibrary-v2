@@ -165,9 +165,9 @@ function decodeToken(token: string): TokenData | null {
 
 // ─── Query builder ───
 
-function buildQuery(tenantId: string, from?: string, until?: string, set?: string): Document {
+function buildQuery(baseFilter: Document, from?: string, until?: string, set?: string): Document {
   const query: Document = {
-    tenantId,
+    ...baseFilter,
     pages_count: { $gt: 0 },
     pages_ocr: { $gt: 0 },
   };
@@ -186,10 +186,10 @@ function buildQuery(tenantId: string, from?: string, until?: string, set?: strin
 
 // ─── Verb handlers ───
 
-async function handleIdentify(now: string, tenantId: string): Promise<NextResponse> {
+async function handleIdentify(now: string, baseFilter: Document): Promise<NextResponse> {
   const db = await getReadDb();
   const earliest = await db.collection('books').findOne(
-    { tenantId, pages_count: { $gt: 0 } },
+    { ...baseFilter, pages_count: { $gt: 0 } },
     { sort: { created_at: 1 }, projection: { created_at: 1 }, maxTimeMS: 15000 }
   );
   const earliestDate = earliest?.created_at
@@ -232,9 +232,9 @@ function handleListMetadataFormats(now: string): NextResponse {
   );
 }
 
-async function handleListSets(now: string, tenantId: string): Promise<NextResponse> {
+async function handleListSets(now: string, baseFilter: Document): Promise<NextResponse> {
   const db = await getReadDb();
-  const categories = await db.collection('books').distinct('categories', { tenantId, pages_count: { $gt: 0 } });
+  const categories = await db.collection('books').distinct('categories', { ...baseFilter, pages_count: { $gt: 0 } }, { maxTimeMS: 20000 });
   const sets = categories
     .filter(Boolean)
     .sort()
@@ -255,7 +255,7 @@ ${sets}
 async function handleListRecords(
   now: string,
   params: URLSearchParams,
-  tenantId: string,
+  baseFilter: Document,
   headersOnly: boolean
 ): Promise<NextResponse> {
   const verbName = headersOnly ? 'ListIdentifiers' : 'ListRecords';
@@ -284,7 +284,7 @@ async function handleListRecords(
   }
 
   const db = await getReadDb();
-  const query = buildQuery(tenantId, from, until, set);
+  const query = buildQuery(baseFilter, from, until, set);
   const total = await db.collection('books').countDocuments(query, { maxTimeMS: 30000 });
 
   if (total === 0) return oaiError('noRecordsMatch', 'No records match the request', verbName);
@@ -317,7 +317,7 @@ ${records}${tokenXml}
   );
 }
 
-async function handleGetRecord(now: string, params: URLSearchParams, tenantId: string): Promise<NextResponse> {
+async function handleGetRecord(now: string, params: URLSearchParams, baseFilter: Document): Promise<NextResponse> {
   const identifier = params.get('identifier');
   const metadataPrefix = params.get('metadataPrefix');
 
@@ -331,7 +331,7 @@ async function handleGetRecord(now: string, params: URLSearchParams, tenantId: s
 
   const db = await getReadDb();
   const book = await db.collection('books').findOne({
-    tenantId,
+    ...baseFilter,
     $or: [{ id: bookId }, { slug: bookId }],
   });
 
@@ -348,10 +348,11 @@ ${bookToRecord(book)}
 // ─── Main handler ───
 
 export async function GET(request: NextRequest) {
+  // Scope: a tenant subdomain harvests its own subset; the main domain (no tenant)
+  // harvests the GLOBAL public catalog. `visible: true` keeps hidden / in-copyright
+  // books out of the harvest, matching every other public surface.
   const { id: tenantId } = getTenantContextFromRequest(request);
-  if (!tenantId) {
-    return oaiError('badArgument', 'Tenant context not found');
-  }
+  const baseFilter: Document = tenantId ? { tenantId } : { visible: true };
 
   const { searchParams } = new URL(request.url);
   const verb = searchParams.get('verb');
@@ -361,17 +362,17 @@ export async function GET(request: NextRequest) {
 
   switch (verb) {
     case 'Identify':
-      return handleIdentify(now, tenantId);
+      return handleIdentify(now, baseFilter);
     case 'ListMetadataFormats':
       return handleListMetadataFormats(now);
     case 'ListSets':
-      return handleListSets(now, tenantId);
+      return handleListSets(now, baseFilter);
     case 'ListIdentifiers':
-      return handleListRecords(now, searchParams, tenantId, true);
+      return handleListRecords(now, searchParams, baseFilter, true);
     case 'ListRecords':
-      return handleListRecords(now, searchParams, tenantId, false);
+      return handleListRecords(now, searchParams, baseFilter, false);
     case 'GetRecord':
-      return handleGetRecord(now, searchParams, tenantId);
+      return handleGetRecord(now, searchParams, baseFilter);
     default:
       return oaiError('badVerb', `"${verb}" is not a valid OAI-PMH verb`);
   }
