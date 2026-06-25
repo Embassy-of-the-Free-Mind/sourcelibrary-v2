@@ -25,6 +25,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'reading-classical-chinese',
+    title: 'Can AI Read Classical Chinese?',
+    subtitle:
+      'We hold ~1,600 Chinese works, most never translated into English. Measured against ctext.org, our OCR reads canonical printed text at ~98.5% character accuracy; measured against James Legge, our translations match or beat the standard scholarly editions on clean text. The honest catch is complex layouts and the works with no reference to check against.',
+    date: '25 June 2026',
+    readTime: '13 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg',
+    imageAlt: 'Woodcut of laborers forging a large iron anchor, from the Tiangong Kaiwu (1637)',
+  },
+  {
     slug: 'naked-philosophers',
     title: 'The Naked Philosophers',
     subtitle:
