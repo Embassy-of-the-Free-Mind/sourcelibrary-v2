@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getReadDb } from '@/lib/mongodb';
+import { posts as blogPostList } from '@/app/blog/page';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -147,19 +148,12 @@ function staticPages(): MetadataRoute.Sitemap {
   ];
 }
 
+// Read the same `posts` array the blog index renders — single source of truth,
+// so the sitemap never drifts from the published posts (the old hardcoded list
+// was missing ~half of them, including every recent post).
 function blogPosts(): MetadataRoute.Sitemap {
-  return [
-    'astrological-diagrams', 'chakra-tradition', 'demonology', 'fechner-bohme',
-    'fire-horse', 'first-translation-methodology', 'first-translations',
-    'hidden-engineers', 'history-of-astrology', 'indigenous-traditions',
-    'invisible-hand', 'mcp-server', 'ocr-consistency', 'cuneiform-ocr',
-    'rithmomachia', 'progress-studies', '2000-first-translations',
-    'worlds-largest-collection', 'origin-story', 'counting-the-gap',
-    'untranslated-renaissance', 'translation-rate', 'hieroglyph-ocr',
-    'rashi-ocr', 'clustering', 'history-of-classification',
-    'visualizing-classification', 'philosophers-stone',
-  ].map((slug) => ({
-    url: `${BASE_URL}/blog/${slug}`,
+  return blogPostList.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
