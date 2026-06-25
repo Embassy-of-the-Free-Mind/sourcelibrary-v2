@@ -137,6 +137,23 @@ Place reference transcriptions and translations in `scripts/eval/ground-truth/` 
 
 Sources: BDRC etexts, OpenPecha, Esukhia Derge Kangyur, Lotsawa House, scholarly editions.
 
+### OCR vs. ctext (Chinese)
+
+For the Chinese corpus, OCR ground truth is auto-built from [ctext.org](https://ctext.org) canonical transcriptions:
+
+```bash
+node scripts/eval/build-ctext-groundtruth.mjs           # dry run — shows alignment + which works pass the guard
+node scripts/eval/build-ctext-groundtruth.mjs --write    # write pinned ground-truth files
+node scripts/eval/qa-eval.mjs compare --corpus=chinese --against=ocr
+```
+
+Two things make this work where a naive CER fails:
+
+- **Subsequence alignment** (`subsequenceCER` in `lib/metrics.mjs`). Most of our Chinese editions are *commentary* editions — the canonical main text is interleaved with small-character annotation that ctext's main-text-only transcription lacks. The reference is matched as an in-order subsequence of the OCR with extra (commentary) characters skipped free, so the metric scores OCR error on the canonical text only. A plain edit distance scored the Book of Odes at 6% when it was really 99%.
+- **Pinned book + page = identity guard.** `compare` fetches the exact `book_id`/`page_number` from each ground-truth file (no fuzzy title matching that could grab a same-phrase decoy). The generator only writes a file when the passage aligns below `--threshold` (default 0.30); anything above is skipped as a wrong book or a divergent recension (e.g. Zhu Xi's reordered *Great Learning*, the *Shiji* with 三家注) — reported, not counted as OCR error.
+
+Coverage caveat: ctext holds canonical **printed** texts only — manuscripts, tables, and rare/regional works (the actual OCR frontier) are out of scope and need MCR / cross-model / embedding checks instead. Baseline run (2026-06-25): **98.5% character accuracy** across 7 canonical works.
+
 ## Architecture
 
 ```

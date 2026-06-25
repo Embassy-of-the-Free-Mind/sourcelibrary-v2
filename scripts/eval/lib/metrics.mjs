@@ -242,3 +242,64 @@ export function pairwiseMetrics(runs, script = 'default') {
   const avgSyl = pairs.reduce((s, p) => s + p.syllableSimilarity, 0) / (pairs.length || 1);
   return { pairs, avgCharSimilarity: avgChar, avgSyllableSimilarity: avgSyl };
 }
+
+// ── CJK OCR vs. canonical-text comparison (ctext ground truth) ──────
+// Most of our Chinese editions are COMMENTARY editions: the canonical main text
+// is interleaved with small-character annotation that ctext's main-text-only
+// transcription lacks. A plain edit distance counts that commentary as error and
+// reports false OCR failures (the Book of Odes scored 6% when it was really 99%).
+// subsequenceCER() instead matches the reference as an in-order subsequence of the
+// OCR, skipping extra OCR characters for free — so it measures OCR error on the
+// canonical text without penalizing correctly-read commentary.
+
+const OCR_WRAPPER_BLOCKS = ['meta', 'summary', 'keywords', 'vocab', 'language', 'scan-quality', 'script', 'page-type', 'columns', 'warning'];
+
+/** Strip editorial annotation wrapper blocks (content + tag) and inline gloss tags. */
+export function stripWrappers(s) {
+  if (!s) return '';
+  let t = s;
+  for (const w of OCR_WRAPPER_BLOCKS) t = t.replace(new RegExp(`<${w}[^>]*>[\\s\\S]*?</${w}>`, 'gi'), '');
+  return t.replace(/<\/?(note|term|margin|gloss|unclear|insert|header|catchword|sig|page-num)[^>]*>/gi, '');
+}
+
+/** Reduce CJK text to comparable characters: drop wrappers, punctuation, latin, digits, whitespace. */
+export function normalizeCJK(s) {
+  return stripWrappers(s).replace(/[。、，；：！？「」『』（）〈〉《》【】\s·．,.;:!?()0-9a-zA-Z○◯●－—\-]/g, '');
+}
+
+/**
+ * Subsequence character error rate of an OCR string against a canonical reference.
+ * Cost = substitutions + reference-character deletions (OCR dropped a main char);
+ * OCR-only characters (commentary, marginalia) are skipped at zero cost.
+ * Returns { cer, refLen, matched }. cer is a slight LOWER bound on true OCR error
+ * (free skips can match a coincidental subsequence), so treat as an optimistic
+ * estimate; a high cer (> ~0.30) means the reference is NOT cleanly present —
+ * i.e. wrong page/book or a divergent recension, not a salvageable OCR read.
+ */
+export function subsequenceCER(reference, ocr) {
+  const R = normalizeCJK(reference);
+  let O = normalizeCJK(ocr);
+  if (!R.length) return { cer: 0, refLen: 0, matched: 0 };
+  // Bound O to a window around the reference head so we don't match across a whole
+  // book and so the DP stays cheap.
+  const head = R.slice(0, 8);
+  const idx = O.indexOf(head);
+  const cap = R.length * 6 + 60;
+  O = idx >= 0 ? O.slice(idx, idx + cap) : O.slice(0, Math.max(cap, 400));
+  const m = R.length, n = O.length;
+  let prev = new Array(n + 1).fill(0); // dp[0][j] = 0: leading/extra O skips are free
+  for (let i = 1; i <= m; i++) {
+    const cur = new Array(n + 1);
+    cur[0] = i; // O exhausted → must delete remaining R chars
+    for (let j = 1; j <= n; j++) {
+      cur[j] = Math.min(
+        cur[j - 1],                                   // skip O[j-1] (commentary) — free
+        prev[j - 1] + (R[i - 1] === O[j - 1] ? 0 : 1), // match / substitute
+        prev[j] + 1,                                  // delete R[i-1] (OCR dropped it)
+      );
+    }
+    prev = cur;
+  }
+  const dist = prev[n];
+  return { cer: dist / m, refLen: m, matched: m - dist };
+}

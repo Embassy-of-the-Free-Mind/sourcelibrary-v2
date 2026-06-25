@@ -1,0 +1,11 @@
+{
+  "work": "Xunzi (Quan Xue)",
+  "book_id": "69e8b26b2ff2a8dc09e77afc",
+  "page_number": 34,
+  "script": "cjk",
+  "language": "Chinese",
+  "source": "ctext",
+  "source_url": "https://ctext.org/xunzi/quan-xue/zh",
+  "anchor": "學不可以已",
+  "ocr_ground_truth": "君子曰：學不可以已。青、取之於藍，而青於藍；冰、水為之，而寒於水。木直中繩，輮以為輪，其曲中規，雖有槁暴，不復挺者，輮使之然也。"
+}
