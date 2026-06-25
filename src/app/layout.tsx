@@ -50,6 +50,7 @@ export const metadata: Metadata = {
       'application/atom+xml': [
         { url: '/api/feed/books', title: 'Source Library - New Books' },
         { url: '/api/feed/gallery', title: 'Source Library Gallery' },
+        { url: '/api/feed/blog', title: 'Source Library - Research Notes' },
       ],
     },
   },

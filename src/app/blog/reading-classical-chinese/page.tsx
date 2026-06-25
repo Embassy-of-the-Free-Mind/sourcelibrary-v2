@@ -214,6 +214,20 @@ export default function ReadingClassicalChinesePage() {
           The OCR benchmark is reproducible from the open evaluation framework in the Source Library repository (<code>scripts/eval</code>): ground truth is built from ctext, and scored with the subsequence aligner described above. Translation comparisons quote the exact page text, linked above.
         </p>
 
+        {/* --- Related notes --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Related notes</h2>
+        <p className="text-secondary leading-relaxed mb-4">
+          This is part of a running series on whether AI can read historical scripts:
+        </p>
+        <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-2">
+          <li><Link href="/blog/tibetan-ocr" className="text-accent-rust hover:underline">Benchmarking AI OCR on 232,000 Pages of Bhutanese Manuscripts</Link> &mdash; the same question for handwritten Tibetan.</li>
+          <li><Link href="/blog/cuneiform-ocr" className="text-accent-rust hover:underline">Can AI Read Cuneiform?</Link></li>
+          <li><Link href="/blog/hieroglyph-ocr" className="text-accent-rust hover:underline">Can AI Read Hieroglyphs? (No.)</Link></li>
+          <li><Link href="/blog/rashi-ocr" className="text-accent-rust hover:underline">The Rashi Problem: When AI OCR Hallucinates in Hebrew</Link></li>
+          <li><Link href="/blog/ocr-consistency" className="text-accent-rust hover:underline">How Consistent Is AI OCR?</Link> &mdash; the consistency metric, in depth.</li>
+          <li><Link href="/blog/confident-hallucinator" className="text-accent-rust hover:underline">The Confident Hallucinator</Link> &mdash; how AI translation fails, and how to catch it.</li>
+        </ul>
+
       </article>
 
       <BlogComments slug="reading-classical-chinese" />
