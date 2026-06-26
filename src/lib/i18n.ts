@@ -25,6 +25,36 @@ export function useLocale(): Locale {
   return localeFromPathname(usePathname());
 }
 
+// ---------- Locale switching (sitewide EN/ES toggle, #2763) ----------
+
+// EN base paths that have a real Spanish (`/es…`) twin route. Keep this in sync
+// with the `src/app/es/**` route folders. Today only the homepage; the funnel
+// pages (`/support`, `/auth/signin`) are added here when their `/es` routes
+// land. The header toggle is shown on EVERY page, but on a page with no twin the
+// ES link falls back to the Spanish homepage (`/es`) as a front door rather than
+// dead-ending on a 404 — the thin-i18n bargain (deep pages rely on the browser's
+// own translate).
+export const LOCALIZED_PATHS = new Set<string>(['/']);
+
+/** Strip the `/es` locale prefix to get the canonical English path. */
+export function canonicalPath(pathname: string | null | undefined): string {
+  if (!pathname || pathname === '/es') return '/';
+  if (pathname.startsWith('/es/')) return pathname.slice(3); // '/es/x' → '/x'
+  return pathname;
+}
+
+/**
+ * Href for switching the current page to `target` locale.
+ * - English: the canonical page (any `/es` prefix dropped) so the reader stays put.
+ * - Spanish: the `/es` twin when one exists, else the Spanish homepage (`/es`).
+ */
+export function localeHref(target: Locale, pathname: string | null | undefined): string {
+  const canonical = canonicalPath(pathname);
+  if (target === 'en') return canonical;
+  if (LOCALIZED_PATHS.has(canonical)) return canonical === '/' ? '/es' : `/es${canonical}`;
+  return '/es';
+}
+
 // ---------- Shared site-shell strings (header nav) ----------
 
 export interface NavStrings {
