@@ -1059,7 +1059,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">
               Works in this collection appearing in a modern, readable translation for the first time — read them in full here.
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {firstTranslations.map((b) => {
                 const thumb = getBookThumbnailUrl(b);
                 return (
@@ -1075,7 +1075,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                           alt={bookTitle(b)}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          sizes="(min-width: 1024px) 170px, (min-width: 640px) 30vw, 45vw"
+                          sizes="(min-width: 1280px) 280px, (min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center">
