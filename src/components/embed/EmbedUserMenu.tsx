@@ -15,16 +15,6 @@ function isTenantSubdomain(host: string): boolean {
   return host.endsWith('.sourcelibrary.org') && host !== 'sourcelibrary.org';
 }
 
-function navigateToSignIn() {
-  if (typeof window === 'undefined') return;
-  if (isTenantSubdomain(window.location.hostname)) {
-    const callbackUrl = encodeURIComponent(window.location.href);
-    window.location.assign(`https://sourcelibrary.org/auth/signin?callbackUrl=${callbackUrl}`);
-  } else {
-    window.location.assign('/auth/signin');
-  }
-}
-
 function navigateToAccount() {
   if (typeof window === 'undefined') return;
   if (isTenantSubdomain(window.location.hostname)) {
@@ -44,10 +34,12 @@ function navigateToAccount() {
  *    (BPH) who finds the default presentation off-putting for scholarly use:
  *    "Default with bells and whistles, possible to chose without".
  *
- * 2. Auth — Sign in link for anonymous visitors, avatar + Account/Sign out
- *    for authenticated ones. The main SiteHeader is stripped on embed routes
- *    so partner subdomains (bph.sourcelibrary.org, …) look like the
- *    partner's own site; this control is the only sign-out affordance.
+ * 2. Auth — avatar + Account/Sign out for authenticated visitors. No sign-in
+ *    affordance is shown to anonymous visitors in the embed (the partner
+ *    reading room is a closed, sign-in-free surface). The main SiteHeader is
+ *    stripped on embed routes so partner subdomains (bph.sourcelibrary.org, …)
+ *    look like the partner's own site; this control is the only sign-out
+ *    affordance for those already signed in.
  *
  * Cookies are scoped to the current host (no Domain attr) so each subdomain
  * keeps independent preferences — a scholar can run BPH in scholar mode
@@ -293,7 +285,10 @@ export default function EmbedUserMenu() {
             </label>
           </div>
 
-          {session ? (
+          {/* Signed-in users keep Account + Sign out. Anonymous visitors are
+              shown no sign-in affordance in the embed — the menu is just the
+              view options for them. */}
+          {session && (
             <>
               <div className="px-3 py-2 border-b border-border-light/60">
                 <div className="text-xs text-muted truncate">Signed in as</div>
@@ -316,17 +311,6 @@ export default function EmbedUserMenu() {
                 Sign out
               </button>
             </>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                setIsOpen(false);
-                navigateToSignIn();
-              }}
-              className="block w-full text-left px-3 py-2 text-sm text-secondary hover:bg-cream/60"
-            >
-              Sign in
-            </button>
           )}
         </div>
       )}

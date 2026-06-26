@@ -10,8 +10,12 @@
  * the top of the page doesn't shift between views. In list mode it also renders
  * the catalogue table; in grid mode it renders a covers grid driven by the
  * same Supabase data, so search + Advanced filter the covers live.
- * Grid mode locks the filter to the digitised subset since covers only exist
- * for SL-backed books.
+ *
+ * The two dimensions are independent. The List/Grid display toggle never
+ * changes the filter — grid shows a placeholder tile for works that have no
+ * cover, so it works on the full catalogue too. The only cross-link is a
+ * convenience: applying "Show digitised & translated" from the full catalogue
+ * switches to Grid once (see digitizedDisplay below).
  */
 
 import { useRouter } from 'next/navigation';
@@ -68,15 +72,18 @@ export default function BphUnifiedCatalogue({
   const embedHref = useEmbedHref();
   const router = useRouter();
 
-  // "Show all" forces list display: grid only renders books with thumbnails
-  // (the digitised subset), so preserving grid here would make the toggle a
-  // visual no-op. List is the only display that can faithfully show the full
-  // 27,706 works.
+  // "Show all" forces list display: the full 27,706-work catalogue reads best
+  // as a list, so entering it always lands on the table.
   //
-  // The grid icon is the inverse case — grid *only* makes sense on the
-  // digitised subset, so clicking grid from any state must land on
-  // view=books. Forcing books here keeps the chrome's count consistent with
-  // the visible covers.
+  // Applying "Show digitised & translated" switches to Grid the FIRST time
+  // only — i.e. on the transition from the full catalogue (mode 'all') into
+  // the digitised subset. Once already in digitised, the toggle preserves the
+  // user's current display so it never re-forces grid on a repeat click.
+  //
+  // The List/Grid icons change the DISPLAY only and preserve the current
+  // filter (mode). Grid renders a placeholder tile for works without a cover,
+  // so it no longer needs to force the digitised subset — selecting a display
+  // never touches the filter.
   //
   // Hrefs are built fresh at render and at click time. Render-time hrefs
   // power middle-click and `view-source` correctly when the user lands on
@@ -85,10 +92,12 @@ export default function BphUnifiedCatalogue({
   // `window.location.search` via replaceState since the last render — that
   // mutation is invisible to Next's `useSearchParams`, so we read it
   // directly from `window.location.search` at click.
+  const digitizedDisplay: CatalogueDisplay = mode === 'all' ? 'grid' : display;
+  const toggleView: 'catalog' | 'books' = mode === 'digitized' ? 'books' : 'catalog';
   const allHref = embedHref(makeHref(basePath, 'catalog', 'list'));
-  const digitizedHref = embedHref(makeHref(basePath, 'books', display));
-  const listHref = embedHref(makeHref(basePath, mode === 'digitized' ? 'books' : 'catalog', 'list'));
-  const gridHref = embedHref(makeHref(basePath, 'books', 'grid'));
+  const digitizedHref = embedHref(makeHref(basePath, 'books', digitizedDisplay));
+  const listHref = embedHref(makeHref(basePath, toggleView, 'list'));
+  const gridHref = embedHref(makeHref(basePath, toggleView, 'grid'));
 
   const navigateToggle = (e: React.MouseEvent<HTMLAnchorElement>, view: 'catalog' | 'books', newDisplay: CatalogueDisplay) => {
     // Only intercept primary-button, unmodified clicks. Let middle-click,
@@ -103,7 +112,7 @@ export default function BphUnifiedCatalogue({
   const toggleNode = (
     <SegmentedToggle
       mode={mode}
-      display={display}
+      digitizedDisplay={digitizedDisplay}
       allHref={allHref}
       digitizedHref={digitizedHref}
       onNavigate={navigateToggle}
@@ -112,18 +121,18 @@ export default function BphUnifiedCatalogue({
   const viewIconsNode = (
     <ViewIcons
       display={display}
-      mode={mode}
+      toggleView={toggleView}
       listHref={listHref}
       gridHref={gridHref}
       onNavigate={navigateToggle}
     />
   );
 
-  // Grid view shows only the digitised subset (covers only exist for
-  // SL-backed books). Lock the catalogue filter to digitised so the chrome's
-  // count reflects what's visible — the "Show all" branch of the segmented
-  // toggle still routes to list view (allHref forces display=list).
-  const effectiveLockDigitized = mode === 'digitized' || display === 'grid';
+  // The filter is locked to the digitised subset only when the user has
+  // explicitly chosen it via "Show digitised & translated" (mode 'digitized').
+  // Display no longer drives this — a grid in "Show all" shows the full
+  // catalogue with placeholder tiles for works that have no cover.
+  const effectiveLockDigitized = mode === 'digitized';
 
   return (
     <>
@@ -156,13 +165,15 @@ export default function BphUnifiedCatalogue({
 
 function SegmentedToggle({
   mode,
-  display,
+  digitizedDisplay,
   allHref,
   digitizedHref,
   onNavigate,
 }: {
   mode: CatalogueMode;
-  display: CatalogueDisplay;
+  /** Display to land on when entering the digitised subset — 'grid' on the
+      first transition from the full catalogue, otherwise the current display. */
+  digitizedDisplay: CatalogueDisplay;
   allHref: string;
   digitizedHref: string;
   onNavigate: (e: React.MouseEvent<HTMLAnchorElement>, view: 'catalog' | 'books', newDisplay: CatalogueDisplay) => void;
@@ -182,7 +193,7 @@ function SegmentedToggle({
       </a>
       <a
         href={digitizedHref}
-        onClick={(e) => onNavigate(e, 'books', display)}
+        onClick={(e) => onNavigate(e, 'books', digitizedDisplay)}
         className={`${base} -ml-px ${mode === 'digitized' ? active : inactive}`}
       >
         Show digitised &amp; translated
@@ -193,13 +204,15 @@ function SegmentedToggle({
 
 function ViewIcons({
   display,
-  mode,
+  toggleView,
   listHref,
   gridHref,
   onNavigate,
 }: {
   display: CatalogueDisplay;
-  mode: CatalogueMode;
+  /** The view both display icons preserve — switching display never changes
+      the filter, so List and Grid stay on whichever filter is active. */
+  toggleView: 'catalog' | 'books';
   listHref: string;
   gridHref: string;
   onNavigate: (e: React.MouseEvent<HTMLAnchorElement>, view: 'catalog' | 'books', newDisplay: CatalogueDisplay) => void;
@@ -211,14 +224,11 @@ function ViewIcons({
     'inline-flex items-center gap-1.5 px-3 h-9 text-sm transition-colors border border-border-light';
   const active = 'bg-primary text-white border-primary';
   const inactive = 'bg-white text-muted hover:text-primary hover:bg-warm';
-  // Match what `listHref` / `gridHref` resolve to in the parent so click-time
-  // navigation lands on the same view+display combination.
-  const listView = mode === 'digitized' ? 'books' : 'catalog';
   return (
     <div className="inline-flex" role="group" aria-label="Display mode">
       <a
         href={listHref}
-        onClick={(e) => onNavigate(e, listView, 'list')}
+        onClick={(e) => onNavigate(e, toggleView, 'list')}
         aria-label="List view"
         aria-current={display === 'list' ? 'page' : undefined}
         className={`${base} rounded-l-md ${display === 'list' ? active : inactive}`}
@@ -228,13 +238,13 @@ function ViewIcons({
       </a>
       <a
         href={gridHref}
-        onClick={(e) => onNavigate(e, 'books', 'grid')}
-        aria-label="Covers view"
+        onClick={(e) => onNavigate(e, toggleView, 'grid')}
+        aria-label="Grid view"
         aria-current={display === 'grid' ? 'page' : undefined}
         className={`${base} rounded-r-md -ml-px ${display === 'grid' ? active : inactive}`}
       >
         <LayoutGrid className="w-4 h-4" />
-        <span>Covers</span>
+        <span>Grid</span>
       </a>
     </div>
   );

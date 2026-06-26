@@ -49,6 +49,7 @@ import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
+import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 
@@ -748,7 +749,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 bookId={book.id}
                 currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
                 currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
-                bookTitle={book.title}
+                bookTitle={book.display_title || book.title}
+                bookAuthor={book.author}
+                bookYear={book.published}
                 pages={pages}
               />
             </div>
@@ -1336,6 +1339,12 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
       {!isEmbedded && <ConditionalSiteHeader variant="light" />}
+
+      {/* Tenant reading rooms (EFM/BPH iframe + subdomains) get a breadcrumb
+          back to the full catalogue. Rendered outside the Suspense boundary so
+          it appears immediately and on every book layout — printed, artwork,
+          and text reader alike. */}
+      {isEmbedded && <CatalogueBreadcrumb />}
 
       {/* Book content streams in */}
       <Suspense fallback={
