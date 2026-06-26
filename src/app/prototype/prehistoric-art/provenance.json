@@ -1,0 +1,355 @@
+{
+  "_comment": "PROTOTYPE provenance record for /prototype/prehistoric-art. Single source of truth, imported by page.tsx. Models how these would be stored as content_type:'artwork' DB entries if the prototype graduates. Every image is mirrored to R2 from Don Hitchcock's donsmaps.com (CC BY 4.0); the depicted objects are public domain by age. image.source = exact original file; image.documentationPage = the donsmaps page documenting the object; object.reference = canonical encyclopaedia entry. All URLs verified 200 on 2026-06-19.",
+  "defaults": {
+    "photographer": "Don Hitchcock",
+    "photographerSite": "https://donsmaps.com",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "objectRights": "public domain (by age)",
+    "r2Base": "https://images.sourcelibrary.org/prototype/prehistoric-art"
+  },
+  "works": [
+    {
+      "id": "lion-man",
+      "category": "figurine",
+      "title": "The Lion Man (Löwenmensch)",
+      "date": "c. 40,000 BP",
+      "period": "Aurignacian",
+      "site": "Hohlenstein-Stadel, Germany",
+      "region": "Swabian Jura",
+      "museum": "Museum Ulm",
+      "medium": "Mammoth ivory",
+      "dimensions": "31.1 cm tall",
+      "blurb": "A standing figure with a lion’s head — the oldest known representation of a being that never existed. Roughly 300 hours of carving with a flint blade, made when the last ice age was at its coldest.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Lion-man" },
+      "image": {
+        "source": "https://donsmaps.com/images23/lionman2.jpg",
+        "documentationPage": "https://donsmaps.com/aurignacian.html"
+      }
+    },
+    {
+      "id": "hohle-fels",
+      "category": "figurine",
+      "title": "Venus of Hohle Fels",
+      "date": "c. 35,000–40,000 BP",
+      "period": "Aurignacian",
+      "site": "Hohle Fels Cave, Germany",
+      "region": "Swabian Jura",
+      "museum": "Urgeschichtliches Museum, Blaubeuren",
+      "medium": "Mammoth ivory",
+      "dimensions": "6 cm tall",
+      "blurb": "The oldest undisputed depiction of a human being yet found. A carved ring in place of a head suggests it was worn as a pendant.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_of_Hohle_Fels" },
+      "image": {
+        "source": "https://donsmaps.com/images12/hohlefelsvenuslge.jpg",
+        "documentationPage": "https://donsmaps.com/aurignacian.html"
+      }
+    },
+    {
+      "id": "adorant",
+      "category": "figurine",
+      "title": "The Adorant (Worshipper)",
+      "date": "c. 40,000 BP",
+      "period": "Aurignacian",
+      "site": "Geißenklösterle, Germany",
+      "region": "Swabian Jura",
+      "museum": "Württembergisches Landesmuseum",
+      "medium": "Carved ivory relief",
+      "dimensions": "c. 3.8 cm tall",
+      "blurb": "A tiny relief of a figure with raised arms. On the reverse, rows of incised notches may be one of the earliest attempts at a calendar or tally.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Geißenklösterle" },
+      "image": {
+        "source": "https://donsmaps.com/images33/img_3259adorantarmshead.jpg",
+        "documentationPage": "https://donsmaps.com/aurignacian.html"
+      }
+    },
+    {
+      "id": "willendorf",
+      "category": "figurine",
+      "title": "Venus of Willendorf",
+      "date": "c. 28,000 BP",
+      "period": "Gravettian",
+      "site": "Willendorf, Austria",
+      "region": "Wachau, Lower Austria",
+      "museum": "Naturhistorisches Museum, Vienna",
+      "medium": "Oolitic limestone, traces of red ochre",
+      "dimensions": "11.1 cm tall",
+      "blurb": "The most famous Palaeolithic figurine. The stone is not local — it travelled, or its maker did — and was once coloured with red ochre.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_of_Willendorf" },
+      "image": {
+        "source": "https://donsmaps.com/images28/venuswillendorfbigimg_1676.jpg",
+        "documentationPage": "https://donsmaps.com/willendorf.html"
+      }
+    },
+    {
+      "id": "lespugue",
+      "category": "figurine",
+      "title": "Venus of Lespugue",
+      "date": "c. 24,000–26,000 BP",
+      "period": "Gravettian",
+      "site": "Rideaux Cave, Lespugue, France",
+      "region": "Haute-Garonne",
+      "museum": "Musée de l’Homme, Paris",
+      "medium": "Tusk ivory",
+      "dimensions": "c. 14.7 cm tall",
+      "blurb": "Carved with a near-geometric symmetry that fascinated 20th-century artists — Picasso kept two casts of it in his studio.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_of_Lespugue" },
+      "image": {
+        "source": "https://donsmaps.com/images40/DSC04530lespuguefront.jpg",
+        "documentationPage": "https://donsmaps.com/lespuguevenus.html"
+      }
+    },
+    {
+      "id": "dolni-vestonice",
+      "category": "figurine",
+      "title": "Venus of Dolní Věstonice",
+      "date": "c. 25,000–29,000 BP",
+      "period": "Gravettian (Pavlovian)",
+      "site": "Dolní Věstonice, Moravia",
+      "region": "Czech Republic",
+      "museum": "Pavilon Anthropos, Brno",
+      "medium": "Fired clay",
+      "dimensions": "11.1 cm tall",
+      "blurb": "Among the oldest known ceramics anywhere — fired more than ten thousand years before pottery vessels existed. A fingerprint of a child is baked into a nearby fragment.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_of_Dolní_Věstonice" },
+      "image": {
+        "source": "https://donsmaps.com/images28/dolnivenusimg_1510.jpg",
+        "documentationPage": "https://donsmaps.com/dolnivenus.html"
+      }
+    },
+    {
+      "id": "brassempouy",
+      "category": "figurine",
+      "title": "The Lady of Brassempouy",
+      "date": "c. 25,000 BP",
+      "period": "Gravettian",
+      "site": "Brassempouy, France",
+      "region": "Landes",
+      "museum": "Musée d’Archéologie Nationale",
+      "medium": "Mammoth ivory",
+      "dimensions": "3.65 cm tall (head)",
+      "blurb": "One of the earliest realistic representations of a human face — a hood or hairstyle rendered in fine cross-hatching above calm, deliberate features.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_of_Brassempouy" },
+      "image": {
+        "source": "https://donsmaps.com/images28/venusbrass.jpg",
+        "documentationPage": "https://donsmaps.com/brassempouy.html"
+      }
+    },
+    {
+      "id": "laussel",
+      "category": "figurine",
+      "title": "Venus of Laussel",
+      "date": "c. 22,000–27,000 BP",
+      "period": "Gravettian",
+      "site": "Laussel, Dordogne, France",
+      "region": "Dordogne",
+      "museum": "Musée d’Aquitaine, Bordeaux",
+      "medium": "Limestone bas-relief",
+      "dimensions": "c. 54 cm (block)",
+      "blurb": "A figure carved into a rock shelter wall, holding a crescent — possibly a horn — incised with thirteen marks, read by some as a lunar count.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_of_Laussel" },
+      "image": {
+        "source": "https://donsmaps.com/images33/img_6531lausselcorne.jpg",
+        "documentationPage": "https://donsmaps.com/venus.html"
+      }
+    },
+    {
+      "id": "menton",
+      "category": "figurine",
+      "title": "Venus of Menton",
+      "date": "c. 23,000 BP",
+      "period": "Gravettian",
+      "site": "Barma Grande, Grimaldi (Balzi Rossi)",
+      "region": "Liguria / Riviera",
+      "museum": "Musée d’Archéologie Nationale",
+      "medium": "Yellow steatite",
+      "dimensions": null,
+      "blurb": "One of the Balzi Rossi figurines from the Italian–French Riviera caves — a series carved in soft, jewel-coloured stones.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_figurines_of_Balzi_Rossi" },
+      "image": {
+        "source": "https://donsmaps.com/images24/balzirossi1.jpg",
+        "documentationPage": "https://donsmaps.com/venus.html"
+      }
+    },
+    {
+      "id": "double-venus",
+      "category": "figurine",
+      "title": "The Double Venus",
+      "date": "c. 23,000 BP",
+      "period": "Gravettian",
+      "site": "Balzi Rossi, Italy",
+      "region": "Liguria / Riviera",
+      "museum": "Private collection",
+      "medium": "Serpentine",
+      "dimensions": null,
+      "blurb": "Two figures sharing a single body, carved from green serpentine — an early image of pairing, or of two states of one being.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Venus_figurines_of_Balzi_Rossi" },
+      "image": {
+        "source": "https://donsmaps.com/images29/doubleimg405.jpg",
+        "documentationPage": "https://donsmaps.com/venus.html"
+      }
+    },
+    {
+      "id": "hohle-phallus",
+      "category": "figurine",
+      "title": "The Hohle Fels Phallus",
+      "date": "c. 28,000 BP",
+      "period": "Gravettian",
+      "site": "Hohle Fels Cave, Germany",
+      "region": "Swabian Jura",
+      "museum": "Urgeschichtliches Museum, Blaubeuren",
+      "medium": "Polished siltstone",
+      "dimensions": "19.2 cm long",
+      "blurb": "A finely polished stone, reassembled from fragments — one of the oldest unambiguous representations of male anatomy, and possibly also a tool.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Hohle_Fels" },
+      "image": {
+        "source": "https://donsmaps.com/images10/hohlefelsphallus.jpg",
+        "documentationPage": "https://donsmaps.com/aurignacian.html"
+      }
+    },
+    {
+      "id": "berekhat-ram",
+      "category": "figurine",
+      "title": "The Berekhat Ram Figure",
+      "date": "c. 230,000+ BP",
+      "period": "Acheulean",
+      "site": "Berekhat Ram, Golan Heights",
+      "region": "Golan Heights",
+      "museum": "Hebrew University of Jerusalem",
+      "medium": "Modified volcanic pebble",
+      "dimensions": "3.5 cm tall",
+      "blurb": "A pebble whose natural shape suggests a figure, deliberately enhanced with a few grooves — possibly made by Homo erectus, which would make it almost ten times older than anything else here.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Berekhat_Ram" },
+      "image": {
+        "source": "https://donsmaps.com/images33/berekhatramhires.jpg",
+        "documentationPage": "https://donsmaps.com/berekhatram.html"
+      }
+    },
+    {
+      "id": "chauvet-horses",
+      "category": "cave-painting",
+      "title": "Panel of the Horses",
+      "date": "c. 36,000 BP",
+      "period": "Aurignacian",
+      "site": "Chauvet Cave, Ardèche, France",
+      "region": "Ardèche",
+      "museum": "In situ (UNESCO World Heritage)",
+      "medium": "Charcoal on limestone",
+      "dimensions": null,
+      "blurb": "Four horses’ heads drawn in overlapping profile, with stumping and shading to model the muzzles — perspective and volume tens of thousands of years before either was “invented.”",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Chauvet_Cave" },
+      "image": {
+        "source": "https://donsmaps.com/images22/chauvethorsessm.jpg",
+        "documentationPage": "https://donsmaps.com/chauvetcave.html"
+      }
+    },
+    {
+      "id": "chauvet-handprints",
+      "category": "cave-painting",
+      "title": "Panel of Hand Prints",
+      "date": "c. 36,000 BP",
+      "period": "Aurignacian",
+      "site": "Chauvet Cave, Ardèche, France",
+      "region": "Ardèche",
+      "museum": "In situ (UNESCO World Heritage)",
+      "medium": "Red ochre on limestone",
+      "dimensions": null,
+      "blurb": "Hands pressed and stencilled onto the wall — the most direct trace any of these makers left: the print of a living hand, held up in the dark.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Chauvet_Cave" },
+      "image": {
+        "source": "https://donsmaps.com/images22/handprintspositivesm.jpg",
+        "documentationPage": "https://donsmaps.com/chauvetcave.html"
+      }
+    },
+    {
+      "id": "lascaux-bulls",
+      "category": "cave-painting",
+      "title": "The Hall of the Bulls",
+      "date": "c. 17,300 BP",
+      "period": "Magdalenian",
+      "site": "Lascaux, Dordogne, France",
+      "region": "Dordogne",
+      "museum": "In situ (closed; replica Lascaux IV)",
+      "medium": "Ochre and manganese on limestone",
+      "dimensions": null,
+      "blurb": "A frieze of aurochs, horses and stags wrapping a chamber, including the enigmatic spotted “unicorn.” One of the supreme achievements of ice-age painting.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Lascaux" },
+      "image": {
+        "source": "https://donsmaps.com/images25/lascauxmainhallunicornmed.jpg",
+        "documentationPage": "https://donsmaps.com/lascaux.html"
+      }
+    },
+    {
+      "id": "lascaux-black-bull",
+      "category": "cave-painting",
+      "title": "The Great Black Bull",
+      "date": "c. 17,300 BP",
+      "period": "Magdalenian",
+      "site": "Lascaux (Axial Gallery), France",
+      "region": "Dordogne",
+      "museum": "In situ (closed; replica Lascaux IV)",
+      "medium": "Manganese pigment on limestone",
+      "dimensions": "3.7 m long",
+      "blurb": "At 3.7 metres long, the largest single figure at Lascaux — its body left as bare rock, its outline and head rendered in dense black.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Lascaux" },
+      "image": {
+        "source": "https://donsmaps.com/images37/lascaux_greatblackbullsm.jpg",
+        "documentationPage": "https://donsmaps.com/lascaux.html"
+      }
+    },
+    {
+      "id": "lascaux-shaft",
+      "category": "cave-painting",
+      "title": "The Shaft Scene",
+      "date": "c. 17,300 BP",
+      "period": "Magdalenian",
+      "site": "Lascaux (the Well), France",
+      "region": "Dordogne",
+      "museum": "In situ (closed; replica Lascaux IV)",
+      "medium": "Pigment on limestone",
+      "dimensions": null,
+      "blurb": "A disembowelled bison, a bird-headed falling man, a spear, a rhinoceros — the most argued-over image in all of cave art, and a candidate for the oldest narrative scene.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Lascaux" },
+      "image": {
+        "source": "https://donsmaps.com/images19/lascauxIMG_1097sm.jpg",
+        "documentationPage": "https://donsmaps.com/lascaux.html"
+      }
+    },
+    {
+      "id": "altamira-ceiling",
+      "category": "cave-painting",
+      "title": "The Polychrome Ceiling",
+      "date": "c. 15,000–22,000 BP",
+      "period": "Magdalenian",
+      "site": "Altamira, Cantabria, Spain",
+      "region": "Cantabria",
+      "museum": "In situ (Museo de Altamira)",
+      "medium": "Ochre, haematite and charcoal",
+      "dimensions": null,
+      "blurb": "A herd of bison painted across a low ceiling, the artists using the rock’s natural bulges to give each animal a three-dimensional swell. Dismissed as a forgery when first published in 1880 — too good to be ancient.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Cave_of_Altamira" },
+      "image": {
+        "source": "https://donsmaps.com/images25/ceilingaltamira.jpg",
+        "documentationPage": "https://donsmaps.com/altamirapaintings.html"
+      }
+    },
+    {
+      "id": "altamira-bison",
+      "category": "cave-painting",
+      "title": "Polychrome Bison (detail)",
+      "date": "c. 15,000–22,000 BP",
+      "period": "Magdalenian",
+      "site": "Altamira, Cantabria, Spain",
+      "region": "Cantabria",
+      "museum": "In situ (Museo de Altamira)",
+      "medium": "Ochre, haematite and charcoal",
+      "dimensions": null,
+      "blurb": "A single curled bison from the great ceiling — pigment diluted to grade from deep red to soft brown, conjuring muscle and weight out of stone.",
+      "object": { "reference": "https://en.wikipedia.org/wiki/Cave_of_Altamira" },
+      "image": {
+        "source": "https://donsmaps.com/images25/bisonaltamira2img_0156.jpg",
+        "documentationPage": "https://donsmaps.com/altamirapaintings.html"
+      }
+    }
+  ]
+}
