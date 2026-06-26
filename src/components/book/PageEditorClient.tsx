@@ -30,6 +30,8 @@ export default function PageEditorClient({
   const [pageList] = useState<Page[]>(initialPageList);
   const [currentPageId, setCurrentPageId] = useState<string>(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
+  // Reading language: 'en' (default) or 'es' (Spanish edition, when available).
+  const [lang, setLang] = useState<'en' | 'es'>('en');
   const params = useParams<{ tenant: string }>();
   const pathname = usePathname();
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
@@ -256,15 +258,28 @@ export default function PageEditorClient({
     }
   };
 
-  // When version-pinned, overlay the versioned translation onto the page object
-  const displayPage = pinnedVersion && versionedTranslation != null
-    ? {
+  // Spanish edition availability (per-page; pivot-translated from English).
+  const hasSpanish = !!currentPage.translation_es?.data;
+  // Version pinning is English-edition-specific, so it disables the ES view.
+  const showSpanish = lang === 'es' && hasSpanish && !pinnedVersion;
+
+  // Build the page handed to the reader, overlaying (in precedence order):
+  //   1. Spanish edition when the ES toggle is active
+  //   2. the version-pinned English translation when ?v= is set
+  let displayPage = currentPage;
+  if (showSpanish) {
+    displayPage = {
+      ...currentPage,
+      translation: { ...(currentPage.translation || {}), ...currentPage.translation_es!, language: 'Spanish' },
+    } as Page;
+  } else if (pinnedVersion && versionedTranslation != null) {
+    displayPage = {
       ...currentPage,
       translation: currentPage.translation
         ? { ...currentPage.translation, data: versionedTranslation }
         : { data: versionedTranslation, language: 'en', model: 'versioned' },
-    } as Page
-    : currentPage;
+    } as Page;
+  }
 
   return (
     <>
@@ -282,6 +297,30 @@ export default function PageEditorClient({
           doiUrl={versionEdition.doiUrl}
           bookUrl={`${tenantPrefix}/book/${book.id}/page/${currentPageId}`}
         />
+      )}
+
+      {hasSpanish && !pinnedVersion && (
+        <div className="flex items-center justify-center gap-2 py-2 text-sm" role="group" aria-label="Reading language">
+          <span className="text-neutral-500">Read in:</span>
+          <div className="inline-flex overflow-hidden rounded-full border border-neutral-300">
+            <button
+              type="button"
+              onClick={() => setLang('en')}
+              aria-pressed={lang === 'en'}
+              className={`px-3 py-1 transition-colors ${lang === 'en' ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-700 hover:bg-neutral-100'}`}
+            >
+              English
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang('es')}
+              aria-pressed={lang === 'es'}
+              className={`px-3 py-1 transition-colors ${lang === 'es' ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-700 hover:bg-neutral-100'}`}
+            >
+              Español
+            </button>
+          </div>
+        </div>
       )}
 
       <TranslationEditor

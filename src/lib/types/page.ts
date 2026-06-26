@@ -12,6 +12,7 @@ export interface Page {
   compressed_photo?: string;
   ocr?: OcrData;
   translation?: TranslationData;
+  translation_es?: TranslationData;  // Spanish edition (pivot-translated from English); read-time toggle in the reader
   summary?: SummaryData;
   modernized?: ModernizedData;  // Modernized text for reading dashboard
   transliteration?: TransliterationData;  // Romanized transliteration for non-Latin scripts
