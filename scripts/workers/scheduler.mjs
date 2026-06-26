@@ -129,6 +129,19 @@ const WORKERS = [
     healthMin: 'degraded',
     log: '/var/log/sourcelibrary/translate-complete.log',
   },
+  {
+    // Spanish edition: pivots existing English → Spanish (translation_es), most
+    // popular books first. Conservative cap so spend ramps gradually + visibly
+    // (gemini_usage). Pause via processing_control.paused. See #2770.
+    name: 'es-translate',
+    cmd: 'node scripts/workers/es-translate-worker.mjs --books=4 --max-pages=300',
+    lock: '/tmp/sl-es-translate.lock',
+    connections: 6,
+    tier: 2,
+    interval: 600,      // every 10 min
+    healthMin: 'healthy',
+    log: '/var/log/sourcelibrary/es-translate.log',
+  },
 
   // Tier 3: Batch collection — lightweight, collects Gemini results
   {
