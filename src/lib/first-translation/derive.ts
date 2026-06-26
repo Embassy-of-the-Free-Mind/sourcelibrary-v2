@@ -23,6 +23,33 @@ import {
   type FirstTranslationVerdict,
   type LegacyDisposition,
 } from './types';
+import { evaluatePrior, type CitedPriorInput } from '../ft-prior-guard';
+
+/**
+ * Map a legacy `translations_found[]` entry (untyped Mongo shape) to the
+ * guard's {@link CitedPriorInput}. Field names mirror what the badge panel's
+ * normalizePriors reads, so the guard sees the same prior the reader does.
+ */
+function toCitedPrior(p: unknown): CitedPriorInput {
+  const o = (p ?? {}) as Record<string, unknown>;
+  const str = (v: unknown) => (typeof v === 'string' ? v : undefined);
+  const completeness = str(o.completeness);
+  return {
+    english_title: str(o.english_title) ?? str(o.title),
+    translator: str(o.translator),
+    pub_year: str(o.pub_year) ?? str(o.year),
+    completeness:
+      completeness === 'complete' ||
+      completeness === 'partial' ||
+      completeness === 'excerpts' ||
+      completeness === 'unknown'
+        ? completeness
+        : undefined,
+    publisher: str(o.publisher),
+    series: str(o.series),
+    notes: str(o.notes),
+  };
+}
 
 /**
  * Normalize a book to a graded {@link FirstTranslation} record.
@@ -63,7 +90,24 @@ export function resolveFirstTranslation(
   if (verdict === 'not_first') {
     const priors = book.translation_verification?.translations_found;
     if (!Array.isArray(priors) || priors.length === 0) {
+      // No cited prior at all — an evidence-free defeat. Escalate, don't demote.
       verdict = 'needs_review';
+    } else {
+      // A cited prior only defeats a first if it is a TRUSTWORTHY sighting.
+      // The #2564 Arithmologia demotion trusted a prior that was actually
+      // Godwin's *anthology* — a real citation to the wrong kind of source. Run
+      // the evidence-quality guard (#2579): if NO cited prior survives it, the
+      // demotion isn't justified → needs_review (a Tier-2 re-verification, not
+      // a restored first).
+      const bookInput = {
+        title: book.title ?? '',
+        author: book.author,
+        language: book.original_language ?? book.language ?? undefined,
+      };
+      const anyTrustworthy = priors.some(
+        (p) => evaluatePrior(bookInput, toCitedPrior(p)).trustworthy,
+      );
+      if (!anyTrustworthy) verdict = 'needs_review';
     }
   }
 
