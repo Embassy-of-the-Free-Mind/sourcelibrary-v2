@@ -457,7 +457,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     }
   }
 
-  const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
+  const [books, highlights, galleryImages, mentionedBooks, firstTranslations] = await Promise.all([
     fetchBooksWithFallback(),
     curatedBookIds.length > 0
       ? withTimeout(
@@ -521,6 +521,23 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
         8000, [],
       )
       : Promise.resolve([]),
+    // First translations — every readable book in this collection flagged as a
+    // first translation. The compact grid above is capped at COMPACT_LIMIT and
+    // popularity-sorted, so this is a separate, fuller query (chronological) for
+    // the dedicated "First translations" band. Art collections skip it.
+    isArtCollection
+      ? Promise.resolve([])
+      : withTimeout(
+        db.collection('books')
+          .find(
+            { collections: id, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true, ...(tenantId ? { tenantId } : {}) },
+            { projection: { ...projection, 'translation_verification.disposition': 1 }, maxTimeMS: 8000 },
+          )
+          .sort({ year: 1, title: 1 })
+          .limit(60)
+          .toArray(),
+        8000, [],
+      ),
   ]);
 
   const artworks = await artworksPromise;
@@ -653,6 +670,13 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     collection: collectionClean as any,
     books: sanitizeBookThumbs(books) as unknown as BookItem[],
     highlights: mergedHighlights,
+    firstTranslations: sanitizeBookThumbs(
+      (firstTranslations as Record<string, unknown>[]).map((b) => ({
+        ...b,
+        ft_disposition: (b.ft_disposition as string | undefined)
+          || ((b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined),
+      })),
+    ) as unknown as BookItem[],
     total,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: JSON.parse(JSON.stringify(galleryImages)) as any[],
@@ -687,7 +711,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
+  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
 
   // Collections that carry an Index catalogue (index_catalogs editions) render
   // the catalogue browser as their centrepiece — hide the Visual Art section
@@ -1011,6 +1035,65 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         {firstTranslationBadge(b.ft_disposition, b.language)}
                       </span>
                     )}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* First translations — every readable first-translation in this collection.
+          Renders only when there are any; hidden on art collections / exhibitions. */}
+      {firstTranslations.length > 0 && !isArtCollection && !exhibition?.layout && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-[1500px] mx-auto px-6 py-10">
+            <div className="flex items-end justify-between gap-4 mb-2">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                First translations
+              </h2>
+              <span className="text-sm text-muted whitespace-nowrap">
+                {firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}
+              </span>
+            </div>
+            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">
+              Works in this collection appearing in a modern, readable translation for the first time — read them in full here.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-5">
+              {firstTranslations.map((b) => {
+                const thumb = getBookThumbnailUrl(b);
+                return (
+                  <Link
+                    key={b.id}
+                    href={tenantBookUrl({ id: b.id, slug: b.slug }, tenantSlug)}
+                    className="group block"
+                  >
+                    <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-sm group-hover:shadow-md transition-shadow mb-2">
+                      {thumb ? (
+                        <Image
+                          src={thumb}
+                          alt={bookTitle(b)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(min-width: 1024px) 170px, (min-width: 640px) 30vw, 45vw"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <BookOpen className="w-8 h-8 text-muted" />
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug">
+                      {bookTitle(b)}
+                    </h3>
+                    {b.author && (
+                      <p className="text-xs text-muted line-clamp-1 mt-0.5">
+                        {b.author}{b.year ? `, ${b.year}` : ''}
+                      </p>
+                    )}
+                    <span className="inline-block mt-1 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
+                      {firstTranslationBadge(b.ft_disposition, b.language)}
+                    </span>
                   </Link>
                 );
               })}
