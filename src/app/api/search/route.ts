@@ -308,9 +308,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               .project({ id: 1 })
               .toArray();
             const allowedBookIds = filteredBooks.map(b => b.id);
-            if (allowedBookIds.length > 0) {
-              pageFilter.book_id = { $in: allowedBookIds };
-            }
+            // An empty allow-list (e.g. a language with zero matching books)
+            // must yield zero pages — never fail open to the whole corpus.
+            // buildPageSearchStage ignores an empty array, so short-circuit
+            // the lane here rather than passing `$in: []` through. (#2760)
+            if (allowedBookIds.length === 0) return [];
+            pageFilter.book_id = { $in: allowedBookIds };
           }
 
           const pageLimit = (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS;

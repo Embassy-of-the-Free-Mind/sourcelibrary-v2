@@ -347,22 +347,31 @@ export async function GET(request: NextRequest) {
     const artworksAboveFloor = [...lexicalArtworkResult, ...semanticArtworksAboveFloor]
       .slice(0, ARTWORK_RESULT_LIMIT);
     // Enrich artworks with slugs from MongoDB (needed for /artwork/[slug] links)
+    // and gate on visibility: the artwork_embeddings lane has no visibility
+    // column, so hidden/invisible artworks surface here and 404 on click. The
+    // visible-only lookup doubles as the visibility filter — any artwork not
+    // returned is dropped. Fail closed: if the lookup errors we can't confirm
+    // visibility, so we drop the whole lane rather than risk a leak. (#2760)
+    let visibleArtworks = artworksAboveFloor;
     if (artworksAboveFloor.length > 0) {
       try {
         const artworkIds = artworksAboveFloor.map(a => a.book_id);
         const artworkDocs = await db.collection('books').find(
-          { id: { $in: artworkIds } },
+          { id: { $in: artworkIds }, visible: true },
           { projection: { id: 1, slug: 1 } }
         ).maxTimeMS(2000).toArray();
         const slugMap = new Map(artworkDocs.map(d => [d.id, d.slug]));
-        for (const a of artworksAboveFloor) {
+        visibleArtworks = artworksAboveFloor.filter(a => slugMap.has(a.book_id));
+        for (const a of visibleArtworks) {
           (a as any).slug = slugMap.get(a.book_id) || null;
         }
-      } catch { /* non-fatal */ }
+      } catch {
+        visibleArtworks = [];
+      }
     }
     let filteredArtworks = {
-      results: artworksAboveFloor,
-      total: artworksAboveFloor.length,
+      results: visibleArtworks,
+      total: visibleArtworks.length,
     };
 
     // Defense-in-depth tenant filter. When a tenant header is present,
