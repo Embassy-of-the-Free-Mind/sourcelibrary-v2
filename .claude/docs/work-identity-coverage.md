@@ -18,8 +18,17 @@ Cluster editions by a shared **`work_id`** and read coverage off the cluster.
 - **`books.work_id`** — a Wikidata QID (`Q200655`) or a works-catalog id
   (`catalog:pandit:108641`, or a bare BDRC/gretil id). The join key. Multiple of
   our books (originals + translations + editions) share one `work_id` = one work.
-- **`books.work_title`**, **`work_id_source`** (`wikidata:P50` |
-  `resolve-work-ids:author+title` | `coverage-demo` | …), **`work_id_confidence`**.
+- **`books.work_title`**, **`work_id_source`** (`local-mint` | `wikidata:P50` |
+  `work-merge:{llm-verified|hand-adjudicated|identical-title-deterministic}` |
+  `resolve-work-ids:{author+title|distinctive-title}` | `kanripo-catalog` |
+  `legacy-seed` | `hand-mint` | `coverage-demo`), **`work_id_confidence`**.
+  **Provenance is now complete — every work_id carries a source** (2026-06-26
+  backfill: 12,203 `kr:*` catalog ids → `kanripo-catalog`, 1,062 pre-tracking
+  hand/QID seeds → `legacy-seed`; previously these 13,265 had a null source and
+  were invisible to the merge/dedup tooling). `local-mint` is auto and the only
+  tag `--remint-local` overwrites; everything else is held. Backups in
+  `scripts/output/workid-source-backfill-backup-2026-06-26.json` (+ the
+  Herculaneum per-volume hand-mint in `herculaneum-workid-backfill-2026-06-26.json`).
 - `text_role` (original | period-translation | modern-translation) and
   `original_language` still matter — coverage reads them per cluster.
 
@@ -248,6 +257,58 @@ gloss); composition-era classification of the USTC denominator itself (to get a
 pure Renaissance-composed subset, not print-year); and completing under-captured
 series (ITRL 98/~100 enumerated; Brill BTSI partial — publisher site bot-blocks
 automated access, enumerated via BMCR / Renaissance Quarterly reviews instead).
+
+## Spot-check audit & live edge cases (2026-06-26)
+**Approach.** Audit clusters by sampling across two axes where defects hide: (a)
+**size extremes** — the largest clusters are where an over-merge lurks; (b) **each
+`work_id_source` tag**. For each sampled cluster, list every member's `title` /
+`language` / `text_role` / `visible` / `pages_count` and ask three questions: do
+all members name the *same work*? are the "editions" actually *parts*? is a *part*
+of a larger work fused into the whole? Queries are throwaway aggregations — group
+`books` by `work_id` sort by count desc for the big clusters; `$addToSet` on
+`language` to surface the cross-language tier. **Clusters that read correctly in
+the sample** (precision is good): Boethius *De Consolatione* (`Q138752489`, 31 eds
+Latin+English, `text_role` o/p/m all present), Vitruvius *De Architectura*
+(`Q1232238`, Latin/French/Italian), Plotinus *Enneads*, Corpus Hermeticum — the
+`work-merge:llm-verified` cross-language tier is doing its job. **No false
+*distinct-work* fusions found** in the sample; every defect below is a *granularity*
+artifact, not data corruption.
+
+**Four live edge classes — all one root: a flat `work_id` can't model part-of.**
+1. **Parts-as-editions (CJK juan + Western fascicles).** `kr:KR3k0059` 御定佩文韻府 =
+   **729 members**, each a juan-slice of ONE dictionary; **39 `kr:` clusters have
+   >50 members, 111 have >20.** Western twin: the Krause *Kunsturkunden* cluster =
+   23 same-title/same-year (1820-21) members, page counts 26→215 = fascicles of one
+   work, not 23 editions. *Correct at work level* (it IS one work) but inflates the
+   edition count and makes `bestEdition()` choose among parts. Defensible as "one
+   work in N parts"; the fix is the contained-works / `work_part_of` layer, not a
+   re-key.
+2. **Part-of-a-whole fused into the whole (the Gītā case).** `Q200655` (Mahābhārata)
+   absorbs "The Song Celestial, or Bhagavad-Gītā (From the Mahābhārata)" — yet the
+   Gītā *also* exists as standalone works (`local:a:william-walker-atkinson:...`,
+   `local:a:kashinath-trimbak-telang:...bhagavadgita...`). So one work (the Gītā) is
+   split across the Mahābhārata cluster AND its own slugs — a true inconsistency,
+   and "first English of the Gītā" is unanswerable from the cluster. Same shape as
+   Poimandres ↔ Corpus Hermeticum. Fix: Gītā is its own work-node with
+   `work_part_of` → Mahābhārata, never a fused "edition."
+3. **Omnibus contamination.** corpus-hermeticum (24) includes "De mysteriis
+   Aegyptiorum - Pimander - Asclepius" — the Ficino 1497 omnibus that also embodies
+   Iamblichus *De Mysteriis* (a different work). plotinus-enneads includes
+   "Plotinus, Enneads VI; Maximus of Tyre, Dissertations." The compilation gets
+   vacuumed into whichever contained work its title best matches. Fix:
+   `book.contained_works[]` (the manifestation-aggregates edge), per the
+   architecture doc's hierarchy model.
+4. **(clean) Herculaneum per-volume singletons** verified correct — each Tomus /
+   Collectio Altera volume is its own work; the English Collectio Altera volumes
+   (e.g. `…:collectio-altera-1864-a`, `text_role:modern-translation`) stay separate
+   from the Latin ones, per the under-cluster policy.
+
+**Takeaway:** clustering *precision* is healthy; the open defects are all
+*granularity* — flat ids fuse parts up (1, 2) or vacuum compilations in (3). All
+three are the same keystone fix the architecture doc names (work-hierarchy /
+contained-works layer, #2567), and none is a corruption bug — safe to leave until
+that layer lands. To re-run this audit:
+`scripts/analysis/work-coverage.mjs` plus ad-hoc group-by-`work_id` sampling.
 
 ## Open levers
 - **Embedding clustering = candidate generator, NOT an auto-writer (tested to
