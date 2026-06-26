@@ -52,9 +52,16 @@ async function main() {
 
   const cursor = books.find(query, {
     projection: {
-      id: 1, title: 1, author: 1, language: 1, visible: 1, pages_translated: 1,
+      id: 1, title: 1, author: 1, language: 1, original_language: 1,
+      visible: 1, pages_translated: 1,
       is_first_translation: 1, 'translation_verification.disposition': 1,
-      'translation_verification.source': 1, first_translation: 1,
+      'translation_verification.source': 1,
+      // Required by the evidence-quality guard in derive (#2579/#2751): without
+      // the cited priors, every `translation_found` looks evidence-free and the
+      // guard escalates it to needs_review — silently bypassing the guard and
+      // breaking the `--verdict=not_first` scoped-apply path.
+      'translation_verification.translations_found': 1,
+      first_translation: 1,
     },
   });
 
