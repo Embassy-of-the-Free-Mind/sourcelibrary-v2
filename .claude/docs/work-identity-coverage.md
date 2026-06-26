@@ -18,8 +18,17 @@ Cluster editions by a shared **`work_id`** and read coverage off the cluster.
 - **`books.work_id`** — a Wikidata QID (`Q200655`) or a works-catalog id
   (`catalog:pandit:108641`, or a bare BDRC/gretil id). The join key. Multiple of
   our books (originals + translations + editions) share one `work_id` = one work.
-- **`books.work_title`**, **`work_id_source`** (`wikidata:P50` |
-  `resolve-work-ids:author+title` | `coverage-demo` | …), **`work_id_confidence`**.
+- **`books.work_title`**, **`work_id_source`** (`local-mint` | `wikidata:P50` |
+  `work-merge:{llm-verified|hand-adjudicated|identical-title-deterministic}` |
+  `resolve-work-ids:{author+title|distinctive-title}` | `kanripo-catalog` |
+  `legacy-seed` | `hand-mint` | `coverage-demo`), **`work_id_confidence`**.
+  **Provenance is now complete — every work_id carries a source** (2026-06-26
+  backfill: 12,203 `kr:*` catalog ids → `kanripo-catalog`, 1,062 pre-tracking
+  hand/QID seeds → `legacy-seed`; previously these 13,265 had a null source and
+  were invisible to the merge/dedup tooling). `local-mint` is auto and the only
+  tag `--remint-local` overwrites; everything else is held. Backups in
+  `scripts/output/workid-source-backfill-backup-2026-06-26.json` (+ the
+  Herculaneum per-volume hand-mint in `herculaneum-workid-backfill-2026-06-26.json`).
 - `text_role` (original | period-translation | modern-translation) and
   `original_language` still matter — coverage reads them per cluster.
 
