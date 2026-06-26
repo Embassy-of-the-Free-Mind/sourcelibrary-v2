@@ -144,12 +144,41 @@ numbers and never mix them:
 | claim | status | why |
 |---|---|---|
 | 503k Latin editions; 366k Latin work-clusters 1400–1700 | **solid** | direct counts from USTC |
-| ~97% of USTC-print clusters have no external English translation | **overstates the Renaissance gap** | validation: the raw figure inflates because the print-year denominator includes *translated* ancient/medieval reprints (3/5 of the sampled misses) |
-| **~85–90% of genuinely Renaissance-composed Latin works untranslated** | **validated (pilot, 95% CI 60–96%, n=30)** | blind stratified independent-verification eval (see Validation); now *measured*, agrees with Shuger's "90%" |
-| translation-match precision ~92% | **validated** | 11/12 of "translated" confirmed by independent grounded search |
+| ~97% of USTC-print clusters have no external English translation | **overstates the ALL-PRINT gap** | n=1000 validation: debiased all-print gap is **84.9% [82.3–87.3]** — the raw figure inflates because the print-year denominator carries *translated* ancient/medieval reprints the matcher misses (~59% of "gap" ancient/medieval works are truly translated) |
+| **~93% of genuinely Renaissance-composed Latin works untranslated** | **validated (n=1000, debiased 93.3% [91.3–95.2]; gap-stratum 94.2% [92–96], n=553)** | blind two-sided stratified eval, Gemini primary over all 1000 + independent Claude cross-check on a 294-work overlap (κ=0.82; 0.88 on the fully-dual n=250 core) + era post-stratification; *measured*, corroborates & slightly exceeds Shuger's "90%". Full paper: `translation-gap-paper.md` |
+| translation-match precision ~79% (era-dependent: 92% classics, 57% Renaissance) | **validated (n=1000)** | of pipeline-"translated", 78.7% [73–84] have a confirmed real prior; Renaissance matches are only 57% real (low-IDF collisions) → the raw translated count is inflated where the gap matters |
 | denominator = *Renaissance-composed* works | **upper bound only** | USTC year is print year; includes ancient/medieval reprints — confirmed by the eval |
 | "~20 new works translated per year" (the rate) | **order-of-magnitude** | from the per-decade first-translation series; gross retranslation removed |
 | "X years to finish" | **deliberately not stated** | numerator and denominator are both order-of-magnitude; honest answer is "millennia" |
+
+## Validation at scale (n=1000, 2026-06-22) — supersedes the pilot
+
+The pilot was scaled to **n=1000** (300 pipeline-"translated" + 700
+pipeline-"gap", blind, stratified, window 1480–1620). A **Gemini grounded-search
+adjudicator** runs over all 1000 (the scalable engine); an **independent Claude
+tool-using agent** cross-checks a 294-work overlap (κ=0.82; the fully-dual n=250
+core has both models on every work, κ=0.88), with a third strict-completeness
+tie-break on disagreements and **post-stratification by composition era**. Full
+method, numbers, and the released dataset: **`.claude/docs/translation-gap-paper.md`**.
+Headline shifts from the pilot:
+
+- **The denominator dominates.** Debiased **all-print gap = 84.9% [82.3–87.3]**
+  (the raw 97% *overstates* it — translated ancient/medieval classics hide in the
+  "gap"); debiased **Renaissance-composed gap = 93.3% [91.3–95.2]** — essentially
+  total, corroborating & slightly exceeding Shuger's "90%."
+- The pilot's "Renaissance gap ~86%" was small-sample noise (n=14); at n=553
+  gap-stratum the Renaissance untranslated rate is **94.2% [92–96]** (the n=250
+  core's 95.6% was a touch high on the smaller sample).
+- Matcher precision is **79%** overall but **era-dependent** (92% classics, 57%
+  Renaissance) — the raw *translated* count is inflated on Renaissance works.
+- Reproduce: `scripts/analysis/gap-validation-{sample,gemini-adjudicate,score,estimate}.mjs`
+  + the Claude/tie-break workflows; artifacts in `scripts/analysis/eval-data/`.
+  Operational note: run grounded-search workflows **one at a time** — fanning out
+  several concurrently trips sustained server-side rate-limiting.
+- **Human gold standard (the binding step) is pending** — the dual-AI estimate
+  bounds independent, not correlated, error. Tool ready:
+  `gap-validation-gold-export.mjs` → review HTML → `gap-validation-gold-score.mjs`
+  → Rogan–Gladen.
 
 ## Validation against ground truth (pilot, 2026-06-21)
 

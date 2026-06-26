@@ -124,10 +124,25 @@ What has been Englished, by whom — and the gap of what hasn't.
   (author-anchor + rare-token title containment), fixing the old author-level
   `has_english_translation` over-flag (Filelfo 63→1) and name-match under-flag
   (Pico 0→17). Emits the **registry** (works that HAVE been translated, with
-  translators credited) and the **gap** (clusters with no external prior, ~97% of
-  early-modern Latin). Converged into #2453 as `tradition='latin'` works +
-  `work_sources(kind='translation')`. Doc: `translation-gap-methodology.md`,
-  and the §"external-translation-prior layer" in `work-identity-coverage.md`.
+  translators credited) and the **gap** (clusters with no external prior; raw
+  2.7% matched). **Validated (n=1000, #2684):** the raw 2.7%/97% is a *print-year*
+  figure — debiased, the gap is **~85% [82–87] all-print** but **~93% [91–95] for
+  genuinely Renaissance-composed Latin** (Gemini primary over 1000 + independent
+  Claude cross-check on a 294-work overlap κ=0.82; n=250 fully-dual core κ=0.88; era
+  post-stratification). Quote the *validated* figure with its denominator, never
+  the bare 97%. Converged into #2453 as `tradition='latin'` works +
+  `work_sources(kind='translation')`.
+- **Scan (digitization) coverage — the third axis** (`scripts/translation-layer/09-scan-coverage.mjs`,
+  #2684): matches the ~364k harvested Latin IIIF manifests (`import_candidates`,
+  real `manifest_url`s) to the same clusters (author-anchor + title + u/v,i/j orth
+  norm). **~58% of early-modern Latin work-clusters are scanned (evidence-backed)** —
+  the `has_iiif_scan` flag *under*-counts at 28% (provenance-free, no manifest_url —
+  don't quote it; mirror of the translation flag's over-count). Yields the 2×2:
+  **~56% scanned-but-untranslated = the actionable translate-queue.** A FLOOR
+  (misses anonymous/un-harvested) and not yet blind-validated (title-match precision
+  unmeasured) — see `scan-coverage-report.json`. Docs: `translation-gap-methodology.md`
+  (plain-language), `translation-gap-paper.md` (method + dataset + validation),
+  and §"external-translation-prior layer" in `work-identity-coverage.md`.
 - **First-translation** is the same question with a date: the first English
   expression of a work. Docs: `first-translation-system.md`,
   `ft-first-translation-paper.md`.

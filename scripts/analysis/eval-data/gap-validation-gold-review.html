@@ -1,0 +1,989 @@
+<!doctype html><meta charset=utf8><title>Gap validation — gold review</title>
+<style>
+ body{font:15px/1.5 -apple-system,system-ui,sans-serif;max-width:860px;margin:24px auto;padding:0 16px;color:#222}
+ .card{border:1px solid #ddd;border-radius:10px;padding:14px 16px;margin:16px 0}
+ h3{margin:0 0 4px} .title{font-style:italic;color:#444;margin-bottom:6px} .muted{color:#999;font-weight:400}
+ .meta{font-size:13px;color:#666;margin-bottom:8px}
+ .adj{background:#f7f7f8;border-radius:7px;padding:8px 10px;margin:6px 0;font-size:13px}
+ .v.translated{color:#0a7} .v.untranslated{color:#b40} .v.uncertain{color:#a70}
+ .prior{margin:3px 0;color:#225} .why{color:#555;margin:3px 0} .src a{color:#69c;font-size:12px;margin-right:4px}
+ .verdict-row{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+ .b{padding:6px 10px;border:1px solid #bbb;background:#fff;border-radius:6px;cursor:pointer}
+ .b.sel{background:#222;color:#fff;border-color:#222} .note{flex:1;min-width:160px;padding:5px}
+ #bar{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;padding:10px 0;display:flex;gap:10px;align-items:center;z-index:9}
+ #exp{padding:8px 14px;background:#0a7;color:#fff;border:0;border-radius:6px;cursor:pointer}
+</style>
+<div id=bar><b>Gap validation — human gold review (40)</b><span id=prog></span><button id=exp>Export labels JSON</button>
+ <span class=muted>Audit the AI search; open a record before deciding. Override freely.</span></div>
+
+<div class="card" data-key="T242">
+ <h3>#1 · Vergilius Maro, Publius <span class="muted">(1520)</span></h3>
+ <div class="title">Bucolica. Cum familiari tam verborum qua sententiarum expositione per Hermannum torrentinum explanata.</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Virgil's Bucolics/Eclogues have been translated into English many times (e.g., Dryden's 1697 Works of Virgil; T.W.C. Edwards 1825; modern verse editions). <a href="https://www.press.jhu.edu/books/title/10172/virgils-book-bucolics-ten-eclogues-translated-english-verse" target="_blank">[open record]</a></div>
+   <div class="why">The work is Virgil's Bucolics (Eclogues), composed in antiquity (~42–37 BC); the 1520 print merely adds the humanist Hermannus Torrentinus's school commentary, so it is an early-modern printing of an ancient text. The Eclogues are among the most-translated Latin works into English (John Dryden 1697, T.W.C. Edwards 1825, and numerous complete modern verse translations).</div>
+   <div class="src"><a href="https://en.wikipedia.org/wiki/Eclogues" target="_blank">en.wikipedia.org/wiki/Eclogues</a> · <a href="https://www.press.jhu.edu/books/title/10172/virgils-book-bucolics-ten-eclogues-translated-english-verse" target="_blank">www.press.jhu.edu/books/title/10172/virgils-b</a> · <a href="https://www.poetryintranslation.com/PITBR/Latin/VirgilEcloguesGeorgicshome.php" target="_blank">www.poetryintranslation.com/PITBR/Latin/Virgi</a> · <a href="https://archive.org/details/ned-kbn-all-00002143-001" target="_blank">archive.org/details/ned-kbn-all-00002143-001</a> · <a href="https://data.cerl.org/thesaurus/cnp01876689" target="_blank">data.cerl.org/thesaurus/cnp01876689</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">While Virgil's Bucolica (Eclogues) is a foundational text of antiquity (~39 BC) with numerous English translations, the specific 'familiaris expositio' (commentary) by the Dutch humanist Hermannus Torrentinus that defines this edition has never been published in an English translation. This pedagogical apparatus was a staple of 16th-century Latin instruction and remained untranslated in its original academic and schoolbook context.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G118">
+ <h3>#2 · Hegius, Alexander <span class="muted">(1498)</span></h3>
+ <div class="title">Dialogus de arte et inertia</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / none · moderate
+   <div class="prior">prior: No prior English translation found; the only Hegius English renderings (Matthews 1988 dissertation) cover the Contra modos significandi invectiva and his letters, not De arte et inertia. <a href="https://dwc.knaw.nl/hegius-alexander-14391440-1498/" target="_blank">[open record]</a></div>
+   <div class="why">The dialogue is by Alexander Hegius (c.1433/39–1498), a contemporary Deventer humanist, composed in his lifetime (printed c.1497, collected in the 1503 Dialogi), so the text is renaissance/early-modern, not a print of an ancient/medieval author. The curated DWC bibliography enumerates which Hegius dialogues Matthews (1988) translated into English — De arte et inertia is not among them — and no other standalone, anthology, or excerpt English translation surfaced.</div>
+   <div class="src"><a href="https://dwc.knaw.nl/hegius-alexander-14391440-1498/" target="_blank">dwc.knaw.nl/hegius-alexander-14391440-1498/</a> · <a href="https://www.abebooks.com/first-edition/Dialogi.De-scientia-quod-contra-AcademicosDe-tribus/22660108335/bd" target="_blank">www.abebooks.com/first-edition/Dialogi.De-sci</a> · <a href="https://digitalcommons.andrews.edu/dissertations/566/" target="_blank">digitalcommons.andrews.edu/dissertations/566/</a> · <a href="https://www.europeana.eu/en/item/04202/BibliographicResource_3000135590103" target="_blank">www.europeana.eu/en/item/04202/BibliographicR</a> · <a href="https://archive.org/details/ned-kbn-all-00003122-001" target="_blank">archive.org/details/ned-kbn-all-00003122-001</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: John V.G. Matthews, 1988, Alexander Hegius (ca. 1433-1498): His Life, Philosophy, and Pedagogy <a href="https://digitalcommons.andrews.edu/dissertations/566/" target="_blank">[open record]</a></div>
+   <div class="why">Alexander Hegius (c. 1433–1498), a key figure in Northern Humanism, composed this pedagogical dialogue during his tenure as rector at Deventer, likely shortly before its first printing in 1497/1498. A full English translation of the work is included in John V.G. Matthews' 1988 doctoral dissertation, which remains the primary English-language scholarly resource for Hegius's corpus.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFcnVZY1pCi_uf5-WruSAU5XntF6wUvpvelbe26Bl2CKRUSjs5tSoqOpZAQZAAMSVHa9TZP8qdBIvhgWOD7zQYi9eb1oo1sX2EC-yRviXam5RB2xZpHS5wktRJCpOL2o7oK2VFl56zmhzXd8Z_DO9W63fTLpmlXxBine-LO-f-U8FVEZS6wUfJSTtAjjIUN_Gt8Q6acwtdV8GaN_uPyM9zRcDmkTd__ZiHuP2Ut9e1npLZufU_sq79Eq6pYMw3Qih_c2kSw7pTn_XU-02Tp3w==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGKaXocImDHl_eG5XKAVYxMr4jcwBFRNcdo2mU9qK6S72jhl6_eRNv2lDtJZvXnLVgNBy8FNLE85yXN9RfJtmpUGHqO4p3NhHXfGiEQNLLiQgDTfByXGAHClA7hjIDP1ZmOScaUwAp1K7x-snFAI3NEw==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQgYOaEFkWnqEtjhUOgWnX9s_xXhBFELw9fXJqVIX2DI1uhnYAhiI4Qt0Nl1VxhkAiFggJtlMxeCY1aGIl5bphI7otdg6es6-Z5cbPwhJGqX84WGWSfKGN6wrbg3R-a_qer6Omdh-roI5-F3m3urWO_be_8uNJZDYfw_xBZ7Vo9eul_GfhYMvUkwsVACq8n8FwPbHcquTG6AiTIizXJNNSFPURMX37PFkgzww=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFtKUuIT2gu9w8DI7JbBDMUFFH_hBpYQfxdJx9cD2Oetgd0PdlIlHdYnGhCmrxCJ5WppmUpOaiXph2IgBWeY-bAfDv5g-yXLZGmrFRKHM9-8Ag6iDtJ11llI9nCndcsCkfBXWs4kk9Zrzzh" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1OJRk2jtvvv5Dkas5z8Yg4vR6S3RfAHUQDJ922mt8bqXdZCwLAsagZZR2ajvMFKWFj18IUQcUign5wV0sALBpcMUBn70v1hdjgvsPHElxZ1xZFEVUiwfhEOBX4NIpttBVcjg=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T198">
+ <h3>#3 · Cicero, Marcus Tullius <span class="muted">(1585)</span></h3>
+ <div class="title">Orationes v pro schola Argentinensi selectae. Pro lege manilia. Archia poëta. M. Marcello. Q. Ligario. Rege deiotaro. Oratio pro archia poeta oratio pro M. Marcello oratio pro q. Ligario oratio pro rege deiotaro pro aulo licinio archia poeta insignis oratio pro marcello oratio pro quinto ligario oratio pro rege deiotaro oratio</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: C. D. Yonge, 1851, The Orations of Marcus Tullius Cicero <a href="https://www.google.com/books/edition/The_Orations_of_Marcus_Tullius_Cicero/X-8UAAAAYAAJ" target="_blank">[open record]</a></div>
+   <div class="why">The work is a 1585 Latin schoolbook containing five of Cicero's speeches (Pro Lege Manilia, Pro Archia, Pro Marcello, Pro Ligario, and Pro Rege Deiotaro). While this specific Strasbourg selection has not been translated as a standalone unit, all five speeches are included in standard English translations of Cicero's orations, such as those by C.D. Yonge (1851-1852) and William Guthrie (1741).</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T196">
+ <h3>#4 · Erasmus, Desiderius <span class="muted">(1516)</span></h3>
+ <div class="title">Epistole. Erasmi Roterodami epistola ad leon, x, pont. Max. De laudibus illius, et nova Hieronymianorum operu editione. Eiusdem ad reverendiss. D. Grimannum s, m, cardinalem epistola. Eiusdem ad reverendiss. Dn. Raphaelem rearium tit. S. Georgii cardinal epistola. Eiusdem ad eximiu sacrae theologiae doctorem Martinu dorpiu hollandu epistola apologetica de suarum lucubrationu editione. Eiusdem in laudem urbis Selestadii panegyricu carmen.</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: R.A.B. Mynors and D.F.S. Thomson, 1976, The Correspondence of Erasmus (CWE 3); Clarence H. Miller, 1993, Poems (CWE 85) <a href="https://utorontopress.com/9780802022028/the-correspondence-of-erasmus/" target="_blank">[open record]</a></div>
+   <div class="why">This 1516 publication is a collection (container) of four letters (Allen 333, 334, 335, 337) and one poem by Erasmus. All constituent parts have been translated into English within the 'Collected Works of Erasmus' (CWE) series, specifically in Volumes 3 (1976) and 85 (1993).</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G606">
+ <h3>#5 · unknown <span class="muted">(1544)</span></h3>
+ <div class="title">Decimum volumen tractatuum e variis juris interpretibus collectorum admittit tractatus conformes rubricis noni libri Justinianei codicis. Tractatus, quos in sequenti pagina asterisco notatos reperies, in superioribus editionibus desiderantur</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / container · strong
+   
+   <div class="why">This work is Volume 10 of the 12-volume legal anthology 'Tractatus ex variis iuris interpretibus collecti' published in Lyon in 1544 (imprints by Georges Regnault and Hugues de La Porte). It is a 'container' of criminal law treatises by various medieval and Renaissance jurists (e.g., Gandinus, Gambiglioni, Marsiliis) and has never been translated into English as a collection or volume.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G14">
+ <h3>#6 · unknown <span class="muted">(1594)</span></h3>
+ <div class="title">Orationes X. Quarum aliæ In Actu Examinis Anniversarii: Aliae In Inauguratione Novæ Curiæ, Eiusdemq[ue] Operarum inchoatione, Habitae in Gymnasio Thoruniensi</div>
+ <div class="meta">era (AI): <b>unknown</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v uncertain">uncertain</span> / none · weak
+   <div class="prior">prior: No search result tied an English translation to this specific anonymous &quot;Orationes X.&quot; (1594), so I cannot assert one exists. <a href="https://www.amazon.com/Providentia-Orationes-Decem-Latin/dp/1166057208" target="_blank">[open record]</a></div>
+   <div class="why">&quot;Orationes X.&quot; (= &quot;Ten Orations&quot;) with an unknown author and a bare 1594/2-editions catalog stub could not be disambiguated to a specific work despite targeted searches across plausible candidates (Theodoret's De providentia orationes decem, Themistius, Lysias, Gregory Nazianzen, Aristides, Cicero, Isocrates); none confirmed the identity, era, or any English translation. I decline to guess an era or assert a translation absent a confirming source.</div>
+   <div class="src"><a href="https://www.amazon.com/Providentia-Orationes-Decem-Latin/dp/1166057208" target="_blank">www.amazon.com/Providentia-Orationes-Decem-La</a> · <a href="http://www.documentacatholicaomnia.eu/04z/z_0393-0466__Theodoretus_Cyrrhi_Episcopus__De_providentia_orationes_decem__MGR.pdf.html" target="_blank">www.documentacatholicaomnia.eu/04z/z_0393-046</a> · <a href="https://www.deutsche-digitale-bibliothek.de/item/KDDLXUTWSV6UUUTB5FRESEGAIVIEWQMF" target="_blank">www.deutsche-digitale-bibliothek.de/item/KDDL</a> · <a href="https://bp16.bnf.fr/ark:/12148/cb418796290/" target="_blank">bp16.bnf.fr/ark:/12148/cb418796290/</a> · <a href="https://blogs.bodleian.ox.ac.uk/history/2014/02/04/new-frankfurt-and-leipzig-book-fair-catalogues-1594-1860/" target="_blank">blogs.bodleian.ox.ac.uk/history/2014/02/04/ne</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / container · strong
+   
+   <div class="why">The work is a collection of 10 Latin orations delivered in 1594 by various faculty and officials (including Heinrich Stroband and Ulrich Schober) at the Gymnasium in Toruń to mark its elevation to an Academic Gymnasium. It was composed in 1594 and printed in 1594/1595 by Andreas Cotenius, placing it firmly in the early modern period. No English translation of this specific anthology or its constituent orations has been identified in any major bibliography or scholarly database.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G148">
+ <h3>#7 · Cicero, Marcus Tullius <span class="muted">(1563)</span></h3>
+ <div class="title">Ex libris epistolarum familiarium epistolae selectae</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: William Melmoth, 1753, The Letters of Marcus Tullius Cicero to several of his friends <a href="https://www.google.com/books/edition/The_Letters_of_Marcus_Tullius_Cicero_to/0_0_AAAAYAAJ" target="_blank">[open record]</a></div>
+   <div class="why">The work is a 16th-century schoolbook anthology of Cicero's 'Epistulae ad Familiares' (Letters to Friends), which were composed in the 1st century BC (ending 43 BC). While this specific 1563 selection (printed by Gabriel Buon in Paris or Vincentius Luchinus in Rome) was not translated as a standalone volume, the complete collection of letters has been translated into English multiple times, notably by William Melmoth in 1753.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G543">
+ <h3>#8 · Brendel, Zacharias <span class="muted">(1604)</span></h3>
+ <div class="title">Has De Meteoris Universe, Et Speciatim De Igneis. Theses, Praesidente ... Zacharia Brendelio ... pietate summa colendo: Philosophorum Collegio publicitus ventilandas, ingenii exercendi gratia defendendas suscepit, Valentinus Rulandus, Lavinganus .... </div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">The work is a set of academic theses for a disputation held at the University of Jena in 1604, presided over by Zacharias Brendel the Elder (1553–1617). As an occasional university publication (disputation), it is a contemporary 17th-century text and has no recorded English translation in major bibliographies or library catalogs like WorldCat or VD17.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G362">
+ <h3>#9 · Franchis, Joannes Maria de <span class="muted">(1613)</span></h3>
+ <div class="title">De auspicatissimis nuptiis. Illustrissimi Principis D. Friderici, Sacri Romani Imperii Archidapiferi, et Electoris, &amp;c. Comitis Palatini ad Rhenum, Ducis Bauariæ, &amp;c. Cum illustrissima Principe D. Elizabetha Serenissimi Magnæ Britanniae, &amp;c. Regis filia vnigenita Poëma.</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Samuel Hutton, 1613, Of the most auspicatious marriage <a href="https://estc.bl.uk/S102613" target="_blank">[open record]</a></div>
+   <div class="why">The work is a contemporary Latin poem celebrating the 1613 marriage of Frederick V and Elizabeth Stuart, composed by Joannes Maria de Franchis in 1613. An English translation by Samuel Hutton, titled 'Of the most auspicatious marriage,' was published in London the same year (STC 11309).</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8W5--Mi-UtvscKjIadKIp_krqAThhhE0ysmKNosXbaYHdJj6ycGpwr3NuNdkAf4iReB_YFyKd2tnLeJymatojaovhUYmQA3hBbzzxzzKx8egMjzZWp0_4WyWuVNLf8nWah-Gk3XJ3V7hqQX6qJCgkf_ks-w_gF21z4yO0mKWYHZzq2PM=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7-Fyk7cdeFc0Mg8qisOqrgqv3KMM0OeO8NgR8aQFq4sDZ5Ax0K6fYAtq_e9HthblV_EPAdDhbyNLVuHTkM4nHdSb3BtOXygqTxrk-PlBmKJYxCCayxqiQA2mJJz1pZNNhzXAHoPcYAHngXt2SVOf8ZceQ2oM=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2NQBmNpqs-NQkBFeLaE3cqciweK7mc1wARBw75KFoJ1WQGaFFjNlN0u7_YLS2WEsh_Lzh-A0sfo_YkuiY3IWaqQyU__eLsX_abSMTX-50iNLzffF5vq0_i-QJgMjYNUqwr235gj_NIg==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEL4bs9bV16ifvr6jcm0JJUu0LtCKf2WJvlh3OtMItPzcbqRlsgdhbppbVA6KULyfhWz984FDUAUzmRepmbPfWv6SpdjOWihSEwL0WRdte2HxIryPoHx7RwurwNq5LQ2D40o9megPI4X9fUe8VIIkCtGKNXkCgVyB_QTD05C3bNRhydzuaiWFNCcjB7KhY=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T22">
+ <h3>#10 · Savonarola, Girolamo <span class="muted">(1510)</span></h3>
+ <div class="title">Expositio in psalmos miserere mei Deus, qui regis Israel, et tris [sic] versus psalmi In te Domine speravi</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Complete English translation by John Patrick Donnelly, S.J., &quot;Prison Meditations on Psalms 51 and 31&quot; (Marquette University Press, 1994), a Latin-English facing-page edition whose Psalm 51 text is Savonarola's &quot;Expositio in psalmum Miserere.&quot; <a href="https://epublications.marquette.edu/hist_fac/52/" target="_blank">[open record]</a></div>
+   <div class="why">Savonarola, a contemporary 15th-century author, composed this Miserere exposition in his Florentine prison in 1498, the year of his execution (Latin first printed that same year). The same work was published complete in English by John Patrick Donnelly (Marquette University Press, 1994), confirmed by the Marquette and Cambridge/EBSCO records.</div>
+   <div class="src"><a href="https://epublications.marquette.edu/hist_fac/52/" target="_blank">epublications.marquette.edu/hist_fac/52/</a> · <a href="https://www.cambridge.org/core/journals/church-history/article/abs/girolamo-savonarola-op-prison-meditations-on-psalms-51-and-31-edited-and-translated-by-john-patrick-donnelly-sj-reformation-texts-with-translation-13501650-biblical-studies-1-milwaukee-wise-marquette-university-press-1994-142-pp-1500/29BDF267D040B7BCC5DCE061C314DB8E" target="_blank">www.cambridge.org/core/journals/church-histor</a> · <a href="https://www.ebsco.com/research-starters/literature-and-writing/prison-meditations-psalms-51-and-31-girolamo-savonarola" target="_blank">www.ebsco.com/research-starters/literature-an</a> · <a href="https://catalog.hathitrust.org/Record/003167659" target="_blank">catalog.hathitrust.org/Record/003167659</a> · <a href="https://www.amazon.com/Prison-Meditations-Psalms-Reformation-Translation/dp/0874627001" target="_blank">www.amazon.com/Prison-Meditations-Psalms-Refo</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / partial · strong
+   <div class="prior">prior: William Marshall, 1534, An exposition... vpon ye .li. psalme; John Patrick Donnelly, 1994, Prison Meditations on Psalms 51 and 31 <a href="https://www.google.com/books/edition/Expositio_in_Psalmos_Miserere_mei_Deus_e/Y_pDAAAAcAAJ" target="_blank">[open record]</a></div>
+   <div class="why">The work is a collection of three psalm meditations (Psalms 51, 80, and 31) written by Savonarola in 1498 while in prison; the meditations on Psalms 51 and 31 were translated into English by William Marshall (1534) and John Patrick Donnelly (1994). The meditation on Psalm 80 ('Qui regis Israel') was translated separately in the 16th century (STC 21799.2) but is typically omitted from modern English editions of his prison writings.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEszZ0Wet8bEvMZYGCf2X2UJN9qcjDHZYgMDJL5hEUd2FbuhV75_IRncAUy1ecbgWVSHYBezTCa_ynG4McD4u6ZkhmSSwcUi_sTncLGxrbaGLxQoVyHfemJcDrCKB16rWXYrXelX0VkB_GU3kUt6mzBCg8dTtGznwkjWwWTnyOzMKhAe78AxNJmLWVTA7hHHf2Bf0K0tVEJusExSVGsRfVOFGb3fxtHIIujyA==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpWKk3Yn7h4JhUtYD7HgVmUzV2vSmwFPmrglof9m3NXZhIH3QxwkBolD4vXuS6BcYfBkLtu0z11-F2Ig4DDMohYMoUHiAGw9ME7GrtsImDmmsA48IDFoXQnWI6LuDYuvRSLtr6xE1tJ5yxy3pDdCUGnRj9ff2OTbEZfY2y8w==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T167">
+ <h3>#11 · Barclay, John (1582-1621). Autor <span class="muted">(1613)</span></h3>
+ <div class="title">Euphormionis Satyrici Pars ... $n P. 3, $p Apologia Pro Se.</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">John Barclay's 'Apologia Pro Se' was first published in Paris in 1610 as a defense of his 'Euphormionis Satyricon' against Jesuit critics. While the fictional narrative of the 'Satyricon' (Parts 1 and 2) was translated into English by Paul Turner (1954) and David A. Fleming (1973), the 'Apologia' (often called Part 3) was excluded from these editions and has no known English translation.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T241">
+ <h3>#12 · Cicero, Marcus Tullius <span class="muted">(1509)</span></h3>
+ <div class="title">Tusculanae disputationes (Comm: Philippus Beroaldus)</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: John Dolman, 1561, Those fyve questions, which Marke Tullye Cicero, disputed in his manor of Tusculanum <a href="https://www.google.com/books/edition/Those_Fyve_Questions_Which_Marke_Tullye/8_9CAAAAcAAJ" target="_blank">[open record]</a></div>
+   <div class="why">The work is Cicero's Tusculanae disputationes, composed in 45 BC; per the prompt's instructions, early-modern prints of ancient authors are classified as 'antiquity'. The text has been translated into English multiple times, starting with the first complete rendering by John Dolman in 1561. While the 1509 edition includes a Renaissance commentary by Philippus Beroaldus that remains untranslated, the primary work itself is widely available in English.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHdSbYttqNemik_0XVfLzU5lSMMYubiAfK1V8ACSlijG4WsYdue1FRMkwL8OMIUUkXLCKWk6Gqszb9R2ftJ37c_zpx49mgh_MZOhUNt9YeyN31OeM11sVo_0nsC6vjctC5RT8ez-ZhGE7BU4pLmERAYmhlaTVg_XyuRqqpEFhIjafk=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T84">
+ <h3>#13 · unknown <span class="muted">(1520)</span></h3>
+ <div class="title">Biblia magna. Biblia cum concordantiis Veteris et Novi Testamenti et sacrorum canonum necnon et additione in marginibus varietatis diversorum textuum ac etiam canonibus antiquis quatuor evangeliorum insertis</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / container · strong
+   <div class="prior">prior: No English translation of this specific Vulgate-with-concordances edition exists; the underlying biblical text is the Latin Vulgate. <a href="https://www.bibliorare.com/lot/358385/" target="_blank">[open record]</a></div>
+   <div class="why">The 1520 Lyon imprint (Moylin/Sacon for Gueynard/Koberger) is a complete Latin Vulgate Bible bundled with concordances of the Old/New Testaments and sacred canons — an early-modern PRINT of Jerome's late-4th-century Vulgate, so the text is antiquity. As a whole-Bible-plus-apparatus container, &quot;a translation of this work&quot; is ill-defined; the Vulgate's biblical text itself was Englished (Douay-Rheims, 1582/1610) but this edition's specific concordance apparatus was not.</div>
+   <div class="src"><a href="https://www.bibliorare.com/lot/358385/" target="_blank">www.bibliorare.com/lot/358385/</a> · <a href="https://www.bonhams.com/auctions/11940/lot/349/" target="_blank">www.bonhams.com/auctions/11940/lot/349/</a> · <a href="https://latinbibles.com/1500s/" target="_blank">latinbibles.com/1500s/</a> · <a href="https://en.wikipedia.org/wiki/Vulgate" target="_blank">en.wikipedia.org/wiki/Vulgate</a> · <a href="https://en.wikipedia.org/wiki/Douay%E2%80%93Rheims_Bible" target="_blank">en.wikipedia.org/wiki/Douay%E2%80%93Rheims_Bi</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">This is a 1520 Lyon edition of the Latin Vulgate (composed c. 405 AD) featuring the scholarly apparatus of Alberto Castellano (first published 1511). While the biblical text itself has numerous English translations, this specific editorial 'work'—including its unique concordances, marginal variants, and canons—has never been published in an English translation.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G350">
+ <h3>#14 · unknown <span class="muted">(1489)</span></h3>
+ <div class="title">Missale Havelbergense</div>
+ <div class="meta">era (AI): <b>medieval</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / container · strong
+   <div class="prior">prior: No English translation of the Havelberg diocesan missal appears in ISTC, USTC, GW, Google Books, or general web search; only modern Roman Missal translations (different works) surface. <a href="https://data.cerl.org/istc/im00663310" target="_blank">[open record]</a></div>
+   <div class="why">The Missale Havelbergense is a diocesan liturgical book (the Latin Mass of the Use of Havelberg) printed by Marcus Brandis in Leipzig c.1489 in two editions (4° and folio), compiling medieval Mass texts/calendar/propers whose codified content belongs to the High-Late Middle Ages, not authored by a contemporary 15th-c. writer. As a multi-part liturgical compilation it is a container for which &quot;a translation&quot; is ill-defined, and no English rendering of this specific use was found.</div>
+   <div class="src"><a href="https://data.cerl.org/istc/im00663310" target="_blank">data.cerl.org/istc/im00663310</a> · <a href="https://data.cerl.org/istc/im00663300" target="_blank">data.cerl.org/istc/im00663300</a> · <a href="https://www.ustc.ac.uk/index.php/record/741246" target="_blank">www.ustc.ac.uk/index.php/record/741246</a> · <a href="https://www.gesamtkatalogderwiegendrucke.de/docs/MISSALE.htm" target="_blank">www.gesamtkatalogderwiegendrucke.de/docs/MISS</a> · <a href="https://brill.com/edcollchap-oa/book/9789004441217/BP000014.xml?language=en" target="_blank">brill.com/edcollchap-oa/book/9789004441217/BP</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">The Missale Havelbergense is a liturgical book (Missal) containing the Mass rites for the Diocese of Havelberg, representing a medieval liturgical tradition codified for its first printing in 1489. Bibliographic searches in the Incunabula Short Title Catalogue (ISTC) and specialized liturgical databases (e.g., Földváry's 'Medieval Variants of the Mass Ordinary') show no record of an English translation. Regional German diocesan missals of this period are rarely translated into English, as they were superseded by the post-Tridentine Roman Missal.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAHxCsjEjtpK763QmUWQqpeN6oVcBTxHxpm0sr39kSsmlu3U77pn2o4yZIu7C1E3TGgU7SKqFXaOoy8Pw2vRTkOz-EiXzMUSsayMCiRPEWK4_FwwApOrLXXV1a-HgMyG2P2eM33jMRHwhHOL_X3hBL12yRLaYzm4_yCeTm4RI5rwYPrBq1uUKaQY49F4Ixs2h57gluODyrVkplQPt9V0cdLG8q2BnRKe_cid2wwbWsnYP84H_0YtUvvcIml-Y=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnwFuFjUVvaHdy_heRBJVvvwbWgucTkwDOS_eN9Nw0V8inDOek6AyY_plCZ7qy84KXD_iJFta-9_X4RmHP21B7gjGv1cbDbUdLr8EXfGd_vyWCYuWhDf0gvb99pOTLZopiZ91rTH-JA4fXERytjc6zZgLXX0TWqOwSyfy0hr-PMWJTstN8sPISBMJQq-7V3uYMkBu8QSZyWfySK3AmbTTJS8_ijbIzsvwLDBCUwuWLPVtL_vjZJ9BDqHI3EiwX" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE4euB7VjsPGoPWEghfzHbmFkV104GsVTaPeG7msKeMPfYBzvgTg7K16HRYpYfdOXWcuYgpfE_p1Ytk8_KvJNPh0PfOp0H82A_iH5nWNz9aTx5blI7OebxlfIowFnca40q9Eqyxi7Tdp5wkp87P2Y7iSQzmarX1OP92FyfGeHcnvoSQY55SK8ukDcxT2Q==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGwwZN7z22s7K5Ru8Xgd9ZvDUPwv7e0eTsuBW5aJkgOCQxC8pzSYgaEKzDTHWeWqtEuK_pnx7LdY5azS4SyG9FBoykZ_atSiPeIm_dNruUTZWqM1ksQH0j8IGZDVqhWueqxCQZdYSANJNcEmCMW6JfC_EkymxtaLF5s2tnw2SPQSyiyeBVfg_TfK37HQczl3IVtaa3s" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFa1U5heo-0IipQBoGa-MOuHZwL9BA-MLBsEXPofSohtPAQ0Q3K8D488YA2MgUIhasahSRaMCLUeuKjzFhB2E5d2HQmHFilRSzRrIIC7kDq1KYw3Oo1h9BbuuOGrdqOm7eWaj2-xMyM0oJkg4XfBhI2OM50lLSmiNSWRrK8msws8UIUHod-9IID929eyHxsH5ir-HLcke-hgDSkHFVeflqGZe0Ox0TTnkAViZs=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G120">
+ <h3>#15 · Petrus Lombardus <span class="muted">(1548)</span></h3>
+ <div class="title">Sententiarum libri IV. pristino suo nitori nunc primum vere restituti. Ad calcem operis subjiciuntur articuli erronei, Parisiis jam olim damnati</div>
+ <div class="meta">era (AI): <b>medieval</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Fully translated into English by Giulio Silano, &quot;The Sentences,&quot; 4 vols., Pontifical Institute of Mediaeval Studies, 2007–2010. <a href="https://pims.ca/publication/isbn-978-0-88844-296-3/" target="_blank">[open record]</a></div>
+   <div class="why">The 1548 print is a Renaissance edition of Peter Lombard's &quot;Sententiae in IV libris distinctae,&quot; composed c. 1150 (medieval), so era follows the text not the printing. A complete 4-book English translation by Giulio Silano (PIMS, 2007–2010) exists, making it the same work translated.</div>
+   <div class="src"><a href="https://pims.ca/publication/isbn-978-0-88844-296-3/" target="_blank">pims.ca/publication/isbn-978-0-88844-296-3/</a> · <a href="https://en.wikipedia.org/wiki/Sentences" target="_blank">en.wikipedia.org/wiki/Sentences</a> · <a href="https://muse.jhu.edu/article/362907" target="_blank">muse.jhu.edu/article/362907</a> · <a href="https://archive.org/details/sentencesbook1my0000pete_k7w9" target="_blank">archive.org/details/sentencesbook1my0000pete_</a> · <a href="https://pims.ca/publication/isbn-978-0-88844-293-2/" target="_blank">pims.ca/publication/isbn-978-0-88844-293-2/</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Giulio Silano, 2007-2010, The Sentences <a href="https://pims.ca/publication/the-sentences-4-volume-set/" target="_blank">[open record]</a></div>
+   <div class="why">The work is the 'Sentences' (Libri Quattuor Sententiarum) of Peter Lombard, a foundational medieval theological textbook composed c. 1150–1158. A complete English translation by Giulio Silano was published in four volumes by the Pontifical Institute of Mediaeval Studies between 2007 and 2010. The 1548 edition is a Renaissance printing of this medieval text with standard scholarly appendices.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQB14PkNBa0PPdnILO6I2JkxeaKfmhS_maR4t_aGLLerU0dJ7_DWmiOF277c5a67QUIr44CZ9PmpsM82OX8ko6AGGCJGd4pJzyBUHyIncSe7_7ekvkPmwttWjMxk4vCYteAcN2SC6QJL4VEV-Z-QOuGw==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJxGPKEiEUisHSU4aiU9i6HK3NcMhEvApusqhlffyaX1kiM2UjcUtnknyh6k3Kng6lpnV2bKQrE-m9nxET58hFrxKoR-r2MLoC9hq4sjupeGz-_h9zI4YSvM9ArQ0t5rMMGPFiDSWph1pVm0CErtDoHIB4-qYgrNWt24SIY3asnzb4LA==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G28">
+ <h3>#16 · unknown <span class="muted">(1590)</span></h3>
+ <div class="title">philosophia nec nec tolerat</div>
+ <div class="meta">era (AI): <b>unknown</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v uncertain">uncertain</span> / none · weak
+   <div class="prior">prior: No catalogue, library, or scholarly source matches this title, so no English translation can be confirmed or ruled out. </div>
+   <div class="why">The string &quot;philosophia nec nec tolerat&quot; is an unresolvable, scrambled title fragment (doubled &quot;nec nec&quot;, dangling verb &quot;tolerat&quot;) with no author and zero matches across Google Books, archive.org, USTC/VD16 framing, WorldCat-style and bibliographic searches. With the work unidentifiable, neither its composition era nor any prior English translation can be established.</div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Thomas Lodge, 1614, The Workes of Lucius Annæus Seneca <a href="https://archive.org/details/workesofluciusann00sene" target="_blank">[open record]</a></div>
+   <div class="why">The phrase is a known maxim from Seneca's Epistulae Morales (108.38). The work was composed in the 1st century AD and first appeared in a complete English translation by Thomas Lodge in 1614.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T75">
+ <h3>#17 · Bonaventura (Heiliger) <span class="muted">(1504)</span></h3>
+ <div class="title">Speculum discipline viri illustrissimi sancti Bonaventure episcopi albanensis ordinis sancti Francisci tractans de honestate vite omnibus religiosis admodum utile</div>
+ <div class="meta">era (AI): <b>medieval</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / same_work · moderate
+   <div class="prior">prior: No prior English translation found; only Latin editions and a 1670 French translation (&quot;Le miroir des novices&quot;) surfaced. <a href="https://medieval.bodleian.ox.ac.uk/catalog/work_3967" target="_blank">[open record]</a></div>
+   <div class="why">The 1504 print is the medieval Franciscan novice-formation text &quot;Speculum disciplinae ad novicios,&quot; composed in the 13th c. by Bernard of Besse (pseudo-Bonaventure; Bonaventure d. 1274), so it is medieval despite the early-modern printing. Searches of Google Books, archive.org, WorldCat, the Bodleian, and Franciscan scholarly sources turned up Latin editions and a 1670 French translation but no English translation.</div>
+   <div class="src"><a href="https://medieval.bodleian.ox.ac.uk/catalog/work_3967" target="_blank">medieval.bodleian.ox.ac.uk/catalog/work_3967</a> · <a href="https://en.wikipedia.org/wiki/Bernard_of_Besse" target="_blank">en.wikipedia.org/wiki/Bernard_of_Besse</a> · <a href="https://archive.org/details/OEXV8SUP12" target="_blank">archive.org/details/OEXV8SUP12</a> · <a href="https://search.worldcat.org/title/sancti-bonaventur-speculum-disciplinae-ad-novitios-item-de-profectu-religiosorum-nec-non-epistola-memorialia-xxv-pietatis-eximi-documenta-complens-ac-de-perfectione-vit-ad-sorores/oclc/65392867" target="_blank">search.worldcat.org/title/sancti-bonaventur-s</a> · <a href="https://books.google.com/books/about/Le_miroir_des_Novices_par_le_S%C3%A9raphique.html?id=IrV2FOh7CuAC" target="_blank">books.google.com/books/about/Le_miroir_des_No</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Irish Franciscan Province of St. Patrick, 1915, The Mirror of Discipline <a href="https://books.google.com/books?id=9_0yAQAAIAAJ" target="_blank">[open record]</a></div>
+   <div class="why">The 'Speculum disciplinae' was composed in the late 13th century (c. 1280) by Bernard of Besse, who served as secretary to St. Bonaventure. Although traditionally attributed to Bonaventure, modern scholarship identifies Bernard as the author. An English translation titled 'The Mirror of Discipline' was published in 1915 by Nono's Printinghouse in Ennis, translated and abridged by members of the Irish Franciscan Province.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3m7F74mHmLRPDF7KuSBLgcnnMa24hpAkpDyfF_FhIYRHsWAm4w2dLWOhdTrP7od1NWrpujwSxyscGNk_8Ir-RYKistX9CnrN29xzlKklEeFrg_lVMYqRqIUTgO2qqFEN12KymnWeDOvw2avc=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP3LwkF5D7FLXEydKOIkaeIGZevNdll07NQJmE-ldO3aiUlMTRQEjsnWKxoCmSX5EYxf19YW7HcBN711-VivjXhiwdomRMziHFC-z1yGA_eCtblFKkyNgxvrrB1sYUE5V_aCBN0STS-yOREEvnt6MrDZHFNIeJcx2z9OocPVa_24jaeETNx7ERkA==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8E0iwn9vvcdV3NFyvLpORB4ejxQfDg-KC2DhS7aBxbQAaFceThRSM497f0pmLO6z0phl-qAzzrOnNdkzCRDi0kQUGuo1SJfohPkm5BtjAOHtiogX90B7Ur-Kolhqwv5iOR9Q89qkYTAFrpVKmFNTT8H60FD9HV4i_nh344WcYb0I=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGSAYxVIVLjASgnqnbJ_7c3ElLPhmDxmOxk6JLOAfWdQHAfsqKIgYHB8mSdRAMBKd-RH_m1sUC9sZuablSCoN4tKUY7s5jx9ytHiCm0ml0wML2uPfQbKUxLwXJvIe24RoEnpziXjyunwq6-AOs=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G239">
+ <h3>#18 · Sarcerius, Erasmus <span class="muted">(1540)</span></h3>
+ <div class="title">In evangelia dominicalia, postilla, qua facili dispositione, omnium evangeliorum textus, ad locos communes dispositus est, qui et singuli ad methodi ferè formam explicati sunt, quò textus et facilius servari possit, et pulchriori ordine explicari. Auth. M. Erasmo sarcerio annaemontano.</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / none · moderate
+   <div class="prior">prior: Sarcerius's only English-rendered work is Taverner's &quot;Common Places of Scripture&quot; (1538/1553), a translation of his Loci communes/Methodus — a different work, not the gospel postils. <a href="https://en.wikipedia.org/wiki/Erasmus_Sarcerius" target="_blank">[open record]</a></div>
+   <div class="why">Erasmus Sarcerius (1501–1559) was a contemporary Lutheran reformer who composed this Sunday-gospel postil c.1539–1540, so the text is early-modern, not a reprint of an older author. No catalogue (Google Books, WorldCat, EEBO/STC, Wikipedia) shows any English translation of the postils; the lone English Sarcerius title is Taverner's rendering of a separate work.</div>
+   <div class="src"><a href="https://en.wikipedia.org/wiki/Erasmus_Sarcerius" target="_blank">en.wikipedia.org/wiki/Erasmus_Sarcerius</a> · <a href="https://books.google.com/books?id=oyJZAAAAcAAJ" target="_blank">books.google.com/books?id=oyJZAAAAcAAJ</a> · <a href="https://quod.lib.umich.edu/e/eebo/A11502.0001.001?view=toc" target="_blank">quod.lib.umich.edu/e/eebo/A11502.0001.001?vie</a> · <a href="https://academic.oup.com/ehr/article/136/581/836/6384632" target="_blank">academic.oup.com/ehr/article/136/581/836/6384</a> · <a href="https://books.google.com/books/about/In_Evangelia_Dominicalia_postilla_in_qua.html?id=g_sY_gAACAAJ" target="_blank">books.google.com/books/about/In_Evangelia_Dom</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Richard Taverner, 1540, The postilles or homilies vpon the gospels of the sondayes <a href="https://books.google.com/books?id=0_08AAAAYAAJ" target="_blank">[open record]</a></div>
+   <div class="why">The work was written by the Lutheran reformer Erasmus Sarcerius (1501–1559) and first published in 1539. It was translated into English by Richard Taverner in 1540 as 'The postilles or homilies vpon the gospels of the sondayes' (STC 2970). Modern scholarship, including the 1841 Oxford edition of Taverner's Postils, confirms that the English text is a translation of Sarcerius's Latin original.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T19">
+ <h3>#19 · Josephus, Flavius <span class="muted">(1557)</span></h3>
+ <div class="title">Operum tomus tertius. De bello Judaico libro continens septem: Contra Apionem libros duos: ex Graecorum codicum collatione castigatos. De Machabaeis, sive de imperio rationis librum unum</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: Both constituent works have long-standing complete English translations (William Whiston 1737; Loeb/Thackeray 1926; Williamson Penguin 1981). <a href="https://penelope.uchicago.edu/josephus/" target="_blank">[open record]</a></div>
+   <div class="why">This is Vol. 3 of Josephus's collected works (a multi-work container), printing two 1st-century-CE Greek originals in Latin: the Jewish War (c. 75-79 CE) and Against Apion (c. 95-100 CE). The text is antiquity, and both contained works have famous complete English translations, so the volume's contents are fully translated.</div>
+   <div class="src"><a href="https://penelope.uchicago.edu/josephus/" target="_blank">penelope.uchicago.edu/josephus/</a> · <a href="https://www.gutenberg.org/files/2850/2850-h/2850-h.htm" target="_blank">www.gutenberg.org/files/2850/2850-h/2850-h.ht</a> · <a href="https://en.wikipedia.org/wiki/The_Jewish_War" target="_blank">en.wikipedia.org/wiki/The_Jewish_War</a> · <a href="https://en.wikipedia.org/wiki/Against_Apion" target="_blank">en.wikipedia.org/wiki/Against_Apion</a> · <a href="https://www.loebclassics.com/view/LCL186/1926/volume.xml" target="_blank">www.loebclassics.com/view/LCL186/1926/volume.</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: Thomas Lodge, 1602, The Famous and Memorable Works of Josephus <a href="https://archive.org/details/famousmemorablew00jose" target="_blank">[open record]</a></div>
+   <div class="why">This 1557 Latin volume is the third part of a multi-volume set of Flavius Josephus's works, containing 'The Jewish War,' 'Against Apion,' and '4 Maccabees.' These ancient texts were first translated into English by Thomas Lodge in 1602, based largely on the Latin versions of Sigismund Gelenius and Erasmus found in editions like this one.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBi4IB7Ra_CyKl_b6_qGo7g1TCBKPiXjXWE4TaYBN3x7s2hZ3yH_5kZMplrs8XxxnoGbdB8TLYd6u8C0ReSauxHSYg5M4ss5f9BYT8fpFUkFn8HEP5D7GuyD1ymhQVuLfZHn5PzFpLseHbLfZNnQ5_Ao-FKjvzZkpfPqqdawgnww==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T143">
+ <h3>#20 · Erasmus, Desiderius <span class="muted">(1520)</span></h3>
+ <div class="title">Ratio seu methodus compendio perueniendi ad veram theologiam, per Erasmum roterod. Postremum ab ipso autore castigata et locupletata. Paraclesis, id est, exhortatio, ad studium evangelicae philosophiae per eundem.</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: Robert D. Sider, 2019, The New Testament Scholarship of Erasmus (CWE 41) <a href="https://utorontopress.com/9781487503840/the-new-testament-scholarship-of-erasmus/" target="_blank">[open record]</a></div>
+   <div class="why">The 1520 edition is a container of two treatises: the Ratio (expanded in 1518 from the 1516 Methodus) and the Paraclesis (1516). Both were translated by Robert D. Sider in the Collected Works of Erasmus, Vol. 41 (2019); the Paraclesis was also translated by William Roy in 1529.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G302">
+ <h3>#21 · unknown <span class="muted">(1608)</span></h3>
+ <div class="title">Clariss. Excellentiss. Q. Viri Hieronymi Seileri Philos. ac Medic. Doctoris &amp; Honoratiss. Virginis Mariæ Bernhardi Martini a Baldhofen Sagan Reipub. Cons. Filiæ, Sponsorum Nobilium Nuptiali Sacro Sagani ad d. XIX. Avg. An. Sal. MDCVIII. celebrand. d</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / container · strong
+   
+   <div class="why">This work is a collection of Latin wedding poems (Amicorum Syncharmata) composed for the marriage of physician Hieronymus Seiler and Maria Martin in Sagan on August 19, 1608. It is a typical piece of Neo-Latin occasional poetry featuring contributions from various local Silesian figures (e.g., Tobias Seiler, Simon Grunaeus) and has never been translated into English.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeOxeSMkKlKtLgOcweHVyhVHy5Uaxb3xOqxeOWs6PksgNlUPKMVp9byUiuVQvP1erWaTA2yPHMGow8Kg5Rr4J-F7OV1dfG1DNYdgsZSSx66jqlPxRjVR2Rouj3m2-5fa6ryuaU9FElIpbWVRw-lw==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G272">
+ <h3>#22 · Bonomi, Giovanni Francesco <span class="muted">(1581)</span></h3>
+ <div class="title">Antiquorum patrum sermones, et epistolae de s. Eusebio Vita praeterea eiusdem. Quae omnia I. Francisci Bonhomii iussu edita sunt</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / container · strong
+   
+   <div class="why">The work is a 1581 Latin anthology of patristic sermons and letters (by authors such as Ambrose and Maximus of Turin) concerning St. Eusebius of Vercelli (d. 371), along with a hagiographic Life. The constituent texts date primarily to the 4th and 5th centuries, with the Life likely being early medieval. No evidence exists of an English translation of this specific curated collection or its primary 'Vita' (BHL 2748).</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEV682Uwr_2eD2789p3bL85A9SWqDKg61LX0HmoPPqok5Q5X1pfS5rCC4v4j9p-obeJ7F2go83Yx85FQUANF8wyaeV_xKEEBdj7qJ_s6T54oF0eiH4A8y35KCsAW9Y9R_NN9OTEw-l0asrbBFg5UX7MrrAIzSLYFMFo6pj3vj-kWgmaA_umQ6jI" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G542">
+ <h3>#23 · Brendel, Johann Philipp <span class="muted">(1603)</span></h3>
+ <div class="title">Theses Disputationis Sextae De Metallis In Genere, Et Medio Hominis Ventre , Quas ... Ex Consensu ... Facultatis Philosophicae. Sub Praesidio, M. Johannis Philippi Brendelii ... exercitii gratia ventilandas exhibet Johannes Phoss ... Ad diem 3. Decembr. A</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">The work is a Latin academic disputation (theses) composed for a specific university exercise held on December 3, 1603, at the University of Jena. Johann Philipp Brendel (1582–1615) was the presiding professor (praeses) and Johannes Phoss was the respondent. No English translation of this specific occasional pamphlet or the series of disputations it belongs to has been identified in major bibliographic databases like WorldCat or HathiTrust.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G640">
+ <h3>#24 · Eck, Valentin <span class="muted">(1528)</span></h3>
+ <div class="title">De Mvndi Contemptv Et Virtute Amplectenda Dialogus : Supellectilium Fasciculus Carmine Elegiaco / Valentino Eckio Authore. Leonhardus Coxvs Brixiannvs Libellum pio Lectori commendat. [..]</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Jacqueline Glomski, 2007, Dialogue on the Contempt of the World and the Embracing of Virtue <a href="https://books.google.com/books?id=8_S6AAAAIAAJ" target="_blank">[open record]</a></div>
+   <div class="why">Valentin Eck (c. 1494–1556) was a Swiss-born humanist active in Poland and Hungary; this work was first published in Krakow in 1519 and reprinted in 1528. A complete English translation of both the dialogue and the accompanying poem (Supellectilium Fasciculus) was published by Jacqueline Glomski in the appendix of her 2007 monograph 'Patronage and Humanist Literature in the Age of the Jagiellons'. The translation includes the commendatory material by the English humanist Leonard Cox mentioned in the title.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T278">
+ <h3>#25 · unknown <span class="muted">(1576)</span></h3>
+ <div class="title">Testamenti Veteris Biblia sacra, sive, Libri canonici, priscae Iudaeorum ecclesiae à Deo traditi Latini recens ex Hebraeo facti, brevibúsque scholiis illustrati ab Immanuele Tremellio &amp; Francisco Junio ; accesservnt libri qui vulgo dicuntur Apocryphi, Latine redditi &amp; notis quibusdam aucti à Francisco Junio ; multò omnes quam ante emendatiùs editi &amp; aucti locis innumeris, quibus etiam adjunximus Novi Testamenti libros ex sermone Syro ab codem Tremellio &amp; ex Graeco à Theodoro Beza in Latinum versos, notisque itidem illustratos ; tertia et omnium quae hodiè extant nouissima cura Francisci Junii</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / partial · strong
+   <div class="prior">prior: Francis Junius, The Apocalypse, or Revelation of S. Iohn... with a briefe and learned commentarie, 1592; Laurence Tomson, The New Testament... translated out of Greeke by Theod. Beza, 1576 <a href="https://www.houstonchristian.edu/museums/dunham-bible-museum/tour-of-the-museum/geneva-bible/" target="_blank">[open record]</a></div>
+   <div class="why">The work is a 16th-century Latin Bible translation by Immanuel Tremellius and Franciscus Junius, first published in parts between 1575 and 1579. While the main Latin biblical text was not translated into English, specific components of this 'container' work were: Laurence Tomson translated Beza's New Testament and notes (1576), and Junius's commentary on Revelation was translated in 1592 and added to later Geneva Bibles.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZDghqO-0yS61zl5MOicZzvRbayx4ZujKSVZ6wq3jZGgNL1YjMrgdMQYxwUBBI4oBc8JjHWYHjXjv2WP8e-RM3GBKWtcRqttkAmeICr_ZHpR-wrxVPr6zcHesbB6_UfvO7NdtpjtDvXQPhdRAkmsKaFch4hMzOzfK-CacfTf0xdhxG7EUJWTytwvgarw==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T67">
+ <h3>#26 · unknown <span class="muted">(1612)</span></h3>
+ <div class="title">Actus Electionis [et] Coronationis, Hoc Est, Historica Et Vera, Omnium, Quae Circa Electionem Et Coronationem ... Domini Matthiae I. electi Rom. Imperatoris semper 08. Germaniae ... Regis ... Eiusq[ue] Serenissimae coniugis Annae Austriacae, [etc] Francof</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / different_source_language · moderate
+   <div class="prior">prior: A 1612 English pamphlet, &quot;Newes from Francfort... Translated out of Dutch into English,&quot; covers the same coronation but derives from a Dutch account, not this Latin work. <a href="https://www.digitale-sammlungen.de/de/details/bsb11064112" target="_blank">[open record]</a></div>
+   <div class="why">This is a contemporary 1612 Latin festival book (Kroner/Bringer, Frankfurt) describing Matthias I's election and coronation in May-June 1612, so the text was composed the same year it was printed. No English translation of this Latin work was found; the only English version of the events is a separate 1612 pamphlet rendered from Dutch, a different source-text account.</div>
+   <div class="src"><a href="https://www.digitale-sammlungen.de/de/details/bsb11064112" target="_blank">www.digitale-sammlungen.de/de/details/bsb1106</a> · <a href="https://www.christies.com.cn/en/lot/frankfurt-1612-actus-electionis-et-coronationis-5213973/?intObjectID=5213973&amp;lid=1" target="_blank">www.christies.com.cn/en/lot/frankfurt-1612-ac</a> · <a href="https://www.huntington.org/collections/lib-317019" target="_blank">www.huntington.org/collections/lib-317019</a> · <a href="https://en.wikipedia.org/wiki/Matthias,_Holy_Roman_Emperor" target="_blank">en.wikipedia.org/wiki/Matthias,_Holy_Roman_Em</a> · <a href="https://grokipedia.com/page/1612_imperial_election" target="_blank">grokipedia.com/page/1612_imperial_election</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">The work is a contemporary Latin account of the election and coronation of Emperor Matthias I and Anna of Austria, which took place in May and June 1612; it was composed and printed in Frankfurt that same year. Bibliographic records from the British Library, the Real Biblioteca, and historical archives (e.g., BLKÖ) confirm the existence of the Latin original and contemporary German and Spanish versions, but no English translation has ever been recorded.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHub6bTwsrZw-eyiQKqtF-NiTS2t6lbNMg_LknyDU-qGd4rOABoF8DW3TWHQ2Q-1_8fN9wnNq3ctz0Fby1jI4pA6kPtB6XPaC1phMrwqv3HBxIBmh2VPyCrA5-sjCRM1EaoWO82p7_xkMRXM4k88Xk6ZJYVHb3MdVsernE9ZgT0hxjcW25Ny6k=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T140">
+ <h3>#27 · Cicero, Marcus Tullius <span class="muted">(1550)</span></h3>
+ <div class="title">Epistolae familiares, ad optimorum exemplarium fidem recognitae, summaque diligentia castigatae. Cum Ascensii commentariis, ac aliorum doctissimorum virorum scholiis, difficillima quaeque loca accuratissime explanantur. Auctores autem, quorum enarrationes appositae sunt, in sequenti catalogo recensetur. Aulus Gellius. Alexander ab Alexandro. Coelius Rhodiginus His accesserunt argumenta Christophori Hegendorphini, et Giberti Longolii lemmata. Annotationes praeterea Hieronymi Arlotti in obscuriores primi libri epistolas, cum hoc opere non antea impressae. Item et Iulii Aemylii castigationes, in quibus non pauci loci, qui prius mendose legebantur, ad synceram lectionem restituuntur, simul &amp; explicantur</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: William Melmoth, 1753, The Letters of Marcus Tullius Cicero to several of his friends <a href="https://archive.org/details/lettersofmarcust01cice" target="_blank">[open record]</a></div>
+   <div class="why">The work is Cicero's 'Epistolae ad Familiares' (Letters to Friends), composed in the 1st century BCE (c. 62–43 BCE). It has been translated into English many times, with the first complete and most influential early translation published by William Melmoth in 1753. The 1550 Brescia edition is a Latin variorum edition of these letters, incorporating Renaissance commentaries by scholars such as Ascensius and Hegendorphinus.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T292">
+ <h3>#28 · Nicolas de Lyra <span class="muted">(1516)</span></h3>
+ <div class="title">Postilla seu expositio literalis &amp; moralis Nicolai de Lira Ordinis minorum super epistolas: et evangelia quadragesimalia: cum questionibus fratris Antonii Betontini eiusdem Ordinis: nec non Alexandri de Ales: que antea pluribus locis depravata fuerat: nuper diligenti cura emendata</div>
+ <div class="meta">era (AI): <b>medieval</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / different_source_language · strong
+   <div class="prior">prior: No prior English translation of this Lenten/festal Postilla on the epistles and gospels exists; the only English-rendered Lyra works are his Apocalypse (Krey 1997) and Song of Songs (Kiecker 1998) commentaries — different works. <a href="https://en.wikipedia.org/wiki/Nicholas_of_Lyra" target="_blank">[open record]</a></div>
+   <div class="why">Nicholas of Lyra (c.1270–1349) composed his Postilla in the early 14th century, so this 1516 print is a medieval text; estimate ~1325 within his commentary period. Multiple searches show only his Apocalypse and Song of Songs commentaries have English translations — this commentary on the epistles and gospels has none.</div>
+   <div class="src"><a href="https://en.wikipedia.org/wiki/Nicholas_of_Lyra" target="_blank">en.wikipedia.org/wiki/Nicholas_of_Lyra</a> · <a href="https://www.wikidata.org/wiki/Q1969164" target="_blank">www.wikidata.org/wiki/Q1969164</a> · <a href="https://archive.org/details/ita-bnc-in2-00000695-001" target="_blank">archive.org/details/ita-bnc-in2-00000695-001</a> · <a href="https://www.amazon.com/Postilla-Nicholas-Reformation-Translation-1350-1650/dp/0874627036" target="_blank">www.amazon.com/Postilla-Nicholas-Reformation-</a> · <a href="https://portail.biblissima.fr/en/ark:/43093/pdatad8cfd18fd749cd9c1c74f58b523c2051808dcfb0" target="_blank">portail.biblissima.fr/en/ark:/43093/pdatad8cf</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">The work is a medieval compilation of commentaries by Nicolas de Lyra (completed c. 1331) and Antonio di Bitonto (d. 1459). While modern translations exist for specific biblical books of Lyra's larger Postilla (e.g., Galatians, Apocalypse), no English translation of this specific Lenten collection has been published. The 1516 editions are reprints of a compilation first published in 1494.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeQdBekn7fIWOPDOTwovdkQLg0bsDGe6GR8jkLud0fgqBUFocDyEHPUjmRlFdwpT30A81E-hAoZD_irD83pFrEwIuZKfapmjhALS5AhjMnQLabBy13CFB5blW5hhZo3dyOtsrAIZm2BaeirGm056a76nZpanGVAFsTTb-HWhg=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdHz7ZIrnffM6TUt63ng84qJxDvWixZ7XHOkwO-XthS1uu6b_wOuhKBh_WELdM_7bGKC8mJVBIIRquamdXru8Ne5LXom5EbQZ6GHYoaXUVRgPyB7pdkXQc2FjgRi0vEDt68Hrj5s6CheHJcLEWuU_hS2_TQTzmdkSMFS-qZg0joTfbtA==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G153">
+ <h3>#29 · unknown <span class="muted">(1516)</span></h3>
+ <div class="title">Passionarium Toletanum</div>
+ <div class="meta">era (AI): <b>medieval</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">The Passionarium Toletanum is a liturgical choir book containing the Passions and Lamentations for the Toledo rite, codified and published in 1516 under Cardinal Cisneros. While the 1516 edition is a Renaissance-era publication, it represents a codification of the medieval Toledan liturgical and chant tradition. No evidence of a published English translation exists, as it is a specialized Latin liturgical source primarily used in musicological and liturgical studies.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2frq4Q71dV8CFaOqvf4kvZKtXOdjSe3qGRhUcxlNCg8Fo3e1o9xXyI6m4J8aIl6KJy-9ANqiX86QvDd6XNgrG6gZANGoP700FL77CHCVB1GeZUQpglu1g6dbmUkaT0wQgd9M36jiVcztAocM9PbGM_r1DnFuLPw4d10-xDKTwc2JIvC4=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G330">
+ <h3>#30 · unknown <span class="muted">(1613)</span></h3>
+ <div class="title">Sic benedicam te in vita mea, &amp; in nomine tuo leuabo manus meas</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Miles Coverdale, 1535, The Bible (Psalm 63:4) <a href="https://www.biblegateway.com/passage/?search=Psalm+63%3A4&amp;version=KJV" target="_blank">[open record]</a></div>
+   <div class="why">The text provided is a direct quotation of Psalm 62:5 from the Latin Vulgate (numbered as Psalm 63:4 in English Bibles). As a biblical text, its composition era is antiquity, and it has been translated into English numerous times, most notably in the Great Bible (1539) and the King James Version (1611).</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T118">
+ <h3>#31 · Della Porta, Giovan Battista <span class="muted">(1608)</span></h3>
+ <div class="title">de distillatione libri ix</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / none · moderate
+   <div class="prior">prior: No published English translation found; a UC Davis project (John Rundin) was &quot;in process&quot; as of 2021 with no record of release. <a href="https://library.ucdavis.edu/news/17th-century-book-on-distillation-in-renaissance-europe-gets-new-life-with-english-translation/" target="_blank">[open record]</a></div>
+   <div class="why">Della Porta (1535–1615) composed De distillatione libri IX himself as a contemporary revision/expansion of Magia naturalis ch. 10, printed Rome 1608, so it is a Renaissance/early-modern original. Searches of Google Books, Internet Archive, dealers, and the UC Davis announcement show only Latin printings, a 1609 reprint, and German/French versions — the sole English effort (Rundin) was unfinished and unpublished.</div>
+   <div class="src"><a href="https://library.ucdavis.edu/news/17th-century-book-on-distillation-in-renaissance-europe-gets-new-life-with-english-translation/" target="_blank">library.ucdavis.edu/news/17th-century-book-on</a> · <a href="https://archive.org/details/bub_gb_s49SAAAAcAAJ" target="_blank">archive.org/details/bub_gb_s49SAAAAcAAJ</a> · <a href="https://en.wikipedia.org/wiki/Giambattista_della_Porta" target="_blank">en.wikipedia.org/wiki/Giambattista_della_Port</a> · <a href="https://www.peterharrington.co.uk/de-distillatione-lib-ix-160931.html" target="_blank">www.peterharrington.co.uk/de-distillatione-li</a> · <a href="https://fr.wikipedia.org/wiki/De_distillatione_libri_IX" target="_blank">fr.wikipedia.org/wiki/De_distillatione_libri_</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / partial · strong
+   <div class="prior">prior: Adam McLean, 2023, The Book of Distillation <a href="https://www.thriftbooks.com/w/the-book-of-distillation_giambattista-della-porta/38580631/" target="_blank">[open record]</a></div>
+   <div class="why">The text was completed in 1604 (as evidenced by the dedication to Federico Cesi) and first printed in 1608. While Della Porta's 'Magia Naturalis' was translated into English in 1658, 'De distillatione' (an expansion of its tenth book) remained untranslated until Adam McLean published an English version of Book I in May 2023. This recent publication (ISBN 9798396152588) is a partial rendering of the original nine-book Latin treatise.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G546">
+ <h3>#32 · Brasavola, Antonio Musa <span class="muted">(1577)</span></h3>
+ <div class="title">Ars componendorum medicamentorum externorum. Cum lepidissimo de morbi Gallici cura tractatu</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / none · moderate
+   <div class="prior">prior: No English translation of any Brasavola work surfaced; the only English &quot;De morbo Gallico&quot; translations are of other authors (Hutten 1533, Fracastoro). <a href="https://en.wikipedia.org/wiki/Antonio_Musa_Brassavola" target="_blank">[open record]</a></div>
+   <div class="why">The work is by Antonio Musa Brasavola (1500-1555), a contemporary 16th-century Ferrara physician composing his own pharmacological treatise, so the text is renaissance_early_modern (the 1577 Lyon printing is posthumous). Searches across Google Books, AbeBooks, Wellcome, and history-of-medicine sources turned up only Latin printings of this work and English translations of OTHER syphilis authors, with no English rendering of this text or its embedded morbi Gallici tractatus.</div>
+   <div class="src"><a href="https://en.wikipedia.org/wiki/Antonio_Musa_Brassavola" target="_blank">en.wikipedia.org/wiki/Antonio_Musa_Brassavola</a> · <a href="https://play.google.com/store/books/details?id=oT06AAAAcAAJ" target="_blank">play.google.com/store/books/details?id=oT06AA</a> · <a href="https://www.abebooks.com/book-search/author/BRASAVOLA-BRASSAVOLA-,-ANTONIO-MUSA-" target="_blank">www.abebooks.com/book-search/author/BRASAVOLA</a> · <a href="https://wellcomecollection.org/concepts/s8v8gns7" target="_blank">wellcomecollection.org/concepts/s8v8gns7</a> · <a href="https://www.lindahall.org/about/news/scientist-of-the-day/antonio-musa-brasavola/" target="_blank">www.lindahall.org/about/news/scientist-of-the</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / partial · strong
+   <div class="prior">prior: William Barrowby, 1737, A new and approved treatise concerning the cure of the French Pockes <a href="https://www.google.com/books/edition/A_New_and_Approved_Treatise_Concerning_t/0_9fAAAAcAAJ" target="_blank">[open record]</a></div>
+   <div class="why">The work is a Renaissance medical text by Antonio Musa Brasavola (1500–1555). The 1577 Lyon edition is a container of two treatises: 'Ars componendorum medicamentorum externorum' (first published 1551) and 'De morbi Gallici cura tractatu' (first published 1553). The syphilis treatise (Part 2) was translated into English by William Barrowby in 1737, while the first part on external medicines remains untranslated in full.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T102">
+ <h3>#33 · Cicero <span class="muted">(1529)</span></h3>
+ <div class="title">Ex familiaribus breviores epistulae aliquot, ab Hermanno Buschio</div>
+ <div class="meta">era (AI): <b>antiquity</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: All letters in this selection belong to Cicero's Epistulae ad familiares, fully translated into English by D.R. Shackleton Bailey (Loeb/Penguin, all 435 letters). <a href="https://www.loebclassics.com/view/LCL205/2001/volume.xml" target="_blank">[open record]</a></div>
+   <div class="why">This 1529 Hermann von dem Busche school edition is a selection of the shorter letters excerpted from Cicero's Epistulae ad familiares, so the text is ancient (Cicero, c. 62–43 BC) and the date is merely the print. As an editorial anthology of excerpts from a larger, fully English-translated corpus, it is a container rather than a single translatable work.</div>
+   <div class="src"><a href="https://en.wikipedia.org/wiki/Hermann_von_dem_Busche" target="_blank">en.wikipedia.org/wiki/Hermann_von_dem_Busche</a> · <a href="https://en.wikipedia.org/wiki/Epistulae_ad_Familiares" target="_blank">en.wikipedia.org/wiki/Epistulae_ad_Familiares</a> · <a href="https://digital.slub-dresden.de/en/workview/dlf/124156/238" target="_blank">digital.slub-dresden.de/en/workview/dlf/12415</a> · <a href="https://www.loebclassics.com/view/LCL205/2001/volume.xml" target="_blank">www.loebclassics.com/view/LCL205/2001/volume.</a> · <a href="https://www.hup.harvard.edu/books/9780674995888" target="_blank">www.hup.harvard.edu/books/9780674995888</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / container · strong
+   <div class="prior">prior: William Melmoth, 1753, The Letters of Marcus Tullius Cicero to Several of His Friends <a href="https://search.worldcat.org/title/1071192301" target="_blank">[open record]</a></div>
+   <div class="why">The work is a pedagogical selection of Cicero's 'Epistulae ad Familiares' (composed c. 62–43 BC) curated by the humanist Hermannus Buschius. While this specific 1529 edition with Buschius's notes has not been translated as a standalone volume, the letters themselves are available in complete English translations of the 'Ad Familiares'. The relationship is 'container' because the Latin work is an anthology of letters from a larger corpus that has been fully translated.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T77">
+ <h3>#34 · unknown <span class="muted">(1616)</span></h3>
+ <div class="title">Quadriga Pietatis : Tractatus quatuor continens, Ut sequens pagina declarat: [1. Speculum peccatoris [et] iusti, de statu peccati [et] gratiae. 2. De Contritione, [et] actibus eius sigillatim crebro eliciendis; deq[ue] Examine conscientiae. 3. Speculum op</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v untranslated">untranslated</span> / container · moderate
+   <div class="prior">prior: A Jesuit devotional anthology (&quot;Quadriga Pietatis,&quot; four-horse chariot of piety) compiled anonymously, first issued ~1606–1615, reprinted 1616 — not a single authored work. <a href="https://digital.ub.uni-paderborn.de/eab/content/titleinfo/3526520" target="_blank">[open record]</a></div>
+   <div class="why">Catalogues (Paderborn, abebooks) confirm this is &quot;Opera cuiusdam patris e Societate Iesu&quot; — a compilation of four spiritual treatises by contemporary 16th–early-17th-c. Jesuit authors (Francisco de Borja, et al.), edited by Pierre d'Hamere, so a multi-work container of early-modern composition where &quot;a translation&quot; is ill-defined. No catalogue, bibliography, or library record found shows any English translation of this specific compilation.</div>
+   <div class="src"><a href="https://digital.ub.uni-paderborn.de/eab/content/titleinfo/3526520" target="_blank">digital.ub.uni-paderborn.de/eab/content/title</a> · <a href="https://www.abebooks.fr/Quadriga-pietatis-continens-tractatus-sequens-pagina/7353841879/bd" target="_blank">www.abebooks.fr/Quadriga-pietatis-continens-t</a> · <a href="https://books.google.de/books/about/Quadriga_Pietatis.html?id=6Sw9AAAAcAAJ" target="_blank">books.google.de/books/about/Quadriga_Pietatis</a> · <a href="https://mateo.uni-mannheim.de/camenaref/alegambe/alegambe1/Alegambe_bibliotheca_idx.html" target="_blank">mateo.uni-mannheim.de/camenaref/alegambe/aleg</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / container · strong
+   <div class="prior">prior: Thomas Everard, 1620, The Practise of Christian Workes <a href="https://books.google.com/books?id=p_8UAAAAYAAJ&amp;pg=PA61" target="_blank">[open record]</a></div>
+   <div class="why">The 'Quadriga Pietatis' is a devotional anthology compiled by the Jesuit Petrus d'Hamere (1570–1633) and first published in 1610 (Ypres), with the 1616 Cologne edition being a reprint. While the third tract (by St. Francis Borgia) was translated into English by Thomas Everard in 1620, the complete four-tract collection has never been published as a single English work.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G197">
+ <h3>#35 · Sabellicus, Marcus Antonius <span class="muted">(1533)</span></h3>
+ <div class="title">De memorabilibus factis dictisque, exemplorum libri X. Praeterea adiecimus Stephani nigri fragmentum, de helluonibus et bibacibus</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / container · strong
+   
+   <div class="why">Marcantonio Sabellico (1436–1506) composed this Renaissance collection of exempla shortly before his death; it was first published in Venice in 1507. No full English translation of the 'Exemplorum libri X' exists in major bibliographies like the Short Title Catalogue or WorldCat. The 1533 edition is a composite volume (container) that includes an appended fragment by the humanist Stephanus Niger.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPA61QnfueRf9Fz7rYEvtaKWhpxsWWAZT6zgqXZKDWtJYTAO_xaRRwKCkWQmxtBlzn7aF3jwHriCZX1nA6hMNZ1VRrKJ5X-I0rCasYlsU6cQHA8AymaHSVvSber9TWxlYsL9yVm4mdB62A-8ym7VqXlhNz5Vd_9YFrbUPCxvs9ZTOv3gLnABXJkJbevZnqNPMiLARdcA50OlEaQPy5tcp5wO5OnkEZPOztANg2sRQbvohMm5PZ79TGatwrQ_xHeq3w3L0donxtoWNe1Fu1Z3esCyORYhrLADZY9nEfRln8OwjCKTs_Saqx8dmTk9oT5kxvCG-Vy2XcbLWHyA==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G626">
+ <h3>#36 · unknown <span class="muted">(1511)</span></h3>
+ <div class="title">Corpus juris canonici, sextus decretalium liber sextus decretalium liber a bonifacio. VIII. In concilio lugdunensi editus [sp.1] cum [sp.2] glossematu divisionibus: que ex novella johannis Andree: suis sunt locis passim apposite. Interpretam?tis domini helie et dominici de sancto geminiano. Casibus litteralibus: summulis: regulis juris cesarei: ac tabulis %[qua ]optimis. Multarum glossarum castigatione.</div>
+ <div class="meta">era (AI): <b>medieval</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / container · strong
+   
+   <div class="why">The work is the Liber Sextus of the Corpus Juris Canonici, promulgated by Pope Boniface VIII in 1298, accompanied by the 14th-century Glossa Ordinaria of Johannes Andreae and 15th-century commentaries by Dominicus de Sancto Geminiano and Helias Regnier. No complete English translation of this massive legal collection or its specific apparatus exists. While partial English renderings of individual decretals and the 'Regulae Iuris' appear in medieval history sourcebooks (e.g., Thatcher &amp; McNeal, 1905), the work as a whole remains untranslated.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G316">
+ <h3>#37 · Tiraqueau, André <span class="muted">(1552)</span></h3>
+ <div class="title">Tractatus, cessante causa cessat effectus</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">André Tiraqueau (1488–1558) was a 16th-century French jurist, and this treatise was first published in 1552 by Jacques Kerver in Paris and Guillaume Rouillé in Lyon. While the legal maxim itself is frequently cited in English law, no published English translation of Tiraqueau's specific Latin treatise exists in major bibliographic records like WorldCat or HathiTrust.</div>
+   <div class="src"></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="G435">
+ <h3>#38 · Rösslin, Eucharius <span class="muted">(1535)</span></h3>
+ <div class="title">De partu hominis, et quae circa ipsum accidunt. Libellus d. Eucharii Rhodionis, medici. Franc. Chri. Egen</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>gap</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: Richard Jonas, 1540, The Byrth of Mankynde <a href="https://www.nlm.nih.gov/exhibition/thebyrthofmankynde/index.html" target="_blank">[open record]</a></div>
+   <div class="why">The work is the Latin translation (first published 1532) of Rösslin's 1513 German midwifery manual 'Der Rosengarten'. Richard Jonas translated this Latin version into English in 1540 under the title 'The Byrth of Mankynde', which became the first printed English book on obstetrics. The 1535 Frankfurt edition by Christian Egenolff is a reprint of the 1532 Latin text.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE6rXV-uo5GSZgTxEPKBCmf0lVaEvngxY2rEPwsa_RwH7GpCSlWVJBZlFH5cqGumVNG8B4v1DXB-7LlM-XdlU5ShVpZGoWZapXnaGsnIOC4XMrqzXW8BhhMLICvwNBEeTMGWO1nxnc=" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEv_nvbhzbUDlDC12MTljCs_SUljckimxXAy_CD2L2jlDDoTmkam9JxOZNnI0JFEpGJhhXobwrnsuwkZ8E_9Qx4ErSlnqLlrZScQe_LdHoeztZkUWteXdi4v-MBdXb3pbN21frait6fxcMqKg==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T81">
+ <h3>#39 · Hues, Robert <span class="muted">(1594)</span></h3>
+ <div class="title">Tractatus de globis et eorum usu accommodatus iis qui Londini editi sunt anno 1593, sumptibus Gulielmi Sandersoni civis Londinensis, conscriptus à Roberto Hues</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: A complete English translation, &quot;A Learned Treatise of Globes&quot; (made English by Chilmead), was printed in London in 1638 and reprinted by the Hakluyt Society in 1889. <a href="https://quod.lib.umich.edu/e/eebo/A44885.0001.001?view=toc" target="_blank">[open record]</a></div>
+   <div class="why">Hues (1553–1632) was a contemporary English author who composed this navigational treatise for print in 1594, so it is renaissance_early_modern. A full English translation exists (1638 Chilmead, EEBO record; Hakluyt Society 1889 reprint ed. Markham), confirmed across EEBO, Bodleian, and Hakluyt sources.</div>
+   <div class="src"><a href="https://quod.lib.umich.edu/e/eebo/A44885.0001.001?view=toc" target="_blank">quod.lib.umich.edu/e/eebo/A44885.0001.001?vie</a> · <a href="https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A44885" target="_blank">ota.bodleian.ox.ac.uk/repository/xmlui/handle</a> · <a href="https://en.wikipedia.org/wiki/Robert_Hues" target="_blank">en.wikipedia.org/wiki/Robert_Hues</a> · <a href="https://shapero.com/en-us/products/clements-markham-tractatus-de-globis-et-eorum-usu-1889-molyneux-82003" target="_blank">shapero.com/en-us/products/clements-markham-t</a> · <a href="https://archive.org/details/tractatusdeglobi00huesrich" target="_blank">archive.org/details/tractatusdeglobi00huesric</a></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v translated">translated</span> / same_work · strong
+   <div class="prior">prior: John Chilmead, 1638, A Learned Treatise of Globes, both Coelestiall and Terrestriall <a href="https://archive.org/details/learnedtreatiseo00hues" target="_blank">[open record]</a></div>
+   <div class="why">Robert Hues (1553–1632) composed this work around 1593 to accompany the first English globes by Emery Molyneux; it was first published in Latin in 1594. The first English translation was produced by John Chilmead and published in London in 1638. A modern edition of this translation was issued by the Hakluyt Society in 1889.</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKU5DXRpXGjXyYMM8i2gr7U9h48zzWMoLZJYpryF4prTbLTKVDyPI4QK4-8vRsYCHBaZe6UlKzCYf8EGjVSGTQ8Qqpx-BpisoD0oHHo7klXZf-hsTzMdpo2PUEumBG5X-8CBDiWX8qDL8mQg==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFKg5pyCZBojPrW5dcRpT6Di0Fqi1C8VtWBL4-DwCmYwAXTzfBV6wiQefpCFSruPPAUqdILz51646Lf-NcRHtCdaUTUcStPyL4SerdTLUuEkc867D1_EvHtuelKMJXgYHMR" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKh3qyGiS7VJGv7E_tJFNpuRR2pJFhwS4ia63pA54DuUdrsJ2b_EHKkZq-7jTt3MtuipoFvouhWFKdE5zL9j22IEkFlxqMk64rJ880WvCfIJMCpgz4r2OdX8-C5bAP" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJ3qnRoAjrzTVnvh9mx74Ly8ljHXgE4uihJ8sph7AgZ4nrlBQbCNe7zgeY9vSiW69v9A6N8q4iP1tj5mV_7kUtweISIckRQaRh99qZv1Vj2vZwkIeazYWYlwkk54ZY5dbmF-RE" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a> · <a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSNuX7e_CKxvEqcLpOSlzO3qb3ZsHoMmYjMt5rbV1KgnAhBScYQPJkuH-Y9RJBnHQpj7SQ3xCmgr8BDOIw1IZ0N9tu8GJNRV4PaPBar4ZCXIXk232G3Ybwm-fnYmxL--xhN3Rn" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<div class="card" data-key="T201">
+ <h3>#40 · Culmann, Leonhard <span class="muted">(1552)</span></h3>
+ <div class="title">Grammatices Latinae exercitium, ad formam disputandi in pueriles questiones redactum pro primis literarum tyronibus, per Leonhardum culmannum craylßheimensem. Iam denuò correctum et auctum.</div>
+ <div class="meta">era (AI): <b>renaissance_early_modern</b> · pipeline label: <b>translated</b></div>
+ 
+  <div class="adj"><b>claude</b>: <span class="v FAIL">FAIL</span> /  · 
+   
+   <div class="why"></div>
+   <div class="src"></div>
+  </div>
+  <div class="adj"><b>gemini</b>: <span class="v untranslated">untranslated</span> / none · strong
+   
+   <div class="why">Leonhard Culmann (1497–1562) was a German Lutheran educator; this work was first published in 1541 (Nuremberg) as a pedagogical tool for Latin grammar. While Culmann's 'Sententiae pueriles' was famously translated into English by Charles Hoole in the 17th century, no record exists of an English translation for this specific grammatical exercise book. Bibliographic databases like WorldCat and VD16 list it only in Latin editions (e.g., 1541, 1546, 1552).</div>
+   <div class="src"><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtrHE0ouzdpqpMwWdjlfu-2XfI9aWO6wGm430FXjiVtoZJYXeaxIkp0t98vURjmkM2Gmakk2YvCgxv-FR09oQVaUScYGi-7B_Rd9oy4dNcMzxwvr5b9_kaZd7wAAJXi8cxUtP6ZQlXytzpAJN-BIWl25suqoIhcrcyjS9V0rc8ctGXwQ_73vxAnkbjo35YxD-9vBed1DwxyFzmAwAe2TAfU2fXtUp4EDwDvZNtrt8XgQ==" target="_blank">vertexaisearch.cloud.google.com/grounding-api</a></div>
+  </div>
+ <div class="verdict-row">
+  <label>Your verdict (open a cited record first):</label>
+  <button class="b" data-v="translated">complete prior EXISTS</button>
+  <button class="b" data-v="untranslated">NO complete prior</button>
+  <button class="b" data-v="cant_tell">can't tell</button>
+  <label><input type="checkbox" class="opened"> I opened a cited record</label>
+  <input class="note" placeholder="note (optional)">
+ </div>
+</div>
+<script>
+const state={};
+document.querySelectorAll('.card').forEach(card=>{const key=card.dataset.key;state[key]={};
+ card.querySelectorAll('.b').forEach(b=>b.onclick=()=>{card.querySelectorAll('.b').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');state[key].verdict=b.dataset.v;prog();});
+ card.querySelector('.opened').onchange=e=>{state[key].opened_record=e.target.checked;};
+ card.querySelector('.note').oninput=e=>{state[key].note=e.target.value;};
+});
+function prog(){const done=Object.values(state).filter(s=>s.verdict).length;document.getElementById('prog').textContent=' '+done+'/'+40+' labeled';}
+document.getElementById('exp').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gap-validation-gold-labels.json';a.click();};
+prog();
+</script>

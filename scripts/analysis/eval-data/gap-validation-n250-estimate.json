@@ -1,0 +1,71 @@
+{
+  "generated": "2026-06-22",
+  "window": [
+    1480,
+    1620
+  ],
+  "population": {
+    "pipeline_translated": 6744,
+    "pipeline_gap": 158737,
+    "total": 165481,
+    "raw_gap_pct": 95.92
+  },
+  "note": "Debiased TRUE translated/gap fractions via two-stratum confusion correction, weighted by population, post-stratified by composition era. 95% nonparametric bootstrap (5000 reps), well-posed works only (containers/uncertain excluded).",
+  "raw_pipeline": {
+    "translated_pct_window": 4.075,
+    "gap_pct_window": 95.925
+  },
+  "debiased": {
+    "gap_allprint": {
+      "point": 0.8492,
+      "lo": 0.8233,
+      "hi": 0.8728
+    },
+    "gap_ren": {
+      "point": 0.9328,
+      "lo": 0.9131,
+      "hi": 0.9519
+    },
+    "translated_allprint": {
+      "point": 0.1508,
+      "lo": 0.1272,
+      "hi": 0.1767
+    },
+    "translated_ren": {
+      "point": 0.0672,
+      "lo": 0.0481,
+      "hi": 0.087
+    }
+  },
+  "well_posed_subrates": {
+    "translated_stratum": {
+      "all": {
+        "n": 216,
+        "translated": 170
+      },
+      "ren": {
+        "n": 82,
+        "translated": 47
+      },
+      "ancmed": {
+        "n": 134,
+        "translated": 123
+      }
+    },
+    "gap_stratum": {
+      "all": {
+        "n": 630,
+        "translated": 78
+      },
+      "ren": {
+        "n": 553,
+        "translated": 32
+      },
+      "ancmed": {
+        "n": 76,
+        "translated": 45
+      }
+    }
+  },
+  "excluded_illposed": 154
+}

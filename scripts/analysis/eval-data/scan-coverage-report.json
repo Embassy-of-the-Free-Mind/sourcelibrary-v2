@@ -1,0 +1,52 @@
+{
+  "generated": "2026-06-24",
+  "method": "evidence-backed scan coverage: real harvested IIIF manifests (import_candidates) matched to USTC work-clusters via author-anchor + rare-token title containment + Latin u/v,i/j orthography normalization. Flag baseline = has_iiif_scan (provenance-free).",
+  "candidates_latin_manifests": 364127,
+  "full_1400_1700": {
+    "clusters": 366205,
+    "scanned_evidence": 213393,
+    "scanned_pct": 58.27,
+    "scanned_flag": 103541,
+    "flag_pct": 28.27,
+    "translated": 9830,
+    "translated_pct": 2.68,
+    "grid": {
+      "scanned_and_translated": 9515,
+      "scanned_not_translated": 203878,
+      "translated_not_scanned": 315,
+      "neither": 152497
+    },
+    "grid_pct": {
+      "scanned_and_translated": 2.6,
+      "scanned_not_translated": 55.67,
+      "translated_not_scanned": 0.09,
+      "neither": 41.64
+    }
+  },
+  "window_1480_1620": {
+    "clusters": 165481,
+    "scanned_evidence": 102084,
+    "scanned_pct": 61.69,
+    "scanned_flag": 48682,
+    "flag_pct": 29.42,
+    "translated": 6744,
+    "translated_pct": 4.08,
+    "grid": {
+      "scanned_and_translated": 6536,
+      "scanned_not_translated": 95548,
+      "translated_not_scanned": 208,
+      "neither": 63189
+    },
+    "grid_pct": {
+      "scanned_and_translated": 3.95,
+      "scanned_not_translated": 57.74,
+      "translated_not_scanned": 0.13,
+      "neither": 38.19
+    }
+  },
+  "caveats": [
+    "Evidence-backed coverage is a FLOOR: author-anchored matching misses anonymous works (no surname) and orthography/title variants beyond u-v/i-j; un-harvested manifests (mainland-China-style holes, paywalled libraries) are not counted.",
+    "The has_iiif_scan flag is provenance-free (no manifest_url) and not validatable; reported only to quantify the flag-vs-evidence gap.",
+    "A scan match means the WORK is digitized somewhere (any edition), not that the specific 1400-1700 cluster edition is the scanned copy."
+  ]
+}
