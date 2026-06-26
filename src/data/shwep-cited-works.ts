@@ -482,7 +482,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad716ac5001c07fa847f7d",
         "slug": "clement-of-alexandria-miscellanies-stromata-book-vii-alexandria",
         "title": "Clement of Alexandria, Miscellanies (Stromata) Book VII",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -548,7 +548,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad768565c3071e0169ae93",
         "slug": "philostratus-and-eunapius-the-lives-of-the-sophists-loeb-eunapius",
         "title": "Philostratus and Eunapius: The Lives of the Sophists (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -1093,16 +1093,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "status": "held",
     "held": [
       {
-        "id": "6993899b74305116d72d25ac",
-        "slug": "plato-de-legibus-platonos-nomoi-ac-praeterea-alii-eiusdem-plato",
-        "title": "Plato De legibus . Platonos Nomoi . Ac praeterea alii eiusdem [Platonis] Dialogi tum gnesioi, tum nothoi, Definitiones, et epistolae",
+        "id": "69b3f734a107e55a0ee1bf15",
+        "slug": "plato-laws-epinomis-15th-century-greek-ms-plato",
+        "title": "Plato: Laws & Epinomis — 15th-Century Greek MS",
         "language": "Greek",
         "translated": true
       },
       {
-        "id": "69b3f734a107e55a0ee1bf15",
-        "slug": "plato-laws-epinomis-15th-century-greek-ms-plato",
-        "title": "Plato: Laws & Epinomis — 15th-Century Greek MS",
+        "id": "6993899b74305116d72d25ac",
+        "slug": "plato-de-legibus-platonos-nomoi-ac-praeterea-alii-eiusdem-plato",
+        "title": "Plato De legibus . Platonos Nomoi . Ac praeterea alii eiusdem [Platonis] Dialogi tum gnesioi, tum nothoi, Definitiones, et epistolae",
         "language": "Greek",
         "translated": true
       },
@@ -1124,13 +1124,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6953ce9377f38f6761be50b6",
         "slug": "plato-laws-vol-2-books-7-12-plato",
         "title": "Plato: Laws, Vol. 2 (Books 7-12)",
-        "language": "English",
-        "translated": true
-      },
-      {
-        "id": "699388cf74305116d72d0157",
-        "slug": "plato-republic-laws-and-timaeus-plato",
-        "title": "Republic, Laws, and Timaeus",
         "language": "Greek",
         "translated": true
       },
@@ -1142,16 +1135,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69b21d42ddb4fa7c305b4693",
-        "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
-        "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
+        "id": "699388cf74305116d72d0157",
+        "slug": "plato-republic-laws-and-timaeus-plato",
+        "title": "Republic, Laws, and Timaeus",
         "language": "Greek",
         "translated": true
       },
       {
-        "id": "69e8b2192ff2a8dc09e765f5",
-        "slug": "platonis-opera-omnia-plato",
-        "title": "Πλάτωνος Ἅπαντα (Platonis Opera Omnia)",
+        "id": "69b21d42ddb4fa7c305b4693",
+        "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+        "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
         "language": "Greek",
         "translated": true
       },
@@ -1160,6 +1153,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "the-works-of-plato-vol-2-sydenham",
         "title": "The Works of Plato, vol. 2",
         "language": "English",
+        "translated": true
+      },
+      {
+        "id": "69e8b2192ff2a8dc09e765f5",
+        "slug": "platonis-opera-omnia-plato",
+        "title": "Πλάτωνος Ἅπαντα (Platonis Opera Omnia)",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -1194,13 +1194,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b51e0fefd8df28f2dafa7d",
         "slug": "platonis-opera-plato",
         "title": "The Works of Plato (Platonis opera)",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b43d3c06b196d69f66f8f7",
-        "slug": "plato-complete-works-ficino-translation-translator",
-        "title": "Plato, Complete Works (Ficino translation)",
         "language": "Latin",
         "translated": true
       }
@@ -1234,41 +1227,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69937e41d85e1d5bbdf3295a",
         "slug": "euthyphro-apology-crito-phaedo-phaedrus-loeb-l036-plato",
         "title": "Euthyphro, Apology, Crito, Phaedo, and Phaedrus",
-        "language": "English",
-        "translated": true
-      },
-      {
-        "id": "6993882174305116d72cf50b",
-        "slug": "pal-gr-173-plato",
-        "title": "Pal.gr.173",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "69a5e5f385fa13e734e41e1f",
-        "slug": "platonis-dialogi-xxiv-the-clarke-plato-plato",
-        "title": "Twenty-four Dialogues of Plato",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "69ad654f75811c30866e1182",
-        "slug": "dialogues-of-plato-vol-1-ion-symposium-phaedrus-cratylus-plato",
-        "title": "Dialogues of Plato, Vol. 1 (Ion, Symposium, Phaedrus, Cratylus)",
-        "language": "English",
-        "translated": true
-      },
-      {
-        "id": "6993898a74305116d72d23af",
-        "slug": "plato-platon-platonis-dialogi-plato",
-        "title": "Plato . Platon . Platonis Dialogi",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "699389510f04c37dcfa609ca",
-        "slug": "cologny-fondation-martin-bodmer-cod-bodmer-136-plato",
-        "title": "Cologny, Fondation Martin Bodmer, Cod. Bodmer 136",
         "language": "Greek",
         "translated": true
       },
@@ -1318,13 +1276,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b43d3c06b196d69f66f8f7",
         "slug": "plato-complete-works-ficino-translation-translator",
         "title": "Plato, Complete Works (Ficino translation)",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b21cee429e087c6f865ff1",
-        "slug": "omnia-divini-platonis-opera-ficino-translation-ficino",
-        "title": "Complete Works of Plato",
         "language": "Latin",
         "translated": true
       }
@@ -1361,13 +1312,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69ad72de5953f4eff4f32e11",
-        "slug": "the-roman-history-of-ammianus-marcellinus-marcellinus",
-        "title": "The Roman History of Ammianus Marcellinus",
-        "language": "English",
-        "translated": true
-      },
-      {
         "id": "69a9570865ddd05bbcd3daee",
         "slug": "rerum-gestarum-libri-qui-supersunt-res-gestae-marcellinus",
         "title": "The Roman History",
@@ -1375,16 +1319,23 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69af2185f98f6eff774cb35e",
-        "slug": "quae-supersunt-marcellinus",
-        "title": "Surviving Works",
+        "id": "6a08a9ae0e77acb4f93079c9",
+        "slug": "ammianus-marcellinus-rerum-gestarum-vol-ii-books-xxvi-xxxi-marcellinus",
+        "title": "Ammianus Marcellinus: Rerum Gestarum, Vol. II: Books XXVI–XXXI (Clark, Teubner)",
         "language": "Latin",
         "translated": true
       },
       {
-        "id": "6a08a9ae0e77acb4f93079c9",
-        "slug": "ammianus-marcellinus-rerum-gestarum-vol-ii-books-xxvi-xxxi-marcellinus",
-        "title": "Ammianus Marcellinus: Rerum Gestarum, Vol. II: Books XXVI–XXXI (Clark, Teubner)",
+        "id": "69ad72de5953f4eff4f32e11",
+        "slug": "the-roman-history-of-ammianus-marcellinus-marcellinus",
+        "title": "The Roman History of Ammianus Marcellinus",
+        "language": "English",
+        "translated": true
+      },
+      {
+        "id": "69af2185f98f6eff774cb35e",
+        "slug": "quae-supersunt-marcellinus",
+        "title": "Surviving Works",
         "language": "Latin",
         "translated": true
       }
@@ -1504,9 +1455,23 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "status": "held",
     "held": [
       {
-        "id": "69b3f71ca107e55a0ee1b43a",
-        "slug": "asclepius-12th-century-hermetic-manuscript-apuleius",
-        "title": "Asclepius — 12th-Century Hermetic Manuscript",
+        "id": "68fb0dc412055a03a58d3282",
+        "slug": "pymander-asclepius-on-the-mysteries-of-the-egyptians-proclus",
+        "title": "The Divine Pymander, Asclepius, and On the Mysteries",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "690989d5cf28baa1b4cae1ca",
+        "slug": "pymander-asclepius-on-the-mysteries-of-the-egyptians-on-trismegistus",
+        "title": "Pymander. Asclepius. On the Mysteries of the Egyptians. On Plato's Alcibiades, on the Soul and the Daemon. On Sacrifice.",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "694f3d6ebe37f451a5324e95",
+        "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+        "title": "Complete Hermetica (1505 Paris Edition)",
         "language": "Latin",
         "translated": true
       }
@@ -2155,7 +2120,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad76c165c3071e0169b707",
         "slug": "diogenes-laertius-lives-of-eminent-philosophers-vol-2-loeb-laertius",
         "title": "Diogenes Laertius: Lives of Eminent Philosophers, Vol. 2 (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -2219,7 +2184,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "699379f1b0a84a5763966912",
         "slug": "homer-iliad-i-books-1-12-loeb-homer",
         "title": "Homer Iliad I (Books 1-12, Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -2439,7 +2404,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69937767b0a84a57639639fe",
         "slug": "phaedo-plato",
         "title": "Phaedo",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -2460,7 +2425,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69937e41d85e1d5bbdf3295a",
         "slug": "euthyphro-apology-crito-phaedo-phaedrus-loeb-l036-plato",
         "title": "Euthyphro, Apology, Crito, Phaedo, and Phaedrus",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -2739,8 +2704,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       193,
       195
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6953a55277f38f6761bcfb62",
+        "slug": "corpus-byzantinae-vol-14-ed",
+        "title": "Corpus Byzantinae Vol. 14",
+        "language": "Greek",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Greek Magical Papyri",
@@ -3010,7 +2983,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69937949b0a84a57639645df",
         "slug": "homers-odyssey-books-xiii-xxiv-homer",
         "title": "Homers Odyssey Books XIII-XXIV",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -3073,7 +3046,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6953ce9577f38f6761be535d",
         "slug": "plato-theaetetus-sophist-plato",
         "title": "Plato: Theaetetus and Sophist",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -3622,7 +3595,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "695936cf3b43cb6630c91ab8",
         "slug": "testament-of-solomon-mccown-critical-edition-attr",
         "title": "Testament of Solomon (McCown Critical Edition)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -4097,7 +4070,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad73325953f4eff4f338ce",
         "slug": "five-theological-orations-nazianzus",
         "title": "Five Theological Orations",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -4138,8 +4111,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       136,
       137
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "690989d5cf28baa1b4cae1ca",
+        "slug": "pymander-asclepius-on-the-mysteries-of-the-egyptians-on-trismegistus",
+        "title": "Pymander. Asclepius. On the Mysteries of the Egyptians. On Plato's Alcibiades, on the Soul and the Daemon. On Sacrifice.",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Fihrist",
@@ -4150,8 +4131,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       192,
       205
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69d5ac2ed0bd3547a565582f",
+        "slug": "the-catalogue-al-nadim",
+        "title": "كتاب الفهرست (The Catalogue)",
+        "language": "Arabic",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Apology",
@@ -4805,8 +4794,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       120,
       178
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a357f7a5307b013ee584d59",
+        "slug": "corpus-inscriptionum-latinarum-anonymous",
+        "title": "Corpus Inscriptionum Latinarum",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Exodus",
@@ -5570,8 +5567,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       154,
       167
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69ad6a635e7e0803b48e648e",
+        "slug": "nicene-and-post-nicene-fathers-series-2-vol-1-eusebius-eds",
+        "title": "Nicene and Post-Nicene Fathers, Series 2, Vol. 1 (Eusebius: Church History, Life of Constantine)",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "De placitis Hippocratis et Platonis",
@@ -5939,8 +5944,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       204,
       205
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69b636138ab57a1de53a7205",
+        "slug": "sahih-al-bukhari-complete-al-bukhari",
+        "title": "Sahih al-Bukhari (Complete)",
+        "language": "Arabic",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Introduction to Arithmetic",
@@ -6309,10 +6322,10 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "status": "held",
     "held": [
       {
-        "id": "69dbcb321040d1d5e20b3397",
-        "slug": "opera-latin-tr-marsilius-ficinus-plato",
-        "title": "Opera [Latin]. Tr: Marsilius Ficinus",
-        "language": "Latin",
+        "id": "6993898a74305116d72d23af",
+        "slug": "plato-platon-platonis-dialogi-plato",
+        "title": "Plato . Platon . Platonis Dialogi",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -6323,31 +6336,24 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69b21cee429e087c6f865ff1",
-        "slug": "omnia-divini-platonis-opera-ficino-translation-ficino",
-        "title": "Complete Works of Plato",
+        "id": "69dbcb321040d1d5e20b3397",
+        "slug": "opera-latin-tr-marsilius-ficinus-plato",
+        "title": "Opera [Latin]. Tr: Marsilius Ficinus",
         "language": "Latin",
         "translated": true
       },
       {
-        "id": "6993898a74305116d72d23af",
-        "slug": "plato-platon-platonis-dialogi-plato",
-        "title": "Plato . Platon . Platonis Dialogi",
-        "language": "Greek",
+        "id": "69b43d4006b196d69f66fc21",
+        "slug": "plato-dialogues-ficino-translation-with-de-amore-translator",
+        "title": "Plato, Dialogues (Ficino translation, with De Amore)",
+        "language": "Latin",
         "translated": true
       },
       {
-        "id": "69e8b2192ff2a8dc09e765f5",
-        "slug": "platonis-opera-omnia-plato",
-        "title": "Πλάτωνος Ἅπαντα (Platonis Opera Omnia)",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "69ad654f75811c30866e1182",
-        "slug": "dialogues-of-plato-vol-1-ion-symposium-phaedrus-cratylus-plato",
-        "title": "Dialogues of Plato, Vol. 1 (Ion, Symposium, Phaedrus, Cratylus)",
-        "language": "English",
+        "id": "69b51e13cf111105c4296494",
+        "slug": "divini-platonis-operum-1-continens-quaternitatem-primam-plato",
+        "title": "The Works of the Divine Plato, Volume 1, containing the First and Second Tetralogies",
+        "language": "Latin",
         "translated": true
       },
       {
@@ -6358,9 +6364,44 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "69aff2fec83500af1dbf6b61",
+        "slug": "-translator",
+        "title": "The Works of Plato",
+        "language": "Russian",
+        "translated": true
+      },
+      {
+        "id": "69ad654f75811c30866e1182",
+        "slug": "dialogues-of-plato-vol-1-ion-symposium-phaedrus-cratylus-plato",
+        "title": "Dialogues of Plato, Vol. 1 (Ion, Symposium, Phaedrus, Cratylus)",
+        "language": "English",
+        "translated": true
+      },
+      {
+        "id": "69b3e5d1304c1c6b3950a501",
+        "slug": "gorgias-apologia-socratis-trans-leonardo-bruni-plato",
+        "title": "Gorgias and the Apology of Socrates",
+        "language": "Latin",
+        "translated": true
+      },
+      {
         "id": "6993899b74305116d72d25ac",
         "slug": "plato-de-legibus-platonos-nomoi-ac-praeterea-alii-eiusdem-plato",
         "title": "Plato De legibus . Platonos Nomoi . Ac praeterea alii eiusdem [Platonis] Dialogi tum gnesioi, tum nothoi, Definitiones, et epistolae",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69ad656c75811c30866e1810",
+        "slug": "dialogues-of-plato-vol-5-laws-epinomis-letters-plato",
+        "title": "Dialogues of Plato, Vol. 5 (Laws, Epinomis, Letters)",
+        "language": "English",
+        "translated": true
+      },
+      {
+        "id": "69b21d4addb4fa7c305b4a88",
+        "slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
+        "title": "The Works of Plato, Vol. 3 (Stephanus edition)",
         "language": "Greek",
         "translated": true
       },
@@ -6372,24 +6413,10 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69d14a2c1c2a66dc094b3a11",
-        "slug": "the-works-of-plato-vol-4-sydenham",
-        "title": "The Works of Plato, vol. 4",
+        "id": "695594987bd6d2cd1d61da30",
+        "slug": "works-of-plato-plato",
+        "title": "Works of Plato",
         "language": "English",
-        "translated": true
-      },
-      {
-        "id": "69ad656c75811c30866e1810",
-        "slug": "dialogues-of-plato-vol-5-laws-epinomis-letters-plato",
-        "title": "Dialogues of Plato, Vol. 5 (Laws, Epinomis, Letters)",
-        "language": "English",
-        "translated": true
-      },
-      {
-        "id": "69b51e0fefd8df28f2dafa7d",
-        "slug": "platonis-opera-plato",
-        "title": "The Works of Plato (Platonis opera)",
-        "language": "Latin",
         "translated": true
       },
       {
@@ -6400,17 +6427,17 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69b51e13cf111105c4296494",
-        "slug": "divini-platonis-operum-1-continens-quaternitatem-primam-plato",
-        "title": "The Works of the Divine Plato, Volume 1, containing the First and Second Tetralogies",
-        "language": "Latin",
+        "id": "6953cee877f38f6761be5dd8",
+        "slug": "plato-euthyphro-apology-crito-phaedo-phaedrus-plato",
+        "title": "Plato Euthyphro, Apology, Crito, Phaedo, Phaedrus",
+        "language": "Greek",
         "translated": true
       },
       {
-        "id": "69b43d4006b196d69f66fc21",
-        "slug": "plato-dialogues-ficino-translation-with-de-amore-translator",
-        "title": "Plato, Dialogues (Ficino translation, with De Amore)",
-        "language": "Latin",
+        "id": "69e8b2192ff2a8dc09e765f5",
+        "slug": "platonis-opera-omnia-plato",
+        "title": "Πλάτωνος Ἅπαντα (Platonis Opera Omnia)",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -6428,9 +6455,23 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "69b51e0fefd8df28f2dafa7d",
+        "slug": "platonis-opera-plato",
+        "title": "The Works of Plato (Platonis opera)",
+        "language": "Latin",
+        "translated": true
+      },
+      {
         "id": "69b43d3c06b196d69f66f8f7",
         "slug": "plato-complete-works-ficino-translation-translator",
         "title": "Plato, Complete Works (Ficino translation)",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21cee429e087c6f865ff1",
+        "slug": "omnia-divini-platonis-opera-ficino-translation-ficino",
+        "title": "Complete Works of Plato",
         "language": "Latin",
         "translated": true
       },
@@ -6442,31 +6483,10 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69b21d4addb4fa7c305b4a88",
-        "slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
-        "title": "The Works of Plato, Vol. 3 (Stephanus edition)",
-        "language": "Greek",
-        "translated": true
-      },
-      {
         "id": "69b21d42ddb4fa7c305b4693",
         "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
         "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
         "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "69b21d36ddb4fa7c305b4440",
-        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
-        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "69aff2fec83500af1dbf6b61",
-        "slug": "-translator",
-        "title": "The Works of Plato",
-        "language": "Russian",
         "translated": true
       }
     ]
@@ -6639,30 +6659,9 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "6993898a74305116d72d23af",
-        "slug": "plato-platon-platonis-dialogi-plato",
-        "title": "Plato . Platon . Platonis Dialogi",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "6993837c50654cbbe2916b24",
-        "slug": "vat-gr-1-plato",
-        "title": "Vat.gr.1",
-        "language": "Greek",
-        "translated": true
-      },
-      {
         "id": "69b21d42ddb4fa7c305b4693",
         "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
         "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "6993882174305116d72cf50b",
-        "slug": "pal-gr-173-plato",
-        "title": "Pal.gr.173",
         "language": "Greek",
         "translated": true
       },
@@ -6731,7 +6730,14 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69a976a1e12635ded71c4fd9",
         "slug": "the-symposium-of-plato-bury",
         "title": "The Symposium of Plato",
-        "language": "English",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69a5e5f385fa13e734e41e1f",
+        "slug": "platonis-dialogi-xxiv-the-clarke-plato-plato",
+        "title": "Twenty-four Dialogues of Plato",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -7114,8 +7120,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       126,
       185
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69a956cd65ddd05bbcd3d083",
+        "slug": "sententiae-ad-intelligibilia-ducentes-aphormai-pros-ta-noeta-holstenius",
+        "title": "Life of Pythagoras and Sentences on the Intelligibles",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Fragments",
@@ -7217,16 +7231,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69b21c35429e087c6f86414b",
-        "slug": "opera-lipsius-edition-tacitus",
-        "title": "The Annals",
+        "id": "69af41695cafc63dd41ef4df",
+        "slug": "c-cornelii-taciti-opera-tacitus",
+        "title": "The Works of Tacitus (C. Cornelii Taciti Opera)",
         "language": "Latin",
         "translated": true
       },
       {
-        "id": "69af41695cafc63dd41ef4df",
-        "slug": "c-cornelii-taciti-opera-tacitus",
-        "title": "The Works of Tacitus (C. Cornelii Taciti Opera)",
+        "id": "69b21c35429e087c6f86414b",
+        "slug": "opera-lipsius-edition-tacitus",
+        "title": "The Annals",
         "language": "Latin",
         "translated": true
       }
@@ -7522,8 +7536,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       221
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a357f112aadc65cf0908511",
+        "slug": "anecdota-atheniensia-anonymous",
+        "title": "Anecdota atheniensia",
+        "language": "Lb",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Anonymous Prolegomena to Platonic Philosophy",
@@ -7735,7 +7757,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "699243c4bc722ec0ee809ded",
         "slug": "the-apostolic-fathers-vol-1-clement-ignatius-polycarp-ed-trans",
         "title": "The Apostolic Fathers Vol. 1: Clement, Ignatius, Polycarp, Didache",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -8098,8 +8120,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       154
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69924720d263adc1aa7b0b2c",
+        "slug": "joseph-and-aseneth-greek-latin-texts-ed",
+        "title": "Joseph and Aseneth",
+        "language": "Greek-Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Kanzā Rabbā",
@@ -8208,7 +8238,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6953a93977f38f6761bd58f4",
         "slug": "hermetica-vol-i-texts-and-translation-ed",
         "title": "The Hermetic Writings, Volume I: Texts and Translation",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -8754,7 +8784,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6953a93977f38f6761bd58f4",
         "slug": "hermetica-vol-i-texts-and-translation-ed",
         "title": "The Hermetic Writings, Volume I: Texts and Translation",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -9293,7 +9323,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69937a5eb0a84a5763968246",
         "slug": "aristophanes-ii-peace-birds-frogs-loeb-aristophanes",
         "title": "Aristophanes II: Peace, Birds, Frogs (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -9364,6 +9394,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "699389a10f04c37dcfa61d51",
+        "slug": "aristophanes-aristophanes-aristophanes",
+        "title": "Aristophanes . Aristophanes",
+        "language": "Greek",
+        "translated": true
+      },
+      {
         "id": "69b2ffaae5d6d64d8e1972f6",
         "slug": "comoediae-novem-aristophanes-2",
         "title": "Nine Comedies",
@@ -9385,6 +9422,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "699388ea1075be7d320551a1",
+        "slug": "euripides-sophocles-and-aristophanes-twenty-plays-aristophanes",
+        "title": "Euripides, Sophocles, and Aristophanes: Twenty Plays",
+        "language": "Greek",
+        "translated": true
+      },
+      {
         "id": "69937991b0a84a5763965383",
         "slug": "aristophanis-comoediae-dindorf-greek-latin-aristophanes",
         "title": "Comedies of Aristophanes",
@@ -9395,13 +9439,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69e419df8a8dae1074c51dad",
         "slug": "aristophanis-comoediae-all-11-comedies-greek",
         "title": "Aristophanis Comoediae (All 11 Comedies, Greek)",
-        "language": "Greek",
-        "translated": true
-      },
-      {
-        "id": "699388ea1075be7d320551a1",
-        "slug": "euripides-sophocles-and-aristophanes-twenty-plays-aristophanes",
-        "title": "Euripides, Sophocles, and Aristophanes: Twenty Plays",
         "language": "Greek",
         "translated": true
       }
@@ -10045,16 +10082,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "status": "held",
     "held": [
       {
-        "id": "69b30001e5d6d64d8e198081",
-        "slug": "opera-1556-edition-hippo",
-        "title": "Works (1556 edition)",
+        "id": "69b2ff6a5545150b61b48140",
+        "slug": "opera-omnia-vol-5-hippo",
+        "title": "Complete Works, Vol. 5",
         "language": "Latin",
         "translated": true
       },
       {
-        "id": "69b2ff6a5545150b61b48140",
-        "slug": "opera-omnia-vol-5-hippo",
-        "title": "Complete Works, Vol. 5",
+        "id": "69b30001e5d6d64d8e198081",
+        "slug": "opera-1556-edition-hippo",
+        "title": "Works (1556 edition)",
         "language": "Latin",
         "translated": true
       },
@@ -10144,44 +10181,8 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       7
     ],
-    "status": "held",
-    "held": [
-      {
-        "id": "69b30001e5d6d64d8e198081",
-        "slug": "opera-1556-edition-hippo",
-        "title": "Works (1556 edition)",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b2ff6a5545150b61b48140",
-        "slug": "opera-omnia-vol-5-hippo",
-        "title": "Complete Works, Vol. 5",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b2ff5f5545150b61b47b54",
-        "slug": "opera-omnia-vol-4-hippo",
-        "title": "Complete Works, Vol. 4",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b2ff4b5545150b61b475b4",
-        "slug": "opera-omnia-vol-2-hippo",
-        "title": "Complete Works, Vol. 2",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b2ff405545150b61b4738c",
-        "slug": "opera-omnia-vol-1-hippo",
-        "title": "Complete Works, Vol. 1",
-        "language": "Latin",
-        "translated": true
-      }
-    ]
+    "status": "acquire",
+    "held": []
   },
   {
     "work": "De trinitate",
@@ -10388,8 +10389,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       216
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a08fd1125e3a402b23b3a75",
+        "slug": "the-alchemist-1612-first-quarto-scolar-press-facsimile-ben-j",
+        "title": "The Alchemist (1612 First Quarto)",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Commentum in Ciceronis Topica",
@@ -10510,17 +10519,17 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "status": "held",
     "held": [
       {
-        "id": "69ad7117c5001c07fa84719a",
-        "slug": "cicero-s-tusculan-disputations-on-the-nature-of-the-gods-cicero",
-        "title": "Cicero's Tusculan Disputations, On the Nature of the Gods, and On the Commonwealth",
-        "language": "English",
-        "translated": true
-      },
-      {
         "id": "69b2232f56715b0e324767fe",
         "slug": "cicero-de-natura-deorum-de-divinatione-de-fato-somnium-cicero",
         "title": "Cicero, Philosophical Works Vol. 2",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69ad7117c5001c07fa84719a",
+        "slug": "cicero-s-tusculan-disputations-on-the-nature-of-the-gods-cicero",
+        "title": "Cicero's Tusculan Disputations, On the Nature of the Gods, and On the Commonwealth",
+        "language": "English",
         "translated": true
       },
       {
@@ -10828,16 +10837,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69942a60045dfc482ad76cbc",
-        "slug": "opera-i-dindorf-oxford-alexandria",
-        "title": "Works, Vol. I (Dindorf, Oxford)",
+        "id": "69942a68045dfc482ad76ec8",
+        "slug": "patrologia-graeca-vol-8-clemens-alexandrinus-i-alexandria",
+        "title": "Greek Patrology, Vol. 8: Clement of Alexandria I",
         "language": "Greek",
         "translated": true
       },
       {
-        "id": "69942a68045dfc482ad76ec8",
-        "slug": "patrologia-graeca-vol-8-clemens-alexandrinus-i-alexandria",
-        "title": "Greek Patrology, Vol. 8: Clement of Alexandria I",
+        "id": "69942a60045dfc482ad76cbc",
+        "slug": "opera-i-dindorf-oxford-alexandria",
+        "title": "Works, Vol. I (Dindorf, Oxford)",
         "language": "Greek",
         "translated": true
       }
@@ -10863,21 +10872,21 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad65c40b6018c6ed179d1d",
         "slug": "dio-s-roman-history-vol-8-cassius",
         "title": "Dio's Roman History, Vol. 8",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
         "id": "6a089bb72b703903f58e770b",
         "slug": "dio-cassius-roman-history-vol-vi-books-51-55-cary",
         "title": "Dio Cassius: Roman History, Vol. VI (Books 51-55)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
         "id": "6a089bc42b703903f58e7908",
         "slug": "dio-cassius-roman-history-vol-viii-books-61-70-cary",
         "title": "Dio Cassius: Roman History, Vol. VIII (Books 61-70)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -11001,23 +11010,8 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       21
     ],
-    "status": "held",
-    "held": [
-      {
-        "id": "69cf7d533d1003a2ea2ffa19",
-        "slug": "the-fragments-of-empedocles-leonard",
-        "title": "The Fragments of Empedocles",
-        "language": "e",
-        "translated": true
-      },
-      {
-        "id": "69942eafb2f6748db4abf429",
-        "slug": "empedoclis-et-parmenidis-fragmenta-ex-simplicii-commentariis-peyron",
-        "title": "Fragments of Empedocles and Parmenides from the Commentaries of Simplicius",
-        "language": "Greek",
-        "translated": true
-      }
-    ]
+    "status": "acquire",
+    "held": []
   },
   {
     "work": "Purifications",
@@ -11026,23 +11020,8 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       21
     ],
-    "status": "held",
-    "held": [
-      {
-        "id": "69cf7d533d1003a2ea2ffa19",
-        "slug": "the-fragments-of-empedocles-leonard",
-        "title": "The Fragments of Empedocles",
-        "language": "e",
-        "translated": true
-      },
-      {
-        "id": "69942eafb2f6748db4abf429",
-        "slug": "empedoclis-et-parmenidis-fragmenta-ex-simplicii-commentariis-peyron",
-        "title": "Fragments of Empedocles and Parmenides from the Commentaries of Simplicius",
-        "language": "Greek",
-        "translated": true
-      }
-    ]
+    "status": "acquire",
+    "held": []
   },
   {
     "work": "Panarion",
@@ -11420,6 +11399,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69942b0ed607f8e57e4b68eb",
         "slug": "patrologia-graeca-vol-44-gregory-of-nyssa-nyssa",
         "title": "Greek Patrology, Vol. 44: Gregory of Nyssa",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b2ff82e5d6d64d8e196fab",
+        "slug": "opera-nyssa",
+        "title": "Works",
         "language": "Greek",
         "translated": true
       }
@@ -12460,7 +12446,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad72e75953f4eff4f330c8",
         "slug": "the-works-of-the-emperor-julian-vol-1-loeb-emperor",
         "title": "The Works of the Emperor Julian, Vol. 1 (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -12478,7 +12464,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad72e75953f4eff4f330c8",
         "slug": "the-works-of-the-emperor-julian-vol-1-loeb-emperor",
         "title": "The Works of the Emperor Julian, Vol. 1 (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -12496,7 +12482,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad72e75953f4eff4f330c8",
         "slug": "the-works-of-the-emperor-julian-vol-1-loeb-emperor",
         "title": "The Works of the Emperor Julian, Vol. 1 (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -12514,14 +12500,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad72e75953f4eff4f330c8",
         "slug": "the-works-of-the-emperor-julian-vol-1-loeb-emperor",
         "title": "The Works of the Emperor Julian, Vol. 1 (Loeb)",
-        "language": "English",
-        "translated": true
-      },
-      {
-        "id": "69924f3bc8e06d213c5d3c07",
-        "slug": "works-of-the-emperor-julian-vol-3-against-the-galileans-wright",
-        "title": "Works of the Emperor Julian, Vol. 3 (Against the Galileans)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -12539,7 +12518,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad72e75953f4eff4f330c8",
         "slug": "the-works-of-the-emperor-julian-vol-1-loeb-emperor",
         "title": "The Works of the Emperor Julian, Vol. 1 (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -12578,8 +12557,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       195
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69b62f591c1c21a3737f4f91",
+        "slug": "authenticae-seu-novellae-constitutiones-dn-justiniani-civilis",
+        "title": "Authenticae seu Novellae constitutiones DN. Justiniani Sacratissimi principis, Notis locupletatae, et recognitae, studio, et diligentia Jul. Pacii I.C.",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Pandects",
@@ -12793,6 +12780,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "6a089c322b703903f58e8ae6",
+        "slug": "livy-history-of-rome-vol-i-books-1-2-foster",
+        "title": "Livy: History of Rome, Vol. I (Books 1-2)",
+        "language": "English",
+        "translated": true
+      },
+      {
         "id": "69b30090e28f56bd74941f9a",
         "slug": "historiarum-libri-vol-2-elzevir-1645-livy",
         "title": "History of Rome, Vol. 2",
@@ -12814,13 +12808,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "69b222c756715b0e324751a4",
-        "slug": "livy-epitomae-decadum-with-lucius-florus-aldine-press-florus",
-        "title": "Livy, Summaries of the Decades, with Lucius Florus",
-        "language": "Latin",
-        "translated": true
-      },
-      {
         "id": "69af40b8c1333bab2648396e",
         "slug": "titi-livi-rerum-romanarum-ab-urbe-condita-libri-livy",
         "title": "History of Rome (Ab Urbe Condita)",
@@ -12835,17 +12822,17 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
-        "id": "6a089c322b703903f58e8ae6",
-        "slug": "livy-history-of-rome-vol-i-books-1-2-foster",
-        "title": "Livy: History of Rome, Vol. I (Books 1-2)",
-        "language": "English",
-        "translated": true
-      },
-      {
         "id": "69b3009ee28f56bd749422ab",
         "slug": "historiarum-libri-vol-3-elzevir-1645-livy",
         "title": "History of Rome, Vol. 3",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "6a089c392b703903f58e8bf6",
+        "slug": "livy-history-of-rome-vol-ii-books-3-4-foster",
+        "title": "Livy: History of Rome, Vol. II (Books 3-4)",
+        "language": "English",
         "translated": true
       }
     ]
@@ -12857,8 +12844,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       3
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69c846296c6f3cc53c8516d9",
+        "slug": "pimander-asclepius-crater-hermetis-hermes-trismegistus",
+        "title": "Pimander. Asclepius. Crater Hermetis",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Imperatoris Manuel Comneni et Michael Glycæ disputatio",
@@ -12897,7 +12892,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6953ce4d77f38f6761be36fb",
         "slug": "meditations-of-marcus-aurelius-communings-with-himself-aurelius",
         "title": "Communings with Himself",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -12915,6 +12910,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b00fc1e485bbb15c6b3dc7",
         "slug": "rerum-rusticarum-libri-tres-varro",
         "title": "On Agriculture",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b2f44ef9f1ad2b3b15293e",
+        "slug": "m-terentii-varronis-opera-estienne",
+        "title": "Works of Varro",
         "language": "Latin",
         "translated": true
       },
@@ -12947,6 +12949,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "69e7836cd93c1f6007506d05",
+        "slug": "de-agri-cultura-de-re-rustica-keil",
+        "title": "De Agri Cultura / De Re Rustica",
+        "language": "Latin",
+        "translated": true
+      },
+      {
         "id": "69af20f5a854057228c07754",
         "slug": "de-agri-cultura-et-rerum-rusticarum-libri-iii-varro",
         "title": "On Agriculture and On Farming",
@@ -12957,13 +12966,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69af4570f2aa63e7702bb71d",
         "slug": "scriptores-rei-rusticae-ex-recensione-io-gottlob-schneider-cato-varro-columella",
         "title": "Writers on Agriculture, Volume I",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69e7836cd93c1f6007506d05",
-        "slug": "de-agri-cultura-de-re-rustica-keil",
-        "title": "De Agri Cultura / De Re Rustica",
         "language": "Latin",
         "translated": true
       }
@@ -13803,8 +13805,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       238
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69770ae377ed318b9f256bf5",
+        "slug": "bible-epistle-to-the-romans",
+        "title": "The Bible: Epistle to the Romans",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Letter to the Galatians",
@@ -14403,6 +14413,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "69944b981ba83513779075f0",
+        "slug": "opera-exegetica-in-libros-mosis-eds",
+        "title": "Exegetical Works on the Books of Moses",
+        "language": "Latin",
+        "translated": true
+      },
+      {
         "id": "69944b881ba835137790718e",
         "slug": "lucubrationes-omnes-first-complete-latin-philo-trans",
         "title": "First Complete Latin Philo",
@@ -14456,6 +14473,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "the-works-of-philo-judaeus-vol-3-alexandria",
         "title": "The Works of Philo Judaeus, Vol. 3",
         "language": "English",
+        "translated": true
+      },
+      {
+        "id": "69944b5a1ba8351377906bfe",
+        "slug": "philonis-alexandrini-opera-quae-supersunt-vol-7-indices-ed",
+        "title": "Surviving Works of Philo of Alexandria (Vol. 7 - Indices)",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -14596,7 +14620,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69944b8e1ba8351377907440",
         "slug": "philo-about-the-contemplative-life-de-vita-contemplativa-ed",
         "title": "Philo About the Contemplative Life (De Vita Contemplativa)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -15057,7 +15081,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69ad768565c3071e0169ae93",
         "slug": "philostratus-and-eunapius-the-lives-of-the-sophists-loeb-eunapius",
         "title": "Philostratus and Eunapius: The Lives of the Sophists (Loeb)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -15498,6 +15522,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       },
       {
+        "id": "6993882174305116d72cf50b",
+        "slug": "pal-gr-173-plato",
+        "title": "Pal.gr.173",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69a5e5f385fa13e734e41e1f",
+        "slug": "platonis-dialogi-xxiv-the-clarke-plato-plato",
+        "title": "Twenty-four Dialogues of Plato",
+        "language": "Greek",
+        "translated": true
+      },
+      {
         "id": "69b21d4addb4fa7c305b4a88",
         "slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
         "title": "The Works of Plato, Vol. 3 (Stephanus edition)",
@@ -15888,7 +15926,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b21ed9a66227125eb06225",
         "slug": "plutarch-s-lives-vol-6-loeb-98-dion-brutus-timoleon-perrin",
         "title": "Plutarch's Lives, Vol. 6 (Loeb 98: Dion, Brutus, Timoleon, Aemilius Paulus)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -15902,7 +15940,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b21ec14522d8c1db3bd3ed",
         "slug": "plutarch-s-lives-vol-1-loeb-46-theseus-romulus-lycurgus-perrin",
         "title": "Plutarch's Lives, Vol. 1 (Loeb 46: Theseus, Romulus, Lycurgus, Numa, Solon, Publicola)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -15916,7 +15954,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b21ec74522d8c1db3bd52e",
         "slug": "plutarch-s-lives-vol-3-loeb-65-pericles-fabius-maximus-perrin",
         "title": "Plutarch's Lives, Vol. 3 (Loeb 65: Pericles, Fabius Maximus, Nicias, Crassus)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -15937,7 +15975,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b21ed34522d8c1db3bd719",
         "slug": "plutarch-s-lives-vol-5-loeb-87-agesilaus-pompey-pelopidas-perrin",
         "title": "Plutarch's Lives, Vol. 5 (Loeb 87: Agesilaus, Pompey, Pelopidas, Marcellus)",
-        "language": "English",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -16637,8 +16675,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       173
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69a9574565ddd05bbcd3e608",
+        "slug": "historia-ecclesiastica-graece-et-latine-with-rufinus-rufinus",
+        "title": "Ecclesiastical History",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Tafsir Al-Tustari",
@@ -16783,13 +16829,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "status": "held",
     "held": [
       {
-        "id": "69e8b23d2ff2a8dc09e77073",
-        "slug": "sextus-empiricus-manuscript-empiricus",
-        "title": "Sextus Empiricus (manuscript)",
-        "language": "Greek",
-        "translated": true
-      },
-      {
         "id": "69a956fa65ddd05bbcd3d7c8",
         "slug": "opera-graece-et-latine-pyrrhoniarum-institutionum-libri-iii-empiricus",
         "title": "The Collected Works of Sextus Empiricus",
@@ -16805,8 +16844,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       195
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a0856f149638a50931c32d6",
+        "slug": "ammoniou-tou-hermeiou-eis-tas-tou-aristotelous-kategorias-yp",
+        "title": "Commentary on the Categories of Aristotle",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "In De Caelo",
@@ -16833,8 +16880,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       150
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69f32d10eab2561110b5b1af",
+        "slug": "song-of-solomon-and-ecclesiastes-manuscript-circa-1240",
+        "title": "Bible. Latin. Song of Solomon and Ecclesiastes : manuscript, circa 1240. MS Lat 441.4. Houghton Library, Harvard University, Cambridge, Mass.",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Proverbs",
@@ -17187,8 +17242,30 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       103
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6994383a6879ff0184cb803a",
+        "slug": "collection-des-anciens-alchimistes-grecs-vols-2-3-berthelot",
+        "title": "Collection of the Ancient Greek Alchemists, Vols. 2-3",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69a979e9daf647306a736c91",
+        "slug": "collection-des-anciens-alchimistes-grecs-vol-3-berthelot",
+        "title": "Collection of the Ancient Greek Alchemists, Volume 3",
+        "language": "French",
+        "translated": true
+      },
+      {
+        "id": "699438326879ff0184cb7e24",
+        "slug": "collection-des-anciens-alchimistes-grecs-vol-1-berthelot",
+        "title": "Collection of the Ancient Greek Alchemists, Vol. 1",
+        "language": "French",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Mushaf as-suwar",
