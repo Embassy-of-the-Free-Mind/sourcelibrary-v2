@@ -23,6 +23,23 @@ export const ATTEMPTS_COLLECTION = 'first_translation_attempts';
 /** How an attempt was carried out. Superset of {@link Resolver} (adds gemini). */
 export type AttemptMethod = Resolver | 'gemini_verifier';
 
+/**
+ * A prior English translation found during an attempt, kept STRUCTURED (not just
+ * a notes string) so per-book consumers — the badge evidence panel, the
+ * "Existing translations" surface, work-cluster linking — can render it without
+ * re-parsing. `found_refs` (registry ids) supersedes this once #2453 exists; until
+ * then this is the queryable record of what was found.
+ */
+export interface PriorTranslation {
+  english_title?: string;
+  translator?: string;
+  pub_year?: string;
+  publisher?: string;
+  completeness?: string;
+  /** The grounding link to where the prior actually is (archive.org / publisher / WorldCat). */
+  source_url?: string;
+}
+
 /** One row in the append-only provenance log. */
 export interface FirstTranslationAttempt {
   /** Stable id for this attempt; referenced by book.first_translation.best_attempt_id. */
@@ -41,6 +58,8 @@ export interface FirstTranslationAttempt {
   result: 'found' | 'none';
   /** Registry ids of priors found (empty when result==='none'). */
   found_refs?: string[];
+  /** Structured priors found this attempt (translator/year/title/link). */
+  priors?: PriorTranslation[];
   evidence_strength: EvidenceStrength;
   /**
    * 0..1 — how independent the consulted sources are from each other and from

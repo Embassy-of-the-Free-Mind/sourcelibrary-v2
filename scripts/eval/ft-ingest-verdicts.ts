@@ -74,6 +74,14 @@ async function main() {
       queries: v.queries ?? [], // the actual searches issued — load-bearing absence evidence
       result: (found ? 'found' : 'none') as 'found' | 'none',
       found_refs: [], // registry ids assigned when #2453 registry exists
+      priors: priors.map((p) => ({          // structured, for per-book consumers (badge panel, work-linking)
+        english_title: p.english_title,
+        translator: p.translator,
+        pub_year: p.pub_year,
+        publisher: p.publisher,
+        completeness: p.completeness,
+        source_url: p.source_url,
+      })),
       evidence_strength: v.evidence_strength,
       model: v.model,
       cost_usd: v.cost_usd,
