@@ -427,7 +427,7 @@ export interface HomeCounts {
 }
 
 // Last refreshed from production 2026-05-26. Only used if Mongo + Supabase are both unreachable.
-const FALLBACK_COUNTS: HomeCounts = { totalBooks: 13869, translatedToEnglish: 13534, firstTranslationCount: 6911, authorCount: 5523, languageCount: 170, artworkCount: 13743, illustrationCount: 122550 };
+const FALLBACK_COUNTS: HomeCounts = { totalBooks: 13869, translatedToEnglish: 13534, firstTranslationCount: 6911, authorCount: 5523, languageCount: 105, artworkCount: 13743, illustrationCount: 122550 };
 
 async function getBookCounts(): Promise<HomeCounts> {
   // 1. MongoDB system_config cache (refreshed daily by scripts/maintenance/prewarm-browse.mjs;

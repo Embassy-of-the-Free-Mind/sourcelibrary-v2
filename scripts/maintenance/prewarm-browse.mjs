@@ -55,6 +55,7 @@ console.log(`Done: ${ok} OK, ${fail} failed (${new Date().toISOString()})`);
 if (process.env.MONGODB_URI) {
   try {
     const { MongoClient } = await import('mongodb');
+    const { countDistinctLanguages } = await import('../lib/language-count.mjs');
     const client = await MongoClient.connect(process.env.MONGODB_URI);
     const db = client.db('bookstore');
     const books = db.collection('books');
@@ -73,7 +74,10 @@ if (process.env.MONGODB_URI) {
       books.countDocuments(readableFilter),
       books.countDocuments({ ...translatedFilter, is_first_translation: true }),
       books.distinct('author', translatedFilter).then(a => a.length),
-      books.distinct('language', translatedFilter).then(l => l.filter(x => x && !x.includes(',') && !x.includes(' and ')).length),
+      // Distinct SOURCE languages across the opened corpus (same `filter` as totalBooks).
+      // countDistinctLanguages splits compound labels and drops variants/junk; a naive
+      // distinct().length over-counts ~1.6x. Keep in sync with update-homepage-stats.mjs.
+      books.distinct('language', filter).then(countDistinctLanguages),
       books.countDocuments(artworkFilter),
       db.collection('gallery_images').countDocuments({}),
       // First-translation verification coverage (#2332 Task 3): of all readable+visible

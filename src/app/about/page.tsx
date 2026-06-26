@@ -17,10 +17,11 @@ export default async function AboutPage() {
 
   const headlineStats: { value: string; label: string; href?: string }[] = [
     { value: fmt(stats.totalBooks), label: 'books digitized', href: '/search' },
-    // Conservative floor: ~50 languages have 5+ translated books each. The raw
-    // distinct-language count (stats.languageCount) is higher but padded with
-    // singletons, compound strings, and junk tokens — not a defensible claim.
-    { value: '50+', label: 'languages' },
+    // stats.languageCount is now an honest distinct-language count: compound
+    // labels are split into atomic languages and variants/junk are dropped
+    // (scripts/lib/language-count.mjs). ~105 as of 2026-06-26, so 100+ is a
+    // defensible floor.
+    { value: '100+', label: 'languages' },
     { value: fmt(stats.translatedToEnglish), label: 'translated to English', href: '/search?has_translation=true' },
     { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true' },
     { value: fmt(stats.illustrationCount), label: 'illustrations cataloged', href: '/gallery' },
