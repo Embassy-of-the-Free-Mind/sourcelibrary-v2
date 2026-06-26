@@ -62,6 +62,18 @@ export const posts: BlogPost[] = [
     imageAlt: 'Robert Fludd\'s Integra Naturae, from Utriusque Cosmi Historia, 1617',
   },
   {
+    slug: 'counting-first-translations',
+    title: 'How Many First Translations, Really?',
+    subtitle:
+      'We badge ~5,700 books as first-ever English translations. Are they? We sent an AI research agent to independently fact-check a random sample of both the badged books and the never-assessed ones — and found the bigger error was the firsts we missed, not the ones we over-claimed. On precision, recall, Wilson intervals, and why fame (not language) predicts a false claim.',
+    date: '19 June 2026',
+    readTime: '11 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/1.jpg',
+    imageAlt: "Title page of Athanasius Kircher's Arithmologia, 1665 — a genuine first English translation",
+  },
+  {
     slug: 'cannabis-bangue',
     title: 'Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis',
     subtitle:

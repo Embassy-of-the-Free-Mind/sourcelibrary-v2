@@ -124,3 +124,10 @@ backups/
 
 # Book ingestion staging (PDFs, page images, metadata waiting to be processed)
 incoming/
+scripts/eval/ft-tier2-bulk.workflow.js
+scripts/eval/ft-tier2-rerun.workflow.js
+scripts/eval/ft-recall.workflow.js
+scripts/eval/ft-reliability.workflow.js
+scripts/eval/ft-groundtruth.workflow.js
+scripts/eval/results/ft-gemini-*.json
+scripts/eval/results/ft-enum-*.json

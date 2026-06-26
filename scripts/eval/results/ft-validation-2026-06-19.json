@@ -1,0 +1,63 @@
+[
+  {
+    "book_id": "69c866086c6f3cc53c856325",
+    "work_identified": "Roger Bacon, Epistola de secretis operibus artis et naturae (1629 French edition 'De l'admirable pouvoir et puissance de l'art et de nature')",
+    "verdict": "not_first",
+    "prior_relationship": "same_text",
+    "evidence_strength": "strong",
+    "our_completeness": "unknown",
+    "match_key": "author_title",
+    "prior_translations_found": [
+      {"title": "An Excellent Discourse of the Admirable Force and Efficacie of Art and Nature (with The Mirror of Alchimy)", "translator": "anonymous", "year": "1597", "completeness": "complete", "url": "https://quod.lib.umich.edu/e/eebo/A01683.0001.001"},
+      {"title": "Frier Bacon his Discovery of the Miracles of Art, Nature, and Magick", "translator": "anonymous", "year": "1659", "completeness": "complete", "url": "https://en.wikipedia.org/wiki/The_Letter_Of_Roger_Bacon_Concerning_The_Marvelous_Power_Of_Art_And_Nature_And_The_Nullity_Of_Magic"},
+      {"title": "Roger Bacon's Letter concerning the Marvelous Power of Art and of Nature", "translator": "Tenney L. Davis", "year": "1923", "completeness": "complete", "url": "https://catalog.hathitrust.org/Record/001381588"}
+    ],
+    "sources_checked": ["EEBO (quod.lib.umich.edu)", "HathiTrust", "Wikipedia/Wikidata Q18510696", "Google Books"],
+    "reasoning": "1629 French edition of Bacon's Epistola; a complete English translation existed by 1597 (32 years earlier), reissued 1659 and re-translated by Davis 1923. Source-language rule: prior English of the work exists regardless of source, so not_first.",
+    "confidence": "high"
+  },
+  {
+    "book_id": "6a14e191311a9edd46222509",
+    "work_identified": "Thor bu: dGongs 'dus nor bu padma'i phreng ba — miscellaneous-writings ms volume from a gathered-intentions terma cycle, Tshamdrak Monastery (Bhutan), EAP310; distinct from Sangye Lingpa's Lama Gongdü",
+    "verdict": "first_no_prior",
+    "prior_relationship": null,
+    "evidence_strength": "moderate",
+    "our_completeness": "unknown",
+    "match_key": "transliteration",
+    "prior_translations_found": [],
+    "sources_checked": ["84000.co", "BDRC/library.bdrc.io", "Lotsawa House", "rigpawiki.org", "treasuryoflives.org", "British Library EAP310"],
+    "reasoning": "Obscure unpublished Bhutanese monastic terma volume; no English translation on any competent tradition source. First English translation; absence bounded by what tradition sources index online.",
+    "confidence": "medium"
+  },
+  {
+    "book_id": "69e77a740fc6fc955e35ff89",
+    "work_identified": "gTer gyi kha byang — treasure-inventory collection from Gangtey Rinpoche's library, Gangtey Monastery (Bhutan), matches EAP039-1-4-209",
+    "verdict": "first_no_prior",
+    "prior_relationship": "related_distinct_work",
+    "evidence_strength": "moderate",
+    "our_completeness": "partial",
+    "match_key": "transliteration",
+    "prior_translations_found": [
+      {"title": "Circle of the Sun, Inventory to the Lama Yangtik (kha byang nyi ma'i snying po)", "translator": "Adam Pearcey", "year": "2024", "completeness": "complete", "url": "https://www.lotsawahouse.org/"},
+      {"title": "The Essence of Luminosity, Inventory to the Lama Yangtik (kha byang 'od gsal snying po)", "translator": "Adam Pearcey", "year": "2024", "completeness": "complete", "url": "https://www.lotsawahouse.org/"}
+    ],
+    "sources_checked": ["eap.bl.uk (EAP039)", "lotsawahouse.org", "library.bdrc.io", "84000.co", "rigpawiki.org", "treasuryoflives.org"],
+    "reasoning": "Gangtey archival treasure-inventory pinned via EAP039. The only English 'kha byang' translations found are Pearcey's 2024 Longchen Rabjam Lama Yangtik inventories — a distinct work (related_distinct_work trap avoided), not this text. No English of this Gangtey collection exists; first translation.",
+    "confidence": "medium"
+  },
+  {
+    "book_id": "69b51e3f768235dc6598e2c7",
+    "work_identified": "Paracelsus, De Vita Longa (five-book Latin recension 'Libri V de vita longa', 1562) — our holding is the LATIN ORIGINAL, not an English translation",
+    "verdict": "not_applicable",
+    "prior_relationship": "same_text",
+    "evidence_strength": "strong",
+    "our_completeness": "partial",
+    "match_key": "author_title",
+    "prior_translations_found": [
+      {"title": "Paracelsus His Dispensatory and Chirurgery (extracts incl. De Vita Longa), Faithfully Englished by W.D.", "translator": "W.D. (likely William Dugard)", "year": "1656", "completeness": "excerpts", "url": "https://quod.lib.umich.edu/e/eebo2/A76995.0001.001"}
+    ],
+    "sources_checked": ["EEBO (UMich A76995)", "Google Books / British Library", "Wellcome Collection", "Internet Archive", "Thomas Willard 2011", "Source Library MCP"],
+    "reasoning": "Our holding is the 1562 Latin original (source-language text), only 26/164 pages machine-translated — so the first-English-translation framing is not_applicable (category error). On the work: a 1656 partial English (excerpts, W.D.) predates any modern complete translation.",
+    "confidence": "high"
+  }
+]

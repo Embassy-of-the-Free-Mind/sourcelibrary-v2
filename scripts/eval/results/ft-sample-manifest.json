@@ -1,0 +1,3565 @@
+{
+  "built": "2026-06-19T11:22:49.774Z",
+  "total_public_firsts": 5732,
+  "author_internal_match_floor": 1181,
+  "strata_plan": [
+    {
+      "key": "obscure | western | confirmed_first",
+      "size": 2976,
+      "sample": 30
+    },
+    {
+      "key": "obscure | tibetan | confirmed_first",
+      "size": 824,
+      "sample": 30
+    },
+    {
+      "key": "canonical | western | confirmed_first",
+      "size": 618,
+      "sample": 30
+    },
+    {
+      "key": "obscure | cjk | confirmed_first",
+      "size": 427,
+      "sample": 30
+    },
+    {
+      "key": "mid | western | confirmed_first",
+      "size": 295,
+      "sample": 30
+    },
+    {
+      "key": "obscure | semitic | confirmed_first",
+      "size": 128,
+      "sample": 30
+    },
+    {
+      "key": "canonical | semitic | confirmed_first",
+      "size": 98,
+      "sample": 30
+    },
+    {
+      "key": "obscure | western | needs_review",
+      "size": 78,
+      "sample": 30
+    },
+    {
+      "key": "canonical | indic | confirmed_first",
+      "size": 72,
+      "sample": 30
+    },
+    {
+      "key": "obscure | indic | confirmed_first",
+      "size": 54,
+      "sample": 30
+    },
+    {
+      "key": "canonical | cjk | confirmed_first",
+      "size": 27,
+      "sample": 27
+    },
+    {
+      "key": "obscure | other | confirmed_first",
+      "size": 20,
+      "sample": 20
+    },
+    {
+      "key": "obscure | western | translation_found",
+      "size": 18,
+      "sample": 18
+    },
+    {
+      "key": "canonical | other | confirmed_first",
+      "size": 18,
+      "sample": 18
+    },
+    {
+      "key": "canonical | western | needs_review",
+      "size": 15,
+      "sample": 15
+    },
+    {
+      "key": "mid | western | needs_review",
+      "size": 14,
+      "sample": 14
+    },
+    {
+      "key": "mid | western | translation_found",
+      "size": 10,
+      "sample": 10
+    },
+    {
+      "key": "obscure | western | null",
+      "size": 6,
+      "sample": 6
+    },
+    {
+      "key": "canonical | western | translation_found",
+      "size": 6,
+      "sample": 6
+    },
+    {
+      "key": "obscure | semitic | needs_review",
+      "size": 5,
+      "sample": 5
+    },
+    {
+      "key": "obscure | cjk | needs_review",
+      "size": 5,
+      "sample": 5
+    },
+    {
+      "key": "mid | semitic | confirmed_first",
+      "size": 5,
+      "sample": 5
+    },
+    {
+      "key": "obscure | tibetan | needs_review",
+      "size": 3,
+      "sample": 3
+    },
+    {
+      "key": "obscure | indic | needs_review",
+      "size": 3,
+      "sample": 3
+    },
+    {
+      "key": "canonical | tibetan | confirmed_first",
+      "size": 2,
+      "sample": 2
+    },
+    {
+      "key": "obscure | indic | translation_found",
+      "size": 2,
+      "sample": 2
+    },
+    {
+      "key": "obscure | other | needs_review",
+      "size": 1,
+      "sample": 1
+    },
+    {
+      "key": "obscure | other | translation_found",
+      "size": 1,
+      "sample": 1
+    },
+    {
+      "key": "mid | semitic | translation_found",
+      "size": 1,
+      "sample": 1
+    }
+  ],
+  "projection": {
+    "ci_half_width_worst_case": 577.1862431242479
+  },
+  "manifest": [
+    {
+      "stratum": "obscure | western | confirmed_first",
+      "size": 2976,
+      "sampled": [
+        {
+          "id": "69b65ce1b3f4fc0441515666",
+          "author": "Mader, Timotheus",
+          "title": "De resolutione theses",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b5259f9658af9164709eb6",
+          "author": "Schaghen, Nicolaus",
+          "title": "In nuptias ... Alberti Snoeckart ... cum ... Anna Margareta van Randtwyck, celebratas in Amerongen IV. Id. Jun. Anno MDCLXII.",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6953aed177f38f6761bd8ab1",
+          "author": "J.J. Bellermann",
+          "title": "Abraxas-Gemmen (Bellermann)",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525cc6be60460830328ab",
+          "author": "Vries, Claas de",
+          "title": "Atlas.",
+          "language": "Dutch",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b2f3ff730bc5749b7eb088",
+          "author": "Prince de Conde (printed by Robert Estienne)",
+          "title": "Remonstrance de Monseigneur le Prince de Conde",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b4cc88d5b6c3815e1a10ad",
+          "author": "Louis Renard",
+          "title": "Poissons, ecrevisses et crabes",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69bd93872d11455793b3f6b5",
+          "author": "Johannes Hertel",
+          "title": "Die Sonne und Mithra im Awesta",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525b86be6046083030d53",
+          "author": "Barros, João de",
+          "title": "Scheeps-togt door Fernando Perez d'Andrade, als opperhoofd der vloot, uit last des Konings Don Manuel van Portugaal, van Malacca afgezonden na de Golf van Bengale en de kusten van China, in't jaar 1516. :, Verhaalende (behalven desselfs ontdekking van 't eiland Sumatra, en deerlyk verbranden van een zyner ryk-gelaade schepen en andere rampspoeden op zyn togt na Bengale en elders onder stormen en tempeesten geleeden,) zyn zeldzaame en onverwagte aankomst in China; en beschryving van dat koningryk : als mede zyn onderhandeling met de koningen van Ternate en Bantam, uyt d'eyge berigten en order des Konings van Portugaal in't Portugys beschreven, door Joan de Barros, raadsheer en histori-schryver der zelve majesteit ; nu eerst uit d'oorspronkelyke taal in 't Nederduyts vertaald en met land-tafereelen, konst-printen en noodig register verrykt",
+          "language": "Dutch",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c850ce6c6f3cc53c852ed0",
+          "author": "Tennhardt, Johann",
+          "title": "Fernere nöthige und zur Seelen Seligkeit sehr nützliche zweyte Erklärung der allerbedencklichsten und anstössigsten Puncten und Redens-Arten",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525ad29577f283b57aa5f",
+          "author": "Kortingh, Stoffel Jansz",
+          "title": "Copiae. Alsoo tot kennisse van de Dinaren, en by gevolg van de Gemeente, gekomen is, dat Pieter Jansz. Twisck beneffens sommige Ledematen van onse Gemeente [Hoorn], ondernomen hebben, een afgesonderde Vergaderingh op-te-regten, ..",
+          "language": "Dutch",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699ef9fb1ec3ccc75bf5317e",
+          "author": "[Sperber, Julius]",
+          "title": "Sendbrieff oder Bericht an Alle, welche von den newen Bruderschafft des Ordens von Rosen Creutz genant, etwas gelesen, oder von andern per modum discursus der sachen beschaffenheit, vernommen",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69affc85ce64b61898f122b4",
+          "author": "Euclid; J.L. Heiberg (ed.)",
+          "title": "Euclidis Opera Omnia, Vol. 6 (Optica, Catoptrica, et al.)",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6990523c8d19cbc90d9d5d0f",
+          "author": "Girolamo Menghi",
+          "title": "Compendio dell'arte essorcistica",
+          "language": "Italian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b2ffdc5545150b61b4a642",
+          "author": "Johannes Clauberg",
+          "title": "Defensio Cartesiana",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69792ac2f35c6bbfbfd252f9",
+          "author": "Ulstad, Philip|Ficino, Marsilio",
+          "title": "Coelum philosophorum. Von heimlichkeit der Natur.  Regiment des Lebens",
+          "language": "Latin-German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c63eb2b463eebe7caac65f",
+          "author": "Aesopus",
+          "title": "Vita et fabellae cum interpretatione latina",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c847e76c6f3cc53c851af9",
+          "author": "Bogatzky, Karl Heinrich von",
+          "title": "Gottselige Betrachtungen über die Auferstehung Jesu Christi",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b51e719a81ef7feb3d4f78",
+          "author": "Rotmarus, Valentin, -1580; Engerd, Johann",
+          "title": "Annales Ingolstadiensis Academiae. Pars IV, Codex Diplomaticvs",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b418902b0edf3eaa2dd408",
+          "author": "Conrad A. Fisch",
+          "title": "Das Buch der Warheitt und der Philosophen (PH293)",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c861f66c6f3cc53c855aba",
+          "author": "Gaultier, Jacques",
+          "title": "Table chronographique de l' estat du christianisme",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c581e43954e1ebf355ef93",
+          "author": "[Hautnorthon, Josaphat Friederich]",
+          "title": "Der verlangete dritte Anfang der mineralischen Dinge",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6979446ddcf302c58a41a4d5",
+          "author": "Rupert von Deutz",
+          "title": "Commentariorum in Johannis Apocalypsin",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b301c917357a3d382a0b8e",
+          "author": "Elzevir Respublica Series",
+          "title": "Respublica Rhaetorum",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6977a719ed849ecd7e62d673",
+          "author": "[Hanneman, Johann Ludwig]",
+          "title": "Cato chemicus tractatus quo verae ac genuinae philosophiae hermeticae, & fucatae ac sophisticae pseudo chemiae & utriusque magistrorum characterismi accurate delineantur",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b51ec0ff09e4fe943b4246",
+          "author": "Yiśrā'ēl Ben-Moše",
+          "title": "Disputatio Cabalistica de Anima : et opus Rhythmicum Ra Abraham Abben Ezrae de modis: quibus Hebraei legem solent interpretari",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69ac8551960d5ad0b47323a9",
+          "author": "Pierre Gassendi",
+          "title": "Opera Omnia, Tomus Sextus",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699061ae3d9181cce82fb8bf",
+          "author": "Abraham Saur",
+          "title": "Theatrum de Veneficis",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6958dfb9dbe0f678e5c52aa7",
+          "author": "Hieronymus Bock (Tragus)",
+          "title": "De stirpium nomenclaturis",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b51eba47b06ecd581960d3",
+          "author": "Morcillo, Sebastián Fox",
+          "title": "Sebastiani Foxij Morzilli Hispalensis, in Platonis Timaeum Commentarij : Acceßit locuples rerum & uerborum in ijsdem memorabilium Index",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c70f18da9771c7163161ca",
+          "author": "Francke, August Hermann",
+          "title": "Thimotheus zum Fürbilde",
+          "language": "German",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | tibetan | confirmed_first",
+      "size": 824,
+      "sampled": [
+        {
+          "id": "6a14e191311a9edd46222509",
+          "author": "Tshamdrak Monastery",
+          "title": "Thor bu dGongs 'dus nor bu padma'i phreng ba",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e77a740fc6fc955e35ff89",
+          "author": "Gangtey Monastery Collection",
+          "title": "gTer gyi kha byang",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e7964380b52390feb19332",
+          "author": "Ogyen Choling Collection",
+          "title": "blo bzang bka' 'bum las bla ma'i yig chung lta khrid snying po dngos grub kun 'byung",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e782a4d93c1f60075041e6",
+          "author": "Gangtey Monastery Collection",
+          "title": "mDo sde brtags sna rgyas pa",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e78b7a4a6785cfd60d57ae",
+          "author": "Ogyen Choling Collection",
+          "title": "mkha’ spyod ma’i smon lam",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e761fecc48e59ad74f2abf",
+          "author": "Gangtey Monastery Collection",
+          "title": "Bla ma'i thugs sgrub bar chad kun sel sogs",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e788604a6785cfd60d0bfb",
+          "author": "Drametse Monastery Collection",
+          "title": "kun bzang dgongs pa kun 'dus",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e782e2d93c1f6007505280",
+          "author": "Gangtey Monastery Collection",
+          "title": "Tshe lha dgu'i dkyil 'khor gyi cho ga",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e787654a6785cfd60cbaaf",
+          "author": "Drametse Monastery Collection",
+          "title": "Bum Na",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6a14e1af311a9edd462232c6",
+          "author": "Tshamdrak Monastery",
+          "title": "Thor bu Chos kyi 'byung gnas gsung rabs rin po che'I mdzod",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e77a130fc6fc955e35d980",
+          "author": "Gangtey Monastery Collection",
+          "title": "sNgags drug phyag rgya drug gi cho ga",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e795e780b52390feb18afc",
+          "author": "Ogyen Choling Collection",
+          "title": "dben sa snyan brgyud las/ bong zhal can gyi tshe sgrub thun mong ma yin pa’i zhal shes",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e78b364a6785cfd60d519f",
+          "author": "Ogyen Choling Collection",
+          "title": "byang chub bka’ ‘bum bka’ rgya ma las/ mun khrid gnad kyi phreng ba",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e788f74a6785cfd60d239a",
+          "author": "Drametse Monastery Collection",
+          "title": "zab pa dang rgya che ba'i chos kyi thob yig gang g'a'i chu rgyun las glegs bam bzhi pa",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e76218cc48e59ad74f3470",
+          "author": "Gangtey Monastery Collection",
+          "title": "Srog sgrub snying gi thig le skor",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e788d84a6785cfd60d1fdb",
+          "author": "Drametse Monastery Collection",
+          "title": "'bri gung dpal 'dzin gyi rtsod pa zlog pa'i yi ge",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e7887f4a6785cfd60d119f",
+          "author": "Drametse Monastery Collection",
+          "title": "gson gshin bsngo ba nyi ma'i 'od zer",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e77a6f0fc6fc955e35fddb",
+          "author": "Gangtey Monastery Collection",
+          "title": "Bai ro'i dra 'bag",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e788554a6785cfd60d083e",
+          "author": "Drametse Monastery Collection",
+          "title": "pad gling thugs sres lnga pa'i bka' 'bum las pod hung",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e788ed4a6785cfd60d2268",
+          "author": "Drametse Monastery Collection",
+          "title": "drag po zor gyi man ngag sogs",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e789e14a6785cfd60d2f17",
+          "author": "Ogyen Choling Collection",
+          "title": "byad 'grol gser gyi lde mig gi lag len gsal byed byad bzhi nag po 'gro shes su bkod pa klags pas don 'grub",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e7882b4a6785cfd60cf94d",
+          "author": "Drametse Monastery Collection",
+          "title": "khrid yig kun gzhi rang grol sogs chos tshan kha 'thor sna tsogs",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e77a550fc6fc955e35f5d5",
+          "author": "Gangtey Monastery Collection",
+          "title": "dGongs 'dus khrid kyi lde mig",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6a14e170311a9edd46221253",
+          "author": "Tshamdrak Monastery",
+          "title": "Thor bu Thub dbang rnam thar Kha",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e7ac405f1a22ab19aa5e5b",
+          "author": "Neyphug Monastery",
+          "title": "Thor bu Las byang me tog phreng mdzes kyi don 'grel sogs",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e78a984a6785cfd60d4785",
+          "author": "Ogyen Choling Collection",
+          "title": "bcud len dang stobs bskyed sbyor ba ngo mtshar ba’i khyad chos",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e7886e4a6785cfd60d102a",
+          "author": "Drametse Monastery Collection",
+          "title": "chos 'khor rgyal po'i drag po'i gtor ma'i las rim dang 'brel bar bod rbad gsad gsum gyi man ngag rno myur thogs med gnam lcags 'bar ba' thog mda'",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e76180cc48e59ad74f00ef",
+          "author": "Gangtey Monastery Collection",
+          "title": "mDos gzhung chen mo",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e7618fcc48e59ad74f0599",
+          "author": "Gangtey Monastery Collection",
+          "title": "Thugs chen gsang 'dus skor",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e788fb4a6785cfd60d242c",
+          "author": "Drametse Monastery Collection",
+          "title": "zab lam dbang gyi mtsham sbyor sogs",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | western | confirmed_first",
+      "size": 618,
+      "sampled": [
+        {
+          "id": "69908aed285673ff8cb80c3b",
+          "author": "Anonymous",
+          "title": "Acaib ul-mahlukat (Wonders of Creatures)",
+          "language": "Turkish",
+          "catalog_rows": 84
+        },
+        {
+          "id": "697c8e0f58e66b1bd4f095d8",
+          "author": "Anonymous",
+          "title": "Freymäurer Bibliothek",
+          "language": "German",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1d094b82ba5d5bed99883",
+          "author": "Unknown",
+          "title": "Geschichte d. Freim. I. Deutschland, Oesterreich, Preussen",
+          "language": "German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "698420e35484bd017cef00ec",
+          "author": "Unknown",
+          "title": "Observationum selectarum ad rem litterariam spectantium",
+          "language": "Latin",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69942eb6b2f6748db4abf915",
+          "author": "John Philoponus",
+          "title": "Commentaria in De Naturali Auscultatione (Physics) libros IV",
+          "language": "Latin",
+          "catalog_rows": 10
+        },
+        {
+          "id": "6952db5777f38f6761bc7519",
+          "author": "Athanasius Kircher",
+          "title": "Prodromus Coptus sive Aegyptiacus",
+          "language": "Latin",
+          "catalog_rows": 7
+        },
+        {
+          "id": "69dbcc850f8c5edf20f4c824",
+          "author": "Thomas Aquinas",
+          "title": "De arte praedicandi. Add: O mors quam amara est memoria tua. Forma arboris",
+          "language": "Latin",
+          "catalog_rows": 585
+        },
+        {
+          "id": "6984e8498a2f054f912420d9",
+          "author": "Paracelsus, Theophrastus",
+          "title": "Philosophiae et medicinae utriusque universae, compendium",
+          "language": "Latin",
+          "catalog_rows": 38
+        },
+        {
+          "id": "6988a5a24dc12b4588052a2c",
+          "author": "Unknown",
+          "title": "Sanctorum, et martyrum Christi icones ... Der Heiligen ... Bildnussen",
+          "language": "Latin-German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69c1bae58522835be845b540",
+          "author": "Anonymous",
+          "title": "Incantations and amulets",
+          "language": "Hebrew and Judeo-Arabic",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69dbcca00f8c5edf20f4cb8e",
+          "author": "Thomas Aquinas",
+          "title": "De humanitate Christi",
+          "language": "Latin",
+          "catalog_rows": 585
+        },
+        {
+          "id": "69b4188b2b0edf3eaa2dd387",
+          "author": "Unknown",
+          "title": "Collection of Alchemical and Mystical Drawings (PH434)",
+          "language": "German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69c1b350b82ba5d5bed957b7",
+          "author": "Unknown",
+          "title": "IX Provinz Schweden : Verhältnisse in ihrem Innern von 1779. Installation des Vicarii Salomonis 15 März 1780, nebst Abb. der dabei gebr. Kleidung u. Insignien. Beschlüsse d. convents z. Wilhelmsbad 1782 über diese Provinz [enz.]",
+          "language": "German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69af22d77c27d4b637feedb5",
+          "author": "Lactantius",
+          "title": "Lactantius, Glossae (Placidus)",
+          "language": "Latin",
+          "catalog_rows": 35
+        },
+        {
+          "id": "69c820ca6c6f3cc53c84a904",
+          "author": "Unknown",
+          "title": "Die isländische Edda",
+          "language": "German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69c1bf2a8522835be846c268",
+          "author": "Anonymous",
+          "title": "Biblical fragment",
+          "language": "Hebrew, Aramaic, and Arabic.",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c709e8da9771c716315e76",
+          "author": "Unknown",
+          "title": "Ueber den nach goettlicher Direction erfolgten Abzug des ... Herrn D. Speners",
+          "language": "German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6978ee3a5ca42f98164d5396",
+          "author": "Anonymous",
+          "title": "Chrysorrhoas. Sive. De arte chymica, dialogus",
+          "language": "Latin",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69b630b31c1c21a373803cc2",
+          "author": "Bernard",
+          "title": "[Speculum de honestate vitae] : ; daran",
+          "language": "Latin",
+          "catalog_rows": 20
+        },
+        {
+          "id": "69c1bd258522835be8467d18",
+          "author": "Anonymous",
+          "title": "Büchlein von der Liebe Gottes, etc.",
+          "language": "German",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69bfccd28ab50eb88e8c68e0",
+          "author": "Anonymous",
+          "title": "Bodleian Library MS. Barocci 99",
+          "language": "Greek",
+          "catalog_rows": 84
+        },
+        {
+          "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95",
+          "author": "Paracelsus",
+          "title": "Opera Omnia Medico-Chemico-Chirurgica",
+          "language": "Latin",
+          "catalog_rows": 38
+        },
+        {
+          "id": "69c1bb358522835be845d64b",
+          "author": "Anonymous",
+          "title": "Composite manuscript: Judeo-Arabic text on Esther and Muḳadimat on weekly readings of the Torah",
+          "language": "Judeo-Arabic and Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc368522835be8461dc5",
+          "author": "Anonymous",
+          "title": "Yemenite Hafṭarot with Aramaic Targum",
+          "language": "Hebrew and Aramaic",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69b21cf8429e087c6f866456",
+          "author": "Desiderius Erasmus",
+          "title": "Novum Testamentum (Greek-Latin, 2nd Froben edition)",
+          "language": "Greek",
+          "catalog_rows": 332
+        },
+        {
+          "id": "69b525a929577f283b57a553",
+          "author": "(unknown)",
+          "title": "Nvova, e vera relatione dell'horibilissimo, e spauentosissimo temporale, seguito il primo d'Agosto del 1674. Nella citta di Amsterdam in Holanda ..",
+          "language": "Italian",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6991c5603074a1745a410fed",
+          "author": "Various",
+          "title": "Alchemical Recipe Collection (~2000 recipes) (ZB Solothurn, S 392)",
+          "language": "German",
+          "catalog_rows": 130
+        },
+        {
+          "id": "69c83b886c6f3cc53c84f6bc",
+          "author": "anonymous",
+          "title": "Biblisches Psalter-Schaz-Kästlein",
+          "language": "German",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c285f8b82ba5d5beda6619",
+          "author": "Unknown",
+          "title": "Materialien zur Israëlitenfrage in der Maurerei Band II 1838-November 1843",
+          "language": "German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69904fc47d19f3f2aac1d7f3",
+          "author": "Athanasius Kircher",
+          "title": "Ars Magna Sciendi",
+          "language": "Latin",
+          "catalog_rows": 7
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | cjk | confirmed_first",
+      "size": 427,
+      "sampled": [
+        {
+          "id": "6992ce83673ee1e40e320d58",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(一百三)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cf8af5b4f75c1a4c9285",
+          "author": "魏源",
+          "title": "海國圖志(19)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69af0dce008f8570d42a739b",
+          "author": "Unknown (Ming Dynasty)",
+          "title": "重刊天文秘略 (Chong Kan Tian Wen Mi Lue: Reprinted Secret Compendium of Astronomy)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ce8a673ee1e40e320f60",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(一百五)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e014e327a1381d255993ee",
+          "author": "Yamamoto Tsunetomo",
+          "title": "Hagakure (葉隠), Vol. 2",
+          "language": "Japanese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cd7e43713c66ea636d58",
+          "author": "允祿 et al.",
+          "title": "皇朝禮器圖式",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cde981c9d7efb84d0ba0",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(六十一)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ce532960dc4e5cea911a",
+          "author": "茅元儀",
+          "title": "武備志(五十五)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ce203ea667fbac8283ec",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(七十六)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ce60673ee1e40e320488",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(九十三)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ce63673ee1e40e320633",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(九十四)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cedc673ee1e40e321ad7",
+          "author": "茅元儀",
+          "title": "武備志(八十五)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699df07e3430a1d77dc79099",
+          "author": "Zhang Nan",
+          "title": "新鐫神峰張先生通考闢謬命理正宗大全 (Orthodox Compendium of Fate Calculation)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cf93f5b4f75c1a4c9383",
+          "author": "魏源",
+          "title": "海國圖志(21)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cf3af5b4f75c1a4c8467",
+          "author": "吳其濬",
+          "title": "植物名實圖考(十七)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cde281c9d7efb84d096b",
+          "author": "茅元儀",
+          "title": "武備志(三十二)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ca84d4d545ae73fee3cc",
+          "author": "Cheng Dawei",
+          "title": "新編直指算法統宗 (Suanfa Tongzong: Systematic Treatise on Arithmetic) Vol 1",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cdfe00f13b15f3ca3be9",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(六十七)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cd31ae978f7d415986d9",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(十一)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ce582960dc4e5cea91f3",
+          "author": "茅元儀",
+          "title": "武備志(五十六)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992caf8d4d545ae73feec07",
+          "author": "Chen Tuan",
+          "title": "河洛真數 (Helo Zhenshu: True Numbers of the River Luo) Vol 1",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ce9e673ee1e40e3212dd",
+          "author": "司農司",
+          "title": "農桑輯要(四)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cda043713c66ea637aa0",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(四十一)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cf78f5b4f75c1a4c900a",
+          "author": "吳其濬",
+          "title": "植物名實圖考(三十一)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cee1673ee1e40e321b2b",
+          "author": "茅元儀",
+          "title": "武備志(八十六)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cd9243713c66ea6374ff",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(三十七)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cd8043713c66ea636ec0",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(三十二)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992d04e219cb601da026784",
+          "author": "唐岱",
+          "title": "繪事發微",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992ceb8673ee1e40e3216b0",
+          "author": "茅元儀",
+          "title": "武備志(七十七)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cdef81c9d7efb84d0e4f",
+          "author": "王圻, 王思義",
+          "title": "三才圖會(六十三)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "mid | western | confirmed_first",
+      "size": 295,
+      "sampled": [
+        {
+          "id": "69b51e3c47b06ecd5818c130",
+          "author": "Postel, Guillaume",
+          "title": "De linguae Phoenicis ... excellentia ... Praefatio",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69790aaaeb0dcfd399123421",
+          "author": "Bruno, Giordano",
+          "title": "Le ciel reformé",
+          "language": "French",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69593413b282844d7b277aaf",
+          "author": "Robert Fludd",
+          "title": "Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)",
+          "language": "Latin",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69b21cad429e087c6f8656a2",
+          "author": "Gerardus Joannes Vossius",
+          "title": "Harmoniae Evangelicae",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69c63768881bf48c13c424d7",
+          "author": "Maier, Michael",
+          "title": "Viatorium, hoc est, de montibus planetarum",
+          "language": "French",
+          "catalog_rows": 2
+        },
+        {
+          "id": "6992469fbc722ec0ee80f357",
+          "author": "Constantin von Tischendorf (ed.)",
+          "title": "Evangelia Apocrypha (Apocryphal Gospels, Greek & Latin)",
+          "language": "Latin",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69af0fb5024c2bf295285490",
+          "author": "Jacopo Zabarella",
+          "title": "In Tres Aristotelis Libros de Anima Commentarij",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "6991ed378bec46532eb4a4a9",
+          "author": "Francesco Patrizi",
+          "title": "Discussionum Peripateticarum Tomi IV",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69c7f7fe6c6f3cc53c842218",
+          "author": "Lull, Ramón",
+          "title": "De auditu kabbalistico sive ad omnes scientias introductorium",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69dbc9fd1040d1d5e20a84d2",
+          "author": "Ficinus, Marsilius",
+          "title": "Liber de sole et lumine",
+          "language": "Latin",
+          "catalog_rows": 4
+        },
+        {
+          "id": "69b51e3ecf111105c4299001",
+          "author": "Postel, Guillaume",
+          "title": "Cosmographicae disciplinae compendium",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69aeabda67e6731bc1366f62",
+          "author": "Aldus Manutius",
+          "title": "Institutionum Grammaticarum Libri Quatuor",
+          "language": "Latin",
+          "catalog_rows": 4
+        },
+        {
+          "id": "69de1c7cd10d4b0d3f6f293e",
+          "author": "Marquis de Sade",
+          "title": "Justine, ou les Malheurs de la vertu",
+          "language": "French",
+          "catalog_rows": 1
+        },
+        {
+          "id": "6953e6111479a63c11084c99",
+          "author": "Galen",
+          "title": "De Simplicium Medicamentorum Facultatibus (1561)",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69dbcb831040d1d5e20b7659",
+          "author": "Regiomontanus, Johannes (Müller, Johann, of Königsberg)",
+          "title": "Ephemerides, sive Almanach perpetuum. Ed: Johannes Lucilius Santritter",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69b51dba768235dc6598717a",
+          "author": "Maier, Michael",
+          "title": "Civitas corporis humani a Tyranide arthritica vindicata",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69b51e3ecf111105c4298f9a",
+          "author": "Postel, Guillaume",
+          "title": "Cosmographicae disciplinae compendium : in suum finem, hoc est ad divinae providentiae certissimam demonstrationem conductum",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69dbcb571040d1d5e20b5fd2",
+          "author": "Ptolemaeus, Claudius",
+          "title": "Cosmographia (Abstract, in German)",
+          "language": "German",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69b52c7f3dd6d94230280bec",
+          "author": "Galen",
+          "title": "Galeni De purgantibus medicamentis",
+          "language": "Greek",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69c87bd56c6f3cc53c858922",
+          "author": "Rabanus Maurus",
+          "title": "De laudibus sancte crucis",
+          "language": "Latin",
+          "catalog_rows": 3
+        },
+        {
+          "id": "6993895d0f04c37dcfa60d2e",
+          "author": "Galen",
+          "title": "Galen, De simplicium medicamentorum facultatibus",
+          "language": "Greek",
+          "catalog_rows": 2
+        },
+        {
+          "id": "6993831384cf5845c644cb68",
+          "author": "Galen",
+          "title": "Galen, Medical Writings (MS)",
+          "language": "Greek",
+          "catalog_rows": 2
+        },
+        {
+          "id": "6990527e8d19cbc90d9d6456",
+          "author": "Agostino Steuco",
+          "title": "De Perenni Philosophia libri X",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69c828ae6c6f3cc53c84c46c",
+          "author": "[Picard, Bernhard]",
+          "title": "Superstitions anciennes et modernes",
+          "language": "French",
+          "catalog_rows": 1
+        },
+        {
+          "id": "6952592bab34727b1f045d04",
+          "author": "Guillaume Postel",
+          "title": "De originibus",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "6952dac977f38f6761bc6cb0",
+          "author": "Robert Fludd",
+          "title": "Utriusque Cosmi Historia Vol. 2",
+          "language": "Latin",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69c858a16c6f3cc53c8542ee",
+          "author": "Postel, Guillaume",
+          "title": "Eversio falsorum Aristotelis dogmatum",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "6958e0659659a6529d5770fd",
+          "author": "Andrea Cesalpino",
+          "title": "Appendix ad libros de plantis",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69aeaaaa2eebe4c57e9ad797",
+          "author": "Pietro Bembo",
+          "title": "Epistolarum Familiarium Libri VI",
+          "language": "Latin",
+          "catalog_rows": 4
+        },
+        {
+          "id": "69a5d8254d84314297c08e10",
+          "author": "Ulisse Aldrovandi",
+          "title": "Ornithologiae, Hoc Est De Avibus Historiae Libri XII",
+          "language": "Latin",
+          "catalog_rows": 1
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | semitic | confirmed_first",
+      "size": 128,
+      "sampled": [
+        {
+          "id": "69924401bc722ec0ee80b312",
+          "author": "Daniel Bomberg (printer) / Felix Pratensis (ed.)",
+          "title": "Mikraot Gedolot: First Rabbinic Bible (Venice, 1517)",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c1bb3e8522835be845dcd3",
+          "author": "Shneur Zalman, of Lyady, 1745-1812; Schneersohn, Menahem Mendel, 1789-1866; Schneersohn, Samuel, 1834-1882; Hilel, ha-Leṿi, mi-Pariṭsh, approximately 1795-1864",
+          "title": "Hasidic discourses",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e72ca3a409200ea79f535f",
+          "author": "J. P. N. Land (ed.)",
+          "title": "Die Fabeln des Sophos (Syriac Syntipas)",
+          "language": "Syriac",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c1bb478522835be845e4d1",
+          "author": "Schneersohn, Menahem Mendel, 1789-1866שניאורסון, מנחם מנדל, 1789-1866",
+          "title": "Hasidic discourses",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3e5ba304c1c6b39509ddb",
+          "author": "Abraham Abulafia",
+          "title": "Collection of kabbalistic works",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5ee1ebfd8cafd91e432cd",
+          "author": "Ephrem the Syrian",
+          "title": "Sancti Ephraem Syri Opera Omnia vol. 3",
+          "language": "Syriac",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5ed6d96d6dd816a56a840",
+          "author": "Bar Hebraeus",
+          "title": "Le Livre des Splendeurs (Grammaire)",
+          "language": "Syriac",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c1bb398522835be845d733",
+          "author": "Schneersohn, Menahem Mendel, 1789-1866שניאורסון, מנחם מנדל; Shneur Zalman, of Lyady, 1745-1812שניאור זלמן בן ברוך, 1745-1812; Schneersohn, Dov Baer, 1773-1827שניאורסון, דב בר בן שניאור זלמן, 1773-1827",
+          "title": "Hasidic discourses",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69908ad8285673ff8cb80bac",
+          "author": "Zakariya al-Qazwini",
+          "title": "Merveilles des pays",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b4cd31d5b6c3815e1a4cc9",
+          "author": "Immanuel Franco",
+          "title": "Tercera parte del sedur",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b5259a95677df8153c62c0",
+          "author": "Aaron of Pesaro",
+          "title": "Sefer Toldot ʼAharon :, marʼeh maqom mi-kol ha-pesuqim šeba-Torah u-neviʼim u-k̲etuvim ha-nimz̲aʼim be-Šita sidre /, ḥibro ha-rav ʼAharon mi-Pesaro ... ʻim tosefet Toldot Yaʻaqov marʼeh maqom meha-pesuqim mi-kol ha-miqraʼ ha-nidrašim ba-Talmud Yerušalmi we-ʻaśah yede ... Yaʻaqov Śaśporṭaś ...",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69920bcde0a548a13d885a90",
+          "author": "Eli Smith & Cornelius Van Dyck",
+          "title": "Al-Kitab al-Muqaddas: Arabic Bible",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6984e84e45b45b78e8d48ab4",
+          "author": "Cordovero, Moses",
+          "title": "[Hebrew: Sefer pa'amon ve'rimon]",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c1baba8522835be8459dc6",
+          "author": "Judah Loew ben Bezalel, approximately 1525-1609יהודה ליואי בן בצלאל, 1525 בערך-1609",
+          "title": "Novellae on the Arbaʾah Ṭurim by Rabbi Löw of Prague",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b63e852a1dde00d5a9e472",
+          "author": "Al-Zamakhshari",
+          "title": "Al-Kashshaf (Quran Commentary)",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69ef2f6c72c1376fdf2af335",
+          "author": "Dioscorides (Arabic trans.)",
+          "title": "Kitab-i Hashayish (Arabic/Persian Dioscorides, illustrated MS)",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3003aa1a4246ddb45be35",
+          "author": "Thomas Erpenius",
+          "title": "Novum Testamentum Arabice",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5eb54aa8e0e4092146fcc",
+          "author": "Paul Bedjan (ed.)",
+          "title": "Acta Martyrum et Sanctorum, Tomus IV",
+          "language": "Syriac",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3008fe5d6d64d8e199768",
+          "author": "Sebastian Munster",
+          "title": "Grammatica Hebraica",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c7b2da25ec2ba5ccd7f49a",
+          "author": "Rovigo, Abraham",
+          "title": "[Hebrew: Sefer eshel Avraham]",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c1bb558522835be845f021",
+          "author": "Aaron ben Moses, ha-Levi, of Starosielce, 1766-1828הורביץ, אהרן, מסטרשילוב, 1766-1828",
+          "title": "ʿAvodat ha-Leṿi by R. Aaron ben Moses Horowitz ha-Levi of Starosielce",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3e5af304c1c6b39509880",
+          "author": "Moses Cordovero",
+          "title": "Zohar (Parashat Bereshit, with Moses Cordovero commentary Or yakar)",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3e5b5304c1c6b395099fd",
+          "author": "Isaac Luria",
+          "title": "Luria's Commentary on the Zohar of Genesis",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c1ba898522835be845930d",
+          "author": "Averroës, 1126-1198אבן רשד, מחמד, 1126-1198",
+          "title": "Sefer ha-Ḥus ṿeha-Muḥash me-Ḳitsur ibn Rushd",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b52596cced70d8e6d72a41",
+          "author": "Musaphia, Benjamin, c.1606-1675",
+          "title": "Zek̲er rav :, yizkor yeme ʻolam we-šoreš davar nimz̲a bi-lešonenu ha-qedošah le-zikaron lifne Śarah tamid.",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e534dad48480a38696741e",
+          "author": "Abu al-Faraj al-Isfahani",
+          "title": "Kitab al-Aghani (Book of Songs), Vols. 1-3",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6a0a248b60700bc49f818309",
+          "author": "Abū al-Qāsim Muḥammad ibn Aḥmad al-ʿIrāqī al-Sīmāwī (active 13th c., Mamluk Egypt)",
+          "title": "Kitāb al-aqālīm al-sabʿah (The Book of the Seven Climes)",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c7f4546c6f3cc53c841836",
+          "author": "Shalom, Abraham ben Isaac",
+          "title": "[Hebrew: Sefer neveh shalom]",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5f3b61cf742c3604133ea",
+          "author": "Severus of Antioch",
+          "title": "Contra Impium Grammaticum and Homilies",
+          "language": "Syriac",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b4cd44d5b6c3815e1a52de",
+          "author": "Menasseh ben Israel",
+          "title": "Misnaioth",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | semitic | confirmed_first",
+      "size": 98,
+      "sampled": [
+        {
+          "id": "69c1bade8522835be845b016",
+          "author": "Anonymous",
+          "title": "Pocket-size Jewish prayer book",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc478522835be84622e8",
+          "author": "Anonymous",
+          "title": "Liturgical fragment",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69a5e659e751f06e74b899e7",
+          "author": "Various",
+          "title": "Mingana-Lewis Palimpsest (Syriac/Arabic/Quranic)",
+          "language": "Syriac",
+          "catalog_rows": 130
+        },
+        {
+          "id": "69c1bb538522835be845ee95",
+          "author": "Anonymous",
+          "title": "Hasidic discourses",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc5f8522835be84622f6",
+          "author": "Anonymous",
+          "title": "Sheṭar yerushah",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bd708522835be846a1df",
+          "author": "Anonymous",
+          "title": "Astronomical calendar",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bb9b8522835be846057c",
+          "author": "Anonymous",
+          "title": "Amulet for protection",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bb178522835be845ccc2",
+          "author": "Anonymous",
+          "title": "Maḥzor for the whole year, according to the rite of Burgundy and Mascone",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc728522835be8463572",
+          "author": "Anonymous",
+          "title": "Hafṭarot in Hebrew, Aramaic and Judeo-Persian",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc3e8522835be84620a8",
+          "author": "Anonymous",
+          "title": "Yemenite Hebrew Bible (incomplete)",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc148522835be846161f",
+          "author": "Anonymous",
+          "title": "Tiḳun sheṭarot",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1b8908522835be844acf9",
+          "author": "Anonymous",
+          "title": "al-Mufākhirah",
+          "language": "Arabic",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bbfd8522835be84610bf",
+          "author": "Anonymous",
+          "title": "Afternoon prayer for the eve of the New Moon",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1b7a6fe4b8f25b9200a17",
+          "author": "Anonymous",
+          "title": "Hijazi Qur'an (possibly 7th century)",
+          "language": "Arabic",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69a5f3b71cf742c3604135bb",
+          "author": "Anonymous",
+          "title": "Syriac Lectionary",
+          "language": "Syriac",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1ba978522835be845973b",
+          "author": "Anonymous",
+          "title": "Illuminated Hebrew Bible in Sephardi script",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bbd28522835be8460a78",
+          "author": "Anonymous",
+          "title": "Liturgical booklet relating to Shavuot",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc0b8522835be84613b7",
+          "author": "Anonymous",
+          "title": "Homilies and novellae",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69a5e461006a409842216e78",
+          "author": "Anonymous",
+          "title": "Syriac Manuscript (Codex Vaticanus Syriacus 160)",
+          "language": "Syriac",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc708522835be84634e8",
+          "author": "Anonymous",
+          "title": "Kabbalistic texts",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69a5e3f5006a409842216b6c",
+          "author": "Anonymous",
+          "title": "Syriac Gospel Lectionary (Cambridge Oo.1.32)",
+          "language": "Syriac",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1ba878522835be84592db",
+          "author": "Anonymous",
+          "title": "Text on Jesus as Messiah",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bb278522835be845d3ad",
+          "author": "Anonymous",
+          "title": "Account book",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1ba9b8522835be8459ac5",
+          "author": "Anonymous",
+          "title": "Psalms 45:16-78:46",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc098522835be846135b",
+          "author": "Anonymous",
+          "title": "Incomplete Passover Haggadah and midrashim",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69b41952ddff1f043992a1d4",
+          "author": "Hermes Trismegistus",
+          "title": "Four Leaves from an Islamic Alchemical Text (PH412)",
+          "language": "Arabic",
+          "catalog_rows": 15
+        },
+        {
+          "id": "69c1bb058522835be845c4d0",
+          "author": "Anonymous",
+          "title": "Halakhic scribal guide",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bc188522835be84616e7",
+          "author": "Anonymous",
+          "title": "Brontological treatise and the interpretation of rainbows",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bbbb8522835be8460594",
+          "author": "Anonymous",
+          "title": "Kabbalistic Yiḥud",
+          "language": "Hebrew",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1be4e8522835be846c16b",
+          "author": "Anonymous",
+          "title": "Magical text on a scapula bone",
+          "language": "Arabic",
+          "catalog_rows": 84
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | western | needs_review",
+      "size": 78,
+      "sampled": [
+        {
+          "id": "69b525bf29577f283b57bc17",
+          "author": "Purchas, Samuel, ca1577-1626",
+          "title": "Derde reys, gedaan voor de Engelsche Maatschappy na Oost-Indien, met drie scheepen, de Draak, Hector, en Consent, van anno 1607 tot 1610. onder den generaal Willem Keeling, door hem selfs beschreven ; nu aldereerst uyt 't Engelsch vertaald ; vercierd met schoone kopere platen, en volkomene registers",
+          "language": "Dutch",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69ae95b87f0f0e8879510aaf",
+          "author": "Joannes Stobaeus (ed. Augustus Meineke)",
+          "title": "Ioannis Stobaei Florilegium",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "697b079920ebe13ce499c770",
+          "author": "[Saint-Martin, Louis Claude de]",
+          "title": "Des erreurs et de la verite",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b51dbaefd8df28f2da9f26",
+          "author": "Fludd, Robert",
+          "title": "Tomi Secundi Tractatus Primi, Sectio Secunda, De technica Microcosmi historia : in Portiones VII. divisa",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69938a8ed5a98fd66f42cef9",
+          "author": "Demosthenes; Lysias; Synesius",
+          "title": "Demosthenes, Epitaphios; Lysias; Synesius",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5b9a1d76b98f272fcedeb",
+          "author": "Guidobaldo del Monte",
+          "title": "Mechanicorum liber",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69482afb914d007380634d28",
+          "author": "Johannes Reuchlin",
+          "title": "De verbo mirifico",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b4ccefd5b6c3815e1a2b71",
+          "author": "Lucian of Samosata",
+          "title": "Saturnalia",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b4c08986a5921d5bc444b1",
+          "author": "Hermes Trismegistus; Marsilio Ficino",
+          "title": "Mercurius Trismegistus a Ficino Latine interpretatus. aliorum philosophorum scripta",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6953c74877f38f6761bdaea9",
+          "author": "Jalal al-Din Rumi / Rosen (trans.)",
+          "title": "Mesnevi (German) - Rumi",
+          "language": "Persian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525ca6be6046083032513",
+          "author": "Herrera, Antonio de",
+          "title": "Twee verscheyde scheeps-togten gedaan na de Moluccos en St. Martha, in 't jaar 1525 en vervolgens. :, De eerste met 6 scheepen uyt de Corunna door den ridder Garcia Jofre de Loyasa, na de specery-eylanden; de tweede door den land-voogd Rodrigue de Bastidas en P. Alvares Palomino, uyt de haven van St. Domingo na St. Martha, &c. : behelsende veel ongemeene reys-verhaalen; en met welk een over-groote bekostiging van scheeps-vlooten, oorloogen en bloed-vergieting, de Castiliaanen sig meester van de West-Indise landschappen en voorname eylanden gemaakt hebben ..., in 't Spaans beschreeven door ... Antonius de Herrera, ... ; nu alder-eerst in 't Neder-duyts vertaald ; met noodig register en konst-printen verrĳkt",
+          "language": "Dutch",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b51e9047b06ecd581937f5",
+          "author": "Weigel, Valentin",
+          "title": "Informatorium Oder kurtzer Unterricht, welcher gestalt man durch drey Mittel den schmalen Weg zu Christo sich führen kan lassen : Als I. Durch übung deß Gebetts. II. Durch die Leyter Jacobs. III. Durch den Schlüssel Davids",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b52c8f3dd6d942302812b2",
+          "author": "Manuel Bryennius",
+          "title": "Manuel Bryenni Musica",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c6fd8ada9771c7163154e0",
+          "author": "Boehme, Jacob",
+          "title": "Vom Zank und Streit der Gelehrten um Christi Testamenta",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5b972486a857b0587cb7c",
+          "author": "Niccolò Tartaglia",
+          "title": "Nova scientia",
+          "language": "Italian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6991eaef2f801130a473ec5c",
+          "author": "Leonardo da Vinci",
+          "title": "Notes et dessins sur la generation et le mecanisme des fonctions intimes",
+          "language": "Italian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e419e58a8dae1074c51fc2",
+          "author": "Longus",
+          "title": "Daphnis & Chloe (Greek-English, Loeb)",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69f080be883d181634179c88",
+          "author": "Herodas; J. Arbuthnot Nairn",
+          "title": "The Mimes of Herodas",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b4c08d86a5921d5bc445cf",
+          "author": "Hermes Trismegistus; Apuleius; Marsilio Ficino",
+          "title": "Philosophica quaedam, Trismegistus per Apuleium et per Marsilium Ficinum traductus",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a68457256d25f466059e53",
+          "author": "Witelo; Georg von Peuerbach",
+          "title": "Perspectiva (De natura, ratione & proiectione radiorum visûs, luminum, colorum atque formarum)",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6953a89077f38f6761bd2214",
+          "author": "Brooke, McLean, Thackeray (eds.)",
+          "title": "Septuagint (LXX) Codex Vaticanus Edition",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525c72f891867c1ae5290",
+          "author": "Terry, Edward",
+          "title": "Scheeps-Togt van Edward Terry Capellaan van den Ambassadeur Thomas Roe, na Oost-Indien; met een vloot van 5 scheepen. Gedaan in het jaar 1615. :, Verhalende een zee-slag tussen de Engelsse en een Portugysse Kraak, omtrent het eyland Gazidia, ook de gelegenheyd deses eylands met den gods-dienst, aart, zeeden en kleeding deser volkeren. Mitsgaders een nette en naauw-keurige beschrĳving van de staten van den Mogol, op wat wĳse des selfs land in provincien verdeelt, en aan andere land-palen is grensende, met de hoofd-stad van yeder landschap, en de voornaamste rivieren. Als mede de gods-dienst en zeeden der mahometanen en heydenen, 't verbranden hunner wĳven met de mannen, onthouding van spĳsen, verhuysing der zielen en andere zeldsaamheeden, nu alder-eerst uyt Engels vertaalt. Met noodig register en konst-printen verrĳkt",
+          "language": "Dutch",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699052538d19cbc90d9d5f17",
+          "author": "Pierre de Lancre",
+          "title": "L'incredulite et mescreance du sortilege plainement convaincue",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b52c543dd6d9423027f694",
+          "author": "Avicenna; Alexander of Aphrodisias",
+          "title": "Alexandri Expositio in librum meteorologicorum / Avicennae De anima",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6a0b2e9f688e6a8e15f66ce4",
+          "author": "Vincenzo Scamozzi",
+          "title": "L'Idea della Architettura Universale (1615 first edition)",
+          "language": "Italian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6a0a248860700bc49f8182fc",
+          "author": "Anonymous (Donum Dei tradition; often attributed to Georgius Aurach de Argentina)",
+          "title": "Donum Dei (The Gift of God) — Alchemical Treatise with Flask Illustrations",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b6500e18b87551bfc9ae84",
+          "author": "Glareanus, Henricus Loriti",
+          "title": "Musicae epitome ex Glareani dodecachordo",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69affe4f6f6f6a408aa74248",
+          "author": "Diophantus of Alexandria; Paul Tannery (ed.)",
+          "title": "Diophanti Alexandrini Opera Omnia, Vol. 1",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525cb6be6046083032716",
+          "author": "Purchas, Samuel, ca1577-1626",
+          "title": "Sesde reys van de Engelsche Maatschappy, na Oost-Indien, door den Generaal, Hendrik Middelton, vervattende sĳn togt na Socotora en door de Roode-Zee na Moha, alwaar hy verraderlĳk van de Turken, met eenige van sĳn volk, wird gevangen genoomen, na Zenan gevoert, en eyndelĳk ontquam; dwingende de Turken hem sĳne geleedene schade te vergoeden, &c. :, Als mede Dag-register van Kapiteyn Nicolaas Dounton, uytgevaren, voor luytenant in dese reys, op het schip de Peper-corn; handelende van de vrugtbaarheyd van Saldania, met des selfs gediertens, de meeste steeden en zee-havens, aan en omtrent de Roode-Zee geleegen, en eenige verdere bysonderheeden, die in de reys van Middelton maar kort zĳn aangeroerd, of overgeslagen. Beyde gedaan in het jaar 1610 en vervolgens, nu aldereerst uyt het Engels vertaald. Met noodig register en konst-printen verrĳkt",
+          "language": "Dutch",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b51dd5cf111105c429155f",
+          "author": "Mynsicht, Adrian von",
+          "title": "Thesaurus et armamentarium medico-chymicum",
+          "language": "Latin",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | indic | confirmed_first",
+      "size": 72,
+      "sampled": [
+        {
+          "id": "69907c6e5f855ec553e752e5",
+          "author": "Unknown",
+          "title": "Muhurta Manjari (Second Copy)",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907cd45f855ec553e77a33",
+          "author": "Unknown",
+          "title": "Janma Pradeep (Natal Astrology)",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907d9efc4b8b2032ced8be",
+          "author": "Unknown",
+          "title": "Svapanadhyaya (Dream Chapter)",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907da8b91bcb2db3f6d76c",
+          "author": "Unknown",
+          "title": "Samar Sara Tika (Military Astrology)",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907f3aafd715da775bc9e0",
+          "author": "Unknown",
+          "title": "Ganakaranjani (Telugu Siddhanta Jyotisha)",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69906d1164d44bd0a0ef51c3",
+          "author": "Unknown",
+          "title": "Mandapa Muhurta",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "699066ef249ce014347d20c8",
+          "author": "Unknown",
+          "title": "Chandra Bhavadhyaya (Lunar Mansions)",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "699066ea249ce014347d2088",
+          "author": "Unknown",
+          "title": "Prashna Manorama",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907da6aee9f4aa58593249",
+          "author": "Unknown",
+          "title": "Nav Ratnamala",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907e1cb91bcb2db3f6e4ae",
+          "author": "Unknown",
+          "title": "HoraChakram5442GhaAlm25Shlf1DevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907cfe5f855ec553e78562",
+          "author": "Unknown",
+          "title": "Bha Vigyanam",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907e02b91bcb2db3f6d9c8",
+          "author": "Unknown",
+          "title": "JyotishSamgraha990GhaAlm5Shlf3DevanagariJyotisham",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907e05b91bcb2db3f6da8c",
+          "author": "Unknown",
+          "title": "SiddhantaKaustubhaBhugolRachnaAdhyayaRamgopalSharma4049GhaAlm19Shlf3DevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "699068c290f6a221d3a9a8c2",
+          "author": "Anonymous",
+          "title": "Tatkala Bhrigu Prasna (Prasna Kalpa Vriksha)",
+          "language": "Sanskrit",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69907dacaee9f4aa585935b9",
+          "author": "Unknown",
+          "title": "Dash Doshadi Vichara in Muhurta Vivarana",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69906a6f1cf6ed5fbc8f5cc5",
+          "author": "Unknown",
+          "title": "Graha Chikitsa",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6991d8a08c1030b12444c14c",
+          "author": "Unknown",
+          "title": "Paramesvaratantra",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69906d3064d44bd0a0ef528e",
+          "author": "Unknown",
+          "title": "Navagraha Shanti",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907e07b91bcb2db3f6daaa",
+          "author": "Unknown",
+          "title": "RanvirVijaya5449GhaAlm25Shlf1DevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907e14b91bcb2db3f6e04e",
+          "author": "Unknown",
+          "title": "ShriRanveerVijaya5438Alm24Shlf5KaDevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69906883249ce014347d6632",
+          "author": "Anonymous",
+          "title": "Kerala Choothidam",
+          "language": "Sanskrit",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69907da5fc4b8b2032ced8d8",
+          "author": "Unknown",
+          "title": "Graha Gochar Phalam in Vidhi Ratna",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69906d4264d44bd0a0ef52df",
+          "author": "Unknown",
+          "title": "Dvadasha Bhavanan Phalani",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907dfdb91bcb2db3f6d95e",
+          "author": "Unknown",
+          "title": "SamudrikamAlm28Shlf56307DevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69906a631cf6ed5fbc8f57d8",
+          "author": "Unknown",
+          "title": "Navagraha Shanti Vidhanamu",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907c755f855ec553e75918",
+          "author": "Unknown",
+          "title": "Bhasha Svarodaya",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907dfbb91bcb2db3f6d8f8",
+          "author": "Unknown",
+          "title": "Samudrikam845GhaAlm4Shlf5DevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907e23b91bcb2db3f6e895",
+          "author": "Unknown",
+          "title": "VivahRatnaSankshepKhemankar854GhaAlm4Shlf5DevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69906d2864d44bd0a0ef524f",
+          "author": "Unknown",
+          "title": "Navagraha Makha Prayoga (Laghu Shaunaki)",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69907e0ab91bcb2db3f6ddb1",
+          "author": "Unknown",
+          "title": "PanchaSwaraa5443Alm25Shlf1GhaDevanagariJyotish",
+          "language": "Sanskrit",
+          "catalog_rows": 18
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | indic | confirmed_first",
+      "size": 54,
+      "sampled": [
+        {
+          "id": "69906821249ce014347d5660",
+          "author": "Nandalal Sastri",
+          "title": "Bhrigu Samhita Yogavali",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6990646def12272ffdc92547",
+          "author": "Hari Prasad Bhatta",
+          "title": "Tajika Sarama",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699068458da6face82f77c58",
+          "author": "Viththala Dikshit",
+          "title": "Muhurta Kalpa Druma (Naval Kishore)",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69925822ad311253224cd753",
+          "author": "Eugène Burnouf",
+          "title": "Le Bhâgavata Purâna, tome premier (Burnouf French translation)",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69d0075c7d7491182a232acc",
+          "author": "Yaśodhara",
+          "title": "Rasaprakāśasudhākara",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6990796fb621b177c1af7208",
+          "author": "Daivajna Vachaspati; Vasudev (comm.)",
+          "title": "Lagna Chandrika with Subodhini Commentary",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69906737249ce014347d3654",
+          "author": "Uromarishi",
+          "title": "Jotida Chintamani 200",
+          "language": "Tamil",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699066de249ce014347d1e4c",
+          "author": "Ranganatha; Baladeva Prasad Mishra (comm.)",
+          "title": "Surya Siddhanta with Gudhartha Prakash",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699066672ec9f7db5717a270",
+          "author": "Bhavani Nath",
+          "title": "Prashna Deepakam",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907cf8a3654a711c0b6e77",
+          "author": "Ganpati Mishra",
+          "title": "Bala Vivekini of Ganpati Mishra",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907cfca3654a711c0b6e8f",
+          "author": "Prajapati Das",
+          "title": "Pancha Svara of Prajapati Das",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69ef2b5885daccce30f2e4ed",
+          "author": "Rajashekhara",
+          "title": "Kavyamimamsa of Rajashekhara",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6990666f2ec9f7db5717a544",
+          "author": "Bhrigu; ed. Ayodhya Prasad Mishra",
+          "title": "Bhrigu Samhita Kundali Khanda",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907c685f855ec553e75062",
+          "author": "Lalmani",
+          "title": "Muhurta Darpanam of Lalmani",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69906469ef12272ffdc9204a",
+          "author": "Ganapati",
+          "title": "Muhurta Ganapati",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699066f5249ce014347d21b6",
+          "author": "Balakrishna Malhara Lada",
+          "title": "Ramala Shastra (Geomancy)",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907d8caee9f4aa5859219a",
+          "author": "Kamalakara",
+          "title": "Siddhanta Tattva Viveka of Kamalakara",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907c455f855ec553e72c96",
+          "author": "Munisvara",
+          "title": "Siddhanta Sarvabhauma Purvardha",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69d0055e1bed36ac0b5558fa",
+          "author": "Nāgārjuna",
+          "title": "Rasaratnākara (manuscript)",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6990676c249ce014347d3fe6",
+          "author": "Agastya Maha Munivar",
+          "title": "Pancha Patchichastiram",
+          "language": "Tamil",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69d0059ee305ccff7ff943dc",
+          "author": "Caturbhuja Miśra; ed. Jādavjī Trikamjī Ācārya",
+          "title": "Rasahṛdayatantra",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69925826ad311253224cdafd",
+          "author": "Eugène Burnouf; A. Roussel; E.L. Hauvette-Besnault",
+          "title": "Le Bhâgavata Purâna, ou Histoire poétique de Krichna (Burnouf/Hauvette-Besnault)",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907d8faee9f4aa58592471",
+          "author": "Jagannatha",
+          "title": "Siddhanta Kaustubha of Jagannatha",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69906834249ce014347d5cef",
+          "author": "Mihira Chandra",
+          "title": "Shiva Svarodaya with Bhasha Tika",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907c395f855ec553e721fd",
+          "author": "Varahamihira; Bhattotpala (comm.)",
+          "title": "Yogayatra Vivritti by Bhattotpala",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69906550726f64800c10b7a9",
+          "author": "Brahmagupta",
+          "title": "Brahma Sphuta Siddhanta (Vol 2)",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907d065f855ec553e78c4c",
+          "author": "Ram Dev Mishra",
+          "title": "Tithi Nirnaya Deepika of Ram Dev Mishra",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699066c0249ce014347d18f1",
+          "author": "Pandit Devaki Nandan",
+          "title": "Brihat Muhurta Sindhu",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69907d91aee9f4aa585927e1",
+          "author": "Jagannatha",
+          "title": "Siddhanta Sara Kaustubha of Jagannatha",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69d5ad8c4dc55b8478de0e92",
+          "author": "Empress Shotoku (commission)",
+          "title": "Hyakumanto Darani",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | cjk | confirmed_first",
+      "size": 27,
+      "sampled": [
+        {
+          "id": "69d5ad934dc55b8478de0ec2",
+          "author": "Anonymous",
+          "title": "Hokekyo Yohin Kundoku",
+          "language": "Japanese",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69d5ae3b4dc55b8478de135e",
+          "author": "Anonymous",
+          "title": "Daihannya Haramittakyo Vol. 162",
+          "language": "Chinese",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6992ca19d4d545ae73fed7d6",
+          "author": "Unknown",
+          "title": "Pelliot chinois 2003 (Dunhuang Document)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992ca1ad4d545ae73fed806",
+          "author": "Unknown",
+          "title": "Pelliot chinois 3594 (Dunhuang Star Chart)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992caced4d545ae73feeb1c",
+          "author": "Unknown",
+          "title": "Pelliot chinois (Dunhuang Illustrated Manuscript)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992ca1cd4d545ae73fed82b",
+          "author": "Unknown",
+          "title": "Pelliot chinois 4518 (Dunhuang Illustrated Scroll)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6993575f8ed86e583b7b8703",
+          "author": "Anonymous",
+          "title": "San zi yin yi (Three Daoist Classics with Commentary)",
+          "language": "Chinese",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6992c9ed54b3f8b16b4afe56",
+          "author": "Unknown",
+          "title": "洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 2",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992ca3bd4d545ae73feda2a",
+          "author": "Unknown",
+          "title": "五百石洞天揮塵 (Wubai Shi Dongtian Huidun) Vol 5",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992c9f48cc847bfb99df8a6",
+          "author": "Unknown",
+          "title": "洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 6",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69d5ae474dc55b8478de136d",
+          "author": "Anonymous",
+          "title": "Daihannya Haramittakyo Vol. 565",
+          "language": "Chinese",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6992ca34d4d545ae73fed83b",
+          "author": "Unknown",
+          "title": "五百石洞天揮塵 (Wubai Shi Dongtian Huidun) Vol 1",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992ca38d4d545ae73fed90f",
+          "author": "Unknown",
+          "title": "五百石洞天揮塵 (Wubai Shi Dongtian Huidun) Vol 3",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992cad0d4d545ae73feeb43",
+          "author": "Unknown",
+          "title": "Pelliot chinois (Dunhuang Manuscript)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992ca1bd4d545ae73fed80a",
+          "author": "Unknown",
+          "title": "Pelliot chinois 2012 (Dunhuang Document)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992f3eec8c6ac61574e72a1",
+          "author": "Anonymous",
+          "title": "名山圖 (Mingshan Tu: Famous Mountains of China)",
+          "language": "Chinese",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6992cb54d4d545ae73feefd4",
+          "author": "Unknown",
+          "title": "周易洗心 (Zhou Yi Xixin: Cleansing the Heart through the Book of Changes) Vols 1-2",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992c9ffd4d545ae73fed67f",
+          "author": "Unknown",
+          "title": "道藏目錄詳註 (Daozang Catalogue with Detailed Notes) Vol 1",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "699df0863430a1d77dc7922c",
+          "author": "Unknown",
+          "title": "天文圖註祥異賦 (Illustrated Astronomical Omen Compendium)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992ca39d4d545ae73fed99f",
+          "author": "Unknown",
+          "title": "五百石洞天揮塵 (Wubai Shi Dongtian Huidun) Vol 4",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992c9f054b3f8b16b4aff28",
+          "author": "Unknown",
+          "title": "洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 4",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992c9f254b3f8b16b4aff77",
+          "author": "Unknown",
+          "title": "洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 5",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992ca3dd4d545ae73fedab5",
+          "author": "Unknown",
+          "title": "五百石洞天揮塵 (Wubai Shi Dongtian Huidun) Vol 6",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69935b6f2c63944063134103",
+          "author": "Anonymous",
+          "title": "Qiu sheng ge dao zong si jing (Four Daoist Classics incl. Daodejing)",
+          "language": "Chinese",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6992cac1d4d545ae73feeac4",
+          "author": "Unknown",
+          "title": "地球圖說 (Diqiu Tushu: Illustrated Explanation of the Earth)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992cacfd4d545ae73feeb33",
+          "author": "Unknown",
+          "title": "Pelliot chinois (Dunhuang Buddhist Painting)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        },
+        {
+          "id": "6992cad3d4d545ae73feeb78",
+          "author": "Unknown",
+          "title": "Pelliot chinois (Dunhuang Scroll)",
+          "language": "Chinese",
+          "catalog_rows": 18
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | other | confirmed_first",
+      "size": 20,
+      "sampled": [
+        {
+          "id": "69a5eae5d507939f0352d3c8",
+          "author": "Yovhannēs Zōhrapean (ed.)",
+          "title": "Astuatsashunchʻ Matean Hin ew Nor Ktakaranatsʻ (Armenian Bible, Zohrapean)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69dfda88220eedf04e13b747",
+          "author": "August Dillmann; William Wright",
+          "title": "Catalogue of the Ethiopic Manuscripts in the British Museum",
+          "language": "Ge'ez",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e786c96846fc56c490ed8a",
+          "author": "Cassianus Bassus (Armenian trans.)",
+          "title": "Girk' Vastakots' (Armenian Geoponica)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525ac95677df8153c6c28",
+          "author": "Armeense drukkerij (Gaspar Šēhrimaneanc eu Thadēos Ereuanci Hamazaspean) (Venezia)",
+          "title": "Tšašoc girkh gegheckatip eû vajelouč gaghaphareceal 'i matenic hnoc thagaûoracn Hajoc.",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e72b82a409200ea79f2b10",
+          "author": "Frédéric Macler",
+          "title": "Contes arméniens",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69943cc3a668f66e6953c8a5",
+          "author": "Victor Langlois",
+          "title": "Collection des historiens de l'Arménie, Vol. 2",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e0138c93b116d24238b125",
+          "author": "Carl Richard Lepsius",
+          "title": "Denkmäler aus Aegypten und Aethiopien (Lepsius, 894 plates)",
+          "language": "Egyptian hieroglyphs",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69920b74e0a548a13d882d08",
+          "author": "Hovhannes Zohrab (ed.)",
+          "title": "Astuatsashunch: Armenian Bible, New Testament (Zohrab)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5f088b29703bc86eb5b9f",
+          "author": "Nerses Shnorhali (Nerses IV the Gracious)",
+          "title": "Tughtk (Letters)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69d66bc14da4f8dce52f197e",
+          "author": "Proclus (trans. Ioane Petritzi)",
+          "title": "Elements of Theology",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69920b8ae0a548a13d88384b",
+          "author": "August Dillmann (ed.)",
+          "title": "Biblia Veteris Testamenti Aethiopica",
+          "language": "Ge'ez",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5f083b29703bc86eb57d2",
+          "author": "Socrates Scholasticus (trans. Philo of Tirak)",
+          "title": "Ekeghetsakan Patmutiwn (Ecclesiastical History - Armenian)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69944952185a84ef595ac060",
+          "author": "Various Armenian Ecclesiastics",
+          "title": "Girk Tghtots (Book of Letters)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e15828ec0a328a49d0a24a",
+          "author": "Deir el-Medineh (papyrus scroll)",
+          "title": "Hymns to Amun-Re",
+          "language": "Egyptian hieroglyphs",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525a829577f283b57a2d2",
+          "author": "Oskan",
+          "title": "Nor ktakaran srboy Awetarani Tearn meroy Yisusi Kristosi.",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69c1bd538522835be84692a5",
+          "author": "Abuna Selama",
+          "title": "Gebra ḥemāmāt",
+          "language": "Ge'ez",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69d66c0c4da4f8dce52f267f",
+          "author": "Ghukas Nuridjanian",
+          "title": "The Door of Geomancy (Armenian)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525a42f891867c1ae4132",
+          "author": "Karapet, Andrianacʹi",
+          "title": "Eražštakan ergecmounkh hogeuorakankh, at̃s̃ajnoc eu erdžankac, srboc vardapetac, Hajoc thargmančac zkargaûorouthĩs Ekeghecuoj vajelčacoucanoghac",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b525a66be60460830305bb",
+          "author": "Petros Pōghosi",
+          "title": "Vardapetouthiun Khristonēakan ĕnd Hajoc /, artadreal aṙ Hṙōmajecis midžnordoutheamb, Karapeti vardapeti, Andrianacuoj; eu Theodorosean Petrosi simpri.",
+          "language": "Armenian",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69a5f09db29703bc86eb5fe3",
+          "author": "Anonymous (Armenian tradition)",
+          "title": "Patmutiwn Makabayetswots (History of the Maccabees - Armenian)",
+          "language": "Armenian",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | western | translation_found",
+      "size": 18,
+      "sampled": [
+        {
+          "id": "69dfdad3220eedf04e13bb16",
+          "author": "W. Woodville Rockhill",
+          "title": "The Life of the Buddha, Derived from Tibetan Works",
+          "language": "English",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992598b3d2d40d1b05915ba",
+          "author": "Franz Boas",
+          "title": "The Mythology of the Bella Coola Indians",
+          "language": "Nuxalk",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b18620c4be2cdd0edc53c3",
+          "author": "Franciscus Mercurius van Helmont",
+          "title": "Seder Olam, sive Ordo Saeculorum",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699379e3b0a84a57639666b4",
+          "author": "Pindar",
+          "title": "Pindari Carmina (with Prolegomena and Commentary)",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "698420e34c3c9f36bc43d974",
+          "author": "Homerus",
+          "title": "Odyssea. Das seind die aller zierlichsten und lustigsten vier und zwaintzig bücher",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69ac7ede20878c5c9ba51d76",
+          "author": "Hierocles of Alexandria",
+          "title": "The Commentary of Hierocles upon the Golden Verses of Pythagoras",
+          "language": "English",
+          "catalog_rows": 0
+        },
+        {
+          "id": "695583d05336c55c8910fa27",
+          "author": "James MacGregor / Thomas Maclauchlan / W.F. Skene",
+          "title": "The Dean of Lismore Book (16th c. Gaelic Poetry Manuscript)",
+          "language": "Irish/English",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699259118812793469fe177f",
+          "author": "Swami Vijnanananda",
+          "title": "The Srimad Devi Bhagavatam (Vijnanananda translation)",
+          "language": "English",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b30103e28f56bd749434b2",
+          "author": "Philo of Alexandria",
+          "title": "Opera (1558 Froben reprint)",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6984e8498a2f054f912420cd",
+          "author": "Figulus, Benedictus",
+          "title": "Pandora magnalium naturalium aurea et benedicta, de benedicto lapidis philosoph. mysterio",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3e5dd304c1c6b3950a6a5",
+          "author": "Pseudo-Aristotle",
+          "title": "Liber de causis",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3028f41bc4bc98613d723",
+          "author": "Jean-Louis Guez de Balzac",
+          "title": "Lettres (Elzevir)",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69ac83dd5d2908b26341c5b2",
+          "author": "Thomas Willis",
+          "title": "Pathologiae Cerebri et Nervosi Generis Specimen",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69ae9b7902039497d3a62624",
+          "author": "Constantin von Tischendorf",
+          "title": "Novum Testamentum ex Sinaitico Codice",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b303cd5facc83a9a3daf2a",
+          "author": "Fulgenzio Micanzio",
+          "title": "La Vie du Père Paolo Sarpi",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b303ea5facc83a9a3db5df",
+          "author": "Eustache de Refuge",
+          "title": "Traicté de la Cour",
+          "language": "French",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b30116e5d6d64d8e19a7ba",
+          "author": "Hesiod",
+          "title": "Opera et Dies et Theogonia (Elzevir pocket)",
+          "language": "Greek",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b51ee6ff09e4fe943b74cc",
+          "author": "Swedenborg, Emanuel",
+          "title": "Works. 26. A Treatise concerning Heaven and its Wonders, and also concerning Hell. - 1817",
+          "language": "English",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | other | confirmed_first",
+      "size": 18,
+      "sampled": [
+        {
+          "id": "69b525b129577f283b57af1d",
+          "author": "Thomas, à Kempis",
+          "title": "Girkh Thōmaji Gembecuoj kanonounaki krōnauori 'i kargē srbojn Ōgostinosi :, jaghags hamaheteumann Khristosi. tharkhmaneceal 'i Johannisē vardapetē Kostandinōpōlsecûoj, 'i hogekan zoûartšouthiun mer aghneajc.",
+          "language": "Armenian",
+          "catalog_rows": 85
+        },
+        {
+          "id": "69c1bd558522835be846949b",
+          "author": "Anonymous",
+          "title": "Ethiopic New Testament",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6953a82c77f38f6761bd0bc5",
+          "author": "Various",
+          "title": "New Testament (Armenian-Greek-Italian trilingual)",
+          "language": "Armenian",
+          "catalog_rows": 130
+        },
+        {
+          "id": "69c1bd5c8522835be84697ed",
+          "author": "Anonymous",
+          "title": "'Orit",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bd5a8522835be84696c6",
+          "author": "Anonymous",
+          "title": "Argānona Weddāsē",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bd498522835be8468c64",
+          "author": "Anonymous",
+          "title": "Deggwā",
+          "language": "Geez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bd518522835be8469111",
+          "author": "Anonymous",
+          "title": "Dāwit",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1be578522835be846c173",
+          "author": "Anonymous",
+          "title": "Three scarabs",
+          "language": "Egyptian hieroglyphs",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69d5ad584dc55b8478ddfc4b",
+          "author": "Anonymous",
+          "title": "Krestos Gospels (Illuminated)",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69d5acf04dc55b8478dde728",
+          "author": "Anonymous",
+          "title": "Ge'ez Psalter",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bd5e8522835be8469a23",
+          "author": "Anonymous",
+          "title": "Ethiopic MS 27",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6953a88577f38f6761bd1883",
+          "author": "Various",
+          "title": "Armenian Psalter (Musée Arménien de France)",
+          "language": "Armenian",
+          "catalog_rows": 130
+        },
+        {
+          "id": "69d5abfdd0bd3547a5654a89",
+          "author": "Anonymous",
+          "title": "Armenian Gospels (15th century)",
+          "language": "Armenian",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6953a87677f38f6761bd14b4",
+          "author": "Various",
+          "title": "Pauline Epistles and Apocalypse (Vatican Armenian MS 19)",
+          "language": "Armenian",
+          "catalog_rows": 130
+        },
+        {
+          "id": "69c1bd578522835be8469631",
+          "author": "Anonymous",
+          "title": "Enoch, Job, and the Book of Kings",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bd4e8522835be8468feb",
+          "author": "Anonymous",
+          "title": "Dersāna Mikā'ēl",
+          "language": "Ge'ez",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69d5ac04d0bd3547a5654b83",
+          "author": "Anonymous",
+          "title": "Armenian Manuscript (Armenien 128)",
+          "language": "Armenian",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69d66bb14da4f8dce52f16eb",
+          "author": "Anonymous",
+          "title": "Four Gospels (Armenian, 10th-11th c.)",
+          "language": "Armenian",
+          "catalog_rows": 84
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | western | needs_review",
+      "size": 15,
+      "sampled": [
+        {
+          "id": "69c866086c6f3cc53c856325",
+          "author": "Bacon, Roger",
+          "title": "De l'admirable pouvoir et puissance de l'art et de nature",
+          "language": "Latin",
+          "catalog_rows": 5
+        },
+        {
+          "id": "69b51e3f768235dc6598e2c7",
+          "author": "Paracelsus",
+          "title": "Medicorum Ac Philosophorum Facile Principis Theophrasti Paracelsi Eremitae libri V. de Vita longa : incognitarum rerum, & hucusque a nemine tractatarum refertissimi",
+          "language": "Latin",
+          "catalog_rows": 38
+        },
+        {
+          "id": "69e792d980b52390feb16d3b",
+          "author": "Anonymous",
+          "title": "Hikayat Hang Tuah, Vol. I",
+          "language": "Malay",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69c1bd8eb82ba5d5bed96a2c",
+          "author": "Unknown",
+          "title": "Illuminatus dirigens, oder das Schottische Noviziat. Classe II. Grad 2. Illuminatus major",
+          "language": "German",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69dbcc8f0f8c5edf20f4c8dc",
+          "author": "Thomas Aquinas",
+          "title": "De articulis fidei et ecclesiae sacramentis",
+          "language": "Latin",
+          "catalog_rows": 585
+        },
+        {
+          "id": "69dc55f0cb6f7429748b98c9",
+          "author": "Thomas Aquinas",
+          "title": "De articulis fidei et ecclesiae sacramentis. De periculis contingentibus circum sacramentum eucharistiae. De regimine Judaeorum",
+          "language": "Latin",
+          "catalog_rows": 585
+        },
+        {
+          "id": "69bfcd918ab50eb88e8c8359",
+          "author": "Anonymous",
+          "title": "Bodleian Library MS. E. D. Clarke 10",
+          "language": "Greek",
+          "catalog_rows": 84
+        },
+        {
+          "id": "6952b0fd77f38f6761bc2adc",
+          "author": "Poliziano, Angelo",
+          "title": "Miscellanea centuria una",
+          "language": "Latin",
+          "catalog_rows": 5
+        },
+        {
+          "id": "69b3f757a107e55a0ee1cb64",
+          "author": "Paracelsus",
+          "title": "Paracelsus, Opera theologica, I (VCF 24)",
+          "language": "German",
+          "catalog_rows": 38
+        },
+        {
+          "id": "69e792de80b52390feb16e5e",
+          "author": "Anonymous",
+          "title": "Hikayat Hang Tuah, Vol. II",
+          "language": "Malay",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69bfce7f8ab50eb88e8c85e3",
+          "author": "Anonymous",
+          "title": "Bodleian Library MS. E. D. Clarke 6",
+          "language": "Greek",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69bfcde68ab50eb88e8c83b3",
+          "author": "Anonymous",
+          "title": "Bodleian Library MS. Holkham gr. 114",
+          "language": "Greek",
+          "catalog_rows": 84
+        },
+        {
+          "id": "69b52be83dd6d9423027cabc",
+          "author": "Marsilio Ficino",
+          "title": "Ficini Expositio Mercurii Trismegisti",
+          "language": "Latin",
+          "catalog_rows": 25
+        },
+        {
+          "id": "69ac7fdc14c3b7edc8ba86ec",
+          "author": "Bacon, Roger",
+          "title": "Part of the Opus Tertium",
+          "language": "English",
+          "catalog_rows": 5
+        },
+        {
+          "id": "69dbcc5c0f8c5edf20f4a6bc",
+          "author": "Thomas Aquinas",
+          "title": "Catena aurea super quattuor evangelistas. Ed: Johannes Andreas, bishop of Aleria",
+          "language": "Latin",
+          "catalog_rows": 585
+        }
+      ]
+    },
+    {
+      "stratum": "mid | western | needs_review",
+      "size": 14,
+      "sampled": [
+        {
+          "id": "69af1315edb4389041037d06",
+          "author": "Archimedes",
+          "title": "Archimedis Opera Omnia cum Commentariis Eutocii, Vol. I (Heiberg 1880)",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "6991d8a18c1030b12444c1c9",
+          "author": "Robert Fludd",
+          "title": "Monochordum Mundi Symphoniacum",
+          "language": "Latin",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69dc5587cb6f7429748b8ddb",
+          "author": "Ficinus, Marsilius",
+          "title": "De Christiana religione [Italian]",
+          "language": "Italian",
+          "catalog_rows": 4
+        },
+        {
+          "id": "685a9b1bcdbe778e22823a64",
+          "author": "Ficino",
+          "title": "De Voluptate (On Pleasure)",
+          "language": "Latin",
+          "catalog_rows": 4
+        },
+        {
+          "id": "69c63da4b463eebe7caac5ae",
+          "author": "Maier, Michael",
+          "title": "Viridarium chymicum, das ist: Chymisches Lust-Gärtlein",
+          "language": "German",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69aeab3967e6731bc13662c9",
+          "author": "Cristoforo Landino",
+          "title": "Quaestiones Camaldulenses",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "695929a57c072c27f686d29f",
+          "author": "Johannes Trithemius",
+          "title": "Steganographia vindicata, reserata et illustrata",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69942f83b2f6748db4ac128c",
+          "author": "Maximus Confessor",
+          "title": "Maximus Confessor Opuscula Theologica et Polemica",
+          "language": "Greek",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69906327ef12272ffdc8f9ac",
+          "author": "Girolamo Cardano",
+          "title": "Somniorum Synesiorum Libri IV",
+          "language": "Latin",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69b4cc44d2bf9b45ea479e98",
+          "author": "Basilius Valentinus",
+          "title": "Chymische Schriften",
+          "language": "German",
+          "catalog_rows": 2
+        },
+        {
+          "id": "6958e00ecf7070242ed422d7",
+          "author": "Macer Floridus (Odo of Meung)",
+          "title": "De viribus herbarum",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "699064afef12272ffdc93d2f",
+          "author": "Girolamo Savonarola",
+          "title": "Compendio di Revelatione",
+          "language": "Italian",
+          "catalog_rows": 4
+        },
+        {
+          "id": "69dc559dcb6f7429748b9192",
+          "author": "Innocentius III, Pont. Max. (Lotharius de Conti)",
+          "title": "Liber de contemptu mundi, sive De miseria humanae conditionis. Add: Bernardus Claravallensis: De proprietatibus romanorum",
+          "language": "Latin",
+          "catalog_rows": 3
+        },
+        {
+          "id": "69b418b02b0edf3eaa2dda3a",
+          "author": "Pseudo-Solomon",
+          "title": "Les véritables clavicules de Salomon (PH296)",
+          "language": "French",
+          "catalog_rows": 2
+        }
+      ]
+    },
+    {
+      "stratum": "mid | western | translation_found",
+      "size": 10,
+      "sampled": [
+        {
+          "id": "6984e84f9404d58b48aca521",
+          "author": "Plotinus",
+          "title": "Operum philosophicorum omnium libri 54",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69ae67594b74f168e0c15d24",
+          "author": "Plato",
+          "title": "Omnia Platonis Opera (Aldine Editio Princeps)",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69b51e0fefd8df28f2dafa7d",
+          "author": "Plato, v427-v347",
+          "title": "Platonis opera",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "6953e5f21479a63c110842bb",
+          "author": "Blaise Pascal",
+          "title": "Oeuvres de Blaise Pascal Vol. I",
+          "language": "French",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69b3e5cf304c1c6b3950a490",
+          "author": "Plato",
+          "title": "Timaeus (MS. Digby 23)",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69b21d36ddb4fa7c305b4440",
+          "author": "Plato",
+          "title": "Platonis Opera Quae Extant, Vol. 1 (Stephanus)",
+          "language": "Greek",
+          "catalog_rows": 2
+        },
+        {
+          "id": "69b18a82c4be2cdd0edc7f8e",
+          "author": "Thomas Hobbes",
+          "title": "Leviathan, sive De Materia",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69af12f493903bf8119f3388",
+          "author": "Galen",
+          "title": "Claudii Galeni De Placitis Hippocratis et Platonis Libri Novem, Vol. I",
+          "language": "Latin",
+          "catalog_rows": 2
+        },
+        {
+          "id": "697a8670e680cef7cedae3aa",
+          "author": "Maimon, Moses ben",
+          "title": "Liber [Hebrew: more nevuchim] doctor perplexorum",
+          "language": "Latin",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69905d1a2fd6a0399389ee80",
+          "author": "Tommaso Campanella",
+          "title": "Realis Philosophiae Epilogisticae (Civitas Solis)",
+          "language": "Latin",
+          "catalog_rows": 1
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | western | null",
+      "size": 6,
+      "sampled": [
+        {
+          "id": "6a308d1cd57c4b7e016006cb",
+          "author": "Samuel Apiarius and Samuel Coccius",
+          "title": "Strange Shapes over Basel, 1566",
+          "language": "German",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69bd9faef6d63c9197481708",
+          "author": "Picinelli, Filippo",
+          "title": "Mundus Symbolicus, in emblematum universitate formatus, explicatus, et tam sacris, quam profanis eruditionibus ac sententiis illustratus",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69bd9f4bf6d63c91974800b0",
+          "author": "Knorr von Rosenroth, Christian",
+          "title": "Kabbala denudata, seu, doctrina Hebraeorum transcendentalis et metaphysica atque theologica : opus antiquissimae philosophiae barbaricae variis speciminibus refertissimum ...",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69bda035f6d63c91974856ae",
+          "author": "Masen, Jacob",
+          "title": "Speculum imaginum veritatis occultae, exhibens symbola, emblemata, hieroglyphica, aenigmata, omni tam materiae, quam forma varietate ...",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69bd9e066120d54bd037a8ad",
+          "author": "[s.n.]",
+          "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in quatuor partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- quartum]",
+          "language": "Latin",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6a308ce6d57c4b7e016006c6",
+          "author": "Hans Glaser",
+          "title": "Celestial Phenomenon over Nuremberg, 14 April 1561",
+          "language": "German",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | western | translation_found",
+      "size": 6,
+      "sampled": [
+        {
+          "id": "69ac7f4320878c5c9ba52ffa",
+          "author": "Bacon, Francis",
+          "title": "Saggi Morali",
+          "language": "Italian",
+          "catalog_rows": 5
+        },
+        {
+          "id": "69b2ffe2e5d6d64d8e1979e7",
+          "author": "Erasmus",
+          "title": "Paraphraseon in Novum Testamentum",
+          "language": "Latin",
+          "catalog_rows": 10
+        },
+        {
+          "id": "69ac80234a6e299332847374",
+          "author": "Bacon, Francis",
+          "title": "Neuf livres de la dignité et de laccroissement des sciences",
+          "language": "French",
+          "catalog_rows": 5
+        },
+        {
+          "id": "6993777cb0a84a5763963d92",
+          "author": "Plutarch",
+          "title": "Plutarchi Vitae Parallelae",
+          "language": "Latin",
+          "catalog_rows": 5
+        },
+        {
+          "id": "697e23cbed510657aed145f2",
+          "author": "Thomas a Kempis",
+          "title": "L'Imitation de Jesus-Christ",
+          "language": "French",
+          "catalog_rows": 60
+        },
+        {
+          "id": "69af0a0a4c57359b8d2d0f49",
+          "author": "Athanasius Kircher",
+          "title": "Arithmologia sive De abditis numerorum mysteriis",
+          "language": "Latin",
+          "catalog_rows": 7
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | semitic | needs_review",
+      "size": 5,
+      "sampled": [
+        {
+          "id": "69a5eb5baa8e0e4092147282",
+          "author": "Paul Bedjan (ed.)",
+          "title": "Acta Martyrum et Sanctorum, Tomus V",
+          "language": "Syriac",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69d5abce4dc55b8478ddd014",
+          "author": "Muhyiddin Ibn al-Arabi",
+          "title": "Al-Futuhat al-Makkiyya",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e53454d48480a386965c84",
+          "author": "Ibn al-Muqaffa",
+          "title": "Kalila wa Dimna (Arabic critical edition)",
+          "language": "Arabic",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6988a59fa4de5da34fd130e0",
+          "author": "Gikatilla, Joseph ben Abraham",
+          "title": "[Hebrew: Sha'arei zedek]",
+          "language": "Hebrew",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69b3e5ee304c1c6b3950a8f5",
+          "author": "al-Sufi",
+          "title": "Suwar al-kawakib (Book of the Fixed Stars)",
+          "language": "Arabic",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | cjk | needs_review",
+      "size": 5,
+      "sampled": [
+        {
+          "id": "69e4207771f02ebac6264a8e",
+          "author": "Ihara Saikaku (井原西鶴)",
+          "title": "好色一代男 (Life of an Amorous Man), Vol. 5",
+          "language": "Japanese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992f3e9c8c6ac61574e7225",
+          "author": "Luo Hongxian (羅洪先)",
+          "title": "廣輿圖 (Guang Yu Tu: Enlarged Territorial Atlas)",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cc12018b80967354cc95",
+          "author": "Jia Sixie",
+          "title": "齊民要術 (Qimin Yaoshu: Essential Techniques for the Welfare of the People) Vols 7-8",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cc14018b80967354cd75",
+          "author": "Jia Sixie",
+          "title": "齊民要術 (Qimin Yaoshu: Essential Techniques for the Welfare of the People) Vol 10",
+          "language": "Chinese",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992cbe8018b80967354c531",
+          "author": "Shen Kuo",
+          "title": "夢溪筆談 (Mengxi Bitan: Dream Pool Essays) Vols 19-24",
+          "language": "Chinese",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "mid | semitic | confirmed_first",
+      "size": 5,
+      "sampled": [
+        {
+          "id": "69b3e59fc94a4ff7cce22e00",
+          "author": "Jabir ibn Hayyan",
+          "title": "al-Riyad (Book of Gardens)",
+          "language": "Arabic",
+          "catalog_rows": 1
+        },
+        {
+          "id": "6970e3519b09d309d780a238",
+          "author": "Postel, Guillaume",
+          "title": "Abrahami patriarchae liber Jezirah",
+          "language": "Hebrew",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69b3e5fe304c1c6b3950aad6",
+          "author": "Averroes",
+          "title": "Collection of philosophical works by Averroes",
+          "language": "Hebrew",
+          "catalog_rows": 1
+        },
+        {
+          "id": "69c1b89e8522835be844add5",
+          "author": "Ptolemy, active 2nd century (بطلموس)",
+          "title": "Thamarat fī aḥkām al-nujūm",
+          "language": "Arabic",
+          "catalog_rows": 1
+        },
+        {
+          "id": "6953619d9c494f9f9f042608",
+          "author": "Jabir ibn Hayyan",
+          "title": "Majmu nafis fi al-kimiya (Jabir ibn Hayyan)",
+          "language": "Arabic",
+          "catalog_rows": 1
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | tibetan | needs_review",
+      "size": 3,
+      "sampled": [
+        {
+          "id": "69dfee86ce6bb8619e07f683",
+          "author": "Tsongkhapa Lobzang Drakpa",
+          "title": "Drang nges legs bshad snying po (Essence of Eloquence)",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e782ddd93c1f60075050c0",
+          "author": "Gangtey Monastery Collection",
+          "title": "Thugs sgrub bar chad kun sel skor",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        },
+        {
+          "id": "69e7963d80b52390feb19040",
+          "author": "Ogyen Choling Collection",
+          "title": "chags med ris chos",
+          "language": "Tibetan",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | indic | needs_review",
+      "size": 3,
+      "sampled": [
+        {
+          "id": "69946ebaf6f3426e298f00c0",
+          "author": "Tiruvalluvar (comm. Parimelazagar & Iramanucakkavirayar)",
+          "title": "Tiruvaḷḷuvar Kuṟaḷ (with Parimelazagar Commentary)",
+          "language": "Tamil",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6991d8ac8c1030b12444c781",
+          "author": "Somaśambhu",
+          "title": "Kriyakandakramavali",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        },
+        {
+          "id": "699066582ec9f7db5717a0a5",
+          "author": "Bhaskara II",
+          "title": "Karana Kutuhala (Karna Kutuhala)",
+          "language": "Sanskrit",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "canonical | tibetan | confirmed_first",
+      "size": 2,
+      "sampled": [
+        {
+          "id": "69dfee8cce6bb8619e07ff08",
+          "author": "Unknown",
+          "title": "Dharma and Non-Dharma Distinction (Chos dang chos ma yin pa rnam par dbye ba)",
+          "language": "Tibetan",
+          "catalog_rows": 18
+        },
+        {
+          "id": "69e7465385f786e884a48575",
+          "author": "Unknown",
+          "title": "An Introduction to Nag-rtsis (Chinese-Tibetan Astrology)",
+          "language": "Tibetan",
+          "catalog_rows": 18
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | indic | translation_found",
+      "size": 2,
+      "sampled": [
+        {
+          "id": "69946ec1f6f3426e298f0309",
+          "author": "Tiruvalluvar (ed. Mrugesa Mudaliyar, trans. John Lazarus)",
+          "title": "The Kural of Tiruvalluvar (Parimelazagar Commentary with English Translation)",
+          "language": "Tamil",
+          "catalog_rows": 0
+        },
+        {
+          "id": "6992584c723cad8be263bf8d",
+          "author": "G.U. Pope",
+          "title": "The Naladiyar: Four Hundred Quatrains in Tamil",
+          "language": "Tamil",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | other | needs_review",
+      "size": 1,
+      "sampled": [
+        {
+          "id": "69e1582bec0a328a49d0a24c",
+          "author": "el-Hibe (papyrus scroll)",
+          "title": "The Report of Wenamun",
+          "language": "Egyptian hieroglyphs",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "obscure | other | translation_found",
+      "size": 1,
+      "sampled": [
+        {
+          "id": "699249a9a2d53df4853be52d",
+          "author": "Washington Matthews",
+          "title": "Navaho Myths, Prayers and Songs",
+          "language": "Navajo",
+          "catalog_rows": 0
+        }
+      ]
+    },
+    {
+      "stratum": "mid | semitic | translation_found",
+      "size": 1,
+      "sampled": [
+        {
+          "id": "69b3e5fb304c1c6b3950aad2",
+          "author": "Avicenna",
+          "title": "al-Qanun (Canon of Medicine)",
+          "language": "Arabic",
+          "catalog_rows": 4
+        }
+      ]
+    }
+  ]
+}
