@@ -52,20 +52,30 @@ export async function GET(request: NextRequest) {
       const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, languages, excludeLanguages, yearMin, yearMax, maxPerBook });
       const bookIds = [...new Set(pages.map(p => p.book_id))];
       let slugMap: Record<string, string> = {};
+      // Books hidden from the public reader (visible:false OR hidden:true). Embeddings
+      // live in Supabase and aren't pruned when a book is hidden, so we drop them here —
+      // otherwise they surface in search and 404 on click (matches the reader gate
+      // isBookReadable / isHiddenBook, PR #2522).
+      const hiddenBookIds = new Set<string>();
       if (bookIds.length > 0) {
         try {
           const db = await getDb();
           const books = await db.collection('books').find(
             { id: { $in: bookIds } },
-            { projection: { id: 1, slug: 1 } }
+            { projection: { id: 1, slug: 1, visible: 1, hidden: 1 } }
           ).toArray();
-          for (const b of books) if (b.id && b.slug) slugMap[b.id as string] = b.slug as string;
+          for (const b of books) {
+            if (b.id && b.slug) slugMap[b.id as string] = b.slug as string;
+            if (b.id && (b.hidden === true || b.visible === false)) hiddenBookIds.add(b.id as string);
+          }
         } catch { /* slug enrichment is best-effort */ }
       }
-      const enriched = pages.map(p => ({
-        ...p,
-        slug: slugMap[p.book_id] || null,
-      }));
+      const enriched = pages
+        .filter(p => !hiddenBookIds.has(p.book_id))
+        .map(p => ({
+          ...p,
+          slug: slugMap[p.book_id] || null,
+        }));
       logSearchQuery({
         request, route: 'search.semantic.page', query: query!,
         total: enriched.length, ms: Date.now() - _searchStart, ok: true,
@@ -103,16 +113,22 @@ export async function GET(request: NextRequest) {
     // Enrich with thumbnail + slug from MongoDB
     const bookIds = books.map(b => b.book_id);
     let thumbnailMap: Record<string, { thumbnail?: string; thumbnail_blob?: string; slug?: string }> = {};
+    // Books hidden from the public reader (visible:false OR hidden:true). Embeddings
+    // live in Supabase and aren't pruned when a book is hidden, so we drop them here —
+    // otherwise they surface in search and 404 on click (matches the reader gate
+    // isBookReadable / isHiddenBook, PR #2522).
+    const hiddenBookIds = new Set<string>();
     if (bookIds.length > 0) {
       try {
         const db = await getDb();
         const mongoBooks = await db.collection('books').find(
           { id: { $in: bookIds } },
-          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, slug: 1 } }
+          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, slug: 1, visible: 1, hidden: 1 } }
         ).toArray();
         for (const mb of mongoBooks) {
           const bid = mb.id || mb._id?.toString();
           if (bid) thumbnailMap[bid] = { thumbnail: mb.thumbnail, thumbnail_blob: mb.thumbnail_blob, slug: mb.slug };
+          if (bid && (mb.hidden === true || mb.visible === false)) hiddenBookIds.add(bid);
         }
       } catch (e) {
         // Non-fatal — results still work without thumbnails
@@ -126,6 +142,7 @@ export async function GET(request: NextRequest) {
     const SEMANTIC_SIM_FLOOR = 0.55;
     const enriched = books
       .filter(b => b.similarity >= SEMANTIC_SIM_FLOOR)
+      .filter(b => !hiddenBookIds.has(b.book_id))
       .map(b => ({
         ...b,
         thumbnail: thumbnailMap[b.book_id]?.thumbnail || null,

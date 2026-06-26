@@ -20,22 +20,29 @@ export async function GET(request: NextRequest) {
   const db = await getReadDb();
   const result = await findBookByIdOrSlug(db, bookIdOrSlug, { id: 1, slug: 1 });
 
+  // "No redirect needed" — either the book isn't found (page renders its 404),
+  // or its canonical URL already IS /book/<input> (a book with no distinct slug,
+  // or matched directly by slug). We can't `NextResponse.next()` here: this is a
+  // route handler (not middleware), so next() throws "NextResponse.next() was used
+  // in a route handler" and surfaces as a 500 — which is exactly what was breaking
+  // every invalid book id and the ~29 visible books that have no slug.
+  //
+  // Instead, bounce back to /book/<input> with an `ns` marker. The proxy skips its
+  // id→resolver rewrite when `ns` is present (so no loop), and /book/[id] renders
+  // the book or calls notFound() for a real, styled 404.
+  const renderInPlace = () =>
+    NextResponse.redirect(new URL(`/book/${encodeURIComponent(bookIdOrSlug)}?ns=1`, request.url), 302);
+
   if (!result) {
-    // Book not found — let the page handle 404
-    return NextResponse.next();
+    return renderInPlace();
   }
 
   const slug = (result.book.slug || result.book.id || result.book._id?.toString()) as string;
 
-  // If the lookup matched by slug, no redirect needed — pass through
-  if (result.matchedBySlug) {
-    return NextResponse.next();
-  }
-
-  // If the resolved slug is the same as the input (no real slug exists), pass through
-  // to avoid infinite redirect loops
-  if (slug === bookIdOrSlug) {
-    return NextResponse.next();
+  // Lookup matched by slug, or the canonical slug is the same as the input → no
+  // real redirect target; render in place.
+  if (result.matchedBySlug || slug === bookIdOrSlug) {
+    return renderInPlace();
   }
 
   // Redirect non-slug URL to canonical slug URL

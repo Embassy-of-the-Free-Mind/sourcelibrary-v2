@@ -39,6 +39,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'message required' }, { status: 400 });
     }
 
+    // Drop opaque cross-origin noise. Browsers report errors thrown by
+    // third-party scripts (extensions, embeds, ad/analytics tags) as the bare
+    // string "Script error." with no stack or source — they're not our bugs and
+    // not actionable, yet they were ~75% of all logged errors (1.6k/day), burying
+    // the real ones. Accept the report (ok) but don't store it.
+    const msg = String(message).trim();
+    if (/^Script error\.?$/i.test(msg)) {
+      return NextResponse.json({ ok: true, skipped: 'noise' });
+    }
+
     const db = await getDb();
     await db.collection('application_errors').insertOne({
       message: String(message).slice(0, 2000),

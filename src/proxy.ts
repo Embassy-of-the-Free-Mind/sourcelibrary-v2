@@ -744,8 +744,11 @@ export async function proxy(request: NextRequest) {
     // Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
     // Custom IDs are shorter hex strings with at least one hex letter (a-f).
     // Pure numeric strings (e.g. "13") are not valid IDs and should 404 normally.
+    // `ns=1` means the book-slug resolver already ran and decided there's no
+    // redirect target (no-slug book or 404) — skip re-rewriting so /book/[id]
+    // renders in place. Without this guard, bouncing back here would loop.
     const looksLikeId = /^[0-9a-f]{24}$/.test(segment) || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
-    if (looksLikeId) {
+    if (looksLikeId && !request.nextUrl.searchParams.has('ns')) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
       url.search = '';
@@ -758,6 +761,26 @@ export async function proxy(request: NextRequest) {
       headers.set('x-redirect-book', segment);
       return NextResponse.rewrite(url, { request: { headers } });
     }
+  }
+
+  // Reader page URLs that use a page *number* instead of a page *id*
+  // (/book/<slug>/page/5). The reader route keys off the page id, so a numeric
+  // segment renders notFound() — but that route is ISR, so it returns HTTP 200
+  // with a "Page Not Found" body (a Next.js soft-404). Google had ~1.2k of these
+  // indexed as soft-404s. Resolve the number → real page id via the existing
+  // book-page resolver, which 301s to /book/<slug>/page/<pageId> (or 302s to the
+  // book if the number is out of range). Real page ids (24-hex, met-*, etc.) are
+  // never purely numeric, so they fall through to the normal ISR page route.
+  const bookPageNumMatch = pathname.match(/^\/book\/([^/]+)\/page\/([1-9]\d{0,5})$/);
+  if (bookPageNumMatch) {
+    const [, segment, pageNum] = bookPageNumMatch;
+    const url = request.nextUrl.clone();
+    url.pathname = '/api/redirect/book-page';
+    url.search = '';
+    const headers = new Headers(request.headers);
+    headers.set('x-redirect-book', segment);
+    headers.set('x-redirect-page', pageNum);
+    return NextResponse.rewrite(url, { request: { headers } });
   }
 
   // --- Bot rate limiting (soft) ---
