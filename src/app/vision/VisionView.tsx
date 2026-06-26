@@ -405,6 +405,53 @@ export default function VisionView({
           })}
         </section>
 
+        {/* ── Ways to take part ── */}
+        {content.ways && (
+          <section className="mt-20 max-w-[68ch]">
+            {F({
+              as: 'h2',
+              path: 'ways.heading',
+              value: content.ways.heading,
+              className: 'font-serif text-2xl md:text-3xl text-primary leading-snug mb-3',
+            })}
+            {F({
+              as: 'p',
+              path: 'ways.intro',
+              value: content.ways.intro,
+              className: 'text-secondary leading-relaxed mb-8',
+            })}
+
+            <dl className="divide-y divide-primary/10 border-y border-primary/10">
+              {content.ways.tiers.map((tier, i) => (
+                <div
+                  key={`${version}:tier:${i}`}
+                  className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-1 sm:gap-8 py-4 items-baseline"
+                >
+                  {F({
+                    as: 'dt',
+                    path: `ways.tiers.${i}.gift`,
+                    value: tier.gift,
+                    className: 'font-serif text-primary text-lg whitespace-nowrap',
+                  })}
+                  {F({
+                    as: 'dd',
+                    path: `ways.tiers.${i}.label`,
+                    value: tier.label,
+                    className: 'text-secondary leading-relaxed',
+                  })}
+                </div>
+              ))}
+            </dl>
+
+            {F({
+              as: 'p',
+              path: 'ways.footnote',
+              value: content.ways.footnote,
+              className: 'text-muted text-sm leading-relaxed mt-6',
+            })}
+          </section>
+        )}
+
         {/* ── CTA ── */}
         <section className="mt-20 max-w-[68ch] border-t border-primary/10 pt-12">
           {F({

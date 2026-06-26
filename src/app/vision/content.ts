@@ -29,6 +29,12 @@ export interface VisionContent {
   signoff: string;
   signature: { name: string; role: string; email: string; photo: string };
   plan: { heading: string; intro: string; items: PlanItem[]; footnote: string };
+  ways: {
+    heading: string;
+    intro: string;
+    tiers: { gift: string; label: string }[];
+    footnote: string;
+  };
   cta: {
     heading: string;
     body: string;
@@ -100,18 +106,30 @@ export const visionContent: VisionContent = {
     photo: '/founder-derek.jpg',
   },
   plan: {
-    heading: 'A brief plan',
-    intro: 'Over the next five years we aim to grow Source Library into a permanent institution. We are seeking roughly **$15 million** in philanthropic support to make it possible. Here is the work, and what each part of it asks for.',
+    heading: 'Year One',
+    intro: 'This is **Year One** of a five-year build. The full vision — translating hundreds of thousands of works, scanning tens of thousands that have never been online, partnering with a thousand libraries — is roughly a **$15 million** undertaking. But it starts with proving the engine. We are raising a **first round of $1 million** to run Source Library as a real institution for its first year (it costs about **$550,000 a year**), make good on the six months of work already delivered, and hold a reserve for the next. Here is what that first million builds.',
     items: [
-      { work: 'Translate 250,000+ more ancient works', resource: '$1M' },
-      { work: 'Scan 50,000+ works that have never been online', resource: '$3M' },
-      { work: 'Partner with 1,000+ libraries and archives worldwide', resource: '$2M' },
-      { work: 'Convene a braintrust of linguists and scholars', resource: '$2M' },
-      { work: 'Build a technical foundation that will last', resource: '$1M' },
-      { work: 'Gatherings and expeditions to bring the community together', resource: '$2M' },
-      { work: 'A small full-time team and direct support for partner libraries', resource: '$4M' },
+      { work: 'A small founding team — a director, a scanning specialist at the Embassy, community & partnerships, and visiting scholars', resource: '$500K' },
+      { work: 'Core technology & AI translation infrastructure — engineering, and keeping every page online', resource: '$270K' },
+      { work: 'Begin a Spanish edition of the library — AI-drafted across the collection, validated by expert translators', resource: '$25K' },
+      { work: 'Begin expert validation of our Tibetan translations — Tibetan scholars checking the AI against the canon', resource: '$10K' },
+      { work: 'A first expedition — endangered Javanese manuscripts with Javanologi (UNS) and B-NICE Amsterdam', resource: '$60K' },
+      { work: 'Contingency and a reserve into year two', resource: '$135K' },
     ],
-    footnote: 'These figures are illustrative of the scale of the work, not a fixed budget. As much as they fund translation and scanning, they sustain people: the gatherings that bring the community together, the expeditions that gather and preserve materials, and the libraries we partner with around the world.',
+    footnote: 'These figures are illustrative of the scale of the work, not a fixed budget. Prove the engine in year one and the rest follows: over five years, hundreds of thousands of works translated and checked by experts into every major language, tens of thousands scanned for the first time, a thousand libraries joined together, and an endowment to keep it all online for good — the full **$15 million** vision, and the permanence it secures. More than half of this first round funds people, because the careful act of bringing an irreplaceable book into the light — and the scholars who validate every translation — is the part AI cannot do.',
+  },
+  ways: {
+    heading: 'A place in the lineage',
+    intro: 'The men and women who translated the last Renaissance are five centuries gone — and their names are still on the work. This is your turn. Every gift below rescues real books and carries your name with them, in perpetuity.',
+    tiers: [
+      { gift: '$275', label: 'Adopt a rare manuscript — one irreplaceable hand-written treasure brought to the world, named for you' },
+      { gift: '$8,500', label: 'A named shelf — 100 books rescued, translated, and yours to name' },
+      { gift: '$60K', label: 'Underwrite the Javanese expedition — rescue endangered manuscripts before they are lost' },
+      { gift: '$80K', label: 'A named wing — 1,000 books of the digital library' },
+      { gift: 'from $150K', label: 'Underwrite a language edition — bring the entire library into Spanish (or Arabic, Hindi, and beyond), expert-validated, your name on it' },
+      { gift: '$250K', label: 'Founding patron — underwrite all of Year One; your name on the institution, and a hand in what we translate next' },
+    ],
+    footnote: 'Every tier funds the people and the careful work behind it — the digitizer at the Embassy, the scholars who validate, the pipeline that keeps each page online. You are not funding overhead; you are rescuing a book for the world, with your name beside it.',
   },
   cta: {
     heading: 'Let’s talk',
