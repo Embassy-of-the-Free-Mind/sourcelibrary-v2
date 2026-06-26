@@ -87,16 +87,63 @@ function stripMarkdownMarkers(text: string): string {
     .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
 }
 
+/**
+ * Collapse runaway lacuna fills and convert leaked LaTeX math to readable text.
+ *
+ * Two OCR-artifact classes reach readers/search/quotes as garbage text:
+ *  1. Runaway dot/dash/underscore loops — papyrus and critical-edition lacunae
+ *     the model reproduces character-for-character (sometimes thousands long).
+ *     OCR prompt v14 prevents most at write-time; this is the read-time guard for
+ *     legacy pages and any residual loop.
+ *  2. LaTeX math leakage — literal `$\frac{a}{b}$` etc. rendered raw to readers.
+ *
+ * Safe for BOTH the reader (run before markdown) and the plain-text snippet/quote
+ * surfaces. Deliberately leaves `$^{n}$` superscript spans alone — the reader
+ * turns those into <sup>, and on snippet surfaces they're harmless. Markdown
+ * table separator rows (`|---|`) are left intact (the dash guard skips any run
+ * adjacent to a `|`). See issue #2764.
+ */
+export function cleanOcrArtifacts(text: string): string {
+  if (!text) return text;
+  return text
+    // 1a. 12+ of the same dot-class char, optionally space-separated (". . . ."),
+    //     collapse to a single […] lacuna marker.
+    .replace(/([.·•…])(?:[ \t ]*\1){11,}/g, '[…]')
+    // 1b. Blank-fill underscore runs (12+).
+    .replace(/_{12,}/g, '[…]')
+    // 1c. Dash rules (12+), incl. spaced ("- - - -"). The leading guard skips any
+    //     run that starts adjacent to a `|` or another dash, so markdown table
+    //     separators (`|------------|`) are never collapsed.
+    .replace(/(?<![|\-–—])[-–—](?:[ \t ]*[-–—]){11,}(?![-–—|])/g, ' […]')
+    // 2a. \frac{a}{b} (optionally $-wrapped) → (a)/(b); \sqrt{x} → √(x).
+    .replace(/\$?\\[dt]?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}\$?/g, '($1)/($2)')
+    .replace(/\$?\\sqrt\s*\{([^{}]*)\}\$?/g, '√($1)')
+    // 2b. Common operators leaked as bare LaTeX commands.
+    .replace(/\\times(?![a-z])/gi, '×')
+    .replace(/\\cdot(?![a-z])/gi, '·')
+    .replace(/\\div(?![a-z])/gi, '÷')
+    .replace(/\\pm(?![a-z])/gi, '±')
+    .replace(/\\(?:leq|le)(?![a-z])/gi, '≤')
+    .replace(/\\(?:geq|ge)(?![a-z])/gi, '≥')
+    .replace(/\\neq(?![a-z])/gi, '≠')
+    .replace(/\\infty(?![a-z])/gi, '∞');
+}
+
 export function stripEditorialWrappers(text: string): string {
   if (!text) return text;
-  return stripMarkdownMarkers(
-    flattenMarkdownTables(
-      text
-        // Paired blocks, content and all (multiline). Backreference keeps it from
-        // swallowing text between two different wrapper types.
-        .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
-        // Any orphan opening/closing wrapper tag left by malformed AI output.
-        .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+  // cleanOcrArtifacts runs LAST so lacuna/LaTeX cleanup applies to the final
+  // plain text (after table flattening + marker stripping). Every snippet/quote
+  // surface routes through here, so they all inherit the OCR safety net.
+  return cleanOcrArtifacts(
+    stripMarkdownMarkers(
+      flattenMarkdownTables(
+        text
+          // Paired blocks, content and all (multiline). Backreference keeps it from
+          // swallowing text between two different wrapper types.
+          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+          // Any orphan opening/closing wrapper tag left by malformed AI output.
+          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+      ),
     ),
   );
 }

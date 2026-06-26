@@ -181,13 +181,19 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Column layout:** If the page has two (or more) text columns, transcribe the left column first, then insert <column-break/> on its own line, then transcribe the right column. Do NOT use <column-break/> for single-column pages.
 
+**Lacunae & runaway repetition (CRITICAL):**
+- Critical and papyrological editions mark missing or illegible text with runs of dots, dashes, or underscores. Transcribe SHORT gaps using the edition's own bracket notation, but NEVER emit more than ~10 repeated characters in a row. If a gap/rule/dotted line is longer, collapse it to a single [...] marker — do NOT reproduce it dot-for-dot.
+- NEVER output the same character more than ~10 times consecutively. A long run of one repeated character is always an error.
+- A lacuna or gap NEVER ends the page. After a [...] marker, CONTINUE transcribing everything else on the page (surrounding text, commentary, footnotes, apparatus). Transcribe the whole page top to bottom.
+
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
 2. Page numbers/headers/signatures go in metadata tags ONLY — NEVER duplicate as ## headings or body text. Example: "DISCURSUS IV." at top of page → <header>DISCURSUS IV.</header> and nothing else
 3. Decorative initials (drop caps): merge large ornamental first letters with the word they begin. A large "L" followed by "EX" → "Lex", not "L Ex"
 4. IGNORE partial text at left/right edges (from facing page in spread)
 5. Capture ALL text including margins and annotations
-6. End with <vocab>key terms, names, concepts</vocab>
+6. Check the physical margins carefully — top, bottom, left, and right. Transcribe ALL marginal text using <margin> tags, placed BEFORE the paragraph they annotate. Do not skip margin text because it is small, faint, or in a different hand.
+7. End with <vocab>key terms, names, concepts</vocab>
 
 **If image has quality issues**, start with <warning>describe issue</warning>
 
