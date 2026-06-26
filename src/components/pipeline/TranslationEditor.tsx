@@ -615,13 +615,15 @@ export default function TranslationEditor({
 
   // URLs for current page at different quality tiers
   const pageProxyUrl = getImageUrl(page, 'full');       // 2400px proxy (cropped if split)
-  const pageDisplayUrl = getImageUrl(page, 'display'); // 1200px for initial display
+  const pageThumbUrl = getImageUrl(page, 'thumbnail');  // small, fast first paint
+  const pageDisplayUrl = getImageUrl(page, 'display');  // marked display variant — the RESTING image
   // Native-res: the original archived image — best available quality
   const pageNativeUrl = (page.split_from_spread || page.crop)
     ? pageProxyUrl // split pages: cropped image IS the full res
     : (isUsableImageUrl(page.archived_photo) ? page.archived_photo! : pageProxyUrl);
-  // For the main view, use native-res if available (progressive: display → native)
-  // This makes spreads load the full 5000px+ image instead of stopping at 2400px
+  // The display variant carries the provenance mark, so it's what we SHOW at rest;
+  // the pristine native original is reserved for the magnifier's deep zoom and the
+  // download link (it is never marked). See issue #2651.
   const pageFullUrl = pageNativeUrl || pageProxyUrl;
 
   // CDLI tablet witnesses (for text-only ETCSL books)
@@ -1362,7 +1364,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-2 lg:p-4" data-reader-panel>
                     <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                       {pageDisplayUrl ? (
-                        <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} highResSrc={pageNativeUrl} alt={`Page ${page.page_number}`} scrollable />
+                        <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable />
                       ) : hasWitnessPhotos && currentWitness ? (
                         <ImageWithMagnifier
                           src={currentWitness.photo_url!}
@@ -2117,7 +2119,7 @@ export default function TranslationEditor({
                   <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
                 )}
                 {pageDisplayUrl ? (
-                  <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
+                  <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable />
                 ) : hasWitnessPhotos && currentWitness ? (
                   <ImageWithMagnifier
                     src={currentWitness.photo_url!}
