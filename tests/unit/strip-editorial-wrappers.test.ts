@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { stripEditorialWrappers, cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 
 describe('stripEditorialWrappers', () => {
   it('drops a <meta> block content-and-all', () => {
@@ -121,5 +121,61 @@ describe('stripEditorialWrappers', () => {
     expect(stripEditorialWrappers('see footnote * and ** below')).toBe('see footnote * and ** below');
     // Underscores are never touched (literal in OCR/transliteration).
     expect(stripEditorialWrappers('istimnāʾ _ or jing_preservation')).toBe('istimnāʾ _ or jing_preservation');
+  });
+
+  // ── OCR safety net is inherited by every snippet/quote surface (#2764) ──────
+  it('collapses a runaway dot wall served through a snippet surface', () => {
+    const t = 'the temple of [...] before the ' + '.'.repeat(800) + ' and then the river';
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/\.{12}/);            // no dot wall survives
+    expect(out).toContain('the temple of');
+    expect(out).toContain('and then the river'); // text after the lacuna survives
+  });
+});
+
+describe('cleanOcrArtifacts', () => {
+  it('collapses 12+ literal dots to a single […] marker', () => {
+    expect(cleanOcrArtifacts('before ' + '.'.repeat(2000) + ' after')).toBe('before […] after');
+  });
+
+  it('collapses spaced-out dot lacunae (". . . .")', () => {
+    expect(cleanOcrArtifacts('μῆνιν ' + '. '.repeat(20).trim() + ' θεά')).toBe('μῆνιν […] θεά');
+  });
+
+  it('collapses long underscore blank-fills', () => {
+    expect(cleanOcrArtifacts('name: ' + '_'.repeat(30))).toBe('name: […]');
+  });
+
+  it('collapses a long dash rule but NOT a markdown table separator', () => {
+    expect(cleanOcrArtifacts('section ' + '—'.repeat(20))).toContain('[…]');
+    // A wide table separator must survive intact (dashes touch a pipe).
+    const sep = '| Name | Page |\n|--------------|--------------|\n| Aquinas | 187 |';
+    expect(cleanOcrArtifacts(sep)).toBe(sep);
+  });
+
+  it('leaves short, normal punctuation runs alone', () => {
+    expect(cleanOcrArtifacts('wait... what? — yes')).toBe('wait... what? — yes');
+    expect(cleanOcrArtifacts('a --- thematic break')).toBe('a --- thematic break');
+  });
+
+  it('converts leaked LaTeX fractions and roots to readable form', () => {
+    expect(cleanOcrArtifacts('the ratio $\\frac{a}{b}$ holds')).toBe('the ratio (a)/(b) holds');
+    expect(cleanOcrArtifacts('bare \\frac{1}{2} too')).toBe('bare (1)/(2) too');
+    expect(cleanOcrArtifacts('side $\\sqrt{2}$')).toBe('side √(2)');
+  });
+
+  it('converts common LaTeX operators', () => {
+    expect(cleanOcrArtifacts('3 \\times 4 \\div 2 \\pm 1')).toBe('3 × 4 ÷ 2 ± 1');
+    expect(cleanOcrArtifacts('a \\leq b \\geq c \\neq d')).toBe('a ≤ b ≥ c ≠ d');
+  });
+
+  it('leaves $^{n}$ superscript spans for the reader to render', () => {
+    // The reader turns these into <sup> downstream — cleanOcrArtifacts must not touch them.
+    expect(cleanOcrArtifacts('verse $^{19}$ here')).toBe('verse $^{19}$ here');
+  });
+
+  it('is a no-op on ordinary prose and prices', () => {
+    expect(cleanOcrArtifacts('a plain sentence with no artifacts.')).toBe('a plain sentence with no artifacts.');
+    expect(cleanOcrArtifacts('it cost $5 to $10')).toBe('it cost $5 to $10');
   });
 });

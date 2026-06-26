@@ -8,6 +8,7 @@ import rehypeRaw from 'rehype-raw';
 import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
+import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 
 // Page types where the entire "translation" is AI-generated description (no original text)
 const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank', 'frontispiece', 'illustration', 'cover', 'map', 'diagram', 'musical-score', 'table']);
@@ -783,7 +784,12 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   const isDescriptionOnly = DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
     DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '');
 
-  const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
+  // Read-time OCR safety net (#2764): collapse runaway dot/dash/underscore
+  // lacuna walls to […] and convert leaked LaTeX (\frac, \sqrt, operators) to
+  // readable text BEFORE any markdown/annotation preprocessing. Superscript
+  // spans ($^{n}$) are left for preprocessLatexSuperscripts below.
+  const withArtifacts = useMemo(() => cleanOcrArtifacts(cleanText), [cleanText]);
+  const withBracketTags = useMemo(() => preprocessBracketTags(withArtifacts, showNotes), [withArtifacts, showNotes]);
   // Drop dangling vocabulary chips when notes are off (see preprocessTerms).
   const withTerms = useMemo(() => preprocessTerms(withBracketTags, showNotes), [withBracketTags, showNotes]);
   // On description-only pages, render the whole AI description uniformly (no half-highlighting).
