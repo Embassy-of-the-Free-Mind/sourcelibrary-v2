@@ -129,6 +129,38 @@ describe('legacy disposition fallback (transition compatibility)', () => {
     expect(isFirstTranslation(withEmpty)).toBe(false); // needs_review still doesn't badge
   });
 
+  it('evidence-UNTRUSTWORTHY translation_found → needs_review, NOT a demotion (#2564 Arithmologia/Godwin)', () => {
+    // The #2564 incident: a genuine first was demoted because its cited "prior"
+    // was Godwin's *anthology*, not a translation of the specific work. The
+    // evidence-quality guard (#2579) must catch an anthology-class prior and
+    // escalate to needs_review rather than honor the not_first.
+    const arithmologia: FirstTranslationBook = {
+      visible: true, pages_translated: 50,
+      title: 'Arithmologia', author: 'Athanasius Kircher', original_language: 'lat',
+      translation_verification: {
+        disposition: 'translation_found',
+        translations_found: [
+          { english_title: 'The Harmony of the Spheres: A Sourcebook of the Pythagorean Tradition', translator: 'Joscelyn Godwin', pub_year: '1993' },
+        ],
+      },
+    };
+    expect(firstTranslationVerdict(arithmologia)).toBe('needs_review');
+    expect(isFirstTranslation(arithmologia)).toBe(false); // needs_review still doesn't badge
+
+    // A clean, specific prior still demotes for real — the guard is not blanket-permissive.
+    const realDemotion: FirstTranslationBook = {
+      visible: true, pages_translated: 50,
+      title: 'Arithmologia', author: 'Athanasius Kircher', original_language: 'lat',
+      translation_verification: {
+        disposition: 'translation_found',
+        translations_found: [
+          { english_title: 'Arithmologia, or the Mystical Properties of Numbers', translator: 'Jane Doe', pub_year: '1901', completeness: 'complete' },
+        ],
+      },
+    };
+    expect(firstTranslationVerdict(realDemotion)).toBe('not_first');
+  });
+
   it('treats legacy first_complete_translation as our-complete (passes the gate)', () => {
     expect(isFirstTranslation(legacy('first_complete_translation'))).toBe(true);
   });

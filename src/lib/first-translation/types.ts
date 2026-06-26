@@ -164,4 +164,10 @@ export interface FirstTranslationBook {
   } | null;
   visible?: boolean;
   pages_translated?: number | null;
+  // Read only by the evidence-quality guard (#2579) when validating a legacy
+  // `translation_found` demotion against its cited priors.
+  title?: string;
+  author?: string;
+  language?: string | null;
+  original_language?: string | null;
 }
