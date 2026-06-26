@@ -8,6 +8,7 @@ import rehypeRaw from 'rehype-raw';
 import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
+import { collapseLacunaWalls, latexToReadable } from '@/lib/clean-ocr-artifacts';
 
 // Page types where the entire "translation" is AI-generated description (no original text)
 const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank', 'frontispiece', 'illustration', 'cover', 'map', 'diagram', 'musical-score', 'table']);
@@ -783,7 +784,9 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   const isDescriptionOnly = DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
     DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '');
 
-  const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
+  // Collapse runaway dot/lacuna walls before anything else parses the text (#2764).
+  const withLacuna = useMemo(() => collapseLacunaWalls(cleanText), [cleanText]);
+  const withBracketTags = useMemo(() => preprocessBracketTags(withLacuna, showNotes), [withLacuna, showNotes]);
   // Drop dangling vocabulary chips when notes are off (see preprocessTerms).
   const withTerms = useMemo(() => preprocessTerms(withBracketTags, showNotes), [withBracketTags, showNotes]);
   // On description-only pages, render the whole AI description uniformly (no half-highlighting).
@@ -793,7 +796,11 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   );
   const withGreek = useMemo(() => preprocessLatexGreek(withDescription), [withDescription]);
   const withLatex = useMemo(() => preprocessLatexSuperscripts(withGreek), [withGreek]);
-  const withAnnotationMd = useMemo(() => preprocessAnnotationInlineMarkdown(withLatex), [withLatex]);
+  // Mop up remaining LaTeX leakage the dedicated handlers above don't cover —
+  // \frac{a}{b}, \sqrt{x}, stray $…$ math, symbol commands (#2764). Runs AFTER
+  // the Greek/superscript/overline handlers so their nicer HTML output stands.
+  const withMathClean = useMemo(() => latexToReadable(withLatex), [withLatex]);
+  const withAnnotationMd = useMemo(() => preprocessAnnotationInlineMarkdown(withMathClean), [withMathClean]);
   const withCentering = useMemo(() => preprocessCentering(withAnnotationMd), [withAnnotationMd]);
   // Ensure blank lines around block-level HTML tags so markdown parser resumes inline processing.
   // Without this, text like "</div>\n**bold**" is treated as one HTML block and ** renders literally.

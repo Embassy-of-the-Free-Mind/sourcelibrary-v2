@@ -30,6 +30,8 @@
  * can't reopen on one surface.
  */
 
+import { cleanOcrArtifacts } from '@/lib/clean-ocr-artifacts';
+
 // Translation-side page-description blocks ∪ OCR-side page-level metadata
 // envelope. All *describe* the page; none are verbatim source text.
 const EDITORIAL_WRAPPERS =
@@ -89,14 +91,19 @@ function stripMarkdownMarkers(text: string): string {
 
 export function stripEditorialWrappers(text: string): string {
   if (!text) return text;
-  return stripMarkdownMarkers(
-    flattenMarkdownTables(
-      text
-        // Paired blocks, content and all (multiline). Backreference keeps it from
-        // swallowing text between two different wrapper types.
-        .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
-        // Any orphan opening/closing wrapper tag left by malformed AI output.
-        .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+  // OCR artifact cleanup (#2764): collapse runaway dot/lacuna walls and convert
+  // stray LaTeX leakage to readable plain text. Sequenced AFTER wrapper/markdown
+  // stripping so it operates on the body text that surfaces in snippets/quotes.
+  return cleanOcrArtifacts(
+    stripMarkdownMarkers(
+      flattenMarkdownTables(
+        text
+          // Paired blocks, content and all (multiline). Backreference keeps it from
+          // swallowing text between two different wrapper types.
+          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+          // Any orphan opening/closing wrapper tag left by malformed AI output.
+          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+      ),
     ),
   );
 }
