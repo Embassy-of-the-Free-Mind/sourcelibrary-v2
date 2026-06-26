@@ -63,7 +63,9 @@ const CONCURRENCY = parseInt(arg('--concurrency') || '10', 10);
 // sl-v1 = old always-on visible logo; sl-v2 = mark-in-place (EXIF+watermark+logo);
 // sl-v3 = regenerate display variant from the clean original at <=2000px + full
 // mark (EXIF + LLM message + invisible watermark + random ~1/10 visible logo).
-const MARK_VERSION = 'sl-v4';  // sl-v4: visible logo shrunk 7%→3.5%
+// sl-v5: watermark robustness — full-delta on textured blocks (was texture-scaled
+// and diluted to ~58% per-page detection); now ~94%, still invisible. Re-marks v4.
+const MARK_VERSION = 'sl-v5';
 const DISPLAY_MAX_W = 2000;  // regenerate display variants at min(this, native width)
 
 const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
