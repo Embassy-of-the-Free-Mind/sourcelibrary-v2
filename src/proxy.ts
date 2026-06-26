@@ -763,6 +763,26 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // Reader page URLs that use a page *number* instead of a page *id*
+  // (/book/<slug>/page/5). The reader route keys off the page id, so a numeric
+  // segment renders notFound() — but that route is ISR, so it returns HTTP 200
+  // with a "Page Not Found" body (a Next.js soft-404). Google had ~1.2k of these
+  // indexed as soft-404s. Resolve the number → real page id via the existing
+  // book-page resolver, which 301s to /book/<slug>/page/<pageId> (or 302s to the
+  // book if the number is out of range). Real page ids (24-hex, met-*, etc.) are
+  // never purely numeric, so they fall through to the normal ISR page route.
+  const bookPageNumMatch = pathname.match(/^\/book\/([^/]+)\/page\/([1-9]\d{0,5})$/);
+  if (bookPageNumMatch) {
+    const [, segment, pageNum] = bookPageNumMatch;
+    const url = request.nextUrl.clone();
+    url.pathname = '/api/redirect/book-page';
+    url.search = '';
+    const headers = new Headers(request.headers);
+    headers.set('x-redirect-book', segment);
+    headers.set('x-redirect-page', pageNum);
+    return NextResponse.rewrite(url, { request: { headers } });
+  }
+
   // --- Bot rate limiting (soft) ---
   // Browser rate limiting is handled by Vercel WAF (dashboard config).
   // This in-memory limiter only applies to bots as a defense-in-depth layer.
