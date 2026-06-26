@@ -23,6 +23,23 @@ export async function POST(request: NextRequest) {
     const dbWork = (async () => {
       const db = await getDb();
 
+      // Don't log 404s for books that are deliberately hidden from the public
+      // reader. Hidden/in-copyright books correctly 404 via the reader gate
+      // (isBookReadable, PR #2522), but bots and stale links keep re-crawling
+      // their /book/<slug>[/page/<id>] URLs — ~27k/week of noise that buries the
+      // real broken links. If the URL points at a known-hidden book, skip it.
+      const bookSlug = url.match(/^\/book\/([^/?#]+)/)?.[1];
+      if (bookSlug) {
+        const slug = decodeURIComponent(bookSlug);
+        const book = await db.collection('books').findOne(
+          { $or: [{ slug }, { id: slug }] },
+          { projection: { visible: 1, hidden: 1 } },
+        );
+        if (book && (book.hidden === true || book.visible === false)) {
+          return; // deliberately hidden — expected 404, not worth recording
+        }
+      }
+
       // Deduplicate: same URL + IP within 1 hour
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
       const anonIp = ip.replace(/\.\d+$/, '.0');
