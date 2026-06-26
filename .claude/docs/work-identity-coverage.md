@@ -258,6 +258,58 @@ pure Renaissance-composed subset, not print-year); and completing under-captured
 series (ITRL 98/~100 enumerated; Brill BTSI partial — publisher site bot-blocks
 automated access, enumerated via BMCR / Renaissance Quarterly reviews instead).
 
+## Spot-check audit & live edge cases (2026-06-26)
+**Approach.** Audit clusters by sampling across two axes where defects hide: (a)
+**size extremes** — the largest clusters are where an over-merge lurks; (b) **each
+`work_id_source` tag**. For each sampled cluster, list every member's `title` /
+`language` / `text_role` / `visible` / `pages_count` and ask three questions: do
+all members name the *same work*? are the "editions" actually *parts*? is a *part*
+of a larger work fused into the whole? Queries are throwaway aggregations — group
+`books` by `work_id` sort by count desc for the big clusters; `$addToSet` on
+`language` to surface the cross-language tier. **Clusters that read correctly in
+the sample** (precision is good): Boethius *De Consolatione* (`Q138752489`, 31 eds
+Latin+English, `text_role` o/p/m all present), Vitruvius *De Architectura*
+(`Q1232238`, Latin/French/Italian), Plotinus *Enneads*, Corpus Hermeticum — the
+`work-merge:llm-verified` cross-language tier is doing its job. **No false
+*distinct-work* fusions found** in the sample; every defect below is a *granularity*
+artifact, not data corruption.
+
+**Four live edge classes — all one root: a flat `work_id` can't model part-of.**
+1. **Parts-as-editions (CJK juan + Western fascicles).** `kr:KR3k0059` 御定佩文韻府 =
+   **729 members**, each a juan-slice of ONE dictionary; **39 `kr:` clusters have
+   >50 members, 111 have >20.** Western twin: the Krause *Kunsturkunden* cluster =
+   23 same-title/same-year (1820-21) members, page counts 26→215 = fascicles of one
+   work, not 23 editions. *Correct at work level* (it IS one work) but inflates the
+   edition count and makes `bestEdition()` choose among parts. Defensible as "one
+   work in N parts"; the fix is the contained-works / `work_part_of` layer, not a
+   re-key.
+2. **Part-of-a-whole fused into the whole (the Gītā case).** `Q200655` (Mahābhārata)
+   absorbs "The Song Celestial, or Bhagavad-Gītā (From the Mahābhārata)" — yet the
+   Gītā *also* exists as standalone works (`local:a:william-walker-atkinson:...`,
+   `local:a:kashinath-trimbak-telang:...bhagavadgita...`). So one work (the Gītā) is
+   split across the Mahābhārata cluster AND its own slugs — a true inconsistency,
+   and "first English of the Gītā" is unanswerable from the cluster. Same shape as
+   Poimandres ↔ Corpus Hermeticum. Fix: Gītā is its own work-node with
+   `work_part_of` → Mahābhārata, never a fused "edition."
+3. **Omnibus contamination.** corpus-hermeticum (24) includes "De mysteriis
+   Aegyptiorum - Pimander - Asclepius" — the Ficino 1497 omnibus that also embodies
+   Iamblichus *De Mysteriis* (a different work). plotinus-enneads includes
+   "Plotinus, Enneads VI; Maximus of Tyre, Dissertations." The compilation gets
+   vacuumed into whichever contained work its title best matches. Fix:
+   `book.contained_works[]` (the manifestation-aggregates edge), per the
+   architecture doc's hierarchy model.
+4. **(clean) Herculaneum per-volume singletons** verified correct — each Tomus /
+   Collectio Altera volume is its own work; the English Collectio Altera volumes
+   (e.g. `…:collectio-altera-1864-a`, `text_role:modern-translation`) stay separate
+   from the Latin ones, per the under-cluster policy.
+
+**Takeaway:** clustering *precision* is healthy; the open defects are all
+*granularity* — flat ids fuse parts up (1, 2) or vacuum compilations in (3). All
+three are the same keystone fix the architecture doc names (work-hierarchy /
+contained-works layer, #2567), and none is a corruption bug — safe to leave until
+that layer lands. To re-run this audit:
+`scripts/analysis/work-coverage.mjs` plus ad-hoc group-by-`work_id` sampling.
+
 ## Open levers
 - **Embedding clustering = candidate generator, NOT an auto-writer (tested to
   exhaustion 2026-06-19, #1634).** Reusing stored embeddings (`book_embeddings`
