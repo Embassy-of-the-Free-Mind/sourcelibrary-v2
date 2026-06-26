@@ -6,6 +6,7 @@
  * Usage: set -a; source .env.production.local; set +a; node scripts/maintenance/update-homepage-stats.mjs
  */
 import { MongoClient } from 'mongodb';
+import { countDistinctLanguages } from '../lib/language-count.mjs';
 
 const uri = process.env.MONGODB_URI;
 if (!uri) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -36,7 +37,10 @@ const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, lang
   books.countDocuments(readableFilter),
   books.countDocuments({ ...translatedFilter, is_first_translation: true }),
   books.distinct('author', translatedFilter).then(a => a.length),
-  books.distinct('language', translatedFilter).then(l => l.filter(x => x && !x.includes(',') && !x.includes(' and ')).length),
+  // Distinct SOURCE languages across the opened corpus (same `filter` as totalBooks,
+  // so the two stats are consistent). countDistinctLanguages splits compound labels
+  // and drops variants/junk — a naive distinct().length over-counts ~1.6x (#lang-count).
+  books.distinct('language', filter).then(countDistinctLanguages),
   books.countDocuments(artworkFilter),
   db.collection('gallery_images').countDocuments({}),
   // First-translation verification coverage (#2332 Task 3): of all readable+visible
