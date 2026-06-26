@@ -190,11 +190,13 @@ async function handleIdentify(now: string, baseFilter: Document): Promise<NextRe
   const db = await getReadDb();
   const earliest = await db.collection('books').findOne(
     { ...baseFilter, pages_count: { $gt: 0 } },
-    { sort: { created_at: 1 }, projection: { created_at: 1 }, maxTimeMS: 15000 }
+    { sort: { created_at: 1 }, projection: { created_at: 1, id: 1 }, maxTimeMS: 15000 }
   );
   const earliestDate = earliest?.created_at
     ? new Date(earliest.created_at).toISOString().split('T')[0]
     : '2022-01-01';
+  // Use a real record id so OAI validators see a resolvable sample (not a placeholder).
+  const sampleId = `oai:sourcelibrary.org:${escXml(earliest?.id || earliest?._id?.toString() || 'example123')}`;
 
   return xmlResponse(
     `${xmlHeader(now, 'Identify')}
@@ -212,7 +214,7 @@ async function handleIdentify(now: string, baseFilter: Document): Promise<NextRe
         <scheme>oai</scheme>
         <repositoryIdentifier>sourcelibrary.org</repositoryIdentifier>
         <delimiter>:</delimiter>
-        <sampleIdentifier>oai:sourcelibrary.org:example123</sampleIdentifier>
+        <sampleIdentifier>${sampleId}</sampleIdentifier>
       </oai-identifier>
     </description>
   </Identify>${xmlFooter()}`
