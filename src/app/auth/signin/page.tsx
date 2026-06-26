@@ -8,8 +8,11 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import { isInAppBrowser, preferredBrowser, inAppBrowserName } from '@/lib/in-app-browser';
 import { trackEvent } from '@/lib/track-event';
 import { TurnstileWidget, turnstileConfigured } from '@/components/auth/TurnstileWidget';
+import { SIGNIN_STRINGS } from '@/lib/funnel-i18n';
+import type { Locale } from '@/lib/i18n';
 
-function SignInContent() {
+function SignInContent({ locale = 'en' }: { locale?: Locale }) {
+  const t = SIGNIN_STRINGS[locale];
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
   const error = searchParams.get('error');
@@ -57,7 +60,7 @@ function SignInContent() {
     e.preventDefault();
     if (!email) return;
     if (turnstileConfigured && !turnstileToken) {
-      setEmailError('Please complete the verification below.');
+      setEmailError(t.errCompleteVerification);
       return;
     }
     setLoading(true);
@@ -73,12 +76,12 @@ function SignInContent() {
         'cf-turnstile-response': turnstileToken ?? '',
       });
       if (result?.error) {
-        setEmailError('Could not send sign-in link. Please try again.');
+        setEmailError(t.errSendLink);
       } else {
         setEmailSent(true);
       }
     } catch {
-      setEmailError('Could not send sign-in link. Please try again.');
+      setEmailError(t.errSendLink);
     } finally {
       setLoading(false);
     }
@@ -96,12 +99,12 @@ function SignInContent() {
             <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
             <circle cx="12" cy="12" r="4" stroke="var(--text-primary)" strokeWidth="1" />
           </svg>
-          <h1 className="text-2xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>Check your email</h1>
+          <h1 className="text-2xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>{t.checkEmailTitle}</h1>
           <p className="text-base mb-6" style={{ color: 'var(--text-muted)' }}>
-            We sent a sign-in link to <strong>{email}</strong>. Click the link to access the library.
+            {t.checkEmailBodyBefore}<strong>{email}</strong>{t.checkEmailBodyAfter}
           </p>
           <button onClick={() => setEmailSent(false)} className="text-sm underline" style={{ color: 'var(--text-muted)' }}>
-            Use a different email
+            {t.useDifferentEmail}
           </button>
         </div>
       </div>
@@ -121,7 +124,7 @@ function SignInContent() {
 
       <div className="relative z-10 w-full max-w-md p-8 rounded-2xl bg-white/95 backdrop-blur-sm border border-white/20 mx-4">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-3 mb-4" aria-label="Source Library home">
+          <Link href={locale === 'es' ? '/es' : '/'} className="inline-flex items-center gap-3 mb-4" aria-label={t.homeAria}>
             <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
               <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
@@ -133,18 +136,17 @@ function SignInContent() {
             </span>
           </Link>
           <h1 className="text-2xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
-            Sign In
+            {t.title}
           </h1>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-            Access the full collection of rare texts in alchemy, Hermetica, and natural philosophy.
+            {t.subtitle}
           </p>
         </div>
 
         {inApp && (
           <div className="mb-6 p-3 rounded-lg text-sm" style={{ background: '#fffbeb', color: '#92400e', border: '1px solid #fde68a' }}>
-            You&rsquo;re in {appName ? `${appName}’s` : 'an'} in-app browser, where Google sign-in is usually blocked.
-            <strong> Use email below</strong> — we&rsquo;ll send a link that opens in your normal browser and signs you in.
-            (Or tap the <strong>&#8230;</strong> menu and choose &ldquo;Open in {browser}&rdquo;.)
+            {appName ? `${t.inAppWarnBeforeApp}${appName}${t.inAppWarnAfterApp}` : t.inAppWarnGeneric}
+            {' '}<strong>{t.inAppUseEmail}</strong> {t.inAppTail.replace('{browser}', browser)}
           </div>
         )}
 
@@ -153,24 +155,24 @@ function SignInContent() {
             {emailError
               ? emailError
               : error === 'OAuthAccountNotLinked'
-                ? 'This email is already associated with another account.'
+                ? t.errOAuthNotLinked
                 : error === 'EmailSignin'
-                  ? 'Could not send sign-in email. Please try again.'
-                  : 'An error occurred during sign in. Please try again.'}
+                  ? t.errEmailSignin
+                  : t.errGeneric}
           </div>
         )}
 
         {/* Email sign-in */}
         <form onSubmit={handleEmailSignIn} className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text-secondary)' }}>
-            Email address
+            {t.emailLabel}
           </label>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
+            placeholder={t.emailPlaceholder}
             required
             className="w-full px-4 py-3 rounded-lg text-base outline-none transition-all"
             style={{
@@ -187,13 +189,13 @@ function SignInContent() {
             className="w-full mt-3 px-4 py-3 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50"
             style={{ background: 'var(--accent-rust)', color: '#ffffff' }}
           >
-            {loading ? 'Sending link...' : 'Continue with Email'}
+            {loading ? t.sendingLink : t.continueEmail}
           </button>
         </form>
 
         <div className="flex items-center gap-3 my-6">
           <div className="flex-1 h-px" style={{ background: 'var(--border-light)' }} />
-          <span className="text-xs" style={{ color: 'var(--text-faint)' }}>or</span>
+          <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{t.or}</span>
           <div className="flex-1 h-px" style={{ background: 'var(--border-light)' }} />
         </div>
 
@@ -205,7 +207,7 @@ function SignInContent() {
               try {
                 await signIn('google', { callbackUrl });
               } catch {
-                setEmailError('Could not connect to Google. Please try again.');
+                setEmailError(t.errGoogleConnect);
                 setGoogleLoading(false);
               }
             }}
@@ -219,7 +221,7 @@ function SignInContent() {
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.25" />
                   <path d="M12 2a10 10 0 019.95 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
-                Redirecting to Google...
+                {t.redirectingGoogle}
               </>
             ) : (
               <>
@@ -229,36 +231,36 @@ function SignInContent() {
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                   <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                 </svg>
-                Continue with Google
+                {t.continueGoogle}
               </>
             )}
           </button>
           {inApp && (
             <p className="text-center text-xs" style={{ color: 'var(--text-faint)' }}>
-              Often blocked in in-app browsers — email is more reliable here.
+              {t.googleBlockedNote}
             </p>
           )}
         </div>
 
         <p className="mt-6 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
-          By signing in, you agree to our{' '}
-          <Link href="/terms" className="underline hover:opacity-80">terms of service</Link>
-          {' '}and{' '}
-          <Link href="/privacy" className="underline hover:opacity-80">privacy policy</Link>.
+          {t.termsPrefix}
+          <Link href="/terms" className="underline hover:opacity-80">{t.terms}</Link>
+          {t.and}
+          <Link href="/privacy" className="underline hover:opacity-80">{t.privacy}</Link>{t.termsSuffix}
         </p>
       </div>
     </div>
   );
 }
 
-export default function SignInPage() {
+export default function SignInPage({ locale = 'en' }: { locale?: Locale }) {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
         <BookLoader size="xs" />
       </div>
     }>
-      <SignInContent />
+      <SignInContent locale={locale} />
     </Suspense>
   );
 }

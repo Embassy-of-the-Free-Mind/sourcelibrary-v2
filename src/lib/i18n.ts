@@ -20,6 +20,36 @@ export function localeFromPathname(pathname: string | null | undefined): Locale 
   return 'en';
 }
 
+// Base paths (English-canonical, no `/es` prefix) that have a Spanish twin
+// route. The EN/ES toggle links to the twin for these; every other page has no
+// `/es` equivalent (thin i18n) so the toggle there points at the Spanish front
+// door and hints at browser translation. Keep in sync with the `/es/*` routes.
+export const LOCALIZED_ROUTES = new Set<string>(['/', '/support', '/auth/signin']);
+
+/** Strip a leading `/es` locale prefix to get the English-canonical base path. */
+export function basePathFromPathname(pathname: string | null | undefined): string {
+  if (!pathname) return '/';
+  if (pathname === '/es') return '/';
+  if (pathname.startsWith('/es/')) return pathname.slice(3); // '/es/support' → '/support'
+  return pathname;
+}
+
+/**
+ * Resolve the EN and ES hrefs for the language toggle on a given page.
+ * `hasTwin` is true when the current page has a real Spanish route, so callers
+ * can hint that, on a non-twin page, ES jumps to the Spanish front door rather
+ * than translating the current page in place.
+ */
+export function localeHrefs(pathname: string | null | undefined): { en: string; es: string; hasTwin: boolean } {
+  const base = basePathFromPathname(pathname);
+  const hasTwin = LOCALIZED_ROUTES.has(base);
+  return {
+    en: base,
+    es: hasTwin ? (base === '/' ? '/es' : `/es${base}`) : '/es',
+    hasTwin,
+  };
+}
+
 /** Client hook: current locale from the URL. */
 export function useLocale(): Locale {
   return localeFromPathname(usePathname());

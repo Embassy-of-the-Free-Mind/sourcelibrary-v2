@@ -1,37 +1,15 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-
-const AMOUNT_OPTIONS = [
-  { value: 'under-1000', label: 'Under $1,000' },
-  { value: '1000-5000', label: '$1,000 - $5,000' },
-  { value: '5000-10000', label: '$5,000 - $10,000' },
-  { value: '10000-25000', label: '$10,000 - $25,000' },
-  { value: '25000-50000', label: '$25,000 - $50,000' },
-  { value: '50000-plus', label: '$50,000+' },
-];
-
-const ROUTE_OPTIONS = [
-  {
-    value: 'naf',
-    label: 'US Tax-Deductible (NAF)',
-    description: 'Via the Netherland-America Foundation, a 501(c)(3) public charity.',
-  },
-  {
-    value: 'efm',
-    label: 'Direct to Embassy of the Free Mind',
-    description: 'For European and international donors. ANBI-registered in the Netherlands.',
-  },
-  {
-    value: 'undecided',
-    label: "I'm not sure yet",
-    description: "We'll help you find the best option for your situation.",
-  },
-];
+import { DONATE_FORM_STRINGS } from '@/lib/funnel-i18n';
+import type { Locale } from '@/lib/i18n';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
-export default function DonationIntentionForm() {
+export default function DonationIntentionForm({ locale = 'en' }: { locale?: Locale }) {
+  const t = DONATE_FORM_STRINGS[locale];
+  const AMOUNT_OPTIONS = t.amountOptions;
+  const ROUTE_OPTIONS = t.routeOptions;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [route, setRoute] = useState('');
@@ -62,13 +40,13 @@ export default function DonationIntentionForm() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Something went wrong');
+        throw new Error(data.error || t.genericError);
       }
 
       setState('success');
     } catch (err) {
       setState('error');
-      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong');
+      setErrorMsg(err instanceof Error ? err.message : t.genericError);
     }
   }
 
@@ -80,12 +58,12 @@ export default function DonationIntentionForm() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-display text-stone-900 mb-3">Thank you, {name.split(' ')[0]}</h3>
+        <h3 className="text-2xl font-display text-stone-900 mb-3">{t.successTitlePrefix}{name.split(' ')[0]}</h3>
         <p className="text-stone-600 text-lg leading-relaxed max-w-md mx-auto mb-4">
-          We've sent you an email with next steps and a personal introduction to Derek Lomas, our Project Director, who can help with anything you need.
+          {t.successBody}
         </p>
         <p className="text-stone-500 text-sm">
-          Check your inbox at <strong>{email}</strong>
+          {t.successInboxPrefix}<strong>{email}</strong>
         </p>
       </div>
     );
@@ -94,9 +72,9 @@ export default function DonationIntentionForm() {
   return (
     <form onSubmit={handleSubmit} className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 md:p-10">
       <div className="mb-8">
-        <h3 className="text-2xl font-display text-stone-900 mb-2">Express Your Interest</h3>
+        <h3 className="text-2xl font-display text-stone-900 mb-2">{t.title}</h3>
         <p className="text-stone-600 text-sm leading-relaxed">
-          Tell us a bit about yourself and we'll follow up personally to help make your contribution as easy as possible.
+          {t.lead}
         </p>
       </div>
 
@@ -105,7 +83,7 @@ export default function DonationIntentionForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="donor-name" className="block text-sm font-medium text-stone-700 mb-1.5">
-              Your name
+              {t.nameLabel}
             </label>
             <input
               id="donor-name"
@@ -114,12 +92,12 @@ export default function DonationIntentionForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-2.5 rounded-lg border border-stone-300 bg-white text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust transition-colors"
-              placeholder="Full name"
+              placeholder={t.namePlaceholder}
             />
           </div>
           <div>
             <label htmlFor="donor-email" className="block text-sm font-medium text-stone-700 mb-1.5">
-              Email
+              {t.emailLabel}
             </label>
             <input
               id="donor-email"
@@ -128,7 +106,7 @@ export default function DonationIntentionForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2.5 rounded-lg border border-stone-300 bg-white text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust transition-colors"
-              placeholder="you@example.com"
+              placeholder={t.emailPlaceholder}
             />
           </div>
         </div>
@@ -136,7 +114,7 @@ export default function DonationIntentionForm() {
         {/* Donation Route */}
         <fieldset>
           <legend className="block text-sm font-medium text-stone-700 mb-3">
-            How would you like to donate?
+            {t.routeLegend}
           </legend>
           <div className="space-y-3">
             {ROUTE_OPTIONS.map((opt) => (
@@ -169,7 +147,7 @@ export default function DonationIntentionForm() {
         {/* Amount Range */}
         <div>
           <label htmlFor="donor-amount" className="block text-sm font-medium text-stone-700 mb-1.5">
-            Approximate amount <span className="font-normal text-stone-400">(optional)</span>
+            {t.amountLabel} <span className="font-normal text-stone-400">{t.optional}</span>
           </label>
           <select
             id="donor-amount"
@@ -177,7 +155,7 @@ export default function DonationIntentionForm() {
             onChange={(e) => setAmountRange(e.target.value)}
             className="w-full px-4 py-2.5 rounded-lg border border-stone-300 bg-white text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust transition-colors"
           >
-            <option value="">Prefer not to say</option>
+            <option value="">{t.amountPreferNot}</option>
             {AMOUNT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
@@ -189,7 +167,7 @@ export default function DonationIntentionForm() {
         {/* Message */}
         <div>
           <label htmlFor="donor-message" className="block text-sm font-medium text-stone-700 mb-1.5">
-            Anything you'd like us to know? <span className="font-normal text-stone-400">(optional)</span>
+            {t.messageLabel} <span className="font-normal text-stone-400">{t.optional}</span>
           </label>
           <textarea
             id="donor-message"
@@ -197,14 +175,14 @@ export default function DonationIntentionForm() {
             onChange={(e) => setMessage(e.target.value)}
             rows={3}
             className="w-full px-4 py-2.5 rounded-lg border border-stone-300 bg-white text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust transition-colors resize-none"
-            placeholder="What draws you to this work, how you found us, or anything else..."
+            placeholder={t.messagePlaceholder}
           />
         </div>
 
         {/* Error */}
         {state === 'error' && (
           <div className="bg-red-50 text-red-700 text-sm rounded-lg px-4 py-3">
-            {errorMsg || 'Something went wrong. Please try again or email derek@sourcelibrary.org directly.'}
+            {errorMsg || t.genericError}
           </div>
         )}
 
@@ -214,11 +192,11 @@ export default function DonationIntentionForm() {
           disabled={state === 'submitting' || !name.trim() || !email.trim() || !route}
           className="w-full bg-stone-900 text-white py-3.5 px-6 rounded-full hover:bg-stone-800 transition-colors text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {state === 'submitting' ? 'Sending...' : 'Get in Touch'}
+          {state === 'submitting' ? t.submitting : t.submit}
         </button>
 
         <p className="text-xs text-stone-400 text-center leading-relaxed">
-          We'll respond personally within one business day. Your information is never shared.
+          {t.reassurance}
         </p>
       </div>
     </form>
