@@ -58,9 +58,18 @@ npx tsc --noEmit
 #    post-deploy status-poll timeout (ETIMEDOUT against api.vercel.com — bit us
 #    2026-06-04). Skipping the purge is far worse than purging after a failed
 #    deploy (a purge is always safe; stale HTML pointing at purged CSS is not).
-echo "▸ Deploying to production (vercel --prod)…"
+#    Resolve the CLI: prefer a global `vercel`, fall back to `npx vercel` so the
+#    script self-heals if ~/.npm-global/bin/vercel ever goes dangling (a removed
+#    global package left a broken symlink behind — bit us 2026-06-26).
+if command -v vercel >/dev/null 2>&1; then
+  VERCEL=(vercel)
+else
+  echo "  (global 'vercel' not found — using 'npx vercel')" >&2
+  VERCEL=(npx --yes vercel)
+fi
+echo "▸ Deploying to production (${VERCEL[*]} --prod)…"
 DEPLOY_EXIT=0
-vercel --prod || DEPLOY_EXIT=$?
+"${VERCEL[@]}" --prod || DEPLOY_EXIT=$?
 if [ "$DEPLOY_EXIT" -ne 0 ]; then
   echo "  ⚠ vercel exited $DEPLOY_EXIT — verifying whether the deployment actually shipped…" >&2
   PROD_OK=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "https://sourcelibrary.org/" || echo 000)
