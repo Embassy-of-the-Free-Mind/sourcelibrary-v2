@@ -243,6 +243,14 @@ const nextConfig: NextConfig = {
       // /sitemap/[__metadata_id__] route and breaks the build, so the
       // index lives at /sitemap-index and we rewrite from /sitemap.xml.
       { source: '/sitemap.xml', destination: '/sitemap-index' },
+      // The Source Library beta launch talk (embedded video + audio-aligned
+      // transcript) lives in a standalone static deployment. Proxy it on-domain
+      // at /launch so the email and site link to sourcelibrary.org, not a
+      // *.vercel.app URL. The page sets
+      // <base href="https://sourcelib-launch-talk.vercel.app/">, so its relative
+      // assets (transcript.json, lecture.mp3, clips/) load from that deployment
+      // directly — only the HTML document needs proxying here.
+      { source: '/launch', destination: 'https://sourcelib-launch-talk.vercel.app/' },
     ];
   },
   async redirects() {
