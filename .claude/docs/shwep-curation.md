@@ -24,17 +24,50 @@ node _tmp-add-new-episodes.mjs
 
 Each episode record: `{ number, title, url, cited_works[] }`.
 
-### 2. Cross-Reference Against MongoDB
+### 2. Cited-works → holdings (the "process matcher")
 
-Match cited works against `books` collection (`bookstore` database).
+> Superseded the old naive exact/substring tag match. Driver:
+> `scripts/enrichment/shwep-cited-works.mjs` (staged + resumable; cache in
+> `/tmp/shwep-cited/`). Model: `gemini-3.1-flash-lite` throughout.
 
-| Match type | Logic |
-|-----------|-------|
-| Exact | Case-insensitive on `title`, `display_title`, `author` |
-| Substring | Minimum 12 chars on same fields |
-| Year filter | Pre-1930 books only (`year` or `published` field) |
+Stages (`--extract | --dedupe | --holdings | --emit | --linkbib | --gap-audit`):
 
-**Noise filter:** Skip words <5 chars, lowercase-starting words, journal/proceedings names, HTML entities.
+1. **extract** — per episode, LLM pulls the historical primary works cited in Earl
+   Fontainelle's bibliography (originals, even when cited via a modern edition).
+2. **dedupe** — cluster raw works → canonical works (exact key + LLM canonicalisation).
+3. **holdings** — the matcher proper, validated 10/10 (#76) and 9/9 + 0 FP (Islamicate/
+   Byzantine tail) vs 6/10 single-shot:
+   - **normalize** each work → canonical title forms in ALL languages + extant/lost status;
+   - **retrieve** = embed title-forms (`match_books_semantic`) ∪ **author-anchored**
+     collected-works editions (embedding ranks a treatise title poorly against
+     "Complete Works of X");
+   - **per-candidate confirm** (flash-lite) — accepts an edition/translation/commentary
+     of *this exact work by this author*, OR a complete-works of the author that would
+     *contain* it (genre-aware: an alchemical epistle is not in a "Philosophical Works");
+     rejects lost works, same-author-wrong-work, name collisions (Philo ≠ Philoponus).
+   - A deterministic **author guard** drops title-coincidence false positives.
+4. **emit** — writes the data files (below).
+5. **linkbib** — injects inline `/book/…` links into each episode's displayed
+   bibliography (verbatim-faithful — spliced, never regenerated), and emits
+   supplementary cards for held works not inline-linked. Skips works cited only in a
+   **dated edition citation** (linking our edition there would misattribute the cited
+   edition). Hand-curated #76/#323 preserved verbatim as the quality bar.
+6. **gap-audit** (read-only) — re-checks "acquire" works against the FULL catalog
+   (incl. hidden/draft) → `held_readable` / `held_unprocessed` / `absent`. Run this
+   before concluding we don't own something (visible-only checks undercount ownership).
+
+**Shared primitives** live in `scripts/lib/holdings-resolver.mjs` (`translatedRatio`,
+`bestEdition` = completeness-tiered + dedicated-over-collected, `holdingStatus`,
+`isCollected`, `editionReadable`/`editionVisible`) — the works-catalog (#2453/#2567)
+imports the same logic. **Two predicates, kept separate:** OWNERSHIP+PROCESSED
+(full-catalog) vs the PUBLIC-LINK gate (visible) — collapsing them re-acquires what we own.
+
+**Parts of books:** when a cited work resolves to a collected/omnibus edition, it
+deep-links to the treatise's page via `book.chapters[].pageId` (`chapterMatch`, ≥0.8
+token overlap, conservative) — inline links, supplementary cards, and the grid all do this.
+
+**Author/year filters:** retrieval already gates `visible:true && pages_count>0`; inline
+links additionally require `pages_translated>0` (readable). No pre-1930 filter.
 
 ### 3. Assign Periods
 
@@ -63,19 +96,35 @@ node /tmp/clean-shwep-tags.mjs   # Remove noisy tags from TS file
 
 ### 6. Render Page
 
-Page component matches tags at render time against MongoDB books via regex search. Clicking a tag opens Source Library search for that text.
+The reading room reads pre-computed data (no render-time matching). The episode page
+(`src/app/shwep/[number]/page.tsx` via `src/app/shwep/shwep-data.ts`): if the episode has
+an inline-linked bibliography it renders that (works underlined in rust = "read here"),
+plus an "Also in Source Library" grid of held works not linked inline; otherwise it renders
+the plain bibliography + the work-centric "Read in Source Library" grid. Both surfaces
+deep-link to a treatise page when the edition is a collected volume.
 
-### 7. Import Missing Books
+### 7. Acquisition (don't over-acquire)
 
-Identify referenced works not yet in the collection. Search digital archives (IA, Gallica, MDZ, etc.) and import via standard import APIs.
+Run `--gap-audit` first: most apparent gaps are held-but-hidden/unprocessed, not absent
+(we hold 16 Philo editions; the visible-only matcher saw one). Genuine absent works are
+mostly copyright-only translations (defer). Triage PD availability before importing.
 
 ## Key Files
 
 | File | Purpose |
 |------|---------|
-| `src/data/shwep-episodes.ts` | Episode data (260 episodes, 199 unique tags) |
-| `src/app/shwep/page.tsx` | Rendering page |
-| `/tmp/shwep_crawled_all.jsonl` | Raw crawl data |
+| `scripts/enrichment/shwep-cited-works.mjs` | The cited-works → holdings → linked-bib pipeline (all stages) |
+| `scripts/lib/holdings-resolver.mjs` | Shared holdings primitives (bestEdition, holdingStatus, …) — also used by the works-catalog |
+| `src/data/shwep-cited-works.ts` | Works DB (held vs acquire, per edition) |
+| `src/data/shwep-book-matches.ts` | Work-centric "Read in Source Library" grid per episode (`{id, page?}[]`) |
+| `src/data/shwep-linked-bibliographies.ts` | Inline-linked bibliographies (auto + hand-curated #76/#323) |
+| `src/data/shwep-supplementary-works.ts` | Held works not inline-linked, shown as cards (`{id, page?}[]`) |
+| `src/data/shwep-episodes.ts` | Episode data (period taxonomy) |
+| `src/app/shwep/shwep-data.ts`, `src/app/shwep/[number]/page.tsx` | Reading-room data layer + episode page |
+| `/tmp/shwep-cited/` | Stage cache (extracted/works/works-held/gap-audit) |
+
+Convergence with the universal works catalog (#2453) and the shared resolver is tracked in
+**#2632** (acquisition triage) and **#2567** (works knowledge-layer architecture).
 
 ## Replicability
 

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
+import { useLocale, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 
 interface NavLink {
   label: string;
@@ -14,22 +15,26 @@ interface NavLink {
   children?: { label: string; href: string }[];
 }
 
-const NAV_LINKS: NavLink[] = [
-  { label: 'Collections', href: '/collections' },
-  { label: 'Gallery', href: '/gallery' },
-  {
-    label: 'Browse',
-    href: '/browse',
-    activePrefix: '/browse',
-    children: [
-      { label: 'Browse', href: '/browse' },
-      { label: 'Catalogue', href: '/catalog' },
-    ],
-  },
-  { label: 'Map', href: '/explore/map', activePrefix: '/explore' },
-  { label: 'Librarian', href: '/librarian' },
-  { label: 'Podcast', href: '/podcast' },
-];
+// Hrefs are constant; labels are resolved per-locale from NAV_STRINGS so the
+// nav stays in one place as languages are added.
+function buildNavLinks(t: NavStrings): NavLink[] {
+  return [
+    { label: t.collections, href: '/collections' },
+    { label: t.gallery, href: '/gallery' },
+    {
+      label: t.browse,
+      href: '/browse',
+      activePrefix: '/browse',
+      children: [
+        { label: t.browse, href: '/browse' },
+        { label: t.catalogue, href: '/catalog' },
+      ],
+    },
+    { label: t.map, href: '/explore/map', activePrefix: '/explore' },
+    { label: t.librarian, href: '/librarian' },
+    { label: t.podcast, href: '/podcast' },
+  ];
+}
 
 interface Breadcrumb {
   label: string;
@@ -45,15 +50,33 @@ interface SiteHeaderProps {
   sticky?: boolean;
   /** Additional className for the header element */
   className?: string;
+  /**
+   * Set by the homepage (`/` and `/es`) to its known locale. The homepage is
+   * statically prerendered, where `usePathname()` is null at build time — so
+   * relying on it leaves the EN/ES toggle out of the static HTML and it only
+   * appears after hydration. Passing the locale explicitly makes the toggle
+   * (and nav strings) server-rendered on the homepage.
+   */
+  homeLocale?: Locale;
 }
 
-export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '' }: SiteHeaderProps) {
+export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '', homeLocale }: SiteHeaderProps) {
   const isWhiteText = variant === 'transparent';
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const pathnameLocale = useLocale();
+  // Prefer the homepage's explicit locale (server-known) over the pathname-
+  // derived one (null during static prerender).
+  const locale = homeLocale ?? pathnameLocale;
+  const t = NAV_STRINGS[locale];
+  const NAV_LINKS = buildNavLinks(t);
+  // The EN/ES toggle only appears where a Spanish route exists — i.e. the
+  // homepage (`/` ↔ `/es`). Deep pages have no `/es` equivalent (thin i18n),
+  // so a global toggle there would dead-end on a 404.
+  const isHome = homeLocale != null || pathname === '/' || pathname === '/es';
 
   // Close menus on route change
   useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
@@ -88,6 +111,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
 
   return (
     <header
+      data-site-header=""
       className={`${variantClasses} ${sticky ? 'sticky top-0 z-20' : ''} ${className}`}
     >
       <div className="flex items-center justify-between px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
@@ -165,6 +189,35 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             })}
           </nav>
 
+          {/* Language toggle (homepage only — `/es` exists only for the home front door) */}
+          {isHome && (
+            <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
+              <Link
+                href="/"
+                aria-current={locale === 'en' ? 'page' : undefined}
+                className={
+                  locale === 'en'
+                    ? (isWhiteText ? 'text-white' : 'text-primary')
+                    : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
+                }
+              >
+                EN
+              </Link>
+              <span className={isWhiteText ? 'text-white/30' : 'text-stone-300'}>·</span>
+              <Link
+                href="/es"
+                aria-current={locale === 'es' ? 'page' : undefined}
+                className={
+                  locale === 'es'
+                    ? (isWhiteText ? 'text-white' : 'text-primary')
+                    : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
+                }
+              >
+                ES
+              </Link>
+            </div>
+          )}
+
           {/* Desktop search icon */}
           <Link
             href="/search"
@@ -173,7 +226,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 ? (isWhiteText ? 'text-white bg-white/10' : 'text-primary bg-warm')
                 : (isWhiteText ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-secondary hover:text-primary hover:bg-warm/50')
             }`}
-            aria-label="Search"
+            aria-label={t.search}
           >
             <Search className="w-4 h-4" />
           </Link>
@@ -185,7 +238,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               className={`p-1.5 rounded transition-colors ${
                 isWhiteText ? 'text-white/70 hover:text-white' : 'text-secondary hover:text-primary'
               }`}
-              aria-label="Navigation menu"
+              aria-label={t.menu}
               aria-expanded={menuOpen}
             >
               {menuOpen ? (
@@ -241,7 +294,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                   href="/search"
                   className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-warm/50 transition-colors"
                 >
-                  Search
+                  {t.search}
                 </Link>
               </div>
             )}

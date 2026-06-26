@@ -3,6 +3,8 @@
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import AuthorAuthorityPicker, { type AuthorAuthoritySelection } from '@/components/catalog/AuthorAuthorityPicker';
+import ContributorsEditor from '@/components/catalog/ContributorsEditor';
+import type { BphContributor } from '@/lib/bph-contributors';
 
 /**
  * BPH catalogue entry edit form. Renders every whitelisted editable field
@@ -16,11 +18,10 @@ import AuthorAuthorityPicker, { type AuthorAuthoritySelection } from '@/componen
  * accurate revision history; the worst case is a noisy diff showing the
  * intervening change being overwritten.
  *
- * Repeatable schema (TEXT[]/JSONB for binding, notes, keywords, etc.) is
- * deferred — the current bph_works schema has these as single TEXT, and
- * the existing data convention (comma-separated for keywords, free-form
- * for notes) is preserved here. Real repeatables get their own PR with
- * the schema migration; the field whitelist already covers them.
+ * Repeatable authors/contributors ARE supported via the `contributors` JSONB
+ * column (BphContributor[]), edited through ContributorsEditor and linked to
+ * our canonical author thesaurus. Other repeatables (binding, keywords, …)
+ * remain single TEXT with the existing comma-separated convention.
  */
 
 interface Props {
@@ -82,6 +83,9 @@ const SECTIONS: Array<{
       { name: 'variant_printer', label: 'Printer (variant)' },
       { name: 'publisher', label: 'Publisher' },
       { name: 'variant_publisher', label: 'Publisher (variant)' },
+      // Verbatim original imprint line as printed (Paul D., 2026-06-24):
+      // e.g. "Getruckt vnd verlegt zu Schw. Hall, bey Johann Lentzen, 1641".
+      { name: 'impressum_original', label: 'Original impressum (verbatim from title page)', type: 'textarea' },
     ],
   },
   {
@@ -107,7 +111,10 @@ const SECTIONS: Array<{
       { name: 'present_location', label: 'Present location' },
       { name: 'shelf_mark', label: 'Shelf mark' },
       { name: 'state_shelf_mark', label: 'State Collection shelf mark' },
-      { name: 'provenance', label: 'Provenance / collection', type: 'textarea' },
+      // Provenance (ownership history) and collection (which named collection
+      // the copy belongs to) are distinct — split per Paul D. (2026-06-24).
+      { name: 'provenance', label: 'Provenance (ownership history)', type: 'textarea' },
+      { name: 'collection', label: 'Collection', type: 'textarea' },
     ],
   },
   {
@@ -125,6 +132,33 @@ const SECTIONS: Array<{
     ],
   },
 ];
+
+/** Normalise the stored `contributors` JSONB into editable rows. */
+function parseContributors(v: unknown): BphContributor[] {
+  if (!Array.isArray(v)) return [];
+  return v
+    .filter((c): c is Record<string, unknown> => !!c && typeof c === 'object')
+    .map((c) => ({
+      role: typeof c.role === 'string' && c.role ? c.role : 'Author',
+      name: typeof c.name === 'string' ? c.name : '',
+      variant_name: typeof c.variant_name === 'string' ? c.variant_name : '',
+      author_id: typeof c.author_id === 'string' ? c.author_id : null,
+      canonical_name: typeof c.canonical_name === 'string' ? c.canonical_name : null,
+    }));
+}
+
+/** Drop blank rows and trim before diffing / saving. */
+function cleanContributors(rows: BphContributor[]): BphContributor[] {
+  return rows
+    .map((c) => ({
+      role: c.role || 'Author',
+      name: (c.name || '').trim(),
+      variant_name: (c.variant_name || '').trim() || undefined,
+      author_id: c.author_id || undefined,
+      canonical_name: c.author_id ? c.canonical_name || undefined : undefined,
+    }))
+    .filter((c) => c.name.length > 0);
+}
 
 /** Convert null/undefined to '' for form inputs, numbers to strings. */
 function toFormValue(v: unknown): string {
@@ -170,6 +204,12 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
   }, [initial]);
 
   const [values, setValues] = useState<Record<string, string>>(initialFormValues);
+  const initialContributors = useMemo(() => parseContributors(initial.contributors), [initial]);
+  const [contributors, setContributors] = useState<BphContributor[]>(initialContributors);
+  const contributorsChanged = useMemo(
+    () => JSON.stringify(cleanContributors(contributors)) !== JSON.stringify(cleanContributors(initialContributors)),
+    [contributors, initialContributors],
+  );
   const [createUbn, setCreateUbn] = useState(suggestedUbn || '');
   const [source, setSource] = useState('');
   const [evidence, setEvidence] = useState('');
@@ -197,7 +237,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
       setError('Give the new record a UBN (catalogue id).');
       return;
     }
-    if (changedFields.length === 0) {
+    if (changedFields.length === 0 && !contributorsChanged) {
       setError(isCreate ? 'Add at least a title before saving.' : 'No fields have changed — nothing to save.');
       return;
     }
@@ -226,6 +266,15 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
           ...(evidence.trim() ? { evidence: evidence.trim() } : {}),
         };
       }
+    }
+    // Repeatable contributors are a single JSONB field, edited outside the flat
+    // value map — include the cleaned array when it changed.
+    if (contributorsChanged) {
+      fieldChanges.contributors = {
+        to: cleanContributors(contributors),
+        source: source.trim(),
+        ...(evidence.trim() ? { evidence: evidence.trim() } : {}),
+      };
     }
 
     try {
@@ -334,6 +383,16 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
               placeholder="SL-000001"
             />
           </FormField>
+        </div>
+      )}
+
+      {/* Edit mode — surface the UBN (catalogue id) read-only so the cataloguer
+          always sees which record they're editing (Paul D., 2026-06-24). The
+          UBN is the primary key and isn't changed through this form. */}
+      {!isCreate && (
+        <div className="p-4 bg-white border border-border-light rounded-lg">
+          <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-1">UBN (catalogue id)</h2>
+          <p className="font-mono text-sm text-primary">{ubn}</p>
         </div>
       )}
 
@@ -456,6 +515,19 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
                 </FormField>
               );
             })}
+            {/* Repeatable authors / contributors (Paul D.) — the "Add author"
+                layer beyond the lead author, each linkable to our thesaurus. */}
+            {section.title === 'Authorship' && (
+              <div className="pt-2 border-t border-stone-100">
+                <label className="flex items-baseline gap-2 mb-2">
+                  <span className="text-xs text-muted">Additional authors &amp; contributors</span>
+                  {contributorsChanged && (
+                    <span className="text-[10px] uppercase text-accent-rust font-medium">changed</span>
+                  )}
+                </label>
+                <ContributorsEditor value={contributors} onChange={setContributors} />
+              </div>
+            )}
           </div>
         </section>
       ))}
@@ -464,12 +536,12 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
           scroll back to the top after editing the bottom of the form. */}
       <div className="sticky bottom-3 z-10 flex items-center justify-between gap-3 p-3 bg-white border border-border-light rounded-lg shadow-sm">
         <div className="text-sm text-muted">
-          {changedFields.length === 0 ? (
+          {changedFields.length + (contributorsChanged ? 1 : 0) === 0 ? (
             isCreate ? 'Add a title to begin' : 'No changes yet'
           ) : (
             <>
-              <span className="font-medium text-primary">{changedFields.length}</span>{' '}
-              field{changedFields.length === 1 ? '' : 's'} {isCreate ? 'filled' : 'changed'}
+              <span className="font-medium text-primary">{changedFields.length + (contributorsChanged ? 1 : 0)}</span>{' '}
+              field{changedFields.length + (contributorsChanged ? 1 : 0) === 1 ? '' : 's'} {isCreate ? 'filled' : 'changed'}
             </>
           )}
           {error && <span className="ml-3 text-accent-rust">{error}</span>}
@@ -483,7 +555,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
           </a>
           <button
             type="submit"
-            disabled={submitting || changedFields.length === 0}
+            disabled={submitting || (changedFields.length === 0 && !contributorsChanged)}
             className="px-4 py-1.5 text-sm rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {submitting

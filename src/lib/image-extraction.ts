@@ -6,6 +6,7 @@
 import Replicate from 'replicate';
 import { images } from '@/lib/api-client';
 import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
+import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
 
 export const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
 
@@ -80,7 +81,17 @@ function buildContextPrefix(ctx: BookContext): string {
   if (ctx.language) parts.push(`Language: ${ctx.language}`);
   if (ctx.subjects?.length) parts.push(`Subjects: ${ctx.subjects.join(', ')}`);
   if (parts.length === 0) return '';
-  return `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${parts.join(' | ')}\n\n`;
+  return `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image or named in the PAGE TEXT below — a book about a subject does not mean every illustration depicts it):\n${parts.join(' | ')}\n\n`;
+}
+
+/** Pull the transcription pipeline's own page/illustration context. Unlike this
+ *  image-only captioner, the OCR pass read the whole page (text, captions, marginal
+ *  labels), so its `<image-desc>` / `<summary>` are context-grounded — feeding them
+ *  here stops the captioner inventing a subject from the book's topic alone (#2707).
+ *  Delegates to the shared grounding builder (page-only mode; the realtime worker
+ *  additionally supplies neighbour + book-summary context). */
+function buildPageGrounding(ocrData?: string): string {
+  return buildGroundingBlock({ ocr: ocrData });
 }
 
 export interface ImageMetadata {
@@ -126,13 +137,14 @@ export interface DetectedImage {
   model: string;
 }
 
-/** Build the complete prompt with book context + classification system context. */
-function buildFullPrompt(bookContext?: BookContext, customPrompt?: string): string {
+/** Build the complete prompt with book context + page grounding + classification context. */
+function buildFullPrompt(bookContext?: BookContext, customPrompt?: string, ocrData?: string): string {
   const base = customPrompt || IMAGE_EXTRACTION_PROMPT;
   const prefix = bookContext ? buildContextPrefix(bookContext) : '';
+  const grounding = buildPageGrounding(ocrData);
   const systems = getClassificationSystems(bookContext);
   const classificationSuffix = buildClassificationPrompt(systems);
-  return prefix + base + classificationSuffix;
+  return prefix + base + grounding + classificationSuffix;
 }
 
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
@@ -197,7 +209,7 @@ export async function extractWithGemini(
       body: JSON.stringify({
         contents: [{
           parts: [
-            { text: buildFullPrompt(options?.bookContext, options?.promptText) },
+            { text: buildFullPrompt(options?.bookContext, options?.promptText, options?.ocrData) },
             { inline_data: { mime_type: mimeType, data: base64Image } }
           ]
         }],

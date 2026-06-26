@@ -109,6 +109,12 @@ export interface TrafficDashboardData {
   sites: Array<{ host: string; count: number }>;
   topPages: Array<{ path: string; count: number }>;
   topReferrers: Array<{ referrer: string; count: number }>;
+  // Clicks (= distinct visitors) per source, not pageviews. `referrer` is
+  // frozen at the visit's entry point and re-sent on every in-app navigation,
+  // so topReferrers above counts every page a visitor reads under their
+  // arrival source. Deduping by anonymized IP collapses that back to one
+  // "click" per visitor, which is the number comparable to Search Console.
+  clicksBySource: Array<{ referrer: string; count: number }>;
   topCountries: Array<{ country: string; count: number }>;
   // Human vs bot vs AI, from the compact ingestion counter (not the pageview
   // collection). Empty until traffic accrues after this feature ships.
@@ -211,6 +217,15 @@ export async function getTrafficDashboard(opts: {
               { $sort: { count: -1 } },
               { $limit: 10 },
             ],
+            clicksBySource: [
+              ...sectionMatch,
+              { $match: { referrer: { $nin: [null, '', 'direct'] } } },
+              // Dedupe to one click per distinct visitor (anonymized IP) per source.
+              { $group: { _id: '$referrer', ips: { $addToSet: '$ip' } } },
+              { $project: { count: { $size: '$ips' } } },
+              { $sort: { count: -1 } },
+              { $limit: 10 },
+            ],
             topCountries: [
               ...sectionMatch,
               { $match: { country: { $nin: [null, '', 'Unknown'] } } },
@@ -277,6 +292,7 @@ export async function getTrafficDashboard(opts: {
     sites: (result?.sites ?? []).map((s: { _id: string; count: number }) => ({ host: s._id, count: s.count })),
     topPages: (result?.topPages ?? []).map((p: { _id: string; count: number }) => ({ path: p._id, count: p.count })),
     topReferrers: (result?.topReferrers ?? []).map((r: { _id: string; count: number }) => ({ referrer: r._id, count: r.count })),
+    clicksBySource: (result?.clicksBySource ?? []).map((r: { _id: string; count: number }) => ({ referrer: r._id, count: r.count })),
     topCountries: (result?.topCountries ?? []).map((c: { _id: string; count: number }) => ({ country: c._id, count: c.count })),
     classification: (classRows as { _id: string; count: number }[]).map((c) => ({ class: c._id, count: c.count })),
   };

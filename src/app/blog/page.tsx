@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
-interface BlogPost {
+export interface BlogPost {
   slug: string;
   title: string;
   subtitle: string;
@@ -23,7 +23,44 @@ interface BlogPost {
   imageAlt?: string;
 }
 
-const posts: BlogPost[] = [
+// Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
+export const posts: BlogPost[] = [
+  {
+    slug: 'reading-classical-chinese',
+    title: 'Can AI Read Classical Chinese?',
+    subtitle:
+      'We hold ~1,600 Chinese works, most never translated into English. Measured against ctext.org, our OCR reads canonical printed text at ~98.5% character accuracy; measured against James Legge, our translations match or beat the standard scholarly editions on clean text. The honest catch is complex layouts and the works with no reference to check against.',
+    date: '25 June 2026',
+    readTime: '13 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg',
+    imageAlt: 'Woodcut of laborers forging a large iron anchor, from the Tiangong Kaiwu (1637)',
+  },
+  {
+    slug: 'naked-philosophers',
+    title: 'The Naked Philosophers',
+    subtitle:
+      'In 327 BCE Alexander\'s fleet-captain was sent to sit before fifteen naked, motionless sages who would not come when the king summoned them. Nineteen centuries later a Rosicrucian alchemist enrolled those same "gymnosophists" as ancestors of his Brotherhood. How a single image — eyewitness ethnography, moral exemplar, Hermetic ancestor — travelled three thousand miles and nineteen centuries, told through eight books in the library.',
+    date: '21 June 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468180-0.jpg',
+    imageAlt: 'Alexander the Great gesturing toward three naked philosophers among flowering plants, a 1544 Armenian Romance of Alexander miniature',
+  },
+  {
+    slug: 'the-giants-werent-translated',
+    title: 'The Giants Were Never Fully Translated',
+    subtitle:
+      'The most-read book on Source Library, Robert Fludd\'s Utriusque Cosmi Historia, has never been translated into English in full. Neither have the major works of Kircher; Ficino reached English only this century. On why "first full translation" is still a meaningful claim, and what the gap really looks like.',
+    date: '21 June 2026',
+    readTime: '6 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg',
+    imageAlt: 'Robert Fludd\'s Integra Naturae, from Utriusque Cosmi Historia, 1617',
+  },
   {
     slug: 'counting-first-translations',
     title: 'How Many First Translations, Really?',
@@ -551,6 +588,19 @@ export default function BlogPage() {
       }
       bg="bg-cream"
     >
+      <div className="flex justify-end mb-6">
+        <a
+          href="/api/feed/blog"
+          className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent-rust transition-colors"
+          title="Subscribe to Research Notes via RSS"
+        >
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 11a9 9 0 0 1 9 9h2.5A11.5 11.5 0 0 0 4 8.5V11zm0 4a5 5 0 0 1 5 5h2.5A7.5 7.5 0 0 0 4 12.5V15zm1.6 2.4A1.6 1.6 0 1 0 4 19a1.6 1.6 0 0 0 1.6-1.6z" />
+          </svg>
+          RSS
+        </a>
+      </div>
+
       {/* Hero post — editorial side-by-side feature */}
       <Link
         href={`/blog/${hero.slug}`}

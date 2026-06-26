@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { isInAppBrowser, preferredBrowser, inAppBrowserName } from '@/lib/in-app-browser';
 import { trackEvent } from '@/lib/track-event';
+import { TurnstileWidget, turnstileConfigured } from '@/components/auth/TurnstileWidget';
 
 function SignInContent() {
   const searchParams = useSearchParams();
@@ -21,6 +22,9 @@ function SignInContent() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [googleLoading, setGoogleLoading] = useState(false);
+  // Cloudflare Turnstile token — only required when the widget is configured
+  // (NEXT_PUBLIC_TURNSTILE_SITE_KEY set). Null until the challenge passes.
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   // Detect in-app browsers (Instagram/FB/TikTok webviews) client-side after
   // mount. These break Google OAuth, so we warn up front and steer to email —
@@ -52,6 +56,10 @@ function SignInContent() {
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
+    if (turnstileConfigured && !turnstileToken) {
+      setEmailError('Please complete the verification below.');
+      return;
+    }
     setLoading(true);
     setEmailError('');
     try {
@@ -59,6 +67,10 @@ function SignInContent() {
         email,
         callbackUrl,
         redirect: false,
+        // Forwarded into the POST body; the auth route verifies it server-side
+        // (no-op when Turnstile is not configured). Field name must match
+        // TURNSTILE_FIELD in src/lib/turnstile.ts.
+        'cf-turnstile-response': turnstileToken ?? '',
       });
       if (result?.error) {
         setEmailError('Could not send sign-in link. Please try again.');
@@ -167,9 +179,11 @@ function SignInContent() {
               border: '1px solid var(--border-medium)',
             }}
           />
+          {/* Renders only when NEXT_PUBLIC_TURNSTILE_SITE_KEY is set. */}
+          <TurnstileWidget onVerify={setTurnstileToken} />
           <button
             type="submit"
-            disabled={loading || !email}
+            disabled={loading || !email || (turnstileConfigured && !turnstileToken)}
             className="w-full mt-3 px-4 py-3 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50"
             style={{ background: 'var(--accent-rust)', color: '#ffffff' }}
           >

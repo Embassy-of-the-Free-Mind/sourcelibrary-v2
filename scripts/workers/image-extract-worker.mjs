@@ -17,9 +17,12 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
+import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -686,7 +689,24 @@ async function revalidateBookPage(bookId) {
 }
 
 // ── Process one page ──
-async function extractImagesFromPage(page, prompt, db, bookId) {
+const GROUNDING_RADIUS = 3; // pages each side scanned for substantive neighbour text
+
+/** Window of nearby page docs (page_number ± GROUNDING_RADIUS) for a page,
+ *  shaped for buildPageGrounding(). Neighbours need NOT be illustration pages —
+ *  they supply the surrounding narrative (or, when blank, trigger the book-summary
+ *  fallback). */
+function neighborsFor(pageNumber, pagesByNumber) {
+  if (typeof pageNumber !== 'number') return [];
+  const out = [];
+  for (let n = pageNumber - GROUNDING_RADIUS; n <= pageNumber + GROUNDING_RADIUS; n++) {
+    if (n === pageNumber) continue;
+    const p = pagesByNumber.get(n);
+    if (p) out.push({ page_number: n, ocr: p.ocr?.data, translation: p.translation?.data });
+  }
+  return out;
+}
+
+async function extractImagesFromPage(page, prompt, groundingCtx) {
   const url = getPageImageUrl(page);
   if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
 
@@ -714,8 +734,17 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
     },
   });
 
+  const grounding = buildPageGrounding({
+    ocr: page?.ocr?.data,
+    translation: page?.translation?.data,
+    pageNumber: page?.page_number,
+    neighbors: neighborsFor(page?.page_number, groundingCtx?.pagesByNumber || new Map()),
+    bookSummary: groundingCtx?.bookSummary || '',
+    radius: GROUNDING_RADIUS,
+  });
+
   const result = await model.generateContent([
-    { text: prompt },
+    { text: prompt + grounding },
     { inlineData: { mimeType: image.mimeType, data: image.data } },
   ]);
 
@@ -726,6 +755,7 @@ async function extractImagesFromPage(page, prompt, db, bookId) {
 
   return {
     pageId: page.id,
+    page, // carry the page doc forward so the gallery materializer can read photo fields + page_number
     text,
     characteristics,
     inputTokens: usage.promptTokenCount || 0,
@@ -744,7 +774,7 @@ async function processBook(db, book) {
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
         { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
       ],
-    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1 } })
+    }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1, 'translation.data': 1 } })
     .toArray();
 
   // Pre-filter: drop pages where OCR has already classified all illustrations
@@ -783,6 +813,29 @@ async function processBook(db, book) {
     : '';
   const prompt = contextPrefix + IMAGE_EXTRACTION_PROMPT;
 
+  // Surrounding-text grounding (#2707): fetch the page window around each
+  // illustration so the captioner can read the narrative the picture sits in.
+  // Neighbours are usually NOT illustration pages (text / blank), so they need a
+  // separate light fetch. One query per book over the union of windows. When an
+  // illustration is isolated among blanks, buildPageGrounding falls back to the
+  // book summary instead.
+  const candidateNumbers = candidatePages.map(p => p.page_number).filter(n => typeof n === 'number');
+  const windowNumbers = new Set();
+  for (const n of candidateNumbers) {
+    for (let d = -GROUNDING_RADIUS; d <= GROUNDING_RADIUS; d++) windowNumbers.add(n + d);
+  }
+  const pagesByNumber = new Map();
+  if (windowNumbers.size > 0) {
+    const windowPages = await db.collection('pages')
+      .find(
+        { book_id: book.id, page_number: { $in: [...windowNumbers] } },
+        { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } },
+      )
+      .toArray();
+    for (const wp of windowPages) pagesByNumber.set(wp.page_number, wp);
+  }
+  const groundingCtx = { pagesByNumber, bookSummary: book.summary || '' };
+
   const now = new Date();
   let totalImages = 0;
   let pagesProcessed = 0;
@@ -795,7 +848,7 @@ async function processBook(db, book) {
   for (let i = 0; i < candidatePages.length; i += PAGE_CONCURRENCY) {
     const chunk = candidatePages.slice(i, i + PAGE_CONCURRENCY);
     const results = await Promise.allSettled(
-      chunk.map(page => extractImagesFromPage(page, prompt, db, book.id))
+      chunk.map(page => extractImagesFromPage(page, prompt, groundingCtx))
     );
 
     for (const settled of results) {
@@ -806,7 +859,7 @@ async function processBook(db, book) {
         continue;
       }
 
-      const { pageId, text, characteristics, inputTokens, outputTokens } = settled.value;
+      const { pageId, page, text, characteristics, inputTokens, outputTokens } = settled.value;
       totalInputTokens += inputTokens;
       totalOutputTokens += outputTokens;
       pagesProcessed++;
@@ -855,32 +908,10 @@ async function processBook(db, book) {
         // Threshold is under review; coordinate any change with the SQS path
         // and scripts/workers/batch-collector.mjs.
         const QUALITY_THRESHOLD = 0.5;
-        for (let di = 0; di < detectedImages.length; di++) {
-          const img = detectedImages[di];
-          if (!img.bbox) continue;
-          if (typeof img.gallery_quality !== 'number') continue;
-          if (img.gallery_quality < QUALITY_THRESHOLD) continue;
-          const galleryDoc = {
-            id: `${pageId}-${di}`,
-            page_id: pageId,
-            book_id: book.id,
-            detection_index: di,
-            description: img.description,
-            type: img.type,
-            bbox: img.bbox,
-            gallery_quality: img.gallery_quality,
-            gallery_rationale: img.gallery_rationale,
-            museum_description: img.museum_description,
-            metadata: img.metadata,
-            detected_at: now,
-            detection_source: 'vision_model',
-            model: MODEL,
-            updated_at: now,
-          };
-          // Inherit page-level scan quality so the gallery_image carries it standalone.
-          // Per-crop sharpness can be added later in a separate pass on extracted_url.
-          if (pageScanQuality) {
-            galleryDoc.scan_quality = {
+        // Inherit page-level scan quality so the gallery_image carries it standalone.
+        // Per-crop sharpness can be added later in a separate pass on extracted_url.
+        const inheritedScanQuality = pageScanQuality
+          ? {
               score: pageScanQuality.scan_score,
               scan_class: pageScanQuality.scan_class,
               illustration_fidelity: pageScanQuality.illustration_fidelity,
@@ -889,17 +920,34 @@ async function processBook(db, book) {
               source: 'page_inherited',
               version: SCAN_QUALITY_VERSION,
               assessed_at: now,
-            };
-          }
-          if (characteristics) {
-            galleryDoc.page_image_characteristics = {
+            }
+          : null;
+        const pageImageCharacteristics = characteristics
+          ? {
               megapixels: characteristics.megapixels,
               sharpness_var: characteristics.sharpness_var,
               chroma_spread: characteristics.chroma_spread,
               flags: characteristics.flags,
-            };
-          }
-          galleryDocs.push(galleryDoc);
+            }
+          : null;
+        for (let di = 0; di < detectedImages.length; di++) {
+          const img = detectedImages[di];
+          if (!img.bbox) continue;
+          if (typeof img.gallery_quality !== 'number') continue;
+          if (img.gallery_quality < QUALITY_THRESHOLD) continue;
+          // Build the fully-denormalized doc via the shared helper so the field
+          // set stays identical across all writers (#2531). `page` is the source
+          // page doc with photo fields + page_number; `book` carries visible/
+          // hidden/provider so the image is gallery-visible without a sync pass.
+          galleryDocs.push(buildGalleryDoc({
+            page,
+            book,
+            detectedImage: img,
+            index: di,
+            now,
+            scanQuality: inheritedScanQuality,
+            pageImageCharacteristics,
+          }));
         }
       }
 
@@ -985,19 +1033,27 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing control
+  // Check processing control. Selective unpause: scoped books extract while
+  // globally paused; SCOPE_FILTER confines every candidate query (empty {} in
+  // normal operation).
   const ctrl = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (ctrl?.paused) {
+  if (!shouldBypassPause(ctrl)) {
     console.log('[IMAGE-EXTRACT] Pipeline paused, exiting');
     await client.close();
     return;
   }
+  let SCOPE_FILTER = {};
+  if (ctrl?.paused && hasScope(ctrl)) {
+    const scopeIds = [...await resolveScopeBookIds(db, ctrl)];
+    SCOPE_FILTER = { id: { $in: scopeIds } };
+    console.log(`[IMAGE-EXTRACT] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
+  }
 
   // Find books ready for image extraction
   const books = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'chapters_complete' })
+    .find({ 'pipeline_auto.status': 'chapters_complete', ...SCOPE_FILTER })
     .sort({ processing_priority: -1, hidden: 1 })
-    .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
+    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, summary: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
     .limit(BOOKS_PER_RUN)
     .toArray();
 
@@ -1011,9 +1067,10 @@ async function main() {
         ],
         pages_ocr: { $gt: 0 },
         detected_images_count: { $exists: false },
+        ...SCOPE_FILTER,
       })
       .sort({ visible: -1, pages_count: -1 })
-      .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
+      .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, summary: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
       .limit(BOOKS_PER_RUN - books.length)
       .toArray();
     if (catchUp.length > 0) {

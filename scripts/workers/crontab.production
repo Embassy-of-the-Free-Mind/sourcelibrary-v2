@@ -96,3 +96,6 @@
 # Materialize gallery crops for batch-path detections (batch-collector writes bbox-only rows; #2430)
 30 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-gen-thumbnails.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/generate-thumbnails.mjs --limit=8000 --concurrency=6 --min-quality=0.5 --include-sensitive" >> /var/log/sourcelibrary/generate-thumbnails.log 2>&1
 50 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-classify-text-role.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/classify-text-role.mjs --only-missing" >> /var/log/sourcelibrary/classify-text-role.log 2>&1
+30 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-lang-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/audit-language-mismatch.mjs --flag" >> /var/log/sourcelibrary/lang-audit.log 2>&1
+0 4 * * * /root/sourcelibrary/scripts/workers/backup-bph-catalog.sh
+30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-work-id-mint.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/mint-local-work-ids.mjs --apply --include-anon --include-parts --include-hidden && node scripts/analysis/assign-work-slugs.mjs --apply" >> /var/log/sourcelibrary/work-id-mint.log 2>&1

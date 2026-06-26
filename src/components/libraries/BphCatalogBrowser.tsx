@@ -6,6 +6,8 @@ import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
+import { useEmbed } from '@/lib/EmbedContext';
+import PlaceholderCover from '@/components/book/PlaceholderCover';
 // Book URL helper moved inline to use basePath
 
 interface BphWork {
@@ -119,7 +121,7 @@ function isAdvFilterApplied(key: string, value: string | boolean, lockDigitized:
   return value !== '' && !(lockDigitized && key === 'digitized');
 }
 
-const PER_PAGE = 50;
+const PER_PAGE = 60;
 
 /** Per-column sort cycling — first click sorts ascending, second click sorts
     descending. Shelfmark only supports ascending (codes don't read meaningfully
@@ -218,6 +220,76 @@ interface Props {
   display?: 'list' | 'grid';
 }
 
+// Strip diacritics so matching is accent-insensitive ("bohme" → "Böhme",
+// "cafe" → "café"). Decompose to NFD and drop the combining marks.
+function foldDiacritics(s: string): string {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+// Wrap occurrences of the active search query inside a piece of result text
+// with <mark> so the matched term is highlighted wherever it shows (title,
+// author, place, …). Case- and diacritic-insensitive, multi-token (each
+// whitespace-separated token of length >= 2). Matching runs on a folded copy
+// of the text but the ORIGINAL (accented) characters are what get rendered —
+// we keep a folded-index → original-index map to slice the real string back
+// out. Returns the original text untouched when there's no query or no match.
+function highlightQuery(text: string | number | null | undefined, query: string): React.ReactNode {
+  if (text == null || text === '') return text;
+  const str = String(text);
+
+  const tokens = query
+    .trim()
+    .split(/\s+/)
+    .filter(t => t.length >= 2)
+    .map(t => foldDiacritics(t).toLowerCase())
+    .filter(Boolean);
+  if (tokens.length === 0) return str;
+
+  // Per-character fold keeps each original code point aligned to its folded
+  // form, so a match in the folded string maps cleanly back to original chars.
+  const chars = Array.from(str);
+  let folded = '';
+  const map: number[] = []; // folded char position → index into `chars`
+  for (let i = 0; i < chars.length; i++) {
+    for (const fc of foldDiacritics(chars[i]).toLowerCase()) {
+      folded += fc;
+      map.push(i);
+    }
+  }
+
+  // Collect match ranges (in original-char indices) for every token.
+  const ranges: Array<[number, number]> = [];
+  for (const tok of tokens) {
+    let from = 0;
+    let idx = folded.indexOf(tok, from);
+    while (idx !== -1) {
+      ranges.push([map[idx], map[idx + tok.length - 1] + 1]);
+      from = idx + tok.length;
+      idx = folded.indexOf(tok, from);
+    }
+  }
+  if (ranges.length === 0) return str;
+
+  // Sort + merge overlapping/adjacent ranges.
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged: Array<[number, number]> = [];
+  for (const r of ranges) {
+    const last = merged[merged.length - 1];
+    if (last && r[0] <= last[1]) last[1] = Math.max(last[1], r[1]);
+    else merged.push([r[0], r[1]]);
+  }
+
+  const nodes: React.ReactNode[] = [];
+  let pos = 0;
+  merged.forEach(([s, e], i) => {
+    if (s > pos) nodes.push(chars.slice(pos, s).join(''));
+    nodes.push(<mark key={i} className="sl-search-hl">{chars.slice(s, e).join('')}</mark>);
+    pos = e;
+  });
+  if (pos < chars.length) nodes.push(chars.slice(pos).join(''));
+  return nodes;
+}
+
 export default function BphCatalogBrowser({
   basePath,
   digitizedUbns,
@@ -236,6 +308,9 @@ export default function BphCatalogBrowser({
     `${basePath}/book/${encodeURIComponent(book.slug || book.id)}`;
 
   const searchParams = useSearchParams();
+  // Generated placeholder covers are an embedded-reading-room feature only —
+  // the main sourcelibrary.org catalogue keeps its plain icon fallback.
+  const embed = useEmbed();
 
   const initialQ = searchParams.get('cq') || '';
   const initialSort = searchParams.get('csort') || 'author';
@@ -282,6 +357,7 @@ export default function BphCatalogBrowser({
 
   const buildParams = useCallback((q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     const params = new URLSearchParams();
+    params.set('limit', String(PER_PAGE));
     if (q) params.set('q', q);
     if (s) params.set('sort', s);
     if (kw) params.set('keyword', kw);
@@ -458,6 +534,9 @@ export default function BphCatalogBrowser({
     ).length,
     [adv, lockDigitized]
   );
+  // Highlight the active search query wherever it appears in a result.
+  const hl = (text: string | number | null | undefined) => highlightQuery(text, searchQuery);
+
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const totalPages = Math.ceil(total / PER_PAGE);
 
@@ -573,13 +652,24 @@ export default function BphCatalogBrowser({
           <span className="text-sm text-muted">
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
-            {display === 'grid' && (
-              <span className="ml-2 text-xs">
-                · Covers view shows only digitised works
-              </span>
-            )}
           </span>
           <div className="flex items-center gap-3 ml-auto">
+            {/* Sort control — sits to the LEFT of the list/grid toggle. Drives
+                the same `sort` state as the list-view column headers, so it
+                works in grid view too (where there are no headers to click). */}
+            <select
+              value={sort}
+              onChange={(e) => handleSortChange(e.target.value)}
+              aria-label="Sort catalogue"
+              className="h-9 text-sm border border-border-light rounded-md pl-2.5 pr-7 bg-white text-secondary hover:bg-warm transition-colors cursor-pointer"
+            >
+              <option value="author">Author A–Z</option>
+              <option value="author_desc">Author Z–A</option>
+              <option value="title">Title A–Z</option>
+              <option value="title_desc">Title Z–A</option>
+              <option value="year_asc">Date (oldest first)</option>
+              <option value="year_desc">Date (newest first)</option>
+            </select>
             {resultsHeaderSlot}
           </div>
         </div>
@@ -667,10 +757,13 @@ export default function BphCatalogBrowser({
       {display === 'list' ? (
         <div className="border border-border-light rounded-lg overflow-hidden bg-white">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            {/* table-fixed + explicit column widths so columns don't resize to
+                the current page's content when the sort order changes. Title
+                is left width-less to absorb the remaining space. */}
+            <table className="w-full text-sm table-fixed">
               <thead>
                 <tr className="border-b border-border-light bg-warm">
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell">
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell w-[20%]">
                     <button
                       type="button"
                       onClick={() => handleSortChange(nextSort('author', sort))}
@@ -688,7 +781,7 @@ export default function BphCatalogBrowser({
                       Title<SortArrow direction={arrowFor('title', sort)} />
                     </button>
                   </th>
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">Place</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell w-[15%]">Place</th>
                   <th className="text-left px-3 py-2.5 font-medium text-secondary w-16">
                     <button
                       type="button"
@@ -698,7 +791,7 @@ export default function BphCatalogBrowser({
                       Year<SortArrow direction={arrowFor('year', sort)} />
                     </button>
                   </th>
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell">
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden md:table-cell w-[15%]">
                     <button
                       type="button"
                       onClick={() => handleSortChange(nextSort('shelfmark', sort))}
@@ -707,7 +800,7 @@ export default function BphCatalogBrowser({
                       Shelfmark<SortArrow direction={arrowFor('shelfmark', sort)} />
                     </button>
                   </th>
-                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell">Subject</th>
+                  <th className="text-left px-3 py-2.5 font-medium text-secondary hidden lg:table-cell w-[14%]">Subject</th>
                 </tr>
               </thead>
               <tbody className={loading ? 'opacity-50' : ''}>
@@ -758,7 +851,7 @@ export default function BphCatalogBrowser({
                       className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
                     >
                       <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                        {displayAuthor || <span className="text-muted">—</span>}
+                        {displayAuthor ? hl(displayAuthor) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top">
                         <div className="font-medium text-primary leading-snug">
@@ -767,10 +860,10 @@ export default function BphCatalogBrowser({
                               href={detailUrl(w.ubn)!}
                               className="hover:text-accent-rust transition-colors"
                             >
-                              {displayTitle}
+                              {hl(displayTitle)}
                             </a>
                           ) : (
-                            <span>{displayTitle}</span>
+                            <span>{hl(displayTitle)}</span>
                           )}
                         </div>
                         {digitized && (
@@ -793,30 +886,30 @@ export default function BphCatalogBrowser({
                         )}
                         {/* Mobile: show author inline (author column is hidden < sm) */}
                         <div className="text-xs text-muted sm:hidden mt-0.5">
-                          {displayAuthor}
+                          {hl(displayAuthor)}
                         </div>
                         {/* Impressum line — place, printer/publisher, year — in
                           the order librarians expect on a short bibliographic
                           card. Falls back gracefully when fields are missing. */}
                         {(w.place || w.printer || w.publisher) && (
                           <div className="text-[11px] text-muted mt-0.5 italic">
-                            {formatImpressum(w)}
+                            {hl(formatImpressum(w))}
                           </div>
                         )}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                        {w.place || <span className="text-muted">—</span>}
+                        {w.place ? hl(w.place) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary tabular-nums">
-                        {w.year || <span className="text-muted">—</span>}
+                        {w.year ? hl(w.year) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
-                        {w.shelf_mark || <span className="text-muted">—</span>}
+                        {w.shelf_mark ? hl(w.shelf_mark) : <span className="text-muted">—</span>}
                       </td>
                       <td className="px-3 py-2 align-top hidden lg:table-cell">
                         {w.keywords ? (
                           <span className="inline-block px-2 py-0.5 text-xs rounded-full bg-cream border border-border-light text-secondary capitalize">
-                            {w.keywords}
+                            {hl(w.keywords)}
                           </span>
                         ) : (
                           <span className="text-muted">—</span>
@@ -897,6 +990,8 @@ export default function BphCatalogBrowser({
                           sizes="(min-width: 1280px) 16vw, (min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
                           className="object-cover"
                         />
+                      ) : embed ? (
+                        <PlaceholderCover title={displayTitle} author={displayAuthor} year={w.year} />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-muted">
                           <BookMarked className="w-8 h-8 opacity-40" />
@@ -909,11 +1004,11 @@ export default function BphCatalogBrowser({
                       )}
                     </div>
                     <div className="mt-2 text-sm font-medium text-primary leading-snug line-clamp-2 group-hover:text-accent-rust transition-colors">
-                      {displayTitle}
+                      {hl(displayTitle)}
                     </div>
                     {displayAuthor && (
                       <div className="text-xs text-muted mt-0.5 line-clamp-1">
-                        {displayAuthor}
+                        {hl(displayAuthor)}
                         {w.year ? ` · ${w.year}` : ''}
                       </div>
                     )}

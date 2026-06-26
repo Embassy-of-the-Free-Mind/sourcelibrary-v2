@@ -11,6 +11,7 @@ import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -165,11 +166,14 @@ export async function GET(request: NextRequest) {
       genre: string | null;
       period: string | null;
       similarity: number;
+      slug?: string | null;
     }
     const emptyArtworks = { results: [] as ArtworkSearchResult[], total: 0 };
     const emptyCollections = { results: [] as CollectionResult[] };
 
-    const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, collectionsResult] = await Promise.all([
+    const emptyLexicalArtworks: ArtworkSearchResult[] = [];
+
+    const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, lexicalArtworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       // Skip index/entity search for quoted phrases — autocomplete returns loose single-word noise
       isPhrase ? Promise.resolve(emptyIndex) : withTimeout(
@@ -237,6 +241,16 @@ export async function GET(request: NextRequest) {
           }))
           .catch(() => emptyArtworks),
         emptyArtworks, 'artworks', 6000,
+      ),
+      // Artwork lexical recall: exact title/author match on content_type:'artwork'
+      // books. The semantic lane above only returns the nearest few by vector, so a
+      // literal query ("tarot", "emblem", "ouroboros") under-returns — ~115 tarot
+      // cards exist but vector search surfaced 4. This lane fuses in every artwork
+      // that literally contains the term (#2735).
+      withTimeout(
+        lexicalArtworkSearch(db, queryRegex, 24, tenantContext.id || undefined)
+          .catch(() => emptyLexicalArtworks),
+        emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
       // Collection search: match collection names/descriptions (~300 docs, fast)
       withTimeout(
@@ -322,7 +336,16 @@ export async function GET(request: NextRequest) {
     };
     filteredSemantic.total = filteredSemantic.results.length;
 
-    const artworksAboveFloor = artworkResult.results.filter(r => r.similarity >= ARTWORK_SIM_FLOOR);
+    // Fuse lexical + semantic artwork recall. Exact title/author matches lead
+    // (they literally contain the query — they always belong); semantic fills in
+    // conceptually-near artworks above the similarity floor, deduped by book_id.
+    const lexicalArtworkIds = new Set(lexicalArtworkResult.map(a => a.book_id));
+    const semanticArtworksAboveFloor = artworkResult.results.filter(
+      r => r.similarity >= ARTWORK_SIM_FLOOR && !lexicalArtworkIds.has(r.book_id),
+    );
+    const ARTWORK_RESULT_LIMIT = 24;
+    const artworksAboveFloor = [...lexicalArtworkResult, ...semanticArtworksAboveFloor]
+      .slice(0, ARTWORK_RESULT_LIMIT);
     // Enrich artworks with slugs from MongoDB (needed for /artwork/[slug] links)
     if (artworksAboveFloor.length > 0) {
       try {
@@ -763,6 +786,69 @@ async function searchVisual(query: string, limit: number): Promise<{ results: Ga
   } catch {
     return { results: [], total: 0 };
   }
+}
+
+/**
+ * Lexical (term) recall for artworks — substring match on artwork title/author.
+ *
+ * The semantic artwork lane returns only the nearest few by vector, so a literal
+ * query under-returns (e.g. "tarot" → 4, while ~115 `content_type:'artwork'`
+ * records have "tarot" in the title). This surfaces every artwork whose title or
+ * author literally contains the term, to be fused with the semantic results (#2735).
+ */
+async function lexicalArtworkSearch(
+  db: any,
+  queryRegex: RegExp,
+  limit: number,
+  tenantId?: string,
+): Promise<Array<{
+  book_id: string;
+  title: string;
+  display_title: string | null;
+  author: string | null;
+  thumbnail_url: string | null;
+  genre: string | null;
+  period: string | null;
+  similarity: number;
+  slug?: string | null;
+}>> {
+  const docs = await db.collection('books').find(
+    {
+      content_type: 'artwork',
+      visible: true,
+      ...(tenantId ? { tenantId } : {}),
+      $or: [
+        { display_title: queryRegex },
+        { title: queryRegex },
+        { author: queryRegex },
+      ],
+    },
+    {
+      projection: {
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+        genre: 1, period: 1, resource_type: 1,
+        image_display: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1,
+        quality_score: 1,
+      },
+    },
+  )
+    .sort({ quality_score: -1 })
+    .limit(limit)
+    .maxTimeMS(3000)
+    .toArray();
+
+  return docs.map((d: any) => ({
+    book_id: d.id,
+    title: d.title,
+    display_title: d.display_title ?? null,
+    author: d.author ?? null,
+    thumbnail_url: getBookThumbnailUrl(d, 'thumb'),
+    genre: d.genre ?? d.resource_type ?? null,
+    period: d.period ?? null,
+    // Exact term match — rank ahead of vector neighbours (which sit below 1.0).
+    similarity: 1,
+    slug: d.slug ?? null,
+  }));
 }
 
 /**

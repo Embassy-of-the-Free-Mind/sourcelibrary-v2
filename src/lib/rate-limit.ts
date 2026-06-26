@@ -88,6 +88,83 @@ export function peekRateLimit(
 }
 
 /**
+ * Mongo-backed sibling of checkRateLimit — a GLOBAL counter shared across all
+ * serverless instances, so the limit is a real cap rather than per-instance.
+ *
+ * Why: the in-memory limiter above resets on every cold start and is private to
+ * each instance, so a distributed caller (or just normal fan-out across Vercel
+ * lambdas) can exceed the nominal limit by a large multiple. For the expensive
+ * surfaces — Gemini-backed Librarian/voice, and the Resend-backed magic-link
+ * send — that soft cap is the cost-abuse vector. This makes it a hard cap.
+ *
+ * Uses a fixed-window atomic upsert (`$inc` on a per-(name,ip,window) doc) with
+ * a TTL index so old windows self-expire. It NEVER blocks the request on a
+ * limiter failure: on any error or a >1.5s round-trip it falls back to the
+ * in-memory limiter, which is strictly better than locking users out when Mongo
+ * is slow. Callers must `await` it.
+ */
+let rateLimitIndexReady: Promise<void> | null = null;
+async function ensureRateLimitIndex(): Promise<void> {
+  if (!rateLimitIndexReady) {
+    rateLimitIndexReady = (async () => {
+      const { getDb } = await import('@/lib/mongodb');
+      const db = await getDb();
+      // TTL index — Mongo drops each window doc shortly after it expires.
+      await db.collection('rate_limits').createIndex({ expireAt: 1 }, { expireAfterSeconds: 0 });
+    })().catch((e) => {
+      // Reset so a later call can retry; don't cache a rejected promise.
+      rateLimitIndexReady = null;
+      throw e;
+    });
+  }
+  return rateLimitIndexReady;
+}
+
+export async function checkRateLimitShared(
+  config: RateLimitConfig,
+  ip: string,
+): Promise<{ allowed: true } | { allowed: false; retryAfter: number }> {
+  const windowMs = config.windowSeconds * 1000;
+  const now = Date.now();
+  const bucket = Math.floor(now / windowMs);
+  const resetAtMs = (bucket + 1) * windowMs;
+  const _id = `${config.name}:${ip}:${bucket}`;
+
+  const run = async (): Promise<{ allowed: true } | { allowed: false; retryAfter: number }> => {
+    await ensureRateLimitIndex();
+    const { getDb } = await import('@/lib/mongodb');
+    const db = await getDb();
+    const doc = await db.collection('rate_limits').findOneAndUpdate(
+      { _id: _id as unknown as never },
+      {
+        $inc: { count: 1 },
+        // Keep the doc one extra window past reset so a slow clock / clustered
+        // writes never resurrect a just-expired window.
+        $setOnInsert: { expireAt: new Date(resetAtMs + windowMs) },
+      },
+      { upsert: true, returnDocument: 'after' },
+    );
+    const count = (doc as { count?: number } | null)?.count ?? 1;
+    if (count > config.limit) {
+      return { allowed: false, retryAfter: Math.ceil((resetAtMs - now) / 1000) };
+    }
+    return { allowed: true };
+  };
+
+  try {
+    // Bound the limiter's latency: if Mongo is slow, fall back rather than
+    // adding a multi-second tax to every gated request.
+    const timeout = new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), 1500));
+    const result = await Promise.race([run(), timeout]);
+    if (result === 'timeout') return checkRateLimit(config, ip);
+    return result;
+  } catch {
+    // A limiter outage must never wall a user — degrade to the in-memory cap.
+    return checkRateLimit(config, ip);
+  }
+}
+
+/**
  * Extract client IP from request headers.
  * Vercel sets x-forwarded-for; Cloudflare sets cf-connecting-ip.
  */

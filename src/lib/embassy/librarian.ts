@@ -298,7 +298,7 @@ function tenantVisibilityFilter() {
 // executeSearchSemantic (book-then-page only) with a single unified path.
 async function executeSearch(query: string): Promise<{
   passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string }>;
-  books: Array<{ id: string; title: string; author?: string; year?: number; slug?: string }>;
+  books: Array<{ id: string; title: string; author?: string; authorSlug?: string; year?: number; slug?: string }>;
 }> {
   const { hybridSearch } = await import('@/lib/search/librarian-search');
   // Main-site only; pass tenant UUID here for per-tenant Librarian instances.
@@ -484,7 +484,15 @@ async function executeTool(
       if (data.books.length > 0) {
         context += 'Books found:\n';
         for (const b of data.books) {
-          context += `- "${b.title}" by ${b.author || 'Unknown'}${b.year ? ` (${b.year})` : ''} — https://sourcelibrary.org/book/${b.slug || b.id}\n`;
+          // Give the model the resolvable author URL (or none) so it never has
+          // to invent one by slugifying a name form it chose in prose — the
+          // cause of 404 author links like /author/robert-bellarmine.
+          const authorPart = b.author
+            ? (b.authorSlug
+              ? `[${b.author}](https://sourcelibrary.org/author/${b.authorSlug})`
+              : b.author)
+            : 'Unknown';
+          context += `- "${b.title}" by ${authorPart}${b.year ? ` (${b.year})` : ''} — https://sourcelibrary.org/book/${b.slug || b.id}\n`;
         }
       }
       if (data.passages.length > 0) {
@@ -709,9 +717,9 @@ For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, p
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
 
-Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-NAME), [Page N](https://sourcelibrary.org/book/SLUG?page=N).
+Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-SLUG), [Page N](https://sourcelibrary.org/book/SLUG?page=N).
 
-Every mention of a book should link to it. Every mention of an author should link to their author page. Every quote should cite a specific page number with a direct link. Use the URLs from tool results — they contain the correct slugs. Author page URLs use the author name in URL form: /author/Cornelius Agrippa → /author/Cornelius%20Agrippa.
+Every mention of a book should link to it. Every mention of an author should link to their author page WHEN the tool results give you that author's link. Use the URLs from tool results verbatim — they contain the correct slugs, including the pre-built author link in each "Books found" line. **NEVER construct an author URL yourself by slugifying or translating a name.** The author's name in our catalog is often a different form than the one you'd write in prose (e.g. "Robert Bellarmine" is stored as "Bellarmino, Roberto, S.J"; "Bartholomaeus Fumus" as "Bartolomeo Fumo"), and a hand-built /author/... link will 404. If a tool result has no author link for someone, write their name as plain text — do not invent a link.
 
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
 
@@ -747,7 +755,7 @@ Source Library has over 10,000 rare books spanning antiquity through the 18th ce
 - Use paragraph breaks between distinct ideas — leave a blank line between paragraphs. Don't write walls of text
 - Conversational but substantive — a research conversation, not a lecture
 - Cite 2-4 key passages rather than dumping everything. Every passage needs a page number and link
-- Link authors to their author pages: [Author Name](https://sourcelibrary.org/author/Author%20Name)
+- Link authors to their author pages ONLY with the author link supplied in the tool results — never a self-built /author/... URL. No tool-supplied link → plain text name.
 - Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)*
 - Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)
 - Make clear when speaking from general knowledge vs. specific texts`;

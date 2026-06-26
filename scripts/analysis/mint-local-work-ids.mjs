@@ -43,8 +43,18 @@ const INCLUDE_ANON = process.argv.includes('--include-anon');
 // size 1). Mathematically zero merge risk — a unique label on one book. The
 // multi-edition clusters are held for the human-gated merge review instead.
 const SINGLETONS_ONLY = process.argv.includes('--singletons-only');
+// Multi-volume sets / periodical issues ("Vol. 8", "No. 6", juan slices) cannot
+// be safely fused by uniform title — "one work in N volumes" vs "N works in a
+// series" (Wubei Zhi vols = one work; Nicene & Post-Nicene Fathers Vol 8 Basil
+// vs Vol 9 Hilary = different works) is a curatorial call, and the single-digit
+// volume number drops out of the token filter, so they falsely cluster. So by
+// DEFAULT we HOLD any multi-edition cluster whose members carry a part/volume
+// marker (singletons are always safe). Pass --include-parts to mint them anyway.
+const INCLUDE_PARTS = process.argv.includes('--include-parts');
 
 const deacc = s => (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const PART_RX = /(\bvol\b|\bvolume\b|\bno\b|\bnos\b|\bband\b|\btome\b|\btomus\b|\bteil\b|\bheft\b|\bpt\b|\bpart\b|\blivre\b|\bfasc\b|\bser\b|\bseries\b|\bjuan\b|slice|卷|册|巻)\.?\s*[ivxlcdm0-9]/i;
+const clusterHasParts = bks => bks.length > 1 && bks.some(x => PART_RX.test(deacc(x.display_title || x.title || '')));
 // Apparatus / edition words ONLY — pure publication-process words. We do NOT
 // strip numbers, roman numerals, or volume LETTERS: those distinguish works
 // (Proverbs collection 25 vs 15; Kanjur mDo sde Ka vs Kha). Bias is hard toward
@@ -62,13 +72,36 @@ function authorTokens(a) {
   return new Set(deacc(a).replace(/\(.*?\)|trans\.?|ed\.?|comm\.?|anonymous/g, ' ')
     .replace(/[^a-z ]/g, ' ').split(/\s+/).filter(w => w.length > 2));
 }
-function uniformTitle(title, authorStr) {
+function uniformTitle(title, authorStr, siglaSource) {
   const at = authorStr ? authorTokens(authorStr) : new Set();
-  // drop bracketed apparatus, deaccent; keep the WHOLE title (no delimiter cut —
-  // a "Vol. 77" / "collection 25" tail is a distinguisher, not apparatus).
-  let s = deacc(title).replace(/[\(\[].*?[\)\]]/g, ' ');
-  const toks = s.replace(/[^a-z0-9 ]/g, ' ').split(/\s+/)
-    .filter(w => w.length >= 2 && !STOP.has(w) && !BOILER.has(w) && !at.has(w));
+  const raw = deacc(title);
+  // sigla come from the FULL title — `display_title` often strips the distinguishing
+  // parenthetical ("A Balbale to Inana (ETCSL 4.07.1)" → "A Balbale to Inana"), which
+  // would re-fuse distinct works. Read sigla from the raw title to recover it.
+  const siglaRaw = deacc(siglaSource || title);
+  // SHORT parentheticals are usually a SIGLUM that identifies a distinct work —
+  // "(Šulgi C)", "(ETCSL 4.08.06)", "(Dumuzid-Inana Y)" are DIFFERENT compositions.
+  // Pull them out as distinguishing tokens (keeping single chars C/X that the main
+  // filter would drop) so they SPLIT. Long/descriptive parens (translations) stay
+  // dropped. Policy: when in doubt, MORE works.
+  const sigla = [];
+  siglaRaw.replace(/[\(\[]([^)\]]{1,22})[\)\]]/g, (m, inner) => {
+    for (const w of inner.replace(/[^a-z0-9 ]/g, ' ').split(/\s+/)) {
+      // keep ONLY siglum-like tokens that identify a distinct work: a single
+      // letter (Šulgi C / X), a number (ETCSL 4.08.06), or a known catalog code.
+      // NOT descriptive gloss words ("Secret of Secrets") — those would over-split
+      // legit cross-language clusters.
+      if (w && (w.length === 1 || /[0-9]/.test(w) || /^(etcsl|ms|mss|cod|frag|rec|ct|bm)$/.test(w))
+        && !STOP.has(w) && !at.has(w)) sigla.push(w);
+    }
+    return ' ';
+  });
+  // main title with parens stripped; keep single-DIGIT numbers (Vol 8 / Series 1),
+  // single LETTERS only survive via the sigla path above.
+  const s = raw.replace(/[\(\[].*?[\)\]]/g, ' ');
+  const main = s.replace(/[^a-z0-9 ]/g, ' ').split(/\s+/)
+    .filter(w => (w.length >= 2 || /^[0-9]+$/.test(w)) && !STOP.has(w) && !BOILER.has(w) && !at.has(w));
+  const toks = [...main, ...sigla];
   const uniq = [...new Set(toks)].sort();           // alphabetical -> word-order-invariant key
   return uniq.slice(0, 12);                           // longer cap: keep distinguishers
 }
@@ -78,24 +111,42 @@ const mc = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 
 await mc.connect();
 const b = mc.db('bookstore').collection('books');
 
-const TEXT = { visible: true, pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] } };
+// --include-hidden: also mint hidden/draft books (ownership truth for the #2453
+// catalog dedup — the Philo-16-hidden-editions case). Reader /work pages still
+// gate on visibility downstream; this only assigns the work_id join key.
+const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
+// --remint-local: also RE-derive existing local-mint work_ids (to apply improved
+// normalization — split a fusion that an earlier mint made). Only ever overwrites
+// work_id_source:'local-mint'; wikidata / work-merge / hand ids are untouched.
+const REMINT = process.argv.includes('--remint-local');
+const TEXT = { pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] },
+  ...(INCLUDE_HIDDEN ? {} : { visible: true }) };
 const total = await b.countDocuments(TEXT);
 const already = await b.countDocuments({ ...TEXT, work_id: { $exists: true, $ne: null } });
 
+const gapOr = [{ work_id: { $exists: false } }, { work_id: null }];
+if (REMINT) gapOr.push({ work_id_source: 'local-mint' });
 const gap = await b.find(
-  { ...TEXT, $or: [{ work_id: { $exists: false } }, { work_id: null }] },
+  { ...TEXT, $or: gapOr },
   { projection: { id: 1, title: 1, display_title: 1, author: 1, author_id: 1, language: 1, year: 1 } }
 ).toArray();
 console.log(`Textual books: ${total} | already have work_id: ${already} (${(100*already/total).toFixed(1)}%)`);
 console.log(`Gap (no work_id): ${gap.length}\n`);
 
+// Generic collected-works CONTAINER words. A title that reduces to ONLY these is
+// not a single work — "Works of Plato" is a compilation, and Plato had many works.
+// So such editions get a UNIQUE per-book work_id (more works, no false mega-work)
+// instead of all fusing into local:a:plato:works.
+const CONTAINER = new Set(['works', 'work', 'opera', 'omnia', 'opuscula', 'dialogues',
+  'collected', 'writings', 'miscellanea', 'collection', 'anthology', 'compendium', 'corpus']);
+
 const writes = [];          // {id, work_id, work_title}
 const clusters = new Map();  // work_id -> [book,...]
-let skippedNoKey = 0, skippedAnon = 0;
+let skippedNoKey = 0, skippedAnon = 0, containerUnique = 0;
 
 for (const bk of gap) {
   const titleRaw = bk.display_title || bk.title || '';
-  const toks = uniformTitle(titleRaw, bk.author);
+  const toks = uniformTitle(titleRaw, bk.author, bk.title);   // sigla from full title
   const authorPart = bk.author_id ? `a:${bk.author_id}`
     : (bk.author ? `n:${slug([...authorTokens(bk.author)].sort()).slice(0, 24)}` : null);
 
@@ -105,7 +156,10 @@ for (const bk of gap) {
   }
   if (toks.length < 1) { skippedNoKey++; continue; }
 
-  const tslug = slug(toks);
+  // container-only title → unique per edition (don't fuse a whole author's corpus)
+  const isContainer = toks.every(t => CONTAINER.has(t));
+  if (isContainer) containerUnique++;
+  const tslug = isContainer ? `${slug(toks)}-ed-${bk.id}` : slug(toks);
   const work_id = `local:${authorPart || 'anon'}:${tslug}`;
   const work_title = titleRaw.slice(0, 200);
   writes.push({ id: bk.id, work_id, work_title });
@@ -115,7 +169,9 @@ for (const bk of gap) {
 
 const multi = [...clusters.entries()].filter(([, v]) => v.length > 1).sort((a, b) => b[1].length - a[1].length);
 const singletons = clusters.size - multi.length;
-const newCoverage = already + writes.length;
+// under --remint-local the gap includes already-minted local-mint books, so they
+// overlap `already` — don't double-count. Cap at total.
+const newCoverage = Math.min(total, REMINT ? already : already + writes.length);
 
 console.log('── Mint result ──');
 console.log(`Mintable books: ${writes.length} (${skippedNoKey} no-distinctive-title, ${skippedAnon} anonymous skipped${INCLUDE_ANON ? '' : ' — pass --include-anon to mint distinctive anon titles'})`);
@@ -150,15 +206,25 @@ console.log(`\nProposal -> ${outDir}local-work-mint-proposals.json`);
 if (APPLY) {
   // SINGLETONS_ONLY: write only books whose mint is unique (cluster size 1) —
   // zero merge risk. Multi-edition clusters are held for the human-gated merge.
-  const toWrite = SINGLETONS_ONLY ? writes.filter(w => clusters.get(w.work_id).length === 1) : writes;
+  let toWrite = SINGLETONS_ONLY ? writes.filter(w => clusters.get(w.work_id).length === 1) : writes;
+  // hold ambiguous multi-volume / series / periodical clusters unless --include-parts
+  let heldParts = 0;
+  if (!INCLUDE_PARTS) {
+    const before = toWrite.length;
+    toWrite = toWrite.filter(w => !clusterHasParts(clusters.get(w.work_id)));
+    heldParts = before - toWrite.length;
+  }
   const heldClusters = writes.length - toWrite.length;
   const backup = `${outDir}local-work-mint-backup-${toWrite.length}.json`;
-  fs.writeFileSync(backup, JSON.stringify({ when: 'apply', singletonsOnly: SINGLETONS_ONLY, count: toWrite.length, writes: toWrite }, null, 2));
-  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} cluster-member books for merge review)` : ''} (backup ${backup})`);
+  fs.writeFileSync(backup, JSON.stringify({ when: 'apply', singletonsOnly: SINGLETONS_ONLY, holdParts: !INCLUDE_PARTS, heldParts, count: toWrite.length, writes: toWrite }, null, 2));
+  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}${INCLUDE_PARTS ? ' --include-parts' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} for review${heldParts ? `, of which ${heldParts} are volume/series-marked` : ''})` : ''} (backup ${backup})`);
   let done = 0;
   for (const w of toWrite) {
+    const idFilter = REMINT
+      ? { id: w.id, $or: [{ work_id: { $in: [null, undefined] } }, { work_id_source: 'local-mint' }] }
+      : { id: w.id, work_id: { $in: [null, undefined] } };
     const r = await b.updateOne(
-      { id: w.id, work_id: { $in: [null, undefined] } },
+      idFilter,
       { $set: { work_id: w.work_id, work_title: w.work_title, work_id_source: 'local-mint', work_id_confidence: 'deterministic', updated_at: new Date() } }
     );
     done += r.modifiedCount;

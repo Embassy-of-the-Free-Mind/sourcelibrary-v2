@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getReadDb } from '@/lib/mongodb';
+import { posts as blogPostList } from '@/app/blog/page';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -9,9 +10,15 @@ import { getReadDb } from '@/lib/mongodb';
 //   0 = static pages + blog + categories
 //   1 = collections + libraries + languages + works
 //   2+ = books (up to 5000 per chunk)
+//   1000+ = indexable reader pages (seo_indexable; up to 5000 per chunk)
 
 const BASE_URL = 'https://sourcelibrary.org';
 const BOOKS_PER_CHUNK = 5000;
+const PAGES_PER_CHUNK = 5000;
+// Indexable reader-page chunks get a high id offset so they never collide with
+// the dynamically-counted book chunks (2..N). Books realistically span a
+// handful of chunks; 1000 is a safe gap. See issue #2688.
+const PAGE_CHUNK_OFFSET = 1000;
 
 // Helper: run a DB query with independent error handling
 async function safeQuery<T>(
@@ -43,10 +50,25 @@ export async function generateSitemaps() {
 
   const bookChunks = Math.ceil(bookCount / BOOKS_PER_CHUNK);
 
-  // Chunk 0 = static, 1 = dynamic non-books, 2+ = books
+  // Count indexable reader pages (issue #2688) for their own chunk range.
+  // Generous timeout: if this times out it falls back to 0 and silently drops
+  // EVERY page chunk from the index (the seo_indexable_id_partial index makes
+  // the count ~50ms, but Atlas can be slow mid-build).
+  const pageCount = await safeQuery('indexable-page-count', async (db) => {
+    return db.collection('pages').countDocuments(
+      { seo_indexable: true },
+      { maxTimeMS: 30000 }
+    );
+  }, 0);
+  const pageChunks = Math.ceil(pageCount / PAGES_PER_CHUNK);
+
+  // Chunk 0 = static, 1 = dynamic non-books, 2+ = books, 1000+ = reader pages
   const ids = [{ id: 0 }, { id: 1 }];
   for (let i = 0; i < bookChunks; i++) {
     ids.push({ id: 2 + i });
+  }
+  for (let i = 0; i < pageChunks; i++) {
+    ids.push({ id: PAGE_CHUNK_OFFSET + i });
   }
 
   return ids;
@@ -88,6 +110,11 @@ export default async function sitemap({
     return [...collectionPages, ...libraryPages, ...languagePages, ...workPages];
   }
 
+  // Chunk 1000+: indexable reader pages (paginated)
+  if (Number.isFinite(chunkId) && chunkId >= PAGE_CHUNK_OFFSET) {
+    return getIndexablePages(chunkId - PAGE_CHUNK_OFFSET);
+  }
+
   // Chunk 2+: Books (paginated)
   const bookChunkIndex = (chunkId ?? -1) - 2;
   if (!Number.isFinite(bookChunkIndex) || bookChunkIndex < 0) return [];
@@ -121,20 +148,12 @@ function staticPages(): MetadataRoute.Sitemap {
   ];
 }
 
+// Read the same `posts` array the blog index renders — single source of truth,
+// so the sitemap never drifts from the published posts (the old hardcoded list
+// was missing ~half of them, including every recent post).
 function blogPosts(): MetadataRoute.Sitemap {
-  return [
-    'astrological-diagrams', 'chakra-tradition', 'demonology', 'fechner-bohme',
-    'fire-horse', 'first-translation-methodology', 'first-translations',
-    'counting-first-translations',
-    'hidden-engineers', 'history-of-astrology', 'indigenous-traditions',
-    'invisible-hand', 'mcp-server', 'ocr-consistency', 'cuneiform-ocr',
-    'rithmomachia', 'progress-studies', '2000-first-translations',
-    'worlds-largest-collection', 'origin-story', 'counting-the-gap',
-    'untranslated-renaissance', 'translation-rate', 'hieroglyph-ocr',
-    'rashi-ocr', 'clustering', 'history-of-classification',
-    'visualizing-classification', 'philosophers-stone',
-  ].map((slug) => ({
-    url: `${BASE_URL}/blog/${slug}`,
+  return blogPostList.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -200,6 +219,45 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
           lastModified,
           changeFrequency: 'weekly' as const,
           priority,
+        };
+      });
+  }, [] as MetadataRoute.Sitemap);
+}
+
+// Indexable reader pages — the demand-proven subset opened to indexing by
+// scripts/seo/flag-indexable-pages.mjs (issue #2688). `seo_url` is precomputed
+// (`/book/<slug>/page/<id>`) so no per-page book join is needed here.
+async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
+  return safeQuery('indexable-pages', async (db) => {
+    // sort by _id so skip/limit pagination is stable across chunks; served by
+    // the seo_indexable_id_partial compound index (a single-field index on
+    // seo_indexable alone makes the planner full-scan in _id order → timeout).
+    const pages = await db.collection('pages').find(
+      { seo_indexable: true, seo_url: { $exists: true, $ne: null } },
+      {
+        projection: { _id: 0, seo_url: 1, updated_at: 1 },
+        sort: { _id: 1 },
+        skip: chunkIndex * PAGES_PER_CHUNK,
+        limit: PAGES_PER_CHUNK,
+        maxTimeMS: 60000,
+      }
+    ).toArray();
+
+    return pages
+      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/'))
+      .map((p) => {
+        let lastModified: Date;
+        try {
+          lastModified = p.updated_at ? new Date(p.updated_at) : new Date();
+          if (isNaN(lastModified.getTime())) lastModified = new Date();
+        } catch {
+          lastModified = new Date();
+        }
+        return {
+          url: `${BASE_URL}${p.seo_url}`,
+          lastModified,
+          changeFrequency: 'monthly' as const,
+          priority: 0.7,
         };
       });
   }, [] as MetadataRoute.Sitemap);

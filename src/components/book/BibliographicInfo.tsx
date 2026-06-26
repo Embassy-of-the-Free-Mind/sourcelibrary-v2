@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, 
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
 import { IMAGE_LICENSES } from '@/lib/types';
 import BookEditModal from './BookEditModal';
+import AdoptBookPanel from './AdoptBookPanel';
 import { useRouter } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
@@ -503,9 +504,15 @@ export default function BibliographicInfo({
                     )}
                   </div>
                 )}
-                {book.image_source.contributing_library && (
+                {book.image_source.digitized_by && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">Digitized by:</span>
+                    <span className="text-stone-200">{book.image_source.digitized_by}</span>
+                  </div>
+                )}
+                {book.image_source.contributing_library && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Provided by:</span>
                     <span className="text-stone-200">{book.image_source.contributing_library}</span>
                   </div>
                 )}
@@ -551,6 +558,35 @@ export default function BibliographicInfo({
                 )}
               </div>
             </div>
+          ) : null}
+
+          {/* Digitization sponsor credit — "adopt a book" donor acknowledgement */}
+          {book.digitization_sponsor ? (
+            <div className="mt-4 pt-4 border-t border-stone-700">
+              <p className="text-sm text-stone-300">
+                Digitized thanks to{' '}
+                {showExternalLinks && book.digitization_sponsor_url ? (
+                  <a
+                    href={book.digitization_sponsor_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent-gold hover:text-accent-gold font-medium inline-flex items-center gap-1"
+                  >
+                    {book.digitization_sponsor}
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                ) : (
+                  <span className="text-accent-gold font-medium">{book.digitization_sponsor}</span>
+                )}
+                .
+              </p>
+            </div>
+          ) : book.digitization_adopted_at ? (
+            <div className="mt-4 pt-4 border-t border-stone-700">
+              <p className="text-sm text-stone-400">Digitization supported by an anonymous patron.</p>
+            </div>
+          ) : showExternalLinks && process.env.NEXT_PUBLIC_ADOPT_ENABLED === 'true' ? (
+            <AdoptBookPanel book={book} />
           ) : null}
 
           {/* Translation credit */}

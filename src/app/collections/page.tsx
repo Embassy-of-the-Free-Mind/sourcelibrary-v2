@@ -8,6 +8,7 @@ import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTime
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { getLibraryStats, roundedCountLabel } from '@/lib/library-stats';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -252,7 +253,9 @@ const INITIAL_PATHWAYS = 12;
 // Rebuild with scripts/build-collections-hero.py when the cover set changes.
 const COLLECTIONS_HERO = '/collections-hero.jpg';
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  const stats = await getLibraryStats();
+  const countLabel = stats ? `${roundedCountLabel(stats.books)} books` : 'Thousands of books';
   return (
     <>
     {/* Background images aren't seen by the preload scanner — hint it early. */}
@@ -262,7 +265,7 @@ export default function CollectionsPage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Collections"
-          subtitle="10,000+ books across three millennia of human knowledge."
+          subtitle={`${countLabel} across three millennia of human knowledge.`}
           image={COLLECTIONS_HERO}
           imageAlt="Mosaic of illustrations from the collection"
           imageFit="tile"

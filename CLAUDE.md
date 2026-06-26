@@ -63,7 +63,7 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 ## Visibility & Stats Invariants
 Lessons from PR #2055 (see `.claude/handoffs/`). The homepage and most public surfaces filter on `visible: true`, but `hidden: true` exists as a parallel flag. When the two disagree, books leak into public counts.
 
-- **`visible` and `hidden` must be opposites.** Every writer that sets `hidden: true` must also set `visible: false` (and vice versa for un-hide). Don't write one without the other. Active writers: `scripts/maintenance/hide-{unarchived,efm-duplicates}.mjs`, `scripts/maintenance/set-launch-books.mjs`, `scripts/workers/pipeline-orchestrator.mjs`, `src/app/api/admin/duplicates/route.ts`, `src/app/api/books/[id]/visibility/route.ts`. Historical drift cleaned up by `scripts/maintenance/fix-conflicting-visibility.mjs` — re-run if `db.books.countDocuments({ visible: true, hidden: true })` ever climbs above zero again.
+- **`visible` and `hidden` must be opposites.** Every writer that sets `hidden: true` must also set `visible: false` (and vice versa for un-hide). Don't write one without the other. Active writers: `scripts/maintenance/hide-{unarchived-books,efm-duplicates}.mjs`, `scripts/maintenance/set-launch-books.mjs`, `scripts/workers/pipeline-orchestrator.mjs`, `src/app/api/admin/duplicates/route.ts`, `src/app/api/books/[id]/visibility/route.ts`. Historical drift cleaned up by `scripts/maintenance/fix-conflicting-visibility.mjs` — re-run if `db.books.countDocuments({ visible: true, hidden: true })` ever climbs above zero again.
 - **Homepage stats live in `system_config.homepage_stats`** (Mongo). Refreshed daily at 05:00 by `scripts/maintenance/prewarm-browse.mjs`, also writable on demand by `scripts/maintenance/update-homepage-stats.mjs`. Both scripts now share the same canonical filters — keep them in sync if you touch either. The canonical filters are:
   - `totalBooks` / `authorCount` / `languageCount`: `visible: true && pages_count > 0` (plus `pages_translated > 0` for authors/languages)
   - `translatedToEnglish`: ≥90% "readable" — `pages_translated >= 0.9 * (pages_ocr - pages_blank)`
@@ -137,6 +137,10 @@ encodes that:
 - **Read-path** (`/author/[slug]` → `src/lib/author-thesaurus.ts`) is flag-gated by `AUTHOR_THESAURUS_READPATH` and redirects every variant slug to the canonical one. Full design, provenance, and migration status: **`.claude/docs/author-identity-system.md`**.
 
 ## Work identity & "do we have the original?" (read before reasoning about gaps)
+**Start with the architecture map: `.claude/docs/translation-works-architecture.md`**
+— it ties together work identity, the #2453 catalog, the translation gap/registry,
+holdings, and first-translation into one stack (coordination home: #2567).
+
 The **work** layer (sibling to the author thesaurus). "Is *this* translation a
 work we also hold the source-language original of?" is answered by clustering
 editions under a shared **`books.work_id`** (Wikidata QID or works-catalog id),
@@ -168,7 +172,7 @@ Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies
 
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-05-26: ~46K total docs, ~29K `visible: true` (publicly shown), ~15K with `pages_count > 0` (actually processed), ~14K with any OCR. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking, seeded by `scripts/tmp-write-highlighted-books.mjs`); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
+- Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-05-26: ~46K total docs, ~29K `visible: true` (publicly shown), ~15K with `pages_count > 0` (actually processed), ~14K with any OCR. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
@@ -185,6 +189,8 @@ Image extraction emits two separate quality signals in the **same Gemini call**.
 A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine or microfilmed; the same diagram on microfilm has `scan_quality.scan_class: bitonal_microfilm` regardless of how gallery-worthy it is. See `/blog/what-makes-a-good-scan` for the user-facing version.
 
 **Bbox coordinate-space invariant (PRs #2516/#2517):** `detected_images[].bbox` / `gallery_images.bbox` are normalized to the image returned by `getPageSource()` (`scripts/lib/page-image-url.mjs`; TS twin `getPageImageUrl()` in `src/lib/utils.ts`) — on split pages that's the half, NOT `archived_photo` (the full spread). Every crop writer (extracted/thumbnail/hires generators, current: `generate-thumbnails.mjs`, `backfill-hires-gallery.mjs`, `gallery-image-gen.ts` callers) must resolve its source with that same function, never an ad-hoc `archived_photo || cropped_photo` priority. Symptom of getting it wrong: gutter-spanning junk crops in the gallery, and the `/gallery/image/[id]` magnifier showing different content than the displayed image (the lens crops on-the-fly from the correct source — check the data before debugging lens math). Repair sweep: `scripts/maintenance/regen-split-gallery-images.mjs` (`--dry-run` / `--clear` / `--regenerate`).
+
+**Record images: use the accessor, never raw fields — book vs artwork store images differently.** The `books` collection mixes content types with *different* image-field conventions: book **covers** live in `thumbnail` / `thumbnail_blob`; **page scans** in `pages.display_photo` / `archived_photo` / `photo`; and **artworks** (`content_type:'artwork'` — single-image gallery items like the Tarot cards) in `image_display` / `image_full` / `image_thumb` / `archived_full_url`. Checking the *wrong* family makes an artwork look imageless when it isn't (a real footgun — it produced a false "94% of artworks have no image" during a 2026-06 audit; the images were all present in the `image_*` fields). **Always resolve a record's display image via `getBookThumbnailUrl()` / `getCoverImageCandidates()` (`src/lib/utils.ts`)** — they already handle every convention (incl. Wikimedia CDN URLs and the artwork 600px/2000px/full thumb variants). Don't hand-check `photo` / `display_photo` on an artwork record. Likewise, **artworks legitimately have `pages_count: 0`** — they're single images, not paginated books, so a `visible:true, pages_count:0` record is usually fine art, not a broken "stub."
 
 ## Quote & snippet integrity — CRITICAL
 Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
@@ -210,7 +216,7 @@ The rules above protect the *rendering pipeline*. These cover *authored* prose �
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
-- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/[tenant]/rithmomachia`), not dead code.
+- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`, at `src/app/rithmomachia`), not dead code.
 
 ## Domain Context
 

@@ -11,7 +11,8 @@ import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
 import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
 import { getEffectiveByline } from '@/lib/byline';
-import { useEmbedHref } from '@/lib/EmbedContext';
+import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
+import PlaceholderCover from '@/components/book/PlaceholderCover';
 
 interface CollectionBook {
   bookId: string;
@@ -51,6 +52,9 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
   const embedHref = useEmbedHref();
+  // Generated placeholder covers render only in the embedded reading room;
+  // the main sourcelibrary.org grids keep the plain book icon.
+  const embed = useEmbed();
 
   const isArtwork = !!book.resource_type;
   const pageCount = book.pages_count || book.pages || 0;
@@ -99,6 +103,12 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
               loading={priority ? 'eager' : 'lazy'}
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjQiIGZpbGw9IiNlN2UyZGUiLz48L3N2Zz4="
+            />
+          ) : embed && !isArtwork ? (
+            <PlaceholderCover
+              title={book.display_title || book.title}
+              author={book.author}
+              year={book.year > 0 ? book.year : book.published}
             />
           ) : (
             <BookCoverPlaceholder

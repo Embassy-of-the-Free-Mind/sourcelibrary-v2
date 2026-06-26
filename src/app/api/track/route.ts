@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { anonymizeIp } from '@/lib/anonymize-ip';
 import { classifyTraffic, type TrafficClass } from '@/lib/traffic-classification';
@@ -82,8 +82,30 @@ function exceedsIpCap(ip: string, ua: string): boolean {
   return s.count > IP_DAILY_CAP && s.uas.size <= 1;
 }
 
-// DB write timeout — analytics is fire-and-forget, don't hold a serverless slot for 30s+
+// Bound deferred DB work so a slow Atlas write doesn't hold the serverless slot.
 const DB_TIMEOUT_MS = 3000;
+
+const OK = NextResponse.json({ success: true });
+
+/** Run a best-effort write after the HTTP response is sent (Next.js after()). */
+function deferDbWrite(work: () => Promise<void>): void {
+  const bounded = async () => {
+    try {
+      await Promise.race([
+        work(),
+        new Promise<void>((resolve) => setTimeout(resolve, DB_TIMEOUT_MS)),
+      ]);
+    } catch {
+      // Analytics must never throw to the client or fail the background task loudly.
+    }
+  };
+  try {
+    after(bounded);
+  } catch {
+    // Tests / non-request contexts without after() scope — still attempt the write.
+    void bounded();
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -114,15 +136,15 @@ export async function POST(request: NextRequest) {
 
     // Non-human traffic: record the compact class counter only, no pageview.
     if (cls !== 'human') {
-      const counted = (async () => { await recordClass(await getDb(), host, cls); })();
-      const timeout = new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), DB_TIMEOUT_MS));
-      await Promise.race([counted, timeout]);
-      return NextResponse.json({ success: true });
+      deferDbWrite(async () => {
+        await recordClass(await getDb(), host, cls);
+      });
+      return OK;
     }
 
     // Human: rate-limit same IP + path within 60s (don't double-count reloads).
     if (path && isDuplicate(ip, path)) {
-      return NextResponse.json({ success: true });
+      return OK;
     }
 
     // Parse referrer — filter out self-referrals
@@ -142,9 +164,7 @@ export async function POST(request: NextRequest) {
     // Detect country (basic - from IP via headers)
     const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
 
-    // Race DB write against a short timeout — analytics is non-critical,
-    // don't hold a serverless function slot during DB degradation
-    const dbWrite = (async () => {
+    deferDbWrite(async () => {
       const db = await getDb();
       await Promise.all([
         db.collection('analytics_pageviews').insertOne({
@@ -158,21 +178,11 @@ export async function POST(request: NextRequest) {
         }),
         recordClass(db, host, 'human'),
       ]);
-    })();
+    });
 
-    const timeout = new Promise<'timeout'>((resolve) =>
-      setTimeout(() => resolve('timeout'), DB_TIMEOUT_MS)
-    );
-
-    const result = await Promise.race([dbWrite, timeout]);
-    if (result === 'timeout') {
-      // DB is slow — return 200 anyway, drop the pageview
-      return NextResponse.json({ success: true });
-    }
-
-    return NextResponse.json({ success: true });
+    return OK;
   } catch {
     // Silently succeed — analytics must never error to the client
-    return NextResponse.json({ success: true });
+    return OK;
   }
 }

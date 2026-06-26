@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
@@ -11,13 +10,11 @@ import { isHiddenBook } from '@/lib/book-access';
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
 export const revalidate = 86400;
 
-// Per-page URLs are thin content (one scanned page) and outnumber book URLs
-// 100:1. Keeping them out of the index concentrates Google's attention on the
-// book-level URL (richer metadata, title, description) and avoids soft-404 /
-// duplicate-canonical noise in GSC. They remain crawlable and follow links.
-export const metadata: Metadata = {
-  robots: { index: false, follow: true },
-};
+// robots (index/noindex) is decided per-page in this route's layout.tsx
+// generateMetadata, gated on the page's `seo_indexable` flag (issue #2688).
+// Per-page URLs outnumber book URLs ~100:1, so they stay noindex by default;
+// only demand-proven pages (read >=5, or translated first-translations) open
+// to indexing. They remain crawlable + follow links regardless.
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;

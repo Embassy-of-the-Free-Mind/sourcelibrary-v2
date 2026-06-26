@@ -137,17 +137,36 @@ export async function GET(req: NextRequest) {
     // against it with the normalised user input so "Boehme" finds "Böhme".
     // Falls back to the original tsvector / per-field ilike on first miss.
     if (q.length >= 2) {
+      // A bare 3–4 digit query is almost always a publication year, so also
+      // match the numeric `year` column — the text columns / tsvector don't
+      // include the year, so "1545" otherwise returned nothing. Digits-only,
+      // so it's safe to inline in an .or() string.
+      const yearQ = /^\d{3,4}$/.test(q) ? q : null;
       if (mode === 'new' && hasNormalizedColumns !== false) {
-        const normQ = sanitizeFilterValue(normalizeBphSearchText(q));
-        if (normQ.length > 0) {
-          query = query.ilike('search_norm', `%${normQ}%`);
+        if (yearQ) {
+          query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ}`);
+        } else {
+          const normQ = sanitizeFilterValue(normalizeBphSearchText(q));
+          if (normQ.length > 0) {
+            query = query.ilike('search_norm', `%${normQ}%`);
+          }
         }
       } else if (mode === 'new') {
-        const safe = sanitizeFilterValue(q);
-        query = query.textSearch('search_tsv', safe, { type: 'websearch', config: 'simple' });
+        if (yearQ) {
+          // A tsvector match can't be OR'd with a column filter in a single
+          // .or(); for a pure year, match the year column directly.
+          query = query.eq('year', Number(yearQ));
+        } else {
+          const safe = sanitizeFilterValue(q);
+          query = query.textSearch('search_tsv', safe, { type: 'websearch', config: 'simple' });
+        }
       } else {
         const safe = sanitizeFilterValue(q);
-        query = query.or(`title.ilike.%${safe}%,author.ilike.%${safe}%,shelf_mark.ilike.%${safe}%`);
+        if (yearQ) {
+          query = query.or(`title.ilike.%${yearQ}%,author.ilike.%${yearQ}%,shelf_mark.ilike.%${yearQ}%,year.eq.${yearQ}`);
+        } else {
+          query = query.or(`title.ilike.%${safe}%,author.ilike.%${safe}%,shelf_mark.ilike.%${safe}%`);
+        }
       }
     }
 

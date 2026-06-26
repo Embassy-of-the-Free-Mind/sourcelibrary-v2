@@ -15,6 +15,7 @@ export type ImageSourceProvider =
   | 'vatlib'         // Vatican Library (alternative endpoint)
   | 'europeana'      // Europeana aggregator
   | 'bl'             // British Library
+  | 'imslp'          // IMSLP / Petrucci Music Library (public-domain scores; re-host)
   | 'sbb'            // Staatsbibliothek zu Berlin
   | 'onb'            // Austrian National Library (Österreichische Nationalbibliothek)
   | 'loc'            // Library of Congress
@@ -81,6 +82,8 @@ export interface ImageSource {
   notes?: string;               // Additional context (e.g., "Scans provided by X library")
   iiif_manifest?: string;       // IIIF Presentation API manifest URL
   shelfmark?: string;           // Physical shelfmark/classmark (e.g., "Pal.lat.1885", "MS. Arab. c. 90")
-  contributing_library?: string; // Physical library that provided/digitized the item (e.g., IA contributor field)
+  contributing_library?: string; // Institution that holds/provided the item (e.g., IA contributor field) — NOT necessarily the digitizer
+  digitized_by?: string;        // Who actually digitized the scans (e.g., "Allard Pierson (University of Amsterdam)")
+  digital_host?: string;        // Host serving the digital images (e.g., "uvaerfgoed.nl")
   sponsor?: string;             // Funding entity for digitization (e.g., "Google", "Sloan Foundation")
 }

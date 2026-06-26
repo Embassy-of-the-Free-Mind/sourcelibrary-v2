@@ -7,52 +7,75 @@ import Image from 'next/image';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import FeedbackCallout from '@/components/feedback/FeedbackCallout';
 import { clearConsent } from '@/lib/consent';
+import { useLocale, FOOTER_STRINGS, type FooterStrings } from '@/lib/i18n';
 
-const NAV_COLUMNS = [
-  {
-    title: 'Library',
-    links: [
-      { label: 'Browse Books', href: '/' },
-      { label: 'Browse A–Z', href: '/browse' },
-      { label: 'Gallery', href: '/gallery' },
-      { label: 'Collections', href: '/collections' },
-      { label: 'Explore', href: '/explore' },
-      { label: 'Search', href: '/search' },
-    ],
-  },
-  {
-    title: 'About',
-    links: [
-      { label: 'About', href: '/about' },
-      { label: 'Our Vision', href: '/vision' },
-      { label: 'Translation Census', href: '/census' },
-      { label: 'Progress', href: '/about/progress' },
-      { label: 'Research Notes', href: '/blog' },
-      { label: 'Privacy', href: '/privacy' },
-      { label: 'Cookie Settings', href: '#cookie-settings' },
-      { label: 'Terms', href: '/terms' },
-      { label: 'Copyright & DMCA', href: '/dmca' },
-    ],
-  },
-  {
-    title: 'Participate',
-    links: [
-      { label: 'Libraries', href: '/libraries' },
-      { label: 'Contribute', href: '/contribute' },
-      { label: 'Support', href: '/support' },
-      { label: 'Corporate Sponsorship', href: '/sponsors' },
-      { label: 'Developers', href: '/developers' },
-    ],
-  },
-] as const;
+// Labels are resolved per-locale from FOOTER_STRINGS via `key`; hrefs are
+// constant and point at the English pages (deep pages have no `/es` route).
+type FooterLinkKey = Exclude<keyof FooterStrings, 'colLibrary' | 'colAbout' | 'colParticipate'>;
 
-const PARTNERS = [
-  { name: 'Embassy of the Free Mind', src: '/partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 800, height: 352, invert: false },
-  { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 373, height: 174, invert: false },
+const NAV_COLUMNS: ReadonlyArray<{
+  titleKey: keyof FooterStrings;
+  links: ReadonlyArray<{ key: FooterLinkKey; href: string }>;
+}> = [
+  {
+    titleKey: 'colLibrary',
+    links: [
+      { key: 'browseBooks', href: '/' },
+      { key: 'browseAZ', href: '/browse' },
+      { key: 'gallery', href: '/gallery' },
+      { key: 'collections', href: '/collections' },
+      { key: 'explore', href: '/explore' },
+      { key: 'search', href: '/search' },
+    ],
+  },
+  {
+    titleKey: 'colAbout',
+    links: [
+      { key: 'about', href: '/about' },
+      { key: 'vision', href: '/vision' },
+      { key: 'census', href: '/census' },
+      { key: 'progress', href: '/about/progress' },
+      { key: 'researchNotes', href: '/blog' },
+      { key: 'privacy', href: '/privacy' },
+      { key: 'cookieSettings', href: '#cookie-settings' },
+      { key: 'terms', href: '/terms' },
+      { key: 'copyright', href: '/dmca' },
+    ],
+  },
+  {
+    titleKey: 'colParticipate',
+    links: [
+      { key: 'libraries', href: '/libraries' },
+      { key: 'contribute', href: '/contribute' },
+      { key: 'support', href: '/support' },
+      { key: 'sponsorship', href: '/sponsors' },
+      { key: 'developers', href: '/developers' },
+    ],
+  },
+];
+
+type Partner = {
+  name: string;
+  href: string;
+  src?: string;
+  width?: number;
+  height?: number;
+  invert?: boolean;
+  /** Render the partner's text wordmark instead of an image (e.g. Frond Studio). */
+  wordmark?: boolean;
+};
+
+// Logo PNGs are trimmed to their content (no internal transparent padding) so
+// every logo fills the shared h-12/h-16 box and they all appear equally tall.
+const PARTNERS: Partner[] = [
+  { name: 'Embassy of the Free Mind', src: '/partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 770, height: 326, invert: false },
+  { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 299, height: 117, invert: false },
+  { name: 'Frond Studio', href: 'https://frond-studio.com', wordmark: true },
 ];
 
 export default function GlobalFooter() {
   const pathname = usePathname();
+  const t = FOOTER_STRINGS[useLocale()];
   const [hasFavorites, setHasFavorites] = useState(false);
 
   useEffect(() => {
@@ -94,52 +117,52 @@ export default function GlobalFooter() {
         {/* Zone 2: Navigation Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 py-10 border-b border-white/[0.08]">
           {NAV_COLUMNS.map((col) => (
-            <div key={col.title}>
+            <div key={col.titleKey}>
               <h3 className="text-accent-gold text-xs font-semibold uppercase tracking-[0.15em] mb-4">
-                {col.title}
+                {t[col.titleKey]}
               </h3>
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    {link.label === 'Support' ? (
+                    {link.key === 'support' ? (
                       <Link
                         href={link.href}
                         className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
                       >
-                        {link.label}
+                        {t[link.key]}
                         <span className="text-[11px] bg-accent-rust/20 text-accent-rust px-2 py-0.5 rounded-full font-bold">
-                          Donate
+                          {t.donate}
                         </span>
                       </Link>
-                    ) : link.label === 'Cookie Settings' ? (
+                    ) : link.key === 'cookieSettings' ? (
                       <button
                         onClick={() => clearConsent()}
                         className="text-sm text-white/50 hover:text-white transition-colors"
                       >
-                        {link.label}
+                        {t[link.key]}
                       </button>
                     ) : (
                       <Link
                         href={link.href}
                         className="text-sm text-white/50 hover:text-white transition-colors"
                       >
-                        {link.label}
+                        {t[link.key]}
                       </Link>
                     )}
                   </li>
                 ))}
                 {/* Conditional personal links under Library */}
-                {col.title === 'Library' && hasFavorites && (
+                {col.titleKey === 'colLibrary' && hasFavorites && (
                   <li>
                     <Link href="/favorites" className="text-sm text-white/50 hover:text-white transition-colors">
-                      Favorites
+                      {t.favorites}
                     </Link>
                   </li>
                 )}
                 {/* Feedback widget under Participate */}
-                {col.title === 'Participate' && (
+                {col.titleKey === 'colParticipate' && (
                   <li>
-                    <FeedbackWidget label="Give Feedback" className="text-sm font-bold text-accent-rust hover:text-white transition-colors" />
+                    <FeedbackWidget label={t.giveFeedback} className="text-sm font-bold text-accent-rust hover:text-white transition-colors" />
                   </li>
                 )}
               </ul>
@@ -156,18 +179,26 @@ export default function GlobalFooter() {
                 href={partner.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-50 hover:opacity-80 transition-opacity"
+                className="flex items-center h-[2.4rem] md:h-[3.2rem] opacity-50 hover:opacity-80 transition-opacity"
                 title={partner.name}
               >
-                <Image
-                  src={partner.src}
-                  alt={partner.name}
-                  width={partner.width}
-                  height={partner.height}
-                  sizes="auto"
-                  className={`h-12 md:h-16 w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
-                  unoptimized
-                />
+                {partner.wordmark ? (
+                  // Frond Studio's logo is a stacked text wordmark (no image asset).
+                  <span className="flex flex-col leading-none gap-[3px] text-white">
+                    <span className="font-sans font-light tracking-tight text-[2rem] md:text-[2.6rem]">Frond</span>
+                    <span className="font-sans font-medium uppercase tracking-[0.44em] text-[0.56rem] md:text-[0.7rem] text-white/70 pl-px">Studio</span>
+                  </span>
+                ) : (
+                  <Image
+                    src={partner.src!}
+                    alt={partner.name}
+                    width={partner.width}
+                    height={partner.height}
+                    sizes="auto"
+                    className={`h-[2.4rem] md:h-[3.2rem] w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
+                    unoptimized
+                  />
+                )}
               </a>
             ))}
           </div>

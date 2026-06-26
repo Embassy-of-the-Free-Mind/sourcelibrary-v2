@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { fetchAllVisibleCatalogRows } from '@/lib/books-catalog';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
@@ -30,16 +30,17 @@ function languageSlug(name: string): string {
 }
 
 async function fetchLanguageStats(): Promise<{ languages: LanguageStats[]; totalBooks: number }> {
-  // Query books_catalog in Supabase — instant vs 10s+ MongoDB aggregation
-  const { data, error } = await supabase
-    .from('books_catalog')
-    .select('language, published, thumbnail, thumbnail_blob')
-    .eq('visible', true)
-    .gt('pages_count', 0)
-    .not('language', 'is', null)
-    .neq('language', '');
-
-  if (error) throw new Error(`Language stats query failed: ${error.message}`);
+  // Query books_catalog in Supabase — instant vs 10s+ MongoDB aggregation.
+  // Paginated: PostgREST caps each response at 1000 rows, so a single select
+  // would silently count languages from only ~6% of the catalog.
+  const data = await fetchAllVisibleCatalogRows<{
+    language: string | null;
+    published: string | null;
+    thumbnail: string | null;
+    thumbnail_blob: string | null;
+  }>('language, published, thumbnail, thumbnail_blob', (q) =>
+    q.not('language', 'is', null).neq('language', ''),
+  );
 
   // Group by language
   const langMap = new Map<string, { count: number; minYear?: string; maxYear?: string; heroImage?: string }>();

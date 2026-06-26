@@ -21,9 +21,9 @@
  * See: https://github.com/JDerekLomas/sourcelibrary/issues/1329
  */
 
-import { loadEnv, samplePages, disconnect, loadCorpusRegistry } from './lib/sampling.mjs';
+import { loadEnv, samplePages, getPage, disconnect, loadCorpusRegistry } from './lib/sampling.mjs';
 import { runModel, resolveModel, fetchImage, estimateCost } from './lib/runners.mjs';
-import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL } from './lib/metrics.mjs';
+import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL, subsequenceCER } from './lib/metrics.mjs';
 import { saveResults, loadLatestResults, listResults, generateConsistencyReport, generateEmbeddingReport, generateMatrixReport, saveBlogPost } from './lib/report.mjs';
 import { evaluateCorpus, evaluateRunConsistency } from './lib/embedding-eval.mjs';
 import fs from 'fs';
@@ -331,68 +331,66 @@ async function cmdCompare() {
     process.exit(1);
   }
 
-  const sampleSize = parseInt(args.sample || '10');
-
-  // Load ground truth
   const gtDir = path.join(__dirname, 'ground-truth');
   if (!fs.existsSync(gtDir)) {
     console.error(`No ground truth directory found at ${gtDir}`);
     process.exit(1);
   }
 
-  const groundTruth = new Map();
+  // Scope ground truth to the corpus's script so a Chinese run ignores e.g. Tibetan GT.
+  const registry = loadCorpusRegistry();
+  const corpusScript = registry[corpus]?.script;
+  const entries = [];
   for (const file of fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))) {
     try {
       const gt = JSON.parse(fs.readFileSync(path.join(gtDir, file), 'utf8'));
-      const key = `${gt.book_id}-${gt.page_number}`;
-      groundTruth.set(key, gt);
+      if (corpusScript && gt.script && gt.script !== corpusScript) continue;
+      entries.push(gt);
     } catch { /* skip */ }
   }
 
-  if (groundTruth.size === 0) {
-    console.error('No ground truth files found. Add JSON files to scripts/eval/ground-truth/');
+  if (entries.length === 0) {
+    console.error('No matching ground truth files. Add JSON files to scripts/eval/ground-truth/');
     process.exit(1);
   }
 
   console.log(`\nGround Truth Comparison (${against})`);
-  console.log(`  Corpus: ${corpus}`);
-  console.log(`  Ground truth entries: ${groundTruth.size}\n`);
+  console.log(`  Corpus: ${corpus}  |  Ground truth entries: ${entries.length}\n`);
 
-  // Sample pages that have ground truth
-  const pages = await samplePages(corpus, sampleSize);
+  // Above this subsequence-CER, the reference isn't cleanly present in the page —
+  // i.e. wrong page/book or a divergent recension, not a salvageable OCR read.
+  const DIVERGENCE = parseFloat(args.threshold || '0.30');
   const results = [];
 
-  for (const page of pages) {
-    const key = `${page.bookId}-${page.pageNumber}`;
-    const gt = groundTruth.get(key);
-    if (!gt) continue;
+  for (const gt of entries) {
+    // Fetch the EXACT pinned book+page. Pinning by id is the book-identity guard —
+    // no fuzzy title matching that could grab a same-phrase decoy.
+    const page = await getPage(gt.book_id, gt.page_number);
+    const label = gt.work || gt.book_id;
+    if (!page) { console.log(`  - ${label}: page not found (${gt.book_id} p${gt.page_number})`); continue; }
+    const ocrText = page.ocr?.data || null;
+    const translationText = page.translation?.data || null;
+    const script = corpusScript || 'default';
 
-    if (against === 'ocr' && gt.ocr_ground_truth && page.ocrText) {
-      const cerScore = cer(page.ocrText, gt.ocr_ground_truth);
-      const charSim = charSimilarity(page.ocrText, gt.ocr_ground_truth);
+    if (against === 'ocr' && gt.ocr_ground_truth && ocrText) {
+      const { cer: score, refLen, matched } = subsequenceCER(gt.ocr_ground_truth, ocrText);
+      const aligned = score <= DIVERGENCE;
       results.push({
-        bookId: page.bookId,
-        bookTitle: page.bookTitle,
-        pageNumber: page.pageNumber,
-        cer: cerScore,
-        charSimilarity: charSim,
-        source: gt.source,
+        work: label, bookId: gt.book_id, pageNumber: gt.page_number,
+        cer: score, charAccuracy: 1 - score, refLen, matched, aligned,
+        source: gt.source, source_url: gt.source_url,
       });
-      console.log(`  ${page.bookTitle} p${page.pageNumber}: CER=${(cerScore * 100).toFixed(1)}% charSim=${(charSim * 100).toFixed(1)}%`);
+      console.log(`  ${aligned ? 'OK ' : 'XX '} ${label.padEnd(22)} CER=${(score * 100).toFixed(1).padStart(5)}%  acc=${((1 - score) * 100).toFixed(1).padStart(5)}%  (ref ${refLen})${aligned ? '' : '  [unalignable: wrong page / divergent recension]'}`);
     }
 
-    if (against === 'translation' && gt.translation_ground_truth && page.translationText) {
-      const bleuScore = bleu4(page.translationText, gt.translation_ground_truth, page.script);
-      const rougeLScore = rougeL(page.translationText, gt.translation_ground_truth, page.script);
+    if (against === 'translation' && gt.translation_ground_truth && translationText) {
+      const bleuScore = bleu4(translationText, gt.translation_ground_truth, script);
+      const rougeLScore = rougeL(translationText, gt.translation_ground_truth, script);
       results.push({
-        bookId: page.bookId,
-        bookTitle: page.bookTitle,
-        pageNumber: page.pageNumber,
-        bleu4: bleuScore,
-        rougeL: rougeLScore,
-        source: gt.translation_source,
+        work: label, bookId: gt.book_id, pageNumber: gt.page_number,
+        bleu4: bleuScore, rougeL: rougeLScore, source: gt.translation_source,
       });
-      console.log(`  ${page.bookTitle} p${page.pageNumber}: BLEU-4=${bleuScore.toFixed(3)} ROUGE-L=${rougeLScore.toFixed(3)}`);
+      console.log(`  ${label}: BLEU-4=${bleuScore.toFixed(3)} ROUGE-L=${rougeLScore.toFixed(3)}`);
     }
   }
 
@@ -401,12 +399,15 @@ async function cmdCompare() {
     process.exit(1);
   }
 
-  // Summary
   if (against === 'ocr') {
-    const avgCer = results.reduce((s, r) => s + r.cer, 0) / results.length;
-    const avgCharSim = results.reduce((s, r) => s + r.charSimilarity, 0) / results.length;
-    console.log(`\nAvg CER: ${(avgCer * 100).toFixed(1)}%`);
-    console.log(`Avg Char Similarity: ${(avgCharSim * 100).toFixed(1)}%`);
+    const aligned = results.filter(r => r.aligned);
+    const totalRef = aligned.reduce((s, r) => s + r.refLen, 0);
+    const charAcc = totalRef ? aligned.reduce((s, r) => s + r.matched, 0) / totalRef : 0;
+    console.log(`\n  Cleanly aligned: ${aligned.length}/${results.length}`);
+    console.log(`  Char-weighted OCR accuracy: ${(charAcc * 100).toFixed(2)}%  (CER ${((1 - charAcc) * 100).toFixed(2)}%)`);
+    const excluded = results.filter(r => !r.aligned);
+    if (excluded.length) console.log(`  Excluded (>${(DIVERGENCE * 100).toFixed(0)}% — wrong page / divergent recension, NOT an OCR failure): ${excluded.map(r => r.work).join(', ')}`);
+    console.log(`  Note: ctext covers canonical PRINTED texts only — manuscripts, tables and rare works are out of scope for this metric.`);
   } else {
     const avgBleu = results.reduce((s, r) => s + r.bleu4, 0) / results.length;
     const avgRouge = results.reduce((s, r) => s + r.rougeL, 0) / results.length;

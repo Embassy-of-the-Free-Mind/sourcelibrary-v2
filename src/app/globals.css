@@ -69,6 +69,17 @@
   --color-border-light: #e8e4dc;
   --color-border-medium: #d4cfc4;
 
+  /* Generated placeholder-cover palette — dark warm-brown "book cover" with
+     cream type, used by PlaceholderCover for books with no digitised cover.
+     Themeable: swap these to retheme every generated cover at once. */
+  --color-cover-bg: #2b2722;       /* deep near-black warm brown */
+  --color-cover-title: #e9e1d0;    /* warm cream title */
+  --color-cover-muted: #b3a890;    /* dimmer warm cream — author/year */
+  --color-cover-rule: #46413a;     /* hairline, barely lighter than the bg */
+
+  /* Search-result match highlight (catalogue search). #c09a5d @ 50%. */
+  --color-search-highlight: rgba(192, 154, 93, 0.5);
+
   /* Status colors as Tailwind utilities */
   --color-status-success: #16a34a;
   --color-status-error: #dc2626;
@@ -82,6 +93,26 @@
   --container-narrow: 672px;   /* ≈ max-w-2xl */
   --container-standard: 1024px; /* ≈ max-w-5xl */
   --container-wide: 1500px;    /* widened from 1280px (#232) */
+}
+
+/* Embedded contexts (iframe, tenant subdomain, /embed/* route) must never
+   show the global Source Library header. Some pages (e.g. /gallery) render
+   SiteHeader and only hide it after a post-mount iframe check, which flashes
+   the header for a frame. The pre-paint init script in src/app/layout.tsx sets
+   html[data-embedded] synchronously, so this rule suppresses that flash before
+   first paint. React still removes the header from the DOM post-mount. */
+html[data-embedded] [data-site-header] {
+  display: none !important;
+}
+
+/* Catalogue search-term highlight. Marks the matched query text in results
+   (title, author, place, …) with the brand highlight tone. Text colour is
+   inherited so it stays readable on the parchment rows. */
+mark.sl-search-hl {
+  background-color: var(--color-search-highlight, rgba(192, 154, 93, 0.5));
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 0.1em;
 }
 
 /* Base styles */

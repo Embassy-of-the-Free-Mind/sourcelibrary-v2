@@ -259,6 +259,16 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     color: 'violet',
     heroImageOverride: 'https://images.sourcelibrary.org/archived/6991bf67734f402cad489bb9/24.jpg',
   },
+  'imslp': {
+    slug: 'imslp',
+    name: 'IMSLP / Petrucci Music Library',
+    shortName: 'IMSLP',
+    providerKey: 'imslp',
+    url: 'https://imslp.org',
+    description: 'The International Music Score Library Project (IMSLP), also known as the Petrucci Music Library, is a volunteer-run free library of public-domain musical scores and printed music. As a re-hosting digital library it preserves scans contributed from collections worldwide — the works held here come from the British Library copy of "The Apollonian Harmony" (ca. 1790), digitized through IMSLP.',
+    color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/books/6a3cef9ba907e2ce38470f7a/pages/0000.jpg',
+  },
   'sbb-berlin': {
     slug: 'sbb-berlin',
     name: 'Staatsbibliothek zu Berlin',

@@ -130,11 +130,13 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     const db = await getDb();
 
-    // Check if book already exists
+    // Check if this exact IA item already exists. Match only on same-item
+    // identifiers — NOT on `title`, which collides across distinct editions
+    // that share IA's publisher-supplied title (e.g. a 1728 vs 1730 printing).
+    // Edition-aware title+author dedup happens in checkDuplicate() below.
     const existing = await db.collection('books').findOne({
       $or: [
         { ia_identifier },
-        { title },
         { 'dublin_core.dc_identifier': `IA:${ia_identifier}` }
       ]
     });
@@ -151,6 +153,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       title,
       author,
       display_title,
+      year,
+      published,
       ia_identifier,
       image_source: {
         provider: 'internet_archive',

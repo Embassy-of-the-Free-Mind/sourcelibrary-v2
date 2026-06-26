@@ -193,7 +193,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Cross-source dedup check
     const dedupResult = await checkDuplicate(db, {
-      title, author,
+      title, author, year, published,
       image_source: { provider: 'wellcome', identifier: work_id, iiif_manifest: manifestUrl, source_url: `https://wellcomecollection.org/works/${work_id}` },
     });
     if (dedupResult.isDuplicate) {

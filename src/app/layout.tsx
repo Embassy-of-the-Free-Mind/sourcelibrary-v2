@@ -38,7 +38,7 @@ import ScrollReveal from "@/components/layout/ScrollReveal";
 // Detection is client-side by hostname to stay ISR-safe — the HTML is
 // host-agnostic and cached; this script self-determines at runtime.
 // Must mirror the detection in EmbedUserMenu.tsx.
-const VIEW_MODE_INIT_SCRIPT = `(function(){var d=document,c=d.cookie,h=location.hostname,p=location.pathname;var bph=/^bph\\./.test(h)||/^\\/embed\\/bph(\\/|$)/.test(p);var m=c.match(/(?:^|; )sl_hide_ai=([01])/);var v=m?m[1]:(bph?'d':null);if(v==='1')d.documentElement.dataset.slHideAi='1';else if(v==='d')d.documentElement.dataset.slHideAi='default';if(/(?:^|; )sl_hide_guide=1/.test(c))d.documentElement.dataset.slHideGuide='1';})();`;
+const VIEW_MODE_INIT_SCRIPT = `(function(){var d=document,c=d.cookie,h=location.hostname,p=location.pathname;var bph=/^bph\\./.test(h)||/^\\/embed\\/bph(\\/|$)/.test(p);var m=c.match(/(?:^|; )sl_hide_ai=([01])/);var v=m?m[1]:(bph?'d':null);if(v==='1')d.documentElement.dataset.slHideAi='1';else if(v==='d')d.documentElement.dataset.slHideAi='default';if(/(?:^|; )sl_hide_guide=1/.test(c))d.documentElement.dataset.slHideGuide='1';try{var emb=(window.self!==window.top)||/^\\/embed\\//.test(p)||(/\\.sourcelibrary\\.(org|com|net)$/.test(h)&&h.split('.').length>=3&&h.indexOf('www.')!==0);if(emb)d.documentElement.dataset.embedded='1';}catch(e){d.documentElement.dataset.embedded='1';}})();`;
 
 export const metadata: Metadata = {
   title: "Source Library — Ancient Texts Translated to English",
@@ -50,6 +50,7 @@ export const metadata: Metadata = {
       'application/atom+xml': [
         { url: '/api/feed/books', title: 'Source Library - New Books' },
         { url: '/api/feed/gallery', title: 'Source Library Gallery' },
+        { url: '/api/feed/blog', title: 'Source Library - Research Notes' },
       ],
     },
   },

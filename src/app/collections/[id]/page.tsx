@@ -586,13 +586,19 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       };
     });
 
-  // Fetch curated exhibition data (if available)
+  // Fetch curated exhibition data (if available).
+  // This decides the WHOLE page layout: when a draft exists, ExhibitionLayout renders
+  // and the standard Featured/highlights/gallery/description bands are suppressed
+  // (they all gate on `!exhibition?.layout`). A timeout here therefore silently FLIPS
+  // a curated collection (e.g. /collections/yoga) back to the generic layout — so this
+  // fetch must be reliable. Backed by the `collection_slug_status_idx` index (IXSCAN,
+  // ~1ms), with a generous timeout so a transient slow read never drops the exhibition.
   const curationDraft = await withTimeout(
     db.collection('curation_drafts').findOne(
       { collection_slug: id, status: 'draft' },
       { projection: { curation: 1 } },
     ),
-    5000, null,
+    12000, null,
   );
 
   // Resolve book references in curation layout — attach thumbnails and slugs
@@ -727,6 +733,16 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   const tier2 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 2).slice(0, 9);
   const tier3 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 3).slice(0, 8);
   const hasCuratedHighlights = curatedHighlightsData.length > 0;
+
+  // Featured books — for collections without hand-curated highlights, surface a few
+  // actual books high on the page (right under the sub-collections, above the
+  // illustration gallery) instead of burying the catalogue at the bottom. `books` is
+  // the compact, popularity-sorted set already fetched for the grid (no extra query),
+  // so this is reliable even when the gallery image query times out. Curated
+  // collections keep their Featured "Start here" + tier treatment untouched.
+  const featuredPreviewBooks = (!isArtCollection && !hasCuratedHighlights)
+    ? (books as BookItem[]).filter(b => !b.resource_type).slice(0, 8)
+    : [];
 
   // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display
   const imagePool: typeof galleryImages = [];
@@ -936,6 +952,65 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         {child.name}
                       </h3>
                     </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Featured books — a few of the collection's books, surfaced under the
+          sub-collections and above the illustration gallery. Full catalogue stays below. */}
+      {featuredPreviewBooks.length > 0 && !exhibition?.layout && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-[1500px] mx-auto px-6 py-10">
+            <div className="flex items-end justify-between gap-4 mb-6">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                Featured books
+              </h2>
+              <a
+                href="#collection-all-books"
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap"
+              >
+                All {total.toLocaleString('en-US')} {itemLabel} &darr;
+              </a>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-5">
+              {featuredPreviewBooks.map((b) => {
+                const thumb = getBookThumbnailUrl(b);
+                return (
+                  <Link
+                    key={b.id}
+                    href={tenantBookUrl({ id: b.id, slug: b.slug }, tenantSlug)}
+                    className="group block"
+                  >
+                    <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-sm group-hover:shadow-md transition-shadow mb-2">
+                      {thumb ? (
+                        <Image
+                          src={thumb}
+                          alt={bookTitle(b)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(min-width: 1024px) 170px, (min-width: 640px) 30vw, 45vw"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <BookOpen className="w-8 h-8 text-muted" />
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug">
+                      {bookTitle(b)}
+                    </h3>
+                    {b.author && (
+                      <p className="text-xs text-muted line-clamp-1 mt-0.5">{b.author}</p>
+                    )}
+                    {b.is_first_translation && (b.pages_translated ?? 0) > 0 && (
+                      <span className="inline-block mt-1 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
+                        {firstTranslationBadge(b.ft_disposition, b.language)}
+                      </span>
+                    )}
                   </Link>
                 );
               })}

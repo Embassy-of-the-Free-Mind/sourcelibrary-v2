@@ -24,6 +24,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -2028,6 +2029,59 @@ MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer see
 
 Return ONLY a valid JSON array. If no significant illustrations, return: []`;
 
+// Per-page text grounding for the batch image-extraction path (#2707), mirroring
+// the realtime worker. Returns Map<pageId, groundingString>. Reads each candidate
+// page's own OCR/translation, a ±radius window of neighbour pages (usually text/
+// blank pages not in the candidate set), and the book summary as the isolated-
+// plate fallback. One window query per book.
+const BATCH_GROUNDING_RADIUS = 3;
+async function buildGroundingByPageId(db, book, candidatePages) {
+  const ids = candidatePages.map(p => p.id);
+  const cps = await db.collection('pages')
+    .find({ id: { $in: ids } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
+    .toArray();
+
+  const windowNumbers = new Set();
+  for (const p of cps) {
+    if (typeof p.page_number !== 'number') continue;
+    for (let d = -BATCH_GROUNDING_RADIUS; d <= BATCH_GROUNDING_RADIUS; d++) windowNumbers.add(p.page_number + d);
+  }
+  const pagesByNumber = new Map();
+  if (windowNumbers.size > 0) {
+    const wp = await db.collection('pages')
+      .find({ book_id: book.id, page_number: { $in: [...windowNumbers] } }, { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
+      .toArray();
+    for (const p of wp) pagesByNumber.set(p.page_number, p);
+  }
+
+  let bookSummary = book.summary;
+  if (bookSummary === undefined) {
+    const b = await db.collection('books').findOne({ id: book.id }, { projection: { summary: 1 } });
+    bookSummary = b?.summary || '';
+  }
+
+  const map = new Map();
+  for (const p of cps) {
+    const neighbors = [];
+    if (typeof p.page_number === 'number') {
+      for (let n = p.page_number - BATCH_GROUNDING_RADIUS; n <= p.page_number + BATCH_GROUNDING_RADIUS; n++) {
+        if (n === p.page_number) continue;
+        const np = pagesByNumber.get(n);
+        if (np) neighbors.push({ page_number: n, ocr: np.ocr?.data, translation: np.translation?.data });
+      }
+    }
+    map.set(p.id, buildPageGrounding({
+      ocr: p.ocr?.data,
+      translation: p.translation?.data,
+      pageNumber: p.page_number,
+      neighbors,
+      bookSummary,
+      radius: BATCH_GROUNDING_RADIUS,
+    }));
+  }
+  return map;
+}
+
 async function submitImageExtractionBatch(db, book, candidatePages) {
   // Guard: check for existing active batch_jobs for this book
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
@@ -2069,9 +2123,14 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
   if (book.language) contextParts.push(`Language: ${book.language}`);
   if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
   const contextPrefix = contextParts.length > 0
-    ? `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${contextParts.join(' | ')}\n\n`
+    ? `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image — a book about a subject does not mean every illustration depicts it):\n${contextParts.join(' | ')}\n\n`
     : '';
   const prompt = contextPrefix + IMAGE_EXTRACTION_PROMPT;
+
+  // Per-page text grounding (#2707): subject identity comes from the page's own
+  // OCR <image-desc>/<summary> + nearby text, not the book's topic. Appended per
+  // item below so each page's prompt carries its own grounding.
+  const groundingByPageId = await buildGroundingByPageId(db, book, candidatePages);
 
   const useFileBased = downloaded.length > IMAGE_EXTRACTION_INLINE_SIZE;
   const batchSize = useFileBased ? IMAGE_EXTRACTION_BATCH_SIZE : IMAGE_EXTRACTION_INLINE_SIZE;
@@ -2093,7 +2152,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         request: {
           contents: [{
             parts: [
-              { text: prompt },
+              { text: prompt + (groundingByPageId.get(item.pageId) || '') },
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
@@ -2164,7 +2223,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         request: {
           contents: [{
             parts: [
-              { text: prompt },
+              { text: prompt + (groundingByPageId.get(item.pageId) || '') },
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
@@ -2247,7 +2306,7 @@ function buildPagePrompt(book) {
   if (book.language) contextParts.push(`Language: ${book.language}`);
   if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
   const contextPrefix = contextParts.length > 0
-    ? `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${contextParts.join(' | ')}\n\n`
+    ? `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image — a book about a subject does not mean every illustration depicts it):\n${contextParts.join(' | ')}\n\n`
     : '';
   return contextPrefix + IMAGE_EXTRACTION_PROMPT;
 }
@@ -2301,8 +2360,10 @@ async function submitCrossBookImageBatches(db, bookItems) {
     console.log(`    Downloaded ${downloaded.length}/${pages.length} images for ${book.title}`);
 
     const prompt = buildPagePrompt(book);
+    // Per-page text grounding (#2707) for each book in the cross-book pool.
+    const groundingByPageId = await buildGroundingByPageId(db, book, candidatePages);
     for (const item of downloaded) {
-      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id });
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, grounding: groundingByPageId.get(item.pageId) || '', bookId: book.id });
     }
   }
 
@@ -2327,7 +2388,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
       request: {
         contents: [{
           parts: [
-            { text: item.prompt },
+            { text: item.prompt + (item.grounding || '') },
             { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
           ],
         }],
@@ -2864,7 +2925,11 @@ async function run() {
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (AR screen → Gemini confirm) ---');
 
-      const SPLIT_LIMIT = 100; // Max books per cycle
+      // Scoped mode raises the window so allowlisted books behind the backlog
+      // aren't stranded (work stays confined by applyBookOverride below). The
+      // module-level phase limits get this raise already; phase-local consts
+      // like this one were missed — the selective-unpause stall bug.
+      const SPLIT_LIMIT = SCOPED_MODE ? 100000 : 100; // Max books per cycle
       const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
 
       // Find archive_complete books that haven't been split-checked yet
@@ -3060,7 +3125,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     if (shouldRun(1.3)) {
       console.log('\n--- Phase 1.3: Pre-OCR spread split (gutter-only) ---');
 
-      const PRE_SPLIT_LIMIT = 8; // each book downloads + crops + uploads all its images
+      const PRE_SPLIT_LIMIT = SCOPED_MODE ? 100000 : 8; // each book downloads + crops + uploads all its images (scoped mode raises the window; work confined by applyBookOverride below)
 
       let readyForPreSplit = await db.collection('books')
         .find({
@@ -3753,13 +3818,18 @@ Rules:
     // Independently pausable via paused_phases:[1.97]. When paused, Phase 2's
     // dedup_complete gate is relaxed (see below) so books flow straight to OCR.
     if (shouldRun(1.97)) {
-      const DEDUP_LIMIT = 50;        // per tick — bounds runtime (~30+ R2 HEADs/book); drains backlog across ticks
+      const DEDUP_LIMIT = SCOPED_MODE ? 100000 : 50;  // per tick — bounds runtime (~30+ R2 HEADs/book); drains backlog across ticks. Scoped mode raises the window so allowlisted books behind the backlog aren't stranded (work confined by the scope filter below).
       const DEDUP_MAX_ATTEMPTS = 3;  // transient-failure giveup; release the book so Phase 2 isn't blocked forever
-      const candidates = await db.collection('books').find({
+      let candidates = await db.collection('books').find({
         'pipeline_auto.status': 'archive_complete',
         'pipeline_auto.dedup_complete': { $ne: true },
       }).project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
         .limit(DEDUP_LIMIT).toArray();
+      // Selective-unpause: confine dedup to the allowlist, like every other phase.
+      // This phase previously had NO scope filter, so when globally paused with a
+      // scope set, scoped books behind the backlog never got dedup_complete and
+      // stalled at Phase 2's dedup gate (never reaching OCR).
+      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 });
 
       if (candidates.length > 0) {
         console.log('\n--- Phase 1.97: Trailing-dupe dedup ---');
@@ -4235,7 +4305,7 @@ Rules:
     if (shouldRun(3.1) || shouldRun(3)) {
       console.log('\n--- Phase 3.1: Post-OCR spread split ---');
 
-      const SPLIT_BATCH_LIMIT = 10; // Books per cycle (each book is heavy: downloads + crops + uploads)
+      const SPLIT_BATCH_LIMIT = SCOPED_MODE ? 100000 : 10; // Books per cycle (each book is heavy: downloads + crops + uploads; scoped mode raises the window, work confined by applyBookOverride below)
 
       let readyForSplit = await db.collection('books')
         .find({

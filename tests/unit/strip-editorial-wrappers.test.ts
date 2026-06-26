@@ -66,4 +66,60 @@ describe('stripEditorialWrappers', () => {
     const out = stripEditorialWrappers(t).replace(/\s+/g, ' ').trim();
     expect(out).toBe('Lorem ipsum dolor sit amet');
   });
+
+  // ── Markdown table flattening (Vasari "tavola"/index pages) ──────────────
+  it('flattens an empty-header markdown table to readable lines, no pipe-soup', () => {
+    // The Vasari Vol.1 1568 index, p.42 — leaked into a search snippet as
+    // "# TABLE OF | | | |---|---| | Luigi Pulci s. | 493 | ...".
+    const t = `# TABLE OF\n\n| | |\n|---|---|\n| Luigi Pulci s. | 493 |\n| Gaddo Gaddi p. | 13 |`;
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/\|/);          // no raw pipes survive
+    expect(out).not.toMatch(/---/);         // no separator scaffolding
+    expect(out).toContain('Luigi Pulci s.  493');
+    expect(out).toContain('Gaddo Gaddi p.  13');
+  });
+
+  it('flattens aligned separator rows and multi-cell rows', () => {
+    const t = `| Name | Page |\n| :--- | ---: |\n| Thomas Aquinas, saint p. | 187 |`;
+    const out = stripEditorialWrappers(t).trim();
+    expect(out).not.toMatch(/[|]|:---|---:/);
+    expect(out).toContain('Name  Page');
+    expect(out).toContain('Thomas Aquinas, saint p.  187');
+  });
+
+  it('leaves prose containing an inline pipe untouched', () => {
+    const t = 'the choice of good | evil is the soul’s';
+    expect(stripEditorialWrappers(t)).toBe(t);
+  });
+
+  // ── Residual markdown markers in plain-text snippets ─────────────────────
+  it('strips ATX heading markers but keeps the heading text', () => {
+    const t = '# TABLE OF\n\n### G\nGaddo Gaddi p.  13';
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/^#/m);
+    expect(out).toContain('TABLE OF');
+    expect(out).toContain('G\n');
+    expect(out).toContain('Gaddo Gaddi p.  13');
+  });
+
+  it('strips paired asterisk emphasis and ->centered<- markers', () => {
+    expect(stripEditorialWrappers('->**B**<-')).toBe('B');
+    expect(stripEditorialWrappers('->THE END.<-')).toBe('THE END.');
+    expect(stripEditorialWrappers('a **bold** and *italic* word')).toBe('a bold and italic word');
+  });
+
+  it('drops --- / *** thematic-break rules', () => {
+    const t = 'Zanobi Stradi s 467\n\n---\n\nTHE END.';
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/^---$/m);
+    expect(out).toContain('Zanobi Stradi s 467');
+    expect(out).toContain('THE END.');
+  });
+
+  it('leaves spaced-out or literal asterisks and underscores alone', () => {
+    // Not markdown emphasis (spaces hug the asterisks) — must survive.
+    expect(stripEditorialWrappers('see footnote * and ** below')).toBe('see footnote * and ** below');
+    // Underscores are never touched (literal in OCR/transliteration).
+    expect(stripEditorialWrappers('istimnāʾ _ or jing_preservation')).toBe('istimnāʾ _ or jing_preservation');
+  });
 });
