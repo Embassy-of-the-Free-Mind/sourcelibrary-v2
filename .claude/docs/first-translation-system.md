@@ -2,11 +2,44 @@
 
 *Source of truth for "how do we decide a book is a first English translation, and how is that counted?" Last reconciled against live code + production data 2026-06-01. Sibling: `.claude/docs/author-identity-system.md`.*
 
-**Related issues:** [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter for the flag — the central open gap) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill prior translations) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
+**Related issues:** [#2567](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2567) (cluster map / tracking) · [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter — central gap) · [#2352](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2352) (work-keyed translation index) · [#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564) (measurement + effort-routing + single-writer) · [#2264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2264) (work resolver) · [#2453](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2453) (works catalog) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
+
+> **Refreshed 2026-06-19** with the First Principle (below), §0 (re-pinned numbers + skeptical findings), §14 (eval & validation), §15 (writer sprawl), §16 (architecture cluster), §17 (process invariant). The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted — **§0 supersedes them.**
 
 > **⚠️ Successor system in flight ([#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564), PR #2573 — not yet merged).** This doc describes the *2026-06-01* engines (8-tool agent + 3-catalog cron + the boolean flag). The #2564 rebuild replaces the loose `disposition` with a **graded verdict model** (`src/lib/first-translation/`: `types.ts`, `derive.ts`, `attempt-log.ts`) where `is_first_translation` becomes a *single-writer derived read* of the verdict, plus a cheap grounded **Gemini enumeration instrument** (`scripts/eval/ft-gemini-adjudicate.mjs`) and an append-only **`first_translation_attempts`** evidence log. Until #2573 merges, treat §2–§8 below as the live system and the rebuild as the target. The instrument→sinks write contract (Mongo verdict + attempts log + Supabase `translation_catalogs`) is specced in **[ft-enumeration-three-sink-spec.md](./ft-enumeration-three-sink-spec.md)**; the human review/audit layer in **[ft-gold-annotator-brief.md](./ft-gold-annotator-brief.md)**; the write-up in **[ft-first-translation-paper.md](./ft-first-translation-paper.md)**.
 
 ---
+
+## First principle — a claim's strength must equal its verification
+
+Everything in this system derives from one **asymmetry**: *"a prior English translation exists"* is settled by **one confirmed sighting** (a resolvable catalog record — monotonic, cheap, high-precision), whereas *"no prior exists"* is a claim about the **absence of evidence** — never absolute, only ever as strong as the breadth + documentation of the search ("first, as far as we looked, as of this date"). The whole architecture is consequences of this, not independent choices:
+
+- **A positive ("found") may be trusted only when the sighting is *real*** — not a self-match (prior = the book's own record), not an anthology/study, same source-language, complete-not-partial, person-disambiguated author. A *fake* found is the failure mode (§17). The guards are just "confirm the sighting is real," made executable.
+- **A negative ("first") is earned, not asserted** — its strength = documented search coverage: the effort tiers, the append-only attempt-log, and the bounded "none found in [sources] as of [date]." It is never "first, period."
+- **The pieces interlock under one rule:** the registry accumulates *verified positives* (the flywheel + the #1974 setter); the effort tiers spend verification proportional to difficulty (and the tier that resolves a book *is* its confidence); stratified sampling buys a corpus claim with a bounded amount of verification and lets the CI carry the residual (and you must measure the measurer); the single-writer derivation is safe **exactly when its source is verified and dangerous exactly when it isn't.**
+
+**Every first-translation error we've hit is the same error — a claim asserted beyond its verification:** the 155-book sweep trusted single-pass grounding-*absence* as a verified negative; the 125-conflict signal trusted a noisy script's *positives*; the 39-demotion trusted the disposition's *unverified positives* (and silently demoted a verified first — §17). 
+
+**The standing test for any change to this system:** *does the strength of what we assert match the verification we actually did — in both directions?* (Don't over-claim a "first" from a blind search; don't over-trust a "found" from an unverified match. Mass-restore is as dangerous as mass-demote.)
+
+## 0. Update 2026-06-19 — re-pinned numbers + skeptical findings
+
+⚠️ The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted. Live re-pin:
+
+| Metric | 2026-06-01 | 2026-06-19 |
+|---|---|---|
+| `is_first_translation:true` (raw) | 7,126 | **6,908** |
+| public (`+visible +pages_translated>0`) | 6,009 | **5,732** |
+| `disposition=confirmed_first` | 7,909 | **7,668** |
+
+**Stop quoting ~6,000 — it's 5,732 and falling** (crons only flip true→false). Four findings from a skeptical re-audit:
+
+1. **The public count rests on the WEAK path.** By `source`: `catalog_search` ≈ 5,725; the "BEST" 8-tool agent (`catalog_and_llm`) appears on **~0** of the 5,732 public firsts. They were originated by content-enrichment (Phase 1.6, reading the book's own pages — structurally blind to *external* prior translations). The rigorous verifier has touched almost none of what we publicly badge.
+2. **~⅓ is unverifiable by design.** 1,888 / 5,732 (33%) public firsts are non-Western (Tibetan 830, Chinese 442, Hebrew 163, Sanskrit 126…) where catalogs don't index → `confirmed_first` *defaults* (recall failure, not verification). Proven false-firsts here: Milarepa (Quintman 2010), Padmasambhava (Padmakara 1993). Treat as a distinct **"unverified — no catalog coverage"** class, not headline firsts.
+3. **38 internal contradictions** (public firsts with `disposition: translation_found` yet still badged) + 124 `needs_review`. ⚠️ **Not** demote-on-sight (an earlier claim, now retracted): `translation_found` is itself a fallible match. The *Arithmologia* appears here matched to Godwin's *anthology* (a verified first that must NOT be demoted), alongside self-matches (book → its own catalog record) and source-language false matches (Latin *Timaeus* → a Greek-sourced English translation). They're a **hard-case benchmark**, not a no-oracle demote list (see #2564). Distinct from the noisier 173/125 `first_translation_conflict` signal from the secondary `discover-prior-translations.mjs`.
+4. **Matching/reconcile failure, not a seeding gap.** `translation_catalogs` already holds Loeb (466) + the classics (Seneca 489, Caesar 357, Virgil 794, Pliny 266) — yet those books are still badged first. We hold the answer and don't match/reconcile it → measure **internal-match recall** (§14) before adding any source.
+
+Forward design + cluster map: **#2567**. Eval + validator: §14. Writer sprawl: §15. Cluster: §16.
 
 ## 1. TL;DR — what to quote
 
@@ -136,4 +169,36 @@ Set by `make_determination` (agent) or Stage 2 (cron). Live counts: `confirmed_f
 
 ## 13. Provenance
 
-Reconciled 2026-06-01 by reading the live engines (`verify-first-translation.ts`, both cron scripts, orchestrator Phase 1.6), the live Hetzner crontab, and the recent handoffs (`2026-05-31-ft-1974-catalog-precedence-and-chip.md`, `2026-05-31-discover-prior-translations-2244.md`). Counts from live `bookstore` queries that day — re-verify if >14 days old. This rewrite (PR #2340) replaced an earlier version whose architecture/numbers had drifted (it described a retired in-pipeline Phase 3.7 path).
+Reconciled 2026-06-01 by reading the live engines (`verify-first-translation.ts`, both cron scripts, orchestrator Phase 1.6), the live Hetzner crontab, and the recent handoffs (`2026-05-31-ft-1974-catalog-precedence-and-chip.md`, `2026-05-31-discover-prior-translations-2244.md`). Counts from live `bookstore` queries that day — re-verify if >14 days old. This rewrite (PR #2340) replaced an earlier version whose architecture/numbers had drifted (it described a retired in-pipeline Phase 3.7 path). **§0/§14/§15/§16 added 2026-06-19** from a three-part audit (code/data/eval) + skeptical live re-check; §0 numbers supersede §1/§9.
+
+## 14. Eval & validation (the missing measurement)
+
+There is **no measured accuracy** for the verifier — this is the spine gap.
+
+- **Harness:** `scripts/eval/ft-eval.mjs` (`seed` → `run` → `report`). **Never run at scale:** `scripts/eval/ft-benchmark.json` has 0 cases, and `seed` pre-fills "expected" labels from the pipeline's *own* verdict (`ground_truth_source: 'NEEDS REVIEW — pre-filled…'`) → running as-is grades the pipeline against itself (circular).
+- **Partial ground truth:** `scripts/eval/ft-ground-truth.json` (**33** Latin cases, vetted vs 5 external APIs; *not* wired into `run()`). Manual census audits: Siku 8/58 (`docs/translation-gap-census-paper/manual-qc-audit.md`), Latin ~70% precision n=25 (`latin-qc-audit.md`). Pattern to copy: `scripts/eval/librarian-search/golden-set.json`.
+- **Non-circular benchmark** = an **independent validator** (separate Claude Code window → later Gemini), adversarial, sources *independent of the production engine*, emitting a verdict **plus an append-only attempt log** (the evidence of absence). Silver-standard, human sample-audited. Spec: **`scripts/eval/ft-validator-runbook.md`**.
+- **Metrics — report for BOTH paths** (8-tool agent AND the `catalog_search` cron that actually made the count): precision, negative-recall, **internal-match recall** (of priors already in `translation_catalogs`, what fraction does the verifier surface?), verdict stability.
+- **Inference at scale:** run the effortful validator on a **work-uniform stratified random sample** (strata = source-path × language-indexing × single-work/container), estimate corpus rates with CIs, *measure the measurer* (audit the validator vs a human sub-sample), report non-Western separately. (#2564.)
+
+## 15. Writer sprawl (the single-writer target)
+
+**~37 scripts** write `is_first_translation` / `disposition` / `translation_verification` (103 files reference the flag; ~37 contain `$set`/`updateOne`/`updateMany` near it). The flag should become **derived single-writer from `disposition`** (#2564 / #2332) so it cannot drift. Active direct-writers to retire/centralize include: `src/lib/verify-first-translation.ts`, `src/lib/metadata-enrichment.ts` (Phase 1.6), `scripts/maintenance/reconcile-ft-from-catalog.mjs`, `scripts/maintenance/apply-audit-verdicts.mjs`, `scripts/maintenance/apply-discovery-results.mjs`, plus the archived `scripts/_archived/2026-06-ft-cleanup/bulk-flag-*.mjs`. A full active/archived inventory is the deliverable for the retire-list.
+
+## 16. Architecture cluster (where this fits)
+
+This doc is the current-state SoT for the *flag mechanics*. The forward design is a layered cluster (map: **#2567**):
+- **Identity:** authors #2179 → work resolver #2264 → dedup-at-scale #2318
+- **Works catalog (frame + denominator):** #2453 (generalizes Chinese #2452); IIIF census #2447
+- **Translation registry (growing positive asset):** work-keyed index #2352 (membership test = the #1974 setter); backfill #2244; provenance bug #2476
+- **Flag mechanics (this doc):** setter #1974 · cleanup #2332 · measurement/effort/single-writer #2564
+
+## 17. Process invariant — never derive a destructive flag from an unverified match (incident 2026-06-19)
+
+The first single-writer reconcile demoted 39 `not_first` derived from `disposition`, silently flipping genuine firsts to `false` — including the **Arithmologia**, whose `translation_found` cited Godwin's *Theatre of the World* (an **anthology**, not a translation) as the "prior." Root cause: `disposition: translation_found` is a **fallible match**, not verified truth, and deriving the flag from it laundered bad matches into live errors (worse than the drift it fixed — the drift was *masking* the bad disposition). Invariants for any flag-flipping batch:
+
+- **Demotion requires evidence-quality guards, not just the enum:** prior is not a **self-match** (≠ the book's own catalog record), `completeness = complete`, **same source-language**, prior is a **translation** (not anthology/study), **person-disambiguated** author (namesake guard — Michael Alberti ≠ L.B. Alberti). Fail any → Tier-2/human, never auto-demote.
+- **Batches must be reversible + audited** — record before/after per book; run only on guard-passing rows; route the rest to review.
+- **A documented hazard must become a code guard** — a comment does not gate a batch job (the 6 false matches were posted before the batch and demoted anyway).
+- **Mass-restore is as dangerous as mass-demote** — only 1 of the 6 worksheet-flagged "false matches" was ground-truth-verified (Arithmologia, restored); Avicenna's demotion was actually *correct* (a complete Bakhtiar 1999 prior exists). Heuristic flags are not verdicts.
+- These books are the regression set for `ft-eval.mjs`. Full analysis: #2564.
