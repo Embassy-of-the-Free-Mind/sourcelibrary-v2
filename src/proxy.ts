@@ -744,8 +744,11 @@ export async function proxy(request: NextRequest) {
     // Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
     // Custom IDs are shorter hex strings with at least one hex letter (a-f).
     // Pure numeric strings (e.g. "13") are not valid IDs and should 404 normally.
+    // `ns=1` means the book-slug resolver already ran and decided there's no
+    // redirect target (no-slug book or 404) — skip re-rewriting so /book/[id]
+    // renders in place. Without this guard, bouncing back here would loop.
     const looksLikeId = /^[0-9a-f]{24}$/.test(segment) || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
-    if (looksLikeId) {
+    if (looksLikeId && !request.nextUrl.searchParams.has('ns')) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
       url.search = '';
