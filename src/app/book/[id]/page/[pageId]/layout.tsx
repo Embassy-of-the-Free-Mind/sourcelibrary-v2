@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
+import { isHiddenBook } from '@/lib/book-access';
 import { Book, Page } from '@/lib/types';
 
 export const preferredRegion = 'fra1';
@@ -14,14 +16,19 @@ interface LayoutProps {
 // Only fetch the fields needed for metadata — skip index, reading_summary, etc.
 const BOOK_META_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
+  visible: 1, hidden: 1,
 };
 const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
   'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
 };
 
+// Returns {null,null} ONLY for a genuine miss (no such page, or wrong tenant).
+// A DB/connection error propagates (after one retry) so the caller can tell a
+// transient blip apart from a real 404 — without this distinction an Atlas
+// hiccup during ISR rebuild would 404 a page that actually exists.
 async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
-  try {
+  const run = async () => {
     const db = await getReadDb();
     const [bookResult, page] = await Promise.all([
       findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION, tenantId),
@@ -36,28 +43,46 @@ async function getPageData(bookId: string, pageId: string, tenantId?: string): P
       }
     }
 
-    return {
-      book,
-      page: page as unknown as Page | null,
-    };
+    return { book, page: page as unknown as Page | null };
+  };
+  try {
+    return await run();
   } catch {
-    return { book: null, page: null };
+    // Transient error — retry once; a second failure propagates to the caller.
+    await new Promise((r) => setTimeout(r, 200 + Math.random() * 300));
+    return await run();
   }
 }
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
-  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
 
-  if (!book || !page) {
-    // Self-referential canonical so this URL isn't seen as a duplicate of '/'
-    // (inherited root canonical).
+  let book: Book | null;
+  let page: Page | null;
+  try {
+    ({ book, page } = await getPageData(id, pageId, ctx?.id ?? undefined));
+  } catch {
+    // Persistent DB error — emit generic noindex metadata, NEVER a false 404.
     return {
-      title: 'Page Not Found - Source Library',
+      title: 'Source Library',
       robots: { index: false, follow: true },
       alternates: { canonical: `/book/${id}/page/${pageId}` },
     };
+  }
+
+  if (!book || !page) {
+    // Genuine miss (bad page id, or page belongs to another tenant) → hard 404.
+    // notFound() runs here in generateMetadata, awaited before the loading.tsx
+    // shell streams, so it sets a real 404 status. The page body's notFound()
+    // comes too late (200 already flushed) and only soft-404s. (Was a 200
+    // soft-404 — GSC's "Soft 404" bucket.)
+    notFound();
+  }
+
+  // Hidden (visible:false) book → hard 404, matching the page body's gate.
+  if (isHiddenBook(book as any)) {
+    notFound();
   }
 
   const bookTitle = book.display_title || book.title;

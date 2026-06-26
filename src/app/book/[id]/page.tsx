@@ -195,24 +195,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   if (!book) {
-    // Self-referential canonical (not the inherited root '/') so Google doesn't
-    // see this as a duplicate of the homepage while it's still 200/noindex.
-    return {
-      title: 'Book Not Found - Source Library',
-      robots: { index: false, follow: false },
-      alternates: { canonical: `/book/${id}` },
-    };
+    // Genuinely missing book → hard 404. Calling notFound() here in
+    // generateMetadata (awaited BEFORE the response shell streams) sets a real
+    // 404 status; the same call from the page body comes too late — loading.tsx
+    // has already flushed a 200 shell — and only soft-404s (200 + not-found UI).
+    // getBookForMetadata retries once and rethrows transient DB errors, which the
+    // catch above turns into generic 200 metadata, so we only reach here for a
+    // genuine miss, never a blip. (Was a 200 soft-404; GSC flagged ~1.2k of these.)
+    notFound();
   }
 
-  // Hidden books (visible:false) are not public. Emit not-found/noindex metadata
-  // on the public ISR route — matches the notFound() the page body returns.
-  // Editors reach hidden books via /book/[id]/preview (dynamic, auth-gated).
+  // Hidden books (visible:false) are not public — hard 404 on the public ISR
+  // route, matching the notFound() the page body returns. Editors reach hidden
+  // books via /book/[id]/preview (dynamic, auth-gated).
   if (isHiddenBook(book)) {
-    return {
-      title: 'Book Not Found - Source Library',
-      robots: { index: false, follow: false },
-      alternates: { canonical: `/book/${id}` },
-    };
+    notFound();
   }
 
   const title = book.display_title || book.title;
