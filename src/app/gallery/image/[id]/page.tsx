@@ -410,6 +410,22 @@ export default function ImageDetailPage({
     }
   };
 
+  const saveType = async (newType: string) => {
+    if (!data || newType === data.type) return;
+    setSaving(true);
+    setError(null);
+    try {
+      await gallery.update(data.id, { type: newType });
+      prefetchCache.delete(data.id);
+      setData({ ...data, type: newType });
+    } catch (e) {
+      console.error('Failed to save type:', e);
+      setError(e instanceof Error ? `Save failed: ${e.message}` : 'Save failed');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const saveMuseumDescription = async () => {
     if (!data) return;
     setSaving(true);
@@ -1135,6 +1151,25 @@ export default function ImageDetailPage({
                       </div>
                     )}
                     {data.galleryRationale && <p className="text-xs text-stone-500 mt-2 italic">{data.galleryRationale}</p>}
+                  </div>
+
+                  {/* Image Type — re-tag a mis-classified image (e.g. an
+                      ex-libris bookplate auto-labelled "emblem"). */}
+                  <div className="bg-stone-800 rounded-lg p-5">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-medium text-stone-300">Image Type</h3>
+                      <select
+                        value={data.type || 'unknown'}
+                        disabled={saving}
+                        onChange={(e) => saveType(e.target.value)}
+                        className="bg-stone-700 text-stone-200 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust disabled:opacity-50 capitalize"
+                      >
+                        {['woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map', 'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score', 'exlibris', 'bookplate', 'unknown'].map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <p className="text-xs text-stone-500 mt-2">Ex-libris and bookplates are provenance marks, not the book&apos;s own illustrations.</p>
                   </div>
 
                   {/* Bounding Box Editor */}

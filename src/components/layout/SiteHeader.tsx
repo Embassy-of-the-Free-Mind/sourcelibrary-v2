@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 
 interface NavLink {
   label: string;
@@ -73,10 +73,15 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const locale = homeLocale ?? pathnameLocale;
   const t = NAV_STRINGS[locale];
   const NAV_LINKS = buildNavLinks(t);
-  // The EN/ES toggle only appears where a Spanish route exists — i.e. the
-  // homepage (`/` ↔ `/es`). Deep pages have no `/es` equivalent (thin i18n),
-  // so a global toggle there would dead-end on a 404.
-  const isHome = homeLocale != null || pathname === '/' || pathname === '/es';
+  // The EN/ES toggle shows only where a real Spanish twin exists (home, sign-in,
+  // support) — the thin-i18n bargain (#2763). On deep English-only pages the
+  // toggle is hidden, so clicking ES never bounces the reader to the `/es`
+  // homepage (deep pages rely on the browser's own translate instead).
+  // `homeLocale` is set on the statically-prerendered homepage, where pathname
+  // is null at build — treat that as localized so the toggle renders server-side.
+  const showLangToggle = homeLocale !== undefined || hasLocalizedTwin(pathname);
+  const enHref = localeHref('en', pathname);
+  const esHref = localeHref('es', pathname);
 
   // Close menus on route change
   useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
@@ -189,33 +194,33 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             })}
           </nav>
 
-          {/* Language toggle (homepage only — `/es` exists only for the home front door) */}
-          {isHome && (
-            <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
-              <Link
-                href="/"
-                aria-current={locale === 'en' ? 'page' : undefined}
-                className={
-                  locale === 'en'
-                    ? (isWhiteText ? 'text-white' : 'text-primary')
-                    : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
-                }
-              >
-                EN
-              </Link>
-              <span className={isWhiteText ? 'text-white/30' : 'text-stone-300'}>·</span>
-              <Link
-                href="/es"
-                aria-current={locale === 'es' ? 'page' : undefined}
-                className={
-                  locale === 'es'
-                    ? (isWhiteText ? 'text-white' : 'text-primary')
-                    : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
-                }
-              >
-                ES
-              </Link>
-            </div>
+          {/* Language toggle — only on pages with a real Spanish twin (#2763) */}
+          {showLangToggle && (
+          <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
+            <Link
+              href={enHref}
+              aria-current={locale === 'en' ? 'page' : undefined}
+              className={
+                locale === 'en'
+                  ? (isWhiteText ? 'text-white' : 'text-primary')
+                  : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
+              }
+            >
+              EN
+            </Link>
+            <span className={isWhiteText ? 'text-white/30' : 'text-stone-300'}>·</span>
+            <Link
+              href={esHref}
+              aria-current={locale === 'es' ? 'page' : undefined}
+              className={
+                locale === 'es'
+                  ? (isWhiteText ? 'text-white' : 'text-primary')
+                  : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
+              }
+            >
+              ES
+            </Link>
+          </div>
           )}
 
           {/* Desktop search icon */}

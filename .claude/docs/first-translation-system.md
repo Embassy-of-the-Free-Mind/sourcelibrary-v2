@@ -2,6 +2,8 @@
 
 *Source of truth for "how do we decide a book is a first English translation, and how is that counted?" Last reconciled against live code + production data 2026-06-01. Sibling: `.claude/docs/author-identity-system.md`.*
 
+> **Scaling verification across the whole corpus (tiered census methodology — models, prompts, tools, cost, the ~5,000 estimate): [`first-translation-census-methodology.md`](./first-translation-census-methodology.md).**
+
 **Related issues:** [#2567](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2567) (cluster map / tracking) · [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter — central gap) · [#2352](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2352) (work-keyed translation index) · [#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564) (measurement + effort-routing + single-writer) · [#2264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2264) (work resolver) · [#2453](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2453) (works catalog) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
 
 > **Refreshed 2026-06-19** with the First Principle (below), §0 (re-pinned numbers + skeptical findings), §14 (eval & validation), §15 (writer sprawl), §16 (architecture cluster), §17 (process invariant). The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted — **§0 supersedes them.**

@@ -308,9 +308,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               .project({ id: 1 })
               .toArray();
             const allowedBookIds = filteredBooks.map(b => b.id);
-            if (allowedBookIds.length > 0) {
-              pageFilter.book_id = { $in: allowedBookIds };
-            }
+            // Always apply the constraint we computed. If the book-level filter
+            // (e.g. a language that matches no books) yields an empty set, the
+            // page search must return nothing — NOT fall through to an
+            // unconstrained whole-corpus search (fail-open bug).
+            pageFilter.book_id = { $in: allowedBookIds };
           }
 
           const pageLimit = (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS;

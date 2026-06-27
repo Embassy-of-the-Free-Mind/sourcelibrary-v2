@@ -38,6 +38,9 @@ export async function POST(request: NextRequest) {
       const db = await getDb();
 
       // Tenant from proxy header if available; otherwise look up the book.
+      // Global (non-tenant) books legitimately have no tenantId — we still
+      // record their history with tenantId: null. Only bail when the book
+      // itself can't be resolved (unknown id/slug).
       let tenantId = getTenantContextFromRequest(request).id;
       let resolvedBookId = book_id;
       if (!tenantId) {
@@ -45,10 +48,10 @@ export async function POST(request: NextRequest) {
           { $or: [{ id: book_id }, { slug: book_id }] },
           { projection: { id: 1, tenantId: 1 } }
         );
-        tenantId = (book?.tenantId as string) || null;
-        if (book?.id) resolvedBookId = book.id as string;
+        if (!book) return; // unknown book — silent fail
+        tenantId = (book.tenantId as string) || null;
+        if (book.id) resolvedBookId = book.id as string;
       }
-      if (!tenantId) return; // unknown book/tenant — silent fail
 
       const collection = db.collection('reading_history');
       const cutoff = new Date(now.getTime() - SESSION_GAP_MS);

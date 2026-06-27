@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useLocale } from '@/lib/i18n';
 
 interface UserMenuProps {
   variant?: 'hero' | 'default';
@@ -11,6 +12,7 @@ interface UserMenuProps {
 
 export default function UserMenu({ variant = 'default' }: UserMenuProps) {
   const { data: session, status } = useStableSession();
+  const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -39,11 +41,11 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
 
     return (
       <Link
-        href="/auth/signin"
+        href={locale === 'es' ? '/es/auth/signin' : '/auth/signin'}
         className={`text-sm font-medium transition-colors hover:opacity-80 ${textColor}`}
         style={textStyle}
       >
-        Sign in
+        {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
       </Link>
     );
   }

@@ -822,14 +822,65 @@ async function stageGapAudit() {
   console.log(`  → ${path.join(CACHE, 'gap-audit.md')}`);
 }
 
+// Lexical recall safety-net: the embedding+confirm matcher structurally misses works
+// the lexical full-catalog gap-audit catches — author-attribution divergence (a work by
+// X bound in an edition catalogued under Y, e.g. Lazzarelli's Crater Hermetis in a
+// "Hermes Trismegistus" omnibus), series-containment, and books too freshly visible to
+// have embeddings yet. This folds the gap-audit's CONFIRMED held_readable hits (same
+// flash-lite confirm + author guard, so precision-equivalent) back into works-held.json
+// before emit, so those works link instead of being mislabelled "acquire". Read gap-audit
+// first (it writes gap-audit.json). Idempotent: only fills works that are still empty.
+async function stageApplyRecall() {
+  console.log('Stage 6b APPLY-RECALL (fold gap-audit held_readable → holdings)');
+  const audit = readJSON('gap-audit.json', null);
+  if (!audit || !audit.held_readable) { console.log('  no gap-audit.json — run --gap-audit first; skipping'); return; }
+  const works = readJSON('works-held.json', []);
+  const byKey = new Map(works.map(w => [`${w.work}|||${w.author}`, w]));
+  const recall = audit.held_readable;
+  const slugs = [...new Set(recall.flatMap(r => (r.evidence || []).map(e => e.slug)).filter(Boolean))];
+  if (!slugs.length) { console.log('  nothing to merge'); return; }
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const db = client.db('bookstore');
+  const docs = await db.collection('books').find({ slug: { $in: slugs }, visible: true, pages_count: { $gt: 0 } },
+    { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, visible: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 } }).toArray();
+  await client.close();
+  const bySlug = new Map(docs.map(d => [d.slug, d]));
+  let merged = 0;
+  for (const r of recall) {
+    const w = byKey.get(`${r.work}|||${r.author}`);
+    if (!w) continue;
+    const books = (r.evidence || []).map(e => bySlug.get(e.slug)).filter(b => b && editionReadable(b) && editionVisible(b));
+    if (!books.length) continue;
+    // These are gap-audit LLM-confirmed holdings (full-catalog confirm + author guard). Two
+    // recall-loss classes both land here: (a) the matcher found nothing (held empty), and
+    // (b) the edition is catalogued under a different author than the work (Crater Hermetis
+    // = Lazzarelli, bound in a "Hermes Trismegistus" omnibus) so emit's author guard drops
+    // it. Force heldMeta.author = the work's author on these confirmed books only, so the
+    // guard keeps them — targeted, precision unaffected for every other work.
+    const evMeta = books.map(b => ({
+      id: b._id.toString(), slug: b.slug || null, title: b.display_title || b.title || '',
+      author: w.author, year: b.year || null, language: b.language || '',
+      pages_translated: b.pages_translated || 0, pages_ocr: b.pages_ocr || 0, pages_blank: b.pages_blank || 0,
+    }));
+    const evIds = new Set(evMeta.map(m => m.id));
+    w.heldMeta = [...(w.heldMeta || []).filter(m => !evIds.has(m.id)), ...evMeta];
+    w.held = [...new Set([...(w.held || []), ...evMeta.map(m => m.id)])];
+    merged++;
+  }
+  writeJSON('works-held.json', works);
+  console.log(`  merged ${merged}/${recall.length} recall hits into holdings → works-held.json`);
+}
+
 // ── main ─────────────────────────────────────────────────────────────────────
 
 (async () => {
   if (want('--extract')) { let eps = loadEpisodes(); if (LIMIT) eps = eps.slice(0, LIMIT); await stageExtract(eps); }
   if (want('--dedupe')) await stageDedupe();
   if (want('--holdings')) await stageHoldings();
+  if (args.includes('--gap-audit')) await stageGapAudit();
+  if (args.includes('--apply-recall')) await stageApplyRecall();
   if (want('--emit')) await stageEmit();
   if (want('--linkbib')) await stageLinkBib();
-  if (args.includes('--gap-audit')) await stageGapAudit();
-  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --emit | --linkbib | --gap-audit | --all');
+  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --gap-audit | --apply-recall | --emit | --linkbib | --all');
 })().catch(e => { console.error('Fatal:', e); process.exit(1); });

@@ -315,6 +315,29 @@ function unwrapDescriptionNotes(text: string): string {
   return text.replace(/<(note|image-desc)>([\s\S]*?)<\/\1>/gi, '$2');
 }
 
+// Decide whether a page really is "description only". The page_type heuristic
+// (frontispiece, illustration, table, …) is not enough: title pages and
+// frontispieces routinely carry genuine transcribed text — the actual title,
+// author, imprint — wrapped in centering markers alongside the AI <note>/<meta>
+// image description. Treating those as description-only mis-fires twice:
+//   1. unwrapDescriptionNotes() strips the highlight off real editorial notes, and
+//   2. with notes toggled off the whole page is hidden, taking the title text with it.
+// So a page counts as description-only ONLY when stripping every annotation tag
+// (and its content) leaves no meaningful body text behind.
+function hasBodyTextOutsideNotes(text: string): boolean {
+  const residual = text
+    // drop annotation tags AND their content (both XML and legacy bracket syntax)
+    .replace(/<(note|image-desc|margin|gloss|insert|unclear)>[\s\S]*?<\/\1>/gi, '')
+    .replace(/\[\[(notes?|margin|gloss|insert|unclear|image):\s*[\s\S]*?\]\]/gi, '')
+    // drop any remaining tags, centering/formatting markers, and markdown emphasis
+    .replace(/<[^>]+>/g, '')
+    .replace(/->|<-|::/g, '')
+    .replace(/[#*`_~|]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return residual.length >= 15;
+}
+
 // Convert markdown bold/italic to HTML tags.
 // Used inside HTML block elements (divs, headings) where the markdown parser won't process inline syntax.
 function inlineMarkdownToHtml(text: string): string {
@@ -780,9 +803,13 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
 
   // For non-text page types (frontispiece, illustration, etc.), all content is AI description.
-  // Check the prop and the model's own <page-type> tag (captured into metadata).
-  const isDescriptionOnly = DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
-    DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '');
+  // Check the prop and the model's own <page-type> tag (captured into metadata) — but only
+  // treat the page as description-only when no genuine transcribed text survives outside the
+  // annotation tags (title pages keep their real title/author/imprint text). See #feedback.
+  const isDescriptionOnly =
+    (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
+      DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
+    !hasBodyTextOutsideNotes(cleanText);
 
   // Read-time OCR safety net (#2764): collapse runaway dot/dash/underscore
   // lacuna walls to […] and convert leaked LaTeX (\frac, \sqrt, operators) to
