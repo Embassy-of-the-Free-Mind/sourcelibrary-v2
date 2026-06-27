@@ -21,8 +21,14 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     const db = await getReadDb();
     const page = await db.collection('pages').findOne({ id: pageId }, { projection: PROJ });
     if (!page) return new Response('not found', { status: 404 });
-    const src = getPageImageUrl(page as unknown as Parameters<typeof getPageImageUrl>[0], 'display');
-    if (!src) return new Response('no image', { status: 404 });
+    let src = getPageImageUrl(page as unknown as Parameters<typeof getPageImageUrl>[0], 'original')
+      || getPageImageUrl(page as unknown as Parameters<typeof getPageImageUrl>[0], 'display');
+    // getPageImageUrl may return the Next image-proxy wrapper (/api/image?url=…),
+    // a relative URL fetch() can't parse — unwrap it to the absolute source.
+    if (src && src.startsWith('/')) {
+      try { src = new URL(src, 'https://sourcelibrary.org').searchParams.get('url') || src; } catch { /* keep */ }
+    }
+    if (!src || !/^https?:\/\//.test(src)) return new Response('no absolute image', { status: 404 });
     const res = await fetch(src);
     if (!res.ok) return new Response('fetch failed', { status: 502 });
     const buf = Buffer.from(await res.arrayBuffer());
