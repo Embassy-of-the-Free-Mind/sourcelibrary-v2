@@ -25,8 +25,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     if (!src) return new Response('no image', { status: 404 });
     const res = await fetch(src);
     if (!res.ok) return new Response('fetch failed', { status: 502 });
-    const img = sharp(Buffer.from(await res.arrayBuffer()));
-    const meta = await img.metadata();
+    const buf = Buffer.from(await res.arrayBuffer());
+    const meta = await sharp(buf).metadata();
     const W = meta.width || 0, H = meta.height || 0;
     const bbox = (page.detected_images as { bbox?: { x: number; y: number; width: number; height: number } }[] | undefined)?.[idx]?.bbox;
 
@@ -36,12 +36,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       const top = Math.max(0, Math.min(H - 1, Math.round(bbox.y * H)));
       const width = Math.max(1, Math.min(W - left, Math.round(bbox.width * W)));
       const height = Math.max(1, Math.min(H - top, Math.round(bbox.height * H)));
-      out = await img.extract({ left, top, width, height }).webp({ quality: 80 }).toBuffer();
+      out = await sharp(buf).extract({ left, top, width, height }).webp({ quality: 80 }).toBuffer();
     } else {
-      out = await img.webp({ quality: 80 }).toBuffer();
+      out = await sharp(buf).webp({ quality: 80 }).toBuffer();
     }
     return new Response(new Uint8Array(out), { headers: { 'Content-Type': 'image/webp', 'Cache-Control': 'public, max-age=31536000, immutable' } });
-  } catch {
-    return new Response('error', { status: 500 });
+  } catch (e) {
+    return new Response('error: ' + (e instanceof Error ? `${e.name}: ${e.message}` : String(e)), { status: 500 });
   }
 }
