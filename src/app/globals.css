@@ -430,10 +430,11 @@ mark {
 .quote-timer { display: inline-flex; line-height: 0; }
 .quote-timer-arc {
   fill: none;
-  /* circumference of r=8.2 ≈ 51.5 */
-  stroke-dasharray: 51.5;
-  stroke-dashoffset: 51.5;
+  /* circumference of r=20 ≈ 126 (high-res viewBox keeps the arc crisp) */
+  stroke-dasharray: 126;
+  stroke-dashoffset: 126;
   animation: quote-sweep linear forwards;
+  shape-rendering: geometricPrecision;
 }
 @keyframes quote-sweep {
   to { stroke-dashoffset: 0; }

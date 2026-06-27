@@ -79,10 +79,10 @@ export default function QuoteBlock({ quotes, bgUrl }: { quotes: Quote[]; bgUrl?:
             <button type="button" onClick={advance} aria-label="Next quote"
               className="w-8 h-8 inline-flex items-center justify-center rounded-full border border-white/25 text-white/70 hover:text-white hover:border-white/50 transition-colors">
               <span key={cycle} className="quote-timer" aria-hidden>
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                  <circle cx="10" cy="10" r="8.2" stroke="currentColor" strokeOpacity="0.3" strokeWidth="1.7" />
-                  <circle className="quote-timer-arc" cx="10" cy="10" r="8.2" stroke="currentColor" strokeWidth="1.7"
-                    strokeLinecap="round" transform="rotate(-90 10 10)"
+                <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="20" stroke="currentColor" strokeOpacity="0.3" strokeWidth="3.4" />
+                  <circle className="quote-timer-arc" cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="3.4"
+                    strokeLinecap="round" transform="rotate(-90 24 24)"
                     style={{ animationDuration: `${CYCLE_MS}ms` }} />
                 </svg>
               </span>
