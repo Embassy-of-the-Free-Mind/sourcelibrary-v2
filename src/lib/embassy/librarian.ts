@@ -804,6 +804,11 @@ export async function* streamAgenticResponse(
   // page citations in the final answer — see verifyCitations.
   const retrievedPageKeys = new Set<string>();
   let choicesPresented = false;
+  // True once the model voluntarily stops searching and writes its answer. If it
+  // instead runs out of search rounds (MAX_ROUNDS) while still calling tools, we
+  // force a final synthesis turn below so the reader never gets a stub or an
+  // empty reply (see the "kites" regression, issue #2826).
+  let answeredNaturally = false;
   const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
 
   function collectSources(sources?: SourceCard[]) {
@@ -863,7 +868,7 @@ export async function* streamAgenticResponse(
     if (allParts.length === 0) break;
     contents.push({ role: 'model', parts: allParts });
 
-    if (functionCalls.length === 0) break;
+    if (functionCalls.length === 0) { answeredNaturally = true; break; }
 
     // Emit tool_call events for all pending calls
     for (const part of functionCalls) {
@@ -918,6 +923,59 @@ export async function* streamAgenticResponse(
     contents.push({ role: 'user', parts: responseParts });
 
     if (choicesPresented) break;
+  }
+
+  // Forced synthesis. If the loop exited because it exhausted MAX_ROUNDS while
+  // the model was still issuing tool calls, the model never got a turn to read
+  // its last results and write an answer — so the reader gets a shallow stub or
+  // (when no text was ever emitted) an empty reply. Give it one final turn with
+  // NO tools available, which compels a text answer synthesized from everything
+  // gathered above. Skipped when the model already answered on its own or ended
+  // the turn with present_choices.
+  if (!answeredNaturally && !choicesPresented) {
+    contents.push({
+      role: 'user',
+      parts: [{
+        text: 'You have gathered enough material. Stop searching now and write your answer for the reader using ONLY the sources and pages you retrieved above. Synthesize them into a focused, well-cited response with page links — do not call any more tools.',
+      }],
+    });
+
+    try {
+      const finalStream = await ai.models.generateContentStream({
+        model: MODEL,
+        // No tools in the config → the model cannot search and must answer.
+        contents,
+        config: { temperature: TEMPERATURE },
+      });
+
+      const finalParts: Array<Record<string, unknown>> = [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let finalUsage: any = null;
+      for await (const chunk of finalStream) {
+        if (chunk.usageMetadata) finalUsage = chunk.usageMetadata;
+        const candidate = chunk.candidates?.[0];
+        if (!candidate?.content?.parts) continue;
+        for (const part of candidate.content.parts) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const p = part as any;
+          if (p.text) {
+            finalParts.push(p);
+            yield { type: 'text', text: p.text };
+          }
+        }
+      }
+
+      usage.rounds++;
+      if (finalUsage) {
+        usage.promptTokens += finalUsage.promptTokenCount ?? 0;
+        usage.outputTokens += finalUsage.candidatesTokenCount ?? 0;
+        usage.thinkingTokens += finalUsage.thoughtsTokenCount ?? 0;
+        usage.cachedTokens += finalUsage.cachedContentTokenCount ?? 0;
+      }
+      if (finalParts.length > 0) contents.push({ role: 'model', parts: finalParts });
+    } catch (err) {
+      console.error('[Librarian] Forced synthesis failed:', err instanceof Error ? err.message : err);
+    }
   }
 
   if (allSources.length > 0) {
