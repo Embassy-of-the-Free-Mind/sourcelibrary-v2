@@ -143,7 +143,7 @@ function EvidenceFooter({
     );
   }
 
-  if (legacy?.tools_called) {
+  if (legacy?.tools_called && legacy.tools_called.length > 0) {
     return (
       <p className="text-stone-600 text-[10px]">
         Verified {fmtDate(legacy.verified_at)} via{' '}
@@ -155,16 +155,53 @@ function EvidenceFooter({
       </p>
     );
   }
-  return null;
+
+  // No grounded attempt AND no recorded tool trail — a pure automated/legacy
+  // determination (~5,500 badged books). Don't imply a thorough search where
+  // none is documented: say so plainly. This is principle #1 (a claim's strength
+  // must equal its verification) made visible to the reader.
+  return (
+    <p className="text-stone-600 text-[10px]">
+      Preliminary determination{legacy?.verified_at ? ` · ${fmtDate(legacy.verified_at)}` : ''} — automated
+      catalogue check only; detailed verification pending.
+      {methodology}
+    </p>
+  );
 }
 
-function StrengthChip({ strength }: { strength?: string }) {
-  if (strength !== 'strong' && strength !== 'moderate') return null;
-  return (
-    <span className="inline-block text-[10px] px-1.5 py-0.5 rounded bg-stone-700/60 text-stone-400">
-      {strength} evidence
-    </span>
-  );
+/**
+ * At-a-glance confidence signal. `strong`/`moderate` come from a real
+ * adjudicator (cross-model / single documented search). `preliminary` marks the
+ * weak legacy/automated claims that carry no documented search trail — so a
+ * "moderate, single-pass" claim reads differently from a "strong, cross-model"
+ * one, and an unverified legacy claim doesn't borrow their authority.
+ */
+function StrengthChip({ strength, preliminary }: { strength?: string; preliminary?: boolean }) {
+  if (strength === 'strong' || strength === 'moderate') {
+    const title =
+      strength === 'strong'
+        ? 'Cross-checked across independent catalogues/models'
+        : 'Single documented search — not cross-model verified';
+    return (
+      <span
+        title={title}
+        className="inline-block whitespace-nowrap text-[10px] px-1.5 py-0.5 rounded bg-stone-700/60 text-stone-400"
+      >
+        {strength} evidence
+      </span>
+    );
+  }
+  if (preliminary) {
+    return (
+      <span
+        title="Automated catalogue check only — detailed per-book verification pending"
+        className="inline-block whitespace-nowrap text-[10px] px-1.5 py-0.5 rounded bg-stone-700/40 text-stone-500"
+      >
+        preliminary
+      </span>
+    );
+  }
+  return null;
 }
 
 export default async function FirstTranslationEvidence({
@@ -201,6 +238,12 @@ export default async function FirstTranslationEvidence({
 
   const priors = normalizePriors(attempt, legacy?.translations_found);
 
+  // Confidence signal. A real adjudicator strength wins; otherwise, a badged
+  // claim with no attempt and no tool trail is "preliminary" (legacy/automated).
+  const effectiveStrength = ft?.evidence_strength ?? attempt?.evidence_strength;
+  const isPreliminary =
+    !effectiveStrength && !attempt && !(legacy?.tools_called && legacy.tools_called.length > 0);
+
   // "Existing translations" only earns a badge if we actually have priors to show.
   if (isExisting && priors.length === 0) return null;
 
@@ -233,7 +276,7 @@ export default async function FirstTranslationEvidence({
         <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
           <div className="flex items-start justify-between gap-2">
             <p className="text-stone-300">{firstTranslationDescription(dispForLabel)}</p>
-            <StrengthChip strength={ft?.evidence_strength ?? (attempt?.evidence_strength)} />
+            <StrengthChip strength={effectiveStrength} preliminary={isPreliminary} />
           </div>
           {legacy?.reasoning && <p className="text-stone-400">{legacy.reasoning}</p>}
           {priors.length > 0 && (
