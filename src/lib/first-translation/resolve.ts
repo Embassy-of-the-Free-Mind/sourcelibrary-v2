@@ -20,6 +20,7 @@
 import type { FirstTranslation, FirstTranslationBook } from './types';
 import type { FirstTranslationAttempt } from './attempt-log';
 import { strongestAttempt } from './attempt-log';
+import type { PriorEvidenceSummary } from './prior-evidence';
 
 /** Result of running a single tier: a candidate verdict + its attempt record. */
 export interface TierOutcome {
@@ -56,6 +57,15 @@ export interface ResolveContext {
    * cheap tiers would have resolved it.
    */
   forceTier2?: boolean;
+  /**
+   * Durable evidence already on record for this book (loaded by the caller via
+   * `loadPriorEvidence`), so the resolver doesn't re-pay for work a prior
+   * approach already did (#2780). When it shows a trustworthy, URL-backed prior
+   * (`recommendation === 'reuse_prior'`), the cascade short-circuits with a
+   * not_first verdict and runs NO tiers. `forceTier2` overrides this (the
+   * sampler still wants a fresh ground-truth pass).
+   */
+  priorEvidence?: PriorEvidenceSummary;
 }
 
 export interface Tiers {
@@ -86,6 +96,26 @@ export async function resolve(
 ): Promise<ResolveResult> {
   const attempts: FirstTranslationAttempt[] = [];
   let resolved: FirstTranslation | null = null;
+
+  // Read-before-verify (#2780): if the accumulated evidence already holds a
+  // trustworthy, URL-backed prior, reuse it — run NO tiers, spend nothing. The
+  // sampler's forceTier2 still gets its fresh ground-truth pass.
+  const pe = ctx.priorEvidence;
+  if (pe?.recommendation === 'reuse_prior' && pe.foundPrior && !ctx.forceTier2) {
+    return {
+      resolved: {
+        verdict: 'not_first',
+        evidence_strength: 'strong',
+        our_completeness: 'unknown',
+        match_key: 'author_title',
+        prior_relationship: 'same_text',
+        resolver: 'tier0_linked',
+        best_attempt_id: pe.foundAttemptId ?? undefined,
+        resolved_at: ctx.now,
+      },
+      attempts: [],
+    };
+  }
 
   const cascade: Tier[] = [tiers.tier0, tiers.tier1];
   if (tiers.tier2) cascade.push(tiers.tier2);
