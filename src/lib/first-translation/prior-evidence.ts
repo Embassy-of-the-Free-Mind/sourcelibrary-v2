@@ -34,6 +34,8 @@ export interface PriorEvidenceSummary {
   priorFound: boolean;
   /** The strongest found prior with a real URL, if any — ready to reuse. */
   foundPrior: PriorTranslation | null;
+  /** attempt_id behind the reusable prior, for best_attempt_id on a reuse verdict. */
+  foundAttemptId: string | null;
   /** Union of every source any approach has already consulted (don't re-run). */
   searchedSources: string[];
   /** Union of every query already issued (don't re-run verbatim). */
@@ -86,6 +88,7 @@ export function summarizePriorEvidence(
     attemptCount: attempts.length,
     priorFound,
     foundPrior,
+    foundAttemptId: priorFound ? (strongestFound?.attempt_id ?? null) : null,
     searchedSources,
     searchedQueries,
     independentAbsenceMethods,
