@@ -410,37 +410,53 @@ export default async function MycologyCollectionPage() {
         bgUrl={quoteBg}
         quotes={[
           {
-            translated: 'This is what likely happened to the widow of Czar Alexis, who poisoned herself with mushrooms preserved in the Russian manner.',
-            original: "C'est ce qui arriva vraisemblablement à la veuve du Czar Alexis, qui s'empoisonna avec des champignons conservés à la manière des Russes.",
-            language: 'French',
-            attribution: 'Paulet, Treatise on Mushrooms, 1793',
-            href: '/book/trait-des-champignons-9e05',
-          },
-          {
-            translated: 'Having never been able to adopt the language of a slave, I do not fear that my name will be found in the portfolio of a Minister.',
-            original: "N'ayant jamais pu prendre le langage d'un esclave, je ne crains pas que mon nom se trouve dans le porte-feuille d'un Ministre.",
-            language: 'French',
-            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
-            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
-          },
-          {
-            translated: 'One might even say that the principal elements of the knowledge it is important for us to acquire about these plants are destined to hide themselves from our efforts, and to remain unfruitful and lost in the immensity of times to come.',
-            original: "On diroit même que les principaux élémens des connoissances qu'il nous importe d'acquérir sur ces végétaux sont destinés à se dérober à nos efforts, et à rester infécondés et perdus dans l'immensité des temps à venir.",
-            language: 'French',
-            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
-            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
-          },
-          {
-            translated: 'The bad are seen hanging full of deadly poison, intertwined with snakes, and other foul creatures, so that both small and great despise, reject, revile, and call them Devil’s bread.',
+            translated: 'There is diverse sort: their water is the rain, their mother the oak-tree, the nurse. … Here comes this clear star, that parts the evil from the good: the life from the death, the poison from the medicine, the darkness from the light.',
+            original: "Daer is diverse soort: hun waeder is den reghen; hun moeder, Eycken-boom, de voester. … Hier comt dees clare STER, die scheydt het quaet uyt goet: het leven uyt de doodt, 't vergif uyt medecyn, het duyster uyt het licht.",
+            language: 'Dutch',
             attribution: 'Sterbeeck, Theatrum Fungorum, 1675',
             href: '/book/theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371',
           },
           {
-            translated: 'White and delicious, by the admission of all mushroom enthusiasts.',
-            original: 'Blanche & délicieuse, de l’aveu de tous les amateurs de champignons.',
+            translated: 'Who does not see how thin the seed of fungi must be, that it can readily fly through the air, as the seeds of capillary plants are wont to do?',
+            original: 'Quis enim non videt quam tenue esse debeat Fungorum semen, ut facili negotio concipi possit per aerem volitare, ut Capillarium plantarum semina solent?',
+            language: 'Latin',
+            attribution: 'Battarra, Fungorum Agri Ariminensis Historia, 1755',
+            href: '/book/fungorum-agri-ariminensis-historia-973a',
+          },
+          {
+            translated: 'If those who claim that all mushrooms are engendered only by corruption, that they have no seeds, no constant characters by which one can distinguish them, had taken the trouble to study their organization, to follow them in their growth, and to compare them, they would undoubtedly blush at their error.',
+            original: "Si ceux qui prétendent que tous les champignons ne sont engendrés que par la corruption, qu'ils n'ont point de semences, point de caractères constans auxquels on puisse les distinguer, eussent pris la peine d'en étudier l'organisation, de les suivre dans leur accroissement, de les comparer, ils rougiroient sans doute de leur erreur.",
+            language: 'French',
+            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
+            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
+          },
+          {
+            translated: 'This mushroom produces almost the same effect among these peoples as opium among the Turks: at the dose of one, a delirium sometimes cheerful; at two, a sort of drunkenness or furious delirium; and finally at three or four, death, or a state that approaches it.',
+            original: "Ce champignon produit à peu-près le même effet chez ces peuples, que l'opium chez les Turcs, c'est-à-dire, qu'à la dose d'un seul, il produit un délire quelquefois gai; à la dose de deux, une sorte d'ivresse ou de délire furieux; et enfin à la dose de trois ou quatre, la mort ou un état qui en approche.",
             language: 'French',
             attribution: 'Paulet, Treatise on Mushrooms, 1793',
             href: '/book/trait-des-champignons-9e05',
+          },
+          {
+            translated: 'When will one begin to have a just idea of the utility of mushrooms? It will only be when a certain number of people spread across the various regions of the earth have cultivated this part of natural history, which is still in its cradle.',
+            original: "Quand est-ce que l'on commencera à se faire une idée juste sur l'utilité des champignons? Ce ne sera que lorsqu'un certain nombre de personnes répandues dans les diverses contrées de la terre auront cultivé cette partie de l'histoire naturelle encore au berceau.",
+            language: 'French',
+            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
+            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
+          },
+          {
+            translated: 'If one still sees only very few people giving themselves to the study of mushrooms, it is because, to make the study of plants easy, already so attractive in itself, much has been done, while nothing has yet been done to smooth out the difficulties with which the study of mushrooms is bristling.',
+            original: "Si l'on ne voit encore que très-peu de personnes se livrer à l'étude des champignons, c'est que pour rendre facile l'étude des plantes, déjà si attrayante par elle-même, on a fait beaucoup, tandis qu'on n'a rien fait encore pour applanir les difficultés dont l'étude des champignons est hérissée.",
+            language: 'French',
+            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
+            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
+          },
+          {
+            translated: 'I in no way approve of cooks using fungi to season the pies they call Pasticci, into which butter, Parmesan, and spices enter; for it often happens, even at Rimini, that guests are badly sickened by food of this kind.',
+            original: 'Denique nulla ratione probamus Coquos uti Fungis ad Offas, quas Pasticci vocant, condiendas, in quibus Butyrum, Caseum parmense, & Aromata ingrediuntur; saepe enim accidit etiam Arimini, ut hujusmodi cibis male convivae vexati sint.',
+            language: 'Latin',
+            attribution: 'Battarra, Fungorum Agri Ariminensis Historia, 1755',
+            href: '/book/fungorum-agri-ariminensis-historia-973a',
           },
         ]}
       />
