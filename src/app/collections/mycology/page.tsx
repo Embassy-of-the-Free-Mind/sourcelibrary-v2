@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, ArrowRight, Search } from 'lucide-react';
+import { BookOpen, Play, ArrowRight, Search } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
@@ -120,34 +120,42 @@ async function getMycologyData() {
 
 interface PagePreview { id: string; page_number?: number; kind: 'illustration' | 'text'; url: string }
 
-// Two interior sample pages for the featured work (besides the cover): one
-// illustration plate and one REAL text page (OCR'd with substantial text, not a
-// blank), deep-linking into the reader. Picks a mid-book plate, not the cover.
+// Two DISTINCT interior pages of the featured work that actually contain an
+// illustration. Derived from gallery_images (so never a blank leaf and never the
+// cover), deduped by page so the two previews are different plates.
 async function getFeaturedPagePreviews(
   db: Awaited<ReturnType<typeof getReadDb>>, bookId: string,
 ): Promise<PagePreview[]> {
+  const imgs = await withTimeout(
+    db.collection('gallery_images').find(
+      { book_id: bookId, gallery_quality: { $gte: 0.5 } },
+      { projection: { _id: 0, page_id: 1 }, maxTimeMS: 5000 },
+    ).sort({ gallery_quality: -1 }).limit(30).toArray() as Promise<Record<string, unknown>[]>,
+    5000, [],
+  );
+  const pageIds: string[] = [];
+  const seen = new Set<string>();
+  for (const g of imgs) {
+    const pid = g.page_id as string | undefined;
+    if (pid && !seen.has(pid)) { seen.add(pid); pageIds.push(pid); }
+    if (pageIds.length >= 3) break;
+  }
+  if (!pageIds.length) return [];
   const proj = { _id: 0, id: 1, page_number: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1 };
-  const [illus, text] = await Promise.all([
-    withTimeout(db.collection('pages').find({ book_id: bookId, page_number: { $gt: 1 }, detected_images: { $exists: true, $ne: [] } }, { projection: proj, maxTimeMS: 5000 }).sort({ page_number: 1 }).limit(5).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
-    // Real text page: OCR'd with > 400 chars of text, no detected illustration, past the front matter.
-    withTimeout(db.collection('pages').find({
-      book_id: bookId, page_number: { $gt: 5 },
-      'ocr.data': { $type: 'string' },
-      $or: [{ detected_images: { $exists: false } }, { detected_images: { $size: 0 } }],
-      $expr: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 400] },
-    }, { projection: proj, maxTimeMS: 6000 }).sort({ page_number: 1 }).limit(2).toArray() as Promise<Record<string, unknown>[]>, 6000, []),
-  ]);
-  const make = (p: Record<string, unknown>, kind: 'illustration' | 'text'): PagePreview | null => {
+  const pages = await withTimeout(
+    db.collection('pages').find({ id: { $in: pageIds } }, { projection: proj, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>,
+    5000, [],
+  );
+  const byId = new Map(pages.map((p) => [p.id as string, p]));
+  const out: PagePreview[] = [];
+  for (const pid of pageIds) {
+    const p = byId.get(pid);
+    if (!p) continue;
     const url = getPageImageUrl(p as unknown as Parameters<typeof getPageImageUrl>[0], 'thumb');
-    return url ? { id: p.id as string, page_number: p.page_number as number | undefined, kind, url } : null;
-  };
-  // Prefer a mid-book plate (skip the first detected, often a frontispiece).
-  const illPick = illus[Math.min(1, Math.max(0, illus.length - 1))];
-  const out: (PagePreview | null)[] = [];
-  if (illPick) out.push(make(illPick, 'illustration'));
-  if (text[0]) out.push(make(text[0], 'text'));
-  else if (illus[0] && illus[0].id !== illPick?.id) out.push(make(illus[0], 'illustration'));
-  return out.filter(Boolean).slice(0, 2) as PagePreview[];
+    if (url) out.push({ id: pid, page_number: p.page_number as number | undefined, kind: 'illustration', url });
+    if (out.length >= 2) break;
+  }
+  return out;
 }
 
 export default async function MycologyCollectionPage() {
@@ -213,7 +221,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row md:items-start gap-8 lg:gap-16">
+        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row-reverse md:justify-end md:items-start gap-8 lg:gap-12">
           <div className="max-w-2xl font-body">
             <p className="text-xl text-primary leading-relaxed mb-4">
               Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
@@ -225,16 +233,14 @@ export default async function MycologyCollectionPage() {
               Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
             </p>
           </div>
-          {/* Plate to the right of the intro text, multiply-blended into the warm
-              section background so the paper disappears and the engraving reads. */}
-          <div className="w-full max-w-[360px] mx-auto md:mx-0 shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/69d8ca06a09828f83ddc973a/95.jpg"
-              alt="A scientific plate of fungi, including morels and stinkhorns, from Battarra's History of the Fungi of the Rimini Territory (1755)"
-              className="w-full h-auto mix-blend-multiply"
-              loading="lazy"
-            />
+          {/* Walkthrough video placeholder (9:16) — left on desktop via row-reverse */}
+          <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0">
+            <div className="relative aspect-[9/16] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
+              <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
+                <Play className="w-6 h-6 text-white" fill="currentColor" />
+              </div>
+              <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
+            </div>
           </div>
         </div>
       </section>
@@ -302,27 +308,26 @@ export default async function MycologyCollectionPage() {
         </section>
       )}
 
-      {/* ===== Gallery — all visual material, masonry ===== */}
+      {/* ===== Gallery — all visual material ===== */}
       {gallery.length > 0 && (
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
-          <div className="max-w-[1500px] mx-auto px-6 pt-12 pb-2">
+          <div className="max-w-[1500px] mx-auto px-6 py-12">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
               <Link href={`/gallery?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
             </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
-            {/* Masonry, balanced columns, bounded to ~3 rows. */}
-            <div className="columns-2 sm:columns-3 lg:columns-5 gap-4 [column-fill:_balance]">
-              {gallery.slice(0, 15).map((g, i) => {
+            {/* Even grid (uniform 3:4 tiles), bounded to 3 rows — no ragged bottom. */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              {gallery.filter((g) => imgUrl(g)).slice(0, 15).map((g, i) => {
                 const src = imgUrl(g);
                 const bookId = g.book_id || g.bookId;
                 const pageId = g.page_id || g.pageId;
                 const label = g.museum_description || g.description || g.book_title;
-                if (!src) return null;
                 const inner = (
-                  <div className="mb-4 break-inside-avoid overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md">
+                  <div className="relative aspect-[3/4] overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={src} alt={label || 'Illustration'} className="w-full h-auto block" loading="lazy" />
+                    <img src={src} alt={label || 'Illustration'} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                   </div>
                 );
                 return bookId && pageId
@@ -389,27 +394,34 @@ export default async function MycologyCollectionPage() {
       />
 
       {/* ===== Get involved ===== */}
-      <section id="involved" className="bg-cream scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-12">
-          <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
-          <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { kicker: 'Open to all', title: 'Leave feedback', body: 'Spot an error, a missing edition, or a better translation of a passage? Tell us, corrections ship fast.', cta: 'Send feedback', href: '/feedback', primary: false },
-              { kicker: 'Volunteer', title: 'Become a curator', body: 'Help select, sequence, and annotate the works in a collection. Lend your scholarship to the catalogue.', cta: 'Apply to curate', href: '/welcome', primary: false },
-              { kicker: 'Support', title: 'Become a patron', body: 'Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.', cta: 'Become a patron', href: '/support', primary: true },
-            ].map((c) => (
-              <div key={c.title} className="border border-border-light bg-white p-6 flex flex-col">
-                <div className="text-[11px] uppercase tracking-wider text-muted mb-3">{c.kicker}</div>
-                <h3 className="text-lg font-semibold text-primary mb-2 font-display">{c.title}</h3>
-                <p className="text-sm text-secondary mb-5 font-body flex-1">{c.body}</p>
-                {c.primary ? (
-                  <Link href={c.href} className={`${BTN_DARK} self-start`}>{c.cta} <ArrowRight className="w-4 h-4" /></Link>
-                ) : (
-                  <Link href={c.href} className={`${RUST_LINK} self-start`}>{c.cta} <ArrowRight className="w-3.5 h-3.5" /></Link>
-                )}
-              </div>
-            ))}
+      <section id="involved" className="relative overflow-hidden scroll-mt-4">
+        {/* Celestial engraving background, cropped to the illustration (object-center
+            keeps the scene and crops the credit text at the page edges). */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="https://images.sourcelibrary.org/archived/6955d43628a09ca65927ff2e/252.jpg" alt="" className="absolute inset-0 w-full h-full object-cover object-center" />
+        <div className="relative max-w-[1500px] mx-auto px-6 py-16">
+          {/* All the join-the-project text in a slightly dark tinted div for legibility. */}
+          <div className="bg-dark/70 backdrop-blur-sm p-8 sm:p-12 max-w-4xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl text-white font-display mb-2">Get involved</h2>
+            <p className="text-sm text-white/70 mb-8 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { kicker: 'Open to all', title: 'Leave feedback', body: 'Spot an error, a missing edition, or a better translation of a passage? Tell us, corrections ship fast.', cta: 'Send feedback', href: '/feedback', primary: false },
+                { kicker: 'Volunteer', title: 'Become a curator', body: 'Help select, sequence, and annotate the works in a collection. Lend your scholarship to the catalogue.', cta: 'Apply to curate', href: '/welcome', primary: false },
+                { kicker: 'Support', title: 'Become a patron', body: 'Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.', cta: 'Become a patron', href: '/support', primary: true },
+              ].map((c) => (
+                <div key={c.title} className="border border-white/15 bg-white/5 p-6 flex flex-col">
+                  <div className="text-[11px] uppercase tracking-wider text-white/50 mb-3">{c.kicker}</div>
+                  <h3 className="text-lg font-semibold text-white mb-2 font-display">{c.title}</h3>
+                  <p className="text-sm text-white/70 mb-5 font-body flex-1">{c.body}</p>
+                  {c.primary ? (
+                    <Link href={c.href} className="inline-flex items-center gap-2 bg-white text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-warm transition-colors self-start">{c.cta} <ArrowRight className="w-4 h-4" /></Link>
+                  ) : (
+                    <Link href={c.href} className="inline-flex items-center gap-1 text-sm text-accent-gold hover:text-white transition-colors self-start">{c.cta} <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
