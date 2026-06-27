@@ -77,7 +77,7 @@ export default function MycoSlider({ books }: { books: MiniBook[] }) {
             data-card
             className="snap-start shrink-0 basis-[66%] sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-4rem)/5)]"
           >
-            <BookCardMini book={b} kind="first" />
+            <BookCardMini book={b} />
           </div>
         ))}
       </div>

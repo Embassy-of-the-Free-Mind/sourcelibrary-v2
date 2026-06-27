@@ -49,7 +49,7 @@ export default function MycoAnchorBar({ sections, slug }: { sections: Section[];
             Jump to <ChevronDown className={`w-4 h-4 transition-transform ${open === 'jump' ? 'rotate-180' : ''}`} />
           </button>
           {open === 'jump' && (
-            <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border border-border-light py-1.5 z-50">
+            <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg border border-border-light py-1.5 z-50">
               {sections.map((s) => (
                 <a key={s.id} href={`#${s.id}`} onClick={() => setOpen(null)} className="block px-3 py-1.5 text-sm text-secondary hover:bg-warm hover:text-accent-rust">{s.label}</a>
               ))}
@@ -64,9 +64,9 @@ export default function MycoAnchorBar({ sections, slug }: { sections: Section[];
               <Share2 className="w-3.5 h-3.5" /> Share
             </button>
             {open === 'share' && (
-              <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-lg shadow-lg border border-border-light p-3 z-50">
+              <div className="absolute right-0 top-full mt-2 w-72 bg-white shadow-lg border border-border-light p-3 z-50">
                 <div className="flex items-center gap-2 mb-3">
-                  <input readOnly value={pageUrl} className="flex-1 min-w-0 text-xs px-2 py-1.5 border border-border-light rounded bg-warm text-secondary" />
+                  <input readOnly value={pageUrl} className="flex-1 min-w-0 text-xs px-2 py-1.5 border border-border-light bg-warm text-secondary" />
                   <button type="button" onClick={() => copy(pageUrl)} className="shrink-0 inline-flex items-center gap-1 text-xs px-2 py-1.5 rounded border border-border-light hover:bg-warm">
                     {copied ? <Check className="w-3.5 h-3.5 text-accent-rust" /> : <Link2 className="w-3.5 h-3.5" />}{copied ? 'Copied' : 'Copy'}
                   </button>
@@ -87,14 +87,14 @@ export default function MycoAnchorBar({ sections, slug }: { sections: Section[];
               <Code2 className="w-3.5 h-3.5" /> Embed
             </button>
             {open === 'embed' && (
-              <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-lg border border-border-light p-3 z-50">
+              <div className="absolute right-0 top-full mt-2 w-80 bg-white shadow-lg border border-border-light p-3 z-50">
                 <label className="block text-xs text-muted mb-1">Section</label>
-                <select value={embedTarget} onChange={(e) => setEmbedTarget(e.target.value)} className="w-full text-xs px-2 py-1.5 border border-border-light rounded bg-warm text-secondary mb-2">
+                <select value={embedTarget} onChange={(e) => setEmbedTarget(e.target.value)} className="w-full text-xs px-2 py-1.5 border border-border-light bg-warm text-secondary mb-2">
                   <option value="collection">Whole collection</option>
                   <option value="translations">First translations</option>
                   <option value="works">Works grid</option>
                 </select>
-                <textarea readOnly value={embedSnippet} rows={3} className="w-full text-[11px] font-mono px-2 py-1.5 border border-border-light rounded bg-warm text-secondary resize-none" />
+                <textarea readOnly value={embedSnippet} rows={3} className="w-full text-[11px] font-mono px-2 py-1.5 border border-border-light bg-warm text-secondary resize-none" />
                 <button type="button" onClick={() => copy(embedSnippet)} className="mt-2 inline-flex items-center gap-1 text-xs px-2 py-1.5 rounded border border-border-light hover:bg-warm">
                   {copied ? <Check className="w-3.5 h-3.5 text-accent-rust" /> : <Link2 className="w-3.5 h-3.5" />}{copied ? 'Copied' : 'Copy snippet'}
                 </button>

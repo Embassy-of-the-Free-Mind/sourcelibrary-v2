@@ -40,7 +40,7 @@ const SECTIONS = [
   { id: 'introduction', label: 'Introduction' },
   { id: 'featured', label: 'Featured' },
   { id: 'translations', label: 'First translations' },
-  { id: 'illustrations', label: 'Illustrations' },
+  { id: 'gallery', label: 'Gallery' },
   { id: 'works', label: 'Works' },
   { id: 'involved', label: 'Get involved' },
 ];
@@ -91,7 +91,7 @@ async function getMycologyData() {
   const bookIds = bookIdDocs.map((d) => d.id as string);
   const galleryRaw = bookIds.length
     ? await withTimeout(db.collection('gallery_images').find(
-      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.6 }, type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] } },
+      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
       { projection: { _id: 0 }, maxTimeMS: 5000 },
     ).sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, [])
     : [];
@@ -190,10 +190,10 @@ export default async function MycologyCollectionPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{title}</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">{tagline}</p>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs sm:text-sm text-white/90 border border-white/25 rounded-full px-3 py-1">{total.toLocaleString('en-US')} works</span>
-            {ftCount > 0 && <span className="text-xs sm:text-sm text-white/90 border border-white/25 rounded-full px-3 py-1">{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>}
-            {dateRange && <span className="text-xs sm:text-sm text-white/90 border border-white/25 rounded-full px-3 py-1">{dateRange.min} – {dateRange.max}</span>}
-            {languages.length > 0 && <span className="text-xs sm:text-sm text-white/80 border border-white/20 rounded-full px-3 py-1">{languages.join(' · ')}</span>}
+            <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{total.toLocaleString('en-US')} works</span>
+            {ftCount > 0 && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>}
+            {dateRange && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{dateRange.min} – {dateRange.max}</span>}
+            {languages.length > 0 && <span className="text-xs sm:text-sm text-white/80 border border-white/20 px-3 py-1">{languages.join(' · ')}</span>}
           </div>
         </div>
       </section>
@@ -217,8 +217,8 @@ export default async function MycologyCollectionPage() {
           </div>
           {/* Walkthrough video placeholder (9:16) */}
           <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0">
-            <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-dark border border-border-light flex items-center justify-center">
-              <div className="w-14 h-14 rounded-full bg-white/15 flex items-center justify-center">
+            <div className="relative aspect-[9/16] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
+              <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
                 <Play className="w-6 h-6 text-white" fill="currentColor" />
               </div>
               <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
@@ -233,27 +233,26 @@ export default async function MycologyCollectionPage() {
         <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-12">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-4">Featured work</p>
-            <div className="rounded-2xl border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[280px_1fr] md:items-start">
+            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[280px_1fr] md:items-start">
               {/* Left: cover + plate strip */}
               <div>
-                <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-warm shadow-md">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
                     <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="280px" />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-12 h-12 text-muted" /></div>
                   )}
-                  <span className="absolute top-3 left-3 text-[11px] font-medium bg-warm/95 text-accent-rust px-2 py-1 rounded">First translation</span>
-                  {featured.language && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-wide text-white/90 bg-dark/55 px-2 py-0.5 rounded">{featured.language}</span>}
+                  {featured.language && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-wide text-white/90 bg-dark/55 px-2 py-0.5">{featured.language}</span>}
                 </div>
                 {featuredPages.length > 0 && (
                   <>
                     <div className="flex gap-2 mt-3">
                       {featuredPages.map((p) => (
                         <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title={p.kind === 'illustration' ? 'Illustrated page' : 'Text page'}
-                          className="group relative aspect-[3/4] flex-1 rounded overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
+                          className="group relative aspect-[3/4] flex-1 overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                          <span className="absolute bottom-1 left-1 text-[8px] uppercase tracking-wide text-white/90 bg-dark/55 px-1 py-0.5 rounded leading-none">{p.kind}</span>
+                          <span className="absolute bottom-1 left-1 text-[8px] uppercase tracking-wide text-white/90 bg-dark/55 px-1 py-0.5 leading-none">{p.kind}</span>
                         </Link>
                       ))}
                     </div>
@@ -267,7 +266,7 @@ export default async function MycologyCollectionPage() {
                 <p className="text-base text-muted mb-4">Pierre Bulliard · 1780&ndash;1791</p>
                 <div className="flex flex-wrap gap-2 mb-5">
                   {['2 volumes', '612 hand-coloured plates', 'Folio'].map((m) => (
-                    <span key={m} className="text-xs text-secondary bg-warm border border-border-light rounded-full px-3 py-1">{m}</span>
+                    <span key={m} className="text-xs text-secondary bg-warm border border-border-light px-3 py-1">{m}</span>
                   ))}
                 </div>
                 <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">The most beautiful mycological atlas of the eighteenth century, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
@@ -303,15 +302,15 @@ export default async function MycologyCollectionPage() {
         </section>
       )}
 
-      {/* ===== Illustrations — masonry ===== */}
+      {/* ===== Gallery — all visual material, masonry ===== */}
       {gallery.length > 0 && (
-        <section id="illustrations" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 pt-12 pb-6">
             <div className="flex items-end justify-between gap-4 mb-1">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">Illustrations</h2>
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
               <Link href={`/gallery?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
             </div>
-            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Hand-coloured plates and engravings from across the collection.</p>
+            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
             <div className="columns-3 lg:columns-5 gap-4">
               {gallery.slice(0, 18).map((g, i) => {
                 const src = imgUrl(g);
@@ -320,7 +319,7 @@ export default async function MycologyCollectionPage() {
                 const label = g.museum_description || g.description || g.book_title;
                 if (!src) return null;
                 const inner = (
-                  <div className="mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md">
+                  <div className="mb-4 break-inside-avoid overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={src} alt={label || 'Illustration'} className="w-full h-auto block" loading="lazy" />
                   </div>
@@ -344,12 +343,12 @@ export default async function MycologyCollectionPage() {
           <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first, translations are gathered in the slider above.</p>
           {sourceWorks.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {sourceWorks.slice(0, 10).map((b) => <BookCardMini key={b.id} book={b} kind="source" />)}
+              {sourceWorks.slice(0, 10).map((b) => <BookCardMini key={b.id} book={b} />)}
             </div>
           ) : (
             <p className="text-sm text-muted">No source-text works to show.</p>
           )}
-          <div className="mt-8 rounded-2xl border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="mt-8 border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more works in mycology</p>
               <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
@@ -385,7 +384,7 @@ export default async function MycologyCollectionPage() {
               { kicker: 'Volunteer', title: 'Become a curator', body: 'Help select, sequence, and annotate the works in a collection. Lend your scholarship to the catalogue.', cta: 'Apply to curate', href: '/welcome', primary: false },
               { kicker: 'Support', title: 'Become a patron', body: 'Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.', cta: 'Become a patron', href: '/support', primary: true },
             ].map((c) => (
-              <div key={c.title} className="rounded-2xl border border-border-light bg-white p-6 flex flex-col">
+              <div key={c.title} className="border border-border-light bg-white p-6 flex flex-col">
                 <div className="text-[11px] uppercase tracking-wider text-muted mb-3">{c.kicker}</div>
                 <h3 className="text-lg font-semibold text-primary mb-2 font-display">{c.title}</h3>
                 <p className="text-sm text-secondary mb-5 font-body flex-1">{c.body}</p>
