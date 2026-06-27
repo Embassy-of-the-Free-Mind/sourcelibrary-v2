@@ -183,13 +183,9 @@ export default async function MycologyCollectionPage() {
   const tagline = (collection.subtitle as string) || 'The Kingdom of Fungi, from Clusius to Saccardo.';
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
 
-  // Quote background per the quote-background-image skill: a figural plate with
-  // a calm zone, no printed text. If nothing qualifies, fall back to the plain
-  // tonal background (quoteBg undefined → QuoteBlock shows the dark surface).
-  const PLATE_TYPES = ['illustration', 'engraving', 'woodcut', 'emblem'];
-  const quotePlate = gallery.find((g) => g.type && PLATE_TYPES.includes(g.type))
-    || gallery.find((g) => g.type && !['page', 'title_page', 'text', 'portrait', 'frontispiece', 'map', 'table', 'chart', 'symbol', 'decorative', 'musical_score', 'exlibris', 'bookplate'].includes(g.type));
-  const quoteBg = quotePlate ? imgUrl(quotePlate) : undefined;
+  // Quote background: the Battarra title-page engraving (lynx, owl, mushrooms),
+  // cropped to the illustration with the Greek-motto banner removed.
+  const quoteBg = '/collections/mycology/quote-bg.webp';
   const galleryTotal = gallery.length;
   const galleryPlates = gallery
     .filter((g) => imgUrl(g))
@@ -214,7 +210,7 @@ export default async function MycologyCollectionPage() {
         <ConditionalSiteHeader variant="transparent" />
       </div>
       {/* ===== Hero ===== */}
-      <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[60vh] flex items-end">
+      <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[66vh] flex items-end">
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.12} />
         {/* Lighter, left-weighted legibility gradient — no bottom fade. */}

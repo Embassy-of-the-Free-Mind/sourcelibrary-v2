@@ -62,10 +62,10 @@ export default function QuoteBlock({ quotes, bgUrl }: { quotes: Quote[]; bgUrl?:
   const attribution = q.language ? `${q.attribution} · ${q.language}` : q.attribution;
 
   return (
-    <section ref={sectionRef} className="relative bg-dark overflow-hidden">
+    <section ref={sectionRef} className="relative bg-dark overflow-hidden min-h-[60vh] md:min-h-[70vh] flex items-center">
       {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0.1} />}
       <div className="absolute inset-0 bg-dark/40" />
-      <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 text-center">
+      <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 text-center">
         <div className="flex items-center justify-center gap-3 mb-8">
           {hasOriginal && (
             <div className="inline-flex items-center border border-white/25 text-xs">
