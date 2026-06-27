@@ -3,6 +3,7 @@
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import ParallaxImage from '@/components/ParallaxImage';
 
 interface SignUpCTAProps {
   variant?: 'section' | 'inline';
@@ -42,8 +43,7 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl, bgAttributi
     <section className="relative overflow-hidden py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
       {bgImageUrl && (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={bgImageUrl} alt="" className="absolute inset-0 w-full h-full object-cover opacity-55" />
+          <ParallaxImage src={bgImageUrl} className="opacity-55" strength={0.1} />
           <div className="absolute inset-0" style={{ background: 'var(--bg-dark)', opacity: 0.62 }} />
         </>
       )}

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { RefreshCw } from 'lucide-react';
+import ParallaxImage from '@/components/ParallaxImage';
 
 export interface Quote {
   translated: string;
@@ -50,10 +51,7 @@ export default function QuoteBlock({ quotes, bgUrl }: { quotes: Quote[]; bgUrl?:
 
   return (
     <section className="relative bg-dark overflow-hidden">
-      {bgUrl && (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img src={bgUrl} alt="" className="absolute inset-0 w-full h-full object-cover opacity-55" />
-      )}
+      {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0.1} />}
       <div className="absolute inset-0 bg-dark/40" />
       <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 text-center">
         <div className="flex items-center justify-center gap-3 mb-8">
