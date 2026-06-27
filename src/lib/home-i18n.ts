@@ -26,6 +26,8 @@ export interface HomeStrings {
   checkEmail: string;
   differentEmail: string;
   google: string;
+  googleBlockedNote: string;
+  emailError: string;
   haveAccount: string;
   explore: string;
   langEnglish: string;
@@ -117,6 +119,8 @@ const en: HomeStrings = {
   checkEmail: 'Check your email — we sent a sign-in link to',
   differentEmail: 'Use a different email',
   google: 'Or continue with Google',
+  googleBlockedNote: 'Google sign-in is usually blocked in in-app browsers — use email above, or open this page in Safari/Chrome.',
+  emailError: 'Could not send the sign-in link. Please try again.',
   haveAccount: 'Already have an account?',
   explore: 'Explore the collection',
   langEnglish: 'English',
@@ -207,6 +211,8 @@ const es: HomeStrings = {
   checkEmail: 'Revisa tu correo — enviamos un enlace de acceso a',
   differentEmail: 'Usar otro correo',
   google: 'O continúa con Google',
+  googleBlockedNote: 'El acceso con Google suele estar bloqueado en navegadores internos — usa el correo de arriba, o abre esta página en Safari/Chrome.',
+  emailError: 'No se pudo enviar el enlace de acceso. Inténtalo de nuevo.',
   haveAccount: '¿Ya tienes una cuenta?',
   explore: 'Explora la colección',
   langEnglish: 'English',

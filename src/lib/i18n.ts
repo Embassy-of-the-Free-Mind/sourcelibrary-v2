@@ -43,6 +43,16 @@ export function canonicalPath(pathname: string | null | undefined): string {
 }
 
 /**
+ * Whether the current page has a real Spanish twin (i.e. switching to ES keeps
+ * the reader on the same page rather than dumping them on the `/es` homepage).
+ * The header uses this to HIDE the EN/ES toggle on deep, English-only pages —
+ * the thin-i18n bargain — so clicking ES never bounces you to the front page.
+ */
+export function hasLocalizedTwin(pathname: string | null | undefined): boolean {
+  return LOCALIZED_PATHS.has(canonicalPath(pathname));
+}
+
+/**
  * Href for switching the current page to `target` locale.
  * - English: the canonical page (any `/es` prefix dropped) so the reader stays put.
  * - Spanish: the `/es` twin when one exists, else the Spanish homepage (`/es`).

@@ -61,11 +61,24 @@ export default function BookMap({ locations }: BookMapProps) {
   const [selected, setSelected] = useState<BookLocation | null>(null);
   const [filters, setFilters] = useState({
     types: new Set(['publication', 'author_birth', 'author_death', 'origin']),
-    minBooks: 1,
     yearFrom: 800,
     yearTo: 2025,
   });
+  // The year fields hold their own editable string so typing/clearing never
+  // snaps back to the default mid-edit (the old `Number(value) || 800` bug).
+  // Committed to `filters` (clamped) on blur or Enter.
+  const [yearFromInput, setYearFromInput] = useState('800');
+  const [yearToInput, setYearToInput] = useState('2025');
   const [zoom, setZoom] = useState(5);
+
+  const commitYear = useCallback((which: 'yearFrom' | 'yearTo', raw: string) => {
+    const n = parseInt(raw, 10);
+    const fallback = which === 'yearFrom' ? 800 : 2025;
+    const val = Number.isFinite(n) ? Math.min(2025, Math.max(800, n)) : fallback;
+    if (which === 'yearFrom') setYearFromInput(String(val));
+    else setYearToInput(String(val));
+    setFilters((f) => ({ ...f, [which]: val }));
+  }, []);
 
   // Filter by type
   const typeFiltered = useMemo(() => {
@@ -109,12 +122,12 @@ export default function BookMap({ locations }: BookMapProps) {
         if (!b.year) return true;
         return b.year >= filters.yearFrom && b.year <= filters.yearTo;
       });
-      if (yearFiltered.length < filters.minBooks) continue;
+      if (yearFiltered.length === 0) continue;
       result.push({ ...pin, books: yearFiltered, totalBooks: yearFiltered.length });
     }
 
     return result.sort((a, b) => b.totalBooks - a.totalBooks);
-  }, [typeFiltered, filters.minBooks, filters.yearFrom, filters.yearTo]);
+  }, [typeFiltered, filters.yearFrom, filters.yearTo]);
 
   // Initialize map
   useEffect(() => {
@@ -231,12 +244,16 @@ export default function BookMap({ locations }: BookMapProps) {
 
           <span className="w-px h-4" style={{ background: 'rgba(0,0,0,0.08)' }} />
 
-          {/* Year range */}
+          {/* Year range — type freely; applied on blur or Enter (no snap-back) */}
           <div className="flex items-center gap-1.5">
             <input
               type="number"
-              value={filters.yearFrom}
-              onChange={(e) => setFilters(f => ({ ...f, yearFrom: Number(e.target.value) || 800 }))}
+              inputMode="numeric"
+              value={yearFromInput}
+              onChange={(e) => setYearFromInput(e.target.value)}
+              onBlur={(e) => commitYear('yearFrom', e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+              aria-label="From year"
               className="w-16 rounded-md px-2 py-1 text-xs text-center"
               style={{ border: '1px solid rgba(0,0,0,0.08)', color: 'var(--text-secondary)', background: 'transparent' }}
               min={800} max={2025}
@@ -244,26 +261,17 @@ export default function BookMap({ locations }: BookMapProps) {
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>to</span>
             <input
               type="number"
-              value={filters.yearTo}
-              onChange={(e) => setFilters(f => ({ ...f, yearTo: Number(e.target.value) || 2025 }))}
+              inputMode="numeric"
+              value={yearToInput}
+              onChange={(e) => setYearToInput(e.target.value)}
+              onBlur={(e) => commitYear('yearTo', e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+              aria-label="To year"
               className="w-16 rounded-md px-2 py-1 text-xs text-center"
               style={{ border: '1px solid rgba(0,0,0,0.08)', color: 'var(--text-secondary)', background: 'transparent' }}
               min={800} max={2025}
             />
           </div>
-
-          <span className="w-px h-4 hidden sm:block" style={{ background: 'rgba(0,0,0,0.08)' }} />
-
-          <select
-            value={filters.minBooks}
-            onChange={(e) => setFilters((f) => ({ ...f, minBooks: Number(e.target.value) }))}
-            className="rounded-md px-2 py-1 text-xs"
-            style={{ border: '1px solid rgba(0,0,0,0.08)', color: 'var(--text-secondary)', background: 'transparent' }}
-          >
-            {[1, 2, 5, 10, 20, 50].map((n) => (
-              <option key={n} value={n}>{n === 1 ? 'All' : `${n}+`}</option>
-            ))}
-          </select>
         </div>
       </div>
 

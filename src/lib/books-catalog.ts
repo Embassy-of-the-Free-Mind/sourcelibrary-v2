@@ -9,6 +9,7 @@
  */
 
 import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
+import { isSingleRealLanguage } from '@/lib/language-canonical';
 
 /**
  * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
@@ -246,6 +247,11 @@ export async function getLanguageCounts(filter: {
   }
   return [...counts.entries()]
     .map(([lang, count]) => ({ lang, count }))
+    // Drop junk labels ("e") and multi-language "collab" labels ("Greek/Latin",
+    // "German-English"): keep only single real languages, whose raw label still
+    // matches the exact `eq('language', value)` filter in browseBooks. See
+    // src/lib/language-canonical.ts.
+    .filter(({ lang }) => isSingleRealLanguage(lang))
     .sort((a, b) => b.count - a.count);
 }
 
