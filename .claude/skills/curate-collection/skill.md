@@ -234,6 +234,8 @@ Structure each verified quote as:
 
 ### Step 4: Write the Expanded Description
 
+> **Authoritative editorial rules: `.claude/docs/collection-intro-writing-rules.md`.** For the page-opening intro, that doc is the source of truth and supersedes the brief notes below where they differ (it forbids restating counts/years — the header owns those — bans foil/oppressor framing and proper nouns in the hook, and defines the required three-part structure). Read it before writing any collection prose.
+
 Write 2-3 paragraphs of editorial context. Structure:
 
 **Paragraph 1:** What this collection is and why it matters. Situate it in intellectual history. Mention 2-3 key texts by title (these will auto-link via `mentioned_books`).
