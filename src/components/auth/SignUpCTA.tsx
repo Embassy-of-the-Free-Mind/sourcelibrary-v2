@@ -6,9 +6,11 @@ import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 interface SignUpCTAProps {
   variant?: 'section' | 'inline';
+  /** Optional background image (e.g. a collection plate) behind the dark section. */
+  bgImageUrl?: string;
 }
 
-export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
+export default function SignUpCTA({ variant = 'section', bgImageUrl }: SignUpCTAProps) {
   const { status } = useStableSession();
   const isEmbedded = useIsEmbedded();
 
@@ -35,8 +37,15 @@ export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
 
   // Full section variant (original)
   return (
-    <section className="py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
-      <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
+      {bgImageUrl && (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={bgImageUrl} alt="" className="absolute inset-0 w-full h-full object-cover opacity-55" />
+          <div className="absolute inset-0" style={{ background: 'var(--bg-dark)', opacity: 0.55 }} />
+        </>
+      )}
+      <div className="relative px-6 md:px-12 max-w-2xl mx-auto text-center">
         <p
           className="text-sm uppercase tracking-[0.2em] mb-6"
           style={{ color: 'var(--accent-gold)' }}
