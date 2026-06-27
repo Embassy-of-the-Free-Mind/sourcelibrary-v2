@@ -184,12 +184,16 @@ function EvidenceFooter({
     );
   }
 
-  // TIER 3 — nothing but a conclusion on record (legacy model guess / never
-  // verified). Don't imply a thorough search where none is documented.
+  // TIER 3 — a weak legacy determination: the catalogue cron checked Open
+  // Library / Google Books / Internet Archive and, finding nothing, asked the
+  // model's training knowledge. That IS evidence — just weak and not
+  // independently auditable. Represent it as such (don't imply "no search", and
+  // don't imply a documented one). The per-book trail wasn't retained, but the
+  // weak verdict is preserved in the attempt log so its accuracy can be measured.
   return (
     <p className="text-stone-600 text-[10px]">
-      Preliminary determination{date ? ` · ${fmtDate(date)}` : ''} — automated check without a documented search
-      trail; detailed verification pending.
+      Preliminary{date ? ` · ${fmtDate(date)}` : ''} — automated catalogue + model-knowledge check; not
+      independently verified.
       {methodology}
     </p>
   );
@@ -220,7 +224,7 @@ function StrengthChip({ strength, preliminary }: { strength?: string; preliminar
   if (preliminary) {
     return (
       <span
-        title="Automated catalogue check only — detailed per-book verification pending"
+        title="Weak evidence — automated catalogue + model-knowledge check, not independently verified"
         className="inline-block whitespace-nowrap text-[10px] px-1.5 py-0.5 rounded bg-stone-700/40 text-stone-500"
       >
         preliminary
