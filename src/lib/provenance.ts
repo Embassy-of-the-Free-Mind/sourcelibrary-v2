@@ -9,7 +9,7 @@
  * NEVER apply to text being stored in the database.
  */
 
-import { imprimatur } from './steganographia';
+import { imprimatur, verifyProvenance } from './steganographia';
 
 const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
 
@@ -31,4 +31,23 @@ export function markForExport(text: string, bookId: string): string {
     // Never let provenance marking break exports
     return text;
   }
+}
+
+/**
+ * Verify a provenance mark on text using the server's secret key.
+ *
+ * Use this — not the unauthenticated reader — when the answer is trusted
+ * (e.g. confirming a leaked or scraped passage came from Source Library).
+ * `authentic` is true only if the embedded MAC verifies under
+ * PROVENANCE_SECRET_KEY; a present-but-unverified mark (forged, legacy, or
+ * exported under a different key) returns the recovered id with
+ * `authentic: false`.
+ *
+ * @returns `{ editionId, authentic }`, or `null` if the key is unconfigured.
+ */
+export function verifyExport(
+  text: string
+): { editionId: string | null; authentic: boolean } | null {
+  if (!PROVENANCE_KEY) return null;
+  return verifyProvenance(text, PROVENANCE_KEY);
 }
