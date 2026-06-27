@@ -1896,8 +1896,18 @@ export default function TranslationEditor({
           );
         })()}
 
-        {/* Footer: nav hint + search */}
+        {/* Footer: like + nav hint + search */}
         <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+          <div className="px-4 pt-2 pb-1 flex items-center justify-center">
+            <LikeButton
+              key={`footer-${page.id}`}
+              targetType="page"
+              targetId={page.id}
+              bookId={book.id}
+              size="sm"
+              showCount={true}
+            />
+          </div>
           <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
             <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
             <span className="lg:hidden">Swipe left/right to navigate</span>
