@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import FeedbackWidget from './FeedbackWidget';
+
+// Pages with their own "get involved" / feedback section opt out of this global
+// callout to avoid a duplicate. (Redesigned collection pages, mycology for now.)
+const HIDE_ON = ['/collections/mycology'];
 
 /**
  * A warm callout section inviting visitors to share feedback.
@@ -9,6 +14,7 @@ import FeedbackWidget from './FeedbackWidget';
  */
 export default function FeedbackCallout() {
   const [dismissed, setDismissed] = useState(false);
+  const pathname = usePathname();
 
   // Read localStorage after mount to avoid hydration mismatch
   useEffect(() => {
@@ -17,6 +23,7 @@ export default function FeedbackCallout() {
     }
   }, []);
 
+  if (pathname && HIDE_ON.some((p) => pathname.startsWith(p))) return null;
   if (dismissed) return null;
 
   return (

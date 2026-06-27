@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Play, ArrowRight, Search } from 'lucide-react';
+import { BookOpen, ArrowRight, Search } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
@@ -120,23 +120,34 @@ async function getMycologyData() {
 
 interface PagePreview { id: string; page_number?: number; kind: 'illustration' | 'text'; url: string }
 
-// Sample-page previews for the featured work: at least one illustration page and
-// one text page, as small thumbnails that deep-link into the reader.
+// Two interior sample pages for the featured work (besides the cover): one
+// illustration plate and one REAL text page (OCR'd with substantial text, not a
+// blank), deep-linking into the reader. Picks a mid-book plate, not the cover.
 async function getFeaturedPagePreviews(
   db: Awaited<ReturnType<typeof getReadDb>>, bookId: string,
 ): Promise<PagePreview[]> {
   const proj = { _id: 0, id: 1, page_number: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1 };
   const [illus, text] = await Promise.all([
-    withTimeout(db.collection('pages').find({ book_id: bookId, detected_images: { $exists: true, $ne: [] } }, { projection: proj, maxTimeMS: 5000 }).sort({ page_number: 1 }).limit(2).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
-    withTimeout(db.collection('pages').find({ book_id: bookId, photo: { $exists: true }, $or: [{ detected_images: { $exists: false } }, { detected_images: { $size: 0 } }] }, { projection: proj, maxTimeMS: 5000 }).sort({ page_number: 1 }).limit(2).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+    withTimeout(db.collection('pages').find({ book_id: bookId, page_number: { $gt: 1 }, detected_images: { $exists: true, $ne: [] } }, { projection: proj, maxTimeMS: 5000 }).sort({ page_number: 1 }).limit(5).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+    // Real text page: OCR'd with > 400 chars of text, no detected illustration, past the front matter.
+    withTimeout(db.collection('pages').find({
+      book_id: bookId, page_number: { $gt: 5 },
+      'ocr.data': { $type: 'string' },
+      $or: [{ detected_images: { $exists: false } }, { detected_images: { $size: 0 } }],
+      $expr: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 400] },
+    }, { projection: proj, maxTimeMS: 6000 }).sort({ page_number: 1 }).limit(2).toArray() as Promise<Record<string, unknown>[]>, 6000, []),
   ]);
   const make = (p: Record<string, unknown>, kind: 'illustration' | 'text'): PagePreview | null => {
     const url = getPageImageUrl(p as unknown as Parameters<typeof getPageImageUrl>[0], 'thumb');
     return url ? { id: p.id as string, page_number: p.page_number as number | undefined, kind, url } : null;
   };
-  // Order so at least one of each kind shows: illustration, text, illustration.
-  const out = [illus[0] && make(illus[0], 'illustration'), text[0] && make(text[0], 'text'), (illus[1] && make(illus[1], 'illustration')) || (text[1] && make(text[1], 'text'))];
-  return out.filter(Boolean).slice(0, 3) as PagePreview[];
+  // Prefer a mid-book plate (skip the first detected, often a frontispiece).
+  const illPick = illus[Math.min(1, Math.max(0, illus.length - 1))];
+  const out: (PagePreview | null)[] = [];
+  if (illPick) out.push(make(illPick, 'illustration'));
+  if (text[0]) out.push(make(text[0], 'text'));
+  else if (illus[0] && illus[0].id !== illPick?.id) out.push(make(illus[0], 'illustration'));
+  return out.filter(Boolean).slice(0, 2) as PagePreview[];
 }
 
 export default async function MycologyCollectionPage() {
@@ -202,7 +213,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row-reverse md:justify-end md:items-start gap-8 lg:gap-12">
+        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row md:items-start gap-8 lg:gap-16">
           <div className="max-w-2xl font-body">
             <p className="text-xl text-primary leading-relaxed mb-4">
               Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
@@ -214,14 +225,16 @@ export default async function MycologyCollectionPage() {
               Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
             </p>
           </div>
-          {/* Walkthrough video placeholder (9:16) — left on desktop via row-reverse */}
-          <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0">
-            <div className="relative aspect-[9/16] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
-              <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
-                <Play className="w-6 h-6 text-white" fill="currentColor" />
-              </div>
-              <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
-            </div>
+          {/* Plate to the right of the intro text, multiply-blended into the warm
+              section background so the paper disappears and the engraving reads. */}
+          <div className="w-full max-w-[360px] mx-auto md:mx-0 shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.sourcelibrary.org/archived/69d8ca06a09828f83ddc973a/95.jpg"
+              alt="A scientific plate of fungi, including morels and stinkhorns, from Battarra's History of the Fungi of the Rimini Territory (1755)"
+              className="w-full h-auto mix-blend-multiply"
+              loading="lazy"
+            />
           </div>
         </div>
       </section>
@@ -231,7 +244,7 @@ export default async function MycologyCollectionPage() {
         <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-12">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-4">Featured work</p>
-            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[1fr_320px] md:items-start">
+            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_440px] md:items-start">
               {/* Left: detail */}
               <div className="min-w-0">
                 <h2 className="text-3xl sm:text-4xl font-semibold text-primary leading-tight mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
@@ -248,25 +261,26 @@ export default async function MycologyCollectionPage() {
                   <Link href={`/gallery?collection=${SLUG}`} className={RUST_LINK}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
                 </div>
               </div>
-              {/* Right: main cover + preview pages stacked vertically beside it */}
-              <div className="flex gap-3">
-                <div className="relative aspect-[3/4] flex-1 overflow-hidden bg-warm shadow-md">
+              {/* Right: cover + sample pages — horizontal filmstrip on desktop
+                  (cover + 1 at lg, + 2 at xl), vertical stack on tablet/mobile. */}
+              <div className="flex flex-col lg:flex-row gap-3 w-full max-w-[300px] mx-auto lg:max-w-none lg:mx-0">
+                <div className="relative aspect-[3/4] lg:flex-1 overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
-                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="240px" />
+                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="200px" />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-12 h-12 text-muted" /></div>
                   )}
                 </div>
                 {featuredPages.length > 0 && (
-                  <div className="flex flex-col gap-3 w-16 sm:w-20 shrink-0">
-                    {featuredPages.map((p) => (
+                  <>
+                    {featuredPages.map((p, idx) => (
                       <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title={p.kind === 'illustration' ? 'Illustrated page' : 'Text page'}
-                        className="relative aspect-[3/4] overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
+                        className={`relative aspect-[3/4] lg:flex-1 overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors ${idx === 1 ? 'block lg:hidden xl:block' : ''}`}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
                       </Link>
                     ))}
-                  </div>
+                  </>
                 )}
               </div>
             </div>
@@ -297,8 +311,9 @@ export default async function MycologyCollectionPage() {
               <Link href={`/gallery?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
             </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
-            <div className="columns-3 lg:columns-5 gap-4">
-              {gallery.slice(0, 18).map((g, i) => {
+            {/* Masonry, balanced columns, bounded to ~3 rows. */}
+            <div className="columns-2 sm:columns-3 lg:columns-5 gap-4 [column-fill:_balance]">
+              {gallery.slice(0, 15).map((g, i) => {
                 const src = imgUrl(g);
                 const bookId = g.book_id || g.bookId;
                 const pageId = g.page_id || g.pageId;
