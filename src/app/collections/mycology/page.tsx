@@ -13,6 +13,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { tenantBookUrl } from '@/lib/slugify';
 import BookCardMini, { MiniBook } from './_components/BookCardMini';
 import MycoSlider from './_components/MycoSlider';
+import MycoMasonry from './_components/MycoMasonry';
 import MycoAnchorBar from './_components/MycoAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
 import LibrarianSearch from './_components/LibrarianSearch';
@@ -189,6 +190,18 @@ export default async function MycologyCollectionPage() {
     || gallery.find((g) => g.type && !['page', 'title_page', 'text', 'portrait', 'frontispiece', 'map', 'table', 'chart', 'symbol', 'decorative', 'musical_score', 'exlibris', 'bookplate'].includes(g.type));
   const quoteBg = quotePlate ? imgUrl(quotePlate) : undefined;
   const galleryTotal = gallery.length;
+  const galleryPlates = gallery
+    .filter((g) => imgUrl(g))
+    .slice(0, 18)
+    .map((g) => {
+      const bookId = g.book_id || g.bookId;
+      const pageId = g.page_id || g.pageId;
+      return {
+        src: imgUrl(g) as string,
+        href: bookId && pageId ? `${tenantBookUrl({ id: String(bookId) }, null)}/page/${pageId}` : undefined,
+        label: g.museum_description || g.description || g.book_title,
+      };
+    });
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
@@ -325,28 +338,21 @@ export default async function MycologyCollectionPage() {
       {gallery.length > 0 && (
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-12">
-            <div className="flex items-end justify-between gap-4 mb-1">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
-              <Link href={`/gallery?collection=${SLUG}`} className={`${BTN_DARK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
-            </div>
+            <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">Gallery</h2>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
-            {/* Even grid (uniform 3:4 tiles), bounded to 3 rows — no ragged bottom. */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-              {gallery.filter((g) => imgUrl(g)).slice(0, 15).map((g, i) => {
-                const src = imgUrl(g);
-                const bookId = g.book_id || g.bookId;
-                const pageId = g.page_id || g.pageId;
-                const label = g.museum_description || g.description || g.book_title;
-                const inner = (
-                  <div className="relative aspect-[3/4] overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={src} alt={label || 'Illustration'} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-                  </div>
-                );
-                return bookId && pageId
-                  ? <Link key={i} href={`${tenantBookUrl({ id: String(bookId) }, null)}/page/${pageId}`} title={label}>{inner}</Link>
-                  : <div key={i} title={label}>{inner}</div>;
-              })}
+            {/* Balanced masonry (true heights, no crop), capped + faded into the page
+                so the ragged bottom is hidden. Cap is static (server-rendered). */}
+            <div
+              className="relative max-h-[420px] md:max-h-[520px] overflow-hidden"
+              style={{
+                maskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+              }}
+            >
+              <MycoMasonry plates={galleryPlates} />
+            </div>
+            <div className="mt-6 flex justify-center">
+              <Link href={`/gallery?collection=${SLUG}`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>
