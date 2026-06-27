@@ -99,12 +99,28 @@ the **consequential** set, not blindly on all 14k:
 attempt is appended to `first_translation_attempts`. Every public-claim batch is
 **backed up and signed off by Derek** before the flag flips.
 
-### Stage F — Statistical closure
-- Fully-censused strata → hard per-book counts.
-- Calibration-only strata → count ± Wilson 95% CI (FPC-corrected) using the
-  measured Tier-1 error (`src/lib/first-translation/inference.ts`).
-- Deliverable: "N individually verified + M estimated within ±X" = a defensible
-  total *and* a per-book badge wherever the claim is public.
+### Stage F — Statistical closure (sampling and badging are ONE pass)
+**The core principle:** estimating the corpus rate and verifying individual books
+are not two efforts — they are the same pass viewed two ways. Running them
+separately (the 462-book sample to estimate, the census to badge) is half the
+history's wasted motion. Unify them:
+
+- **Every Tier-2 batch IS a random sample → always compute the estimate over it.**
+  Whatever set you verify, run the stratified estimator
+  (`src/lib/first-translation/inference.ts`, Wilson 95% + FPC) across the strata
+  you touched. Each run yields a CI'd corpus number *for free* — never schedule a
+  separate "measurement study."
+- **Draw the per-book work-queue AS a seeded random sample per stratum**
+  (density × language-family × disposition). Then the badges you earn double as
+  the calibration set for the strata you don't fully census — verification and
+  calibration are the same books. Use `scripts/eval/ft-stratified-sample.ts` to
+  draw the queue so the order is itself a valid sample, not an arbitrary list.
+- **Closure:** fully-censused strata → hard per-book counts; sampled strata →
+  count ± Wilson 95% CI (FPC-corrected) from the *same* verified books.
+- **One pipeline, two outputs every run:** per-book verdicts (the badges) **and**
+  a confidence-bounded corpus total ("N individually verified + M estimated
+  within ±X"). The estimate sharpens monotonically as the census proceeds,
+  because every verified book is also a sampled book.
 
 ---
 
