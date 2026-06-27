@@ -438,6 +438,18 @@ export async function PATCH(
       updateFields[`detected_images.${detectionIndex}.gallery_quality`] = Math.max(0, Math.min(1, body.galleryQuality));
     }
 
+    // Re-tag the image type (e.g. an ex-libris bookplate auto-classified as
+    // "emblem"). Validate against the known type vocabulary; ex-libris and
+    // bookplates are provenance, not the book's own illustrations.
+    const VALID_IMAGE_TYPES = new Set([
+      'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
+      'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece',
+      'musical_score', 'exlibris', 'bookplate', 'unknown',
+    ]);
+    if (typeof body.type === 'string' && VALID_IMAGE_TYPES.has(body.type)) {
+      updateFields[`detected_images.${detectionIndex}.type`] = body.type;
+    }
+
     if (typeof body.featured === 'boolean') {
       updateFields[`detected_images.${detectionIndex}.featured`] = body.featured;
     }
@@ -592,6 +604,7 @@ export async function PATCH(
       if (typeof body.galleryQuality === 'number') {
         galleryUpdate.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
       }
+      if (typeof body.type === 'string' && VALID_IMAGE_TYPES.has(body.type)) galleryUpdate.type = body.type;
       if (typeof body.featured === 'boolean') galleryUpdate.featured = body.featured;
       if (typeof body.museumDescription === 'string') galleryUpdate.museum_description = body.museumDescription;
       if (typeof body.description === 'string') galleryUpdate.description = body.description;
