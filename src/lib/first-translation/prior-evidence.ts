@@ -47,6 +47,15 @@ export interface PriorEvidenceSummary {
    */
   independentAbsenceMethods: number;
   /**
+   * Distinct evidence FAMILIES that independently returned "none" (see
+   * {@link attemptFamily}). This is the honest independence signal — it collapses
+   * correlated same-model-family checks to one vote. Use THIS (not
+   * independentAbsenceMethods) to weight an absence claim's strength.
+   */
+  independentAbsenceFamilies: number;
+  /** Distinct families that returned "found" — cross-family agreement on a prior. */
+  foundFamilies: number;
+  /**
    * What a new approach should do given the pile:
    *  - 'reuse_prior'      a trustworthy prior already exists → don't re-search; demote.
    *  - 'absence_strong'   ≥2 independent approaches found nothing → a fresh pass adds little.
@@ -54,6 +63,40 @@ export interface PriorEvidenceSummary {
    *  - 'unverified'       nothing on record → full verification warranted.
    */
   recommendation: 'reuse_prior' | 'absence_strong' | 'absence_weak' | 'unverified';
+}
+
+/**
+ * Evidence *family* — for cross-family independence (#2805). Independence must be
+ * by family, NOT raw `method`: `method='gemini_verifier'` is overloaded (it tags
+ * the real grounded adjudicator AND every backfilled legacy store), and two
+ * outputs of the same model family are correlated, not independent votes.
+ *
+ *  - 'model_knowledge'  unverified model belief: ai_metadata (legacy_ai),
+ *                       llm guesses (legacy_llm), Gemini classification (legacy_tc).
+ *                       All Gemini-family → ONE vote however many tags.
+ *  - 'catalog'          catalog/registry lookup: translation_verification tool
+ *                       sweep (legacy_tv), ft_reverify_proposal catalog_counts
+ *                       (legacy_rp — queries the SAME OL/GB/IA catalogs, so it is
+ *                       correlated WITH this family, not its own), and the real
+ *                       grounded gemini adjudicator (gemini_verifier w/ queries[]).
+ *  - 'agent'            independent cross-model agent (Claude Tier-2 = tier2_agent).
+ *  - 'human'            human specialist.
+ *  - 'unknown'          unclassifiable.
+ */
+export type AttemptFamily = 'model_knowledge' | 'catalog' | 'agent' | 'human' | 'unknown';
+
+export function attemptFamily(a: FirstTranslationAttempt): AttemptFamily {
+  if (a.method === 'tier2_agent') return 'agent';
+  if (a.method === 'human') return 'human';
+  const notes = a.notes ?? '';
+  if (/^\[legacy_(ai|llm|tc)\]/.test(notes)) return 'model_knowledge';
+  if (/^\[legacy_(tv|rp)\]/.test(notes)) return 'catalog';
+  if (a.method === 'gemini_verifier') {
+    // Real grounded adjudicator (has queries) → catalog; bare/legacy → model_knowledge.
+    return (a.queries?.length ?? 0) > 0 ? 'catalog' : 'model_knowledge';
+  }
+  if (a.method === 'tier0_linked' || a.method === 'tier1_catalog') return 'catalog';
+  return 'unknown';
 }
 
 const hasUrl = (p?: PriorTranslation): boolean => !!p?.source_url && /^https?:\/\//.test(p.source_url);
@@ -77,6 +120,13 @@ export function summarizePriorEvidence(
   const independentAbsenceMethods = new Set(
     attempts.filter((a) => a.result === 'none').map((a) => a.method),
   ).size;
+  // The honest version: distinct FAMILIES (correlated same-model checks collapse).
+  const independentAbsenceFamilies = new Set(
+    attempts.filter((a) => a.result === 'none').map((a) => attemptFamily(a)),
+  ).size;
+  const foundFamilies = new Set(
+    attempts.filter((a) => a.result === 'found').map((a) => attemptFamily(a)),
+  ).size;
 
   let recommendation: PriorEvidenceSummary['recommendation'];
   if (priorFound) recommendation = 'reuse_prior';
@@ -89,6 +139,8 @@ export function summarizePriorEvidence(
     priorFound,
     foundPrior,
     foundAttemptId: priorFound ? (strongestFound?.attempt_id ?? null) : null,
+    independentAbsenceFamilies,
+    foundFamilies,
     searchedSources,
     searchedQueries,
     independentAbsenceMethods,
