@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ArrowLeft, BookOpen, Play, ArrowRight } from 'lucide-react';
-import SiteHeader from '@/components/layout/SiteHeader';
+import { BookOpen, Play, ArrowRight } from 'lucide-react';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -149,8 +149,6 @@ export default async function MycologyCollectionPage() {
   const title = (collection.name as string) || 'Mycology & Fungi';
   const tagline = (collection.subtitle as string) || 'The Kingdom of Fungi, from Clusius to Saccardo.';
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
-  const parentLabel = parent ? parent.name : 'Collections';
-  const breadcrumbs = [{ label: 'Collections', href: '/collections' }, ...(parent ? [{ label: parent.name, href: parentHref }] : [])];
 
   const collageTiles = gallery.map(imgUrl).filter(Boolean).slice(0, 21) as string[];
   // Prefer a figural illustration plate (not text/portrait/map) for the quote band.
@@ -165,8 +163,8 @@ export default async function MycologyCollectionPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Normal light navbar, in document flow, with collection breadcrumbs. */}
-      <SiteHeader variant="light" breadcrumbs={breadcrumbs} />
+      {/* Normal light navbar, in document flow (breadcrumbs live in the hero). */}
+      <ConditionalSiteHeader variant="light" />
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[60vh] flex items-end">
         {collageTiles.length > 0 && (
@@ -184,9 +182,15 @@ export default async function MycologyCollectionPage() {
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-dark/45 to-transparent" />
 
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-12 pb-10">
-          <Link href={parentHref} className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white/90 transition-colors mb-6">
-            <ArrowLeft className="w-4 h-4" /> {parentLabel}
-          </Link>
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/60 mb-6">
+            <Link href="/collections" className="hover:text-white/90 hover:underline transition-colors">Collections</Link>
+            {parent && (
+              <>
+                <span className="text-white/30">/</span>
+                <Link href={parentHref} className="hover:text-white/90 hover:underline transition-colors">{parent.name}</Link>
+              </>
+            )}
+          </nav>
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{title}</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">{tagline}</p>
           <div className="flex flex-wrap items-center gap-2">
@@ -203,19 +207,19 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row md:items-start gap-8 lg:gap-10">
+        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row-reverse md:items-start gap-12 lg:gap-24">
           <div className="max-w-2xl font-body">
             <p className="text-xl text-primary leading-relaxed mb-4">
-              Fungi were gathered for food, brewed into medicine, and puzzled over for centuries before anyone could say what they even were: plant, animal, or something stranger that earned a kingdom of its own.
+              Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
             </p>
             <p className="text-secondary leading-relaxed mb-4">
-              The books that worked this out stay closed to most of the people who depend on them. Persoon and Fries fixed the rules of fungal naming in dense Latin; Sterbeeck wrote the first book devoted entirely to mushrooms, in Dutch; Bulliard&rsquo;s plates are among the finest ever made, the most important of these appearing in English here for the first time. Centuries of close observation, reachable until now mainly through citation while the pages themselves sat unread.
+              The books that worked this out run from pocket field guides to vast scientific surveys. Sterbeeck wrote the first work devoted entirely to mushrooms; Bulliard had each species painted from life, in plates still prized for their accuracy; Persoon and Fries built the orderings the whole field still rests on. Much of this writing survives only in Latin, French, and German, reachable until now mainly through citation while the pages themselves sat unread.
             </p>
             <p className="text-secondary leading-relaxed">
-              The detail in those pages is startlingly fine. A mushroom Persoon pinned down in a single Latin sentence can be matched against the specimen in your hand, the name you use every day traced back to the exact words that first fixed it to a living thing.
+              Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
             </p>
           </div>
-          {/* Walkthrough video placeholder (9:16) */}
+          {/* Walkthrough video placeholder (9:16) — left on desktop via row-reverse */}
           <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0">
             <div className="relative aspect-[9/16] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
               <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
@@ -269,14 +273,14 @@ export default async function MycologyCollectionPage() {
                     <span key={m} className="text-xs text-secondary bg-warm border border-border-light px-3 py-1">{m}</span>
                   ))}
                 </div>
-                <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">The most beautiful mycological atlas of the eighteenth century, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
-                <p className="text-secondary leading-relaxed font-body mb-5 max-w-prose">Among the first works to render fungi in full, accurate colour, it remains a touchstone for identification. Source Library presents both volumes in high resolution, alongside the first complete English translation.</p>
+                <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">An illustrated flora of the fungi of France, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
+                <p className="text-secondary leading-relaxed font-body mb-5 max-w-prose">Among the first works to render fungi in full, accurate colour, it remained a standard reference for identification well into the following century.</p>
                 <figure className="mb-6 max-w-prose">
                   <blockquote className="relative pl-6 text-lg text-primary italic font-body leading-snug">
                     <span className="absolute left-0 top-0 text-3xl text-accent-rust/50 leading-none" style={{ fontFamily: 'var(--font-serif)' }}>&ldquo;</span>
                     The plates are so exact that mycologists still use them to confirm identifications, two centuries on.
                   </blockquote>
-                  <figcaption className="text-[11px] uppercase tracking-wider text-muted mt-2">Source Library · Curator&rsquo;s note</figcaption>
+                  <figcaption className="text-[11px] uppercase tracking-wider text-muted mt-2">Curator&rsquo;s note</figcaption>
                 </figure>
                 <div className="flex flex-wrap items-center gap-5">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
