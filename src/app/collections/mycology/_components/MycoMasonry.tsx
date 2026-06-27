@@ -9,16 +9,16 @@ export interface Plate { src: string; href?: string; label?: string }
  * Balanced flex masonry. Each plate renders at its NATURAL aspect ratio
  * (width:100%; height:auto — never cropped). Plates are assigned to whichever
  * column is currently shortest, using each image's true ratio captured on load,
- * recomputed on resize. Columns: 4 desktop / 3 small / 2 mobile. Existing tokens.
+ * recomputed on resize. Columns: 5 desktop / 3 tablet-mobile. Existing tokens.
  * The capped height + bottom fade live on the parent (server-rendered).
  */
 export default function MycoMasonry({ plates }: { plates: Plate[] }) {
-  const [cols, setCols] = useState(4);
+  const [cols, setCols] = useState(5);
   const aspects = useRef<number[]>(plates.map(() => 0.7)); // width/height; ~0.7 until loaded
   const [, bump] = useState(0);
 
   useEffect(() => {
-    const calc = () => setCols(window.innerWidth >= 1024 ? 4 : window.innerWidth >= 640 ? 3 : 2);
+    const calc = () => setCols(window.innerWidth >= 1024 ? 5 : 3);
     calc();
     window.addEventListener('resize', calc);
     return () => window.removeEventListener('resize', calc);

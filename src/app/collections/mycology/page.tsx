@@ -192,7 +192,7 @@ export default async function MycologyCollectionPage() {
   const galleryTotal = gallery.length;
   const galleryPlates = gallery
     .filter((g) => imgUrl(g))
-    .slice(0, 18)
+    .slice(0, 20)
     .map((g) => {
       const bookId = g.book_id || g.bookId;
       const pageId = g.page_id || g.pageId;
@@ -259,9 +259,9 @@ export default async function MycologyCollectionPage() {
               Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
             </p>
           </div>
-          {/* Walkthrough video placeholder (9:16) — left on desktop via row-reverse */}
-          <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0">
-            <div className="relative aspect-[2/3] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
+          {/* Walkthrough video placeholder (2:3) — left on desktop via row-reverse; 66vh tall on desktop */}
+          <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
+            <div className="relative aspect-[2/3] lg:h-[66vh] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
               <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
                 <Play className="w-6 h-6 text-white" fill="currentColor" />
               </div>
@@ -343,7 +343,7 @@ export default async function MycologyCollectionPage() {
             {/* Balanced masonry (true heights, no crop), capped + faded into the page
                 so the ragged bottom is hidden. Cap is static (server-rendered). */}
             <div
-              className="relative max-h-[420px] md:max-h-[520px] overflow-hidden"
+              className="relative max-h-[560px] sm:max-h-[1000px] lg:max-h-[1200px] overflow-hidden"
               style={{
                 maskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
@@ -362,8 +362,8 @@ export default async function MycologyCollectionPage() {
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
-          <div className="w-full max-w-[420px] mx-auto md:mx-0 shrink-0">
-            <video className="w-full h-auto mix-blend-multiply" autoPlay loop muted playsInline preload="metadata">
+          <div className="w-full max-w-[420px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
+            <video className="w-full h-auto mix-blend-multiply lg:w-auto lg:h-[66vh]" autoPlay loop muted playsInline preload="metadata">
               <source src="/collections/mycology/librarian.mp4" type="video/mp4" />
             </video>
           </div>
