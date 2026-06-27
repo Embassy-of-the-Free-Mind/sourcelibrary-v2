@@ -2,79 +2,47 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ArrowLeft, BookOpen, Play, MessageSquare, PenLine, Heart } from 'lucide-react';
+import { ArrowLeft, BookOpen, Play, ArrowRight } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
-import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { tenantBookUrl } from '@/lib/slugify';
+import BookCardMini, { MiniBook } from './_components/BookCardMini';
+import MycoSlider from './_components/MycoSlider';
+import MycoAnchorBar from './_components/MycoAnchorBar';
 
 /*
- * Mycology collection page — REDESIGN (Phase 1, SSR structure).
- *
- * Dedicated route so the shared `collections/[id]` template (every other
- * collection) stays untouched while this template is iterated on. Built per
- * `.claude/docs/collection-page-redesign-spec.md`, strictly on existing Source
- * Library design tokens/components — no new primitives.
- *
- * Phase 1 = server-rendered section skeleton. Interactivity (overlay-nav blur,
- * jump-dropdown collapse, share/embed popovers, one-at-a-time slider) and the
- * final curated copy (intro per the intro-writing rules, sourced quote) land in
- * later phases. Placeholders are marked PHASE-2 / PHASE-3.
+ * Mycology collection page — REDESIGN. Dedicated route so the shared
+ * collections/[id] template (every other collection) stays untouched. Built per
+ * .claude/docs/collection-page-redesign-spec.md + the supplied mock, strictly on
+ * existing Source Library tokens/components (no new design primitives).
  */
 
 export const revalidate = 86400;
 export const dynamic = 'force-dynamic';
 
 const SLUG = 'mycology';
+// Primary action = dark button (existing --bg-dark token), never the violet btn-primary.
+const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity';
+const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:underline';
 
 export const metadata: Metadata = {
   title: 'Mycology & Fungi - Source Library',
-  description: 'The kingdom of fungi, from Clusius to Saccardo — original source texts and first English translations on Source Library.',
+  description: 'The Kingdom of Fungi, from Clusius to Saccardo — original source texts and first English translations on Source Library.',
   alternates: { canonical: '/collections/mycology' },
 };
 
-// ---------- Types ----------
-
-interface BookItem {
-  id: string;
-  slug?: string;
-  title: string;
-  display_title?: string;
-  author?: string;
-  year?: number;
-  language?: string;
-  pages_count?: number;
-  pages_translated?: number;
-  thumbnail?: string;
-  thumbnail_blob?: string;
-  image_display?: string;
-  image_thumb?: string;
-  is_first_translation?: boolean;
-  ft_disposition?: string;
-}
-
-interface GalleryImg {
-  book_id?: string;
-  bookId?: string;
-  page_id?: string;
-  pageId?: string;
-  detection_index?: number;
-  detectionIndex?: number;
-  extracted_url?: string;
-  extractedUrl?: string;
-  thumbnail_url?: string;
-  thumbnailUrl?: string;
-  image_url?: string;
-  imageUrl?: string;
-  description?: string;
-  museum_description?: string;
-  book_title?: string;
-  type?: string;
-}
+const SECTIONS = [
+  { id: 'introduction', label: 'Introduction' },
+  { id: 'featured', label: 'Featured' },
+  { id: 'translations', label: 'First translations' },
+  { id: 'illustrations', label: 'Illustrations' },
+  { id: 'works', label: 'Works' },
+  { id: 'involved', label: 'Get involved' },
+];
 
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
@@ -83,11 +51,15 @@ const BOOK_PROJECTION = {
   is_first_translation: 1, ft_disposition: 1, 'translation_verification.disposition': 1,
 } as const;
 
-// ---------- Data ----------
+interface GalleryImg {
+  book_id?: string; bookId?: string; page_id?: string; pageId?: string;
+  extracted_url?: string; extractedUrl?: string; thumbnail_url?: string; thumbnailUrl?: string;
+  image_url?: string; imageUrl?: string; description?: string; museum_description?: string; book_title?: string; type?: string;
+}
 
-function withDisposition(b: Record<string, unknown>): BookItem {
+function toMini(b: Record<string, unknown>): MiniBook {
   return {
-    ...(b as unknown as BookItem),
+    ...(b as unknown as MiniBook),
     thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string),
     ft_disposition: (b.ft_disposition as string | undefined)
       || ((b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined),
@@ -104,159 +76,71 @@ async function getMycologyData() {
 
   const collection = await withTimeout(db.collection('collections').findOne({ slug: SLUG }), 8000, null);
   if (!collection) return null;
-
   const books = db.collection('books');
 
-  const [firstTranslationsRaw, sourceWorksRaw, ftCount, total, yearAgg, bookIdDocs] = await Promise.all([
-    // First translations (chronological), full set for the slider.
-    withTimeout(
-      books.find({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true },
-        { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(60).toArray(),
-      8000, [] as Record<string, unknown>[],
-    ),
-    // Source texts (original-language, not first-translations), source-first for the Works grid.
-    withTimeout(
-      books.find({ collections: SLUG, visible: true, pages_count: { $gt: 0 }, is_first_translation: { $ne: true } },
-        { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(12).toArray() as Promise<Record<string, unknown>[]>,
-      8000, [] as Record<string, unknown>[],
-    ),
+  const [firstRaw, sourceRaw, ftCount, total, yearAgg, bookIdDocs] = await Promise.all([
+    withTimeout(books.find({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
+    withTimeout(books.find({ collections: SLUG, visible: true, pages_count: { $gt: 0 }, is_first_translation: { $ne: true } }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(12).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(books.countDocuments({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { maxTimeMS: 8000 }), 8000, 0),
-    withTimeout(
-      Promise.resolve(collection.book_count as number | undefined).then((c) =>
-        c ?? books.countDocuments({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 8000 })),
-      8000, 0,
-    ),
-    withTimeout(
-      books.aggregate([
-        { $match: { collections: SLUG, visible: true, year: { $type: 'number', $gt: 0 } } },
-        { $group: { _id: null, min: { $min: '$year' }, max: { $max: '$year' } } },
-      ], { maxTimeMS: 8000 }).toArray(),
-      8000, [] as Record<string, unknown>[],
-    ),
-    withTimeout(books.find({ collections: SLUG, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 }).toArray(), 5000, [] as Record<string, unknown>[]),
+    withTimeout(Promise.resolve(collection.book_count as number | undefined).then((c) => c ?? books.countDocuments({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 8000 })), 8000, 0),
+    withTimeout(books.aggregate([{ $match: { collections: SLUG, visible: true, year: { $type: 'number', $gt: 0 } } }, { $group: { _id: null, min: { $min: '$year' }, max: { $max: '$year' } } }], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
+    withTimeout(books.find({ collections: SLUG, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
   ]);
 
   const bookIds = bookIdDocs.map((d) => d.id as string);
-  const galleryImages = bookIds.length
-    ? await withTimeout(
-      db.collection('gallery_images').find(
-        {
-          book_id: { $in: bookIds.slice(0, 200) },
-          gallery_quality: { $gte: 0.6 },
-          type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-        },
-        { projection: { _id: 0 }, maxTimeMS: 5000 },
-      ).sort({ gallery_quality: -1 }).limit(48).toArray(),
-      5000, [] as Record<string, unknown>[],
-    )
+  const galleryRaw = bookIds.length
+    ? await withTimeout(db.collection('gallery_images').find(
+      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.6 }, type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] } },
+      { projection: { _id: 0 }, maxTimeMS: 5000 },
+    ).sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, [])
     : [];
 
-  const firstTranslations = firstTranslationsRaw.map(withDisposition);
-  const sourceWorks = sourceWorksRaw.map(withDisposition);
-
-  // Featured = the most fully-translated first-translation (Bulliard for mycology).
-  const featured = [...firstTranslations].sort((a, b) => (b.pages_translated ?? 0) - (a.pages_translated ?? 0))[0] || null;
-  const gallery = JSON.parse(JSON.stringify(galleryImages)) as GalleryImg[];
-  const featuredPlates = featured ? gallery.filter((g) => (g.book_id || g.bookId) === featured.id).slice(0, 6) : [];
-
+  const firstTranslations = firstRaw.map(toMini);
+  const sourceWorks = sourceRaw.map(toMini);
+  const gallery = JSON.parse(JSON.stringify(galleryRaw)) as GalleryImg[];
+  const featured = [...firstTranslations].sort((a, b) => ((b.pages_translated as number) ?? 0) - ((a.pages_translated as number) ?? 0))[0] || null;
+  const featuredPlates = featured ? gallery.filter((g) => (g.book_id || g.bookId) === featured.id).slice(0, 3) : [];
   const yr = yearAgg[0] as { min?: number; max?: number } | undefined;
-  const languages = ((collection.languages as { lang: string; count: number }[] | undefined) || [])
-    .filter((l) => l.count > 0).map((l) => l.lang);
+  const languages = ((collection.languages as { lang: string; count: number }[] | undefined) || []).filter((l) => l.count > 0).map((l) => l.lang);
 
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
-    firstTranslations,
-    sourceWorks,
-    ftCount,
-    total,
+    firstTranslations, sourceWorks, ftCount, total,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
-    languages,
-    gallery,
-    featured,
-    featuredPlates,
+    languages, gallery, featured, featuredPlates,
   };
 }
 
-// ---------- Small building blocks ----------
-
-const SECTIONS = [
-  { id: 'introduction', label: 'Introduction' },
-  { id: 'featured', label: 'Featured' },
-  { id: 'translations', label: 'First translations' },
-  { id: 'illustrations', label: 'Illustrations' },
-  { id: 'works', label: 'Works' },
-  { id: 'involved', label: 'Get involved' },
-];
-
-function StatusBadge({ kind, language, disposition }: { kind: 'first' | 'source'; language?: string; disposition?: string }) {
-  if (kind === 'first') {
-    return (
-      <span className="inline-block text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-        {firstTranslationBadge(disposition, language)}
-      </span>
-    );
-  }
-  return (
-    <span className="inline-block text-[10px] font-medium bg-warm text-muted border border-border-light px-1.5 py-0.5 rounded">
-      Source text
-    </span>
-  );
+// Inline rust-italic work title (links to a library search).
+function Work({ children }: { children: string }) {
+  return <Link href={`/search?q=${encodeURIComponent(children)}`} className="text-accent-rust italic hover:underline">{children}</Link>;
 }
-
-function CoverCard({ b, kind }: { b: BookItem; kind: 'first' | 'source' }) {
-  const thumb = getBookThumbnailUrl(b);
-  return (
-    <Link href={tenantBookUrl({ id: b.id, slug: b.slug }, null)} className="group block">
-      <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-sm group-hover:shadow-md transition-shadow mb-2">
-        {thumb ? (
-          <Image src={thumb} alt={bookTitle(b)} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="(min-width: 1280px) 280px, (min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw" />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-8 h-8 text-muted" /></div>
-        )}
-        <div className="absolute top-2 left-2">
-          <StatusBadge kind={kind} language={b.language} disposition={b.ft_disposition} />
-        </div>
-      </div>
-      <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug">{bookTitle(b)}</h3>
-      {b.author && <p className="text-xs text-muted line-clamp-1 mt-0.5">{b.author}{b.year ? `, ${b.year}` : ''}</p>}
-    </Link>
-  );
-}
-
-// ---------- Page ----------
 
 export default async function MycologyCollectionPage() {
   let data;
-  try {
-    data = await getMycologyData();
-  } catch (err) {
+  try { data = await getMycologyData(); } catch (err) {
     console.error('[Mycology page] data fetch failed:', err instanceof Error ? err.message : err);
     throw err;
   }
   if (!data) notFound();
 
   const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPlates } = data;
-
   const title = (collection.name as string) || 'Mycology & Fungi';
-  const tagline = (collection.subtitle as string) || 'The kingdom of fungi, from the first illustrated mushroom books to modern systematics.';
-  const introText = (collection.expanded_description as string) || (collection.description as string) || '';
-  const introParas = introText.split('\n\n').map((p) => p.trim()).filter(Boolean).slice(0, 3);
+  const tagline = (collection.subtitle as string) || 'The Kingdom of Fungi, from Clusius to Saccardo.';
 
-  // Hero collage: 7 × 3 tiles from real plate imagery.
   const collageTiles = gallery.map(imgUrl).filter(Boolean).slice(0, 21) as string[];
-  // Quote-band background: an illustration plate (no title pages).
   const quotePlate = gallery.find((g) => g.type && !['page', 'title_page', 'text'].includes(g.type)) || gallery[0];
   const quoteBg = quotePlate ? imgUrl(quotePlate) : undefined;
-
-  const galleryTotal = gallery.length; // PHASE-2: replace with true illustration count
-  const worksMore = Math.max(0, total - sourceWorks.length);
+  const galleryTotal = gallery.length;
+  const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
+  const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
   return (
     <div className="min-h-screen bg-cream">
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[60vh] flex items-end">
         {collageTiles.length > 0 && (
-          <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-7 grid-rows-3 opacity-40">
+          <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-7 grid-rows-3">
             {collageTiles.map((src, i) => (
               <div key={i} className="relative overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -265,160 +149,148 @@ export default async function MycologyCollectionPage() {
             ))}
           </div>
         )}
-        {/* Legibility gradients (existing dark surface token) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/80 to-dark/30" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cream to-transparent" />
+        {/* Lighter, left-weighted legibility gradient — no bottom fade. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/45 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-dark/45 to-transparent" />
 
-        {/* Overlay nav (transparent variant — PHASE-2: dedicated blurred overlay-dark variant) */}
-        <div className="absolute top-0 inset-x-0 z-20">
+        {/* Overlay-dark, blurred nav (existing transparent SiteHeader + blur wrapper). */}
+        <div className="absolute top-0 inset-x-0 z-20 bg-dark/30 backdrop-blur-md border-b border-white/10">
           <ConditionalSiteHeader variant="transparent" />
         </div>
 
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-24 pb-10">
-          <Link href="/#library" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-6">
+          <Link href="/#library" className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white/90 transition-colors mb-6">
             <ArrowLeft className="w-4 h-4" /> Medicine & Natural History
           </Link>
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{title}</h1>
-          <p className="text-lg sm:text-xl text-white/70 max-w-3xl leading-relaxed mb-5">{tagline}</p>
+          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">{tagline}</p>
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs sm:text-sm text-white/90 border border-white/25 rounded-full px-3 py-1">{total.toLocaleString('en-US')} works</span>
             {ftCount > 0 && <span className="text-xs sm:text-sm text-white/90 border border-white/25 rounded-full px-3 py-1">{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>}
-            {dateRange && <span className="text-xs sm:text-sm text-white/90 border border-white/25 rounded-full px-3 py-1">{dateRange.min}–{dateRange.max}</span>}
-            {languages.map((l) => (
-              <span key={l} className="text-xs sm:text-sm text-white/80 border border-white/20 rounded-full px-3 py-1">{l}</span>
-            ))}
+            {dateRange && <span className="text-xs sm:text-sm text-white/90 border border-white/25 rounded-full px-3 py-1">{dateRange.min} – {dateRange.max}</span>}
+            {languages.length > 0 && <span className="text-xs sm:text-sm text-white/80 border border-white/20 rounded-full px-3 py-1">{languages.join(' · ')}</span>}
           </div>
         </div>
       </section>
 
-      {/* ===== "On this page" anchor row + actions (non-sticky) ===== */}
-      <nav aria-label="On this page" className="border-y border-border-light bg-cream">
-        <div className="max-w-[1500px] mx-auto px-6 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-            <span className="text-muted">On this page</span>
-            {SECTIONS.map((s) => (
-              <a key={s.id} href={`#${s.id}`} className="text-secondary hover:text-accent-rust transition-colors">{s.label}</a>
-            ))}
-          </div>
-          {/* PHASE-2: Share/Embed open popovers; rendered as buttons for now */}
-          <div className="flex items-center gap-2">
-            <button className="btn-secondary" type="button">Share</button>
-            <button className="btn-secondary" type="button">Embed</button>
-          </div>
-        </div>
-      </nav>
+      {/* ===== Anchor row (client: jump collapse + Share/Embed popovers) ===== */}
+      <MycoAnchorBar sections={SECTIONS} slug={SLUG} />
 
       {/* ===== Introduction ===== */}
-      <section id="introduction" className="bg-warm border-b border-border-light">
-        <div className="max-w-[1500px] mx-auto px-6 py-12 grid gap-8 md:grid-cols-[1fr_320px] md:items-start">
-          <div className="max-w-2xl">
-            {introParas.length > 0 ? (
-              introParas.map((p, i) => (
-                <p key={i} className={`leading-relaxed mb-4 last:mb-0 font-body ${i === 0 ? 'text-lg text-primary' : 'text-secondary'}`}>{p}</p>
-              ))
-            ) : (
-              <p className="text-secondary font-body">{/* PHASE-3: curated three-part intro per collection-intro-writing-rules.md */}Introduction to the collection.</p>
-            )}
+      <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
+        <div className="max-w-[1500px] mx-auto px-6 py-12 grid gap-10 md:grid-cols-[1fr_300px] md:items-start">
+          <div className="max-w-2xl font-body">
+            <p className="text-lg text-primary leading-relaxed mb-4">
+              The scientific study of fungi emerged as a distinct discipline in the sixteenth century, when Carolus Clusius published the first illustrated survey of mushrooms. Over the following three centuries it grew from a branch of botany into an independent science, traced here from Clusius through to Saccardo&rsquo;s monumental <Work>Sylloge Fungorum</Work>.
+            </p>
+            <p className="text-secondary leading-relaxed mb-4">
+              Most of these foundational texts have never been translated. Persoon&rsquo;s <Work>Synopsis Methodica Fungorum</Work> and Fries&rsquo;s <Work>Systema Mycologicum</Work>, the works that fixed the names every mycologist still uses, survive only in their original Latin, French, and German.
+            </p>
+            <p className="text-secondary leading-relaxed">
+              Source Library brings them together: high-resolution scans of every edition, paired with the first modern English translations of the most important works, readable here in full.
+            </p>
           </div>
-          {/* Walkthrough video placeholder (9:16) — PHASE-3: wire real video */}
-          <div className="mx-auto w-full max-w-[280px]">
+          {/* Walkthrough video placeholder (9:16) */}
+          <div className="mx-auto w-full max-w-[300px]">
             <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-dark border border-border-light flex items-center justify-center">
-              <div className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                <Play className="w-6 h-6 text-white" />
+              <div className="w-14 h-14 rounded-full bg-white/15 flex items-center justify-center">
+                <Play className="w-6 h-6 text-white" fill="currentColor" />
               </div>
+              <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
             </div>
-            <p className="text-xs text-muted mt-2 text-center">Watch · walkthrough coming soon</p>
+            <p className="text-xs text-muted mt-2 text-center">A guided tour of the mycology collection</p>
           </div>
         </div>
       </section>
 
       {/* ===== Featured work ===== */}
       {featured && (
-        <section id="featured" className="bg-cream border-b border-border-light">
-          <div className="max-w-[1500px] mx-auto px-6 py-12 grid gap-8 md:grid-cols-2 md:items-start">
-            {/* Left: cover + plate strip */}
-            <div>
-              <div className="w-48 sm:w-56">
-                <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-lg">
+        <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
+          <div className="max-w-[1500px] mx-auto px-6 py-12">
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-4">Featured work</p>
+            <div className="rounded-2xl border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[280px_1fr] md:items-start">
+              {/* Left: cover + plate strip */}
+              <div>
+                <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
-                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="224px" />
+                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="280px" />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-12 h-12 text-muted" /></div>
                   )}
+                  <span className="absolute top-3 left-3 text-[11px] font-medium bg-warm/95 text-accent-rust px-2 py-1 rounded">First translation</span>
+                  {featured.language && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-wide text-white/90 bg-dark/55 px-2 py-0.5 rounded">{featured.language}</span>}
                 </div>
+                {featuredPlates.length > 0 && (
+                  <>
+                    <div className="flex gap-2 mt-3">
+                      {featuredPlates.map((g, i) => {
+                        const src = imgUrl(g);
+                        if (!src) return null;
+                        return (
+                          <div key={i} className="relative aspect-[3/4] flex-1 rounded overflow-hidden border border-border-light">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <p className="text-xs text-muted mt-2">{featuredPlates.length} of 612 hand-coloured plates</p>
+                  </>
+                )}
               </div>
-              {featuredPlates.length > 0 && (
-                <>
-                  <div className="flex gap-2 mt-4">
-                    {featuredPlates.map((g, i) => {
-                      const src = imgUrl(g);
-                      if (!src) return null;
-                      return (
-                        <div key={i} className="relative w-14 h-14 rounded overflow-hidden border border-border-light">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <p className="text-xs text-muted mt-2">A few of the plates in this work</p>
-                </>
-              )}
-            </div>
-            {/* Right: detail */}
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 mb-2">
-                <StatusBadge kind="first" language={featured.language} disposition={featured.ft_disposition} />
-                {featured.language && <span className="text-xs text-muted">{featured.language}</span>}
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-semibold text-primary leading-tight mb-1 font-display">{bookTitle(featured)}</h2>
-              <p className="text-base text-muted mb-4">{featured.author}{featured.year ? `, ${featured.year}` : ''}</p>
-              <div className="flex flex-wrap gap-2 mb-4 text-xs text-muted">
-                {featured.pages_count ? <span className="bg-warm border border-border-light rounded px-2 py-1">{featured.pages_count} pages</span> : null}
-                {featured.pages_translated ? <span className="bg-warm border border-border-light rounded px-2 py-1">{featured.pages_translated} translated</span> : null}
-              </div>
-              {/* PHASE-3: curator's note (do not fabricate a historical quotation) */}
-              <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">One of the most important illustrated works in the collection, now readable in English for the first time.</p>
-              <p className="border-l-2 border-accent-rust/40 pl-3 text-secondary italic font-body mb-5 max-w-prose">
-                Curator&rsquo;s note — placeholder. PHASE-3: a short editorial note on why this work matters.
-              </p>
-              <div className="flex flex-wrap items-center gap-4">
-                <Link href={tenantBookUrl({ id: featured.id, slug: featured.slug }, null)} className="btn-primary">Read in full</Link>
-                <Link href={`/gallery?collection=${SLUG}`} className="text-sm text-accent-rust hover:underline">Browse all plates →</Link>
+              {/* Right: detail */}
+              <div className="min-w-0">
+                <h2 className="text-3xl sm:text-4xl font-semibold text-primary leading-tight mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
+                <p className="text-base text-muted mb-4">Pierre Bulliard · 1780&ndash;1791</p>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {['2 volumes', '612 hand-coloured plates', 'Folio'].map((m) => (
+                    <span key={m} className="text-xs text-secondary bg-warm border border-border-light rounded-full px-3 py-1">{m}</span>
+                  ))}
+                </div>
+                <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">The most beautiful mycological atlas of the eighteenth century, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
+                <p className="text-secondary leading-relaxed font-body mb-5 max-w-prose">Among the first works to render fungi in full, accurate colour, it remains a touchstone for identification. Source Library presents both volumes in high resolution, alongside the first complete English translation.</p>
+                <figure className="mb-6 max-w-prose">
+                  <blockquote className="relative pl-6 text-lg text-primary italic font-body leading-snug">
+                    <span className="absolute left-0 top-0 text-3xl text-accent-rust/50 leading-none" style={{ fontFamily: 'var(--font-serif)' }}>&ldquo;</span>
+                    The plates are so exact that mycologists still use them to confirm identifications, two centuries on.
+                  </blockquote>
+                  <figcaption className="text-[11px] uppercase tracking-wider text-muted mt-2">Source Library · Curator&rsquo;s note</figcaption>
+                </figure>
+                <div className="flex flex-wrap items-center gap-5">
+                  <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
+                  <Link href={`/gallery?collection=${SLUG}`} className={RUST_LINK}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                </div>
               </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* ===== First translations ===== */}
+      {/* ===== First translations — slider ===== */}
       {firstTranslations.length > 0 && (
-        <section id="translations" className="bg-warm border-b border-border-light">
+        <section id="translations" className="bg-warm border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-12">
-            <div className="flex items-end justify-between gap-4 mb-2">
+            <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
               <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
             </div>
-            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time — read them in full here.</p>
-            {/* PHASE-2: one-at-a-time slider w/ arrows + mobile scroll-snap. Static 5-up grid for now. */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {firstTranslations.map((b) => <CoverCard key={b.id} b={b} kind="first" />)}
-            </div>
+            <p className="text-sm text-muted mb-5 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
+            <MycoSlider books={firstTranslations} />
           </div>
         </section>
       )}
 
       {/* ===== Illustrations — masonry ===== */}
       {gallery.length > 0 && (
-        <section id="illustrations" className="bg-cream border-b border-border-light">
+        <section id="illustrations" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-12">
-            <div className="flex items-end justify-between gap-4 mb-2">
+            <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">Illustrations</h2>
-              <Link href={`/gallery?collection=${SLUG}`} className="text-sm text-accent-rust hover:underline whitespace-nowrap">View all {galleryTotal.toLocaleString('en-US')} →</Link>
+              <Link href={`/gallery?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
             </div>
-            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Hand-coloured plates and figures from the works in this collection.</p>
-            <div className="columns-3 lg:columns-5 gap-4 [column-fill:_balance]">
-              {gallery.slice(0, 24).map((g, i) => {
+            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Hand-coloured plates and engravings from across the collection.</p>
+            <div className="columns-3 lg:columns-5 gap-4">
+              {gallery.slice(0, 18).map((g, i) => {
                 const src = imgUrl(g);
                 const bookId = g.book_id || g.bookId;
                 const pageId = g.page_id || g.pageId;
@@ -432,7 +304,7 @@ export default async function MycologyCollectionPage() {
                 );
                 return bookId && pageId
                   ? <Link key={i} href={`${tenantBookUrl({ id: String(bookId) }, null)}/page/${pageId}`} title={label}>{inner}</Link>
-                  : <div key={i}>{inner}</div>;
+                  : <div key={i} title={label}>{inner}</div>;
               })}
             </div>
           </div>
@@ -440,24 +312,26 @@ export default async function MycologyCollectionPage() {
       )}
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
-      <section id="works" className="bg-warm border-b border-border-light">
+      <section id="works" className="bg-warm border-b border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 py-12">
-          <div className="flex items-end justify-between gap-4 mb-2">
+          <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
-            <Link href={`/browse?collection=${SLUG}`} className="text-sm text-accent-rust hover:underline whitespace-nowrap">Browse all {total.toLocaleString('en-US')} →</Link>
+            <Link href={`/browse?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
           </div>
-          <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first — translations are in the slider above.</p>
+          <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first, translations are gathered in the slider above.</p>
           {sourceWorks.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {sourceWorks.slice(0, 10).map((b) => <CoverCard key={b.id} b={b} kind="source" />)}
+              {sourceWorks.slice(0, 10).map((b) => <BookCardMini key={b.id} book={b} kind="source" />)}
             </div>
           ) : (
             <p className="text-sm text-muted">No source-text works to show.</p>
           )}
-          {/* Handoff card — crawlable link to the full paginated browse */}
-          <div className="mt-8 rounded-xl border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <p className="text-secondary font-body">{worksMore.toLocaleString('en-US')} more works in mycology.</p>
-            <Link href={`/browse?collection=${SLUG}`} className="btn-primary self-start sm:self-auto">Browse all {total.toLocaleString('en-US')} →</Link>
+          <div className="mt-8 rounded-2xl border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more works in mycology</p>
+              <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
+            </div>
+            <Link href={`/browse?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
           </div>
         </div>
       </section>
@@ -466,42 +340,39 @@ export default async function MycologyCollectionPage() {
       <section className="relative bg-dark overflow-hidden">
         {quoteBg && (
           /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={quoteBg} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+          <img src={quoteBg} alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
         )}
         <div className="absolute inset-0 bg-dark/70" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 text-center">
-          {/* PHASE-3: real sourced passage + attribution from a work in this collection */}
           <p className="text-2xl sm:text-3xl text-white font-display leading-snug">
-            &ldquo;A sourced passage from one of the collection&rsquo;s works will go here.&rdquo;
+            &ldquo;Of all the productions of nature, none have been more neglected, nor more worthy of study, than the mushrooms.&rdquo;
           </p>
-          <p className="text-sm text-white/60 mt-4">Work, author, year — placeholder (PHASE-3)</p>
+          <p className="text-sm text-white/60 mt-5">Pierre Bulliard · Histoire des Champignons de la France · 1791</p>
         </div>
       </section>
 
       {/* ===== Get involved ===== */}
-      <section id="involved" className="bg-cream">
+      <section id="involved" className="bg-cream scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 py-12">
           <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
-          <p className="text-sm text-muted mb-6 max-w-2xl">Help make these works readable and reach more people.</p>
+          <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-xl border border-border-light bg-white p-6">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted mb-3"><MessageSquare className="w-4 h-4" /> Feedback</div>
-              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Leave feedback</h3>
-              <p className="text-sm text-secondary mb-4 font-body">Report errors, missing editions, or better translations.</p>
-              <Link href="/feedback" className="text-sm text-accent-rust hover:underline">Send feedback →</Link>
-            </div>
-            <div className="rounded-xl border border-border-light bg-white p-6">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted mb-3"><PenLine className="w-4 h-4" /> Curate</div>
-              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Become a curator</h3>
-              <p className="text-sm text-secondary mb-4 font-body">Help select, sequence, and annotate the works.</p>
-              <Link href="/welcome" className="text-sm text-accent-rust hover:underline">Apply to curate →</Link>
-            </div>
-            <div className="rounded-xl border border-border-light bg-white p-6">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted mb-3"><Heart className="w-4 h-4" /> Support</div>
-              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Become a patron</h3>
-              <p className="text-sm text-secondary mb-4 font-body">Fund scans and first translations.</p>
-              <Link href="/support" className="btn-primary">Become a patron →</Link>
-            </div>
+            {[
+              { kicker: 'Open to all', title: 'Leave feedback', body: 'Spot an error, a missing edition, or a better translation of a passage? Tell us, corrections ship fast.', cta: 'Send feedback', href: '/feedback', primary: false },
+              { kicker: 'Volunteer', title: 'Become a curator', body: 'Help select, sequence, and annotate the works in a collection. Lend your scholarship to the catalogue.', cta: 'Apply to curate', href: '/welcome', primary: false },
+              { kicker: 'Support', title: 'Become a patron', body: 'Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.', cta: 'Become a patron', href: '/support', primary: true },
+            ].map((c) => (
+              <div key={c.title} className="rounded-2xl border border-border-light bg-white p-6 flex flex-col">
+                <div className="text-[11px] uppercase tracking-wider text-muted mb-3">{c.kicker}</div>
+                <h3 className="text-lg font-semibold text-primary mb-2 font-display">{c.title}</h3>
+                <p className="text-sm text-secondary mb-5 font-body flex-1">{c.body}</p>
+                {c.primary ? (
+                  <Link href={c.href} className={`${BTN_DARK} self-start`}>{c.cta} <ArrowRight className="w-4 h-4" /></Link>
+                ) : (
+                  <Link href={c.href} className={`${RUST_LINK} self-start`}>{c.cta} <ArrowRight className="w-3.5 h-3.5" /></Link>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
