@@ -259,7 +259,7 @@ export default async function MycologyCollectionPage() {
         <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-12">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-4">Featured work</p>
-            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_440px] md:items-stretch">
+            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_620px] md:items-start">
               {/* Left: detail */}
               <div className="min-w-0">
                 <h2 className="text-3xl sm:text-4xl font-semibold text-primary leading-tight mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
@@ -278,8 +278,8 @@ export default async function MycologyCollectionPage() {
               </div>
               {/* Right: cover + sample pages — horizontal filmstrip on desktop
                   (cover + 1 at lg, + 2 at xl), vertical stack on tablet/mobile. */}
-              <div className="flex flex-col lg:flex-row gap-3 w-full max-w-[300px] mx-auto lg:max-w-none lg:mx-0 lg:h-full">
-                <div className="relative aspect-[3/4] lg:aspect-auto lg:flex-1 lg:h-full overflow-hidden bg-warm shadow-md">
+              <div className="flex flex-col lg:flex-row gap-3 w-full max-w-[260px] mx-auto lg:max-w-none lg:mx-0">
+                <div className="relative aspect-[2/3] lg:flex-1 overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
                     <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="200px" />
                   ) : (
@@ -290,7 +290,7 @@ export default async function MycologyCollectionPage() {
                   <>
                     {featuredPages.map((p, idx) => (
                       <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title={p.kind === 'illustration' ? 'Illustrated page' : 'Text page'}
-                        className={`relative aspect-[3/4] lg:aspect-auto lg:flex-1 lg:h-full overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors ${idx === 1 ? 'block lg:hidden xl:block' : ''}`}>
+                        className={`relative aspect-[2/3] lg:flex-1 overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors ${idx === 1 ? 'block lg:hidden xl:block' : ''}`}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
                       </Link>
@@ -311,7 +311,7 @@ export default async function MycologyCollectionPage() {
               <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
               <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
             </div>
-            <p className="text-sm text-muted mb-5 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
+            <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
             <MycoSlider books={firstTranslations} />
           </div>
         </section>
@@ -323,7 +323,7 @@ export default async function MycologyCollectionPage() {
           <div className="max-w-[1500px] mx-auto px-6 py-12">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
-              <Link href={`/gallery?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
+              <Link href={`/gallery?collection=${SLUG}`} className={`${BTN_DARK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
             </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
             {/* Even grid (uniform 3:4 tiles), bounded to 3 rows — no ragged bottom. */}
@@ -378,7 +378,7 @@ export default async function MycologyCollectionPage() {
         <div className="max-w-[1500px] mx-auto px-6 py-12">
           <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
-            <Link href={`/browse?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
+            <Link href={`/browse?collection=${SLUG}`} className={`${BTN_DARK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
           </div>
           <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first, translations are gathered in the slider above.</p>
           {sourceWorks.length > 0 ? (

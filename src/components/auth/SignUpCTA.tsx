@@ -42,10 +42,10 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl }: SignUpCTA
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={bgImageUrl} alt="" className="absolute inset-0 w-full h-full object-cover opacity-55" />
-          <div className="absolute inset-0" style={{ background: 'var(--bg-dark)', opacity: 0.55 }} />
+          <div className="absolute inset-0" style={{ background: 'var(--bg-dark)', opacity: 0.62 }} />
         </>
       )}
-      <div className="relative px-6 md:px-12 max-w-2xl mx-auto text-center">
+      <div className="relative px-6 md:px-12 max-w-2xl mx-auto text-center" style={bgImageUrl ? { textShadow: '0 1px 10px rgba(0,0,0,0.55)' } : undefined}>
         <p
           className="text-sm uppercase tracking-[0.2em] mb-6"
           style={{ color: 'var(--accent-gold)' }}
@@ -60,7 +60,7 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl }: SignUpCTA
         </h2>
         <p
           className="text-base md:text-lg mb-10 max-w-lg mx-auto leading-relaxed"
-          style={{ color: '#a09a90' }}
+          style={{ color: bgImageUrl ? '#e7e1d7' : '#a09a90' }}
         >
           Create a free account to save books, track your reading, and follow
           new translations as they&apos;re published.
@@ -72,7 +72,7 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl }: SignUpCTA
         >
           Create free account
         </Link>
-        <p className="text-xs mt-5" style={{ color: '#6b6560' }}>
+        <p className="text-xs mt-5" style={{ color: bgImageUrl ? '#cfc8bc' : '#6b6560' }}>
           Sign in with email &middot; No spam, ever
         </p>
       </div>

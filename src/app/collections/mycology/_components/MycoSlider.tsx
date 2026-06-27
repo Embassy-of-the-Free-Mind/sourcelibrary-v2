@@ -57,11 +57,11 @@ export default function MycoSlider({ books }: { books: MiniBook[] }) {
         <span className="text-xs text-muted tabular-nums">{firstShown}–{lastShown} of {books.length}</span>
         <div className="hidden sm:flex items-center gap-1.5">
           <button type="button" onClick={() => step(-1)} disabled={atStart} aria-label="Previous"
-            className="w-8 h-8 inline-flex items-center justify-center rounded-full border border-border-light text-secondary hover:bg-warm disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+            className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button type="button" onClick={() => step(1)} disabled={atEnd} aria-label="Next"
-            className="w-8 h-8 inline-flex items-center justify-center rounded-full border border-border-light text-secondary hover:bg-warm disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+            className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
