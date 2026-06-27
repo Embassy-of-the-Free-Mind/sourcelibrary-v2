@@ -81,7 +81,7 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl, bgAttributi
       {bgImageUrl && bgAttribution && (
         <Link
           href={bgAttribution.href}
-          className="absolute bottom-3 inset-x-0 z-10 text-center text-[11px] leading-snug px-6 max-w-3xl mx-auto hover:underline"
+          className="absolute bottom-3 inset-x-0 z-10 text-center text-[11px] leading-snug px-6 max-w-3xl mx-auto hover:opacity-80 transition-opacity"
           style={{ color: '#cfc8bc', textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}
         >
           {bgAttribution.text}

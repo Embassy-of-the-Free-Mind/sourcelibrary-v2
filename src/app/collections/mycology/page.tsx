@@ -30,7 +30,7 @@ export const dynamic = 'force-dynamic';
 const SLUG = 'mycology';
 // Primary action = dark button (existing --bg-dark token), never the violet btn-primary.
 const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity';
-const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:underline';
+const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
 
 export const metadata: Metadata = {
   title: 'Mycology & Fungi - Source Library',
@@ -194,8 +194,11 @@ export default async function MycologyCollectionPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Normal light navbar, in document flow (breadcrumbs live in the hero). */}
-      <ConditionalSiteHeader variant="light" />
+      {/* Inverted navbar — dark footer-tone bg with light text (transparent variant
+          renders the inverted/light text), in document flow. Breadcrumbs live in the hero. */}
+      <div className="bg-dark">
+        <ConditionalSiteHeader variant="transparent" />
+      </div>
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[60vh] flex items-end">
         {/* One composited collage image (2:3 tiles) — a single optimized load. */}
@@ -207,11 +210,11 @@ export default async function MycologyCollectionPage() {
 
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-12 pb-10">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/60 mb-6">
-            <Link href="/collections" className="hover:text-white/90 hover:underline transition-colors">Collections</Link>
+            <Link href="/collections" className="hover:text-white/90 transition-colors">Collections</Link>
             {parent && (
               <>
                 <span className="text-white/30">/</span>
-                <Link href={parentHref} className="hover:text-white/90 hover:underline transition-colors">{parent.name}</Link>
+                <Link href={parentHref} className="hover:text-white/90 transition-colors">{parent.name}</Link>
               </>
             )}
           </nav>
@@ -245,7 +248,7 @@ export default async function MycologyCollectionPage() {
           </div>
           {/* Walkthrough video placeholder (9:16) — left on desktop via row-reverse */}
           <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0">
-            <div className="relative aspect-[9/16] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
+            <div className="relative aspect-[2/3] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
               <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
                 <Play className="w-6 h-6 text-white" fill="currentColor" />
               </div>
@@ -395,15 +398,45 @@ export default async function MycologyCollectionPage() {
         </div>
       </section>
 
-      {/* ===== Quote band (lighter tint + Translated/Original toggle) =====
-          NOTE: verify the French original against the source before prod. */}
+      {/* ===== Quote band — cycles through sourced passages from the collection.
+          Text pulled from the books' own OCR + translations (per-book search API). */}
       <QuoteBlock
-        translated="Of all the productions of nature, none have been more neglected, nor more worthy of study, than the mushrooms."
-        original="De toutes les productions de la nature, il n'en est aucune qui ait été plus négligée, ni qui soit cependant plus digne de nos recherches, que les champignons."
-        originalLanguage="French"
-        attribution="Pierre Bulliard · Histoire des Champignons de la France · 1791"
-        attributionHref={featuredHref}
         bgUrl={quoteBg}
+        quotes={[
+          {
+            translated: 'This is what likely happened to the widow of Czar Alexis, who poisoned herself with mushrooms preserved in the Russian manner.',
+            original: "C'est ce qui arriva vraisemblablement à la veuve du Czar Alexis, qui s'empoisonna avec des champignons conservés à la manière des Russes.",
+            language: 'French',
+            attribution: 'Paulet, Treatise on Mushrooms, 1793',
+            href: '/book/trait-des-champignons-9e05',
+          },
+          {
+            translated: 'Having never been able to adopt the language of a slave, I do not fear that my name will be found in the portfolio of a Minister.',
+            original: "N'ayant jamais pu prendre le langage d'un esclave, je ne crains pas que mon nom se trouve dans le porte-feuille d'un Ministre.",
+            language: 'French',
+            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
+            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
+          },
+          {
+            translated: 'One might even say that the principal elements of the knowledge it is important for us to acquire about these plants are destined to hide themselves from our efforts, and to remain unfruitful and lost in the immensity of times to come.',
+            original: "On diroit même que les principaux élémens des connoissances qu'il nous importe d'acquérir sur ces végétaux sont destinés à se dérober à nos efforts, et à rester infécondés et perdus dans l'immensité des temps à venir.",
+            language: 'French',
+            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
+            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
+          },
+          {
+            translated: 'The bad are seen hanging full of deadly poison, intertwined with snakes, and other foul creatures, so that both small and great despise, reject, revile, and call them Devil’s bread.',
+            attribution: 'Sterbeeck, Theatrum Fungorum, 1675',
+            href: '/book/theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371',
+          },
+          {
+            translated: 'White and delicious, by the admission of all mushroom enthusiasts.',
+            original: 'Blanche & délicieuse, de l’aveu de tous les amateurs de champignons.',
+            language: 'French',
+            attribution: 'Paulet, Treatise on Mushrooms, 1793',
+            href: '/book/trait-des-champignons-9e05',
+          },
+        ]}
       />
 
       {/* ===== Get involved ===== */}
@@ -435,7 +468,7 @@ export default async function MycologyCollectionPage() {
       <SignUpCTA
         bgImageUrl="/api/gallery-crop/6955d43628a09ca65928002a-0"
         bgAttribution={{
-          text: 'Allegorical engraving depicting a woman and two cherubs observing the stars with astronomical instruments. British Celestial History (Historia Coelestis Britannica), Vol. 3 — John Flamsteed (1725).',
+          text: 'Flamsteed, Historia Coelestis Britannica, Vol. 3, 1725.',
           href: '/gallery/image/6955d43628a09ca65928002a-0',
         }}
       />
