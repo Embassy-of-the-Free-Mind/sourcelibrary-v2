@@ -3,9 +3,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { ArrowLeft, BookOpen, Play, ArrowRight } from 'lucide-react';
-import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
+import SiteHeader from '@/components/layout/SiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
+import { getPageImageUrl } from '@/lib/page-image-url';
 import { notFound } from 'next/navigation';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
@@ -99,7 +100,11 @@ async function getMycologyData() {
   const sourceWorks = sourceRaw.map(toMini);
   const gallery = JSON.parse(JSON.stringify(galleryRaw)) as GalleryImg[];
   const featured = [...firstTranslations].sort((a, b) => ((b.pages_translated as number) ?? 0) - ((a.pages_translated as number) ?? 0))[0] || null;
-  const featuredPlates = featured ? gallery.filter((g) => (g.book_id || g.bookId) === featured.id).slice(0, 3) : [];
+  const [featuredPages, parentDoc] = await Promise.all([
+    featured ? getFeaturedPagePreviews(db, featured.id) : Promise.resolve([] as PagePreview[]),
+    collection.parent ? withTimeout(db.collection('collections').findOne({ slug: collection.parent as string }, { projection: { _id: 0, slug: 1, name: 1 } }), 5000, null) : Promise.resolve(null),
+  ]);
+  const parent = parentDoc ? { slug: parentDoc.slug as string, name: parentDoc.name as string } : null;
   const yr = yearAgg[0] as { min?: number; max?: number } | undefined;
   const languages = ((collection.languages as { lang: string; count: number }[] | undefined) || []).filter((l) => l.count > 0).map((l) => l.lang);
 
@@ -107,13 +112,29 @@ async function getMycologyData() {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
     firstTranslations, sourceWorks, ftCount, total,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
-    languages, gallery, featured, featuredPlates,
+    languages, gallery, featured, featuredPages, parent,
   };
 }
 
-// Inline rust-italic work title (links to a library search).
-function Work({ children }: { children: string }) {
-  return <Link href={`/search?q=${encodeURIComponent(children)}`} className="text-accent-rust italic hover:underline">{children}</Link>;
+interface PagePreview { id: string; page_number?: number; kind: 'illustration' | 'text'; url: string }
+
+// Sample-page previews for the featured work: at least one illustration page and
+// one text page, as small thumbnails that deep-link into the reader.
+async function getFeaturedPagePreviews(
+  db: Awaited<ReturnType<typeof getReadDb>>, bookId: string,
+): Promise<PagePreview[]> {
+  const proj = { _id: 0, id: 1, page_number: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1 };
+  const [illus, text] = await Promise.all([
+    withTimeout(db.collection('pages').find({ book_id: bookId, detected_images: { $exists: true, $ne: [] } }, { projection: proj, maxTimeMS: 5000 }).sort({ page_number: 1 }).limit(2).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+    withTimeout(db.collection('pages').find({ book_id: bookId, photo: { $exists: true }, $or: [{ detected_images: { $exists: false } }, { detected_images: { $size: 0 } }] }, { projection: proj, maxTimeMS: 5000 }).sort({ page_number: 1 }).limit(2).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+  ]);
+  const make = (p: Record<string, unknown>, kind: 'illustration' | 'text'): PagePreview | null => {
+    const url = getPageImageUrl(p as unknown as Parameters<typeof getPageImageUrl>[0], 'thumb');
+    return url ? { id: p.id as string, page_number: p.page_number as number | undefined, kind, url } : null;
+  };
+  // Order so at least one of each kind shows: illustration, text, illustration.
+  const out = [illus[0] && make(illus[0], 'illustration'), text[0] && make(text[0], 'text'), (illus[1] && make(illus[1], 'illustration')) || (text[1] && make(text[1], 'text'))];
+  return out.filter(Boolean).slice(0, 3) as PagePreview[];
 }
 
 export default async function MycologyCollectionPage() {
@@ -124,12 +145,19 @@ export default async function MycologyCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPlates } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const title = (collection.name as string) || 'Mycology & Fungi';
   const tagline = (collection.subtitle as string) || 'The Kingdom of Fungi, from Clusius to Saccardo.';
+  const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
+  const parentLabel = parent ? parent.name : 'Collections';
+  const breadcrumbs = [{ label: 'Collections', href: '/collections' }, ...(parent ? [{ label: parent.name, href: parentHref }] : [])];
 
   const collageTiles = gallery.map(imgUrl).filter(Boolean).slice(0, 21) as string[];
-  const quotePlate = gallery.find((g) => g.type && !['page', 'title_page', 'text'].includes(g.type)) || gallery[0];
+  // Prefer a figural illustration plate (not text/portrait/map) for the quote band.
+  const PLATE_TYPES = ['illustration', 'engraving', 'woodcut', 'emblem'];
+  const quotePlate = gallery.find((g) => g.type && PLATE_TYPES.includes(g.type))
+    || gallery.find((g) => g.type && !['page', 'title_page', 'text', 'portrait', 'frontispiece', 'map', 'table', 'chart', 'symbol', 'decorative', 'musical_score', 'exlibris', 'bookplate'].includes(g.type))
+    || gallery[0];
   const quoteBg = quotePlate ? imgUrl(quotePlate) : undefined;
   const galleryTotal = gallery.length;
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
@@ -137,6 +165,8 @@ export default async function MycologyCollectionPage() {
 
   return (
     <div className="min-h-screen bg-cream">
+      {/* Normal light navbar, in document flow, with collection breadcrumbs. */}
+      <SiteHeader variant="light" breadcrumbs={breadcrumbs} />
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[60vh] flex items-end">
         {collageTiles.length > 0 && (
@@ -153,14 +183,9 @@ export default async function MycologyCollectionPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-dark/45 to-transparent" />
 
-        {/* Overlay-dark, blurred nav (existing transparent SiteHeader + blur wrapper). */}
-        <div className="absolute top-0 inset-x-0 z-20 bg-dark/30 backdrop-blur-md border-b border-white/10">
-          <ConditionalSiteHeader variant="transparent" />
-        </div>
-
-        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-24 pb-10">
-          <Link href="/#library" className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white/90 transition-colors mb-6">
-            <ArrowLeft className="w-4 h-4" /> Medicine & Natural History
+        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-12 pb-10">
+          <Link href={parentHref} className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white/90 transition-colors mb-6">
+            <ArrowLeft className="w-4 h-4" /> {parentLabel}
           </Link>
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{title}</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">{tagline}</p>
@@ -178,20 +203,20 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-12 grid gap-10 md:grid-cols-[1fr_300px] md:items-start">
+        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row md:items-start gap-8 lg:gap-10">
           <div className="max-w-2xl font-body">
-            <p className="text-lg text-primary leading-relaxed mb-4">
-              The scientific study of fungi emerged as a distinct discipline in the sixteenth century, when Carolus Clusius published the first illustrated survey of mushrooms. Over the following three centuries it grew from a branch of botany into an independent science, traced here from Clusius through to Saccardo&rsquo;s monumental <Work>Sylloge Fungorum</Work>.
+            <p className="text-xl text-primary leading-relaxed mb-4">
+              Fungi were gathered for food, brewed into medicine, and puzzled over for centuries before anyone could say what they even were: plant, animal, or something stranger that earned a kingdom of its own.
             </p>
             <p className="text-secondary leading-relaxed mb-4">
-              Most of these foundational texts have never been translated. Persoon&rsquo;s <Work>Synopsis Methodica Fungorum</Work> and Fries&rsquo;s <Work>Systema Mycologicum</Work>, the works that fixed the names every mycologist still uses, survive only in their original Latin, French, and German.
+              The books that worked this out stay closed to most of the people who depend on them. Persoon and Fries fixed the rules of fungal naming in dense Latin; Sterbeeck wrote the first book devoted entirely to mushrooms, in Dutch; Bulliard&rsquo;s plates are among the finest ever made, the most important of these appearing in English here for the first time. Centuries of close observation, reachable until now mainly through citation while the pages themselves sat unread.
             </p>
             <p className="text-secondary leading-relaxed">
-              Source Library brings them together: high-resolution scans of every edition, paired with the first modern English translations of the most important works, readable here in full.
+              The detail in those pages is startlingly fine. A mushroom Persoon pinned down in a single Latin sentence can be matched against the specimen in your hand, the name you use every day traced back to the exact words that first fixed it to a living thing.
             </p>
           </div>
           {/* Walkthrough video placeholder (9:16) */}
-          <div className="mx-auto w-full max-w-[300px]">
+          <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0">
             <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-dark border border-border-light flex items-center justify-center">
               <div className="w-14 h-14 rounded-full bg-white/15 flex items-center justify-center">
                 <Play className="w-6 h-6 text-white" fill="currentColor" />
@@ -220,21 +245,19 @@ export default async function MycologyCollectionPage() {
                   <span className="absolute top-3 left-3 text-[11px] font-medium bg-warm/95 text-accent-rust px-2 py-1 rounded">First translation</span>
                   {featured.language && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-wide text-white/90 bg-dark/55 px-2 py-0.5 rounded">{featured.language}</span>}
                 </div>
-                {featuredPlates.length > 0 && (
+                {featuredPages.length > 0 && (
                   <>
                     <div className="flex gap-2 mt-3">
-                      {featuredPlates.map((g, i) => {
-                        const src = imgUrl(g);
-                        if (!src) return null;
-                        return (
-                          <div key={i} className="relative aspect-[3/4] flex-1 rounded overflow-hidden border border-border-light">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                          </div>
-                        );
-                      })}
+                      {featuredPages.map((p) => (
+                        <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title={p.kind === 'illustration' ? 'Illustrated page' : 'Text page'}
+                          className="group relative aspect-[3/4] flex-1 rounded overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                          <span className="absolute bottom-1 left-1 text-[8px] uppercase tracking-wide text-white/90 bg-dark/55 px-1 py-0.5 rounded leading-none">{p.kind}</span>
+                        </Link>
+                      ))}
                     </div>
-                    <p className="text-xs text-muted mt-2">{featuredPlates.length} of 612 hand-coloured plates</p>
+                    <p className="text-xs text-muted mt-2">A look inside: illustration plates and text pages</p>
                   </>
                 )}
               </div>
@@ -283,7 +306,7 @@ export default async function MycologyCollectionPage() {
       {/* ===== Illustrations — masonry ===== */}
       {gallery.length > 0 && (
         <section id="illustrations" className="bg-cream border-b border-border-light scroll-mt-4">
-          <div className="max-w-[1500px] mx-auto px-6 py-12">
+          <div className="max-w-[1500px] mx-auto px-6 pt-12 pb-6">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">Illustrations</h2>
               <Link href={`/gallery?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
@@ -347,7 +370,7 @@ export default async function MycologyCollectionPage() {
           <p className="text-2xl sm:text-3xl text-white font-display leading-snug">
             &ldquo;Of all the productions of nature, none have been more neglected, nor more worthy of study, than the mushrooms.&rdquo;
           </p>
-          <p className="text-sm text-white/60 mt-5">Pierre Bulliard · Histoire des Champignons de la France · 1791</p>
+          <Link href={featuredHref} className="inline-block text-sm text-white/60 hover:text-white/90 hover:underline mt-5">Pierre Bulliard · Histoire des Champignons de la France · French · 1791</Link>
         </div>
       </section>
 
