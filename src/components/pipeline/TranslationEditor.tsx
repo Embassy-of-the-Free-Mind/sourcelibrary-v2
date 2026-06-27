@@ -444,6 +444,11 @@ export default function TranslationEditor({
   const hasRashiScript = !!bookMetadata.metadata?.scriptType?.toLowerCase().includes('rashi');
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
+  // Label for the translation panel/toggle. Reflects the language actually being
+  // shown (the reader's EN/ES toggle overlays page.translation with translation_es
+  // and sets language:'Spanish'), so the UI never says "English" over Spanish text.
+  const translationLang = (page.translation?.language || '').toLowerCase();
+  const translationLangLabel = (translationLang.startsWith('es') || translationLang.includes('span')) ? 'Español' : 'English';
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
   // Save state for the inline page editor. The previous design auto-saved on
   // blur with no UI feedback — editors (Paul Dijstelberge, May 2026) reported
@@ -1157,7 +1162,7 @@ export default function TranslationEditor({
                   aria-pressed={showTranslationPanel}
                 >
                   <Languages className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden sm:inline">English</span>
+                  <span className="hidden sm:inline">{translationLangLabel}</span>
                 </button>
               )}
             </div>
@@ -1653,7 +1658,7 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        {translationText ? 'English' : 'Step 2: Translate'}
+                        {translationText ? translationLangLabel : 'Step 2: Translate'}
                       </span>
                       {translationText && (
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
@@ -2034,7 +2039,7 @@ export default function TranslationEditor({
               title="Toggle translation panel"
             >
               <Languages className="w-4 h-4" />
-              <span className="hidden sm:inline">English</span>
+              <span className="hidden sm:inline">{translationLangLabel}</span>
             </button>
           </div>
 
