@@ -404,6 +404,10 @@ export default async function MycologyCollectionPage() {
           Text pulled from the books' own OCR + translations (per-book search API). */}
       <QuoteBlock
         bgUrl={quoteBg}
+        imageCredit={{
+          text: 'Image: Battarra, Fungorum Agri Ariminensis Historia, 1755.',
+          href: '/gallery/image/69d8ca06a09828f83ddc973f-0',
+        }}
         quotes={[
           {
             translated: 'There is diverse sort: their water is the rain, their mother the oak-tree, the nurse. … Here comes this clear star, that parts the evil from the good: the life from the death, the poison from the medicine, the darkness from the light.',
@@ -486,7 +490,7 @@ export default async function MycologyCollectionPage() {
       <SignUpCTA
         bgImageUrl="/api/gallery-crop/6955d43628a09ca65928002a-0"
         bgAttribution={{
-          text: 'Flamsteed, Historia Coelestis Britannica, Vol. 3, 1725.',
+          text: 'Image: Flamsteed, Historia Coelestis Britannica, Vol. 3, 1725.',
           href: '/gallery/image/6955d43628a09ca65928002a-0',
         }}
       />

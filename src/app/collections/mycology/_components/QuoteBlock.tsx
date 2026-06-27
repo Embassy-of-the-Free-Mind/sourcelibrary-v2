@@ -21,7 +21,7 @@ export interface Quote {
  * original-language text, a Translated/Original toggle swaps it; the language is
  * shown in the attribution. Existing tokens only.
  */
-export default function QuoteBlock({ quotes, bgUrl }: { quotes: Quote[]; bgUrl?: string }) {
+export default function QuoteBlock({ quotes, bgUrl, imageCredit }: { quotes: Quote[]; bgUrl?: string; imageCredit?: { text: string; href: string } }) {
   const [i, setI] = useState(0);
   const [showOriginal, setShowOriginal] = useState(false);
   const [cycle, setCycle] = useState(0); // re-keys the ring so the sweep restarts each round
@@ -94,6 +94,13 @@ export default function QuoteBlock({ quotes, bgUrl }: { quotes: Quote[]; bgUrl?:
         </p>
         <Link href={q.href} className="inline-block text-sm text-white/70 hover:text-white transition-colors mt-5">{attribution}</Link>
       </div>
+      {imageCredit && (
+        <Link href={imageCredit.href}
+          className="absolute bottom-3 inset-x-0 z-10 text-center text-[11px] leading-snug px-6 max-w-3xl mx-auto text-white/60 hover:text-white/90 transition-colors"
+          style={{ textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}>
+          {imageCredit.text}
+        </Link>
+      )}
     </section>
   );
 }
