@@ -718,6 +718,20 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, offset, performSearch, updateUrl]);
 
+  // Clicking an AI suggestion chip = search FOR that term. Must change the query,
+  // re-run the result search, update the URL, and refresh the narration — in every
+  // view. The unified ("All") view previously only re-streamed narration via
+  // startAiStream(term, true) and never ran performSearch, so the results never
+  // changed (issue #2789). Centralized here so the two chip render sites can't drift.
+  const runSearchForTerm = useCallback((term: string) => {
+    setQuery(term);
+    setOffset(0);
+    performSearch(term, viewMode, 0);
+    updateUrl(term, viewMode, 0);
+    startAiStream(term, true); // append=true keeps the narration trail
+    aiTriggeredForQuery.current = term; // guard the deps-effect from re-streaming a fresh one
+  }, [viewMode, performSearch, updateUrl, startAiStream]);
+
   // Browse mode: fetch books when no query
   const isBrowseMode = !query || query.length < 2;
   const prefetchUsed = useRef(false);
@@ -1358,7 +1372,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                 {aiTerms.map(term => (
                   <button
                     key={term}
-                    onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
+                    onClick={() => runSearchForTerm(term)}
                     className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
                   >
                     {term}
@@ -1450,7 +1464,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                   {aiTerms.map(term => (
                     <button
                       key={term}
-                      onClick={() => { startAiStream(term, true); }}
+                      onClick={() => runSearchForTerm(term)}
                       className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
                     >
                       {term}
