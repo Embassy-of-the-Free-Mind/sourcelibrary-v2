@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Play, ArrowRight } from 'lucide-react';
+import { BookOpen, Play, ArrowRight, Search } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
@@ -42,6 +42,7 @@ const SECTIONS = [
   { id: 'featured', label: 'Featured' },
   { id: 'translations', label: 'First translations' },
   { id: 'gallery', label: 'Gallery' },
+  { id: 'librarian', label: 'Librarian' },
   { id: 'works', label: 'Works' },
   { id: 'involved', label: 'Get involved' },
 ];
@@ -201,7 +202,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row-reverse md:items-start gap-12 lg:gap-24">
+        <div className="max-w-[1500px] mx-auto px-6 py-12 flex flex-col md:flex-row-reverse md:justify-end md:items-start gap-8 lg:gap-12">
           <div className="max-w-2xl font-body">
             <p className="text-xl text-primary leading-relaxed mb-4">
               Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
@@ -221,7 +222,6 @@ export default async function MycologyCollectionPage() {
               </div>
               <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
             </div>
-            <p className="text-xs text-muted mt-2 text-center">A guided tour of the mycology collection</p>
           </div>
         </div>
       </section>
@@ -231,55 +231,43 @@ export default async function MycologyCollectionPage() {
         <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-12">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-4">Featured work</p>
-            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[280px_1fr] md:items-start">
-              {/* Left: cover + plate strip */}
-              <div>
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-warm shadow-md">
-                  {getBookThumbnailUrl(featured) ? (
-                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="280px" />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-12 h-12 text-muted" /></div>
-                  )}
-                  {featured.language && <span className="absolute bottom-3 right-3 text-[10px] uppercase tracking-wide text-white/90 bg-dark/55 px-2 py-0.5">{featured.language}</span>}
-                </div>
-                {featuredPages.length > 0 && (
-                  <>
-                    <div className="flex gap-2 mt-3">
-                      {featuredPages.map((p) => (
-                        <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title={p.kind === 'illustration' ? 'Illustrated page' : 'Text page'}
-                          className="group relative aspect-[3/4] flex-1 overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                          <span className="absolute bottom-1 left-1 text-[8px] uppercase tracking-wide text-white/90 bg-dark/55 px-1 py-0.5 leading-none">{p.kind}</span>
-                        </Link>
-                      ))}
-                    </div>
-                    <p className="text-xs text-muted mt-2">A look inside: illustration plates and text pages</p>
-                  </>
-                )}
-              </div>
-              {/* Right: detail */}
+            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[1fr_320px] md:items-start">
+              {/* Left: detail */}
               <div className="min-w-0">
                 <h2 className="text-3xl sm:text-4xl font-semibold text-primary leading-tight mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
-                <p className="text-base text-muted mb-4">Pierre Bulliard · 1780&ndash;1791</p>
+                <p className="text-base text-muted mb-4">Pierre Bulliard · 1780&ndash;1791{featured.language ? ` · ${featured.language}` : ''}</p>
                 <div className="flex flex-wrap gap-2 mb-5">
                   {['2 volumes', '612 hand-coloured plates', 'Folio'].map((m) => (
                     <span key={m} className="text-xs text-secondary bg-warm border border-border-light px-3 py-1">{m}</span>
                   ))}
                 </div>
                 <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">An illustrated flora of the fungi of France, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
-                <p className="text-secondary leading-relaxed font-body mb-5 max-w-prose">Among the first works to render fungi in full, accurate colour, it remained a standard reference for identification well into the following century.</p>
-                <figure className="mb-6 max-w-prose">
-                  <blockquote className="relative pl-6 text-lg text-primary italic font-body leading-snug">
-                    <span className="absolute left-0 top-0 text-3xl text-accent-rust/50 leading-none" style={{ fontFamily: 'var(--font-serif)' }}>&ldquo;</span>
-                    The plates are so exact that mycologists still use them to confirm identifications, two centuries on.
-                  </blockquote>
-                  <figcaption className="text-[11px] uppercase tracking-wider text-muted mt-2">Curator&rsquo;s note</figcaption>
-                </figure>
+                <p className="text-secondary leading-relaxed font-body mb-6 max-w-prose">Among the first works to render fungi in full, accurate colour, it remained a standard reference for identification well into the following century.</p>
                 <div className="flex flex-wrap items-center gap-5">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
                   <Link href={`/gallery?collection=${SLUG}`} className={RUST_LINK}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
                 </div>
+              </div>
+              {/* Right: main cover + preview pages stacked vertically beside it */}
+              <div className="flex gap-3">
+                <div className="relative aspect-[3/4] flex-1 overflow-hidden bg-warm shadow-md">
+                  {getBookThumbnailUrl(featured) ? (
+                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="240px" />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-12 h-12 text-muted" /></div>
+                  )}
+                </div>
+                {featuredPages.length > 0 && (
+                  <div className="flex flex-col gap-3 w-16 sm:w-20 shrink-0">
+                    {featuredPages.map((p) => (
+                      <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title={p.kind === 'illustration' ? 'Illustrated page' : 'Text page'}
+                        className="relative aspect-[3/4] overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -303,7 +291,7 @@ export default async function MycologyCollectionPage() {
       {/* ===== Gallery — all visual material, masonry ===== */}
       {gallery.length > 0 && (
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
-          <div className="max-w-[1500px] mx-auto px-6 pt-12 pb-6">
+          <div className="max-w-[1500px] mx-auto px-6 pt-12 pb-2">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
               <Link href={`/gallery?collection=${SLUG}`} className={`${RUST_LINK} whitespace-nowrap`}>View all {galleryTotal.toLocaleString('en-US')} <ArrowRight className="w-3.5 h-3.5" /></Link>
@@ -330,6 +318,24 @@ export default async function MycologyCollectionPage() {
           </div>
         </section>
       )}
+
+      {/* ===== Ask the librarian ===== */}
+      <section id="librarian" className="bg-dark scroll-mt-4">
+        <div className="max-w-[1500px] mx-auto px-6 py-16">
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-gold mb-3">Ask the librarian</p>
+            <h2 className="text-2xl sm:text-3xl text-white font-display mb-3">Search inside every book</h2>
+            <p className="text-white/70 leading-relaxed font-body mb-7">
+              The librarian reads the full transcribed text and the description of every illustration in each book that has been digitised here. Ask a question in plain language and it points you to the exact page, passage, or plate that answers it.
+            </p>
+            <Link href="/librarian" className="flex items-center gap-3 bg-white/10 border border-white/20 text-white/70 px-5 py-3.5 hover:bg-white/15 transition-colors rounded-lg">
+              <Search className="w-5 h-5 text-white/50 shrink-0" />
+              <span className="text-left">Ask a question about mycology&hellip;</span>
+              <ArrowRight className="w-4 h-4 ml-auto text-white/50 shrink-0" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
       <section id="works" className="bg-warm border-b border-border-light scroll-mt-4">
