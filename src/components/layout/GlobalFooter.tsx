@@ -61,8 +61,6 @@ type Partner = {
   width?: number;
   height?: number;
   invert?: boolean;
-  /** Render the partner's text wordmark instead of an image (e.g. Frond Studio). */
-  wordmark?: boolean;
 };
 
 // Logo PNGs are trimmed to their content (no internal transparent padding) so
@@ -70,7 +68,7 @@ type Partner = {
 const PARTNERS: Partner[] = [
   { name: 'Embassy of the Free Mind', src: '/partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 770, height: 326, invert: false },
   { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 299, height: 117, invert: false },
-  { name: 'Frond Studio', href: 'https://frond-studio.com', wordmark: true },
+  { name: 'Frond Studio', src: '/partners/frond-studio-white.png', href: 'https://frond-studio.com', width: 400, height: 213, invert: false },
 ];
 
 export default function GlobalFooter() {
@@ -182,23 +180,15 @@ export default function GlobalFooter() {
                 className="flex items-center h-[2.4rem] md:h-[3.2rem] opacity-50 hover:opacity-80 transition-opacity"
                 title={partner.name}
               >
-                {partner.wordmark ? (
-                  // Frond Studio's logo is a stacked text wordmark (no image asset).
-                  <span className="flex flex-col leading-none gap-[3px] text-white">
-                    <span className="font-sans font-light tracking-tight text-[2rem] md:text-[2.6rem]">Frond</span>
-                    <span className="font-sans font-medium uppercase tracking-[0.44em] text-[0.56rem] md:text-[0.7rem] text-white/70 pl-px">Studio</span>
-                  </span>
-                ) : (
-                  <Image
-                    src={partner.src!}
-                    alt={partner.name}
-                    width={partner.width}
-                    height={partner.height}
-                    sizes="auto"
-                    className={`h-[2.4rem] md:h-[3.2rem] w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
-                    unoptimized
-                  />
-                )}
+                <Image
+                  src={partner.src!}
+                  alt={partner.name}
+                  width={partner.width}
+                  height={partner.height}
+                  sizes="auto"
+                  className={`h-[2.4rem] md:h-[3.2rem] w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
+                  unoptimized
+                />
               </a>
             ))}
           </div>
