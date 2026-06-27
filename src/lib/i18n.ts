@@ -28,13 +28,12 @@ export function useLocale(): Locale {
 // ---------- Locale switching (sitewide EN/ES toggle, #2763) ----------
 
 // EN base paths that have a real Spanish (`/es…`) twin route. Keep this in sync
-// with the `src/app/es/**` route folders. Today only the homepage; the funnel
-// pages (`/support`, `/auth/signin`) are added here when their `/es` routes
-// land. The header toggle is shown on EVERY page, but on a page with no twin the
-// ES link falls back to the Spanish homepage (`/es`) as a front door rather than
-// dead-ending on a 404 — the thin-i18n bargain (deep pages rely on the browser's
-// own translate).
-export const LOCALIZED_PATHS = new Set<string>(['/']);
+// with the `src/app/es/**` route folders: the homepage plus the acquisition
+// funnel (`/support`, `/auth/signin`). The header toggle is shown on EVERY page,
+// but on a page with no twin the ES link falls back to the Spanish homepage
+// (`/es`) as a front door rather than dead-ending on a 404 — the thin-i18n
+// bargain (deep pages rely on the browser's own translate).
+export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin']);
 
 /** Strip the `/es` locale prefix to get the canonical English path. */
 export function canonicalPath(pathname: string | null | undefined): string {
