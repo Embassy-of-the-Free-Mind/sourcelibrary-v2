@@ -340,18 +340,25 @@ export default async function MycologyCollectionPage() {
       )}
 
       {/* ===== Ask the librarian ===== */}
-      <section id="librarian" className="bg-dark scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-16">
-          <div className="max-w-2xl mx-auto text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-gold mb-3">Ask the librarian</p>
-            <h2 className="text-2xl sm:text-3xl text-white font-display mb-3">Search inside every book</h2>
-            <p className="text-white/70 leading-relaxed font-body mb-7">
+      <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
+        <div className="max-w-[1500px] mx-auto px-6 py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
+          {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
+          <div className="w-full max-w-[420px] mx-auto md:mx-0 shrink-0">
+            <video className="w-full h-auto mix-blend-multiply" autoPlay loop muted playsInline preload="metadata">
+              <source src="/collections/mycology/librarian.mp4" type="video/mp4" />
+            </video>
+          </div>
+          {/* Text right, left-aligned. */}
+          <div className="max-w-xl">
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-3">Ask the librarian</p>
+            <h2 className="text-2xl sm:text-3xl text-primary font-display mb-3">Search inside every book</h2>
+            <p className="text-secondary leading-relaxed font-body mb-7">
               The librarian reads the full transcribed text and the description of every illustration in each book that has been digitised here. Ask a question in plain language and it points you to the exact page, passage, or plate that answers it.
             </p>
-            <Link href="/librarian" className="flex items-center gap-3 bg-white/10 border border-white/20 text-white/70 px-5 py-3.5 hover:bg-white/15 transition-colors rounded-lg">
-              <Search className="w-5 h-5 text-white/50 shrink-0" />
+            <Link href="/librarian" className="flex items-center gap-3 bg-white border border-border-light text-muted px-5 py-3.5 hover:border-accent-rust/40 transition-colors rounded-lg max-w-md">
+              <Search className="w-5 h-5 text-muted shrink-0" />
               <span className="text-left">Ask a question about mycology&hellip;</span>
-              <ArrowRight className="w-4 h-4 ml-auto text-white/50 shrink-0" />
+              <ArrowRight className="w-4 h-4 ml-auto text-muted shrink-0" />
             </Link>
           </div>
         </div>
