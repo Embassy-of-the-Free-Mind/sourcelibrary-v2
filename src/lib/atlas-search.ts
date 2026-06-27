@@ -134,11 +134,18 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
   const filter: Document[] = [];
   // Hidden / deduped pages live at page_number ≤ 0. Exclude them from search.
   filter.push({ range: { path: 'page_number', gt: 0 } });
-  if (bookIds) {
+  if (bookIds !== undefined) {
     if (typeof bookIds === 'string') {
       filter.push({ equals: { path: 'book_id', value: bookIds } });
     } else if (bookIds.length > 0) {
       filter.push({ in: { path: 'book_id', value: bookIds } });
+    } else {
+      // Empty allow-list ⇒ match nothing. `undefined` means "no book filter";
+      // an empty *array* is a computed allow-list that resolved to zero books
+      // (e.g. a language with no matching titles) and must NOT fail open to the
+      // whole corpus. Atlas `in` rejects an empty value array, so use an
+      // impossible equals sentinel. (#2760)
+      filter.push({ equals: { path: 'book_id', value: ' __no_match__' } });
     }
   }
 
