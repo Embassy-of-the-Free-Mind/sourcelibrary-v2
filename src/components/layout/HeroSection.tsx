@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import { isInAppBrowser } from '@/lib/in-app-browser';
 import { useStableSession } from '@/hooks/useStableSession';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
@@ -13,16 +14,26 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  // Google OAuth is blocked inside Instagram/Facebook/LinkedIn webviews
+  // (disallowed_useragent), so the button silently fails there. Detect it and
+  // steer the visitor to the email magic link, which always works.
+  const [inApp, setInApp] = useState(false);
+  useEffect(() => { setInApp(isInAppBrowser(navigator.userAgent)); }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     setLoading(true);
+    setError(false);
     try {
-      await signIn('email', { email, callbackUrl: '/', redirect: false });
-      setSent(true);
+      // Provider id is 'nodemailer' (next-auth v5 renamed Email→Nodemailer);
+      // the old 'email' id silently no-ops and faked a "check your email".
+      const result = await signIn('nodemailer', { email, callbackUrl: '/', redirect: false });
+      if (result?.error) setError(true);
+      else setSent(true);
     } catch {
-      // fall through
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -64,9 +75,13 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
           {loading ? t.sending : t.join}
         </button>
       </form>
+      {error && (
+        <p className="mt-2 text-sm text-red-200">{t.emailError}</p>
+      )}
       <div className="flex items-center gap-4 mt-4">
         <button
           onClick={() => signIn('google', { callbackUrl: '/' })}
+          style={{ opacity: inApp ? 0.5 : 1 }}
           className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white/90 transition-colors"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -85,6 +100,9 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
           {t.haveAccount}
         </Link>
       </div>
+      {inApp && (
+        <p className="mt-2 max-w-md text-xs text-white/50">{t.googleBlockedNote}</p>
+      )}
     </div>
   );
 }

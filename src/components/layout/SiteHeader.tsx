@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, localeHref, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 
 interface NavLink {
   label: string;
@@ -73,11 +73,13 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const locale = homeLocale ?? pathnameLocale;
   const t = NAV_STRINGS[locale];
   const NAV_LINKS = buildNavLinks(t);
-  // The EN/ES toggle is shown sitewide (#2763): Spanish-speaking visitors lose
-  // all language control once they leave `/es`, and the funnel pages reach
-  // Instagram/webview users who have no browser translate button. EN always
-  // links to the canonical page (reader stays put); ES links to the `/es` twin
-  // when one exists, else the Spanish homepage front door (see localeHref).
+  // The EN/ES toggle shows only where a real Spanish twin exists (home, sign-in,
+  // support) — the thin-i18n bargain (#2763). On deep English-only pages the
+  // toggle is hidden, so clicking ES never bounces the reader to the `/es`
+  // homepage (deep pages rely on the browser's own translate instead).
+  // `homeLocale` is set on the statically-prerendered homepage, where pathname
+  // is null at build — treat that as localized so the toggle renders server-side.
+  const showLangToggle = homeLocale !== undefined || hasLocalizedTwin(pathname);
   const enHref = localeHref('en', pathname);
   const esHref = localeHref('es', pathname);
 
@@ -192,7 +194,8 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             })}
           </nav>
 
-          {/* Language toggle — shown sitewide (#2763) */}
+          {/* Language toggle — only on pages with a real Spanish twin (#2763) */}
+          {showLangToggle && (
           <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
             <Link
               href={enHref}
@@ -218,6 +221,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               ES
             </Link>
           </div>
+          )}
 
           {/* Desktop search icon */}
           <Link
