@@ -425,6 +425,23 @@ mark {
   animation: fade-in 0.7s ease-out forwards;
 }
 
+/* Countdown ring for the cycling quote band — the arc sweeps full over one
+   cycle, re-keyed each round so it restarts. Duration is set inline. */
+.quote-timer { display: inline-flex; line-height: 0; }
+.quote-timer-arc {
+  fill: none;
+  /* circumference of r=8.2 ≈ 51.5 */
+  stroke-dasharray: 51.5;
+  stroke-dashoffset: 51.5;
+  animation: quote-sweep linear forwards;
+}
+@keyframes quote-sweep {
+  to { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .quote-timer-arc { animation: none; stroke-dashoffset: 0; }
+}
+
 /* Page-load entrance: opacity-only (a transform here would break sticky
    headers inside the page). Slightly longer + a soft ease so it's noticeable. */
 .animate-page-enter {
