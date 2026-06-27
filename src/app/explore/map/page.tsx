@@ -3,7 +3,66 @@ import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import BookMapLoader from '@/components/explore/BookMapLoader';
-import type { BookLocation } from '@/components/explore/BookMap';
+import type { BookLocation, LocationType } from '@/components/explore/BookMap';
+
+/**
+ * The shape stored in system_config.map_data (and the live-fallback build):
+ * each per-(city,type) group carries its full book list. The page strips these
+ * down to the lightweight {years, undated} the client needs and lazy-loads the
+ * full lists per city — keeping the initial payload ~350 KB instead of ~7 MB.
+ */
+interface RawLocation {
+  city: string;
+  country: string | null;
+  lat: number;
+  lng: number;
+  type: LocationType;
+  books: Array<{ id: string; title: string; display_title?: string; author: string; year: number | null; slug: string }>;
+}
+interface RawMapData {
+  locations: RawLocation[];
+  stats: { total_books: number; total_locations: number; by_type: Record<string, number> };
+}
+
+// Role bitmask — mirrors TYPE_BIT in BookMap.tsx (kept local so this server
+// component doesn't import from the 'use client' module).
+const TYPE_BIT: Record<string, number> = { publication: 1, author_birth: 2, author_death: 4, origin: 8 };
+
+/**
+ * Collapse the per-(city,type) cache groups into one lightweight record per city.
+ * Books are deduped by id across roles (OR-ing their role bits) and stripped to
+ * {y: year, m: role-mask} — no titles/authors/slugs/ids ship to the client; those
+ * load lazily per city from /api/explore/map/city.
+ */
+function slimLocations(locations: RawLocation[]): BookLocation[] {
+  const byCity = new Map<string, {
+    city: string; country: string | null; lat: number; lng: number;
+    books: Map<string, { y: number | null; m: number }>;
+  }>();
+
+  for (const loc of locations) {
+    const key = `${loc.city}|${loc.country || ''}`;
+    let entry = byCity.get(key);
+    if (!entry) {
+      entry = { city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng, books: new Map() };
+      byCity.set(key, entry);
+    }
+    // Prefer the publication group's coords for the pin (matches prior behavior).
+    if (loc.type === 'publication') { entry.lat = loc.lat; entry.lng = loc.lng; }
+    const bit = TYPE_BIT[loc.type] || 0;
+    for (const b of loc.books || []) {
+      const ex = entry.books.get(b.id);
+      if (ex) ex.m |= bit;
+      else entry.books.set(b.id, { y: typeof b.year === 'number' ? b.year : null, m: bit });
+    }
+  }
+
+  const out: BookLocation[] = [];
+  for (const e of byCity.values()) {
+    out.push({ city: e.city, country: e.country, lat: e.lat, lng: e.lng, books: [...e.books.values()] });
+  }
+  return out;
+}
 
 // Daily ISR so the page re-reads the system_config.map_data cache that the
 // Hetzner cron rebuilds at 05:45 — `revalidate = false` froze the rendered
@@ -41,7 +100,7 @@ export const metadata: Metadata = {
   },
 };
 
-async function fetchMapData() {
+async function fetchMapData(): Promise<RawMapData> {
   const db = await getReadDb();
 
   // Read pre-computed map data from system_config (fast single-doc read)
@@ -50,10 +109,7 @@ async function fetchMapData() {
     .findOne({ _id: 'map_data' as any }, { maxTimeMS: 10000 });
 
   if (cached?.data) {
-    return cached.data as {
-      locations: BookLocation[];
-      stats: { total_books: number; total_locations: number; by_type: Record<string, number> };
-    };
+    return cached.data as RawMapData;
   }
 
   // Fallback: compute live (slow but works if cache is empty)
@@ -68,7 +124,7 @@ async function fetchMapData() {
     )
     .toArray();
 
-  const groups = new Map<string, BookLocation>();
+  const groups = new Map<string, RawLocation>();
   const byType: Record<string, number> = {};
   let totalBooks = 0;
 
@@ -85,7 +141,7 @@ async function fetchMapData() {
       if (!groups.has(key)) {
         groups.set(key, {
           city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
-          type: loc.type as BookLocation['type'], books: [],
+          type: loc.type as LocationType, books: [],
         });
       }
 
@@ -115,6 +171,7 @@ async function fetchMapData() {
 export default async function MapPage() {
   try {
     const data = await fetchMapData();
+    const locations = slimLocations(data.locations);
     const locationCount = data.stats.total_locations;
     return (
       <ContentPageLayout
@@ -131,7 +188,7 @@ export default async function MapPage() {
         maxWidth="full"
         noPadding
       >
-        <BookMapLoader locations={data.locations} stats={data.stats} />
+        <BookMapLoader locations={locations} stats={data.stats} />
       </ContentPageLayout>
     );
   } catch (err) {
