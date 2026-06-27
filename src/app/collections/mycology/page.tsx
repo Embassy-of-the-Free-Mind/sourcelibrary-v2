@@ -14,6 +14,7 @@ import { tenantBookUrl } from '@/lib/slugify';
 import BookCardMini, { MiniBook } from './_components/BookCardMini';
 import MycoSlider from './_components/MycoSlider';
 import MycoAnchorBar from './_components/MycoAnchorBar';
+import QuoteBlock from './_components/QuoteBlock';
 
 /*
  * Mycology collection page — REDESIGN. Dedicated route so the shared
@@ -150,12 +151,12 @@ export default async function MycologyCollectionPage() {
   const tagline = (collection.subtitle as string) || 'The Kingdom of Fungi, from Clusius to Saccardo.';
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
 
-  const collageTiles = gallery.map(imgUrl).filter(Boolean).slice(0, 21) as string[];
-  // Prefer a figural illustration plate (not text/portrait/map) for the quote band.
+  // Quote background per the quote-background-image skill: a figural plate with
+  // a calm zone, no printed text. If nothing qualifies, fall back to the plain
+  // tonal background (quoteBg undefined → QuoteBlock shows the dark surface).
   const PLATE_TYPES = ['illustration', 'engraving', 'woodcut', 'emblem'];
   const quotePlate = gallery.find((g) => g.type && PLATE_TYPES.includes(g.type))
-    || gallery.find((g) => g.type && !['page', 'title_page', 'text', 'portrait', 'frontispiece', 'map', 'table', 'chart', 'symbol', 'decorative', 'musical_score', 'exlibris', 'bookplate'].includes(g.type))
-    || gallery[0];
+    || gallery.find((g) => g.type && !['page', 'title_page', 'text', 'portrait', 'frontispiece', 'map', 'table', 'chart', 'symbol', 'decorative', 'musical_score', 'exlibris', 'bookplate'].includes(g.type));
   const quoteBg = quotePlate ? imgUrl(quotePlate) : undefined;
   const galleryTotal = gallery.length;
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
@@ -167,16 +168,9 @@ export default async function MycologyCollectionPage() {
       <ConditionalSiteHeader variant="light" />
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[60vh] flex items-end">
-        {collageTiles.length > 0 && (
-          <div className="absolute inset-0 grid grid-cols-4 sm:grid-cols-7 grid-rows-3">
-            {collageTiles.map((src, i) => (
-              <div key={i} className="relative overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover" />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* One composited collage image (2:3 tiles) — a single optimized load. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={`/api/collections/${SLUG}/hero-collage`} alt="" className="absolute inset-0 w-full h-full object-cover" fetchPriority="high" />
         {/* Lighter, left-weighted legibility gradient — no bottom fade. */}
         <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-dark/45 to-transparent" />
@@ -362,20 +356,16 @@ export default async function MycologyCollectionPage() {
         </div>
       </section>
 
-      {/* ===== Quote band ===== */}
-      <section className="relative bg-dark overflow-hidden">
-        {quoteBg && (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={quoteBg} alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
-        )}
-        <div className="absolute inset-0 bg-dark/70" />
-        <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 text-center">
-          <p className="text-2xl sm:text-3xl text-white font-display leading-snug">
-            &ldquo;Of all the productions of nature, none have been more neglected, nor more worthy of study, than the mushrooms.&rdquo;
-          </p>
-          <Link href={featuredHref} className="inline-block text-sm text-white/60 hover:text-white/90 hover:underline mt-5">Pierre Bulliard · Histoire des Champignons de la France · French · 1791</Link>
-        </div>
-      </section>
+      {/* ===== Quote band (lighter tint + Translated/Original toggle) =====
+          NOTE: verify the French original against the source before prod. */}
+      <QuoteBlock
+        translated="Of all the productions of nature, none have been more neglected, nor more worthy of study, than the mushrooms."
+        original="De toutes les productions de la nature, il n'en est aucune qui ait été plus négligée, ni qui soit cependant plus digne de nos recherches, que les champignons."
+        originalLanguage="French"
+        attribution="Pierre Bulliard · Histoire des Champignons de la France · 1791"
+        attributionHref={featuredHref}
+        bgUrl={quoteBg}
+      />
 
       {/* ===== Get involved ===== */}
       <section id="involved" className="bg-cream scroll-mt-4">
