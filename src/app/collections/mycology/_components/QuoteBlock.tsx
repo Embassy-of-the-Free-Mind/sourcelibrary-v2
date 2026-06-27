@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import ParallaxImage from '@/components/ParallaxImage';
 
-const CYCLE_MS = 11000;
+const CYCLE_MS = 22000;
 
 export interface Quote {
   translated: string;
