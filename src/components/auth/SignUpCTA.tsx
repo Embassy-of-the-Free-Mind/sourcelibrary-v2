@@ -8,9 +8,11 @@ interface SignUpCTAProps {
   variant?: 'section' | 'inline';
   /** Optional background image (e.g. a collection plate) behind the dark section. */
   bgImageUrl?: string;
+  /** Optional credit for the background image, shown bottom-centre with a link. */
+  bgAttribution?: { text: string; href: string };
 }
 
-export default function SignUpCTA({ variant = 'section', bgImageUrl }: SignUpCTAProps) {
+export default function SignUpCTA({ variant = 'section', bgImageUrl, bgAttribution }: SignUpCTAProps) {
   const { status } = useStableSession();
   const isEmbedded = useIsEmbedded();
 
@@ -76,6 +78,15 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl }: SignUpCTA
           Sign in with email &middot; No spam, ever
         </p>
       </div>
+      {bgImageUrl && bgAttribution && (
+        <Link
+          href={bgAttribution.href}
+          className="absolute bottom-3 inset-x-0 z-10 text-center text-[11px] leading-snug px-6 max-w-3xl mx-auto hover:underline"
+          style={{ color: '#cfc8bc', textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}
+        >
+          {bgAttribution.text}
+        </Link>
+      )}
     </section>
   );
 }

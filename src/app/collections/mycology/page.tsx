@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Play, ArrowRight, Search } from 'lucide-react';
+import { BookOpen, Play, ArrowRight } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
@@ -15,6 +15,7 @@ import BookCardMini, { MiniBook } from './_components/BookCardMini';
 import MycoSlider from './_components/MycoSlider';
 import MycoAnchorBar from './_components/MycoAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
+import LibrarianSearch from './_components/LibrarianSearch';
 
 /*
  * Mycology collection page — REDESIGN. Dedicated route so the shared
@@ -364,11 +365,7 @@ export default async function MycologyCollectionPage() {
             <p className="text-secondary leading-relaxed font-body mb-7">
               The librarian reads the full transcribed text and the description of every illustration in each book that has been digitised here. Ask a question in plain language and it points you to the exact page, passage, or plate that answers it.
             </p>
-            <Link href="/librarian" className="flex items-center gap-3 bg-white border border-border-light text-muted px-5 py-3.5 hover:border-accent-rust/40 transition-colors rounded-lg max-w-md">
-              <Search className="w-5 h-5 text-muted shrink-0" />
-              <span className="text-left">Ask a question about mycology&hellip;</span>
-              <ArrowRight className="w-4 h-4 ml-auto text-muted shrink-0" />
-            </Link>
+            <LibrarianSearch placeholder="Ask a question about mycology…" />
           </div>
         </div>
       </section>
@@ -435,7 +432,13 @@ export default async function MycologyCollectionPage() {
         </div>
       </section>
 
-      <SignUpCTA bgImageUrl="/api/gallery-crop/6955d43628a09ca65928002a-0" />
+      <SignUpCTA
+        bgImageUrl="/api/gallery-crop/6955d43628a09ca65928002a-0"
+        bgAttribution={{
+          text: 'Allegorical engraving depicting a woman and two cherubs observing the stars with astronomical instruments. British Celestial History (Historia Coelestis Britannica), Vol. 3 — John Flamsteed (1725).',
+          href: '/gallery/image/6955d43628a09ca65928002a-0',
+        }}
+      />
     </div>
   );
 }
