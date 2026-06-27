@@ -37,6 +37,39 @@ verified. Everything else rests on the weak legacy `translation_verification.dis
 
 ---
 
+## 1b. The durability principle — evidence outlives the approach
+The verification *approach* will keep changing (it already went heuristic →
+Gemini → Claude → whatever's next). The **evidence** a run leaves behind must
+not. So separate the two:
+
+- **Evidence = durable, approach-agnostic facts.** "On date D, approach A ran
+  queries Q against sources S and found / didn't find prior P (with URL)." True
+  forever, regardless of who produced it or who reads it. Stored append-only in
+  `first_translation_attempts`, tagged with `method` (the approach) so a future
+  instrument can tell whose evidence it is.
+- **Verdict = a disposable interpretation** derived from the accumulated pile.
+  Any new approach recomputes the verdict over all prior evidence; it never
+  resets the pile.
+
+Three consequences every approach must honor:
+1. **Read before you spend.** Before verifying a book, load its prior attempts
+   (`loadPriorEvidence` / `summarizePriorEvidence` in `prior-evidence.ts`):
+   short-circuit on an already-found, URL-backed prior; skip queries/sources
+   already covered; treat absence from N *independent* approaches as stronger
+   than one pass.
+2. **Land findings in the durable registry.** A found prior is the most reusable
+   artifact in the system — write it to `translation_catalogs` (Sink C) so other
+   approaches *and* other features (work-identity census #2567) inherit it
+   instead of re-discovering it.
+3. **Derive the verdict from the pile, not from the run.** Swapping approaches
+   should recompute, never overwrite. `strongestAttempt` + the derived rule are
+   the start; the goal is verdict = f(accumulated evidence + independence).
+
+The payoff: when the approach changes again, the next instrument inherits every
+attempt ever logged as a head start. Years of search evidence keep paying off
+instead of evaporating — the antidote to the history's "every approach starts
+over" waste.
+
 ## 2. Why a tiered census, not a single pass
 
 Two hard-won constraints shape the design:
