@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -26,6 +26,7 @@ import {
   type Collection,
 } from '@/lib/api-client';
 import { tenantBookUrl } from '@/lib/slugify';
+import { matchKnownEntity } from '@/lib/known-entities';
 import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -732,6 +733,16 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
     aiTriggeredForQuery.current = term; // guard the deps-effect from re-streaming a fresh one
   }, [viewMode, performSearch, updateUrl, startAiStream]);
 
+  // Known-entity capture (#2790): a query that names a place in the library (a
+  // reading room like "shwep", a collection, a library partner) gets a direct
+  // entry card above results instead of being left to the LLM's guess. Suppressed
+  // in embed/tenant mode — these hrefs (/shwep, /collections, /libraries) point
+  // off-tenant and would leak past the subdomain lockdown.
+  const knownEntity = useMemo(
+    () => (embed ? null : matchKnownEntity(query, { collections: collectionsList })),
+    [embed, query, collectionsList]
+  );
+
   // Browse mode: fetch books when no query
   const isBrowseMode = !query || query.length < 2;
   const prefetchUsed = useRef(false);
@@ -1349,6 +1360,26 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
             <Pagination total={browseTotal} offset={offset} setOffset={setOffset} loading={browseLoading} pageSize={resultsPerPage} />
           </div>
+        )}
+
+        {/* Known-entity capture (#2790): direct entry for a query that names a
+            place in the library (reading room / collection / library partner). */}
+        {knownEntity && query.length >= 2 && (
+          <Link
+            href={knownEntity.href}
+            className="group flex items-center gap-3 mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light hover:border-accent-rust/40 transition-colors"
+          >
+            <span className="text-2xl shrink-0" aria-hidden>{knownEntity.icon || '📚'}</span>
+            <div className="min-w-0 flex-1">
+              <div className="text-xs uppercase tracking-wide text-muted">
+                {knownEntity.kind === 'reading-room' ? 'Reading room' : knownEntity.kind === 'library' ? 'Library partner' : 'Collection'}
+              </div>
+              <div className="font-serif font-medium text-primary group-hover:text-accent-rust transition-colors">
+                {knownEntity.title} <span aria-hidden>→</span>
+              </div>
+              <p className="text-sm text-muted line-clamp-2">{knownEntity.description}</p>
+            </div>
+          </Link>
         )}
 
         {/* Loading */}
