@@ -33,10 +33,11 @@ export async function GET(request: Request) {
     const firstTranslation = searchParams.get('first_translation') === '1' || undefined;
     const hasTranslation = searchParams.get('has_translation') === '1' || undefined;
     const category = searchParams.get('category') || undefined;
+    const collection = searchParams.get('collection') || undefined;
 
     const promises: [Promise<{ books: unknown[]; total: number }>, Promise<{ lang: string; count: number }[]> | null] = [
-      browseBooks({ language, search, sort, offset, limit, exactCount: true, yearMin, yearMax, firstTranslation, hasTranslation, category }),
-      includeLangs ? getLanguageCounts({}) : null,
+      browseBooks({ language, search, sort, offset, limit, exactCount: true, yearMin, yearMax, firstTranslation, hasTranslation, category, collection }),
+      includeLangs ? getLanguageCounts({ collection }) : null,
     ];
 
     const [result, languages] = await Promise.all([

@@ -4,7 +4,7 @@ import HeroSection from '@/components/layout/HeroSection';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
-import BookCard from '@/components/book/BookCard';
+import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
@@ -221,7 +221,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           {discoverBooks.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
               {discoverBooks.map((book, i) => (
-                <BookCard key={book.id} book={book} priority={i < 2} />
+                <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={i < 2} />
               ))}
             </div>
           ) : (

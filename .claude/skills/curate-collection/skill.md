@@ -255,6 +255,8 @@ Write 2-3 paragraphs of editorial context. Structure:
 
 Select books across three tiers. Each needs an editorial `note` explaining significance.
 
+> **For the featured/highlighted book's blurb, follow the `featured-work-description` skill (`.claude/skills/featured-work-description/skill.md`).** It sells the book, not the platform: no Source Library / translation / OCR / "high resolution" language, lead with the one distinctive thing about the book anchored by a fact, two short paragraphs, stats stay in the stat line.
+
 **Tier 1 — Essential Reading (4-6 books):**
 The masterworks. Books that define the field. Notes should be 2-3 sentences explaining why this text is foundational.
 

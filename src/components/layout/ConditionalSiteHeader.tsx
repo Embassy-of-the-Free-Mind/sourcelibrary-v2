@@ -9,7 +9,7 @@ import { useEmbedContext } from '@/hooks/useEmbedContext';
 import SiteHeader from './SiteHeader';
 
 interface Props {
-    variant?: 'transparent' | 'light';
+    variant?: 'transparent' | 'light' | 'dark';
 }
 
 export default function ConditionalSiteHeader({ variant = 'light' }: Props) {

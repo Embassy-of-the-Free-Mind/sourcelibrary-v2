@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import BookCard from '@/components/book/BookCard';
+import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { Book } from '@/lib/types';
 import { bookUrl } from '@/lib/slugify';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
@@ -523,7 +523,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
                 {newArrivals.map((book) => (
-                  <BookCard key={book.id} book={book} priority={false} />
+                  <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={false} />
                 ))}
               </div>
             </div>
@@ -537,7 +537,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
                 {recentlyTranslated.map((book) => (
-                  <BookCard key={book.id} book={book} priority={false} />
+                  <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={false} />
                 ))}
               </div>
             </div>
@@ -678,7 +678,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
           ) : viewMode === 'cards' ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
               {displayedBooks.map((book, index) => (
-                <BookCard key={book.id} book={book} priority={index < 5} />
+                <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={index < 5} />
               ))}
             </div>
           ) : (

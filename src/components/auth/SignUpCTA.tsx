@@ -3,12 +3,17 @@
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import ParallaxImage from '@/components/ParallaxImage';
 
 interface SignUpCTAProps {
   variant?: 'section' | 'inline';
+  /** Optional background image (e.g. a collection plate) behind the dark section. */
+  bgImageUrl?: string;
+  /** Optional credit for the background image, shown bottom-centre with a link. */
+  bgAttribution?: { text: string; href: string };
 }
 
-export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
+export default function SignUpCTA({ variant = 'section', bgImageUrl, bgAttribution }: SignUpCTAProps) {
   const { status } = useStableSession();
   const isEmbedded = useIsEmbedded();
 
@@ -35,8 +40,14 @@ export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
 
   // Full section variant (original)
   return (
-    <section className="py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
-      <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
+    <section className={`relative overflow-hidden py-20 md:py-28${bgImageUrl ? ' min-h-[60vh] md:min-h-[80vh] flex flex-col justify-center' : ''}`} style={{ background: 'var(--bg-dark)' }}>
+      {bgImageUrl && (
+        <>
+          <ParallaxImage src={bgImageUrl} className="opacity-55" strength={0.08} oversize={0.1} />
+          <div className="absolute inset-0" style={{ background: 'var(--bg-dark)', opacity: 0.5 }} />
+        </>
+      )}
+      <div className="relative px-6 md:px-12 max-w-2xl mx-auto text-center" style={bgImageUrl ? { textShadow: '0 1px 10px rgba(0,0,0,0.55)' } : undefined}>
         <p
           className="text-sm uppercase tracking-[0.2em] mb-6"
           style={{ color: 'var(--accent-gold)' }}
@@ -51,7 +62,7 @@ export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
         </h2>
         <p
           className="text-base md:text-lg mb-10 max-w-lg mx-auto leading-relaxed"
-          style={{ color: '#a09a90' }}
+          style={{ color: bgImageUrl ? '#e7e1d7' : '#a09a90' }}
         >
           Create a free account to save books, track your reading, and follow
           new translations as they&apos;re published.
@@ -63,10 +74,19 @@ export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
         >
           Create free account
         </Link>
-        <p className="text-xs mt-5" style={{ color: '#6b6560' }}>
+        <p className="text-xs mt-5" style={{ color: bgImageUrl ? '#cfc8bc' : '#6b6560' }}>
           Sign in with email &middot; No spam, ever
         </p>
       </div>
+      {bgImageUrl && bgAttribution && (
+        <Link
+          href={bgAttribution.href}
+          className="absolute bottom-3 inset-x-0 z-10 text-center text-[11px] leading-snug px-6 max-w-3xl mx-auto hover:opacity-80 transition-opacity"
+          style={{ color: '#cfc8bc', textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}
+        >
+          {bgAttribution.text}
+        </Link>
+      )}
     </section>
   );
 }

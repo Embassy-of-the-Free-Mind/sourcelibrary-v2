@@ -159,6 +159,15 @@ NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
   Sanskrit) and `resolve-work-ids-wikidata.mjs` (Wikidata P50 — Greek/Latin).
 - Full design, tool list, per-tradition candidate coverage, and open levers:
   **`.claude/docs/work-identity-coverage.md`**.
+- **Acquiring works we're missing — read FIRST, don't reinvent:**
+  **`.claude/docs/finding-missing-works-acquisition.md`**. TWO layers, don't conflate:
+  **(1) our works system IS `books.work_id`** — ~99% coverage across ALL traditions
+  (Chinese, Latin, Greek, Tibetan, Arabic…), USTC-independent; **(2) USTC is just ONE
+  external universe** (continental print, 1450–1700) to diff against for *unheld* works,
+  NOT our works system (use Wikidata P50 for what USTC misses). The "enumerate IA →
+  title-cluster → diff → import" shortcut is a known trap — it over-reports gaps and
+  re-imports works we hold (the divergent-title tail; our own Pymander is 35 editions
+  across 12 work_ids). We are NOT thin on Latin — verify a gap before any "dump."
 
 ## Authentication across subdomains
 
@@ -226,6 +235,9 @@ Detect the work domain from the user's prompt and load the right context automat
 - **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
 - **Collection page layout / design (`/collections/[id]` and any collection page):** the collection page template is governed by **`.claude/docs/collection-page-redesign-spec.md`** — the authoritative build spec for the page skeleton (hero collage, anchor row, intro, featured work, first-translations slider, illustrations masonry, bounded works grid, quote band, get-involved, status badges that replace the old essential/important/notable tiers). Read it before changing collection-page structure or styling. Hard rule from the spec: introduce **no new design primitives** — every value maps to an existing Source Library token / Tailwind variant.
 - **Writing a collection intro / description:** follow **`.claude/docs/collection-intro-writing-rules.md`** — the three-part intro structure (hook / works + access / what access enables) and its hard editorial rules (positive framing with no foil or oppressor group named, no proper nouns in Part 1, no AI tropes, no em-dashes, the header owns all counts/dates so the intro never restates them, first-translation claims only where truly tagged). Required reading for `/curate-collection` and any authored collection prose.
+- **Writing a featured-work description (the blurb under a collection's highlighted/featured book):** use the **`featured-work-description`** skill (`.claude/skills/featured-work-description/skill.md`). It sells the BOOK, not the platform — never mention Source Library, translation, OCR, scanning, or "high resolution"; lead with the one distinctive thing only this book can claim (a first, a foundational status, a making detail, a scale, an influence, an origin), anchored by a verifiable fact; two short paragraphs; stats stay in the stat line, not the prose. Applies to every collection page's featured/highlighted-book text.
+- **Choosing the quote-band background image (collection pages):** use the **`quote-background-image`** skill (`.claude/skills/quote-background-image/skill.md`). Pick the most beautiful collection plate with a calm, even mid-tone zone for the text, no printed text on the image, offset focus, that survives a wide crop and is on-theme; reject anything illegible, disturbing, or degraded. If nothing clears the bar, use a plain tonal background from the palette (don't force a bad image). Applies to every collection's quote section.
+- **Collection page book cards (first-translations slider + works grid, NOT the featured slot):** follow **`.claude/docs/collection-book-card-design.md`** — square corners, hairline border, 3:4 cover, dark-glass "First Translation" tag top-right, language pill · year · pages, and a single OCR/Translated status line (tick at 100%, cross at 0%, else the percent; OCR blue, Translated green). Map every value to existing tokens.
 - **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
 - **MCP server/CLI:** read `memory/mcp-server.md`
 - **Embeddings / semantic search:** read `.claude/docs/embeddings.md` — five Supabase tables (`page_translations`, `book_embeddings`, `artwork_embeddings`, `gallery_text_embeddings`, `clip_embeddings`), three workers, five RPCs.
