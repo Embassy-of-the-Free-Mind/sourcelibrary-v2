@@ -376,7 +376,7 @@ const TOOLS: Tool[] = [
     name: "get_quote",
     title: "Get Quote",
     description:
-      "Get the exact translated text of a single page for quoting. Returns the full translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response. Do not paraphrase or reconstruct from memory.",
+      "Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response, do not paraphrase or reconstruct from memory. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote and its page number. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]",
     annotations: { title: "Get Quote", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,

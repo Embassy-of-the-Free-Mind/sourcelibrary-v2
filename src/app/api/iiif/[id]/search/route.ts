@@ -106,9 +106,11 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     const bookId = book.id as string;
     const pagesCount = (book.pages_count as number) || 0;
 
-    // Bot gating
+    // Bot gating. NB: isTrustedBot is async — must be awaited, or the Promise
+    // is always truthy and no bot is ever gated (search crawlers are exempted
+    // inside isTrustedBot; training/bulk crawlers stay gated).
     const bot = isBot(request);
-    const trusted = bot && isTrustedBot(request);
+    const trusted = bot && (await isTrustedBot(request));
     const maxPage = bot && !trusted ? botMaxPage(pagesCount) : pagesCount;
 
     // Use MongoDB $regex to filter pages server-side (scoped to one book, safe)

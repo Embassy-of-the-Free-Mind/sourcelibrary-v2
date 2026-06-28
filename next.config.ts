@@ -115,6 +115,13 @@ const nextConfig: NextConfig = {
           // Next.js uses these headers for client-side navigation — without Vary,
           // CF caches the RSC payload and serves it to fresh page loads as raw text.
           { key: 'Vary', value: 'RSC, Next-Router-State-Tree, Next-Router-Prefetch' },
+          // Text-and-data-mining reservation (TDMRep / EU DSM Art. 4 opt-out).
+          // Expressly reserves AI-training / TDM rights site-wide in a
+          // machine-readable way; the policy URL explains the separate license
+          // required for training use. Mirrors /.well-known/tdmrep.json and the
+          // robots.ts training-crawler reservation. See /licensing.
+          { key: 'TDM-Reservation', value: '1' },
+          { key: 'TDM-Policy', value: 'https://sourcelibrary.org/licensing' },
         ],
       },
       // Prevent Cloudflare from caching RSC (React Server Component) responses.

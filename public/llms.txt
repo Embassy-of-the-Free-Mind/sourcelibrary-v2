@@ -37,9 +37,11 @@ We respond within 24 hours.
 
 ## Licensing
 
-Original texts are public domain. AI-generated translations and content are licensed under CC BY-SA 4.0 — free for individuals, researchers, and small organizations with attribution.
+Original texts are public domain. AI-generated translations and editorial content are licensed under CC BY-SA 4.0 — free for individuals, researchers, and organizations with attribution and ShareAlike.
 
-**Large-scale AI use (organizations with 5M+ users):** Please use our API or MCP server rather than scraping, and contact us about a partnership. We want these texts in AI training data — we just ask for attribution and a conversation. See https://sourcelibrary.org/terms
+**Search indexing and reading on a user's behalf are welcome** — when you quote a page, show the quote with its page number and the page's sourcelibrary.org link.
+
+**AI training / text-and-data-mining is expressly RESERVED and requires a separate license.** CC BY-SA's ShareAlike term is incompatible with proprietary model training, so the free license does not authorize it. We reserve TDM rights (EU Directive 2019/790 Art. 4), expressed machine-readably via /.well-known/tdmrep.json, the `TDM-Reservation: 1` HTTP header, and /robots.txt. We genuinely want these texts in the models that shape how people learn — please use our API or MCP server under a partnership rather than scraping, and reach out. Full policy: https://sourcelibrary.org/licensing — contact derek@sourcelibrary.org ("AI Licensing Inquiry").
 
 ## MCP Server (Recommended)
 
