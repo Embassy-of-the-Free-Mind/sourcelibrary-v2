@@ -1,8 +1,11 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 export interface Framing { x: number; y: number; scale: number }
+
+/** Live framing updates from the admin editor, by slot — avoids a server refresh. */
+export const framingEvent = (slot: string) => `framing:${slot}`;
 
 /**
  * Absolute background image with a subtle scroll parallax. Drop it inside a
@@ -34,6 +37,17 @@ export default function ParallaxImage({
   frameSlot?: string;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  // Framing lives in state so admin edits (dispatched as events) survive parent
+  // re-renders (e.g. the quote band re-rendering every cycle) without a server refresh.
+  const [frame, setFrame] = useState<Framing | undefined>(framing ?? undefined);
+  useEffect(() => { setFrame(framing ?? undefined); }, [framing]);
+  useEffect(() => {
+    if (!frameSlot) return;
+    const h = (e: Event) => setFrame((e as CustomEvent<Framing>).detail);
+    window.addEventListener(framingEvent(frameSlot), h as EventListener);
+    return () => window.removeEventListener(framingEvent(frameSlot), h as EventListener);
+  }, [frameSlot]);
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -68,8 +82,8 @@ export default function ParallaxImage({
     };
   }, [strength]);
 
-  const op = framing ? `${framing.x}% ${framing.y}%` : objectPosition;
-  const scale = framing?.scale ?? 1;
+  const op = frame ? `${frame.x}% ${frame.y}%` : objectPosition;
+  const scale = frame?.scale ?? 1;
 
   return (
     <div ref={wrapRef} className="absolute inset-x-0" style={{ willChange: 'transform', top: `${-oversize * 100}%`, height: `${100 + oversize * 200}%` }}>

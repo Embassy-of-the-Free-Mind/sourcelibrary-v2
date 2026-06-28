@@ -1,24 +1,22 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import { useStableSession } from '@/hooks/useStableSession';
-
-interface Framing { x: number; y: number; scale: number }
+import { framingEvent, type Framing } from '@/components/ParallaxImage';
 
 /**
  * Admin-only inline framing tool for a background image rendered by
- * <ParallaxImage frameSlot="..."> elsewhere in the same section. Renders nothing
- * for non-admins. When active, drag the image to pan and use the zoom slider to
- * resize; Save persists to /api/admin/image-framing for that slot. Reusable: drop
- * it inside any `relative` section that contains a [data-frame-slot] image.
+ * <ParallaxImage frameSlot="..."> in the same section. Renders nothing for
+ * non-admins. Drag the image to pan, slider to zoom; changes are broadcast as
+ * `framing:<slot>` events (live preview, no server refresh) and Save persists to
+ * /api/admin/image-framing. Reusable: drop inside any `relative` section that has
+ * a <ParallaxImage frameSlot="..."> with the matching slot.
  */
 export default function ImageFramingEditor({ slot, initial }: { slot: string; initial?: Framing | null }) {
   const { data: session } = useStableSession();
   const role = (session?.user as { role?: string } | undefined)?.role;
   const isAdmin = role === 'admin' || role === 'superadmin';
 
-  const router = useRouter();
   const start = initial ?? { x: 50, y: 50, scale: 1 };
   const [editing, setEditing] = useState(false);
   const [f, setF] = useState<Framing>(start);
@@ -27,19 +25,12 @@ export default function ImageFramingEditor({ slot, initial }: { slot: string; in
   const drag = useRef<{ px: number; py: number; x: number; y: number } | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  const target = useCallback(() => document.querySelector<HTMLImageElement>(`[data-frame-slot="${slot}"]`), [slot]);
+  // Broadcast framing so the matching ParallaxImage live-updates (no refresh).
+  const broadcast = useCallback((fr: Framing) => {
+    window.dispatchEvent(new CustomEvent(framingEvent(slot), { detail: fr }));
+  }, [slot]);
 
-  // Live-apply current framing to the rendered image.
-  const apply = useCallback((fr: Framing) => {
-    const img = target();
-    if (!img) return;
-    const op = `${fr.x}% ${fr.y}%`;
-    img.style.objectPosition = op;
-    img.style.transformOrigin = op;
-    img.style.transform = `scale(${fr.scale})`;
-  }, [target]);
-
-  useEffect(() => { if (editing) apply(f); }, [editing, f, apply]);
+  useEffect(() => { if (editing) broadcast(f); }, [editing, f, broadcast]);
 
   if (!isAdmin) return null;
 
@@ -57,13 +48,13 @@ export default function ImageFramingEditor({ slot, initial }: { slot: string; in
     // Dragging the image right reveals its left edge → decrease object-position x.
     setF((cur) => ({
       ...cur,
-      x: clamp(drag.current!.x - (dx / width) * 100, 0, 100),
-      y: clamp(drag.current!.y - (dy / height) * 100, 0, 100),
+      x: clamp(drag.current!.x - (dx / Math.max(1, width)) * 100, 0, 100),
+      y: clamp(drag.current!.y - (dy / Math.max(1, height)) * 100, 0, 100),
     }));
   };
   const onPointerUp = () => { drag.current = null; };
 
-  const cancel = () => { setEditing(false); setF(start); apply(start); setMsg(''); };
+  const cancel = () => { setEditing(false); setF(start); broadcast(start); setMsg(''); };
 
   const save = async () => {
     setSaving(true); setMsg('');
@@ -73,10 +64,14 @@ export default function ImageFramingEditor({ slot, initial }: { slot: string; in
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slot, ...f }),
       });
-      if (!res.ok) throw new Error((await res.json().catch(() => ({})))?.error || `HTTP ${res.status}`);
-      setMsg('Saved');
+      if (!res.ok) {
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e?.error || `HTTP ${res.status}`);
+      }
+      // No router.refresh(): the live framing already shows via the broadcast and
+      // persists in ParallaxImage state. The saved value is read on the next full load.
+      setMsg('Saved ✓');
       setEditing(false);
-      router.refresh();
     } catch (err) {
       setMsg(`Error: ${err instanceof Error ? err.message : 'failed'}`);
     } finally {
@@ -88,7 +83,6 @@ export default function ImageFramingEditor({ slot, initial }: { slot: string; in
 
   return (
     <>
-      {/* Drag surface — only while editing. Sits above the bg, below the panel. */}
       {editing && (
         <div
           ref={overlayRef}
@@ -101,10 +95,9 @@ export default function ImageFramingEditor({ slot, initial }: { slot: string; in
         />
       )}
 
-      {/* Control panel */}
       <div className="absolute top-3 right-3 z-30 flex flex-col items-end gap-2">
         {!editing ? (
-          <button type="button" onClick={() => setEditing(true)}
+          <button type="button" onClick={() => { setEditing(true); setMsg(''); }}
             className={`${btn} bg-white/90 text-black hover:bg-white shadow`}>
             Frame image
           </button>
