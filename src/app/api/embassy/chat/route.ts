@@ -28,6 +28,10 @@ const chatRequestSchema = z.object({
   history: z.array(messageSchema).max(50).optional(),
   visibility: z.enum(['public', 'private']).optional(),
   stream: z.boolean().optional(),
+  // Optional collection slug/topic to weight the search toward. Set by the
+  // "Ask the Librarian" entry point on a collection page; the Librarian biases
+  // results toward this collection while still surfacing strong outside matches.
+  collection: z.string().max(120).nullable().optional(),
 });
 
 /**
@@ -96,7 +100,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { threadId, message, history = [], visibility = 'public', stream = false } = parsed.data;
+  const { threadId, message, history = [], visibility = 'public', stream = false, collection = null } = parsed.data;
   const db = await getDb();
 
   // Get user display name (anonymous visitors skip the lookup)
@@ -200,7 +204,7 @@ export async function POST(request: NextRequest) {
 
   if (!stream) {
     try {
-      for await (const step of streamAgenticResponse(message, history, activeThreadId)) {
+      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection })) {
         if (step.type === 'text') {
           fullText += step.text || '';
         } else if (step.type === 'sources') {
@@ -272,7 +276,7 @@ export async function POST(request: NextRequest) {
     try {
       await send({ type: 'threadId', threadId: activeThreadId });
 
-      for await (const step of streamAgenticResponse(message, history, activeThreadId)) {
+      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection })) {
         lastStepType = step.type;
         switch (step.type) {
           case 'thinking':

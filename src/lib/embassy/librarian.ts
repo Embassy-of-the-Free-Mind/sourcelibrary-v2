@@ -154,11 +154,12 @@ function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
 const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: 'search',
-    description: 'Search Source Library — fuses keyword search (Atlas) with semantic search (AI embeddings) across the collection. Returns the strongest matching passages plus relevant books. Works for both verbatim queries (Latin/German phrases, technical terms) and conceptual queries (modern paraphrases of historical ideas). Search in English for best coverage — nearly all books are translated.',
+    description: 'Search Source Library — fuses keyword search (Atlas) with semantic search (AI embeddings) across the whole library. Returns the strongest matching passages plus relevant books. Works for both verbatim queries (Latin/German phrases, technical terms) and conceptual queries (modern paraphrases of historical ideas). Search in English for best coverage — nearly all books are translated.',
     parameters: {
       type: Type.OBJECT,
       properties: {
         query: { type: Type.STRING, description: 'Search query — use period-appropriate terms when known (e.g., "sympathetic magic" not "resonance", "flying ointment" not "psychedelics"). Modern paraphrases also work — semantic matching handles the mapping.' },
+        collection: { type: Type.STRING, description: 'Optional. A collection slug from the "Collections" list in your instructions to FOCUS the search on. Results are weighted toward that collection but still include strong matches from the rest of the library — it is a lean, not a filter. Set this whenever the user\'s question is clearly about one collection\'s subject (e.g. a question about fungi or mushrooms → "mycology"; about tarot or planetary seals → "astrology"). Pick the single most relevant slug; if unsure or the topic spans the whole library, omit it.' },
       },
       required: ['query'],
     },
@@ -296,14 +297,24 @@ function tenantVisibilityFilter() {
 //
 // Replaces the prior executeSearchCollection (keyword-only) and
 // executeSearchSemantic (book-then-page only) with a single unified path.
-async function executeSearch(query: string): Promise<{
+async function executeSearch(query: string, collection?: string | null): Promise<{
   passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string }>;
   books: Array<{ id: string; title: string; author?: string; authorSlug?: string; year?: number; slug?: string }>;
+  collectionUsed: string | null;
 }> {
   const { hybridSearch } = await import('@/lib/search/librarian-search');
+  // The model may pass a slug, a name, or a loose topic phrase — normalize it to
+  // a real slug (or null → plain global search). Weighting is soft, so a missed
+  // resolution just searches the whole library unweighted.
+  const { resolveCollectionSlug } = await import('@/lib/embassy/collection-catalog');
+  const collectionUsed = await resolveCollectionSlug(collection);
   // Main-site only; pass tenant UUID here for per-tenant Librarian instances.
-  const { passages, books } = await hybridSearch(query, { tenantId: null });
-  return { passages, books };
+  const { passages, books } = await hybridSearch(query, {
+    tenantId: null,
+    collection: collectionUsed,
+    // collectionWeight defaults to 2 in hybridSearch.
+  });
+  return { passages, books, collectionUsed };
 }
 
 async function executeSearchWikipedia(query: string): Promise<{ title: string; summary: string; url: string } | null> {
@@ -468,6 +479,7 @@ async function executeTool(
   name: string,
   args: Record<string, unknown>,
   threadId?: string,
+  collectionContext?: string | null,
 ): Promise<{ result: unknown; step: LibrarianStep; sources?: SourceCard[] }> {
   switch (name) {
     case 'search':
@@ -477,7 +489,11 @@ async function executeTool(
     case 'search_collection':
     case 'search_semantic': {
       const query = args.query as string;
-      const data = await executeSearch(query);
+      // Explicit per-call collection wins; otherwise fall back to the thread's
+      // collection context (set when the user opened the Librarian from a
+      // collection page). Either way the weighting is soft.
+      const collection = (args.collection as string | undefined) || collectionContext || null;
+      const data = await executeSearch(query, collection);
       const totalFound = data.passages.length + data.books.length;
 
       let context = '';
@@ -509,10 +525,11 @@ async function executeTool(
         pageNumber: p.page_number, snippet: stripAnnotations(p.text).slice(0, 200), inCollection: true,
       }));
 
+      const focusNote = data.collectionUsed ? `, focused on ${data.collectionUsed}` : '';
       return {
-        result: { found: totalFound, context },
+        result: { found: totalFound, context, collection: data.collectionUsed },
         step: { type: 'tool_result', name: 'search', query, found: totalFound,
-          summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books` : 'No results' },
+          summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books${focusNote}` : `No results${focusNote}` },
         sources,
       };
     }
@@ -682,7 +699,32 @@ async function executeTool(
 
 // ── System Prompt ─────────────────────────────────────────────────────
 
-function buildSystemPrompt(notebookContext: string, messageIndex: number): string {
+function buildSystemPrompt(
+  notebookContext: string,
+  messageIndex: number,
+  collectionOpts?: { catalog?: string; collectionContext?: string | null },
+): string {
+  const catalog = collectionOpts?.catalog?.trim();
+  const collectionContext = collectionOpts?.collectionContext;
+
+  // Tell the model it can focus a search on a collection, list the real slugs,
+  // and — if the session started from a collection page — that it should lean
+  // that way by default.
+  const collectionSection = catalog
+    ? `## Collections — focusing a search
+
+The library is organized into thematic collections. The **search** tool takes an optional \`collection\` argument: pass the slug of the most relevant collection and results are *weighted toward* it while still surfacing strong matches from the rest of the library (a lean, not a filter). Set it whenever a question is clearly about one collection's subject — map the user's topic to the closest slug yourself (e.g. "mushrooms / fungi" → \`mycology\`; "tarot" → \`astrology\`). If a question spans the whole library or none fits, omit it.
+${collectionContext ? `\n**This conversation started inside the "${collectionContext}" collection.** Unless the user clearly shifts to a different subject, pass \`collection: "${collectionContext}"\` on your searches so results stay focused there.\n` : ''}
+Available collection slugs (slug — name):
+${catalog}
+
+`
+    : '';
+
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection);
+}
+
+function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -747,7 +789,7 @@ After 2-3 rounds of searching (4-6 tool calls total), stop and synthesize what y
 
 Source Library has over 10,000 rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
 
-## Formatting
+${collectionSection}## Formatting
 
 - Use markdown headers (## and ###) to organize longer responses into clear sections
 - Use **bold** for key terms and *italics* for book titles (linked: *[Title](url)*)
@@ -772,6 +814,7 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
+  options?: { collection?: string | null },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
@@ -785,7 +828,17 @@ export async function* streamAgenticResponse(
   const notebookContext = formatNotebookForPrompt(notebook);
   // User messages in history = prior user turns. This message is the next one.
   const messageIndex = history.filter(m => m.role === 'user').length + 1;
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex);
+
+  // Collection catalog (so the model can map a topic → the right slug) and the
+  // optional collection context (when the Librarian was opened from a collection
+  // page, searches lean toward it by default). Resolve the context to a real
+  // slug so a stray value can't silently break weighting.
+  const { formatCatalogForPrompt, resolveCollectionSlug } = await import('@/lib/embassy/collection-catalog');
+  const [catalog, collectionContext] = await Promise.all([
+    formatCatalogForPrompt(),
+    resolveCollectionSlug(options?.collection),
+  ]);
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext });
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
@@ -804,6 +857,11 @@ export async function* streamAgenticResponse(
   // page citations in the final answer — see verifyCitations.
   const retrievedPageKeys = new Set<string>();
   let choicesPresented = false;
+  // True once the model voluntarily stops searching and writes its answer. If it
+  // instead runs out of search rounds (MAX_ROUNDS) while still calling tools, we
+  // force a final synthesis turn below so the reader never gets a stub or an
+  // empty reply (see the "kites" regression, issue #2826).
+  let answeredNaturally = false;
   const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
 
   function collectSources(sources?: SourceCard[]) {
@@ -863,7 +921,7 @@ export async function* streamAgenticResponse(
     if (allParts.length === 0) break;
     contents.push({ role: 'model', parts: allParts });
 
-    if (functionCalls.length === 0) break;
+    if (functionCalls.length === 0) { answeredNaturally = true; break; }
 
     // Emit tool_call events for all pending calls
     for (const part of functionCalls) {
@@ -876,7 +934,7 @@ export async function* streamAgenticResponse(
       functionCalls.map(async part => {
         const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
         try {
-          return await executeTool(fc.name, fc.args || {}, threadId);
+          return await executeTool(fc.name, fc.args || {}, threadId, collectionContext);
         } catch (err) {
           console.error(`[Librarian] Tool ${fc.name} failed:`, err instanceof Error ? err.message : err);
           return {
@@ -918,6 +976,59 @@ export async function* streamAgenticResponse(
     contents.push({ role: 'user', parts: responseParts });
 
     if (choicesPresented) break;
+  }
+
+  // Forced synthesis. If the loop exited because it exhausted MAX_ROUNDS while
+  // the model was still issuing tool calls, the model never got a turn to read
+  // its last results and write an answer — so the reader gets a shallow stub or
+  // (when no text was ever emitted) an empty reply. Give it one final turn with
+  // NO tools available, which compels a text answer synthesized from everything
+  // gathered above. Skipped when the model already answered on its own or ended
+  // the turn with present_choices.
+  if (!answeredNaturally && !choicesPresented) {
+    contents.push({
+      role: 'user',
+      parts: [{
+        text: 'You have gathered enough material. Stop searching now and write your answer for the reader using ONLY the sources and pages you retrieved above. Synthesize them into a focused, well-cited response with page links — do not call any more tools.',
+      }],
+    });
+
+    try {
+      const finalStream = await ai.models.generateContentStream({
+        model: MODEL,
+        // No tools in the config → the model cannot search and must answer.
+        contents,
+        config: { temperature: TEMPERATURE },
+      });
+
+      const finalParts: Array<Record<string, unknown>> = [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let finalUsage: any = null;
+      for await (const chunk of finalStream) {
+        if (chunk.usageMetadata) finalUsage = chunk.usageMetadata;
+        const candidate = chunk.candidates?.[0];
+        if (!candidate?.content?.parts) continue;
+        for (const part of candidate.content.parts) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const p = part as any;
+          if (p.text) {
+            finalParts.push(p);
+            yield { type: 'text', text: p.text };
+          }
+        }
+      }
+
+      usage.rounds++;
+      if (finalUsage) {
+        usage.promptTokens += finalUsage.promptTokenCount ?? 0;
+        usage.outputTokens += finalUsage.candidatesTokenCount ?? 0;
+        usage.thinkingTokens += finalUsage.thoughtsTokenCount ?? 0;
+        usage.cachedTokens += finalUsage.cachedContentTokenCount ?? 0;
+      }
+      if (finalParts.length > 0) contents.push({ role: 'model', parts: finalParts });
+    } catch (err) {
+      console.error('[Librarian] Forced synthesis failed:', err instanceof Error ? err.message : err);
+    }
   }
 
   if (allSources.length > 0) {
