@@ -557,8 +557,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               // partner reading room (Tenant Subdomain Lockdown). See keyword
               // page-lane materialization which already does this.
               ...(tenantId ? { tenantId } : {}),
-              ...(languages.length > 0 ? { language: { $in: languages } } : {}),
-              ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
+              // Honor the singular `language` param too — not just the `languages`
+              // array. buildBookFilters() (keyword lane) checks all three, but these
+              // semantic lanes only checked the array, so `?language=Sanskrit` leaked
+              // English-edition translations of Sanskrit works through semantic
+              // promotion (the search-eval "Sanskrit filter" failure). Mirror the
+              // keyword-lane precedence: languages → excludeLanguages → language.
+              ...(languages.length > 0 ? { language: { $in: languages } }
+                : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
+                : language ? { language } : {}),
             },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1, text_role: 1 } }
           )
@@ -630,8 +637,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               // defense-in-depth — but keep it consistent with the book lane so a
               // future RPC change can't silently leak cross-tenant pages.
               ...(tenantId ? { tenantId } : {}),
-              ...(languages.length > 0 ? { language: { $in: languages } } : {}),
-              ...(excludeLanguages.length > 0 && languages.length === 0 ? { language: { $nin: excludeLanguages } } : {}),
+              // Honor the singular `language` param too — not just the `languages`
+              // array. buildBookFilters() (keyword lane) checks all three, but these
+              // semantic lanes only checked the array, so `?language=Sanskrit` leaked
+              // English-edition translations of Sanskrit works through semantic
+              // promotion (the search-eval "Sanskrit filter" failure). Mirror the
+              // keyword-lane precedence: languages → excludeLanguages → language.
+              ...(languages.length > 0 ? { language: { $in: languages } }
+                : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
+                : language ? { language } : {}),
             },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, text_role: 1 } }
           )
