@@ -45,6 +45,7 @@ import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import PageComments from '@/components/book/PageComments';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 // Languages that use non-Latin scripts and benefit from transliteration
@@ -1919,6 +1920,13 @@ export default function TranslationEditor({
                   contactEmail="derek@sourcelibrary.org"
                   className="hover:underline"
                   style={{ color: 'var(--text-muted)' }}
+                />
+                <span style={{ color: 'var(--border-light)' }}>·</span>
+                <PageComments
+                  key={`comments-${page.id}`}
+                  bookId={book.id}
+                  pageId={page.id}
+                  pageNumber={page.page_number}
                 />
               </>
             )}
