@@ -36,10 +36,27 @@ const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font
 const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
+const OG_TITLE = 'Fungi & Mycology — Source Library';
+const OG_DESC = 'Fungi built the soil that built our world. These are the books that first studied them — original source texts and first English translations on Source Library.';
+
 export const metadata: Metadata = {
-  title: 'Mycology & Fungi - Source Library',
-  description: 'The Kingdom of Fungi, from Clusius to Saccardo — original source texts and first English translations on Source Library.',
+  title: OG_TITLE,
+  description: OG_DESC,
   alternates: { canonical: '/collections/mycology' },
+  openGraph: {
+    title: OG_TITLE,
+    description: OG_DESC,
+    url: '/collections/mycology',
+    siteName: 'Source Library',
+    type: 'website',
+    images: [{ url: '/collections/mycology/og.jpg', width: 1200, height: 800, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: OG_TITLE,
+    description: OG_DESC,
+    images: ['/collections/mycology/og.jpg'],
+  },
 };
 
 const SECTIONS = [
