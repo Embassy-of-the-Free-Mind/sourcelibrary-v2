@@ -44,8 +44,8 @@ export const metadata: Metadata = {
 
 const SECTIONS = [
   { id: 'introduction', label: 'Introduction' },
-  { id: 'featured', label: 'Featured' },
   { id: 'translations', label: 'First translations' },
+  { id: 'featured', label: 'Featured' },
   { id: 'gallery', label: 'Gallery' },
   { id: 'librarian', label: 'Librarian' },
   { id: 'works', label: 'Works' },
@@ -282,8 +282,8 @@ export default async function MycologyCollectionPage() {
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-          <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
-            <div className="font-body flex-1 min-w-0">
+          <div className="flex flex-col md:flex-row-reverse md:items-stretch gap-8 lg:gap-12">
+            <div className="font-body flex-1 min-w-0 flex flex-col">
               {/* Lead — larger; fills the available width beside the video. */}
               <p className="text-2xl sm:text-3xl text-primary leading-snug mb-6">
                 Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
@@ -294,6 +294,13 @@ export default async function MycologyCollectionPage() {
               <p className="text-secondary leading-relaxed max-w-2xl">
                 Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
               </p>
+              {/* Engraving filling the gap below the text (left-aligned), blended into
+                  the section so the paper ground melts into bg-warm. */}
+              <div className="mt-6 md:mt-auto md:flex-1 md:min-h-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/collections/mycology/intro-fungi.webp" alt="Three mushrooms, engraving"
+                  className="block w-full md:w-auto h-auto md:h-full max-w-full object-contain object-left-bottom mix-blend-multiply" />
+              </div>
             </div>
             {/* Walkthrough video placeholder — 33% of section width, max 80vh tall, 2:3
                 (same dimensions as the featured book cover). */}
@@ -309,14 +316,28 @@ export default async function MycologyCollectionPage() {
         </div>
       </section>
 
+      {/* ===== First translations — slider ===== */}
+      {firstTranslations.length > 0 && (
+        <section id="translations" className="bg-cream border-b border-border-light scroll-mt-4">
+          <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+            <div className="flex items-end justify-between gap-4 mb-1">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
+              <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
+            </div>
+            <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
+            <MycoSlider books={firstTranslations} />
+          </div>
+        </section>
+      )}
+
       {/* ===== Featured work ===== */}
       {featured && (
-        <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-            <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-14">
-              {/* Cover (desktop: right via row-reverse, 33% of section width, max 80vh
-                  tall, 2:3 — matches the intro video). On mobile it comes first and
-                  takes 80%, with the page previews stacked in the remaining 20%. */}
+            <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
+              {/* Cover (desktop: left, 33% of section width, max 80vh tall, 2:3 — matches
+                  the intro video). On mobile it comes first and takes 80%, with the page
+                  previews stacked in the remaining 20%. */}
               <div className="w-full md:w-[min(33%,53.333vh)] shrink-0 flex gap-3 md:block">
                 <div className="w-4/5 md:w-full relative aspect-[2/3] overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
@@ -372,20 +393,6 @@ export default async function MycologyCollectionPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* ===== First translations — slider ===== */}
-      {firstTranslations.length > 0 && (
-        <section id="translations" className="bg-warm border-b border-border-light scroll-mt-4">
-          <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-            <div className="flex items-end justify-between gap-4 mb-1">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
-              <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
-            </div>
-            <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
-            <MycoSlider books={firstTranslations} />
           </div>
         </section>
       )}
