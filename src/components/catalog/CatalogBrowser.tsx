@@ -41,17 +41,26 @@ interface CatalogBrowserProps {
   initialBooks: BookItem[];
   initialTotal: number;
   languages: { lang: string; count: number }[];
+  /** When set, every query is scoped to this collection slug (fixed for the page). */
+  collection?: string;
+  /** All selectable collections for the dropdown filter. */
+  collections?: { slug: string; name: string }[];
 }
 
-export default function CatalogBrowser({ initialBooks, initialTotal, languages }: CatalogBrowserProps) {
+export default function CatalogBrowser({ initialBooks, initialTotal, languages, collection: initialCollection, collections = [] }: CatalogBrowserProps) {
   const [books, setBooks] = useState<BookItem[]>(initialBooks);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState('popular');
   const [language, setLanguage] = useState('');
   const [query, setQuery] = useState('');
+  const [collection, setCollection] = useState(initialCollection || '');
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  // Ref mirrors `collection` so fetchBooks/updateUrl always read the current value
+  // without threading it through every handler.
+  const collectionRef = useRef(collection);
+  collectionRef.current = collection;
   const searchRef = useRef<HTMLInputElement>(null);
   const initializedRef = useRef(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -75,6 +84,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
       if (params.language) qs.set('language', params.language);
       if (params.query) qs.set('q', params.query);
       if (params.page > 1) qs.set('page', String(params.page));
+      if (collectionRef.current) qs.set('collection', collectionRef.current);
 
       const res = await fetch(`/api/catalog/browse?${qs.toString()}`, {
         signal: controller.signal,
@@ -114,7 +124,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
     setLanguage(urlLang);
     setQuery(urlQ);
     setCurrentPage(urlPage);
-    setViewMode(urlView || storedView || 'list');
+    setViewMode(urlView || storedView || 'grid');
 
     // If URL has non-default params, fetch that specific page
     const isDefault = urlSort === 'popular' && !urlLang && !urlQ && urlPage === 1;
@@ -129,7 +139,8 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
     if (lang) params.set('language', lang);
     if (q) params.set('q', q);
     if (page > 1) params.set('page', String(page));
-    if (view !== 'list') params.set('view', view);
+    if (view !== 'grid') params.set('view', view);
+    if (collectionRef.current) params.set('collection', collectionRef.current);
     const qs = params.toString();
     window.history.replaceState(null, '', `/catalog${qs ? `?${qs}` : ''}`);
   }, []);
@@ -147,6 +158,14 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
     updateUrl(sort, newLang, 1, query, viewMode);
     fetchBooks({ sort, language: newLang, query, page: 1 });
   }, [sort, query, viewMode, updateUrl, fetchBooks]);
+
+  const handleCollection = useCallback((newCol: string) => {
+    collectionRef.current = newCol; // set before fetch/url so they use the new value
+    setCollection(newCol);
+    setCurrentPage(1);
+    updateUrl(sort, language, 1, query, viewMode);
+    fetchBooks({ sort, language, query, page: 1 });
+  }, [sort, language, query, viewMode, updateUrl, fetchBooks]);
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value);
@@ -286,6 +305,20 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
               </option>
             ))}
           </select>
+
+          {/* Collection filter */}
+          {collections.length > 0 && (
+            <select
+              value={collection}
+              onChange={e => handleCollection(e.target.value)}
+              className="text-sm border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
+            >
+              <option value="">All collections</option>
+              {collections.map(c => (
+                <option key={c.slug} value={c.slug}>{c.name}</option>
+              ))}
+            </select>
+          )}
         </div>
       </div>
 
