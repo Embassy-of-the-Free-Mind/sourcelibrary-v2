@@ -135,7 +135,7 @@ export default async function CollectionBooksPage(
   const [memberRaw, total, related] = await Promise.all([
     withTimeout(books.find(memberFilter, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort(sort).skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(Promise.resolve(collection.book_count as number | undefined).then((c) => c ?? books.countDocuments(memberFilter, { maxTimeMS: 8000 })), 8000, 0),
-    page === 1 ? getRelatedBooks(db, id) : Promise.resolve({ books: [] as MiniBook[], terms: [] as string[] }),
+    page === 1 ? getRelatedBooks(db, id) : Promise.resolve({ books: [] as MiniBook[], terms: [] as string[], debug: {} as Record<string, unknown> }),
   ]);
   const members = memberRaw.map(toMini);
   const totalPages = Math.max(1, Math.ceil((total || members.length) / PAGE_SIZE));
