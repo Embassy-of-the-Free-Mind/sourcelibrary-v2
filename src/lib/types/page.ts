@@ -11,8 +11,16 @@ export interface Page {
   thumbnail?: string;
   compressed_photo?: string;
   ocr?: OcrData;
-  translation?: TranslationData;
-  translation_es?: TranslationData;  // Spanish edition (pivot-translated from English); read-time toggle in the reader
+  translation?: TranslationData;  // canonical English translation (pivot base for other languages)
+  translation_es?: TranslationData;  // LEGACY Spanish field — superseded by translations.es; kept readable during migration (#2835)
+  /**
+   * Language-keyed content translations (ISO code → TranslationData), e.g.
+   * { es: {...}, zh: {...} }. The general model that replaces per-language
+   * fields like translation_es (#2835). English stays on `translation` as the
+   * pivot base. Read via availableTranslations()/getTranslation() in
+   * src/lib/page-translations.ts, which also folds in the legacy translation_es.
+   */
+  translations?: Record<string, TranslationData>;
   summary?: SummaryData;
   modernized?: ModernizedData;  // Modernized text for reading dashboard
   transliteration?: TransliterationData;  // Romanized transliteration for non-Latin scripts

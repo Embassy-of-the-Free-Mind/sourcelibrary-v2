@@ -7,6 +7,7 @@ import VersionBanner from '@/components/ui/VersionBanner';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
+import { getTranslation } from '@/lib/page-translations';
 import { pages as pagesApi, readingHistory } from '@/lib/api-client';
 
 interface PageEditorClientProps {
@@ -259,7 +260,10 @@ export default function PageEditorClient({
   };
 
   // Spanish edition availability (per-page; pivot-translated from English).
-  const hasSpanish = !!currentPage.translation_es?.data;
+  // Read via the language-keyed model (translations.es) with legacy
+  // translation_es fallback, so this keeps working through the #2835 migration.
+  const spanishTranslation = getTranslation(currentPage, 'es');
+  const hasSpanish = !!spanishTranslation?.data;
   // Version pinning is English-edition-specific, so it disables the ES view.
   const showSpanish = lang === 'es' && hasSpanish && !pinnedVersion;
 
@@ -270,7 +274,7 @@ export default function PageEditorClient({
   if (showSpanish) {
     displayPage = {
       ...currentPage,
-      translation: { ...(currentPage.translation || {}), ...currentPage.translation_es!, language: 'Spanish' },
+      translation: { ...(currentPage.translation || {}), ...spanishTranslation!, language: 'Spanish' },
     } as Page;
   } else if (pinnedVersion && versionedTranslation != null) {
     displayPage = {
