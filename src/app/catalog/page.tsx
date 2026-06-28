@@ -64,6 +64,7 @@ export default async function CatalogPage(
           initialTotal={total}
           languages={languages}
           collection={collection}
+          collectionName={collectionName ?? undefined}
         />
       </div>
     </>

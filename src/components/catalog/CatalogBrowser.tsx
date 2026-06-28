@@ -43,9 +43,11 @@ interface CatalogBrowserProps {
   languages: { lang: string; count: number }[];
   /** When set, every query is scoped to this collection slug (fixed for the page). */
   collection?: string;
+  /** Display name for the active collection (for the removable filter chip). */
+  collectionName?: string;
 }
 
-export default function CatalogBrowser({ initialBooks, initialTotal, languages, collection }: CatalogBrowserProps) {
+export default function CatalogBrowser({ initialBooks, initialTotal, languages, collection, collectionName }: CatalogBrowserProps) {
   const [books, setBooks] = useState<BookItem[]>(initialBooks);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
@@ -53,7 +55,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
   const [language, setLanguage] = useState('');
   const [query, setQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const searchRef = useRef<HTMLInputElement>(null);
   const initializedRef = useRef(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -117,7 +119,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
     setLanguage(urlLang);
     setQuery(urlQ);
     setCurrentPage(urlPage);
-    setViewMode(urlView || storedView || 'list');
+    setViewMode(urlView || storedView || 'grid');
 
     // If URL has non-default params, fetch that specific page
     const isDefault = urlSort === 'popular' && !urlLang && !urlQ && urlPage === 1;
@@ -132,7 +134,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
     if (lang) params.set('language', lang);
     if (q) params.set('q', q);
     if (page > 1) params.set('page', String(page));
-    if (view !== 'list') params.set('view', view);
+    if (view !== 'grid') params.set('view', view);
     if (collection) params.set('collection', collection);
     const qs = params.toString();
     window.history.replaceState(null, '', `/catalog${qs ? `?${qs}` : ''}`);
@@ -178,6 +180,18 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
 
   return (
     <div>
+      {/* Active collection filter — removable (clears to the full catalogue). */}
+      {collection && (
+        <div className="mb-4">
+          <span className="inline-flex items-center gap-2 text-sm bg-warm border border-border-light rounded-full pl-3 pr-1.5 py-1 text-primary">
+            <span className="text-muted">Collection:</span> {collectionName || collection}
+            <Link href="/catalog" aria-label="Clear collection filter" title="Show the whole catalogue"
+              className="inline-flex items-center justify-center w-5 h-5 rounded-full text-muted hover:text-primary hover:bg-border-light transition-colors">
+              <X className="w-3.5 h-3.5" />
+            </Link>
+          </span>
+        </div>
+      )}
       {/* Search bar — prominent */}
       <div className="relative mb-6">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
