@@ -6,6 +6,39 @@ import type { Book, Page } from '@/lib/types';
 import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { isHiddenBook } from '@/lib/book-access';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+
+// Schema.org structured data for a translated page, so it surfaces as a
+// citable scholarly work in web search (#2822). Only emitted for indexable
+// pages (same seo_indexable gate as robots, #2688) — structured data on a
+// noindex page is wasted. The excerpt is wrapper-stripped (the #2232 invariant:
+// never expose editorial <meta>/<summary>/… blocks as page text).
+function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string, unknown> | null {
+  if ((page as unknown as { seo_indexable?: boolean }).seo_indexable !== true) return null;
+  const bookTitle = book.display_title || book.title;
+  const raw = page.translation?.data || page.ocr?.data || '';
+  const clean = stripEditorialWrappers(raw).trim();
+  const excerpt = clean.length > 500 ? clean.slice(0, 497) + '…' : clean;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: `${bookTitle} — Page ${page.page_number}`,
+    url: pageUrl,
+    inLanguage: book.language || undefined,
+    datePublished: book.published || undefined,
+    author: book.author ? { '@type': 'Person', name: book.author } : undefined,
+    translator: { '@type': 'Organization', name: 'Source Library' },
+    isPartOf: {
+      '@type': 'Book',
+      name: bookTitle,
+      ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
+      ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
+    },
+    license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    isAccessibleForFree: true,
+    ...(excerpt ? { text: excerpt } : {}),
+  };
+}
 
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
 export const revalidate = 86400;
@@ -81,8 +114,17 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
   const serializedPage = JSON.parse(JSON.stringify(currentPage)) as Page;
   const serializedNavPages = JSON.parse(JSON.stringify(navPages)) as Page[];
 
+  const bookPath = book.slug || scopedBookId;
+  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org/book/${bookPath}/page/${pageId}`);
+
   return (
     <>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
       <PageEditorClient
         initialBook={book}
