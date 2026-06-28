@@ -65,7 +65,7 @@ export default function QuoteBlock({ quotes, bgUrl, imageCredit, framing }: { qu
 
   return (
     <section ref={sectionRef} className="relative bg-dark overflow-hidden min-h-[60vh] md:min-h-[80vh] flex items-center">
-      {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0.04} oversize={0.05} objectPosition="10% 50%" frameSlot={FRAME_SLOT} framing={framing ?? undefined} />}
+      {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0.08} oversize={0.1} objectPosition="10% 50%" frameSlot={FRAME_SLOT} framing={framing ?? undefined} />}
       <ImageFramingEditor slot={FRAME_SLOT} initial={framing} />
       <div className="absolute inset-0 bg-dark/40" />
       <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 text-center">

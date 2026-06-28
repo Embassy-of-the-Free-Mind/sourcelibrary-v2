@@ -224,7 +224,7 @@ export default async function MycologyCollectionPage() {
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[66vh] flex items-end">
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
-        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.04} oversize={0.05} />
+        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.08} oversize={0.1} />
         {/* Lighter, left-weighted legibility gradient — no bottom fade. */}
         <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-dark/45 to-transparent" />
