@@ -30,7 +30,7 @@ async function getCollections(): Promise<{ slug: string; name: string }[]> {
     const db = await getReadDb();
     const rows = await db.collection('collections')
       .find({ hidden: { $ne: true }, name: { $type: 'string' }, book_count: { $gt: 0 } }, { projection: { _id: 0, slug: 1, name: 1 } })
-      .sort({ name: 1 }).limit(300).toArray();
+      .sort({ name: 1 }).limit(1000).toArray();
     return rows.map((r) => ({ slug: r.slug as string, name: r.name as string })).filter((r) => r.slug && r.name);
   } catch {
     return [];
