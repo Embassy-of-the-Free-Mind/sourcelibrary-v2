@@ -19,6 +19,7 @@ import {
   getQuote,
   searchImages,
   submitFeedback,
+  shareFindings,
   checkDuplicate,
   ApiError,
 } from "./api.js";
@@ -526,6 +527,49 @@ const TOOLS: Tool[] = [
       required: ["message"],
     },
   },
+  {
+    name: "share_findings",
+    title: "Share Findings",
+    description:
+      "Share a research dossier back to the Source Library team — a title, an optional summary, and an ordered list of citations (the passages your thesis rests on). Each citation is a reference { book_id, page, note }, NOT copied text: the library re-renders the canonical quote from the reference, so links stay authoritative. Use this when the user has assembled a thesis backed by passages across one or more books and wants to contribute it back. Like submit_feedback, it goes to the team for review (not an instant public page).",
+    annotations: {
+      title: "Share Findings",
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: true,
+    },
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        title: {
+          type: "string",
+          description: "Title of the dossier / thesis (2-300 characters)",
+        },
+        summary: {
+          type: "string",
+          description: "Optional prose summarizing the argument (max 5000 characters)",
+        },
+        citations: {
+          type: "array",
+          description:
+            "Ordered list of supporting passages (1-50). Get book_id + page from get_quote / search_translations.",
+          items: {
+            type: "object",
+            properties: {
+              book_id: { type: "string", description: "The book ID" },
+              page: { type: "number", description: "Page number" },
+              note: { type: "string", description: "Optional note on why this passage matters" },
+            },
+            required: ["book_id", "page"],
+          },
+        },
+        name: { type: "string", description: "Your name (optional)" },
+        email: { type: "string", description: "Your email for follow-up (optional)" },
+      },
+      required: ["title", "citations"],
+    },
+  },
 ];
 
 // ── Server Setup ──────────────────────────────────────────────────────
@@ -544,7 +588,7 @@ Feedback: submit_feedback. Partnerships: derek@sourcelibrary.org.`;
 const server = new Server(
   {
     name: "source-library",
-    version: "4.3.0",
+    version: "4.5.0",
   },
   {
     capabilities: {
@@ -607,6 +651,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "submit_feedback":
         result = await submitFeedback(args as Parameters<typeof submitFeedback>[0]);
         break;
+      case "share_findings":
+        result = await shareFindings(args as Parameters<typeof shareFindings>[0]);
+        break;
       default:
         return {
           content: [{ type: "text" as const, text: `Unknown tool: ${name}` }],
@@ -642,7 +689,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error(`Source Library MCP server v4.4.0 running (${TOOLS.length} tools)`);
+  console.error(`Source Library MCP server v4.5.0 running (${TOOLS.length} tools)`);
 }
 
 main().catch((error) => {

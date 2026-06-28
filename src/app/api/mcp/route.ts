@@ -381,6 +381,17 @@ async function submitFeedback(args: Record<string, unknown>) {
   return { ok: true, message: 'Feedback submitted successfully. Thank you!' };
 }
 
+async function shareFindings(args: Record<string, unknown>) {
+  const result = await apiPost('/share-findings', {
+    title: args.title,
+    summary: args.summary || null,
+    citations: args.citations || [],
+    name: args.name || null,
+    email: args.email || null,
+  }) as Record<string, unknown>;
+  return { ok: true, id: result.id, message: result.message || 'Findings shared with the Source Library team. Thank you!' };
+}
+
 // ── Tool definitions ───────────────────────────────────────────────
 
 // Shared annotation for all read-only tools
@@ -566,6 +577,34 @@ const TOOLS: Tool[] = [
       required: ['message'],
     },
   },
+  {
+    name: 'share_findings',
+    title: 'Share Findings',
+    description: 'Share a research dossier back to the Source Library team — a title, an optional summary, and an ordered list of citations (the passages your thesis rests on). Each citation is a reference { book_id, page, note }, NOT copied text: the library re-renders the canonical quote from the reference, so links stay authoritative. Use this when the user has assembled a thesis backed by passages across one or more books and wants to contribute it back. Like submit_feedback, this goes to the team for review (not an instant public page).',
+    annotations: { title: 'Share Findings', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        title: { type: 'string', description: 'Title of the dossier / thesis (2-300 chars)' },
+        summary: { type: 'string', description: 'Optional prose summarizing the argument (max 5000 chars)' },
+        citations: {
+          type: 'array',
+          description: 'Ordered list of supporting passages (1-50). Get book_id + page from get_quote / search_translations.',
+          items: {
+            type: 'object',
+            properties: {
+              book_id: { type: 'string', description: 'The book ID' },
+              page: { type: 'number', description: 'Page number' },
+              note: { type: 'string', description: 'Optional note on why this passage matters' },
+            },
+            required: ['book_id', 'page'],
+          },
+        },
+        name: { type: 'string' }, email: { type: 'string' },
+      },
+      required: ['title', 'citations'],
+    },
+  },
 ];
 
 // ── Tool dispatch ──────────────────────────────────────────────────
@@ -586,6 +625,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'get_quotes': return getQuotes(args);
     case 'search_images': return searchImages(args);
     case 'submit_feedback': return submitFeedback(args);
+    case 'share_findings': return shareFindings(args);
     default: throw new Error(`Unknown tool: ${name}`);
   }
 }

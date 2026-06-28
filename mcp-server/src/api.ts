@@ -91,6 +91,28 @@ export async function submitFeedback(args: {
   };
 }
 
+export async function shareFindings(args: {
+  title: string;
+  summary?: string;
+  citations: { book_id: string; page: number; note?: string }[];
+  name?: string;
+  email?: string;
+}) {
+  const result = await apiPost("/share-findings", {
+    title: args.title,
+    summary: args.summary || null,
+    citations: args.citations || [],
+    name: args.name || null,
+    email: args.email || null,
+  }) as Record<string, unknown>;
+
+  return {
+    ok: true,
+    id: result.id,
+    message: result.message || "Findings shared with the Source Library team. Thank you!",
+  };
+}
+
 export async function checkDuplicate(args: {
   title: string;
   author?: string;
