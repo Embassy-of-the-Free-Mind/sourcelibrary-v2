@@ -44,7 +44,7 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl, bgAttributi
       {bgImageUrl && (
         <>
           <ParallaxImage src={bgImageUrl} className="opacity-55" strength={0.06} oversize={0.08} />
-          <div className="absolute inset-0" style={{ background: 'var(--bg-dark)', opacity: 0.62 }} />
+          <div className="absolute inset-0" style={{ background: 'var(--bg-dark)', opacity: 0.5 }} />
         </>
       )}
       <div className="relative px-6 md:px-12 max-w-2xl mx-auto text-center" style={bgImageUrl ? { textShadow: '0 1px 10px rgba(0,0,0,0.55)' } : undefined}>
