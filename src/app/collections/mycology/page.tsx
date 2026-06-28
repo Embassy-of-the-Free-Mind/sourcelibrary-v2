@@ -139,46 +139,51 @@ interface PagePreview { id: string; page_number?: number; kind: 'illustration' |
 // well-separated points in the book (≈35% and ≈80% through the high-quality
 // plates) so the two previews are distinct — not the cover, not a colour/plain
 // pair of the same plate sitting on adjacent leaves.
+// Preview rule: the first 3 non-blank, non-cover pages PLUS at least 2 pages with
+// visual art (figures/plates), never the cover page. If the book has no visuals,
+// just the first 5 non-blank, non-cover pages. Filled to 5 where possible.
+const BLANK_PAGE_TYPES = new Set(['blank', 'exlibris', 'bookplate', 'digitizer-insert']);
+const VISUAL_PAGE_TYPES = new Set(['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'figure', 'plate']);
+
 async function getFeaturedPagePreviews(
   db: Awaited<ReturnType<typeof getReadDb>>, bookId: string,
 ): Promise<PagePreview[]> {
-  const imgs = await withTimeout(
-    db.collection('gallery_images').find(
-      { book_id: bookId, gallery_quality: { $gte: 0.5 } },
-      { projection: { _id: 0, page_id: 1 }, maxTimeMS: 5000 },
-    ).sort({ gallery_quality: -1 }).limit(40).toArray() as Promise<Record<string, unknown>[]>,
-    5000, [],
-  );
-  const distinct: string[] = [];
-  const seen = new Set<string>();
-  for (const g of imgs) {
-    const pid = g.page_id as string | undefined;
-    if (pid && !seen.has(pid)) { seen.add(pid); distinct.push(pid); }
-    if (distinct.length >= 12) break;
-  }
-  if (!distinct.length) return [];
-  const proj = { _id: 0, id: 1, page_number: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1 };
-  const pages = await withTimeout(
-    db.collection('pages').find({ id: { $in: distinct } }, { projection: proj, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>,
-    5000, [],
-  );
-  // Order by page number, skip the front matter (likely the cover plate).
-  const pool = pages
-    .filter((p) => ((p.page_number as number) ?? 0) > 3)
-    .sort((a, b) => ((a.page_number as number) ?? 0) - ((b.page_number as number) ?? 0));
-  const usable = pool.length ? pool : pages;
+  const proj = { _id: 0, id: 1, page_number: 1, page_type: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1 };
+  const [pages, vis] = await Promise.all([
+    withTimeout(
+      db.collection('pages').find({ book_id: bookId }, { projection: proj, maxTimeMS: 6000 }).sort({ page_number: 1 }).limit(500).toArray() as Promise<Record<string, unknown>[]>,
+      6000, [],
+    ),
+    withTimeout(
+      db.collection('gallery_images').find({ book_id: bookId, gallery_quality: { $gte: 0.5 } }, { projection: { _id: 0, page_id: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>,
+      5000, [],
+    ),
+  ]);
+  const visIds = new Set(vis.map((g) => g.page_id as string | undefined).filter(Boolean));
+  // Non-blank, not the cover (page 1).
+  const usable = pages.filter((p) => !BLANK_PAGE_TYPES.has((p.page_type as string) || '') && ((p.page_number as number) ?? 0) > 1);
   if (!usable.length) return [];
-  // Up to 6 distinct pages spread evenly across the book.
-  const N = Math.min(6, usable.length);
-  const idxs = N <= 1 ? [0] : Array.from({ length: N }, (_, k) => Math.round((k / (N - 1)) * (usable.length - 1)));
+
+  const isVisual = (p: Record<string, unknown>) => visIds.has(p.id as string) || VISUAL_PAGE_TYPES.has((p.page_type as string) || '');
   const out: PagePreview[] = [];
-  for (const i of idxs) {
-    const p = usable[Math.min(i, usable.length - 1)];
+  const seen = new Set<string>();
+  const push = (p: Record<string, unknown>) => {
+    const id = p.id as string;
+    if (!id || seen.has(id)) return;
     const url = getPageImageUrl(p as unknown as Parameters<typeof getPageImageUrl>[0], 'thumb');
-    if (url && !out.some((o) => o.id === (p.id as string))) {
-      out.push({ id: p.id as string, page_number: p.page_number as number | undefined, kind: 'illustration', url });
-    }
+    if (!url) return;
+    seen.add(id);
+    out.push({ id, page_number: p.page_number as number | undefined, kind: isVisual(p) ? 'illustration' : 'text', url });
+  };
+
+  const visualPages = usable.filter(isVisual);
+  if (visualPages.length === 0) {
+    for (const p of usable) { if (out.length >= 5) break; push(p); }
+    return out;
   }
+  for (const p of usable) { if (out.length >= 3) break; push(p); }       // first 3 non-blank
+  for (const p of visualPages) { if (out.length >= 5) break; push(p); }  // at least 2 visuals
+  for (const p of usable) { if (out.length >= 5) break; push(p); }       // top up to 5
   return out;
 }
 
@@ -269,9 +274,10 @@ export default async function MycologyCollectionPage() {
                 Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
               </p>
             </div>
-            {/* Walkthrough video placeholder (2:3) — left on desktop via row-reverse; 66vh tall on desktop */}
-            <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
-              <div className="relative aspect-[2/3] lg:h-[66vh] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
+            {/* Walkthrough video placeholder — 33% of section width, max 80vh tall, 2:3
+                (same dimensions as the featured book cover). */}
+            <div className="w-full max-w-[300px] mx-auto md:mx-0 md:w-[min(33%,53.333vh)] md:max-w-none shrink-0">
+              <div className="relative aspect-[2/3] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
                 <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
                   <Play className="w-6 h-6 text-white" fill="currentColor" />
                 </div>
@@ -286,10 +292,11 @@ export default async function MycologyCollectionPage() {
       {featured && (
         <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-            <div className="grid gap-8 lg:gap-14 md:grid-cols-[minmax(0,420px)_1fr] md:items-start">
-              {/* Cover (desktop: left column). On mobile the cover takes 80% and the
-                  page previews stack in the remaining 20% beside it. */}
-              <div className="flex gap-3 md:block">
+            <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
+              {/* Cover (desktop: left, 33% of section width, max 80vh tall, 2:3 — matches
+                  the intro video). On mobile the cover takes 80% and the page previews
+                  stack in the remaining 20% beside it. */}
+              <div className="w-full md:w-[min(33%,53.333vh)] shrink-0 flex gap-3 md:block">
                 <div className="w-4/5 md:w-full relative aspect-[2/3] overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
                     <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="(min-width:768px) 420px, 80vw" />
@@ -311,7 +318,7 @@ export default async function MycologyCollectionPage() {
               </div>
 
               {/* Content (desktop: right column) */}
-              <div className="min-w-0">
+              <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent-rust mb-3">Featured</p>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-primary leading-[1.06] mb-3" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
                 <p className="text-sm text-muted mb-6">
