@@ -44,7 +44,6 @@ import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
-import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import PageComments from '@/components/book/PageComments';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
@@ -1908,19 +1907,10 @@ export default function TranslationEditor({
               bookId={book.id}
               size="sm"
               showCount={true}
+              label="Like this page"
             />
             {!isEmbedded && (
               <>
-                <span style={{ color: 'var(--border-light)' }}>·</span>
-                <FeedbackWidget
-                  label="Found something? Tell Derek"
-                  heading="Tell Derek what you found"
-                  intro="A passage that struck you, a connection, a question — Derek reads every note."
-                  placeholder="What caught your eye on this page…"
-                  contactEmail="derek@sourcelibrary.org"
-                  className="hover:underline"
-                  style={{ color: 'var(--text-muted)' }}
-                />
                 <span style={{ color: 'var(--border-light)' }}>·</span>
                 <PageComments
                   key={`comments-${page.id}`}
