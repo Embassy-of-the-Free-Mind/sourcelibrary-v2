@@ -267,9 +267,49 @@ async function getBookText(args: Record<string, unknown>) {
   return result;
 }
 
+// The shareable link is the thing a chat assistant actually hands the reader.
+// The quote API nests it at citation.short_url; surface it at the top level as
+// `citation_link` (headline) so it reads like the deliverable, not metadata.
+// `short_url` is kept as a top-level back-compat alias.
+async function fetchQuote(bookId: string, page: number) {
+  const result = await apiGet(`/books/${bookId}/quote`, new URLSearchParams({ page: String(page) })) as Record<string, unknown>;
+  const citation = result.citation as Record<string, unknown> | undefined;
+  const citationLink = (citation?.short_url as string) || undefined;
+  return { citation_link: citationLink, ...result, short_url: citationLink };
+}
+
+// Symmetric guidance: quote verbatim AND present the link. The blockquote +
+// attribution template gives the model a ready pattern to copy so the verbatim
+// text and the citation_link stay bound together every time.
+const QUOTE_TIP =
+  'Copy the translation text exactly when quoting — do not paraphrase — AND present the citation_link to the reader alongside the quote. Recommended rendering:\n\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]';
+
 async function getQuote(args: Record<string, unknown>) {
-  const result = await apiGet(`/books/${args.book_id}/quote`, new URLSearchParams({ page: String(args.page) })) as Record<string, unknown>;
-  return { ...result, tip: 'Copy the translation text exactly when quoting. Do not paraphrase.' };
+  return { ...(await fetchQuote(String(args.book_id), Number(args.page))), tip: QUOTE_TIP };
+}
+
+// Batch variant: assemble a multi-passage dossier for one book in a single
+// round-trip, via an explicit page list and/or a from/to range. Capped to keep
+// the response bounded.
+async function getQuotes(args: Record<string, unknown>) {
+  const bookId = String(args.book_id);
+  const pageSet = new Set<number>();
+  if (Array.isArray(args.pages)) {
+    for (const p of args.pages) { const n = Number(p); if (Number.isFinite(n)) pageSet.add(n); }
+  }
+  if (args.from !== undefined && args.to !== undefined) {
+    const from = Number(args.from), to = Number(args.to);
+    if (Number.isFinite(from) && Number.isFinite(to)) for (let p = from; p <= to; p++) pageSet.add(p);
+  }
+  const pages = [...pageSet].sort((a, b) => a - b).slice(0, 25);
+  const quotes = await Promise.all(pages.map(async page => {
+    try {
+      return await fetchQuote(bookId, page);
+    } catch (err) {
+      return { page, error: err instanceof Error ? err.message : 'failed' };
+    }
+  }));
+  return { book_id: bookId, count: quotes.length, quotes, tip: QUOTE_TIP };
 }
 
 async function searchImages(args: Record<string, unknown>) {
@@ -426,7 +466,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'Get a book\'s AI-generated summary, chapter list, edition metadata, DOI, and page counts. THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance, often answering the question without any further searching. Pair with get_book_text to read selected chapters, or search_within_book to locate passages inside it.',
+    description: 'START HERE for any named work. Get a book\'s AI-generated summary, chapter list (with English titles, page ranges, and page IDs), edition metadata, DOI, page counts, curated key quotes (each already carrying page + page_id, so they are citation-ready), and IIIF manifest link. THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance, often answering the question without any further searching. The three read tools form a pipeline: get_book (discover) → get_book_text (read a chapter or page range) → get_quote (lock a single page with full citation apparatus). Also use search_within_book to locate passages inside it.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -437,7 +477,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book_text',
     title: 'Read Book Text',
-    description: 'Read a book\'s text. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation) — call get_book first to get the chapter list. Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.',
+    description: 'Read a book\'s text (step 2 of the get_book → get_book_text → get_quote pipeline). Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation) — call get_book first to get the chapter list. Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.',
     annotations: { title: 'Read Book Text', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -456,7 +496,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quote',
     title: 'Get Quote',
-    description: 'Get exact text of a single page for quoting, with citation URL. ALWAYS use before putting text in quotation marks.',
+    description: 'Get exact text of a single page for quoting, with a citation URL. Final step of the get_book → get_book_text → get_quote pipeline. ALWAYS use before putting text in quotation marks. The headline output is `citation_link` (the shareable per-page short URL) — present it to the reader alongside the quote, do not bury it. Recommended rendering:\n\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\n\nThe full response also carries a structured `citation` block (inline/footnote/chicago/mla/bibtex), the original-language text, and the CC-BY-SA license. For several pages of one book at once, use get_quotes.',
     annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -465,6 +505,22 @@ const TOOLS: Tool[] = [
         page: { type: 'number', description: 'Page number' },
       },
       required: ['book_id', 'page'],
+    },
+  },
+  {
+    name: 'get_quotes',
+    title: 'Get Quotes (batch)',
+    description: 'Batch version of get_quote: fetch verbatim text + citation_link for several pages of ONE book in a single round-trip. Give an explicit list of page numbers and/or a from/to range. Returns an array of quote objects (same shape as get_quote, each with its own citation_link). Use this to assemble a multi-passage, properly-cited dossier without one call per page. Capped at 25 pages per call.',
+    annotations: { title: 'Get Quotes (batch)', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        book_id: { type: 'string', description: 'The book ID' },
+        pages: { type: 'array', items: { type: 'number' }, description: 'Explicit list of page numbers, e.g. [12, 44, 73]' },
+        from: { type: 'number', description: 'Start of a page range (inclusive). Use with to.' },
+        to: { type: 'number', description: 'End of a page range (inclusive). Use with from.' },
+      },
+      required: ['book_id'],
     },
   },
   {
@@ -514,6 +570,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'get_book': return getBook(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
+    case 'get_quotes': return getQuotes(args);
     case 'search_images': return searchImages(args);
     case 'submit_feedback': return submitFeedback(args);
     default: throw new Error(`Unknown tool: ${name}`);
