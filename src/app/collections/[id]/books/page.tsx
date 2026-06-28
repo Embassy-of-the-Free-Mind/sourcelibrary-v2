@@ -85,17 +85,18 @@ async function getRelatedBooks(
     debug.themeTerms = termAgg.map((t) => `${t._id}(${t.n})`);
     if (themeTerms.length < 2) return { books: [], terms: themeTerms, debug };
 
-    // Non-member books sharing ≥2 theme terms, ranked by overlap.
+    // Non-member books sharing ≥2 theme terms, ranked by overlap. Compare on
+    // LOWERCASED terms (theme terms are lowercased) so case never blocks a match.
     const candAgg = await withTimeout(
       db.collection('book_indexes').aggregate([
-        { $match: { book_id: { $nin: memberIds }, $or: [{ 'keywords.term': { $in: themeTerms } }, { 'concepts.term': { $in: themeTerms } }] } },
+        { $match: { book_id: { $nin: memberIds } } },
         { $project: { book_id: 1, all: { $map: { input: { $concatArrays: [{ $ifNull: ['$keywords', []] }, { $ifNull: ['$concepts', []] }] }, as: 't', in: { $toLower: '$$t.term' } } } } },
         { $project: { book_id: 1, score: { $size: { $setIntersection: ['$all', themeTerms] } } } },
         { $match: { score: { $gte: 2 } } },
         { $sort: { score: -1 } },
         { $limit: 60 },
-      ], { maxTimeMS: 7000 }).toArray() as Promise<Record<string, unknown>[]>,
-      7000, [],
+      ], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>,
+      8000, [],
     );
     const scoreMap = new Map(candAgg.map((c) => [c.book_id as string, c.score as number]));
     const candIds = [...scoreMap.keys()];
