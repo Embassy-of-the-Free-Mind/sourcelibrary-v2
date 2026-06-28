@@ -282,8 +282,8 @@ export default async function MycologyCollectionPage() {
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-          <div className="flex flex-col md:flex-row-reverse md:items-stretch gap-8 lg:gap-12">
-            <div className="font-body flex-1 min-w-0 flex flex-col">
+          <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
+            <div className="font-body flex-1 min-w-0">
               {/* Lead — larger; fills the available width beside the video. */}
               <p className="text-xl sm:text-3xl text-primary leading-snug mb-6">
                 Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
@@ -294,13 +294,6 @@ export default async function MycologyCollectionPage() {
               <p className="text-secondary leading-relaxed max-w-2xl">
                 Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
               </p>
-              {/* Engraving filling the gap below the text (left-aligned), blended into
-                  the section so the paper ground melts into bg-warm. */}
-              <div className="mt-6 md:mt-auto md:flex-1 md:min-h-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/collections/mycology/intro-fungi.webp" alt="Three mushrooms, engraving" loading="lazy" decoding="async"
-                  className="block w-full md:w-auto h-auto md:h-full max-w-full object-contain object-left-bottom mix-blend-multiply" />
-              </div>
             </div>
             {/* Walkthrough video placeholder — 33% of section width, max 80vh tall, 2:3
                 (same dimensions as the featured book cover). */}
