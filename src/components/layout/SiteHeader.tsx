@@ -42,8 +42,9 @@ interface Breadcrumb {
 }
 
 interface SiteHeaderProps {
-  /** 'transparent' for the homepage hero overlay, 'light' (default) for all other pages */
-  variant?: 'transparent' | 'light';
+  /** 'transparent' for the homepage hero overlay, 'light' (default) for all other
+   *  pages, 'dark' for a solid dark bar (e.g. the collection page header). */
+  variant?: 'transparent' | 'light' | 'dark';
   /** Optional breadcrumb trail after the logo (e.g. "Image Gallery") */
   breadcrumbs?: Breadcrumb[];
   /** Make header sticky */
@@ -61,7 +62,7 @@ interface SiteHeaderProps {
 }
 
 export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '', homeLocale }: SiteHeaderProps) {
-  const isWhiteText = variant === 'transparent';
+  const isWhiteText = variant === 'transparent' || variant === 'dark';
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -104,6 +105,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const variantClasses = {
     transparent: 'relative z-50 py-4',
     light: 'bg-cream border-b border-border-light py-3',
+    dark: 'bg-dark border-b border-white/10 py-3',
   }[variant];
 
   const linkClass = isWhiteText

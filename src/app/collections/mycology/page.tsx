@@ -19,6 +19,7 @@ import MycoAnchorBar from './_components/MycoAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
 import { getImageFraming } from '@/lib/image-framing';
 import LibrarianSearch from './_components/LibrarianSearch';
+import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 /*
  * Mycology collection page — REDESIGN. Dedicated route so the shared
@@ -261,11 +262,8 @@ export default async function MycologyCollectionPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Inverted navbar — dark footer-tone bg with light text (transparent variant
-          renders the inverted/light text), in document flow. Breadcrumbs live in the hero. */}
-      <div className="bg-dark">
-        <ConditionalSiteHeader variant="transparent" />
-      </div>
+      {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
+      <ConditionalSiteHeader variant="dark" />
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[66vh] flex items-end">
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
@@ -320,7 +318,7 @@ export default async function MycologyCollectionPage() {
             <figure className="w-full md:w-[min(33%,53.333vh)] shrink-0 m-0 mx-auto md:mx-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/collections/mycology/intro-plate.webp" alt="A microscope amid fungi, plants, and books — frontispiece engraving" loading="lazy" decoding="async" className="w-full h-auto" />
-              <figcaption className="mt-2 text-xs text-muted text-center md:text-left">
+              <figcaption className="mt-2 text-xs text-muted text-center">
                 <Link href="/gallery/image/69d8ca9ea09828f83ddcbbbe-0" className="hover:text-primary transition-colors">
                   Selecta Fungorum Carpologia — L.-R. &amp; C. Tulasne, 1863
                 </Link>
@@ -548,23 +546,21 @@ export default async function MycologyCollectionPage() {
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
           <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { kicker: 'Open to all', title: 'Leave feedback', body: 'Spot an error, a missing edition, or a better translation of a passage? Tell us, corrections ship fast.', cta: 'Send feedback', href: '/feedback', primary: false },
-              { kicker: 'Volunteer', title: 'Become a curator', body: 'Help select, sequence, and annotate the works in a collection. Lend your scholarship to the catalogue.', cta: 'Apply to curate', href: '/welcome', primary: false },
-              { kicker: 'Support', title: 'Become a patron', body: 'Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.', cta: 'Become a patron', href: '/support', primary: true },
-            ].map((c) => (
-              <div key={c.title} className="border border-border-light bg-white p-6 flex flex-col">
-                <div className="text-[11px] uppercase tracking-wider text-muted mb-3">{c.kicker}</div>
-                <h3 className="text-lg font-semibold text-primary mb-2 font-display">{c.title}</h3>
-                <p className="text-sm text-secondary mb-5 font-body flex-1">{c.body}</p>
-                {c.primary ? (
-                  <Link href={c.href} className={`${BTN_DARK} self-start`}>{c.cta} <ArrowRight className="w-4 h-4" /></Link>
-                ) : (
-                  <Link href={c.href} className={`${RUST_LINK} self-start`}>{c.cta} <ArrowRight className="w-3.5 h-3.5" /></Link>
-                )}
-              </div>
-            ))}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {/* Feedback — opens the global feedback modal (same one used across the site). */}
+            <div className="border border-border-light bg-white p-6 flex flex-col">
+              <div className="text-[11px] uppercase tracking-wider text-muted mb-3">Open to all</div>
+              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Leave feedback</h3>
+              <p className="text-sm text-secondary mb-5 font-body flex-1">Spot an error, a missing edition, or a better translation of a passage? Tell us, corrections ship fast.</p>
+              <FeedbackWidget label="Send feedback" className={`${RUST_LINK} self-start`} />
+            </div>
+            {/* Patron */}
+            <div className="border border-border-light bg-white p-6 flex flex-col">
+              <div className="text-[11px] uppercase tracking-wider text-muted mb-3">Support</div>
+              <h3 className="text-lg font-semibold text-primary mb-2 font-display">Become a patron</h3>
+              <p className="text-sm text-secondary mb-5 font-body flex-1">Fund new high-resolution scans and first translations. Every work you help recover stays open to everyone.</p>
+              <Link href="/support" className={`${BTN_DARK} self-start`}>Become a patron <ArrowRight className="w-4 h-4" /></Link>
+            </div>
           </div>
         </div>
       </section>
