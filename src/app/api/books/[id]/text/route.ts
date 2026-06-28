@@ -98,6 +98,12 @@ export const GET = withApiAuth(async (
     const isBotRequest = isBot(request) && !(await isTrustedBot(request));
     const botPageLimit = isBotRequest ? botMaxPage(book.pages_count || 0) : undefined;
 
+    // Per-request page cap. The daily budget check above only sees the PRIOR 24h
+    // total, so a single large from/to range (or an unbounded request) could serve
+    // far past the cap in ONE call. Clamp this request to the remaining budget for
+    // limited tiers; apikey/bot are unlimited (limit < 0 → no cap).
+    const budgetPageCap = (enforce && budget.limit > 0) ? Math.max(1, budget.remaining) : undefined;
+
     // Chapter mode: return pre-materialized chapter text
     if (chapterParam !== null) {
       const chapterIndex = parseInt(chapterParam);
@@ -194,17 +200,27 @@ export const GET = withApiAuth(async (
       });
     }
 
-    // Build page query
+    // Build page query. The max page number this request may reach is the
+    // tightest of: requested `to`, the bot 20% limit, and the per-request budget
+    // cap (counted from the start page). budgetMaxPage closes the granularity gap
+    // where one big range would otherwise serve past the daily cap in a single call.
+    const startPage = fromPage ?? 1;
+    const budgetMaxPage = budgetPageCap !== undefined ? startPage + budgetPageCap - 1 : undefined;
+    const pageCaps = [toPage, botPageLimit, budgetMaxPage].filter((v): v is number => v !== undefined);
+    const effectiveToPage = pageCaps.length ? Math.min(...pageCaps) : undefined;
+
     const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
-    if (fromPage !== undefined || toPage !== undefined || botPageLimit !== undefined) {
+    if (fromPage !== undefined || effectiveToPage !== undefined) {
       pageFilter.page_number = {};
       if (fromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = fromPage;
-      // Bot page limit caps the maximum page number
-      const effectiveToPage = botPageLimit !== undefined
-        ? (toPage !== undefined ? Math.min(toPage, botPageLimit) : botPageLimit)
-        : toPage;
       if (effectiveToPage !== undefined) (pageFilter.page_number as Record<string, number>).$lte = effectiveToPage;
     }
+
+    // Did the budget cap (not the bot limit / requested range) truncate the result?
+    const requestedEnd = toPage ?? (book.pages_count || Number.MAX_SAFE_INTEGER);
+    const budgetTruncated = budgetMaxPage !== undefined
+      && effectiveToPage === budgetMaxPage
+      && requestedEnd > budgetMaxPage;
 
     // Build projection — only fetch what's needed
     const projection: Record<string, number> = { page_number: 1, _id: 0 };
@@ -316,6 +332,21 @@ export const GET = withApiAuth(async (
           pages_total: book.pages_count || pages.length,
           full_access: 'Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server',
           partnership: 'https://sourcelibrary.org/llms.txt',
+        },
+      } : {}),
+      ...(budgetTruncated ? {
+        budget: {
+          truncated: true,
+          reason: 'daily_page_budget',
+          last_page_served: budgetMaxPage,
+          used_24h: budget.used,
+          limit_24h: budget.limit,
+          note: `Served up to p.${budgetMaxPage}; the rest of this range is beyond your remaining daily page budget (${budget.used}/${budget.limit} used in 24h). Retrying immediately will be rate-limited — sign in or use an API key for a higher limit, or bulk-export instead.`,
+          next_steps: {
+            sign_in: 'https://sourcelibrary.org/auth/signin',
+            get_api_key: 'https://sourcelibrary.org/developers',
+            bulk_export: 'https://sourcelibrary.org/api/dataset/v1/pages',
+          },
         },
       } : {}),
       pages: pagesWithContent.map(p => {
