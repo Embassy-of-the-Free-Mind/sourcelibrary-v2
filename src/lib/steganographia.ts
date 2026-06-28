@@ -5,19 +5,34 @@
  * the Aldine Press anchor-and-dolphin device, this module embeds an
  * invisible imprimatur — a provenance mark — into translated editions.
  *
- * Just as early printers placed colophons and devices in their books
- * to assert the origin and integrity of an edition, this system weaves
- * a short edition identifier into the text itself using zero-width
- * Unicode characters. The mark is a statement of provenance: "this
- * edition was produced by Source Library."
+ * Just as early printers placed colophons and devices in their books to
+ * assert the origin of an edition, this system weaves a short, *readable*
+ * colophon — and a structured edition identifier — into the text itself
+ * using zero-width Unicode characters. The mark is a message in a bottle:
+ * anyone (human or machine) curious enough to notice the zero-width run and
+ * decode it gets a legible note pointing back to Source Library, plus a
+ * keyed MAC that proves the note is genuinely ours.
  *
- * Marks are deterministically placed using a secret key, so verifying
- * provenance requires only the key and the text in question.
+ * This is *attribution, not DRM.* Zero-width characters are trivially
+ * stripped (any Unicode-normalization pass or "remove hidden characters"
+ * tool removes them; so does our own `clean()`). The mark deliberately
+ * decodes to plain text so that whoever cracks it finds a friendly
+ * colophon rather than an opaque tracking token. What the keyed MAC buys
+ * is *unforgeability*: without PROVENANCE_SECRET_KEY a third party can read
+ * or strip the mark, but cannot fabricate a "made by Source Library" mark
+ * that verifies as genuine for an edition we never exported.
  *
- * Method: Zero-width Unicode characters encode bits of the edition
- * identifier at positions derived from HMAC(key, page_content). Each
- * mark is placed after sentence-ending punctuation, where whitespace
- * variation is invisible to the reader.
+ * Method: zero-width characters encode the bytes of a framed, MAC-tagged
+ * payload — [VERSION][idLen][id][msgLen][message][MAC] — at positions
+ * derived from HMAC(key, page_content), placed after sentence-ending
+ * punctuation where whitespace variation is invisible to the reader.
+ *
+ * Threat model & limits: the MAC binds the edition id + message, not the
+ * surrounding prose, so a genuine mark survives excerpting (a short quote
+ * still verifies) — robust provenance, not text tamper-evidence. A genuine
+ * mark can in principle be lifted from one of our texts and replanted onto
+ * another; what it prevents is forging a mark for an edition we never
+ * exported. Marks are inherently removable.
  */
 
 import crypto from 'crypto';
@@ -25,23 +40,31 @@ import crypto from 'crypto';
 // Zero-width characters used to encode bits
 // These are invisible in all renderers but preserved by copy-paste
 const ZWC = {
-  ZERO: '\u200B',   // Zero-width space  → bit 0
-  ONE: '\u200C',    // Zero-width non-joiner → bit 1
-  MARKER: '\u200D', // Zero-width joiner → marks start of an imprimatur char
-  FILLER: '\uFEFF', // Zero-width no-break space → padding/noise
+  ZERO: '​',   // Zero-width space  → bit 0
+  ONE: '‌',    // Zero-width non-joiner → bit 1
+  MARKER: '‍', // Zero-width joiner → marks start of a payload byte
+  FILLER: '﻿', // Zero-width no-break space → separates redundant copies
 };
 
 // All zero-width chars we use (for cleaning/reading)
 const ALL_ZWC = new Set(Object.values(ZWC));
 
+// Authenticated-payload framing.
+// Layout (bytes): [VERSION][idLen][id…][msgLenHi][msgLenLo][message…][MAC…]
+//   MAC = HMAC-SHA256(key, <every byte before the MAC>)[:MAC_BYTES]
+const MARK_VERSION = 0x02;
+const MAC_BYTES = 6;           // 48-bit tag — blind-forgery odds ~1 in 2.8e14
+const MAX_ID_BYTES = 12;       // edition id ceiling (matches imprimatur contract)
+const MAX_MSG_BYTES = 512;     // readable colophon ceiling
+const REPLACEMENT = '�';  // produced when bytes are not valid UTF-8
+
 /**
- * Encode an edition ID (up to 12 alphanumeric chars) into a sequence
- * of zero-width characters.
+ * Encode a byte buffer into a sequence of zero-width characters,
+ * MSB-first, with a MARKER delimiting the start of each byte.
  */
-function encodeId(editionId: string): string {
-  const bytes = Buffer.from(editionId, 'utf-8');
+function encodeBytes(buf: Buffer): string {
   let encoded = '';
-  for (const byte of bytes) {
+  for (const byte of buf) {
     encoded += ZWC.MARKER; // start delimiter
     for (let bit = 7; bit >= 0; bit--) {
       encoded += (byte >> bit) & 1 ? ZWC.ONE : ZWC.ZERO;
@@ -51,10 +74,10 @@ function encodeId(editionId: string): string {
 }
 
 /**
- * Decode zero-width characters back to an edition ID.
+ * Decode a run of zero-width characters back into the byte sequence
+ * that produced it. Inverse of {@link encodeBytes}.
  */
-function decodeId(zwcString: string): string | null {
-  // Extract only our ZWC characters
+function decodeBytes(zwcString: string): number[] {
   const chars = [...zwcString].filter(c => ALL_ZWC.has(c));
 
   const bytes: number[] = [];
@@ -74,7 +97,85 @@ function decodeId(zwcString: string): string | null {
     bytes.push(byte);
   }
 
-  if (bytes.length === 0) return null;
+  return bytes;
+}
+
+interface Payload {
+  editionId: string;
+  message: string;
+  authentic: boolean;
+}
+
+/**
+ * Build the framed, MAC-tagged payload buffer for an edition id and an
+ * optional readable colophon message. The MAC covers everything before
+ * it (version, id, and message), binding all three.
+ */
+function buildPayload(editionId: string, message: string, secretKey: string): Buffer {
+  const idBytes = Buffer.from(editionId, 'utf-8');
+  const msgBytes = Buffer.from(message, 'utf-8');
+  const preMac = Buffer.concat([
+    Buffer.from([MARK_VERSION, idBytes.length]),
+    idBytes,
+    Buffer.from([(msgBytes.length >> 8) & 0xff, msgBytes.length & 0xff]),
+    msgBytes,
+  ]);
+  const mac = crypto.createHmac('sha256', secretKey).update(preMac).digest().subarray(0, MAC_BYTES);
+  return Buffer.concat([preMac, mac]);
+}
+
+/**
+ * Parse a decoded byte run as a framed v2 payload, returning the edition
+ * id, the readable message, and whether its MAC verifies under the given
+ * key. Returns null if the bytes are not a well-formed v2 payload.
+ */
+function parsePayload(bytes: number[], secretKey: string | null): Payload | null {
+  // [VER][idLen][id…][msgLenHi][msgLenLo][message…][mac(MAC_BYTES)]
+  if (bytes.length < 2) return null;
+  if (bytes[0] !== MARK_VERSION) return null;
+
+  const idLen = bytes[1];
+  if (idLen < 1 || idLen > MAX_ID_BYTES) return null;
+  let off = 2 + idLen;
+  if (bytes.length < off + 2) return null;
+
+  const idBytes = Buffer.from(bytes.slice(2, off));
+  const msgLen = (bytes[off] << 8) | bytes[off + 1];
+  off += 2;
+  if (msgLen > MAX_MSG_BYTES) return null;
+  if (bytes.length < off + msgLen + MAC_BYTES) return null;
+
+  const msgBytes = Buffer.from(bytes.slice(off, off + msgLen));
+  off += msgLen;
+  const macBytes = Buffer.from(bytes.slice(off, off + MAC_BYTES));
+
+  // Edition id must round-trip cleanly (reject invalid UTF-8)
+  const editionId = idBytes.toString('utf-8');
+  if (editionId.includes(REPLACEMENT) || Buffer.from(editionId, 'utf-8').length !== idLen) {
+    return null;
+  }
+  const message = msgBytes.toString('utf-8');
+
+  let authentic = false;
+  if (secretKey) {
+    const preMac = Buffer.from(bytes.slice(0, off)); // everything up to the MAC
+    const expected = crypto.createHmac('sha256', secretKey).update(preMac).digest().subarray(0, MAC_BYTES);
+    authentic = expected.length === macBytes.length && crypto.timingSafeEqual(expected, macBytes);
+  }
+
+  return { editionId, message, authentic };
+}
+
+/**
+ * Legacy reader: the original format encoded the raw edition-id bytes with
+ * no version byte, length, MAC, or message. Recover the id on a best-effort
+ * basis so old exports stay attributable (presence only — never
+ * authenticated). Restricted to printable ASCII so it cannot misread a
+ * framed payload's binary header as text.
+ */
+function parseLegacyId(bytes: number[]): string | null {
+  if (bytes.length === 0 || bytes.length > MAX_ID_BYTES) return null;
+  if (!bytes.every(b => b >= 0x20 && b <= 0x7e)) return null;
   return Buffer.from(bytes).toString('utf-8');
 }
 
@@ -135,35 +236,50 @@ function selectPositions(
 /**
  * Apply an imprimatur — a provenance mark — to the given text.
  *
- * The edition identifier is encoded as invisible zero-width characters
- * and distributed across multiple insertion points for redundancy,
- * so even a partial excerpt may carry a recoverable provenance mark.
+ * The edition identifier and an optional readable colophon message are
+ * wrapped in a framed, MAC-authenticated payload and distributed across a
+ * couple of insertion points for redundancy, so even a partial excerpt may
+ * carry a recoverable — and verifiable — mark.
  *
  * @param text - The translation text to mark
- * @param editionId - Edition identifier (max 12 alphanumeric chars), akin to a printer's colophon
- * @param secretKey - Secret key for deterministic placement
+ * @param editionId - Edition identifier (max 12 bytes), akin to a printer's colophon
+ * @param secretKey - Secret key for the MAC and deterministic placement
+ * @param options.message - Optional readable colophon woven alongside the id
  * @returns Marked text (visually identical to input)
  */
 export function imprimatur(
   text: string,
   editionId: string,
-  secretKey: string
+  secretKey: string,
+  options?: { message?: string }
 ): string {
-  if (editionId.length > 12) {
-    throw new Error('Edition ID must be 12 characters or fewer');
+  if (editionId.length === 0) {
+    throw new Error('Edition ID must not be empty');
+  }
+  if (Buffer.from(editionId, 'utf-8').length > MAX_ID_BYTES) {
+    throw new Error('Edition ID must be 12 bytes or fewer');
+  }
+  if (!secretKey) {
+    throw new Error('A secret key is required to apply a provenance mark');
+  }
+  const message = options?.message ?? '';
+  if (Buffer.from(message, 'utf-8').length > MAX_MSG_BYTES) {
+    throw new Error(`Colophon message must be ${MAX_MSG_BYTES} bytes or fewer`);
   }
 
   // Remove any existing provenance marks first
   const cleanText = clean(text);
 
-  const encoded = encodeId(editionId);
+  const encoded = encodeBytes(buildPayload(editionId, message, secretKey));
   const points = findInsertionPoints(cleanText);
 
   if (points.length === 0) return cleanText;
 
-  // Place the FULL encoded ID at multiple insertion points for redundancy.
-  // Even a small excerpt containing one complete mark recovers the full ID.
-  const maxMarks = Math.min(points.length, 5); // up to 5 redundant copies
+  // Place the FULL encoded payload at a couple of insertion points for
+  // redundancy. Even a small excerpt containing one complete copy recovers
+  // (and verifies) the full mark. Kept low because each copy now carries a
+  // readable message — more copies = more (invisible) bloat.
+  const maxMarks = Math.min(points.length, 2);
   const positions = selectPositions(points, maxMarks, cleanText, secretKey);
   const chunks = positions.map(() => encoded + ZWC.FILLER);
 
@@ -179,35 +295,100 @@ export function imprimatur(
 }
 
 /**
- * Read the provenance mark from text, recovering the edition identifier.
+ * Verify a provenance mark and recover the edition identifier + message.
+ *
+ * This is the authenticated read path: with the secret key it confirms the
+ * mark was produced by Source Library (the MAC checks out) rather than
+ * merely present. Prefer this over {@link readProvenance} wherever the
+ * answer is trusted (admin tooling, attribution claims).
+ *
+ * @param text - Text that may carry a provenance mark
+ * @param secretKey - The PROVENANCE_SECRET_KEY used when marking
+ * @returns The recovered edition id + message (if any) and whether the MAC
+ *          verified. `authentic: false` with a non-null `editionId` means a
+ *          mark was present but did not authenticate (forged, legacy, or
+ *          wrong key).
+ */
+export function verifyProvenance(
+  text: string,
+  secretKey: string
+): { editionId: string | null; message: string | null; authentic: boolean } {
+  const zwcChars = [...text].filter(c => ALL_ZWC.has(c));
+  if (zwcChars.length === 0) return { editionId: null, message: null, authentic: false };
+
+  const copies = zwcChars.join('').split(ZWC.FILLER).filter(s => s.length > 0);
+
+  const authenticVotes: Record<string, number> = {};
+  const presentVotes: Record<string, number> = {};
+  const sample: Record<string, Payload> = {};
+
+  for (const copy of copies) {
+    const bytes = decodeBytes(copy);
+    const parsed = parsePayload(bytes, secretKey);
+    if (parsed) {
+      presentVotes[parsed.editionId] = (presentVotes[parsed.editionId] || 0) + 1;
+      // Prefer an authenticated sample for this id if we have one
+      if (parsed.authentic || !sample[parsed.editionId]) sample[parsed.editionId] = parsed;
+      if (parsed.authentic) {
+        authenticVotes[parsed.editionId] = (authenticVotes[parsed.editionId] || 0) + 1;
+      }
+      continue;
+    }
+    const legacy = parseLegacyId(bytes);
+    if (legacy) {
+      presentVotes[legacy] = (presentVotes[legacy] || 0) + 1;
+      if (!sample[legacy]) sample[legacy] = { editionId: legacy, message: '', authentic: false };
+    }
+  }
+
+  const top = (votes: Record<string, number>): string | null => {
+    const entries = Object.entries(votes);
+    if (entries.length === 0) return null;
+    return entries.sort((a, b) => b[1] - a[1])[0][0];
+  };
+
+  const authenticId = top(authenticVotes);
+  if (authenticId) {
+    return { editionId: authenticId, message: sample[authenticId].message, authentic: true };
+  }
+  const presentId = top(presentVotes);
+  if (presentId) {
+    return { editionId: presentId, message: sample[presentId].message, authentic: false };
+  }
+  return { editionId: null, message: null, authentic: false };
+}
+
+/**
+ * Read the provenance mark from text, recovering the edition identifier
+ * on a presence-only basis.
+ *
+ * SECURITY: this does NOT authenticate the mark — it returns whatever
+ * edition id is encoded, even if forged or corrupt. Use
+ * {@link verifyProvenance} when the result is trusted (attribution,
+ * takedowns). This remains for display/diagnostics and for reading legacy
+ * marks where no key is available.
  *
  * @param text - Text that may carry a provenance mark
  * @returns The edition identifier if found, null otherwise
  */
 export function readProvenance(text: string): string | null {
-  // Extract all ZWC characters in order
   const zwcChars = [...text].filter(c => ALL_ZWC.has(c));
   if (zwcChars.length === 0) return null;
 
-  const zwcString = zwcChars.join('');
+  const copies = zwcChars.join('').split(ZWC.FILLER).filter(s => s.length > 0);
 
-  // Split on FILLER to get redundant copies
-  const copies = zwcString.split(ZWC.FILLER).filter(s => s.length > 0);
-
-  // Try to decode each copy, take the most common result
   const candidates: Record<string, number> = {};
   for (const copy of copies) {
-    const decoded = decodeId(copy);
-    if (decoded && decoded.length > 0 && decoded.length <= 12) {
-      candidates[decoded] = (candidates[decoded] || 0) + 1;
-    }
+    const bytes = decodeBytes(copy);
+    // Try the framed format first (key-less parse → authenticity unknown),
+    // then fall back to the legacy raw-bytes format.
+    const id = parsePayload(bytes, null)?.editionId ?? parseLegacyId(bytes);
+    if (id) candidates[id] = (candidates[id] || 0) + 1;
   }
 
   if (Object.keys(candidates).length === 0) return null;
 
-  // Return the most frequently decoded ID
-  return Object.entries(candidates)
-    .sort((a, b) => b[1] - a[1])[0][0];
+  return Object.entries(candidates).sort((a, b) => b[1] - a[1])[0][0];
 }
 
 /**
