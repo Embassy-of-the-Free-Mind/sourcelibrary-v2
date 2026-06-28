@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@source-library%2Fmcp-server.svg)](https://www.npmjs.com/package/@source-library/mcp-server)
 
-Search, read, and cite 22,000+ rare pre-modern texts (alchemy, Hermetica, Kabbalah, theology, early science) with AI-generated English translations. 11 tools (full-text + semantic search, reading, exact quoting, image search, duplicate detection, feedback). CLI + MCP server, no API key needed.
+Search, read, and cite 22,000+ rare pre-modern texts (alchemy, Hermetica, Kabbalah, theology, early science) with AI-generated English translations. 12 tools (full-text + semantic search, reading, exact quoting, image search, duplicate detection, feedback, sharing findings back). CLI + MCP server, no API key needed.
 
 ## Quick Start
 
@@ -49,7 +49,7 @@ npm install && npm run build
 npm start
 ```
 
-## 11 Tools
+## 12 Tools
 
 ### Search & Discovery
 
@@ -141,7 +141,7 @@ Read a book. Prefer `chapter` for chapter-at-a-time reading; falls back to `from
 
 #### get_quote
 
-Get the exact translated text of a single page for quoting. Returns the full translation, original OCR, and a formatted citation. Always use this before putting text in quotation marks — never paraphrase from memory.
+Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR, and a formatted citation. The response headline is `citation_link` — the stable `sourcelibrary.org/q/…` shortlink to present alongside the quote and its page number. Always use this before putting text in quotation marks — never paraphrase from memory. Suggested render: `> [quote]` then `— [Author], p. [N]. [citation_link]`.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -195,6 +195,18 @@ Submit feedback, bug reports, or feature requests directly to the Source Library
 | `name` | string | No | Your name |
 | `email` | string | No | Email for follow-up |
 | `page` | string | No | Related page URL |
+
+#### share_findings
+
+Share a research dossier back to the Source Library team — a title, optional summary, and an ordered list of citations (`{ book_id, page, note }`, references not copied text). Like `submit_feedback`, it goes to the team for review.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `title` | string | Yes | Title of the dossier / thesis (2-300 chars) |
+| `summary` | string | No | Prose summarizing the argument (max 5000 chars) |
+| `citations` | array | Yes | Ordered `{ book_id, page, note }` passages (1-50) |
+| `name` | string | No | Your name |
+| `email` | string | No | Email for follow-up |
 
 ## CLI
 

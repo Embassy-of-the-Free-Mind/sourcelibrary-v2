@@ -456,12 +456,32 @@ export async function getBookText(args: {
     }
   }
 
-  // Add quoting guidance when returning page text
+  // Add quoting guidance when returning page text. Reinforce the house style:
+  // every quote shown to the user carries its page number and the page's
+  // sourcelibrary.org url (each page entry includes both).
   (result as Record<string, unknown>).tip =
-    "When quoting from these pages, copy text verbatim from the translation field. Do not paraphrase or reconstruct from memory.";
+    "When quoting from these pages, copy text verbatim from the translation field — do not paraphrase or reconstruct from memory. " +
+    "Present each quote to the user with its page number and the page's url (sourcelibrary.org link).";
 
   return result;
 }
+
+// The shareable shortlink lives at result.citation.short_url. Lift it to a
+// headline `citation_link` (and keep `short_url` for back-compat) so an LLM
+// caller treats the quote-plus-link as the deliverable instead of burying the
+// link in a citation sub-object and paraphrasing without it (#2820).
+function withCitationLink(result: Record<string, unknown>): Record<string, unknown> {
+  const citation = result.citation as Record<string, unknown> | undefined;
+  const link = citation?.short_url as string | undefined;
+  return link ? { citation_link: link, short_url: link, ...result } : result;
+}
+
+const QUOTE_TIP =
+  "Copy the translation text exactly when quoting — do not paraphrase or " +
+  "reconstruct from memory, even if you know this text from other sources. " +
+  "Present the citation_link to the user alongside the quote. Render as:\n" +
+  "> [exact translation text, verbatim]\n" +
+  "> — [Author], p. [N]. [citation_link]";
 
 export async function getQuote(args: {
   book_id: string;
@@ -470,10 +490,7 @@ export async function getQuote(args: {
   const params = new URLSearchParams({ page: String(args.page) });
   const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
 
-  return {
-    ...result,
-    tip: "Copy the translation text exactly when quoting. Do not paraphrase or reconstruct from memory, even if you know this text from other sources.",
-  };
+  return { ...withCitationLink(result), tip: QUOTE_TIP };
 }
 
 type ImageSource = "gallery" | "artworks" | "all";
