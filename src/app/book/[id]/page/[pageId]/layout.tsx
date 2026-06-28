@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
 import { Book, Page } from '@/lib/types';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 
 export const preferredRegion = 'fra1';
 
@@ -65,8 +66,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   const ogBookTitle = book.published ? `${bookTitle} (${book.published})` : bookTitle;
   const title = `${ogBookTitle} - Page ${pageNum}`;
 
-  // Use translation excerpt if available, otherwise OCR excerpt
-  const textContent = page.translation?.data || page.ocr?.data || '';
+  // Use translation excerpt if available, otherwise OCR excerpt. Strip editorial
+  // wrapper blocks first so <meta>/<summary>/… prose never lands in the OG
+  // description / search snippet (#2232 invariant).
+  const textContent = stripEditorialWrappers(page.translation?.data || page.ocr?.data || '').trim();
   const excerpt = textContent.length > 200
     ? textContent.substring(0, 197) + '...'
     : textContent;

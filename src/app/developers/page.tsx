@@ -420,6 +420,11 @@ source-library search "alchemy" --json | jq .results`}
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/verify?book_id=&amp;page=</td>
+                  <td className="py-2.5 text-secondary">Flat alias of /books/:id/quote — verbatim page text + citation block, for web agents with URL allow-lists</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
                   <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations</td>
                 </tr>
