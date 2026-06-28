@@ -45,18 +45,62 @@ export interface ApiAuthDecision {
 const ANON_LIMIT_PER_HOUR = Number(process.env.API_ANON_LIMIT_PER_HOUR || 60);
 const SESSION_LIMIT_PER_HOUR = Number(process.env.API_SESSION_LIMIT_PER_HOUR || 1000);
 
-// User-Agent substrings that get the verified-bot bypass. Reverse-DNS verification
-// would be the gold standard; for now we rely on UA strings since the only cost
-// of a false positive is one extra unauthenticated call slipping through.
+// User-Agent substrings that get the verified-bot bypass (kind:'bot' → unlimited
+// budget + rate-limit exempt). Once API_AUTH_ENFORCE is on, this is a real
+// privilege, so the rDNS-verifiable ones are forward-confirmed below — a spoofed
+// "Googlebot" UA from a non-Google IP is demoted to anon, not handed unlimited.
+// (google-extended intentionally NOT here: it's an AI-training token, gated.)
 const VERIFIED_BOT_UAS = [
-  'googlebot', 'google-extended', 'bingbot', 'msnbot',
+  'googlebot', 'bingbot', 'msnbot',
   'duckduckbot', 'applebot', 'mojeekbot',
 ];
+
+// Expected reverse-DNS suffixes per bot signature. A request claiming one of
+// these UAs must reverse-resolve to a matching host AND that host must forward-
+// resolve back to the request IP. Signatures absent here (duckduckbot, mojeek)
+// can't be rDNS-verified; they keep UA-trust (low volume, accepted risk).
+const VERIFIED_BOT_DOMAINS: Record<string, string[]> = {
+  googlebot: ['.googlebot.com', '.google.com'],
+  bingbot: ['.search.msn.com'],
+  msnbot: ['.search.msn.com'],
+  applebot: ['.applebot.apple.com'],
+};
 
 function detectVerifiedBot(ua: string): string | null {
   const lower = ua.toLowerCase();
   for (const sig of VERIFIED_BOT_UAS) if (lower.includes(sig)) return sig;
   return null;
+}
+
+// Forward-confirmed reverse DNS, cached per IP+signature. Fail-safe: any error,
+// timeout, or mismatch returns false (caller demotes the request to anon — never
+// a hard block). Lazy-imports node:dns so this module stays edge-safe until a
+// verified-bot UA actually hits a Node route.
+const rdnsCache = new Map<string, { ok: boolean; exp: number }>();
+const RDNS_TTL_MS = 60 * 60 * 1000;
+
+async function verifyBotByRdns(sig: string, ip: string): Promise<boolean> {
+  const domains = VERIFIED_BOT_DOMAINS[sig];
+  if (!domains) return true; // not rDNS-verifiable — keep UA-trust
+  if (!ip) return false;
+  const cacheKey = `${ip}|${sig}`;
+  const hit = rdnsCache.get(cacheKey);
+  if (hit && hit.exp > Date.now()) return hit.ok;
+
+  let ok = false;
+  try {
+    const dns = await import('node:dns/promises');
+    const hosts = await dns.reverse(ip);
+    const host = hosts.find((h) => domains.some((d) => h.toLowerCase().endsWith(d)));
+    if (host) {
+      const forward = await dns.resolve(host).catch(() => [] as string[]);
+      ok = forward.includes(ip);
+    }
+  } catch {
+    ok = false;
+  }
+  rdnsCache.set(cacheKey, { ok, exp: Date.now() + RDNS_TTL_MS });
+  return ok;
 }
 
 function sameOrigin(request: NextRequest): boolean {
@@ -120,9 +164,11 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
   // gets the same access as a logged-out human, which is what they get today.
   const ua = request.headers.get('user-agent') || '';
   const bot = detectVerifiedBot(ua);
-  if (bot) {
+  if (bot && (await verifyBotByRdns(bot, getClientIp(request)))) {
     return { allowed: true, status: 200, identity: { kind: 'bot', bot } };
   }
+  // A verified-bot UA that fails rDNS confirmation (likely spoofed) falls
+  // through to same-origin / anon below — it gets a normal cap, not unlimited.
   if (sameOrigin(request)) {
     return { allowed: true, status: 200, identity: { kind: 'anon' } };
   }
