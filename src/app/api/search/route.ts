@@ -529,9 +529,16 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Semantic search finds conceptually related books that keyword search missed.
     // These should rank alongside Supabase trigram hits, not be buried as page entries.
     // Lower floor when keyword search found nothing — semantic becomes the primary results.
+    //
+    // SKIP entirely in pages_only mode (the MCP passage-search contract): book-level
+    // results carry no page_number/snippet, so the MCP filters them out — but they
+    // still rank above page hits and inflate `total`. With a small limit they fill the
+    // whole window and the caller gets 0 passages despite a high total_matches. The
+    // keyword book lane already short-circuits for pagesOnly (see line ~231); mirror it
+    // here so pages_only means pages only. (Saves the semBooks lookup too.)
     const hasKeywordResults = bookDocs.length > 0 || pageDocs.length > 0;
     const SEMANTIC_SIM_FLOOR = hasKeywordResults ? 0.65 : 0.55;
-    if (semanticDocs.length > 0) {
+    if (semanticDocs.length > 0 && !pagesOnly) {
       // Collect unique book IDs from semantic results (skip books already in results)
       const semanticBookIds = [...new Set(
         semanticDocs
