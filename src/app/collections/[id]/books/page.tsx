@@ -85,19 +85,28 @@ async function getRelatedBooks(
     debug.themeTerms = termAgg.map((t) => `${t._id}(${t.n})`);
     if (themeTerms.length < 2) return { books: [], terms: themeTerms, debug };
 
-    // Non-member books sharing ≥2 theme terms, ranked by overlap. Compare on
-    // LOWERCASED terms (theme terms are lowercased) so case never blocks a match.
-    const candAgg = await withTimeout(
+    // Non-member books sharing theme terms, ranked by overlap. Compare on
+    // LOWERCASED terms so case never blocks a match.
+    debug.nonMemberIndexes = await withTimeout(db.collection('book_indexes').countDocuments({ book_id: { $nin: memberIds } }, { maxTimeMS: 5000 }), 5000, -1);
+    const t0 = Date.now();
+    const candRaw = await withTimeout(
       db.collection('book_indexes').aggregate([
         { $match: { book_id: { $nin: memberIds } } },
         { $project: { book_id: 1, all: { $map: { input: { $concatArrays: [{ $ifNull: ['$keywords', []] }, { $ifNull: ['$concepts', []] }] }, as: 't', in: { $toLower: '$$t.term' } } } } },
         { $project: { book_id: 1, score: { $size: { $setIntersection: ['$all', themeTerms] } } } },
-        { $match: { score: { $gte: 2 } } },
+        { $match: { score: { $gte: 1 } } },
         { $sort: { score: -1 } },
-        { $limit: 60 },
-      ], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>,
-      8000, [],
+        { $limit: 200 },
+      ], { maxTimeMS: 9000 }).toArray() as Promise<Record<string, unknown>[]>,
+      12000, null as unknown as Record<string, unknown>[],
     );
+    debug.candMs = Date.now() - t0;
+    debug.candTimedOut = candRaw === null;
+    const candRows = candRaw || [];
+    debug.matched1 = candRows.length;
+    debug.matched2 = candRows.filter((c) => (c.score as number) >= 2).length;
+    debug.topScores = candRows.slice(0, 6).map((c) => c.score);
+    const candAgg = candRows.filter((c) => (c.score as number) >= 2).slice(0, 60);
     const scoreMap = new Map(candAgg.map((c) => [c.book_id as string, c.score as number]));
     const candIds = [...scoreMap.keys()];
     debug.candidates = candIds.length;
