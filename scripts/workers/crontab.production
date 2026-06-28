@@ -17,6 +17,7 @@
 0 8 * * * /usr/local/bin/oura-digest >> /var/log/oura-digest.log 2>&1
 15 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrichment-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrichment-snapshot.mjs" >> /var/log/sourcelibrary/enrichment-snapshot.log 2>&1
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
+45 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-metrics-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analytics/snapshot-metrics.mjs" >> /var/log/sourcelibrary/metrics-snapshot.log 2>&1
 */2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
 30 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-entity-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-entities.mjs" >> /var/log/sourcelibrary/entity-sync.log 2>&1
 #PAUSED-GEMINI 30 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-embed-gemini.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=\$GEMINI_API_KEY_TIER3 && node scripts/workers/embed-gemini.mjs --incremental" >> /var/log/sourcelibrary/embed-gemini.log 2>&1
