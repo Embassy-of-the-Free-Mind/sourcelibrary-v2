@@ -10,12 +10,40 @@ const MCP_HEADERS = {
 
 // ── API Helpers ────────────────────────────────────────────────────────
 
+/**
+ * Carries the HTTP status and parsed body of a failed upstream call so the
+ * MCP layer can emit a structured, machine-readable error (see index.ts)
+ * instead of an opaque string. This is what lets a research agent branch on
+ * `rate_limited` vs `auth_required` vs `transient` rather than guessing from
+ * prose — the in-repo half of the fix for issue #2823 (the bare opaque error).
+ */
+export class ApiError extends Error {
+  status: number;
+  body: unknown;
+  constructor(status: number, body: unknown, rawText: string) {
+    super(`API ${status}: ${rawText}`);
+    this.name = "ApiError";
+    this.status = status;
+    this.body = body;
+  }
+}
+
+async function failFromResponse(response: Response): Promise<never> {
+  const rawText = await response.text().catch(() => response.statusText);
+  let body: unknown = rawText;
+  try {
+    body = JSON.parse(rawText);
+  } catch {
+    // non-JSON body — keep the raw text
+  }
+  throw new ApiError(response.status, body, rawText);
+}
+
 export async function apiGet(path: string, params?: URLSearchParams): Promise<unknown> {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
   const response = await fetch(url, { headers: MCP_HEADERS });
   if (!response.ok) {
-    const text = await response.text().catch(() => response.statusText);
-    throw new Error(`API ${response.status}: ${text}`);
+    return failFromResponse(response);
   }
   return response.json();
 }
@@ -28,8 +56,7 @@ export async function apiPost(path: string, body: unknown): Promise<unknown> {
     body: JSON.stringify(body),
   });
   if (!response.ok) {
-    const text = await response.text().catch(() => response.statusText);
-    throw new Error(`API ${response.status}: ${text}`);
+    return failFromResponse(response);
   }
   return response.json();
 }
@@ -38,8 +65,7 @@ export async function apiGetText(path: string, params?: URLSearchParams): Promis
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
   const response = await fetch(url, { headers: MCP_HEADERS });
   if (!response.ok) {
-    const text = await response.text().catch(() => response.statusText);
-    throw new Error(`API ${response.status}: ${text}`);
+    return failFromResponse(response);
   }
   return response.text();
 }
@@ -62,6 +88,28 @@ export async function submitFeedback(args: {
   return {
     ok: true,
     message: "Feedback submitted successfully. Thank you!",
+  };
+}
+
+export async function shareFindings(args: {
+  title: string;
+  summary?: string;
+  citations: { book_id: string; page: number; note?: string }[];
+  name?: string;
+  email?: string;
+}) {
+  const result = await apiPost("/share-findings", {
+    title: args.title,
+    summary: args.summary || null,
+    citations: args.citations || [],
+    name: args.name || null,
+    email: args.email || null,
+  }) as Record<string, unknown>;
+
+  return {
+    ok: true,
+    id: result.id,
+    message: result.message || "Findings shared with the Source Library team. Thank you!",
   };
 }
 

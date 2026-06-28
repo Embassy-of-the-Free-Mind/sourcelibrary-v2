@@ -20,6 +20,8 @@ interface LikeButtonProps {
   initialLiked?: boolean;
   size?: 'sm' | 'md' | 'lg';
   showCount?: boolean;
+  /** Optional text label shown next to the heart (e.g. "Like this page"). Part of the clickable button. */
+  label?: string;
   className?: string;
 }
 
@@ -56,6 +58,7 @@ export default memo(function LikeButton({
   initialLiked,
   size = 'md',
   showCount = true,
+  label,
   className = '',
 }: LikeButtonProps) {
   // If parent explicitly passed initialCount (even 0), server provided the data
@@ -186,6 +189,7 @@ export default memo(function LikeButton({
         <div className={`${buttonSizes[size]} rounded-full`}>
           <Heart className={`${sizeClasses[size]} text-gray-400`} />
         </div>
+        {label && <span className={`${textSizes[size]} text-gray-500`}>{label}</span>}
         {showCount && count > 0 && (
           <span className={`${textSizes[size]} text-gray-500`}>{count}</span>
         )}
@@ -223,6 +227,17 @@ export default memo(function LikeButton({
             strokeWidth={liked ? 0 : 2}
           />
         </div>
+        {label && (
+          <span
+            className={`
+              ${textSizes[size]} font-medium
+              transition-colors duration-200
+              ${liked ? 'text-status-error' : 'text-gray-500 group-hover:text-red-400'}
+            `}
+          >
+            {label}
+          </span>
+        )}
         {showCount && count > 0 && (
           <span
             className={`
