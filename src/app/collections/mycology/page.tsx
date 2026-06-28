@@ -274,7 +274,7 @@ export default async function MycologyCollectionPage() {
         <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-dark/90 via-dark/50 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1/2 hidden md:block bg-gradient-to-t from-dark/85 via-dark/35 to-transparent" />
 
-        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-12 pb-10">
+        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-12 pb-10">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/60 mb-6">
             <Link href="/collections" className="hover:text-white/90 transition-colors">Collections</Link>
             {parent && (
@@ -300,7 +300,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
             <div className="font-body flex-1 min-w-0">
               {/* Lead — larger; fills the available width beside the video. */}
@@ -331,7 +331,7 @@ export default async function MycologyCollectionPage() {
       {/* ===== First translations — slider ===== */}
       {firstTranslations.length > 0 && (
         <section id="translations" className="bg-cream border-b border-border-light scroll-mt-4">
-          <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+          <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
               <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
@@ -345,7 +345,7 @@ export default async function MycologyCollectionPage() {
       {/* ===== Featured work ===== */}
       {featured && (
         <section id="featured" className="bg-warm border-b border-border-light scroll-mt-4">
-          <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+          <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
               {/* Cover (desktop: left, 33% of section width, max 80vh tall, 2:3 — matches
                   the intro video). On mobile it comes first and takes 80%, with the page
@@ -412,7 +412,7 @@ export default async function MycologyCollectionPage() {
       {/* ===== Gallery — all visual material ===== */}
       {gallery.length > 0 && (
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
-          <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+          <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">Gallery</h2>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
             {/* Balanced masonry (true heights, no crop), capped + faded into the page
@@ -435,7 +435,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Ask the librarian ===== */}
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
           <div className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
             <video className="w-full h-auto mix-blend-multiply lg:w-auto lg:h-[74vh]" autoPlay loop muted playsInline preload="metadata">
@@ -456,7 +456,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
       <section id="works" className="bg-cream border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
             <Link href={`/browse?collection=${SLUG}`} className={`${BTN_DARK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
@@ -543,7 +543,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Get involved ===== */}
       <section id="involved" className="bg-cream scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
           <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

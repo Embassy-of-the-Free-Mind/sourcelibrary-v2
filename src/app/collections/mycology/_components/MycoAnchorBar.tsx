@@ -33,7 +33,7 @@ export default function MycoAnchorBar({ sections, slug }: { sections: Section[];
 
   return (
     <nav aria-label="On this page" className="border-y border-border-light bg-cream">
-      <div ref={rootRef} className="max-w-[1500px] mx-auto px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div ref={rootRef} className="max-w-[1500px] mx-auto px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
         {/* Jump links — inline on desktop */}
         <div className="hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
           <span className="text-muted">On this page</span>
