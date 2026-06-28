@@ -188,8 +188,6 @@ export default async function MycologyCollectionPage() {
   if (!data) notFound();
 
   const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages, parent } = data;
-  const title = (collection.name as string) || 'Mycology & Fungi';
-  const tagline = (collection.subtitle as string) || 'The Kingdom of Fungi, from Clusius to Saccardo.';
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
 
   // Quote background: the Battarra title-page engraving (lynx, owl, mushrooms),
@@ -237,8 +235,8 @@ export default async function MycologyCollectionPage() {
               </>
             )}
           </nav>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{title}</h1>
-          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">{tagline}</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Fungi &amp; Mycology</h1>
+          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Fungi built the soil that built our world. These are the books that first studied them.</p>
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{total.toLocaleString('en-US')} works</span>
             {ftCount > 0 && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>}
