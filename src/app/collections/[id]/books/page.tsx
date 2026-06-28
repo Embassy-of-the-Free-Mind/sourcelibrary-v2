@@ -28,7 +28,7 @@ function toMini(b: Record<string, unknown>): MiniBook {
   };
 }
 
-type SP = { page?: string; sort?: string };
+type SP = { page?: string; sort?: string; debug?: string };
 
 async function getCollection(slug: string) {
   const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
@@ -50,9 +50,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 // Tier 2: books elsewhere in the library that share the collection's index themes
 // (NOT collection members). Best-effort + fully bounded; returns [] on any failure.
+interface RelatedResult { books: MiniBook[]; terms: string[]; debug: Record<string, unknown> }
+
 async function getRelatedBooks(
   db: Awaited<ReturnType<typeof getReadDb>>, slug: string,
-): Promise<{ books: MiniBook[]; terms: string[] }> {
+): Promise<RelatedResult> {
+  const debug: Record<string, unknown> = {};
   try {
     const books = db.collection('books');
     const memberDocs = await withTimeout(
@@ -60,7 +63,10 @@ async function getRelatedBooks(
       5000, [],
     );
     const memberIds = memberDocs.map((d) => d.id as string);
-    if (!memberIds.length) return { books: [], terms: [] };
+    debug.members = memberIds.length;
+    if (!memberIds.length) return { books: [], terms: [], debug };
+
+    debug.indexedMembers = await withTimeout(db.collection('book_indexes').countDocuments({ book_id: { $in: memberIds } }, { maxTimeMS: 5000 }), 5000, -1);
 
     // Top index terms among the members → the collection's "theme".
     const termAgg = await withTimeout(
@@ -76,7 +82,8 @@ async function getRelatedBooks(
       6000, [],
     );
     const themeTerms = termAgg.map((t) => t._id as string).filter((t) => t && t.length > 2);
-    if (themeTerms.length < 2) return { books: [], terms: themeTerms };
+    debug.themeTerms = termAgg.map((t) => `${t._id}(${t.n})`);
+    if (themeTerms.length < 2) return { books: [], terms: themeTerms, debug };
 
     // Non-member books sharing ≥2 theme terms, ranked by overlap.
     const candAgg = await withTimeout(
@@ -92,16 +99,19 @@ async function getRelatedBooks(
     );
     const scoreMap = new Map(candAgg.map((c) => [c.book_id as string, c.score as number]));
     const candIds = [...scoreMap.keys()];
-    if (!candIds.length) return { books: [], terms: themeTerms };
+    debug.candidates = candIds.length;
+    if (!candIds.length) return { books: [], terms: themeTerms, debug };
 
     const docs = await withTimeout(
       books.find({ id: { $in: candIds }, visible: true, pages_count: { $gt: 0 } }, { projection: BOOK_PROJECTION, maxTimeMS: 6000 }).toArray() as Promise<Record<string, unknown>[]>,
       6000, [],
     );
+    debug.visibleCandidates = docs.length;
     const out = docs.map(toMini).sort((a, b) => (scoreMap.get(b.id) ?? 0) - (scoreMap.get(a.id) ?? 0)).slice(0, RELATED_LIMIT);
-    return { books: out, terms: themeTerms.slice(0, 6) };
-  } catch {
-    return { books: [], terms: [] };
+    return { books: out, terms: themeTerms.slice(0, 6), debug };
+  } catch (e) {
+    debug.error = e instanceof Error ? e.message : 'failed';
+    return { books: [], terms: [], debug };
   }
 }
 
@@ -170,6 +180,10 @@ export default async function CollectionBooksPage(
                 <Link href={pageHref(page + 1)} className="inline-flex items-center gap-1 text-sm text-primary hover:text-accent-rust transition-colors">Next <ChevronRight className="w-4 h-4" /></Link>
               ) : <span className="inline-flex items-center gap-1 text-sm text-muted/40">Next <ChevronRight className="w-4 h-4" /></span>}
             </div>
+          )}
+
+          {sp.debug === '1' && (
+            <pre className="mt-12 p-4 bg-warm border border-border-light text-xs overflow-auto text-secondary">related debug: {JSON.stringify(related.debug, null, 2)}</pre>
           )}
 
           {/* Tier 2 — discovered, not curated. Clearly separated + labeled. */}
