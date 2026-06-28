@@ -159,14 +159,15 @@ NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
   Sanskrit) and `resolve-work-ids-wikidata.mjs` (Wikidata P50 — Greek/Latin).
 - Full design, tool list, per-tradition candidate coverage, and open levers:
   **`.claude/docs/work-identity-coverage.md`**.
-- **Acquiring works we're missing (esp. Latin) — read FIRST, don't reinvent:**
-  **`.claude/docs/finding-missing-works-acquisition.md`**. The "enumerate IA →
-  title-cluster → diff → import" approach is a known trap (it over-reports gaps and
-  re-imports works we hold — the divergent-title tail, e.g. our own Pymander is 35
-  editions across 12 work_ids). The real universe is the **USTC layer in Supabase**
-  (`ustc_editions` ~1.63M, work-clustered); holdings link via `books.ustc_id`
-  (`catalog-coverage/backfill-ustc-matches.mjs`, currently ~34% of Latin). We are
-  NOT thin on Latin — verify a gap before any "dump."
+- **Acquiring works we're missing — read FIRST, don't reinvent:**
+  **`.claude/docs/finding-missing-works-acquisition.md`**. TWO layers, don't conflate:
+  **(1) our works system IS `books.work_id`** — ~99% coverage across ALL traditions
+  (Chinese, Latin, Greek, Tibetan, Arabic…), USTC-independent; **(2) USTC is just ONE
+  external universe** (continental print, 1450–1700) to diff against for *unheld* works,
+  NOT our works system (use Wikidata P50 for what USTC misses). The "enumerate IA →
+  title-cluster → diff → import" shortcut is a known trap — it over-reports gaps and
+  re-imports works we hold (the divergent-title tail; our own Pymander is 35 editions
+  across 12 work_ids). We are NOT thin on Latin — verify a gap before any "dump."
 
 ## Authentication across subdomains
 
