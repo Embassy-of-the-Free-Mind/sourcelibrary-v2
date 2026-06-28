@@ -10,12 +10,17 @@ import { useRef, useEffect } from 'react';
  */
 export default function ParallaxImage({
   src, alt = '', className = '', strength = 0.12, loading = 'lazy',
+  oversize = 0.15, objectPosition = 'center',
 }: {
   src: string;
   alt?: string;
   className?: string;
   strength?: number;
   loading?: 'lazy' | 'eager';
+  /** Fraction the image is grown beyond the box (margin for the parallax shift).
+   *  Keep strength <= oversize so the edge is never revealed. */
+  oversize?: number;
+  objectPosition?: string;
 }) {
   const ref = useRef<HTMLImageElement>(null);
 
@@ -54,6 +59,7 @@ export default function ParallaxImage({
 
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
-    <img ref={ref} src={src} alt={alt} loading={loading} className={`absolute inset-x-0 -top-[15%] h-[130%] w-full object-cover ${className}`} style={{ willChange: 'transform' }} />
+    <img ref={ref} src={src} alt={alt} loading={loading} className={`absolute inset-x-0 w-full object-cover ${className}`}
+      style={{ willChange: 'transform', top: `${-oversize * 100}%`, height: `${100 + oversize * 200}%`, objectPosition }} />
   );
 }
