@@ -17,6 +17,7 @@ import MycoMasonry from './_components/MycoMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
 import MycoAnchorBar from './_components/MycoAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
+import { getImageFraming } from '@/lib/image-framing';
 import LibrarianSearch from './_components/LibrarianSearch';
 
 /*
@@ -189,6 +190,7 @@ export default async function MycologyCollectionPage() {
 
   const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
+  const quoteFraming = await getImageFraming('mycology-quote-bg');
 
   // Quote background: the Battarra title-page engraving (lynx, owl, mushrooms),
   // cropped to the illustration with the Greek-motto banner removed.
@@ -412,6 +414,7 @@ export default async function MycologyCollectionPage() {
           Text pulled from the books' own OCR + translations (per-book search API). */}
       <QuoteBlock
         bgUrl={quoteBg}
+        framing={quoteFraming}
         imageCredit={{
           text: 'Image: Battarra, Fungorum Agri Ariminensis Historia, 1755.',
           href: '/gallery/image/69d8ca06a09828f83ddc973f-0',

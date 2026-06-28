@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import ParallaxImage from '@/components/ParallaxImage';
+import ParallaxImage, { type Framing } from '@/components/ParallaxImage';
+import ImageFramingEditor from '@/components/admin/ImageFramingEditor';
 
 const CYCLE_MS = 22000;
+const FRAME_SLOT = 'mycology-quote-bg';
 
 export interface Quote {
   translated: string;
@@ -21,7 +23,7 @@ export interface Quote {
  * original-language text, a Translated/Original toggle swaps it; the language is
  * shown in the attribution. Existing tokens only.
  */
-export default function QuoteBlock({ quotes, bgUrl, imageCredit }: { quotes: Quote[]; bgUrl?: string; imageCredit?: { text: string; href: string } }) {
+export default function QuoteBlock({ quotes, bgUrl, imageCredit, framing }: { quotes: Quote[]; bgUrl?: string; imageCredit?: { text: string; href: string }; framing?: Framing | null }) {
   const [i, setI] = useState(0);
   const [showOriginal, setShowOriginal] = useState(false);
   const [cycle, setCycle] = useState(0); // re-keys the ring so the sweep restarts each round
@@ -63,7 +65,8 @@ export default function QuoteBlock({ quotes, bgUrl, imageCredit }: { quotes: Quo
 
   return (
     <section ref={sectionRef} className="relative bg-dark overflow-hidden min-h-[60vh] md:min-h-[80vh] flex items-center">
-      {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0.04} oversize={0.05} objectPosition="10% 50%" />}
+      {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0.04} oversize={0.05} objectPosition="10% 50%" frameSlot={FRAME_SLOT} framing={framing ?? undefined} />}
+      <ImageFramingEditor slot={FRAME_SLOT} initial={framing} />
       <div className="absolute inset-0 bg-dark/40" />
       <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 text-center">
         <div className="flex items-center justify-center gap-3 mb-8">
