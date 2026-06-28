@@ -40,7 +40,7 @@ export default function SignUpCTA({ variant = 'section', bgImageUrl, bgAttributi
 
   // Full section variant (original)
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
+    <section className={`relative overflow-hidden py-20 md:py-28${bgImageUrl ? ' min-h-[60vh] md:min-h-[80vh] flex flex-col justify-center' : ''}`} style={{ background: 'var(--bg-dark)' }}>
       {bgImageUrl && (
         <>
           <ParallaxImage src={bgImageUrl} className="opacity-55" strength={0.1} />
