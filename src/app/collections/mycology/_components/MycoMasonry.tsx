@@ -1,21 +1,19 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export interface Plate { src: string; href?: string; label?: string }
+export interface Plate { src: string; href?: string; label?: string; fallback?: string }
 
 /**
- * Balanced flex masonry. Each plate renders at its NATURAL aspect ratio
- * (width:100%; height:auto — never cropped). Plates are assigned to whichever
- * column is currently shortest, using each image's true ratio captured on load,
- * recomputed on resize. Columns: 5 desktop / 3 tablet-mobile. Existing tokens.
- * The capped height + bottom fade live on the parent (server-rendered).
+ * Lightweight masonry. Columns are filled round-robin (item i → column i % cols)
+ * so the layout is STABLE — images never jump columns as they decode. Each plate
+ * renders at its natural aspect (width:100%; height:auto). No per-image measuring
+ * or rebalancing (that caused the reflow churn). Small thumbnails load fast;
+ * full-res is the onError fallback. Columns: 5 desktop / 3 tablet-mobile.
  */
 export default function MycoMasonry({ plates }: { plates: Plate[] }) {
   const [cols, setCols] = useState(5);
-  const aspects = useRef<number[]>(plates.map(() => 0.7)); // width/height; ~0.7 until loaded
-  const [, bump] = useState(0);
 
   useEffect(() => {
     const calc = () => setCols(window.innerWidth >= 1024 ? 5 : 3);
@@ -24,23 +22,14 @@ export default function MycoMasonry({ plates }: { plates: Plate[] }) {
     return () => window.removeEventListener('resize', calc);
   }, []);
 
-  // Greedy distribution: each plate to the currently-shortest column. Column
-  // "height" accumulates 1/aspect (taller images add more), so it balances.
-  const columns: number[][] = Array.from({ length: cols }, () => []);
-  const heights = new Array(cols).fill(0);
-  plates.forEach((_, idx) => {
-    let c = 0;
-    for (let j = 1; j < cols; j++) if (heights[j] < heights[c]) c = j;
-    columns[c].push(idx);
-    heights[c] += 1 / (aspects.current[idx] || 0.7);
-  });
+  const columns: Plate[][] = Array.from({ length: cols }, () => []);
+  plates.forEach((p, i) => columns[i % cols].push(p));
 
   return (
     <div className="flex gap-4 items-start">
       {columns.map((col, ci) => (
         <div key={ci} className="flex-1 min-w-0 flex flex-col gap-4">
-          {col.map((idx) => {
-            const p = plates[idx];
+          {col.map((p, k) => {
             const inner = (
               <div className="group overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -48,20 +37,18 @@ export default function MycoMasonry({ plates }: { plates: Plate[] }) {
                   src={p.src}
                   alt={p.label || 'Illustration'}
                   loading="lazy"
-                  onLoad={(e) => {
+                  decoding="async"
+                  onError={p.fallback ? (e) => {
                     const im = e.currentTarget;
-                    if (im.naturalWidth && im.naturalHeight) {
-                      const a = im.naturalWidth / im.naturalHeight;
-                      if (Math.abs(a - aspects.current[idx]) > 0.01) { aspects.current[idx] = a; bump((v) => v + 1); }
-                    }
-                  }}
+                    if (p.fallback && im.src !== p.fallback) im.src = p.fallback;
+                  } : undefined}
                   className="w-full h-auto block group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
             );
             return p.href
-              ? <Link key={idx} href={p.href} title={p.label}>{inner}</Link>
-              : <div key={idx} title={p.label}>{inner}</div>;
+              ? <Link key={k} href={p.href} title={p.label}>{inner}</Link>
+              : <div key={k} title={p.label}>{inner}</div>;
           })}
         </div>
       ))}

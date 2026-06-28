@@ -63,7 +63,7 @@ export default function QuoteBlock({ quotes, bgUrl, imageCredit }: { quotes: Quo
 
   return (
     <section ref={sectionRef} className="relative bg-dark overflow-hidden min-h-[60vh] md:min-h-[80vh] flex items-center">
-      {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0} oversize={0} objectPosition="40% 50%" />}
+      {bgUrl && <ParallaxImage src={bgUrl} className="opacity-55" strength={0.04} oversize={0.05} objectPosition="10% 50%" />}
       <div className="absolute inset-0 bg-dark/40" />
       <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 text-center">
         <div className="flex items-center justify-center gap-3 mb-8">

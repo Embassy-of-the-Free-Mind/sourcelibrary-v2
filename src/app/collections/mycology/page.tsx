@@ -76,6 +76,15 @@ function imgUrl(img: GalleryImg): string | undefined {
   return img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.image_url || img.imageUrl;
 }
 
+// Small thumbnail (~12KB) for grids — prefer a stored thumb, else derive the
+// `-thumb` variant from the full URL. Keep imgUrl() as the full-res fallback.
+function thumbUrl(img: GalleryImg): string | undefined {
+  const t = img.thumbnail_url || img.thumbnailUrl;
+  if (t) return t;
+  const full = img.extracted_url || img.extractedUrl || img.image_url || img.imageUrl;
+  return full ? full.replace(/(\.[a-z0-9]+)(\?.*)?$/i, '-thumb$1$2') : undefined;
+}
+
 async function getMycologyData() {
   const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
   if (!db) throw new Error('DB connection timeout');
@@ -194,7 +203,8 @@ export default async function MycologyCollectionPage() {
       const bookId = g.book_id || g.bookId;
       const pageId = g.page_id || g.pageId;
       return {
-        src: imgUrl(g) as string,
+        src: thumbUrl(g) as string,
+        fallback: imgUrl(g),
         href: bookId && pageId ? `${tenantBookUrl({ id: String(bookId) }, null)}/page/${pageId}` : undefined,
         label: g.museum_description || g.description || g.book_title,
       };
@@ -212,7 +222,7 @@ export default async function MycologyCollectionPage() {
       {/* ===== Hero ===== */}
       <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[66vh] flex items-end">
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
-        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.12} />
+        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.04} oversize={0.05} />
         {/* Lighter, left-weighted legibility gradient — no bottom fade. */}
         <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-dark/45 to-transparent" />
