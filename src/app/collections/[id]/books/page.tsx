@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { unstable_cache } from 'next/cache';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -127,6 +128,18 @@ async function getRelatedBooks(
   }
 }
 
+// Cache the expensive (unindexed) related computation so it runs ~once/day
+// instead of on every request. (Interim until a proper precompute job exists.)
+const relatedCached = unstable_cache(
+  async (slug: string) => {
+    const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
+    if (!db) return { books: [] as MiniBook[], terms: [] as string[], debug: { error: 'db timeout' } as Record<string, unknown> };
+    return getRelatedBooks(db, slug);
+  },
+  ['collection-related-v1'],
+  { revalidate: 86400 },
+);
+
 export default async function CollectionBooksPage(
   { params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<SP> },
 ) {
@@ -147,7 +160,7 @@ export default async function CollectionBooksPage(
   const [memberRaw, total, related] = await Promise.all([
     withTimeout(books.find(memberFilter, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort(sort).skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(Promise.resolve(collection.book_count as number | undefined).then((c) => c ?? books.countDocuments(memberFilter, { maxTimeMS: 8000 })), 8000, 0),
-    page === 1 ? getRelatedBooks(db, id) : Promise.resolve({ books: [] as MiniBook[], terms: [] as string[], debug: {} as Record<string, unknown> }),
+    page === 1 ? relatedCached(id) : Promise.resolve({ books: [] as MiniBook[], terms: [] as string[], debug: {} as Record<string, unknown> }),
   ]);
   const members = memberRaw.map(toMini);
   const totalPages = Math.max(1, Math.ceil((total || members.length) / PAGE_SIZE));
