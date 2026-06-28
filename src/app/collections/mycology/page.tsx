@@ -117,7 +117,7 @@ async function getMycologyData() {
   const gallery = JSON.parse(JSON.stringify(galleryRaw)) as GalleryImg[];
   const featured = [...firstTranslations].sort((a, b) => ((b.pages_translated as number) ?? 0) - ((a.pages_translated as number) ?? 0))[0] || null;
   const [featuredPages, parentDoc] = await Promise.all([
-    featured ? getFeaturedPagePreviews(db, featured.id) : Promise.resolve([] as PagePreview[]),
+    featured ? getFeaturedPagePreviews(db, featured.id, getBookThumbnailUrl(featured)) : Promise.resolve([] as PagePreview[]),
     collection.parent ? withTimeout(db.collection('collections').findOne({ slug: collection.parent as string }, { projection: { _id: 0, slug: 1, name: 1 } }), 5000, null) : Promise.resolve(null),
   ]);
   const parent = parentDoc ? { slug: parentDoc.slug as string, name: parentDoc.name as string } : null;
@@ -149,8 +149,15 @@ const BLANK_PAGE_TYPES = new Set(['blank', 'exlibris', 'bookplate', 'digitizer-i
 const VISUAL_PAGE_TYPES = new Set(['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'figure', 'plate']);
 const TEXT_OCR_MIN = 700;
 
+// Page sequence number from an image URL like .../43.jpg or .../0043-thumb.jpg.
+function imgIndexFromUrl(url: string | null | undefined): number | null {
+  if (!url) return null;
+  const m = url.match(/\/0*(\d+)(?:-[a-z]+)?\.[a-z0-9]+(?:[?#]|$)/i);
+  return m ? parseInt(m[1], 10) : null;
+}
+
 async function getFeaturedPagePreviews(
-  db: Awaited<ReturnType<typeof getReadDb>>, bookId: string,
+  db: Awaited<ReturnType<typeof getReadDb>>, bookId: string, coverUrl?: string | null,
 ): Promise<PagePreview[]> {
   const proj = { _id: 0, id: 1, page_number: 1, page_type: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1 };
   const [pages, vis] = await Promise.all([
@@ -169,8 +176,13 @@ async function getFeaturedPagePreviews(
     ),
   ]);
   const visIds = new Set(vis.map((g) => g.page_id as string | undefined).filter(Boolean));
-  // Non-blank, not the cover (page 1).
-  const usable = pages.filter((p) => !BLANK_PAGE_TYPES.has((p.page_type as string) || '') && ((p.page_number as number) ?? 0) > 1);
+  // The page used as the book cover (so it's never repeated in the previews).
+  const coverIdx = imgIndexFromUrl(coverUrl);
+  const isCoverPage = (p: Record<string, unknown>) => coverIdx != null && [
+    p.archived_photo, p.cropped_photo, p.enhanced_photo, p.photo, p.photo_original,
+  ].some((f) => imgIndexFromUrl(f as string | undefined) === coverIdx);
+  // Non-blank, not page 1, not the cover plate.
+  const usable = pages.filter((p) => !BLANK_PAGE_TYPES.has((p.page_type as string) || '') && ((p.page_number as number) ?? 0) > 1 && !isCoverPage(p));
   if (!usable.length) return [];
 
   const isVisual = (p: Record<string, unknown>) => visIds.has(p.id as string) || VISUAL_PAGE_TYPES.has((p.page_type as string) || '');
@@ -301,10 +313,10 @@ export default async function MycologyCollectionPage() {
       {featured && (
         <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-            <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
-              {/* Cover (desktop: left, 33% of section width, max 80vh tall, 2:3 — matches
-                  the intro video). On mobile the cover takes 80% and the page previews
-                  stack in the remaining 20% beside it. */}
+            <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-14">
+              {/* Cover (desktop: right via row-reverse, 33% of section width, max 80vh
+                  tall, 2:3 — matches the intro video). On mobile it comes first and
+                  takes 80%, with the page previews stacked in the remaining 20%. */}
               <div className="w-full md:w-[min(33%,53.333vh)] shrink-0 flex gap-3 md:block">
                 <div className="w-4/5 md:w-full relative aspect-[2/3] overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
