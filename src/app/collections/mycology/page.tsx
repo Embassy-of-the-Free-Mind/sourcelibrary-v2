@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Play, ArrowRight } from 'lucide-react';
+import { BookOpen, ArrowRight } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getReadDb } from '@/lib/mongodb';
@@ -314,16 +314,16 @@ export default async function MycologyCollectionPage() {
                 Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
               </p>
             </div>
-            {/* Walkthrough video placeholder — 33% of section width, max 80vh tall, 2:3
-                (same dimensions as the featured book cover). */}
-            <div className="w-full md:w-[min(33%,53.333vh)] shrink-0">
-              <div className="relative aspect-[2/3] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
-                <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
-                  <Play className="w-6 h-6 text-white" fill="currentColor" />
-                </div>
-                <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
-              </div>
-            </div>
+            {/* Intro plate — Tulasne frontispiece engraving (transparent ground, no frame). */}
+            <figure className="w-full md:w-[min(33%,53.333vh)] shrink-0 m-0 mx-auto md:mx-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/collections/mycology/intro-plate.webp" alt="A microscope amid fungi, plants, and books — frontispiece engraving" loading="lazy" decoding="async" className="w-full h-auto" />
+              <figcaption className="mt-2 text-xs text-muted text-center md:text-left">
+                <Link href="/gallery/image/69d8ca9ea09828f83ddcbbbe-0" className="hover:text-primary transition-colors">
+                  Selecta Fungorum Carpologia — L.-R. &amp; C. Tulasne, 1863
+                </Link>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
