@@ -99,8 +99,8 @@ async function getRelatedBooks(
         { $match: { score: { $gte: 1 } } },
         { $sort: { score: -1 } },
         { $limit: 200 },
-      ], { maxTimeMS: 9000 }).toArray() as Promise<Record<string, unknown>[]>,
-      12000, null as unknown as Record<string, unknown>[],
+      ], { maxTimeMS: 25000, allowDiskUse: true }).toArray() as Promise<Record<string, unknown>[]>,
+      28000, null as unknown as Record<string, unknown>[],
     );
     debug.candMs = Date.now() - t0;
     debug.candTimedOut = candRaw === null;
