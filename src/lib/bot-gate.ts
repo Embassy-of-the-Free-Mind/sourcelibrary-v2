@@ -40,6 +40,15 @@ const ALWAYS_ALLOW = ['sourcelibrary-mcp'];
 // to self-identifying bots; a scraper using a browser UA was never gated anyway.
 const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'duckduckbot', 'claude-searchbot', 'oai-searchbot'];
 
+// User-INITIATED assistant fetches: an AI assistant retrieving a page because a
+// human asked it to (not a crawler). These get full access too — reading on a
+// user's behalf is exactly the use we want. Claude-User already passes (it's not
+// in KNOWN_BOTS); ChatGPT-User is gated only because 'chatgpt' is in KNOWN_BOTS,
+// so name it here to ungate it. Matches the /licensing policy ("reading on a
+// user's behalf is welcome"). The training/crawler variants (GPTBot, ClaudeBot)
+// are NOT here and stay gated.
+const USER_FETCH_AGENTS = ['claude-user', 'chatgpt-user', 'perplexity-user'];
+
 export function isBot(request: Request): boolean {
   const ua = (request.headers.get('user-agent') || '').toLowerCase();
   return KNOWN_BOTS.some(bot => ua.includes(bot));
@@ -61,6 +70,9 @@ export async function isTrustedBot(request: Request): Promise<boolean> {
 
   // Search-index crawlers get full access; training/bulk crawlers do not.
   if (SEARCH_CRAWLERS.some(bot => ua.includes(bot))) return true;
+
+  // User-initiated assistant fetches (a human asked an assistant to read a page).
+  if (USER_FETCH_AGENTS.some(bot => ua.includes(bot))) return true;
 
   // Check for API key — holders bypass bot gating on all endpoints
   const authHeader = request.headers.get('authorization');
