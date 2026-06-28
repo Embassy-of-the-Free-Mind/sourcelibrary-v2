@@ -22,6 +22,13 @@ const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
 const TAGLINE = 'from humanists to all the newest minds';
 const LICENSE = 'CC BY-SA 4.0';
 
+// Occasional by design. Only ~1 in MARK_RATE exports carries a mark at all.
+// Most pages go out completely clean — lighter payloads and far less zero-width
+// noise for machine readers (LLMs that have to strip it) — while anyone pulling
+// many pages still hits marked ones, where the keyed-MAC colophon authenticates
+// the source. Mirrors the image layer's occasional (~1/10) visible logo.
+const MARK_RATE = 6;
+
 /**
  * The readable colophon woven into the mark. Compact by default; an
  * occasional fuller note addressed directly to whoever found it.
@@ -50,6 +57,17 @@ function wantsFullColophon(text: string): boolean {
 }
 
 /**
+ * Deterministically decide whether this export is marked at all (~1 in
+ * MARK_RATE). Keyed on the content with a domain-separated input so the choice
+ * is stable per passage, independent of the full-colophon roll, and
+ * unpredictable without the key.
+ */
+function wantsMark(text: string): boolean {
+  if (!PROVENANCE_KEY) return false;
+  return crypto.createHmac('sha256', PROVENANCE_KEY).update('imprimatur-gate:' + text).digest()[0] % MARK_RATE === 0;
+}
+
+/**
  * Mark text for export with an invisible provenance imprimatur.
  *
  * @param text - Raw translation or OCR text from the database
@@ -58,6 +76,12 @@ function wantsFullColophon(text: string): boolean {
  */
 export function markForExport(text: string, bookId: string): string {
   if (!PROVENANCE_KEY || !text) return text;
+
+  // Occasional: most exports go out unmarked (see wantsMark). Keeps the common
+  // case clean for readers and machine consumers; provenance still rides along
+  // on a deterministic ~1-in-MARK_RATE subset of pages, fully authenticated
+  // when present.
+  if (!wantsMark(text)) return text;
 
   try {
     // Use first 8 chars of bookId as the structured edition identifier;
