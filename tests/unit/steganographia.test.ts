@@ -62,7 +62,7 @@ describe('imprimatur / verifyProvenance', () => {
   });
 
   it('reports no mark on clean text', () => {
-    expect(verifyProvenance(SAMPLE, KEY)).toEqual({ editionId: null, authentic: false });
+    expect(verifyProvenance(SAMPLE, KEY)).toEqual({ editionId: null, message: null, authentic: false });
     expect(readProvenance(SAMPLE)).toBeNull();
     expect(hasProvenance(SAMPLE)).toBe(false);
   });
@@ -75,7 +75,24 @@ describe('imprimatur / verifyProvenance', () => {
 
   it('full 12-byte edition id round-trips', () => {
     const marked = imprimatur(SAMPLE, '0123456789ab', KEY);
-    expect(verifyProvenance(marked, KEY)).toEqual({ editionId: '0123456789ab', authentic: true });
+    expect(verifyProvenance(marked, KEY)).toEqual({ editionId: '0123456789ab', message: '', authentic: true });
+  });
+
+  it('carries a readable colophon message that round-trips and authenticates', () => {
+    const msg = 'Source Library · sourcelibrary.org/book/6a358363f13bd628 · CC BY-SA 4.0';
+    const marked = imprimatur(SAMPLE, '6a358363', KEY, { message: msg });
+    expect(clean(marked)).toBe(SAMPLE); // still invisible
+    const { editionId, message, authentic } = verifyProvenance(marked, KEY);
+    expect(editionId).toBe('6a358363');
+    expect(message).toBe(msg);
+    expect(authentic).toBe(true);
+  });
+
+  it('binds the message into the MAC — a swapped message fails to authenticate', () => {
+    const a = imprimatur(SAMPLE, '6a358363', KEY, { message: 'genuine note' });
+    const b = imprimatur(SAMPLE, '6a358363', OTHER_KEY, { message: 'forged note' });
+    expect(verifyProvenance(a, KEY).authentic).toBe(true);
+    expect(verifyProvenance(b, KEY).authentic).toBe(false);
   });
 
   it('readProvenance recovers the id but makes no authenticity claim', () => {
