@@ -23,10 +23,42 @@ const norm = (e) => (e || '').trim().toLowerCase();
 const BOT_RE = /(bot|crawler|spider|preview|monitor|uptime|wget|curl|python-requests|libwww|http-client|headless|chrome-lighthouse|MCP)/i;
 const isBot = (ua) => !ua || BOT_RE.test(ua);
 
+// Provider prefixes that PR #2025 now 308-redirects away. Before that they
+// served live content; we collapse them so /internet-archive/book/foo counts as
+// /book/foo (mirrors usage-deepdive.mjs::normalizePath so "top books" is faithful).
+const PROVIDER_PREFIXES = new Set([
+  'internet-archive', 'gallica', 'bavarian-state-library', 'e-codices', 'bodleian',
+  'manchester', 'laurenziana', 'e-rara', 'library-of-congress', 'vatican-library',
+  'wellcome-collection', 'bdrc', 'kloss-collection', 'allard-pierson', 'cambridge',
+  'leiden', 'google-books', 'qatar-digital-library', 'oraec',
+  'bibliotheca-philosophica-hermetica', 'tu-delft', 'kyoto', 'british-library',
+]);
+
+// Collapse a raw pageview path to its canonical form and classify it.
+// Handles provider prefixes and /embed/<tenant>/book|collections/... so books
+// reached through a tenant or legacy provider URL still count toward the totals.
+function classifyPath(raw) {
+  if (!raw) return { kind: 'other', slug: '' };
+  let s = raw.split('?')[0];
+  const parts = s.split('/').filter(Boolean);
+  if (parts.length && PROVIDER_PREFIXES.has(parts[0])) parts.shift();
+  if (parts[0] === 'embed' && parts.length > 2) {
+    const inner = parts[2];
+    if (inner === 'book') return { kind: 'book', slug: parts[3] || '' };
+    if (inner === 'collections') return { kind: 'collection', slug: parts[3] || '' };
+    return { kind: 'other', slug: '' };
+  }
+  if (parts[0] === 'book') return { kind: 'book', slug: parts[1] || '' };
+  if (parts[0] === 'collections') return { kind: 'collection', slug: parts[1] || '' };
+  return { kind: 'other', slug: '' };
+}
+
 await withMongo(async (db) => {
   const now = Date.now();
   const since = (d) => new Date(now - d * 864e5);
+  const day = (d) => new Date(now - d * 864e5).toISOString().slice(0, 10);
   const SINCE = since(DAYS), d30 = since(30), d14 = since(14), d7 = since(7), d1 = since(1);
+  const todayStr = new Date(now).toISOString().slice(0, 10);
 
   const fpGroup = { _id: { ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } } };
 
@@ -46,17 +78,32 @@ await withMongo(async (db) => {
   for (const cn of ['beta_subscribers', 'newsletter_subscribers']) {
     try { subscribers[cn] = await db.collection(cn).countDocuments({}); } catch { subscribers[cn] = null; }
   }
+  // Prior-period signups for week-over-week / month-over-month deltas.
+  const [prev7, prev30] = await Promise.all([
+    users.countDocuments({ createdAt: { $gt: d14, $lte: d7 } }),
+    users.countDocuments({ createdAt: { $gt: since(60), $lte: d30 } }),
+  ]);
+  // Daily new signups over 90 days, for the growth chart (cumulative derived on read).
+  const signupSeries = await users.aggregate([
+    { $match: { createdAt: { $gt: since(90) } } },
+    { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, n: { $sum: 1 } } },
+    { $sort: { _id: 1 } },
+  ]).toArray();
+  const signupsByDay = signupSeries.map((r) => ({ date: r._id, n: r.n }));
+  const signupsBefore90 = total - signupsByDay.reduce((s, r) => s + r.n, 0); // cumulative baseline
 
   // ─── DAU / MAU / DWELL ────────────────────────────────────────────────────
   const pv = db.collection('analytics_pageviews');
   const mau = (await pv.aggregate([
     { $match: { timestamp: { $gt: d30 } } }, { $group: fpGroup }, { $count: 'n' },
   ]).toArray())[0]?.n || 0;
-  const dau = await pv.aggregate([
-    { $match: { timestamp: { $gt: d14 } } },
+  // 30-day DAU series (drives the trend chart); avg DAU uses the last 14 days.
+  const dauSeries = await pv.aggregate([
+    { $match: { timestamp: { $gt: d30 } } },
     { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } } } },
     { $group: { _id: '$_id.day', users: { $sum: 1 } } }, { $sort: { _id: 1 } },
   ], { allowDiskUse: true }).toArray();
+  const dau = dauSeries.filter((d) => d._id >= day(14));
   const avgDau = Math.round(dau.reduce((s, d) => s + d.users, 0) / (dau.length || 1));
 
   // Dwell: per-session (ip+ua, 30-min idle gap) duration, last 7d, multi-hit only.
@@ -130,28 +177,24 @@ await withMongo(async (db) => {
   const pvCursor = pv.find({ timestamp: { $gte: SINCE } }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } });
   let humanPvs = 0, botPvs = 0;
   const dailyHits = new Map(), bookHits = new Map(), collectionHits = new Map(), referrers = new Map(), countries = new Map();
-  const kindOf = (p) => {
-    if (!p) return 'other';
-    const s = p.split('?')[0];
-    if (s.startsWith('/book/')) return 'book';
-    if (s.startsWith('/collections/')) return 'collection';
-    return 'other';
-  };
   while (await pvCursor.hasNext()) {
     const d = await pvCursor.next();
     if (isBot(d.userAgent)) { botPvs++; continue; }
     humanPvs++;
-    const s = (d.path || '').split('?')[0];
-    const day = new Date(d.timestamp).toISOString().slice(0, 10);
-    dailyHits.set(day, (dailyHits.get(day) || 0) + 1);
-    if (kindOf(s) === 'book') { const slug = s.split('/')[2] || ''; if (slug) bookHits.set(slug, (bookHits.get(slug) || 0) + 1); }
-    if (kindOf(s) === 'collection') { const slug = s.split('/')[2] || ''; if (slug) collectionHits.set(slug, (collectionHits.get(slug) || 0) + 1); }
+    const cls = classifyPath(d.path || '');
+    const dstr = new Date(d.timestamp).toISOString().slice(0, 10);
+    dailyHits.set(dstr, (dailyHits.get(dstr) || 0) + 1);
+    if (cls.kind === 'book' && cls.slug) bookHits.set(cls.slug, (bookHits.get(cls.slug) || 0) + 1);
+    if (cls.kind === 'collection' && cls.slug) collectionHits.set(cls.slug, (collectionHits.get(cls.slug) || 0) + 1);
     const refDomain = (d.referrer || 'direct').replace(/^https?:\/\//, '').split('/')[0] || 'direct';
     referrers.set(refDomain, (referrers.get(refDomain) || 0) + 1);
     countries.set(d.country || 'unknown', (countries.get(d.country || 'unknown') || 0) + 1);
   }
   const topN = (m, n) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
   const dailyPageviews = [...dailyHits.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([date, hits]) => ({ date, hits }));
+  // Pageviews week-over-week, from the per-day human series (last 7 vs prior 7).
+  const pvLast7 = dailyPageviews.filter((r) => r.date >= day(7)).reduce((s, r) => s + r.hits, 0);
+  const pvPrev7 = dailyPageviews.filter((r) => r.date >= day(14) && r.date < day(7)).reduce((s, r) => s + r.hits, 0);
 
   // Resolve top book slugs/ids to titles.
   const topBookKeys = topN(bookHits, 15);
@@ -237,13 +280,26 @@ await withMongo(async (db) => {
   } catch { /* noop */ }
 
   // ─── ASSEMBLE + WRITE ─────────────────────────────────────────────────────
+  // `deltas` express period-over-period change so the page can show momentum,
+  // not just a static level. Each is { now, prev } — the page derives the %.
   const snapshot = {
     generatedAt: new Date(now),
     windowDays: DAYS,
+    schemaVersion: 2,
     users: {
       total, verified, hasLogin, everLoggedIn, repeatLogin,
       new30, new7, new1,
       ...subscribers,
+    },
+    deltas: {
+      signups7: { now: new7, prev: prev7 },
+      signups30: { now: new30, prev: prev30 },
+      pageviews7: { now: pvLast7, prev: pvPrev7 },
+    },
+    series: {
+      signupsByDay,          // [{date,n}] daily NEW signups, 90d
+      signupsBaseline: signupsBefore90, // cumulative total before the 90d window
+      dau: dauSeries.map((d) => ({ date: d._id, users: d.users })), // 30d
     },
     engagement: {
       mau, avgDau,
@@ -268,6 +324,27 @@ await withMongo(async (db) => {
     { $set: { ...snapshot, _id: 'metrics_snapshot' } },
     { upsert: true },
   );
+
+  // Accumulate a daily time series so trends for the EXPENSIVE rolling metrics
+  // (MAU, dwell, stickiness) can be charted over time — these aren't
+  // reconstructable from raw events after the fact the way signups/DAU are.
+  // Idempotent per calendar day (a re-run overwrites the same dated doc).
+  const histDoc = {
+    date: todayStr, generatedAt: new Date(now),
+    signupsTotal: total, verified, everLoggedIn,
+    new7, new30, mau, avgDau,
+    dwellMedianSec: dwellMedian, dwellMeanSec: dwellMean,
+    uniqVisitors, returningVisitors: multiDay, returningTotal: totalFp,
+    humanPvs7: pvLast7,
+  };
+  let histRes;
+  try {
+    histRes = await db.collection('metrics_history').updateOne(
+      { date: todayStr }, { $set: histDoc }, { upsert: true },
+    );
+  } catch (e) { console.error(`  (metrics_history write skipped: ${e.message})`); }
+
   console.log(`metrics_snapshot written (matched=${res.matchedCount} upserted=${res.upsertedCount ? 1 : 0}). generatedAt=${snapshot.generatedAt.toISOString()}`);
-  console.log(`  users.total=${total}  MAU=${mau}  avgDAU=${avgDau}  humanPV(${DAYS}d)=${humanPvs}  dwellMedian=${dwellMedian}s`);
+  console.log(`  users.total=${total} (+${new7}/7d, prev ${prev7})  MAU=${mau}  avgDAU=${avgDau}  humanPV(${DAYS}d)=${humanPvs}  dwellMedian=${dwellMedian}s`);
+  if (histRes) console.log(`  metrics_history[${todayStr}] ${histRes.upsertedCount ? 'inserted' : 'updated'}.`);
 }, { timeoutMs: 240000 });

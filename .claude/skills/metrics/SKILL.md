@@ -9,6 +9,15 @@ Runs the two analytics scripts that together give the full audience + usage
 picture, then summarizes the numbers and surfaces qualitative texture. Both read
 production Mongo (`bookstore`) — purely read-only, no cost, no permission needed.
 
+> **Live dashboard:** a daily-refreshed version of these numbers (with trends,
+> deltas, growth/DAU charts, and a methodology panel) lives at
+> https://sourcelibrary.org/platform/admin/metrics (super-admin gated). It reads
+> `system_config.metrics_snapshot`, written by `scripts/analytics/snapshot-metrics.mjs`
+> on the Hetzner cron (05:45 UTC) and accumulated daily into `metrics_history`.
+> Use the scripts below when you need fresher-than-daily numbers, a custom window
+> (`--days N`), or the deeper qualitative texture (search chains, journeys) the
+> dashboard intentionally omits.
+
 ## Run all three (in order)
 
 ```bash
