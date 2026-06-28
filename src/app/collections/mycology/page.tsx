@@ -248,12 +248,12 @@ export default async function MycologyCollectionPage() {
         <ConditionalSiteHeader variant="transparent" />
       </div>
       {/* ===== Hero ===== */}
-      <section className="relative bg-dark overflow-hidden min-h-[40vh] md:min-h-[66vh] flex items-end">
+      <section className="relative bg-dark overflow-hidden min-h-[66vh] flex items-end">
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.08} oversize={0.1} />
-        {/* Lighter, left-weighted legibility gradient — no bottom fade. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/45 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-dark/45 to-transparent" />
+        {/* Legibility tint — left-weighted on desktop, broader on mobile (text sits bottom-left). */}
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/50 to-dark/15 md:to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-2/3 md:h-1/2 bg-gradient-to-t from-dark/85 via-dark/35 to-transparent" />
 
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-12 pb-10">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/60 mb-6">
@@ -285,7 +285,7 @@ export default async function MycologyCollectionPage() {
           <div className="flex flex-col md:flex-row-reverse md:items-stretch gap-8 lg:gap-12">
             <div className="font-body flex-1 min-w-0 flex flex-col">
               {/* Lead — larger; fills the available width beside the video. */}
-              <p className="text-2xl sm:text-3xl text-primary leading-snug mb-6">
+              <p className="text-xl sm:text-3xl text-primary leading-snug mb-6">
                 Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
               </p>
               <p className="text-secondary leading-relaxed mb-4 max-w-2xl">
@@ -298,13 +298,13 @@ export default async function MycologyCollectionPage() {
                   the section so the paper ground melts into bg-warm. */}
               <div className="mt-6 md:mt-auto md:flex-1 md:min-h-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/collections/mycology/intro-fungi.webp" alt="Three mushrooms, engraving"
+                <img src="/collections/mycology/intro-fungi.webp" alt="Three mushrooms, engraving" loading="lazy" decoding="async"
                   className="block w-full md:w-auto h-auto md:h-full max-w-full object-contain object-left-bottom mix-blend-multiply" />
               </div>
             </div>
             {/* Walkthrough video placeholder — 33% of section width, max 80vh tall, 2:3
                 (same dimensions as the featured book cover). */}
-            <div className="w-full max-w-[300px] mx-auto md:mx-0 md:w-[min(33%,53.333vh)] md:max-w-none shrink-0">
+            <div className="w-full md:w-[min(33%,53.333vh)] shrink-0">
               <div className="relative aspect-[2/3] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
                 <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
                   <Play className="w-6 h-6 text-white" fill="currentColor" />
@@ -352,7 +352,7 @@ export default async function MycologyCollectionPage() {
                       <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title="Page from the work"
                         className="relative aspect-[2/3] overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                        <img src={p.url} alt="" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
                       </Link>
                     ))}
                   </div>
@@ -380,7 +380,7 @@ export default async function MycologyCollectionPage() {
                         <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title="Page from the work"
                           className="group relative aspect-[2/3] flex-1 overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                          <img src={p.url} alt="" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         </Link>
                       ))}
                     </div>

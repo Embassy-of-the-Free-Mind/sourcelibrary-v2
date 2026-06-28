@@ -40,9 +40,9 @@ export default function MycoMasonry({ plates }: { plates: Plate[] }) {
 
   return (
     <>
-      <div className="flex gap-4 items-start">
+      <div className="flex gap-2 sm:gap-4 items-start">
         {columns.map((col, ci) => (
-          <div key={ci} className="flex-1 min-w-0 flex flex-col gap-4">
+          <div key={ci} className="flex-1 min-w-0 flex flex-col gap-2 sm:gap-4">
             {col.map((p, k) => (
               <button
                 key={k}

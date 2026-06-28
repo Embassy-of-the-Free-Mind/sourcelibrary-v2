@@ -43,7 +43,7 @@ function Status({ label, pctValue, doneClass }: { label: string; pctValue: numbe
  * pages, and a single OCR/Translated status line. Existing tokens only.
  */
 export default function BookCardMini({ book }: { book: MiniBook }) {
-  const thumb = getBookThumbnailUrl(book);
+  const thumb = getBookThumbnailUrl(book, 'thumb');
   const ocrPct = pct(book.pages_ocr, book.pages_count);
   const translatedPct = pct(book.pages_translated, book.pages_count);
   return (

@@ -48,13 +48,10 @@ export default function MycoSlider({ books }: { books: MiniBook[] }) {
 
   const atStart = start <= 0;
   const atEnd = start >= books.length - perView;
-  const firstShown = books.length === 0 ? 0 : start + 1;
-  const lastShown = Math.min(start + perView, books.length);
 
   return (
     <div>
       <div className="flex items-center justify-end gap-3 mb-3">
-        <span className="text-xs text-muted tabular-nums">{firstShown}–{lastShown} of {books.length}</span>
         <div className="hidden sm:flex items-center gap-1.5">
           <button type="button" onClick={() => step(-1)} disabled={atStart} aria-label="Previous"
             className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
