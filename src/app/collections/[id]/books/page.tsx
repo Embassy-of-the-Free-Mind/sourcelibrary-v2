@@ -74,16 +74,18 @@ async function getRelatedBooks(
         { $match: { book_id: { $in: memberIds } } },
         { $project: { terms: { $concatArrays: [{ $ifNull: ['$keywords', []] }, { $ifNull: ['$concepts', []] }] } } },
         { $unwind: '$terms' },
-        { $group: { _id: { $toLower: '$terms.term' }, n: { $sum: 1 } } },
+        { $group: { _id: '$terms.term', n: { $sum: 1 } } },
         { $match: { _id: { $type: 'string' } } },
         { $sort: { n: -1 } },
         { $limit: 16 },
       ], { maxTimeMS: 6000 }).toArray() as Promise<Record<string, unknown>[]>,
       6000, [],
     );
-    const themeTerms = termAgg.map((t) => t._id as string).filter((t) => t && t.length > 2);
+    // Raw-case terms drive an index-eligible $in prefilter; lowercased terms score.
+    const themeTermsRaw = termAgg.map((t) => t._id as string).filter((t) => typeof t === 'string' && t.length > 2);
+    const themeTerms = themeTermsRaw.map((t) => t.toLowerCase());
     debug.themeTerms = termAgg.map((t) => `${t._id}(${t.n})`);
-    if (themeTerms.length < 2) return { books: [], terms: themeTerms, debug };
+    if (themeTermsRaw.length < 2) return { books: [], terms: themeTerms, debug };
 
     // Non-member books sharing theme terms, ranked by overlap. Compare on
     // LOWERCASED terms so case never blocks a match.
@@ -91,7 +93,7 @@ async function getRelatedBooks(
     const t0 = Date.now();
     const candRaw = await withTimeout(
       db.collection('book_indexes').aggregate([
-        { $match: { book_id: { $nin: memberIds } } },
+        { $match: { book_id: { $nin: memberIds }, $or: [{ 'keywords.term': { $in: themeTermsRaw } }, { 'concepts.term': { $in: themeTermsRaw } }] } },
         { $project: { book_id: 1, all: { $map: { input: { $concatArrays: [{ $ifNull: ['$keywords', []] }, { $ifNull: ['$concepts', []] }] }, as: 't', in: { $toLower: '$$t.term' } } } } },
         { $project: { book_id: 1, score: { $size: { $setIntersection: ['$all', themeTerms] } } } },
         { $match: { score: { $gte: 1 } } },
