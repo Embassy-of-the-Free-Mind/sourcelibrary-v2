@@ -111,7 +111,7 @@ html[data-embedded] [data-site-header] {
 mark.sl-search-hl {
   background-color: var(--color-search-highlight, rgba(192, 154, 93, 0.5));
   color: inherit;
-  border-radius: 2px;
+  border-radius: 0;
   padding: 0 0.1em;
 }
 
@@ -154,7 +154,7 @@ mark.sl-search-hl {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0;
   text-decoration: none;
   transition: top 0.2s;
 }
@@ -274,7 +274,7 @@ h1, h2, h3, h4 {
   background: rgba(158, 74, 58, 0.1);
   border-bottom: 1px dashed var(--accent-rust);
   padding: 1px 4px;
-  border-radius: 2px;
+  border-radius: 0;
   font-size: 0.9em;
   color: var(--accent-rust);
 }
@@ -284,7 +284,7 @@ h1, h2, h3, h4 {
   background: var(--bg-warm);
   border: 1px solid var(--border-light);
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 0;
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   color: var(--text-muted);
@@ -312,7 +312,7 @@ h1, h2, h3, h4 {
   color: #fff;
   background: var(--accent-violet);
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 0;
   text-decoration: none;
   transition: background 0.2s;
   border: none;
@@ -339,7 +339,7 @@ h1, h2, h3, h4 {
   color: var(--text-secondary);
   background: var(--bg-warm);
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 0;
   text-decoration: none;
   transition: background 0.2s;
   border: 1px solid var(--border-light);
@@ -355,13 +355,13 @@ h1, h2, h3, h4 {
 .card {
   background: var(--bg-white);
   border: 1px solid var(--border-light);
-  border-radius: 12px;
+  border-radius: 0;
 }
 
 .card-warm {
   background: var(--bg-warm);
   border: 1px solid var(--border-light);
-  border-radius: 12px;
+  border-radius: 0;
 }
 
 /* Dark section */
@@ -380,7 +380,7 @@ mark {
   background: rgba(201, 168, 108, 0.3);
   color: inherit;
   padding: 1px 2px;
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 /* Shimmer animation for skeleton loaders */
@@ -727,10 +727,13 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 }
 
 /* ── Square corners site-wide (redesign) ──────────────────────────────────────
-   Zero the radius on anything that opts into a Tailwind rounded-* utility, EXCEPT
-   buttons and button-style links (which keep their pill/rounded shape). Buttons
-   are <button>, [role="button"], and <a> (our button CTAs are styled anchors), so
-   those are excluded; cards/panels/images/inputs (divs/imgs/inputs) go square. */
-[class*="rounded-"]:not(button):not([role="button"]):not(a) {
+   Global radius style: NO rounded corners anywhere — cards, panels, images,
+   inputs, AND buttons all go square. Targets every Tailwind rounded-* utility.
+   Exceptions: the user avatar (data-avatar="true") stays a full circle, and
+   loading spinners (.animate-spin) stay round so they don't spin as squares. */
+[class*="rounded-"]:not([data-avatar="true"]):not(.animate-spin) {
   border-radius: 0 !important;
+}
+[data-avatar="true"] {
+  border-radius: 9999px !important;
 }
