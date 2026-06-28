@@ -2,7 +2,26 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import BookCardMini, { MiniBook } from './BookCardMini';
+import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+
+export interface MiniBook {
+  id: string;
+  slug?: string;
+  title: string;
+  display_title?: string;
+  author?: string;
+  year?: number;
+  language?: string;
+  pages_count?: number;
+  pages_ocr?: number;
+  pages_translated?: number;
+  is_first_translation?: boolean;
+  ft_disposition?: string;
+  thumbnail?: string;
+  thumbnail_blob?: string;
+  image_display?: string;
+  image_thumb?: string;
+}
 
 /**
  * First-translations slider. Arrows advance ONE item at a time and dim at the
@@ -74,7 +93,7 @@ export default function MycoSlider({ books }: { books: MiniBook[] }) {
             data-card
             className="snap-start shrink-0 basis-[66%] sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-4rem)/5)]"
           >
-            <BookCardMini book={b} />
+            <CollectionBookCard book={b as unknown as CollectionBook} />
           </div>
         ))}
       </div>

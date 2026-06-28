@@ -11,8 +11,8 @@ import { notFound } from 'next/navigation';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { tenantBookUrl } from '@/lib/slugify';
-import BookCardMini, { MiniBook } from './_components/BookCardMini';
-import MycoSlider from './_components/MycoSlider';
+import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import MycoSlider, { type MiniBook } from './_components/MycoSlider';
 import MycoMasonry from './_components/MycoMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
 import MycoAnchorBar from './_components/MycoAnchorBar';
@@ -464,7 +464,7 @@ export default async function MycologyCollectionPage() {
           <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first, translations are gathered in the slider above.</p>
           {sourceWorks.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {sourceWorks.slice(0, 10).map((b) => <BookCardMini key={b.id} book={b} />)}
+              {sourceWorks.slice(0, 10).map((b) => <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} />)}
             </div>
           ) : (
             <p className="text-sm text-muted">No source-text works to show.</p>

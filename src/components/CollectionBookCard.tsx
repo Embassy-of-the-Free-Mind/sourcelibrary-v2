@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, FileText } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { cn, getBookThumbnailUrl } from '@/lib/utils';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
-import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
 import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
@@ -14,17 +13,17 @@ import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 
-interface CollectionBook {
-  bookId: string;
+export interface CollectionBook {
+  bookId?: string;
   id?: string;
   slug?: string;
   title: string;
   display_title?: string | null;
-  author: string;
+  author?: string;
   /** Editor for edited volumes/anthologies — shown as "edited by X" when
    *  author is missing/"Unknown". See src/lib/byline.ts. */
   editor?: string | null;
-  year: number;
+  year?: number;
   pages?: number;
   pages_count?: number;
   pages_ocr?: number;
@@ -47,13 +46,30 @@ interface CollectionBookCardProps {
   bookUrlPrefix?: string;
 }
 
+function pctOf(n?: number, d?: number): number {
+  if (!d || !n || n <= 0) return 0;
+  return Math.min(100, Math.round((n / d) * 100));
+}
+
+// One status item: tick at 100%, cross at 0%, else the percentage. (book design.md)
+function Status({ label, pctValue, doneClass }: { label: string; pctValue: number; doneClass: string }) {
+  if (pctValue >= 100) return <span className={`inline-flex items-center gap-1 ${doneClass}`}><Check className="w-3 h-3" /> {label}</span>;
+  if (pctValue <= 0) return <span className="inline-flex items-center gap-1 text-muted"><X className="w-3 h-3" /> {label}</span>;
+  return <span className="text-muted">{pctValue}% {label}</span>;
+}
+
+/**
+ * The single book-cover card used site-wide (catalogue, browse, collections,
+ * languages, timeline, libraries, search, home). Per book design.md: square
+ * corners, hairline border, 3:4 cover, dark-glass "First Translation" tag,
+ * language pill · year · pages, and a single OCR/Translated status line (books
+ * only). Keeps the robust data handling: artwork, embed placeholders, DOI.
+ */
 export default function CollectionBookCard({ book, priority = false, bookUrlPrefix }: CollectionBookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
   const embedHref = useEmbedHref();
-  // Generated placeholder covers render only in the embedded reading room;
-  // the main sourcelibrary.org grids keep the plain book icon.
   const embed = useEmbed();
 
   const isArtwork = !!book.resource_type;
@@ -61,138 +77,101 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const primaryUrl = getBookThumbnailUrl(book, 'display');
   const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
-  const slug = book.slug || book.id || book.bookId;
+  const slug = book.slug || book.id || book.bookId || '';
 
-  const bookHref = embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(book.slug || book.id || book.bookId)}`);
+  const bookHref = embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(slug)}`);
   const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);
+
+  const ocrPct = pctOf(book.pages_ocr, pageCount);
+  const translatedPct = pctOf(book.pages_translated, pageCount);
+  const byline = getEffectiveByline({ ...book, author: book.author || '' });
 
   return (
     <Link
       href={isArtwork ? artworkHref : bookHref}
-      className="group block animate-fade-in-up"
+      className="group flex flex-col h-full border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow] animate-fade-in-up"
     >
-      <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">
-        {/* Book Poster with Shimmer Loading */}
-        <div className="relative aspect-[3/4] bg-warm overflow-hidden">
-          {/* Shimmer placeholder - only for images, shows until loaded */}
-          {!imageLoaded && !imageError && thumbnailUrl && (
-            <div className="absolute inset-0 bg-gradient-to-r from-border-light via-warm to-border-light bg-[length:200%_100%] animate-shimmer" />
-          )}
+      {/* Cover */}
+      <div className="relative aspect-[3/4] bg-warm overflow-hidden">
+        {!imageLoaded && !imageError && thumbnailUrl && (
+          <div className="absolute inset-0 bg-gradient-to-r from-border-light via-warm to-border-light bg-[length:200%_100%] animate-shimmer" />
+        )}
 
-          {thumbnailUrl && !imageError ? (
-            <Image
-              src={thumbnailUrl}
-              loader={bookCoverResponsiveLoader}
-              alt={book.display_title || book.title}
-              fill
-              quality={85}
-              className={cn(
-                'object-cover group-hover:scale-105 transition-transform duration-300',
-                priority ? 'opacity-100' : (imageLoaded ? 'opacity-100' : 'opacity-0')
-              )}
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-              onLoad={() => setImageLoaded(true)}
-              onError={() => {
-                if (!useFallback && fallbackUrl) {
-                  setUseFallback(true);
-                } else {
-                  setImageError(true);
-                }
-              }}
-              priority={priority}
-              loading={priority ? 'eager' : 'lazy'}
-              placeholder="blur"
-              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjQiIGZpbGw9IiNlN2UyZGUiLz48L3N2Zz4="
-            />
-          ) : embed && !isArtwork ? (
-            <PlaceholderCover
-              title={book.display_title || book.title}
-              author={book.author}
-              year={book.year > 0 ? book.year : book.published}
-            />
-          ) : (
-            <BookCoverPlaceholder
-              title={book.display_title || book.title}
-              author={isArtwork ? undefined : book.author}
-            />
-          )}
+        {thumbnailUrl && !imageError ? (
+          <Image
+            src={thumbnailUrl}
+            loader={bookCoverResponsiveLoader}
+            alt={book.display_title || book.title}
+            fill
+            quality={85}
+            className={cn(
+              'object-cover group-hover:scale-105 transition-transform duration-300',
+              priority ? 'opacity-100' : (imageLoaded ? 'opacity-100' : 'opacity-0'),
+            )}
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            onLoad={() => setImageLoaded(true)}
+            onError={() => {
+              if (!useFallback && fallbackUrl) setUseFallback(true);
+              else setImageError(true);
+            }}
+            priority={priority}
+            loading={priority ? 'eager' : 'lazy'}
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjQiIGZpbGw9IiNlN2UyZGUiLz48L3N2Zz4="
+          />
+        ) : embed && !isArtwork ? (
+          <PlaceholderCover
+            title={book.display_title || book.title}
+            author={book.author}
+            year={(book.year ?? 0) > 0 ? book.year : book.published}
+          />
+        ) : (
+          <BookCoverPlaceholder
+            title={book.display_title || book.title}
+            author={isArtwork ? undefined : book.author}
+          />
+        )}
 
-          {/* Status badges */}
-          {(isPublishedFirstTranslation(book) || book.has_doi) && (
-            <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5 items-end">
-              {isPublishedFirstTranslation(book) && (
-                <div className="bg-accent-gold text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
-                  {firstTranslationBadge(book.ft_disposition, book.language)}
-                </div>
-              )}
-              {book.has_doi && (
-                <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
-                  DOI
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Book Info */}
-        <div className="p-4">
-          <h3
-            className="text-base font-bold text-primary group-hover:text-accent-rust transition-colors mb-2 leading-tight line-clamp-2"
-            style={{ fontFamily: 'var(--font-serif)' }}
-          >
-            {book.display_title || book.title}
-          </h3>
-          <p className="text-sm text-secondary mb-3 line-clamp-1">
-            {(() => {
-              const byline = getEffectiveByline(book);
-              if (byline.role === 'editor') {
-                return <span>edited by <AuthorName author={byline.editor} /></span>;
-              }
-              return <AuthorName author={book.author} />;
-            })()}
-          </p>
-
-          <div className="flex flex-wrap gap-2 text-xs text-muted">
-            {(() => {
-              const chips: React.ReactNode[] = [];
-              if (book.year > 0) {
-                chips.push(
-                  <span key="year" className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {book.year}
-                  </span>
-                );
-              } else if (book.published) {
-                chips.push(
-                  <span key="year" className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {book.published}
-                  </span>
-                );
-              }
-              if (isArtwork) {
-                if (book.resource_type) {
-                  chips.push(
-                    <span key="type" className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span>
-                  );
-                }
-              } else {
-                if (pageCount > 0) {
-                  chips.push(
-                    <span key="pages" className="flex items-center gap-1">
-                      <FileText className="w-3 h-3" />
-                      {pageCount} pages
-                    </span>
-                  );
-                }
-                if (book.language) {
-                  chips.push(<span key="lang">{book.language}</span>);
-                }
-              }
-              return chips.flatMap((chip, i) => i === 0 ? [chip] : [<span key={`sep-${i}`}>•</span>, chip]);
-            })()}
+        {/* Tags — dark-glass First Translation (+ DOI), square per book design.md */}
+        {(isPublishedFirstTranslation(book) || book.has_doi) && (
+          <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
+            {isPublishedFirstTranslation(book) && (
+              <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
+                First Translation
+              </span>
+            )}
+            {book.has_doi && (
+              <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(37,99,235,0.85)' }}>
+                DOI
+              </span>
+            )}
           </div>
+        )}
+      </div>
+
+      {/* Info */}
+      <div className="flex flex-col flex-1 p-3">
+        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug" style={{ fontFamily: 'var(--font-body)' }}>
+          {book.display_title || book.title}
+        </h3>
+        <p className="text-xs text-muted mt-0.5 line-clamp-1">
+          {byline.role === 'editor' ? <>edited by <AuthorName author={byline.editor} /></> : (book.author ? <AuthorName author={book.author} /> : null)}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-[11px] text-muted">
+          {book.language && <span className="bg-warm px-1.5 py-0.5 text-secondary">{book.language}</span>}
+          {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (book.published ? <span>{book.published}</span> : null)}
+          {isArtwork
+            ? (book.resource_type ? <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span> : null)
+            : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} pages</span> : null)}
         </div>
+
+        {!isArtwork && pageCount > 0 && (
+          <div className="flex items-center gap-3 mt-auto pt-3 text-[11px]">
+            <Status label="OCR" pctValue={ocrPct} doneClass="text-status-info" />
+            <Status label="Translated" pctValue={translatedPct} doneClass="text-status-success" />
+          </div>
+        )}
       </div>
     </Link>
   );

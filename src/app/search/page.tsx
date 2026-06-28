@@ -31,7 +31,7 @@ import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
-import BookCard from '@/components/book/BookCard';
+import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 
@@ -1331,7 +1331,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             {!browseLoading && browseBooks.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {browseBooks.map((book, idx) => (
-                  <BookCard key={book.id} book={book} priority={idx < 5} />
+                  <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={idx < 5} />
                 ))}
               </div>
             )}

@@ -725,3 +725,12 @@ html[data-sl-hide-guide="1"] [data-view-section="reading-guide"] {
 html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
   display: none !important;
 }
+
+/* ── Square corners site-wide (redesign) ──────────────────────────────────────
+   Zero the radius on anything that opts into a Tailwind rounded-* utility, EXCEPT
+   buttons and button-style links (which keep their pill/rounded shape). Buttons
+   are <button>, [role="button"], and <a> (our button CTAs are styled anchors), so
+   those are excluded; cards/panels/images/inputs (divs/imgs/inputs) go square. */
+[class*="rounded-"]:not(button):not([role="button"]):not(a) {
+  border-radius: 0 !important;
+}
