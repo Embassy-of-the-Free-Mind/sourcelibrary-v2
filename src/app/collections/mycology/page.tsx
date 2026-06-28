@@ -245,12 +245,14 @@ export default async function MycologyCollectionPage() {
     .filter((g) => imgUrl(g))
     .slice(0, 20)
     .map((g) => {
-      const bookId = g.book_id || g.bookId;
-      const pageId = g.page_id || g.pageId;
+      // Gallery-image id is "<pageId>-<detectionIndex>", embedded in the file URL.
+      const u = g.extracted_url || g.extractedUrl || g.image_url || g.imageUrl || '';
+      const m = u.match(/\/([a-f0-9]{24}-\d+)\.[a-z0-9]+(?:[?#]|$)/i);
+      const imageId = m ? m[1] : undefined;
       return {
         src: thumbUrl(g) as string,
         fallback: imgUrl(g),
-        href: bookId && pageId ? `${tenantBookUrl({ id: String(bookId) }, null)}/page/${pageId}` : undefined,
+        href: imageId ? `/gallery/image/${imageId}` : undefined,
         label: g.museum_description || g.description || g.book_title,
       };
     });
