@@ -25,12 +25,24 @@ async function getCollectionName(slug: string): Promise<string | null> {
   }
 }
 
+async function getCollections(): Promise<{ slug: string; name: string }[]> {
+  try {
+    const db = await getReadDb();
+    const rows = await db.collection('collections')
+      .find({ hidden: { $ne: true }, name: { $type: 'string' } }, { projection: { _id: 0, slug: 1, name: 1 } })
+      .sort({ name: 1 }).limit(300).toArray();
+    return rows.map((r) => ({ slug: r.slug as string, name: r.name as string })).filter((r) => r.slug && r.name);
+  } catch {
+    return [];
+  }
+}
+
 export default async function CatalogPage(
   { searchParams }: { searchParams: Promise<{ collection?: string }> },
 ) {
   const { collection } = await searchParams;
 
-  const [browseResult, languages, collectionName] = await Promise.all([
+  const [browseResult, languages, collectionName, collections] = await Promise.all([
     browseBooks({ sort: 'popular', limit: 60, collection }).catch((err) => {
       console.error('[catalog] browseBooks failed:', err?.message || err);
       return { books: [], total: 0 };
@@ -40,6 +52,7 @@ export default async function CatalogPage(
       return [];
     }),
     collection ? getCollectionName(collection) : Promise.resolve(null),
+    getCollections(),
   ]);
   const { books, total } = browseResult;
 
@@ -64,7 +77,7 @@ export default async function CatalogPage(
           initialTotal={total}
           languages={languages}
           collection={collection}
-          collectionName={collectionName ?? undefined}
+          collections={collections}
         />
       </div>
     </>
