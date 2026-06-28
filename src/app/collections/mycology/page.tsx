@@ -139,11 +139,15 @@ interface PagePreview { id: string; page_number?: number; kind: 'illustration' |
 // well-separated points in the book (≈35% and ≈80% through the high-quality
 // plates) so the two previews are distinct — not the cover, not a colour/plain
 // pair of the same plate sitting on adjacent leaves.
-// Preview rule: the first 3 non-blank, non-cover pages PLUS at least 2 pages with
-// visual art (figures/plates), never the cover page. If the book has no visuals,
-// just the first 5 non-blank, non-cover pages. Filled to 5 where possible.
+// Preview rule: the first 3 pages with ACTUAL TEXT (substantial OCR — skips the
+// cover, marbled endpapers, blanks, library stamps, and bare title pages) PLUS at
+// least 2 pages with visual art (figures/plates). Never the cover. If the book has
+// no visuals, just the first 5 text pages. Filled to 5 where possible. The OCR-
+// length gate works because junk pages OCR to a short AI description (≤~320 chars)
+// while real text pages run 1,000+; the 700-char threshold sits in that gap.
 const BLANK_PAGE_TYPES = new Set(['blank', 'exlibris', 'bookplate', 'digitizer-insert']);
 const VISUAL_PAGE_TYPES = new Set(['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'figure', 'plate']);
+const TEXT_OCR_MIN = 700;
 
 async function getFeaturedPagePreviews(
   db: Awaited<ReturnType<typeof getReadDb>>, bookId: string,
@@ -151,8 +155,13 @@ async function getFeaturedPagePreviews(
   const proj = { _id: 0, id: 1, page_number: 1, page_type: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1 };
   const [pages, vis] = await Promise.all([
     withTimeout(
-      db.collection('pages').find({ book_id: bookId }, { projection: proj, maxTimeMS: 6000 }).sort({ page_number: 1 }).limit(500).toArray() as Promise<Record<string, unknown>[]>,
-      6000, [],
+      db.collection('pages').aggregate([
+        { $match: { book_id: bookId } },
+        { $project: { ...proj, ocrLen: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] } } },
+        { $sort: { page_number: 1 } },
+        { $limit: 600 },
+      ], { maxTimeMS: 7000 }).toArray() as Promise<Record<string, unknown>[]>,
+      7000, [],
     ),
     withTimeout(
       db.collection('gallery_images').find({ book_id: bookId, gallery_quality: { $gte: 0.5 } }, { projection: { _id: 0, page_id: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>,
@@ -165,6 +174,7 @@ async function getFeaturedPagePreviews(
   if (!usable.length) return [];
 
   const isVisual = (p: Record<string, unknown>) => visIds.has(p.id as string) || VISUAL_PAGE_TYPES.has((p.page_type as string) || '');
+  const hasText = (p: Record<string, unknown>) => ((p.ocrLen as number) ?? 0) >= TEXT_OCR_MIN;
   const out: PagePreview[] = [];
   const seen = new Set<string>();
   const push = (p: Record<string, unknown>) => {
@@ -176,14 +186,13 @@ async function getFeaturedPagePreviews(
     out.push({ id, page_number: p.page_number as number | undefined, kind: isVisual(p) ? 'illustration' : 'text', url });
   };
 
+  const textPages = usable.filter(hasText);
   const visualPages = usable.filter(isVisual);
-  if (visualPages.length === 0) {
-    for (const p of usable) { if (out.length >= 5) break; push(p); }
-    return out;
-  }
-  for (const p of usable) { if (out.length >= 3) break; push(p); }       // first 3 non-blank
+
+  for (const p of textPages) { if (out.length >= 3) break; push(p); }    // first 3 with real text
   for (const p of visualPages) { if (out.length >= 5) break; push(p); }  // at least 2 visuals
-  for (const p of usable) { if (out.length >= 5) break; push(p); }       // top up to 5
+  for (const p of textPages) { if (out.length >= 5) break; push(p); }    // top up with more text
+  for (const p of usable) { if (out.length >= 5) break; push(p); }       // last resort: any usable
   return out;
 }
 
