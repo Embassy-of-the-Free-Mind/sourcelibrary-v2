@@ -34,6 +34,7 @@ const SLUG = 'mycology';
 // Primary action = dark button (existing --bg-dark token), never the violet btn-primary.
 const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity';
 const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
+const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
 export const metadata: Metadata = {
   title: 'Mycology & Fungi - Source Library',
@@ -167,8 +168,9 @@ async function getFeaturedPagePreviews(
     .sort((a, b) => ((a.page_number as number) ?? 0) - ((b.page_number as number) ?? 0));
   const usable = pool.length ? pool : pages;
   if (!usable.length) return [];
-  const idxs = usable.length === 1 ? [0] : [Math.floor(usable.length * 0.35), Math.floor(usable.length * 0.8)];
-  if (idxs.length === 2 && idxs[0] === idxs[1]) idxs[1] = usable.length - 1;
+  // Up to 6 distinct pages spread evenly across the book.
+  const N = Math.min(6, usable.length);
+  const idxs = N <= 1 ? [0] : Array.from({ length: N }, (_, k) => Math.round((k / (N - 1)) * (usable.length - 1)));
   const out: PagePreview[] = [];
   for (const i of idxs) {
     const p = usable[Math.min(i, usable.length - 1)];
@@ -253,25 +255,28 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
-        <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16 flex flex-col md:flex-row-reverse md:justify-end md:items-start gap-8 lg:gap-12">
-          <div className="max-w-2xl font-body">
-            <p className="text-xl text-primary leading-relaxed mb-4">
-              Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
-            </p>
-            <p className="text-secondary leading-relaxed mb-4">
-              The books that worked this out run from pocket field guides to vast scientific surveys. Sterbeeck wrote the first work devoted entirely to mushrooms; Bulliard had each species painted from life, in plates still prized for their accuracy; Persoon and Fries built the orderings the whole field still rests on. Much of this writing survives only in Latin, French, and German, reachable until now mainly through citation while the pages themselves sat unread.
-            </p>
-            <p className="text-secondary leading-relaxed">
-              Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
-            </p>
-          </div>
-          {/* Walkthrough video placeholder (2:3) — left on desktop via row-reverse; 66vh tall on desktop */}
-          <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
-            <div className="relative aspect-[2/3] lg:h-[66vh] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
-              <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
-                <Play className="w-6 h-6 text-white" fill="currentColor" />
+        <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
+          {/* Lead — full width, larger. */}
+          <p className="font-body text-2xl sm:text-3xl text-primary leading-snug mb-8 md:mb-12">
+            Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
+          </p>
+          <div className="flex flex-col md:flex-row-reverse md:justify-end md:items-start gap-8 lg:gap-12">
+            <div className="max-w-2xl font-body">
+              <p className="text-secondary leading-relaxed mb-4">
+                The books that worked this out run from pocket field guides to vast scientific surveys. Sterbeeck wrote the first work devoted entirely to mushrooms; Bulliard had each species painted from life, in plates still prized for their accuracy; Persoon and Fries built the orderings the whole field still rests on. Much of this writing survives only in Latin, French, and German, reachable until now mainly through citation while the pages themselves sat unread.
+              </p>
+              <p className="text-secondary leading-relaxed">
+                Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
+              </p>
+            </div>
+            {/* Walkthrough video placeholder (2:3) — left on desktop via row-reverse; 66vh tall on desktop */}
+            <div className="w-full max-w-[300px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
+              <div className="relative aspect-[2/3] lg:h-[66vh] overflow-hidden bg-dark border border-border-light flex items-center justify-center">
+                <div className="w-14 h-14 bg-white/15 flex items-center justify-center">
+                  <Play className="w-6 h-6 text-white" fill="currentColor" />
+                </div>
+                <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
               </div>
-              <span className="absolute bottom-2 left-3 text-xs text-white/80">Watch · 4 min</span>
             </div>
           </div>
         </div>
@@ -281,45 +286,62 @@ export default async function MycologyCollectionPage() {
       {featured && (
         <section id="featured" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-            <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-4">Featured work</p>
-            <div className="border border-border-light bg-white p-6 sm:p-8 grid gap-8 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_620px] md:items-start">
-              {/* Left: detail */}
-              <div className="min-w-0">
-                <h2 className="text-3xl sm:text-4xl font-semibold text-primary leading-tight mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
-                <p className="text-base text-muted mb-4">Pierre Bulliard · 1780&ndash;1791{featured.language ? ` · ${featured.language}` : ''}</p>
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {['2 volumes', '612 hand-coloured plates', 'Folio'].map((m) => (
-                    <span key={m} className="text-xs text-secondary bg-warm border border-border-light px-3 py-1">{m}</span>
-                  ))}
-                </div>
-                <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">An illustrated flora of the fungi of France, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
-                <p className="text-secondary leading-relaxed font-body mb-6 max-w-prose">Among the first works to render fungi in full, accurate colour, it remained a standard reference for identification well into the following century.</p>
-                <div className="flex flex-wrap items-center gap-5">
-                  <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
-                  <Link href={`/gallery?collection=${SLUG}`} className={RUST_LINK}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
-                </div>
-              </div>
-              {/* Right: cover + sample pages — horizontal filmstrip on desktop
-                  (cover + 1 at lg, + 2 at xl), vertical stack on tablet/mobile. */}
-              <div className="flex flex-col lg:flex-row gap-3 w-full max-w-[260px] mx-auto lg:max-w-none lg:mx-0">
-                <div className="relative aspect-[2/3] lg:flex-1 overflow-hidden bg-warm shadow-md">
+            <div className="grid gap-8 lg:gap-14 md:grid-cols-[minmax(0,420px)_1fr] md:items-start">
+              {/* Cover (desktop: left column). On mobile the cover takes 80% and the
+                  page previews stack in the remaining 20% beside it. */}
+              <div className="flex gap-3 md:block">
+                <div className="w-4/5 md:w-full relative aspect-[2/3] overflow-hidden bg-warm shadow-md">
                   {getBookThumbnailUrl(featured) ? (
-                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="200px" />
+                    <Image src={getBookThumbnailUrl(featured)!} alt={bookTitle(featured)} fill className="object-cover" sizes="(min-width:768px) 420px, 80vw" />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center"><BookOpen className="w-12 h-12 text-muted" /></div>
                   )}
                 </div>
                 {featuredPages.length > 0 && (
-                  <>
-                    {featuredPages.map((p, idx) => (
-                      <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title={p.kind === 'illustration' ? 'Illustrated page' : 'Text page'}
-                        className={`relative aspect-[2/3] lg:flex-1 overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors ${idx === 1 ? 'block lg:hidden xl:block' : ''}`}>
+                  <div className="w-1/5 flex flex-col gap-2 md:hidden">
+                    {featuredPages.slice(0, 4).map((p) => (
+                      <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title="Page from the work"
+                        className="relative aspect-[2/3] overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover" />
                       </Link>
                     ))}
-                  </>
+                  </div>
                 )}
+              </div>
+
+              {/* Content (desktop: right column) */}
+              <div className="min-w-0">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent-rust mb-3">Featured</p>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-primary leading-[1.06] mb-3" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
+                <p className="text-sm text-muted mb-6">
+                  <span className="italic">by Pierre Bulliard</span>
+                  <span className="font-mono text-[11px] uppercase tracking-wider"> · 1780&ndash;1791{featured.language ? ` · ${featured.language}` : ''}</span>
+                </p>
+                <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">An illustrated flora of the fungi of France, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
+                <p className="text-secondary leading-relaxed font-body mb-8 max-w-prose">Among the first works to render fungi in full, accurate colour, it remained a standard reference for identification well into the following century.</p>
+
+                {/* Inside the book — horizontal preview row (desktop; on mobile the
+                    previews sit beside the cover above). */}
+                {featuredPages.length > 0 && (
+                  <div className="hidden md:block mb-8">
+                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent-gold mb-3">Inside the book</p>
+                    <div className="flex gap-3">
+                      {featuredPages.map((p) => (
+                        <Link key={p.id} href={`${featuredHref}/page/${p.id}`} title="Page from the work"
+                          className="group relative aspect-[2/3] flex-1 overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={p.url} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
+                  <Link href={`/gallery?collection=${SLUG}`} className={BTN_OUTLINE}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                </div>
               </div>
             </div>
           </div>
@@ -368,8 +390,8 @@ export default async function MycologyCollectionPage() {
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
-          <div className="w-full max-w-[420px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
-            <video className="w-full h-auto mix-blend-multiply lg:w-auto lg:h-[66vh]" autoPlay loop muted playsInline preload="metadata">
+          <div className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
+            <video className="w-full h-auto mix-blend-multiply lg:w-auto lg:h-[74vh]" autoPlay loop muted playsInline preload="metadata">
               <source src="/collections/mycology/librarian.mp4" type="video/mp4" />
             </video>
           </div>
