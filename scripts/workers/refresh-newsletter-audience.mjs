@@ -66,7 +66,7 @@ async function main() {
   // 3) Build the deduped union of every Mongo email source (+ first names).
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
   await client.connect();
-  const db = client.db();
+  const db = client.db('bookstore'); // prod DB — the connection-string default is not it
   const union = new Map(); // email -> firstName|null
   const addFrom = async (coll, field = 'email') => {
     try {
