@@ -256,16 +256,16 @@ export default async function MycologyCollectionPage() {
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 py-8 md:py-16">
-          {/* Lead — full width, larger. */}
-          <p className="font-body text-2xl sm:text-3xl text-primary leading-snug mb-8 md:mb-12">
-            Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
-          </p>
-          <div className="flex flex-col md:flex-row-reverse md:justify-end md:items-start gap-8 lg:gap-12">
-            <div className="max-w-2xl font-body">
-              <p className="text-secondary leading-relaxed mb-4">
+          <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
+            <div className="font-body flex-1 min-w-0">
+              {/* Lead — larger; fills the available width beside the video. */}
+              <p className="text-2xl sm:text-3xl text-primary leading-snug mb-6">
+                Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
+              </p>
+              <p className="text-secondary leading-relaxed mb-4 max-w-2xl">
                 The books that worked this out run from pocket field guides to vast scientific surveys. Sterbeeck wrote the first work devoted entirely to mushrooms; Bulliard had each species painted from life, in plates still prized for their accuracy; Persoon and Fries built the orderings the whole field still rests on. Much of this writing survives only in Latin, French, and German, reachable until now mainly through citation while the pages themselves sat unread.
               </p>
-              <p className="text-secondary leading-relaxed">
+              <p className="text-secondary leading-relaxed max-w-2xl">
                 Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
               </p>
             </div>
