@@ -459,7 +459,7 @@ export default async function MycologyCollectionPage() {
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
-            <Link href={`/collections/${SLUG}/books`} className={`${BTN_DARK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
+            <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
           </div>
           <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first, translations are gathered in the slider above.</p>
           {sourceWorks.length > 0 ? (
@@ -474,7 +474,7 @@ export default async function MycologyCollectionPage() {
               <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more works in mycology</p>
               <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
             </div>
-            <Link href={`/collections/${SLUG}/books`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
+            <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
           </div>
         </div>
       </section>

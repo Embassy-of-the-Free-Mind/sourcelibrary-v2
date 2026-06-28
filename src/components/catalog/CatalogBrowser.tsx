@@ -41,9 +41,11 @@ interface CatalogBrowserProps {
   initialBooks: BookItem[];
   initialTotal: number;
   languages: { lang: string; count: number }[];
+  /** When set, every query is scoped to this collection slug (fixed for the page). */
+  collection?: string;
 }
 
-export default function CatalogBrowser({ initialBooks, initialTotal, languages }: CatalogBrowserProps) {
+export default function CatalogBrowser({ initialBooks, initialTotal, languages, collection }: CatalogBrowserProps) {
   const [books, setBooks] = useState<BookItem[]>(initialBooks);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
@@ -75,6 +77,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
       if (params.language) qs.set('language', params.language);
       if (params.query) qs.set('q', params.query);
       if (params.page > 1) qs.set('page', String(params.page));
+      if (collection) qs.set('collection', collection);
 
       const res = await fetch(`/api/catalog/browse?${qs.toString()}`, {
         signal: controller.signal,
@@ -95,7 +98,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
         setLoading(false);
       }
     }
-  }, []);
+  }, [collection]);
 
   // Initialize from URL params on mount
   useEffect(() => {
@@ -130,9 +133,10 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
     if (q) params.set('q', q);
     if (page > 1) params.set('page', String(page));
     if (view !== 'list') params.set('view', view);
+    if (collection) params.set('collection', collection);
     const qs = params.toString();
     window.history.replaceState(null, '', `/catalog${qs ? `?${qs}` : ''}`);
-  }, []);
+  }, [collection]);
 
   const handleSort = useCallback((newSort: string) => {
     setSort(newSort);
