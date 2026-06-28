@@ -44,6 +44,7 @@ import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
+import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 // Languages that use non-Latin scripts and benefit from transliteration
@@ -1896,8 +1897,32 @@ export default function TranslationEditor({
           );
         })()}
 
-        {/* Footer: nav hint + search */}
+        {/* Footer: like + nav hint + search */}
         <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+          <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-3 flex-wrap text-xs">
+            <LikeButton
+              key={`footer-${page.id}`}
+              targetType="page"
+              targetId={page.id}
+              bookId={book.id}
+              size="sm"
+              showCount={true}
+            />
+            {!isEmbedded && (
+              <>
+                <span style={{ color: 'var(--border-light)' }}>·</span>
+                <FeedbackWidget
+                  label="Found something? Tell Derek"
+                  heading="Tell Derek what you found"
+                  intro="A passage that struck you, a connection, a question — Derek reads every note."
+                  placeholder="What caught your eye on this page…"
+                  contactEmail="derek@sourcelibrary.org"
+                  className="hover:underline"
+                  style={{ color: 'var(--text-muted)' }}
+                />
+              </>
+            )}
+          </div>
           <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
             <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
             <span className="lg:hidden">Swipe left/right to navigate</span>

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSession } from 'next-auth/react';
 
-export default function FeedbackWidget({ className, style, initialMessage, label }: { className?: string; style?: React.CSSProperties; initialMessage?: string; label?: string }) {
+export default function FeedbackWidget({ className, style, initialMessage, label, heading, intro, placeholder, contactEmail }: { className?: string; style?: React.CSSProperties; initialMessage?: string; label?: string; heading?: string; intro?: string; placeholder?: string; contactEmail?: string }) {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -92,9 +92,12 @@ export default function FeedbackWidget({ className, style, initialMessage, label
           </div>
         ) : (
           <>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-stone-800">Send feedback</h3>
-              <button onClick={() => setOpen(false)} className="text-stone-400 hover:text-stone-600">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-medium text-stone-800">{heading || 'Send feedback'}</h3>
+                {intro && <p className="text-sm text-stone-500 mt-0.5">{intro}</p>}
+              </div>
+              <button onClick={() => setOpen(false)} className="text-stone-400 hover:text-stone-600 flex-shrink-0 ml-2">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -104,7 +107,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Spot an error? Have an idea? Anything at all..."
+              placeholder={placeholder || 'Spot an error? Have an idea? Anything at all...'}
               rows={4}
               className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold resize-none"
               autoFocus
@@ -158,6 +161,15 @@ export default function FeedbackWidget({ className, style, initialMessage, label
                 {status === 'sending' ? 'Sending...' : status === 'error' ? 'Try again' : 'Send'}
               </button>
             </div>
+
+            {contactEmail && (
+              <p className="text-xs text-stone-400 mt-3 text-center">
+                Prefer email?{' '}
+                <a href={`mailto:${contactEmail}`} className="text-accent-rust hover:text-accent-gold underline">
+                  {contactEmail}
+                </a>
+              </p>
+            )}
           </>
         )}
       </div>
