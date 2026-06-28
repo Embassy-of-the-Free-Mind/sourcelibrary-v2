@@ -24,24 +24,43 @@ const KNOWN_BOTS = [
   'youbot',
   'cohere-ai',
   'meta-externalagent',
+  'ccbot',              // Common Crawl — a primary training-data source; gate it
+  'applebot-extended',  // Apple's AI-training crawler (distinct from search Applebot)
   'sourcelibrary-mcp', // our own MCP server — always allow
 ];
 
 // MCP server should never be gated
 const ALWAYS_ALLOW = ['sourcelibrary-mcp'];
 
+// Search-index crawlers we deliberately allow FULL read access. Discovery and
+// citability serve the mission, so these bypass the page gate; training/bulk
+// crawlers do NOT (they stay gated and must license bulk/training use). Matches
+// the robots.ts search-allow list and the /licensing policy. NB: this is UA-based
+// (honor system) — consistent with the rest of this gate, which only ever applied
+// to self-identifying bots; a scraper using a browser UA was never gated anyway.
+const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'duckduckbot', 'claude-searchbot', 'oai-searchbot'];
+
 export function isBot(request: Request): boolean {
   const ua = (request.headers.get('user-agent') || '').toLowerCase();
   return KNOWN_BOTS.some(bot => ua.includes(bot));
 }
 
+/** True for search-index crawlers we allow full read access (not training crawlers). */
+export function isSearchCrawler(request: Request): boolean {
+  const ua = (request.headers.get('user-agent') || '').toLowerCase();
+  return SEARCH_CRAWLERS.some(bot => ua.includes(bot));
+}
+
 /**
- * Check if the request is trusted — either via whitelisted User-Agent
- * or a valid API key (Bearer sl_data_...).
+ * Check if the request is trusted (bypasses the page gate) — our own MCP, a
+ * search-index crawler, or a valid API key (Bearer sl_data_...).
  */
 export async function isTrustedBot(request: Request): Promise<boolean> {
   const ua = (request.headers.get('user-agent') || '').toLowerCase();
   if (ALWAYS_ALLOW.some(bot => ua.includes(bot))) return true;
+
+  // Search-index crawlers get full access; training/bulk crawlers do not.
+  if (SEARCH_CRAWLERS.some(bot => ua.includes(bot))) return true;
 
   // Check for API key — holders bypass bot gating on all endpoints
   const authHeader = request.headers.get('authorization');

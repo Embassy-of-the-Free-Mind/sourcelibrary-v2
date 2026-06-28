@@ -308,10 +308,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               .project({ id: 1 })
               .toArray();
             const allowedBookIds = filteredBooks.map(b => b.id);
-            // Always apply the constraint we computed. If the book-level filter
-            // (e.g. a language that matches no books) yields an empty set, the
-            // page search must return nothing — NOT fall through to an
-            // unconstrained whole-corpus search (fail-open bug).
+            // If the book-level filter (e.g. a language that matches no books)
+            // yields an empty set, the page search must return NOTHING — never
+            // fall through to an unconstrained whole-corpus search (fail-open).
+            // Short-circuit here: `$in: []` does NOT survive the trip through
+            // buildPageSearchStage (it drops an empty array, reopening the
+            // leak), so bail at the lane rather than rely on it. (#2760)
+            if (allowedBookIds.length === 0) return [];
             pageFilter.book_id = { $in: allowedBookIds };
           }
 

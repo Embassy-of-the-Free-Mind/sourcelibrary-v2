@@ -65,7 +65,28 @@ export interface HybridSearchOptions {
   limit?: number;
   /** Max book-level results in `books` (default 5). */
   bookLimit?: number;
+  /**
+   * Optional collection slug to WEIGHT (not filter) results toward. When set,
+   * the collection's own pages get extra weighted votes in the RRF merge, so
+   * they dominate the top of the list while strong matches from the rest of the
+   * library still surface. Soft bias — an unknown/empty slug is a no-op.
+   */
+  collection?: string | null;
+  /**
+   * How hard to lean toward `collection`. The collection-scoped lists contribute
+   * `collectionWeight / (k + rank)` each in the RRF merge vs 1/(k+rank) for the
+   * global lists. ~2 = strong lean but outsiders still break through; 1 = mild;
+   * higher → closer to a hard filter. Default 2.
+   */
+  collectionWeight?: number;
 }
+
+// Atlas $in and the scoped page-vector scan both degrade on huge id lists, so
+// cap how many of a collection's books we scope to. Larger collections
+// contribute their most substantial books first (Mongo sorts by book_count);
+// keyword recall across the rest still flows via the global keyword path, so
+// nothing is hard-excluded — those pages just don't get the extra boost.
+const MAX_SCOPED_BOOKS = 400;
 
 // ── Tenant visibility (Mongo book metadata enrichment) ───────────────
 
@@ -175,6 +196,74 @@ async function globalPageSource(query: string, opts: HybridSearchOptions): Promi
   }
 }
 
+// ── Collection-scoped sources (the weighting input) ──────────────────
+
+/**
+ * Resolve a collection slug to the book_ids we'll scope to (visibility/tenant
+ * gated, capped at MAX_SCOPED_BOOKS, largest books first).
+ */
+async function collectionBookIds(slug: string, opts: HybridSearchOptions): Promise<string[]> {
+  const db = await getDb();
+  const rows = await db.collection('books')
+    .find({ collections: slug, ...tenantBookFilter(opts.tenantId) })
+    .project({ id: 1 })
+    .sort({ book_count: -1, pages_count: -1 })
+    .limit(MAX_SCOPED_BOOKS)
+    .toArray();
+  return rows.map(r => r.id).filter(Boolean);
+}
+
+/**
+ * Run keyword + semantic search restricted to a collection's books. These two
+ * ranked lists become extra, weighted inputs to the RRF merge — that's the
+ * whole mechanism behind "lean toward this collection." Returns [] when the
+ * collection is empty/unknown so the caller cleanly falls back to global only.
+ */
+async function collectionScopedSources(
+  query: string,
+  bookIds: string[],
+): Promise<{ scopedKeyword: RawHit[]; scopedSemantic: RawHit[] }> {
+  if (bookIds.length === 0) return { scopedKeyword: [], scopedSemantic: [] };
+  const db = await getDb();
+
+  const [kwRows, semRows] = await Promise.all([
+    db.collection('pages')
+      .aggregate([
+        buildPageSearchStage(query, bookIds),
+        { $limit: 24 },
+        { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
+      ])
+      .toArray()
+      .catch(() => [] as Record<string, unknown>[]),
+    semanticPageSearchScoped(query, bookIds, 20).catch(() => []),
+  ]);
+
+  const scopedKeyword: RawHit[] = [];
+  const perBook = new Map<string, number>();
+  for (const r of kwRows as Array<{ book_id: string; page_number: number; translation?: { data?: string }; score: number }>) {
+    const n = (perBook.get(r.book_id) || 0) + 1;
+    if (n > 2) continue;
+    perBook.set(r.book_id, n);
+    scopedKeyword.push({
+      book_id: r.book_id,
+      page_number: r.page_number,
+      text: (r.translation?.data || '').slice(0, 1200),
+      score: r.score,
+      source: 'cp_kw',
+    });
+  }
+
+  const scopedSemantic: RawHit[] = semRows.map(p => ({
+    book_id: p.book_id,
+    page_number: p.page_number,
+    text: p.snippet,
+    score: p.score,
+    source: 'cp_sem',
+  }));
+
+  return { scopedKeyword, scopedSemantic };
+}
+
 // ── RRF merge ────────────────────────────────────────────────────────
 
 /**
@@ -183,13 +272,15 @@ async function globalPageSource(query: string, opts: HybridSearchOptions): Promi
  * k=60 is the canonical default. Eval showed k=20 vs k=60 produce identical
  * rankings on the current golden set — stick with 60 for posterity.
  */
-function rrfMerge(rankedLists: RawHit[][], k = 60): RawHit[] {
+function rrfMerge(rankedLists: RawHit[][], k = 60, weights?: number[]): RawHit[] {
   const scores = new Map<string, { hit: RawHit; score: number; sources: Set<string> }>();
-  for (const list of rankedLists) {
+  for (let li = 0; li < rankedLists.length; li++) {
+    const list = rankedLists[li];
+    const weight = weights?.[li] ?? 1;
     for (let i = 0; i < list.length; i++) {
       const hit = list[i];
       const key = `${hit.book_id}:${hit.page_number}`;
-      const contribution = 1 / (k + i + 1);
+      const contribution = weight / (k + i + 1);
       const existing = scores.get(key);
       if (existing) {
         existing.score += contribution;
@@ -351,17 +442,36 @@ export async function hybridSearch(
 ): Promise<HybridSearchResult> {
   const limit = opts.limit ?? 8;
   const bookLimit = opts.bookLimit ?? 5;
+  const collectionWeight = opts.collectionWeight ?? 2;
 
-  // Fan out to all three sources + book-level Atlas in parallel
-  const [kw, btp, gp, books] = await Promise.all([
+  // If a collection is requested, resolve its books up front so the scoped
+  // searches can run alongside the global ones.
+  const scopedIds = opts.collection
+    ? await collectionBookIds(opts.collection, opts)
+    : [];
+
+  // Fan out to all three global sources + book-level Atlas + (optionally) the
+  // collection-scoped sources, all in parallel.
+  const [kw, btp, gp, books, scoped] = await Promise.all([
     keywordSource(query, opts),
     bookThenPageSource(query, opts),
     globalPageSource(query, opts),
     findBooks(query, opts, bookLimit),
+    scopedIds.length > 0
+      ? collectionScopedSources(query, scopedIds)
+      : Promise.resolve({ scopedKeyword: [] as RawHit[], scopedSemantic: [] as RawHit[] }),
   ]);
 
-  // RRF merge passages
-  let merged = rrfMerge([kw, btp, gp]);
+  // RRF merge. Global lists weight 1; the collection-scoped lists weight
+  // `collectionWeight` (~2) so a page that's both relevant AND in the
+  // collection outranks an equally-relevant page from elsewhere — without
+  // excluding the elsewhere page. Collection hits also tend to appear in the
+  // global lists too, compounding the lean.
+  let merged = rrfMerge(
+    [kw, btp, gp, scoped.scopedKeyword, scoped.scopedSemantic],
+    60,
+    [1, 1, 1, collectionWeight, collectionWeight],
+  );
 
   // Optional cross-encoder rerank (no-op without API key)
   merged = await maybeRerank(query, merged);

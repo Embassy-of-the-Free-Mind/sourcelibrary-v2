@@ -138,6 +138,11 @@ export default function TermsPage() {
               derek@sourcelibrary.org
             </a>
           </p>
+          <p className="text-secondary mt-4 text-sm">
+            For our full position on AI training and text-and-data-mining — including
+            our express reservation of those rights — see{' '}
+            <Link href="/licensing" className="text-accent-rust hover:underline">AI &amp; Data-Mining Licensing</Link>.
+          </p>
         </section>
 
         {/* ── API & MCP Access ── */}

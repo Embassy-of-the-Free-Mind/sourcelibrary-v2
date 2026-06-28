@@ -10,12 +10,40 @@ const MCP_HEADERS = {
 
 // ── API Helpers ────────────────────────────────────────────────────────
 
+/**
+ * Carries the HTTP status and parsed body of a failed upstream call so the
+ * MCP layer can emit a structured, machine-readable error (see index.ts)
+ * instead of an opaque string. This is what lets a research agent branch on
+ * `rate_limited` vs `auth_required` vs `transient` rather than guessing from
+ * prose — the in-repo half of the fix for issue #2823 (the bare opaque error).
+ */
+export class ApiError extends Error {
+  status: number;
+  body: unknown;
+  constructor(status: number, body: unknown, rawText: string) {
+    super(`API ${status}: ${rawText}`);
+    this.name = "ApiError";
+    this.status = status;
+    this.body = body;
+  }
+}
+
+async function failFromResponse(response: Response): Promise<never> {
+  const rawText = await response.text().catch(() => response.statusText);
+  let body: unknown = rawText;
+  try {
+    body = JSON.parse(rawText);
+  } catch {
+    // non-JSON body — keep the raw text
+  }
+  throw new ApiError(response.status, body, rawText);
+}
+
 export async function apiGet(path: string, params?: URLSearchParams): Promise<unknown> {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
   const response = await fetch(url, { headers: MCP_HEADERS });
   if (!response.ok) {
-    const text = await response.text().catch(() => response.statusText);
-    throw new Error(`API ${response.status}: ${text}`);
+    return failFromResponse(response);
   }
   return response.json();
 }
@@ -28,8 +56,7 @@ export async function apiPost(path: string, body: unknown): Promise<unknown> {
     body: JSON.stringify(body),
   });
   if (!response.ok) {
-    const text = await response.text().catch(() => response.statusText);
-    throw new Error(`API ${response.status}: ${text}`);
+    return failFromResponse(response);
   }
   return response.json();
 }
@@ -38,8 +65,7 @@ export async function apiGetText(path: string, params?: URLSearchParams): Promis
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
   const response = await fetch(url, { headers: MCP_HEADERS });
   if (!response.ok) {
-    const text = await response.text().catch(() => response.statusText);
-    throw new Error(`API ${response.status}: ${text}`);
+    return failFromResponse(response);
   }
   return response.text();
 }
@@ -62,6 +88,28 @@ export async function submitFeedback(args: {
   return {
     ok: true,
     message: "Feedback submitted successfully. Thank you!",
+  };
+}
+
+export async function shareFindings(args: {
+  title: string;
+  summary?: string;
+  citations: { book_id: string; page: number; note?: string }[];
+  name?: string;
+  email?: string;
+}) {
+  const result = await apiPost("/share-findings", {
+    title: args.title,
+    summary: args.summary || null,
+    citations: args.citations || [],
+    name: args.name || null,
+    email: args.email || null,
+  }) as Record<string, unknown>;
+
+  return {
+    ok: true,
+    id: result.id,
+    message: result.message || "Findings shared with the Source Library team. Thank you!",
   };
 }
 
@@ -408,12 +456,32 @@ export async function getBookText(args: {
     }
   }
 
-  // Add quoting guidance when returning page text
+  // Add quoting guidance when returning page text. Reinforce the house style:
+  // every quote shown to the user carries its page number and the page's
+  // sourcelibrary.org url (each page entry includes both).
   (result as Record<string, unknown>).tip =
-    "When quoting from these pages, copy text verbatim from the translation field. Do not paraphrase or reconstruct from memory.";
+    "When quoting from these pages, copy text verbatim from the translation field — do not paraphrase or reconstruct from memory. " +
+    "Present each quote to the user with its page number and the page's url (sourcelibrary.org link).";
 
   return result;
 }
+
+// The shareable shortlink lives at result.citation.short_url. Lift it to a
+// headline `citation_link` (and keep `short_url` for back-compat) so an LLM
+// caller treats the quote-plus-link as the deliverable instead of burying the
+// link in a citation sub-object and paraphrasing without it (#2820).
+function withCitationLink(result: Record<string, unknown>): Record<string, unknown> {
+  const citation = result.citation as Record<string, unknown> | undefined;
+  const link = citation?.short_url as string | undefined;
+  return link ? { citation_link: link, short_url: link, ...result } : result;
+}
+
+const QUOTE_TIP =
+  "Copy the translation text exactly when quoting — do not paraphrase or " +
+  "reconstruct from memory, even if you know this text from other sources. " +
+  "Present the citation_link to the user alongside the quote. Render as:\n" +
+  "> [exact translation text, verbatim]\n" +
+  "> — [Author], p. [N]. [citation_link]";
 
 export async function getQuote(args: {
   book_id: string;
@@ -422,10 +490,7 @@ export async function getQuote(args: {
   const params = new URLSearchParams({ page: String(args.page) });
   const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
 
-  return {
-    ...result,
-    tip: "Copy the translation text exactly when quoting. Do not paraphrase or reconstruct from memory, even if you know this text from other sources.",
-  };
+  return { ...withCitationLink(result), tip: QUOTE_TIP };
 }
 
 type ImageSource = "gallery" | "artworks" | "all";

@@ -4,20 +4,45 @@ import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+export type LocationType = 'publication' | 'author_birth' | 'author_death' | 'origin';
+
+// Type bitmask — a book can have several roles in the same city (published here
+// AND author born here). Storing the roles as bits lets the client filter by the
+// active type toggles and still count each book once.
+export const TYPE_BIT: Record<LocationType, number> = {
+  publication: 1, author_birth: 2, author_death: 4, origin: 8,
+};
+const TYPE_BY_PRIORITY: LocationType[] = ['publication', 'author_birth', 'author_death', 'origin'];
+
+/**
+ * Lightweight per-city record shipped to the client. To keep the initial payload
+ * small (~0.4 MB vs the old ~7 MB), each book is just its year (`y`, null if
+ * undated) and a role bitmask (`m`); the full book list loads lazily from
+ * /api/explore/map/city on click. Books are already deduped per city server-side.
+ */
 export interface BookLocation {
   city: string;
   country: string | null;
   lat: number;
   lng: number;
-  type: 'publication' | 'author_birth' | 'author_death' | 'origin';
-  books: Array<{
-    id: string;
-    title: string;
-    display_title?: string;
-    author: string;
-    year: number | null;
-    slug: string;
-  }>;
+  books: Array<{ y: number | null; m: number }>;
+}
+
+/** Full book record, fetched lazily for the clicked city's sidebar. */
+export interface CityBook {
+  id: string;
+  title: string;
+  display_title?: string;
+  author: string;
+  year: number | null;
+  slug: string;
+}
+
+interface SelectedCity {
+  city: string;
+  country: string | null;
+  type: LocationType;
+  count: number;
 }
 
 interface BookMapProps {
@@ -58,7 +83,9 @@ export default function BookMap({ locations }: BookMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<L.LayerGroup | null>(null);
 
-  const [selected, setSelected] = useState<BookLocation | null>(null);
+  const [selected, setSelected] = useState<SelectedCity | null>(null);
+  const [cityBooks, setCityBooks] = useState<CityBook[]>([]);
+  const [booksLoading, setBooksLoading] = useState(false);
   const [filters, setFilters] = useState({
     types: new Set(['publication', 'author_birth', 'author_death', 'origin']),
     yearFrom: 800,
@@ -80,54 +107,41 @@ export default function BookMap({ locations }: BookMapProps) {
     setFilters((f) => ({ ...f, [which]: val }));
   }, []);
 
-  // Filter by type
-  const typeFiltered = useMemo(() => {
-    return locations.filter((loc) => filters.types.has(loc.type));
-  }, [locations, filters.types]);
+  // Bitmask of the currently-active type toggles.
+  const selectedMask = useMemo(() => {
+    let m = 0;
+    for (const t of filters.types) m |= TYPE_BIT[t as LocationType] || 0;
+    return m;
+  }, [filters.types]);
 
-  // Merge by city NAME (not coords) to fix duplicate pin issue
+  // Per-city pins: count books whose role is active and whose year is in range
+  // (undated always counts), and derive the marker's dominant role. Books are
+  // already deduped per city server-side, so each is counted once.
   const cityPins = useMemo(() => {
-    const byCity = new Map<string, {
+    const result: Array<{
       city: string; country: string | null; lat: number; lng: number;
-      books: BookLocation['books']; types: Set<string>; totalBooks: number;
-    }>();
+      totalBooks: number; dominantType: LocationType; roles: LocationType[];
+    }> = [];
 
-    for (const loc of typeFiltered) {
-      const key = `${loc.city}|${loc.country || ''}`;
-      const existing = byCity.get(key);
-      if (existing) {
-        const existingIds = new Set(existing.books.map(b => b.id));
-        for (const b of loc.books) {
-          if (!existingIds.has(b.id) && existing.books.length < 200) {
-            existing.books.push(b);
-          }
-        }
-        existing.types.add(loc.type);
-        existing.totalBooks += loc.books.length;
-        if (loc.type === 'publication') {
-          existing.lat = loc.lat;
-          existing.lng = loc.lng;
-        }
-      } else {
-        byCity.set(key, {
-          city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
-          books: [...loc.books], types: new Set([loc.type]), totalBooks: loc.books.length,
-        });
+    for (const loc of locations) {
+      let count = 0;
+      let orMask = 0;
+      for (const b of loc.books) {
+        if (!(b.m & selectedMask)) continue;
+        if (b.y != null && (b.y < filters.yearFrom || b.y > filters.yearTo)) continue;
+        count++;
+        orMask |= b.m & selectedMask;
       }
-    }
-
-    const result: Array<typeof byCity extends Map<string, infer V> ? V : never> = [];
-    for (const pin of byCity.values()) {
-      const yearFiltered = pin.books.filter(b => {
-        if (!b.year) return true;
-        return b.year >= filters.yearFrom && b.year <= filters.yearTo;
+      if (count === 0) continue;
+      const roles = TYPE_BY_PRIORITY.filter((t) => orMask & TYPE_BIT[t]);
+      result.push({
+        city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
+        totalBooks: count, dominantType: roles[0] ?? 'origin', roles,
       });
-      if (yearFiltered.length === 0) continue;
-      result.push({ ...pin, books: yearFiltered, totalBooks: yearFiltered.length });
     }
 
     return result.sort((a, b) => b.totalBooks - a.totalBooks);
-  }, [typeFiltered, filters.yearFrom, filters.yearTo]);
+  }, [locations, selectedMask, filters.yearFrom, filters.yearTo]);
 
   // Initialize map
   useEffect(() => {
@@ -147,7 +161,29 @@ export default function BookMap({ locations }: BookMapProps) {
     return () => { map.remove(); mapRef.current = null; markersRef.current = null; };
   }, []);
 
-  const handleSelect = useCallback((loc: BookLocation) => setSelected(loc), []);
+  const handleSelect = useCallback((city: SelectedCity) => setSelected(city), []);
+
+  // Lazy-load the clicked city's full book list (kept out of the initial payload).
+  // Refetches when the year range or active types change while a city is open,
+  // so the sidebar list stays consistent with the markers.
+  useEffect(() => {
+    if (!selected) { setCityBooks([]); setBooksLoading(false); return; }
+    const ctrl = new AbortController();
+    setBooksLoading(true);
+    const params = new URLSearchParams({
+      city: selected.city,
+      country: selected.country ?? '',
+      from: String(filters.yearFrom),
+      to: String(filters.yearTo),
+      types: [...filters.types].join(','),
+    });
+    fetch(`/api/explore/map/city?${params.toString()}`, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : { books: [] }))
+      .then((d) => setCityBooks(d.books || []))
+      .catch(() => { if (!ctrl.signal.aborted) setCityBooks([]); })
+      .finally(() => { if (!ctrl.signal.aborted) setBooksLoading(false); });
+    return () => ctrl.abort();
+  }, [selected, filters.types, filters.yearFrom, filters.yearTo]);
 
   // Render city pins
   useEffect(() => {
@@ -160,15 +196,13 @@ export default function BookMap({ locations }: BookMapProps) {
 
     for (const pin of cityPins) {
       if (pin.totalBooks < minBooksForZoom) continue;
-      const dominantType = pin.types.has('publication') ? 'publication'
-        : pin.types.has('author_birth') ? 'author_birth'
-        : pin.types.has('author_death') ? 'author_death' : 'origin';
+      const dominantType = pin.dominantType;
 
       const marker = L.marker([pin.lat, pin.lng], {
         icon: createLocationIcon(dominantType, pin.totalBooks),
       });
 
-      const typeLabels = [...pin.types].map(t => TYPE_CONFIG[t]?.label || t).join(' · ');
+      const typeLabels = pin.roles.map(t => TYPE_CONFIG[t]?.label || t).join(' · ');
       marker.bindTooltip(
         `<strong>${pin.city}</strong>${pin.country ? `<br/><span style="opacity:0.7">${pin.country}</span>` : ''}<br/>${pin.totalBooks} book${pin.totalBooks !== 1 ? 's' : ''}<br/><span style="opacity:0.5;font-size:10px">${typeLabels}</span>`,
         { direction: 'top', offset: [0, -6], className: 'book-tooltip' }
@@ -177,8 +211,7 @@ export default function BookMap({ locations }: BookMapProps) {
       marker.on('click', () => {
         handleSelect({
           city: pin.city, country: pin.country,
-          lat: pin.lat, lng: pin.lng, type: dominantType,
-          books: pin.books.slice(0, 200),
+          type: dominantType, count: pin.totalBooks,
         });
       });
       layerGroup.addLayer(marker);
@@ -308,24 +341,30 @@ export default function BookMap({ locations }: BookMapProps) {
                 </button>
               </div>
               <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
-                {selected.books.length} book{selected.books.length !== 1 ? 's' : ''}
+                {selected.count} book{selected.count !== 1 ? 's' : ''}
               </p>
             </div>
 
             <div className="px-5 py-3 space-y-0.5">
-              {selected.books.slice(0, 50).map((book, i) => (
-                <a key={i} href={`/book/${book.slug || book.id}`} className="block px-2.5 py-2 -mx-2.5 rounded-lg hover:bg-black/[0.03] transition-colors">
-                  <div className="text-[13px] leading-snug font-medium" style={{ color: 'var(--text-primary)' }}>
-                    {(() => { const t = book.display_title || book.title; return t.length > 65 ? t.substring(0, 65) + '\u2026' : t; })()}
-                  </div>
-                  <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                    {book.author.length > 40 ? book.author.substring(0, 40) + '\u2026' : book.author}
-                    {book.year ? `, ${book.year}` : ''}
-                  </div>
-                </a>
-              ))}
-              {selected.books.length > 50 && (
-                <p className="text-[11px] px-2.5 py-2" style={{ color: 'var(--text-muted)' }}>and {selected.books.length - 50} more</p>
+              {booksLoading && cityBooks.length === 0 ? (
+                <p className="text-[11px] px-2.5 py-2" style={{ color: 'var(--text-muted)' }}>Loading\u2026</p>
+              ) : (
+                <>
+                  {cityBooks.slice(0, 50).map((book, i) => (
+                    <a key={i} href={`/book/${book.slug || book.id}`} className="block px-2.5 py-2 -mx-2.5 rounded-lg hover:bg-black/[0.03] transition-colors">
+                      <div className="text-[13px] leading-snug font-medium" style={{ color: 'var(--text-primary)' }}>
+                        {(() => { const t = book.display_title || book.title; return t.length > 65 ? t.substring(0, 65) + '\u2026' : t; })()}
+                      </div>
+                      <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                        {book.author.length > 40 ? book.author.substring(0, 40) + '\u2026' : book.author}
+                        {book.year ? `, ${book.year}` : ''}
+                      </div>
+                    </a>
+                  ))}
+                  {cityBooks.length > 50 && (
+                    <p className="text-[11px] px-2.5 py-2" style={{ color: 'var(--text-muted)' }}>and {cityBooks.length - 50} more</p>
+                  )}
+                </>
               )}
             </div>
           </div>
