@@ -212,19 +212,28 @@ async function run() {
     // sync-worker writes analytics_usage with pipelineFunnel and coverage
     // It does NOT track user sessions — those would come from a web analytics source.
     // Gemini usage gives a proxy for AI activity.
-    const geminiToday = await db.collection('gemini_usage_daily').findOne({ date: todayStr });
-    const geminiYest = await db.collection('gemini_usage_daily').findOne({ date: yestStr });
-    // Prefer yesterday's COMPLETE day over today's partial one (today is still
-    // accumulating, so its total would read as a near-zero floor). The printed
-    // line includes the date, so the chosen day stays visible.
-    const geminiDoc = geminiYest || geminiToday;
+    // Gemini spend — computed LIVE from batch_jobs (the gemini_usage_daily
+    // rollup died 2026-06-08, so it can't be trusted). Today + month-to-date.
+    const startOfDay = new Date(); startOfDay.setHours(0, 0, 0, 0);
+    const startOfMonth = new Date(); startOfMonth.setDate(1); startOfMonth.setHours(0, 0, 0, 0);
+    const sumCost = async (since) => {
+      const r = await db.collection('batch_jobs').aggregate([
+        { $match: { created_at: { $gte: since } } },
+        { $group: { _id: null, cost: { $sum: '$cost_usd' }, pages: { $sum: '$completed_pages' }, jobs: { $sum: 1 } } },
+      ]).toArray();
+      return r[0] || { cost: 0, pages: 0, jobs: 0 };
+    };
+    const gemToday = await sumCost(startOfDay);
+    const gemMonth = await sumCost(startOfMonth);
+    const geminiLine = `Gemini spend: $${gemToday.cost.toFixed(2)} today (${fmt(gemToday.pages)} pgs) · $${gemMonth.cost.toFixed(2)} MTD`;
 
-    let userLine = 'User sessions: not tracked (no web analytics in DB)';
-    if (geminiDoc) {
-      const cost = geminiDoc.totalCost?.toFixed(4) ?? '?';
-      const calls = geminiDoc.totalRecords ?? '?';
-      userLine = `Gemini API: ${fmt(calls)} calls, $${cost} (${geminiDoc.date})`;
-    }
+    // Signups — new users in the last 24h (web analytics DAU/traffic live in
+    // PostHog; add via API in a follow-up if wanted).
+    const signups24h = await db.collection('users').countDocuments({
+      $or: [{ createdAt: { $gte: oneDayAgo } }, { created_at: { $gte: oneDayAgo } }],
+    });
+    const totalUsers = await db.collection('users').countDocuments({});
+    const signupLine = `Signups: ${fmt(signups24h)} new (24h) · ${fmt(totalUsers)} total`;
 
     // ── 7. Site health — uptime_checks last 24h ──
     const uptimeChecks = await db.collection('uptime_checks').find(
@@ -324,10 +333,11 @@ async function run() {
     lines.push(`  Grade: ${dbGrade} (last checked ${dbMeasuredAt})`);
     lines.push(`  find: ${findMs}ms  browse: ${countMs}ms`);
 
-    // Users
+    // Users + AI spend
     lines.push('');
     lines.push('👥 Activity');
-    lines.push(`  ${userLine}`);
+    lines.push(`  ${signupLine}`);
+    lines.push(`  ${geminiLine}`);
 
     // Site health
     lines.push('');
