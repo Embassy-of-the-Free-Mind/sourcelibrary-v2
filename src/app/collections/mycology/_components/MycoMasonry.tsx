@@ -42,7 +42,7 @@ export default function MycoMasonry({ plates }: { plates: Plate[] }) {
           {col.map((idx) => {
             const p = plates[idx];
             const inner = (
-              <div className="border border-border-light hover:border-accent-rust/40 transition-colors">
+              <div className="group overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={p.src}
@@ -55,7 +55,7 @@ export default function MycoMasonry({ plates }: { plates: Plate[] }) {
                       if (Math.abs(a - aspects.current[idx]) > 0.01) { aspects.current[idx] = a; bump((v) => v + 1); }
                     }
                   }}
-                  className="w-full h-auto block"
+                  className="w-full h-auto block group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
             );
