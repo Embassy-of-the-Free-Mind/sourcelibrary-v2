@@ -6,6 +6,19 @@ import { getChapterTexts } from '@/lib/chapter-text';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+
+// This route serves quotable page text (get_book_text tells agents to "copy
+// verbatim from the translation field"), so it MUST strip the AI editorial
+// wrapper blocks (<meta>/<summary>/<keywords>/<vocab> + the OCR page envelope)
+// before output — they describe the page and routinely name adjacent-page
+// content, so serving them produces fabricated quotes. Same read-time strip
+// the quote API uses; the materialized chapter text has wrappers baked in, so
+// stripping must happen here at read time. See CLAUDE.md "Quote & snippet
+// integrity" (#2232) and #2822 audit.
+function cleanText(text: string | undefined | null): string {
+  return text ? stripEditorialWrappers(text).trim() : '';
+}
 
 export const maxDuration = 30;
 
@@ -142,7 +155,7 @@ export const GET = withApiAuth(async (
           `# Pages ${ct.pageStart}–${ct.pageEnd}`,
           `# Source: https://sourcelibrary.org/book/${resolvedBookId}`,
           '',
-          content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text,
+          cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text),
         ].join('\n');
 
         return new Response(header, {
@@ -170,8 +183,8 @@ export const GET = withApiAuth(async (
           pageEnd: ct.pageEnd,
           token_estimate: ct.token_estimate,
           ...(ct.parts_total ? { part: ct.part, parts_total: ct.parts_total } : {}),
-          text: content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text,
-          ...(content === 'both' && ct.ocr_text ? { ocr_text: ct.ocr_text } : {}),
+          text: cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text),
+          ...(content === 'both' && ct.ocr_text ? { ocr_text: cleanText(ct.ocr_text) } : {}),
         },
       }, {
         headers: {
@@ -234,8 +247,8 @@ export const GET = withApiAuth(async (
       lines.push('');
 
       for (const page of pages) {
-        const ocr = page.ocr?.data;
-        const translation = page.translation?.data;
+        const ocr = cleanText(page.ocr?.data);
+        const translation = cleanText(page.translation?.data);
 
         if (content === 'both' && (ocr || translation)) {
           lines.push(`--- Page ${page.page_number} ---`);
@@ -309,7 +322,7 @@ export const GET = withApiAuth(async (
         const entry: Record<string, unknown> = { page_number: p.page_number };
 
         if ((content === 'ocr' || content === 'both') && p.ocr?.data) {
-          entry.ocr = p.ocr.data;
+          entry.ocr = cleanText(p.ocr.data);
           if (includeMetadata) {
             entry.ocr_metadata = {
               language: p.ocr.language,
@@ -319,7 +332,7 @@ export const GET = withApiAuth(async (
           }
         }
         if ((content === 'translation' || content === 'both') && p.translation?.data) {
-          entry.translation = p.translation.data;
+          entry.translation = cleanText(p.translation.data);
           if (includeMetadata) {
             entry.translation_metadata = {
               language: p.translation.language,

@@ -21,7 +21,83 @@ import {
   submitFeedback,
   shareFindings,
   checkDuplicate,
+  ApiError,
 } from "./api.js";
+
+/**
+ * Map a failed upstream call to a structured, machine-readable error envelope.
+ * Agents should branch on `error` (the category) and honor `retry_after` —
+ * never parse the human `message`. Categories:
+ *   auth_required — sign in / supply an API key (401/403)
+ *   rate_limited  — daily page budget reached; retry after the window (429)
+ *   not_found     — the book/page/chapter does not exist (404)
+ *   bad_request   — malformed call; fix params, do not retry as-is (400/422)
+ *   transient     — upstream hiccup or network blip; a plain retry may succeed (5xx / fetch failure)
+ *
+ * NOTE: the bare "No approval received" string some agents see on get_book_text
+ * is emitted by the MCP *client's* tool-approval gate (an approval timeout),
+ * not by this server — see issue #2823. This envelope makes every error WE own
+ * branchable so that, at minimum, real server-side gates never look opaque.
+ */
+function structuredError(error: unknown): {
+  error: string;
+  message: string;
+  retryable: boolean;
+  retry_after_seconds?: number;
+  status?: number;
+  details?: unknown;
+} {
+  if (error instanceof ApiError) {
+    const body = error.body as Record<string, unknown> | undefined;
+    const retryAfter =
+      body && typeof body === "object" && typeof body.retry_after_seconds === "number"
+        ? (body.retry_after_seconds as number)
+        : undefined;
+    const message =
+      body && typeof body === "object" && typeof body.error === "string"
+        ? (body.error as string)
+        : error.message;
+
+    let category: string;
+    let retryable = false;
+    let fallbackRetryAfter: number | undefined;
+    if (error.status === 401 || error.status === 403) {
+      category = "auth_required";
+    } else if (error.status === 429) {
+      category = "rate_limited";
+      retryable = true;
+      fallbackRetryAfter = 3600;
+    } else if (error.status === 404) {
+      category = "not_found";
+    } else if (error.status === 400 || error.status === 422) {
+      category = "bad_request";
+    } else if (error.status >= 500) {
+      category = "transient";
+      retryable = true;
+    } else {
+      category = "error";
+    }
+
+    return {
+      error: category,
+      message,
+      retryable,
+      ...(retryAfter ?? fallbackRetryAfter
+        ? { retry_after_seconds: retryAfter ?? fallbackRetryAfter }
+        : {}),
+      status: error.status,
+      ...(body && typeof body === "object" ? { details: body } : {}),
+    };
+  }
+
+  // Network failure, JSON parse error, or anything else — treat as transient
+  // so a research agent retries rather than silently falling back to web search.
+  return {
+    error: "transient",
+    message: error instanceof Error ? error.message : "Unknown error",
+    retryable: true,
+  };
+}
 
 // ── Tool Definitions ──────────────────────────────────────────────────
 
@@ -594,11 +670,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
     };
   } catch (error) {
+    // Structured, machine-readable error so agents can branch on the category
+    // (auth_required / rate_limited / transient / …) and honor retry_after,
+    // instead of regexing an opaque "Error: …" string. See issue #2823.
     return {
       content: [
         {
           type: "text" as const,
-          text: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+          text: JSON.stringify(structuredError(error), null, 2),
         },
       ],
       isError: true,
