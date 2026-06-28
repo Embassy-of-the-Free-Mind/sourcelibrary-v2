@@ -203,7 +203,11 @@ export default function PageComments({ bookId, pageId, pageNumber }: PageComment
                 <li key={c.id} className="flex items-start gap-2.5">
                   <span
                     className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs font-medium"
-                    style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+                    style={{
+                      background: 'var(--bg-white, #fff)',
+                      border: '1px solid var(--border-light)',
+                      color: 'var(--text-secondary)',
+                    }}
                   >
                     {(c.user_name || 'A')[0].toUpperCase()}
                   </span>
