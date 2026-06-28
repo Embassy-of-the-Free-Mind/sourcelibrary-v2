@@ -251,9 +251,11 @@ export default async function MycologyCollectionPage() {
       <section className="relative bg-dark overflow-hidden min-h-[66vh] flex items-end">
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.08} oversize={0.1} />
-        {/* Legibility tint — left-weighted on desktop, broader on mobile (text sits bottom-left). */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/50 to-dark/15 md:to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-2/3 md:h-1/2 bg-gradient-to-t from-dark/85 via-dark/35 to-transparent" />
+        {/* Mobile: vertical tint — strongest at the bottom (text), light at top. */}
+        <div className="absolute inset-0 md:hidden bg-gradient-to-t from-dark/85 via-dark/45 to-dark/5" />
+        {/* Desktop: left-weighted tint + bottom fade (unchanged). */}
+        <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-dark/90 via-dark/50 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 hidden md:block bg-gradient-to-t from-dark/85 via-dark/35 to-transparent" />
 
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 pt-12 pb-10">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/60 mb-6">
