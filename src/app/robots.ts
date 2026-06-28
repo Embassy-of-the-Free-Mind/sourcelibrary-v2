@@ -1,7 +1,42 @@
 import { MetadataRoute } from 'next';
 
+/**
+ * Robots policy. Two intents, deliberately separated:
+ *
+ *  1. SEARCH-INDEX crawlers (Googlebot, Bingbot, Claude-SearchBot, OAI-SearchBot)
+ *     are ALLOWED on content. They are how readers discover and are sent to us;
+ *     surfacing our pages in search/answers serves the mission.
+ *
+ *  2. TRAINING / BULK crawlers (ClaudeBot, GPTBot, Google-Extended, CCBot,
+ *     Applebot-Extended, Meta-ExternalAgent, anthropic-ai, …) are RESERVED.
+ *     Our translations are CC-BY-SA 4.0 — whose ShareAlike term is incompatible
+ *     with proprietary model training — so AI training / text-and-data-mining
+ *     requires a SEPARATE license. See https://sourcelibrary.org/licensing and
+ *     the machine-readable reservation at /.well-known/tdmrep.json (TDMRep) plus
+ *     the TDM-Reservation HTTP header. Bulk/training access is available through
+ *     the API or MCP server under a partnership — not by scraping.
+ *
+ * This is the honor-system + express-reservation layer; the server-side bot gate
+ * (src/lib/bot-gate.ts) is the enforcement layer.
+ */
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = 'https://sourcelibrary.org';
+
+  // Endpoints a reserved AI crawler MAY still reach: the structured API, the
+  // partnership/licensing docs, and the blog. Everything else (full text) is reserved.
+  const aiAllowList = [
+    '/blog/',
+    '/api/search',
+    '/api/books/',
+    '/api/verify',
+    '/api/mcp',
+    '/llms.txt',
+    '/terms',
+    '/licensing',
+    '/developers',
+  ];
+  // Reserved crawlers that aren't given API access still get the public docs + blog.
+  const docsOnly = ['/blog/', '/llms.txt', '/terms', '/licensing', '/developers'];
 
   return {
     rules: [
@@ -43,80 +78,34 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
 
-      // AI training crawlers: block bulk scraping, point to API
-      // These companies should use our API or MCP server instead.
-      // See https://sourcelibrary.org/terms for licensing details.
-      {
-        userAgent: 'CCBot',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'Bytespider',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'Diffbot',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'Omgilibot',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'FacebookBot',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'Applebot',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'Google-Extended',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'PerplexityBot',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'Amazonbot',
-        allow: '/blog/',
-        disallow: '/',
-      },
-      {
-        userAgent: 'ClaudeBot',
-        disallow: '/',
-      },
-      {
-        userAgent: 'cohere-ai',
-        allow: '/blog/',
-        disallow: '/',
-      },
+      // ── SEARCH-INDEX crawlers: explicitly welcome on content ──
+      // Discovery + citability serve the mission. (Googlebot/Bingbot are already
+      // allowed via '*'; these AI search crawlers are named so the intent is
+      // unambiguous and they're never swept up with the training crawlers below.)
+      { userAgent: 'Claude-SearchBot', allow: '/' },
+      { userAgent: 'OAI-SearchBot', allow: '/' },
 
-      // AI assistants: welcome to use the API and llms.txt
-      // GPTBot, Claude-Web, etc. — access the structured API
-      {
-        userAgent: 'GPTBot',
-        allow: ['/blog/', '/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
-        disallow: '/',
-      },
-      {
-        userAgent: 'Claude-Web',
-        allow: ['/blog/', '/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
-        disallow: '/',
-      },
-      {
-        userAgent: 'Anthropic-AI',
-        disallow: '/',
-      },
+      // ── TRAINING / BULK crawlers: RESERVED — see /licensing ──
+      // CC-BY-SA's ShareAlike makes proprietary training incompatible with the
+      // free license; training/TDM needs a separate license. GPTBot/Claude-Web
+      // keep structured-API access (use the API/MCP, not scraping); the rest get
+      // the public docs + blog only. None get the full text.
+      { userAgent: 'GPTBot', allow: aiAllowList, disallow: '/' },
+      { userAgent: 'Claude-Web', allow: aiAllowList, disallow: '/' },
+      { userAgent: 'ClaudeBot', allow: docsOnly, disallow: '/' },
+      { userAgent: 'Anthropic-AI', allow: docsOnly, disallow: '/' },
+      { userAgent: 'Google-Extended', allow: docsOnly, disallow: '/' },
+      { userAgent: 'Applebot-Extended', allow: docsOnly, disallow: '/' },
+      { userAgent: 'Meta-ExternalAgent', allow: '/blog/', disallow: '/' },
+      { userAgent: 'CCBot', allow: '/blog/', disallow: '/' },
+      { userAgent: 'Bytespider', allow: '/blog/', disallow: '/' },
+      { userAgent: 'Diffbot', allow: '/blog/', disallow: '/' },
+      { userAgent: 'Omgilibot', allow: '/blog/', disallow: '/' },
+      { userAgent: 'FacebookBot', allow: '/blog/', disallow: '/' },
+      { userAgent: 'Applebot', allow: '/blog/', disallow: '/' },
+      { userAgent: 'PerplexityBot', allow: '/blog/', disallow: '/' },
+      { userAgent: 'Amazonbot', allow: '/blog/', disallow: '/' },
+      { userAgent: 'cohere-ai', allow: '/blog/', disallow: '/' },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
     // Note: Next.js generateSitemaps() automatically creates a sitemap index
