@@ -130,8 +130,9 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const [showBookDropdown, setShowBookDropdown] = useState(false);
   const bookSearchRef = useRef<HTMLDivElement>(null);
 
-  // Image search state
-  const [imageSearchQuery, setImageSearchQuery] = useState(searchParams.get('q') || '');
+  // Image search: `searchInput` is the typed text; the committed query lives in
+  // the URL (`q`) and only updates on Enter / the search button — no live search.
+  const [searchInput, setSearchInput] = useState(searchParams.get('q') || '');
 
   // Quality toggle state
   const qualityParam = searchParams.get('minQuality');
@@ -147,6 +148,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const iconclassFilter = searchParams.get('iconclass') || '';
   const yearStart = searchParams.get('yearStart') || '';
   const yearEnd = searchParams.get('yearEnd') || '';
+  // Committed image search query (drives the fetch); comes from the URL only.
+  const imageSearchQuery = searchParams.get('q') || '';
   // Merged-gallery source facet: 'all' (default, interleaves illustrations + artworks),
   // 'illustration', or 'artwork'.
   const sourceFilter = searchParams.get('source') || 'all';
@@ -303,8 +306,14 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   const handleImageSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    updateParams({ q: imageSearchQuery });
+    updateParams({ q: searchInput.trim() });
   };
+
+  // Keep the input in sync with the committed query (back/forward, clearing a
+  // chip, etc.) — only when `q` actually changes, never while typing.
+  useEffect(() => {
+    setSearchInput(imageSearchQuery);
+  }, [imageSearchQuery]);
 
   const handleQualityChange = (level: string) => {
     if (level === 'archive') {
@@ -329,11 +338,17 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
             <input
               type="text"
-              placeholder="Search images..."
-              value={imageSearchQuery}
-              onChange={(e) => setImageSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
+              placeholder="Search images…"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="w-full pl-9 pr-[4.5rem] py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
             />
+            <button
+              type="submit"
+              className="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-1.5 text-xs font-medium bg-accent-rust text-white rounded-md hover:bg-accent-rust/90 transition-colors"
+            >
+              Search
+            </button>
           </form>
 
           {/* Book Search */}
@@ -436,7 +451,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             {imageSearchQuery && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm">
                 Search: &quot;{imageSearchQuery}&quot;
-                <button onClick={() => { setImageSearchQuery(''); updateParams({ q: '' }); }} className="hover:text-blue-600">
+                <button onClick={() => { setSearchInput(''); updateParams({ q: '' }); }} className="hover:text-blue-600">
                   <X className="w-3 h-3" />
                 </button>
               </div>
