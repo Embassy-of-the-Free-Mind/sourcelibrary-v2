@@ -1,0 +1,817 @@
+{
+  "summary": {
+    "built": "2026-06-29",
+    "purpose": "#2880 search head-to-head pilot + #2885(a) Tier-0 alignment audit",
+    "n": 52,
+    "by_stratum": {
+      "badged · western": 13,
+      "badged · non-western": 13,
+      "unbadged · western": 13,
+      "unbadged · non-western": 13
+    },
+    "with_tier0_candidate": 1,
+    "note": "Run the unified Tier-2 oracle (ft-verdict-contract.md §2) AND Tier-1 (ft-gemini-adjudicate.mjs) over `manifest`. Score: Gemini-vs-Claude agreement (head-to-head) + alignment audit (tier0.catalog_id present but oracle finds no prior = false merge; oracle finds a held prior with no tier0 = recall miss). Oracle is UNPRIMED — do not feed it tier0."
+  },
+  "manifest": [
+    {
+      "author": "Erastus, Thomas",
+      "display_title": "Theses de sudore",
+      "id": "69b65be618b87551bfd0f73a",
+      "is_first_translation": true,
+      "language": "Latin",
+      "title": "Theses de sudore",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:thomas-erastus:sudore-theses",
+      "stratum": "badged · western",
+      "tier0": {
+        "candidates": 1,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69b5258ccced70d8e6d728e1",
+      "title": "Van het bidden inde Kercken.",
+      "display_title": "\n              Van het bidden inde Kercken.\n            ",
+      "author": "? (s.l.)",
+      "language": "Dutch",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::bidden-inde-kercken-van",
+      "stratum": "badged · western",
+      "tier0": null
+    },
+    {
+      "id": "69aec4473b6ebce5e0ee5929",
+      "title": "The Federalist: A Collection of Essays (1788 First Edition)",
+      "display_title": null,
+      "author": "Alexander Hamilton, James Madison & John Jay",
+      "language": "English",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:alexander-hamilton-james:1788-essays-federalist",
+      "stratum": "badged · western",
+      "tier0": {
+        "candidates": 11,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "author": "Staricius, Johannes",
+      "display_title": "Neu-vermehrter Helden-Schatz",
+      "id": "69c852056c6f3cc53c85329c",
+      "is_first_translation": true,
+      "language": "German",
+      "title": "Neu-vermehrter Helden-Schatz",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:staricius-johannes:helden-neu-schatz-vermehrter",
+      "stratum": "badged · western",
+      "tier0": null
+    },
+    {
+      "id": "69dbcbea1040d1d5e20bb356",
+      "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae Add: Epistolae ad Paulum ...",
+      "author": "Seneca, Lucius Annaeus",
+      "language": "Latin",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "local:a:seneca:ad-add-cardinalibus-epistolae-formula-honestae-paulum-quattuor-sive-virtutibus-v",
+      "stratum": "badged · western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69b525c12f891867c1ae4ac0",
+      "title": "Twee bysondere scheeps-togten na Oost-Indien, van Pedralvarez Cabral, in het jaar 1500. en Joan da Nova, in het jaar 1501., Beyde in het Portugys beschreeven uyt de reysigers hunne eygen hand-schriften, op ordre des konings van Portugaal, door Joan de Barros, raads-heer en history-schrĳver van die majesteyt, nu aldereerst uyt die spraak vertaald, met noodig register en konst-printen verrĳkt",
+      "display_title": "\n              Twee bysondere scheeps-togten na Oost-Indien, van Pedralvarez Cabral, in het jaar 1500. en Joan da Nova, ...\n        ",
+      "author": "Barros, João de",
+      "language": "Dutch",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:joao-de-barros:1500-bysondere-cabral-da-en-indien-jaar-joan-na-nova-oost-pedralvarez",
+      "stratum": "badged · western",
+      "tier0": null
+    },
+    {
+      "title": "Die Macht der Kinder in der letzten Zeit",
+      "display_title": "The Power of Children in the Last Times",
+      "author": "Petersen, Johann Wilhelm",
+      "language": "German",
+      "id": "6909e609cf28baa1b4cb0705",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:johann-wilhelm-petersen:children-last-power-times",
+      "stratum": "badged · western",
+      "tier0": {
+        "candidates": 2,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69b429f46cdfcbb4df792d23",
+      "title": "Geschichte der Afrikanischen Bauherren",
+      "display_title": "History of the African Architects",
+      "author": "Koeppen, K. Fr.",
+      "language": "German",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:koeppen-k-fr:african-architects-history",
+      "stratum": "badged · western",
+      "tier0": null
+    },
+    {
+      "author": "Petersen, Johann Wilhelm",
+      "display_title": "I. Kurtze Erzehlung dessen was mit ... Herrn Hertzogs Moritz Wilhelms ... selbiger von der päbstischen Messe geredet II. Freude im Himmel über einen zur Evangelischen Gemeinde wiederkommenden Hertzog",
+      "id": "69c85a5d6c6f3cc53c854861",
+      "is_first_translation": true,
+      "language": "German",
+      "title": "I. Kurtze Erzehlung dessen was mit ... Herrn Hertzogs Moritz Wilhelms ... selbiger von der päbstischen Messe geredet II. Freude im Himmel über einen zur Evangelischen Gemeinde wiederkommenden Hertzog",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:johann-wilhelm-petersen:der-dessen-einen-erzehlung-evangelischen-freude-gemeinde-geredet-herrn-hertzog-h",
+      "stratum": "badged · western",
+      "tier0": {
+        "candidates": 2,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "author": "Mästlin, Michael",
+      "display_title": "Consideratio & observatio cometae aetherei astronomica qui anno MDLXXX mensibus octobri, novembri et decembri in alto aethere apparvit",
+      "id": "69b65bf218b87551bfd0fb05",
+      "is_first_translation": true,
+      "language": "Latin",
+      "title": "Consideratio & observatio cometae aetherei astronomica qui anno MDLXXX mensibus octobri, novembri et decembri in alto aethere apparvit : item descriptio terribilium aliquot & portensorum chasmatum quae his annis MDLXXX & MDLXXXI conspecta sunt",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:michael-maestlin:aethere-aetherei-alto-anno-apparvit-astronomica-cometae-consideratio-decembri-et",
+      "stratum": "badged · western",
+      "tier0": null
+    },
+    {
+      "id": "69b51e00efd8df28f2daf238",
+      "title": "Nachlass von Karl Kiesewetter (1854-1895) – BSB Kiesewetteriana. 39c, Nachlass von Karl Kiesewetter (1854-1895): Misterium Naturae de Lapide vegetabili, Manuskript - BSB Kiesewetteriana 39c",
+      "display_title": "The Mystery of Nature concerning the Vegetable Stone",
+      "author": "Basilius, Valentinus, 1394-1450; Kiesewetter, Karl",
+      "language": "German",
+      "original_language": "German",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:basil-valentine:1854-1895-concerning-mystery-nature-stone-vegetable",
+      "stratum": "badged · western",
+      "tier0": {
+        "candidates": 9,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "6991e18b339ebc8509949b83",
+      "title": "Comentario Resolutorio de Usuras",
+      "display_title": "Resolutory Commentary on Usury",
+      "author": "Martín de Azpilcueta",
+      "language": "Spanish",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:martin-de-azpilcueta:resolutory-usury",
+      "stratum": "badged · western",
+      "tier0": null
+    },
+    {
+      "id": "69751587a88d83c830d99e14",
+      "title": "Articuli fidei sacrosanctae",
+      "display_title": "Articles of the Holy Faith",
+      "author": "Lull, Ramón",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:ramon-llull:articles-faith-holy",
+      "stratum": "badged · western",
+      "tier0": {
+        "candidates": 11,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e795ed80b52390feb18b2a",
+      "title": "gsang ‘dus sgrub thabs dben sa snyan brgyud kyi man ngag ltar nyanms su len tshul dngos grub kun byung",
+      "display_title": "gsang ‘dus sgrub thabs dben sa snyan brgyud kyi man ngag ltar nyanms su len tshul dngos grub kun byung",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:choling-collection-ogyen:brgyud-byung-dben-dngos-dus-grub-gsang-kun-kyi-len-ltar-man",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69c1baee8522835be845b7b6",
+      "title": "Festival prayer book",
+      "display_title": "Festival prayer book (Gaster Hebrew MS 255)",
+      "author": "Anonymous",
+      "language": "Hebrew, Judeo-Arabic, and Ladino",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::book-festival-prayer",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e7968180b52390feb1970d",
+      "title": "no title",
+      "display_title": "no title",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:choling-collection-ogyen:no-title",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "6a14e17f311a9edd46221c07",
+      "title": "Thor bu 'Gro mgon rgya ras kyi tshogs chos sogs",
+      "display_title": "Thor bu 'Gro mgon rgya ras kyi tshogs chos sogs",
+      "author": "Tshamdrak Monastery",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:monastery-tshamdrak:bu-chos-gro-kyi-mgon-ras-rgya-sogs-thor-tshogs",
+      "stratum": "badged · non-western",
+      "tier0": null
+    },
+    {
+      "id": "69c1bbf78522835be8460e27",
+      "title": "Prayers and litugical poems",
+      "display_title": "Prayers and litugical poems (Gaster Hebrew MS 1824)",
+      "author": "Anonymous",
+      "language": "Hebrew",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::litugical-poems-prayers",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "6992cdc6e7c91e930c254938",
+      "title": "武備志(二十七)",
+      "display_title": "Treatise on Armament Technology, Volume 27",
+      "author": "茅元儀",
+      "language": "Chinese",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "茅元儀-treatise-armament-technology",
+      "stratum": "badged · non-western",
+      "tier0": null
+    },
+    {
+      "id": "6991d8a38c1030b12444c221",
+      "title": "Vajramratatantra",
+      "display_title": "Treatise on the Nectar of the Thunderbolt",
+      "author": "Unknown",
+      "language": "Sanskrit",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:unknown:nectar-thunderbolt-treatise",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "6a14e1d7311a9edd462246c8",
+      "title": "Thor bu rDo rje phag mo'i zab khrid",
+      "display_title": "Thor bu rDo rje phag mo'i zab khrid",
+      "author": "Tshamdrak Monastery",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:monastery-tshamdrak:bu-khrid-mo-phag-rdo-rje-thor-zab",
+      "stratum": "badged · non-western",
+      "tier0": null
+    },
+    {
+      "id": "69e78a824a6785cfd60d38ae",
+      "title": "smon lam yongs rdzogs chab gcig tu bsgrigs pa",
+      "display_title": "smon lam yongs rdzogs chab gcig tu bsgrigs pa",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:choling-collection-ogyen:bsgrigs-chab-gcig-lam-pa-rdzogs-smon-tu-yongs",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e78a804a6785cfd60d3772",
+      "title": "bla ma nor bu rgya mtsho (gter ma)",
+      "display_title": "bla ma nor bu rgya mtsho (gter ma)",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:choling-collection-ogyen:bla-bu-ma-mtsho-nor-rgya",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69c1bb278522835be845d3ad",
+      "title": "Account book",
+      "display_title": "Account book (Gaster Hebrew MS 975)",
+      "author": "Anonymous",
+      "language": "Hebrew",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::account-book",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e763a3cc48e59ad74f39aa",
+      "title": "bDud rtsi zgil chung tshe rabs las rtsis",
+      "display_title": "bDud rtsi zgil chung tshe rabs las rtsis",
+      "author": "Gangtey Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-gangtey-monas:bdud-chung-las-rabs-rtsi-rtsis-tshe-zgil",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e787604a6785cfd60cb761",
+      "title": "Bum Tha",
+      "display_title": "Bum Tha",
+      "author": "Drametse Monastery Collection",
+      "language": "Tibetan",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "local:n:collection-drametse-mona:bum-tha",
+      "stratum": "badged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "695581a157e3b773024f6989",
+      "title": "Poems and Translations from the Ancient Celtic Bards",
+      "display_title": null,
+      "author": "Robert Munro",
+      "language": "English/Gaelic",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:robert-munro:ancient-bards-celtic-from-poems-translations",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 5,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "author": "Unknown",
+      "display_title": null,
+      "id": "69c26fabb82ba5d5beda277a",
+      "is_first_translation": false,
+      "language": "French",
+      "title": "Cahiers contenant les réceptions et cérémonies des Grades d'Apprentif, Compagnon et Maître",
+      "work_id": "local:n:unknown:apprentif-cahiers-ceremonies-compagnon-contenant-et-grades-maitre-receptions",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "author": "Ehrmann, J.F. (Eq. a Cubo)",
+      "display_title": null,
+      "id": "69c261e6b82ba5d5beda0515",
+      "is_first_translation": false,
+      "language": "German",
+      "title": "Briefe von J.F. Ehrmann (Eq. A Cubo) zu Strassburg an J.W. Metzeler zu Frankfurt. N. 1 bis 20, vom 26 Mai 1818 bis 23 October 1833. fol.",
+      "work_id": "local:a:ehrmann-j-f-eq-a-cubo:1-1818-1833-20-23-26-bis-briefe-fol-frankfurt-mai-metzeler",
+      "stratum": "unbadged · western",
+      "tier0": null
+    },
+    {
+      "id": "69dbcb141040d1d5e20b1a64",
+      "title": "Cornucopiae linguae latinae (Ed: Pyrrhus Perottus. Rev: Ludovicus Odaxius). Add: Commentariolus in prohemium Historiae naturalis Plinii",
+      "author": "Perottus, Nicolaus",
+      "language": "Latin",
+      "display_title": "Cornucopia of the Latin Language",
+      "is_first_translation": false,
+      "work_id": "local:n:nicolaus-perottus:cornucopia-language-latin",
+      "stratum": "unbadged · western",
+      "tier0": null
+    },
+    {
+      "id": "6a085c3849638a50931cccb4",
+      "title": "Lucanus.",
+      "display_title": null,
+      "author": "Lucan",
+      "language": "Latin",
+      "work_id": "Q678375",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69905f2040bc3a0478efaf14",
+      "title": "De naturalium effectuum causis, sive de incantationibus",
+      "display_title": "De Incantationibus",
+      "author": "Pietro Pomponazzi",
+      "language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:pietro-pomponazzi:incantationibus",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 1,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "6a08512049638a50931b8042",
+      "title": "De quaesitis per. epistolam libri. 3. Aldi. Manutij Paulli. F. Aldi. N.",
+      "display_title": null,
+      "author": "Manuzio, Aldo",
+      "language": "Latin",
+      "work_id": "local:a:manuzio-aldo:3-aldi-epistolam-libri-manutij-paulli-per-quaesitis",
+      "stratum": "unbadged · western",
+      "tier0": null
+    },
+    {
+      "id": "69af21387c27d4b637fed2ce",
+      "title": "Великосвѣтскій расколъ",
+      "display_title": "The Schism in High Society",
+      "author": "Nikolai Leskov",
+      "language": "Russian",
+      "is_first_translation": false,
+      "work_id": "local:a:nikolai-leskov:high-schism-society",
+      "stratum": "unbadged · western",
+      "tier0": null
+    },
+    {
+      "author": "Röpert, von",
+      "display_title": null,
+      "id": "69c28defb82ba5d5beda72d6",
+      "is_first_translation": false,
+      "language": "German",
+      "title": "Gold- und Rosenkreutzer. Correspondenz und Aufnahme",
+      "work_id": "local:a:ropert-von:aufnahme-correspondenz-gold-rosenkreutzer-und",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "author": "Unknown",
+      "display_title": null,
+      "id": "69c26d65b82ba5d5beda1efb",
+      "is_first_translation": false,
+      "language": "French",
+      "title": "Grand Inspecteur Général, nec plus ultra",
+      "work_id": "local:n:unknown:general-grand-inspecteur-nec-plus-ultra",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69af4a8b4f33c7a93c6440cf",
+      "title": "Procli Diadochi in Primum Euclidis Elementorum Librum Commentarii",
+      "display_title": "Commentary on the First Book of Euclid's Elements",
+      "author": "Proclus",
+      "language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:proclus:book-elements-euclid-first",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 16,
+        "title_overlap": 1,
+        "catalog_id": "69dbbdedf071889fedd299de",
+        "english_title": "Proclus: A Commentary on the First Book of Euclid's Elements",
+        "translator": "Glenn R. Morrow",
+        "pub_year": 1970,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "validated_additions"
+      }
+    },
+    {
+      "id": "69e41ec8d0364cb0bcf7957e",
+      "title": "Les Bijoux indiscrets",
+      "display_title": null,
+      "author": "Denis Diderot",
+      "language": "French",
+      "original_language": "French",
+      "work_id": "local:a:diderot:bijoux-indiscrets",
+      "stratum": "unbadged · western",
+      "tier0": null
+    },
+    {
+      "author": "Unknown",
+      "display_title": null,
+      "id": "69c25169b82ba5d5bed9e58a",
+      "is_first_translation": false,
+      "language": "German",
+      "title": "Meistergrad der Strikten Observanz, Geschichte, Erklärung und Catechismus",
+      "work_id": "local:n:unknown:catechismus-der-erklarung-geschichte-meistergrad-observanz-strikten-und",
+      "stratum": "unbadged · western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "699246b3bc722ec0ee81144f",
+      "title": "The Holy Bible (Wycliffe), Vol. 1",
+      "display_title": null,
+      "author": "John Wycliffe / Forshall & Madden (eds.)",
+      "language": "Hebrew-Greek",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:n:forshall-john-madden-wyc:1-bible-holy-vol",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 12,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e7964880b52390feb1934e",
+      "title": "rje btsun rdo rje rnal 'byor ma na ro mkha' spyod kyi rim gnyis zab mo'i nyams len vaidurya zhun ma'i them skas",
+      "display_title": "rje btsun rdo rje rnal 'byor ma na ro mkha' spyod kyi rim gnyis zab mo'i nyams len vaidurya zhun ma'i them skas",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:choling-collection-ogyen:btsun-byor-gnyis-kyi-len-ma-mkha-mo-na-nyams-rdo-rim",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69906467ef12272ffdc91f4e",
+      "title": "Graha Laghava with Vishvanatha Commentary",
+      "display_title": "Concise Manual on Planetary Motion with Commentary",
+      "author": "Ganesa Daivagna",
+      "language": "Sanskrit",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:ganesa-daivagna:concise-manual-motion-planetary",
+      "stratum": "unbadged · non-western",
+      "tier0": null
+    },
+    {
+      "id": "69b3e686abb796bfd9de42ab",
+      "title": "Texts on magic and fortune telling",
+      "display_title": "Compendium of Ritual Magic and Divination",
+      "author": "Unknown",
+      "language": "Middle English",
+      "is_first_translation": false,
+      "work_id": "local:n:unknown:compendium-divination-magic-ritual",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e7ab9e5f1a22ab19a9b03b",
+      "title": "Neyphug Kanjur mDo sde Ca",
+      "display_title": "Neyphug Kanjur mDo sde Ca",
+      "author": "Neyphug Monastery",
+      "language": "Tibetan",
+      "is_first_translation": false,
+      "translation_verification": {},
+      "work_id": "local:n:monastery-neyphug:ca-kanjur-mdo-sde",
+      "stratum": "unbadged · non-western",
+      "tier0": null
+    },
+    {
+      "id": "69d5ae594dc55b8478de1380",
+      "title": "Shi Jing, Shu Jing, Yi Jing",
+      "display_title": "詩経・書経・易経 (Book of Odes, Documents, Changes — Combined Japanese Edition)",
+      "author": "Various",
+      "language": "Chinese",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69afee4757adc49dbfc42036",
+      "title": "A dedication of a statue (Šulgi V)",
+      "display_title": "A dedication of a statue (Šulgi V)",
+      "author": "Anonymous Sumerian",
+      "language": "Sumerian",
+      "original_language": "Sumerian",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:n:sumerian:dedication-statue-v",
+      "stratum": "unbadged · non-western",
+      "tier0": null
+    },
+    {
+      "id": "69e7aaff5f1a22ab19a9115d",
+      "title": "Thadrak Kanjur mDo sde Tsha",
+      "display_title": "Thadrak Kanjur mDo sde Tsha",
+      "author": "Thadrak Temple",
+      "language": "Tibetan",
+      "is_first_translation": false,
+      "translation_verification": {},
+      "work_id": "local:n:temple-thadrak:kanjur-mdo-sde-tsha",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 4,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69de982fb0ba5d86ca72d160",
+      "title": "元曲選 (Selections of Yuan Plays), Vol. 46",
+      "display_title": null,
+      "author": "Zang Maoxun (臧懋循), compiler",
+      "language": "Chinese",
+      "work_id": "local:a:zang-maoxun-compiler:46-vol",
+      "stratum": "unbadged · non-western",
+      "tier0": null
+    },
+    {
+      "id": "69e72895a409200ea79f01ff",
+      "title": "聊齋志異 Vol. 10",
+      "display_title": null,
+      "author": "Pu Songling (蒲松齡)",
+      "language": "Chinese",
+      "work_id": "local:a:pu-songling:10-vol",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 1,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e7962f80b52390feb18ef5",
+      "title": "snang mdzad snyan brgyud las/ bde mchog bong zhal can gyi sgrub thabs gser phreng las dmigs gnad zab mo zhal shes shin tu zab pa",
+      "display_title": "snang mdzad snyan brgyud las/ bde mchog bong zhal can gyi sgrub thabs gser phreng las dmigs gnad zab mo zhal shes shin tu zab pa",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:choling-collection-ogyen:bde-bong-brgyud-can-dmigs-gnad-gser-gyi-las-mchog-mdzad-mo",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69e75d1ccc48e59ad74eb520",
+      "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 18",
+      "display_title": null,
+      "author": "Kanze School",
+      "language": "Japanese",
+      "work_id": "local:a:kanze-school:18-vol",
+      "stratum": "unbadged · non-western",
+      "tier0": {
+        "candidates": 4,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      }
+    },
+    {
+      "id": "69b52fab1a04ee0f3b4180e9",
+      "title": "An Egyptian Hieroglyphic Dictionary Vol. 2",
+      "display_title": null,
+      "author": "E.A. Wallis Budge",
+      "language": "Egyptian",
+      "is_first_translation": false,
+      "work_id": "local:a:e-a-wallis-budge:2-dictionary-egyptian-hieroglyphic-vol",
+      "stratum": "unbadged · non-western",
+      "tier0": null
+    }
+  ]
+}
