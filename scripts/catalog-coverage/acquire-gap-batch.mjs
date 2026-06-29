@@ -90,31 +90,39 @@ async function importWork(w, hit) {
   const j = await r.json(); return (r.ok && (j.success || j.bookId)) ? j.bookId : null;
 }
 
-// ---- process a bounded batch of pending works ----
-const pending = await queue.find({ status: 'pending' }).limit(BATCH * 4).toArray();
-let acquired = 0, held = 0, noSource = 0, rejected = 0, attempted = 0;
-for (const w of pending) {
-  if (attempted >= BATCH) break;
-  attempted++;
+// ---- process a bounded batch of pending works, CONCURRENTLY ----
+const CONCURRENCY = parseInt(process.argv[process.argv.indexOf('--concurrency') + 1] || '10');
+const tally = { acquired: 0, held: 0, 'no-source': 0, 'no-match': 0, 'import-failed': 0 };
+
+async function processWork(w) {
   const surname = clean((w.author || '').split(/[,\s]+/)[0]);
   const tk = toks(w.title).slice(0, 2);
   if (surname.length >= 4 && tk.length) {
     const have = await books.findOne({ $and: [{ $or: [{ author: new RegExp(surname, 'i') }, { title: new RegExp(surname, 'i') }] }, { title: new RegExp(tk.join('|'), 'i') }] }, { projection: { _id: 1 } });
-    if (have) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'held', done_at: new Date() } }); held++; continue; }
+    if (have) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'held', done_at: new Date() } }); return 'held'; }
   }
   let cands = await iaResolve(w);
   if (!cands.length) cands = await eraraResolve(w);
-  if (!cands.length) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-source', done_at: new Date() } }); noSource++; continue; }
+  if (!cands.length) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-source', done_at: new Date() } }); return 'no-source'; }
   const v = await verify(w, cands.slice(0, 6));
-  if (!v) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-match', done_at: new Date() } }); rejected++; continue; }
-  if (DRY) { acquired++; continue; }
+  if (!v) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-match', done_at: new Date() } }); return 'no-match'; }
+  if (DRY) return 'acquired';
   const bookId = await importWork(w, v);
-  if (bookId) {
-    await queue.updateOne({ sn: w.sn }, { $set: { status: 'acquired', book_id: bookId, source: v.src, source_ref: v.ref, done_at: new Date() } });
-    acquired++;
-  } else { await queue.updateOne({ sn: w.sn }, { $set: { status: 'import-failed', done_at: new Date() } }); }
+  if (bookId) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'acquired', book_id: bookId, source: v.src, source_ref: v.ref, done_at: new Date() } }); return 'acquired'; }
+  await queue.updateOne({ sn: w.sn }, { $set: { status: 'import-failed', done_at: new Date() } }); return 'import-failed';
+}
+
+// Atomically claim a batch (set status:'processing') so concurrent/overlapping runs don't collide
+const claimed = [];
+for (let i = 0; i < BATCH; i++) {
+  const r = await queue.findOneAndUpdate({ status: 'pending' }, { $set: { status: 'processing', claimed_at: new Date() } }, { returnDocument: 'after' });
+  const doc = r?.value ?? r; if (!doc) break; claimed.push(doc);
+}
+for (let i = 0; i < claimed.length; i += CONCURRENCY) {
+  const res = await Promise.all(claimed.slice(i, i + CONCURRENCY).map(w => processWork(w).catch(() => { queue.updateOne({ sn: w.sn }, { $set: { status: 'pending' } }); return 'error'; })));
+  for (const s of res) if (tally[s] !== undefined) tally[s]++;
 }
 
 const remaining = await queue.countDocuments({ status: 'pending' });
-log(`batch done: acquired ${acquired}, held ${held}, no-source ${noSource}, no-match ${rejected} | pending remaining ${remaining}`);
+log(`batch done (conc ${CONCURRENCY}): acquired ${tally.acquired}, held ${tally.held}, no-source ${tally['no-source']}, no-match ${tally['no-match']} | pending remaining ${remaining}`);
 await mc.close();
