@@ -89,3 +89,65 @@ export function rankBySubject<T extends RankableImage>(imgs: T[], topicTerms: st
     .sort((a, b) => (b.s - a.s) || ((b.img.gallery_quality ?? 0) - (a.img.gallery_quality ?? 0)) || (a.i - b.i))
     .map((x) => x.img);
 }
+
+// Remove exact duplicates (same image shown twice in a hero/gallery). keyFn
+// returns a stable identity (image URL or gallery-image id); null/empty keys are
+// always kept. Order is preserved.
+export function dedupeImages<T>(imgs: T[], keyFn: (img: T) => string | undefined | null): T[] {
+  const seen = new Set<string>();
+  const out: T[] = [];
+  for (const img of imgs) {
+    const k = keyFn(img);
+    if (!k) { out.push(img); continue; }
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push(img);
+  }
+  return out;
+}
+
+type Bucket = 'subject' | 'other' | 'people' | 'decor';
+
+function categorize(img: RankableImage, topicTerms: string[]): Bucket {
+  const type = (img.type || '').toLowerCase();
+  const desc = (img.museum_description || img.description || '').toLowerCase();
+  if (PERSON_TYPES.has(type)) return 'people';
+  if (SUBJECT_TYPES.has(type)) return 'subject';
+  if (topicTerms.some((t) => t && desc.includes(t))) return 'subject';
+  if (DECOR_TYPES.has(type)) return 'decor';
+  if (PERSON_WORDS.some((p) => desc.includes(p))) return 'people';
+  return 'other';
+}
+
+// Subject-weighted ordering that still keeps a RANGE: instead of "all plants
+// first, then everything else," it interleaves the categories on a fixed cycle
+// that leans heavily on subject matter but guarantees some people, decoration,
+// and other imagery appear in the visible set. Each bucket is internally sorted
+// by subject score (best first). Use this for the hero/gallery instead of a pure
+// sort when you want variety as well as weighting.
+const WEAVE_CYCLE: Bucket[] = [
+  'subject', 'subject', 'subject', 'other', 'subject', 'subject',
+  'people', 'subject', 'other', 'subject', 'subject', 'decor',
+];
+const WEAVE_FALLBACK: Bucket[] = ['subject', 'other', 'people', 'decor'];
+
+export function weaveBySubject<T extends RankableImage>(imgs: T[], topicTerms: string[] = []): T[] {
+  const buckets: Record<Bucket, T[]> = { subject: [], other: [], people: [], decor: [] };
+  for (const img of imgs) buckets[categorize(img, topicTerms)].push(img);
+  for (const k of WEAVE_FALLBACK) {
+    buckets[k].sort((a, b) => scoreGalleryImage(b, topicTerms) - scoreGalleryImage(a, topicTerms)
+      || ((b.gallery_quality ?? 0) - (a.gallery_quality ?? 0)));
+  }
+  const out: T[] = [];
+  const total = imgs.length;
+  let ci = 0;
+  while (out.length < total) {
+    const want = WEAVE_CYCLE[ci % WEAVE_CYCLE.length];
+    ci++;
+    let pick = buckets[want].shift();
+    if (!pick) for (const k of WEAVE_FALLBACK) { if (buckets[k].length) { pick = buckets[k].shift(); break; } }
+    if (!pick) break;
+    out.push(pick);
+  }
+  return out;
+}

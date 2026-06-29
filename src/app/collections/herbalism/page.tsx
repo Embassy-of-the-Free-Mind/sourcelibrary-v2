@@ -12,7 +12,8 @@ import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-uti
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { tenantBookUrl } from '@/lib/slugify';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
-import { rankBySubject, topicTermsFromName } from '@/lib/collection-image-ranking';
+import QuoteBlock from '../mycology/_components/QuoteBlock';
+import { dedupeImages, weaveBySubject, topicTermsFromName } from '@/lib/collection-image-ranking';
 import MycoSlider, { type MiniBook } from '../mycology/_components/MycoSlider';
 import MycoMasonry from '../mycology/_components/MycoMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
@@ -67,6 +68,31 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', title: OG_TITLE, description: OG_DESC },
 };
+
+// Quote band — verified page-exact via the quote API (collection-quotes skill),
+// wrapper-stripped, each linked to its exact page id. Translation-only (the
+// originals are not re-paired here, to avoid mis-alignment). Spread across three
+// works, languages, and eras.
+const QUOTES = [
+  {
+    translated: 'The myrtle is under the protection of Venus because it is useful for remedies of love, as are the rose and the linden tree.',
+    language: 'Latin',
+    attribution: 'Della Porta, Villae, 1592',
+    href: '/book/villae-porta/page/69b1c642edda7fb64e1a08c0',
+  },
+  {
+    translated: 'The Ancients hold that there are three different movements among all plants; namely, budding, flowering, and ripening…',
+    language: 'French',
+    attribution: 'de Serres, Théâtre d’Agriculture, 1603',
+    href: '/book/le-theatre-d-agriculture-et-mesnage-des-champs-serres/page/69a5d7f94d84314297c08078',
+  },
+  {
+    translated: 'It flowers from May until Autumn in the same year it is sown, and it perishes upon the arrival of winter.',
+    language: 'Latin',
+    attribution: 'Ray, Historia Plantarum, 1688',
+    href: '/book/historia-plantarum-vol-ii-ray/page/6958e0d19659a6529d5772dd',
+  },
+];
 
 const SECTIONS = [
   { id: 'introduction', label: 'Introduction' },
@@ -229,9 +255,10 @@ export default async function HerbalismCollectionPage() {
 
   const { firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages } = data;
 
-  // Weight the gallery toward botanical subject matter over author portraits /
-  // title-page frontispieces, keeping quality as the base (see collection-image-ranking).
-  const rankedGallery = rankBySubject(gallery as GalleryImg[], topicTermsFromName('Herbalism & Botany'));
+  // Dedupe exact repeats, then weight toward botanical subject matter while
+  // keeping a RANGE (some portraits/decoration), see collection-image-ranking.
+  const deduped = dedupeImages(gallery as GalleryImg[], (g) => galleryImageId(g) || imgUrl(g));
+  const rankedGallery = weaveBySubject(deduped, topicTermsFromName('Herbalism & Botany'));
   const galleryTotal = rankedGallery.length;
   const galleryPlates = rankedGallery
     .filter((g) => imgUrl(g))
@@ -452,6 +479,13 @@ export default async function HerbalismCollectionPage() {
           </div>
         </div>
       </section>
+
+      {/* ===== Quote band — verified passages from the collection's own books ===== */}
+      <QuoteBlock
+        bgUrl="/api/gallery-crop/6953ccb477f38f6761be3223-0"
+        imageCredit={{ text: 'Image: Voynich Manuscript, a botanical folio (15th c.).', href: '/gallery/image/6953ccb477f38f6761be3223-0' }}
+        quotes={QUOTES}
+      />
 
       {/* ===== Get involved ===== */}
       <section id="involved" className="bg-cream scroll-mt-4">

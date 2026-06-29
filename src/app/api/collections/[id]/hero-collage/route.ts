@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import sharp from 'sharp';
 import { getReadDb } from '@/lib/mongodb';
-import { rankBySubject, topicTermsFromName, type RankableImage } from '@/lib/collection-image-ranking';
+import { weaveBySubject, dedupeImages, topicTermsFromName, type RankableImage } from '@/lib/collection-image-ranking';
 
 // Single composited hero-collage image for a collection: a MASONRY of the
 // collection's gallery images at their natural aspect ratios (auto heights),
@@ -39,11 +39,13 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
       { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1, type: 1, description: 1, museum_description: 1, gallery_quality: 1 }, maxTimeMS: 5000 },
     ).sort({ gallery_quality: -1 }).limit(POOL).toArray();
-    // Re-rank toward subject matter (plants/fungi over portraits/frontispieces),
-    // then take the top FETCH_LIMIT for the collage.
+    // Dedupe exact repeats, weave toward subject matter (plants/fungi over
+    // portraits/frontispieces) while keeping a range, then take FETCH_LIMIT.
     const topicTerms = topicTermsFromName((collectionDoc?.name as string) || id);
-    const imgs = rankBySubject(pool as RankableImage[], topicTerms).slice(0, FETCH_LIMIT) as Array<Record<string, unknown>>;
-    const urls = imgs.map((g) => (g.thumbnail_url || g.extracted_url || g.image_url) as string | undefined).filter((u): u is string => Boolean(u));
+    const urlOf = (g: Record<string, unknown>) => (g.thumbnail_url || g.extracted_url || g.image_url) as string | undefined;
+    const unique = dedupeImages(pool as Array<Record<string, unknown>>, (g) => urlOf(g));
+    const imgs = weaveBySubject(unique as RankableImage[], topicTerms).slice(0, FETCH_LIMIT) as Array<Record<string, unknown>>;
+    const urls = imgs.map(urlOf).filter((u): u is string => Boolean(u));
     if (!urls.length) return solid(3600);
 
     // Fetch + resize to column width in parallel (natural height preserved).
