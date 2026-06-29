@@ -135,10 +135,28 @@ const counts = {
   found_high_complete_to_translation_found: 0,
   found_suspect_kept_confirmed_first: 0,
   found_low_or_partial_kept_confirmed_first: 0,
+  found_unresolvable_kept_confirmed_first: 0,
   not_found_no_change: 0,
 };
-const samples = { tf: [], suspect: [], partial: [] };
+const samples = { tf: [], suspect: [], partial: [], unresolvable: [] };
 const now = new Date();
+
+// GUARD (stop-the-bleeding, 2026-06-30): a demote is a destructive public claim —
+// it must rest on a REAL, RESOLVABLE sighting, never a url-less or fabricated
+// "prior". A prior audit found ~450 confirmed_first books already flipped to
+// translation_found on discovery priors with no URL and placeholder translators
+// (e.g. "Not specified (AI-assisted/Collaborative digital project)"), silently
+// stripping genuine first translations. Require BOTH: grounding evidence with a
+// real URL, AND a non-placeholder translator — else keep confirmed_first and
+// mark for review. (First Principle / §17: never demote on an unverified match.)
+const hasResolvableEvidence = (d) =>
+  Array.isArray(d.evidence) && d.evidence.some((e) => typeof e?.url === 'string' && /^https?:\/\//.test(e.url));
+const PLACEHOLDER_TRANSLATOR =
+  /not specified|unspecified|ai[- ]?assisted|machine[- ]?translat|auto[- ]?translat|collaborative digital|generated|\btbd\b|^\s*n\/?a\s*$|^\s*unknown\s*$|^\s*none\s*$/i;
+const realTranslator = (t) => {
+  const s = (t || '').trim();
+  return s.length >= 3 && !PLACEHOLDER_TRANSLATOR.test(s);
+};
 
 for (const b of eligible) {
   const d = b.translation_verification[ESTIMATE] ?? b.translation_verification[LEGACY_ESTIMATE];
@@ -178,7 +196,23 @@ for (const b of eligible) {
     continue;
   }
 
-  // High-confidence complete translation found → flip
+  // Resolvable-sighting gate — do NOT demote on a url-less or fabricated prior.
+  if (!hasResolvableEvidence(d) || !realTranslator(d.translation?.translator)) {
+    counts.found_unresolvable_kept_confirmed_first++;
+    if (samples.unresolvable.length < 6) samples.unresolvable.push({ id: b.id, lang: b.language, trans: d.translation, has_url: hasResolvableEvidence(d) });
+    if (apply) {
+      await db.collection('books').updateOne(
+        { _id: b._id },
+        { $set: {
+          [`translation_verification.${FLAG}`]: true,
+          'translation_verification.discovery_unresolvable_prior': true,
+        }}
+      );
+    }
+    continue;
+  }
+
+  // High-confidence complete translation found WITH a resolvable, real prior → flip
   counts.found_high_complete_to_translation_found++;
   if (samples.tf.length < 5) samples.tf.push({ id: b.id, lang: b.language, trans: d.translation });
 
@@ -217,6 +251,8 @@ console.log('\n=== Sample suspect kept confirmed_first ===');
 for (const s of samples.suspect) console.log(`  [${s.id}] (${s.lang}) suspect: ${s.reason}`);
 console.log('\n=== Sample partial/low-conf kept confirmed_first ===');
 for (const s of samples.partial) console.log(`  [${s.id}] (${s.lang}) conf=${s.conf} comp=${s.comp} alt="${s.trans?.english_title?.slice(0, 45)}"`);
+console.log('\n=== Sample BLOCKED demotes (unresolvable/fabricated prior — kept confirmed_first) ===');
+for (const s of samples.unresolvable) console.log(`  [${s.id}] (${s.lang}) url=${s.has_url ? 'Y' : '-'} translator="${(s.trans?.translator || '').slice(0, 40)}" alt="${(s.trans?.english_title || '').slice(0, 40)}"`);
 
 if (apply) {
   const after = await db.collection('books').aggregate([
