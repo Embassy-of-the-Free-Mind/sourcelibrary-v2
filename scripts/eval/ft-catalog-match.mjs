@@ -259,9 +259,17 @@ async function main() {
       .toArray();
     console.log(`Loaded ${books.length} badged books.`);
 
+    // EXCLUDE the contaminated discovery harvest (2026-06-30). 302 rows carry
+    // `source: ft_verification_discovery` — unverified Gemini discovery-pass
+    // output (all url-less, often fabricated, e.g. "Madame Dupin" translating a
+    // 1494 Latin Kabbalistic work). They are NOT real catalog records, and
+    // trusting them as a `found_refs` prior produces FALSE DEMOTES (this matcher
+    // flagged Reuchlin's De Verbo Mirifico off one). A Tier-0 demote must rest on
+    // a real curated catalogue, never a discovery hallucination. (#2885; sibling
+    // of the discovery-cron guard #2892.)
     const catRows = await db
       .collection('translation_catalogs')
-      .find({})
+      .find({ source: { $ne: 'ft_verification_discovery' } })
       .project({
         _id: 1, source: 1, author: 1, author_normalized: 1, author_surname: 1,
         canonical_author: 1, canonical_author_normalized: 1,
