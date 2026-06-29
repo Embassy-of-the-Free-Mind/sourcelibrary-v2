@@ -95,7 +95,7 @@ async function main() {
   for (const [bookId, attempts] of byBook) {
     const book = bookById.get(bookId);
     if (!book) { stats.book_missing++; continue; }
-    const ft = deriveVerdictFromAttempts(attempts);
+    const ft = deriveVerdictFromAttempts(attempts, book);
     if (!ft) { stats.no_verdict++; continue; }
     stats.derived++;
     stats.by_verdict[ft.verdict] = (stats.by_verdict[ft.verdict] || 0) + 1;
