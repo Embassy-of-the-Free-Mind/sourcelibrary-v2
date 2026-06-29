@@ -651,18 +651,16 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <h2 className="text-2xl font-serif text-stone-800 mb-1">{hasFilters ? 'Results' : 'Browse Images'}</h2>
               <p className="text-stone-500 text-base">
                 {data.total > 0
-                  ? `${data.total.toLocaleString('en-US')}${hasMore ? '+' : ''} ${hasFilters ? 'results' : 'images'} — plates & standalone artworks`
+                  ? `${data.total.toLocaleString('en-US')} ${hasFilters ? 'results' : 'images'} — plates & standalone artworks`
                   : 'Plates & standalone artworks'}
               </p>
             </div>
-            {/* Masonry (CSS columns, natural aspect) with a bottom fade while more pages remain */}
+            {/* Masonry: stable round-robin flex columns (appending on load-more
+                never reflows existing tiles), with a bottom fade while more remain. */}
             <div
-              className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-3 sm:gap-4"
-              style={hasMore && !loadingMore ? { maskImage: 'linear-gradient(to bottom, #000 90%, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, #000 90%, transparent)' } : undefined}
+              style={hasMore && !loadingMore ? { maskImage: 'linear-gradient(to bottom, #000 92%, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, #000 92%, transparent)' } : undefined}
             >
-              {allItems.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
-              ))}
+              <GalleryMasonry items={allItems} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
             </div>
 
             {/* Load More */}
@@ -691,6 +689,38 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   );
 }
 
+// Round-robin masonry: item i → column i % cols. Appending new items (load-more)
+// only adds to the bottom of columns, so existing tiles never move/reflow — the
+// jumpy CSS-`columns` behavior is gone. 5 columns on desktop, 3 below.
+function GalleryMasonry({ items, tenantPrefix, collectionScope }: { items: GalleryItem[]; tenantPrefix: string; collectionScope?: string }) {
+  const [cols, setCols] = useState(5);
+  useEffect(() => {
+    const update = () => setCols(window.innerWidth >= 1024 ? 5 : 3);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+  const columns: GalleryItem[][] = Array.from({ length: cols }, () => []);
+  items.forEach((item, i) => columns[i % cols].push(item));
+  return (
+    <div className="flex gap-3 sm:gap-4 items-start">
+      {columns.map((col, ci) => (
+        <div key={ci} className="flex-1 min-w-0 flex flex-col gap-3 sm:gap-4">
+          {col.map((item, idx) => (
+            <GalleryCard
+              key={`${item.pageId}-${item.detectionIndex}`}
+              item={item}
+              priority={ci < cols && idx < 2}
+              tenantPrefix={tenantPrefix}
+              collectionScope={collectionScope}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScope }: { item: GalleryItem; priority?: boolean; tenantPrefix?: string; collectionScope?: string }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
@@ -713,7 +743,7 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
     : `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
 
   return (
-    <div className="relative group mb-3 sm:mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 hover:shadow-md transition-all">
+    <div className="relative group rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 hover:shadow-md transition-all animate-fade-in-up">
       <Link href={imageHref} className="block relative bg-stone-100">
         {!imageError ? (
           // Plain img for true masonry (natural aspect, no crop). Also dodges
@@ -757,14 +787,6 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
         </div>
 
       </Link>
-
-      {isArtwork && (
-        <div className="absolute top-1.5 right-1.5 z-10 pointer-events-none">
-          <span className="bg-accent-rust/90 text-white text-[10px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded-full shadow-sm">
-            Artwork
-          </span>
-        </div>
-      )}
 
       <div className="absolute top-1.5 left-1.5 z-10">
         <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors px-1.5 py-0.5">

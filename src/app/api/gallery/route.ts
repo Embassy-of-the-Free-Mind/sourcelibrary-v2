@@ -468,20 +468,29 @@ export async function GET(request: NextRequest) {
     // → paintings/prints of him), surfaced at the top.
     let outItems: any[] = mappedItems; // eslint-disable-line @typescript-eslint/no-explicit-any
     let searchHasMore = hasMore;
+    let displayTotal = total;
     if (searchQuery && offset === 0) {
       try {
         const { semanticArtworkSearch } = await import('@/lib/semantic-search');
         const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.25 });
+        let addedArtworks = 0;
         if (artHits.length > 0) {
           const ids = artHits.map(a => a.book_id);
           const artDocs = await db.collection('books').find(
-            { id: { $in: ids }, visible: true, content_type: 'artwork', ...(tenantId ? { tenantId } : {}) },
+            { id: { $in: ids }, visible: true, content_type: 'artwork', ...(tenantId ? { tenantId } : {}),
+              $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 } },
           ).toArray();
           const byId = new Map(artDocs.map(d => [d.id, d]));
           const artItems = artHits.map(a => byId.get(a.book_id)).filter(Boolean).map(artworkToGalleryItem);
-          if (artItems.length > 0) outItems = [...artItems, ...mappedItems];
+          if (artItems.length > 0) { outItems = [...artItems, ...mappedItems]; addedArtworks = artItems.length; }
         }
+        // Real result count: text-matching illustrations + surfaced artworks.
+        const illCount = await db.collection('gallery_images').countDocuments(
+          { $text: { $search: searchQuery }, gallery_quality: { $gte: minQuality }, book_visible: true, ...(tenantId ? { tenantId } : {}) },
+          { maxTimeMS: 5000 },
+        ).catch(() => null);
+        if (illCount !== null) { displayTotal = illCount + addedArtworks; searchHasMore = outItems.length < displayTotal; }
       } catch { /* non-critical — search still returns illustrations */ }
     }
 
@@ -501,7 +510,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       items: outItems,
-      total,
+      total: displayTotal,
       hasMore: searchHasMore,
       limit,
       offset,

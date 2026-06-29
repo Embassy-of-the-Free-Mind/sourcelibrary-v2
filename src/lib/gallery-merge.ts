@@ -59,6 +59,16 @@ export async function mergedGalleryBrowse(
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
   const pageIndex = Math.floor(offset / Math.max(1, limit));
+  // The natural-aspect masonry shows full pages, so raise the quality floor for
+  // the merged browse — blank/low-content plates the old square crop hid now
+  // read as empty tiles. (Explicit type/quality filters still honor the request.)
+  const qFloor = imageType ? minQuality : Math.max(minQuality, 0.82);
+  // Artworks must actually have an image, else they render as blank tiles.
+  const artHasImage = { $or: [
+    { image_display: { $nin: [null, ''] } },
+    { image_full: { $nin: [null, ''] } },
+    { image_thumb: { $nin: [null, ''] } },
+  ] };
 
   const artPerPage = source === 'artwork' ? limit : Math.max(1, Math.round(limit * 0.25));
   const illusPerPage = source === 'artwork' ? 0 : limit - artPerPage;
@@ -68,7 +78,7 @@ export async function mergedGalleryBrowse(
   let illusHasMore = false;
   if (illusPerPage > 0) {
     const f: Record<string, unknown> = {
-      ...tenant, gallery_quality: { $gte: minQuality }, book_visible: true,
+      ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
       extracted_url: { $ne: null }, image_url: { $ne: null },
     };
     if (maxPerBook < 100) f.book_rank = { $lte: maxPerBook };
@@ -88,7 +98,7 @@ export async function mergedGalleryBrowse(
   }
 
   // ---- artworks (allowDiskUse guards the sort on the 26k-row artwork set) ----
-  const af: Record<string, unknown> = { ...tenant, content_type: 'artwork', visible: true };
+  const af: Record<string, unknown> = { ...tenant, content_type: 'artwork', visible: true, ...artHasImage };
   if (imageType) af.resource_type = imageType;
   if (yearStart !== null || yearEnd !== null) {
     const y: Record<string, number> = {};
@@ -149,7 +159,7 @@ export async function mergedGalleryBrowse(
   if (illusPerPage > 0) {
     if (imageType || yearStart !== null || yearEnd !== null) {
       const cf: Record<string, unknown> = {
-        ...tenant, gallery_quality: { $gte: minQuality }, book_visible: true,
+        ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
         extracted_url: { $ne: null }, image_url: { $ne: null },
       };
       if (maxPerBook < 100) cf.book_rank = { $lte: maxPerBook };
