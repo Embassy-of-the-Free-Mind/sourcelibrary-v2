@@ -22,6 +22,10 @@ import {
   type FirstTranslationAttempt,
 } from '@/lib/first-translation/attempt-log';
 import {
+  summarizePriorEvidence,
+  type PriorEvidenceSummary,
+} from '@/lib/first-translation/prior-evidence';
+import {
   FIRST_FAMILY,
   DISPOSITION_TO_VERDICT,
   VERDICT_TO_DISPOSITION,
@@ -103,13 +107,30 @@ function PriorList({ priors }: { priors: NormalizedPrior[] }) {
   );
 }
 
-/** The grounded search trail (new model) or the legacy "verified via tools" line. */
+/** Render a source/tool token readably: a URL → its host; a `search_x` tool → "x". */
+function cleanSource(s: string): string {
+  if (/^https?:\/\//.test(s)) {
+    try { return new URL(s).hostname.replace(/^www\./, ''); } catch { return s; }
+  }
+  return s.replace(/^search_/, '').replace(/_/g, ' ');
+}
+
+/**
+ * The evidence footer, honest about how much verification actually backs the
+ * claim (principle #1). Three tiers, by what's on record:
+ *  1. a documented search trail (real queries) → show exactly what was searched;
+ *  2. an automated catalogue check (tools/sources but no retained query log) →
+ *     say so, and that the query log wasn't kept;
+ *  3. nothing but a conclusion → "preliminary, verification pending".
+ */
 function EvidenceFooter({
   attempt,
+  summary,
   legacy,
   showExternalLinks,
 }: {
   attempt: FirstTranslationAttempt | null;
+  summary: PriorEvidenceSummary | null;
   legacy?: EvidenceBook['translation_verification'];
   showExternalLinks: boolean;
 }) {
@@ -117,54 +138,100 @@ function EvidenceFooter({
     <>{' '}&middot;{' '}<a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>
   ) : null;
 
-  if (attempt) {
-    const sources = (attempt.sources_checked ?? []).filter(Boolean);
-    const queries = (attempt.queries ?? []).filter(Boolean);
+  const date = attempt?.date ?? legacy?.verified_at;
+  const queries = (attempt?.queries ?? []).filter(Boolean);
+
+  // TIER 1 — a real documented search (we kept the queries). Show it verbatim.
+  if (queries.length > 0) {
+    const sources = (summary?.searchedSources ?? attempt?.sources_checked ?? []).filter(Boolean).map(cleanSource);
+    const indep = summary?.independentAbsenceMethods ?? 0;
     return (
       <div className="text-stone-600 text-[10px] space-y-1">
         <p>
-          {sources.length ? `Searched ${sources.slice(0, 6).join(', ')}` : 'Searched library catalogs'}
-          {attempt.date ? ` · ${fmtDate(attempt.date)}` : ''}
+          {sources.length ? `Searched ${[...new Set(sources)].slice(0, 6).join(', ')}` : 'Searched library catalogs'}
+          {indep >= 2 ? ` · ${indep} independent checks` : ''}
+          {date ? ` · ${fmtDate(date)}` : ''}
           {methodology}
         </p>
-        {queries.length > 0 && (
-          <details className="group/q">
-            <summary className="cursor-pointer hover:text-stone-500 list-none [&::-webkit-details-marker]:hidden">
-              show {queries.length} search{queries.length === 1 ? '' : 'es'}
-            </summary>
-            <ul className="mt-1 pl-3 space-y-0.5">
-              {queries.slice(0, 12).map((q, i) => (
-                <li key={i} className="text-stone-500">“{q}”</li>
-              ))}
-            </ul>
-          </details>
-        )}
+        <details className="group/q">
+          <summary className="cursor-pointer hover:text-stone-500 list-none [&::-webkit-details-marker]:hidden">
+            show {queries.length} search{queries.length === 1 ? '' : 'es'}
+          </summary>
+          <ul className="mt-1 pl-3 space-y-0.5">
+            {queries.slice(0, 12).map((q, i) => (
+              <li key={i} className="text-stone-500">“{q}”</li>
+            ))}
+          </ul>
+        </details>
       </div>
     );
   }
 
-  if (legacy?.tools_called) {
+  // TIER 2 — an automated catalogue check ran (tools/sources recorded) but no
+  // query log was retained. Name the tools; don't imply a documented search.
+  const tools = [...new Set([
+    ...(summary?.searchedSources ?? []),
+    ...(attempt?.sources_checked ?? []),
+    ...((legacy?.tools_called ?? []).filter((t) => t !== 'make_determination')),
+  ].filter(Boolean).map(cleanSource))];
+  if (tools.length > 0) {
     return (
       <p className="text-stone-600 text-[10px]">
-        Verified {fmtDate(legacy.verified_at)} via{' '}
-        {legacy.tools_called
-          .filter((t) => t !== 'make_determination')
-          .map((t) => t.replace('search_', '').replace(/_/g, ' '))
-          .join(', ')}
+        Automated catalogue check{date ? ` · ${fmtDate(date)}` : ''} via {tools.slice(0, 6).join(', ')} — detailed
+        query log not retained.
         {methodology}
       </p>
     );
   }
-  return null;
+
+  // TIER 3 — a weak legacy determination: the catalogue cron checked Open
+  // Library / Google Books / Internet Archive and, finding nothing, asked the
+  // model's training knowledge. That IS evidence — just weak and not
+  // independently auditable. Represent it as such (don't imply "no search", and
+  // don't imply a documented one). The per-book trail wasn't retained, but the
+  // weak verdict is preserved in the attempt log so its accuracy can be measured.
+  return (
+    <p className="text-stone-600 text-[10px]">
+      Preliminary{date ? ` · ${fmtDate(date)}` : ''} — automated catalogue + model-knowledge check; not
+      independently verified.
+      {methodology}
+    </p>
+  );
 }
 
-function StrengthChip({ strength }: { strength?: string }) {
-  if (strength !== 'strong' && strength !== 'moderate') return null;
-  return (
-    <span className="inline-block text-[10px] px-1.5 py-0.5 rounded bg-stone-700/60 text-stone-400">
-      {strength} evidence
-    </span>
-  );
+/**
+ * At-a-glance confidence signal. `strong`/`moderate` come from a real
+ * adjudicator (cross-model / single documented search). `preliminary` marks the
+ * weak legacy/automated claims that carry no documented search trail — so a
+ * "moderate, single-pass" claim reads differently from a "strong, cross-model"
+ * one, and an unverified legacy claim doesn't borrow their authority.
+ */
+function StrengthChip({ strength, preliminary }: { strength?: string; preliminary?: boolean }) {
+  if (strength === 'strong' || strength === 'moderate') {
+    const title =
+      strength === 'strong'
+        ? 'Cross-checked across independent catalogues/models'
+        : 'Single documented search — not cross-model verified';
+    return (
+      <span
+        title={title}
+        className="inline-block whitespace-nowrap text-[10px] px-1.5 py-0.5 rounded bg-stone-700/60 text-stone-400"
+      >
+        {strength} evidence
+      </span>
+    );
+  }
+  if (preliminary) {
+    return (
+      <span
+        title="Weak evidence — automated catalogue + model-knowledge check, not independently verified"
+        className="inline-block whitespace-nowrap text-[10px] px-1.5 py-0.5 rounded bg-stone-700/40 text-stone-500"
+      >
+        preliminary
+      </span>
+    );
+  }
+  return null;
 }
 
 export default async function FirstTranslationEvidence({
@@ -188,18 +255,29 @@ export default async function FirstTranslationEvidence({
 
   if (!isFirst && !isExisting) return null;
 
-  // Only hit the DB for the grounded attempt when the graded model is present.
+  // Always read the accumulated evidence pile. Since the #2802 backfill lifted
+  // legacy disposition evidence into the attempt log (13k+ books), most claims —
+  // not just graded ones — now have a real, if weak, trail to show.
   let attempt: FirstTranslationAttempt | null = null;
-  if (ft) {
-    try {
-      const db = await getReadDb();
-      attempt = strongestAttempt(await getAttempts(db, book.id));
-    } catch {
-      attempt = null;
-    }
+  let summary: PriorEvidenceSummary | null = null;
+  try {
+    const db = await getReadDb();
+    const attempts = await getAttempts(db, book.id);
+    attempt = strongestAttempt(attempts);
+    summary = summarizePriorEvidence(attempts);
+  } catch {
+    attempt = null;
+    summary = null;
   }
 
   const priors = normalizePriors(attempt, legacy?.translations_found);
+
+  // Confidence signal. Only a real adjudicator strength (strong/moderate) earns
+  // the evidence chip; everything else — weak legacy/automated, or nothing on
+  // record — reads as "preliminary" so it doesn't borrow a verified claim's
+  // authority.
+  const effectiveStrength = ft?.evidence_strength ?? attempt?.evidence_strength;
+  const isPreliminary = effectiveStrength !== 'strong' && effectiveStrength !== 'moderate';
 
   // "Existing translations" only earns a badge if we actually have priors to show.
   if (isExisting && priors.length === 0) return null;
@@ -217,7 +295,7 @@ export default async function FirstTranslationEvidence({
           <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
             <p className="text-stone-300">This text has already been translated into English:</p>
             <PriorList priors={priors} />
-            <EvidenceFooter attempt={attempt} legacy={legacy} showExternalLinks={showExternalLinks} />
+            <EvidenceFooter attempt={attempt} summary={summary} legacy={legacy} showExternalLinks={showExternalLinks} />
           </div>
         </details>
       </div>
@@ -233,7 +311,7 @@ export default async function FirstTranslationEvidence({
         <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
           <div className="flex items-start justify-between gap-2">
             <p className="text-stone-300">{firstTranslationDescription(dispForLabel)}</p>
-            <StrengthChip strength={ft?.evidence_strength ?? (attempt?.evidence_strength)} />
+            <StrengthChip strength={effectiveStrength} preliminary={isPreliminary} />
           </div>
           {legacy?.reasoning && <p className="text-stone-400">{legacy.reasoning}</p>}
           {priors.length > 0 && (
@@ -242,7 +320,7 @@ export default async function FirstTranslationEvidence({
               <PriorList priors={priors} />
             </div>
           )}
-          <EvidenceFooter attempt={attempt} legacy={legacy} showExternalLinks={showExternalLinks} />
+          <EvidenceFooter attempt={attempt} summary={summary} legacy={legacy} showExternalLinks={showExternalLinks} />
         </div>
       </details>
     </div>
