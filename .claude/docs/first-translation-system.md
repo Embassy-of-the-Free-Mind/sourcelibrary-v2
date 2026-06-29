@@ -8,7 +8,36 @@
 
 > **Refreshed 2026-06-19** with the First Principle (below), §0 (re-pinned numbers + skeptical findings), §14 (eval & validation), §15 (writer sprawl), §16 (architecture cluster), §17 (process invariant). The §1/§9 numbers are the 2026-06-01 reconciliation and have drifted — **§0 supersedes them.**
 
-> **⚠️ Successor system in flight ([#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564), PR #2573 — not yet merged).** This doc describes the *2026-06-01* engines (8-tool agent + 3-catalog cron + the boolean flag). The #2564 rebuild replaces the loose `disposition` with a **graded verdict model** (`src/lib/first-translation/`: `types.ts`, `derive.ts`, `attempt-log.ts`) where `is_first_translation` becomes a *single-writer derived read* of the verdict, plus a cheap grounded **Gemini enumeration instrument** (`scripts/eval/ft-gemini-adjudicate.mjs`) and an append-only **`first_translation_attempts`** evidence log. Until #2573 merges, treat §2–§8 below as the live system and the rebuild as the target. The instrument→sinks write contract (Mongo verdict + attempts log + Supabase `translation_catalogs`) is specced in **[ft-enumeration-three-sink-spec.md](./ft-enumeration-three-sink-spec.md)**; the human review/audit layer in **[ft-gold-annotator-brief.md](./ft-gold-annotator-brief.md)**; the write-up in **[ft-first-translation-paper.md](./ft-first-translation-paper.md)**.
+> **⚠️ Successor system in flight ([#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564), PR #2573 — not yet merged).** This doc describes the *2026-06-01* engines (8-tool agent + 3-catalog cron + the boolean flag). The #2564 rebuild replaces the loose `disposition` with a **graded verdict model** (`src/lib/first-translation/`: `types.ts`, `derive.ts`, `attempt-log.ts`) where `is_first_translation` becomes a *single-writer derived read* of the verdict, plus a cheap grounded **Gemini enumeration instrument** (`scripts/eval/ft-gemini-adjudicate.mjs`) and an append-only **`first_translation_attempts`** evidence log. Until #2573 merges, treat §2–§8 below as the live system and the rebuild as the target. The instrument→sinks write contract (Mongo verdict + attempts log + Supabase `translation_catalogs`) is specced in **[ft-enumeration-three-sink-spec.md](./ft-enumeration-three-sink-spec.md)**; the human review/audit layer in **[ft-gold-annotator-brief.md](./ft-gold-annotator-brief.md)**; the write-up in **[ft-first-translation-paper.md](./ft-first-translation-paper.md)**. **(See the 2026-06-29 update below — the rebuild's data model AND an evidence-first loop have since MERGED; the single-writer/cascade/headline-switch have NOT. Read that before trusting §2–§8 as current.)**
+
+---
+
+## Update 2026-06-29 — evidence-first loop SHIPPED; what's live vs still aspirational
+
+The #2564 rebuild's graded-verdict **data model is merged and an evidence-first loop now runs** — but the single-writer reconcile, the tier cascade, and the public-count switch are **still not wired**. Be precise about live-vs-target so you don't trust the wrong thing (the rest of this doc still describes the *designed* system in places, not the *wired* one).
+
+**Now LIVE (merged):**
+- The graded-verdict model (`src/lib/first-translation/`: `types.ts`, `derive.ts`, `attempt-log.ts`, `prior-evidence.ts`, `ft-prior-guard.ts`) — real and used.
+- An evidence-first loop in four PRs — *keep → record → read → derive*:
+  - **#2865** — the nightly grounded producers (`ft-ground-remediation`, `audit-translation-claims`, `discover-translations-estimate`) now **append** their search to `first_translation_attempts` instead of discarding it (the ledger was a frozen one-time backfill before).
+  - **#2866** — the registry matcher (`ft-catalog-match.mjs --apply`) **records** guard-passing matches against our own `translation_catalogs` as found-prior attempts.
+  - **#2868** — producers **read** the ledger before spending (skip a paid search when a trustworthy prior is already on record).
+  - **#2871** — `derive-ft-verdict-from-attempts.ts` turns the accumulated ledger **into** a graded verdict (verdict = f(evidence)), hardened against two real legacy-backfill failure modes (studies miscounted as priors → false demotes; `not_applicable` collapsed into absence → false promotes).
+
+**Still NOT wired (target, not reality — do not trust as done):**
+- **The "single-writer reconcile" is MANUAL.** `reconcile-first-translation-flag.ts` is on no cron. The live writers of `is_first_translation` are still Phase 1.6 enrichment + the nightly apply-crons (`apply-audit-verdicts`, `apply-discovery-results`). The writer sprawl (§15) #2564 set out to kill is still live.
+- **The tier cascade (`resolve.ts`) is unwired** — no production caller. `derive-ft-verdict-from-attempts.ts` is the closest live thing, run manually, **verdict-only** (writes `book.first_translation`, never the boolean flag; gated on sign-off).
+- **`isPublicFirst` is defined but unused** — the public count is still raw `is_first_translation`.
+- **No measured accuracy yet.** The eval is still the spine gap (§14); a non-circular harness is tracked in **#2876**.
+
+**The honest three numbers (2026-06-29):**
+- **~5,818** — currently badged public (`is_first_translation ∧ visible ∧ pages_translated>0`). Mostly **weak legacy** evidence.
+- **~6,283** — what the headline becomes if the ledger-derived verdicts are applied + reconciled (net **+466** evidence-backed firsts the legacy pipeline missed, **−1** over-claim).
+- **~3,033** — the **defensible** count (`isPublicFirst`): badges resting on non-weak (actually verified) evidence. The gap from 6,283 is *unverified*, not necessarily wrong (a big slice is the non-Western catalog-blind pool).
+
+**Gemini proposes, Claude disposes.** The cheap nightly engine is Gemini flash-lite (Google-Search-grounded; ~63% fabrication on "prior exists" → a proposer, untrustworthy alone). The trustworthy check is an **independent Claude Sonnet subagent** (agentic WebSearch/WebFetch, ~57k tokens/book, adversarial refute-framing) — a *different model family*, so a prior one fabricates the other catches. Never settle a public flip on Gemini alone. A 7-book Tier-2 test (2026-06-29) found only **~2/7** "moderate" Gemini-only promote candidates survive as clean firsts — the cheap grade over-counts ~3×.
+
+Forward design + measurement: **#2876** (eval harness), **#2567** (cluster).
 
 ---
 
