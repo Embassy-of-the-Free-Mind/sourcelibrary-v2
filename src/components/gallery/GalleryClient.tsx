@@ -670,13 +670,9 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                   : 'Plates & standalone artworks'}
               </p>
             </div>
-            {/* Masonry: stable round-robin flex columns (appending on load-more
-                never reflows existing tiles), with a bottom fade while more remain. */}
-            <div
-              style={hasMore && !loadingMore ? { maskImage: 'linear-gradient(to bottom, #000 92%, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, #000 92%, transparent)' } : undefined}
-            >
-              <GalleryMasonry items={allItems} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
-            </div>
+            {/* Uneven masonry cropped by a fixed-height container + fade mask (handled inside). */}
+            <GalleryMasonry items={allItems} hasMore={hasMore} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
+            <div className="mt-2" />
 
             {/* Load More */}
             {hasMore && (
@@ -704,52 +700,74 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   );
 }
 
-// Balanced masonry: place each tile in the currently-shortest column, using its
-// aspect ratio as a height estimate. This both (a) balances column heights so
-// there's no ragged-gap bottom, and (b) stays stable on load-more — greedy
-// placement is order-deterministic, so appending items never moves existing
-// tiles (no reflow/jumping). 5 columns on desktop, 3 below.
-function GalleryMasonry({ items, tenantPrefix, collectionScope }: { items: GalleryItem[]; tenantPrefix: string; collectionScope?: string }) {
+// Masonry with intentionally UNEVEN columns, cropped by a fixed-height container
+// + fade mask (NOT balanced). Tiles flow naturally round-robin; the container is
+// capped to the shortest column's height so every column fills it (no whitespace
+// gaps) while taller columns overflow past the bottom, where the mask fades the
+// hard crop line. The cap grows with each load-more. 5 columns desktop, 3 below.
+const MASONRY_GAP = 16;
+function GalleryMasonry({ items, hasMore, tenantPrefix, collectionScope }: { items: GalleryItem[]; hasMore: boolean; tenantPrefix: string; collectionScope?: string }) {
   const [cols, setCols] = useState(5);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const update = () => setCols(window.innerWidth >= 1024 ? 5 : 3);
+    const update = () => {
+      setCols(window.innerWidth >= 1024 ? 5 : 3);
+      if (ref.current) setContainerWidth(ref.current.offsetWidth);
+    };
     update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
 
+  // Natural round-robin — deliberately NOT height-balanced.
   const columns = useMemo(() => {
     const colArr: GalleryItem[][] = Array.from({ length: cols }, () => []);
-    const heights = new Array(cols).fill(0);
-    for (const item of items) {
-      // Tile height ÷ width. Prefer the exact aspect from the server; fall back
-      // to the crop bbox, then a slight-portrait default.
-      const ratio = item.aspect && item.aspect > 0
-        ? 1 / item.aspect
-        : (item.bbox && item.bbox.width > 0 ? Math.min(2.4, Math.max(0.5, item.bbox.height / item.bbox.width)) : 1.25);
-      let s = 0;
-      for (let i = 1; i < cols; i++) if (heights[i] < heights[s]) s = i;
-      colArr[s].push(item);
-      heights[s] += ratio + 0.06; // +gap so count stays roughly even too
-    }
+    items.forEach((item, i) => colArr[i % cols].push(item));
     return colArr;
   }, [items, cols]);
 
+  // Crop height = shortest column's pixel height (from aspect ratios — no DOM
+  // measurement of tiles, so no flashing). Only crop while more pages remain.
+  const cropHeight = useMemo(() => {
+    if (!hasMore || !containerWidth || cols < 1) return undefined;
+    const colWidth = (containerWidth - (cols - 1) * MASONRY_GAP) / cols;
+    if (colWidth <= 0) return undefined;
+    let minH = Infinity;
+    for (const col of columns) {
+      if (col.length === 0) continue;
+      let h = 0;
+      for (const it of col) { const a = it.aspect && it.aspect > 0 ? it.aspect : 0.75; h += colWidth / a + MASONRY_GAP; }
+      if (h < minH) minH = h;
+    }
+    return Number.isFinite(minH) ? Math.round(minH - MASONRY_GAP) : undefined;
+  }, [columns, containerWidth, cols, hasMore]);
+
   return (
-    <div className="flex gap-3 sm:gap-4 items-start">
-      {columns.map((col, ci) => (
-        <div key={ci} className="flex-1 min-w-0 flex flex-col gap-3 sm:gap-4">
-          {col.map((item, idx) => (
-            <GalleryCard
-              key={`${item.pageId}-${item.detectionIndex}`}
-              item={item}
-              priority={ci < cols && idx < 2}
-              tenantPrefix={tenantPrefix}
-              collectionScope={collectionScope}
-            />
-          ))}
-        </div>
-      ))}
+    <div
+      ref={ref}
+      style={cropHeight ? {
+        maxHeight: cropHeight,
+        overflow: 'hidden',
+        maskImage: 'linear-gradient(to bottom, #000 70%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, #000 70%, transparent 100%)',
+      } : undefined}
+    >
+      <div className="flex gap-3 sm:gap-4 items-start">
+        {columns.map((col, ci) => (
+          <div key={ci} className="flex-1 min-w-0 flex flex-col gap-3 sm:gap-4">
+            {col.map((item, idx) => (
+              <GalleryCard
+                key={`${item.pageId}-${item.detectionIndex}`}
+                item={item}
+                priority={ci < cols && idx < 2}
+                tenantPrefix={tenantPrefix}
+                collectionScope={collectionScope}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
