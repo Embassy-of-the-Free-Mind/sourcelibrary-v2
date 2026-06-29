@@ -23,7 +23,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
-import { appendAttempt, makeAttemptId, domainsFromEvidence } from '../lib/ft-attempt-log.mjs';
+import { appendAttempt, makeAttemptId, domainsFromEvidence, findTrustworthyPrior } from '../lib/ft-attempt-log.mjs';
 
 const MODEL = 'gemini-3.1-flash-lite';
 const CONCURRENCY = 3;
@@ -150,11 +150,21 @@ async function main() {
   console.log(`Pulled ${sample.length} books\n`);
 
   const found = [], missed = [], errors = [];
+  const reused = [];
   let totalIn = 0, totalOut = 0;
 
   await pool(sample, async (book) => {
     const t = (book.display_title || book.title || '').slice(0, 55);
     try {
+      // Read before you spend: if a trustworthy prior is already on record
+      // (e.g. a guard-passing match in our own registry), don't pay for a
+      // fresh grounded search — we already know a prior exists.
+      const known = await findTrustworthyPrior(db, book.id);
+      if (known) {
+        reused.push({ book, prior: known });
+        console.log(`  REUSE       ${t} — prior already on record (${known._src || known.method})`);
+        return;
+      }
       const r = await discoverOne(book);
       if (r.error) { errors.push({ book, error: r.error }); console.log(`  PARSE-FAIL  ${t}`); return; }
       totalIn += r.tokens?.input || 0;
@@ -215,6 +225,7 @@ async function main() {
 
   console.log('\n=== Estimate ===');
   console.log(`  Sample size:                ${sample.length}`);
+  console.log(`  Reused (prior on record):   ${reused.length} — search skipped, no spend`);
   console.log(`  Translation found (missed): ${found.length} (${(100 * found.length / sample.length).toFixed(0)}%)`);
   console.log(`  No translation found:       ${missed.length} (${(100 * missed.length / sample.length).toFixed(0)}%)`);
   console.log(`  Errors / parse fails:       ${errors.length}`);

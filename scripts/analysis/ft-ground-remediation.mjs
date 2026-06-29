@@ -40,7 +40,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
-import { appendAttempt, makeAttemptId } from '../lib/ft-attempt-log.mjs';
+import { appendAttempt, makeAttemptId, findTrustworthyPrior } from '../lib/ft-attempt-log.mjs';
 
 const MODEL = 'gemini-3.1-flash-lite';
 const CONCURRENCY = 3;
@@ -323,28 +323,45 @@ async function main() {
   if (books.length === 0) { await client.close(); return; }
 
   const tally = { NOT_FIRST: 0, FIRST_LIKELY: 0, NEEDS_HUMAN: 0 };
-  let processed = 0, errors = 0;
+  let processed = 0, errors = 0, reusedCount = 0;
 
   for (let i = 0; i < books.length; i += CONCURRENCY) {
     const batch = books.slice(i, i + CONCURRENCY);
-    const settled = await Promise.allSettled(batch.map(async book => ({ book, result: await groundBook(book) })));
+    const settled = await Promise.allSettled(batch.map(async book => {
+      // Read before you spend: if a trustworthy prior is already on record,
+      // skip the 3-catalog search + Gemini synthesis and reuse the evidence.
+      const known = await findTrustworthyPrior(db, book.id);
+      if (known) {
+        return { book, result: {
+          reused: true,
+          has_english_translation: true,
+          translations: known.priors || [],
+          evidence_strength: known.evidence_strength || null,
+          confidence: 'high',
+          reasoning: `Reused prior evidence on record (${known._src || known.method}, attempt ${known.attempt_id}).`,
+          raw: {},
+        } };
+      }
+      return { book, result: await groundBook(book) };
+    }));
     for (const s of settled) {
       processed++;
       if (s.status === 'rejected') { errors++; console.log(`  [${processed}/${books.length}] FAIL ${s.reason}`); continue; }
       const { book, result } = s.value;
+      if (result.reused) reusedCount++;
       const b = bucket(result);
       tally[b.verdict]++;
       const short = (book.display_title || book.title || '').substring(0, 50);
       const t0 = (result.translations || [])[0];
       const ev = t0 ? ` -> "${(t0.english_title || '').substring(0, 45)}" (${t0.pub_year || '?'}, ${t0.translator || '?'})` : '';
-      console.log(`  [${processed}/${books.length}] ${b.verdict.padEnd(12)} ${short}${ev}`);
+      console.log(`  [${processed}/${books.length}] ${result.reused ? 'REUSE ' : ''}${b.verdict.padEnd(12)} ${short}${ev}`);
       await proposals.updateOne(
         { book_id: book.id },
         { $set: {
             book_id: book.id, title: book.display_title || book.title, author: book.author || '', language: book.language,
             old_flag: book.is_first_translation ?? null, old_disposition: book.translation_verification?.disposition ?? null,
             verdict: b.verdict, proposed_flag: b.proposed_flag, reason_code: b.why,
-            grounded: true, source: 'catalog_search',
+            grounded: !result.reused, source: result.reused ? 'ledger_reuse' : 'catalog_search',
             has_english_translation: result.has_english_translation ?? null,
             translations: result.translations || [], evidence_strength: result.evidence_strength || null,
             confidence: result.confidence || null, reasoning: result.reasoning || null,
@@ -357,6 +374,8 @@ async function main() {
       // Keep the search. A NOT_FIRST is a catalog-grounded prior sighting;
       // a FIRST_LIKELY is a documented absence across 3 catalogs. Either way
       // the durable evidence (sources, query, priors found) outlives this run.
+      // Skip on reuse — the prior is already on record; don't duplicate it.
+      if (result.reused) continue;
       const isoDate = new Date().toISOString();
       const found = b.verdict === 'NOT_FIRST';
       await appendAttempt(db, {
@@ -384,7 +403,7 @@ async function main() {
     if (i + CONCURRENCY < books.length) await new Promise(r => setTimeout(r, BATCH_DELAY_MS));
   }
 
-  console.log(`\n=== done: ${processed} grounded, ${errors} errors ===`);
+  console.log(`\n=== done: ${processed} processed (${reusedCount} reused from ledger, no spend), ${errors} errors ===`);
   console.log('verdicts:', JSON.stringify(tally));
   console.log('NOTE: proposals only. No is_first_translation flag written. NOT_FIRST(catalog-grounded) is safe to confirm false after review; FIRST_LIKELY needs human sign-off before any true.');
   await client.close();

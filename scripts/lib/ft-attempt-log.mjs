@@ -41,6 +41,44 @@ export function domainsFromEvidence(evidence) {
 }
 
 /**
+ * Read before you spend. Return an existing attempt that already found a
+ * TRUSTWORTHY prior English translation for this book, or null.
+ *
+ * The bar is deliberately high (precision over recall) because the consequence
+ * is skipping a paid re-search: a prior counts only when it carries a concrete,
+ * resolvable reference — a registry id (`found_refs`, e.g. our own
+ * translation_catalogs match) or a `source_url` on the prior — AND its
+ * evidence_strength is not 'weak'. A grounded model "found" with no resolvable
+ * sighting does NOT qualify (that is exactly the ~63%-fabrication risk), so it
+ * never short-circuits a search. This mirrors the First Principle: only a
+ * confirmed sighting is trusted enough to stop looking.
+ *
+ * @returns {Promise<object|null>} the strongest qualifying attempt, or null.
+ */
+export async function findTrustworthyPrior(db, bookId) {
+  const found = await db
+    .collection(ATTEMPTS_COLLECTION)
+    .find({ book_id: bookId, result: 'found' })
+    .toArray();
+  const qualifying = found.filter((a) => {
+    if (a.evidence_strength === 'weak') return false;
+    const hasRef = Array.isArray(a.found_refs) && a.found_refs.length > 0;
+    const hasUrl = Array.isArray(a.priors) && a.priors.some((p) => p && p.source_url);
+    return hasRef || hasUrl;
+  });
+  if (qualifying.length === 0) return null;
+  // Prefer the strongest: a registry/structured ref over a bare URL, then strength.
+  const rank = { strong: 2, moderate: 1, weak: 0 };
+  qualifying.sort((a, b) => {
+    const aRef = Array.isArray(a.found_refs) && a.found_refs.length > 0 ? 1 : 0;
+    const bRef = Array.isArray(b.found_refs) && b.found_refs.length > 0 ? 1 : 0;
+    if (aRef !== bRef) return bRef - aRef;
+    return (rank[b.evidence_strength] ?? 0) - (rank[a.evidence_strength] ?? 0);
+  });
+  return qualifying[0];
+}
+
+/**
  * Append one attempt. Idempotent on attempt_id (upsert + $setOnInsert), so a
  * cron retry won't duplicate. Never throws into the caller.
  * @returns {Promise<boolean>} true if a new attempt was written.
