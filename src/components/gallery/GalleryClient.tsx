@@ -707,11 +707,11 @@ function GalleryMasonry({ items, tenantPrefix, collectionScope }: { items: Galle
     const colArr: GalleryItem[][] = Array.from({ length: cols }, () => []);
     const heights = new Array(cols).fill(0);
     for (const item of items) {
-      // Estimated tile height ÷ width. Illustrations: from the crop bbox.
-      // Artworks / unknown: assume slightly portrait.
-      const ratio = item.bbox && item.bbox.width > 0
-        ? Math.min(2.4, Math.max(0.5, item.bbox.height / item.bbox.width))
-        : 1.25;
+      // Tile height ÷ width. Prefer the exact aspect from the server; fall back
+      // to the crop bbox, then a slight-portrait default.
+      const ratio = item.aspect && item.aspect > 0
+        ? 1 / item.aspect
+        : (item.bbox && item.bbox.width > 0 ? Math.min(2.4, Math.max(0.5, item.bbox.height / item.bbox.width)) : 1.25);
       let s = 0;
       for (let i = 1; i < cols; i++) if (heights[i] < heights[s]) s = i;
       colArr[s].push(item);
@@ -742,6 +742,8 @@ function GalleryMasonry({ items, tenantPrefix, collectionScope }: { items: Galle
 function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScope }: { item: GalleryItem; priority?: boolean; tenantPrefix?: string; collectionScope?: string }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const reservedAspect = item.aspect && item.aspect > 0 ? item.aspect : 0.75;
 
   // Standalone artworks have no bbox crop and link to their /book detail page,
   // not the gallery image viewer.
@@ -761,19 +763,21 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
     : `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
 
   return (
-    <div className="relative group rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 hover:shadow-md transition-all animate-fade-in-up">
-      <Link href={imageHref} className="block relative bg-stone-100">
+    <div className="relative group rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 hover:shadow-md transition-all">
+      {/* Reserve the exact tile box from the aspect ratio so nothing shifts as
+          the image decodes (no jumping); the image then fades in smoothly. */}
+      <Link href={imageHref} className="block relative bg-stone-100" style={{ aspectRatio: String(reservedAspect) }}>
         {!imageError ? (
-          // Plain img for true masonry (natural aspect, no crop). Also dodges
-          // next/image host allow-listing for external artwork image hosts.
+          // Plain img (dodges next/image host allow-listing for external artwork hosts).
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={displayUrl}
             alt={item.description}
             loading={priority ? 'eager' : 'lazy'}
             decoding="async"
-            className="w-full h-auto block group-hover:scale-105 transition-transform duration-300"
+            className={`absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={(e) => {
+              setLoaded(true);
               // Detect corrupt Blob thumbnails (real ones are 300px+)
               if (!useCropFallback && blobUrl && cropUrl) {
                 const img = e.currentTarget;
@@ -786,7 +790,7 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
             }}
           />
         ) : (
-          <div className="aspect-square flex items-center justify-center text-stone-300">
+          <div className="absolute inset-0 flex items-center justify-center text-stone-300">
             <ImageIcon className="w-8 h-8" />
           </div>
         )}

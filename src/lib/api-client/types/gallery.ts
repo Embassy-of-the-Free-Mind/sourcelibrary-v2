@@ -49,6 +49,9 @@ export interface GalleryItem {
   firstSyncedAt?: string;
   /** Which kind of visual this is. Absent ⇒ 'illustration'. */
   source?: GallerySource;
+  /** Width÷height of the displayed image, for reserving tile space (no layout
+   *  shift on load) and balancing masonry columns. */
+  aspect?: number;
   /** Where the tile links to. Illustrations omit this (built from pageId-detectionIndex);
    *  artworks set it to their /book/<slug> detail page. */
   link?: string;

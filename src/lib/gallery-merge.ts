@@ -23,12 +23,18 @@ export interface MergedBrowseOpts {
   visitorId?: string | null;
 }
 
+const clampAspect = (r: number) => Math.min(3, Math.max(0.33, r));
+
 // Standalone artworks store images in their own fields — map one to a GalleryItem tile.
 export function artworkToGalleryItem(a: any) {
   const image = a.image_display || a.image_full || a.image_thumb || a.thumbnail_blob || a.thumbnail || '';
   const thumb = a.image_thumb || a.thumbnail_blob || a.thumbnail || a.image_display || image;
   const year = typeof a.year === 'number' ? a.year : (parseInt(a.published, 10) || undefined);
+  const w = a.full_width || a.commons_width;
+  const h = a.full_height || a.commons_height;
+  const aspect = w && h ? clampAspect(w / h) : 0.78;
   return {
+    aspect,
     pageId: `artwork-${a.id}`,
     bookId: a.id,
     pageNumber: 0,
@@ -108,7 +114,7 @@ export async function mergedGalleryBrowse(
   }
   const artDocs = await db.collection('books')
     .find(af, {
-      projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 },
+      projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 },
       allowDiskUse: true,
     })
     .sort({ year: 1, title: 1 })
@@ -116,24 +122,32 @@ export async function mergedGalleryBrowse(
   const artHasMore = artDocs.length > artPerPage;
   const arts = artDocs.slice(0, artPerPage).map(artworkToGalleryItem);
 
-  // ---- illustration likes ----
+  // ---- illustration likes + page dims (for exact aspect) ----
   const likesMap: Record<string, { count: number; liked: boolean }> = {};
+  const dimMap = new Map<string, { image_width?: number; image_height?: number }>();
   if (illusDocs.length > 0) {
     const ids = illusDocs.map(d => `${d.page_id}-${d.detection_index}`);
-    try {
-      const likeDocs = await db.collection('likes').aggregate([
+    const pageIds = illusDocs.map(d => d.page_id).filter(Boolean);
+    const [likeDocs, dimDocs] = await Promise.all([
+      db.collection('likes').aggregate([
         { $match: { target_type: 'image', target_id: { $in: ids } } },
         { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
-      ]).toArray();
-      for (const ld of likeDocs) likesMap[ld._id] = { count: ld.count, liked: visitorId ? ld.visitors.includes(visitorId) : false };
-    } catch { /* non-critical */ }
+      ]).toArray().catch(() => []),
+      db.collection('pages').find({ id: { $in: pageIds } }, { projection: { id: 1, image_width: 1, image_height: 1 } }).toArray().catch(() => []),
+    ]);
+    for (const ld of likeDocs) likesMap[ld._id] = { count: ld.count, liked: visitorId ? ld.visitors.includes(visitorId) : false };
+    for (const p of dimDocs) dimMap.set(p.id, p);
   }
   const illus = illusDocs.map(d => {
     const key = `${d.page_id}-${d.detection_index}`;
+    const b = d.bbox; const pd = dimMap.get(d.page_id);
+    const aspect = b && b.width > 0 && b.height > 0 && pd?.image_width && pd?.image_height
+      ? clampAspect((b.width * pd.image_width) / (b.height * pd.image_height))
+      : (b && b.width > 0 && b.height > 0 ? clampAspect((b.width / b.height) * 0.72) : 0.72);
     return {
       pageId: d.page_id, bookId: d.book_id, pageNumber: d.page_number, detectionIndex: d.detection_index,
       imageUrl: d.image_url, bookTitle: d.book_title, author: d.book_author, year: d.book_year,
-      description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation,
+      description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation, aspect,
       extractedUrl: d.extracted_url, thumbnailUrl: d.thumbnail_url, galleryQuality: d.gallery_quality,
       museumDescription: d.museum_description, metadata: d.metadata, source: 'illustration' as const,
       likeCount: likesMap[key]?.count ?? 0, likedByVisitor: likesMap[key]?.liked ?? false,

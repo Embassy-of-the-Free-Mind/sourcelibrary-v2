@@ -452,6 +452,7 @@ export async function GET(request: NextRequest) {
         extractedUrl: doc.extracted_url,
         thumbnailUrl: doc.thumbnail_url,
         galleryQuality: doc.gallery_quality,
+        aspect: doc.bbox && doc.bbox.width > 0 && doc.bbox.height > 0 ? Math.min(3, Math.max(0.33, (doc.bbox.width / doc.bbox.height) * 0.72)) : 0.72,
         confidence: doc.confidence,
         museumDescription: doc.museum_description,
         metadata: doc.metadata,
@@ -475,12 +476,13 @@ export async function GET(request: NextRequest) {
         const esc = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const rx = { $regex: esc, $options: 'i' }; // case-insensitive phrase match on titles
         const imgPresent = { $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] };
-        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 } };
+        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 } };
+        const bboxAspect = (b: any) => b && b.width > 0 && b.height > 0 ? Math.min(3, Math.max(0.33, (b.width / b.height) * 0.72)) : 0.72; // eslint-disable-line @typescript-eslint/no-explicit-any
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mapPlate = (d: any) => ({
           pageId: d.page_id, bookId: d.book_id, pageNumber: d.page_number, detectionIndex: d.detection_index,
           imageUrl: d.image_url, bookTitle: d.book_title, author: d.book_author, year: d.book_year,
-          description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation,
+          description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation, aspect: bboxAspect(d.bbox),
           extractedUrl: d.extracted_url, thumbnailUrl: d.thumbnail_url, galleryQuality: d.gallery_quality,
           source: 'illustration', likeCount: 0, likedByVisitor: false,
         });
