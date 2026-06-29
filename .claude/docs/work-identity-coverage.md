@@ -5,6 +5,8 @@ translation?"** — reliably, by query, instead of guessing. Umbrella: issue #23
 (work-level dedup / work identity). Sibling system: the **author** thesaurus
 (`.claude/docs/author-identity-system.md`) — this is the **work** layer.
 
+> **Classifying a confusing record? Start with the [work-identity casebook](./work-identity-casebook.md)** — worked examples of every hard pattern (original / period-translation / modern-translation / container / volume / recension / commentary / miscellany / artwork), each with the correct role + badge call. The Iamblichus *De mysteriis* cluster is the flagship (one work, five hard patterns at once).
+
 ## The mistake this exists to prevent (2026-06-17)
 `books.text_role = 'modern-translation'` does **NOT** mean we lack the original.
 The original almost always sits in the catalog as a **separate, unlinked book**.
