@@ -9,10 +9,13 @@
  *   npx tsx scripts/catalog-coverage/archive-acquired.ts --batch 60
  */
 import { MongoClient } from 'mongodb';
-import { execSync } from 'child_process';
+import { execFile } from 'child_process';
+import { promisify } from 'util';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
 import { upgradeToFullRes, rateLimitedFetch } from '../lib/iiif-utils.mjs';
+const execFileP = promisify(execFile);
+const CONCURRENCY = parseInt(process.argv[process.argv.indexOf('--concurrency') + 1] || '6');
 
 const BATCH = parseInt(process.argv[process.argv.indexOf('--batch') + 1] || '60');
 const log = (...a: any[]) => console.log(new Date().toISOString().slice(11, 19), ...a);
@@ -44,13 +47,13 @@ async function main() {
 
   const todo = await queue.find({ status: 'acquired', book_id: { $exists: true }, archived: { $ne: true } }).limit(BATCH).toArray();
   let ok = 0, partial = 0;
-  for (const w of todo) {
+  async function processBook(w: any) {
     const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1 } });
-    if (!b) { await queue.updateOne({ sn: w.sn }, { $set: { archived: true, archive_note: 'no-book' } }); continue; }
+    if (!b) { await queue.updateOne({ sn: w.sn }, { $set: { archived: true, archive_note: 'no-book' } }); return; }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (have0 < (b.pages_count || 0) * 0.99) {
       if (w.source === 'erara') { await archiveIiif(w.book_id); }
-      else { try { execSync(`node scripts/maintenance/archive-ia-bulk.mjs --book-id=${w.book_id}`, { stdio: 'ignore', timeout: 300000 }); } catch {} }
+      else { try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (r2 >= (b.pages_count || 0) * 0.99 && r2 > 0) {
@@ -58,6 +61,9 @@ async function main() {
       await queue.updateOne({ sn: w.sn }, { $set: { archived: true } });
       ok++;
     } else { await queue.updateOne({ sn: w.sn }, { $set: { archived: true, archive_note: `partial:${r2}/${b.pages_count}` } }); partial++; }
+  }
+  for (let i = 0; i < todo.length; i += CONCURRENCY) {
+    await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w).catch(() => {})));
   }
   const remaining = await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
   log(`archive-acquired: complete ${ok}, partial ${partial} | un-archived acquired remaining ${remaining}`);
