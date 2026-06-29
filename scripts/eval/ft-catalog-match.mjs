@@ -2,7 +2,8 @@
 /**
  * Stage B / Tier-0 — First-Translation catalog-match reuse  (#2780)
  *
- * REPORT-ONLY. FREE. No LLM/API calls — pure DB matching.
+ * FREE. No LLM/API calls — pure DB matching. Report by default; `--apply` also
+ * records guard-passing matches as durable evidence in the attempt log.
  *
  * We badge ~5,800 books "First Translation" but hold a 24K-row
  * `translation_catalogs` collection (Mongo, db `bookstore`) of KNOWN published
@@ -13,10 +14,20 @@
  * The history's repeated lesson is "matching/reconcile failure, not a seeding
  * gap" — so this is a matching pass over data we already hold.
  *
- * IMPORTANT — this script NEVER writes a verdict or flips a flag. It emits a
- * report (JSON + Markdown) of demote *candidates* that queue for Derek's
- * consolidated sign-off. False demotes are the #1 historical failure (the
- * "Arithmologia" incident), so matching is conservative and guarded.
+ * IMPORTANT — this script NEVER writes a verdict or flips a flag, with or
+ * without --apply. It emits a report (JSON + Markdown) of demote *candidates*
+ * that queue for Derek's consolidated sign-off. False demotes are the #1
+ * historical failure (the "Arithmologia" incident), so matching is conservative
+ * and guarded.
+ *
+ * --apply (evidence only, still no flag change): a guard-passing match means we
+ * already hold a prior English translation of this work in our own registry —
+ * that is durable, approach-agnostic evidence. Instead of letting it live only
+ * in a throwaway report, --apply appends one `found` attempt per demote
+ * candidate to `first_translation_attempts` (the same ledger the live producers
+ * feed, #2865), keyed on the catalog row so re-runs are idempotent. A future
+ * derive step re-vets it through src/lib/ft-prior-guard.ts before any demote, so
+ * recording it here cannot itself flip a badge.
  *
  * MATCHING
  *   A badged book matches a catalog row when BOTH signals hold:
@@ -40,21 +51,25 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/eval/ft-catalog-match.mjs
+ *   node scripts/eval/ft-catalog-match.mjs            # report only
+ *   node scripts/eval/ft-catalog-match.mjs --apply    # report + record evidence
  *
  * Output:
  *   scripts/output/ft-catalog-match-<date>.json
  *   scripts/output/ft-catalog-match-<date>.md
+ *   (+ with --apply: found-prior attempts in first_translation_attempts)
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
+import { appendAttempt } from '../lib/ft-attempt-log.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
 const DATE = new Date().toISOString().slice(0, 10);
+const APPLY = process.argv.includes('--apply');
 
 // ── Text normalisation (mirrors src/lib/ft-prior-guard.ts) ─────────────────────
 
@@ -417,6 +432,49 @@ async function main() {
     if (demote.length === 0) {
       console.warn('[ASSERT] ZERO demote candidates — every match failed at least one guard. '
         + 'Expected for a Latin-only catalog vs a multilingual badged set; not necessarily an error.');
+    }
+
+    // ── Keep the match (--apply) ───────────────────────────────────────────────
+    // A guard-passing match = our own registry already holds a prior English
+    // translation of this work. Record it as durable found-prior evidence so it
+    // accumulates instead of evaporating into a report. Still NO flag change.
+    if (APPLY && demote.length) {
+      const isoDate = new Date().toISOString();
+      let applied = 0;
+      for (const r of demote) {
+        const m = r.best_match;
+        const ok = await appendAttempt(db, {
+          // Stable id keyed on the matched catalog row → idempotent across runs.
+          attempt_id: `${r.book_id}:tier1_catalog:registry:${m.catalog_id}`,
+          book_id: r.book_id,
+          work_id: r.work_id || null,
+          date: isoDate,
+          method: 'tier1_catalog',
+          match_key: 'author_title',
+          sources_checked: ['translation_catalogs'],
+          queries: [[r.author, r.title].filter(Boolean).join(' ').trim()].filter(Boolean),
+          result: 'found',
+          found_refs: [m.catalog_id],
+          priors: [{
+            english_title: m.english_title || undefined,
+            translator: m.translator || undefined,
+            pub_year: m.pub_year != null ? String(m.pub_year) : undefined,
+            publisher: m.publisher || undefined,
+            completeness: m.completeness || undefined,
+            source_url: m.url || undefined,
+          }],
+          // A guard-passing single-registry match: moderate, not strong (no cross-check).
+          evidence_strength: 'moderate',
+          independence_score: 0.3,
+          model: null,
+          notes: `[registry-match] our translation_catalogs holds a guard-passing prior (${m.source || 'catalog'}); author_overlap=${m.author_overlap}, title_coverage=${m.title_coverage}`,
+          _src: 'ft-catalog-match',
+        });
+        if (ok) applied++;
+      }
+      console.log(`\n[apply] appended ${applied} new found-prior attempts (${demote.length - applied} already present). No flag changed.`);
+    } else if (!APPLY && demote.length) {
+      console.log(`\n[dry-run] ${demote.length} demote candidates would be recorded as found-prior attempts. Re-run with --apply (records evidence only; no flag change).`);
     }
 
     // ── Write report ─────────────────────────────────────────────────────────
