@@ -145,7 +145,7 @@ function GalleryShell() {
 async function fetchInitialGalleryData(tenantId: string | null, bookId?: string): Promise<GalleryResponse> {
   try {
     const db = await getReadDb();
-    const limit = 24;
+    const limit = 48;
     const minQuality = 0.7;
     const maxPerBook = 3;
 

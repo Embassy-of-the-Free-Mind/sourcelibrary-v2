@@ -154,7 +154,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // 'illustration', or 'artwork'.
   const sourceFilter = searchParams.get('source') || 'all';
 
-  const limit = 24;
+  const limit = 48;
 
   // Update URL params
   const updateParams = useCallback((updates: Record<string, string>) => {
@@ -341,11 +341,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               placeholder="Search images…"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full pl-9 pr-[4.5rem] py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
+              className="w-full pl-9 pr-[5.25rem] py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
             />
             <button
               type="submit"
-              className="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-1.5 text-xs font-medium bg-accent-rust text-white rounded-md hover:bg-accent-rust/90 transition-colors"
+              className="absolute right-0 top-0 bottom-0 px-4 text-sm font-medium bg-accent-rust text-white rounded-r-lg hover:bg-accent-rust/90 transition-colors"
             >
               Search
             </button>
@@ -749,8 +749,8 @@ function GalleryMasonry({ items, hasMore, tenantPrefix, collectionScope }: { ite
       style={cropHeight ? {
         maxHeight: cropHeight,
         overflow: 'hidden',
-        maskImage: 'linear-gradient(to bottom, #000 70%, transparent 100%)',
-        WebkitMaskImage: 'linear-gradient(to bottom, #000 70%, transparent 100%)',
+        maskImage: 'linear-gradient(to bottom, #000 calc(100% - 20vh), transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, #000 calc(100% - 20vh), transparent 100%)',
       } : undefined}
     >
       <div className="flex gap-3 sm:gap-4 items-start">
