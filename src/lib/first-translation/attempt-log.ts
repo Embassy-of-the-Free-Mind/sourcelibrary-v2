@@ -54,8 +54,14 @@ export interface FirstTranslationAttempt {
   sources_checked: string[];
   /** The actual queries issued, for auditability. */
   queries?: string[];
-  /** Did this attempt find a prior translation, or confirm absence? */
-  result: 'found' | 'none';
+  /**
+   * Did this attempt find a prior translation, confirm absence, or judge the
+   * book not an English-translation candidate at all? `not_applicable` (an agent
+   * deciding it's an original-language edition / container / translation into
+   * another language) is NOT an absence vote — it must not be counted toward a
+   * "first" claim. (Legacy rows encoded it in `notes` as "not_applicable: …".)
+   */
+  result: 'found' | 'none' | 'not_applicable';
   /** Registry ids of priors found (empty when result==='none'). */
   found_refs?: string[];
   /** Structured priors found this attempt (translator/year/title/link). */
