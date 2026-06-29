@@ -49,6 +49,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { appendAttempt, makeAttemptId, domainsFromEvidence } from '../lib/ft-attempt-log.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 const MODEL = 'gemini-3.1-flash-lite';
@@ -321,6 +322,33 @@ async function main() {
           cost_usd: ((r.tokens?.input || 0) / 1_000_000) * 0.15 + ((r.tokens?.output || 0) / 1_000_000) * 3.50,
           status: 'success',
           endpoint: 'script/audit-translation-claims',
+        });
+
+        // Keep the search. This audit verified a specific CITED prior via real
+        // Google-grounded search — record what was queried, what was consulted,
+        // and whether a prior was confirmed, so the evidence outlives the run.
+        const isoDate = new Date().toISOString();
+        const priorFound = r.verdict === 'confirmed' || !!r.alternative_translation_found;
+        const prior = r.verdict === 'confirmed'
+          ? { english_title: claim.english_title, translator: claim.translator, pub_year: claim.pub_year, publisher: claim.publisher }
+          : (r.alternative_translation_found || null);
+        const domains = domainsFromEvidence(r.evidence);
+        await appendAttempt(db, {
+          attempt_id: makeAttemptId(book.id, 'gemini_verifier', isoDate),
+          book_id: book.id,
+          date: isoDate,
+          method: 'gemini_verifier',
+          match_key: 'author_title',
+          sources_checked: domains,
+          queries: r.searchQueries || [],
+          result: priorFound ? 'found' : 'none',
+          found_refs: [],
+          priors: prior ? [prior] : [],
+          evidence_strength: priorFound ? 'moderate' : 'weak',
+          independence_score: domains.length ? 0.3 : 0.1,
+          model: MODEL,
+          notes: `[audit ${r.verdict}/${r.confidence}] ${(r.reasoning || '').slice(0, 300)}`.trim(),
+          _src: 'audit-translation-claims',
         });
       }
     } catch (err) {
