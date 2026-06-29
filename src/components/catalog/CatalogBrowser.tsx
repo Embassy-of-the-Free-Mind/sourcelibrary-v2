@@ -53,7 +53,8 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState('popular');
   const [language, setLanguage] = useState('');
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');        // committed query (drives fetch/URL)
+  const [searchInput, setSearchInput] = useState(''); // typed text, committed on submit
   const [collection, setCollection] = useState(initialCollection || '');
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -123,6 +124,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
     setSort(urlSort);
     setLanguage(urlLang);
     setQuery(urlQ);
+    setSearchInput(urlQ);
     setCurrentPage(urlPage);
     setViewMode(urlView || storedView || 'grid');
 
@@ -167,15 +169,24 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
     fetchBooks({ sort, language, query, page: 1 });
   }, [sort, language, query, viewMode, updateUrl, fetchBooks]);
 
-  const handleSearch = useCallback((value: string) => {
-    setQuery(value);
-    setCurrentPage(1);
-    // Debounce API call
+  // Search runs only on Enter / the Search button — no live-as-you-type.
+  const submitSearch = useCallback(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      updateUrl(sort, language, 1, value, viewMode);
-      fetchBooks({ sort, language, query: value, page: 1 });
-    }, 300);
+    const q = searchInput.trim();
+    setQuery(q);
+    setCurrentPage(1);
+    updateUrl(sort, language, 1, q, viewMode);
+    fetchBooks({ sort, language, query: q, page: 1 });
+  }, [searchInput, sort, language, viewMode, updateUrl, fetchBooks]);
+
+  const clearSearch = useCallback(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    setSearchInput('');
+    setQuery('');
+    setCurrentPage(1);
+    updateUrl(sort, language, 1, '', viewMode);
+    fetchBooks({ sort, language, query: '', page: 1 });
+    searchRef.current?.focus();
   }, [sort, language, viewMode, updateUrl, fetchBooks]);
 
   const handlePage = useCallback((page: number) => {
@@ -193,33 +204,34 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
 
   return (
     <div>
-      {/* Search bar — prominent */}
-      <div className="relative mb-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
+      {/* Search bar — prominent. Searches on Enter / the Search button only. */}
+      <form onSubmit={e => { e.preventDefault(); submitSearch(); }} className="relative mb-6">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted pointer-events-none" />
         <input
           ref={searchRef}
           type="text"
-          value={query}
-          onChange={e => handleSearch(e.target.value)}
+          value={searchInput}
+          onChange={e => setSearchInput(e.target.value)}
           placeholder="Search titles and authors..."
-          className="w-full text-base border border-border-light rounded-xl pl-12 pr-10 py-3 bg-white text-primary placeholder:text-muted/50 focus:outline-none focus:border-accent-rust focus:ring-1 focus:ring-accent-rust/20"
+          className="w-full text-base border border-border-light rounded-xl pl-12 pr-[9.5rem] py-3 bg-white text-primary placeholder:text-muted/50 focus:outline-none focus:border-accent-rust focus:ring-1 focus:ring-accent-rust/20"
         />
-        {query && (
+        {searchInput && (
           <button
-            onClick={() => {
-              setQuery('');
-              setCurrentPage(1);
-              if (debounceRef.current) clearTimeout(debounceRef.current);
-              updateUrl(sort, language, 1, '', viewMode);
-              fetchBooks({ sort, language, query: '', page: 1 });
-              searchRef.current?.focus();
-            }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
+            type="button"
+            onClick={clearSearch}
+            className="absolute right-[6.75rem] top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
+            aria-label="Clear search"
           >
             <X className="w-5 h-5" />
           </button>
         )}
-      </div>
+        <button
+          type="submit"
+          className="absolute right-0 top-0 bottom-0 px-6 text-sm font-medium bg-accent-rust text-white rounded-r-xl hover:bg-accent-rust/90 transition-colors"
+        >
+          Search
+        </button>
+      </form>
 
       {/* Controls */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
