@@ -559,6 +559,10 @@ export default function TranslationEditor({
   // Swipe navigation state
   const touchStartX = useRef<number>(0);
   const touchStartY = useRef<number>(0);
+  // Explicit "a swipe is in progress" flag. Using a dedicated boolean (rather
+  // than testing touchStartX === 0) means a touch that genuinely begins at the
+  // extreme left edge (clientX === 0) is no longer mistaken for "no swipe".
+  const swipeActive = useRef<boolean>(false);
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
@@ -800,10 +804,11 @@ export default function TranslationEditor({
 
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    swipeActive.current = true;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX.current === 0) return;
+    if (!swipeActive.current) return;
 
     const deltaX = e.touches[0].clientX - touchStartX.current;
     const deltaY = e.touches[0].clientY - touchStartY.current;
@@ -834,6 +839,7 @@ export default function TranslationEditor({
     }
 
     // Reset swipe state
+    swipeActive.current = false;
     touchStartX.current = 0;
     touchStartY.current = 0;
     setSwipeOffset(0);
@@ -1344,13 +1350,16 @@ export default function TranslationEditor({
               style={{
                 transform: isSwiping ? `translateX(${swipeOffset}px)` : 'none',
                 transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
+                // Tell the browser we own horizontal gestures but it still drives
+                // vertical scrolling — stops swipe and panel-scroll from fighting.
+                touchAction: 'pan-y',
                 '--reader-font-size': `${fontSize}px`,
                 '--reader-line-height': lineHeight,
               } as React.CSSProperties}
             >
               {/* Source Image Panel */}
               {showImagePanel && (
-                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1 relative`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+                <div data-reader-panel="image" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1 relative`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                       {!pageDisplayUrl && hasWitnessPhotos ? 'Tablet Photo' : 'Source Image'}
@@ -1493,7 +1502,7 @@ export default function TranslationEditor({
 
               {/* OCR Panel */}
               {showOcrPanel && (
-                <div id="reader-text" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+                <div id="reader-text" data-reader-panel="ocr" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
@@ -1656,7 +1665,7 @@ export default function TranslationEditor({
 
               {/* Translation Panel — suppressed for English-source books (OCR is the reading view) */}
               {showTranslationPanel && !isEnglishSource && (
-                <div id={showOcrPanel ? undefined : 'reader-text'} className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
+                <div id={showOcrPanel ? undefined : 'reader-text'} data-reader-panel="translation" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
