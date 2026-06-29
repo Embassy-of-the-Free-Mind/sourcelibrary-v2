@@ -1,0 +1,44 @@
+# First-Translation — evaluation & census runs ledger
+
+*One row per measurement/verification run we've actually done, so a new worker can see what's been tried, what it found, and where the data lives — instead of re-discovering it from a thicket of near-duplicate JSONs. Built 2026-06-29 by cataloging the artifacts on disk + the documented findings. Companion to `first-translation-history.md` (the narrative) and `first-translation-system.md` §14 (the eval landscape).*
+
+> **Why this exists.** The *narrative* of past attempts is well-documented; the *run-level records* were not. `scripts/eval/results/` and `scripts/output/` hold ~35 result files with version-y names (`-verdicts` vs `-final` vs `-rerun`; `promote-346` vs `-merged`) and **no index of which is canonical, what N, what method, or what it concluded.** This is that index. Keep it updated when you run an eval — it's the durability principle applied to the evals, not just the per-book attempts.
+
+> **Caveat (2026-06-29):** the main checkout is stale/diverged, so paths/sizes are as of the catalog date; re-verify counts before citing. Several figures are sourced from prose in the history/methodology docs and are tagged accordingly.
+
+---
+
+## The runs (chronological)
+
+| Date | Run | Method / model | Frame | N | Headline result | Canonical artifact(s) | Status |
+|---|---|---|---|---|---|---|---|
+| ~Mar–May 2026 | 33-case Latin ground truth | hand-vetted vs 5 external APIs | Latin | 33 | reference labels | `scripts/eval/results/ft-groundtruth-worklist.json`; cleaned variants `scripts/output/ft-groundtruth{,-clean}.json` (49/42) | **gold**, NOT wired into `ft-eval.mjs` |
+| 2026-06-19 | grounded-validation pilot | Gemini adjudicator | mixed | 4 | early instrument check | `scripts/eval/results/ft-validation-2026-06-19.json` | superseded |
+| 2026-06-19 | **462-book stratified study of BADGED firsts** | Gemini→Claude Tier-2, stratified (manifest, 30/stratum) | badged firsts | 462 | **46% genuine-first · 30% not_applicable · 18% not_first · 6% unresolved → ~3,774 defensible (95% CI ~3,300–4,300)** | `ft-tier2-verdicts-final.json` (462); frame `ft-sample-manifest.json` (total_public_firsts=5732) | **canonical** (over-claim rate). `ft-tier2-verdicts.json` = earlier copy; `-worklist` = inputs |
+| 2026-06-19 | unbadged recall samples | Gemini | unbadged eligible | 40 → 73 → 150 (worklist 1000/850) | **~23–25% of unbadged are genuine firsts** (150-run: 34 first-family / 91 not_first / 24 n/a) | `ft-recall-verdicts-150.json` (canonical); `-73`,`-40` earlier | canonical = the 150 |
+| 2026-06-19 | cross-model comparison (precursor to the head-to-head) | Sonnet vs Gemini on same sample | sample-106 | 106 / 212 | sonnet: 52 first_no_prior/27 n/a/11 not_first; **gemini had 67/212 ERRORs** (parse/quota) | `ft-sonnet-verdicts.json` (106), `ft-gemini-verdicts.json` (212), `ft-3way-merged.json` (106), `ft-sample.json` | precursor to #2880 |
+| 2026-06-19 | rater-reliability / κ instrument | inter-rater | sample | 50 | the κ instrument (→ PR #2831) | `ft-reliability-worklist.json` | feeds #2876 |
+| 2026-06-19 | human gold-annotation | Claude labels + HTML annotator | candidates | 150 | gold-label set | `ft-gold-candidates.json` (150), `ft-gold-labels-claude.json`, `ft-gold-annotator.html` | gold (see `ft-gold-annotator-brief.md`) |
+| 2026-06-21 | catalog harvest backup | — | catalog rows | 589 | pre-edit backup | `scripts/output/ft-redo589-backup-2026-06-21.json`; `ft-evidence-2026-06-21/` | backup |
+| **2026-06-26** | **Era-6 DEMOTE census** (#2564) | Claude Tier-2 (8 pilot + 137 workflow) | reconcile demote candidates | 145 | **56 genuine firsts SAVED / 89 valid demotes (39% would have been wrongly stripped)** | `scripts/output/results-145.json`, `raw-137.json`, `signoff-diff.md`, `ft-evidence-2026-06-26/` | **APPLIED** (backup + provenance) |
+| **2026-06-26** | **Era-6 PROMOTE census** (#2564) | Claude Tier-2 | blocked-promotion candidates | 346 | **217 promote / 124 leave / 5 hold** (re-ran 28 session-limit fails) | `promote-346-final.json` (canonical), `promote-signoff-diff.md`, `promote-backup-pre-apply.json` | **APPLIED**. `-merged`/`.json` = stages; `ft-tier2-rerun-verdicts.json` (59) = the re-run |
+| 2026-06-26 | manual QC audits | human | Siku / Latin | 58 / 25 | Siku 8/58; Latin ~70% precision | `docs/translation-gap-census-paper/{manual-qc-audit,latin-qc-audit}.md` | human spot audits |
+| 2026-06-27 | registry catalog-match (Stage B/Tier-0) | DB match, no LLM | badged firsts | 5,772 scanned | demote candidates surfaced (report-only) | `scripts/output/ft-catalog-match-2026-06-27.json` | superseded by 2026-06-29 run |
+| 2026-06-27 | language-mislabel detector | rule | badged | 2,707 rows | ⚠️ **FLAWED — do not apply** (edition-language ≠ source; PR #2806 closed) | `ft-language-mislabel-2026-06-27.json` | flawed, closed |
+| ~2026-06 | lite-model probes | flash-lite | random/gt | 320 / 42 / 80 | lite-model floor checks (verify FT vs OCR scope) | `ft-lite-floor-results.json`, `ft-lite-gt-results.json`, `ft-random80{,-lite}.json` | unclear scope — verify |
+| **2026-06-29** | **#2876/#2879 quality harness** (grade-the-pile) | grades STORED verdicts vs held gold, zero-token | gold n=2,272 | **disposition precision(first) 58.9% [55.1–62.6] (W 68.3% / nW 47.1%) · recall of catalog priors 72.4% (W 74.7 / nW 47.7) · fabrication 56.8% (not_first precision 43.2%, n=37) · κ 0.355 (fair)**; complete-prior confirmed on only 121/1,436 matches (`completeness` unset) | `scripts/eval/ft-quality-harness.ts`, `agreement.ts`, report `ft-quality-report-<date>.{md,json}`, distilled gold `ft-gold-census-2026-06-26.json` | **canonical (stored-pile accuracy)**; gold enriched for hard cases → precision is a *lower bound* |
+| 2026-06-29 | registry-match → ledger (#2866) | DB match + guards, `--apply` | badged firsts | 5,772 scanned | **1** guard-passing demote (Reuchlin); recorded to attempt log | `ft-promote-candidates-2026-06-29.json` (the promote side, 466) | current |
+| 2026-06-29 | derive-from-attempts dry-run (#2871) | verdict = f(ledger) | books w/ attempts | 28,200 | would promote 1,513 / demote 1 (raw); **public-gated +466 / −1 → ~6,283**; defensible ~3,033 | (dry-run, not persisted) | current |
+| 2026-06-29 | **7-book Tier-2 live-search test** | independent Claude subagents (refute-framed) | promote candidates | 7 | **only 2/7 survive as clean firsts** (2 n/a, 1 prior-found, 1 n/a+prior, 1 uncertain, 2 first) — caught a confabulated prior | recorded as `tier2_agent` attempts (`_src:tier2-test-2026-06-29`) | current |
+
+---
+
+## How to read this / known traps
+
+- **Canonical vs scratch.** Where several files share a stem, the canonical one is tagged above (`-final` usually wins; `-merged`/`-rerun`/`-partial`/`-raw` are stages). Don't cite a non-final copy.
+- **Two different kinds of eval.** *Grade-the-pile* (#2876) scores **stored** verdicts at zero token cost. *Run-the-method* (the Tier-2 censuses, the 7-book test, the planned #2880) **runs searches live** and costs tokens. They answer different questions — don't conflate "58.9% disposition precision" (the old pile) with the accuracy of the live search.
+- **The over-claim rate (462-study, ~46% genuine) and the unbadged recall (~25%) are the two load-bearing numbers** behind "≈5,000 genuine firsts, composed of substantially different books" (history doc).
+- **What's missing and why #2880 exists:** no run has done the **Gemini-vs-Claude live head-to-head on a properly stratified, oracle-labeled whole-corpus sample**. The 2026-06-19 sonnet-vs-gemini set (106) is the closest precursor but was small and Gemini erred on 1/3. Recall of the live search remains unmeasured (the `catalog.completeness` blocker).
+
+## Provenance
+Built by cataloging `scripts/eval/results/*.json` + `scripts/output/ft-*.json` (counts/distributions read directly 2026-06-29) and cross-referencing `first-translation-history.md`, `first-translation-census-methodology.md` §8–9, and `first-translation-system.md` §14. Figures tagged "documented" come from prose, not a re-run — re-verify before publishing.
