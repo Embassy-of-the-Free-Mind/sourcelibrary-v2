@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -689,9 +689,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   );
 }
 
-// Round-robin masonry: item i → column i % cols. Appending new items (load-more)
-// only adds to the bottom of columns, so existing tiles never move/reflow — the
-// jumpy CSS-`columns` behavior is gone. 5 columns on desktop, 3 below.
+// Balanced masonry: place each tile in the currently-shortest column, using its
+// aspect ratio as a height estimate. This both (a) balances column heights so
+// there's no ragged-gap bottom, and (b) stays stable on load-more — greedy
+// placement is order-deterministic, so appending items never moves existing
+// tiles (no reflow/jumping). 5 columns on desktop, 3 below.
 function GalleryMasonry({ items, tenantPrefix, collectionScope }: { items: GalleryItem[]; tenantPrefix: string; collectionScope?: string }) {
   const [cols, setCols] = useState(5);
   useEffect(() => {
@@ -700,8 +702,24 @@ function GalleryMasonry({ items, tenantPrefix, collectionScope }: { items: Galle
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
-  const columns: GalleryItem[][] = Array.from({ length: cols }, () => []);
-  items.forEach((item, i) => columns[i % cols].push(item));
+
+  const columns = useMemo(() => {
+    const colArr: GalleryItem[][] = Array.from({ length: cols }, () => []);
+    const heights = new Array(cols).fill(0);
+    for (const item of items) {
+      // Estimated tile height ÷ width. Illustrations: from the crop bbox.
+      // Artworks / unknown: assume slightly portrait.
+      const ratio = item.bbox && item.bbox.width > 0
+        ? Math.min(2.4, Math.max(0.5, item.bbox.height / item.bbox.width))
+        : 1.25;
+      let s = 0;
+      for (let i = 1; i < cols; i++) if (heights[i] < heights[s]) s = i;
+      colArr[s].push(item);
+      heights[s] += ratio + 0.06; // +gap so count stays roughly even too
+    }
+    return colArr;
+  }, [items, cols]);
+
   return (
     <div className="flex gap-3 sm:gap-4 items-start">
       {columns.map((col, ci) => (

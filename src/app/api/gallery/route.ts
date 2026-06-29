@@ -471,26 +471,61 @@ export async function GET(request: NextRequest) {
     let displayTotal = total;
     if (searchQuery && offset === 0) {
       try {
+        const tenantF = tenantId ? { tenantId } : {};
+        const esc = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const rx = { $regex: esc, $options: 'i' }; // case-insensitive phrase match on titles
+        const imgPresent = { $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] };
+        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 } };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const mapPlate = (d: any) => ({
+          pageId: d.page_id, bookId: d.book_id, pageNumber: d.page_number, detectionIndex: d.detection_index,
+          imageUrl: d.image_url, bookTitle: d.book_title, author: d.book_author, year: d.book_year,
+          description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation,
+          extractedUrl: d.extracted_url, thumbnailUrl: d.thumbnail_url, galleryQuality: d.gallery_quality,
+          source: 'illustration', likeCount: 0, likedByVisitor: false,
+        });
+
+        // (1) Title-matching artworks — strongest signal (e.g. "John the Apostle" in the name)
+        const titleArtDocs = await db.collection('books').find(
+          { content_type: 'artwork', visible: true, ...tenantF, $and: [{ $or: [{ title: rx }, { display_title: rx }] }, imgPresent] },
+          artProj,
+        ).limit(10).toArray().catch(() => []);
+        // (2) Books whose title matches → their top plates
+        const titleBookIds = await db.collection('books').distinct('id',
+          { visible: true, ...tenantF, content_type: { $ne: 'artwork' }, $or: [{ title: rx }, { display_title: rx }] },
+          { maxTimeMS: 5000 },
+        ).catch(() => []);
+        const titlePlateDocs = titleBookIds.length > 0
+          ? await db.collection('gallery_images').find(
+              { book_id: { $in: titleBookIds.slice(0, 200) }, gallery_quality: { $gte: 0.6 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null }, book_rank: { $lte: 4 } },
+              { projection: { _id: 0 } },
+            ).sort({ gallery_quality: -1 }).limit(12).toArray().catch(() => [])
+          : [];
+        // (3) Semantically relevant artworks (related, not necessarily titled)
         const { semanticArtworkSearch } = await import('@/lib/semantic-search');
-        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.25 });
-        let addedArtworks = 0;
-        if (artHits.length > 0) {
-          const ids = artHits.map(a => a.book_id);
-          const artDocs = await db.collection('books').find(
-            { id: { $in: ids }, visible: true, content_type: 'artwork', ...(tenantId ? { tenantId } : {}),
-              $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 } },
-          ).toArray();
-          const byId = new Map(artDocs.map(d => [d.id, d]));
-          const artItems = artHits.map(a => byId.get(a.book_id)).filter(Boolean).map(artworkToGalleryItem);
-          if (artItems.length > 0) { outItems = [...artItems, ...mappedItems]; addedArtworks = artItems.length; }
-        }
-        // Real result count: text-matching illustrations + surfaced artworks.
+        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.25 }).catch(() => []);
+        const semIds = artHits.map(a => a.book_id);
+        const semArtDocs = semIds.length > 0
+          ? await db.collection('books').find({ id: { $in: semIds }, content_type: 'artwork', visible: true, ...tenantF, ...imgPresent }, artProj).toArray().catch(() => [])
+          : [];
+        const semById = new Map(semArtDocs.map(d => [d.id, d]));
+
+        // Assemble: title artworks + title plates lead, then semantic artworks, then the illustration search.
+        const seenBooks = new Set<string>();
+        const seenPages = new Set<string>();
+        const lead: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+        for (const d of titleArtDocs) if (!seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); }
+        for (const d of titlePlateDocs) { const k = `${d.page_id}-${d.detection_index}`; if (!seenPages.has(k)) { seenPages.add(k); lead.push(mapPlate(d)); } }
+        for (const a of artHits) { const d = semById.get(a.book_id); if (d && !seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); } }
+        const rest = mappedItems.filter((it: any) => !seenPages.has(`${it.pageId}-${it.detectionIndex}`)); // eslint-disable-line @typescript-eslint/no-explicit-any
+        outItems = [...lead, ...rest];
+
+        // Real result count: text-matching illustrations + the lead (title/semantic) items.
         const illCount = await db.collection('gallery_images').countDocuments(
-          { $text: { $search: searchQuery }, gallery_quality: { $gte: minQuality }, book_visible: true, ...(tenantId ? { tenantId } : {}) },
+          { $text: { $search: searchQuery }, gallery_quality: { $gte: minQuality }, book_visible: true, ...tenantF },
           { maxTimeMS: 5000 },
         ).catch(() => null);
-        if (illCount !== null) { displayTotal = illCount + addedArtworks; searchHasMore = outItems.length < displayTotal; }
+        if (illCount !== null) { displayTotal = illCount + lead.length; searchHasMore = outItems.length < displayTotal; }
       } catch { /* non-critical — search still returns illustrations */ }
     }
 
