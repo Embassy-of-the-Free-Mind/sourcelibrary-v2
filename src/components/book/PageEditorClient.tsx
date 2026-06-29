@@ -16,6 +16,32 @@ interface PageEditorClientProps {
   initialPageList: Page[];
 }
 
+// Which reader panel ('image' | 'ocr' | 'translation') is currently filling the
+// viewport? Returns the panel whose box straddles the viewport's vertical centre,
+// else the nearest one. Used to keep a mobile reader in the same panel across a
+// page flip. Returns null when no panels are mounted.
+function getActiveReaderPanel(): string | null {
+  const panels = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-reader-panel]')
+  );
+  if (panels.length === 0) return null;
+  const center = window.innerHeight / 2;
+  let best: string | null = null;
+  let bestDist = Infinity;
+  for (const el of panels) {
+    const r = el.getBoundingClientRect();
+    if (r.top <= center && r.bottom >= center) {
+      return el.dataset.readerPanel ?? null;
+    }
+    const dist = Math.min(Math.abs(r.top - center), Math.abs(r.bottom - center));
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = el.dataset.readerPanel ?? null;
+    }
+  }
+  return best;
+}
+
 // Component that handles search highlighting (needs Suspense)
 function SearchHighlighter() {
   useSearchHighlight({ delay: 800 });
@@ -216,23 +242,37 @@ export default function PageEditorClient({
 
   // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string) => {
+    // On mobile the panels stack vertically (image, then OCR, then translation).
+    // Flipping a page used to dump the reader back to the top of the page even
+    // when they were mid-way through the translation. Capture which panel is
+    // currently filling the viewport *before* the swap, so we can land on the
+    // same panel of the new page. (Reader feedback: "going to the next page from
+    // the OCR or translation should take you to the same part of the next page.")
+    const isMobile = window.innerWidth < 1024;
+    const activePanel = isMobile ? getActiveReaderPanel() : null;
+
     setCurrentPageId(newPageId);
     // Build URL with supported query params (version pinning)
     const newParams = new URLSearchParams();
     if (pinnedVersion) newParams.set('v', pinnedVersion);
     const suffix = newParams.toString() ? `?${newParams.toString()}` : '';
     window.history.pushState(null, '', `${tenantPrefix}/book/${book.id}/page/${newPageId}${suffix}`);
-    // On mobile (< lg breakpoint), scroll to the text panels instead of the top
-    // so readers land on the content, not the image
-    const isMobile = window.innerWidth < 1024;
-    if (isMobile) {
-      const textSection = document.getElementById('reader-text');
-      if (textSection) {
-        textSection.scrollIntoView({ behavior: 'instant' });
-        return;
-      }
+
+    if (isMobile && activePanel && activePanel !== 'image') {
+      // Keep the reader in the text panel they were reading, at its top. The
+      // panel <div>s persist across the page swap (only their content changes),
+      // so the same selector resolves on the new page. rAF lets the swap settle.
+      requestAnimationFrame(() => {
+        const el = document.querySelector(`[data-reader-panel="${activePanel}"]`);
+        if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    } else {
+      // Desktop, or a reader who was looking at the scan: go to the top so the
+      // next page's image is in view.
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
-    window.scrollTo({ top: 0, behavior: 'instant' });
+
     // Notify embed.js host frame (no-op when not in an iframe)
     if (window.self !== window.top) {
       window.parent.postMessage(
