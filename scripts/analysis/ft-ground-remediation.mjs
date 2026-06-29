@@ -40,6 +40,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { appendAttempt, makeAttemptId } from '../lib/ft-attempt-log.mjs';
 
 const MODEL = 'gemini-3.1-flash-lite';
 const CONCURRENCY = 3;
@@ -352,6 +353,33 @@ async function main() {
         } },
         { upsert: true },
       );
+
+      // Keep the search. A NOT_FIRST is a catalog-grounded prior sighting;
+      // a FIRST_LIKELY is a documented absence across 3 catalogs. Either way
+      // the durable evidence (sources, query, priors found) outlives this run.
+      const isoDate = new Date().toISOString();
+      const found = b.verdict === 'NOT_FIRST';
+      await appendAttempt(db, {
+        attempt_id: makeAttemptId(book.id, 'tier1_catalog', isoDate),
+        book_id: book.id,
+        date: isoDate,
+        method: 'tier1_catalog',
+        match_key: 'author_title',
+        sources_checked: ['open_library', 'google_books', 'internet_archive'],
+        queries: [[book.display_title || book.title, book.author].filter(Boolean).join(' ').trim()].filter(Boolean),
+        result: found ? 'found' : 'none',
+        found_refs: [],
+        priors: (result.translations || []).map(t => ({
+          english_title: t.english_title, translator: t.translator, pub_year: t.pub_year,
+          publisher: t.publisher, completeness: t.completeness, source_url: t.source_url || undefined,
+        })),
+        // Single-pass catalog grounding: a found prior is moderate; an absence is weak.
+        evidence_strength: found ? 'moderate' : 'weak',
+        independence_score: 0.3,
+        model: MODEL,
+        notes: `[ground ${b.verdict}] ${(result.reasoning || '').slice(0, 300)}${result.search_limitations ? ` | ${result.search_limitations.slice(0, 120)}` : ''}`.trim(),
+        _src: 'ft-ground-remediation',
+      });
     }
     if (i + CONCURRENCY < books.length) await new Promise(r => setTimeout(r, BATCH_DELAY_MS));
   }

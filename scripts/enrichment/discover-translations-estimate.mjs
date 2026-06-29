@@ -23,6 +23,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { appendAttempt, makeAttemptId, domainsFromEvidence } from '../lib/ft-attempt-log.mjs';
 
 const MODEL = 'gemini-3.1-flash-lite';
 const CONCURRENCY = 3;
@@ -101,14 +102,15 @@ async function discoverOne(book) {
   const text = resp.text || '';
   const grounding = resp.candidates?.[0]?.groundingMetadata;
   const evidence = (grounding?.groundingChunks || []).filter(c => c.web?.uri).slice(0, 5).map(c => ({ url: c.web.uri, title: c.web.title || '' }));
+  const searchQueries = grounding?.webSearchQueries || [];
   let parsed;
   try {
     const m = text.match(/```(?:json)?\s*([\s\S]*?)```/) || text.match(/\{[\s\S]*\}/);
     parsed = JSON.parse((m ? m[1] || m[0] : text).trim());
   } catch {
-    return { error: 'parse_failed', raw: text.slice(0, 300), evidence };
+    return { error: 'parse_failed', raw: text.slice(0, 300), evidence, searchQueries };
   }
-  return { ...parsed, evidence, tokens: { input: resp.usageMetadata?.promptTokenCount || 0, output: resp.usageMetadata?.candidatesTokenCount || 0 } };
+  return { ...parsed, evidence, searchQueries, tokens: { input: resp.usageMetadata?.promptTokenCount || 0, output: resp.usageMetadata?.candidatesTokenCount || 0 } };
 }
 
 async function pool(items, fn, n) {
@@ -179,6 +181,29 @@ async function main() {
             },
           }}
         );
+
+        // Keep the search. This is a documented look for ANY prior English
+        // translation of the work — record it append-only so the absence (or
+        // the missed prior) is durable evidence, not a one-night side note.
+        const isoDate = new Date().toISOString();
+        const domains = domainsFromEvidence(r.evidence);
+        await appendAttempt(db, {
+          attempt_id: makeAttemptId(book.id, 'gemini_verifier', isoDate),
+          book_id: book.id,
+          date: isoDate,
+          method: 'gemini_verifier',
+          match_key: 'author_title',
+          sources_checked: domains,
+          queries: r.searchQueries || [],
+          result: r.translation_exists ? 'found' : 'none',
+          found_refs: [],
+          priors: r.translation ? [r.translation] : [],
+          evidence_strength: r.translation_exists ? 'moderate' : 'weak',
+          independence_score: domains.length ? 0.3 : 0.1,
+          model: MODEL,
+          notes: `[discover ${r.confidence}] ${(r.reasoning || '').slice(0, 300)}`.trim(),
+          _src: 'discover-translations-estimate',
+        });
       }
     } catch (err) {
       errors.push({ book, error: err.message });
