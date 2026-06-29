@@ -857,11 +857,17 @@ export default function TranslationEditor({
     setModernizedText(page.modernized?.data || null);
     lastSavedRef.current = { ocr, translation, summary };
     setSaveStatus('idle');
-    // Reset scroll on all content panels and the outer panel container (mobile stacked layout)
+    // Reset each content panel's internal scroll (desktop: panels scroll independently).
     document.querySelectorAll('[data-reader-panel]').forEach(el => {
       el.scrollTop = 0;
     });
-    document.querySelector('[data-reader-panels-container]')?.scrollTo(0, 0);
+    // On mobile the stacked panels share one outer scroller, and PageEditorClient
+    // positions it so the reader stays in the panel they were reading across a
+    // flip — don't reset it to the top here or the two fight. Desktop keeps the
+    // top-reset (panels are side-by-side, overflow hidden).
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      document.querySelector('[data-reader-panels-container]')?.scrollTo(0, 0);
+    }
   }, [page]);
 
   // Toggle modernized mode and persist to localStorage
@@ -1359,7 +1365,7 @@ export default function TranslationEditor({
             >
               {/* Source Image Panel */}
               {showImagePanel && (
-                <div data-reader-panel="image" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1 relative`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+                <div data-reader-section="image" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1 relative`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                       {!pageDisplayUrl && hasWitnessPhotos ? 'Tablet Photo' : 'Source Image'}
@@ -1502,7 +1508,7 @@ export default function TranslationEditor({
 
               {/* OCR Panel */}
               {showOcrPanel && (
-                <div id="reader-text" data-reader-panel="ocr" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+                <div id="reader-text" data-reader-section="ocr" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
@@ -1665,7 +1671,7 @@ export default function TranslationEditor({
 
               {/* Translation Panel — suppressed for English-source books (OCR is the reading view) */}
               {showTranslationPanel && !isEnglishSource && (
-                <div id={showOcrPanel ? undefined : 'reader-text'} data-reader-panel="translation" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
+                <div id={showOcrPanel ? undefined : 'reader-text'} data-reader-section="translation" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
