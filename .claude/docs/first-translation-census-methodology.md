@@ -174,6 +174,8 @@ one is caught by the other. Never settle a public flip on a single model family.
 
 ## 5. Prompts
 
+> **Canonical output contract + the unified Tier-2 oracle prompt: [`ft-verdict-contract.md`](./ft-verdict-contract.md).** Both tiers emit ONE schema so they're comparable head-to-head (#2880); the unified oracle prompt handles a book of unknown direction (random sample) and includes `not_applicable` + a source-thoroughness floor. The directional demote/promote prompts below remain valid when the direction is already known.
+
 ### Tier 1 — Gemini adjudicator (`ft-gemini-adjudicate.mjs`)
 > You are a first-translation adjudicator. Decide whether OUR book is the FIRST
 > English translation of THIS specific text. Use Google Search to investigate.
