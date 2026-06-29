@@ -20,6 +20,12 @@ export interface ImageMetadata {
   cit?: string[];
 }
 
+/** A merged-gallery tile is either an illustration cropped from a book page
+ *  ('illustration', the gallery_images default) or a standalone artwork
+ *  ('artwork', a content_type:'artwork' record). Defaults to 'illustration'
+ *  when absent so existing consumers keep working. */
+export type GallerySource = 'illustration' | 'artwork';
+
 export interface GalleryItem {
   pageId: string;
   bookId: string;
@@ -41,6 +47,14 @@ export interface GalleryItem {
   likeCount?: number;
   likedByVisitor?: boolean;
   firstSyncedAt?: string;
+  /** Which kind of visual this is. Absent ⇒ 'illustration'. */
+  source?: GallerySource;
+  /** Width÷height of the displayed image, for reserving tile space (no layout
+   *  shift on load) and balancing masonry columns. */
+  aspect?: number;
+  /** Where the tile links to. Illustrations omit this (built from pageId-detectionIndex);
+   *  artworks set it to their /book/<slug> detail page. */
+  link?: string;
 }
 
 export interface BookInfo {
@@ -60,6 +74,8 @@ export interface GalleryFilters {
   types: string[];
   subjects: string[];
   yearRange: { minYear: number | null; maxYear: number | null };
+  /** Available source facet values for the merged gallery. */
+  sources?: GallerySource[];
 }
 
 export interface GalleryResponse {
@@ -69,6 +85,8 @@ export interface GalleryResponse {
   offset: number;
   bookInfo: BookInfo | null;
   filters: GalleryFilters;
+  /** Reliable "more pages exist" flag (preferred over total-vs-offset math). */
+  hasMore?: boolean;
 }
 
 export interface GallerySearchParams {
@@ -90,6 +108,8 @@ export interface GallerySearchParams {
   sort?: string;
   visitorId?: string;
   iconclass?: string;
+  /** Merged-gallery source filter. 'all' (default) interleaves both. */
+  source?: 'all' | GallerySource;
 }
 
 export interface GalleryImageUpdateRequest {

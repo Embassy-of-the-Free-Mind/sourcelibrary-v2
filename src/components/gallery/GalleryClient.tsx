@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -130,8 +130,9 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const [showBookDropdown, setShowBookDropdown] = useState(false);
   const bookSearchRef = useRef<HTMLDivElement>(null);
 
-  // Image search state
-  const [imageSearchQuery, setImageSearchQuery] = useState(searchParams.get('q') || '');
+  // Image search: `searchInput` is the typed text; the committed query lives in
+  // the URL (`q`) and only updates on Enter / the search button — no live search.
+  const [searchInput, setSearchInput] = useState(searchParams.get('q') || '');
 
   // Quality toggle state
   const qualityParam = searchParams.get('minQuality');
@@ -147,8 +148,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const iconclassFilter = searchParams.get('iconclass') || '';
   const yearStart = searchParams.get('yearStart') || '';
   const yearEnd = searchParams.get('yearEnd') || '';
+  // Committed image search query (drives the fetch); comes from the URL only.
+  const imageSearchQuery = searchParams.get('q') || '';
+  // Merged-gallery source facet: 'all' (default, interleaves illustrations + artworks),
+  // 'illustration', or 'artwork'.
+  const sourceFilter = searchParams.get('source') || 'all';
 
-  const limit = 24;
+  const limit = 48;
 
   // Update URL params
   const updateParams = useCallback((updates: Record<string, string>) => {
@@ -170,7 +176,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // and no other filters are present.
   useEffect(() => {
     const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
-    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId) {
+    // The SSR payload is illustration-only; for the merged default ('all') or
+    // artwork-only we must fetch on mount to pull artworks in. Only skip when the
+    // request matches what the server already rendered (illustration-only, no filters).
+    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && sourceFilter === 'illustration') {
       setIsInitialLoad(false);
       return;
     }
@@ -193,6 +202,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
+          source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
           visitorId: identity.id || undefined,
         });
         setData(json);
@@ -207,7 +217,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -227,6 +237,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         yearFrom: yearStart ? parseInt(yearStart) : undefined,
         yearTo: yearEnd ? parseInt(yearEnd) : undefined,
         minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
+        source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
         visitorId: identity.id || undefined,
       });
       setAllItems(prev => [...prev, ...json.items]);
@@ -240,7 +251,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit]);
+  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
 
   // Book search with debounce
   useEffect(() => {
@@ -280,8 +291,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const hasMore = data ? currentOffset < data.total : false;
-  const remainingCount = data ? data.total - currentOffset : 0;
+  // Prefer the server's reliable hasMore flag; fall back to total-vs-offset.
+  const hasMore = data ? (data.hasMore ?? currentOffset < data.total) : false;
 
   const handleBookSelect = (book: BookSearchResult) => {
     setBookSearchQuery('');
@@ -295,8 +306,14 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   const handleImageSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    updateParams({ q: imageSearchQuery });
+    updateParams({ q: searchInput.trim() });
   };
+
+  // Keep the input in sync with the committed query (back/forward, clearing a
+  // chip, etc.) — only when `q` actually changes, never while typing.
+  useEffect(() => {
+    setSearchInput(imageSearchQuery);
+  }, [imageSearchQuery]);
 
   const handleQualityChange = (level: string) => {
     if (level === 'archive') {
@@ -313,7 +330,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   return (
     <>
-      <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden animate-fade-in-up">
+      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6 overflow-x-hidden animate-fade-in-up">
         {/* Search & Filter Bar */}
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
           {/* Image Search */}
@@ -321,11 +338,17 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
             <input
               type="text"
-              placeholder="Search images..."
-              value={imageSearchQuery}
-              onChange={(e) => setImageSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
+              placeholder="Search images…"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="w-full pl-9 pr-[5.25rem] py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
             />
+            <button
+              type="submit"
+              className="absolute right-0 top-0 bottom-0 px-4 text-sm font-medium bg-accent-rust text-white rounded-r-lg hover:bg-accent-rust/90 transition-colors"
+            >
+              Search
+            </button>
           </form>
 
           {/* Book Search */}
@@ -428,7 +451,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             {imageSearchQuery && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm">
                 Search: &quot;{imageSearchQuery}&quot;
-                <button onClick={() => { setImageSearchQuery(''); updateParams({ q: '' }); }} className="hover:text-blue-600">
+                <button onClick={() => { setSearchInput(''); updateParams({ q: '' }); }} className="hover:text-blue-600">
                   <X className="w-3 h-3" />
                 </button>
               </div>
@@ -448,6 +471,29 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         {showFilters && data?.filters && (
           <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border border-stone-200">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Source: book plates vs standalone artworks */}
+              <div>
+                <label className="block text-xs font-medium text-stone-500 mb-2">Show</label>
+                <div className="flex flex-wrap gap-1">
+                  {[
+                    { key: 'all', label: 'Everything' },
+                    { key: 'illustration', label: 'Plates' },
+                    { key: 'artwork', label: 'Artworks' },
+                  ].map(({ key, label }) => (
+                    <button
+                      key={key}
+                      onClick={() => updateParams({ source: key === 'all' ? '' : key })}
+                      className={`px-2 py-1 text-xs rounded-full transition-colors ${sourceFilter === key
+                          ? 'bg-accent-rust text-white'
+                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                        }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Quality Toggle */}
               <div>
                 <label className="block text-xs font-medium text-stone-500 mb-2">Image Quality</label>
@@ -616,23 +662,21 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         {/* Image Grid */}
         {!loading && data && allItems.length > 0 && (
           <>
-            {!hasFilters && (
-              <div className="mb-4">
-                <h2 className="text-2xl font-serif text-stone-800 mb-1">Browse Images</h2>
-                <p className="text-stone-500 text-base">
-                  {data.total.toLocaleString('en-US')} illustrations from rare historical manuscripts.
-                </p>
-              </div>
-            )}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {allItems.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
-              ))}
+            <div className="mb-4">
+              <h2 className="text-2xl font-serif text-stone-800 mb-1">{hasFilters ? 'Results' : 'Browse Images'}</h2>
+              <p className="text-stone-500 text-base">
+                {data.total > 0
+                  ? `${data.total.toLocaleString('en-US')} ${hasFilters ? 'results' : 'images'} — plates & standalone artworks`
+                  : 'Plates & standalone artworks'}
+              </p>
             </div>
+            {/* Uneven masonry cropped by a fixed-height container + fade mask (handled inside). */}
+            <GalleryMasonry items={allItems} hasMore={hasMore} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
+            <div className="mt-2" />
 
             {/* Load More */}
             {hasMore && (
-              <div className="mt-10 text-center">
+              <div className="mt-8 text-center">
                 <button
                   onClick={handleLoadMore}
                   disabled={loadingMore}
@@ -645,7 +689,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
-                  {loadingMore ? 'Loading...' : `Load more (${remainingCount.toLocaleString('en-US')} remaining)`}
+                  {loadingMore ? 'Loading…' : 'Load more'}
                 </button>
               </div>
             )}
@@ -656,11 +700,88 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   );
 }
 
+// Masonry with intentionally UNEVEN columns, cropped by a fixed-height container
+// + fade mask (NOT balanced). Tiles flow naturally round-robin; the container is
+// capped to the shortest column's height so every column fills it (no whitespace
+// gaps) while taller columns overflow past the bottom, where the mask fades the
+// hard crop line. The cap grows with each load-more. 5 columns desktop, 3 below.
+const MASONRY_GAP = 16;
+function GalleryMasonry({ items, hasMore, tenantPrefix, collectionScope }: { items: GalleryItem[]; hasMore: boolean; tenantPrefix: string; collectionScope?: string }) {
+  const [cols, setCols] = useState(5);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const update = () => {
+      setCols(window.innerWidth >= 1024 ? 5 : 3);
+      if (ref.current) setContainerWidth(ref.current.offsetWidth);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  // Natural round-robin — deliberately NOT height-balanced.
+  const columns = useMemo(() => {
+    const colArr: GalleryItem[][] = Array.from({ length: cols }, () => []);
+    items.forEach((item, i) => colArr[i % cols].push(item));
+    return colArr;
+  }, [items, cols]);
+
+  // Crop height = shortest column's pixel height (from aspect ratios — no DOM
+  // measurement of tiles, so no flashing). Only crop while more pages remain.
+  const cropHeight = useMemo(() => {
+    if (!hasMore || !containerWidth || cols < 1) return undefined;
+    const colWidth = (containerWidth - (cols - 1) * MASONRY_GAP) / cols;
+    if (colWidth <= 0) return undefined;
+    let minH = Infinity;
+    for (const col of columns) {
+      if (col.length === 0) continue;
+      let h = 0;
+      for (const it of col) { const a = it.aspect && it.aspect > 0 ? it.aspect : 0.75; h += colWidth / a + MASONRY_GAP; }
+      if (h < minH) minH = h;
+    }
+    return Number.isFinite(minH) ? Math.round(minH - MASONRY_GAP) : undefined;
+  }, [columns, containerWidth, cols, hasMore]);
+
+  return (
+    <div
+      ref={ref}
+      style={cropHeight ? {
+        maxHeight: cropHeight,
+        overflow: 'hidden',
+        maskImage: 'linear-gradient(to bottom, #000 calc(100% - 20vh), transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, #000 calc(100% - 20vh), transparent 100%)',
+      } : undefined}
+    >
+      <div className="flex gap-3 sm:gap-4 items-start">
+        {columns.map((col, ci) => (
+          <div key={ci} className="flex-1 min-w-0 flex flex-col gap-3 sm:gap-4">
+            {col.map((item, idx) => (
+              <GalleryCard
+                key={`${item.pageId}-${item.detectionIndex}`}
+                item={item}
+                priority={ci < cols && idx < 2}
+                tenantPrefix={tenantPrefix}
+                collectionScope={collectionScope}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScope }: { item: GalleryItem; priority?: boolean; tenantPrefix?: string; collectionScope?: string }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const reservedAspect = item.aspect && item.aspect > 0 ? item.aspect : 0.75;
 
-  const cropUrl = item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
+  // Standalone artworks have no bbox crop and link to their /book detail page,
+  // not the gallery image viewer.
+  const isArtwork = item.source === 'artwork';
+  const cropUrl = !isArtwork && item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
   // Prefer thumbnail for grid cards — extracted images are ~2MB vs ~38KB thumbnails
   const blobUrl = item.thumbnailUrl || item.extractedUrl;
 
@@ -668,41 +789,38 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
     ? (cropUrl || toThumbnailUrl(item.imageUrl))
     : (blobUrl || cropUrl || toThumbnailUrl(item.imageUrl));
 
-  const isPreGenerated = !useCropFallback && !!blobUrl;
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
   // Forward the collection scope so the image viewer keeps prev/next inside the collection.
-  const imageHref = `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
+  const imageHref = isArtwork
+    ? `${tenantPrefix}${item.link || `/book/${item.bookId}`}`
+    : `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
 
   return (
-    <div className="relative group rounded-lg overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={imageHref} className="block relative aspect-square bg-stone-100">
+    <div className="relative group rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 hover:shadow-md transition-all">
+      {/* Reserve the exact tile box from the aspect ratio so nothing shifts as
+          the image decodes (no jumping); the image then fades in smoothly. */}
+      <Link href={imageHref} className="block relative bg-stone-100" style={{ aspectRatio: String(reservedAspect) }}>
         {!imageError ? (
-          <Image
+          // Plain img (dodges next/image host allow-listing for external artwork hosts).
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
             src={displayUrl}
             alt={item.description}
-            fill
-            quality={85}
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
+            loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
+            className={`absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={(e) => {
+              setLoaded(true);
               // Detect corrupt Blob thumbnails (real ones are 300px+)
               if (!useCropFallback && blobUrl && cropUrl) {
-                const img = e.target as HTMLImageElement;
-                if (img.naturalWidth < 150 || img.naturalHeight < 150) {
-                  setUseCropFallback(true);
-                }
+                const img = e.currentTarget;
+                if (img.naturalWidth < 150 || img.naturalHeight < 150) setUseCropFallback(true);
               }
             }}
             onError={() => {
-              if (!useCropFallback && cropUrl) {
-                setUseCropFallback(true);
-              } else {
-                setImageError(true);
-              }
+              if (!useCropFallback && cropUrl) setUseCropFallback(true);
+              else setImageError(true);
             }}
-            unoptimized={!isPreGenerated && !!item.bbox}
-            priority={priority}
-            loading={priority ? 'eager' : 'lazy'}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-stone-300">

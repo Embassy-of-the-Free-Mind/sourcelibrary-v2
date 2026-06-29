@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL } from '@/lib/clip';
+import { mergedGalleryBrowse, artworkToGalleryItem } from '@/lib/gallery-merge';
 
 export const maxDuration = 30;
 
@@ -142,6 +143,28 @@ export async function GET(request: NextRequest) {
     if (galleryCount === 0) {
       // Fall back to legacy pipeline
       return NextResponse.json(await legacyGalleryQuery(db, searchParams));
+    }
+
+    // Merged plain-gallery browse (default /gallery): interleave book illustrations
+    // with standalone artworks. Only for the unscoped browse — single-book, search,
+    // collection/library, and metadata-facet requests keep illustration-only behavior.
+    const isPlainBrowse = !bookId && !searchQuery && !collectionSlug && !libraryFilter
+      && !subjectFilter && !figureFilter && !symbolFilter && !iconclassFilter;
+    const sourceParam = searchParams.get('source') || 'all';
+    if (isPlainBrowse && (sourceParam === 'all' || sourceParam === 'artwork')) {
+      const sessionForMerge = await auth();
+      const visitorIdForMerge = sessionForMerge?.user?.id || searchParams.get('visitor_id');
+      const merged = await mergedGalleryBrowse(db, {
+        tenantId, source: sourceParam as 'all' | 'artwork', limit, offset,
+        imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId: visitorIdForMerge,
+      });
+      const mergedFilters = await getGalleryFilters(db).catch(() => ({ types: [], subjects: [], yearRange: { minYear: null, maxYear: null } }));
+      return NextResponse.json({
+        items: merged.items, total: merged.total, hasMore: merged.hasMore, limit, offset, bookInfo: null,
+        filters: { ...mergedFilters, sources: ['illustration', 'artwork'] },
+      }, {
+        headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },
+      });
     }
 
     // If filtering by collection, resolve to book IDs
@@ -429,6 +452,7 @@ export async function GET(request: NextRequest) {
         extractedUrl: doc.extracted_url,
         thumbnailUrl: doc.thumbnail_url,
         galleryQuality: doc.gallery_quality,
+        aspect: doc.bbox && doc.bbox.width > 0 && doc.bbox.height > 0 ? Math.min(3, Math.max(0.33, (doc.bbox.width / doc.bbox.height) * 0.72)) : 0.72,
         confidence: doc.confidence,
         museumDescription: doc.museum_description,
         metadata: doc.metadata,
@@ -438,6 +462,74 @@ export async function GET(request: NextRequest) {
         likedByVisitor: likeData?.liked ?? false,
       };
     });
+
+    // Include relevant standalone artworks in SEARCH results (first page only).
+    // Illustration search is keyword/Atlas; artwork search is semantic, so the
+    // artworks it returns are the genuinely on-topic ones (e.g. "John the Apostle"
+    // → paintings/prints of him), surfaced at the top.
+    let outItems: any[] = mappedItems; // eslint-disable-line @typescript-eslint/no-explicit-any
+    let searchHasMore = hasMore;
+    let displayTotal = total;
+    if (searchQuery && offset === 0) {
+      try {
+        const tenantF = tenantId ? { tenantId } : {};
+        const esc = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const rx = { $regex: esc, $options: 'i' }; // case-insensitive phrase match on titles
+        const imgPresent = { $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] };
+        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 } };
+        const bboxAspect = (b: any) => b && b.width > 0 && b.height > 0 ? Math.min(3, Math.max(0.33, (b.width / b.height) * 0.72)) : 0.72; // eslint-disable-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const mapPlate = (d: any) => ({
+          pageId: d.page_id, bookId: d.book_id, pageNumber: d.page_number, detectionIndex: d.detection_index,
+          imageUrl: d.image_url, bookTitle: d.book_title, author: d.book_author, year: d.book_year,
+          description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation, aspect: bboxAspect(d.bbox),
+          extractedUrl: d.extracted_url, thumbnailUrl: d.thumbnail_url, galleryQuality: d.gallery_quality,
+          source: 'illustration', likeCount: 0, likedByVisitor: false,
+        });
+
+        // (1) Title-matching artworks — strongest signal (e.g. "John the Apostle" in the name)
+        const titleArtDocs = await db.collection('books').find(
+          { content_type: 'artwork', visible: true, ...tenantF, $and: [{ $or: [{ title: rx }, { display_title: rx }] }, imgPresent] },
+          artProj,
+        ).limit(10).toArray().catch(() => []);
+        // (2) Books whose title matches → their top plates
+        const titleBookIds = await db.collection('books').distinct('id',
+          { visible: true, ...tenantF, content_type: { $ne: 'artwork' }, $or: [{ title: rx }, { display_title: rx }] },
+          { maxTimeMS: 5000 },
+        ).catch(() => []);
+        const titlePlateDocs = titleBookIds.length > 0
+          ? await db.collection('gallery_images').find(
+              { book_id: { $in: titleBookIds.slice(0, 200) }, gallery_quality: { $gte: 0.6 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null }, book_rank: { $lte: 4 } },
+              { projection: { _id: 0 } },
+            ).sort({ gallery_quality: -1 }).limit(12).toArray().catch(() => [])
+          : [];
+        // (3) Semantically relevant artworks (related, not necessarily titled)
+        const { semanticArtworkSearch } = await import('@/lib/semantic-search');
+        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.25 }).catch(() => []);
+        const semIds = artHits.map(a => a.book_id);
+        const semArtDocs = semIds.length > 0
+          ? await db.collection('books').find({ id: { $in: semIds }, content_type: 'artwork', visible: true, ...tenantF, ...imgPresent }, artProj).toArray().catch(() => [])
+          : [];
+        const semById = new Map(semArtDocs.map(d => [d.id, d]));
+
+        // Assemble: title artworks + title plates lead, then semantic artworks, then the illustration search.
+        const seenBooks = new Set<string>();
+        const seenPages = new Set<string>();
+        const lead: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+        for (const d of titleArtDocs) if (!seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); }
+        for (const d of titlePlateDocs) { const k = `${d.page_id}-${d.detection_index}`; if (!seenPages.has(k)) { seenPages.add(k); lead.push(mapPlate(d)); } }
+        for (const a of artHits) { const d = semById.get(a.book_id); if (d && !seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); } }
+        const rest = mappedItems.filter((it: any) => !seenPages.has(`${it.pageId}-${it.detectionIndex}`)); // eslint-disable-line @typescript-eslint/no-explicit-any
+        outItems = [...lead, ...rest];
+
+        // Real result count: text-matching illustrations + the lead (title/semantic) items.
+        const illCount = await db.collection('gallery_images').countDocuments(
+          { $text: { $search: searchQuery }, gallery_quality: { $gte: minQuality }, book_visible: true, ...tenantF },
+          { maxTimeMS: 5000 },
+        ).catch(() => null);
+        if (illCount !== null) { displayTotal = illCount + lead.length; searchHasMore = outItems.length < displayTotal; }
+      } catch { /* non-critical — search still returns illustrations */ }
+    }
 
     // Get filters (cached for 30 min, only compute on first page)
     let filters = { types: [] as string[], subjects: [] as string[], yearRange: { minYear: null as number | null, maxYear: null as number | null } };
@@ -454,8 +546,9 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({
-      items: mappedItems,
-      total,
+      items: outItems,
+      total: displayTotal,
+      hasMore: searchHasMore,
       limit,
       offset,
       bookInfo,

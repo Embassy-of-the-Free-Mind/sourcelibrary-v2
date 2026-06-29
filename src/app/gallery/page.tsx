@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { unstable_cache } from 'next/cache';
 import { getReadDb } from '@/lib/mongodb';
+import { mergedGalleryBrowse } from '@/lib/gallery-merge';
 import { headers } from 'next/headers';
 import GalleryClient from '@/components/gallery/GalleryClient';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -84,7 +85,7 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
       <SignUpCTA />
 
       {/* Classification credits */}
-      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-12">
+      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pb-12">
         <p className="text-xs text-stone-400 text-center">
           Image subjects classified using{' '}
           <a href="https://iconclass.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-600">Iconclass</a>
@@ -121,7 +122,7 @@ async function GalleryData({ searchParams }: GalleryPageProps) {
 
 function GalleryShell() {
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-6">
+    <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6">
       <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
         <div className="flex-1 min-w-0 sm:min-w-[200px] max-w-md h-9 bg-stone-200/70 rounded-lg animate-pulse" />
         <div className="min-w-0 sm:min-w-[200px] max-w-sm flex-1 h-9 bg-stone-200/70 rounded-lg animate-pulse" />
@@ -144,7 +145,7 @@ function GalleryShell() {
 async function fetchInitialGalleryData(tenantId: string | null, bookId?: string): Promise<GalleryResponse> {
   try {
     const db = await getReadDb();
-    const limit = 24;
+    const limit = 48;
     const minQuality = 0.7;
     const maxPerBook = 3;
 
@@ -195,6 +196,22 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
         { $sort: { _id: 1 } },
       ], { maxTimeMS: 10000 }).toArray() as { _id: string }[];
       yearResult = [{ minYear: 1400, maxYear: 1900 }];
+    }
+
+    const sharedFilters = {
+      types: typesResult.map(t => t._id as string).filter(Boolean),
+      subjects: subjectsResult.map(s => s._id as string).filter(Boolean),
+      yearRange: (yearResult[0] as { minYear: number | null; maxYear: number | null }) || { minYear: null, maxYear: null },
+    };
+
+    // Plain gallery (no single book): first paint is the MERGED feed (plates +
+    // standalone artworks), matching the client's default 'all' source.
+    if (!bookId) {
+      const merged = await mergedGalleryBrowse(db, { tenantId, source: 'all', limit, offset: 0, minQuality, maxPerBook });
+      return {
+        items: merged.items, total: merged.total, hasMore: merged.hasMore, limit, offset: 0, bookInfo: null,
+        filters: { ...sharedFilters, sources: ['illustration', 'artwork'] },
+      };
     }
 
     const [items, total, bookInfo] = await Promise.all([
