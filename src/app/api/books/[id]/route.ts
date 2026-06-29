@@ -10,6 +10,7 @@ import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
+import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 
 export const preferredRegion = 'fra1';
 
@@ -309,9 +310,15 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
       }
     }
 
-    // Revalidate book page for any field change (pages are statically cached)
+    // Revalidate book page for any field change (pages are statically cached).
+    // revalidatePath alone is NOT enough: /book/* HTML is also held at the
+    // Cloudflare edge for 24h (CDN-Cache-Control), so an admin cover/title edit
+    // stays invisible for up to a day and reads as "changing the cover isn't
+    // working" (feedback, 2026-06-22). Mirror what /api/admin/revalidate-book
+    // does — revalidatePath + an explicit Cloudflare purge of the same paths.
     const bookSlug = book.slug || bookId;
     if (changedFields.length > 0) {
+      const purgePaths: string[] = [`/book/${bookSlug}`, `/book/${bookId}`];
       revalidatePath(`/book/${bookSlug}`);
       revalidatePath(`/book/${bookSlug}`, 'layout');
       revalidatePath(`/book/${bookId}`);
@@ -325,11 +332,30 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
           revalidatePath(`/${tenant.slug}/book/${bookSlug}`);
           revalidatePath(`/${tenant.slug}/book/${bookSlug}`, 'layout');
           revalidatePath(`/${tenant.slug}/book/${bookId}`);
+          // Tenant subdomains route to /embed/[tenant]/book/[slug] via proxy.ts.
+          revalidatePath(`/embed/${tenant.slug}/book/${bookSlug}`);
+          revalidatePath(`/embed/${tenant.slug}/book/${bookSlug}`, 'layout');
+          revalidatePath(`/embed/${tenant.slug}/book/${bookId}`);
+          purgePaths.push(
+            `/${tenant.slug}/book/${bookSlug}`,
+            `/${tenant.slug}/book/${bookId}`,
+            `/embed/${tenant.slug}/book/${bookSlug}`,
+            `/embed/${tenant.slug}/book/${bookId}`,
+          );
         }
       }
       // Thumbnail/title changes also affect listing pages (home, collections, search)
-      if (changedFields.some(f => ['thumbnail', 'thumbnail_blob', 'title', 'display_title', 'author'].includes(f))) {
+      if (changedFields.some(f => ['thumbnail', 'thumbnail_blob', 'image_display', 'image_thumb', 'title', 'display_title', 'author'].includes(f))) {
         revalidatePath('/', 'layout');
+        purgePaths.push('/');
+      }
+      // Bust the Cloudflare edge HTML cache too (best-effort; never block the
+      // response on it). Without this the revalidatePath above is shadowed by
+      // the 24h CDN cache and the edit looks like it did nothing.
+      try {
+        await purgeCloudflareUrls(purgePaths);
+      } catch (err) {
+        console.error('Cloudflare purge after book update failed (non-fatal):', err);
       }
     }
 

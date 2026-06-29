@@ -31,6 +31,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   const embed = useEmbed();
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnail || currentThumbnailBlob);
   const [thumbnailError, setThumbnailError] = useState(false);
 
@@ -57,6 +58,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
   const selectCover = async (page: Page) => {
     setSaving(page.id);
+    setSaveError(null);
     try {
       const update = buildCoverUpdate(page, {
         source: 'manual',
@@ -66,6 +68,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
       });
       if (!update) {
         console.error('Cover Picker: page has no usable image URL', page);
+        setSaveError('That page has no usable image to use as a cover.');
         return;
       }
       await books.update(bookId, update as unknown as Record<string, unknown>);
@@ -73,7 +76,11 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
       setIsOpen(false);
       router.refresh();
     } catch (error) {
+      // Surface the failure instead of silently doing nothing — the picker used
+      // to swallow every error, which is how a failed save read as "changing the
+      // cover isn't working" with no clue why.
       console.error('Error setting cover:', error);
+      setSaveError(error instanceof Error ? error.message : 'Could not save the cover. Please try again.');
     } finally {
       setSaving(null);
     }
@@ -157,6 +164,12 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                 <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
+
+            {saveError && (
+              <div role="alert" className="mx-4 mt-3 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {saveError}
+              </div>
+            )}
 
             {/* Pages Grid */}
             <div className="p-4 overflow-y-auto max-h-[calc(85vh-80px)]">
