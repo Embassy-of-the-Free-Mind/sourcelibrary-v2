@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import sharp from 'sharp';
 import { getReadDb } from '@/lib/mongodb';
+import { rankBySubject, topicTermsFromName, type RankableImage } from '@/lib/collection-image-ranking';
 
 // Single composited hero-collage image for a collection: a MASONRY of the
 // collection's gallery images at their natural aspect ratios (auto heights),
@@ -13,6 +14,10 @@ export const revalidate = 86400;
 const COLS = 7, COLW = 200, H = 900, W = COLS * COLW;
 const BG = '#1a1612';
 const FETCH_LIMIT = 48;
+// Pull a larger quality pool, then re-rank toward subject matter and take the top
+// FETCH_LIMIT — so the hero leads with the collection's topic (plants, fungi, …)
+// rather than the author portraits that dominate a pure quality sort.
+const POOL = 140;
 
 async function solid(maxAge: number): Promise<Response> {
   const out = await sharp({ create: { width: W, height: H, channels: 3, background: BG } }).webp({ quality: 60 }).toBuffer();
@@ -23,14 +28,21 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   const { id } = await params;
   try {
     const db = await getReadDb();
-    const bookDocs = await db.collection('books').find({ collections: id, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 }).toArray();
+    const [collectionDoc, bookDocs] = await Promise.all([
+      db.collection('collections').findOne({ slug: id }, { projection: { _id: 0, name: 1 }, maxTimeMS: 3000 }),
+      db.collection('books').find({ collections: id, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 }).toArray(),
+    ]);
     const bookIds = bookDocs.map((d) => d.id as string);
     if (!bookIds.length) return solid(3600);
 
-    const imgs = await db.collection('gallery_images').find(
+    const pool = await db.collection('gallery_images').find(
       { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
-      { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1 }, maxTimeMS: 5000 },
-    ).sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
+      { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1, type: 1, description: 1, museum_description: 1, gallery_quality: 1 }, maxTimeMS: 5000 },
+    ).sort({ gallery_quality: -1 }).limit(POOL).toArray();
+    // Re-rank toward subject matter (plants/fungi over portraits/frontispieces),
+    // then take the top FETCH_LIMIT for the collage.
+    const topicTerms = topicTermsFromName((collectionDoc?.name as string) || id);
+    const imgs = rankBySubject(pool as RankableImage[], topicTerms).slice(0, FETCH_LIMIT) as Array<Record<string, unknown>>;
     const urls = imgs.map((g) => (g.thumbnail_url || g.extracted_url || g.image_url) as string | undefined).filter((u): u is string => Boolean(u));
     if (!urls.length) return solid(3600);
 

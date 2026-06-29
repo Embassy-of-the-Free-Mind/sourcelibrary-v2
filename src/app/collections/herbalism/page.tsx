@@ -12,6 +12,7 @@ import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-uti
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { tenantBookUrl } from '@/lib/slugify';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import { rankBySubject, topicTermsFromName } from '@/lib/collection-image-ranking';
 import MycoSlider, { type MiniBook } from '../mycology/_components/MycoSlider';
 import MycoMasonry from '../mycology/_components/MycoMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
@@ -42,6 +43,16 @@ const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium 
 const OG_TITLE = 'Herbalism & Botany — Source Library';
 const OG_DESC = 'The tradition of plant knowledge from antiquity to the Enlightenment — original herbals and first English translations on Source Library.';
 const HERO_TAGLINE = 'The tradition of plant knowledge, from antiquity to the Enlightenment.';
+
+// Authored per .claude/docs/collection-intro-writing-rules.md (three-part: hook /
+// works + access / what access enables). Built from the collection's own stored
+// description (Theophrastus, Dioscorides, Fuchs, Gerard, Parkinson) plus the
+// featured work (Mattioli). [0] is the bold hook; the rest are body paragraphs.
+const INTRO = [
+  'Knowing which plants could heal, feed, or kill was among the oldest forms of practical knowledge, and the people who pursued it learned to trust nothing they had not watched grow.',
+  'The discipline was assembled over two thousand years of close work. Theophrastus sorted plants into kinds; Dioscorides compiled a pharmacy that physicians leaned on for fifteen centuries; the Renaissance herbalists Fuchs, Gerard, and Parkinson paired exact description with woodcuts drawn from life, while Mattioli enlarged the ancient canon with observations of his own. Much of this survives only in Latin and the early printed folios, reached until now mainly through citation, though many of the central works, Mattioli’s vast commentary on Dioscorides among them, appear in English here for the first time.',
+  'The pages reward the same patient looking that made them. A plant Fuchs had painted from a living specimen can be set beside the species pressed in a modern herbarium, a remedy recorded by Dioscorides matched to the compound that explains why it worked, the slow task of telling a healing plant from its poisonous double followed leaf by leaf across the centuries.',
+];
 
 export const metadata: Metadata = {
   title: OG_TITLE,
@@ -216,12 +227,13 @@ export default async function HerbalismCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages } = data;
-  const expanded = (collection.expanded_description as string) || (collection.description as string) || '';
-  const introParas = expanded.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
+  const { firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages } = data;
 
-  const galleryTotal = gallery.length;
-  const galleryPlates = gallery
+  // Weight the gallery toward botanical subject matter over author portraits /
+  // title-page frontispieces, keeping quality as the base (see collection-image-ranking).
+  const rankedGallery = rankBySubject(gallery as GalleryImg[], topicTermsFromName('Herbalism & Botany'));
+  const galleryTotal = rankedGallery.length;
+  const galleryPlates = rankedGallery
     .filter((g) => imgUrl(g))
     .slice(0, 20)
     .map((g) => {
@@ -234,10 +246,10 @@ export default async function HerbalismCollectionPage() {
       };
     });
   // Intro side image: the highest-quality plate in the collection.
-  const introPlate = gallery.find((g) => imgUrl(g));
+  const introPlate = rankedGallery.find((g) => imgUrl(g));
   const introImg = introPlate ? imgUrl(introPlate) : null;
   const introImgId = introPlate ? galleryImageId(introPlate) : undefined;
-  const signupBgId = gallery[1] ? galleryImageId(gallery[1]) : (introPlate ? introImgId : undefined);
+  const signupBgId = rankedGallery[1] ? galleryImageId(rankedGallery[1]) : (introPlate ? introImgId : undefined);
 
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
@@ -277,8 +289,8 @@ export default async function HerbalismCollectionPage() {
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
             <div className="font-body flex-1 min-w-0">
-              {introParas[0] && <p className="text-xl sm:text-3xl text-primary leading-snug mb-6">{introParas[0]}</p>}
-              {introParas.slice(1).map((p, i) => (
+              <p className="text-xl sm:text-3xl text-primary leading-snug mb-6">{INTRO[0]}</p>
+              {INTRO.slice(1).map((p, i) => (
                 <p key={i} className="text-secondary leading-relaxed mb-4 max-w-2xl">{p}</p>
               ))}
             </div>
