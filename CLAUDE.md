@@ -179,6 +179,20 @@ The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot
 
 Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies.md` for the full rationale and rollback notes.
 
+## Crawler & AI-access policy — two-layer gate (CRITICAL)
+The policy across the whole site is: **search-index crawlers and user-initiated assistant fetches get full content; AI-training / bulk crawlers are blocked or page-gated and must license bulk/training use** (see `/licensing`). It is enforced at **two independent layers, and they must agree** — this is the load-bearing gotcha.
+
+1. **Cloudflare WAF (edge)** — custom firewall rules in the Cloudflare dashboard, **NOT in this repo**. They block/allow by User-Agent *before* the request reaches Next.js. Key rules (phase `http_request_firewall_custom`): a **skip rule** "Allow social-card scrapers + verified search crawlers" (the allowlist — `Googlebot`/`bingbot`/`DuckDuckBot`/`Claude-SearchBot`/`OAI-SearchBot`/`Claude-User`/`ChatGPT-User`/`Perplexity-User`/…) and a **block rule** "Block Anthropic training crawlers" (`ClaudeBot`/`Anthropic-AI`), plus Bot Fight Mode. Edit via the CF API with **`CF_API_TOKEN`** (has WAF edit scope; `CLOUDFLARE_API_TOKEN` is the purge token and does NOT). Adding a UA to the skip-rule expression is additive/idempotent and can't block real traffic.
+2. **App layer** — `src/lib/bot-gate.ts` (`KNOWN_BOTS` → page-gated to `BOT_PAGE_PERCENT` = 20% of each book; `SEARCH_CRAWLERS` + `USER_FETCH_AGENTS` bypass via `isTrustedBot`), and the budget in `src/lib/api-budget.ts` + `src/lib/api-auth.ts`. Applies on the content APIs (`/api/books/[id]/{text,quote}`, tenant quote, `dts/document`, `iiif/search`). HTML reader pages are NOT app-gated — robots.txt is their only crawler control.
+
+**The trap: changing one layer alone is silently defeated by the other.** Ungating a UA in `bot-gate.ts` does nothing if Cloudflare still blocks it at the edge — we hit this twice (OAI-SearchBot and ChatGPT-User were app-ungated but kept 403ing until added to the CF skip rule). **When you change crawler access, update BOTH the app code and the CF rule.**
+
+**Diagnosing which layer returned a 403:** `cf-ray` present + **no** `x-vercel-id` + body "Your request was blocked." / a branded "API Access Available" page = **Cloudflare edge**. `x-vercel-id` present + a JSON error body = **app** (bot gate or budget).
+
+**Budget (anti-bulk).** `api-budget.ts`: rolling 24h page cap — anon 100 / session 200 / apikey + verified-bot unlimited. **Enforced in prod** (`API_AUTH_ENFORCE=1`, on since ~2026-05). Two spoof/granularity guards: (a) the verified-bot "unlimited" tier is granted only after **forward-confirmed reverse DNS** (`api-auth.ts` `VERIFIED_BOT_DOMAINS`) — a spoofed `Googlebot` UA from a non-Google IP is demoted to anon, not handed unlimited; (b) `/text` clamps **pages-per-request** to the caller's remaining budget so one big `from/to` range can't bypass the daily cap in a single call (returns a `budget` block when truncated). `google-extended` is deliberately NOT a verified bot (it's a training token).
+
+**Declaration layer (separate from enforcement):** `src/app/robots.ts`, `/.well-known/tdmrep.json`, the `TDM-Reservation`/`TDM-Policy` headers (`next.config.ts`), `public/llms.txt`, and `/licensing` express the reservation (honor-system + EU DSM Art. 4 opt-out). Keep these consistent with the enforcement layers above when the policy changes.
+
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
 - Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-05-26: ~46K total docs, ~29K `visible: true` (publicly shown), ~15K with `pages_count > 0` (actually processed), ~14K with any OCR. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
