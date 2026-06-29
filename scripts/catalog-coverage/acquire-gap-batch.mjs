@@ -112,6 +112,8 @@ async function processWork(w) {
   await queue.updateOne({ sn: w.sn }, { $set: { status: 'import-failed', done_at: new Date() } }); return 'import-failed';
 }
 
+// Self-heal: return stale 'processing' (a prior run died mid-flight) back to pending
+await queue.updateMany({ status: 'processing', claimed_at: { $lt: new Date(Date.now() - 60*60*1000) } }, { $set: { status: 'pending' } });
 // Atomically claim a batch (set status:'processing') so concurrent/overlapping runs don't collide
 const claimed = [];
 for (let i = 0; i < BATCH; i++) {
