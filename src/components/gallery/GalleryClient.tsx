@@ -147,6 +147,9 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const iconclassFilter = searchParams.get('iconclass') || '';
   const yearStart = searchParams.get('yearStart') || '';
   const yearEnd = searchParams.get('yearEnd') || '';
+  // Merged-gallery source facet: 'all' (default, interleaves illustrations + artworks),
+  // 'illustration', or 'artwork'.
+  const sourceFilter = searchParams.get('source') || 'all';
 
   const limit = 24;
 
@@ -170,7 +173,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // and no other filters are present.
   useEffect(() => {
     const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
-    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId) {
+    // The SSR payload is illustration-only; for the merged default ('all') or
+    // artwork-only we must fetch on mount to pull artworks in. Only skip when the
+    // request matches what the server already rendered (illustration-only, no filters).
+    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && sourceFilter === 'illustration') {
       setIsInitialLoad(false);
       return;
     }
@@ -193,6 +199,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
+          source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
           visitorId: identity.id || undefined,
         });
         setData(json);
@@ -207,7 +214,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -227,6 +234,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         yearFrom: yearStart ? parseInt(yearStart) : undefined,
         yearTo: yearEnd ? parseInt(yearEnd) : undefined,
         minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
+        source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
         visitorId: identity.id || undefined,
       });
       setAllItems(prev => [...prev, ...json.items]);
@@ -240,7 +248,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit]);
+  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
 
   // Book search with debounce
   useEffect(() => {
@@ -313,7 +321,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   return (
     <>
-      <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden animate-fade-in-up">
+      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6 overflow-x-hidden animate-fade-in-up">
         {/* Search & Filter Bar */}
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
           {/* Image Search */}
@@ -448,6 +456,29 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         {showFilters && data?.filters && (
           <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border border-stone-200">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Source: book plates vs standalone artworks */}
+              <div>
+                <label className="block text-xs font-medium text-stone-500 mb-2">Show</label>
+                <div className="flex flex-wrap gap-1">
+                  {[
+                    { key: 'all', label: 'Everything' },
+                    { key: 'illustration', label: 'Plates' },
+                    { key: 'artwork', label: 'Artworks' },
+                  ].map(({ key, label }) => (
+                    <button
+                      key={key}
+                      onClick={() => updateParams({ source: key === 'all' ? '' : key })}
+                      className={`px-2 py-1 text-xs rounded-full transition-colors ${sourceFilter === key
+                          ? 'bg-accent-rust text-white'
+                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                        }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Quality Toggle */}
               <div>
                 <label className="block text-xs font-medium text-stone-500 mb-2">Image Quality</label>
@@ -660,7 +691,10 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
 
-  const cropUrl = item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
+  // Standalone artworks have no bbox crop and link to their /book detail page,
+  // not the gallery image viewer.
+  const isArtwork = item.source === 'artwork';
+  const cropUrl = !isArtwork && item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
   // Prefer thumbnail for grid cards — extracted images are ~2MB vs ~38KB thumbnails
   const blobUrl = item.thumbnailUrl || item.extractedUrl;
 
@@ -671,7 +705,9 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
   const isPreGenerated = !useCropFallback && !!blobUrl;
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
   // Forward the collection scope so the image viewer keeps prev/next inside the collection.
-  const imageHref = `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
+  const imageHref = isArtwork
+    ? `${tenantPrefix}${item.link || `/book/${item.bookId}`}`
+    : `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
 
   return (
     <div className="relative group rounded-lg overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
@@ -724,6 +760,14 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
         </div>
 
       </Link>
+
+      {isArtwork && (
+        <div className="absolute top-1.5 right-1.5 z-10 pointer-events-none">
+          <span className="bg-accent-rust/90 text-white text-[10px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded-full shadow-sm">
+            Artwork
+          </span>
+        </div>
+      )}
 
       <div className="absolute top-1.5 left-1.5 z-10">
         <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors px-1.5 py-0.5">

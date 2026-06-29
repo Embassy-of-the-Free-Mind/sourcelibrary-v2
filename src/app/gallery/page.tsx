@@ -84,7 +84,7 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
       <SignUpCTA />
 
       {/* Classification credits */}
-      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-12">
+      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pb-12">
         <p className="text-xs text-stone-400 text-center">
           Image subjects classified using{' '}
           <a href="https://iconclass.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-600">Iconclass</a>
@@ -121,7 +121,7 @@ async function GalleryData({ searchParams }: GalleryPageProps) {
 
 function GalleryShell() {
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-6">
+    <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6">
       <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
         <div className="flex-1 min-w-0 sm:min-w-[200px] max-w-md h-9 bg-stone-200/70 rounded-lg animate-pulse" />
         <div className="min-w-0 sm:min-w-[200px] max-w-sm flex-1 h-9 bg-stone-200/70 rounded-lg animate-pulse" />
