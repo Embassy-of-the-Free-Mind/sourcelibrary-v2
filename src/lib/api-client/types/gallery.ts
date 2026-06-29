@@ -82,6 +82,8 @@ export interface GalleryResponse {
   offset: number;
   bookInfo: BookInfo | null;
   filters: GalleryFilters;
+  /** Reliable "more pages exist" flag (preferred over total-vs-offset math). */
+  hasMore?: boolean;
 }
 
 export interface GallerySearchParams {

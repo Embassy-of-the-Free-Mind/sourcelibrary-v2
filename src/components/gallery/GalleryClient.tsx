@@ -288,8 +288,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const hasMore = data ? currentOffset < data.total : false;
-  const remainingCount = data ? data.total - currentOffset : 0;
+  // Prefer the server's reliable hasMore flag; fall back to total-vs-offset.
+  const hasMore = data ? (data.hasMore ?? currentOffset < data.total) : false;
 
   const handleBookSelect = (book: BookSearchResult) => {
     setBookSearchQuery('');
@@ -647,15 +647,19 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         {/* Image Grid */}
         {!loading && data && allItems.length > 0 && (
           <>
-            {!hasFilters && (
-              <div className="mb-4">
-                <h2 className="text-2xl font-serif text-stone-800 mb-1">Browse Images</h2>
-                <p className="text-stone-500 text-base">
-                  {data.total.toLocaleString('en-US')} illustrations from rare historical manuscripts.
-                </p>
-              </div>
-            )}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <div className="mb-4">
+              <h2 className="text-2xl font-serif text-stone-800 mb-1">{hasFilters ? 'Results' : 'Browse Images'}</h2>
+              <p className="text-stone-500 text-base">
+                {data.total > 0
+                  ? `${data.total.toLocaleString('en-US')}${hasMore ? '+' : ''} ${hasFilters ? 'results' : 'images'} — plates & standalone artworks`
+                  : 'Plates & standalone artworks'}
+              </p>
+            </div>
+            {/* Masonry (CSS columns, natural aspect) with a bottom fade while more pages remain */}
+            <div
+              className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-3 sm:gap-4"
+              style={hasMore && !loadingMore ? { maskImage: 'linear-gradient(to bottom, #000 90%, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, #000 90%, transparent)' } : undefined}
+            >
               {allItems.map((item, idx) => (
                 <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
               ))}
@@ -663,7 +667,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
             {/* Load More */}
             {hasMore && (
-              <div className="mt-10 text-center">
+              <div className="mt-8 text-center">
                 <button
                   onClick={handleLoadMore}
                   disabled={loadingMore}
@@ -676,7 +680,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
-                  {loadingMore ? 'Loading...' : `Load more (${remainingCount.toLocaleString('en-US')} remaining)`}
+                  {loadingMore ? 'Loading…' : 'Load more'}
                 </button>
               </div>
             )}
@@ -702,7 +706,6 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
     ? (cropUrl || toThumbnailUrl(item.imageUrl))
     : (blobUrl || cropUrl || toThumbnailUrl(item.imageUrl));
 
-  const isPreGenerated = !useCropFallback && !!blobUrl;
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
   // Forward the collection scope so the image viewer keeps prev/next inside the collection.
   const imageHref = isArtwork
@@ -710,38 +713,32 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
     : `${tenantPrefix}/gallery/image/${galleryImageId}${collectionScope ? `?collection=${encodeURIComponent(collectionScope)}` : ''}`;
 
   return (
-    <div className="relative group rounded-lg overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={imageHref} className="block relative aspect-square bg-stone-100">
+    <div className="relative group mb-3 sm:mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 hover:shadow-md transition-all">
+      <Link href={imageHref} className="block relative bg-stone-100">
         {!imageError ? (
-          <Image
+          // Plain img for true masonry (natural aspect, no crop). Also dodges
+          // next/image host allow-listing for external artwork image hosts.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
             src={displayUrl}
             alt={item.description}
-            fill
-            quality={85}
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
+            loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
+            className="w-full h-auto block group-hover:scale-105 transition-transform duration-300"
             onLoad={(e) => {
               // Detect corrupt Blob thumbnails (real ones are 300px+)
               if (!useCropFallback && blobUrl && cropUrl) {
-                const img = e.target as HTMLImageElement;
-                if (img.naturalWidth < 150 || img.naturalHeight < 150) {
-                  setUseCropFallback(true);
-                }
+                const img = e.currentTarget;
+                if (img.naturalWidth < 150 || img.naturalHeight < 150) setUseCropFallback(true);
               }
             }}
             onError={() => {
-              if (!useCropFallback && cropUrl) {
-                setUseCropFallback(true);
-              } else {
-                setImageError(true);
-              }
+              if (!useCropFallback && cropUrl) setUseCropFallback(true);
+              else setImageError(true);
             }}
-            unoptimized={isArtwork || (!isPreGenerated && !!item.bbox)}
-            priority={priority}
-            loading={priority ? 'eager' : 'lazy'}
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-stone-300">
+          <div className="aspect-square flex items-center justify-center text-stone-300">
             <ImageIcon className="w-8 h-8" />
           </div>
         )}

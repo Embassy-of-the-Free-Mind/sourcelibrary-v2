@@ -51,7 +51,7 @@ export function artworkToGalleryItem(a: any) {
 export async function mergedGalleryBrowse(
   db: any,
   opts: MergedBrowseOpts,
-): Promise<{ items: any[]; total: number }> {
+): Promise<{ items: any[]; total: number; hasMore: boolean }> {
   const {
     tenantId, source, limit, offset,
     imageType = null, minQuality = 0.7, maxPerBook = 3,
@@ -142,6 +142,31 @@ export async function mergedGalleryBrowse(
   }
 
   const hasMore = illusHasMore || artHasMore;
-  const total = offset + items.length + (hasMore ? limit : 0); // monotone estimate for infinite scroll
-  return { items, total };
+
+  // Real total for the UI count: illustrations (estimated when unfiltered, exact
+  // when type/year-filtered) + artworks. Both guarded with a time cap.
+  let illusTotal = 0;
+  if (illusPerPage > 0) {
+    if (imageType || yearStart !== null || yearEnd !== null) {
+      const cf: Record<string, unknown> = {
+        ...tenant, gallery_quality: { $gte: minQuality }, book_visible: true,
+        extracted_url: { $ne: null }, image_url: { $ne: null },
+      };
+      if (maxPerBook < 100) cf.book_rank = { $lte: maxPerBook };
+      if (imageType) cf.type = imageType;
+      if (yearStart !== null || yearEnd !== null) {
+        const y: Record<string, number> = {};
+        if (yearStart !== null) y.$gte = yearStart;
+        if (yearEnd !== null) y.$lte = yearEnd;
+        cf.book_year = y;
+      }
+      illusTotal = await db.collection('gallery_images').countDocuments(cf, { maxTimeMS: 8000 }).catch(() => 0);
+    } else {
+      illusTotal = await db.collection('gallery_images').estimatedDocumentCount();
+    }
+  }
+  const artTotal = await db.collection('books').countDocuments(af, { maxTimeMS: 8000 }).catch(() => arts.length);
+  const total = illusTotal + artTotal;
+
+  return { items, total, hasMore };
 }

@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL } from '@/lib/clip';
-import { mergedGalleryBrowse } from '@/lib/gallery-merge';
+import { mergedGalleryBrowse, artworkToGalleryItem } from '@/lib/gallery-merge';
 
 export const maxDuration = 30;
 
@@ -160,7 +160,7 @@ export async function GET(request: NextRequest) {
       });
       const mergedFilters = await getGalleryFilters(db).catch(() => ({ types: [], subjects: [], yearRange: { minYear: null, maxYear: null } }));
       return NextResponse.json({
-        items: merged.items, total: merged.total, limit, offset, bookInfo: null,
+        items: merged.items, total: merged.total, hasMore: merged.hasMore, limit, offset, bookInfo: null,
         filters: { ...mergedFilters, sources: ['illustration', 'artwork'] },
       }, {
         headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },
@@ -462,6 +462,29 @@ export async function GET(request: NextRequest) {
       };
     });
 
+    // Include relevant standalone artworks in SEARCH results (first page only).
+    // Illustration search is keyword/Atlas; artwork search is semantic, so the
+    // artworks it returns are the genuinely on-topic ones (e.g. "John the Apostle"
+    // → paintings/prints of him), surfaced at the top.
+    let outItems: any[] = mappedItems; // eslint-disable-line @typescript-eslint/no-explicit-any
+    let searchHasMore = hasMore;
+    if (searchQuery && offset === 0) {
+      try {
+        const { semanticArtworkSearch } = await import('@/lib/semantic-search');
+        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.25 });
+        if (artHits.length > 0) {
+          const ids = artHits.map(a => a.book_id);
+          const artDocs = await db.collection('books').find(
+            { id: { $in: ids }, visible: true, content_type: 'artwork', ...(tenantId ? { tenantId } : {}) },
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 } },
+          ).toArray();
+          const byId = new Map(artDocs.map(d => [d.id, d]));
+          const artItems = artHits.map(a => byId.get(a.book_id)).filter(Boolean).map(artworkToGalleryItem);
+          if (artItems.length > 0) outItems = [...artItems, ...mappedItems];
+        }
+      } catch { /* non-critical — search still returns illustrations */ }
+    }
+
     // Get filters (cached for 30 min, only compute on first page)
     let filters = { types: [] as string[], subjects: [] as string[], yearRange: { minYear: null as number | null, maxYear: null as number | null } };
     if (offset === 0) {
@@ -477,8 +500,9 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({
-      items: mappedItems,
+      items: outItems,
       total,
+      hasMore: searchHasMore,
       limit,
       offset,
       bookInfo,

@@ -209,7 +209,7 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
     if (!bookId) {
       const merged = await mergedGalleryBrowse(db, { tenantId, source: 'all', limit, offset: 0, minQuality, maxPerBook });
       return {
-        items: merged.items, total: merged.total, limit, offset: 0, bookInfo: null,
+        items: merged.items, total: merged.total, hasMore: merged.hasMore, limit, offset: 0, bookInfo: null,
         filters: { ...sharedFilters, sources: ['illustration', 'artwork'] },
       };
     }
