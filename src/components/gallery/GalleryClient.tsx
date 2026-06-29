@@ -736,7 +736,7 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
                 setImageError(true);
               }
             }}
-            unoptimized={!isPreGenerated && !!item.bbox}
+            unoptimized={isArtwork || (!isPreGenerated && !!item.bbox)}
             priority={priority}
             loading={priority ? 'eager' : 'lazy'}
           />

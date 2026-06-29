@@ -1,0 +1,147 @@
+/**
+ * Merged gallery browse — interleaves book illustrations (gallery_images) with
+ * standalone artworks (books, content_type:'artwork') into one GalleryItem feed.
+ *
+ * Pure: takes a Mongo db handle + plain options and returns { items, total }.
+ * No Next/auth/route deps, so it can run in the API route, in SSR, and in a
+ * standalone test script. Used ONLY for the unscoped /gallery browse; all the
+ * scoped/search paths stay illustration-only in their existing code.
+ */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export interface MergedBrowseOpts {
+  tenantId: string | null;
+  source: 'all' | 'artwork';
+  limit: number;
+  offset: number;
+  imageType?: string | null;
+  minQuality?: number;
+  maxPerBook?: number;
+  yearStart?: number | null;
+  yearEnd?: number | null;
+  visitorId?: string | null;
+}
+
+// Standalone artworks store images in their own fields — map one to a GalleryItem tile.
+export function artworkToGalleryItem(a: any) {
+  const image = a.image_display || a.image_full || a.image_thumb || a.thumbnail_blob || a.thumbnail || '';
+  const thumb = a.image_thumb || a.thumbnail_blob || a.thumbnail || a.image_display || image;
+  const year = typeof a.year === 'number' ? a.year : (parseInt(a.published, 10) || undefined);
+  return {
+    pageId: `artwork-${a.id}`,
+    bookId: a.id,
+    pageNumber: 0,
+    detectionIndex: 0,
+    imageUrl: image,
+    thumbnailUrl: thumb,
+    extractedUrl: image,        // card's primary src; no bbox crop for artworks
+    bookTitle: a.display_title || a.title || 'Untitled',
+    author: a.author,
+    year,
+    description: a.summary || a.display_title || a.title || '',
+    type: a.resource_type,
+    source: 'artwork' as const,
+    link: `/book/${a.slug || a.id}`,
+    likeCount: 0,
+    likedByVisitor: false,
+  };
+}
+
+export async function mergedGalleryBrowse(
+  db: any,
+  opts: MergedBrowseOpts,
+): Promise<{ items: any[]; total: number }> {
+  const {
+    tenantId, source, limit, offset,
+    imageType = null, minQuality = 0.7, maxPerBook = 3,
+    yearStart = null, yearEnd = null, visitorId = null,
+  } = opts;
+  const tenant = tenantId ? { tenantId } : {};
+  const pageIndex = Math.floor(offset / Math.max(1, limit));
+
+  const artPerPage = source === 'artwork' ? limit : Math.max(1, Math.round(limit * 0.25));
+  const illusPerPage = source === 'artwork' ? 0 : limit - artPerPage;
+
+  // ---- illustrations ----
+  let illusDocs: any[] = [];
+  let illusHasMore = false;
+  if (illusPerPage > 0) {
+    const f: Record<string, unknown> = {
+      ...tenant, gallery_quality: { $gte: minQuality }, book_visible: true,
+      extracted_url: { $ne: null }, image_url: { $ne: null },
+    };
+    if (maxPerBook < 100) f.book_rank = { $lte: maxPerBook };
+    if (imageType) f.type = imageType;
+    if (yearStart !== null || yearEnd !== null) {
+      const y: Record<string, number> = {};
+      if (yearStart !== null) y.$gte = yearStart;
+      if (yearEnd !== null) y.$lte = yearEnd;
+      f.book_year = y;
+    }
+    const docs = await db.collection('gallery_images')
+      .find(f, { projection: { _id: 0 } })
+      .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+      .skip(pageIndex * illusPerPage).limit(illusPerPage + 1).toArray();
+    illusHasMore = docs.length > illusPerPage;
+    illusDocs = docs.slice(0, illusPerPage);
+  }
+
+  // ---- artworks (allowDiskUse guards the sort on the 26k-row artwork set) ----
+  const af: Record<string, unknown> = { ...tenant, content_type: 'artwork', visible: true };
+  if (imageType) af.resource_type = imageType;
+  if (yearStart !== null || yearEnd !== null) {
+    const y: Record<string, number> = {};
+    if (yearStart !== null) y.$gte = yearStart;
+    if (yearEnd !== null) y.$lte = yearEnd;
+    af.year = y;
+  }
+  const artDocs = await db.collection('books')
+    .find(af, {
+      projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 },
+      allowDiskUse: true,
+    })
+    .sort({ year: 1, title: 1 })
+    .skip(pageIndex * artPerPage).limit(artPerPage + 1).toArray();
+  const artHasMore = artDocs.length > artPerPage;
+  const arts = artDocs.slice(0, artPerPage).map(artworkToGalleryItem);
+
+  // ---- illustration likes ----
+  const likesMap: Record<string, { count: number; liked: boolean }> = {};
+  if (illusDocs.length > 0) {
+    const ids = illusDocs.map(d => `${d.page_id}-${d.detection_index}`);
+    try {
+      const likeDocs = await db.collection('likes').aggregate([
+        { $match: { target_type: 'image', target_id: { $in: ids } } },
+        { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
+      ]).toArray();
+      for (const ld of likeDocs) likesMap[ld._id] = { count: ld.count, liked: visitorId ? ld.visitors.includes(visitorId) : false };
+    } catch { /* non-critical */ }
+  }
+  const illus = illusDocs.map(d => {
+    const key = `${d.page_id}-${d.detection_index}`;
+    return {
+      pageId: d.page_id, bookId: d.book_id, pageNumber: d.page_number, detectionIndex: d.detection_index,
+      imageUrl: d.image_url, bookTitle: d.book_title, author: d.book_author, year: d.book_year,
+      description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation,
+      extractedUrl: d.extracted_url, thumbnailUrl: d.thumbnail_url, galleryQuality: d.gallery_quality,
+      museumDescription: d.museum_description, metadata: d.metadata, source: 'illustration' as const,
+      likeCount: likesMap[key]?.count ?? 0, likedByVisitor: likesMap[key]?.liked ?? false,
+    };
+  });
+
+  // ---- interleave (space artworks ~every `gap` tiles) ----
+  const items: any[] = [];
+  let ii = 0, ai = 0;
+  const gap = arts.length > 0 ? Math.max(2, Math.round((illus.length + arts.length) / arts.length)) : Infinity;
+  for (let pos = 0; items.length < limit && (ii < illus.length || ai < arts.length); pos++) {
+    const wantArt = ai < arts.length && (pos % gap === gap - 1 || ii >= illus.length);
+    if (wantArt) items.push(arts[ai++]);
+    else if (ii < illus.length) items.push(illus[ii++]);
+    else if (ai < arts.length) items.push(arts[ai++]);
+  }
+
+  const hasMore = illusHasMore || artHasMore;
+  const total = offset + items.length + (hasMore ? limit : 0); // monotone estimate for infinite scroll
+  return { items, total };
+}

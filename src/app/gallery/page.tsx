@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { unstable_cache } from 'next/cache';
 import { getReadDb } from '@/lib/mongodb';
+import { mergedGalleryBrowse } from '@/lib/gallery-merge';
 import { headers } from 'next/headers';
 import GalleryClient from '@/components/gallery/GalleryClient';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -195,6 +196,22 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
         { $sort: { _id: 1 } },
       ], { maxTimeMS: 10000 }).toArray() as { _id: string }[];
       yearResult = [{ minYear: 1400, maxYear: 1900 }];
+    }
+
+    const sharedFilters = {
+      types: typesResult.map(t => t._id as string).filter(Boolean),
+      subjects: subjectsResult.map(s => s._id as string).filter(Boolean),
+      yearRange: (yearResult[0] as { minYear: number | null; maxYear: number | null }) || { minYear: null, maxYear: null },
+    };
+
+    // Plain gallery (no single book): first paint is the MERGED feed (plates +
+    // standalone artworks), matching the client's default 'all' source.
+    if (!bookId) {
+      const merged = await mergedGalleryBrowse(db, { tenantId, source: 'all', limit, offset: 0, minQuality, maxPerBook });
+      return {
+        items: merged.items, total: merged.total, limit, offset: 0, bookInfo: null,
+        filters: { ...sharedFilters, sources: ['illustration', 'artwork'] },
+      };
     }
 
     const [items, total, bookInfo] = await Promise.all([
