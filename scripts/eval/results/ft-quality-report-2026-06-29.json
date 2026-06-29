@@ -1,0 +1,527 @@
+{
+  "generated_at": "2026-06-29T16:43:41.072Z",
+  "run_date": "2026-06-29",
+  "db": "bookstore",
+  "gold": {
+    "total_books": 2272,
+    "by_provenance": {
+      "census": 483,
+      "tier2_study": 384,
+      "external_33": 32,
+      "catalog": 1373
+    },
+    "adjudicated_source_counts": {
+      "census": 483,
+      "tier2_study": 384,
+      "external_33": 32
+    },
+    "catalog_recall": {
+      "catalog_rows": 24040,
+      "badged_books_scanned": 10420,
+      "assessed_books_scanned": 10420,
+      "matched_with_prior": 1436,
+      "of_which_complete_prior": 121,
+      "added_to_gold": 1373
+    }
+  },
+  "methods": {
+    "M1_disposition": {
+      "label": "Stored disposition (production)",
+      "precFirst": {
+        "numer": 393,
+        "denom": 667,
+        "rate": 0.5892053973013494,
+        "ci": [
+          0.5514618596448018,
+          0.6259272960719544
+        ]
+      },
+      "precNotFirst": {
+        "numer": 16,
+        "denom": 37,
+        "rate": 0.43243243243243246,
+        "ci": [
+          0.28671719277157315,
+          0.5908581890983192
+        ]
+      },
+      "recallNotFirst": {
+        "numer": 1084,
+        "denom": 1498,
+        "rate": 0.7236315086782377,
+        "ci": [
+          0.7004350537790518,
+          0.7456839397171797
+        ]
+      },
+      "coveredFirst": 667,
+      "coveredNotFirst": 37,
+      "emitted": 2196,
+      "skippedCircular": 0,
+      "byLang": {
+        "western": {
+          "precFirst": {
+            "numer": 254,
+            "denom": 372,
+            "rate": 0.6827956989247311,
+            "ci": [
+              0.6338401581050231,
+              0.7280145463406688
+            ]
+          },
+          "recall": {
+            "numer": 1023,
+            "denom": 1370,
+            "rate": 0.7467153284671533,
+            "ci": [
+              0.7230186306399018,
+              0.769032323027109
+            ]
+          }
+        },
+        "non_western": {
+          "precFirst": {
+            "numer": 139,
+            "denom": 295,
+            "rate": 0.4711864406779661,
+            "ci": [
+              0.414960966371001,
+              0.5281526830299678
+            ]
+          },
+          "recall": {
+            "numer": 61,
+            "denom": 128,
+            "rate": 0.4765625,
+            "ci": [
+              0.3919887260658145,
+              0.5625020687595063
+            ]
+          }
+        }
+      },
+      "byStruct": {
+        "single": {
+          "precFirst": {
+            "numer": 381,
+            "denom": 638,
+            "rate": 0.5971786833855799,
+            "ci": [
+              0.5586486524342669,
+              0.6345454740838843
+            ]
+          },
+          "recall": {
+            "numer": 1002,
+            "denom": 1377,
+            "rate": 0.7276688453159041,
+            "ci": [
+              0.7035472801248543,
+              0.7505236749401019
+            ]
+          }
+        },
+        "container": {
+          "precFirst": {
+            "numer": 12,
+            "denom": 29,
+            "rate": 0.41379310344827586,
+            "ci": [
+              0.255131773413224,
+              0.5926216401212141
+            ]
+          },
+          "recall": {
+            "numer": 82,
+            "denom": 121,
+            "rate": 0.6776859504132231,
+            "ci": [
+              0.5900535548732551,
+              0.7543833045338393
+            ]
+          }
+        }
+      }
+    },
+    "M2_derivation": {
+      "label": "Derived verdict (derive.ts)",
+      "precFirst": {
+        "numer": 187,
+        "denom": 337,
+        "rate": 0.5548961424332344,
+        "ci": [
+          0.5015133662523266,
+          0.607041503005713
+        ]
+      },
+      "precNotFirst": {
+        "numer": 9,
+        "denom": 17,
+        "rate": 0.5294117647058824,
+        "ci": [
+          0.30963235060004424,
+          0.7383489355759056
+        ]
+      },
+      "recallNotFirst": {
+        "numer": 701,
+        "denom": 1420,
+        "rate": 0.4936619718309859,
+        "ci": [
+          0.4677102358945907,
+          0.5196479071848301
+        ]
+      },
+      "coveredFirst": 337,
+      "coveredNotFirst": 17,
+      "emitted": 1748,
+      "skippedCircular": 452,
+      "byLang": {
+        "western": {
+          "precFirst": {
+            "numer": 59,
+            "denom": 82,
+            "rate": 0.7195121951219512,
+            "ci": [
+              0.6141492754244032,
+              0.8052284995409186
+            ]
+          },
+          "recall": {
+            "numer": 693,
+            "denom": 1322,
+            "rate": 0.5242057488653555,
+            "ci": [
+              0.49725344989463577,
+              0.5510177816121287
+            ]
+          }
+        },
+        "non_western": {
+          "precFirst": {
+            "numer": 128,
+            "denom": 255,
+            "rate": 0.5019607843137255,
+            "ci": [
+              0.4410203819139689,
+              0.5628429868236208
+            ]
+          },
+          "recall": {
+            "numer": 8,
+            "denom": 98,
+            "rate": 0.08163265306122448,
+            "ci": [
+              0.041944058967642,
+              0.15288287154233562
+            ]
+          }
+        }
+      },
+      "byStruct": {
+        "single": {
+          "precFirst": {
+            "numer": 183,
+            "denom": 328,
+            "rate": 0.5579268292682927,
+            "ci": [
+              0.5038179533361828,
+              0.6106945615709216
+            ]
+          },
+          "recall": {
+            "numer": 667,
+            "denom": 1301,
+            "rate": 0.5126825518831668,
+            "ci": [
+              0.48552457786484216,
+              0.5397658509278062
+            ]
+          }
+        },
+        "container": {
+          "precFirst": {
+            "numer": 4,
+            "denom": 9,
+            "rate": 0.4444444444444444,
+            "ci": [
+              0.18877852109766452,
+              0.733348706504507
+            ]
+          },
+          "recall": {
+            "numer": 34,
+            "denom": 119,
+            "rate": 0.2857142857142857,
+            "ci": [
+              0.2122475363514532,
+              0.3725831837522352
+            ]
+          }
+        }
+      }
+    },
+    "M3_tier2": {
+      "label": "Tier-2 stored verdict",
+      "precFirst": {
+        "numer": 0,
+        "denom": 0,
+        "rate": null,
+        "ci": [
+          0,
+          1
+        ]
+      },
+      "precNotFirst": {
+        "numer": 0,
+        "denom": 0,
+        "rate": null,
+        "ci": [
+          0,
+          1
+        ]
+      },
+      "recallNotFirst": {
+        "numer": 0,
+        "denom": 1,
+        "rate": 0,
+        "ci": [
+          0,
+          0.7934506856227626
+        ]
+      },
+      "coveredFirst": 0,
+      "coveredNotFirst": 0,
+      "emitted": 1,
+      "skippedCircular": 452,
+      "byLang": {
+        "western": {
+          "precFirst": {
+            "numer": 0,
+            "denom": 0,
+            "rate": null,
+            "ci": [
+              0,
+              1
+            ]
+          },
+          "recall": {
+            "numer": 0,
+            "denom": 1,
+            "rate": 0,
+            "ci": [
+              0,
+              0.7934506856227626
+            ]
+          }
+        },
+        "non_western": {
+          "precFirst": {
+            "numer": 0,
+            "denom": 0,
+            "rate": null,
+            "ci": [
+              0,
+              1
+            ]
+          },
+          "recall": {
+            "numer": 0,
+            "denom": 0,
+            "rate": null,
+            "ci": [
+              0,
+              1
+            ]
+          }
+        }
+      },
+      "byStruct": {
+        "single": {
+          "precFirst": {
+            "numer": 0,
+            "denom": 0,
+            "rate": null,
+            "ci": [
+              0,
+              1
+            ]
+          },
+          "recall": {
+            "numer": 0,
+            "denom": 1,
+            "rate": 0,
+            "ci": [
+              0,
+              0.7934506856227626
+            ]
+          }
+        },
+        "container": {
+          "precFirst": {
+            "numer": 0,
+            "denom": 0,
+            "rate": null,
+            "ci": [
+              0,
+              1
+            ]
+          },
+          "recall": {
+            "numer": 0,
+            "denom": 0,
+            "rate": null,
+            "ci": [
+              0,
+              1
+            ]
+          }
+        }
+      }
+    }
+  },
+  "calibration": {
+    "strong": {
+      "correct": 3,
+      "total": 6
+    },
+    "moderate": {
+      "correct": 0,
+      "total": 1
+    }
+  },
+  "agreement": {
+    "attempts_seen": 46448,
+    "families": {
+      "agent": 501,
+      "catalog": 15890,
+      "model_knowledge": 24579
+    },
+    "overall": {
+      "meanKappa": 0.355050692126935,
+      "itemsCompared": 12283,
+      "pairs": [
+        {
+          "n": 498,
+          "po": 0.7369477911646586,
+          "pe": 0.6694972661731263,
+          "kappa": 0.20408462045238232,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "agent",
+          "raterB": "catalog"
+        },
+        {
+          "n": 494,
+          "po": 0.6882591093117408,
+          "pe": 0.5027291055418053,
+          "kappa": 0.37309644670050757,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "agent",
+          "raterB": "model_knowledge"
+        },
+        {
+          "n": 12277,
+          "po": 0.7360104259998371,
+          "pe": 0.4844245565039297,
+          "kappa": 0.4879710092279153,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "catalog",
+          "raterB": "model_knowledge"
+        }
+      ]
+    },
+    "western": {
+      "meanKappa": 0.35432615814719065,
+      "itemsCompared": 8160,
+      "pairs": [
+        {
+          "n": 405,
+          "po": 0.7728395061728395,
+          "pe": 0.7184941319920742,
+          "kappa": 0.19305236713301888,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "agent",
+          "raterB": "catalog"
+        },
+        {
+          "n": 405,
+          "po": 0.6765432098765433,
+          "pe": 0.5300167657369304,
+          "kappa": 0.31176951316011375,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "agent",
+          "raterB": "model_knowledge"
+        },
+        {
+          "n": 8160,
+          "po": 0.774264705882353,
+          "pe": 0.4891056624855824,
+          "kappa": 0.5581565941484393,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "catalog",
+          "raterB": "model_knowledge"
+        }
+      ]
+    },
+    "non_western": {
+      "meanKappa": 0.2723529891769724,
+      "itemsCompared": 2011,
+      "pairs": [
+        {
+          "n": 62,
+          "po": 0.532258064516129,
+          "pe": 0.4417273673257024,
+          "kappa": 0.16216216216216212,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "agent",
+          "raterB": "catalog"
+        },
+        {
+          "n": 61,
+          "po": 0.7704918032786885,
+          "pe": 0.5786079011018543,
+          "kappa": 0.4553571428571428,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "agent",
+          "raterB": "model_knowledge"
+        },
+        {
+          "n": 2008,
+          "po": 0.5418326693227091,
+          "pe": 0.4276201965048174,
+          "kappa": 0.19953966251161231,
+          "labels": [
+            "found",
+            "none"
+          ],
+          "raterA": "catalog",
+          "raterB": "model_knowledge"
+        }
+      ]
+    }
+  }
+}

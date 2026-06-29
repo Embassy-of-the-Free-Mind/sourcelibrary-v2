@@ -1,0 +1,4362 @@
+{
+ "metadata": {
+  "built": "2026-06-26",
+  "source": "#2564 census Tier-2 (ft-verify) adjudication, human-reviewed for application; distilled from scripts/output/ft-evidence-2026-06-26/{promote-346-final,raw-137}.json",
+  "n": 483,
+  "result_enum": [
+   "complete_prior_found",
+   "only_partial_exists",
+   "none_found",
+   "not_applicable"
+  ]
+ },
+ "cases": [
+  {
+   "book_id": "69920b9ee0a548a13d884387",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "German",
+   "work": "Codex Argenteus: Gothic Gospels of Ulfilas",
+   "batch": "promote"
+  },
+  {
+   "book_id": "699249cfa2d53df4853c036b",
+   "result": "complete_prior_found",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "LEAVE",
+   "lang": "Akkadian",
+   "work": "The Seven Tablets of Creation, Vol. I (Enuma Elish)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6992596e3d2d40d1b058e993",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "HOLD_REVIEW",
+   "lang": "English",
+   "work": "The Works of Hsüntze (Xunzi)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "699259763d2d40d1b058f2da",
+   "result": "none_found",
+   "verdict_stage1": "first_from_source",
+   "decision": "HOLD_REVIEW",
+   "lang": "English",
+   "work": "The Book of Lord Shang: A Classic of the Chinese School of Law",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6992c904453c7175dc1bcb79",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Chinese",
+   "work": "營造法式 (Yingzao Fashi) · 卷五~卷九",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6992f40ec8c6ac61574e74c4",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Chinese",
+   "work": "離騷圖 (Li Sao Tu: Illustrated Poems of Qu Yuan)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "699388ea1075be7d320551a1",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Euripides, Sophocles, and Aristophanes: Twenty Plays",
+   "batch": "promote"
+  },
+  {
+   "book_id": "699388f30f04c37dcfa60530",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Greek Siege Warfare Compendium",
+   "batch": "promote"
+  },
+  {
+   "book_id": "699389f11075be7d320559a0",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Greek",
+   "work": "John Tzetzes, Scholia on Hesiod Works and Days",
+   "batch": "promote"
+  },
+  {
+   "book_id": "699ef9fe16733aa5a290e3d6",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "A short enquiry concerning the hermetick art. To which is annexed, a collection from Kabbala denudata, and translation o",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a552c142054c7ce7175dd4",
+   "result": "none_found",
+   "verdict_stage1": "first_modern_translation",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "The Soul, or Rational Psychology",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5ed7996d6dd816a56aae6",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Syriac",
+   "work": "Anecdota Syriaca vols. 3-4",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5eda496d6dd816a56ae46",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Syriac",
+   "work": "Homiliae S. Isaaci Antiocheni",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5edcc96d6dd816a56b8af",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Bibliotheca Orientalis Clementino-Vaticana vol. 2",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5edce96d6dd816a56bb8b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Bibliotheca Orientalis Clementino-Vaticana vol. 3 pars 1: De Scriptoribus Syris Nestorianis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5f099b29703bc86eb5cf4",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Armenian",
+   "work": "Vark ew Vkayabanutiwn Srbots, vol. 1 (Lives and Martyrdoms of the Saints)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5f2110a8b44a5d9dc8e20",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Syriac",
+   "work": "Anthology: Memre and Homilies",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5f25b0a8b44a5d9dc9936",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Syriac",
+   "work": "Paintings of the Life of Jesus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5f330d4c2e3cf8ecb7b01",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Syriac",
+   "work": "Opera Omnia (Quae Supersunt)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a5f469d4c2e3cf8ecb9324",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Syriac",
+   "work": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a68282b3d8052782b3c788",
+   "result": "none_found",
+   "verdict_stage1": "first_modern_translation",
+   "decision": "HOLD_REVIEW",
+   "lang": "French",
+   "work": "Les Fortifications du Comte de Pagan",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a683af256d25f466059279",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "French",
+   "work": "Architecture hydraulique, tome second, seconde partie",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69a6845e7ab725b59be40ee1",
+   "result": "complete_prior_found",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Opticae thesaurus: Alhazeni Arabis libri septem",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aafe186ccc25ab9ea1c33b",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "Ur III Administrative Tablet (Drehem)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69ac5f6f7f20875486da4f5b",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "French",
+   "work": "Oeuvres complètes, Tome 11: Travaux mathématiques 1645-1651",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69ac5f89318c66595eb9bbdd",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "French",
+   "work": "Oeuvres complètes, Tome 15: Observations astronomiques, Systema Saturnium",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69ac5f8f4f76006bddda2a37",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "French",
+   "work": "Oeuvres complètes, Tome 16: Mécanique jusqu'à 1666, Horlogerie",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69ac5f954f76006bddda2ca5",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "French",
+   "work": "Oeuvres complètes, Tome 17: L'horloge à pendule, Travaux divers de physique",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69ac809c1aa2dc787a68521e",
+   "result": "none_found",
+   "verdict_stage1": "first_modern_translation",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "Writings of Methodius, Alexander of Lycopolis, Peter of Alexandria, and Several Fragments",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69ac8e62e54b190acc1d3f13",
+   "result": "complete_prior_found",
+   "verdict_stage1": "first_modern_translation",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Systema theologicum ex Prae-Adamitarum hypothesi",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea755b4861a2a73847bc2",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Opera Omnia (Complete Works — Elegantiae, Declamatio, De Voluptate)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea76c8d11058c37156070",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Griechische Zauberpapyri und das Gemeinde- und Dankgebet im I. Klemensbriefe",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea7fad9729ce38747ee57",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Speculum Historiale (Mirror of History)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea803d9729ce38747f75c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De Sacramento Eucharistiae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea805d9729ce38747f875",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Orationes contra Turcos",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea808d9729ce38747f9c0",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De Re Dialectica Liber",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea8741cbf28a363a4fad7",
+   "result": "complete_prior_found",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Iamblichus De Mysteriis; Psellus De Daemonibus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aea88e1cbf28a363a50346",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Opera Omnia (Aldine)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aeac2bce3ea0f6a5a79909",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Epistolarum Libri XII et Praelectiones",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Logik: eine Untersuchung der Prinzipien der Erkenntnis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aebe72a103e42dc941438e",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "An Essay to the Advancement of Musick",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec0f0dd3c98abc0da80ce",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Nicephori Gregorae Byzantina Historia vol. I",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec307f7a3be06a67e66f4",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De romanis piscibus libellus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec79a2bb3df12d9b41eeb",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Dialectica breuis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0ab86ff9e48a393c20bc",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Anatome Plantarum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0bdaa16c6f12e8767727",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Arca Noë",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0bdafd75e3c62284c4ce",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "In Sphaeram Joannis de Sacrobosco Commentarius",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d172705dcc541045751",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Traites et Notes d'Alchimie (al-Kindi Alchemy MSS)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d30ca8f47eb1206aeb2",
+   "result": "none_found",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Herbarum Vivae Eicones (Vol. 2)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d30acdbcba89ba1cedf",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De Medicatis Aquis atque de Fossilibus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d34be5fc7f3635458eb",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Opera Genuina Omnia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d35067c0c26ee26d2bc",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Rariorum Stirpium per Pannoniam Historia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d55ca8f47eb1206b704",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De Alchemia Dialogi II (On Geber's Alchemy)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d64ca8f47eb1206b78c",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Verae Alchemiae Doctrina (True Alchemy Anthology)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0dab9f13b61d0a6c6105",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Cogitata Physico-Mathematica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0de6067c0c26ee26d8f3",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Commentarii in Libros Sex Pedacii Dioscoridis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0ed3be5fc7f363546b2f",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Libri de Piscibus Marinis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0f42af16a5a1d2280246",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Poemata Omnia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69afd691f6ab0e0de59ae93a",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "Inana and An",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69afecbd57adc49dbfc41fd2",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A Tigi for Šulgi (Šulgi L) (ETCSL 2.4.2.12)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69afee4c57adc49dbfc4203c",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A praise poem of Šulgi (Šulgi W)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69afee6257adc49dbfc42054",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A love song of Šulgi (Šulgi Z)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69afeea157adc49dbfc42099",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "An Adab to An for Šu-Suen (Šu-Suen E) (ETCSL 2.4.4.5)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69afefcf57adc49dbfc42227",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "An Adab to Dagan for Išme-Dagan (Išme-Dagan U) (ETCSL 2.5.4.21)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff06157adc49dbfc42299",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "An Ua-di to Inana for Lipit-Eštar (Lipit-Eštar H) (ETCSL 2.5.5.8)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff08157adc49dbfc4237f",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A praise poem of Ḫammu-rābi (Ḫammu-rābi A)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff08457adc49dbfc423bc",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A praise poem of Abī-Ešuḫ (Abī-Ešuḫ B)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff08857adc49dbfc42415",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "Letter from Šulgi (?) to Aradĝu about troops",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff08e57adc49dbfc424da",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A hymn to Bau's beneficent protective goddess (Bau A)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff09757adc49dbfc42706",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A fragment of a hymn to Nanna",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff09857adc49dbfc42709",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "An excerpt from a hymn to Nanna",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff09857adc49dbfc4270d",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "A fragment of a hymn to Nanna",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff09a57adc49dbfc427a9",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "Ninisina and the gods (Ninisina F)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff0a857adc49dbfc42f66",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "Proverbs: collection 16",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff0a957adc49dbfc43096",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "Proverbs: collection 27",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aff0a957adc49dbfc430d5",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Sumerian",
+   "work": "Proverbs: from Urim",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b00a0ec42435fcd0cf9acb",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_from_source",
+   "decision": "HOLD_REVIEW",
+   "lang": "Latin",
+   "work": "Claudii Galeni Opera Omnia, Vol. 18 Pt. 2",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b00e9e312120db3b488d41",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "L. Annaei Senecae Opera Philosophica, Vol. 1",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b00f6ce485bbb15c6b29cb",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Pedanii Dioscoridis De Medica Materia Libri Quinque (1546)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b18a7cc4be2cdd0edc7c3b",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Dutch",
+   "work": "Leviathan, of van de Stoffe",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b1cb49a282e3475aab4b79",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Die Bezauberte Welt",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b1d9ecd3979b7aedf4d96d",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Chiromantia medica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b1d9f667b78a79d04b1a03",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Dutch",
+   "work": "Van den spinnekop: droom-ghedicht",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b21bc3429e087c6f863493",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Aristotelis Opera, Vol. 5 (Rhetoric, Poetics, Politics)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b21bcb429e087c6f8636eb",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Comoediae Novem",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b21bef64fe7db19620a83e",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Psalterium Graecum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b21d42ddb4fa7c305b4693",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Platonis Opera Quae Extant, Vol. 2 (Stephanus)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b220eb56715b0e32473894",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Epistolae Diversorum Philosophorum — Greek Letter Collection (Aldine Editio Princeps)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b220f356715b0e32473bd0",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Cornucopiae Linguae Latinae (Aldine Press)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2214d08069e96e842f4d3",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Orthographia Dictionum Graecarum apud Statium (Aldine Press)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2215d08069e96e842f961",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine Press)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2217608069e96e842fd0d",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Philostratus, Life of Apollonius of Tyana (Aldine Press)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2218b08069e96e843034c",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Xenophon, Opera — Cyropaedia, Hunting, Spartan Constitution, Agesilaus (Aldine Press)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b221c908069e96e843135b",
+   "result": "complete_prior_found",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Isocrates, Orationes, with Alcidamas, Gorgias, and Aristides (Aldine Editio Princeps)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b221d008069e96e843147d",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Institutionum Grammaticarum Libri Quatuor (Aldine Press)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b269769c47116e2114d998",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Pontani De Fortitudine; De Principe; Dialogus Charon; De Obedientia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2f33d21208ea9dc277e2a",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Medicae artis principes post Hippocratem et Galenum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2f3b221208ea9dc27884b",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Biblia (Robert Estienne Bible)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2f4110e2f024dfbfba9d3",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Thesaurus Graecae Linguae (vol. 3)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2f47c5ef23d31023f7535",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Iuris Orientalis Libri III",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2ff5f5545150b61b47b54",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Opera Omnia Vol. 4",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2ffc95545150b61b49756",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Opera Pars Secunda",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b2ffdc5545150b61b4a290",
+   "result": "complete_prior_found",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Apophthegmatum Opus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b3001c5545150b61b4bc01",
+   "result": "not_applicable",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Scripta (1550)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b30089e28f56bd74941c98",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De Natura Stirpium",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b30094e5d6d64d8e199966",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Notitia Dignitatum (cum Orientis tum Occidentis)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b30097e5d6d64d8e199c53",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Opera Omnia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b300a7e28f56bd74942755",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Biblia Integra (1491)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b301ecc22956d8a0de5299",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Aristarchus Sacer",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b302cddf2b658a33e9b550",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Comus sive Phagesiposia Cimmeria",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b303b15facc83a9a3da55c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Historia Pacis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b3047f1d880408995e059f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Dutch",
+   "work": "Psalmen Davids (Dutch metrical psalter)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b3048c1d880408995e0907",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Dutch",
+   "work": "Rechten ende Vryheden van Cleve (Gelderland)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b62f4d1c1c21a3737f449b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Epitome omnium operum divi Aurelii Augustini Hipponensis episcopi, In qua quidquid vir ille sanctissimus et doctissimus ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b62f971c1c21a3737f76bc",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "<Ta Sôzomena tôn palaiotatôn poiêtôn geôrgika, boukolixa kai gnômika>. Vetustissimorum authorum georgica, bucolica, et g",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bd0aaab01b17638a097e63",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete_translation",
+   "decision": "PROMOTE",
+   "lang": "Chinese",
+   "work": "瓊琯白先生集 (Collected Works of Bai Yuchan, Southern Daoist Alchemist)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bd0b0bb01b17638a098903",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "HOLD_REVIEW",
+   "lang": "Chinese",
+   "work": "楞嚴經要解 (Shurangama Sutra with Essential Commentary)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfbec194e521147a83f249",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Greek",
+   "work": "Syntagma: Orthodox Refuge (Confession of Faith)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfccb18ab50eb88e8c5ec1",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Barocci 235",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfccc18ab50eb88e8c6317",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Cromwell 11",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfcce98ab50eb88e8c6ea1",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Auct. T. inf. 1. 3",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfccfb8ab50eb88e8c7380",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Barocci 44",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfcdfd8ab50eb88e8c83c8",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Arch. Selden. B. 54",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfcfb83047130b1c3c00ee",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Barocci 83",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69bfcfc03047130b1c3c02af",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Barocci 125",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c10d9a42741c656896364d",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Greek",
+   "work": "Patrologia Graeca vol. 78 — Isidore of Pelusium: Epistulae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c1af53b82ba5d5bed94ae5",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Geschichte der Freimaurerei in Frankreich, aus ächten Urkunden dargestellt",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c1b79ffe4b8f25b9200411",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Arabic",
+   "work": "The Ibn al-Bawwab Qur'an (Baghdad, c. 1000 CE)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c1b7a1fe4b8f25b9200659",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Arabic",
+   "work": "The Ruzbihan Qur'an (Shiraz, c. 1410)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c1b8c68522835be844b1b3",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Arabic",
+   "work": "Kitāb al-Manṭiq",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c1c7a5b82ba5d5bed97c1b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Handschriftl. Materialien zu den Vorlesungen über der Geschichte der Freimaurerei",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c734076a0f3d112faf750d",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "[Hebrew: Ayelet ahavim. Perush al shir ha-shirim]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c734846a0f3d112faf755c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "[Hebrew: Sefer me'il Shemu'el]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c734936a0f3d112faf7595",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "[Hebrew:] Sefer me'ulefet sapirim",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c731f56a0f3d112faf73d7",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "[Hebrew:] Ma'yenei ha-yesh'ua",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c764b46a0f3d112faf8ed7",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "Dodecadis fatidicae Maleaci a tribu Levi",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c7b18425ec2ba5ccd7f44e",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "[Hebrew: Sefer pardes rimmonim]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c7ba3925ec2ba5ccd7f930",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "A free and impartial censure of the Platonick philosophy",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c7a1c492b884e4f817382f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "[Hebrew: Sefer me'orot natan]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c7b45e25ec2ba5ccd7f5be",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "[Hebrew: Sefer shiv'im tikunei ha-zohar]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8000c6c6f3cc53c843dc1",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "An hermeticall banquet, drest by a spagyricall cook",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8125f6c6f3cc53c847b72",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Dr. Fludds Answer to M. Foster or, the squesing of parson Fosters sponge",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c824346c6f3cc53c84b35c",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Mysteria physico-medica, ob augustissimos suos natales",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c828026c6f3cc53c84c221",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "Docimastice metallica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c836fd6c6f3cc53c84ed4c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Der gantze Psalter Davids",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8552d6c6f3cc53c853a69",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "[Hebrew: Mafteach ha-Zohar]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c84d3b6c6f3cc53c8526bc",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "Cosmotheoria, libros duos complexa",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c868986c6f3cc53c856721",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "Annales mac[onniques]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c874646c6f3cc53c857c74",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The elements of the true arithmetic of infinities",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8787d6c6f3cc53c85825a",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "Geistliche Kurtzweil",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c889376c6f3cc53c85a3ed",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Scriptures wich shew for what Christ died",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8893a6c6f3cc53c85a3ef",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The second book of wonders",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c883ce6c6f3cc53c859844",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The Phoenix. An illustrated review of occultism and philosophy",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c892326c6f3cc53c85bbc6",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The strange effects of faith. Third part",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c88edb6c6f3cc53c85b1f2",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "English",
+   "work": "Vita di san Giosafat, convertito da Barlaam",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c88fd76c6f3cc53c85b497",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "[Cyrillisch: The freemason without a mask]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8926f6c6f3cc53c85bc53",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The strange effects of faith. Fifth part",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c892176c6f3cc53c85bb7c",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The strange effects of faith. Second part",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c897ec6c6f3cc53c85c965",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "An essay upon the symbolic centre of the earth",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8988b6c6f3cc53c85cb67",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The strange effects of faith. Fourth part",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c898976c6f3cc53c85cb8d",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The strange effects of faith. Fifth part",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8986c6c6f3cc53c85cb05",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The strange effects of faith. Third part",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e34cc41628b775aa84",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Veranthwortung fuer Herr Caspar Schwenckfelden",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e3551fbd40b95eaa32",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Versuch einer Geschichte des Tempelherrenordens",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e3551fbd40b95eaa3c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Dutch",
+   "work": "Verklaring van de evangelische parabolen",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5058",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Versuch einer Geschichte des Tempelherrenordens",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e3354cca56a12bc607",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Versammlungs-Rede",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e3551fbd40b95eaa3e",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Versuch einer Geschichte des Arianismus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e4ef9444b5fe7c4794",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Unparteiische Samlungen zur Historie der Rosenkreuzer",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8996c6c6f3cc53c85ce01",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The fourth book of wonders",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5056",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "German",
+   "work": "Uraltes chymisches Werck",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a505e",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Ueber den Ursprung und die vornehmsten Schicksale der Orden der Rosenkreuzer und Freymaurer",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e3354cca56a12bc605",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Dutch",
+   "work": "Vermeerderde en doorgaans verbeterde hemelsche liefdes-kus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c581e34cc41628b775aa82",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "German",
+   "work": "Urim & Thumim Moysis welches Aaron in Amts-Schildlein getragen Feuer-bleibendes Wasser",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c89c676c6f3cc53c85d59e",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "E.S.T. Instructions",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8a24f6c6f3cc53c85e3cd",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Divination and its history",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8a2786c6f3cc53c85e42c",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Time and space",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8a2816c6f3cc53c85e442",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The star lore of the Bible",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8a2da6c6f3cc53c85e50e",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Rosicrucian order. Crotona fellowship. Outer court manual no. 2. The Rosicrucian fraternity",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c89c076c6f3cc53c85d4c9",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Freemasonry: its outward and visible signs",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8a29b6c6f3cc53c85e47d",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The Golden Age and others",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c8a2ab6c6f3cc53c85e4a1",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Man's blood and generation",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69c4ec33a3a4a7c546ee610b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Philaletha illustratus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aebe72c0472fef6455ae37",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "A Treatise of the Natural Grounds and Principles of Harmony",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0be1bc67baee10860ec1",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Opera Chirurgica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0c1d0b28ecdd1331d5e2",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Gnomonices Libri Octo",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0bfaf2e68add0cf21eec",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Musaeum Metallicum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0a1c5c5d25dbf81c824d",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Primitiae Gnomonicae Catoptricae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0bdea3e283c6b4d27730",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De Visione, Voce, Auditu",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec44d3b6ebce5e0ee5ba8",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Notes on the State of Virginia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aebe61c0472fef6455aa53",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Mercury, or The Secret and Swift Messenger",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec1eece4dead60877abde",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The Natural History of Oxfordshire",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0c7c067c0c26ee26b5da",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De Scientia Stellarum (Zij al-Sabi)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0c89067c0c26ee26bcaf",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Elementa Astronomica (Jawami Ilm al-Nujum)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0bfad52f95654dfadf69",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ornithologiae, Libri XII",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0ca0067c0c26ee26bf37",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Colliget Libri VII (Kitab al-Kulliyyat)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0a9068bf0754164e4558",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "Musaeum Regalis Societatis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0cfe067c0c26ee26cfa9",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Tabulae Stellarum Fixarum (Zij-i Sultani)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec5353b6ebce5e0ee916d",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "An Inquiry into the Human Mind on the Principles of Common Sense",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d05be5fc7f363545789",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Examen Philosophiae Novae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec157b87be1eef391ea55",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "The Faerie Queene, Vol. 1 (Kent Illustrations)",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d04067c0c26ee26d0cf",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Syntagma Selectorum Arcanorum Chymicorum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69af0d072705dcc541045424",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Appendix Necessaria Syntagmatis Arcanorum Chymicorum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69aec1f00767ad23dd0affb0",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "An Essay towards a Real Character and a Philosophical Language",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b64f9818b87551bfc96192",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Explicatio gravis et eruditae cuiusdam Quaestionis peri prognōstikou di' astronomias, hoc est, de Praesignificationibus ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6519d18b87551bfcab404",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Epithalamion pii ac eruditi iuvenis M. Alberti Sulceri, Ecclesiae Christi apud Basilienses ministri, & pudicae virginis ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6501d18b87551bfc9baef",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "En lector, librum damus vere aureum, planeque scholasticum, quo continentur haec : ; Ta chrysa kaloumena Pythagorou epē.",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6501818b87551bfc9b872",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Exempla literarum augustalium quibus comprobatur Ius Familiaritatis Augustalis ac Privilegium, quo cavetur, ne inscio He",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6523118b87551bfcb0916",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "... Epitome troporum ac schematum et grammaticorum & rhetorum, ad authores tum prophanos tum sacros intelligendos non mi",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6522c18b87551bfcb07b0",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Brevis admonitio Joannis Calvini ad fratres Polonos, ne triplicem in Deo essentiam pro tribus personis imaginando, tres ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6519f18b87551bfcab414",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Epistola Sebast. Curionis ad amplissimum Collegium Iurisconsult. Patavinae civitatis : Continens defensionem Augustini C",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6508318b87551bfc9ef24",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Iudicium D. Philippi Melanchthonis De controversia Coenae Domini : ad illustrissimum Principem ac D.D. Fridericum Comite",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6454618b87551bfc3a2a6",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "... Epitome troporum ac schematum et grammaticorum & rhetorum, ad autores tum prophanos tum sacros intelligendos non min",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b64f9018b87551bfc9606f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Verba et locutiones oratoriae decerptae ex libris oratoriis M. T. Ciceronis : quibus accedunt locutiones dialecticae, ac",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b640d81c1c21a37387f583",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "... Sententiarum sive capitum, theologicorum praecipue, ex sacris & profanis libris, tomi tres",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6522718b87551bfcb0461",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De providentia divina liber",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b651a418b87551bfcab4f6",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ex libris XXIII commentariorum in vetera imperatorum Romanorum numismata Aeneae Vici liber primus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b64f9a18b87551bfc96234",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Greek",
+   "work": "Exomologēsis tēs orthodoxou pisteōs, toutesti didachēs christianikēs, prosenechtheisa Karolō tō tōn rhōmaiōn autokratori",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b653c018b87551bfcc1216",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ioannis Vuieri medicarum observationum rararum Liber I : De Scorbuto. De Quartana. De Pestilentiali Angina, Pleuritide, ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6543318b87551bfcc6a6d",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Hymenaeus, in nuptias nobilis, et generosi domini, et sponsi domini Ioannis Iacobi à Madijs & honestae virginis Annae à ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6542618b87551bfcc6072",
+   "result": "complete_prior_found",
+   "verdict_stage1": "first_modern_translation",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Caelii Augustini Curionis Sarracenicae historiae libri III : In quibus Sarracenorum, Turcarum, Aegypti Sultanorum, ... o",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6566018b87551bfcdf6c5",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Cosmographiae totius compendiosa et dilucida explicatio : nunc primum latine in lucem edita",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6586a18b87551bfcf37ee",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "In C. Plinii Majoris capita aliquot, ut difficilima, ita pulcherrima et utilissima commentarius, varia et non vulgari er",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6554418b87551bfcd33b7",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Pauli principis de la Scala et Hun ... primi tomi miscellaneorum, de rerum caussis & successibus atque secretiori method",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b657ec18b87551bfced361",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Francisci Hotomani iurisconsulti observationum liber IIII",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6576518b87551bfce93bb",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ex gratiosi ordinis Med. Bas. decreto M. Jacobus Seidelius Olaviensis Silesius ... ad X. Calend. Octob. hora locoque sol",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b655e318b87551bfcd9c00",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Stephani de Malescot Iuriscos. ac Belarborensis Theophilologi, de Nuptiis Liber Paradoxicus, nova & recenti methodo comp",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b655b518b87551bfcd7079",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Francisci Hotomani iurisconsulti observationum, liber primus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b654ae18b87551bfccc8c9",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De syllabarum et carminum ratione libri duo",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b657d518b87551bfcebfc8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De certa electorum salute, theses sexaginta",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b654c418b87551bfccddd9",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Literae illustriss. principis, Ludovici Borbonii, principis Condaei, etc. ad Carolum IX Galliae regem, quibus eius fidem",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b658da18b87551bfcf6cea",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Peri ermēneías : seu de enuntiationibus, quas propositiones vocant, in quibus verum et falsum vero dijudicantur",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b658df18b87551bfcf6dab",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Vita clarissimi viri D. Iosiae Simleri Tigurini, S. Theologiae in Schola Tigurina Professoris fidelissimi",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b658d018b87551bfcf6709",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Disputatio de melancholia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b658e118b87551bfcf6dd5",
+   "result": "not_applicable",
+   "verdict_stage1": "first_from_source",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Callimachi Cyrenaei Hymni, cum suis scholiis Graecis : et Epigrammata",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6585b18b87551bfcf314e",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Articuli de coena dominica, ministris ecclesiarum et scholarum Marchiticarum mandato ac iussu illustrissimi principis ac",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6577118b87551bfce96e8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Apologia modesta et christiana, ad acta conventus quindecim theologorum Torgae nuper habiti : ex qua liquet quid in Eccl",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b657c918b87551bfcebd26",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Greek",
+   "work": "Psalmorum Davidis aliquot metaphrasis graeca",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b656f218b87551bfce50ff",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Exegesis perspicua et ferme integra controversiae de Sacra Coena, scripta ut privatim conscientias piorum erudiat, et su",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b656c218b87551bfce3160",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Lucae Paeti ... de mensuris, et ponderibus Romanis, et Graecis : cum his quae hodie Romae sunt collatis libri quinque, e",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6592b18b87551bfcf9eb8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "... Positiones, de, rerum divisione, et adquirendo earundem iure gentium dominio",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b655c818b87551bfcd80ea",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses logicae : quas ante studiorum instaurationem, in Academia Dilingiana",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6565518b87551bfcdee97",
+   "result": "only_partial_exists",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Alae seu scalae mathematicae, quibus visibilium remotissima coelorum theatra conscendi ... tum hujus portentosi syderis ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6596118b87551bfcfb3c7",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De dentium affectibus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6595f18b87551bfcfb3b3",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Gratulationes d. Martino Aichmanno Schorndorffensi, viro virtute, & doctrina praestantissimo, cum utriusque iuris doctor",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6552f18b87551bfcd2728",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Supplicatio Carolo IX. Gal. regi exhibita post collectas coniunctasque copias et stipendia Germanico exercitui persoluta",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ae018b87551bfd05ad8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses de corde et eius vitiis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65b6f18b87551bfd0c2fe",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses ex materia successionis ab intestato",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6596f18b87551bfcfb45b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses hasce",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65a6f18b87551bfd02a55",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Isagoge ad lectionem Epistolarum Divi Pauli apostoli, qua compositionis oeconomia, et germana dispositio indicatur",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6597218b87551bfcfb465",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De anodinis medicamentis eorumque causis et usibus Physica & Medica consideratio in Theses aliquot digesta",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65b6c18b87551bfd0c2ee",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Conclusiones ex tit. D. de rei vindicatione",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65a7818b87551bfd02b7d",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "XL. enunciata, et controversa iuris responsa",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65a7618b87551bfd02b73",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De arbitris compromisso receptis conclusiones",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65adb18b87551bfd05ac4",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses de pestilentia",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6597418b87551bfcfb477",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De prodigiosa specie, naturaq[ue] cometae, qui nobis effulsit altior lunae sedibus, insolita prorsus figura, ac magnitud",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6596818b87551bfcfb415",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De tabe et phthisi pronunciata",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6596a18b87551bfcfb42f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Disputationis medicae de hydrope theses inaugurales LXV",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65bdd18b87551bfd0f70a",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Has de humoribus theses",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65bdf18b87551bfd0f718",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Amplissimi ordinis Academiae Basiliensis decreto, theses has inaugurales proponit",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65b5c18b87551bfd0c29b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De transactionibus axiomata",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65be418b87551bfd0f72c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Propositiones medicae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65b6a18b87551bfd0c2e4",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De restitutione minorum conclusiones",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65be618b87551bfd0f73a",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses de sudore",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65a7b18b87551bfd02b87",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Authoritate et iussu amplissimi ordinis Iuridicae Facultatis in celeberrima Basiliensi Academia, Conclusiones has de iur",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65a7d18b87551bfd02b91",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De legatis positiones",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65a7418b87551bfd02b65",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De acquirenda, retinenda, et amittenda possessione enunciationes C",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ad718b87551bfd05ab0",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses medicae de dysenteria",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65beb18b87551bfd0f756",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Apotherapeia iatrikē",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c8718b87551bfd1491a",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses theologicae de sacrosancta trinitate contra antitrinitarios",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65cdeb3f4fc0441515650",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Apo kōpēs eis to bēma: Positiones Peri tēs tōn katamēniōn epochēs",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c6c18b87551bfd147ca",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Disputatio de tutelis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65cefb3f4fc04415156ae",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De somno et vigilia theses ad disputandum propositae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c7318b87551bfd147f4",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Impetrato consensu amplissimi ordinis Iuridicae Facultatis, in inclyta Academia Basiliensi, pro Doctoratus gradu in utro",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c7118b87551bfd147e2",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De feudis theses LVI",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e00b3f4fc044151e195",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses de pleuritide",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c5818b87551bfd13d89",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "D. Benedicti Aretii bernensis theologi, Lectiones septem de Coena Domini, ex variis Scripturae locis sumptae, quos seque",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65df8b3f4fc044151e16f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ex amplissimi gratiosissimique Collegii Medici Inclytae Academiae Basiliensis decreto ac permissu, Theses sequentes de p",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65de7b3f4fc044151d9c6",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Baronatus et armorum insignium melioratio pro Rodulpho de Salis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65dfbb3f4fc044151e179",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses has subsequentes de artis medicae definitione & divisione Praeside Viro Clariss. D.D. Thoma Erasto, syn Theō defe",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65d03b3f4fc04415163d1",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De hydrope theses",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65cffb3f4fc0441516293",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Propositiones de lithiasi tōn nephrōn",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ce5b3f4fc044151567a",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De epilepsia theses",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65d76b3f4fc0441517c45",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De pignoribus et hypothecis theses",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c7618b87551bfd147fe",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De sententia, re iudicata, appellationibus, & executione rei iudicatae, Theses L",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c6f18b87551bfd147d8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Christo auspice: Impetrato consensu amplissimi ordinis facultatis Iuridicae, in inclyta Academia Basiliensi, pro solenni",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c7a18b87551bfd14816",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De dotibus positiones L",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c6218b87551bfd14472",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De ischuria theses",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c6518b87551bfd1447c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses medicae de divina et admiranda hominis in utero formatione",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e02b3f4fc044151e19f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses de dolore",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e04b3f4fc044151e1ad",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses de lienteria",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65df6b3f4fc044151e15d",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses inaugurales et medicae de podagrica affectione",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65defb3f4fc044151deaa",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Propositiones de lithiasi tōn nephrōn",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65d7ab3f4fc0441517caa",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Praestanti viro, dn. Andr. Ruinellae Ioannis f. Praegallo Rheto, philosophiae & medicinae doctori ad solennem actum XIII",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65d71b3f4fc0441517c2b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ex communi clariss. et consultiss. iuris professorum ordinis, in inclyta Basiliensium Academia decreto, subsequentes (de",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65d60b3f4fc0441517be1",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De transactionibus theses LXIV",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65cfcb3f4fc0441516281",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "... Theses de pleuritide",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65d6cb3f4fc0441517c17",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Themata iuridica, ex titulo C. D. et Instit. de iniuriis",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ce8b3f4fc0441515688",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De dysenteria theses",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65cedb3f4fc04415156a0",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De podagra et podagricorum curatione doctrina",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c7818b87551bfd1480c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "[Theses de usuris, desumptae ex L. Eos. C. de usuris: & l.1.C. de nautico foenore, &c.]",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c7d18b87551bfd14824",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De testibus et testimoniis theses L",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e6cb3f4fc0441521aae",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "A. C. ex decreto et autoritate amplissimi Iurisconsultorum Ordinis in celeberrima Basiliensium Academia, pro consequendo",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65c6a18b87551bfd147c0",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De iureiurando theses XL",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66084b3f4fc044153308b",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De muliebribus naturalibus Disputatio medica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65efbb3f4fc0441525906",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Isagoge ad lectionem epistolarum D. Pauli apostoli : qua compositiones oeconomia & germana dispositio indicatur",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ed9b3f4fc0441524ec6",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Peri tōn periptōmatōn tēs prōtēs pepseōs disputatio",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6608bb3f4fc04415330ab",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theou megaloio hekēti, Ad theses hasce de locorum affectorum cognitione generali",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65edeb3f4fc0441524eee",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Disputatio medica, de cibo et potu",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65edbb3f4fc0441524ed8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De epilepsia disputatio",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66177b3f4fc044153c0d0",
+   "result": "complete_prior_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "De caritate annonae ac fame conciones tres",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e74b3f4fc0441521e69",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De mediatoris invocatione : theses theologicae, oppositae Iesuitarum, de Mariae virginis, Angelorum, & Hominum mortuorum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6607fb3f4fc0441533067",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses philosophicae et medicae De rebus secundum & praeter naturam aurium : in celeberrimo Basiliensium Gymnasio, ex Am",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66101b3f4fc0441536cd1",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Rudimenta prima grammatices, ex eruditissimis quibusque grammaticis excerpta",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ff3b3f4fc044152dbd5",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Claudii Alberii Triuncuriani De concordia medicorum disputatio exoterica : ad Vencislaum Lavinium ab Ottenfeld, Moravum",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65fe1b3f4fc044152c723",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Apologia brevis et necessaria Marci Beumleri Tigurini, in qua primo exponuntur caussae, cur Iacobi Andreae manus & lingu",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65f67b3f4fc0441528995",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Via ac ratio scholae illustrium d.d. Rhaetorum qui nomine Trium Foederum nuncupantur",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6606ab3f4fc044153229f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Pro Calendario Gregoriano Dispvtatio Apologetica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ee0b3f4fc0441524efc",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De hepatis inflammatione theses",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ee7b3f4fc0441524f3a",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Endoxa philosophica & medica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ed7b3f4fc0441524eb8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses de febre hectica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ef6b3f4fc0441525693",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Francisci Porti Cretensis... In omnes Sophoclis tragoedias prolegomena, ut vulgo vocantur : in quibus ipsa poetae vita g",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e79b3f4fc0441521e7d",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De iustificatione, quae fit per fidem, sacrae syzētēseōs capita",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e7bb3f4fc0441521e87",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De tribus capitibus christianae religionis, nempe arbitrio hominis, quomodo sit liberum, aeterna sanctorum praedestionat",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6617ab3f4fc044153c16e",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ternio sacrorum theorematum, de uno Deo, de uno mediatore, et de Iesu, qui est Christus",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6617cb3f4fc044153c184",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Quaestio illustris: an'ne renati de sua ipsorum et de aliorum Piorum aeterna electione, certo pronunciare, & per fidem, ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66163b3f4fc044153b5c8",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "... De pacto revenditionis sive restitutionis conclusiones",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b6617fb3f4fc044153c196",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Didaskalia De nobili dicto Davidis : Iustus ut palma florebit: tanquam Cedrus in Libano crescet",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66089b3f4fc044153309f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Theses medicae de renum calculo",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66181b3f4fc044153c1ac",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Problema de veritatis et pacis tē syzygia : quo explicatur Zachariae Vatis dictum: Diligite Veritatem & Pacem",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ffbb3f4fc044152e34c",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Ad Gilberti Genebrardi accusationem Theodori Bezae defensio",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65fd6b3f4fc044152c073",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Chronologia sive De tempore et eius mutationibus ecclesiasticis tractatio theologica libris duobus comprehensa",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66183b3f4fc044153c1c2",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Pyrobolia, seu de ignitis Sathanae telis, commonefactio theologica",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65ee2b3f4fc0441524f0e",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "De causis curatricibus Theses Progymnasticae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b66186b3f4fc044153c1e0",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Analyticae Quaestiones & Responsiones de pane vitae",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69b65e7eb3f4fc0441521e99",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Disputationis contra Ebionitas, Iesu Christi Domini nostri deitatem negantes & philou anthrōpou eum esse fingentes sōmat",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69e7616fcc48e59ad74efb21",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Tibetan",
+   "work": "Klong gsal nyi ma 'bar ba'I rgyud sogs",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69e787c74a6785cfd60cd5ca",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Tibetan",
+   "work": "rgyud bcu bdun",
+   "batch": "promote"
+  },
+  {
+   "book_id": "69e78ff09adaf7b110e39e52",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Tibetan",
+   "work": "Bum Pa",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6a1008e8f717292950966e31",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Latin",
+   "work": "Bibliothèque des philosophes chimiques / Tome premier.",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6a10091ff717292950967cc7",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "English",
+   "work": "An  Enquiry into the Nature of the Human Soul : wherein the Immateriality of the Soul is evinced from the Principles of ",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6a10092ff7172929509680b9",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "Latin",
+   "work": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des écrivains de cette science ... / 2",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6a100a2af71729295096e40f",
+   "result": "none_found",
+   "verdict_stage1": "confirmed_first",
+   "decision": "PROMOTE",
+   "lang": "German",
+   "work": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigke",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6a14e17d311a9edd46221b35",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Tibetan",
+   "work": "Thor bu Bla ma nor rgyam chos skor",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6a14e1a4311a9edd46222dc2",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Tibetan",
+   "work": "Thor bu sMin gling zab chos rig 'dzin thugs thig",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6a14e1df311a9edd462249f0",
+   "result": "not_applicable",
+   "verdict_stage1": "confirmed_first",
+   "decision": "LEAVE",
+   "lang": "Tibetan",
+   "work": "Thor bu Bla ma nor bu rgya mtsho'i las byang sogs",
+   "batch": "promote"
+  },
+  {
+   "book_id": "6991d8ab8c1030b12444c551",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete",
+   "decision": null,
+   "lang": "French",
+   "work": "Traite de l'Harmonie Universelle",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69ac5f687f20875486da4c17",
+   "result": "not_applicable",
+   "verdict_stage1": "first_complete",
+   "decision": null,
+   "lang": "French",
+   "work": "Oeuvres complètes, Tome 10: Correspondance 1691-1695",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69942e50d607f8e57e4b82da",
+   "result": "only_partial_exists",
+   "verdict_stage1": "first_complete",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Hypomnēmatismoi kai Sēmeioseis Gnomikai (Miscellanea Philosophica et Historica)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b3e5ee304c1c6b3950a8f5",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Arabic",
+   "work": "Suwar al-kawakib (Book of the Fixed Stars)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69d5abce4dc55b8478ddd014",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Arabic",
+   "work": "Al-Futuhat al-Makkiyya",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6992cc12018b80967354cc95",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Chinese",
+   "work": "齊民要術 (Qimin Yaoshu: Essential Techniques for the Welfare of the People) Vols 7-8",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6992cc14018b80967354cd75",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Chinese",
+   "work": "齊民要術 (Qimin Yaoshu: Essential Techniques for the Welfare of the People) Vol 10",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6992f3e9c8c6ac61574e7225",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Chinese",
+   "work": "廣輿圖 (Guang Yu Tu: Enlarged Territorial Atlas)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525b76be6046083030d31",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Voyagie na West-Indien, gedaan door David Middelton, met kapiteyn Michael Geare, in 't jaa",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525b729577f283b57b79c",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Voyagie van Capiteyn William Hawkins, door Oost-Indien, gedaan anno 1608 en vervolgens. :,",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525b829577f283b57b84c",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Bartholomeus Gosnols reys van Engeland na het noorder-gedeelte van Virginien, anno 1602, d",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525bf29577f283b57bc17",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Derde reys, gedaan voor de Engelsche Maatschappy na Oost-Indien, met drie scheepen, de Dra",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525c36be6046083031e01",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Kort verhaal van Pieter Carder, gebooren tot St. Veriaan in Cornwal, niet verre van Vaalmu",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525c72f891867c1ae5290",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Scheeps-Togt van Edward Terry Capellaan van den Ambassadeur Thomas Roe, na Oost-Indien; me",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525ca6be6046083032513",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Twee verscheyde scheeps-togten gedaan na de Moluccos en St. Martha, in 't jaar 1525 en ver",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b525cb6be6046083032716",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Dutch",
+   "work": "Sesde reys van de Engelsche Maatschappy, na Oost-Indien, door den Generaal, Hendrik Middel",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e1582bec0a328a49d0a24c",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Egyptian hieroglyphs",
+   "work": "The Report of Wenamun",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69ac7fdc14c3b7edc8ba86ec",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "English",
+   "work": "Part of the Opus Tertium",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69d5abbfd0bd3547a5654016",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "English",
+   "work": "Kitab al-Manazir",
+   "batch": "demote"
+  },
+  {
+   "book_id": "697b079920ebe13ce499c770",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "French",
+   "work": "Des erreurs et de la verite",
+   "batch": "demote"
+  },
+  {
+   "book_id": "699052538d19cbc90d9d5f17",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "French",
+   "work": "L'incredulite et mescreance du sortilege plainement convaincue",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b418b02b0edf3eaa2dda3a",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "French",
+   "work": "Les véritables clavicules de Salomon (PH296)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6975158da88d83c830d99e3a",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Aureum vellus oder guldin Schatz und Kunstkammer",
+   "batch": "demote"
+  },
+  {
+   "book_id": "697b07993db05804f2b82140",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Erklaerte Offenbarung Johannis",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6990632fef12272ffdc900f2",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Von der Weltseele; eine Hypothese der höhern Physik zur Erklärung des allgemeinen Organism",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6990636eef12272ffdc916af",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Fragmente aus dem Nachlasse eines jungen Physikers, Vol. I",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a5ef33bfd8cafd91e43b73",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Schachzabelbuch (verse translation)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b3f757a107e55a0ee1cb64",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Paracelsus, Opera theologica, I (VCF 24)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b4cc44d2bf9b45ea479e98",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Chymische Schriften",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51e9047b06ecd581937f5",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Informatorium Oder kurtzer Unterricht, welcher gestalt man durch drey Mittel den schmalen ",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c1bd8eb82ba5d5bed96a2c",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Illuminatus dirigens, oder das Schottische Noviziat. Classe II. Grad 2. Illuminatus major",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c63da4b463eebe7caac5ae",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Viridarium chymicum, das ist: Chymisches Lust-Gärtlein",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c6fd8ada9771c7163154e0",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Vom Zank und Streit der Gelehrten um Christi Testamenta",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c71b82da9771c7163168b6",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Ausspruch der alten Jüdischen Kirchen",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c856c76c6f3cc53c853eed",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "German",
+   "work": "Die geistliche Bücher und Schrifften",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69938a8ed5a98fd66f42cef9",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Demosthenes, Epitaphios; Lysias; Synesius",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69942f83b2f6748db4ac128c",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Maximus Confessor Opuscula Theologica et Polemica",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b20f7baed0c6181c6c67b5",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Miscellanea Philosophica et Historica",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b52c8f3dd6d942302812b2",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Manuel Bryenni Musica",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b62f501c1c21a3737f47b7",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Pindari Olympia, Pythia, Nemea, Isthmia. Caeterorum octo lyricorum carmina, Alcaeai, Anacr",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69bfcd918ab50eb88e8c8359",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Bodleian Library MS. E. D. Clarke 10",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69bfcde68ab50eb88e8c83b3",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Bodleian Library MS. Holkham gr. 114",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69bfce7f8ab50eb88e8c85e3",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Bodleian Library MS. E. D. Clarke 6",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69d146041c2a66dc094b1fad",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "In Nicomachi Arithmeticam Introductionem (+ De Fato)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69944b621ba8351377907092",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Philonis Judaei Opera Omnia (Vol. 8)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "699389f174305116d72d3069",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Euthymius Zigabenus, Panoplia Dogmatica; Theodoretus, Historia Religiosa",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e419e58a8dae1074c51fc2",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "Daphnis & Chloe (Greek-English, Loeb)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69f080be883d181634179c88",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Greek",
+   "work": "The Mimes of Herodas",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6990585617295890441358e0",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Trattato di musica secondo la vera scienza dell armonia",
+   "batch": "demote"
+  },
+  {
+   "book_id": "699064afef12272ffdc93d2f",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Compendio di Revelatione",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6991eadb2f801130a473e9f4",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Etudes et dessins sur les canaux",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6991eaef2f801130a473ec5c",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Notes et dessins sur la generation et le mecanisme des fonctions intimes",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a5b972486a857b0587cb7c",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Nova scientia",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a68215b3d8052782b3c346",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Quesiti et inventioni diverse",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a68228d5bf106c72bb878b",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Della misura dell'acque correnti",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a683ab7ab725b59be40e31",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Spiritali di Herone Alessandrino",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69aebfc3e997cc01b0caafe3",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "Lettere di M. Pietro Aretino (vol. 3)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69dc5587cb6f7429748b8ddb",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "De Christiana religione [Italian]",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a0b2316620b66ad8f23283a",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "L'Idea della Architettura Universale",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a0b2e8d688e6a8e15f66b9b",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "I Dieci Libri dell'Architettura di M. Vitruvio (Barbaro's 1556 commentary, illustrations b",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a0b2e9f688e6a8e15f66ce4",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Italian",
+   "work": "L'Idea della Architettura Universale (1615 first edition)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e4207771f02ebac6264a8e",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Japanese",
+   "work": "好色一代男 (Life of an Amorous Man), Vol. 5",
+   "batch": "demote"
+  },
+  {
+   "book_id": "685a9b1bcdbe778e22823a64",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De Voluptate (On Pleasure)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "d850a255-4633-43d5-8383-7c67a7e55144",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+   "batch": "demote"
+  },
+  {
+   "book_id": "68fb0dc412055a03a58d3281",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Pymander, de potestate et sapientia Dei",
+   "batch": "demote"
+  },
+  {
+   "book_id": "694e7c5146953358dafc3867",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Nova et accurata vestibuli Comeniani editio. Ampl. facultatis philos. in acad. reg. consen",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69482afb914d007380634d28",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De verbo mirifico",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69526a50ab34727b1f046dc5",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Plotini Opera Omnia (Enneads)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6952b0fd77f38f6761bc2adc",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Miscellanea centuria una",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6958e00ecf7070242ed422d7",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De viribus herbarum",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6958e011cf7070242ed4235c",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Herbarum varias qui vis cognoscere vires",
+   "batch": "demote"
+  },
+  {
+   "book_id": "695929a57c072c27f686d29f",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Steganographia vindicata, reserata et illustrata",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6990612b322e01b1349a39cf",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Directorium Inquisitorum",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69906327ef12272ffdc8f9ac",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Somniorum Synesiorum Libri IV",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69906ed78a353648e1ed085f",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Ars Notoria sive Flores Aurei",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6991d8a18c1030b12444c1c9",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Monochordum Mundi Symphoniacum",
+   "batch": "demote"
+  },
+  {
+   "book_id": "699246a8bc722ec0ee80fa08",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Acta Apostolorum Apocrypha (Apocryphal Acts, Greek & Latin)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a5649d2a434dd7a98425fe",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De consideratione quintae essentiae seu de famulatu philosophiae",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a5b9a1d76b98f272fcedeb",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Mechanicorum liber",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a68457256d25f466059e53",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Perspectiva (De natura, ratione & proiectione radiorum visûs, luminum, colorum atque forma",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a68516b3d8052782b3d429",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Diversarum speculationum mathematicarum & physicarum liber",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69ae95b87f0f0e8879510aaf",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Ioannis Stobaei Florilegium",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69aea83c1cbf28a363a4f25a",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Problemata Aristotelis (Gaza translation)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69aeab3967e6731bc13662c9",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Quaestiones Camaldulenses",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69af1315edb4389041037d06",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Archimedis Opera Omnia cum Commentariis Eutocii, Vol. I (Heiberg 1880)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69affe4f6f6f6a408aa74248",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Diophanti Alexandrini Opera Omnia, Vol. 1",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69affe6c6f6f6a408aa743ca",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Diophanti Alexandrini Opera Omnia, Vol. 2",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b2f38d21208ea9dc2786c4",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Querolus, antiqua comoedia nunquam antehac edita",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b4c08986a5921d5bc444b1",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Mercurius Trismegistus a Ficino Latine interpretatus. aliorum philosophorum scripta",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b4c08d86a5921d5bc445cf",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Philosophica quaedam, Trismegistus per Apuleium et per Marsilium Ficinum traductus",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b4ccefd5b6c3815e1a2b71",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Saturnalia",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51cf247b06ecd58182718",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Symbolum physico-chymicum Henrici Khunrath Lips. ... De Chao Physico-Chymicorum Catholico,",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51dbaefd8df28f2da9f26",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Tomi Secundi Tractatus Primi, Sectio Secunda, De technica Microcosmi historia : in Portion",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51dd5cf111105c429155f",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Thesaurus et armamentarium medico-chymicum",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51e0cefd8df28f2daf78e",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Tractatus aliquot Chemici Singvlares : Summum philosophorum arcanum continentes. 1. Liber ",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51e3f768235dc6598e2c7",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Medicorum Ac Philosophorum Facile Principis Theophrasti Paracelsi Eremitae libri V. de Vit",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51e83cf111105c429ead5",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Johannis Trithemii Primo Spanheimensis Deinde Divi Jacobi Peapolitani Abbatis Steganograph",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b52be83dd6d9423027cabc",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Ficini Expositio Mercurii Trismegisti",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b52c263dd6d9423027e308",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Ant. Musae Herbarium / Apuleii Platonici / Dioscordis De herbis",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b52c543dd6d9423027f694",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Alexandri Expositio in librum meteorologicorum / Avicennae De anima",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c86fb56c6f3cc53c85713b",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Chrysopoeiae",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c866086c6f3cc53c856325",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De l'admirable pouvoir et puissance de l'art et de nature",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c8701f6c6f3cc53c857213",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Chymisticum artificium naturae",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51d21f23ccdcced3062bb",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Nobiblis, Clarissimi Ac probatissimi Philosophi & Medici, Dn. Aureoli Philippi Theophrasti",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51e1547b06ecd58189a2f",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Divini Platonis operum. 3, Continens Quaternitatem Quintam, & Sextam",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b51e7bff09e4fe943afb74",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Standortkataloge verschiedener Fächer - BSB Cbm Cat. 121 d-r",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69c1138537989a445aea1ac1",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Opera Quae Supersunt Omnia (Corpus Reformatorum)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b3f788a107e55a0ee1dc6c",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Herbarium / Pseudo-Apuleius; De medicamentis ex animalibus (BPL 1283)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69dbcb281040d1d5e20b2f2d",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De venenis. Ed: Guilielmus Haldenhoff",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69dbcc5c0f8c5edf20f4a6bc",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Catena aurea super quattuor evangelistas. Ed: Johannes Andreas, bishop of Aleria",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69dbcc8f0f8c5edf20f4c8dc",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De articulis fidei et ecclesiae sacramentis",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69dc559dcb6f7429748b9192",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Liber de contemptu mundi, sive De miseria humanae conditionis. Add: Bernardus Claravallens",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69dc55f0cb6f7429748b98c9",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De articulis fidei et ecclesiae sacramentis. De periculis contingentibus circum sacramentu",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69b6500e18b87551bfc9ae84",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Musicae epitome ex Glareani dodecachordo",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69de1dd9cf4ce17f68524c8a",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De magnis coniunctionibus. Ed: Johannes Angelus Trad: Johannes Hispalensis",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a09dd1624d4d312f5c30b35",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De arte gymnastica libri sex",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a09dd1e24d4d312f5c30cae",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "De arte gymnastica libri sex (Amsterdam ed.)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a0a248860700bc49f8182fc",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Donum Dei (The Gift of God) — Alchemical Treatise with Flask Illustrations",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a0a46f8ef9e0385fbdf5903",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Beati Raymundi Lulli Doctoris Illuminati et Martyris Opera, Tomus I (Salzinger ed., Mainz)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e792d980b52390feb16d3b",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Malay",
+   "work": "Hikayat Hang Tuah, Vol. I",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e792de80b52390feb16e5e",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Malay",
+   "work": "Hikayat Hang Tuah, Vol. II",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e75a27095c302d3fddec98",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Old French",
+   "work": "Le Jeu de Robin et de Marion",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6953c74877f38f6761bdaea9",
+   "result": "not_applicable",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Persian",
+   "work": "Mesnevi (German) - Rumi",
+   "batch": "demote"
+  },
+  {
+   "book_id": "699066582ec9f7db5717a0a5",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Sanskrit",
+   "work": "Karana Kutuhala (Karna Kutuhala)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6991d8ac8c1030b12444c781",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Sanskrit",
+   "work": "Kriyakandakramavali",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69a5eb5baa8e0e4092147282",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Syriac",
+   "work": "Acta Martyrum et Sanctorum, Tomus V",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69946ebaf6f3426e298f00c0",
+   "result": "only_partial_exists",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Tamil",
+   "work": "Tiruvaḷḷuvar Kuṟaḷ (with Parimelazagar Commentary)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69dfee86ce6bb8619e07f683",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Tibetan",
+   "work": "Drang nges legs bshad snying po (Essence of Eloquence)",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e782ddd93c1f60075050c0",
+   "result": "none_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Tibetan",
+   "work": "Thugs sgrub bar chad kun sel skor",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69e7963d80b52390feb19040",
+   "result": "complete_prior_found",
+   "verdict_stage1": "needs_review",
+   "decision": null,
+   "lang": "Tibetan",
+   "work": "chags med ris chos",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a308ce6d57c4b7e016006c6",
+   "result": "complete_prior_found",
+   "verdict_stage1": "no-verdict",
+   "decision": null,
+   "lang": "German",
+   "work": "Celestial Phenomenon over Nuremberg, 14 April 1561",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a308d1cd57c4b7e016006cb",
+   "result": "none_found",
+   "verdict_stage1": "no-verdict",
+   "decision": null,
+   "lang": "German",
+   "work": "Strange Shapes over Basel, 1566",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69bd9f4bf6d63c91974800b0",
+   "result": "only_partial_exists",
+   "verdict_stage1": "no-verdict",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Kabbala denudata, seu, doctrina Hebraeorum transcendentalis et metaphysica atque theologic",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69bd9e066120d54bd037a8ad",
+   "result": "not_applicable",
+   "verdict_stage1": "no-verdict",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosop",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69bd9faef6d63c9197481708",
+   "result": "none_found",
+   "verdict_stage1": "no-verdict",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Mundus Symbolicus, in emblematum universitate formatus, explicatus, et tam sacris, quam pr",
+   "batch": "demote"
+  },
+  {
+   "book_id": "69bda035f6d63c91974856ae",
+   "result": "none_found",
+   "verdict_stage1": "no-verdict",
+   "decision": null,
+   "lang": "Latin",
+   "work": "Speculum imaginum veritatis occultae, exhibens symbola, emblemata, hieroglyphica, aenigmat",
+   "batch": "demote"
+  },
+  {
+   "book_id": "6a26ba6961b3857ed05afd33",
+   "result": "complete_prior_found",
+   "verdict_stage1": "no-verdict",
+   "decision": null,
+   "lang": "und",
+   "work": "Sphaera",
+   "batch": "demote"
+  }
+ ]
+}
