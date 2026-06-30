@@ -90,17 +90,22 @@ export const COLLECTION_TEMPLATES: Record<string, CollectionTemplateConfig> = {
     },
     quoteBg: '/api/gallery-crop/69b4cc7fd5b6c3815e1a0d83-0',
     quoteCredit: { text: 'Image: Maria Sibylla Merian, Metamorphosis insectorum Surinamensium, 1719.', href: '/gallery/image/69b4cc7fd5b6c3815e1a0d83-0' },
+    quoteTint: 'soft',
     // Join-the-project background: the same standard plate the fungi page uses.
     signup: {
       bgImageUrl: '/api/gallery-crop/6955d43628a09ca65928002a-0',
       bgAttribution: { text: 'Image: Flamsteed, Historia Coelestis Britannica, Vol. 3, 1725.', href: '/gallery/image/6955d43628a09ca65928002a-0' },
     },
     quotes: [
-      { translated: 'The myrtle is under the protection of Venus because it is useful for remedies of love, as are the rose and the linden tree.', language: 'Latin', attribution: 'Della Porta, Villae, 1592', href: '/book/villae-porta/page/69b1c642edda7fb64e1a08c0' },
-      { translated: 'The Ancients hold that there are three different movements among all plants; namely, budding, flowering, and ripening…', language: 'French', attribution: 'de Serres, Théâtre d’Agriculture, 1603', href: '/book/le-theatre-d-agriculture-et-mesnage-des-champs-serres/page/69a5d7f94d84314297c08078' },
-      { translated: 'It flowers from May until Autumn in the same year it is sown, and it perishes upon the arrival of winter.', language: 'Latin', attribution: 'Ray, Historia Plantarum, 1688', href: '/book/historia-plantarum-vol-ii-ray/page/6958e0d19659a6529d5772dd' },
+      { translated: 'The myrtle is under the protection of Venus because it is useful for remedies of love, as are the rose and the linden tree.', original: 'Myrtus sub Veneris tutela, quod venereis remediis conducat, sic rosa, & philyra.', language: 'Latin', attribution: 'Della Porta, Villae, 1592', href: '/book/villae-porta/page/69b1c642edda7fb64e1a08c0' },
+      { translated: 'The Ancients hold that there are three different movements among all plants; namely, budding, flowering, and ripening…', original: 'Les Anciens tiennent estre entre toutes plantes, trois divers mouvemens; assavoir, bouter, fleurir, meurir…', language: 'French', attribution: 'de Serres, Théâtre d’Agriculture, 1603', href: '/book/le-theatre-d-agriculture-et-mesnage-des-champs-serres/page/69a5d7f94d84314297c08078' },
+      { translated: 'It flowers from May until Autumn in the same year it is sown, and it perishes upon the arrival of winter.', original: 'Floret à Maio usque in Autumnum eodem quo sata est anno, & superveniente hyeme corrumpitur.', language: 'Latin', attribution: 'Ray, Historia Plantarum, 1688', href: '/book/historia-plantarum-vol-ii-ray/page/6958e0d19659a6529d5772dd' },
     ],
     // Custom librarian visual (no video): the Ortus sanitatis scholars-in-a-garden woodcut.
-    librarian: { imageSrc: 'https://images.sourcelibrary.org/gallery/6958e84f538549809db81f94/6958e850538549809db81f9a-0.jpg', placeholder: 'Ask a question about herbs and plants…' },
+    librarian: {
+      imageSrc: 'https://images.sourcelibrary.org/gallery/6958e84f538549809db81f94/6958e850538549809db81f9a-0.jpg',
+      credit: { text: 'Ortus sanitatis (Garden of Health)', href: '/gallery/image/6958e850538549809db81f9a-0' },
+      placeholder: 'Ask a question about herbs and plants…',
+    },
   },
 };

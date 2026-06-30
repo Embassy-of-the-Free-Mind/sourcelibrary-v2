@@ -48,8 +48,11 @@ export interface CollectionTemplateConfig {
   quoteBg?: string;
   quoteCredit?: { text: string; href: string };
   quoteFramingKey?: string;
-  /** Librarian section visual — a video or a still image (custom per collection). */
-  librarian?: { videoSrc?: string; imageSrc?: string; placeholder: string };
+  /** Background darkening behind the quote band. 'soft' for busy/light plates. */
+  quoteTint?: 'soft' | 'strong';
+  /** Librarian section visual — a video or a still image (custom per collection).
+   *  An image should carry a credit (attribution + link to its gallery page). */
+  librarian?: { videoSrc?: string; imageSrc?: string; credit?: { text: string; href: string }; placeholder: string };
   /** If omitted, derived as a gallery-crop of a top plate. */
   signup?: { bgImageUrl: string; bgAttribution: { text: string; href: string } };
   /** Override the image-ranking topic terms (defaults to the hero title). */
@@ -356,7 +359,7 @@ export default async function CollectionTemplate({ config }: { config: Collectio
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {(config.librarian?.videoSrc || config.librarian?.imageSrc) && (
-            <div className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
+            <figure className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 m-0 lg:w-auto lg:max-w-none">
               {config.librarian.videoSrc ? (
                 <video className="w-full h-auto mix-blend-multiply lg:w-auto lg:h-[74vh]" autoPlay loop muted playsInline preload="metadata">
                   <source src={config.librarian.videoSrc} type="video/mp4" />
@@ -365,7 +368,12 @@ export default async function CollectionTemplate({ config }: { config: Collectio
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={config.librarian.imageSrc} alt="" loading="lazy" decoding="async" className="w-full h-auto mix-blend-multiply lg:h-[74vh] lg:w-auto object-contain" />
               )}
-            </div>
+              {config.librarian.imageSrc && config.librarian.credit && (
+                <figcaption className="mt-2 text-xs text-muted text-center">
+                  <Link href={config.librarian.credit.href} className="hover:text-primary transition-colors">{config.librarian.credit.text}</Link>
+                </figcaption>
+              )}
+            </figure>
           )}
           <div className="max-w-xl">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-3">Ask the librarian</p>
@@ -401,7 +409,7 @@ export default async function CollectionTemplate({ config }: { config: Collectio
 
       {/* Quote band */}
       {config.quotes && config.quotes.length > 0 && (
-        <QuoteBlock bgUrl={config.quoteBg} framing={quoteFraming} imageCredit={config.quoteCredit} quotes={config.quotes} />
+        <QuoteBlock bgUrl={config.quoteBg} framing={quoteFraming} imageCredit={config.quoteCredit} quotes={config.quotes} tint={config.quoteTint} />
       )}
 
       {/* Get involved */}
