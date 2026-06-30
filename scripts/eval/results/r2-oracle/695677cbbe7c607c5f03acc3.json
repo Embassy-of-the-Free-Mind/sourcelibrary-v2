@@ -1,0 +1,40 @@
+{
+  "book_id": "695677cbbe7c607c5f03acc3",
+  "work_identified": "Basilica Philosophica (Tractatus III / Pars Altera of Opus Medico-Chymicum), Johann Daniel Mylius, Frankfurt 1618/1620",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Johann Daniel Mylius \"Basilica Philosophica\" English translation",
+    "Mylius \"Opus Medico-Chymicum\" \"Basilica Philosophica\" translation English",
+    "worldcat \"Mylius\" \"Basilica Philosophica\" English translation",
+    "Johann Daniel Mylius alchemist works English translation published",
+    "worldcat \"opus medico-chymicum\" Mylius English translation",
+    "Mylius \"Basilica Philosophica\" English translation academic press OR university press",
+    "HathiTrust Mylius \"Basilica Philosophica\" English",
+    "\"Basilica Philosophica\" Mylius translated English 17th century OR 18th century OR 19th century",
+    "Mylius \"Opus Medico-Chymicum\" \"first translation\" OR \"first English\" alchemical text",
+    "site:archive.org \"mylius\" \"basilica philosophica\" english",
+    "Mylius \"pars altera\" \"basilica philosophica\" English translation modern",
+    "Mylius alchemist \"Basilica Philosophica\" English Brill OR \"academic press\" OR translation 2000 OR 2010 OR 2020",
+    "\"Johann Daniel Mylius\" English translation \"never been\" OR \"no translation\" OR \"untranslated\""
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/BIUSante_pharma_res011390x02", "found": "Latin-only edition of Pars Altera (1620) at BIUSante Paris; no English translation associated"},
+    {"url": "https://archive.org/details/2389063RX1.nlm.nih.gov", "found": "Latin-only edition of Vol.1 Opus Medico-Chymicum at NLM; no English translation"},
+    {"url": "https://en.wikipedia.org/wiki/Johann_Daniel_Mylius", "found": "Lists four Mylius works (Opus Medico-Chymicum 1618, Antidotarium 1620, Philosophia Reformata 1622, Anatomia Auri 1628); no English translations mentioned"},
+    {"url": "https://www.weiserantiquarian.com/pages/books/58865/...", "found": "Adam McLean 1984 translation confirmed to be from Philosophia Reformata (1622), NOT Basilica Philosophica"},
+    {"url": "https://www.amazon.com/Twelve-Grades-Alchemy-translations/dp/B0C1HZYS3Z", "found": "McLean 2023 Twelve Grades of Alchemy confirmed to be from Philosophia Reformata (1622), NOT Basilica Philosophica"},
+    {"url": "http://www.prdl.org/author_view.php?a_id=4870", "found": "PRDL lists Philosophia Reformata (1622) for Mylius; no English translations mentioned"},
+    {"url": "https://www.alchemywebsite.com/s_mylius.html", "found": "Covers only Philosophia Reformata (1622); no English translation of Basilica Philosophica"},
+    {"url": "https://www.alchemywebsite.com/equipment_mylius_philosophica_01.html", "found": "Gallery of Basilica Philosophica equipment illustrations; no English translation mentioned"},
+    {"url": "https://books.google.com/books/about/Basilica_philosophica_continens_lib_tres.html?id=b41HQwAACAAJ", "found": "Google Books confirms Latin-only edition; no English translation in catalogue"},
+    {"url": "https://search.worldcat.org/title/Opus-medico-chymicum-/oclc/14301678", "found": "WorldCat record (HTTP 403, accessed via search); no English edition returned in multiple searches"},
+    {"url": "https://wellcomecollection.org/works/j2xn4c7s", "found": "Wellcome Collection holds Latin edition; no English translation listed"}
+  ],
+  "reasoning": "No English translation of Mylius's Basilica Philosophica (Pars Altera of Opus Medico-Chymicum, 1618/1620) found. The only Mylius English translations (McLean 1984 + 2023) are from his separate Philosophia Reformata (1622). Archive.org, Google Books, Wikipedia, PRDL, alchemywebsite.com, and Wellcome all confirm Latin-only. WorldCat/HathiTrust returned 403s but searches surfaced no English editions."
+}

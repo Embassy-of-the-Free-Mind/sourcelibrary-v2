@@ -1,0 +1,36 @@
+{
+  "book_id": "69e76168cc48e59ad74ef921",
+  "work_identified": "rDo rje phag mo'i gsol 'debs sogs — anthology of supplication prayers to Vajravarahi and related liturgical texts from the Gangtey Monastery Collection (Nyingma, Bhutan)",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Vajravarahi supplication prayer Tibetan English translation \"rDo rje phag mo\" \"gsol 'debs\"",
+    "Gangtey Monastery Collection Tibetan prayer English translation WorldCat",
+    "\"rdo rje phag mo\" \"gsol 'debs\" English translation BDRC WorldCat",
+    "\"Dorje Phagmo\" OR \"Vajravarahi\" supplication prayer \"English translation\" published book \"first translation\"",
+    "Gangtey Monastery \"rdo rje phag mo\" prayers English translation published",
+    "worldcat.org \"rdo rje phag mo\" \"gsol 'debs\" English translation",
+    "Lotsawa House \"Vajravarahi\" OR \"Vajravārāhī\" supplication gsol 'debs Nyingma translation",
+    "\"Dorje Phagmo\" OR \"Vajravarahi\" \"gsol debs\" Gangteng Nyingma Bhutan English translation published",
+    "\"rdo rje phag mo\" supplication prayers Gangtey OR Gangteng Bhutan English published translation book",
+    "\"Gangtey\" OR \"Gangteng\" monastery Bhutan manuscript English translation published academic",
+    "worldcat \"rdo rje phag mo\" gsol debs sogs Tibetan prayer book"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.lotsawahouse.org/topics/vajrayogini/", "found": "Lists 8 Vajrayogini/Vajravarahi texts in English (aspiration prayers, praise, sadhanas, songs) — none are supplications (gsol debs) from the Gangtey tradition or Bhutanese Nyingma; no match for this compilation"},
+    {"url": "https://dakinitranslations.com/vajrayogini/", "found": "Dakini Translations site covering Kagyu Vajrayogini/Vajravarahi; translations are Kagyu lineage texts (Naropa, Drigung, Karma Kagyu) — no Gangtey Monastery or Bhutanese Nyingma compilation"},
+    {"url": "https://eap.bl.uk/project/EAP039", "found": "British Library Endangered Archives Programme EAP039 = digitization of Gangtey Monastery manuscript collection (270,398 images, 1,130 catalogued titles); page did not render full catalogue content"},
+    {"url": "https://library.bdrc.io/show/bdr:P127", "found": "BDRC record for Phagmo Drupa (different person — historical Kagyu master); no record for the Gangtey Vajravarahi supplication compilation"},
+    {"url": "https://library.bdrc.io/show/bdr:MW8LS17006", "found": "BDRC page did not render usable content"},
+    {"url": "https://search.worldcat.org/search?q=Vajravarahi+supplication+Tibetan+English", "found": "403 Forbidden — WorldCat not directly accessible; gap in thoroughness floor"},
+    {"url": "https://en.wikipedia.org/wiki/Gangteng_Monastery", "found": "Confirms Gangteng/Gangtey Gonpa is a Nyingma monastery in Bhutan, founded by Gyalse Pema Thinley (early 17th c.), descended from tertön Pema Lingpa; has large manuscript collection"},
+    {"url": "https://khyentselineage.tsadra.org/index.php/rdo_rje_phag_mo_dkar_mo_shes_rab_gsal_byed_ma", "found": "A different Vajravarahi text (white Vajravarahi, prajnaparamita); no English translation listed, unrelated to Gangtey"},
+    {"url": "https://dakinitranslations.com/2022/06/23/naropas-vajrayogini-for-beginners-and-drikung-kagyu-texts-new-translations-of-naropas-innate-vajrayogini-for-beginners-eight-praises-to-vajrayogini-and-drikung-kagyus-vajrayogini-li/", "found": "Naropa and Drikung Kagyu Vajrayogini translations; no Gangtey Monastery texts"}
+  ],
+  "reasoning": "This is a liturgical anthology of Vajravarahi (rdo rje phag mo) supplications and related texts specific to the Gangtey Monastery collection (Nyingma, Bhutan). Searches across Lotsawa House, Dakini Translations, BDRC, archive.org, and broad web queries found no prior English translation of this specific compilation. General Vajravarahi supplications exist in English (Kagyu/Nyingma), but none matching this Gangtey anthology. WorldCat was inaccessible (403), moderating to medium confidence."
+}

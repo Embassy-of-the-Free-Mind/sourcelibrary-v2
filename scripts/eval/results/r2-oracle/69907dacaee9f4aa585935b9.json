@@ -1,0 +1,41 @@
+{
+  "book_id": "69907dacaee9f4aa585935b9",
+  "work_identified": "Dash Doshadi Vichara in Muhurta Vivarana — a Sanskrit jyotisha treatise on the ten doshas (inauspicious factors) in electional astrology (muhurta), anonymous authorship; survives as manuscript MAS326/MAS363 in Indian manuscript collections",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "weak",
+  "match_key": "author_title",
+  "confidence": "low",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Dash Doshadi Vichara Muhurta Vivarana Sanskrit English translation",
+    "\"Muhurta Vivarana\" Sanskrit jyotisha English translation",
+    "\"Muhurta Vivarana\" Sanskrit text manuscript",
+    "\"dashadosha\" OR \"dasha dosha\" muhurta Sanskrit English translation jyotisha",
+    "site:worldcat.org \"muhurta vivarana\"",
+    "WorldCat \"Muhurta Vivarana\" English",
+    "\"dash doshadi\" OR \"dasha doshadi\" muhurta Sanskrit jyotisha",
+    "site:archive.org \"dash doshadi\" OR \"dasha doshadi\" Sanskrit muhurta",
+    "archive.org \"muhurta vivarana\" Sanskrit",
+    "GRETIL jyotisha \"muhurta\" list texts Sanskrit",
+    "\"ten doshas\" muhurta electional astrology Sanskrit English translation book",
+    "jyotisha \"muhurta vivarana\" English published book translation publisher",
+    "\"muhurta vivarana\" English translation published",
+    "\"Dash Doshadi Vichara\" English translation jyotisha astrology",
+    "HathiTrust \"muhurta vivarana\" English Sanskrit",
+    "Amazon \"muhurta vivarana\" Sanskrit English",
+    "\"muhurta vivarana\" translation English Hindi publisher India"
+  ],
+  "sources_consulted": [
+    {"url": "http://indianmanuscripts.com/astrological-manuscripts", "found": "MAS326 = 'muhurta_vivarana_vichar' and MAS363 = 'Dash Doshadi Vichar' listed as Sanskrit manuscripts; no English translation mentioned"},
+    {"url": "http://indianmanuscripts.com/muhurtavivaranavichar", "found": "MAS326 manuscript details; Sanskrit manuscript only, no translation"},
+    {"url": "https://gretil.sub.uni-goettingen.de/gretilbk.htm", "found": "No 'Muhurta Vivarana' or 'Dash Doshadi' listed; jyotisha section not fully indexed"},
+    {"url": "https://sanskritdocuments.org/sanskrit/jyotisha/", "found": "14 jyotisha texts listed; no Muhurta Vivarana or Dash Doshadi present"},
+    {"url": "https://search.worldcat.org/search?q=muhurta+vivarana", "found": "403/429 errors on direct access; Google site: search returned no Muhurta Vivarana matches — only unrelated vivarana texts (Paratrisika, Yogasutrabhashya)"},
+    {"url": "https://archive.org/search?query=muhurta+vivarana", "found": "No results for 'Muhurta Vivarana'; related muhurta texts (Muhurta Chintamani, Muhurta Martanda) found but not this work"},
+    {"url": "https://catalog.hathitrust.org/Search/Home?lookfor=muhurta+vivarana", "found": "403 error; Google search for HathiTrust + muhurta vivarana returned no matching record"},
+    {"url": "https://hinduonline.co/Scriptures/Jyotishya/Jyotishya.html", "found": "Extensive jyotisha text list; no Muhurta Vivarana or Dash Doshadi Vichara listed as a translated work"}
+  ],
+  "reasoning": "No English translation of this obscure Sanskrit jyotisha manuscript found in any source: WorldCat (indirect), archive.org, HathiTrust (indirect), GRETIL, Sanskrit Documents, Indian manuscript catalogs, or publisher searches. The text survives only as an unedited manuscript. Evidence is weak because WorldCat was inaccessible directly and GRETIL lacks muhurta texts; a tradition-specific Indological absence cannot be confirmed with full confidence."
+}

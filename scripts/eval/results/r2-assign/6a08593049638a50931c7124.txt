@@ -1,0 +1,4 @@
+book_id: 6a08593049638a50931c7124
+Title: Orthographiae ratio, ab Aldo Manutio, Pauli f. collecta.
+Author: Manuzio, Paolo
+Source language: Latin

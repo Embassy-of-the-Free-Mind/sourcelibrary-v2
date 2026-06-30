@@ -1,0 +1,57 @@
+{
+  "book_id": "69b4c08186a5921d5bc4418f",
+  "work_identified": "Corpus Hermeticum (Pimander sive De potestate et sapientia Dei) in Ficino's 1471 Latin translation of Greek Hermetic tractates I-XIV, with additional Ficino opera — the underlying Hermetic texts attributed to Hermes Trismegistus",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Divine Pymander in XVII Books",
+      "translator": "John Everard",
+      "pub_year": "1650",
+      "publisher": "London (posthumous)",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/b30329619"
+    },
+    {
+      "english_title": "Hermetica: The Greek Corpus Hermeticum and the Latin Asclepius",
+      "translator": "Brian P. Copenhaver",
+      "pub_year": "1992",
+      "publisher": "Cambridge University Press",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Corpus_Hermeticum"
+    },
+    {
+      "english_title": "Corpus Hermeticum: The Power & Wisdom of God",
+      "translator": "Maxwell Lewis Latham",
+      "pub_year": "2020",
+      "publisher": "Falcon Books Publishing",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Corpus-Hermeticum-Power-Wisdom-God/dp/0995769222"
+    }
+  ],
+  "queries_run": [
+    "Ficino \"Pimander\" OR \"De potestate et sapientia Dei\" Latin English translation WorldCat",
+    "Hermes Trismegistus Ficino Latin translation English \"Corpus Hermeticum\" Pimander prior translations history",
+    "\"Ficino's Pimander\" English translation published book translator",
+    "John Everard \"Divine Pymander\" 1650 English translation Ficino Pimander",
+    "\"Maxwell Lewis Latham\" \"Corpus Hermeticum\" Ficino translation year published ISBN 0995769222",
+    "Ficino Pimander \"et alia\" OR \"other Ficino\" early printed edition contents Asclepius Lazzarelli",
+    "\"De potestate et sapientia\" \"alia Ficini Opera\" edition 1471 OR 1481 OR 1505 contents works",
+    "Everard 1650 \"Divine Pymander\" XVII books contents complete list Ficino Latin translation English"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/b30329619", "found": "Everard 1650 complete English of Corpus Hermeticum XVII books translated from Ficino's Latin — oldest English of this work"},
+    {"url": "https://archive.org/details/bib_fict_4102599", "found": "Ficino's Latin Pimander (third printed edition), confirming source-text identity of our book"},
+    {"url": "https://www.goodreads.com/book/show/52182245-corpus-hermeticum", "found": "Latham 2020 description: modern English from Ficino's Latin, covers Pimander + Asclepius + Lazzarelli commentary, 181pp"},
+    {"url": "https://falconbookspublishing.com/authors-corner-interview-with-max-lewis-latham/", "found": "Latham confirms translation is from Ficino's Latin Hermetica specifically; pub March 2020"},
+    {"url": "https://en.wikipedia.org/wiki/Corpus_Hermeticum", "found": "Copenhaver 1992 (Cambridge UP, from Greek) cited as definitive modern scholarly English translation; Everard 1650 cited as first English from Ficino's Latin"},
+    {"url": "https://www.amazon.com/Corpus-Hermeticum-Power-Wisdom-God/dp/0995769222", "found": "Latham translation ISBN 9780995769229, listed as published 2020, Falcon Books"},
+    {"url": "https://search.worldcat.org/title/mercurii-trismegisti-liber-de-potestate-et-sapientia-dei-pimander-corpus-hermeticum-i-xiv/oclc/635855997", "found": "WorldCat record for Ficino Latin Pimander (OCLC 635855997) — 403 on direct access; snippets confirm Latin editions only in this record"},
+    {"url": "https://www.academia.edu/31423671/Ficinos_Hermetic_Translations_English_Translation_of_His_Latin_Pimander", "found": "403 Forbidden — title confirms an academic English translation of Ficino's Latin Pimander exists but could not verify details"}
+  ],
+  "reasoning": "Ficino's Latin Pimander (the Corpus Hermeticum I-XIV) has been fully translated into English multiple times. Everard (1650) translated it from Ficino's Latin (pre-1900). Copenhaver (1992, Cambridge UP) translated the underlying Greek comprehensively. Latham (2020, Falcon Books) is a modern English translation directly from Ficino's Latin — same source text as ours. Under the source-language rule, any of these three triggers not_first."
+}

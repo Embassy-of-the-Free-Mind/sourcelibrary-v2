@@ -1,0 +1,4 @@
+book_id: 69c1bb5c8522835be845f2eb
+Title: Hasidic discourses
+Author: Schneersohn, Dov Baer, 1773-1827שניאורסון, דב בר בן שניאור זלמן, 1773-1827; Shneur Zalman, of Lyady, 1745-1812שניאור זלמן בן ברוך, 1745-1812
+Source language: Hebrew

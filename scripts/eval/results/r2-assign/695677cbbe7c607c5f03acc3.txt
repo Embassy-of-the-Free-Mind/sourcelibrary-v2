@@ -1,0 +1,4 @@
+book_id: 695677cbbe7c607c5f03acc3
+Title: Operis medico-chymici pars altera - Basilica Philosophica
+Author: Johann Daniel Mylius
+Source language: Latin

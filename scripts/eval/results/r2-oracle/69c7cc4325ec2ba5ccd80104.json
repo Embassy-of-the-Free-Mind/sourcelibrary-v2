@@ -1,0 +1,46 @@
+{
+  "book_id": "69c7cc4325ec2ba5ccd80104",
+  "work_identified": "Die erste Liebe. Das ist: wahre Abbildung der ersten Christen (1696) by Gottfried Arnold — German Pietist work on the early church as ideal, distinct from his later Kirchen- und Ketzerhistorie",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Gottfried Arnold on worship: a translation from Die erste Liebe, 1696",
+      "translator": "Paul Wagner",
+      "pub_year": "1989",
+      "publisher": "Wilfrid Laurier University (MA thesis)",
+      "completeness": "partial",
+      "source_url": "https://scholars.wlu.ca/etd/102/"
+    }
+  ],
+  "queries_run": [
+    "Gottfried Arnold \"Die erste Liebe\" English translation \"First Love\" Christians",
+    "Gottfried Arnold \"erste Liebe\" English translation history Pietism",
+    "worldcat \"Die erste Liebe\" Gottfried Arnold English translation",
+    "Gottfried Arnold \"erste Liebe\" English HathiTrust OR \"university press\" translation",
+    "Gottfried Arnold Pietist \"Die erste Liebe\" complete English translation published",
+    "\"Gottfried Arnold\" \"erste Liebe\" OR \"wahre Abbildung\" translated English scholarly",
+    "Gottfried Arnold \"erste Liebe\" English translation 18th century OR 19th century OR 20th century published",
+    "\"The Pietists Selected Writings\" Erb \"Gottfried Arnold\" \"erste Liebe\" table contents chapters",
+    "Gottfried Arnold \"Die erste Liebe\" VD17 OR \"German Baroque\" English translation \"18th century\" history",
+    "\"Gottfried Arnold\" english books \"true portrayal\" OR \"first christians\" OR \"early church\" translation 1990s 2000s 2010s",
+    "Gottfried Arnold Pietism works translated English \"Peter Erb\" OR \"Douglas Shantz\" OR \"Jonathan Strom\""
+  ],
+  "sources_consulted": [
+    {"url": "https://scholars.wlu.ca/etd/102/", "found": "Paul Wagner MA thesis (1989): partial translation — book two, chapter one only ('Von ihrem Gebet zu Gott'). Explicitly states 'for the first time an English translation from book two of Die erste Liebe, chapter one.' Confirms no prior English even of that chapter existed before 1989."},
+    {"url": "https://en.wikipedia.org/wiki/Gottfried_Arnold", "found": "No English translation of Die erste Liebe mentioned. Only Dutch edition (1701) of the Kirchen-Ketzerhistorie noted. Arnold works listed without any English translation information."},
+    {"url": "https://archive.org/details/pietistsselected0000unse", "found": "Peter Erb 'Pietists: Selected Writings' (Paulist Press 1983) includes Gottfried Arnold in 'Radical Pietists' section. Table of contents not accessible; cannot confirm whether excerpts from Die erste Liebe are included, but even if so would be anthology excerpts (partial)."},
+    {"url": "https://via-hygeia.art/a-little-gottfried-arnold-sampler-part-1-an-early-history-of-the-rosicrucian-movement-1699/", "found": "Discusses Arnold's Kirchen- und Ketzerhistorie; no mention of English translation of Die erste Liebe."},
+    {"url": "https://archive.org/details/pietistsprotesta0000erbp", "found": "Peter Erb 'Pietists, Protestants, and mysticism' (1989) — scholarly study of Arnold's use of medieval mystics; metadata only, full text not accessible."},
+    {"url": "https://www.paulistpress.com/Products/2509-9/the-pietists.aspx", "found": "Publisher page for Erb's Pietists anthology — described as 'most comprehensive collection of Pietist writings in English' but no ToC detail."},
+    {"url": "https://books.google.com/books/about/Die_Erste_Liebe.html?id=OJvYAAAAMAAJ", "found": "Modern German critical edition (Schneider ed.) — confirms no English translation mentioned."},
+    {"url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/arnold-gottfried", "found": "Scholarly encyclopedia entry on Arnold — extensive treatment of Die erste Liebe, no English translation mentioned."},
+    {"url": "https://catalog.hathitrust.org/Record/102159034", "found": "HTTP 403 — could not access directly."},
+    {"url": "https://search.worldcat.org/search?q=Gottfried+Arnold+erste+Liebe&itemType=book&inLanguage=eng", "found": "HTTP 403 — WorldCat blocked direct API access; indirect searches via web consistently surface only the Wagner 1989 partial dissertation as the sole English-language output."}
+  ],
+  "reasoning": "No complete English translation of Die erste Liebe found across all accessible sources. Only prior English is Wagner's 1989 MA dissertation (WLU), itself a partial: one chapter (Bk2/Ch1). The work had six German editions to 1780 plus Pennsylvania German reprints but was never fully Englished. Verdict first_complete contingent on our translation covering the full work (completeness unverified from oracle position)."
+}

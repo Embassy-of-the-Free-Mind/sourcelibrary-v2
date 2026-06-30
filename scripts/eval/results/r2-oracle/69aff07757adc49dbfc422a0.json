@@ -1,0 +1,51 @@
+{
+  "book_id": "69aff07757adc49dbfc422a0",
+  "work_identified": "A Šir-namgala to Inana for Ur-Ninurta (Ur-Ninurta A), ETCSL 2.5.6.1 — Sumerian royal hymn in which Inana selects Ur-Ninurta as shepherd-king; distinct from other Ur-Ninurta royal compositions (B–H)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "A blessing of King Urninurta",
+      "translator": "Åke W. Sjöberg",
+      "pub_year": "1977",
+      "publisher": "Archon Books, Hamden, Connecticut (in: M. de Jong Ellis, ed., Essays on the Ancient Near East in Memory of Jacob Joel Finkelstein, pp. 189–195)",
+      "completeness": "complete",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/section2/b2561.htm"
+    },
+    {
+      "english_title": "A hymn of Inana for Ur-Ninurta (Ur-Ninurta A): translation",
+      "translator": "ETCSL team (Jeremy Black, Gábor Zólyomi, Graham Cunningham, Eleanor Robson)",
+      "pub_year": "1999",
+      "publisher": "Electronic Text Corpus of Sumerian Literature, University of Oxford (online)",
+      "completeness": "complete",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/section2/tr2561.htm"
+    }
+  ],
+  "queries_run": [
+    "ETCSL 2.5.6.1 \"Ur-Ninurta A\" \"Šir-namgala\" Inana English translation",
+    "ETCSL Electronic Text Corpus Sumerian Literature \"Ur-Ninurta A\" English translation",
+    "\"Ur-Ninurta A\" Sumerian translation scholar \"Thorkild Jacobsen\" OR \"Black\" OR \"Tinney\" OR \"ETCSL\" hymn Inana",
+    "\"Ur-Ninurta\" Sumerian royal hymn Inana \"first translation\" English Römer Falkenstein WorldCat",
+    "Sjöberg \"blessing of King Urninurta\" 1977 \"Essays on the Ancient Near East\" Finkelstein English translation Sumerian",
+    "WorldCat \"Ur-Ninurta A\" OR \"sir-namgala Inana\" Sumerian hymn English translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/section2/tr2561.htm",
+      "found": "Full English translation of Ur-Ninurta A published online by ETCSL (Oxford), revised 1999; contributors JAB/GZ/GC/ER; HTML conversion Sept 2001"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/section2/b2561.htm",
+      "found": "ETCSL bibliography: Sjöberg 1977 (English, Archon Books CT) and Römer 1989 (German, TUAT) and Falkenstein 1950 (German, ZA) confirmed as scholarship on this text"
+    },
+    {
+      "url": "https://search.worldcat.org/title/essays-on-the-ancient-near-east-in-memory-of-jacob-joel-finkelstein/oclc/3294583",
+      "found": "WorldCat record for Sjöberg's containing volume confirmed (HTTP 429 on fetch, but OCLC record located)"
+    }
+  ],
+  "reasoning": "ETCSL (Oxford) published a full English translation in 1999 (etcsl.orinst.ox.ac.uk/section2/tr2561.htm). Sjöberg published an earlier English translation in 1977 (Archon Books, Hamden CT). Both predate any Source Library rendering. Two independent English translations confirmed from tradition-appropriate catalogues."
+}

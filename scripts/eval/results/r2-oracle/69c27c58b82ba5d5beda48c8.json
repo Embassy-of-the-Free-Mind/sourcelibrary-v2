@@ -1,0 +1,58 @@
+{
+  "book_id": "69c27c58b82ba5d5beda48c8",
+  "work_identified": "Die drei ältesten Kunsturkunden der Freimaurerbrüderschaft (The Three Oldest Craft Records of the Masonic Fraternity) by Karl Christian Friedrich Krause, 1810–1820, 2 vols.",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "The Three Oldest Craft Records of the Masonic Fraternity",
+      "translator": "Bro. Vincent Lombardo",
+      "pub_year": "2012",
+      "publisher": "Freemasonry Research Forum QSA (freemasonryresearchforumqsa.com), Thornhill, Ontario — online publication, copyright 2014–2026",
+      "completeness": "complete",
+      "source_url": "https://www.freemasonryresearchforumqsa.com/kraus/000-english-page-001.php"
+    }
+  ],
+  "queries_run": [
+    "Krause \"drei ältesten Kunsturkunden\" Freimaurerbrüderschaft English translation",
+    "Karl Christian Friedrich Krause \"three oldest documents\" Freemasons English translation",
+    "Krause \"Kunsturkunden\" Freimaurerbrüderschaft WorldCat English translation",
+    "Vincent Lombardo Krause Freemason translation \"Kunsturkunden\" 2012",
+    "\"Freemasonry Research Forum\" QSA Queensland \"Kunsturkunden\" Lombardo",
+    "Krause \"Kunsturkunden\" English translation 19th century Masonic history scholarly",
+    "Krause \"Freimaurerbrüderschaft\" \"three oldest\" OR \"oldest craft records\" English published book",
+    "\"drei ältesten Kunsturkunden\" Krause HathiTrust OR \"Google Books\" English translation",
+    "site:archive.org \"Kunsturkunden\" Krause Freemason English"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.freemasonryresearchforumqsa.com/kraus/000-english-page-001.php",
+      "found": "Introduction page for Lombardo's English translation; translator identified as Bro. Vincent Lombardo, Thornhill Ontario, dated April 21 2012; copyright 2014–2026; acknowledges limited German proficiency (Italian background) but presents bilingual German/English text across all volumes"
+    },
+    {
+      "url": "https://www.freemasonryresearchforumqsa.com/kraus/content-s1v2.php",
+      "found": "Table of contents for Section 1 of Volume 2; navigation links confirm all four sections (Vol1 Sec1, Vol1 Sec2, Vol2 Sec1, Vol2 Sec2) are covered in the translation"
+    },
+    {
+      "url": "https://freemasonryresearchforumqsa.com/kraus/content-s2v1.php",
+      "found": "Table of contents for Section 2 of Volume 1; covers three forms of Apprentice Degree catechism (1725, Prichard, Browne); extensive supplementary materials included"
+    },
+    {
+      "url": "https://archive.org/stream/KrauseKCFDieDreiltestenKunsturkundenDerFreimaurerbrrderschaft1817German/Krause%20K%20C%20F%20-%20Die%20drei%20%C3%A4ltesten%20Kunsturkunden%20der%20Freimaurerbr%C3%BCderschaft%20-%201817%20German_djvu.txt",
+      "found": "German original (1817 edition) on archive.org; no English translation on archive.org"
+    },
+    {
+      "url": "https://www.worldcat.org/search",
+      "found": "403 Forbidden — WorldCat not accessible; could not confirm or refute via library catalog"
+    },
+    {
+      "url": "https://books.google.com/books/about/Die_drei_%C3%A4ltesten_Kunsturkunden_der_Fre.html?id=w0cMAQAAMAAJ",
+      "found": "Google Books lists multiple German editions; no English translation edition found on Google Books"
+    }
+  ],
+  "reasoning": "A complete online English translation by Bro. Vincent Lombardo (2012, freemasonryresearchforumqsa.com) covers all four sections across both volumes of Krause's German Masonic documentary work. WorldCat was inaccessible (403); no print English translation found in library catalogs or archive.org. The Lombardo translation is on a legitimate Masonic research site (not a distrusted aggregator), dates from 2012, and predates Source Library's AI translation."
+}

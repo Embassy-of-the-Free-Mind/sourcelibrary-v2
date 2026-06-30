@@ -1,0 +1,4 @@
+book_id: 6955d43628a09ca65927ff2e
+Title: Historia Coelestis Britannica Vol. 3
+Author: John Flamsteed
+Source language: Latin

@@ -1,0 +1,59 @@
+{
+  "book_id": "697c8e13b2d7ab5ea61a0d0c",
+  "work_identified": "De fide et operibus (On Faith and Works) by Augustine of Hippo, composed c.413 AD",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Of Faith and Works",
+      "translator": "C. L. Cornish and H. Browne",
+      "pub_year": "1847",
+      "publisher": "Oxford: J. H. Parker; London: F. and J. Rivington",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/seventeenshorttr00augu"
+    },
+    {
+      "english_title": "Faith and Works",
+      "translator": "Charles T. Wilcox",
+      "pub_year": "1955",
+      "publisher": "The Catholic University of America Press (Fathers of the Church, vol. 27)",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/treatisesonmarri0027augu"
+    }
+  ],
+  "queries_run": [
+    "Augustine \"De fide et operibus\" English translation \"On Faith and Works\"",
+    "Augustine \"On Faith and Works\" English translation Nicene Post-Nicene Fathers NPNF",
+    "Augustine \"On Faith and Works\" \"Fathers of the Church\" FC 27 Mary Sarah Muldowney translator",
+    "Augustine \"De fide et operibus\" \"On Faith and Works\" English translator year WorldCat",
+    "Augustine \"seventeen short treatises\" Oxford 1847 translator \"faith and works\"",
+    "Augustine \"On Faith and Works\" \"Fathers of the Church\" volume 27 translator publisher 1955"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/seventeenshorttr00augu",
+      "found": "1847 Oxford edition 'Seventeen Short Treatises' translated by C. L. Cornish and H. Browne; confirmed 'Of Faith and Works' (De fide et operibus) is included"
+    },
+    {
+      "url": "https://archive.org/details/treatisesonmarri0027augu",
+      "found": "Fathers of the Church vol. 27 (1955): 'Treatises on Marriage and Other Subjects'; 'Faith and Works' confirmed in table of contents"
+    },
+    {
+      "url": "https://www.abebooks.com/9780813209678/Treatises-Marriage-Subjects-Good-Adulterous-0813209676/plp",
+      "found": "FC vol. 27 (CUA Press, 1955); translator Charles T. Wilcox, editor Roy J. Deferrari; 'Faith and Works' listed in full title"
+    },
+    {
+      "url": "https://www.jstor.org/stable/j.ctt32b2f1",
+      "found": "JSTOR record for FC vol. 27 'Treatises on Marriage and Other Subjects' confirming scholarly publication"
+    },
+    {
+      "url": "https://www.biblestudytools.com/classics/augustine-seventeen-short-treatises-of-s-augustine/of-faith-and-works.html",
+      "found": "Full text of 'Of Faith and Works' from the 1847 Cornish/Browne translation hosted and indexed online"
+    }
+  ],
+  "reasoning": "De fide et operibus (c.413) has been translated into English at least twice: (1) C. L. Cornish & H. Browne, 'Of Faith and Works', Seventeen Short Treatises (Oxford, 1847); (2) Charles T. Wilcox, 'Faith and Works', Fathers of the Church vol. 27 (CUA Press, 1955). Both are complete scholarly translations. Not a first."
+}

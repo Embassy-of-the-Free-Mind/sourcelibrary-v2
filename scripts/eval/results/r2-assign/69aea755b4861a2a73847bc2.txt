@@ -1,0 +1,4 @@
+book_id: 69aea755b4861a2a73847bc2
+Title: Opera Omnia (Complete Works — Elegantiae, Declamatio, De Voluptate)
+Author: Lorenzo Valla
+Source language: Latin

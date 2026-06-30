@@ -1,0 +1,55 @@
+{
+  "book_id": "69b21e3194025df5d290b90a",
+  "work_identified": "Plutarch's Moralia Vol. 6 (Bernardakis/Teubner 1895 Greek critical edition) — treatises including De animae procreatione in Timaeo, De E apud Delphos, De defectu oraculorum, De Pythiae oraculis, and related essays",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Plutarch's Moralia, Vol. XIII Part I (includes De animae procreatione in Timaeo)",
+      "translator": "Harold F. Cherniss",
+      "pub_year": "1976",
+      "publisher": "Harvard University Press (Loeb Classical Library, LCL 427)",
+      "completeness": "complete",
+      "source_url": "https://catalog.perseus.org/catalog/urn:cts:greekLit:tlg0007.tlg134.opp-eng2"
+    },
+    {
+      "english_title": "Plutarch's Moralia, Vol. V (includes De E apud Delphos, De Pythiae oraculis, De defectu oraculorum)",
+      "translator": "Frank Cole Babbitt",
+      "pub_year": "1936",
+      "publisher": "Harvard University Press (Loeb Classical Library, LCL 306)",
+      "completeness": "complete",
+      "source_url": "https://www.loebclassics.com/view/plutarch-moralia_obsolescence_oracles/1936/pb_LCL306.347.xml"
+    },
+    {
+      "english_title": "Plutarch's Morals, Vol. II (includes translation of De animae procreatione in Timaeo)",
+      "translator": "Philips (ed. William Watson Goodwin)",
+      "pub_year": "1874",
+      "publisher": "Little, Brown and Co.",
+      "completeness": "complete",
+      "source_url": "https://catalog.perseus.org/catalog/urn:cts:greekLit:tlg0007.tlg134.opp-eng2"
+    }
+  ],
+  "queries_run": [
+    "Plutarch Moralia Bernardakis Teubner volume 6 contents treatises",
+    "Plutarch Moralia Loeb Classical Library English translation volumes complete",
+    "Bernardakis Moralia Teubner volume 6 1895 De animae procreatione De Iside spuria",
+    "Plutarch Moralia Goodwin 1874 English translation complete volumes WorldCat",
+    "WorldCat Plutarchi Chaeronensis Moralia Bernardakis volume 6 1895 Teubner",
+    "Plutarchi Chaeronensis Moralia Bernardakis vol 6 De E apud Delphos De defectu animae procreatione site:archive.org OR site:perseus.tufts.edu",
+    "Plutarch Moralia Loeb volume V Babbitt De E apud Delphos De Pythiae oraculis De defectu oraculorum English translation 1936",
+    "Plutarch Moralia volume 6 Bernardakis 1895 De E apud Delphos De fato De Stoicorum contents"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.attalus.org/info/moralia.html", "found": "Comprehensive list of Moralia treatises and translations; confirms Goodwin 5-vol (1874-1878) and Loeb 15-vol (1927-2004) cover complete Moralia"},
+    {"url": "https://archive.org/details/plutarchs-moralia-vol.-6-loeb-337", "found": "Loeb vol. 6 (Loeb 337) translated by W.C. Helmbold, 1939, covers Stephanus 439A-523B with full English translation"},
+    {"url": "https://en.wikipedia.org/wiki/Moralia", "found": "Confirms two complete English translations of Moralia: Goodwin (1871, 5 vols) and Loeb (1927-2004, 16 vols)"},
+    {"url": "https://catalog.perseus.org/catalog/urn:cts:greekLit:tlg0007.tlg134", "found": "De animae procreatione in Timaeo confirmed in Bernardakis Teubner Vol VI (1895); English translations by Cherniss (Loeb XIII.1, 1976) and Philips/Goodwin (1874, Little Brown)"},
+    {"url": "https://www.loebclassics.com/view/plutarch-moralia_obsolescence_oracles/1936/pb_LCL306.347.xml", "found": "De defectu oraculorum in Loeb vol. V, translated by Babbitt, 1936"},
+    {"url": "https://bmcr.brynmawr.edu/2010/2010.02.40/", "found": "BMCR review confirms Bernardakis Teubner is a 7-volume (1888-1926) Greek critical edition, not a translation"}
+  ],
+  "reasoning": "Bernardakis Teubner vol. 6 (1895) is a GREEK critical edition (db mislabels source lang as Latin). Confirmed treatises — De animae procreatione, De E apud Delphos, De defectu oraculorum, De Pythiae oraculis — all have prior complete English translations via Goodwin (1874, Little Brown) and Loeb (1927-2004, 16 vols). Cherniss (Loeb XIII.1, 1976) specifically translates De animae procreatione. not_first, strong evidence."
+}

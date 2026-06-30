@@ -1,0 +1,4 @@
+book_id: 69b21e3194025df5d290b90a
+Title: Plutarchi Chaeronensis Moralia, Vol. 6 (Bernardakis, Teubner)
+Author: Plutarch; ed. Gregorios N. Bernardakis
+Source language: Latin

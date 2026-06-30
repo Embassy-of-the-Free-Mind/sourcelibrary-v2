@@ -1,0 +1,36 @@
+{
+  "book_id": "69b51df2768235dc6598a371",
+  "work_identified": "Elucidarius Maior (Elvcidarivs Major), oder Erleuchtung über die Reformation der ganzen weiten Welt — Christoph Barbarossa (pseudonym: Radtichs Brotofferr, real name Christoph Rodtbart), 1617, German alchemical commentary on the Chymical Wedding of Christian Rosencreutz",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Christoph Barbarossa Elucidarius Major OR Elvcidarivs Major German alchemical Rosicrucian English translation",
+    "Elvcidarivs Major OR Elucidarius Major Barbarossa Chymischen Hochzeit German 17th century",
+    "WorldCat Elucidarius Major OR Elvcidarivs Major Barbarossa German alchemy translation English",
+    "Christoph Barbarossa alchemy alchemist German author 17th century",
+    "VD17 Elucidarius Major Rosicrucian 1617 Brotoffer OR Barbarossa chemical wedding",
+    "Brotoffer Elucidarius Major Applications of the Green Lion Muschter English translation Rosicrucian",
+    "Ratichius Brotoffer OR Radtichs Brotofferr OR Christoph Rotbart English translation alchemy",
+    "Practice of the Green Lion Practica Leonis Viridis Brotoffer OR Barbarossa McLean 2015 alchemy Rosicrucian",
+    "Peter Forshaw Elucidarius Major Brotoffer Barbarossa Rosicrucian commentary alchemical",
+    "Elucidarius major first English OR English translation 1617 Rosicrucian commentary alchemy",
+    "Elucidarius major OR Erleuchtung Barbarossa OR Brotoffer site:books.google.com OR site:hathitrust.org",
+    "Elucidarius Major Brotoffer Barbarossa translation published 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 2025"
+  ],
+  "sources_consulted": [
+    {"url": "https://prdl.org/author_view.php?a_id=6095", "found": "PRDL lists Christoph Barbarossa (1562-1623) with 5 titles / 16 vols including Elucidarius maior (1617, 1751, 1752) — all editions in German or Latin only; no English translation listed"},
+    {"url": "https://journals.openedition.org/rg/818?lang=en", "found": "Academic article confirms Elucidarius Major 1617 by Barbarossa/Brotoffer as commentary on Chymical Wedding; Peter Forshaw preparing article; no English translation mentioned"},
+    {"url": "https://www.alchemy-texts.com/all-authors/", "found": "Lists Radtichs Brotoffer with 3 books; no English translation indicated"},
+    {"url": "https://www.weiserantiquarian.com/pages/books/61203/ruud-muschter-adam-mclean/the-practice-of-the-green-lion-practica-leonis-viridis-magnum-opus-hermetic-sourceworks-series", "found": "Practica Leonis Viridis (1619, anonymous C.V.M.U.S.) translated to English by Muschter 2015 — confirmed DIFFERENT work, not Elucidarius Major"},
+    {"url": "https://books.google.fi/books?id=I2sOAAAAQAAJ", "found": "Google Books: 1751 Wien reprint of Elucidarius Major in German by J.P. Krauss; 240pp; no English translation"},
+    {"url": "https://alchemie.hab.de/thesaurus/", "found": "HAB alchemical thesaurus: no entry found for Brotoffer/Barbarossa or Elucidarius Major"},
+    {"url": "https://bibliotheksrekonstruktion.hab.de/bahnsen/bahnsen-persName.html", "found": "HAB library reconstruction: Barbarossa/Brotoffer works listed in German historical library"},
+    {"url": "https://researchgate.net/publication/333169599_Le_contexte_alchimique_des_Noces_Chymiques", "found": "Scholarly paper on alchemical context of Chemical Wedding references Elucidarius Major as the first alchemical commentary (1617); no English translation mentioned"}
+  ],
+  "reasoning": "Elucidarius Major (1617) is an obscure German alchemical commentary on the Chemical Wedding by Christoph Barbarossa (pseudonym Radtichs Brotofferr). PRDL, OpenEdition academic journal, alchemywebsite.com, Google Books, and targeted web searches all confirm only German/Latin editions exist. The only related Chymical Wedding commentary translated to English (Practica Leonis Viridis 2015) is a different 1619 anonymous work."
+}

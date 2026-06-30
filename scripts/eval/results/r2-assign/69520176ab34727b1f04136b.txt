@@ -1,0 +1,4 @@
+book_id: 69520176ab34727b1f04136b
+Title: Utriusque cosmi majoris scilicet et minoris metaphysica, physica atque technica historia
+Author: Robert Fludd
+Source language: Latin

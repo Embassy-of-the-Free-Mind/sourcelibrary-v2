@@ -1,0 +1,44 @@
+{
+  "book_id": "69906a891cf6ed5fbc8f5df0",
+  "work_identified": "Surya Siddhanta — the canonical 14-chapter Sanskrit astronomical treatise (popular/medieval recension)",
+  "verdict": "first_modern",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Translation of the Sûrya-Siddhânta, A Text-Book of Hindu Astronomy; With Notes, and an Appendix",
+      "translator": "Ebenezer Burgess",
+      "pub_year": "1860",
+      "publisher": "Journal of the American Oriental Society, Vol. 6 (pp. 141–498); reprinted Calcutta 1935 (ed. Phanindralal Gangooly, intro P.C. Sengupta)",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/jstor-592174"
+    },
+    {
+      "english_title": "Translation of the Surya Siddhanta and of the Siddhanta Siromani",
+      "translator": "Bapu Deva Sastri and Lancelot Wilkinson",
+      "pub_year": "1861",
+      "publisher": "Baptist Mission Press, Calcutta",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/suryasiddhantaenglishtranslationlancelotwilkinsonbapudevasastri1861_727_C"
+    }
+  ],
+  "queries_run": [
+    "Surya Siddhanta English translation history Burgess 1858 complete",
+    "Surya Siddhanta WorldCat English translation editions",
+    "\"Surya Siddhanta\" \"popular edition\" Sanskrit recension",
+    "Burgess \"Surya Siddhanta\" 1858 complete translation all 14 chapters",
+    "Gangooly \"Surya Siddhanta\" 1935 Calcutta \"new translation\" OR \"independent translation\" OR \"re-translated\"",
+    "\"Surya Siddhanta\" English translation 2000s 21st century new scholarly"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/jstor-592174", "found": "Burgess 1858/1860 complete translation of all 14 chapters, 359 pages, published JAOS Vol. 6"},
+    {"url": "https://en.wikipedia.org/wiki/Surya_Siddhanta", "found": "Confirms Burgess (1860) and Bapu Deva Sastri (1861) as the two 19th-century complete translations; Gangooly (1989/1997) is a reprint of Burgess, not a new translation; no independent post-1900 translation found"},
+    {"url": "https://search.worldcat.org/title/translation-of-the-surya-siddhanta-a-text-book-of-hindu-astronomy-with-notes-and-an-appendix-by-ebenezer-burgess-edited-by-phanindralal-gangooly-with-an-introd-by-prabodhchandra-sengupta/oclc/4593534", "found": "WorldCat record for Burgess/Gangooly edition (OCLC 4593534) — confirmed library holdings"},
+    {"url": "https://archive.org/details/suryasiddhantaenglishtranslationlancelotwilkinsonbapudevasastri1861_727_C", "found": "Bapu Deva Sastri / Wilkinson 1861 complete translation available on Archive.org"},
+    {"url": "https://www.amazon.com/Surya-siddhanta-text-With-English-Translation/dp/8183150179", "found": "S. Jain edition is Burgess text re-edited, not an independent new translation"}
+  ],
+  "reasoning": "Two complete 19th-century English translations exist: Burgess (1860, all 14 chapters, JAOS) and Bapu Deva Sastri/Wilkinson (1861). Post-1900 editions (Gangooly 1935, Jain 21st c.) are reprints/re-editions of Burgess, not independent new translations. No independent modern translation found. Verdict: first_modern."
+}

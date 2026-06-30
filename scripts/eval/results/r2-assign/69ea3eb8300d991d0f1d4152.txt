@@ -1,0 +1,4 @@
+book_id: 69ea3eb8300d991d0f1d4152
+Title: The Finding of Wineland the Good (Vinland Sagas)
+Author: A. M. Reeves (ed.)
+Source language: Old Norse

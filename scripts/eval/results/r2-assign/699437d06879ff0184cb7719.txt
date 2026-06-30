@@ -1,0 +1,4 @@
+book_id: 699437d06879ff0184cb7719
+Title: Patrologia Latina Vol. 8: Marius Victorinus — Adversus Arium et Opera
+Author: Marius Victorinus
+Source language: Latin

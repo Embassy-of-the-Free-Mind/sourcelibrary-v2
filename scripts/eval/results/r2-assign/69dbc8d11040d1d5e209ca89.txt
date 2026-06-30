@@ -1,0 +1,4 @@
+book_id: 69dbc8d11040d1d5e209ca89
+Title: De disciplina scholarium. Comm: pseudo- Thomas Aquinas
+Author: Boethius (Pseudo-)
+Source language: Latin

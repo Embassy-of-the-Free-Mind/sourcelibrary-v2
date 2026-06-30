@@ -1,0 +1,37 @@
+{
+  "book_id": "6a08593049638a50931c7124",
+  "work_identified": "Orthographiae ratio (1561/1566) by Aldus Manutius the Younger (Aldo Manuzio, 1547-1597), son of Paolo Manuzio — a Latin treatise on the principles of Latin orthography compiled from ancient inscriptions, manuscripts, coins, and classical grammarians",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Paolo Manuzio \"Orthographiae ratio\" English translation",
+    "\"Orthographiae ratio\" \"Aldo Manutio\" \"Pauli\" WorldCat translation English",
+    "Aldus Manutius younger \"orthography\" Latin English translation scholarly",
+    "\"Aldus Manutius\" younger orthography \"Latin spelling\" English translation modern scholarship",
+    "\"I Tatti Renaissance Library\" Manutius OR \"Aldus Manutius\" orthography English translation",
+    "\"Paulus Manutius\" OR \"Paolo Manuzio\" \"orthographiae ratio\" English translation academic",
+    "\"Aldus Manutius the Younger\" \"Orthographiae ratio\" English \"first translation\"",
+    "\"Orthographiae ratio\" Manutius 2000s 2010s 2020s reprint translation",
+    "ISBN 9789333319522 \"orthographiae ratio\" language publisher",
+    "Manuzio \"orthographiae\" \"Latin orthography\" English translation Renaissance digital humanities project",
+    "site:worldcat.org \"orthographiae ratio\" manutio"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Aldus_Manutius_the_Younger", "found": "Describes the Orthographiae ratio (1561, expanded 1566); no mention of any English translation; notes only Eleganze was translated into French (1557) and English (1573)"},
+    {"url": "https://exhibits.lib.byu.edu/aldine/59Aldus.html", "found": "BYU Aldine exhibition page on item 59: describes 1561 first edition; no English translation mentioned"},
+    {"url": "https://archive.org/details/orthographiaerat00manu", "found": "1561 Latin edition; language: Latin; no translation indicated"},
+    {"url": "https://archive.org/details/bub_gb_Ebu1BU3d764C", "found": "Another Latin edition on archive.org; language: Latin"},
+    {"url": "https://www.amazon.com/Orthographiae-ratio-Manutio-Pauli-collecta/dp/9333319522", "found": "2016 facsimile reprint (ISBN 9789333319522); language Latin; Facsimile Publisher, not a translation"},
+    {"url": "https://bmcr.brynmawr.edu/2017/2017.08.27", "found": "Review of I Tatti vol 78 (Aldus Manutius: Humanism and the Latin Classics); covers Aldus the Elder only; Orthographiae ratio not included"},
+    {"url": "https://www.britannica.com/biography/Aldus-Manutius-the-Younger", "found": "Britannica biography; describes Orthographiae ratio as his greatest scholarly contribution; no English translation mentioned"},
+    {"url": "http://www.worldcat.org/identities/lccn-n88-132189/", "found": "WorldCat identity for Aldo Manuzio 1547-1597; 30 editions 1561-1607, all Latin; no English translation listed"},
+    {"url": "https://www.abaa.org/book/236169300", "found": "Rare book dealer listing for 1566 edition; Latin only"},
+    {"url": "https://www.abebooks.com/Orthographiae-ratio-Aldo-Manutio-Paulli-Collecta/1326701029/bd", "found": "AbeBooks: 1566 Latin edition; no translation"}
+  ],
+  "reasoning": "No English translation of the Orthographiae ratio has ever been published. WorldCat records 30 Latin editions (1561-1607) with no English-language edition. Archive.org, HathiTrust, ABAA, Britannica, Wikipedia, I Tatti Renaissance Library, and rare-book dealers all confirm Latin-only publication. The 2016 ISBN 9789333319522 is a Latin facsimile reprint, not a translation. This specialized Renaissance Latin philological treatise (a guide to Latin spelling conventions) has no known English version."
+}

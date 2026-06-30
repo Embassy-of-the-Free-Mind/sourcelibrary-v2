@@ -1,0 +1,4 @@
+book_id: 69d8ca22a09828f83ddc9c7a
+Title: Histoire des Champignons de la France, Vol 2
+Author: Pierre Bulliard
+Source language: French

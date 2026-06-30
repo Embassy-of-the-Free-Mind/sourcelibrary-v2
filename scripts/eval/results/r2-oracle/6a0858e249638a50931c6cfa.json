@@ -1,0 +1,36 @@
+{
+  "book_id": "6a0858e249638a50931c6cfa",
+  "work_identified": "Scipione Capece, 'De principiis rerum libri duo' and 'De vate maximo libri tres' — combined Aldine 1546 edition; Neo-Latin Lucretian poem on natural philosophy + hexametric poem on Saint John the Baptist",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Scipione Capece \"De principiis rerum\" English translation",
+    "Scipione Capece \"principiis rerum\" English translator",
+    "Capece \"De principiis rerum\" WorldCat English translation",
+    "Scipione Capece Neo-Latin poem \"principles of things\" English translation scholarship",
+    "worldcat Capece \"principiis rerum\" OR \"vate maximo\" English lang:en",
+    "Capece \"De principiis rerum\" Aldus Manutius Venice 1546 critical edition English",
+    "Capece \"De principiis rerum\" bilingual edition text translation Bloomsbury Brill Harvard",
+    "\"De vate maximo\" Capece English translation \"John the Baptist\" Latin poem",
+    "Capece \"De principiis rerum\" translation Italian German \"vate maximo\"",
+    "\"Scipione Capece\" OR \"Scipionis Capicii\" \"on the principles\" OR \"principles of things\" English",
+    "Capece \"principiis rerum\" translated English published book 2000 2010 2020",
+    "site:archive.org \"Capece\" \"principiis rerum\" English"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Scipione_Capece", "found": "No English translations mentioned; Italian verse translation by F.M. Ricci (1754) is the only non-Latin version noted"},
+    {"url": "https://www.ereticopedia.org/scipione-capece", "found": "No English translations; only F.M. Ricci's 1754 Italian blank-verse rendering mentioned"},
+    {"url": "https://pronapoli.com/autor/scipione-capece/", "found": "Confirms Ricci's 1754 Italian translation as the sole prior translation; no English version"},
+    {"url": "https://archive.org/details/bub_gb_6V_QVEpShgUC", "found": "1594 Latin edition; no English translation present"},
+    {"url": "https://bmcr.brynmawr.edu/2017/2017.02.45", "found": "Capece mentioned in passing in Lucretius-reception scholarship; no English translation noted"},
+    {"url": "https://unipub.uni-graz.at/obvugrhs/content/titleinfo/242233", "found": "2014 German-language thesis on De principiis rerum; access blocked, confirms scholarly attention limited to German/Italian"},
+    {"url": "https://www.umbriacultura.it/SebinaOpac/resource/il-poema-de-principiis-rerum-di-scipione-capece-patrizio-napoletano-illustre-scrittore-del-secolo-16/UM100684714?locale=eng&tabDoc=tabcomm", "found": "1754 Remondiniana edition with Ricci Italian verse translation; no English version mentioned"},
+    {"url": "https://www.academia.edu/36564289/Italian_Lucretius_Christian_Lucretius_A_Tale_of_Two_Models_in_Italian_Didactic_Poetry_from_the_16th_to_the_18th_century", "found": "Scholarship on Capece as Lucretian imitator; no English translation exists or is discussed"}
+  ],
+  "reasoning": "De principiis rerum (Lucretian natural-philosophy poem, 2 bks) and De vate maximo (St. John the Baptist hexameters, 3 bks) have no prior English translation. Only prior: F.M. Ricci's 1754 Italian blank-verse rendering (Venice, Remondiniana). Searches across archive.org, Wikipedia, BMCR, Pronapoli, Ereticopedia, and Neo-Latin scholarship found no English version of either text."
+}

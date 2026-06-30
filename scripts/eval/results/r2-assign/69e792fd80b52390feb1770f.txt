@@ -1,0 +1,4 @@
+book_id: 69e792fd80b52390feb1770f
+Title: 三國演義 (Sānguó Yǎnyì / Romance of the Three Kingdoms)
+Author: Luo Guanzhong
+Source language: Chinese

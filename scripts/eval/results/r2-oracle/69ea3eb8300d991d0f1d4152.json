@@ -1,0 +1,24 @@
+{
+  "book_id": "69ea3eb8300d991d0f1d4152",
+  "work_identified": "The Finding of Wineland the Good — A. M. Reeves's 1890 English scholarly edition and translation of the Vinland sagas (Grœnlendinga saga / Eiríks saga rauða)",
+  "verdict": "not_applicable",
+  "prior_relationship": null,
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Arthur Middleton Reeves \"Finding of Wineland the Good\" 1890 English translation Vinland sagas",
+    "WorldCat \"Finding of Wineland the Good\" Reeves 1890 language English",
+    "\"Finding of Wineland the Good\" Reeves \"edited and translated\" language English 1890 Vinland sagas first English translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/findingofwinelan00reev", "found": "Language: English; Icelandic — full title: 'edited and translated from the earliest records by Arthur Middleton Reeves'; confirms bilingual scholarly edition, English translation of sagas"},
+    {"url": "https://openlibrary.org/works/OL177952W/The_finding_of_Wineland_the_good", "found": "Language listed as English; Reeves identified as editor/author of English scholarly edition"},
+    {"url": "https://en.wikipedia.org/wiki/Arthur_Middleton_Reeves", "found": "Reeves (1856–1891) published English translations of Saga of Erik the Red and Saga of the Greenlanders in this 1890 volume; republished multiple times"},
+    {"url": "https://en.wikisource.org/wiki/The_Finding_of_Wineland_the_Good/Chapter_2", "found": "Chapter 2 text is in English prose; header explicitly states 'translated by Arthur Middleton Reeves' — confirms the book IS an English translation"},
+    {"url": "https://www.worldcat.org/title/finding-of-wineland-the-good-the-history-of-the-icelandic-discovery-of-america/oclc/1158336314", "found": "WorldCat record for the Reeves 1890 English edition confirming English + Icelandic bilingual work"}
+  ],
+  "reasoning": "Our item IS the Reeves 1890 English edition ('edited and translated from the earliest records'). The book is in English with Icelandic originals appended. Source-language metadata 'Old Norse' is an error — the item is itself the English translation. First-English-translation claim is ill-posed: our item is already in English. → not_applicable per contract."
+}

@@ -1,0 +1,56 @@
+{
+  "book_id": "6a08507649638a50931b647b",
+  "work_identified": "Epistolae of St. Jerome — Volume 1 of the 1566 Aldine edition edited by Marianus Victorius Reatinus and published by Paolo Manuzio, Rome; contains Jerome's letters and anti-heretical treatises in Latin",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "partial",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Principal Works of St. Jerome (Letters and Select Works)",
+      "translator": "W.H. Fremantle, G. Lewis, W.G. Martley",
+      "pub_year": "1893",
+      "publisher": "Christian Literature Publishing Co. (Nicene and Post-Nicene Fathers, Series II, Vol. 6, ed. Philip Schaff and Henry Wace)",
+      "completeness": "partial",
+      "source_url": "https://archive.org/details/LettersAndSelectWorks"
+    }
+  ],
+  "queries_run": [
+    "St Jerome Epistolae letters complete English translation NPNF \"Nicene and Post-Nicene Fathers\" translator year",
+    "Jerome letters \"Fathers of the Church\" English translation complete Catholic University",
+    "Jerome \"select letters\" OR \"selected letters\" English Fremantle NPNF how many letters translated complete",
+    "NPNF \"principal works of St Jerome\" Fremantle \"select letters\" how many letters translated 1893",
+    "archive.org \"principal works of St Jerome\" NPNF Fremantle 1893 letters",
+    "Paolo Manuzio \"Epistolae Hieronymi\" edition 16th century which letters volume 1",
+    "how many letters of St Jerome remain untranslated into English"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.roger-pearse.com/weblog/2025/12/06/the-letters-of-st-jerome/",
+      "found": "Comprehensive survey confirming no single complete English translation exists; NPNF covers large selection; French (Labourt 1949–63) and Spanish (Ruiz Bueno 1962) have complete translations"
+    },
+    {
+      "url": "https://www.roger-pearse.com/weblog/2025/12/09/how-many-letters-of-st-jerome-remain-untranslated-into-english/",
+      "found": "Only 7 letters (93, 94, 150–154) remain untranslated into English as of Dec 2025; ~147/154 have prior English translations across multiple sources"
+    },
+    {
+      "url": "https://www.newadvent.org/fathers/3001.htm",
+      "found": "NPNF Vol. 6 contains Letters I–CL (1–150) translated by Fremantle, Lewis, Martley (1893); letters attributed to spurious at 148–150"
+    },
+    {
+      "url": "https://www.ccel.org/ccel/schaff/npnf206.toc.html",
+      "found": "Table of contents of NPNF Series II Vol. 6 confirming ~120 numbered letters of Jerome in English"
+    },
+    {
+      "url": "https://archive.org/details/LettersAndSelectWorks",
+      "found": "Digitized copy of Fremantle 1893 NPNF translation of Jerome's letters and select works, freely accessible"
+    },
+    {
+      "url": "https://archive.org/details/selectlettersofs00jerouoft",
+      "found": "F.A. Wright 1933 'Select Letters of St. Jerome' (Heinemann) — a further selection, not complete"
+    }
+  ],
+  "reasoning": "Jerome's Epistolae have a substantial prior English translation in NPNF Series II Vol. 6 (Fremantle, Lewis, Martley, 1893), covering ~120+ letters (I–CL). Volume 1 of the Manuzio edition contains a subset of these same letters; all fall within the NPNF coverage. The Manuzio Latin edition is the work, not a distinct intermediary. Not the first English."
+}

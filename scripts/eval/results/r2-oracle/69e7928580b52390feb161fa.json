@@ -1,0 +1,90 @@
+{
+  "book_id": "69e7928580b52390feb161fa",
+  "work_identified": "Padmasambhava's Prophecy of the Future (Lamp Clarifying What Is To Come / Refined Essence of Golden Speech) and Guidebook to the Hidden Land of Pemakö [Wondrous Terma] — combined terma manuscript from the Ogyen Choling Collection, Bumthang, Bhutan",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "transliteration",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Pemako \"Padma Bkod\" guidebook English translation \"gnas yig\" Padmasambhava hidden land",
+    "Ogyen Choling Collection Tibetan manuscripts Padmasambhava prophecy future translation English",
+    "\"Padma bkod\" \"gnas yig\" English translation \"hidden land\" prophecy Padmasambhava terma",
+    "\"Ogyen Choling\" OR \"O rgyan chos gling\" collection digitized manuscripts BDRC catalog",
+    "\"ma 'ong lung bstan\" \"padma bkod\" \"gnas yig\" Tibetan terma prophecy translation",
+    "BDRC \"padma bkod\" \"gnas yig\" terma \"lung bstan\" English translation WorldCat",
+    "WorldCat \"hidden land\" \"Pemako\" OR \"Pemakö\" OR \"Padma bkod\" English translation book Tibetan",
+    "Ian Baker \"heart of the world\" Pemako guidebook English translation Tibetan text",
+    "\"Ogyen Choling\" OR \"ogling\" collection \"lung bstan\" OR \"gnas yig\" \"padma bkod\" English translation published",
+    "EAP105 \"Ogyen Choling\" Bhutan manuscripts catalog digitized texts list",
+    "site:eap.bl.uk \"padma bkod\" OR \"lung bstan\" EAP105 Ogyen Choling",
+    "\"sbas yul padma bkod\" \"gnas yig\" translated English academic OR Himalayan OR Buddhist publication",
+    "\"gsung gi thig\" \"gser gyi yang zhun\" OR \"gser gyis yang zhun\" Tibetan prophecy translation English",
+    "\"padma bkod\" \"gnas yig\" \"lung bstan\" terma Ogyen Choling Bhutan publication",
+    "\"slob dpon chen po\" \"padma 'byung gnas\" \"ma 'ong\" OR \"ma 'ongs\" \"lung bstan\" \"padma bkod\" English translation OR translated",
+    "\"sbas yul padma bkod\" \"gnas yig\" \"ngo mtshar\" terma Bhutan Bumthang English translation academic",
+    "Padmasambhava \"prophecy future\" \"guidebook\" OR \"hidden land\" Pemako Tibetan English dissertation thesis academic translation",
+    "\"Ogyen Choling\" OR \"ogling\" Bhutan terma text \"translated\" OR \"translation\" English published academic",
+    "worldcat \"padma bkod\" OR \"padma-bkod\" OR \"pemako\" english translation published book library",
+    "\"84000\" OR \"lotsawa house\" Pemako OR \"Padma bkod\" guidebook prophecy terma English translated 2020 2021 2022 2023",
+    "\"Tib Shelf\" \"Pemako\" OR \"Pemakö\" \"hidden sacred land\" translation English tibetan text",
+    "84000.co Pemako OR \"padma bkod\" guidebook hidden land terma translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.lotsawahouse.org/tibetan-masters/jatson-nyingpo/pemako-guidebook",
+      "found": "Jatsön Nyingpo Pemakö guidebook translated 2020 (Greensmith/Jacobson/Choephel) from Könchok Chidü — DIFFERENT text/revealer, not Ogyen Choling"
+    },
+    {
+      "url": "https://www.lotsawahouse.org/topics/pemako/",
+      "found": "Only two Pemakö texts on Lotsawa House: Jatsön Nyingpo guidebook and Lelung Shepé Dorje prayer — neither matches our text"
+    },
+    {
+      "url": "https://www.lotsawahouse.org/topics/prophecy/",
+      "found": "Prophecy series has 9 texts; none match our Ogyen Choling combined prophecy+Pemakö guidebook"
+    },
+    {
+      "url": "https://www.lotsawahouse.org/words-of-the-buddha/clarifying-light-prophecy",
+      "found": "Ma 'ongs lung bstan gsal byed sgron me compiled by Jamyang Khyentse Chökyi Lodrö — DIFFERENT text, no Pemakö content"
+    },
+    {
+      "url": "https://adamspearcey.com/tag/ma-ongs-lung-bstan-gsal-byed-sgron-me/",
+      "found": "Adam Pearcey commentary on Ma 'ongs lung bstan: attributed to Jamyang Khyentse, not Padmasambhava; no Pemakö element; DIFFERENT text"
+    },
+    {
+      "url": "https://eap.bl.uk/project/EAP105",
+      "found": "EAP105 = Ogyen Choling digitization project; 2,599 titles photographed; no English translations produced by this project"
+    },
+    {
+      "url": "https://eap.bl.uk/archive-file/EAP105-2-1-192",
+      "found": "bum thang stang ris mo can gyi gnas yig ngo mtshar — a Bumthang gnas yig from Ogyen Choling but about local Bumthang site, not Pemakö"
+    },
+    {
+      "url": "https://ci.nii.ac.jp/ncid/BB07453864",
+      "found": "Sbas yul Padma bkod kyi lam yig collection (Tseten Dorji, Tezu 1974; microfiche IASWR) — Tibetan only, no English translation"
+    },
+    {
+      "url": "https://sites.google.com/view/newtibetological/geo-titles-tibetan",
+      "found": "Tibetan Pemakö guidebook catalog: texts by Jatsön Nyingpo, Mi 'gyur tshe dbang, Padma gling pa — no English translations noted; no Ogyen Choling texts listed"
+    },
+    {
+      "url": "https://www.wisdomlib.org/history/compilation/kailash-journal-of-himalayan-studies/d/doc1602261.html",
+      "found": "Academic analysis of Padma-bkod; lists Tibetan source texts but no English translations of gnas yig; no Ogyen Choling material"
+    },
+    {
+      "url": "https://library.bdrc.io/search",
+      "found": "BDRC catalog search inaccessible — page renders only header; no results retrieved"
+    },
+    {
+      "url": "https://www.tibshelf.org/tibetan-translations/hidden-sacred-land-of-pemako",
+      "found": "Page content truncated; could not enumerate listed translations"
+    },
+    {
+      "url": "https://brill.com/display/book/9789004437685/BP000022.xml",
+      "found": "Academic chapter on Padma bkod in Western world (2021) — scholarly analysis, not a translation of this specific text"
+    }
+  ],
+  "reasoning": "Tibetan terma manuscript from Ogyen Choling Collection, Bhutan, combining Padmasambhava's future prophecy and guidebook to hidden land of Pemakö. Searched Lotsawa House, Tib Shelf, WorldCat, EAP105, academic databases. Known English Pemakö translations (Jatsön Nyingpo 2020, Khamtrul Rinpoche unpub.) are distinct texts by different revealers. No English translation of this specific Ogyen Choling manuscript found."
+}

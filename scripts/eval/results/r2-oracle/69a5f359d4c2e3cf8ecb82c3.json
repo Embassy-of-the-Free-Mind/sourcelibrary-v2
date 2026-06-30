@@ -1,0 +1,39 @@
+{
+  "book_id": "69a5f359d4c2e3cf8ecb82c3",
+  "work_identified": "Syriac manuscript liturgical-patristic anthology (~900 CE) containing liturgical offices (Service of the Night, Sunday morning prayers) and patristic discourses attributed to Isaac of Nineveh and Mar Ephrem — specific manuscript identity unresolved; 'Liturgical and Patristic Anthology' is a generic descriptive title, not a traditional Syriac work name",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "none",
+  "confidence": "low",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Syriac \"Liturgical and Patristic Anthology\" English translation",
+    "Syriac liturgical patristic anthology WorldCat English translation",
+    "WorldCat Syriac anthology liturgical patristic \"various authors\" English translation site:worldcat.org",
+    "Syriac patristic anthology Sebastian Brock English translation Gorgias Press CSCO",
+    "\"liturgical and patristic anthology\" Syriac",
+    "\"invitation to syriac christianity\" anthology contents table Penn Johnson Shepardson 2022",
+    "Syriac manuscript anthology 900 CE liturgical patristic Isaac Nineveh Ephrem English translation published",
+    "Syriac \"anthology\" liturgical patristic \"various\" English translation Brill Gorgias CSCO",
+    "Syriac manuscript \"service of the night\" OR \"night service\" liturgical prayers anthology English translation",
+    "Isaac of Nineveh \"discourses\" Syriac English translation complete Sebastian Brock Dana Miller CSCO",
+    "Ephrem Syriac homilies \"night service\" \"service of the night\" English translation liturgical",
+    "Syriac \"homily of Mar Ephrem\" \"Isaac of Nineveh\" \"service of the night\" English translation anthology",
+    "WorldCat \"liturgical and patristic anthology\" Syriac \"various\" 900",
+    "Isaac of Nineveh \"90th discourse\" OR \"ninetieth discourse\" OR \"eighth discourse\" Syriac English translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://bmcr.brynmawr.edu/2023/2023.05.05/", "found": "Review of 'Invitation to Syriac Christianity: An Anthology' (Penn et al., 2022, UC Press) — curated excerpt anthology of diverse Syriac texts, NOT a full manuscript translation, not a match"},
+    {"url": "https://scholarworks.iu.edu/journals/index.php/tmr/article/view/39332", "found": "Medieval Review of same anthology — confirmed it is an excerpt selection spanning 2nd–14th century, breadth over depth, not a full manuscript"},
+    {"url": "https://www.gorgiaspress.com/the-syrian-fathers-on-prayer", "found": "403 Forbidden; Gorgias Press Syrian Fathers on Prayer — Brock anthology of Syriac patristic texts on prayer, distinct work"},
+    {"url": "https://www.tertullian.org/rpearse/oriental/syriac.htm", "found": "Isaac of Nineveh translations: Wensinck (1923), Miller/HTM (1984), Brock (1995 Part II); Ephrem translations by Assemani, McVey, Brock; no combined liturgical-patristic manuscript anthology identified"},
+    {"url": "https://search.worldcat.org/search?q=syriac+liturgical+patristic+anthology", "found": "403 Forbidden"},
+    {"url": "https://syri.ac/brock/liturgy", "found": "403 Forbidden"},
+    {"url": "https://syri.ac/brock/ephrem", "found": "403 Forbidden"},
+    {"url": "https://brill.com/edcollchap-oa/book/9789004527553/BP000001.xml", "found": "Florilegia Syriaca chapter — discusses Syriac patristic florilegia methodology; no English translations of Syriac florilegia listed"},
+    {"url": "https://en.wikipedia.org/wiki/The_Ascetical_Homilies_of_Isaac_the_Syrian", "found": "Isaac of Nineveh: 140 discourses in 3 Parts; Part I (82, Miller 1984 / HTM), Part II (41, Brock 1995 CSCO), Part III (SVS Press); numbered discourses exist in English but as standalone Part volumes, not as this anthology"}
+  ],
+  "reasoning": "No prior complete English translation found for this specific ~900 CE Syriac manuscript anthology (434 pp). Component texts (Isaac of Nineveh discourses, Ephrem homilies) exist in English in separate CSCO/HTM/Brock volumes, but this specific compiled anthology combining liturgical offices (Service of Night, Sunday morning prayers) with patristic discourses is unmatched in any catalog searched. Work identity is unresolved: title is a generic descriptor; confidence is low because a Syriac ms. specialist might identify a specific named codex with a prior translation."
+}

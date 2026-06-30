@@ -1,0 +1,4 @@
+book_id: 6953ea0a1479a63c11085bed
+Title: Einleitung in die Analysis des Unendlichen
+Author: Leonhard Euler
+Source language: German

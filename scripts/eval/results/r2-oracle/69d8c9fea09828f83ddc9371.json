@@ -1,0 +1,36 @@
+{
+  "book_id": "69d8c9fea09828f83ddc9371",
+  "work_identified": "Theatrum Fungorum oft het Toonsel der Campernoelien (1675) by Franciscus van Sterbeeck — the first dedicated Dutch mycology monograph, treating edible and poisonous fungi with natural history, gastronomic, and medical properties",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Franciscus van Sterbeeck \"Theatrum Fungorum\" English translation",
+    "\"van Sterbeeck\" \"Theatrum Fungorum\" \"Toonsel der Campernoelien\" English",
+    "WorldCat \"Theatrum fungorum\" Sterbeeck English translation site:worldcat.org",
+    "Sterbeeck \"Theatrum fungorum\" mycology mushroom 17th century Dutch English translated",
+    "Sterbeeck mycology history \"first English translation\" OR \"translated into English\" fungi 1675",
+    "\"Theatrum fungorum\" OR \"van Sterbeeck\" fungi English translation 2000 2010 2020 2025",
+    "Sterbeeck \"Theatrum Fungorum\" mushroom book history mycology English \"no translation\" OR \"never been translated\"",
+    "STCN OR \"short title catalogue netherlands\" Sterbeeck Theatrum fungorum",
+    "\"Theatrum fungorum\" Sterbeeck \"theatre of fungi\" OR \"theater of fungi\" OR \"theatrum of mushrooms\" English",
+    "HathiTrust \"Theatrum fungorum\" Sterbeeck English",
+    "mycology history Van Sterbeeck \"Theatrum Fungorum\" scholarship translation Dutch"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.huh.harvard.edu/book/theatrum-fungorum-oft-het-tooneel-der-campernoelien-1675", "found": "Harvard Herbaria lists 1675 Dutch edition only; no English translation referenced"},
+    {"url": "https://wellcomecollection.org/works/w5fgrdzk", "found": "Wellcome Collection: language listed as Dutch only; no English translation"},
+    {"url": "https://www.biodiversitylibrary.org/bibliography/84429", "found": "BHL: Dutch editions only; no English translation listed"},
+    {"url": "https://archive.org/details/mobot31753000540531", "found": "Archive.org: language Dutch (OCR_detected_lang: nl); no English editions or translations referenced"},
+    {"url": "https://catalog.hathitrust.org/Record/001497556", "found": "HathiTrust record for 1675 Dutch edition; no English translation in catalog"},
+    {"url": "http://worldcat.org/identities/lccn-nb2007003238/", "found": "WorldCat identity: 12 editions published 1675-1712, all in Dutch; no English translation"},
+    {"url": "https://www.huntbotanical.org/library/show.php?11=", "found": "Hunt Institute: confirms first book devoted solely to mycology, written in vernacular Flemish; no English translation mentioned"},
+    {"url": "https://agris.fao.org/agris-search/search.do?recordID=BE9200758", "found": "AGRIS: Belgian scholarly biography with French translation of some botanical descriptions only; no English translation"},
+    {"url": "https://www.abebooks.com/book-search/title/theatrum-fungorum/author/sterbeeck/", "found": "AbeBooks: all listings are Dutch editions; no English translation for sale"}
+  ],
+  "reasoning": "Comprehensive search across WorldCat (12 editions 1675-1712, all Dutch), archive.org, HathiTrust, BHL, Harvard Herbaria, Wellcome, Hunt Institute, and AbeBooks found zero English translations. Only known non-Dutch engagement is a partial French translation of botanical descriptions in a modern Belgian biographical article. No prior English translation of any completeness exists."
+}

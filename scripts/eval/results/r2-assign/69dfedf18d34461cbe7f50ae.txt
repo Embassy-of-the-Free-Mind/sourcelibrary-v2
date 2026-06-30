@@ -1,0 +1,4 @@
+book_id: 69dfedf18d34461cbe7f50ae
+Title: Nihon Shoki (日本書紀, Chronicles of Japan), Vol. 1 (1599 woodblock)
+Author: Prince Toneri
+Source language: Japanese

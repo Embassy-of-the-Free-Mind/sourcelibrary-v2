@@ -1,0 +1,64 @@
+{
+  "book_id": "69b21db694025df5d2909995",
+  "work_identified": "Waerachtighe ende grondighe beschryvinghe van het groot ende Goudt-rijck Coninckrijck van Guiana (1598 Dutch translation of Raleigh's 'The Discoverie of the Large, Rich, and Bewtiful Empyre of Guiana', 1596, with Laurens Keymis's second voyage account) — underlying work is an English original",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Discoverie of the Large, Rich, and Bewtiful Empyre of Guiana",
+      "translator": "Walter Raleigh (English original; no translator — Raleigh authored in English)",
+      "pub_year": "1596",
+      "publisher": "Robert Robinson, London",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/discoverieoflarg00rale"
+    },
+    {
+      "english_title": "A Relation of the Second Voyage to Guiana",
+      "translator": "Lawrence Keymis (English original; authored in English)",
+      "pub_year": "1596",
+      "publisher": "Thomas Dawson, London",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/relationofsecond00kemy"
+    }
+  ],
+  "queries_run": [
+    "Waerachtighe Beschryvinghe van Guiana Raleigh Dutch translation English",
+    "Raleigh \"Discovery of Guiana\" Dutch translation \"Waerachtighe\" 1598",
+    "site:worldcat.org Raleigh \"Guiana\" Dutch \"beschryvinghe\"",
+    "Raleigh \"Discovery of Guiana\" English editions complete translations history 1596",
+    "\"Waerachtighe\" OR \"Waerachtige\" Raleigh Guiana Dutch \"translated from English\" 1598 Cornelis Claesz",
+    "Keymis \"Relation of the Second Voyage to Guiana\" 1596 English original text",
+    "Raleigh \"Discovery of Guiana\" \"Discoverie\" English translation 1595 1596 complete editions HathiTrust"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://play.google.com/store/books/details/Waerachtighe_ende_grondighe_beschryvinghe_van_het_?id=uqhkAAAAcAAJ",
+      "found": "Dutch edition title page explicitly states '[Translated from the English]'; published January 1598; contains Raleigh + Keymis accounts"
+    },
+    {
+      "url": "https://archive.org/details/discoverieoflarg00rale",
+      "found": "Raleigh's 1596 English original — 'The Discoverie of the Large, Rich, and Bewtiful Empyre of Guiana' — no translator; written in English by Raleigh; published by Robert Robinson, London"
+    },
+    {
+      "url": "https://archive.org/details/relationofsecond00kemy",
+      "found": "Keymis's 1596 English original 'A Relation of the Second Voyage to Guiana' — authored in English, published by Thomas Dawson, London"
+    },
+    {
+      "url": "https://catalog.hathitrust.org/Record/009779685",
+      "found": "HathiTrust catalog record confirms multiple complete English editions of Raleigh's Discovery of Guiana exist"
+    },
+    {
+      "url": "https://quod.lib.umich.edu/e/eebo2/A04813.0001.001",
+      "found": "EEBO-2 confirms Keymis's English original 'A relation of the second voyage to Guiana' (1596) is available and complete"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/The_Discovery_of_Guiana",
+      "found": "Confirms English original published 1596; Latin edition 1599; no first-translation issue — work is English"
+    }
+  ],
+  "reasoning": "The Dutch 'Waerachtighe beschryvinghe van Guiana' (1598, Cornelis Claesz) is explicitly a Dutch TRANSLATION of Raleigh's English original 'The Discoverie of Guiana' (1596) plus Keymis's 'Relation of the Second Voyage' (1596). Both underlying works are English originals. Per the source-language rule, the underlying work has been completely in English since 1596 with multiple editions; no first-English-translation claim is supportable."
+}

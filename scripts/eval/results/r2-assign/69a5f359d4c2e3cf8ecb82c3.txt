@@ -1,0 +1,4 @@
+book_id: 69a5f359d4c2e3cf8ecb82c3
+Title: Liturgical and Patristic Anthology
+Author: Various
+Source language: Syriac

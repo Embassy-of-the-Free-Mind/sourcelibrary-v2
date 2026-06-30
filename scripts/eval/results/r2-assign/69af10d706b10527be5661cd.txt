@@ -1,0 +1,4 @@
+book_id: 69af10d706b10527be5661cd
+Title: Демон и запрещенные стихотворения М. Ю. Лермонтова
+Author: Михаил Юрьевич Лермонтов
+Source language: Russian

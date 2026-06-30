@@ -1,0 +1,43 @@
+{
+  "book_id": "6953ea0a1479a63c11085bed",
+  "work_identified": "Introductio in analysin infinitorum (Euler, 1748) — German edition 'Einleitung in die Analysis des Unendlichen'; same work as the Latin original, translated into German by Michelsen (1788) and Maser (1885)",
+  "verdict": "not_first",
+  "prior_relationship": "different_source_language",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Introduction to Analysis of the Infinite, Book I",
+      "translator": "John D. Blanton",
+      "pub_year": "1988",
+      "publisher": "Springer-Verlag, New York",
+      "completeness": "complete",
+      "source_url": "https://www.cambridge.org/core/journals/mathematical-gazette/article/abs/introduction-to-analysis-of-the-infinite-book-i-by-leonard-euler-translated-by-john-d-blanton-pp-327-dm-98-1988-isbn-3540968245-springer/536B0B10809DD0C43C015DB43746CC3D"
+    },
+    {
+      "english_title": "Introduction to Analysis of the Infinite, Book II",
+      "translator": "John D. Blanton",
+      "pub_year": "1989",
+      "publisher": "Springer-Verlag, New York",
+      "completeness": "complete",
+      "source_url": "https://www.cambridge.org/core/journals/mathematical-gazette/article/abs/introduction-to-analysis-of-the-infinite-book-ii-by-leonard-euler-translated-by-john-d-blanton-pp-505-dm118-1989-isbn-3540971327-springer/25CECE3B9A27F69ED470F0B7937FE43B"
+    }
+  ],
+  "queries_run": [
+    "Euler \"Introductio in analysin infinitorum\" English translation \"Introduction to Analysis of the Infinite\"",
+    "Euler \"Einleitung in die Analysis des Unendlichen\" English translation history",
+    "John Blanton Euler \"Introduction to Analysis of the Infinite\" Springer 1988 ISBN translation",
+    "WorldCat Euler \"Introduction to Analysis of the Infinite\" Blanton complete English translation two volumes"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Introductio_in_analysin_infinitorum", "found": "Confirms Blanton (1988) was the first English translation; 2-vol Springer edition; Ian Bruce also translated online"},
+    {"url": "https://www.cambridge.org/core/journals/mathematical-gazette/article/abs/introduction-to-analysis-of-the-infinite-book-i-by-leonard-euler-translated-by-john-d-blanton-pp-327-dm-98-1988-isbn-3540968245-springer/536B0B10809DD0C43C015DB43746CC3D", "found": "Peer-reviewed Mathematical Gazette notice of Blanton Book I (1988, 327 pp, ISBN 3-540-96824-5, Springer)"},
+    {"url": "https://www.cambridge.org/core/journals/mathematical-gazette/article/abs/introduction-to-analysis-of-the-infinite-book-ii-by-leonard-euler-translated-by-john-d-blanton-pp-505-dm118-1989-isbn-3540971327-springer/25CECE3B9A27F69ED470F0B7937FE43B", "found": "Peer-reviewed Mathematical Gazette notice of Blanton Book II (1989, 505 pp, ISBN 3-540-97132-7, Springer)"},
+    {"url": "https://archive.org/details/analysisoftheinfinitebook1Euler1748Blanton1988", "found": "Internet Archive scan of Blanton Book I (1748/1988), translator J D Blanton confirmed in metadata"},
+    {"url": "https://archive.org/details/introductiontoan0000eule", "found": "Two-volume Springer 1988 English translation listed"},
+    {"url": "https://digital.ub.uni-paderborn.de/ihd/content/titleinfo/3414680", "found": "Michelsen 1788 German translation of the Introductio — confirms 'Einleitung' is the German edition of the same Latin work"}
+  ],
+  "reasoning": "Our book is the German edition of Euler's Introductio in analysin infinitorum (1748). A complete modern English translation of this identical work was published by Springer in 1988–89 (John D. Blanton, 2 vols., reviewed in Mathematical Gazette). Blanton translated from the Latin original; our item is the German edition — same work, different source language. Per the contract rule, a complete modern English from any source language yields not_first."
+}

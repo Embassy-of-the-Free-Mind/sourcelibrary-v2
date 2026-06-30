@@ -1,0 +1,4 @@
+book_id: 69a5e484006a4098422176a4
+Title: Syriac Theological Manuscript (Codex Vaticanus Syriacus 162)
+Author: Anonymous
+Source language: Syriac

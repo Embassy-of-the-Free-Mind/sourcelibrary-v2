@@ -1,0 +1,27 @@
+{
+  "book_id": "69a5e484006a4098422176a4",
+  "action": "demote",
+  "action_valid": true,
+  "basis": "complete_modern_prior",
+  "prior": {
+    "translator": "Amir Harrak",
+    "year": "2017",
+    "completeness": "Parts I-II (Harrak 2017, Gorgias Press) + Parts III-IV (Harrak 1999, PIMS) = all four parts in modern English",
+    "url": "https://www.amazon.com/Chronicle-Zuqnin-Creation-Chronicles-Antiquity/dp/1463206631"
+  },
+  "queries_run": [
+    "Chronicle of Zuqnin complete English translation all four parts",
+    "Pseudo-Dionysius Tel-Mahre Chronicle English translation Parts I II",
+    "Harrak Chronicle of Zuqnin Parts I and II English translation Gorgias 2017 2024",
+    "Chronicle of Zuqnin Harrak 2017 first English translation Parts I Gorgias"
+  ],
+  "sources_consulted": [
+    {"url": "https://searchworks.stanford.edu/view/12490904", "found": "Harrak 2017 Gorgias Press Parts I-II confirmed as Syriac text with English translation on facing pages"},
+    {"url": "https://www.amazon.com/Chronicle-Zuqnin-Creation-Chronicles-Antiquity/dp/1463206631", "found": "Harrak Parts I-II, Gorgias Press 2017, ISBN 9781463206635, described as first English translation"},
+    {"url": "https://en.wikipedia.org/wiki/Chronicle_of_Zuqnin", "found": "Translation history; Harrak 2017 Parts I-II cited as most recent scholarly work"},
+    {"url": "https://www.degruyterbrill.com/document/doi/10.31826/9781463237370/html?lang=en", "found": "DeGruyter DOI record confirming Harrak Parts I-II Gorgias publication"},
+    {"url": "https://almuslih.org/wp-content/uploads/2024/11/Harrak-A-The-Chronicle-of-Zuqnin-I-to-II.pdf", "found": "PDF of Harrak Parts I-II translation (3.6MB, binary confirmed accessible)"},
+    {"url": "https://www.amazon.com/Chronicle-488-775-Mediaeval-Sources-Translation/dp/0888442866", "found": "Harrak Parts III-IV, PIMS 1999, confirmed English translation"}
+  ],
+  "reasoning": "Harrak 2017 (Gorgias Press, ISBN 9781463206635) is the first English translation of Parts I-II. Harrak 1999 (PIMS) covers Parts III-IV. Together all four parts have complete modern English coverage. Stage-1 prior (Witakowski 1996, Part III only) is partial but Harrak's two volumes together complete the whole chronicle."
+}
