@@ -63,32 +63,48 @@ await withMongo(async (db) => {
   console.log(`avg DAU (last 14d)       ${avgDau}`);
   console.log(`DAU last 3 days: ${dau.slice(-3).map((d) => d._id + '=' + d.users).join('  ')}`);
 
-  // Dwell time: per session (ip+ua, 30-min gap) duration. last7d for speed.
-  const rows = await pv.find({ timestamp: { $gt: d7 } }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
+  // ---- PAGEVIEWS: raw volume + per-day averages ----
+  const pv24 = await pv.countDocuments({ timestamp: { $gt: d1 } });
+  const pv7 = await pv.countDocuments({ timestamp: { $gt: d7 } });
+  const pv30 = await pv.countDocuments({ timestamp: { $gt: d30 } });
+  console.log('\n=== PAGEVIEWS ===');
+  console.log(`last 24h                 ${pv24}`);
+  console.log(`avg/day (last 7d)        ${Math.round(pv7 / 7)}   (${pv7} total)`);
+  console.log(`avg/day (last 30d)       ${Math.round(pv30 / 30)}   (${pv30} total)`);
+
+  // Dwell time: per session (ip+ua, 30-min gap) duration. Fetch 30d once, then
+  // split sessions by start time into past-month (all) and past-day buckets.
+  const rows = await pv.find({ timestamp: { $gt: d30 } }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
   const byFp = new Map();
   for (const r of rows) {
     const k = r.ip + '|' + (r.userAgent || '').slice(0, 60);
     (byFp.get(k) || byFp.set(k, []).get(k)).push(+new Date(r.timestamp));
   }
-  const durations = []; let multiHit = 0;
+  const sessions = []; // { start: ms, dur: sec } for each multi-pageview session
   for (const ts of byFp.values()) {
     ts.sort((a, b) => a - b);
     let start = ts[0], prev = ts[0], n = 1;
+    const flush = () => { if (n > 1) sessions.push({ start, dur: (prev - start) / 1000 }); };
     for (let i = 1; i < ts.length; i++) {
-      if (ts[i] - prev > 30 * 60 * 1000) { if (n > 1) { durations.push((prev - start) / 1000); multiHit++; } start = ts[i]; n = 1; }
+      if (ts[i] - prev > 30 * 60 * 1000) { flush(); start = ts[i]; n = 1; }
       else n++;
       prev = ts[i];
     }
-    if (n > 1) { durations.push((prev - start) / 1000); multiHit++; }
+    flush();
   }
-  durations.sort((a, b) => a - b);
-  const med = durations[Math.floor(durations.length / 2)] || 0;
-  const mean = durations.reduce((s, x) => s + x, 0) / (durations.length || 1);
-  const fmt = (s) => `${Math.floor(s / 60)}m${Math.round(s % 60)}s`;
-  console.log('\n=== DWELL (last 7d, multi-pageview sessions only) ===');
-  console.log(`multi-page sessions      ${multiHit}`);
-  console.log(`median session duration  ${fmt(med)}`);
-  console.log(`mean session duration    ${fmt(mean)}`);
+  const fmt = (s) => { const t = Math.round(s); return `${Math.floor(t / 60)}m${t % 60}s`; };
+  const dwellStats = (sess) => {
+    const d = sess.map((s) => s.dur).sort((a, b) => a - b);
+    const med = d[Math.floor(d.length / 2)] || 0;
+    const mean = d.reduce((s, x) => s + x, 0) / (d.length || 1);
+    return { n: d.length, med, mean };
+  };
+  const d1ms = +d1;
+  const month = dwellStats(sessions);
+  const day = dwellStats(sessions.filter((s) => s.start > d1ms));
+  console.log('\n=== DWELL / TIME ON SITE (multi-pageview sessions only) ===');
+  console.log(`past month  sessions ${month.n}  avg ${fmt(month.mean)}  median ${fmt(month.med)}`);
+  console.log(`past day    sessions ${day.n}  avg ${fmt(day.mean)}  median ${fmt(day.med)}`);
 
   // ---- INCOMPLETE SIGNUPS: verification token issued, never became a user ----
   const userEmails = new Set((await users.find({}, { projection: { email: 1 } }).toArray()).map((u) => norm(u.email)).filter(Boolean));
@@ -99,4 +115,4 @@ await withMongo(async (db) => {
   console.log('\n=== INCOMPLETE SIGNUPS (nudge candidates) ===');
   console.log(`verification_tokens rows      ${vt.length}`);
   console.log(`distinct emails started but never completed signup: ${pendingEmails.size}`);
-}, { timeoutMs: 120000 });
+}, { timeoutMs: 240000 });
