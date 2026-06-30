@@ -12,17 +12,23 @@ A *work* is one intellectual creation. A *manifestation* is a particular edition
 printing, translation, or volume of it. You are judging the work, not the copy.
 
 ## Decision rules (these encode the grain policy — apply them, don't re-litigate)
-**SAME work:**
-- Two editions / printings of the same text (incl. different years): *Horologium
-  Oscillatorium* (1673) and *Horologium Oscillatorium* → **same**.
-- A translation and its original, or two translations of one text: source-language
-  recensions of one work are **same** (the first-translation predicate is then
-  per *source-language* — that's a separate axis, not this label).
-- Volumes / parts of ONE work: *Plauti Comoediae* Vol. I and Vol. II → **same**
-  (one work, read in two volumes). *(Policy under decision #2909-B; for the gold,
-  label volumes of one work as SAME and let κ on `hard_volume` reveal disagreement.)*
+> **This rubric labels the `work_id` *clustering* relation** ("are these the same
+> work, for the do-we-hold-the-original question?"). Note the separate **count**
+> policy (Derek 2026-06-30): *every book is **at least** one work; containers hold
+> **more**; count ≥ books.* Clustering can still put two manifestations of one
+> work/volume under one id (count ≥ books does not).
+
+**SAME work (one cluster):**
+- Two editions / printings of the *same* single work or *the same volume* (incl.
+  different years): *Horologium Oscillatorium* (1673) and *Horologium
+  Oscillatorium* → **same**.
+- A translation and its original (of the same work/volume): they cluster — the
+  first-translation predicate is then per *source-language*, a separate axis.
 
 **DIFFERENT works:**
+- **Volumes / parts of a multi-volume set:** *Plauti Comoediae* Vol. I and Vol. II;
+  Wubei Zhi Vol. 6 and Vol. 7 → **different** (decided: each volume is ≥1 work;
+  vol. N clusters only with its *own* editions/original, not with vol. M).
 - A base text and a commentary ON it: Cicero's *Epistolae* vs Manuzio's
   *Commentarius in epistolas Ciceronis* → **different** (the commentary is its own
   creation, even if bound together).
@@ -70,7 +76,9 @@ labeler failures):
   `different` = probe over-merge precision (expect many false positives from
   name-variants / translation editions).
 - `anchor_miss` — recall against external (Wikidata QID) truth.
-- `hard_commentary` / `hard_volume` — the grain-boundary strata; κ here is the real
+- `hard_volume` — under the decided policy these are **different** (each volume ≥1
+  work); the stratum now mostly tests whether labelers apply that consistently.
+- `hard_commentary` — the grain-boundary stratum; κ here is the real
   signal (low κ ⇒ the policy is under-specified, not the resolver wrong).
 
 ## Reading the result

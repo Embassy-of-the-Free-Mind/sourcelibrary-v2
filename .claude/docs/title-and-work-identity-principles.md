@@ -106,9 +106,11 @@ Mahābhārata). Below: volume/part, recension, commentary, scope. Complications:
    the Mahābhārata yet a primary work; the Bhīṣma Parva isn't. **Reception decides,
    not containment** — so clean part-of metadata (Toh hierarchy, TEI) never settles
    work-grain.
-2. **Fragmentation — one work scattered across many books** (Mahābhārata Vols. 1–7).
-   The FT claim is about the *complete* text; completeness must be **assembled
-   across manifestations**, never asserted per volume.
+2. **Fragmentation — one *named* work scattered across many books** (Mahābhārata
+   Vols. 1–7). For the **`work_id` clustering** relation, completeness can be read
+   across manifestations. For the **count**, the decided grain policy (Set F) is
+   the opposite: each volume is ≥1 work, so volumes are *not* collapsed. Clustering
+   and counting pull apart here — that's expected, they're different relations.
 3. **The super-relation is overloaded** — series ≠ canon ≠ collected-works ≠
    parent-work. A series is a publication container (no intellectual identity); a
    canon is a curated corpus (its own significance + name-set). Don't flatten them.
@@ -148,61 +150,62 @@ three-state predicate on `(work, source-language)`; and titles, names, layers, a
 "we translated it" are all projections of that.** Pathological as a string, trivial
 as a typed work-graph.
 
-## Principle set F — counting: first-translations are events in the graph
-If the FT claim is a predicate on `(work, source-language)`, then **a
-first-translation is an event in the work-graph, not a property of a book.** A
-book is *where you can read one* — it is not the unit you *count*. The two
-cardinalities (books vs first-translated works) are independent, and they diverge
-in **both directions at once**, so the errors don't even cancel:
+## Principle set F — counting: the work is book-floored and only grows
+**GRAIN POLICY (decided, Derek 2026-06-30):** *every book is **at least** one
+work; a book may contain **more** (works within works); never fewer.* So the work
+count is **floored at the book count and only grows** — monotonic. "More works the
+better." Two consequences:
 
-- **Overcount:** one work spread across many books (multi-volume sets,
-  multi-edition holdings) badges the *same* first N times.
-- **Undercount:** one book that is a multi-work container holds many works; badged
-  as 1, it hides N first-events (or 0, if its constituents were each translated
-  before — see the container-vs-edited-work distinction below).
+- **A multi-volume set is many works**, one per volume (at least). The Mahābhārata
+  in 7 volumes counts as ≥7; the Wubei Zhi in ~20 volumes as ≥20. We do **not**
+  collapse volumes into one work for the count. (This reverses the earlier
+  "volumes = one work" lean.)
+- **A container decomposes into the works within it.** The Articella = Hippocrates
+  + Galen + Ḥunayn (≥3 works under one book); "Collected Drukpa Kagyu texts" = its
+  constituents. This is where most of the *growth* comes from.
 
-**Compilation-as-work vs compilation-as-container** (the subtle case): a
-compilation *can itself* be a first-translation even if every constituent was
-translated elsewhere — **but only when the compilation is an edited work, not a
-container.** Test: is translating all the parts separately the *same thing* as
-translating this compilation? If no — because the selection + arrangement +
-editorial apparatus is itself content — it is a distinct work with its own FT
-status. 老子元翼 is the live proof: its 64 constituent commentaries exist in
-English piecemeal, but Jiao Hong's *anthology* (his selection/arrangement) had
-never been Englished as such → a genuine first *of the compilation*. A bare
-container ("Collection of kabbalistic works") has no such identity → it decomposes
-to its constituents and bears no claim of its own.
+### Two different notions — do NOT conflate them
+This is the load-bearing distinction. There are **two** "work" relations with
+opposite cardinalities:
 
-### Measured proxy error (FT-badged set, 2026-06-30)
-`scripts/_tmp_ft_proxy_error.mjs` (read-only) against the live `is_first_translation`
-+ `visible` + `pages_translated>0` set:
-- **N_books = 5,814** (the current headline unit).
-- **distinct `work_id` ≈ 5,030** → **~784 badges are the same work re-counted**
-  across volumes/editions (≈13% overcount). Concentrated in multi-volume Chinese
-  encyclopedias: 三才圖會 / Sancai Tuhui (52× + 39×), 武備志 / Wubei Zhi
-  (42× + 21× + 20×), 海國圖志 (17×), Huygens *Œuvres* (13×).
-- **515 FT-badged books carry multi-work container signals** (collected/works/
-  various/anthology/miscellany) and **305 carry volume/part signals** — each
-  container holds many works, an *undercount* of unknown-but-large magnitude
-  (Articella = Hippocrates+Galen+Ḥunayn; "Collected Drukpa Kagyu texts"; etc.).
+| | what it is | cardinality |
+|---|---|---|
+| **`work_id` (clustering)** | groups editions + translations of one work, so we can answer *"do we hold the source-language original of this translation?"* | **≤ books** (one work, many manifestations) |
+| **the work *count*** (this policy) | the curatorial tally of distinct intellectual works we hold | **≥ books** (book-floored, grows with decomposition) |
 
-So the honest statement of the headline is: **we do not know the
-first-translated-works count** from book-badges — deduping multi-manifestation
-pulls 5,814 → ~5,030, while decomposing the 515 containers pushes it back up by an
-amount we can't know without their contents manifests. The true number is
-unknowable until firsts are counted as work-graph events. The error is *bounded
-and enumerable*, not mysterious — the divergent set is exactly the
-multi-volume + container books, which are findable by signal.
+`work_id` clustering legitimately puts several books under one id (a translation +
+its original share a `work_id` — that's the whole point). The **count is never
+`distinct work_id`** — that would violate the floor. The bilingual-slug merge
+(#2908) operates on `work_id` *clustering*; it does not reduce the count.
+
+**Compilation-as-work vs container** still applies *above* the book floor: when a
+book is a container, you decompose it into its constituent works — and an *edited*
+compilation (Jiao Hong's 老子元翼: a selection/arrangement that is itself a work)
+is its own work even though its 64 constituent commentaries exist in English
+elsewhere. A bare miscellany decomposes to its parts and bears no claim of its own.
+
+### What this does to the headline (FT-badged set, 2026-06-30: 5,814 books)
+Under the floor, the earlier "dedupe 5,814 → ~5,030" is **wrong** — those ~784
+multi-volume "re-counts" are legitimate distinct works (each volume ≥1 work). The
+only true over-count is **exact duplicate *records*** (the same single edition
+catalogued twice — a small set), not multi-volume sets and not multi-edition
+holdings. The dominant correction is **upward**: the **515 container books**
+decompose into many works each. So:
+
+> **The honest headline is HIGHER than 5,814, not lower** — book-floored, plus
+> container decomposition, minus only true duplicate records. We still can't state
+> the exact number until containers carry a contents manifest (issue #2909), but
+> the *direction* is settled: we have been **under-counting**, by hiding works
+> inside containers.
 
 ## The cheap test (use this until the graph exists)
 > If a reader who knows the field would read the title + "First Translation" badge
 > together and think *"wait, that's been translated for a century,"* the title is
 > naming the wrong layer.
 
-That one mental test catches the whole class. For counting, the parallel test:
-**if you're counting books, you are not counting first-translations** — you are
-counting *places to read them*, off by the multi-volume sets (too high) and the
-anthologies (too low) simultaneously.
+That one mental test catches the whole class. For counting, the parallel:
+**count at the book floor, then look inside containers for more** — never collapse
+volumes or editions to shrink the number.
 
 ---
 
