@@ -1,0 +1,556 @@
+[
+  {
+    "id": "69b65be618b87551bfd0f73a",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:thomas-erastus:sudore-theses",
+    "tier0": {
+      "candidates": 1,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b5258ccced70d8e6d728e1",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::bidden-inde-kercken-van",
+    "tier0": null
+  },
+  {
+    "id": "69aec4473b6ebce5e0ee5929",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:alexander-hamilton-james:1788-essays-federalist",
+    "tier0": {
+      "candidates": 11,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c852056c6f3cc53c85329c",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:staricius-johannes:helden-neu-schatz-vermehrter",
+    "tier0": null
+  },
+  {
+    "id": "69dbcbea1040d1d5e20bb356",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:seneca:ad-add-cardinalibus-epistolae-formula-honestae-paulum-quattuor-sive-virtutibus-v",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b525c12f891867c1ae4ac0",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:joao-de-barros:1500-bysondere-cabral-da-en-indien-jaar-joan-na-nova-oost-pedralvarez",
+    "tier0": null
+  },
+  {
+    "id": "6909e609cf28baa1b4cb0705",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:johann-wilhelm-petersen:children-last-power-times",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b429f46cdfcbb4df792d23",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:koeppen-k-fr:african-architects-history",
+    "tier0": null
+  },
+  {
+    "id": "69c85a5d6c6f3cc53c854861",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:johann-wilhelm-petersen:der-dessen-einen-erzehlung-evangelischen-freude-gemeinde-geredet-herrn-hertzog-h",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b65bf218b87551bfd0fb05",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:michael-maestlin:aethere-aetherei-alto-anno-apparvit-astronomica-cometae-consideratio-decembri-et",
+    "tier0": null
+  },
+  {
+    "id": "69b51e00efd8df28f2daf238",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:basil-valentine:1854-1895-concerning-mystery-nature-stone-vegetable",
+    "tier0": {
+      "candidates": 9,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6991e18b339ebc8509949b83",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:martin-de-azpilcueta:resolutory-usury",
+    "tier0": null
+  },
+  {
+    "id": "69751587a88d83c830d99e14",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:ramon-llull:articles-faith-holy",
+    "tier0": {
+      "candidates": 11,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e795ed80b52390feb18b2a",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:brgyud-byung-dben-dngos-dus-grub-gsang-kun-kyi-len-ltar-man",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c1baee8522835be845b7b6",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::book-festival-prayer",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e7968180b52390feb1970d",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:no-title",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6a14e17f311a9edd46221c07",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:monastery-tshamdrak:bu-chos-gro-kyi-mgon-ras-rgya-sogs-thor-tshogs",
+    "tier0": null
+  },
+  {
+    "id": "69c1bbf78522835be8460e27",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::litugical-poems-prayers",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6992cdc6e7c91e930c254938",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "茅元儀-treatise-armament-technology",
+    "tier0": null
+  },
+  {
+    "id": "6991d8a38c1030b12444c221",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:unknown:nectar-thunderbolt-treatise",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6a14e1d7311a9edd462246c8",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:monastery-tshamdrak:bu-khrid-mo-phag-rdo-rje-thor-zab",
+    "tier0": null
+  },
+  {
+    "id": "69e78a824a6785cfd60d38ae",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:bsgrigs-chab-gcig-lam-pa-rdzogs-smon-tu-yongs",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e78a804a6785cfd60d3772",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:bla-bu-ma-mtsho-nor-rgya",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c1bb278522835be845d3ad",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::account-book",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e763a3cc48e59ad74f39aa",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:collection-gangtey-monas:bdud-chung-las-rabs-rtsi-rtsis-tshe-zgil",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e787604a6785cfd60cb761",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:collection-drametse-mona:bum-tha",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "695581a157e3b773024f6989",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:robert-munro:ancient-bards-celtic-from-poems-translations",
+    "tier0": {
+      "candidates": 5,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c26fabb82ba5d5beda277a",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:unknown:apprentif-cahiers-ceremonies-compagnon-contenant-et-grades-maitre-receptions",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c261e6b82ba5d5beda0515",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:ehrmann-j-f-eq-a-cubo:1-1818-1833-20-23-26-bis-briefe-fol-frankfurt-mai-metzeler",
+    "tier0": null
+  },
+  {
+    "id": "69dbcb141040d1d5e20b1a64",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:nicolaus-perottus:cornucopia-language-latin",
+    "tier0": null
+  },
+  {
+    "id": "6a085c3849638a50931cccb4",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "Q678375",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69905f2040bc3a0478efaf14",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:pietro-pomponazzi:incantationibus",
+    "tier0": {
+      "candidates": 1,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6a08512049638a50931b8042",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:manuzio-aldo:3-aldi-epistolam-libri-manutij-paulli-per-quaesitis",
+    "tier0": null
+  },
+  {
+    "id": "69af21387c27d4b637fed2ce",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:nikolai-leskov:high-schism-society",
+    "tier0": null
+  },
+  {
+    "id": "69c28defb82ba5d5beda72d6",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:ropert-von:aufnahme-correspondenz-gold-rosenkreutzer-und",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c26d65b82ba5d5beda1efb",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:unknown:general-grand-inspecteur-nec-plus-ultra",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69af4a8b4f33c7a93c6440cf",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:proclus:book-elements-euclid-first",
+    "tier0": {
+      "candidates": 16,
+      "title_overlap": 1,
+      "catalog_id": "69dbbdedf071889fedd299de",
+      "english_title": "Proclus: A Commentary on the First Book of Euclid's Elements",
+      "translator": "Glenn R. Morrow",
+      "pub_year": 1970,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "validated_additions"
+    }
+  },
+  {
+    "id": "69e41ec8d0364cb0bcf7957e",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:diderot:bijoux-indiscrets",
+    "tier0": null
+  },
+  {
+    "id": "69c25169b82ba5d5bed9e58a",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:unknown:catechismus-der-erklarung-geschichte-meistergrad-observanz-strikten-und",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "699246b3bc722ec0ee81144f",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:n:forshall-john-madden-wyc:1-bible-holy-vol",
+    "tier0": {
+      "candidates": 12,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e7964880b52390feb1934e",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:choling-collection-ogyen:btsun-byor-gnyis-kyi-len-ma-mkha-mo-na-nyams-rdo-rim",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69906467ef12272ffdc91f4e",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:ganesa-daivagna:concise-manual-motion-planetary",
+    "tier0": null
+  },
+  {
+    "id": "69b3e686abb796bfd9de42ab",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:unknown:compendium-divination-magic-ritual",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e7ab9e5f1a22ab19a9b03b",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:monastery-neyphug:ca-kanjur-mdo-sde",
+    "tier0": null
+  },
+  {
+    "id": "69d5ae594dc55b8478de1380",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": null,
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69afee4757adc49dbfc42036",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:n:sumerian:dedication-statue-v",
+    "tier0": null
+  },
+  {
+    "id": "69e7aaff5f1a22ab19a9115d",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:temple-thadrak:kanjur-mdo-sde-tsha",
+    "tier0": {
+      "candidates": 4,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69de982fb0ba5d86ca72d160",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:zang-maoxun-compiler:46-vol",
+    "tier0": null
+  },
+  {
+    "id": "69e72895a409200ea79f01ff",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:pu-songling:10-vol",
+    "tier0": {
+      "candidates": 1,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e7962f80b52390feb18ef5",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:choling-collection-ogyen:bde-bong-brgyud-can-dmigs-gnad-gser-gyi-las-mchog-mdzad-mo",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e75d1ccc48e59ad74eb520",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:kanze-school:18-vol",
+    "tier0": {
+      "candidates": 4,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b52fab1a04ee0f3b4180e9",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:e-a-wallis-budge:2-dictionary-egyptian-hieroglyphic-vol",
+    "tier0": null
+  }
+]
