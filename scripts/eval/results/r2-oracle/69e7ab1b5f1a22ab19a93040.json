@@ -1,0 +1,74 @@
+{
+  "book_id": "69e7ab1b5f1a22ab19a93040",
+  "work_identified": "Bhaiṣajyavastu (Chapter on Medicines) — 'Dul ba Kha volume of the Thadrak Kanjur; Toh 1-6 of the Mūlasarvāstivāda Vinaya (Vinayavastu, chapter 6 of 17)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Chapter on Medicines (Bhaiṣajyavastu)",
+      "translator": "Fumi Yao; proofread by Shayne Clarke",
+      "pub_year": "2021",
+      "publisher": "84000: Translating the Words of the Buddha",
+      "completeness": "complete",
+      "source_url": "https://84000.co/translation/toh1-6"
+    }
+  ],
+  "queries_run": [
+    "Thadrak Kanjur \"Dul ba\" Kha English translation Tibetan Vinaya",
+    "84000 Kangyur Vinaya \"Dul ba\" English translation complete",
+    "Mulasarvastivada Vinaya Tibetan English translation complete WorldCat",
+    "Thadrak Kanjur Tibet manuscript BDRC collection Vinaya",
+    "rKTs \"Dul ba\" Kha Kangyur Vinaya volume Tibetan translation status",
+    "BDRC bdrc.io \"thadrak\" temple kanjur Tibet",
+    "Kangyur \"Dul ba\" \"kha\" volume Tohoku 1 Vinayavastu Vinayavibhanga contents",
+    "Bhaisajyavastu \"chapter on medicines\" 84000 published English translation complete Vinayavastu Toh1-6",
+    "\"Dul ba Kha\" Vinayavastu Bhaisajyavastu \"chapter on medicines\" volume kha Kangyur",
+    "EAP310 Thadrak Kanjur \"Dul ba Kha\" volumes list Bhutan",
+    "Kangyur \"dul ba\" Ka Kha Ga volumes Vinayavastu chapters content distribution Bhaisajyavastu",
+    "Bhaisajyavastu English translation prior 2021 scholarly publication Mulasarvastivada",
+    "\"chapter on medicines\" 84000 Fumi Yao 2021 translation published Bhaisajyavastu complete",
+    "\"Thadrak Kanjur\" OR \"Thadrag Kanjur\" Tibet Kanjur edition",
+    "BDRC \"Thadrak\" OR \"Thadrag\" Kanjur Kangyur W-number resource",
+    "site:eap.bl.uk EAP310 \"Dul ba\" Kha thadrak kanjur vinaya",
+    "Vinayavastu Kangyur volume Ka Kha chapters \"going forth\" \"restoration rite\" \"medicines\" which volume"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://84000.co/canon-sections/discipline",
+      "found": "Toh 1-6 (Bhaiṣajyavastu, 794 pages) listed as published; chapters 7-17 listed as in progress"
+    },
+    {
+      "url": "https://84000.co/translation/toh1-6",
+      "found": "Complete published English translation of the Bhaiṣajyavastu; PDF and EPUB available"
+    },
+    {
+      "url": "https://84000.co/blog-stories/dr-fumi-yao",
+      "found": "Dr. Fumi Yao translated the Bhaiṣajyavastu; published August 2021 under 84000 patronage"
+    },
+    {
+      "url": "https://discourse.suttacentral.net/t/dr-fumi-yao-on-translating-the-vinaya-mulasarvastivada-chapter-on-medicines-bhai-ajyavastu/21203",
+      "found": "Confirms Fumi Yao's complete 84000 English translation of the Bhaiṣajyavastu published 2021"
+    },
+    {
+      "url": "https://eap.bl.uk/project/EAP310",
+      "found": "Thadrak Temple (Bhutan) manuscript documentation; Thadrak Kanjur = 106-volume manuscript collection"
+    },
+    {
+      "url": "https://eap.bl.uk/collection/EAP310-2-1",
+      "found": "Neyphug Kanjur (sister collection from same EAP project) shows 13 'Dul ba volumes; Kha = vol. 2 of Vinaya"
+    },
+    {
+      "url": "https://library.bdrc.io/search?q=thadrak+kanjur&lg=en",
+      "found": "BUDA search attempted; no specific Thadrak Kanjur W-number retrieved; Thadrak known from EAP310 data"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Kangyur",
+      "found": "Vinayavastu (Toh 1) spans 4 Kanjur volumes: Ka, Kha, Ga, Nga; Bhaiṣajyavastu = vol. 2 (kha) in Dege"
+    }
+  ],
+  "reasoning": "'Dul ba Kha = vol. 2 of the Vinaya section. In both the Dege Kanjur (ff. 1a–317a) and the Stok Palace Kanjur (ff. 1a–444a), this entire volume contains the Bhaiṣajyavastu. Fumi Yao published a complete ~800-page English translation via 84000 in August 2021 (Toh 1-6). Source-language rule applies; same text, same tradition."
+}

@@ -1,0 +1,60 @@
+{
+  "book_id": "69aea755b4861a2a73847bc2",
+  "work_identified": "Lorenzo Valla Opera Omnia — multi-work container explicitly naming three distinct works: Elegantiae linguae latinae, Declamatio (Donation of Constantine), and De Voluptate (De vero bono)",
+  "verdict": "needs_review",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "On Pleasure / De Voluptate",
+      "translator": "A. Kent Hieatt and Maristella Lorch",
+      "pub_year": "1977",
+      "publisher": "Abaris Books, New York",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/onpleasuredevolu0000vall"
+    },
+    {
+      "english_title": "The Treatise of Lorenzo Valla on the Donation of Constantine: Text and Translation into English",
+      "translator": "Christopher B. Coleman",
+      "pub_year": "1922",
+      "publisher": "Yale University Press",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/cu31924029363706"
+    },
+    {
+      "english_title": "On the Donation of Constantine",
+      "translator": "G. W. Bowersock",
+      "pub_year": "2007",
+      "publisher": "Harvard University Press (I Tatti Renaissance Library)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Treatise-Lorenzo-Valla-Donation-Constantine/dp/080207734X"
+    }
+  ],
+  "queries_run": [
+    "Lorenzo Valla \"Opera Omnia\" English translation complete works",
+    "Lorenzo Valla \"De Voluptate\" English translation \"On Pleasure\"",
+    "Lorenzo Valla \"Elegantiae\" English translation complete",
+    "Lorenzo Valla \"Donation of Constantine\" English translation Coleman",
+    "I Tatti Renaissance Library Lorenzo Valla \"Elegantiae\" translation Harvard",
+    "\"Elegantiae linguae latinae\" Valla English translated",
+    "Lorenzo Valla complete English translations bibliography Renaissance humanist",
+    "Valla \"Elegantiae linguae latinae\" English translation published",
+    "Lorenzo Valla \"opera omnia\" English translation first complete",
+    "Lorenzo Valla Elegantiae \"on the elegance\" translated English language"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Lorenzo_Valla", "found": "Comprehensive translation list: 6 works in English; Elegantiae linguae latinae absent; no complete Opera Omnia in English noted"},
+    {"url": "https://archive.org/details/onpleasuredevolu0000vall", "found": "De Voluptate English translation by Hieatt & Lorch, 1977, Abaris Books confirmed"},
+    {"url": "https://archive.org/details/cu31924029363706", "found": "Donation of Constantine English translation by Coleman, 1922, Yale UP confirmed"},
+    {"url": "https://openlibrary.org/books/OL2988396M/Opera_omnia", "found": "Valla Opera Omnia 1962 Turin reprint is in Latin/German/Italian — not an English edition"},
+    {"url": "https://itatti.harvard.edu/publications/book-series/i-tatti-renaissance-library", "found": "Elegantiae linguae latinae not present in the I Tatti Renaissance Library series"},
+    {"url": "https://catalog.hathitrust.org/Record/001807277", "found": "HathiTrust Opera Omnia record — Latin edition only"},
+    {"url": "https://www.amazon.com/Treatise-Lorenzo-Valla-Donation-Constantine/dp/080207734X", "found": "2007 I Tatti / Harvard edition of Donation of Constantine with English translation"},
+    {"url": "https://renaissancearea.wordpress.com/lorenzo-valla/", "found": "No mention of English translation of Elegantiae"},
+    {"url": "https://www.britannica.com/topic/Elegantiae-linguae-latinae", "found": "Elegantiae entry cites no English translation"}
+  ],
+  "reasoning": "Opera Omnia is a multi-work container. Two of three named works have confirmed prior English translations: De Voluptate (Hieatt & Lorch 1977) and Declamatio/Donation of Constantine (Coleman 1922; Bowersock 2007). Elegantiae has no known English translation. First-translation claim is ill-posed across this collection with conflicting per-work histories."
+}

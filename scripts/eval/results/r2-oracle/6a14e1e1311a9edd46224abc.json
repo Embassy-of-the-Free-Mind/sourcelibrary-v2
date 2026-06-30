@@ -1,0 +1,42 @@
+{
+  "book_id": "6a14e1e1311a9edd46224abc",
+  "work_identified": "Thor bu bsKang rgyun gsol kha — miscellaneous continuous-fulfilment supplications specific to Tshamdrak Monastery, Chhukha district, Bhutan (distinct from canonical Kangyur/Tanjur texts and from other monastery-specific ritual collections)",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Thor bu bsKang rgyun gsol kha Tshamdrak Monastery English translation",
+    "\"bsKang rgyun gsol kha\" English translation Tibetan",
+    "Tshamdrak Monastery Tibetan liturgy kangso prayer English",
+    "BDRC \"Thor bu bsKang rgyun\" Tibetan ritual text site:tbrc.org OR site:bdrc.io",
+    "Tshamdrak monastery Tibetan text \"kangso\" \"gsol kha\" English translation published",
+    "\"Tshamdrak\" monastery Tibet text published English",
+    "\"bskang gsol\" Tshamdrak OR \"tsha mdrag\" monastery English translation published book",
+    "WorldCat search for bskang rgyun gsol kha (via search.worldcat.org — rate-limited, no direct title match returned)",
+    "\"Thor bu\" \"bskang rgyun\" Tibetan ritual supplication monastery English translation published",
+    "archive.org Thor bu bsKang rgyun gsol kha English OR Tibetan",
+    "Lotsawa House \"bskang rgyun\" OR \"kangso\" Bhutan monastery translation English",
+    "Lotsawa House fulfilment series (topics/fulfilment page fetched)",
+    "\"Thor bu bskang rgyun\" OR \"Thor bu bsKang rgyun gsol kha\" site:archive.org OR site:worldcat.org",
+    "Tshamdrak monastery Bhutan ritual texts English translation academic journal",
+    "\"continuous fulfilment\" OR \"continuous offering\" Tibetan monastery prayer \"first translation\" English",
+    "84000.co \"kangso\" OR \"bskang rgyun\" Tibetan English translation",
+    "Tshamdrak Bhutan monastery \"bskang rgyun\" OR \"kangso\" ritual prayer English academic paper translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://eap.bl.uk/project/EAP310", "found": "Confirms Tshamdrak (Chhukha, Bhutan) manuscripts were digitized under EAP310 as previously 'unknown and inaccessible to scholars'; no translation work associated with this project"},
+    {"url": "https://eap.bl.uk/archive-file/EAP310-4-2-62", "found": "Related Tshamdrak file 'Thor bu gNas brtan gsol 'debs sogs' (different text from ours); confirms monastery provenance but no English translation"},
+    {"url": "https://www.lotsawahouse.org/topics/fulfilment/", "found": "Complete Lotsawa House fulfilment series — 15+ translated fulfilment texts listed; none from Tshamdrak Monastery; no 'bsKang rgyun gsol kha' match"},
+    {"url": "https://library.bdrc.io/search?q=Thor+bu+bsKang+rgyun+gsol+kha&uilang=en", "found": "BDRC interface returned no readable results (JavaScript-rendered page); Tibetan canonical searches confirm no canonical match"},
+    {"url": "https://archive.org/search?query=bskang+rgyun+gsol+kha", "found": "No items found on Internet Archive for this title"},
+    {"url": "https://search.worldcat.org/search?q=%22bskang+rgyun%22", "found": "Rate-limited (HTTP 429); indirect search via Google found no WorldCat record matching this title"},
+    {"url": "https://84000.co/", "found": "84000 translates canonical Kangyur texts; this monastery-specific ritual liturgy is outside their scope; no relevant match"},
+    {"url": "http://mongolschinaandthesilkroad.blogspot.com/2013/09/digital-documentation-of-manuscripts-in.html", "found": "Blog post on EAP310: Tshamdrak manuscripts 'hitherto remained unknown and inaccessible to scholars' — confirms no prior scholarly access before ~2013 digitization"},
+    {"url": "https://www.academia.edu/44765314/Kangsol_A_Vajrakila_Performance_Tradition_of_Sumthrang_Monastery_in_Central_Bhutan", "found": "Academic paper on kangsol ritual at Sumthrang Monastery (Bhutan) — parallel tradition, not Tshamdrak; no reference to prior English translation of Tshamdrak bsKang rgyun text"}
+  ],
+  "reasoning": "Text is monastery-specific continuous-fulfilment liturgy (bsKang rgyun gsol kha) from Tshamdrak, a small Bhutanese monastery whose manuscripts were 'unknown and inaccessible to scholars' until ~2013 EAP310 digitization. Lotsawa House's complete fulfilment series, archive.org, and broad web searches yield no prior English rendering. WorldCat and BDRC were partially inaccessible (rate limits/JS), keeping confidence at medium."
+}

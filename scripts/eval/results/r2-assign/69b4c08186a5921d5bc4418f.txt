@@ -1,0 +1,4 @@
+book_id: 69b4c08186a5921d5bc4418f
+Title: Mercurius Trismeg. De potestate et sapientia Dei, et alia Ficini Opera
+Author: Hermes Trismegistus; Marsilio Ficino
+Source language: Latin

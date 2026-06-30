@@ -1,0 +1,55 @@
+{
+  "book_id": "69557474f63a7571091734e4",
+  "work_identified": "Proclus Diadochus, In Platonis Timaeum Commentaria (Commentary on Plato's Timaeus), 5 books, c. 5th century CE — the complete surviving ancient commentary on the Timaeus",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Commentaries of Proclus on the Timaeus of Plato in Five Books: Containing a Treasury of Pythagoric and Platonic Physiology",
+      "translator": "Thomas Taylor",
+      "pub_year": "1820",
+      "publisher": "The Author (London)",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/proclusontimaeus01procuoft"
+    },
+    {
+      "english_title": "Proclus: Commentary on Plato's Timaeus (6 volumes, Books 1–5)",
+      "translator": "Harold Tarrant (Book 1, Book 5); David T. Runia and Michael Share (Book 2); Dirk Baltzly (Books 3–4)",
+      "pub_year": "2007–2017",
+      "publisher": "Cambridge University Press",
+      "completeness": "complete",
+      "source_url": "https://www.cambridge.org/core/series/proclus-commentary-on-platos-timaeus/B013F9C4226049F9F293F81C8C04C020"
+    }
+  ],
+  "queries_run": [
+    "Proclus Commentary on Plato's Timaeus English translation Cambridge University Press Tarrant Baltzly Dillon",
+    "Proclus \"Commentarius in Platonis Timaeum\" English translation history",
+    "Proclus Commentary Timaeus English translation complete all volumes list 2007 2017 Cambridge",
+    "Proclus \"Commentary on the Timaeus\" English translation 19th century Taylor Thomas older previous",
+    "Proclus \"In Timaeum\" commentary how many books surviving complete incomplete",
+    "WorldCat Proclus \"Commentary on Plato's Timaeus\" English translation complete"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.cambridge.org/core/series/proclus-commentary-on-platos-timaeus/B013F9C4226049F9F293F81C8C04C020",
+      "found": "Complete 6-volume series (Books 1–5) by Tarrant/Runia/Share/Baltzly, published 2007–2017; Cambridge describes it as 'the first new English translation for nearly two centuries'"
+    },
+    {
+      "url": "https://archive.org/details/proclusontimaeus01procuoft",
+      "found": "Thomas Taylor, 1820 translation, 'in five books', complete coverage of all surviving Proclus commentary on the Timaeus"
+    },
+    {
+      "url": "https://bmcr.brynmawr.edu/2008/2008.08.01/",
+      "found": "Bryn Mawr Classical Review of Cambridge Vol. III; confirms the 6-volume series as a complete modern translation replacing Taylor's 1816/1820 translation"
+    },
+    {
+      "url": "https://philpapers.org/rec/TARPCO-4",
+      "found": "Volume I (Book 1), Tarrant, 2007, Cambridge UP — confirms series details"
+    }
+  ],
+  "reasoning": "Two complete prior English translations found: Thomas Taylor (1820, all 5 books, on archive.org) and Cambridge UP 6-volume series by Tarrant/Runia/Share/Baltzly (2007–2017, covering Books 1–5 = the full surviving text). Cambridge edition explicitly described as 'first new English translation for nearly two centuries.' No first-translation claim is viable."
+}

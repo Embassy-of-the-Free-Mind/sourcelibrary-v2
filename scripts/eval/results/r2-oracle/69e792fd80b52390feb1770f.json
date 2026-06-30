@@ -1,0 +1,44 @@
+{
+  "book_id": "69e792fd80b52390feb1770f",
+  "work_identified": "三國演義 (Sānguó Yǎnyì / Romance of the Three Kingdoms) by Luo Guanzhong — 14th-century Chinese historical novel, 120-chapter canonical version",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "San Kuo, or Romance of the Three Kingdoms",
+      "translator": "C.H. Brewitt-Taylor",
+      "pub_year": "1925",
+      "publisher": "Kelly and Walsh, Shanghai",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/romanceofthreeki02loku"
+    },
+    {
+      "english_title": "Three Kingdoms",
+      "translator": "Moss Roberts",
+      "pub_year": "1991",
+      "publisher": "Foreign Languages Press / University of California Press (1994)",
+      "completeness": "complete",
+      "source_url": "https://search.worldcat.org/title/The-romance-of-the-three-kingdoms/oclc/1020312496"
+    }
+  ],
+  "queries_run": [
+    "Romance of the Three Kingdoms English translation history Brewitt-Taylor Moss Roberts complete",
+    "C.H. Brewitt-Taylor \"Romance of the Three Kingdoms\" 1925 English translation complete",
+    "WorldCat \"Romance of the Three Kingdoms\" Brewitt-Taylor 1925 OCLC",
+    "Romance of the Three Kingdoms Wikipedia English translations"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Romance_of_the_Three_Kingdoms", "found": "Confirms Brewitt-Taylor 1925 complete English translation and Moss Roberts 1991 complete translation"},
+    {"url": "https://archive.org/details/romanceofthreeki02loku", "found": "Volume 2 of Brewitt-Taylor translation: 'Unabridged ed.' originally published Kelly and Walsh, Shanghai 1925; reprinted Tuttle 1970"},
+    {"url": "https://www.worldcat.org/title/san-kuo-or-romance-of-the-three-kingdoms/oclc/4870736", "found": "WorldCat OCLC 4870736: Brewitt-Taylor translation held by hundreds of libraries worldwide"},
+    {"url": "https://search.worldcat.org/title/The-romance-of-the-three-kingdoms/oclc/1020312496", "found": "WorldCat record for Moss Roberts complete translation (UC Press/FLP)"},
+    {"url": "https://ccsenet.org/journal/index.php/ells/article/download/0/0/37608/37950", "found": "Scholarly paper: both Brewitt-Taylor (1925) and Roberts (1991) confirmed as complete English translations; Roberts supersedes"},
+    {"url": "https://sacu.org/chbt", "found": "Society for Anglo-Chinese Understanding: Brewitt-Taylor described as first complete English translator of the novel"},
+    {"url": "https://catalog.hathitrust.org/Record/001185224", "found": "HathiTrust record for Brewitt-Taylor 'San kuo; or Romance of the three kingdoms'"}
+  ],
+  "reasoning": "C.H. Brewitt-Taylor published the first complete English translation in 1925 (Kelly & Walsh, Shanghai), confirmed unabridged on Archive.org and held by hundreds of libraries (WorldCat OCLC 4870736, HathiTrust). Moss Roberts produced a second complete translation in 1991 (UC Press/FLP 1994). This is one of the most translated Chinese classics; no first-translation claim holds."
+}

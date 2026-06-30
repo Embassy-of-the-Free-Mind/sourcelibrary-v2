@@ -1,0 +1,4 @@
+book_id: 69b21db694025df5d2909995
+Title: Waerachtighe Beschryvinghe van Guiana
+Author: Sir Walter Raleigh (Dutch trans.)
+Source language: Dutch

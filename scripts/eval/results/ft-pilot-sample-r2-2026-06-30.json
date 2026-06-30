@@ -1,0 +1,911 @@
+{
+  "summary": {
+    "built": "2026-06-30",
+    "round": 2,
+    "purpose": "#2880 pilot Round 2 expansion (+13/stratum), excludes Round 1, oversamples Tier-0 matches for #2885a",
+    "n": 52,
+    "by_stratum": {
+      "badged · western": 13,
+      "badged · non-western": 13,
+      "unbadged · western": 13,
+      "unbadged · non-western": 13
+    },
+    "with_tier0_candidate": 13,
+    "excluded_round1": 52,
+    "note": "Run BOTH tiers. Oracle uses the CORRECTED NA rubric (ft-verdict-contract.md §2, rev 2026-06-30): not_applicable ONLY for already-English / wordless visual art; a container/scripture-volume/compilation we produced the first English of (no prior English of the content) is a FIRST; a complete prior English of the content is not_first. Oracle UNPRIMED — do not feed tier0."
+  },
+  "manifest": [
+    {
+      "id": "6955d43628a09ca65927ff2e",
+      "title": "Historia Coelestis Britannica Vol. 3",
+      "display_title": "British Celestial History (Historia Coelestis Britannica), Vol. 3",
+      "author": "John Flamsteed",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "flamsteed-historia-coelestis-britannica-vol",
+      "tier0": {
+        "candidates": 3,
+        "title_overlap": 0.67,
+        "catalog_id": "69ab0b7a77a90a84931796e1",
+        "english_title": "The preface to John Flamsteed's Historia coelestis Britannica; or, British catalogue of the heavens (1725)",
+        "translator": "Johnson, Alison Dione",
+        "pub_year": 1982,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69520176ab34727b1f04136b",
+      "title": "Utriusque cosmi majoris scilicet et minoris metaphysica, physica atque technica historia",
+      "display_title": "History of the Macrocosm and Microcosm",
+      "author": "Robert Fludd",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "Q134005762",
+      "tier0": {
+        "candidates": 12,
+        "title_overlap": 0.67,
+        "catalog_id": "69ab0b7d77a90a849317b3b1",
+        "english_title": "The Greater and Lesser Worlds of Robert Fludd: Macrocosm Microcosm and Medicine",
+        "translator": "Joscelyn Godwin",
+        "pub_year": 2019,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "godwin"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69aea755b4861a2a73847bc2",
+      "title": "Opera Omnia (Complete Works — Elegantiae, Declamatio, De Voluptate)",
+      "display_title": "Complete Works of Lorenzo Valla",
+      "author": "Lorenzo Valla",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "first_complete_translation"
+      },
+      "work_id": "local:a:lorenzo-valla:works-ed-69aea755b4861a2a73847bc2",
+      "tier0": {
+        "candidates": 21,
+        "title_overlap": 0.5,
+        "catalog_id": "69ab0b7c77a90a849317abe5",
+        "english_title": "Treatise of Lorenzo Valla on the donation of Constantine",
+        "translator": "",
+        "pub_year": 1922,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69d8ca22a09828f83ddc9c7a",
+      "title": "Histoire des Champignons de la France, Vol 2",
+      "author": "Pierre Bulliard",
+      "language": "French",
+      "original_language": "French",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "local:a:pierre-bulliard:2-champignons-france-histoire-vol",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "695677cbbe7c607c5f03acc3",
+      "title": "Operis medico-chymici pars altera - Basilica Philosophica",
+      "display_title": "The Philosophical Basilica (Basilica Philosophica)",
+      "author": "Johann Daniel Mylius",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:johann-daniel-mylius:basilica-philosophical",
+      "tier0": {
+        "candidates": 1,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b21db694025df5d2909995",
+      "title": "Waerachtighe Beschryvinghe van Guiana",
+      "display_title": "The Discovery of Guiana",
+      "author": "Sir Walter Raleigh (Dutch trans.)",
+      "language": "Dutch",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:sir-walter-raleigh:bewtiful-discoverie-empyre-guiana-large-rich",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "author": "Arnold, Gottfried",
+      "display_title": "Die erste Liebe. Das ist: wahre Abbildung der ersten Christen",
+      "id": "69c7cc4325ec2ba5ccd80104",
+      "is_first_translation": true,
+      "language": "German",
+      "title": "Die erste Liebe. Das ist: wahre Abbildung der ersten Christen",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:gottfried-arnold:abbildung-christen-das-der-die-erste-ersten-ist-liebe-wahre",
+      "tier0": {
+        "candidates": 10,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b51df2768235dc6598a371",
+      "title": "Elvcidarivs Major. oder Erleuchtung über die Reformation der ganzen weiten Welt : F.C.R. auß ihrer Chymischen Hochzeit, und sonst mit viel andern Testimoniis Philosophorum sonderlich in appendice, dermassen verbessert, daß beydes materia & præparatio lapidis aurei, deutlich genug darinn angezeiget werden",
+      "display_title": "Elucidarius Major, or Enlightenment on the Reformation of the Whole Wide World",
+      "author": "Barbarossa, Christoph",
+      "language": "German",
+      "original_language": "German",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:barbarossa-christoph:elucidarius-enlightenment-major-reformation-whole-wide-world",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "6985ca72077b71ae19896a1c",
+      "title": "Propugnatio terminorum et doctrinae... Raymundi Lullii",
+      "display_title": "Defense of the Terms and Doctrine of Ramon Llull",
+      "author": "Zepeda, Alonso de",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:alonso-de-zepeda:defense-doctrine-llull-ramon-terms",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69dbc8d11040d1d5e209ca89",
+      "title": "De disciplina scholarium. Comm: pseudo- Thomas Aquinas",
+      "author": "Boethius (Pseudo-)",
+      "language": "Latin",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "local:a:boethius:aquinas-comm-disciplina-pseudo-scholarium-thomas",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "6988a59ef2833fb36a54e166",
+      "title": "Der Röm. Spanischen Cantzley Nachtrab: Sinceratio Sincerationum. Oder unteutsche betrugliche Zweyzungigkeit",
+      "display_title": "Supplement to the Roman-Spanish Chancellery: The Sincerity of Sincerities",
+      "author": "Anonymous",
+      "language": "German",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::chancellery-roman-sincerities-sincerity-spanish-supplement",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b4c08186a5921d5bc4418f",
+      "title": "Mercurius Trismeg. De potestate et sapientia Dei, et alia Ficini Opera",
+      "display_title": "Hermes Trismegistus & Ficino, On Power and Wisdom of God (with other Ficino works)",
+      "author": "Hermes Trismegistus; Marsilio Ficino",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "Q4071312",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69d8c9fea09828f83ddc9371",
+      "title": "Theatrum Fungorum oft het Toonsel der Campernoelien",
+      "author": "Franciscus van Sterbeeck",
+      "language": "Dutch",
+      "original_language": "Dutch",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "local:a:franciscus-van-sterbeeck:campernoelien-der-fungorum-oft-theatrum-toonsel",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "6990687d249ce014347d64b7",
+      "title": "Sakadeva Sastiram",
+      "display_title": "The Treatise of Sahadeva",
+      "author": "Anonymous",
+      "language": "Tamil",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::sahadeva-treatise",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 0.5,
+        "catalog_id": "69ab0b7b77a90a84931799f2",
+        "english_title": "A Plain treatise on the Peruvian bark : the Stanitz manuscript; (A late seventeenth or early eighteenth century anonymous manuscript account of the Jesuits' bark published in its original Latin text with a translation, introduction, and notes)",
+        "translator": "",
+        "pub_year": 1992,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69a5f359d4c2e3cf8ecb82c3",
+      "title": "Liturgical and Patristic Anthology",
+      "display_title": "Liturgical and Patristic Anthology",
+      "author": "Various",
+      "language": "Syriac",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:various:anthology-liturgical-patristic",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 0.33,
+        "catalog_id": "69ab0b7a77a90a84931795f1",
+        "english_title": "Latin literature: an anthology",
+        "translator": "Grant, Michael",
+        "pub_year": 1978,
+        "source_language": "la",
+        "completeness": "partial",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69a5e484006a4098422176a4",
+      "title": "Syriac Theological Manuscript (Codex Vaticanus Syriacus 162)",
+      "display_title": "Syriac Theological Manuscript",
+      "author": "Anonymous",
+      "language": "Syriac",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "anonymous-syriac-manuscript",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 0.33,
+        "catalog_id": "69ab0b7a77a90a8493179871",
+        "english_title": "De musica mensurata : the Anonymous of St. Emmeram (Text and English translation of a unique manuscript (Clm. 14523) in the Bayerische Staatsbibliothek, Munich)",
+        "translator": "",
+        "pub_year": 1990,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69906a891cf6ed5fbc8f5df0",
+      "title": "Surya Siddhanta (Popular Edition)",
+      "display_title": "The Sun Treatise",
+      "author": "Anonymous",
+      "language": "Sanskrit",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::sun-treatise",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 1,
+        "catalog_id": "69ab0b7b77a90a84931799f2",
+        "english_title": "A Plain treatise on the Peruvian bark : the Stanitz manuscript; (A late seventeenth or early eighteenth century anonymous manuscript account of the Jesuits' bark published in its original Latin text with a translation, introduction, and notes)",
+        "translator": "",
+        "pub_year": 1992,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e7928580b52390feb161fa",
+      "title": "Slob dpon chen po padma ’byung gnas kyi (kyis) gsungs pa’i ma ’ong lung bstan gsal ba’i sgron ma gsung gis (gi) thig gser gyis (gyi) yang zhun ma dang sbas yul padma bkod kyi gnas yig ngo mtshar (gter...",
+      "display_title": "Slob dpon chen po padma ’byung gnas kyi (kyis) gsungs pa’i ma ’ong lung bstan gsal ba’i sgron ma gsung gis (gi) thig gser gyis (gyi) yang zhun ma dang sbas yul padma bkod kyi gnas yig ngo mtshar (gter...",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:choling-collection-ogyen:ba-bkod-bstan-byung-chen-dang-dpon-gis-gnas-gsal-gser-gsung",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "6a14e1e1311a9edd46224abc",
+      "title": "Thor bu bsKang rgyun gsol kha",
+      "display_title": "Thor bu bsKang rgyun gsol kha",
+      "author": "Tshamdrak Monastery",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:monastery-tshamdrak:bskang-bu-gsol-kha-rgyun-thor",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e7886f4a6785cfd60d103b",
+      "title": "bla ma dgongs pa 'dus pa'i don dbang smin byed bdud rtsi thig pa chog 'khrigs su bstar ba rim gnyis grub pa' 'jug sgo",
+      "display_title": "bla ma dgongs pa 'dus pa'i don dbang smin byed bdud rtsi thig pa chog 'khrigs su bstar ba rim gnyis grub pa' 'jug sgo",
+      "author": "Drametse Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-drametse-mona:ba-bdud-bla-bstar-byed-chog-dbang-dgongs-don-dus-gnyis-grub",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69c1bb5c8522835be845f2eb",
+      "title": "Hasidic discourses",
+      "display_title": "Hasidic Discourses — Mitteler Rebbe & Alter Rebbe",
+      "author": "Schneersohn, Dov Baer, 1773-1827שניאורסון, דב בר בן שניאור זלמן, 1773-1827; Shneur Zalman, of Lyady, 1745-1812שניאור זלמן בן ברוך, 1745-1812",
+      "language": "Hebrew",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:baer-dov-lyady-schneerso:alter-discourses-hasidic-mitteler-rebbe",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e782aad93c1f600750430d",
+      "title": "kBa' brgyad yang gsang lo rgyus",
+      "display_title": "kBa' brgyad yang gsang lo rgyus",
+      "author": "Gangtey Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-gangtey-monas:brgyad-gsang-kba-lo-rgyus-yang",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e77ac60fc6fc955e3620bd",
+      "title": "bKa' brgyad bde gshegs 'dus pa'i skor",
+      "display_title": "bKa' brgyad bde gshegs 'dus pa'i skor",
+      "author": "Gangtey Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-gangtey-monas:bde-bka-brgyad-dus-gshegs-pa-skor",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e787b54a6785cfd60ccecf",
+      "title": "gsang ba sbas ston thems byang ye shes gsal byed",
+      "display_title": "gsang ba sbas ston thems byang ye shes gsal byed",
+      "author": "Drametse Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-drametse-mona:ba-byang-byed-gsal-gsang-sbas-shes-ston-thems-ye",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69907dacaee9f4aa585935b9",
+      "title": "Dash Doshadi Vichara in Muhurta Vivarana",
+      "display_title": "Exposition on Auspicious Moments",
+      "author": "Unknown",
+      "language": "Sanskrit",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:unknown:auspicious-exposition-moments",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e76168cc48e59ad74ef921",
+      "title": "rDo rje phag mo'I gsol 'debs sogs",
+      "display_title": "rDo rje phag mo'I gsol 'debs sogs",
+      "author": "Gangtey Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-gangtey-monas:debs-gsol-mo-phag-rdo-rje-sogs",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "6953ea0a1479a63c11085bed",
+      "title": "Einleitung in die Analysis des Unendlichen",
+      "display_title": "Introduction to the Analysis of the Infinite",
+      "author": "Leonhard Euler",
+      "language": "German",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:leonhard-euler:analysin-infinitorum-introductio",
+      "tier0": {
+        "candidates": 7,
+        "title_overlap": 1,
+        "catalog_id": "69ab0b7a77a90a84931798bc",
+        "english_title": "Introduction to analysis of the infinite",
+        "translator": "Blanton, John D.",
+        "pub_year": 1990,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "697c8e13b2d7ab5ea61a0d0c",
+      "title": "De fide et operibus liber unus",
+      "display_title": "On Faith and Works",
+      "author": "Augustinus, Aurelius",
+      "language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:augustine-of-hippo:faith-works",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 1,
+        "catalog_id": "69ab0b7a77a90a8493179887",
+        "english_title": "On faith and works",
+        "translator": "Lombardo, Gregory J.",
+        "pub_year": 1988,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69dbc62137db7bc4b2eb2e19",
+      "title": "De mineralibus",
+      "author": "Albertus Magnus",
+      "language": "Latin",
+      "display_title": "On Minerals",
+      "is_first_translation": false,
+      "work_id": "Q107042674",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 1,
+        "catalog_id": "69ab0b7d77a90a849317afbb",
+        "english_title": "Book of minerals",
+        "translator": "",
+        "pub_year": 1967,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69557474f63a7571091734e4",
+      "title": "Commentarius in Platonis Timaeum",
+      "display_title": "Commentary on Plato's Timaeus",
+      "author": "Proclus Diadochus",
+      "language": "Greek/Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:proclus:commentaries-plato-timaeus-vol",
+      "tier0": {
+        "candidates": 2,
+        "title_overlap": 1,
+        "catalog_id": "69dbbdedf071889fedd29918",
+        "english_title": "Proclus: Commentary on Plato's Timaeus",
+        "translator": "Harold Tarrant, Dirk Baltzly, John Dillon, and others",
+        "pub_year": 2007,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "validated_additions"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "6a08593049638a50931c7124",
+      "title": "Orthographiae ratio, ab Aldo Manutio, Pauli f. collecta.",
+      "display_title": null,
+      "author": "Manuzio, Paolo",
+      "language": "Latin",
+      "work_id": "local:a:manuzio-paolo:ab-aldo-collecta-manutio-orthographiae-pauli-ratio",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69af10d706b10527be5661cd",
+      "title": "Демон и запрещенные стихотворения М. Ю. Лермонтова",
+      "display_title": "Demon and Forbidden Poems of M. Yu. Lermontov",
+      "author": "Михаил Юрьевич Лермонтов",
+      "language": "Russian",
+      "is_first_translation": false,
+      "work_id": "local:a:mikhail-lermontov:demon",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69b21e3194025df5d290b90a",
+      "title": "Plutarchi Chaeronensis Moralia, Vol. 6 (Bernardakis, Teubner)",
+      "display_title": "Moralia, Vol. 6",
+      "author": "Plutarch; ed. Gregorios N. Bernardakis",
+      "language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "Q128792124",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "699437d06879ff0184cb7719",
+      "title": "Patrologia Latina Vol. 8: Marius Victorinus — Adversus Arium et Opera",
+      "display_title": "Patrologia Latina Vol. 8: Marius Victorinus — Against Arius and Works",
+      "author": "Marius Victorinus",
+      "language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "patrologia-latina",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "author": "Unknown",
+      "display_title": null,
+      "id": "69c2b199b82ba5d5beda8f52",
+      "is_first_translation": false,
+      "language": "German",
+      "title": "Materialien zur Geschichte der Freimaurerei in England, Schottland und Irland von Christi Geburt bis auf unsere Zeiten [enz.]",
+      "work_id": "local:n:unknown:auf-bis-christi-der-england-freimaurerei-geburt-geschichte-irland-materialien-sc",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "6a08507649638a50931b647b",
+      "title": "Epistolae D. Hieronymi Stridonensis, et libri contra haereticos, ex antiquissimis exemplaribus, nunc primum, opera, ac studio Mariani Victorii Reatini emendati, eiusdemque argumentis, & scholiis illustrati. Adiecta est operis initio Vita S. Hieronymi, olim falso ab Erasmo, aliisque relata, quam idem Marianus ex eius scriptis collectam primus edidit. ... Index locupletissimus, ... ab eodem Mariano compositus. Loca Sacrae Scripturae, a D. Hieronymo explicata. Volume 1.",
+      "display_title": "Letters of Saint Jerome and Books Against Heretics",
+      "author": "Manuzio, Paolo",
+      "language": "Latin",
+      "is_first_translation": false,
+      "work_id": "local:n:manuzio-paolo:against-books-heretics-jerome-letters-saint",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "6953e58d77f38f6761bf0cfc",
+      "title": "Traité de la Lumière (1690)",
+      "display_title": "Treatise on Light",
+      "author": "Christiaan Huygens",
+      "language": "French",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:christiaan-huygens:light-treatise",
+      "tier0": {
+        "candidates": 8,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "author": "Krause, Karl Chr.Fr.",
+      "display_title": null,
+      "id": "69c27c58b82ba5d5beda48c8",
+      "is_first_translation": false,
+      "language": "German",
+      "title": "drei ältesten Kunsturkunden der Freimaurer-Bruderschaft, mitgetheilt, bearbeitet und in einem Lehrfragstuck urvergeistiget",
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:karl-chr-fr-krause:altesten-bearbeitet-bruderschaft-der-drei-einem-freimaurer-kunsturkunden-lehrfra",
+      "tier0": {
+        "candidates": 2,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "6a0858e249638a50931c6cfa",
+      "title": "Scipionis Capicii De principiis rerum libri duo. Eiusdem De vate maximo libri tres.",
+      "display_title": null,
+      "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+      "language": "Latin",
+      "work_id": "local:n:aldo-andreas-asula-manuz:capicii-duo-eiusdem-libri-maximo-principiis-rerum-scipionis-tres-vate",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69e158f6ec0a328a49d0a29a",
+      "title": "The Great Hymn to the Aton",
+      "author": "Tell el-Amarna (Tür)",
+      "language": "Egyptian hieroglyphs",
+      "original_language": "Egyptian hieroglyphs",
+      "display_title": "The Great Hymn to the Aton",
+      "work_id": "local:a:tell-el-amarna-tur:aton-great-hymn",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 0.33,
+        "catalog_id": "69ab0b7b77a90a8493179a58",
+        "english_title": "St. Bonaventure's writings concerning the Franciscan Order; This book contains twenty documents, about half of which are writngs of Bonaventure himself, the rest being the legislation of the Order during his generalate, over which he had great influence. It is essentially a translation of the authentic Opuscula ad Ordinem spectantia published in volume VIII of the Quaracchi edition. I have eliminated the spurious and doubtful works ... and have also omitted the Apologia pauperum, the Legenda major, and the Legenda minor ... However, I have added a number of other works which have come to light subsequent to the publication of the Quaracchi edition",
+        "translator": "Monti, Dominic",
+        "pub_year": 1994,
+        "source_language": "la",
+        "completeness": "partial",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e792fd80b52390feb1770f",
+      "title": "三國演義 (Sānguó Yǎnyì / Romance of the Three Kingdoms)",
+      "display_title": null,
+      "author": "Luo Guanzhong",
+      "language": "Chinese",
+      "work_id": "local:a:luo-guanzhong:illustrated-kingdoms-romance-three",
+      "tier0": {
+        "candidates": 1,
+        "title_overlap": 0.6,
+        "catalog_id": "69ab0b7e77a90a849317c079",
+        "english_title": "Romance of the three kingdoms",
+        "translator": "Moss Roberts (Translator)",
+        "pub_year": 1900,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "openlibrary"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69aff08257adc49dbfc42392",
+      "title": "A prayer for Ḫammu-rābi (Ḫammu-rābi E)",
+      "display_title": "A prayer for Ḫammu-rābi (Ḫammu-rābi E)",
+      "author": "Anonymous Sumerian",
+      "language": "Sumerian",
+      "original_language": "Sumerian",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "needs_review"
+      },
+      "work_id": "local:n:sumerian:e-hammu-prayer-rabi",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69f3261852a77bb28fdb6506",
+      "title": "Hwayang munʾgyŏn nok",
+      "display_title": "崔愼, 1642-1708. 華陽問見錄 / [崔愼撰]. [Korea : s.n., 18--]. TK 3482.9 4514 Harvard-Yenching Library",
+      "author": "Chʻoe, Sin",
+      "language": "Korean",
+      "work_id": "local:a:avicenna:1642-1708-3482-4514-9-tk",
+      "tier0": {
+        "candidates": 2,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e7967380b52390feb19671",
+      "title": "bod kyi brda sprod pa'i gzhung sum cu pa dang rtags kyi 'jug nyung ngu'i tshig gis go sla bar bkral ba legs bshad snang ba dam pa",
+      "display_title": "bod kyi brda sprod pa'i gzhung sum cu pa dang rtags kyi 'jug nyung ngu'i tshig gis go sla bar bkral ba legs bshad snang ba dam pa",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:choling-collection-ogyen:ba-bar-bkral-bod-brda-bshad-cu-dam-dang-gis-go-gzhung",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e7ab1b5f1a22ab19a93040",
+      "title": "Thadrak Kanjur Kanjur 'Dul ba Kha",
+      "display_title": "Thadrak Kanjur Kanjur 'Dul ba Kha",
+      "author": "Thadrak Temple",
+      "language": "Tibetan",
+      "is_first_translation": false,
+      "translation_verification": {},
+      "work_id": "local:n:temple-thadrak:ba-dul-kanjur-kha",
+      "tier0": {
+        "candidates": 4,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e788c24a6785cfd60d1e28",
+      "title": "dpal ye shes mgon po ma ning nag po'i rgyun khyer",
+      "display_title": "dpal ye shes mgon po ma ning nag po'i rgyun khyer",
+      "author": "Drametse Monastery Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:collection-drametse-mona:dpal-khyer-ma-mgon-nag-ning-po-rgyun-shes-ye",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e78b624a6785cfd60d55ec",
+      "title": "byang chub sems dpa'i spyod pa la 'jug pa zhes bya ba'i mchan 'grel",
+      "display_title": "byang chub sems dpa'i spyod pa la 'jug pa zhes bya ba'i mchan 'grel",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:choling-collection-ogyen:ba-bya-byang-chub-dpa-grel-jug-mchan-pa-sems-spyod-zhes",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e78b6e4a6785cfd60d56ff",
+      "title": "snang mdzad snyan brgyud las/ bde mchog bong zhal can gyi zhal shes skor",
+      "display_title": "snang mdzad snyan brgyud las/ bde mchog bong zhal can gyi zhal shes skor",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:choling-collection-ogyen:bde-bong-brgyud-can-gyi-las-mchog-mdzad-shes-skor-snang-snyan",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69aff07757adc49dbfc422a0",
+      "title": "A Šir-namgala to Inana for Ur-Ninurta (Ur-Ninurta A) (ETCSL 2.5.6.1)",
+      "display_title": "A Šir-namgala to Inana for Ur-Ninurta (Ur-Ninurta A)",
+      "author": "Anonymous Sumerian",
+      "language": "Sumerian",
+      "original_language": "Sumerian",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:n:sumerian:1-2-5-6-etcsl-inana-namgala-ninurta-sir-ur",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "6a14e168311a9edd46220ac1",
+      "title": "Tshamdrak rNying rgyud dKar chag",
+      "display_title": "Tshamdrak rNying rgyud dKar chag",
+      "author": "Tshamdrak Monastery",
+      "language": "Tibetan",
+      "work_id": "local:n:monastery-tshamdrak:chag-dkar-rgyud-rnying",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69dfedf18d34461cbe7f50ae",
+      "title": "Nihon Shoki (日本書紀, Chronicles of Japan), Vol. 1 (1599 woodblock)",
+      "display_title": null,
+      "author": "Prince Toneri",
+      "language": "Japanese",
+      "original_language": "Japanese",
+      "work_id": "local:a:prince-toneri:1-1599-nihon-shoki-vol",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69ea3eb8300d991d0f1d4152",
+      "title": "The Finding of Wineland the Good (Vinland Sagas)",
+      "display_title": null,
+      "author": "A. M. Reeves (ed.)",
+      "language": "Old Norse",
+      "work_id": "local:a:a-m-reeves-ed:finding-good-wineland",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    }
+  ]
+}

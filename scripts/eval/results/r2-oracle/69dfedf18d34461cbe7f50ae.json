@@ -1,0 +1,34 @@
+{
+  "book_id": "69dfedf18d34461cbe7f50ae",
+  "work_identified": "Nihon Shoki (日本書紀, Chronicles of Japan) — the complete 30-volume 8th-century Japanese imperial chronicle compiled under Prince Toneri, covering mythological origins through 697 CE; our item is Vol. 1 of the 1599 woodblock print edition",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "partial",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Nihongi: Chronicles of Japan from the Earliest Times to A.D. 697",
+      "translator": "W.G. Aston",
+      "pub_year": "1896",
+      "publisher": "Published for the Japan Society by Kegan Paul, Trench, Trübner & Co., London",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/nihongi1asto"
+    }
+  ],
+  "queries_run": [
+    "Nihon Shoki English translation Aston Nihongi 1896 complete",
+    "Nihon Shoki Chronicles of Japan English translation WorldCat",
+    "\"Nihongi\" OR \"Nihon Shoki\" English translation history complete prior W.G. Aston",
+    "Nihon Shoki 30 volumes how many books scope 697 AD complete chronicle"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/nihongi1asto", "found": "Aston's Nihongi v.1 (1896), 2-volume English translation of Nihon Shoki published by Kegan Paul for the Japan Society"},
+    {"url": "https://en.wikipedia.org/wiki/Nihon_Shoki", "found": "Aston 1896 confirmed as first English translation; Nihon Shoki comprises 30 volumes ending 697 CE; no other complete English translations listed"},
+    {"url": "https://jhti.studentorg.berkeley.edu/Nihon%20Shoki%20editions%20and%20copyrights.html", "found": "JHTI confirms Aston translation first published 1896 in Proceedings of Japan Society; Japan Society holds copyright; electronic rights granted 1999"},
+    {"url": "https://en.wikisource.org/wiki/Nihongi:_Chronicles_of_Japan_from_the_Earliest_Times_to_A.D._697", "found": "Full 2-volume Aston translation (1896) hosted on Wikisource; published by Kegan Paul for Japan Society"},
+    {"url": "https://www.worldhistory.org/Nihon_Shoki/", "found": "Nihon Shoki is a 30-volume chronicle ending 697 CE; Aston 1896 is the standard English reference"}
+  ],
+  "reasoning": "Aston's 1896 'Nihongi' is a complete English translation of the full Nihon Shoki (all 30 books, mythological origins through 697 CE), confirmed via archive.org, Wikipedia, Wikisource, and JHTI. The chronicle itself ends at 697 CE so this covers the entire text. Source-language rule applies: a complete prior English exists. Our Vol. 1 of the 1599 woodblock is not_first."
+}

@@ -1,0 +1,4 @@
+book_id: 697c8e13b2d7ab5ea61a0d0c
+Title: De fide et operibus liber unus
+Author: Augustinus, Aurelius
+Source language: Latin

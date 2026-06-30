@@ -1,0 +1,62 @@
+{
+  "book_id": "69a5e484006a4098422176a4",
+  "work_identified": "Chronicle of Zuqnin (Pseudo-Dionysius of Tell-Mahre), 8th-century Syriac universal chronicle, uniquely preserved in Vat. sir. 162",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Pseudo-Dionysius of Tel-Mahre: Chronicle (Known also as the Chronicle of Zuqnin). Part III",
+      "translator": "Witold Witakowski",
+      "pub_year": "1996",
+      "publisher": "Liverpool University Press (Translated Texts for Historians, 22)",
+      "completeness": "partial",
+      "source_url": "https://search.worldcat.org/title/Chronicle-:-known-also-as-the-Chronicle-of-Zuqnin.-Part-III/oclc/36451853"
+    },
+    {
+      "english_title": "The Chronicle of Zuqnin, Parts III and IV: A.D. 488-775",
+      "translator": "Amir Harrak",
+      "pub_year": "1999",
+      "publisher": "Pontifical Institute of Medieval Studies (Mediaeval Sources in Translation, 36)",
+      "completeness": "partial",
+      "source_url": "https://search.worldcat.org/title/The-Chronicle-of-Zuqnin-parts-III-and-IV-:-A.D.-488-775/oclc/384744101"
+    },
+    {
+      "english_title": "The Chronicle of Zuqnin: Parts I and II. From the Creation to the Year 506/7 AD",
+      "translator": "Amir Harrak",
+      "pub_year": "2017",
+      "publisher": "Gorgias Press (Gorgias Chronicles of Late Antiquity, 2)",
+      "completeness": "partial",
+      "source_url": "https://search.worldcat.org/title/chronicle-of-zuqnin-parts-i-and-ii-from-the-creation-to-the-year-5067-ad/oclc/975744423"
+    }
+  ],
+  "queries_run": [
+    "Codex Vaticanus Syriacus 162 Vatican Library manuscript contents",
+    "\"Vat. syr. 162\" OR \"Vaticanus Syriacus 162\" English translation",
+    "Chronicle of Zuqnin \"Vaticanus Syriacus 162\" English translation complete contents",
+    "Harrak \"Chronicle of Zuqnin\" \"parts I and II\" Gorgias Press publication year",
+    "Chronicle of Zuqnin parts I II English translation Harrak complete",
+    "Harrak \"Chronicle of Zuqnin\" \"Parts I and II\" 2017 Gorgias \"first English translation\"",
+    "WorldCat \"Chronicle of Zuqnin\" English translation Harrak OCLC",
+    "Witakowski \"Pseudo-Dionysius\" \"Chronicle of Zuqnin\" part three English translation 1996 Liverpool",
+    "Brent Landau \"Revelation of the Magi\" English translation publication year book",
+    "archive.org \"Chronicle of Zuqnin\" OR \"Zuqnin\" English translation PDF",
+    "\"Vat. sir. 162\" OR \"Vaticanus Syriacus 162\" contents texts manuscript theological"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.nasscal.com/manuscripta-apocryphorum/vatican-biblioteca-apostolica-vaticana-vat-sir-162/", "found": "Vat. sir. 162 contains Revelation of the Magi (fol. 17r-25r), embedded within the Chronicle of Zuqnin"},
+    {"url": "https://en.wikipedia.org/wiki/Chronicle_of_Zuqnin", "found": "Chronicle of Zuqnin is the unique text of Vat. sir. 162; multiple English translations noted"},
+    {"url": "https://search.worldcat.org/title/Chronicle-:-known-also-as-the-Chronicle-of-Zuqnin.-Part-III/oclc/36451853", "found": "WorldCat OCLC 36451853: Witakowski English translation Part III, Liverpool UP 1996"},
+    {"url": "https://search.worldcat.org/title/The-Chronicle-of-Zuqnin-parts-III-and-IV-:-A.D.-488-775/oclc/384744101", "found": "WorldCat OCLC 384744101: Harrak English translation Parts III & IV, PIMS 1999"},
+    {"url": "https://search.worldcat.org/title/chronicle-of-zuqnin-parts-i-and-ii-from-the-creation-to-the-year-5067-ad/oclc/975744423", "found": "WorldCat OCLC 975744423: Harrak English translation Parts I & II, Gorgias 2017"},
+    {"url": "https://www.amazon.com/Chronicle-Zuqnin-Creation-Chronicles-Antiquity/dp/1463206631", "found": "Harrak Parts I & II published Gorgias Press; described as first English translation of those parts"},
+    {"url": "https://archive.org/details/chronicleknownal0000dion", "found": "Archive.org: Witakowski Part III English translation available for borrowing"},
+    {"url": "https://apps.flw.ugent.be/chta/default/work/634", "found": "CHAP database: lists Witakowski 1996, Hespel 1989, Harrak 1999 as translations of the Chronicle"},
+    {"url": "https://gedsh.bethmardutho.org/Zuqnin-Chronicle-of", "found": "BethMardutho GEDSH entry confirmed but 403 forbidden; cross-confirmed through other sources"},
+    {"url": "https://www.roger-pearse.com/weblog/2010/11/25/the-manuscript-of-the-chronicle-of-zuqnin/", "found": "Harrak Parts III/IV described as excellent English translation; Landau has Revelation of the Magi English"}
+  ],
+  "reasoning": "Vat. sir. 162 is uniquely the Chronicle of Zuqnin. Harrak translated Parts III/IV into English (PIMS 1999) and Parts I/II (Gorgias 2017, billed as first English of those parts). Witakowski translated Part III (Liverpool UP 1996). The complete chronicle has prior English coverage; no first-translation claim can stand."
+}

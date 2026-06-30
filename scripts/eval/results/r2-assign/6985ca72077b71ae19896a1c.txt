@@ -1,0 +1,4 @@
+book_id: 6985ca72077b71ae19896a1c
+Title: Propugnatio terminorum et doctrinae... Raymundi Lullii
+Author: Zepeda, Alonso de
+Source language: Latin

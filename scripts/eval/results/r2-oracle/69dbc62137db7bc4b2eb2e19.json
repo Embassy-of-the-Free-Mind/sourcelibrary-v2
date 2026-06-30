@@ -1,0 +1,44 @@
+{
+  "book_id": "69dbc62137db7bc4b2eb2e19",
+  "work_identified": "De mineralibus (Book of Minerals) by Albertus Magnus",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Book of Minerals",
+      "translator": "Dorothy Wyckoff",
+      "pub_year": "1967",
+      "publisher": "Clarendon Press (Oxford University Press)",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/bookofminerals0000albe"
+    }
+  ],
+  "queries_run": [
+    "Dorothy Wyckoff \"Albertus Magnus\" \"Book of Minerals\" English translation",
+    "Albertus Magnus \"De mineralibus\" English translation history",
+    "Albertus Magnus \"Book of Minerals\" Wyckoff 1967 \"complete\" translation WorldCat"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/bookofminerals0000albe",
+      "found": "Complete English translation by Dorothy Wyckoff, 1967, Clarendon Press, ISBN 9780198581222, confirmed available in full"
+    },
+    {
+      "url": "https://www.cambridge.org/core/journals/british-journal-for-the-history-of-science/article/abs/middle-ages-albertus-magnus-book-of-minerals-translated-by-dorothy-wyckoff-london-oxford-university-press-clarendon-press-1967-pp-xlii-309-84s/88729BC581FFD2550E461236B99A40FF",
+      "found": "British Journal for History of Science review confirms complete scholarly translation xlii + 309 pp + 2 plates, covering all five books of De mineralibus"
+    },
+    {
+      "url": "https://www.amazon.com/Minerals-Albertus-Magnus-Dorothy-Wyckoff/dp/019858122X",
+      "found": "ISBN 9780198581222, Dorothy Wyckoff translator, Clarendon Press 1967 confirmed"
+    },
+    {
+      "url": "https://mineralogicalrecord.com/new_biobibliography/albertus-magnus/",
+      "found": "Bibliographic record of Albertus Magnus confirms Wyckoff 1967 as the English translation of De mineralibus"
+    }
+  ],
+  "reasoning": "Dorothy Wyckoff's 'Book of Minerals' (Clarendon Press, 1967, xlii+309pp) is a complete English translation of De mineralibus confirmed across archive.org, Cambridge Core review, and multiple library catalogues. Covers all 5 books and ~100 stones. Strong prior — our translation is not the first."
+}

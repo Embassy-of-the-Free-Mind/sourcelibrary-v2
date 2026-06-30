@@ -1,0 +1,37 @@
+{
+  "book_id": "69d8ca22a09828f83ddc9c7a",
+  "work_identified": "Histoire des Champignons de la France, Vol. 2 (Bulliard/Ventenat, pub. 1809-1812); second volume of the French mycological treatise describing and illustrating fungi of France",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Bulliard \"Histoire des Champignons de la France\" English translation",
+    "Pierre Bulliard \"Histoire des Champignons\" English translated fungi mycology",
+    "Bulliard \"Histoire des Champignons\" WorldCat English translation site:worldcat.org",
+    "\"History of the Fungi of France\" OR \"History of the Mushrooms of France\" Bulliard English",
+    "Bulliard mushrooms France vol 2 mycology English translation 18th 19th century HathiTrust",
+    "Bulliard \"champignons\" \"translated\" OR \"translation\" English botanical mycological 1800s 1900s",
+    "Bulliard \"champignons\" mycology history English translation scholarly journal academic",
+    "site:archive.org bulliard champignons france english",
+    "\"histoire des champignons\" Bulliard volume 2 \"vol. 2\" English translated mycology history",
+    "Bulliard \"Histoire des Champignons\" biodiversity heritage library english translation",
+    "Bulliard mycologist \"history of fungi\" OR \"history of mushrooms\" France English book published",
+    "Bulliard \"Histoire des Champignons\" modern edition reprint translated annotated English 2000s 2010s 2020s"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/histoiredescham00ventgoog", "found": "Vol. 2 Part 2, French only, pub. Leblanc 1812 — no English edition"},
+    {"url": "https://en.wikipedia.org/wiki/Jean_Baptiste_Fran%C3%A7ois_Pierre_Bulliard", "found": "Lists all Bulliard works; no English translation mentioned for any title"},
+    {"url": "https://www.first-nature.com/fungi/~biog-bulliard.php", "found": "Full Bulliard biography; all works listed in French; no translation noted"},
+    {"url": "https://www.huh.harvard.edu/book/histoire-des-champignons-de-la-france-1780-1791", "found": "Harvard Herbaria catalogue record; French only (403 on fetch, confirmed via search snippet)"},
+    {"url": "https://gallica.bnf.fr/ark:/12148/bpt6k9771590w.texteImage", "found": "BnF Gallica; French original only"},
+    {"url": "https://www.biodiversitylibrary.org/creator/3622", "found": "BHL Bulliard creator page; 403 on fetch; Google-indexed results show French-only holdings"},
+    {"url": "https://search.worldcat.org/de/title/herbier-de-la-france-division-2-histoire-des-champignons-par-bulliard-et-ventenat-1-histoire-des-champignons-de-la-france/oclc/311317924", "found": "WorldCat OCLC 311317924; 403 on fetch; Google snippet confirms French edition, no English found in broader WorldCat search"},
+    {"url": "https://www.amazon.com/-/he/Pierre-Bulliard/dp/1169784925", "found": "Modern reprint listed as French Edition (Vol. 1); no English edition listed for any volume"},
+    {"url": "https://link.springer.com/article/10.1007/BF03449412", "found": "Scholarly mycology paper on historical fungal databases; Bulliard cited; no English translation of this work mentioned"}
+  ],
+  "reasoning": "Twelve searches across archive.org, Wikipedia, Harvard Herbaria, BHL, Gallica, WorldCat (Google-indexed), and mycological scholarship found no English translation of Bulliard's Histoire des Champignons de la France in any volume. All modern reprints are French facsimiles. This 18th-c. French mycological treatise appears never to have been Englished."
+}

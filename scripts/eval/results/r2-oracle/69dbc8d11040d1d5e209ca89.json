@@ -1,0 +1,40 @@
+{
+  "book_id": "69dbc8d11040d1d5e209ca89",
+  "work_identified": "De disciplina scholarium (pseudo-Boethius) with pseudo-Thomas Aquinas commentary — 13th-century Latin university conduct manual falsely attributed to Boethius, circulated with commentary falsely attributed to Thomas Aquinas",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "De disciplina scholarium pseudo-Boethius English translation",
+    "\"De disciplina scholarium\" Boethius English translation WorldCat",
+    "\"De disciplina scholarium\" OR \"disciplina scolarium\" \"English\" translation scholar",
+    "hathitrust \"disciplina scholarium\" OR \"disciplina scolarium\" English",
+    "\"De disciplina scholarium\" OR \"On the Education of Students\" Boethius pseudo English translation published",
+    "pseudo-Boethius \"De disciplina scholarium\" medieval education treatise history scholarship translation",
+    "\"pseudo-Boethius\" \"disciplina\" OR \"On the Discipline of Students\" OR \"On Scholarly Discipline\" English translation 2000 2010 2015 2020",
+    "Weijers \"De disciplina scolarium\" Brill 1976 English French critical edition",
+    "\"De disciplina scholarium\" OR \"De disciplina scolarium\" translation English dissertation thesis anthology",
+    "worldcat \"disciplina scholarium\" OR \"disciplina scolarium\" English translation site:worldcat.org OR site:search.worldcat.org",
+    "\"disciplina scholarium\" OR \"disciplina scolarium\" \"English translation\" university students medieval",
+    "\"De disciplina scholarium\" \"translated\" OR \"translation\" English Boethius medieval education"
+  ],
+  "sources_consulted": [
+    {"url": "https://search.worldcat.org/title/De-disciplina-scholarium/oclc/633443746", "found": "WorldCat record for De disciplina scholarium — Latin edition only, no English translation listed"},
+    {"url": "https://archive.org/details/dedisciplinascol0000unse", "found": "Weijers 1976 critical edition (Brill, Leiden): Latin text with French critical apparatus, xiv+189pp — no English"},
+    {"url": "https://brill.com/display/title/6329?language=en", "found": "Brill catalog: only edition is Weijers 1976, Latin/French; no English translation published by Brill"},
+    {"url": "https://www.abebooks.com/book-search/title/disciplina-scolarium/", "found": "15 listings: Latin originals, Weijers 1976 Latin/French, POD facsimiles — no English translation"},
+    {"url": "https://philpapers.org/rec/SCHDDS-2", "found": "PhilPapers record — blocked; search snippet shows only Latin/French editions"},
+    {"url": "https://medieval.bodleian.ox.ac.uk/catalog/work_3957", "found": "Bodleian Medieval Manuscripts catalog: lists Latin manuscripts, no English translation noted"},
+    {"url": "https://www.researchgate.net/publication/282462813_Boethian_Humor_and_the_Pseudo-Boethian_De_disciplina_scolarium", "found": "Blocked; snippet: Brooke Hunter article on the pseudo-Boethian text's humor — study, not a translation"},
+    {"url": "https://www.loc.gov/item/65058840/", "found": "Library of Congress: 1485 Louvain incunable with commentary — Latin, no English"},
+    {"url": "https://www.worldcat.org/oclc/493448256", "found": "WorldCat record for Consolatione + Disciplina scolarium — blocked; context indicates Latin incunable"},
+    {"url": "https://openlibrary.org/books/OL4627881M/De_disciplina_scolarium", "found": "Open Library: Weijers 1976 edition — language: Latin; no English translation"},
+    {"url": "https://www.brepolsonline.net/content/journals/10.1484/J.VIATOR.5.103505", "found": "Brepols Viator article on Boethian Humor — English-language study, not a translation of the work"},
+    {"url": "https://www.routledge.com/Forging-Boethius-in-Medieval-Intellectual-Fantasies/Hunter/p/book/9781032094533", "found": "Brooke Hunter 2018 Routledge monograph: scholarly study in English — not a translation of the text"}
+  ],
+  "reasoning": "Exhaustive search of WorldCat, archive.org, Brill, AbeBooks, Open Library, Bodleian MSS catalog, LoC, and general web finds no English translation of De disciplina scholarium. The only modern edition is Weijers 1976 (Latin/French). Brooke Hunter's 2018 Routledge monograph studies the text but does not translate it. No English rendering of the pseudo-Thomas commentary exists either."
+}

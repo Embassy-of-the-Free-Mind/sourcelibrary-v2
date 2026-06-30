@@ -1,0 +1,4 @@
+book_id: 6a0858e249638a50931c6cfa
+Title: Scipionis Capicii De principiis rerum libri duo. Eiusdem De vate maximo libri tres.
+Author: Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula
+Source language: Latin

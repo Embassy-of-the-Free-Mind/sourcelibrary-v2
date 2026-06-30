@@ -1,0 +1,4 @@
+book_id: 69d8c9fea09828f83ddc9371
+Title: Theatrum Fungorum oft het Toonsel der Campernoelien
+Author: Franciscus van Sterbeeck
+Source language: Dutch

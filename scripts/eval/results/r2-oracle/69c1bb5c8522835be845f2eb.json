@@ -1,0 +1,40 @@
+{
+  "book_id": "69c1bb5c8522835be845f2eb",
+  "work_identified": "Manuscript compilation of Hasidic discourses (ma'amarim) primarily by Dov Baer Schneursohn (Mitteler Rebbe, 1773-1827) with additional discourses by Shneur Zalman of Lyady (Alter Rebbe, 1745-1812); consistent with Manchester Gaster Hebrew MS 1351, 1357, or similar codex in this series",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "WorldCat 'Hasidic discourses' 'Dov Baer' Schneersohn 'Shneur Zalman' English translation",
+    "Kehot Publication Society 'Dov Baer Schneersohn' 'Shneur Zalman' 'hasidic discourses' English translation",
+    "'Dov Baer Schneersohn' OR 'Dovber Schneuri' 'hasidic discourses' English translation published",
+    "WorldCat 'hasidic discourses' 'Dov Baer' 1773 1827 'Shneur Zalman' Hebrew English",
+    "worldcat 'Dov Ber' OR 'Dovber Schneuri' hasidic discourses English translation 1773",
+    "'Maamarei Admur HaEmtza'i' English translation 'Dov Baer' Kehot",
+    "sefaria.org 'Dov Baer' OR 'Mitteler Rebbe' discourses English available maamarim",
+    "'Shneur Zalman' 'Dov Baer' 'hasidic discourses' English translation WorldCat catalog",
+    "chabad.org 'Shneur Zalman' 'Dov Baer' 'hasidic discourses' English translation book",
+    "archive.org 'hasidic discourses' Schneersohn 'Shneur Zalman' 'Dov Baer' Hebrew",
+    "Gaster Hebrew manuscript 'hasidic discourses' 'Dov Baer' 'Shneur Zalman' English translation published",
+    "Manchester Rylands Gaster manuscript 'hasidic discourses' English translation Chabad Schneursohn",
+    "sefaria.org 'Torah Or' OR 'Torah Ohr' 'Shneur Zalman' English translation available",
+    "'Gaster Hebrew manuscript' Chabad hasidic discourses published scholarly edition English translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.digitalcollections.manchester.ac.uk/view/MS-GASTER-HEBREW-01351/319", "found": "Gaster MS 1351 = Hasidic discourses primarily by Dov Baer Schneuri with some by Shneur Zalman; ~811 pp Hebrew manuscript; no English translation mentioned"},
+    {"url": "https://www.digitalcollections.manchester.ac.uk/view/MS-GASTER-HEBREW-01357", "found": "Gaster MS 1357 = 'Hasidic discourses composed by Rabbi Dov Baer (RDB) and Shneur Zalman (RSZ)'; matches Source Library dual-author attribution exactly; no English translation available"},
+    {"url": "https://en.wikipedia.org/wiki/Dovber_Schneuri", "found": "English translations of Dov Baer's works: Sha'ar HaYichud (Gate of Unity), Kuntres HaHitpa'alut (Tract on Ecstasy/Louis Jacobs), Derech Chayim; no comprehensive discourse collection translated"},
+    {"url": "https://www.sefaria.org/texts/Chasidut", "found": "Sefaria has for Dov Baer: Kuntres HaHitpa'alut and Gate of Unity in English; for Shneur Zalman: Tanya, Likkutei Torah, Torah Ohr"},
+    {"url": "https://www.sefaria.org/Torah_Ohr", "found": "Torah Ohr (Shneur Zalman's discourses on Genesis/Exodus/Esther) available in English on Sefaria via Kehot edition — this is a specific named published work, not the manuscript collection"},
+    {"url": "https://ascentofsafed.com/Teachings/Advanced/Kabbala/Booklist4.html", "found": "Bibliography: Dov Baer English translations limited to 'Flames: A Chanuka Discourse from Gates of Radiance' (Loewenthal, Kehot 2002); Maamarei Admur HaEmtza'i (20 vols discourses) not listed as translated"},
+    {"url": "https://www.chabad.org/library/article_cdo/aid/2841700/jewish/Selections-From-Torah-Or-and-Likkutei-Torah-Festivals.htm", "found": "Selections from Torah Or/Likutei Torah (Shneur Zalman) published in English by SIE — PARTIAL/SELECTIONS only, not complete translation; festival-focused"},
+    {"url": "https://merrimackvalleyhavurah.wordpress.com/2022/05/30/works-of-the-hasidic-masters-in-english/", "found": "English works list: Dov Baer Schneersohn (Mitteler Rebbe) not listed with any comprehensive discourse collection in English"},
+    {"url": "https://www.sothebys.com/en/auctions/ecatalogue/2013/judaica-n09060/lot.106.html", "found": "Sotheby's 2013: Hassidic discourses manuscript of Dovber Schneuri 1826 (6 ma'amarim); confirms manuscript nature of these collections"},
+    {"url": "https://beta.kehot.com/maamarei-admur-hazoken-maaraza-l-shas-zohar-tefillah", "found": "Kehot catalog confirms Maamarei Admur HaZaken (Shneur Zalman's discourse collection) published in Hebrew; no English edition listed"}
+  ],
+  "reasoning": "This is a Hebrew manuscript compilation of Hasidic discourses (ma'amarim) by both Dov Baer Schneursohn and Shneur Zalman, matching the Manchester Gaster series (MS 1351/1357). Named individual works exist in English (Tanya, Torah Or, Tract on Ecstasy, Gate of Unity, Flames), but no prior English translation of this specific manuscript compilation—nor of Dov Baer's comprehensive discourse corpus (Maamarei Admur HaEmtza'i, 20 vols)—has been found across WorldCat, Sefaria, Kehot catalog, Chabad.org, and academic bibliographies."
+}

@@ -1,0 +1,4 @@
+book_id: 69e158f6ec0a328a49d0a29a
+Title: The Great Hymn to the Aton
+Author: Tell el-Amarna (Tür)
+Source language: Egyptian hieroglyphs

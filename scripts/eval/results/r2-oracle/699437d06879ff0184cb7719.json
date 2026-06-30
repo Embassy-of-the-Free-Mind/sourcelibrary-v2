@@ -1,0 +1,44 @@
+{
+  "book_id": "699437d06879ff0184cb7719",
+  "work_identified": "Marius Victorinus, Adversus Arium (Against Arius) — four books, Latin, as preserved in Patrologia Latina Vol. 8",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Theological Treatises on the Trinity",
+      "translator": "Mary T. Clark",
+      "pub_year": "1981",
+      "publisher": "Catholic University of America Press (Fathers of the Church, Vol. 69)",
+      "completeness": "complete",
+      "source_url": "https://www.cuapress.org/9780813210902/theological-treatises-on-the-trinity/"
+    }
+  ],
+  "queries_run": [
+    "Marius Victorinus \"Adversus Arium\" English translation \"Fathers of the Church\" Mary Clark",
+    "Marius Victorinus \"Against Arius\" English translation WorldCat",
+    "site:worldcat.org Marius Victorinus \"Theological Treatises on the Trinity\" Mary Clark"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.cuapress.org/9780813210902/theological-treatises-on-the-trinity/",
+      "found": "CUA Press catalog: confirms Mary T. Clark translation contains all four books of Adversus Arium plus two letters, homoousios treatise, and three Hymns; Fathers of the Church Vol. 69; originally published 1981"
+    },
+    {
+      "url": "https://archive.org/details/fathersofchurch0069unse",
+      "found": "Internet Archive: Mary T. Clark translation, 1981, Catholic University of America Press, Vol. 69, English+Latin, ~371 pp."
+    },
+    {
+      "url": "https://www.cuapress.org/9780813211695/theological-treatises-on-the-trinity/",
+      "found": "CUA Press alternate edition page: same Clark translation, published 2001, explicitly lists four books Against Arius in table of contents"
+    },
+    {
+      "url": "https://www.amazon.com/Fathers-Church-Theological-Treatises-Trinity/dp/0813210909",
+      "found": "Amazon listing: Fathers of the Church Vol. 69, Mary T. Clark translator, ISBN 9780813210902"
+    }
+  ],
+  "reasoning": "Mary T. Clark's complete English translation of all four books of Adversus Arium was published in Fathers of the Church Vol. 69 (CUA Press, 1981). The Patrologia Latina Vol. 8 text is the same Latin source-text. Prior is complete, modern, from a major patristic academic series. Verdict: not_first."
+}

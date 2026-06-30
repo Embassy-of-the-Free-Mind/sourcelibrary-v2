@@ -1,0 +1,59 @@
+{
+  "book_id": "69aff08257adc49dbfc42392",
+  "work_identified": "A prayer for Ḫammu-rābi (Ḫammu-rābi E) [ETCSL 2.8.2.5]; fragmentary Sumerian royal prayer, only lines 38-47 of ~47 survive",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "partial",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Prayers for King Hammurabi of Babylon",
+      "translator": "Åke W. Sjöberg",
+      "pub_year": "1972",
+      "publisher": "Brill (in: Ex orbe religionum: Studia Geo Widengren oblata, Pars Prior, pp. 58-72)",
+      "completeness": "partial",
+      "source_url": "https://brill.com/view/book/9789004378414/B9789004378414_s010.xml"
+    },
+    {
+      "english_title": "A prayer for Hammu-rabi (Hammu-rabi E): translation",
+      "translator": "Jeremy A. Black (ETCSL; adapted March 1999)",
+      "pub_year": "1999",
+      "publisher": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "completeness": "partial",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/section2/tr2825.htm"
+    }
+  ],
+  "queries_run": [
+    "ETCSL \"Hammurabi E\" Sumerian prayer English translation site:etcsl.orinst.ox.ac.uk",
+    "ETCSL \"prayer for Hammurabi\" Sumerian literature electronic text corpus Oxford",
+    "Sjöberg \"Hammu-rabi E\" 1972 prayer Sumerian translation scholarly",
+    "worldcat \"prayers for Hammurabi\" Sumerian Babylon translation English published",
+    "Sjöberg 1972 \"Ex orbe religionum\" \"Prayers for King Hammurabi\" translation what prayers included A B C D E",
+    "ETCSL Jeremy Black 1999 \"Hammu-rabi E\" translation Sumerian \"2.8.2.5\""
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/section2/b2825.htm",
+      "found": "ETCSL bibliography for Ḫammu-rābi E: explicitly lists Sjöberg 1972 as providing composite text, translation, photograph, and commentary for this specific prayer"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/section2/tr2825.htm",
+      "found": "ETCSL English translation of lines 38-47 (37 lines missing); adapted by JAB (Jeremy A. Black) March 1999; text confirmed fragmentary"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/section2/c2825.htm",
+      "found": "ETCSL composite Sumerian text: 37 lines missing + lines 38-47 only; cuneiform sources CBS 4503 + PRAK I B 11"
+    },
+    {
+      "url": "https://brill.com/view/book/9789004378414/B9789004378414_s010.xml",
+      "found": "HTTP 403 — Brill paywall; chapter title confirmed: 'Prayers for King Ḫammurabi of Babylon' by Sjöberg"
+    },
+    {
+      "url": "https://archive.org/details/exorbereligionum0002unse",
+      "found": "Ex orbe religionum vol. 2 in Internet Archive: access-restricted; could not verify page contents directly"
+    }
+  ],
+  "reasoning": "Sjöberg (Brill, 1972) published English translation of Ḫammu-rābi E per ETCSL's authoritative Assyriological bibliography for this text. ETCSL/Black (Oxford, 1999) also translated lines 38-47 online. Both predate our edition. Both are partial because 37 of ~47 lines are lost in the only known tablet(s)."
+}

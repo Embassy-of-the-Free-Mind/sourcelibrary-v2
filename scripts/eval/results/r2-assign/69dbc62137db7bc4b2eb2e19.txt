@@ -1,0 +1,4 @@
+book_id: 69dbc62137db7bc4b2eb2e19
+Title: De mineralibus
+Author: Albertus Magnus
+Source language: Latin

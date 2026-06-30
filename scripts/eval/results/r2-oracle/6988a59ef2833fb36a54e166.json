@@ -1,0 +1,40 @@
+{
+  "book_id": "6988a59ef2833fb36a54e166",
+  "work_identified": "Der Röm. Spanischen Cantzley Nachtrab: Sinceratio Sincerationum. Oder unteutsche betrügliche Zweyzüngigkeit — attr. Ludwig Camerarius, 1624, German-language Protestant polemical pamphlet warning Evangelicals against Roman-Spanish deceptive equivocation practices during the Thirty Years' War",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Sinceratio Sincerationum \"Spanischen Cantzley\" German pamphlet",
+    "\"Röm. Spanischen Cantzley Nachtrab\" \"Zweyzungigkeit\" early modern German",
+    "\"Sinceratio Sincerationum\" English translation WorldCat",
+    "\"Spanischen Cantzley Nachtrab\" Ludwig Camerarius English translation",
+    "VD17 \"Sinceratio Sincerationum\" OR \"Spanischen Cantzley Nachtrab\" Camerarius",
+    "\"Sinceratio Sincerationum\" English translation HathiTrust OR \"Google Books\"",
+    "worldcat \"Sinceratio sincerationum\" Camerarius editions",
+    "ESTC \"Spanischen Cantzley\" OR \"Sinceratio Sincerationum\" English",
+    "Ludwig Camerarius \"Spanischen Cantzley\" 1624 Thirty Years War pamphlet English scholarship",
+    "Camerarius 1624 \"double-tongued\" OR \"Zweyzüngigkeit\" Protestant pamphlet Thirty Years War English scholarship",
+    "\"Sinceratio sincerationum\" OR \"Roman Spanish Chancellery\" OR \"Nachtrab\" Camerarius English 2000 2010 2020 2024 translated",
+    "\"Noel Malcolm\" \"Reason of State\" Camerarius Hobbes translation Thirty Years War \"Sinceratio\"",
+    "STC 4541 OR 4542 OR 4543 Camerarius English translation pamphlet 1620s \"Thirty Years War\"",
+    "\"Sinceratio sincerationum\" site:scholar.google.com OR site:jstor.org OR site:academia.edu"
+  ],
+  "sources_consulted": [
+    {"url": "https://play.google.com/store/books/details?id=jDRFAAAAcAAJ", "found": "German-language original, January 1624, Ludwig Camerarius; no English translation mentioned"},
+    {"url": "https://play.google.com/store/books/details?id=8U5oAAAAcAAJ", "found": "Second Google Books edition of the same German work; no English translation"},
+    {"url": "https://books.google.de/books?id=XHxKAAAAcAAJ", "found": "German original on Google Books; no English edition found"},
+    {"url": "https://www.deutsche-digitale-bibliothek.de/item/5SO2EATO5DF567EGB4YIPFJRB7C4JPGT", "found": "Chapter excerpt pp.30-39 from the 1624 German edition; Public Domain Mark; no English translation mentioned; held at Univ. of Tübingen Library"},
+    {"url": "https://datb.cerl.org/estc/_search?query=Sinceratio+Sincerationum", "found": "ZERO results — no pre-1801 English printing of this title in the English Short Title Catalogue"},
+    {"url": "https://datb.cerl.org/estc/_search?query=Ludwig+Camerarius", "found": "ZERO results — no pre-1801 English printing of any work by Ludwig Camerarius in the ESTC"},
+    {"url": "https://archive.org/details/bub_gb_sts92k0yCLEC", "found": "Camerarius's Cancellaria Hispanica (Latin, 1622) — a related but distinct work; German-language polemical Nachtrab not found on archive.org"},
+    {"url": "https://en.wikipedia.org/wiki/Ludwig_Camerarius", "found": "Ludwig Camerarius (1573–1651); works listed include Prodromus (1622), Cancellaria hispanica (1622), Mysterium iniquitatis (1625); Sinceratio Sincerationum not in Wikipedia's works list; no English translations of any work noted"},
+    {"url": "https://ndpr.nd.edu/reviews/reason-of-state-propaganda-and-the-thirty-years-war-an-unknown-translation-by-thomas-hobbes/", "found": "Hobbes translated 'Altera secretissima instructio…' (1626 Latin pamphlet) — a DIFFERENT work, not the Sinceratio Sincerationum"},
+    {"url": "https://vtechworks.lib.vt.edu/server/api/core/bitstreams/6c1e3513-2f0a-4e2a-b616-c5f112334141/content", "found": "Transalpine Postal Routes as Intelligence Work 1555–1645 — contextual scholarship; does not mention an English translation of this pamphlet"}
+  ],
+  "reasoning": "German polemical pamphlet (Camerarius, 1624). ESTC search returned 0 hits for title and 0 hits for author — no pre-1801 English printing exists. No modern English translation found across Google Books, archive.org, Deutsche Digitale Bibliothek, multiple web searches, or Thirty Years War scholarship (Malcolm/Hobbes book covers a different pamphlet). WorldCat and HathiTrust returned 403 but ESTC absence is decisive for pre-1801. Specialized propaganda text; no known translation tradition."
+}

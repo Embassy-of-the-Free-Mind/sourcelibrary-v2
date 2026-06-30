@@ -1,0 +1,34 @@
+{
+  "book_id": "6953e58d77f38f6761bf0cfc",
+  "work_identified": "Traité de la Lumière (1690) by Christiaan Huygens — complete wave-theory optics treatise, distinct from other Huygens works",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Treatise on Light",
+      "translator": "Silvanus P. Thompson",
+      "pub_year": "1912",
+      "publisher": "Macmillan & Company, London",
+      "completeness": "complete",
+      "source_url": "https://www.gutenberg.org/ebooks/14725"
+    }
+  ],
+  "queries_run": [
+    "Huygens \"Traité de la Lumière\" English translation Silvanus Thompson 1912",
+    "Huygens \"Treatise on Light\" English translation history complete",
+    "WorldCat Huygens \"Treatise on Light\" Thompson 1912 complete translation OCLC"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.gutenberg.org/ebooks/14725", "found": "Complete Thompson 1912 translation freely available on Project Gutenberg; full text confirmed"},
+    {"url": "https://archive.org/details/huyghens-traite-de-la-lumiere-gauthier-villars-1690-english-trans", "found": "Internet Archive hosts Thompson English translation of Traité de la Lumière 1690"},
+    {"url": "https://en.wikipedia.org/wiki/Treatise_on_Light", "found": "Wikipedia documents Thompson 1912 (Macmillan, London) as the English translation; no other English translator listed"},
+    {"url": "https://library.cmu.edu/about/news/2022-05/posner-collection-treatise-on-light", "found": "CMU Libraries article confirms Thompson 1912 is the only English translation, arriving 222 years after the 1690 French original"},
+    {"url": "https://librivox.org/treatise-on-light-by-christiaan-huygens/", "found": "LibriVox audio recording of complete Thompson translation, confirming full work coverage"},
+    {"url": "https://www.grputland.com/2016/06/errata-in-various-editions-of-huygens-treatise-on-light.html", "found": "Scholarly errata page covering multiple print editions of the Thompson translation, confirming it as the standard complete English text"}
+  ],
+  "reasoning": "Silvanus P. Thompson published a complete English translation of Traité de la Lumière in 1912 (Macmillan, London). Confirmed complete via Project Gutenberg, Internet Archive, LibriVox audio, Wikipedia, and CMU Libraries scholarship. CMU article notes it was the only English translation, 222 years after the 1690 original."
+}

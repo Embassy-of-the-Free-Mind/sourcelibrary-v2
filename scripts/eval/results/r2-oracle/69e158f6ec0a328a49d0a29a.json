@@ -1,0 +1,51 @@
+{
+  "book_id": "69e158f6ec0a328a49d0a29a",
+  "work_identified": "Great Hymn to the Aten (inscribed in tomb of Ay, Amarna, TA25; attributed to Akhenaten, c. 1350 BCE)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Rock Tombs of El Amarna, Part VI: Tombs of Parennefer, Tutu, and Aÿ",
+      "translator": "Norman de Garis Davies",
+      "pub_year": "1908",
+      "publisher": "Egypt Exploration Society",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Great_Hymn_to_the_Aten"
+    },
+    {
+      "english_title": "Ancient Near Eastern Texts Relating to the Old Testament (ANET)",
+      "translator": "John A. Wilson",
+      "pub_year": "1950",
+      "publisher": "Princeton University Press",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Ancient_Near_Eastern_Texts_Relating_to_the_Old_Testament"
+    },
+    {
+      "english_title": "Ancient Egyptian Literature, Volume II: The New Kingdom",
+      "translator": "Miriam Lichtheim",
+      "pub_year": "1976",
+      "publisher": "University of California Press",
+      "completeness": "complete",
+      "source_url": "https://archive.org/stream/MiriamLichtheimAncientEgyptianLiteratureVolII/Miriam+Lichtheim+Ancient+Egyptian+Literature+Vol+II_djvu.txt"
+    }
+  ],
+  "queries_run": [
+    "Great Hymn to the Aton English translation Lichtheim Pritchard ANET",
+    "\"Great Hymn to the Aton\" English translation history Akhenaten",
+    "WorldCat \"Great Hymn to the Aten\" English translation Wilson Lichtheim",
+    "Lichtheim \"Ancient Egyptian Literature\" volume II \"Great Hymn to the Aten\" University California Press 1976",
+    "John A. Wilson \"Great Hymn to Aten\" ANET \"Ancient Near Eastern Texts\" Princeton 1950 translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Great_Hymn_to_the_Aten", "found": "Lists multiple prior English translations: Davies 1908, Wilson in ANET 1950, Lichtheim 1976, Weigall 1911, Budge 1923"},
+    {"url": "https://archive.org/stream/MiriamLichtheimAncientEgyptianLiteratureVolII/Miriam+Lichtheim+Ancient+Egyptian+Literature+Vol+II_djvu.txt", "found": "Lichtheim's Great Hymn to the Aten appears at p.96 in 'Part Two: Hymns, Prayers, and a Harper's Song'; text confirmed present"},
+    {"url": "https://en.wikipedia.org/wiki/Ancient_Near_Eastern_Texts_Relating_to_the_Old_Testament", "found": "Wilson translation of the Great Hymn confirmed in ANET (Princeton UP, 1st ed. 1950)"},
+    {"url": "https://search.worldcat.org/title/new-kingdom-amarna-period-the-great-hymn-to-aten/oclc/14067933", "found": "WorldCat record oclc/14067933 confirms catalogued English edition of the Great Hymn to the Aten (403 on direct fetch)"},
+    {"url": "https://books.google.com/books/about/Ancient_Egyptian_Literature_Volume_II.html?id=7ZlTC1yA1sMC", "found": "Google Books confirms Lichtheim Ancient Egyptian Literature Vol II (UC Press 1976) contains the hymn"}
+  ],
+  "reasoning": "One of the most-translated ancient Egyptian texts. Davies (1908) gave the first scholarly English rendering; Wilson translated it for Pritchard's ANET (Princeton UP, 1st ed. 1950); Lichtheim (1976, UC Press) produced the canonical modern scholarly translation. Multiple complete English translations precede ours by decades."
+}

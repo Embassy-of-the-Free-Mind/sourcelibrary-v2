@@ -1,0 +1,75 @@
+{
+  "book_id": "69af10d706b10527be5661cd",
+  "work_identified": "Демон и запрещенные стихотворения М. Ю. Лермонтова (Demon and Forbidden Poems of M. Yu. Lermontov), Leipzig: E. L. Kasprovich, 1879 — a compilation combining The Demon (romantic narrative poem) with Lermontov's censored erotic/Junker poems suppressed during his lifetime",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "The Demon, and Other Poems",
+      "translator": "Eugene M. Kayden",
+      "pub_year": "1965",
+      "publisher": "Antioch Press, Yellow Springs, Ohio",
+      "completeness": "partial",
+      "source_url": "https://archive.org/details/demonotherpoems0000lerm"
+    }
+  ],
+  "queries_run": [
+    "Lermontov \"The Demon\" English translation complete poem",
+    "Lermontov \"forbidden poems\" English translation",
+    "Lermontov \"Demon and forbidden poems\" English translation WorldCat",
+    "Lermontov \"zapreshchennye stikhotvoreniya\" \"forbidden poems\" English translation published",
+    "Lermontov \"Demon\" \"forbidden\" poems anthology English book published translator",
+    "Lermontov 1879 Leipzig \"запрещенные стихотворения\" OR \"forbidden poems\" contents erotic political junker",
+    "Lermontov \"Kasprovich\" 1879 Leipzig English translation forbidden poems history",
+    "Lermontov junker hussar erotic poems English translation publication",
+    "Lermontov erotic poems English \"Peterhof Holiday\" OR \"Ulanshu\" OR \"Goshpital\" translated English publication",
+    "Lermontov \"запрещенные стихотворения\" Leipzig 1879 content poems listed bibliography",
+    "\"Eros Russe\" Lermontov English translation \"not for women\" ISBN 1572010048 publisher contents",
+    "\"Eros Russe\" Lermontov \"not for women\" \"Berkeley Slavic\" \"The Demon\" included OR excluded bilingual edition",
+    "ISBN 1572010045 OR 9781572010048 \"Eros Russe\" Lermontov publisher description contents",
+    "Lermontov forbidden erotic poems \"Hussar poems\" OR \"junker poems\" first English complete translation",
+    "Russian erotic poetry anthology English translation Lermontov \"Peterhof\" OR \"Ulansha\" OR junker included",
+    "Lermontov \"Demon i zapreshchennye\" OR \"Demon and forbidden\" English translation WorldCat OR HathiTrust OR catalog",
+    "WorldCat Lermontov \"demon\" \"forbidden\" OR \"zapreshchennye\" English translation site:worldcat.org",
+    "Lermontov Leipzig 1879 \"Demon\" \"forbidden poems\" English translation publication history"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Mikhail_Lermontov",
+      "found": "Confirmed Demon was censored; Junker/erotic poems circulated in manuscript, published 1879 Geneva anthology; explicitly excluded from Soviet complete collected works as unsuitable for print"
+    },
+    {
+      "url": "http://elib.shpl.ru/ru/nodes/39666-lermontov-m-yu-demon-i-zapreschennye-stihotvoreniya-m-yu-lermontova-leyptsig-1879",
+      "found": "State Public Historical Library (GPIB) catalog entry confirmed the 1879 Leipzig publication by E. L. Kasprovich; no English translation record present"
+    },
+    {
+      "url": "https://archive.org/details/demonotherpoems0000lerm",
+      "found": "The Demon and Other Poems, Eugene Kayden, 1965, Antioch Press — contains The Demon and other canonical poems; no erotic/forbidden content"
+    },
+    {
+      "url": "https://archive.org/details/demonthe00lermrich",
+      "found": "The Demon, 1918, Douglas & Foulis, Edinburgh — only The Demon, no forbidden poems"
+    },
+    {
+      "url": "https://www.amazon.com/Eros-Russe-Russkii-Russian-Women/dp/1572010045",
+      "found": "Eros Russe: Russian Eros Not for Women (Lermontov), Berkeley Slavic Specialties, 3rd ed. 1995 — bilingual edition of Lermontov erotic poems; contents not confirmed, The Demon unlikely included given title and focus"
+    },
+    {
+      "url": "https://en.atomiyme.com/lunmontovs-junker-poems-and-their-brief-analysis/",
+      "found": "Lermontov's junker poems (Hospital, Peterhof Holiday, Ulansha) described as never published for understandable reasons; no English translation mentioned"
+    },
+    {
+      "url": "https://www.rookebooks.com/1875-the-demon-a-poem",
+      "found": "1875 English translation of The Demon by Alexander Condie Stephen confirmed to exist; page not accessible but title/date confirmed from multiple search results"
+    },
+    {
+      "url": "https://www.worldcat.org/search?q=lermontov+demon+forbidden",
+      "found": "HTTP 403; WorldCat inaccessible directly but alternative searches found no English catalog record for the Leipzig 1879 compilation"
+    }
+  ],
+  "reasoning": "Leipzig 1879 compilation pairs The Demon (widely translated into English since 1875: Condie Stephen, Kayden 1965, Johnston, Pyman, Pettus et al.) with censored erotic Junker poems. No English of this complete compilation found. Forbidden/erotic poems excluded even from Soviet collected works; the 1995 Berkeley Slavic 'Eros Russe' may cover erotic poems but not alongside The Demon. First complete English of this compilation."
+}

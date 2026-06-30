@@ -1,0 +1,62 @@
+{
+  "book_id": "69520176ab34727b1f04136b",
+  "work_identified": "Utriusque cosmi majoris scilicet et minoris metaphysica, physica atque technica historia — Robert Fludd's encyclopedic Latin work on the macrocosm and microcosm, published in multiple volumes 1617–1621 (Oppenheim/Frankfurt, de Bry). Distinct from Fludd's later Philosophia Moysaica (Englished as 'Mosaicall Philosophy', 1659).",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "The Origin and Structure of the Cosmos: Being a Translation of Books One and Two of Tractate One from Volume One of Utriusque Cosmi Historia",
+      "translator": "Patricia Tahil",
+      "pub_year": "1982",
+      "publisher": "Magnum Opus Hermetic Sourceworks, Edinburgh (limited edition of 250 copies)",
+      "completeness": "partial",
+      "source_url": "https://www.weiserantiquarian.com/pages/books/58860/robert-fludd-edited-and-adam-mclean-patricia-tahil/the-origin-and-structure-of-the-cosmos-being-a-translation-of-books-one-and-two-of-tractate-one-from"
+    },
+    {
+      "english_title": "'The Temple of Music' by Robert Fludd",
+      "translator": "Peter Hauge",
+      "pub_year": "2011",
+      "publisher": "Ashgate (Music Theory in Britain, 1500–1700: Critical Editions)",
+      "completeness": "partial",
+      "source_url": "https://www.routledge.com/The-Temple-of-Music-by-Robert-Fludd/Hauge/p/book/9780754655107"
+    },
+    {
+      "english_title": "Utriusque Cosmi: Hermeticism and Science in Robert Fludd: Translation and commentary",
+      "translator": "Jasper C. Hernández",
+      "pub_year": "2025",
+      "publisher": "Chronocrators (ISBN 9798289455857)",
+      "completeness": "partial",
+      "source_url": "https://www.amazon.com/Utriusque-Cosmi-Hermeticism-Translation-commentary/dp/B0FFMCXGMH"
+    }
+  ],
+  "queries_run": [
+    "Robert Fludd \"Utriusque cosmi\" English translation complete",
+    "Robert Fludd \"History of the Two Worlds\" English translation published",
+    "WorldCat Robert Fludd \"Utriusque cosmi majoris\" English translation",
+    "Joscelyn Godwin \"Robert Fludd\" English translation complete works 2019",
+    "Jasper Hernandez \"Utriusque Cosmi\" \"Robert Fludd\" translation 2025 complete",
+    "Peter Hauge \"Robert Fludd\" \"Temple of Music\" translation English 2011",
+    "\"Robert Fludd\" \"Utriusque cosmi\" complete English translation ALL volumes published book",
+    "\"Robert Fludd\" English translation \"first complete\" OR \"complete translation\" \"both worlds\" OR \"Utriusque cosmi\"",
+    "Robert Fludd \"History of the Macrocosm\" OR \"History of Two Worlds\" English translation 19th century published",
+    "\"Mosaicall Philosophy\" Fludd 1659 \"Utriusque cosmi\" same work different",
+    "HathiTrust \"Robert Fludd\" \"utriusque cosmi\" English translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.amazon.com/Utriusque-Cosmi-Hermeticism-Translation-commentary/dp/B0FFMCXGMH", "found": "Hernández 2025 translation covers first three books of the first treatise only (partial); published June 24, 2025"},
+    {"url": "https://www.weiserantiquarian.com/pages/books/58860/robert-fludd-edited-and-adam-mclean-patricia-tahil/the-origin-and-structure-of-the-cosmos-being-a-translation-of-books-one-and-two-of-tractate-one-from", "found": "Tahil 1982 partial translation confirmed: Books 1–2 of Tractate 1, Volume 1 only; limited edition 250 copies"},
+    {"url": "https://www.routledge.com/The-Temple-of-Music-by-Robert-Fludd/Hauge/p/book/9780754655107", "found": "Hauge 2011 translation confirmed: Temple of Music section only (music theory), Ashgate series"},
+    {"url": "https://en.wikipedia.org/wiki/Robert_Fludd", "found": "Wikipedia: no English translation of Utriusque Cosmi mentioned; only Mosaicall Philosophy (1659) listed as English, which is a different work (Philosophia Moysaica)"},
+    {"url": "https://via-hygeia.art/robert-fludd-from-the-utriusque-cosmi-tractatus-de-astrologia/", "found": "Via-Hygeia: excerpts only (chapters IV–V of De Astrologia), translated via Piobb's 1907 French—not a direct Latin translation, not complete"},
+    {"url": "https://openlibrary.org/works/OL15598852W/Utriusque_cosmi_maioris_scilicet_et_minoris_metaphysica_physica_atqve_technica_historia", "found": "Open Library: only original 1617 Latin edition listed; no English translations in catalog"},
+    {"url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupid?key=olbp61674", "found": "Penn Online Books: only Latin originals listed (2 volumes, ca. 1617); no English editions"},
+    {"url": "https://archive.org/details/utriusquecosmima01flud", "found": "Internet Archive: original Latin text available; search for English translations yielded no results"},
+    {"url": "https://quod.lib.umich.edu/e/eebo/A39847.0001.001/1:12", "found": "Mosaicall Philosophy (1659) confirmed as Philosophia Moysaica in English—a distinct later work, not Utriusque Cosmi"},
+    {"url": "https://search.worldcat.org/title/The-origin-and-structure-of-the-cosmos-:-being-a-translation-of-books-one-and-two-of-Tractate-One-from-volume-one-of-Utriusque-cosmi-historia/oclc/11445471", "found": "WorldCat records Tahil 1982 as the principal English-language translation entry; no complete English translation record found"}
+  ],
+  "reasoning": "All confirmed English translations are partial: Tahil (1982) Books 1–2 of Tractate 1 only; Hauge (2011) Temple of Music section only; Hernández (2025) first 3 books of Tractate 1. No 19th-century translation exists. Wikipedia and Penn Online Books list no English edition of this work. Mosaicall Philosophy (1659) is a different Fludd work. Our item's completeness unverified but all priors are definitively partial."
+}

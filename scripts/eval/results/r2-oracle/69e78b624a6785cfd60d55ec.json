@@ -1,0 +1,81 @@
+{
+  "book_id": "69e78b624a6785cfd60d55ec",
+  "work_identified": "Khenpo Shenga (gzhan phan chos kyi snang ba / gzhan phan byams pa'i go cha, 1871–1927): Annotated Commentary (mchan 'grel) on Śāntideva's Bodhicaryāvatāra — woodblock print from Ogyen Choling collection, Bumthang, Bhutan (Kagyu tradition)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Annotated Commentary Shantideva's Entering the Way of the Bodhisattvas",
+      "translator": "Khenpo Gawang Rinpoche and Gerry Wiener",
+      "pub_year": "2023",
+      "publisher": "Jeweled Lotus Publishing / Amazon KDP",
+      "completeness": "unknown",
+      "source_url": "https://www.amazon.com/Annotated-Commentary-Shantidevas-Entering-Bodhisattvas/dp/B0BXN6NQLL"
+    }
+  ],
+  "queries_run": [
+    "Bodhicaryāvatāra mchan grel commentary English translation Tibetan",
+    "\"byang chub sems dpa'i spyod pa la 'jug pa\" \"mchan 'grel\" English translation",
+    "Ogyen Choling Collection Bodhicaryavatara commentary Tibetan manuscript Bhutan",
+    "Khenpo Shenga \"mchan grel\" Bodhicaryavatara English translation \"thirteen great texts\"",
+    "Kunzang Sonam \"mchan grel\" Bodhicaryavatara English translation Padmakara \"Nectar of Manjushri\"",
+    "\"spyod 'jug mchan 'grel\" English translation published WorldCat",
+    "Bodhicaryavatara interlinear commentary mchan grel English translation published Khenpo",
+    "\"Zhanphan Jampai Gocha\" OR \"gzhan phan byams pa'i go cha\" English translation published",
+    "\"gzhan phan chos kyi snang ba\" OR \"Khenpo Shenga\" \"byams pa'i go cha\" same person alternate name",
+    "\"Khenpo Shenga\" annotated commentary Bodhicaryavatara complete English translation book publisher",
+    "\"Khenpo Gawang Rinpoche\" \"Gerry Wiener\" \"Annotated Commentary\" Bodhisattvas complete publication 2022 2023",
+    "\"Annotated Commentary Shantideva's Entering the Way of the Bodhisattvas\" Khenpo Gawang Wiener 2023 OR 2022 OR 2024 publication",
+    "BDRC \"byang chub sems dpa'i spyod pa la 'jug pa\" \"mchan 'grel\" \"Ogyen Choling\" author",
+    "Khenpo Shenga \"spyod jug\" OR \"Bodhicaryavatara\" \"mchan grel\" English translation published OR translated into",
+    "WorldCat Bodhicaryavatara OR Way of the Bodhisattva commentary mchan grel English translation",
+    "\"Bodhicaryavatara\" \"mchan 'grel\" \"English\" translated published 2020 2021 2022 2023 2024 2025"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://eap.bl.uk/archive-file/EAP105-2-3-3",
+      "found": "EAP105 Ogyen Choling: mchan 'grel attributed to 'Gzhan phan byams pa'i go cha'"
+    },
+    {
+      "url": "https://images.mandala.library.virginia.edu/image/first-folios-buddhist-textbyang-chub-sems-dpai-spyod-pa-la-jug-pa-zhes-bya-bai-mchan-grel",
+      "found": "Author: Zhanphan Jampai Gocha; tradition: Kagyu; xylograph on desho paper; Ogyen Choling, Bhutan"
+    },
+    {
+      "url": "https://www.rigpawiki.org/index.php?title=Annotated_Commentary_on_the_Bodhicharyavatara",
+      "found": "403 Forbidden — could not retrieve"
+    },
+    {
+      "url": "https://rywiki.tsadra.org/index.php/gzhung_chen_bcu_gsum_gyi_mchan_%E2%80%99grel",
+      "found": "403 Forbidden — could not retrieve"
+    },
+    {
+      "url": "https://www.lotsawahouse.org/tibetan-masters/khenpo-shenga/",
+      "found": "17 Khenpo Shenga translations on site; Bodhicaryavatara mchan grel not among them"
+    },
+    {
+      "url": "https://www.lotsawahouse.org/topics/thirteen-major-texts/intro",
+      "found": "Khenpo Shenga's mchan grel on BCA widely studied; no English translation mentioned"
+    },
+    {
+      "url": "https://wisdomlib.org/buddhism/book/bodhisattvacharyavatara/d/doc6417.html",
+      "found": "Bibliography of Tibetan works; spyod 'jug mchan 'grel by Khenpo Zhenga listed but no English translation noted"
+    },
+    {
+      "url": "https://www.amazon.com/Annotated-Commentary-Shantidevas-Entering-Bodhisattvas/dp/B0BXN6NQLL",
+      "found": "PRIOR FOUND: Khenpo Shenga mchan grel translated by Khenpo Gawang Rinpoche + Gerry Wiener, ISBN 9798386103903"
+    },
+    {
+      "url": "https://www.goodreads.com/author/show/5873414.Khenpo_Gawang",
+      "found": "'Annotated Commentary Shantideva's Entering the Way of the Bodhisattvas' listed under Khenpo Gawang; pub date not shown"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Bodhisattvacary%C4%81vat%C4%81ra",
+      "found": "Lists English translations of root text and major commentaries; no Khenpo Shenga mchan grel translation listed"
+    }
+  ],
+  "reasoning": "Ogyen Choling xylograph is by 'Gzhan phan byams pa'i go cha' (confirmed alt-epithet of Khenpo Shenga, gzhan phan chos kyi snang ba, 1871–1927) per EAP105 + Mandala Collections. Prior English exists: Khenpo Gawang Rinpoche + Gerry Wiener, 'Annotated Commentary Shantideva's Entering the Way of the Bodhisattvas,' Jeweled Lotus/Amazon KDP, ca.2023 (ISBN 9798386103903). Year is approximate (ASIN B0BXN6NQLL). verdict: not_first."
+}

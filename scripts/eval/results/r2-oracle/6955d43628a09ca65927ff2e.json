@@ -1,0 +1,41 @@
+{
+  "book_id": "6955d43628a09ca65927ff2e",
+  "work_identified": "Historia Coelestis Britannica, Vol. 3 (1725) — the third volume of Flamsteed's posthumous star-catalogue compilation, containing the long preface/prolegomena to the British Catalogue, historical star catalogues (Ptolemy, Ulugh Beg, Tycho Brahe, Hevelius, etc.), Flamsteed's own British star catalogue (~2,936 stars), a southern-stars supplement, and tables; distinct from Vol. 1–2 (observation logs) and from the separate Atlas Coelestis (1729)",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Preface to John Flamsteed's Historia Coelestis Britannica, or British Catalogue of the Heavens (1725)",
+      "translator": "Alison Dione Johnson",
+      "pub_year": "1982",
+      "publisher": "National Maritime Museum (Maritime Monographs and Reports No. 52), ed. Allan Chapman",
+      "completeness": "partial",
+      "source_url": "https://wellcomecollection.org/works/c5fa7an4"
+    }
+  ],
+  "queries_run": [
+    "Historia Coelestis Britannica Flamsteed English translation volume 3",
+    "John Flamsteed \"Historia Coelestis Britannica\" \"translated\" English",
+    "Flamsteed \"Historia Coelestis Britannica\" volume 3 contents star catalogue WorldCat English",
+    "WorldCat \"Historia Coelestis Britannica\" English translation complete",
+    "Flamsteed \"Historia Coelestis Britannica\" volume 3 \"Catalogus Stellarum\" English translation scholarly",
+    "Flamsteed \"Historia Coelestis Britannica\" \"English translation\" OR \"translated into English\" OR \"translated by\"",
+    "Flamsteed \"Historia Coelestis\" volume 3 complete translation English 2000 2010 2020 2025 scholarly",
+    "HathiTrust Flamsteed \"Historia Coelestis Britannica\" English",
+    "site:search.worldcat.org \"Historia Coelestis Britannica\" flamsteed English translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://wellcomecollection.org/works/c5fa7an4", "found": "1982 Chapman/Johnson publication translates the PREFACE only (~222pp including editorial matter); explicitly titled 'The Preface to...' not the full volume"},
+    {"url": "https://search.worldcat.org/title/preface-to-john-flamsteeds-historia-coelestis-britannica-or-british-catalogue-of-the-heavens-1725/oclc/10554616", "found": "403 Forbidden"},
+    {"url": "https://archive.org/details/historia-coelestis-britannica-vol-3", "found": "Latin original Vol. 3; no English translation linked or mentioned"},
+    {"url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/E6C4157AFB69501534BE72AE09321924/S0007087400021890a.pdf/john-flamsteed-preface-to-historia-coelestis-britannica-edited-and-introduced-by-allan-chapman-based-on-a-translation-by-alison-dione-johnson-greenwich-national-maritime-museum-maritime-monographs-and.pdf", "found": "1985 review of Chapman/Johnson — behind paywall but confirms it is a preface-only translation"},
+    {"url": "https://www.britannica.com/topic/Historia-Coelestis-Britannica", "found": "Describes the 1982 translation as 'partial'"},
+    {"url": "https://www.abebooks.com/first-edition/Preface-John-Flamsteeds-Historia-Coelestis-Britannica/134971480/bd", "found": "Bookseller listing confirms Chapman/Johnson 1982 is titled 'The Preface...' — one section, not Vol. 3 entirety"},
+    {"url": "https://wiki.uibk.ac.at/noscemus/Historia_coelestis_Britannica", "found": "Access denied (Anubis security); could not retrieve"}
+  ],
+  "reasoning": "Vol. 3 contains the lengthy preface/prolegomena + historical catalogues + Flamsteed's own British star catalogue + tables. Only the preface has a prior English translation (Alison Dione Johnson, 1982, National Maritime Museum — partial). No complete English translation of the full volume found in WorldCat, archive.org, HathiTrust, or scholarly literature. Our rendering covers the complete volume."
+}

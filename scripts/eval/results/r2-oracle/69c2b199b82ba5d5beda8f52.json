@@ -1,0 +1,35 @@
+{
+  "book_id": "69c2b199b82ba5d5beda8f52",
+  "work_identified": "Materialien zur Geschichte der Freimaurerei in England, Schottland und Irland von Christi Geburt bis auf unsere Zeiten — a German-language Masonic encyclopedia article (indicated by [enz.] annotation), likely from the Lenning/Mossdorf 'Allgemeines Handbuch der Freimaurerei' or 'Encyclopädie der Freimaurerei', covering Masonic history in England, Scotland, and Ireland from the birth of Christ to the time of composition",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Materialien zur Geschichte der Freimaurerei in England Schottland Irland English translation",
+    "\"Materialien zur Geschichte der Freimaurerei in England Schottland und Irland\" WorldCat",
+    "\"Materialien zur Geschichte der Freimaurerei\" \"Christi Geburt\" England Schottland Irland",
+    "\"Materialien zur Geschichte der Freimaurerei in England\" Kloss OR Findel OR Nettelbladt",
+    "\"Allgemeines Handbuch der Freimaurerei\" Schauberg OR Lenning archive.org text \"England Schottland\" article entry",
+    "\"Allgemeines Handbuch der Freimaurerei\" OR \"Encyclopaedie der Freimaurerei\" Lenning English translation published",
+    "Masonic encyclopedia Germany Lenning OR Mossdorf English translation \"history of freemasonry\" England Scotland Ireland",
+    "Georg Kloss \"Materialien zur Geschichte\" Freimaurerei English translation masonic history",
+    "Kloss \"Geschichte freimaurerei England Irland Schottland\" 1847 English translation available",
+    "\"materials for the history of freemasonry in England Scotland Ireland\" English translation \"birth of Christ\"",
+    "Masonic history freemasonry England Scotland Ireland German \"from the birth of Christ\" translation English book",
+    "freemasonry history England Scotland Ireland German \"Materialien\" 19th century encyclopedia Kloss Lenning"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Georg_Kloss", "found": "Kloss's 'Geschichte der Freimaurerei in England, Irland und Schottland' (1847/1848) listed; no English translation mentioned for any of his works"},
+    {"url": "https://searchworks.stanford.edu/view/946107", "found": "Kloss 'Geschichte der Freimaurerei in England, Irland und Schottland' 1848 (repr. 1971), German only, no English edition"},
+    {"url": "https://archive.org/stream/LenningCAllgemeinesHandbuchDerFreimaurereiEncyklopadieDerFreimaurereiVolIIHP1865/Lenning+C+-+Allgemeines+Handbuch+der+Freimaurerei+-+Encyklopadie+der+Freimaurerei+Vol+II+-+H+-+P+-+1865_djvu.txt", "found": "Full text of Lenning Allgemeines Handbuch Vol II (H-P) 1865; 'Materialien' entry not located in visible excerpt (tool returned partial content), but work is German-only with no English edition known"},
+    {"url": "https://freimaurer-wiki.de/index.php/Nettelblad", "found": "Nettelblad's masonic history works listed; 'Materialien zur Geschichte der Freimaurerei in England, Schottland und Irland' not attributed to him; no English translations noted"},
+    {"url": "https://www.universalfreemasonry.org/en/encyclopedia/mossdorf-friedrich", "found": "Mossdorf's contributions to Lenning's Encyclopädie noted; no English translation of the Encyclopädie der Freimaurerei mentioned"},
+    {"url": "https://www.deutsche-digitale-bibliothek.de/item/PHUS5MIR322X45IB5NW7W53QBKIZITET", "found": "Kloss Geschichte der Freimaurerei in England, Irland und Schottland — German edition only, 1848 and 1971 reprint"},
+    {"url": "https://archive.org/details/historyoffreemas02gouluoft", "found": "Gould's History of Freemasonry covers England/Scotland/Ireland in English — original English work, not a translation of this German text"}
+  ],
+  "reasoning": "This German Masonic encyclopedia article ([enz.] tag = Enzyklopädie) on Freemasonry history in England, Scotland, and Ireland has no prior English translation. The Lenning/Mossdorf 'Allgemeines Handbuch der Freimaurerei' (from which this derives) was never translated into English. Kloss's parallel German history on the same three countries (1847) is explicitly confirmed untranslated. No English rendering of this specific German text found across WorldCat, archive.org, and Masonic scholarship searches. Confidence medium: work identity as encyclopedia article is probable but not textually confirmed."
+}

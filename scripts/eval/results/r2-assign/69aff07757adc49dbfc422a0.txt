@@ -1,0 +1,4 @@
+book_id: 69aff07757adc49dbfc422a0
+Title: A Šir-namgala to Inana for Ur-Ninurta (Ur-Ninurta A) (ETCSL 2.5.6.1)
+Author: Anonymous Sumerian
+Source language: Sumerian

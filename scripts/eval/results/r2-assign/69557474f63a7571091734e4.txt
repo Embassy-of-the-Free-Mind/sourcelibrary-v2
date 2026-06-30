@@ -1,0 +1,4 @@
+book_id: 69557474f63a7571091734e4
+Title: Commentarius in Platonis Timaeum
+Author: Proclus Diadochus
+Source language: Greek/Latin
