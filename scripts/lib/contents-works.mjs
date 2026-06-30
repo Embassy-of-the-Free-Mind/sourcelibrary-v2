@@ -38,6 +38,7 @@ export function deriveContentsWorks(book) {
   const chs = book.chapters || [];
   if (!chs.length) return [];
   const top = Math.min(...chs.map((c) => c.level ?? 1));
+  const pages = Number(book.pages_count) || null;
   const seen = new Set();
   const out = [];
   for (const c of chs) {
@@ -51,8 +52,23 @@ export function deriveContentsWorks(book) {
       title: t,
       title_en: c.titleEn && c.titleEn !== c.title ? c.titleEn : null,
       page_from: Number(c.pageNumber) || null,
-      page_to: Number(c.endPage) || Number(c.pageNumber) || null,
+      _rawEnd: Number(c.endPage) || null,
     });
+  }
+  // Resolve page_to. The stored level-1 `endPage` is unreliable — it stops before
+  // its level-2 children and is sometimes malformed (endPage = pageNumber-1, an
+  // inverted range). So: trust a stored end only when it's >= page_from; otherwise
+  // tile to the NEXT level-1 start (page order), clamped to the book's pages_count.
+  // Never emit page_to < page_from.
+  const starts = out.map((e) => e.page_from).filter((n) => n).sort((a, b) => a - b);
+  const nextStart = (from) => { for (const s of starts) if (s > from) return s; return null; };
+  for (const e of out) {
+    if (e.page_from == null) { e.page_to = null; delete e._rawEnd; continue; }
+    let end = e._rawEnd && e._rawEnd >= e.page_from ? e._rawEnd : null;
+    if (end == null) { const ns = nextStart(e.page_from); end = ns ? ns - 1 : (pages || e.page_from); }
+    if (pages) end = Math.min(end, pages);
+    e.page_to = Math.max(e.page_from, end);
+    delete e._rawEnd;
   }
   return out;
 }
