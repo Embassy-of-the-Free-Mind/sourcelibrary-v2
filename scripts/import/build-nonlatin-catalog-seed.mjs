@@ -77,7 +77,59 @@ const SANSKRIT = [
     translator: 'Kenneth K. Inada', pub_year: 1970, publisher: 'Hokuseido Press',
     source: 'scholarly_complete', source_url: 'https://www.worldcat.org/title/nagarjuna/oclc/137109',
   },
+  // ── Epics & classical treatises with genuinely COMPLETE public-domain English ──
+  {
+    author: 'Vyasa', canonical_work: 'Mahabharata Maha Bharata',
+    english_title: 'The Mahabharata of Krishna-Dwaipayana Vyasa (complete, 12 vols)',
+    translator: 'Kisari Mohan Ganguli', pub_year: 1896, publisher: 'Bharata Press',
+    source: 'scholarly_pd', source_url: 'https://archive.org/details/mahabharata01ramauoft',
+  },
+  {
+    author: 'Valmiki', canonical_work: 'Ramayana Ramayan',
+    english_title: 'The Rámáyan of Válmíki (complete, 5 vols)',
+    translator: 'Ralph T. H. Griffith', pub_year: 1874, publisher: 'Trübner & Co.',
+    source: 'scholarly_pd', source_url: 'https://archive.org/details/rmyanofvlmki01valm',
+  },
+  {
+    author: 'Kautilya', canonical_work: 'Arthashastra Arthasastra Kautilya',
+    english_title: "Kautilya's Arthaśāstra",
+    translator: 'R. Shamasastry', pub_year: 1915, publisher: 'Government Press, Bangalore',
+    source: 'scholarly_pd', source_url: 'https://archive.org/details/arthasastra00kautuoft',
+  },
+  {
+    author: 'Vatsyayana', canonical_work: 'Kama Sutra Kamasutra',
+    english_title: 'The Kama Sutra of Vatsyayana',
+    translator: 'Richard Burton & F. F. Arbuthnot', pub_year: 1883, publisher: 'Kama Shastra Society',
+    source: 'scholarly_pd', source_url: 'https://archive.org/details/kamasutraofvatsy00vatsyaya',
+  },
 ];
+
+// ── Pali (pli) ───────────────────────────────────────────────────────────────
+const PALI = [
+  {
+    author: 'Nagasena', canonical_work: 'Milinda Panha Questions of King Milinda',
+    english_title: 'The Questions of King Milinda (complete, 2 vols, SBE 35–36)',
+    translator: 'T. W. Rhys Davids', pub_year: 1890, publisher: 'Clarendon Press (Sacred Books of the East, Vols. 35 & 36)',
+    source: 'sacred_books_east', source_url: 'https://archive.org/details/questionsofkingm01davi',
+  },
+];
+
+// ── Tamil (ta) ───────────────────────────────────────────────────────────────
+const TAMIL = [
+  {
+    author: 'Tiruvalluvar', canonical_work: 'Tirukkural Kural Thirukkural Tiruvalluvar',
+    english_title: 'The Sacred Kurral of Tiruvalluva-Nayanar',
+    translator: 'G. U. Pope', pub_year: 1886, publisher: 'W. H. Allen & Co.',
+    source: 'scholarly_pd', source_url: 'https://archive.org/details/sacredkurraloft00popeuoft',
+  },
+];
+
+// NOTE: deliberately NO Hebrew seed rows. Our Hebrew corpus is obscure Kabbalah
+// (commentaries, manuscript miscellanies, misattributions) where prior complete
+// English is genuinely scarce — verified case-by-case in #2899's ft-verify round,
+// not by catalog rows. And the one famous candidate, Maimonides' Guide for the
+// Perplexed, was written in Judeo-Arabic (source-language ambiguity), so it does
+// not belong in a Hebrew-tagged seed. Hebrew over-claims go through ft-verify.
 
 // ── Chinese (zh) ─────────────────────────────────────────────────────────────
 const CHINESE = [
@@ -99,12 +151,32 @@ const CHINESE = [
     translator: 'James Legge', pub_year: 1861, publisher: 'Trübner & Co.',
     source: 'legge_chinese_classics', source_url: 'https://archive.org/details/chineseclassics01legggoog',
   },
+  {
+    author: 'Mencius', canonical_work: 'Mencius Mengzi Meng Tzu Chinese Classics',
+    english_title: 'The Works of Mencius (The Chinese Classics, Vol. II)',
+    translator: 'James Legge', pub_year: 1861, publisher: 'Trübner & Co.',
+    source: 'legge_chinese_classics', source_url: 'https://archive.org/details/chineseclassics00legggoog',
+  },
+  {
+    author: 'Sunzi', canonical_work: 'Art of War Sunzi Sun Tzu Bingfa',
+    english_title: 'Sun Tzu on the Art of War',
+    translator: 'Lionel Giles', pub_year: 1910, publisher: 'Luzac & Co.',
+    source: 'scholarly_pd', source_url: 'https://archive.org/details/suntzuonartofwar00suntuoft',
+  },
+  {
+    author: 'Confucius', canonical_work: 'I Ching Yi Jing Book of Changes Yijing Zhouyi',
+    english_title: 'The Yî King (Book of Changes, SBE Vol. 16)',
+    translator: 'James Legge', pub_year: 1882, publisher: 'Clarendon Press (Sacred Books of the East, Vol. 16)',
+    source: 'sacred_books_east', source_url: 'https://archive.org/details/sacredbooksofch16conf',
+  },
 ];
 
 function rows() {
   const out = [];
   for (const r of SANSKRIT) out.push({ ...r, source_language: 'sa', completeness: 'complete' });
   for (const r of CHINESE) out.push({ ...r, source_language: 'zh', completeness: 'complete' });
+  for (const r of PALI) out.push({ ...r, source_language: 'pli', completeness: 'complete' });
+  for (const r of TAMIL) out.push({ ...r, source_language: 'ta', completeness: 'complete' });
   return out;
 }
 

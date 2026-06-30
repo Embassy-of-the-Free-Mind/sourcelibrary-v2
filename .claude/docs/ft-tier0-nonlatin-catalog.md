@@ -103,13 +103,52 @@ Note: most seed-matched works aren't *currently* FT-badged, so immediate badged-
 book impact is small; the value is the proven mechanism + correct priors for
 future FT decisions on these works.
 
-## Recommended follow-up (to cover the canon at scale)
-The anonymity + cross-script blockers above need a **cross-lingual work-identity**
-layer, not more fuzzy author/title rows:
-- Give the Tibetan/Sanskrit/Chinese canon books **external work ids** (BDRC for
-  84000/Kangyur-Tengyur; Wikidata QIDs elsewhere), then key a work-id-anchored
-  Tier-0 path off those — deterministic, no surname/title fuzz. This is the
-  natural extension of the work-identity system (`work-identity-coverage.md`,
-  #2318) and the only thing that unlocks 84000's 727 anonymous published sūtras.
-- Expand the named-author seed (Murty/Clay/AITM series; more SBE volumes) where
-  the author appears in Latin script in our corpus.
+## Round 2 (2026-06-30, #2901): canon-grounding is EMPTY for our holdings
+The "give the canon external work-ids → work-id-anchored Tier-0" idea (below) was
+tested before building it, and the premise does not hold **for what we actually
+hold**:
+- **84000 ↔ our Tibetan corpus: ZERO overlap.** Parsed 480 published 84000 texts
+  (CC0 RDF) and token-matched (Sanskrit-IAST + English titles) against all 1,470
+  visible/translated Tibetan books → **0 hits**. Our Tibetan corpus is indigenous
+  Tibetan literature (Nyingma termas, Milarepa songs, Tsongkhapa/lamrim treatises),
+  NOT the Kangyur/Tengyur sūtras 84000 translates. We don't hold those sūtras, so a
+  prior-catalog of them can't match anything.
+- **External work-ids are ~absent on the non-Latin corpus**: of 3,998 visible/
+  translated non-Latin books, only **194 (5%)** carry a Wikidata QID (179 Greek +
+  15 Sanskrit — already from the classical resolver); **3,743 (94%)** carry
+  internal `local:` slugs that join to nothing external.
+- **General lesson**: a prior-translation catalog's value = overlap between {works
+  it says have English} and {works we hold and badge FT}. Our corpus is *selected*
+  for untranslated/obscure material, so external "complete English exists" catalogs
+  structurally MISS it — which is the CORRECT answer (those books genuinely ARE
+  firsts). Building the BDRC/84000 pipeline would have produced ~0 matches.
+
+So the only lever that pays off is the **named-author famous-work seed**, expanded
+to the full public-domain canon (18 rows: + Mahābhārata/Ganguli, Rāmāyaṇa/Griffith,
+Arthaśāstra/Shamasastry, Kāma Sūtra/Burton, Mencius/Sunzi/I-Ching/Legge-Giles,
+Milinda/Rhys Davids (pli), Tirukkural/Pope (ta)). Across ALL non-Latin a broad
+author scan finds only **7 famous-author FT badges total** — confirming the corpus
+is overwhelmingly genuine firsts.
+
+### The "famous base text + classical commentary" pattern (route-to-human)
+The two LIVE famous-work FT badges are both *text + named commentary* editions:
+- **老子元翼** (Jiao Hong's 64-commentary anthology of the Daodejing) — base text
+  Englished since Chalmers 1868/Legge 1891.
+- **Tirukkural with Parimelazagar commentary** — base text Englished since
+  Pope 1886; the *commentary* is Tamil-only even in our own Lazarus 1885 holding,
+  so a narrow "first complete English of the Parimelazagar commentary" claim is
+  plausible (one ambiguous 1955 prior unresolved).
+In both, the badge MISLEADS as catalogued (titled as the famous base text) but a
+narrow commentary-first claim may be genuine. **Decision (Derek, 2026-06-30): KEEP
+the badge + reframe the metadata** to foreground the commentary (recorded in each
+book's `translation_verification.ft_reframe_needed_2026_06_30`; evidence in
+`scripts/output/ft-evidence-2026-06-30/commentary-edition-ft-verify-2026-06-30.json`).
+This is the FT runbook's "route famous-adjacent works to a human specialist" case.
+
+## Superseded follow-up (kept for the record — do NOT build the 84000 path)
+The anonymity + cross-script blockers suggested a cross-lingual work-identity
+layer (BDRC for 84000, Wikidata elsewhere). Round 2 above shows this yields ~0 for
+our holdings — **do not build it for Tier-0 prior-matching.** (Work-ids are still
+worth pursuing for OTHER reasons — clustering, dedup — under #2318, just not as a
+Tier-0 prior-catalog lever.) Expanding the named-author seed where the author
+appears in Latin script remains the only productive direction.
