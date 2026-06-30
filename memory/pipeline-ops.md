@@ -39,6 +39,9 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - **Selective pause:** `paused_phases: ['ocr','translation','images']`
 - **Adaptive limits:** `GET/PATCH /api/admin/adaptive-limits`
 - **`paused: true` doesn't stop Lambda workers or Hetzner translate-worker.** Must CANCEL jobs in MongoDB for actual load reduction.
+- **The pipeline is currently paused on purpose** (Gemini spend, since 2026-06-08). Archiving still runs, so books pile at `archive_complete` and it *looks* like an outage — check the flag before diagnosing a stall.
+- **To process ONE book while paused, do NOT selectively unpause** — run a one-off batch job instead (`POST /api/books/[id]/batch-ocr-async` then `.../batch-translate-async`, or the `/batch-translate` skill). Selective-unpause has a known bug: it raises module-level phase limits but not the phase-local split/dedup limits (and Phase 1.97 isn't scope-aware), so hidden/scoped books strand at `archive_complete`. The pause flag is also shared prod state other sessions depend on. **Full collaborator runbook: `.claude/docs/translating-a-book.md`.**
+- **Per-book cost (measured `gemini_usage`, 1,752 books, OCR+translation, 2026-06-30):** median **$0.58**, mean **$0.94**, p75 ~$1, but large folios run several $ up to **~$29** (1,188p). A book is "well under a dollar typically," NOT "cents." Translation output tokens dominate. Pricing: `src/lib/gemini-logger.ts` `MODEL_PRICING`.
 
 ## Concurrency Limits
 
