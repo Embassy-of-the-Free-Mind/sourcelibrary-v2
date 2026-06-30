@@ -4,6 +4,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
+import { isHiddenBook } from '@/lib/book-access';
 
 export const revalidate = false;
 export const dynamicParams = true;
@@ -22,6 +23,12 @@ async function getArtwork(slug: string) {
     { slug: { $in: slugsToTry }, resource_type: { $exists: true }, content_type: { $ne: 'book' } },
   );
   if (!artwork) return null;
+  // Hidden (visible:false) artworks are not public — mirror the /book route's
+  // gate. The main lookup above had no visibility filter, so a hidden artwork
+  // rendered fully via a direct /artwork/<slug> URL even though it's excluded
+  // from search/gallery (hidden-readpath-gate invariant; this is how Julika's
+  // "searched toltec → clicked → error" hit a record that should never resolve).
+  if (isHiddenBook(artwork)) return null;
 
   // Get collections this artwork belongs to
   const collectionSlugs = (artwork.collections as string[]) || [];
