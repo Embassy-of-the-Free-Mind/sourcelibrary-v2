@@ -27,12 +27,15 @@
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
+import { norm, seriesKey } from '../lib/work-identity-util.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const OUT_DIR = path.join(process.cwd(), 'scripts', 'output');
-const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
-  .toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+// Volume/fascicle markers — Latin-script AND CJK (巻/卷 juan/maki, 上中下 upper/
+// middle/lower, 第N). CJK markers strip out under norm(), so a CJK multi-volume
+// set can collapse to one title; exclude them from auto-merge (grain policy).
 const volRe = /\b(vol|volume|part|tome|band|tomus|tom|pt|bd)\.?\s*[ivxlcdm0-9]/i;
+const cjkVolRe = /[巻卷冊册帙]|第[一二三四五六七八九十百0-9]+|[上中下][巻卷冊]?\s*$/;
 
 function rankFormat(w) {
   if (/^Q\d+$/.test(w)) return 0;        // Wikidata QID — most canonical
@@ -65,10 +68,12 @@ async function main() {
   const clusters = new Map();
   for (const [w, b] of repByWid) {
     if ((b.language || '') === 'Tibetan') continue;       // pecha hazard
-    if (volRe.test(b.title || '')) continue;              // grain policy — undecided
+    if (volRe.test(b.title || '') || cjkVolRe.test(b.title || '')) continue; // grain policy — undecided
     const t = norm(b.title);
     if (t.split(' ').length < 3) continue;                // need a substantive title
-    const k = `${norm(b.author).split(' ').pop()}||${t}`;
+    // series key (numbered/roman distinguishers) folded into the cluster key as
+    // defense-in-depth — a numbered series item can never collapse with another.
+    const k = `${norm(b.author).split(' ').pop()}||${t}||${seriesKey(b.title)}`;
     if (!clusters.has(k)) clusters.set(k, new Set());
     clusters.get(k).add(w);
   }

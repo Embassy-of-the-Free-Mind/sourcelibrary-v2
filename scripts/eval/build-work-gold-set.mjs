@@ -41,14 +41,11 @@
  */
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { norm, sig, surname, sameSeries } from '../lib/work-identity-util.mjs';
 
 const PER = (() => { const i = process.argv.indexOf('--per-stratum'); return i > -1 ? +process.argv[i + 1] : 40; })();
 const OUT = (() => { const i = process.argv.indexOf('--out'); return i > -1 ? process.argv[i + 1] : 'scripts/output/work-gold-set-unlabeled.jsonl'; })();
 
-const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
-const STOP = new Set(['the', 'and', 'with', 'from', 'vol', 'volume', 'part', 'tome', 'band', 'book', 'der', 'die', 'des', 'von', 'und', 'of', 'les', 'la', 'le', 'el', 'für', 'mit', 'thor', 'bu', 'sogs', 'rnam', 'pa', 'ba']);
-const sig = (s) => [...new Set(norm(s).split(' ').filter((t) => t.length >= 4 && !STOP.has(t)))];
-const surname = (a) => norm(a).split(' ').filter(Boolean).pop() || '';
 const commentRe = /\b(comm(\.|entary)?|with .* commentary|bhashya|bhāṣya|tika|ṭīkā|glossa|scholia|annotation|cum commento|espositione|notes by)\b/i;
 const volRe = /\b(vol|volume|part|tome|band|tomus)\.?\s*[ivxlcdm0-9]/i;
 // stable string hash → deterministic order (no RNG; RNG is unavailable anyway)
@@ -80,6 +77,7 @@ async function main() {
       const jac = inter / new Set([...A.toks, ...B.toks]).size;
       const aKey = [...A.toks].sort().join(' '), bKey = [...B.toks].sort().join(' ');
       const isQ = (x) => /^Q\d+$/.test(x);
+      if (!sameSeries(A.b.title, B.b.title)) continue; // series guard (numbered/vol items ≠ same work)
       if (isQ(A.w) !== isQ(B.w) && jac >= 0.6 && inter >= 2) add('anchor_miss', A.b, B.b, 'same');
       else if (aKey === bKey && A.b.language !== 'Tibetan') add('oversplit_high', A.b, B.b, 'same');
       else if (jac >= 0.7 && inter >= 3 && A.b.language !== 'Tibetan') add('oversplit_med', A.b, B.b, 'same');
