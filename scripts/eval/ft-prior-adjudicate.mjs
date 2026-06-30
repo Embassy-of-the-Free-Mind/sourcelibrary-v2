@@ -41,8 +41,13 @@ const DATE = new Date().toISOString().slice(0, 10);
 const RUN_DATE = new Date().toISOString();
 const RUN = process.argv.includes('--run');
 const APPLY = process.argv.includes('--apply');
+const LOOSE = process.argv.includes('--loose'); // recall mode: drop the source-lang hard gate + lower the title bar (the LLM re-judges)
 const MODEL = process.argv.find((a) => a.startsWith('--model='))?.split('=')[1] || 'gemini-3.1-flash-lite';
 const SAMPLE = (() => { const i = process.argv.indexOf('--sample'); return i > -1 ? parseInt(process.argv[i + 1], 10) || 15 : 0; })();
+
+// Bump when buildPrompt changes — every logged verdict records this, so a verdict is
+// always traceable to the exact prompt template that produced it.
+const PROMPT_VERSION = 'ft-prior-adjudicate/v2-2026-06-30-complete-defeats';
 
 // ── Gemini key rotation (mirror ft-gemini-adjudicate.mjs) ───────────────────────
 const keys = [];
@@ -102,7 +107,7 @@ async function adjudicate(p) {
       const text = resp.text || '';
       const m = text.match(/```(?:json)?\s*([\s\S]*?)```/) || text.match(/(\{[\s\S]*\})/);
       let parsed; try { parsed = JSON.parse((m ? m[1] : text).trim()); } catch { const mm = text.match(/\{[\s\S]*\}/); if (mm) try { parsed = JSON.parse(mm[0]); } catch {} }
-      if (parsed?.relationship) return { ...parsed, cost_usd: costOf(resp.usageMetadata || {}) };
+      if (parsed?.relationship) return { ...parsed, raw: text.slice(0, 800), cost_usd: costOf(resp.usageMetadata || {}) };
       if (attempt === 2) return { relationship: 'uncertain', defeats_badge: false, confidence: 'low', error: 'parse_failed', raw: text.slice(0, 160), cost_usd: costOf(resp.usageMetadata || {}) };
     } catch (err) {
       const msg = String(err.message || err);
@@ -132,15 +137,17 @@ async function main() {
       let best = null;
       for (const r of cand) {
         const tc = Math.max(cov(b.title, r.english_title || ''), cov(b.title, r.canonical_work || ''));
-        if (tc < 0.6) continue;
-        if (biso !== normalise(r.source_language)) continue; // same-work source-lang stays (the LLM still re-checks)
-        if (!best || tc > best.tc) best = { r, tc };
+        if (tc < (LOOSE ? 0.5 : 0.6)) continue;
+        const langMatch = biso === normalise(r.source_language);
+        if (!LOOSE && !langMatch) continue; // strict: same-work source-lang; loose: keep, the LLM re-judges
+        if (!best || tc > best.tc) best = { r, tc, langMatch };
       }
       if (best) pairs.push({
         book_id: b.id, work_id: b.work_id || null, book_title: b.title, book_author: b.author, book_language: b.language,
         catalog_id: String(best.r._id), cat_title: best.r.english_title || best.r.canonical_work, cat_translator: best.r.translator,
         cat_year: best.r.pub_year, cat_source: best.r.source, cat_completeness: best.r.completeness || 'unknown',
         cat_url: best.r.url || best.r.source_url || null, title_coverage: +best.tc.toFixed(2),
+        src_lang_match: best.langMatch,
       });
     }
     console.log(`Gate-free candidate pairs (badge ↔ catalog prior): ${pairs.length}`);
@@ -175,21 +182,32 @@ async function main() {
     console.log(`Wrote ${f}`);
 
     if (APPLY) {
+      // Enduring, auditable trail: log EVERY adjudication (defeats AND keeps), each with
+      // the EXACT prompt + prompt_version + model + raw response, so any verdict is fully
+      // reproducible and traceable to the question we asked. A "keep" is evidence too — it
+      // records that this candidate prior was considered and rejected (and why). Idempotent
+      // on (book_id, method, prompt_version, catalog_id) — re-running a NEW prompt version
+      // appends a fresh record rather than silently overwriting the old verdict.
       let logged = 0;
       for (const o of out) {
-        if (!o.defeats_badge || o.confidence === 'low') continue;
         const ok = await appendAttempt(db, {
-          attempt_id: `${o.book_id}:llm_prior_adjudicate:${o.catalog_id}`,
+          attempt_id: `${o.book_id}:llm_prior_adjudicate:${PROMPT_VERSION}:${o.catalog_id}`,
           book_id: o.book_id, work_id: o.work_id, date: RUN_DATE, method: 'llm_prior_adjudicate', match_key: 'author_title',
+          prompt_version: PROMPT_VERSION, prompt: buildPrompt(o), model: MODEL, raw_response: o.raw || null,
           sources_checked: ['translation_catalogs'], queries: [[o.book_author, o.book_title].filter(Boolean).join(' ')],
-          result: 'found', found_refs: [o.catalog_id],
-          priors: [{ english_title: o.cat_title || undefined, translator: o.cat_translator || undefined, pub_year: o.cat_year != null ? String(o.cat_year) : undefined, completeness: o.completeness || undefined, source_url: o.cat_url || undefined }],
-          evidence_strength: o.confidence === 'high' ? 'moderate' : 'weak', independence_score: 0.4, model: MODEL,
-          notes: `[llm-prior-adjudicate] ${o.relationship}, completeness=${o.completeness}, conf=${o.confidence}: ${o.reasoning || ''}`.slice(0, 480),
+          // result: 'found' = a complete prior that defeats the badge; 'not_found' = considered + rejected (different work / partial / about-not-translation).
+          result: o.defeats_badge && o.confidence !== 'low' ? 'found' : 'not_found',
+          found_refs: o.defeats_badge && o.confidence !== 'low' ? [o.catalog_id] : [],
+          candidate_ref: o.catalog_id,
+          adjudication: { relationship: o.relationship, completeness: o.completeness, defeats_badge: !!o.defeats_badge, confidence: o.confidence, title_coverage: o.title_coverage, src_lang_match: o.src_lang_match },
+          priors: o.defeats_badge ? [{ english_title: o.cat_title || undefined, translator: o.cat_translator || undefined, pub_year: o.cat_year != null ? String(o.cat_year) : undefined, completeness: o.completeness || undefined, source_url: o.cat_url || undefined }] : [],
+          evidence_strength: o.confidence === 'high' ? 'moderate' : 'weak', independence_score: 0.4,
+          notes: `[llm-prior-adjudicate ${PROMPT_VERSION}] ${o.relationship}, completeness=${o.completeness}, defeats=${!!o.defeats_badge}, conf=${o.confidence}: ${o.reasoning || ''}`.slice(0, 480),
         });
         if (ok) logged++;
       }
-      console.log(`Recorded ${logged} demote-candidate attempts (idempotent). Demotes still require sign-off.`);
+      const defeatsN = out.filter((o) => o.defeats_badge && o.confidence !== 'low').length;
+      console.log(`Logged ${logged} adjudications to first_translation_attempts (${defeatsN} demote candidates + the rest as considered-and-kept). Prompt+version+raw persisted. Demotes still require sign-off.`);
     }
   });
 }
