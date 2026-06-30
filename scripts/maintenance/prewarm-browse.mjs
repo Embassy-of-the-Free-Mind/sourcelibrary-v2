@@ -56,6 +56,7 @@ if (process.env.MONGODB_URI) {
   try {
     const { MongoClient } = await import('mongodb');
     const { countDistinctLanguages } = await import('../lib/language-count.mjs');
+    const { countFirstTranslatedWorks } = await import('../lib/contents-works.mjs');
     const client = await MongoClient.connect(process.env.MONGODB_URI);
     const db = client.db('bookstore');
     const books = db.collection('books');
@@ -91,7 +92,12 @@ if (process.env.MONGODB_URI) {
       readable: verificationReadable,
       pct: verificationReadable ? +(100 * verificationChecked / verificationReadable).toFixed(1) : 0,
     };
-    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, updatedAt: new Date() };
+    // Book-floored FT WORK count (#2913) — see update-homepage-stats.mjs. Keep in sync.
+    const ftBooks = await books.find({ ...translatedFilter, is_first_translation: true })
+      .project({ _id: 0, contents_works: 1 }).toArray();
+    const firstTranslatedWorks = countFirstTranslatedWorks(ftBooks, { mode: 'verified' });
+    const firstTranslatedWorksProvisional = countFirstTranslatedWorks(ftBooks, { mode: 'provisional' });
+    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, updatedAt: new Date() };
     await db.collection('system_config').updateOne(
       { _id: 'homepage_stats' },
       { $set: stats },

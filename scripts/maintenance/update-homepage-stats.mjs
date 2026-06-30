@@ -7,6 +7,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { countDistinctLanguages } from '../lib/language-count.mjs';
+import { countFirstTranslatedWorks } from '../lib/contents-works.mjs';
 
 const uri = process.env.MONGODB_URI;
 if (!uri) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -55,7 +56,18 @@ const verification_coverage = {
   pct: verificationReadable ? +(100 * verificationChecked / verificationReadable).toFixed(1) : 0,
 };
 
-const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, updatedAt: new Date() };
+// Book-floored FT WORK count (#2913). firstTranslationCount above counts FT *books*;
+// a container book holds several works. `firstTranslatedWorks` decomposes containers
+// via the provisional contents_works[] manifest (#2916), counting only individually
+// ft-verify'd constituents above the book floor (honest, == books until verification
+// lands), and `…Provisional` counts every chapter-derived constituent (upper bound).
+// Both are book-floored (≥ firstTranslationCount), asserted by countFirstTranslatedWorks.
+const ftBooks = await books.find({ ...translatedFilter, is_first_translation: true })
+  .project({ _id: 0, contents_works: 1 }).toArray();
+const firstTranslatedWorks = countFirstTranslatedWorks(ftBooks, { mode: 'verified' });
+const firstTranslatedWorksProvisional = countFirstTranslatedWorks(ftBooks, { mode: 'provisional' });
+
+const stats = { totalBooks, translatedToEnglish, firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, updatedAt: new Date() };
 
 await db.collection('system_config').updateOne(
   { _id: 'homepage_stats' },
