@@ -75,7 +75,15 @@ book.contents_works_meta = {
 1. **Seed (free).** `scripts/maintenance/seed-contents-works.mjs` writes the
    chapter-derived manifest as **provisional** (`provenance: 'chapter_index'`,
    `verified: false`). Dry-run by default; `--apply` writes; `--clear` reverses.
-   Backup written before any write.
+   Backup written before any write. The container set is identified by
+   `isContainerSignal()` (title/author tokens) — kept **multilingual but
+   high-precision** (`CONTAINER_RE`): English/Latin collected-works tokens plus
+   precision-validated Tibetan (`thor bu`, `bka' 'bum`, `gsung 'bum`) and Greek/
+   Latin (`operum`, `corpus`). A broad "decompose anything with ≥2 chapters" rule
+   is **deliberately rejected** — Latin/German/Sanskrit FT books are
+   monograph-dominated (descriptive chapter titles ≠ distinct works), so it would
+   over-count. CJK collected-works tokens were measured and dropped (no genuine
+   yield in this corpus). Re-validate any new token against a sample before adding.
 2. **Clean.** Thin (<2pp) entries carry low confidence — they are kept but
    down-weighted, not silently dropped. The 76 chapterless containers + thin/low-reach
    residual route to AI extraction — **paid, ask before scaling** (Derek's rule).
