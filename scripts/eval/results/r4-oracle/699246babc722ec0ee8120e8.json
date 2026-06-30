@@ -1,0 +1,25 @@
+{
+  "book_id": "699246babc722ec0ee8120e8",
+  "work_identified": "The Holy Bible in the Earlier and Later Wycliffite Versions, Vol. 2 — Forshall & Madden 1850 critical edition of the 14th-century Middle English Bible",
+  "verdict": "not_applicable",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Wycliffe Bible Forshall Madden 1850 edition Middle English language"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.amazon.com/Wycliffes-Bible-facsimile-Forshall-translation/dp/1782011420",
+      "found": "Describes the F&M 1850 edition explicitly as 'Middle English translation of the Latin Vulgate' — the text itself is in Middle English, already English"
+    },
+    {
+      "url": "https://www.antiquebible.com/shop/p/1850-forshall-and-madden-first-complete-printed-wycliffe-bible",
+      "found": "Confirms F&M 1850 is the first complete printed edition of the 14th-c. Wycliffite Bible; scholarly critical edition collating 170 MSS; text in Middle English"
+    }
+  ],
+  "reasoning": "The Wycliffite Bible (c.1382–95) is itself a 14th-century Middle English translation of the Latin Vulgate — it IS an English-language text. The F&M 1850 edition is a critical scholarly edition of that Middle English original. Our item is already in English; the first-English-translation claim is ill-posed."
+}

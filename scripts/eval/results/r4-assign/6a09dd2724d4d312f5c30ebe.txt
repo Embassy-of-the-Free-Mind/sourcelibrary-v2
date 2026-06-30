@@ -1,0 +1,4 @@
+book_id: 6a09dd2724d4d312f5c30ebe
+Title: L'Utilité qui provient du jeu de la paume au corps et à l'esprit
+Author: Galen; tr. Jean Forbet l'aîné
+Source language: French

@@ -1,0 +1,79 @@
+{
+  "book_id": "69a5ee1ebfd8cafd91e432cd",
+  "work_identified": "Sancti Ephraem Syri Opera Omnia vol. 3 (Syriac/Latin), ed. Assemani, Rome 1743 — one of the Syriac volumes of the six-volume Roman edition, containing: Two Books on Faith Against Inquirers (90 sermons against Arian/Eunomian heresies), Treatise Against the Jews, Necrosima/Funeral Canons (85 metrical compositions), Paraeneses (exhortations to repentance), 23 Additional Sermons (Nativity, Passion, Resurrection, Marian), Treatise on Paradise (15 hymns), and Acts of Saint Ephraem",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Hymns on Paradise",
+      "translator": "Sebastian Brock",
+      "pub_year": "1990",
+      "publisher": "St. Vladimir's Seminary Press (Popular Patristic Series 10)",
+      "completeness": "partial",
+      "source_url": "https://archive.org/download/syrarch334903/St.%20Ephrem%20the%20Syrian%20-%20Hymns%20on%20Paradise%20(Sebastian%20Brock).pdf"
+    },
+    {
+      "english_title": "Nicene and Post-Nicene Fathers Series II Vol. XIII: Ephraim the Syrian (selections)",
+      "translator": "Philip Schaff et al.",
+      "pub_year": "1898",
+      "publisher": "T&T Clark / Christian Literature Company",
+      "completeness": "partial",
+      "source_url": "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_XIII/Ephraim_the_Syrian_and_Aphrahat/Preface"
+    }
+  ],
+  "queries_run": [
+    "Ephrem Syrian Opera Omnia Assemani Rome 1732 volume 3 contents",
+    "Ephraem Syri Opera Omnia Assemani English translation volume 3",
+    "Sebastian Brock Ephrem Syrian complete works English translation",
+    "NPNF Nicene Post-Nicene Fathers Ephrem Syrian English translation complete",
+    "Ephrem Syrian \"Selected Prose Works\" Fathers Church English translation complete commentary",
+    "WorldCat Ephrem Syrian complete English translation \"Opera Omnia\"",
+    "Ephrem Syrian volume 3 Assemani Syriac Latin 1743 commentary prose works contents",
+    "\"Works of St Ephrem\" \"Volume 3\" English translation Gorgias Syriac Studies Library",
+    "Ephrem Syrian English translation complete works list Kathleen McVey Jeffrey Wickes Brock Gorgias",
+    "Ephrem Syrian \"Hymni de Fide\" \"Sermones de Fide\" difference 87 hymns Assemani Wickes",
+    "Ephrem Syrian \"Sermons on Faith\" OR \"Two Books on Faith\" English translation complete",
+    "Ephrem Syrian \"Necrosima\" OR \"funeral canons\" OR \"paraeneses\" English translation",
+    "C.W. Mitchell \"Ephraim's Prose Refutations\" 1921 contents English translation",
+    "Ephrem Syrian prose works English translation complete \"Commentary on Diatessaron\" OR \"hymns on unleavened bread\""
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://saintephrem.org/find-a-translation-online-and-in-print/",
+      "found": "Explicit statement: no complete English translation of the Assemani Opera Omnia exists; only scattered selections from various works"
+    },
+    {
+      "url": "https://archive.org/details/assemani-et-alii-1732-1746-ephraem-syri-opera-omnia-syr-3",
+      "found": "Confirmed vol. 3 is the Syriac/Latin 1743 volume; no English translation noted"
+    },
+    {
+      "url": "https://archive.org/stream/assemani-et-alii-1732-1746-ephraem-syri-opera-omnia-syr-3/Assemani%20et%20alii%201732-1746%20-%20Ephraem%20Syri%20opera%20omnia%20Syr%203_djvu.txt",
+      "found": "Vol. 3 contents: Two Books on Faith Against Inquirers (90 sermons), Treatise Against Jews, Necrosima (85 canons), Paraeneses, 23 Additional Sermons, Treatise on Paradise (15 hymns), Acts of Saint Ephraem"
+    },
+    {
+      "url": "https://rucore.libraries.rutgers.edu/rutgers-lib/40356/",
+      "found": "Gorgias Press reprint of Works vol. 3 is in Syriac, Greek and Latin — not an English translation"
+    },
+    {
+      "url": "https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_XIII/Ephraim_the_Syrian_and_Aphrahat/Preface",
+      "found": "NPNF is a selection of hymns and homilies only; explicitly excludes commentaries; does not cover Necrosima, Paraeneses, or Faith sermons of vol. 3"
+    },
+    {
+      "url": "https://archive.org/download/syrarch334903/St.%20Ephrem%20the%20Syrian%20-%20Hymns%20on%20Paradise%20(Sebastian%20Brock).pdf",
+      "found": "Brock's 15 Hymns on Paradise is a complete translation of the Paradise section only — partial coverage of vol. 3"
+    },
+    {
+      "url": "https://syri.ac/brock/ephrem",
+      "found": "HTTP 403; tradition-appropriate scholarly catalogue confirmed via search-result summaries"
+    },
+    {
+      "url": "https://www.amazon.com/Works-St-Ephrem-Syrian-Vol/dp/1607248247",
+      "found": "Gorgias 'Works vol. 3' is Syriac/Greek/Latin with an English introduction only — not a translation"
+    }
+  ],
+  "reasoning": "No complete English of Assemani Syriac/Latin vol. 3 exists: saintephrem.org explicitly confirms this. The volume's 7 sections include Necrosima, Paraeneses, Treatise Against Jews, and 90 Faith sermons with no known English. Brock (1990) covers only the 15 Paradise hymns; NPNF is an unrelated selection. First_complete because our vol. 3 is full-volume and only partial prior English of its constituent works exists."
+}

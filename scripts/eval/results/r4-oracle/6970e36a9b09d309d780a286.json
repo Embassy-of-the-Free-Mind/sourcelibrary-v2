@@ -1,0 +1,34 @@
+{
+  "book_id": "6970e36a9b09d309d780a286",
+  "work_identified": "Het eerste stuck van de wercken van Mr. Willem Teellinck — first volume of his posthumously published collected works (Utrecht, 1659), comprising multiple tractates on biblical texts; a multi-work container distinct from any individual Teellinck treatise",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Willem Teellinck \"eerste stuck van de wercken\" English translation",
+    "Willem Teellinck collected works Dutch English translation WorldCat",
+    "Willem Teellinck \"wercken\" English translation Puritan Reformed",
+    "Teellinck \"alle de wercken\" \"eerste stuck\" contents tractaten English",
+    "Teellinck \"eerste stuck\" tractaten OR \"first part\" English translated Dutch Reformation Nadere Reformatie",
+    "Teellinck \"Nood-wendigh vertoogh\" OR \"Noord-sterre\" OR \"Soliloquia\" \"eerste stuck\" collected works volume 1659",
+    "Teellinck EEBO \"eerste stuck\" OR \"first part of the works\" English 17th century",
+    "Teellinck \"Path of True Godliness\" original Dutch title \"Den Wegh\" OR \"Nood-wendigh\" 1659 OR \"eerste stuck\"",
+    "Teellinck \"alle de wercken\" OCLC 44822409 English translation WorldCat",
+    "Willem Teellinck English translation \"collected works\" OR \"alle de wercken\" site:worldcat.org"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.abebooks.com/first-edition/Werken-VVillem-Teellinck-J.U.D-sijn-leven/32042876960/bd", "found": "First edition of Alle de Werken / Het eerste stuck, Utrecht 1659, Dutch only — no English translation noted, volume described as first part of his tractates on certain biblical texts"},
+    {"url": "https://www.prdl.juniusinstitute.org/author_view.php?s=40&limit=20&a_id=35&sort=", "found": "49 Teellinck titles / 53 vols catalogued — all Dutch/Latin originals, no English translations of any volume listed"},
+    {"url": "https://en.wikipedia.org/wiki/Willem_Teellinck", "found": "Only English translation mentioned: The Path of True Godliness (2003, one individual work); no collected works in English"},
+    {"url": "https://www.christianstudylibrary.org/article/willem-teellinck-1579-1629", "found": "Most Teellinck works remain in Dutch; only Path of True Godliness (2003) in modern English; 4 individual works from 1620s never reprinted — all individual items, not the collected volume"},
+    {"url": "https://search.worldcat.org/title/alle-de-wercken/oclc/44822409", "found": "WorldCat OCLC 44822409: Dutch-language original only, no English translation edition linked"},
+    {"url": "https://archive.org/details/pathoftruegodlin0000teel", "found": "English translation of one individual Teellinck work by Baker Academic 2003, not the collected volume"},
+    {"url": "https://www.heritagebooks.org/brands/Teellinck,-William.html", "found": "No Teellinck products currently listed — no collected-works English edition in print"},
+    {"url": "https://cf.sbts.edu/equip/uploads/2025/06/SBJT-28.3-Revival-in-the-Dutch-Trad-Beeke-Kuivenhoven.pdf", "found": "Dutch Reformation scholarship (SBJT 2024): Teellinck corpus largely untranslated; confirms only 4 individual 1620s titles and Path of True Godliness in English"}
+  ],
+  "reasoning": "No complete English translation of this multi-tractate collected volume exists. Only 4 individual Teellinck tractates were Englished in the 1620s (never reprinted) and The Path of True Godliness (2003) — none of these constitute a translation of the eerste stuck volume as a whole. PRDL, WorldCat, and Dutch Reformation scholarship confirm absence."
+}

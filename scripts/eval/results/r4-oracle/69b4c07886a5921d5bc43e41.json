@@ -1,0 +1,33 @@
+{
+  "book_id": "69b4c07886a5921d5bc43e41",
+  "work_identified": "Calcidius, In Timaeum Platonis — his Latin partial translation (Timaeus 17a–53c) and extensive commentary, 4th c. CE",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "On Plato's Timaeus",
+      "translator": "John Magee",
+      "pub_year": "2016",
+      "publisher": "Harvard University Press (Dumbarton Oaks Medieval Library 41)",
+      "completeness": "complete",
+      "source_url": "https://www.hup.harvard.edu/books/9780674599178"
+    }
+  ],
+  "queries_run": [
+    "Chalcidius \"In Timaeum\" English translation Dumbarton Oaks John Magee",
+    "Chalcidius Timaeus commentary English translation WorldCat",
+    "Calcidius \"On Plato's Timaeus\" Magee 2016 \"first English translation\" complete commentary"
+  ],
+  "sources_consulted": [
+    {"url": "https://bmcr.brynmawr.edu/2018/2018.02.21", "found": "Describes Magee 2016 as 'the first Anglo-Saxon edition' of Calcidius; covers commentary chapters 1–355 in full"},
+    {"url": "https://www.hup.harvard.edu/books/9780674599178", "found": "Harvard University Press listing for Magee's translation (DOML 41, 2016, ISBN 978-0-674-59917-8)"},
+    {"url": "https://en.wikipedia.org/wiki/Calcidius", "found": "Confirms Magee (Harvard UP, 2016) as the modern English translation of Calcidius's Timaeus translation and commentary"},
+    {"url": "https://www.amazon.com/Platos-Timaeus-Dumbarton-Medieval-Library/dp/0674599179", "found": "Amazon listing confirming Magee 2016 bilingual Latin/English edition, DOML 41"},
+    {"url": "https://www.academia.edu/36605562/Review_of_On_Platos_Timaeus_by_Calcidius_Translated_by_John_Magee", "found": "Academic review confirming Magee 2016 as first English translation of Calcidius's complete text and commentary"}
+  ],
+  "reasoning": "John Magee published the first complete English translation of Calcidius's In Timaeum (his Latin Timaeus translation + commentary) as DOML 41, Harvard UP, 2016. Multiple scholarly sources (BMCR, HUP catalogue, Wikipedia, Academia.edu) confirm this as 'the first Anglo-Saxon edition.' Prior firmly established; verdict is not_first."
+}
