@@ -13,8 +13,21 @@
 // (chapter-derived, unverified) from authoritative (ft-verify'd). Per the grain
 // policy the COUNT is never `distinct work_id`, and is asserted ≥ books.
 
-// Title signals that a book is a multi-work container (mirrors the #2914 estimator).
-export const CONTAINER_RE = /\b(collected works|complete works|collected|selected works|anthology|miscellany|compilation|omnibus|works of|writings of|various|samhita|collection|opera omnia|sammlung)\b/i;
+// Title signals that a book is a multi-work container.
+//
+// The English/Latin set mirrors the #2914 estimator. The non-English tokens were
+// added in a precision-validated pass (#2916): each was measured against the FT
+// corpus and kept only where the books it catches are GENUINE containers, not
+// monographs whose chapters merely have descriptive titles. Deliberately EXCLUDED
+// after measuring: a broad "derive >=2 over everything" rule (Latin/German/Sanskrit
+// FT books are monograph-dominated — "Codicillus" has 93 chapters but is one work),
+// and CJK collected-works tokens 全集/文集 (catch ~nothing in this corpus) and 全書
+// (only hits illustrated encyclopedias whose "sections" are plates, not works).
+// Validated high-precision additions:
+//   • Tibetan  `thor bu` (miscellanea), `bka' 'bum` / `gsung 'bum` (collected works)
+//   • Latin/Gk `operum` (genitive of opera — "[Epitome] of all the works of …"),
+//              `corpus` (Corpus Hermeticum, Hippocratic Corpus, Corpus Medicorum)
+export const CONTAINER_RE = /\b(collected works|complete works|collected|selected works|anthology|miscellany|compilation|omnibus|works of|writings of|various|samhita|collection|opera omnia|operum|corpus|sammlung)\b|thor bu|bka.{0,2}\s?.?bum|gsung\s?.?bum/i;
 export const AUTHOR_CONTAINER_RE = /various|multiple|anonymous|collective/i;
 
 // Generic section / apparatus titles that are NOT distinct works.
