@@ -6,7 +6,7 @@ import ParallaxImage, { type Framing } from '@/components/ParallaxImage';
 import ImageFramingEditor from '@/components/admin/ImageFramingEditor';
 
 const CYCLE_MS = 22000;
-const FRAME_SLOT = 'mycology-quote-bg';
+const DEFAULT_FRAME_SLOT = 'mycology-quote-bg';
 
 export interface Quote {
   translated: string;
@@ -23,7 +23,7 @@ export interface Quote {
  * original-language text, a Translated/Original toggle swaps it; the language is
  * shown in the attribution. Existing tokens only.
  */
-export default function QuoteBlock({ quotes, bgUrl, imageCredit, framing, tint = 'strong' }: { quotes: Quote[]; bgUrl?: string; imageCredit?: { text: string; href: string }; framing?: Framing | null; tint?: 'soft' | 'strong' }) {
+export default function QuoteBlock({ quotes, bgUrl, imageCredit, framing, tint = 'strong', frameSlot = DEFAULT_FRAME_SLOT }: { quotes: Quote[]; bgUrl?: string; imageCredit?: { text: string; href: string }; framing?: Framing | null; tint?: 'soft' | 'strong'; frameSlot?: string }) {
   // Background darkening: 'soft' lets a busy/light plate read more brightly.
   const tintImg = tint === 'soft' ? 'opacity-65' : 'opacity-55';
   const tintOverlay = tint === 'soft' ? 'bg-dark/30' : 'bg-dark/40';
@@ -68,8 +68,8 @@ export default function QuoteBlock({ quotes, bgUrl, imageCredit, framing, tint =
 
   return (
     <section ref={sectionRef} className="relative bg-dark overflow-hidden min-h-[60vh] md:min-h-[80vh] flex items-center">
-      {bgUrl && <ParallaxImage src={bgUrl} className={tintImg} strength={0.08} oversize={0.1} objectPosition="10% 50%" frameSlot={FRAME_SLOT} framing={framing ?? undefined} />}
-      <ImageFramingEditor slot={FRAME_SLOT} initial={framing} />
+      {bgUrl && <ParallaxImage src={bgUrl} className={tintImg} strength={0.08} oversize={0.1} objectPosition="10% 50%" frameSlot={frameSlot} framing={framing ?? undefined} />}
+      <ImageFramingEditor slot={frameSlot} initial={framing} />
       <div className={`absolute inset-0 ${tintOverlay}`} />
       <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 text-center">
         <div className="flex items-center justify-center gap-3 mb-8">

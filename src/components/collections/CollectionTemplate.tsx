@@ -206,7 +206,10 @@ export default async function CollectionTemplate({ config }: { config: Collectio
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
   const featuredDesc = (featured as unknown as { description?: string })?.description;
-  const quoteFraming = config.quoteFramingKey ? await getImageFraming(config.quoteFramingKey) : null;
+  // Per-collection frame slot so admin reframes of one collection's quote plate
+  // never collide with another's. (Was hardcoded to mycology's slot.)
+  const quoteFrameSlot = config.quoteFramingKey || `${config.slug}-quote-bg`;
+  const quoteFraming = await getImageFraming(quoteFrameSlot);
   const signupBgId = rankedGallery[1] ? galleryImageId(rankedGallery[1]) : topPlateId;
   const signup = config.signup
     || (signupBgId ? { bgImageUrl: `/api/gallery-crop/${signupBgId}`, bgAttribution: { text: (rankedGallery[1]?.book_title as string) ? `Image: ${rankedGallery[1]?.book_title}` : 'Image from the collection', href: `/gallery/image/${signupBgId}` } } : undefined);
@@ -409,7 +412,7 @@ export default async function CollectionTemplate({ config }: { config: Collectio
 
       {/* Quote band */}
       {config.quotes && config.quotes.length > 0 && (
-        <QuoteBlock bgUrl={config.quoteBg} framing={quoteFraming} imageCredit={config.quoteCredit} quotes={config.quotes} tint={config.quoteTint} />
+        <QuoteBlock bgUrl={config.quoteBg} framing={quoteFraming} frameSlot={quoteFrameSlot} imageCredit={config.quoteCredit} quotes={config.quotes} tint={config.quoteTint} />
       )}
 
       {/* Get involved */}
