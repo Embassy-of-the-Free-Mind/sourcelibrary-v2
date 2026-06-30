@@ -7,6 +7,8 @@ translation?"** — reliably, by query, instead of guessing. Umbrella: issue #23
 
 > **Classifying a confusing record? Start with the [work-identity casebook](./work-identity-casebook.md)** — worked examples of every hard pattern (original / period-translation / modern-translation / container / volume / recension / commentary / miscellany / artwork), each with the correct role + badge call. The Iamblichus *De mysteriis* cluster is the flagship (one work, five hard patterns at once).
 
+> **Designing titles, naming, or the count?** See **[title-and-work-identity-principles.md](./title-and-work-identity-principles.md)** — why a title can't carry work identity (it does five conflicting jobs), the canonical-work grain test, sub/supertitle tree, the three-state claim, and **why first-translations are counted over WORKS not books** (wrong in both directions: multi-volume over-counts, containers under-count). **Measuring the resolver?** the probe (`scripts/eval/work-resolver-probe.mjs`, zero-token lower-bound) + the stratified gold instrument (`build-work-gold-set.mjs` / `score-work-gold-set.mjs` + **[work-identity-gold-rubric.md](./work-identity-gold-rubric.md)**, precision/recall + κ). Build plan + the open multi-volume grain decision: issue #2909.
+
 ## The mistake this exists to prevent (2026-06-17)
 `books.text_role = 'modern-translation'` does **NOT** mean we lack the original.
 The original almost always sits in the catalog as a **separate, unlinked book**.
