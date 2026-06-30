@@ -148,12 +148,61 @@ three-state predicate on `(work, source-language)`; and titles, names, layers, a
 "we translated it" are all projections of that.** Pathological as a string, trivial
 as a typed work-graph.
 
+## Principle set F — counting: first-translations are events in the graph
+If the FT claim is a predicate on `(work, source-language)`, then **a
+first-translation is an event in the work-graph, not a property of a book.** A
+book is *where you can read one* — it is not the unit you *count*. The two
+cardinalities (books vs first-translated works) are independent, and they diverge
+in **both directions at once**, so the errors don't even cancel:
+
+- **Overcount:** one work spread across many books (multi-volume sets,
+  multi-edition holdings) badges the *same* first N times.
+- **Undercount:** one book that is a multi-work container holds many works; badged
+  as 1, it hides N first-events (or 0, if its constituents were each translated
+  before — see the container-vs-edited-work distinction below).
+
+**Compilation-as-work vs compilation-as-container** (the subtle case): a
+compilation *can itself* be a first-translation even if every constituent was
+translated elsewhere — **but only when the compilation is an edited work, not a
+container.** Test: is translating all the parts separately the *same thing* as
+translating this compilation? If no — because the selection + arrangement +
+editorial apparatus is itself content — it is a distinct work with its own FT
+status. 老子元翼 is the live proof: its 64 constituent commentaries exist in
+English piecemeal, but Jiao Hong's *anthology* (his selection/arrangement) had
+never been Englished as such → a genuine first *of the compilation*. A bare
+container ("Collection of kabbalistic works") has no such identity → it decomposes
+to its constituents and bears no claim of its own.
+
+### Measured proxy error (FT-badged set, 2026-06-30)
+`scripts/_tmp_ft_proxy_error.mjs` (read-only) against the live `is_first_translation`
++ `visible` + `pages_translated>0` set:
+- **N_books = 5,814** (the current headline unit).
+- **distinct `work_id` ≈ 5,030** → **~784 badges are the same work re-counted**
+  across volumes/editions (≈13% overcount). Concentrated in multi-volume Chinese
+  encyclopedias: 三才圖會 / Sancai Tuhui (52× + 39×), 武備志 / Wubei Zhi
+  (42× + 21× + 20×), 海國圖志 (17×), Huygens *Œuvres* (13×).
+- **515 FT-badged books carry multi-work container signals** (collected/works/
+  various/anthology/miscellany) and **305 carry volume/part signals** — each
+  container holds many works, an *undercount* of unknown-but-large magnitude
+  (Articella = Hippocrates+Galen+Ḥunayn; "Collected Drukpa Kagyu texts"; etc.).
+
+So the honest statement of the headline is: **we do not know the
+first-translated-works count** from book-badges — deduping multi-manifestation
+pulls 5,814 → ~5,030, while decomposing the 515 containers pushes it back up by an
+amount we can't know without their contents manifests. The true number is
+unknowable until firsts are counted as work-graph events. The error is *bounded
+and enumerable*, not mysterious — the divergent set is exactly the
+multi-volume + container books, which are findable by signal.
+
 ## The cheap test (use this until the graph exists)
 > If a reader who knows the field would read the title + "First Translation" badge
 > together and think *"wait, that's been translated for a century,"* the title is
 > naming the wrong layer.
 
-That one mental test catches the whole class.
+That one mental test catches the whole class. For counting, the parallel test:
+**if you're counting books, you are not counting first-translations** — you are
+counting *places to read them*, off by the multi-volume sets (too high) and the
+anthologies (too low) simultaneously.
 
 ---
 
