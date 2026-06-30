@@ -28,14 +28,9 @@
  * Usage: node scripts/eval/work-resolver-probe.mjs [--limit-examples N]
  */
 import { MongoClient } from 'mongodb';
+import { norm, sig, surname, sameSeries } from '../lib/work-identity-util.mjs';
 
 const EX = (() => { const i = process.argv.indexOf('--limit-examples'); return i > -1 ? +process.argv[i + 1] : 10; })();
-const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
-  .toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
-const STOP = new Set(['the', 'and', 'with', 'from', 'vol', 'volume', 'part', 'tome', 'band', 'book', 'der', 'die',
-  'des', 'von', 'und', 'of', 'les', 'la', 'le', 'el', 'des', 'für', 'mit', 'thor', 'bu', 'sogs', 'rnam', 'pa', 'ba']);
-const sig = (s) => [...new Set(norm(s).split(' ').filter((t) => t.length >= 4 && !STOP.has(t)))];
-const surname = (a) => norm(a).split(' ').filter(Boolean).pop() || '';
 const trad = (b) => b.language || '?';
 
 function fmt(w) {
@@ -114,6 +109,10 @@ async function main() {
       for (let j = i + 1; j < items.length; j++) {
         const b = items[j]; if (seen.has(b.w) || b.toks.size < 2) continue;
         const bkey = [...b.toks].sort().join(' ');
+        // SERIES GUARD: distinct numbered/lettered series items (Sumerian
+        // "collection 10/11", "Vol. I/II") share a token-set but differ by a
+        // distinguisher sig() drops — never the same work.
+        if (!sameSeries(a.b.title, b.b.title)) continue;
         const inter = [...a.toks].filter((t) => b.toks.has(t)).length;
         const jac = inter / new Set([...a.toks, ...b.toks]).size;
         if (akey === bkey) { b.tier = 'high'; cluster.push(b); }
@@ -145,6 +144,7 @@ async function main() {
     const locals = items.filter((x) => !/^Q\d+$/.test(x.w));
     for (const q of qids) {
       for (const l of locals) {
+        if (!sameSeries(q.b.title, l.b.title)) continue; // series guard
         const inter = [...q.toks].filter((t) => l.toks.has(t)).length;
         const jac = inter / new Set([...q.toks, ...l.toks]).size;
         if (jac >= 0.6 && inter >= 2) { anchorMiss++; if (anchorEx.length < EX) anchorEx.push(`    QID ${q.w} ↔ ${l.w}  "${(l.b.title || '').slice(0, 30)}" [${trad(l.b)}]`); break; }
