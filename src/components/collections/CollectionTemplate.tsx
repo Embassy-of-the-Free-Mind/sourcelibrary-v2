@@ -48,7 +48,8 @@ export interface CollectionTemplateConfig {
   quoteBg?: string;
   quoteCredit?: { text: string; href: string };
   quoteFramingKey?: string;
-  librarian?: { videoSrc?: string; placeholder: string };
+  /** Librarian section visual — a video or a still image (custom per collection). */
+  librarian?: { videoSrc?: string; imageSrc?: string; placeholder: string };
   /** If omitted, derived as a gallery-crop of a top plate. */
   signup?: { bgImageUrl: string; bgAttribution: { text: string; href: string } };
   /** Override the image-ranking topic terms (defaults to the hero title). */
@@ -352,11 +353,16 @@ export default async function CollectionTemplate({ config }: { config: Collectio
       {/* Librarian */}
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
-          {config.librarian?.videoSrc && (
+          {(config.librarian?.videoSrc || config.librarian?.imageSrc) && (
             <div className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
-              <video className="w-full h-auto mix-blend-multiply lg:w-auto lg:h-[74vh]" autoPlay loop muted playsInline preload="metadata">
-                <source src={config.librarian.videoSrc} type="video/mp4" />
-              </video>
+              {config.librarian.videoSrc ? (
+                <video className="w-full h-auto mix-blend-multiply lg:w-auto lg:h-[74vh]" autoPlay loop muted playsInline preload="metadata">
+                  <source src={config.librarian.videoSrc} type="video/mp4" />
+                </video>
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={config.librarian.imageSrc} alt="" loading="lazy" decoding="async" className="w-full h-auto mix-blend-multiply lg:h-[74vh] lg:w-auto object-contain" />
+              )}
             </div>
           )}
           <div className="max-w-xl">

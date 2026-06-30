@@ -80,14 +80,27 @@ export const COLLECTION_TEMPLATES: Record<string, CollectionTemplateConfig> = {
       'Its makers worked at this for two thousand years. Theophrastus grouped plants by their parts; Dioscorides compiled a pharmacy so trusted that physicians leaned on it for fifteen centuries; Fuchs, Gerard, and Parkinson had each species cut into woodblocks from a specimen on the table, and Mattioli wove his own fieldwork into the ancient text he was annotating. Their volumes survive in Latin and heavy printed folios, named in footnotes far more often than they are opened, though the most important, among them Mattioli’s commentary on Dioscorides, can now be read in English for the first time.',
       'What emerges is how much depended on a single plant being known for certain. Track one herb through these volumes and you can watch its name settle, its portrait sharpen from rough woodcut to fine engraving, its claimed powers tested and cut back to the few that hold, until the plant a sixteenth-century physician reached for is plainly the same one growing in a hedgerow today.',
     ],
-    // intro side image, featured, and signup background are all derived from data.
-    quoteBg: '/api/gallery-crop/6953ccb477f38f6761be3223-0',
-    quoteCredit: { text: 'Image: Voynich Manuscript, a botanical folio (15th c.).', href: '/gallery/image/6953ccb477f38f6761be3223-0' },
+    // Featured derived from data. Intro plate pinned to Leonardo's botanical studies.
+    introImage: {
+      src: 'https://images.sourcelibrary.org/gallery/6991eaf72f801130a473ee22/6991eaf82f801130a473ee57-0.jpg',
+      alt: 'Botanical studies of plants with mirror-writing text by Leonardo da Vinci',
+      caption: 'Botanical studies of plants with mirror-writing text by Leonardo da Vinci',
+      href: '/gallery/image/6991eaf82f801130a473ee57-0',
+      framed: true,
+    },
+    quoteBg: '/api/gallery-crop/69b4cc7fd5b6c3815e1a0d83-0',
+    quoteCredit: { text: 'Image: Maria Sibylla Merian, Metamorphosis insectorum Surinamensium, 1719.', href: '/gallery/image/69b4cc7fd5b6c3815e1a0d83-0' },
+    // Join-the-project background: the same standard plate the fungi page uses.
+    signup: {
+      bgImageUrl: '/api/gallery-crop/6955d43628a09ca65928002a-0',
+      bgAttribution: { text: 'Image: Flamsteed, Historia Coelestis Britannica, Vol. 3, 1725.', href: '/gallery/image/6955d43628a09ca65928002a-0' },
+    },
     quotes: [
       { translated: 'The myrtle is under the protection of Venus because it is useful for remedies of love, as are the rose and the linden tree.', language: 'Latin', attribution: 'Della Porta, Villae, 1592', href: '/book/villae-porta/page/69b1c642edda7fb64e1a08c0' },
       { translated: 'The Ancients hold that there are three different movements among all plants; namely, budding, flowering, and ripening…', language: 'French', attribution: 'de Serres, Théâtre d’Agriculture, 1603', href: '/book/le-theatre-d-agriculture-et-mesnage-des-champs-serres/page/69a5d7f94d84314297c08078' },
       { translated: 'It flowers from May until Autumn in the same year it is sown, and it perishes upon the arrival of winter.', language: 'Latin', attribution: 'Ray, Historia Plantarum, 1688', href: '/book/historia-plantarum-vol-ii-ray/page/6958e0d19659a6529d5772dd' },
     ],
-    librarian: { videoSrc: '/collections/mycology/librarian.mp4', placeholder: 'Ask a question about herbs and plants…' },
+    // Custom librarian visual (no video): the Ortus sanitatis scholars-in-a-garden woodcut.
+    librarian: { imageSrc: 'https://images.sourcelibrary.org/gallery/6958e84f538549809db81f94/6958e850538549809db81f9a-0.jpg', placeholder: 'Ask a question about herbs and plants…' },
   },
 };
