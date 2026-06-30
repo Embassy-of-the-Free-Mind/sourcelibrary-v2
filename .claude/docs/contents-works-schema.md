@@ -108,6 +108,47 @@ rendered headline — the new figures are additive until verification justifies 
 swap (#2913 Phase 4). Hard invariant, asserted in code: **count ≥ books** — a result
 below the floor means clustering was conflated with counting (a bug).
 
+## Verification: structural recall + LLM precision (completeness is an output, not a gate)
+
+The per-constituent / per-badge FT verification was almost mis-designed around the
+catalog's `completeness` field. The insight that corrected it (Derek, 2026-06-30):
+
+- **"Is there a prior translation of this work?"** is the *match* — author + title +
+  source-language. **Completeness is irrelevant to it.** A match against an
+  `unknown`-completeness catalog row is still a real prior; `unknown` means *we never
+  recorded* whether it's complete, not that it isn't one. Gating the match on
+  `completeness: complete` censored 99% of real matches for a field nobody filled in
+  (the "1% ceiling" that made the free matcher return 0).
+- **"Does that prior defeat the badge?"** is a *judgment about* the match — and *this*
+  is where complete-vs-partial matters (a partial prior does NOT defeat a "first
+  *complete* translation" badge). So **completeness is an OUTPUT the adjudicator
+  determines**, alongside "same work?", not a precondition for looking. The
+  completeness it finds flows back to the catalog for free.
+
+So verification is two cheap stages — **structural matching is recall, an LLM is
+precision**:
+
+1. **Gate-free structural match** (`ft-constituent-catalog-match.mjs` for sub-works;
+   the candidate generator in `ft-prior-adjudicate.mjs` for badges) — surfaces every
+   `(badge ↔ catalog-prior)` candidate pair. Loose on purpose; completeness is NOT a
+   gate.
+2. **LLM pairwise adjudication** (`ft-prior-adjudicate.mjs`, gemini-3.1-flash-lite,
+   ~$0.0001/pair, metadata-only — no web search for the obvious cases) — judges each
+   pair: is the candidate a *complete English translation of our exact work*? It
+   trivially separates a book *about* the author (Findlen's *The Last Man Who Knew
+   Everything* ≠ a translation of *Musurgia*), a scholarly edition of the *original*
+   Latin, a single volume of a set, or a *partial* prior — the discrimination the
+   `completeness` heuristic could never make. `defeats_badge = true` ONLY for a
+   COMPLETE prior of the exact work; uncertain → `confidence: low` → escalate to the
+   web-search Claude-subagent tier (#2880 / ft-verify), never guess.
+
+Validated 2026-06-30 (n=65 badge candidates, $0.005): correctly kept the false
+matches (biographies, different works, Latin editions), caught real over-claims
+(Secretum Secretorum, Trithemius *Steganographia*), and the validation batch exposed
+a prompt bug (partial priors were wrongly defeating "first-complete" badges) before
+anything was written. Demotes still require sign-off; verdicts log to
+`first_translation_attempts` (`method: 'llm_prior_adjudicate'`), never flip a flag.
+
 ## Guardrails (carried from #2913 / #2916)
 
 - Provisional by default; never seed unverified sub-works as authoritative.
