@@ -79,16 +79,36 @@ const fn=all.filter(r=>r.gCorr!=='FIRST'&&r.oCorr==='FIRST').length;
 console.log(`Tier-1 precision(first) ${pct(tp/(tp+fp))} (${tp}/${tp+fp}) · recall(first) ${pct(tp/(tp+fn))} (${tp}/${tp+fn})`);
 
 // ===== #2885a alignment audit (R2 tier0 hits) =====
+// The pilot SAMPLER's tier0() is a crude candidate generator (surname-regex + 0.3
+// overlap, NO guards). Production (ft-catalog-match.mjs) gates on source-language
+// (catalog is 100% src=la) + generic-author + completeness. We apply those two
+// load-bearing guards here so the audit measures PRODUCTION behaviour, not the strawman.
+const norm = s => (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+const LANG_ISO = {latin:'la','latin-german':'la',la:'la',greek:'grc','ancient greek':'grc',grc:'grc',german:'de',dutch:'nl',french:'fr',italian:'it',spanish:'es',hebrew:'he',arabic:'ar',sanskrit:'sa',tibetan:'bo',chinese:'zh',syriac:'syc',armenian:'hy',akkadian:'akk'};
+const GEN = new Set(['anonymous','anon','unknown','various','collective','multiple authors','catholic church']);
+const bookIso = b => { for(const k of [norm(b.original_language),norm(b.language)]){ if(!k) continue; if(LANG_ISO[k]) return LANG_ISO[k]; const f=k.split(/[-\/, ]/)[0]; if(LANG_ISO[f]) return LANG_ISO[f]; } return norm(b.language)||'unknown'; };
+const isGeneric = a => { const n=norm(a); return !n||GEN.has(n)||n.length<3; };
+
+// scoringkey rows lack language/author — attach them from the R2 manifest so the guards can see them
+const r2man = new Map(JSON.parse(readFileSync(`${R}/ft-pilot-sample-r2-2026-06-30.json`,'utf8')).manifest.map(b=>[b.id,b]));
+for(const r of r2){ const m=r2man.get(r.id); if(m){ r.language=m.language; r.original_language=m.original_language; r.author=m.author; } }
+
 console.log(`\n===== #2885a Tier-0 ALIGNMENT AUDIT (Round 2 catalog matches) =====`);
 const hits = r2.filter(r=>r.tier0 && r.tier0.catalog_id && r.o);
-console.log(`Books with a Tier-0 best match: ${hits.length}`);
-let trueMerge=0, falseMerge=0;
+console.log(`Raw sampler candidates: ${hits.length}`);
+let prodKeep=[], prodReject=[];
 for(const r of hits){
+  const passLang = bookIso(r) === 'la';      // catalog is entirely src=la
+  const generic = isGeneric(r.author);
+  (passLang && !generic ? prodKeep : prodReject).push(r);
+}
+console.log(`After PRODUCTION guards (source-lang==la + non-generic author): KEEP ${prodKeep.length} / REJECT ${prodReject.length}`);
+let trueMerge=0, falseMerge=0;
+console.log('PRODUCTION-equivalent matches (these are what Tier-0 would actually nominate):');
+for(const r of prodKeep){
   const oPrior = priorExists(r.o);
   if(oPrior) trueMerge++; else falseMerge++;
-  const flag = oPrior ? 'T' : 'F';
-  const lang = (r.language||'').slice(0,8).padEnd(8);
-  const t0 = (r.tier0.english_title||'').slice(0,30);
-  console.log('  ['+flag+'] '+r.id+' '+lang+' tier0="'+t0+'" oracle='+r.o.verdict);
+  console.log('  ['+(oPrior?'T':'F')+'] '+r.id+' '+(r.language||'').slice(0,8).padEnd(8)+' tier0="'+(r.tier0.english_title||'').slice(0,30)+'" oracle='+r.o.verdict);
 }
-console.log(`Tier-0 precision (catalog match → real prior): ${trueMerge}/${hits.length} = ${pct(trueMerge/(hits.length||1))}  (false merges: ${falseMerge})`);
+console.log(`Production Tier-0 precision (nominated match → real prior): ${trueMerge}/${prodKeep.length||1} = ${pct(trueMerge/(prodKeep.length||1))}  · FALSE MERGES that survive guards: ${falseMerge}`);
+console.log(`(Strawman sampler matches the guards reject — would-be false demotes blocked by source-lang/generic-author: ${prodReject.filter(r=>!priorExists(r.o)).length})`);

@@ -32,16 +32,20 @@
 - **Tier-1 precision(first) 91.1% (51/56) · recall(first) 81.0% (51/63).** Under the corrected rubric Gemini is a **good cheap first-detector**. Its residual weakness flips from R1: not NA-blindness but **fabricating priors** — calling a genuine first `not_first` (the 12 false negatives that cost recall).
 - → **Routing:** Tier-1 is now trustworthy enough on **badged** items generally (not just Western) to use as the cheap proposer; Tier-2 is needed to (a) catch Gemini's fabricated-prior false negatives and (b) handle `needs_review` containers.
 
-### 4. #2885a — Tier-0 ALIGNMENT AUDIT (13 catalog matches)
-| outcome | count | meaning |
-|---|---|---|
-| catalog match → oracle confirms a real prior | 11/13 = **84.6%** | Tier-0 "a prior exists" precision |
-| **false merge** (catalog match → oracle finds NO prior) | **2/13** | would have caused a WRONG demote |
-| catalog *title* is actually the right work | ~8/13 (~62%) | catalog-identification precision is much lower |
+### 4. #2885a — Tier-0 ALIGNMENT AUDIT (13 sampler candidates) — CORRECTED
+**Correction (2026-06-30):** an earlier draft of this section reported "2/13 false merges that would cause a wrong demote." That measured the pilot **sampler's** crude candidate generator (`tier0()` in `ft-pilot-sample*.mjs`: bare surname-regex + 0.3 title-overlap, **no guards**), NOT the production matcher. Re-scored through the **production guards** (`ft-catalog-match.mjs` source-language + generic-author), verified against the live `books` records:
 
-- **The false merges:** Sakadeva Sastiram (Tamil) and the Syriac Liturgical Anthology both matched to *"A Plain treatise on the Peruvian bark"* / *"Latin literature: an anthology"* — pure surname/​token-overlap noise; oracle found no prior → `first_no_prior`.
-- **Coincidental rights:** 3 more had absurd catalog titles ("Peruvian bark" → Surya Siddhanta; "St. Bonaventure" → Great Hymn to the Aton; "De musica mensurata" → Codex Vaticanus Syriacus) yet the oracle *independently* found a real, *different* prior. So Tier-0 got "prior exists" right for the **wrong reason** in those — its catalog row is garbage.
-- **Verdict on Tier-0:** the surname+title-overlap≥0.3 matcher is **~38% garbage on non-Western/anonymous works** and produces **false merges that would wrongly demote**. **Tier-0 must NOT auto-short-circuit to `not_first`** — every match requires Tier-2 confirmation. (Confirms the CLAUDE.md invariant: never infer a prior from an unverified catalog link.)
+| stage | result |
+|---|---|
+| raw sampler candidates | 13 |
+| after production guards (source-lang `==la` **and** non-generic author) | **KEEP 5 / REJECT 8** |
+| **production Tier-0 precision** (nominated → real prior) | **5/5 = 100%** |
+| **false merges that survive the guards** | **0** |
+| would-be false demotes blocked by the guards | 2 (Sakadeva/Tamil, Syriac anthology — both rejected by source-lang **and** generic-author) |
+
+- **Why the garbage never reaches production:** the catalog is **100% `source_language: la`** (24,040 rows), so the source-language guard rejects every non-Latin book (Tamil/Sanskrit/Syriac/Egyptian/Chinese); the generic-author guard independently rejects `Anonymous`/`Various`/`Unknown`. The 5 KEEPs are all Latin, all genuine — and of those, the two *partial*-prior matches (Flamsteed/Fludd → `first_complete`) are further blocked from demoting by the completeness guard, Valla is a `needs_review` container, leaving Augustine + Albertus as correct real demotes. **Net: 0 false demotes on this sample.**
+- **The real finding is COVERAGE, not precision:** Tier-0 has **zero reach outside Latin/Greek** — every non-Latin tradition correctly falls through to Tier-2 (accurate but costly). Extending it = ingesting non-Latin catalogs (84000/CBETA/GRETIL/ETCSL/Sefaria) with correct `source_language` → **issue #2899**.
+- **Standing invariant still holds:** Tier-0 only *nominates*; Tier-2 confirms before any public flip. (CLAUDE.md: never infer a prior from an unverified catalog link.)
 
 ### 5. Review queue A — disagreements & the genuine non-firsts among badged
 Badged demote/remove candidates (oracle = ground truth, corrected rubric) — **6 of 52 badged**, measure-only, Derek sign-off required before any flip:
