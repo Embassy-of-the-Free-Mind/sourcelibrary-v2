@@ -1,0 +1,4 @@
+book_id: 69e747e685f786e884a49e40
+Title: Edda Sæmundar hinns Fróða
+Author: Sæmundr fróði (ed. Rasmus Rask)
+Source language: Old Norse

@@ -1,0 +1,41 @@
+{
+  "book_id": "69e787094a6785cfd60ca250",
+  "work_identified": "Volume 'Di' of the rNying ma rgyud 'bum (Collected Tantras of the Nyingma / Nyingma Gyubum), Drametse Monastery manuscript edition — a multi-tantra canonical scripture volume from the 46-volume Bhutanese recension of this collection",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "rNying ma rgyud 'bum \"Di\" volume English translation Nyingma Gyubum",
+    "Nyingma Gyubum collected tantras English translation 84000 rKTs volume",
+    "\"Nyingma Gyubum\" OR \"rNying ma rgyud 'bum\" English translation published book academic",
+    "84000.co \"Nyingma Gyubum\" OR \"rNying ma rgyud 'bum\" English translation completed volumes",
+    "BDRC \"rNying ma rgyud 'bum\" Drametse \"69e787094a6785cfd60ca250\" OR book_id Tibetan",
+    "rNying ma rgyud 'bum \"Drametse\" BDRC W21518 OR W21521 volume \"di\" tantras",
+    "BIBLIOGRAPHY Editions rNying ma rgyud 'bum NGB",
+    "Cantwell Mayer \"rNying ma rgyud 'bum\" English critical edition translation published",
+    "\"rNying ma rgyud 'bum\" \"Drametse\" catalog BDRC \"snga 'gyur\" Nyingma volume letters \"ka kha ga\"",
+    "\"Complete Nyingma Tradition\" Shambhala Tsadra translation \"rgyud 'bum\" OR tantras volumes published",
+    "Nyingma Gyubum NGB \"first English translation\" OR \"translated into English\" tantra volume complete",
+    "\"snga 'gyur rgyud 'bum\" OR \"Nyingma Gyubum\" \"di\" volume English translation 2020 OR 2021 OR 2022 OR 2023 OR 2024",
+    "worldcat.org \"rNying ma rgyud 'bum\" English language translation",
+    "EAP105 Drametse rNying ma rgyud bum volumes list contents \"di\" OR \"ga\" OR Tibetan syllable volume label"
+  ],
+  "sources_consulted": [
+    {"url": "https://scholar.84000.co/article/old-tantras-kangyur-section", "found": "84000 explicitly states NGB translations have not been done and 'will, it is hoped, be added to the 84000 collection' — no NGB volumes translated yet"},
+    {"url": "https://en.wikipedia.org/wiki/Nyingma_Gyubum", "found": "Overview of the NGB — no complete English translation of any volume documented; Cantwell & Mayer have critically edited individual texts, not whole volumes"},
+    {"url": "https://archive.org/details/bdrc-W21518", "found": "rNying ma'i rgyud 'bum (Gting skyes edition, 36 vols) — Tibetan-language manuscript, no English translation"},
+    {"url": "https://archive.org/details/bdrc-W1KG16449", "found": "Sangs rgyas gling manuscript of rNying ma'i rgyud 'bum — 47 vols (3 missing), Tibetan only, follows Bhutanese recension"},
+    {"url": "https://rywiki.tsadra.org/index.php/rnying_ma_rgyud_'bum", "found": "403 Forbidden — could not access"},
+    {"url": "https://www.worldcat.org/search?q=rNying+ma+rgyud+bum+English", "found": "403 Forbidden — direct WorldCat access blocked; searched via Google with no English translation results found"},
+    {"url": "https://eap.bl.uk/project/EAP105", "found": "EAP105 project digitized Drametse 46-vol rNying ma rGyud 'bum manuscript — digitization only, no translation"},
+    {"url": "https://library.bdrc.io/show/bdr:WA3JT13481", "found": "BDRC BUDA page loaded header only — no detailed volume listing accessible via WebFetch"},
+    {"url": "https://www.tsadra.org/translation/featured-translations/complete-nyingma-tradition/", "found": "403 — 'The Complete Nyingma Tradition' series translates Choying Tobden Dorje's 19th-c. Mdo rgyud mdzod, NOT the rNying ma rgyud 'bum itself"},
+    {"url": "https://www.rigpawiki.org/index.php?title=Nyingma_Gy%C3%BCbum", "found": "403 Forbidden"},
+    {"url": "https://www.researchgate.net/publication/384880507_Rnying_ma'i_rgyud_'bum_an_Ancient_Tibetan_Buddhist_Canon", "found": "403 Forbidden"}
+  ],
+  "reasoning": "No English translation of any volume of the rNying ma rgyud 'bum exists: 84000 explicitly confirms none done and 'hopes' to add them; searches across BDRC, Archive.org, Wikipedia, and academic literature find only Tibetan-language editions and scattered critical editions of individual tantras. The Drametse 'Di' volume is an untranslated multi-tantra canonical manuscript. rKTs direct access failed but NGB translation status is independently confirmed by 84000."
+}

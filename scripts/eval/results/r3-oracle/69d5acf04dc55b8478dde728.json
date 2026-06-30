@@ -1,0 +1,85 @@
+{
+  "book_id": "69d5acf04dc55b8478dde728",
+  "work_identified": "Mäzmurä Dawit (Psalms of David) — the canonical Ge'ez/Ethiopic Psalter of the Ethiopian Orthodox Tewahedo Church, comprising Psalms 1–151 plus canticles (Canticles of the Prophets, Song of Songs, Wəddase Maryam, Anqäṣä Bərhan), derived from the Greek LXX tradition and developed as an independent textual tradition in Ethiopia since the 4th–6th centuries",
+  "verdict": "not_first",
+  "prior_relationship": "different_source_language",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "A New English Translation of the Septuagint (NETS) — Psalms",
+      "translator": "Albert Pietersma",
+      "pub_year": "2007",
+      "publisher": "Oxford University Press",
+      "completeness": "complete",
+      "source_url": "https://www.oup.com/us/catalog/general/subject/ReligionTheology/BibleStudies/?view=usa&ci=9780195289756"
+    },
+    {
+      "english_title": "New Revised Standard Version (NRSV) — Psalms",
+      "translator": "NRSV Bible Translation Committee (Bruce Metzger, chair)",
+      "pub_year": "1989",
+      "publisher": "National Council of the Churches of Christ in the USA",
+      "completeness": "complete",
+      "source_url": "https://www.biblegateway.com/versions/New-Revised-Standard-Version-NRSV-Bible/"
+    }
+  ],
+  "queries_run": [
+    "Ge'ez Ethiopic Psalter English translation complete",
+    "WorldCat 'Ethiopic Psalter' OR 'Ge'ez Psalter' English translation",
+    "Ethiopic Psalter English translation published scholar translator",
+    "'Ethiopic Bible' OR 'Ge'ez Bible' English translation complete published book",
+    "Daniel Whitford 'Complete Ethiopian Bible' Psalms translation source language Ge'ez 2019 2020",
+    "English translation 'Ethiopic Psalter' academic scholarly publication",
+    "19th century OR early 20th century 'ethiopic psalter' scholarly edition English translation Dillmann OR Ludolf",
+    "'ethiopic psalter' 'first english' OR 'first complete english' translation 2020 2021 2022 2023 2024",
+    "Ethiopian Bible English 'Book of Psalms' Ge'ez recension translated complete 2020 2021 2022 2023",
+    "'Mäzmurä Dawit' OR 'Mazmura Dawit' English translation published",
+    "Getatchew Haile OR Strelcyn 'ethiopic psalms' OR 'ethiopic psalter' English translation published",
+    "Marcos Daoud 'Psalter' OR 'Psalms' translated Ethiopian liturgy Ge'ez English",
+    "Ethiopian Psalms 'translated from' Ge'ez English published 2000 2005 2010 2015 scholar university press",
+    "Encyclopaedia Aethiopica 'Psalter' OR 'Psalms' English translation Ge'ez",
+    "Psalms English translation from Ge'ez Ethiopic text specifically distinct recension",
+    "'Mäzmurä dawit' OR 'Mazmura Dawit' English translation published"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Bible_translations_into_Ge%CA%BDez",
+      "found": "No complete English Ge'ez Psalter translation listed; historical Latin/German scholarly editions only; 2017 new Ge'ez NT mentioned but no English Psalter"
+    },
+    {
+      "url": "https://ethiopianorthodoxbible.wordpress.com/2025/09/17/a-complete-list-of-all-the-ethiopian-orthodox-bible-books-already-in-english/",
+      "found": "Psalms excluded from their list as ubiquitous in mainstream Bibles; site focuses on books unique to Ethiopian canon; no Ge'ez-specific English Psalter referenced"
+    },
+    {
+      "url": "https://www.amazon.com/Complete-Ethiopian-Bible-English-Unparaphrased/dp/1787934772",
+      "found": "Whitford 'Complete Ethiopian Bible' (Codexia Editions, ~2025 new edition) claims Ge'ez sourcing and includes Psalms; self-published commercial title, no scholarly vetting, credibility as genuine Ge'ez-to-English translation unconfirmed"
+    },
+    {
+      "url": "https://referenceworks.brill.com/display/entries/THBO/COM-0010040300.xml",
+      "found": "Brill Textual History of the Bible Online article on Ethiopic translations (Steve Delamarter) blocked; mentions early printed Ethiopic Psalter editions but full text inaccessible"
+    },
+    {
+      "url": "https://ftp.arcchurches.com/ProductPdf/mL21CC/601049/ethiopian-bible_88_books-in__english.pdf",
+      "found": "'4 books of the Ethiopian Psalter' included in 88-book Ethiopian Bible English compilation; claims Ge'ez source but no named translator; popular/online resource"
+    },
+    {
+      "url": "https://www.ethiopianorthodox.org/english/church/englishethiopianliturgy.pdf",
+      "found": "Marcos Daoud 1959 liturgy translation from Ge'ez; includes liturgical Psalm verses but not a complete Psalter"
+    },
+    {
+      "url": "https://www.roger-pearse.com/weblog/tag/ethiopic/",
+      "found": "No Ge'ez Psalter English translation mentioned; AI translation challenges for Ge'ez hagiography discussed; confirms Ge'ez remains undertranslated into English"
+    },
+    {
+      "url": "https://eap.bl.uk/archive-file/EAP823-1-1-1",
+      "found": "BL Endangered Archives Programme Mäzmurä Dawit archive; page empty, no English translation linked"
+    },
+    {
+      "url": "https://www.textmanuscripts.com/medieval/ethiopian-psalter-in-geez-141654",
+      "found": "Manuscript descriptions confirm standard Ethiopian Psalter structure; no English translation mentioned, only Ge'ez manuscripts described"
+    }
+  ],
+  "reasoning": "Source-language rule decisive: complete modern English of the Psalms (THIS WORK) exists from Hebrew (NRSV 1989, KJV, ESV, NIV — universal) and from the Greek LXX (NETS 2007, Pietersma, OUP), the direct textual ancestor of the Ge'ez Psalter. No Ge'ez-specific scholarly English Psalter was found, but the rule requires only ANY source language. Whitford commercial compilation unverified."
+}

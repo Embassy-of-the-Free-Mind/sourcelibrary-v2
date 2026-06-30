@@ -1,0 +1,4 @@
+book_id: 69920b97e0a548a13d8840d5
+Title: New Testament in Syriac (Peshitta)
+Author: British and Foreign Bible Society
+Source language: Syriac

@@ -1,0 +1,37 @@
+{
+  "book_id": "69e789aa4a6785cfd60d2cf0",
+  "work_identified": "Siṃhamukhā (seng gdong ma) torma-repulsion protector ritual from the Profound Ḍākinī Hearing Lineage (yang zab mkha' 'gro snyan rgyud), arranged in liturgical black-text format — Ogyen Choling Collection, Bhutan",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "yang zab mkha dro snyan rgyud seng gdong ma gtor zlog English translation",
+    "Ogyen Choling Collection Tibetan \"mkha' 'gro snyan rgyud\" \"seng gdong ma\" English translation",
+    "BDRC \"mkha' 'gro snyan rgyud\" \"seng gdong ma\" \"gtor zlog\" site:bdrc.io OR site:tbrc.org",
+    "Lotsawa House \"Simhamukha\" OR \"Sengdongma\" \"torma\" ritual Tibetan translation English",
+    "\"Zab gsang seng gdong snyan brgyud\" English translation Tibetan cycle Rinchen Terdzo",
+    "WorldCat \"sengdongma\" OR \"simhamukha\" \"gtor zlog\" English translation tibetan 2000 2010 2020",
+    "\"yang zab mkha' 'gro snyan rgyud\" \"bka' srung\" \"seng gdong\" Tibetan Buddhist text English",
+    "\"profound and secret\" \"hearing lineage\" simhamukha sengdongma gtor zlog torma repulsion English translation",
+    "\"zab gsang seng gdong snyan brgyud\" English translation gtor zlog protector ritual published",
+    "84000 translations Simhamukha \"lion-faced\" tibetan kangyur English",
+    "eap.bl.uk EAP105 \"seng gdong\" OR \"mkha' 'gro snyan rgyud\" Ogyen Choling",
+    "Simhamukha \"gtor zlog\" \"torma repulsion\" English translation published Tibetan text"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.lotsawahouse.org/topics/simhamukha", "found": "12 translated Siṃhamukhā texts (sadhanas, prayers, empowerments, history) — all from Longchen Nyingtik or Sakya traditions; no gtor zlog from yang zab mkha' 'gro snyan rgyud"},
+    {"url": "https://www.samyetranslations.org/translation/the-history-of-the-hearing-lineage-of-the-profound-and-secret-practice-of-simhamukha/", "found": "English translation of 'Zab gsang seng gdong snyan brgyud kyi lo rgyus' (History of the Hearing Lineage) by Jamyang Khyentse Wangpo — a history text, NOT the gtor zlog protector ritual"},
+    {"url": "https://dakinitranslations.com/lion-faced-%E1%B8%8Dakini/", "found": "Sadhanas by Karma Chagme, Taranatha, 13th Karmapa, Jamyang Khyentse Wangpo (Dakini Publications 2018–2020) — no gtor zlog from yang zab cycle"},
+    {"url": "https://rtz.tsadra.org/index.php/Category:Zab_gsang_seng_gdong_snyan_brgyud", "found": "403 Forbidden — cycle confirmed to exist in Rinchen Terdzo but page content inaccessible"},
+    {"url": "https://library.bdrc.io/show/bdr:MW23681", "found": "sgrub thabs kun btus — returned BUDA header only, no substantive catalog data accessible"},
+    {"url": "https://eap.bl.uk/project/EAP105", "found": "Ogyen Choling EAP105 project confirmed (1,708 titles, 144,728 images digitized for British Library); no specific seng gdong gtor zlog text surfaced in search results"},
+    {"url": "https://84000.co/translation/toh-search/?query=simhamukha", "found": "Page returned no substantive content; Kangyur focus — would not hold this class of ritual text anyway"},
+    {"url": "https://www.lotsawahouse.org/tibetan-masters/jigme-lingpa/longchen-nyingtik-tormas", "found": "Longchen Nyingtik torma notes for Siṃhamukhā present but no gtor zlog (repulsion ritual) on this page"},
+    {"url": "https://www.samyetranslations.org/translation/averting-negativity-through-simhamukha-the-lion-faced-dakini/", "found": "Tibetan source: 'seng gdong ma'i zlog dmigs ni' by 8th Karmapa Mikyö Dorje — an averting meditation, NOT a gtor zlog from yang zab mkha' 'gro snyan rgyud"}
+  ],
+  "reasoning": "No English translation found of this specific protector ritual (bka' srung gtor zlog) from the yang zab mkha' 'gro snyan rgyud cycle. Existing English Siṃhamukhā corpus covers sadhanas (Dakini Translations), LNT empowerments/prayers (Lotsawa House), and the cycle's History text (Samye 2024) — none are this Ogyen Choling gtor zlog. WorldCat inaccessible; BDRC partially blocked; evidence_strength moderate not strong."
+}

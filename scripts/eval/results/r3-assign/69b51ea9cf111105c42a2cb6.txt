@@ -1,0 +1,4 @@
+book_id: 69b51ea9cf111105c42a2cb6
+Title: Præcursor Introductoriæ Algebram Speciosam Universalem vel Artem Magnam Universalem Sciendi & Demonstrandi B. Raymundi Lulli Doctoris Illum. & Martyris ...
+Author: Lullus, Raimundus
+Source language: Latin

@@ -1,0 +1,42 @@
+{
+  "book_id": "69e7965180b52390feb19416",
+  "work_identified": "rje btsun rdo rje rnal 'byor ma na ro mkha' spyod ma'i lam gyi rim pa'i spyi don gsang chen sgo brgya 'byed pa'i lde mig — a Gelug scholastic commentary on the general meaning (spyi don) of the two-stage (generation + completion) Vajrayoginī Naro Khecharī practice, composed by Lobzang Tenpai Gyaltsen / Tagpu (blo bzang bstan pa'i rgyal mtshan, 1714–1762), held in the Ogyen Choling Collection. Distinct from Pabongkha's 'Extremely Secret Dakini of Naropa' and other Naro Khecharī sadhanas.",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Vajrayogini Naro Khechari \"vaidurya zhun ma'i them skas\" English translation",
+    "Tagpu Rinpoche Ogyen Choling Vajrayogini sadhana English translation",
+    "\"rdo rje rnal 'byor ma na ro mkha' spyod\" \"lam gyi rim pa\" English translation Tagpu",
+    "BDRC \"Ogyen Choling\" Vajrayogini Naro Khechari Tagpu practice text",
+    "Lotsawa House \"Naro Khechari\" \"lam rim\" OR \"stages of practice\" English translation Tibetan",
+    "\"Lobzang Tenpai Gyaltsen\" OR \"Tagpu Rinpoche\" Vajrayogini English translation published",
+    "\"bee du ra ya zhun ma\" OR \"vaidurya zhun ma\" Vajrayogini English translation",
+    "\"Vajrayogini\" \"lam gyi rim pa\" OR \"path and stages\" English translation Gelug commentary published",
+    "WorldCat \"Naro Khechari\" \"two stages\" OR \"generation stage\" OR \"completion stage\" English translation book",
+    "\"Lobzang Tenpai Gyaltsen\" Vajrayogini \"rim gnyis\" published English translation book",
+    "\"blo bzang bstan pa'i rgyal mtshan\" English translation published",
+    "\"stag phu\" OR \"Tagpu\" \"blo bzang bstan pa'i rgyal mtshan\" works English translation Vajrayogini",
+    "\"Extremely Secret Dakini of Naropa\" Pabongkha English translation Tagpu Lobzang Tenpai Gyaltsen based on",
+    "archive.org \"Naro Khechari\" OR \"naro mkha spyod\" \"two stages\" English translation Tibetan",
+    "Elizabeth English \"Vajrayogini\" \"Naro Khechari\" commentary stages translation Wisdom Publications",
+    "\"Tsenzhab Serkong\" OR \"Pabongka\" \"Vajrayogini\" \"Naro Khechari\" English \"stages\" commentary published",
+    "BDRC library \"69e7965180b52390feb19416\" OR \"rje btsun rdo rje rnal byor ma na ro mkha spyod ma lam gyi rim pa\""
+  ],
+  "sources_consulted": [
+    {"url": "https://images.mandala.library.virginia.edu/image/title-page-buddhist-textrje-btsun-rdo-rje-rnal-byor-ma-na-ro-mkha-spyod-kyi-rim-gnyis-zab-moi", "found": "Title page of this exact text in Tibetan; author confirmed as Lozang Tenpai Gyaltshen; no English translation mentioned; Gelug sadhana, umed handwriting on desho paper"},
+    {"url": "https://archive.org/details/bdrc-W1KG5169", "found": "BDRC record for 'rje btsun rdo rje rnal byor ma nA ro mkha spyod kyi rim gnyis zab mo'i nyams len bai DU r+ya zhun ma'i them skas sogs chos tshan khag cig'; author blo bzang bstan pa'i rgyal mtshan (Tagpu, 1714–1762); Tibetan only, 532 pp; no English translation noted; publisher Delhi: Thub bstan tshul khrims sgrol dkar"},
+    {"url": "https://www.lotsawahouse.org/topics/vajrayogini/", "found": "Lotsawa House Vajrayogini series: 8 texts listed (sadhanas, praises, aspirations by Naropa, Ngorchen, Jamyang Khyentse etc.); no text by Tagpu / Lobzang Tenpai Gyaltsen present; no spyi don commentary"},
+    {"url": "https://dakinitranslations.com/vajrayogini/", "found": "Dakini Translations Vajrayogini page: Kagyu-oriented translations (Naropa, Gampopa, Zharmapa, Drigung Kagyu); no Gelug spyi don commentary by Tagpu"},
+    {"url": "https://dechenlingpress.org/product/the-extremely-secret-dakini-of-naropa/", "found": "Pabongkha's commentary (trans. David Gonsalez, 2020, ISBN 978-1-55939-386-7); distinct Gelug Vajrayogini text by different author; not Tagpu's spyi don"},
+    {"url": "https://nalandatranslation.org/product-category/restricted-texts/sadhaka/vajrayogini/", "found": "Nalanda Translation Committee Vajrayogini sadhanas (Trungpa lineage); no text by Tagpu"},
+    {"url": "https://library.bdrc.io/show/bdr:P336", "found": "BDRC person record for stag phu 04 blo bzang bstan pa'i rgyal mtshan — page loaded as BUDA header only; could not retrieve works list"},
+    {"url": "https://tushita.info/wp-content/uploads/2019/07/Vajrayogini-Commentary-Tsenzhab-Serkong-Rinpoche.pdf", "found": "Binary PDF; Serkong Rinpoche commentary on Vajrayogini (Pomaia 1980); distinct author, not Tagpu"},
+    {"url": "https://sakyaresearch.org/sources/4957", "found": "403 Forbidden; could not verify content"}
+  ],
+  "reasoning": "The text is Tagpu Lobzang Tenpai Gyaltsen's (1714–1762) Gelug spyi don commentary on the two-stage Naro Khecharī Vajrayoginī practice. BDRC (W1KG5169) confirms Tibetan-only; no English translation found across Lotsawa House, Dakini Translations, Nalanda TC, Dechen Ling, WorldCat, or archive.org. Existing English Vajrayoginī Naro Khecharī translations (Pabongkha, Serkong) are distinct texts by different authors."
+}

@@ -1,0 +1,67 @@
+{
+  "book_id": "69c88b0a6c6f3cc53c85a824",
+  "work_identified": "Le tableau des riches inventions couvertes du voile des feintes amoureuses, qui sont représentées dans le Songe de Poliphile (Béroalde de Verville, 1600) — a distinct French alchemical reworking/commentary of Colonna's Hypnerotomachia Poliphili, not a direct translation of the Italian original",
+  "verdict": "first_from_source",
+  "prior_relationship": "related_distinct_work",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Hypnerotomachia Poliphili: The Strife of Love in a Dream",
+      "translator": "Joscelyn Godwin",
+      "pub_year": "1999",
+      "publisher": "Thames & Hudson",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Hypnerotomachia_Poliphili"
+    }
+  ],
+  "queries_run": [
+    "Béroalde de Verville \"Le tableau des riches inventions\" \"Songe de Poliphile\" English translation",
+    "\"Hypnerotomachia Poliphili\" English translation Godwin 1999 complete",
+    "\"Béroalde de Verville\" \"Tableau des riches inventions\" English translation WorldCat",
+    "worldcat \"Beroalde de Verville\" \"songe de Poliphile\" English",
+    "\"Beroalde de Verville\" \"tableau\" English translation published",
+    "site:archive.org \"tableau des riches inventions\" English",
+    "\"tableau des riches inventions\" \"Beroalde\" English \"translated\" OR \"translation\" -French",
+    "Hypnerotomachia Poliphili English translations history 1592 Dallington Godwin 1999 complete",
+    "\"Beroalde de Verville\" \"Poliphile\" distinct work alchemical commentary scholarship English never translated",
+    "\"Beroalde de Verville\" OR \"Béroalde de Verville\" English translation published book"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Hypnerotomachia_Poliphili",
+      "found": "Godwin 1999 is first complete English of the Hypnerotomachia (from Italian original); 1592 Dallington partial; no mention of English translation of Béroalde's 1600 French version"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Fran%C3%A7ois_B%C3%A9roalde_de_Verville",
+      "found": "Tableau (1600) is a distinct item in his bibliography; his famous Moyen de parvenir was translated into English (Machen 1923) but the Tableau is not listed as having an English translation"
+    },
+    {
+      "url": "https://journals.openedition.org/elseneur/844",
+      "found": "Scholarly analysis of Béroalde as translator of Colonna; work described as 'actualisation du Songe de 1546, une correction des erreurs commises par Jean Martin, et une glose' — functions as update + commentary, not mere retranslation; no English translation mentioned"
+    },
+    {
+      "url": "https://architectura.univ-tours.fr/en/livres-notice/cesr_4023c490/",
+      "found": "Béroalde's Tableau described as 'more a new avatar than a faithful image' of Colonna's original; alchemical reinterpretation distinct from the Italian source; no English translation referenced"
+    },
+    {
+      "url": "https://agorha.inha.fr/ark:/54721/40052a40-9ac8-4790-b33c-8a2987f80c8b",
+      "found": "INHA authority record: Béroalde listed as 'traducteur' (translator) of the 1600 Tableau; confirms it as a separately catalogued work"
+    },
+    {
+      "url": "https://caareviews.org/reviews/375",
+      "found": "Godwin translated from Italian original; 1546 French Martin edition and 1592 English Dallington (partial) noted; Béroalde 1600 not mentioned"
+    },
+    {
+      "url": "https://www.backcreekbooks.com/pages/books/1675/arthur-machen-francois-beroalde-de-verville/fantastic-tales-or-the-way-to-attain-a-book-full-of-pantagruelism-now-for-the-first-time-done-into",
+      "found": "Arthur Machen's English translation of Béroalde de Verville (1923) is of Le Moyen de parvenir — NOT the Tableau des riches inventions"
+    },
+    {
+      "url": "https://www.worldcat.org/search?q=beroalde+de+verville+tableau+riches",
+      "found": "HTTP 403 — WorldCat direct access blocked; relied on secondary search results for WorldCat presence"
+    }
+  ],
+  "reasoning": "Béroalde's 1600 Tableau is a distinct, separately-citable French reworking of Colonna's Hypnerotomachia — scholarly consensus calls it 'more a new avatar than a faithful image,' with its own alchemical commentary (Recueil stéganographique). The underlying Hypnerotomachia has complete English (Godwin 1999, from Italian). Béroalde's French version has never been Englished; Machen's 1923 Béroalde translation is of Le Moyen de parvenir only. DB metadata lists source_language:German but the work is unambiguously French."
+}

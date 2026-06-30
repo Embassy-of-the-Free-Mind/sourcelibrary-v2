@@ -1,0 +1,41 @@
+{
+  "book_id": "6990693f2f82e0fda4805a70",
+  "work_identified": "Tajika Neelakanthi by Nilakantha Daivajna (son of Ananta Deva), Sanskrit treatise on the Tajika system of astrology covering Varshaphala (annual horoscopy) and Prasna (horary astrology), completed ca. 1587 CE",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Tajik Neelkanthi of Acharya Neelkantha: A Classic on Annual Horoscopy and Horary Astrology (Sanskrit Text with English Translation)",
+      "translator": "D.P. Saxena",
+      "pub_year": "2007",
+      "publisher": "Ranjan Publications",
+      "completeness": "complete",
+      "source_url": "https://www.saujanyabooks.com/details.aspx?id=17606"
+    }
+  ],
+  "queries_run": [
+    "Tajika Neelakanthi Neelakantha English translation Sanskrit astrology",
+    "\"Tajika Neelakanthi\" English translation published",
+    "WorldCat \"Tajika Neelakanthi\" OR \"Tajik Neelkanthi\" English translation D.P. Saxena Ranjan Publications",
+    "\"Tajik Neelkanthi\" \"D.P. Saxena\" OR \"D P Saxena\" \"Ranjan Publications\" year published English complete translation",
+    "\"Tajika Neelakanthi\" English translation before 2000 jyotisha astrology",
+    "GRETIL Tajika Neelakanthi Sanskrit text",
+    "\"Tajik Neelkanthi\" Saxena Ranjan Publications publication year ISBN"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.saujanyabooks.com/details.aspx?id=17606", "found": "D.P. Saxena English translation listed as 'Sanskrit Text with English Translation' covering Sangya, Varsa, and Prasna Tantra sections; pub year 2007"},
+    {"url": "https://bookkish.com/products/tajik-neelkanthi-english", "found": "D.P. Saxena, Ranjan Publications; described as 'complete text in Sanskrit English translation, notes and exhaustive commentary with practical example Horoscopes'; 335pp; ISBN 9782808197342"},
+    {"url": "https://saptarishisshop.com/product/tajik-neelkanthi/", "found": "English edition confirmed: D.P. Saxena, Ranjan Publications"},
+    {"url": "https://www.amazon.com/Tajik-Neelkanthi-Kanth-Saxena-Author/dp/B0855KH78W", "found": "Amazon.com listing for D.P. Saxena English edition (server 500 on fetch but confirmed in search snippet)"},
+    {"url": "https://www.astrodevam.com/tajik-neelkanthi-boas-0930.html", "found": "English eBook edition by D.P. Saxena, Ranjan Publications; SKU BOAS-0930"},
+    {"url": "https://www.vedicbooks.net/tajik-neelkanthi-p-16085.html", "found": "English edition by D.P. Saxena, $21.99; described as authoritative treatise on horary astrology"},
+    {"url": "https://archive.org/details/tajika_nilakanthi", "found": "1931 Sanskrit+Hindi edition by Jyotirvid Pandit Mahidhar Sharma — NOT English"},
+    {"url": "https://en.wikipedia.org/wiki/Tajika_Neelakanthi", "found": "Wikipedia article on the work; one reference is a 1976 'original text with translation and commentary' (language unclear, likely Hindi); no explicit statement of prior English"},
+    {"url": "https://gretil.sub.uni-goettingen.de/gretilbk.htm", "found": "GRETIL catalog consulted; no electronic Sanskrit text for Tajika Neelakanthi found"}
+  ],
+  "reasoning": "D.P. Saxena's 'Tajik Neelkanthi' (Ranjan Publications, ISBN 9782808197342, ~335pp) is a complete English translation with Sanskrit text, commentary and horoscope examples, widely sold commercially on Amazon.com/India, Bookkish, Vedic Books, Saptarishis and others. Multiple independent retail listings confirm completeness. Verdict: not_first."
+}

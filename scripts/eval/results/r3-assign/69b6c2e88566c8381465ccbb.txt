@@ -1,0 +1,4 @@
+book_id: 69b6c2e88566c8381465ccbb
+Title: Index librorum prohibitorum Innoc. XI. P. M. iussu editus usque ad annum 1681 : eidem accedit in fine appendix usque ad mensem Iunij 1704
+Author: Innozenz
+Source language: Latin

@@ -1,0 +1,39 @@
+{
+  "book_id": "6992cf4cf5b4f75c1a4c887b",
+  "work_identified": "植物名實圖考 卷二十二 (Zhiwu Mingshi Tukao, vol. 22; Wu Qijun, 1848) — one of 38 volumes of the illustrated Chinese botanical encyclopedia",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "partial",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Zhiwu Mingshi Tukao English translation Wu Qijun 植物名實圖考",
+    "WorldCat \"Zhiwu mingshi tukao\" OR \"植物名實圖考\" English translation",
+    "\"Wu Qijun\" botany English translation history of botany China sinology",
+    "site:worldcat.org \"吳其濬\" OR \"wu qijun\" English",
+    "\"illustrated investigation of plant names\" OR \"plants names realities\" Wu Qijun English translation published",
+    "\"He Bian\" OR \"Menzies\" \"Zhiwu mingshi tukao\" English translation volume",
+    "archive.org \"zhiwu mingshi tukao\" English",
+    "\"植物名實圖考\" English translation complete OR partial HathiTrust OR \"University Press\" OR Brill",
+    "Walravens \"Zhiwu Mingshi Tukao\" Swingle index English preface translation 2022 2023",
+    "\"Zhiwu mingshi tukao\" volume 22 OR \"juan 22\" English plants botany translated",
+    "\"ordering the myriad things\" Menzies botany China \"zhiwu mingshi\" translation English",
+    "\"Zhiwu mingshi tukao\" translation OR translated English sinology journal article excerpt",
+    "\"zhiwu mingshi tukao\" \"first English translation\" OR \"never been translated\" OR \"no English translation\""
+  ],
+  "sources_consulted": [
+    {"url": "https://www.wikidata.org/wiki/Q11117391", "found": "No English translations listed; only Chinese editions documented"},
+    {"url": "https://www.wikidata.org/wiki/Q107402112", "found": "1848 Daoguang woodblock edition on Chinese Wikisource; no English translation item"},
+    {"url": "https://www.wikidata.org/wiki/Q2594641", "found": "Wu Qijun author page; no English translation of Zhiwu mingshi tukao listed"},
+    {"url": "https://journals.eco-vector.com/1811-8062/article/view/77360", "found": "Walravens 2021: Swingle prepared only indexes and preface translations, NOT a translation of the botanical text itself"},
+    {"url": "https://uwapress.uw.edu/book/9780295749464/ordering-the-myriad-things/", "found": "Menzies 2021 is a secondary history-of-botany monograph, not a translation of the Zhiwu mingshi tukao"},
+    {"url": "https://ctext.org/datawiki.pl?if=en&res=743487", "found": "Wu Qijun entry on CText; no English translation mentioned"},
+    {"url": "https://search.worldcat.org/", "found": "Direct access blocked (403); no WorldCat record for English translation surfaced in any indirect search"},
+    {"url": "https://catalog.hathitrust.org/", "found": "Direct access blocked (403); no HathiTrust record for English translation surfaced in indirect searches"},
+    {"url": "https://www.chstm.org/events/popular-science-missionary-science-case-wu-qijun-1789-1847s-reinvention-botany", "found": "Scholarly discussion of Wu Qijun; no English translation of the text mentioned"},
+    {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5966355/", "found": "History of spread of Western botany to China; references Zhiwu mingshi tukao as untranslated source"}
+  ],
+  "reasoning": "No English translation of 植物名實圖考 found across Wikidata, CText, sinological scholarship (Walravens 2021, Menzies 2021, Fa-Ti Fan), or indirect WorldCat/HathiTrust searches. Swingle's only English-language output on this text was unpublished indexes and preface translations — not the botanical text. Work is a substantial illustrated botanical encyclopedia with plant descriptions; vol. 22 has prose, not wordless art."
+}

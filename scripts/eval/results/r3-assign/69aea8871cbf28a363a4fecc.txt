@@ -1,0 +1,4 @@
+book_id: 69aea8871cbf28a363a4fecc
+Title: De la division du travail social
+Author: Émile Durkheim
+Source language: French

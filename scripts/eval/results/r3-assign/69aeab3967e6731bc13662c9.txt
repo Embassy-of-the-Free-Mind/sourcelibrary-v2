@@ -1,0 +1,4 @@
+book_id: 69aeab3967e6731bc13662c9
+Title: Quaestiones Camaldulenses
+Author: Cristoforo Landino
+Source language: Latin

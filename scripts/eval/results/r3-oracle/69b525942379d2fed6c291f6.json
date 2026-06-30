@@ -1,0 +1,69 @@
+{
+  "book_id": "69b525942379d2fed6c291f6",
+  "work_identified": "Toonneel des Aerdrycks ofte Nieuwe Atlas (Dutch-language edition of the Atlas Novus / Theatrum Orbis Terrarum), Willem and Joan Blaeu, Amsterdam, c.1635–c.1660",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "The Blaeu Atlas of Scotland: Scotland from Theatrum Orbis Terrarum Sive Atlas Novus Pars Quinta",
+      "translator": "I.C. Cunningham",
+      "pub_year": "2006",
+      "publisher": "Birlinn / National Library of Scotland, Edinburgh",
+      "completeness": "partial",
+      "source_url": "https://www.abebooks.co.uk/9781841585857/Blaeu-Atlas-Scotland-Joan-1841585858/plp"
+    }
+  ],
+  "queries_run": [
+    "Blaeu \"Toonneel des aerdrycks\" English edition translation",
+    "Willem Blaeu \"Theatre of the World\" English edition 17th century atlas",
+    "Blaeu Atlas Novus English edition 1645 1646 1647 \"theatre of the world\"",
+    "Blaeu \"Toonneel des Aerdrycks\" WorldCat editions languages",
+    "Blaeu atlas \"Toonneel des aerdrycks\" site:worldcat.org",
+    "Blaeu \"Atlas Novus\" English translation modern scholarly \"first English\"",
+    "Blaeu Atlas Scotland 2006 Birlinn \"first English translation\" Cunningham \"Atlas Novus\" volume",
+    "Blaeu \"Atlas Novus\" OR \"Theatrum Orbis Terrarum\" complete English translation modern",
+    "history cartography Blaeu atlas English no English edition published languages",
+    "Blaeu \"Toonneel des aerdrycks\" archive.org internet archive",
+    "Taschen Blaeu \"Atlas Maior\" Van der Krogt English \"original text\" translation OR commentary",
+    "Blaeu atlas \"grand atlas\" Goss English text \"selection of maps\" translated OR commentary OR captions"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Atlas_Maior",
+      "found": "Atlas Maior published in Latin, French, Dutch, German, Spanish only — no English edition in the 17th century; confirmed absence"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Willem_Blaeu",
+      "found": "Atlas Novus / Toonneel des Aerdrycks history; Atlas Novus in Latin, Dutch, French, German — no English"
+    },
+    {
+      "url": "https://library.wur.nl/WebQuery/groenekennis/1869984",
+      "found": "Groenekennis record: editions in Latin, French, German, Spanish — no English edition listed"
+    },
+    {
+      "url": "https://www.abebooks.co.uk/9781841585857/Blaeu-Atlas-Scotland-Joan-1841585858/plp",
+      "found": "2006 Blaeu Atlas of Scotland (Vol. V, Scotland/Ireland from Latin) translated by I.C. Cunningham — first English of that section only; Atlas Novus Vol. V, not the Dutch Toonneel"
+    },
+    {
+      "url": "https://www.si.edu/object/blaeus-grand-atlas-17th-century-world-cartographic-material-introduction-captions-and-selection-maps:siris_sil_901788",
+      "found": "Goss 1990 Grand Atlas: English introduction, captions, and selection of maps only — not a complete translation of the original text"
+    },
+    {
+      "url": "https://www.taschen.com/en/books/classics/44816/joan-blaeu-atlas-maior-of-1665/",
+      "found": "Taschen Atlas Maior: multilingual (EN/DE/FR) with van der Krogt commentary and selected original Blaeu quotes from Dutch — partial excerpts, not complete translation; covers Atlas Maior (successor work), not Atlas Novus"
+    },
+    {
+      "url": "https://www.mullenbooks.com/pages/books/172357/joan-blaeu-p-c-j-van-der-krogt/atlas-maior-of-1665",
+      "found": "Taschen facsimile with modern scholarly annotation; texts translated from Dutch but partial/excerpts, not the complete Atlas Novus / Toonneel des Aerdrycks text"
+    },
+    {
+      "url": "https://www.bonhams.com/auction/30293/lot/4/blaeu-willem-and-jan-toonneel-des-aerdrycks-oft-nieuwe-atlasvierde-deel-amsterdam-jan-blaeu-1646-but-1647/",
+      "found": "Bonhams lot for Vierde Deel (Fourth Part) of Toonneel des Aerdrycks, 1646/7 — confirms multi-volume Dutch structure"
+    }
+  ],
+  "reasoning": "No English edition of the Blaeu Atlas Novus / 'Toonneel des aerdrycks' was ever published (17th-c. claim checked and refuted: only Latin, Dutch, French, German, Spanish). Only a partial prior English exists: 2006 NLS/Birlinn Scotland Atlas (Vol. V from Latin, not Dutch). Taschen eds. include selected Dutch quotes (Atlas Maior, partial). No complete English translation of this Dutch-language atlas exists."
+}

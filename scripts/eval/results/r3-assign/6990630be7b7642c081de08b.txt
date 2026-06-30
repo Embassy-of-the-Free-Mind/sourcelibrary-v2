@@ -1,0 +1,4 @@
+book_id: 6990630be7b7642c081de08b
+Title: Sefer ha-Zohar (Cremona 1558)
+Author: Moses de León (attributed)
+Source language: Hebrew

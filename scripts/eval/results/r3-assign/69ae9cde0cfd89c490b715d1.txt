@@ -1,0 +1,4 @@
+book_id: 69ae9cde0cfd89c490b715d1
+Title: Herculanensium Voluminum quae Supersunt, Vol. V
+Author: Real Academia Ercolanese
+Source language: Latin
