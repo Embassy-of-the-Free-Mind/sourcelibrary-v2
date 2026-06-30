@@ -106,6 +106,33 @@ export function dedupeImages<T>(imgs: T[], keyFn: (img: T) => string | undefined
   return out;
 }
 
+// Content signature for catching NEAR-duplicates: the same plate stored as two
+// gallery records (different page/url) within the same book — exact url/id dedupe
+// misses these. Keyed on book + a normalised title taken from the AI description
+// (the quoted title it almost always carries, e.g. titled 'System of the
+// Interior…'), falling back to the description's distinctive words. Scoped to the
+// SAME book so genuinely different holdings of a similar plate are never merged.
+// Returns null when there's no usable signature (those images are always kept).
+const DESC_FILLER = /\b(this|an?|the|intricate|elaborate|detailed|finely|ornate|beautiful|vibrant|hand-?colou?red|engraving|woodcut|illustration|frontispiece|plate|image|page|depicts?|depicting|features?|featuring|titled|shows?|showing|serves?|as|of|from|with)\b/g;
+const STOP_WORDS = new Set(['this', 'that', 'with', 'from', 'which', 'their', 'they', 'into', 'also', 'such', 'titled', 'depicts', 'depicting', 'showing', 'shows', 'features', 'featuring', 'serves', 'page', 'plate', 'image', 'folio', 'engraving', 'woodcut', 'illustration', 'frontispiece']);
+export function nearDupeSignature(img: {
+  book_id?: string | null; book_title?: string | null;
+  type?: string | null; description?: string | null; museum_description?: string | null;
+}): string | null {
+  const book = (img.book_id || img.book_title || '').toString().toLowerCase();
+  const desc = (img.museum_description || img.description || '').toLowerCase();
+  if (!book || !desc) return null;
+  // Prefer the quoted title the AI description almost always carries; else strip
+  // filler from the whole description. Either way, reduce to the first four
+  // significant words so length variations ("…Heaven" vs "…Heaven, shewing…")
+  // don't split the key.
+  const quoted = desc.match(/[‘'"“]([^‘'"”]{6,120})[’'"”]/);
+  const source = quoted ? quoted[1] : desc.replace(DESC_FILLER, ' ');
+  const words = source.replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter((w) => w.length > 3 && !STOP_WORDS.has(w));
+  const title = words.slice(0, 4).join('');
+  return title.length >= 6 ? `${book}::${title}` : null;
+}
+
 type Bucket = 'subject' | 'other' | 'people' | 'decor';
 
 function categorize(img: RankableImage, topicTerms: string[]): Bucket {

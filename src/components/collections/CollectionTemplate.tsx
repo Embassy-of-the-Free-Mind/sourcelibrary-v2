@@ -19,7 +19,7 @@ import QuoteBlock, { type Quote } from '@/app/collections/mycology/_components/Q
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ParallaxImage from '@/components/ParallaxImage';
 import { getImageFraming } from '@/lib/image-framing';
-import { dedupeImages, weaveBySubject, topicTermsFromName } from '@/lib/collection-image-ranking';
+import { dedupeImages, nearDupeSignature, weaveBySubject, topicTermsFromName } from '@/lib/collection-image-ranking';
 
 /*
  * Reusable collection-page template (the mycology redesign, generalised). Applied
@@ -183,7 +183,9 @@ export default async function CollectionTemplate({ config }: { config: Collectio
   const { firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages } = data;
 
   const topicTerms = topicTermsFromName(config.topicName || config.hero.title);
-  const deduped = dedupeImages(gallery, (g) => galleryImageId(g) || imgUrl(g));
+  // Dedupe exact repeats, then content near-duplicates (same plate, two records).
+  const exact = dedupeImages(gallery, (g) => galleryImageId(g) || imgUrl(g));
+  const deduped = dedupeImages(exact, nearDupeSignature);
   const rankedGallery = weaveBySubject(deduped, topicTerms);
   const galleryTotal = rankedGallery.length;
   const galleryPlates = rankedGallery.filter((g) => imgUrl(g)).slice(0, 20).map((g) => {
