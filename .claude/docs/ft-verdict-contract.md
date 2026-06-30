@@ -35,15 +35,16 @@
 | `first_complete` | only partial/excerpt English exists AND our item is verified complete | **first** |
 | `first_modern` | only pre-1900 English exists | **first** |
 | `not_first` | a complete modern English translation of the work exists (from ANY source language) | **demote** |
-| `not_applicable` | ill-posed: visual art, multi-work container/anthology/opera-omnia, scripture-manuscript copy, or our item is itself a non-English translation | **remove** |
+| `not_applicable` | **our item is itself already in English** (an English original or an English edition/translation), OR wordless visual art with no translatable prose | **remove** |
 | `unverifiable` | competent sources are catalogue-blind; search can't be bounded | not a first |
 | `needs_review` | evidence conflicts or work identity unresolved | not a first |
 
 **Hard rules on the contract:**
 - `prior_translations_found` is `[]` unless a prior English exists. Every entry MUST carry a real translator + year you actually found — **never a placeholder, never a guess**. (`prior_found` is derived downstream as `length>0`; do not emit it.)
 - `evidence_strength`: `strong` only if a prior was positively found OR absence was confirmed in competent tradition-appropriate sources; `moderate` for a well-searched bounded absence; `weak` if competent sources could not be searched. A blind Western-catalogue miss on a non-Western text is `weak`, never proof of a first.
+- **`not_applicable` is NARROW (revised 2026-06-30, #2880 Round 1).** It means ONLY: our item is *already English* (English original, or an existing English edition/translation), or it is wordless visual art. A **multi-work container / anthology / single volume of a larger set / scripture-or-liturgy compilation is NOT automatically `not_applicable`** — the question is still "does a complete prior English of THIS content exist?" If a prior does → `not_first`; if none does and we produced the first English of that material → it is a **first** (`first_no_prior`/`first_complete`), even though the cataloguing unit is a volume or a compilation. "Container" and "scripture copy" are cataloguing abstractions, not translation facts. (Rationale: Round 1's strict NA rule undercounted the badged genuine-first rate by ~27 points — 50%→77% — by disqualifying untranslated Tibetan/Chinese/Hebrew material we were in fact first to English. When the claim is honest, **word it around the material/volume actually translated**, not the implied complete parent work.)
 
-This is identical to what `scripts/eval/ft-gemini-adjudicate.mjs` already returns — so a Gemini run and a Claude run are directly comparable verdict-for-verdict.
+This is identical to what `scripts/eval/ft-gemini-adjudicate.mjs` already returns — so a Gemini run and a Claude run are directly comparable verdict-for-verdict. (NB: the Tier-1 Gemini prompt still carries the OLD broad NA rule; reconciling it is hypothesis **H1** in the #2880 Round-2 A/B — see `ft-pilot-round-1.md` §9.)
 
 ---
 
@@ -59,7 +60,7 @@ Use this for a book whose direction is unknown (a random-sample book in #2880, o
 >
 > Disambiguate THIS work from parent/sibling/derivative works and other editions. **Source-language rule (decisive):** if a complete modern English translation of THIS WORK exists from ANY source language, the verdict is `not_first` — even if our copy is in a different language than the prior translator used. Use `first_from_source` ONLY when our text is a distinct, separately-citable intermediary never Englished while the underlying work has been.
 >
-> `not_applicable` if: visual art with no translatable prose; a multi-work container / anthology / opera-omnia (claim ill-posed); a plain manuscript copy of canonical scripture; or our item is itself a translation INTO another (non-English) language.
+> `not_applicable` ONLY if: our item is **already in English** (an English original, or an existing English edition/translation), OR it is wordless visual art with no translatable prose. A **multi-work container / anthology / single volume of a larger set / scripture-or-liturgy compilation is NOT `not_applicable`** by itself — judge it like any other text: if a complete prior English of THIS content exists → `not_first`; if none does and our English is the first rendering of that material → a **first** (`first_no_prior`/`first_complete`). "Container" / "scripture copy" are cataloguing labels, not translation facts. (If our item is itself a translation INTO another non-English language, e.g. a Dutch edition of a Portuguese work, weigh whether the underlying work has a prior English → `not_first`, else treat our rendering on its merits.)
 >
 > Return ONLY the JSON contract (the schema in §1). Every `prior_translations_found` entry MUST have a real translator + year you actually found — never a guess. If your "no prior" rests only on weak sources, set `evidence_strength: weak`.
 

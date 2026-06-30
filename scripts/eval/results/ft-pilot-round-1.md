@@ -110,5 +110,15 @@ Five drawn pseudo-randomly across strata, re-inspected against the oracle's cite
 - **Overall stop check:** all strata within target? **No.** Last K rounds dry of new failure patterns? **No** (Round 1 surfaced the NA-gap). → **CONTINUE** (expand + run the A/B arms).
 - **Sign-off needed?** This is a **measure-only** round — no flips. For Derek's awareness, the badged-stratum **measure-only** badge-impact (NOT a recommendation to apply): of 26 badged books, oracle reads FIRST 13 · **NA 11** · INDET 2 · **NOT_FIRST 0**. The over-claim on badged firsts is **almost entirely "this badge is ill-posed for this item type" (NA), essentially zero "someone translated it first" (not_first)** — a materially different remediation (suppress badge on containers/scripture-volumes/English-originals) than demotion. Any actual flip needs a directional Tier-2 re-verify (`ft-verify`) + Derek sign-off.
 
+### 10b. CORRECTED-RUBRIC re-read (added 2026-06-30, after Derek review)
+Derek rejected the strict `not_applicable` rule: a multi-work container / single scripture-volume / compilation that we produced the **first English of** (no prior English of the content) IS a first — "container"/"scripture copy" are cataloguing labels, not translation facts. NA should mean only *already-English* or *wordless visual art*. Re-mapping the **same oracle evidence** (no re-run — `ft-pilot-score.mjs` `clsCorrected`):
+
+| | strict NA rule (orig) | corrected rule |
+|---|---|---|
+| BADGED genuine-first | 13/26 = **50.0%** | **20/26 = 76.9%** [57.9–89.0] |
+| overall genuine-first | 17/52 = 32.7% | **32/52 = 61.5%** [48.0–73.5] |
+
+The badged "over-claim" collapses from 50% to **4/26 (15%)** real problems — and they are specific: **1 remove** (Federalist, already English) + **3 demote** (Seneca two-work volume, festival maḥzor, Bum Tha/Prajñāpāramitā — each has an actual complete prior English). Everything else the strict rule called NA was untranslated Tibetan/Chinese/Hebrew material we were genuinely first to English. The contract's NA definition (`ft-verdict-contract.md` §1/§2) was narrowed accordingly, and Round 2's oracle uses the corrected rubric. **Claim-wording guardrail:** word the public badge around the *material/volume actually translated*, not the implied complete parent work.
+
 ### 11. Ledger row
 `| 2026-06-30 | pilot round 1 | Tier-1 gemini-3-flash-preview + oracle sonnet (unprimed, hinted) | 4×13 stratified (badged×W/nonW) | 52 | κ=0.30; T1 NA-blindness (26 oracle NA vs 4); badged 50% genuine / 42% NA / 0% real-prior | scripts/eval/results/ft-pilot-round-1.* | round artifact |`

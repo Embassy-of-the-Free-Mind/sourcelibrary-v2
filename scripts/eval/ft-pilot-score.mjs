@@ -24,16 +24,42 @@ for (const f of readdirSync(`${ROOT}/r1-oracle`).filter(f => f.endsWith('.json')
 }
 
 const FIRST = new Set(['first_no_prior', 'first_from_source', 'first_complete', 'first_modern']);
+// STRICT rubric (original contract): not_applicable auto-disqualifies containers + scripture copies.
 const cls = v => FIRST.has(v) ? 'FIRST' : v === 'not_first' ? 'NOT_FIRST' : v === 'not_applicable' ? 'NA'
   : (v === 'unverifiable' || v === 'needs_review') ? 'INDET' : 'OTHER';
 const priorClaimed = o => Array.isArray(o.prior_translations_found) && o.prior_translations_found.length > 0;
+
+// CORRECTED rubric (Derek, 2026-06-30): not_applicable means ONLY "our item is already English"
+// or "wordless visual art". A multi-work container / single scripture-volume / compilation that we
+// produced the FIRST English of (no prior English of that content) IS a first. A complete prior
+// English of the content → not_first. Re-maps the SAME oracle evidence — no re-run.
+// Items already in English (or wordless visual art) in this sample, manually verified:
+const ALREADY_ENGLISH = new Set([
+  '69aec4473b6ebce5e0ee5929', // The Federalist (English original)
+  '69b52fab1a04ee0f3b4180e9', // Budge, Egyptian Hieroglyphic Dictionary (English reference work)
+  '699246b3bc722ec0ee81144f', // Wycliffe Bible, Forshall & Madden (Middle English)
+  '695581a157e3b773024f6989', // Munro, Poems & Translations (already-English publication)
+  '69b3e686abb796bfd9de42ab', // Texts on magic & fortune telling (Middle English miscellany)
+]);
+const priorExists = o => o.verdict === 'not_first' || priorClaimed(o);
+function clsCorrected(o) {
+  if (FIRST.has(o.verdict)) return 'FIRST';
+  if (o.verdict === 'not_first') return 'NOT_FIRST';
+  if (o.verdict === 'unverifiable' || o.verdict === 'needs_review') return 'INDET';
+  if (o.verdict === 'not_applicable') {
+    if (ALREADY_ENGLISH.has(String(o.book_id))) return 'NA_ENGLISH'; // truly not a translation
+    if (priorExists(o)) return 'NOT_FIRST';                          // complete prior of the content exists
+    return 'FIRST';                                                  // untranslated content we Englished
+  }
+  return 'OTHER';
+}
 
 // ---- assemble joined rows ----
 const rows = key.map(k => {
   const o = oracle.get(String(k.id)), g = gem.get(String(k.id));
   return {
     id: k.id, stratum: k.stratum, badged: k.badged, disposition: k.disposition,
-    oVerdict: o?.verdict || 'MISSING', oCls: o ? cls(o.verdict) : 'MISSING', oConf: o?.confidence,
+    oVerdict: o?.verdict || 'MISSING', oCls: o ? cls(o.verdict) : 'MISSING', oCorr: o ? clsCorrected(o) : 'MISSING', oConf: o?.confidence,
     oPrior: o ? priorClaimed(o) : null, oStrength: o?.evidence_strength,
     gVerdict: g?.verdict || 'MISSING', gCls: g ? cls(g.verdict) : 'MISSING', gPrior: g ? priorClaimed(g) : null,
   };
@@ -122,6 +148,29 @@ console.log('\n================ CORPUS-COUNT INPUTS (this round, unweighted) ===
 console.log(`BADGED genuine-first rate (oracle):   ${bm.oFirst}/${bm.n} = ${pct(bm.p)} [${pct(bm.lo)}–${pct(bm.hi)}]  (1 - this = over-claim)`);
 console.log(`UNBADGED genuine-first rate (oracle): ${um.oFirst}/${um.n} = ${pct(um.p)} [${pct(um.lo)}–${pct(um.hi)}]  (recall: firsts not badged)`);
 console.log('NOTE: a single headline corpus number needs corpus-level stratum weights (badged/unbadged × W/nonW totals) — deferred to Derek per #2880 guardrail.');
+
+// ---- CORRECTED rubric: genuine-first rate per stratum (re-mapped oracle evidence, no re-run) ----
+console.log('\n================ CORRECTED RUBRIC (NA = already-English / wordless art only) ================');
+console.log('Genuine-first = oracle FIRST family OR (container/scripture/compilation with NO prior English of the content).');
+console.log('stratum                  n | genuine-FIRST [Wilson95] | not_first | NA(English) | indet');
+for (const s of [...strata, '__ALL__']) {
+  const sub = s === '__ALL__' ? scored : scored.filter(r => r.stratum === s);
+  const n = sub.length;
+  const f = sub.filter(r => r.oCorr === 'FIRST').length;
+  const nf = sub.filter(r => r.oCorr === 'NOT_FIRST').length;
+  const na = sub.filter(r => r.oCorr === 'NA_ENGLISH').length;
+  const ind = sub.filter(r => r.oCorr === 'INDET').length;
+  const [p, lo, hi] = wilson(f, n);
+  console.log(`${(s === '__ALL__' ? 'OVERALL' : s).padEnd(24)} ${String(n).padStart(2)} | ${String(f).padStart(2)}/${n} = ${pct(p)} [${pct(lo)}–${pct(hi)}] | ${nf} | ${na} | ${ind}`);
+}
+const bF = scored.filter(r => r.badged && r.oCorr === 'FIRST').length;
+const bN = scored.filter(r => r.badged).length;
+const [bp, blo, bhi] = wilson(bF, bN);
+console.log(`\nBADGED genuine-first (corrected): ${bF}/${bN} = ${pct(bp)} [${pct(blo)}–${pct(bhi)}]  (was ${pct(13 / 26)} under strict NA rule)`);
+console.log('GENUINE non-firsts among BADGED (the only demote/remove candidates):');
+for (const r of scored.filter(r => r.badged && (r.oCorr === 'NOT_FIRST' || r.oCorr === 'NA_ENGLISH'))) {
+  console.log(`  ${r.id}  ${r.oCorr === 'NA_ENGLISH' ? 'REMOVE (already English)' : 'DEMOTE (prior English exists)'}  — oracle:${r.oVerdict}`);
+}
 
 // ---- disagreement queue (read-all) ----
 console.log('\n================ QUEUE A — DISAGREEMENTS (4-class) ================');
