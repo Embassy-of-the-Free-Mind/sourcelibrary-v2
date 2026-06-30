@@ -140,7 +140,8 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Overview mode — read pre-computed snapshot from system_config (live agg takes 30-80s)
+    // Overview mode — read pre-computed snapshot from system_config.
+    // Live aggregation is extremely slow on slow networks and is disabled.
     const cached = await db.collection('system_config')
       .findOne({ _id: 'timeline_overview' } as any)
       .catch(() => null);
@@ -151,66 +152,10 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Fallback: compute live (will likely timeout on Atlas, but try)
-    const pipeline = [
-      { $match: baseMatch },
-      {
-        $group: {
-          _id: { $multiply: [{ $floor: { $divide: ['$year', 10] } }, 10] },
-          count: { $sum: 1 },
-          languages: { $push: '$language' },
-        },
-      },
-      { $sort: { _id: 1 as const } },
-    ];
-
-    const rawDecades = await db.collection('books').aggregate(pipeline, { maxTimeMS: 15000 }).toArray();
-
-    const decades = rawDecades.map(d => {
-      const langCounts: Record<string, number> = {};
-      for (const lang of d.languages) {
-        const key = lang || 'Unknown';
-        langCounts[key] = (langCounts[key] || 0) + 1;
-      }
-      const languages = Object.entries(langCounts)
-        .map(([lang, count]) => ({ lang, count }))
-        .sort((a, b) => b.count - a.count);
-      return { decade: d._id, count: d.count, languages };
-    });
-
-    const total = decades.reduce((sum, d) => sum + d.count, 0);
-    const allYears = decades.map(d => d.decade);
-    const yearRange = {
-      min: allYears.length ? allYears[0] : 0,
-      max: allYears.length ? allYears[allYears.length - 1] + 9 : 0,
-    };
-
-    const globalLangCounts: Record<string, number> = {};
-    for (const d of decades) {
-      for (const l of d.languages) {
-        globalLangCounts[l.lang] = (globalLangCounts[l.lang] || 0) + l.count;
-      }
-    }
-    const topLanguages = Object.entries(globalLangCounts)
-      .map(([lang, count]) => ({ lang, count }))
-      .sort((a, b) => b.count - a.count);
-
-    // Read filter options from cache
-    const cachedFilters = await db.collection('system_config')
-      .findOne({ _id: 'timeline_filters' } as any)
-      .catch(() => null);
-
-    const languages = cachedFilters?.data?.languages || [];
-    const collections = cachedFilters?.data?.collections || [];
-
-    return NextResponse.json({
-      decades,
-      summary: { total, yearRange, topLanguages },
-      filters: {
-        languages: languages.filter(Boolean).sort(),
-        collections: collections.filter(Boolean).sort(),
-      },
-    });
+    return NextResponse.json(
+      { error: 'Timeline overview not precomputed' },
+      { status: 503 },
+    );
   } catch (error) {
     console.error('Timeline API error:', error);
     return NextResponse.json({ error: 'Failed to fetch timeline data' }, { status: 500 });
