@@ -139,11 +139,22 @@ The two LIVE famous-work FT badges are both *text + named commentary* editions:
   so a narrow "first complete English of the Parimelazagar commentary" claim is
   plausible (one ambiguous 1955 prior unresolved).
 In both, the badge MISLEADS as catalogued (titled as the famous base text) but a
-narrow commentary-first claim may be genuine. **Decision (Derek, 2026-06-30): KEEP
-the badge + reframe the metadata** to foreground the commentary (recorded in each
-book's `translation_verification.ft_reframe_needed_2026_06_30`; evidence in
-`scripts/output/ft-evidence-2026-06-30/commentary-edition-ft-verify-2026-06-30.json`).
-This is the FT runbook's "route famous-adjacent works to a human specialist" case.
+narrow commentary-first claim may be genuine. This is the FT runbook's "route
+famous-adjacent works to a human specialist" case, and it generalized into a
+principles doc — **`.claude/docs/title-and-work-identity-principles.md`** (titles
+do five conflicting jobs; the FT claim is a three-state predicate on
+`(work, source-language)`; the famous base text and its commentary are *distinct
+works*). Resolution (applied 2026-06-30, #2905):
+- **老子元翼** — retitled to lead with Jiao Hong's anthology (Tao Te Ching kept
+  in-title for findability); badge KEPT and now honest (first English of the
+  *anthology*; base-text translations render as "Related translations found").
+- **Tirukkural** — the narrow commentary-first claim is **unproven** (Thangaiya
+  1955 exists but its commentary-language is unverifiable without a physical copy).
+  Badge HEDGED (`is_first_translation:false`, `verdict:needs_review`) — no confident
+  first while a credible prior is unresolved; physical-copy todo logged on the book.
+Evidence: `scripts/output/ft-evidence-2026-06-30/commentary-edition-ft-verify-2026-06-30.json`;
+per-book notes in `translation_verification.ft_reframe_needed_2026_06_30` /
+`.open_question_2026_06_30`.
 
 ## Superseded follow-up (kept for the record — do NOT build the 84000 path)
 The anonymity + cross-script blockers suggested a cross-lingual work-identity
