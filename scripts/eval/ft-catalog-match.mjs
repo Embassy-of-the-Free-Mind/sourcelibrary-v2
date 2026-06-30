@@ -70,6 +70,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
 const DATE = new Date().toISOString().slice(0, 10);
 const APPLY = process.argv.includes('--apply');
+// --audit (#2899, #2885a): report-only alignment audit. Scans the broader set of
+// visible, translated, non-English books (not just FT-badged ones) and reports
+// per-source-language ("tradition") match precision. Never records attempts —
+// it measures catalog coverage, it does not demote. Optional `--lang a,b,c`
+// restricts the scan to specific book languages.
+const AUDIT = process.argv.includes('--audit');
+const LANG_FILTER = (() => {
+  const i = process.argv.indexOf('--lang');
+  if (i === -1 || !process.argv[i + 1]) return null;
+  return process.argv[i + 1].split(',').map((s) => s.trim()).filter(Boolean);
+})();
 
 // ── Text normalisation (mirrors src/lib/ft-prior-guard.ts) ─────────────────────
 
@@ -129,25 +140,53 @@ function isGenericAuthor(author) {
 }
 
 function extractSurname(author) {
-  const norm = normalise(author);
-  if (!norm) return '';
-  // catalog authors are often "Surname, Forename"
-  const raw = (author || '');
+  if (!normalise(author)) return '';
+  // Strip parenthetical role/qualifier markers — "(comm.)", "(ed.)", "(attr.)",
+  // "(traditional)" — which are ubiquitous on non-Latin attributions and would
+  // otherwise become the surname. (The catalog importer already strips these
+  // when it precomputes author_surname, so this aligns the book side.)
+  let raw = (author || '').replace(/\([^)]*\)/g, '');
+  // Multi-author "Primary; Commentator" → take the primary author (first segment).
+  if (raw.includes(';')) raw = raw.split(';')[0];
+  // "Surname, Forename" → surname.
   if (raw.includes(',')) return normalise(raw.split(',')[0]);
-  const parts = norm.split(/\s+/).filter(Boolean);
+  const parts = normalise(raw).split(/\s+/).filter(Boolean);
   return parts[parts.length - 1] || '';
 }
 
 // ── Source-language normalisation ──────────────────────────────────────────────
-// The catalog is entirely `source_language: 'la'`. Map a book's language to the
-// same ISO-ish bucket so guard (c) can compare like with like.
+// The catalog was originally entirely `source_language: 'la'`; #2899 adds
+// non-Latin catalogs (Hebrew/Aramaic via Sefaria, Sanskrit/Pali/etc. via Sacred
+// Books of the East, …). Map both the book's surface/original language AND any
+// ISO code that may already appear in the data to the same bucket so guard (c)
+// compares like with like. Keys are matched after `normalise()` (lowercased,
+// punctuation-stripped). Keep in sync with KNOWN_SOURCE_LANGUAGES in
+// scripts/lib/translation-catalog-record.mjs.
 
 const LANG_TO_ISO = {
+  // Latin
   latin: 'la', 'latin-german': 'la', la: 'la',
+  // Greek
   greek: 'grc', 'ancient greek': 'grc', 'classical greek': 'grc', grc: 'grc',
-  german: 'de', dutch: 'nl', french: 'fr', italian: 'it', spanish: 'es',
-  hebrew: 'he', arabic: 'ar', sanskrit: 'sa', tibetan: 'bo', chinese: 'zh',
-  syriac: 'syc', armenian: 'hy', akkadian: 'akk',
+  // modern European (parity with existing rows)
+  german: 'de', de: 'de', dutch: 'nl', nl: 'nl', french: 'fr', fr: 'fr',
+  italian: 'it', it: 'it', spanish: 'es', es: 'es',
+  // Hebrew / Aramaic
+  hebrew: 'he', 'biblical hebrew': 'he', 'mishnaic hebrew': 'he', he: 'he',
+  aramaic: 'arc', 'jewish aramaic': 'arc', 'imperial aramaic': 'arc', arc: 'arc',
+  // Arabic / Persian
+  arabic: 'ar', ar: 'ar', persian: 'fa', fa: 'fa', avestan: 'ave', ave: 'ave',
+  // South Asian
+  sanskrit: 'sa', sa: 'sa', san: 'sa', pali: 'pli', pli: 'pli', pi: 'pli', tamil: 'ta', ta: 'ta',
+  // Tibetan
+  tibetan: 'bo', bo: 'bo',
+  // Chinese (all classical/literary variants collapse to one bucket) + CJK
+  chinese: 'zh', 'classical chinese': 'zh', 'literary chinese': 'zh', 'old chinese': 'zh',
+  zh: 'zh', lzh: 'zh', zho: 'zh',
+  japanese: 'ja', ja: 'ja', korean: 'ko', ko: 'ko',
+  // Ancient Near East
+  syriac: 'syc', syc: 'syc', armenian: 'hy', hy: 'hy',
+  akkadian: 'akk', akk: 'akk', sumerian: 'sux', sux: 'sux', egyptian: 'egy', egy: 'egy',
 };
 
 function bookSourceIso(book) {
@@ -242,15 +281,24 @@ function titleSignal(book, row) {
 
 async function main() {
   await withMongo(async (db) => {
+    // In --audit mode, drop the `is_first_translation` constraint: we want to
+    // measure how well the catalog COVERS the corpus per tradition, not only
+    // which badges are at risk. Optionally restrict to specific languages.
     const badgeQ = {
-      is_first_translation: true,
+      ...(AUDIT ? {} : { is_first_translation: true }),
       visible: true,
       pages_translated: { $gt: 0 },
-      language: { $nin: [null, 'en', 'eng', 'English', 'english'] },
+      language: LANG_FILTER
+        ? { $in: LANG_FILTER }
+        : { $nin: [null, 'en', 'eng', 'English', 'english'] },
     };
 
     const nBadged = await db.collection('books').countDocuments(badgeQ);
-    console.log(`Badged books (FT, visible, translated, non-English): ${nBadged}`);
+    console.log(
+      AUDIT
+        ? `[AUDIT] Scanning ${nBadged} visible, translated, non-English books${LANG_FILTER ? ` (langs: ${LANG_FILTER.join(', ')})` : ''}`
+        : `Badged books (FT, visible, translated, non-English): ${nBadged}`,
+    );
 
     const books = await db
       .collection('books')
@@ -428,6 +476,22 @@ async function main() {
       needs_review_failed_guard_tally: reviewGuardFails,
     };
 
+    // Per-tradition (source-language) precision view for the alignment audit
+    // (#2885a). For each ISO bucket: how many books got a fully-guard-passing
+    // catalog match. These are the correctly source-language-gated candidates.
+    if (AUDIT) {
+      const traditions = {};
+      for (const r of results) {
+        const iso = r.book_source_iso || 'unknown';
+        const t = traditions[iso] || (traditions[iso] = { matched: 0, demote_candidates: 0 });
+        t.matched++;
+        if (r.tier === 'demote_candidate') t.demote_candidates++;
+      }
+      summary.by_tradition = Object.fromEntries(
+        Object.entries(traditions).sort((a, b) => b[1].demote_candidates - a[1].demote_candidates),
+      );
+    }
+
     // ── Empty-bucket assertions (catalog APIs once silently returned 100% NONE)
     console.log('\n=== SUMMARY ===');
     console.log(JSON.stringify(summary, null, 2));
@@ -446,7 +510,10 @@ async function main() {
     // A guard-passing match = our own registry already holds a prior English
     // translation of this work. Record it as durable found-prior evidence so it
     // accumulates instead of evaporating into a report. Still NO flag change.
-    if (APPLY && demote.length) {
+    if (APPLY && AUDIT) {
+      console.warn('\n[AUDIT] --audit is report-only; ignoring --apply (no attempts recorded).');
+    }
+    if (APPLY && !AUDIT && demote.length) {
       const isoDate = new Date().toISOString();
       let applied = 0;
       for (const r of demote) {
