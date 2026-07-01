@@ -185,6 +185,16 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     color: 'violet',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69b52c393dd6d9423027eb56/0003.jpg',
   },
+  'marciana': {
+    slug: 'marciana',
+    name: 'Biblioteca Nazionale Marciana',
+    shortName: 'Marciana',
+    providerKey: 'marciana',
+    url: 'https://bibliotecanazionalemarciana.cultura.gov.it',
+    description: 'The Biblioteca Nazionale Marciana in Venice, founded on Cardinal Bessarion\'s 1468 bequest of his Greek library, is one of the greatest surviving collections of Greek manuscripts. Among its treasures is the Codex Marcianus (Gr. Z. 299), the earliest and most important witness to the corpus of the Greek alchemists.',
+    color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/manuscripts/marciana-gr-299/399.jpg',
+  },
   'leiden': {
     slug: 'leiden',
     name: 'Leiden University Library',

@@ -43,6 +43,7 @@ export type ImageSourceProvider =
   | 'qdl'            // Qatar Digital Library / British Library
   | 'escorial'       // Real Biblioteca del Monasterio de El Escorial
   | 'bnp'            // Biblioteca Nacional de Portugal
+  | 'marciana'       // Biblioteca Nazionale Marciana, Venice
   | 'irht'           // IRHT (CNRS)
   | 'bdrc'           // Buddhist Digital Resource Center
   | 'ndl'            // National Diet Library of Japan (alternate key)
