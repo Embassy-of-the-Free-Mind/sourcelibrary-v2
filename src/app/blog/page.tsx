@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'fish-voiced-priest',
+    title: 'The Fish-Voiced Priest',
+    subtitle:
+      'An AI read a thousand-year-old Greek hand in the Codex Marcianus and invented a character who is not on the page — it turned "I am Ion, the priest of the inner sanctuaries" into "the fish-voiced one," then footnoted its own mistake. Why, for a hard script, the printed critical edition has to carry the text while the manuscript carries the facsimile.',
+    date: '2 July 2026',
+    readTime: '11 min read',
+    tag: 'Technical',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg',
+    imageAlt: 'Folio 93 recto of the Codex Marcianus gr. Z. 299, in tenth-century Greek minuscule',
+  },
+  {
     slug: 'reading-classical-chinese',
     title: 'Can AI Read Classical Chinese?',
     subtitle:
