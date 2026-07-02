@@ -11,7 +11,8 @@ const BOOK: FirstTranslationBook = {
 
 const at = (over: Partial<FirstTranslationAttempt>): FirstTranslationAttempt => ({
   attempt_id: 'a', book_id: 'b', date: '2026-06-29T00:00:00Z',
-  method: 'tier1_catalog', match_key: 'author_title', sources_checked: [],
+  method: 'tier1_catalog', match_key: 'author_title',
+  sources_checked: ['search_local_catalogs'],
   result: 'none', evidence_strength: 'moderate', ...over,
 });
 
@@ -106,6 +107,38 @@ describe('deriveVerdictFromAttempts — hardened against the real ledger', () =>
     expect(ft?.evidence_strength).toBe('weak');
     expect(isFirstByVerdict(withVerdict(ft))).toBe(true);
     expect(canPromoteToFirst(withVerdict(ft))).toBe(false);
+  });
+
+  // FAILURE MODE 2b: the legacy backfill's mid-notes NA form must also be caught.
+  it('legacy "[legacy_ai] status=not_applicable; …" row is not an absence vote (Book of Kells case)', () => {
+    const ft = deriveVerdictFromAttempts([
+      // real legacy_tv catalog search that found nothing
+      at({ method: 'gemini_verifier', evidence_strength: 'weak',
+        notes: '[legacy_tv] disposition=translation_found; original English-language scholarly work' }),
+      // legacy_ai judgment: FT does not apply — miscoded as result:none, no search
+      at({ method: 'gemini_verifier', evidence_strength: 'weak', sources_checked: [],
+        notes: '[legacy_ai] status=not_applicable; This book is an original publication in English.' }),
+    ], BOOK);
+    // Only ONE real absence family remains → weak → never promote-qualifying.
+    expect(ft?.verdict).toBe('first_no_prior');
+    expect(ft?.evidence_strength).toBe('weak');
+    expect(canPromoteToFirst(withVerdict(ft))).toBe(false);
+  });
+
+  // FAILURE MODE 3: an absence with no recorded search coverage is not evidence.
+  it('result:none with no sources_checked and no queries → null (no absence evidence)', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'gemini_verifier', sources_checked: [], notes: '[legacy_llm] model belief: none known' }),
+    ], BOOK);
+    expect(ft).toBeNull();
+  });
+
+  it('queries alone count as coverage for an absence vote', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'gemini_verifier', sources_checked: [], queries: ['smith english translation 1650'] }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('first_no_prior');
+    expect(ft?.evidence_strength).toBe('weak');
   });
 
   it('not_applicable rows are excluded from the absence family count', () => {
