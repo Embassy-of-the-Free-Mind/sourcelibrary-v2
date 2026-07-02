@@ -12,6 +12,17 @@
 
 ---
 
+## Update 2026-07-02 — first corpus-wide derive ran; guards fixed; execution checklist opened (#2933)
+
+The ledger→verdict derivation (`derive-ft-verdict-from-attempts.ts`) ran corpus-wide for the first time. What happened and what it changed:
+
+- **Two false-promote leaks found + fixed (PR #2932).** The unguarded run would have "evidence-backed" promoted **1,349** books incl. the Book of Kells facsimile and *Religio Medici*: (a) the backfill's mid-notes `status=not_applicable` form escaped `isNotApplicable`, so "original English work, FT doesn't apply" rows counted as absence votes; (b) `result:none` rows with NO recorded `sources_checked`/`queries` counted as absence votes and faked cross-family independence. Absence votes now require recorded search coverage. Post-fix: derivable verdicts 10,531 → 2,314; gate-passing promotes 1,349 → **36**; demotes 186 (unchanged — positive sightings).
+- **2,314 graded verdicts are now materialized** on `books.first_translation` (an interim unguarded apply of 10,531 was fully reverted; 0 value drift on survivors). Public boolean untouched.
+- **The 186-demote diff decomposes** (worksheet: `scripts/output/ft-demote-worksheet-2026-07-02.json`): 16 already Tier-2-confirmed (apply-ready) · 11 already Tier-2-REFUTED yet re-proposed (the refute-precedence gap — a higher-tier refute must beat an older "found" row; incl. De Voluptate) · 30 pre-1900-only priors + 47 partial/unknown-completeness priors (the verdict-grading collapse — derive maps any trustworthy found → `not_first`, contradicting §6's `first_modern`/`first_complete`) · **83 genuine modern-complete-prior candidates → ft-verify (Claude subagents) in progress**. Early rounds show the June pattern holding: Stage-1 "high-confidence" priors failing verification as partial / fabricated / wrong-source-language.
+- **The nightly FT machinery is fully dormant**: ft-search/ft-validate `#PAUSED-GEMINI`; ft-audit, ft-discover, ft-ground all run with **0 eligible books** (scopes exhausted). §4's table describes crons that no longer do work.
+- **~8,461 of the ledger's 28,200 book_ids are orphans** (match neither `books.id` nor `_id`; 42 in `deleted_books`) — read "books with durable evidence" as ~19,700.
+- **All remaining wiring + retirement work is consolidated in issue #2933** (derive gaps A1/A2, promote eligibility gate, cron the derive+reconcile, retire dead crons + `reconcile-ft-from-catalog.mjs`, orphan tagging, dated-fields sweep, `isPublicFirst` headline decision).
+
 ## Update 2026-06-29 — evidence-first loop SHIPPED; what's live vs still aspirational
 
 The #2564 rebuild's graded-verdict **data model is merged and an evidence-first loop now runs** — but the single-writer reconcile, the tier cascade, and the public-count switch are **still not wired**. Be precise about live-vs-target so you don't trust the wrong thing (the rest of this doc still describes the *designed* system in places, not the *wired* one).
