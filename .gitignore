@@ -57,6 +57,7 @@ src/data/*
 !src/data/concept-diffusion-research.json
 !src/data/book-constellation.json
 !src/data/image-constellation.json
+!src/data/marcianus-berthelot-overlay.json
 !src/data/jung-bph-alignment-2026-05-22.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
