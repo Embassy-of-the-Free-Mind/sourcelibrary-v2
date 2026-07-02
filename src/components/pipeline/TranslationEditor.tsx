@@ -29,6 +29,9 @@ import {
 } from 'lucide-react';
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
+import PairedEditionPanel from '@/components/book/PairedEditionPanel';
+import AiBadge from '@/components/ui/AiBadge';
+import { MANUSCRIPT_OCR_FLAG } from '@/lib/marcianus-overlay.shared';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
@@ -568,6 +571,11 @@ export default function TranslationEditor({
 
   // Jump-to-page: the counter ("18/864") doubles as an editable input
   const [isEditingPage, setIsEditingPage] = useState(false);
+
+  // Paired critical-edition overlay (Marcianus 299 ↔ Berthelot). When an aligned
+  // folio is showing, the manuscript's own OCR/translation is demoted to a
+  // flagged aid — see .claude/docs/edition-facsimile-pairing.md.
+  const [hasPairedEdition, setHasPairedEdition] = useState(false);
   const [pageInputValue, setPageInputValue] = useState('');
 
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
@@ -1341,6 +1349,15 @@ export default function TranslationEditor({
           </div>
         )}
 
+        {/* Paired critical edition (Marcianus 299 ↔ Berthelot) — the reading
+            text of record, surfaced above the facsimile + demoted AI OCR. */}
+        <PairedEditionPanel
+          bookId={book.id}
+          pageId={page.id}
+          pageNumber={page.page_number}
+          onLoaded={setHasPairedEdition}
+        />
+
         {/* Panel layout - dynamic based on visibility */}
         {(() => {
           const visibleCount = [showImagePanel, showOcrPanel, showTranslationPanel, showTransliterationPanel && hasTransliteration, showGermanSourcePanel && hasGermanSource].filter(Boolean).length;
@@ -1514,9 +1531,19 @@ export default function TranslationEditor({
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                         {ocrText ? (book.language || 'Original') : 'Step 1: Transcribe'}
                       </span>
-                      {ocrText && (
+                      {ocrText && !hasPairedEdition && (
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
                           <Check className="w-3 h-3" />
+                        </span>
+                      )}
+                      {ocrText && hasPairedEdition && (
+                        <span
+                          className="inline-flex items-center gap-1 text-[11px] normal-case"
+                          style={{ color: 'var(--text-muted)' }}
+                          title={MANUSCRIPT_OCR_FLAG.tooltip}
+                        >
+                          <AiBadge title={MANUSCRIPT_OCR_FLAG.tooltip} />
+                          {MANUSCRIPT_OCR_FLAG.label}
                         </span>
                       )}
                     </div>
@@ -1677,9 +1704,19 @@ export default function TranslationEditor({
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                         {translationText ? translationLangLabel : 'Step 2: Translate'}
                       </span>
-                      {translationText && (
+                      {translationText && !hasPairedEdition && (
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
                           <Check className="w-3 h-3" />
+                        </span>
+                      )}
+                      {translationText && hasPairedEdition && (
+                        <span
+                          className="inline-flex items-center gap-1 text-[11px] normal-case"
+                          style={{ color: 'var(--text-muted)' }}
+                          title={MANUSCRIPT_OCR_FLAG.tooltip}
+                        >
+                          <AiBadge title={MANUSCRIPT_OCR_FLAG.tooltip} />
+                          {MANUSCRIPT_OCR_FLAG.label}
                         </span>
                       )}
                       {translationText && (

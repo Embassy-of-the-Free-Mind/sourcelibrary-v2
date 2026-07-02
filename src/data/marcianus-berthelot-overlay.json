@@ -1,0 +1,2030 @@
+{
+ "note": "Non-destructive reading overlay: Marcianus gr. Z. 299 folios paired to Berthelot & Ruelle (Greek text vol) page-for-page. by_marc_page keyed by Marcianus page_number. bert_page = primary transcription page (best-coverage candidate). self = pass1-vs-pass2 OCR Dice (stability). cover = OCR-in-Berthelot token coverage — a NOISY LOWER BOUND, never an accuracy rate. See .claude/docs/edition-facsimile-pairing.md.",
+ "marcianus_book": "6a45298cc6d95bc278fbc8c3",
+ "berthelot_book": "6994383a6879ff0184cb803a",
+ "berthelot_citation": "Berthelot & Ruelle, Collection des anciens alchimistes grecs (1887–88)",
+ "work_id": "local:corpus-alchemicorum-graecorum",
+ "stats": {
+  "folios_aligned": 195,
+  "self_agreement_mean": 0.616474964163231,
+  "pearson_self_vs_coverage": 0.2664893399451278
+ },
+ "by_marc_page": {
+  "28": {
+   "folio": "3r",
+   "marc_id": "6a45298cc6d95bc278fbc8df",
+   "bert_page": 431,
+   "bert_pages": [
+    430
+   ],
+   "self": 0.1844484629294756,
+   "cover": 0.130859375
+  },
+  "37": {
+   "folio": "7v",
+   "marc_id": "6a45298cc6d95bc278fbc8e8",
+   "bert_page": 422,
+   "bert_pages": [
+    422
+   ],
+   "self": 0.7681159420289855,
+   "cover": 0.028985507246376812
+  },
+  "40": {
+   "folio": "9r",
+   "marc_id": "6a45298cc6d95bc278fbc8eb",
+   "bert_page": 27,
+   "bert_pages": [
+    27
+   ],
+   "self": 0.6295503211991434,
+   "cover": 0.17180616740088106
+  },
+  "44": {
+   "folio": "11r",
+   "marc_id": "6a45298cc6d95bc278fbc8ef",
+   "bert_page": 109,
+   "bert_pages": [
+    108
+   ],
+   "self": 0.6813186813186813,
+   "cover": 0.15486725663716813
+  },
+  "100": {
+   "folio": "39r",
+   "marc_id": "6a45298cc6d95bc278fbc927",
+   "bert_page": 335,
+   "bert_pages": [
+    334
+   ],
+   "self": 0.6299212598425197,
+   "cover": 0.2607003891050584
+  },
+  "103": {
+   "folio": "40v",
+   "marc_id": "6a45298cc6d95bc278fbc92a",
+   "bert_page": 332,
+   "bert_pages": [
+    331
+   ],
+   "self": 0.6233269598470363,
+   "cover": 0.3203125
+  },
+  "146": {
+   "folio": "62r",
+   "marc_id": "6a45298cc6d95bc278fbc955",
+   "bert_page": 430,
+   "bert_pages": [
+    429
+   ],
+   "self": 0.585949177877429,
+   "cover": 0.2765957446808511
+  },
+  "147": {
+   "folio": "62v",
+   "marc_id": "6a45298cc6d95bc278fbc956",
+   "bert_page": 295,
+   "bert_pages": [
+    295
+   ],
+   "self": 0.5894206549118388,
+   "cover": 0.28717948717948716
+  },
+  "148": {
+   "folio": "63r",
+   "marc_id": "6a45298cc6d95bc278fbc957",
+   "bert_page": 296,
+   "bert_pages": [
+    295
+   ],
+   "self": 0.5864077669902913,
+   "cover": 0.37109375
+  },
+  "149": {
+   "folio": "63v",
+   "marc_id": "6a45298cc6d95bc278fbc958",
+   "bert_page": 297,
+   "bert_pages": [
+    296
+   ],
+   "self": 0.5383177570093458,
+   "cover": 0.4714828897338403
+  },
+  "150": {
+   "folio": "64r",
+   "marc_id": "6a45298cc6d95bc278fbc959",
+   "bert_page": 298,
+   "bert_pages": [
+    297
+   ],
+   "self": 0.6064981949458483,
+   "cover": 0.4981132075471698
+  },
+  "151": {
+   "folio": "64v",
+   "marc_id": "6a45298cc6d95bc278fbc95a",
+   "bert_page": 299,
+   "bert_pages": [
+    299
+   ],
+   "self": 0.6900584795321637,
+   "cover": 0.5137254901960784
+  },
+  "152": {
+   "folio": "65r",
+   "marc_id": "6a45298cc6d95bc278fbc95b",
+   "bert_page": 300,
+   "bert_pages": [
+    300
+   ],
+   "self": 0.6291666666666667,
+   "cover": 0.5432098765432098
+  },
+  "153": {
+   "folio": "65v",
+   "marc_id": "6a45298cc6d95bc278fbc95c",
+   "bert_page": 301,
+   "bert_pages": [
+    301
+   ],
+   "self": 0.6666666666666666,
+   "cover": 0.46511627906976744
+  },
+  "154": {
+   "folio": "66r",
+   "marc_id": "6a45298cc6d95bc278fbc95d",
+   "bert_page": 303,
+   "bert_pages": [
+    303
+   ],
+   "self": 0.6772908366533864,
+   "cover": 0.4263565891472868
+  },
+  "155": {
+   "folio": "66v",
+   "marc_id": "6a45298cc6d95bc278fbc95e",
+   "bert_page": 304,
+   "bert_pages": [
+    303
+   ],
+   "self": 0.6172344689378757,
+   "cover": 0.4743083003952569
+  },
+  "171": {
+   "folio": "74v",
+   "marc_id": "6a45298cc6d95bc278fbc96e",
+   "bert_page": 333,
+   "bert_pages": [
+    332
+   ],
+   "self": 0.6883910386965377,
+   "cover": 0.2784313725490196
+  },
+  "172": {
+   "folio": "75r",
+   "marc_id": "6a45298cc6d95bc278fbc96f",
+   "bert_page": 334,
+   "bert_pages": [
+    333
+   ],
+   "self": 0.6,
+   "cover": 0.2446351931330472
+  },
+  "173": {
+   "folio": "75v",
+   "marc_id": "6a45298cc6d95bc278fbc970",
+   "bert_page": 335,
+   "bert_pages": [
+    334
+   ],
+   "self": 0.6564885496183206,
+   "cover": 0.27586206896551724
+  },
+  "174": {
+   "folio": "76r",
+   "marc_id": "6a45298cc6d95bc278fbc971",
+   "bert_page": 336,
+   "bert_pages": [
+    335
+   ],
+   "self": 0.5394495412844037,
+   "cover": 0.2883895131086142
+  },
+  "175": {
+   "folio": "76v",
+   "marc_id": "6a45298cc6d95bc278fbc972",
+   "bert_page": 336,
+   "bert_pages": [
+    336
+   ],
+   "self": 0.642570281124498,
+   "cover": 0.276
+  },
+  "176": {
+   "folio": "77r",
+   "marc_id": "6a45298cc6d95bc278fbc973",
+   "bert_page": 338,
+   "bert_pages": [
+    337
+   ],
+   "self": 0.6283524904214559,
+   "cover": 0.2696629213483146
+  },
+  "177": {
+   "folio": "77v",
+   "marc_id": "6a45298cc6d95bc278fbc974",
+   "bert_page": 338,
+   "bert_pages": [
+    338
+   ],
+   "self": 0.5957446808510638,
+   "cover": 0.2364341085271318
+  },
+  "178": {
+   "folio": "78r",
+   "marc_id": "6a45298cc6d95bc278fbc975",
+   "bert_page": 463,
+   "bert_pages": [
+    339,
+    463
+   ],
+   "self": 0.70020964360587,
+   "cover": 0.4125
+  },
+  "179": {
+   "folio": "78v",
+   "marc_id": "6a45298cc6d95bc278fbc976",
+   "bert_page": 465,
+   "bert_pages": [
+    339,
+    464
+   ],
+   "self": 0.6603053435114504,
+   "cover": 0.4679245283018868
+  },
+  "180": {
+   "folio": "79r",
+   "marc_id": "6a45298cc6d95bc278fbc977",
+   "bert_page": 466,
+   "bert_pages": [
+    465,
+    466
+   ],
+   "self": 0.6666666666666666,
+   "cover": 0.4880382775119617
+  },
+  "181": {
+   "folio": "79v",
+   "marc_id": "6a45298cc6d95bc278fbc978",
+   "bert_page": 467,
+   "bert_pages": [
+    341,
+    467
+   ],
+   "self": 0.559652928416486,
+   "cover": 0.45535714285714285
+  },
+  "182": {
+   "folio": "80r",
+   "marc_id": "6a45298cc6d95bc278fbc979",
+   "bert_page": 469,
+   "bert_pages": [
+    468
+   ],
+   "self": 0.7178423236514523,
+   "cover": 0.5269709543568465
+  },
+  "183": {
+   "folio": "80v",
+   "marc_id": "6a45298cc6d95bc278fbc97a",
+   "bert_page": 470,
+   "bert_pages": [
+    469
+   ],
+   "self": 0.5909980430528375,
+   "cover": 0.4763779527559055
+  },
+  "184": {
+   "folio": "81r",
+   "marc_id": "6a45298cc6d95bc278fbc97b",
+   "bert_page": 471,
+   "bert_pages": [
+    470
+   ],
+   "self": 0.7204968944099379,
+   "cover": 0.5450819672131147
+  },
+  "185": {
+   "folio": "81v",
+   "marc_id": "6a45298cc6d95bc278fbc97c",
+   "bert_page": 472,
+   "bert_pages": [
+    472
+   ],
+   "self": 0.6480446927374302,
+   "cover": 0.5168539325842697
+  },
+  "186": {
+   "folio": "82r",
+   "marc_id": "6a45298cc6d95bc278fbc97d",
+   "bert_page": 473,
+   "bert_pages": [
+    473
+   ],
+   "self": 0.718978102189781,
+   "cover": 0.5407407407407407
+  },
+  "187": {
+   "folio": "82v",
+   "marc_id": "6a45298cc6d95bc278fbc97e",
+   "bert_page": 474,
+   "bert_pages": [
+    474
+   ],
+   "self": 0.5566600397614314,
+   "cover": 0.324
+  },
+  "193": {
+   "folio": "85v",
+   "marc_id": "6a45298cc6d95bc278fbc984",
+   "bert_page": 108,
+   "bert_pages": [
+    107
+   ],
+   "self": 0.7024952015355086,
+   "cover": 0.25984251968503935
+  },
+  "199": {
+   "folio": "88v",
+   "marc_id": "6a45298cc6d95bc278fbc98a",
+   "bert_page": 23,
+   "bert_pages": [
+    23
+   ],
+   "self": 0.6356589147286822,
+   "cover": 0.26
+  },
+  "207": {
+   "folio": "92v",
+   "marc_id": "6a45298cc6d95bc278fbc992",
+   "bert_page": 14,
+   "bert_pages": [
+    13
+   ],
+   "self": 0.6979591836734694,
+   "cover": 0.21951219512195122
+  },
+  "208": {
+   "folio": "93r",
+   "marc_id": "6a45298cc6d95bc278fbc993",
+   "bert_page": 14,
+   "bert_pages": [
+    13
+   ],
+   "self": 0.6747967479674797,
+   "cover": 0.5532786885245902
+  },
+  "210": {
+   "folio": "94r",
+   "marc_id": "6a45298cc6d95bc278fbc995",
+   "bert_page": 16,
+   "bert_pages": [
+    16
+   ],
+   "self": 0.6998087954110899,
+   "cover": 0.5975609756097561
+  },
+  "211": {
+   "folio": "94v",
+   "marc_id": "6a45298cc6d95bc278fbc996",
+   "bert_page": 17,
+   "bert_pages": [
+    17
+   ],
+   "self": 0.6914498141263941,
+   "cover": 0.5111940298507462
+  },
+  "212": {
+   "folio": "95r",
+   "marc_id": "6a45298cc6d95bc278fbc997",
+   "bert_page": 19,
+   "bert_pages": [
+    18,
+    19
+   ],
+   "self": 0.626746506986028,
+   "cover": 0.4150197628458498
+  },
+  "213": {
+   "folio": "95v",
+   "marc_id": "6a45298cc6d95bc278fbc998",
+   "bert_page": 20,
+   "bert_pages": [
+    19,
+    21
+   ],
+   "self": 0.6521739130434783,
+   "cover": 0.528
+  },
+  "214": {
+   "folio": "96r",
+   "marc_id": "6a45298cc6d95bc278fbc999",
+   "bert_page": 314,
+   "bert_pages": [
+    314
+   ],
+   "self": 0.6380368098159509,
+   "cover": 0.4745762711864407
+  },
+  "215": {
+   "folio": "96v",
+   "marc_id": "6a45298cc6d95bc278fbc99a",
+   "bert_page": 316,
+   "bert_pages": [
+    315
+   ],
+   "self": 0.5579399141630901,
+   "cover": 0.3624454148471616
+  },
+  "216": {
+   "folio": "97r",
+   "marc_id": "6a45298cc6d95bc278fbc99b",
+   "bert_page": 316,
+   "bert_pages": [
+    316
+   ],
+   "self": 0.672566371681416,
+   "cover": 0.3930131004366812
+  },
+  "217": {
+   "folio": "97v",
+   "marc_id": "6a45298cc6d95bc278fbc99c",
+   "bert_page": 318,
+   "bert_pages": [
+    317
+   ],
+   "self": 0.5467980295566502,
+   "cover": 0.39436619718309857
+  },
+  "218": {
+   "folio": "98r",
+   "marc_id": "6a45298cc6d95bc278fbc99d",
+   "bert_page": 319,
+   "bert_pages": [
+    318
+   ],
+   "self": 0.7639484978540773,
+   "cover": 0.42127659574468085
+  },
+  "219": {
+   "folio": "98v",
+   "marc_id": "6a45298cc6d95bc278fbc99e",
+   "bert_page": 320,
+   "bert_pages": [
+    319
+   ],
+   "self": 0.6227272727272727,
+   "cover": 0.4090909090909091
+  },
+  "220": {
+   "folio": "99r",
+   "marc_id": "6a45298cc6d95bc278fbc99f",
+   "bert_page": 321,
+   "bert_pages": [
+    320,
+    321
+   ],
+   "self": 0.6853146853146853,
+   "cover": 0.48623853211009177
+  },
+  "221": {
+   "folio": "99v",
+   "marc_id": "6a45298cc6d95bc278fbc9a0",
+   "bert_page": 322,
+   "bert_pages": [
+    322
+   ],
+   "self": 0.6093023255813953,
+   "cover": 0.3611111111111111
+  },
+  "222": {
+   "folio": "100r",
+   "marc_id": "6a45298cc6d95bc278fbc9a1",
+   "bert_page": 324,
+   "bert_pages": [
+    323
+   ],
+   "self": 0.6582914572864321,
+   "cover": 0.4635416666666667
+  },
+  "223": {
+   "folio": "100v",
+   "marc_id": "6a45298cc6d95bc278fbc9a2",
+   "bert_page": 325,
+   "bert_pages": [
+    324
+   ],
+   "self": 0.5652173913043478,
+   "cover": 0.31666666666666665
+  },
+  "225": {
+   "folio": "101v",
+   "marc_id": "6a45298cc6d95bc278fbc9a4",
+   "bert_page": 442,
+   "bert_pages": [
+    442
+   ],
+   "self": 0.6936708860759494,
+   "cover": 0.4175257731958763
+  },
+  "226": {
+   "folio": "102r",
+   "marc_id": "6a45298cc6d95bc278fbc9a5",
+   "bert_page": 443,
+   "bert_pages": [
+    443
+   ],
+   "self": 0.6185567010309279,
+   "cover": 0.4178082191780822
+  },
+  "228": {
+   "folio": "103r",
+   "marc_id": "6a45298cc6d95bc278fbc9a7",
+   "bert_page": 444,
+   "bert_pages": [
+    444
+   ],
+   "self": 0.680365296803653,
+   "cover": 0.4304932735426009
+  },
+  "229": {
+   "folio": "103v",
+   "marc_id": "6a45298cc6d95bc278fbc9a8",
+   "bert_page": 446,
+   "bert_pages": [
+    445
+   ],
+   "self": 0.48847926267281105,
+   "cover": 0.4
+  },
+  "230": {
+   "folio": "104r",
+   "marc_id": "6a45298cc6d95bc278fbc9a9",
+   "bert_page": 385,
+   "bert_pages": [
+    384,
+    389
+   ],
+   "self": 0.6067415730337079,
+   "cover": 0.40476190476190477
+  },
+  "231": {
+   "folio": "104v",
+   "marc_id": "6a45298cc6d95bc278fbc9aa",
+   "bert_page": 385,
+   "bert_pages": [
+    385
+   ],
+   "self": 0.5392781316348195,
+   "cover": 0.46638655462184875
+  },
+  "232": {
+   "folio": "105r",
+   "marc_id": "6a45298cc6d95bc278fbc9ab",
+   "bert_page": 386,
+   "bert_pages": [
+    386
+   ],
+   "self": 0.6948775055679287,
+   "cover": 0.5570776255707762
+  },
+  "233": {
+   "folio": "105v",
+   "marc_id": "6a45298cc6d95bc278fbc9ac",
+   "bert_page": 387,
+   "bert_pages": [
+    386
+   ],
+   "self": 0.5619834710743802,
+   "cover": 0.36065573770491804
+  },
+  "234": {
+   "folio": "106r",
+   "marc_id": "6a45298cc6d95bc278fbc9ad",
+   "bert_page": 387,
+   "bert_pages": [
+    387
+   ],
+   "self": 0.5458248472505092,
+   "cover": 0.25833333333333336
+  },
+  "236": {
+   "folio": "107r",
+   "marc_id": "6a45298cc6d95bc278fbc9af",
+   "bert_page": 126,
+   "bert_pages": [
+    126
+   ],
+   "self": 0.767816091954023,
+   "cover": 0.1981981981981982
+  },
+  "237": {
+   "folio": "107v",
+   "marc_id": "6a45298cc6d95bc278fbc9b0",
+   "bert_page": 127,
+   "bert_pages": [
+    126
+   ],
+   "self": 0.48130841121495327,
+   "cover": 0.6064814814814815
+  },
+  "238": {
+   "folio": "108r",
+   "marc_id": "6a45298cc6d95bc278fbc9b1",
+   "bert_page": 128,
+   "bert_pages": [
+    127
+   ],
+   "self": 0.6446280991735537,
+   "cover": 0.45714285714285713
+  },
+  "242": {
+   "folio": "110r",
+   "marc_id": "6a45298cc6d95bc278fbc9b5",
+   "bert_page": 438,
+   "bert_pages": [
+    437
+   ],
+   "self": 0.6536796536796536,
+   "cover": 0.3920704845814978
+  },
+  "243": {
+   "folio": "110v",
+   "marc_id": "6a45298cc6d95bc278fbc9b6",
+   "bert_page": 439,
+   "bert_pages": [
+    438
+   ],
+   "self": 0.5369127516778524,
+   "cover": 0.46153846153846156
+  },
+  "246": {
+   "folio": "112r",
+   "marc_id": "6a45298cc6d95bc278fbc9b9",
+   "bert_page": 44,
+   "bert_pages": [
+    44,
+    116
+   ],
+   "self": 0.5916114790286976,
+   "cover": 0.3333333333333333
+  },
+  "247": {
+   "folio": "112v",
+   "marc_id": "6a45298cc6d95bc278fbc9ba",
+   "bert_page": 45,
+   "bert_pages": [
+    44,
+    52
+   ],
+   "self": 0.5986394557823129,
+   "cover": 0.5161290322580645
+  },
+  "248": {
+   "folio": "113r",
+   "marc_id": "6a45298cc6d95bc278fbc9bb",
+   "bert_page": 45,
+   "bert_pages": [
+    45
+   ],
+   "self": 0.7215496368038741,
+   "cover": 0.47029702970297027
+  },
+  "249": {
+   "folio": "113v",
+   "marc_id": "6a45298cc6d95bc278fbc9bc",
+   "bert_page": 47,
+   "bert_pages": [
+    47
+   ],
+   "self": 0.4924406047516199,
+   "cover": 0.42731277533039647
+  },
+  "250": {
+   "folio": "114r",
+   "marc_id": "6a45298cc6d95bc278fbc9bd",
+   "bert_page": 48,
+   "bert_pages": [
+    47
+   ],
+   "self": 0.6370023419203747,
+   "cover": 0.5475113122171946
+  },
+  "251": {
+   "folio": "114v",
+   "marc_id": "6a45298cc6d95bc278fbc9be",
+   "bert_page": 48,
+   "bert_pages": [
+    48
+   ],
+   "self": 0.502262443438914,
+   "cover": 0.36363636363636365
+  },
+  "252": {
+   "folio": "115r",
+   "marc_id": "6a45298cc6d95bc278fbc9bf",
+   "bert_page": 49,
+   "bert_pages": [
+    13,
+    49,
+    50
+   ],
+   "self": 0.6149870801033591,
+   "cover": 0.35978835978835977
+  },
+  "253": {
+   "folio": "115v",
+   "marc_id": "6a45298cc6d95bc278fbc9c0",
+   "bert_page": 51,
+   "bert_pages": [
+    50
+   ],
+   "self": 0.7428571428571429,
+   "cover": 0.5047619047619047
+  },
+  "254": {
+   "folio": "116r",
+   "marc_id": "6a45298cc6d95bc278fbc9c1",
+   "bert_page": 391,
+   "bert_pages": [
+    390
+   ],
+   "self": 0.6612244897959184,
+   "cover": 0.4819277108433735
+  },
+  "255": {
+   "folio": "116v",
+   "marc_id": "6a45298cc6d95bc278fbc9c2",
+   "bert_page": 156,
+   "bert_pages": [
+    156,
+    391
+   ],
+   "self": 0.5874125874125874,
+   "cover": 0.3175355450236967
+  },
+  "256": {
+   "folio": "117r",
+   "marc_id": "6a45298cc6d95bc278fbc9c3",
+   "bert_page": 157,
+   "bert_pages": [
+    157
+   ],
+   "self": 0.5990783410138248,
+   "cover": 0.5209302325581395
+  },
+  "257": {
+   "folio": "117v",
+   "marc_id": "6a45298cc6d95bc278fbc9c4",
+   "bert_page": 158,
+   "bert_pages": [
+    157
+   ],
+   "self": 0.6498740554156172,
+   "cover": 0.6060606060606061
+  },
+  "258": {
+   "folio": "118r",
+   "marc_id": "6a45298cc6d95bc278fbc9c5",
+   "bert_page": 388,
+   "bert_pages": [
+    117,
+    158,
+    388
+   ],
+   "self": 0.7010309278350515,
+   "cover": 0.41708542713567837
+  },
+  "259": {
+   "folio": "118v",
+   "marc_id": "6a45298cc6d95bc278fbc9c6",
+   "bert_page": 389,
+   "bert_pages": [
+    388,
+    389
+   ],
+   "self": 0.578088578088578,
+   "cover": 0.4027777777777778
+  },
+  "260": {
+   "folio": "119r",
+   "marc_id": "6a45298cc6d95bc278fbc9c7",
+   "bert_page": 446,
+   "bert_pages": [
+    446,
+    447
+   ],
+   "self": 0.6863157894736842,
+   "cover": 0.4583333333333333
+  },
+  "261": {
+   "folio": "119v",
+   "marc_id": "6a45298cc6d95bc278fbc9c8",
+   "bert_page": 448,
+   "bert_pages": [
+    447
+   ],
+   "self": 0.5394736842105263,
+   "cover": 0.3744292237442922
+  },
+  "262": {
+   "folio": "120r",
+   "marc_id": "6a45298cc6d95bc278fbc9c9",
+   "bert_page": 448,
+   "bert_pages": [
+    448
+   ],
+   "self": 0.5882352941176471,
+   "cover": 0.3333333333333333
+  },
+  "263": {
+   "folio": "120v",
+   "marc_id": "6a45298cc6d95bc278fbc9ca",
+   "bert_page": 450,
+   "bert_pages": [
+    449
+   ],
+   "self": 0.6738197424892703,
+   "cover": 0.46153846153846156
+  },
+  "264": {
+   "folio": "121r",
+   "marc_id": "6a45298cc6d95bc278fbc9cb",
+   "bert_page": 450,
+   "bert_pages": [
+    450,
+    451
+   ],
+   "self": 0.729064039408867,
+   "cover": 0.46116504854368934
+  },
+  "265": {
+   "folio": "121v",
+   "marc_id": "6a45298cc6d95bc278fbc9cc",
+   "bert_page": 452,
+   "bert_pages": [
+    451
+   ],
+   "self": 0.6025974025974026,
+   "cover": 0.43147208121827413
+  },
+  "266": {
+   "folio": "122r",
+   "marc_id": "6a45298cc6d95bc278fbc9cd",
+   "bert_page": 453,
+   "bert_pages": [
+    452
+   ],
+   "self": 0.7300771208226221,
+   "cover": 0.576530612244898
+  },
+  "267": {
+   "folio": "122v",
+   "marc_id": "6a45298cc6d95bc278fbc9ce",
+   "bert_page": 454,
+   "bert_pages": [
+    453
+   ],
+   "self": 0.6014319809069213,
+   "cover": 0.4854368932038835
+  },
+  "268": {
+   "folio": "123r",
+   "marc_id": "6a45298cc6d95bc278fbc9cf",
+   "bert_page": 454,
+   "bert_pages": [
+    454
+   ],
+   "self": 0.618925831202046,
+   "cover": 0.40414507772020725
+  },
+  "269": {
+   "folio": "123v",
+   "marc_id": "6a45298cc6d95bc278fbc9d0",
+   "bert_page": 455,
+   "bert_pages": [
+    455
+   ],
+   "self": 0.5714285714285714,
+   "cover": 0.37438423645320196
+  },
+  "270": {
+   "folio": "124r",
+   "marc_id": "6a45298cc6d95bc278fbc9d1",
+   "bert_page": 456,
+   "bert_pages": [
+    456
+   ],
+   "self": 0.5860215053763441,
+   "cover": 0.48333333333333334
+  },
+  "271": {
+   "folio": "124v",
+   "marc_id": "6a45298cc6d95bc278fbc9d2",
+   "bert_page": 457,
+   "bert_pages": [
+    457
+   ],
+   "self": 0.5026737967914439,
+   "cover": 0.3351063829787234
+  },
+  "272": {
+   "folio": "125r",
+   "marc_id": "6a45298cc6d95bc278fbc9d3",
+   "bert_page": 458,
+   "bert_pages": [
+    458
+   ],
+   "self": 0.6474820143884892,
+   "cover": 0.4492753623188406
+  },
+  "273": {
+   "folio": "125v",
+   "marc_id": "6a45298cc6d95bc278fbc9d4",
+   "bert_page": 459,
+   "bert_pages": [
+    459
+   ],
+   "self": 0.612987012987013,
+   "cover": 0.5372340425531915
+  },
+  "274": {
+   "folio": "126r",
+   "marc_id": "6a45298cc6d95bc278fbc9d5",
+   "bert_page": 460,
+   "bert_pages": [
+    459
+   ],
+   "self": 0.6256410256410256,
+   "cover": 0.4642857142857143
+  },
+  "275": {
+   "folio": "126v",
+   "marc_id": "6a45298cc6d95bc278fbc9d6",
+   "bert_page": 461,
+   "bert_pages": [
+    460
+   ],
+   "self": 0.5815602836879432,
+   "cover": 0.45410628019323673
+  },
+  "276": {
+   "folio": "127r",
+   "marc_id": "6a45298cc6d95bc278fbc9d7",
+   "bert_page": 462,
+   "bert_pages": [
+    461
+   ],
+   "self": 0.5056433408577878,
+   "cover": 0.35185185185185186
+  },
+  "277": {
+   "folio": "127v",
+   "marc_id": "6a45298cc6d95bc278fbc9d8",
+   "bert_page": 462,
+   "bert_pages": [
+    415,
+    462
+   ],
+   "self": 0.6305418719211823,
+   "cover": 0.36585365853658536
+  },
+  "279": {
+   "folio": "128v",
+   "marc_id": "6a45298cc6d95bc278fbc9da",
+   "bert_page": 417,
+   "bert_pages": [
+    417
+   ],
+   "self": 0.6318537859007833,
+   "cover": 0.2513089005235602
+  },
+  "280": {
+   "folio": "129r",
+   "marc_id": "6a45298cc6d95bc278fbc9db",
+   "bert_page": 418,
+   "bert_pages": [
+    417
+   ],
+   "self": 0.6879271070615034,
+   "cover": 0.48148148148148145
+  },
+  "281": {
+   "folio": "129v",
+   "marc_id": "6a45298cc6d95bc278fbc9dc",
+   "bert_page": 418,
+   "bert_pages": [
+    418
+   ],
+   "self": 0.5849056603773585,
+   "cover": 0.47368421052631576
+  },
+  "282": {
+   "folio": "130r",
+   "marc_id": "6a45298cc6d95bc278fbc9dd",
+   "bert_page": 419,
+   "bert_pages": [
+    419
+   ],
+   "self": 0.6141732283464567,
+   "cover": 0.40625
+  },
+  "283": {
+   "folio": "130v",
+   "marc_id": "6a45298cc6d95bc278fbc9de",
+   "bert_page": 421,
+   "bert_pages": [
+    420
+   ],
+   "self": 0.5388888888888889,
+   "cover": 0.32085561497326204
+  },
+  "284": {
+   "folio": "131r",
+   "marc_id": "6a45298cc6d95bc278fbc9df",
+   "bert_page": 421,
+   "bert_pages": [
+    421
+   ],
+   "self": 0.5076923076923077,
+   "cover": 0.24875621890547264
+  },
+  "295": {
+   "folio": "136v",
+   "marc_id": "6a45298cc6d95bc278fbc9ea",
+   "bert_page": 111,
+   "bert_pages": [
+    111
+   ],
+   "self": 0.671875,
+   "cover": 0.505
+  },
+  "296": {
+   "folio": "137r",
+   "marc_id": "6a45298cc6d95bc278fbc9eb",
+   "bert_page": 113,
+   "bert_pages": [
+    104,
+    112,
+    113
+   ],
+   "self": 0.5977653631284916,
+   "cover": 0.31693989071038253
+  },
+  "297": {
+   "folio": "137v",
+   "marc_id": "6a45298cc6d95bc278fbc9ec",
+   "bert_page": 114,
+   "bert_pages": [
+    105,
+    113,
+    114,
+    495
+   ],
+   "self": 0.7436619718309859,
+   "cover": 0.48314606741573035
+  },
+  "298": {
+   "folio": "138r",
+   "marc_id": "6a45298cc6d95bc278fbc9ed",
+   "bert_page": 106,
+   "bert_pages": [
+    106,
+    496
+   ],
+   "self": 0.543859649122807,
+   "cover": 0.23008849557522124
+  },
+  "299": {
+   "folio": "138v",
+   "marc_id": "6a45298cc6d95bc278fbc9ee",
+   "bert_page": 498,
+   "bert_pages": [
+    497
+   ],
+   "self": 0.5476673427991886,
+   "cover": 0.18907563025210083
+  },
+  "300": {
+   "folio": "139r",
+   "marc_id": "6a45298cc6d95bc278fbc9ef",
+   "bert_page": 109,
+   "bert_pages": [
+    64,
+    108,
+    499
+   ],
+   "self": 0.4782608695652174,
+   "cover": 0.2231404958677686
+  },
+  "301": {
+   "folio": "139v",
+   "marc_id": "6a45298cc6d95bc278fbc9f0",
+   "bert_page": 501,
+   "bert_pages": [
+    501
+   ],
+   "self": 0.5458248472505092,
+   "cover": 0.10931174089068826
+  },
+  "302": {
+   "folio": "140r",
+   "marc_id": "6a45298cc6d95bc278fbc9f1",
+   "bert_page": 109,
+   "bert_pages": [
+    109
+   ],
+   "self": 0.5372549019607843,
+   "cover": 0.26693227091633465
+  },
+  "305": {
+   "folio": "141v",
+   "marc_id": "6a45298cc6d95bc278fbc9f4",
+   "bert_page": 54,
+   "bert_pages": [
+    54,
+    406
+   ],
+   "self": 0.488,
+   "cover": 0.328125
+  },
+  "306": {
+   "folio": "142r",
+   "marc_id": "6a45298cc6d95bc278fbc9f5",
+   "bert_page": 55,
+   "bert_pages": [
+    54,
+    407
+   ],
+   "self": 0.6363636363636364,
+   "cover": 0.40239043824701193
+  },
+  "307": {
+   "folio": "142v",
+   "marc_id": "6a45298cc6d95bc278fbc9f6",
+   "bert_page": 56,
+   "bert_pages": [
+    55,
+    408
+   ],
+   "self": 0.5193370165745856,
+   "cover": 0.34782608695652173
+  },
+  "308": {
+   "folio": "143r",
+   "marc_id": "6a45298cc6d95bc278fbc9f7",
+   "bert_page": 58,
+   "bert_pages": [
+    57,
+    408
+   ],
+   "self": 0.5675675675675675,
+   "cover": 0.4007352941176471
+  },
+  "309": {
+   "folio": "143v",
+   "marc_id": "6a45298cc6d95bc278fbc9f8",
+   "bert_page": 58,
+   "bert_pages": [
+    58,
+    409
+   ],
+   "self": 0.6525911708253359,
+   "cover": 0.40234375
+  },
+  "310": {
+   "folio": "144r",
+   "marc_id": "6a45298cc6d95bc278fbc9f9",
+   "bert_page": 60,
+   "bert_pages": [
+    59,
+    60,
+    410
+   ],
+   "self": 0.5714285714285714,
+   "cover": 0.3161764705882353
+  },
+  "311": {
+   "folio": "144v",
+   "marc_id": "6a45298cc6d95bc278fbc9fa",
+   "bert_page": 62,
+   "bert_pages": [
+    61,
+    62,
+    411
+   ],
+   "self": 0.5523156089193825,
+   "cover": 0.3333333333333333
+  },
+  "312": {
+   "folio": "145r",
+   "marc_id": "6a45298cc6d95bc278fbc9fb",
+   "bert_page": 63,
+   "bert_pages": [
+    62,
+    412
+   ],
+   "self": 0.5985663082437276,
+   "cover": 0.3118279569892473
+  },
+  "313": {
+   "folio": "145v",
+   "marc_id": "6a45298cc6d95bc278fbc9fc",
+   "bert_page": 64,
+   "bert_pages": [
+    63,
+    65,
+    412
+   ],
+   "self": 0.6666666666666666,
+   "cover": 0.4980392156862745
+  },
+  "314": {
+   "folio": "146r",
+   "marc_id": "6a45298cc6d95bc278fbc9fd",
+   "bert_page": 66,
+   "bert_pages": [
+    65,
+    413
+   ],
+   "self": 0.5714285714285714,
+   "cover": 0.39069767441860465
+  },
+  "316": {
+   "folio": "147r",
+   "marc_id": "6a45298cc6d95bc278fbc9ff",
+   "bert_page": 68,
+   "bert_pages": [
+    67
+   ],
+   "self": 0.5962962962962963,
+   "cover": 0.3511450381679389
+  },
+  "317": {
+   "folio": "147v",
+   "marc_id": "6a45298cc6d95bc278fbca00",
+   "bert_page": 69,
+   "bert_pages": [
+    68,
+    393
+   ],
+   "self": 0.5609756097560976,
+   "cover": 0.436426116838488
+  },
+  "318": {
+   "folio": "148r",
+   "marc_id": "6a45298cc6d95bc278fbca01",
+   "bert_page": 70,
+   "bert_pages": [
+    69,
+    393
+   ],
+   "self": 0.611764705882353,
+   "cover": 0.5247148288973384
+  },
+  "319": {
+   "folio": "148v",
+   "marc_id": "6a45298cc6d95bc278fbca02",
+   "bert_page": 71,
+   "bert_pages": [
+    71,
+    394
+   ],
+   "self": 0.58195211786372,
+   "cover": 0.37037037037037035
+  },
+  "320": {
+   "folio": "149r",
+   "marc_id": "6a45298cc6d95bc278fbca03",
+   "bert_page": 396,
+   "bert_pages": [
+    395
+   ],
+   "self": 0.5569620253164557,
+   "cover": 0.22262773722627738
+  },
+  "321": {
+   "folio": "149v",
+   "marc_id": "6a45298cc6d95bc278fbca04",
+   "bert_page": 74,
+   "bert_pages": [
+    73,
+    396
+   ],
+   "self": 0.5939849624060151,
+   "cover": 0.48698884758364314
+  },
+  "322": {
+   "folio": "150r",
+   "marc_id": "6a45298cc6d95bc278fbca05",
+   "bert_page": 75,
+   "bert_pages": [
+    74,
+    75,
+    397
+   ],
+   "self": 0.6294964028776978,
+   "cover": 0.4064748201438849
+  },
+  "323": {
+   "folio": "150v",
+   "marc_id": "6a45298cc6d95bc278fbca06",
+   "bert_page": 76,
+   "bert_pages": [
+    76,
+    397
+   ],
+   "self": 0.6796116504854369,
+   "cover": 0.41568627450980394
+  },
+  "324": {
+   "folio": "151r",
+   "marc_id": "6a45298cc6d95bc278fbca07",
+   "bert_page": 78,
+   "bert_pages": [
+    77,
+    398
+   ],
+   "self": 0.6976744186046512,
+   "cover": 0.4883720930232558
+  },
+  "325": {
+   "folio": "151v",
+   "marc_id": "6a45298cc6d95bc278fbca08",
+   "bert_page": 79,
+   "bert_pages": [
+    78,
+    399
+   ],
+   "self": 0.49320388349514566,
+   "cover": 0.46613545816733065
+  },
+  "326": {
+   "folio": "152r",
+   "marc_id": "6a45298cc6d95bc278fbca09",
+   "bert_page": 80,
+   "bert_pages": [
+    80,
+    400
+   ],
+   "self": 0.6307977736549165,
+   "cover": 0.44727272727272727
+  },
+  "327": {
+   "folio": "152v",
+   "marc_id": "6a45298cc6d95bc278fbca0a",
+   "bert_page": 81,
+   "bert_pages": [
+    81,
+    400
+   ],
+   "self": 0.6137566137566137,
+   "cover": 0.3867595818815331
+  },
+  "328": {
+   "folio": "153r",
+   "marc_id": "6a45298cc6d95bc278fbca0b",
+   "bert_page": 83,
+   "bert_pages": [
+    83,
+    401
+   ],
+   "self": 0.6601178781925344,
+   "cover": 0.34901960784313724
+  },
+  "329": {
+   "folio": "153v",
+   "marc_id": "6a45298cc6d95bc278fbca0c",
+   "bert_page": 84,
+   "bert_pages": [
+    83
+   ],
+   "self": 0.6213592233009708,
+   "cover": 0.40234375
+  },
+  "330": {
+   "folio": "154r",
+   "marc_id": "6a45298cc6d95bc278fbca0d",
+   "bert_page": 85,
+   "bert_pages": [
+    85
+   ],
+   "self": 0.5989110707803993,
+   "cover": 0.4119718309859155
+  },
+  "331": {
+   "folio": "154v",
+   "marc_id": "6a45298cc6d95bc278fbca0e",
+   "bert_page": 86,
+   "bert_pages": [
+    86,
+    87,
+    403
+   ],
+   "self": 0.588,
+   "cover": 0.45934959349593496
+  },
+  "332": {
+   "folio": "155r",
+   "marc_id": "6a45298cc6d95bc278fbca0f",
+   "bert_page": 88,
+   "bert_pages": [
+    87,
+    404
+   ],
+   "self": 0.593128390596745,
+   "cover": 0.3546099290780142
+  },
+  "333": {
+   "folio": "155v",
+   "marc_id": "6a45298cc6d95bc278fbca10",
+   "bert_page": 89,
+   "bert_pages": [
+    88,
+    405
+   ],
+   "self": 0.5031712473572939,
+   "cover": 0.3673469387755102
+  },
+  "334": {
+   "folio": "156r",
+   "marc_id": "6a45298cc6d95bc278fbca11",
+   "bert_page": 90,
+   "bert_pages": [
+    90
+   ],
+   "self": 0.72,
+   "cover": 0.5355648535564853
+  },
+  "335": {
+   "folio": "156v",
+   "marc_id": "6a45298cc6d95bc278fbca12",
+   "bert_page": 91,
+   "bert_pages": [
+    91
+   ],
+   "self": 0.5670498084291188,
+   "cover": 0.5037037037037037
+  },
+  "336": {
+   "folio": "157r",
+   "marc_id": "6a45298cc6d95bc278fbca13",
+   "bert_page": 92,
+   "bert_pages": [
+    91,
+    92
+   ],
+   "self": 0.5073529411764706,
+   "cover": 0.3143939393939394
+  },
+  "337": {
+   "folio": "157v",
+   "marc_id": "6a45298cc6d95bc278fbca14",
+   "bert_page": 94,
+   "bert_pages": [
+    93,
+    94
+   ],
+   "self": 0.5978947368421053,
+   "cover": 0.4152542372881356
+  },
+  "338": {
+   "folio": "158r",
+   "marc_id": "6a45298cc6d95bc278fbca15",
+   "bert_page": 95,
+   "bert_pages": [
+    94
+   ],
+   "self": 0.7001862197392924,
+   "cover": 0.45387453874538747
+  },
+  "339": {
+   "folio": "158v",
+   "marc_id": "6a45298cc6d95bc278fbca16",
+   "bert_page": 96,
+   "bert_pages": [
+    96
+   ],
+   "self": 0.6378986866791745,
+   "cover": 0.44649446494464945
+  },
+  "340": {
+   "folio": "159r",
+   "marc_id": "6a45298cc6d95bc278fbca17",
+   "bert_page": 98,
+   "bert_pages": [
+    97
+   ],
+   "self": 0.5916030534351145,
+   "cover": 0.38636363636363635
+  },
+  "341": {
+   "folio": "159v",
+   "marc_id": "6a45298cc6d95bc278fbca18",
+   "bert_page": 99,
+   "bert_pages": [
+    98,
+    484
+   ],
+   "self": 0.5673249551166966,
+   "cover": 0.45126353790613716
+  },
+  "342": {
+   "folio": "160r",
+   "marc_id": "6a45298cc6d95bc278fbca19",
+   "bert_page": 100,
+   "bert_pages": [
+    99,
+    485
+   ],
+   "self": 0.6748681898066784,
+   "cover": 0.4912891986062718
+  },
+  "343": {
+   "folio": "160v",
+   "marc_id": "6a45298cc6d95bc278fbca1a",
+   "bert_page": 101,
+   "bert_pages": [
+    101,
+    486
+   ],
+   "self": 0.5661764705882353,
+   "cover": 0.4473684210526316
+  },
+  "344": {
+   "folio": "161r",
+   "marc_id": "6a45298cc6d95bc278fbca1b",
+   "bert_page": 487,
+   "bert_pages": [
+    487
+   ],
+   "self": 0.708256880733945,
+   "cover": 0.2572463768115942
+  },
+  "345": {
+   "folio": "161v",
+   "marc_id": "6a45298cc6d95bc278fbca1c",
+   "bert_page": 103,
+   "bert_pages": [
+    103,
+    110,
+    488
+   ],
+   "self": 0.5685884691848907,
+   "cover": 0.3769230769230769
+  },
+  "346": {
+   "folio": "162r",
+   "marc_id": "6a45298cc6d95bc278fbca1d",
+   "bert_page": 414,
+   "bert_pages": [
+    110,
+    414
+   ],
+   "self": 0.6016949152542372,
+   "cover": 0.3598326359832636
+  },
+  "347": {
+   "folio": "162v",
+   "marc_id": "6a45298cc6d95bc278fbca1e",
+   "bert_page": 415,
+   "bert_pages": [
+    414
+   ],
+   "self": 0.6263736263736264,
+   "cover": 0.41935483870967744
+  },
+  "348": {
+   "folio": "163r",
+   "marc_id": "6a45298cc6d95bc278fbca1f",
+   "bert_page": 415,
+   "bert_pages": [
+    415
+   ],
+   "self": 0.635814889336016,
+   "cover": 0.25
+  },
+  "360": {
+   "folio": "169r",
+   "marc_id": "6a45298cc6d95bc278fbca2b",
+   "bert_page": 25,
+   "bert_pages": [
+    25
+   ],
+   "self": 0.7442680776014109,
+   "cover": 0.28321678321678323
+  },
+  "361": {
+   "folio": "169v",
+   "marc_id": "6a45298cc6d95bc278fbca2c",
+   "bert_page": 27,
+   "bert_pages": [
+    26
+   ],
+   "self": 0.4628975265017668,
+   "cover": 0.2052980132450331
+  },
+  "362": {
+   "folio": "170r",
+   "marc_id": "6a45298cc6d95bc278fbca2d",
+   "bert_page": 28,
+   "bert_pages": [
+    28
+   ],
+   "self": 0.5576208178438662,
+   "cover": 0.2222222222222222
+  },
+  "364": {
+   "folio": "171r",
+   "marc_id": "6a45298cc6d95bc278fbca2f",
+   "bert_page": 30,
+   "bert_pages": [
+    30
+   ],
+   "self": 0.6219081272084805,
+   "cover": 0.29225352112676056
+  },
+  "365": {
+   "folio": "171v",
+   "marc_id": "6a45298cc6d95bc278fbca30",
+   "bert_page": 31,
+   "bert_pages": [
+    31
+   ],
+   "self": 0.6463414634146342,
+   "cover": 0.24369747899159663
+  },
+  "367": {
+   "folio": "172v",
+   "marc_id": "6a45298cc6d95bc278fbca32",
+   "bert_page": 34,
+   "bert_pages": [
+    33
+   ],
+   "self": 0.5346153846153846,
+   "cover": 0.25555555555555554
+  },
+  "368": {
+   "folio": "173r",
+   "marc_id": "6a45298cc6d95bc278fbca33",
+   "bert_page": 34,
+   "bert_pages": [
+    34
+   ],
+   "self": 0.5783132530120482,
+   "cover": 0.2901960784313726
+  },
+  "369": {
+   "folio": "173v",
+   "marc_id": "6a45298cc6d95bc278fbca34",
+   "bert_page": 36,
+   "bert_pages": [
+    35
+   ],
+   "self": 0.6431226765799256,
+   "cover": 0.26996197718631176
+  },
+  "371": {
+   "folio": "174v",
+   "marc_id": "6a45298cc6d95bc278fbca36",
+   "bert_page": 36,
+   "bert_pages": [
+    36
+   ],
+   "self": 0.5672268907563025,
+   "cover": 0.20920502092050208
+  },
+  "373": {
+   "folio": "175v",
+   "marc_id": "6a45298cc6d95bc278fbca38",
+   "bert_page": 39,
+   "bert_pages": [
+    39
+   ],
+   "self": 0.6810344827586207,
+   "cover": 0.24050632911392406
+  },
+  "374": {
+   "folio": "176r",
+   "marc_id": "6a45298cc6d95bc278fbca39",
+   "bert_page": 41,
+   "bert_pages": [
+    40
+   ],
+   "self": 0.708502024291498,
+   "cover": 0.27419354838709675
+  },
+  "375": {
+   "folio": "176v",
+   "marc_id": "6a45298cc6d95bc278fbca3a",
+   "bert_page": 42,
+   "bert_pages": [
+    41
+   ],
+   "self": 0.6056910569105691,
+   "cover": 0.2834008097165992
+  },
+  "377": {
+   "folio": "177v",
+   "marc_id": "6a45298cc6d95bc278fbca3c",
+   "bert_page": 43,
+   "bert_pages": [
+    43
+   ],
+   "self": 0.6604477611940298,
+   "cover": 0.22794117647058823
+  },
+  "380": {
+   "folio": "179r",
+   "marc_id": "6a45298cc6d95bc278fbca3f",
+   "bert_page": 121,
+   "bert_pages": [
+    121
+   ],
+   "self": 0.6263048016701461,
+   "cover": 0.5147679324894515
+  },
+  "381": {
+   "folio": "179v",
+   "marc_id": "6a45298cc6d95bc278fbca40",
+   "bert_page": 122,
+   "bert_pages": [
+    121
+   ],
+   "self": 0.6594827586206896,
+   "cover": 0.5256410256410257
+  },
+  "382": {
+   "folio": "180r",
+   "marc_id": "6a45298cc6d95bc278fbca41",
+   "bert_page": 123,
+   "bert_pages": [
+    122
+   ],
+   "self": 0.5879732739420935,
+   "cover": 0.5135135135135135
+  },
+  "383": {
+   "folio": "180v",
+   "marc_id": "6a45298cc6d95bc278fbca42",
+   "bert_page": 124,
+   "bert_pages": [
+    123
+   ],
+   "self": 0.6171003717472119,
+   "cover": 0.4690909090909091
+  },
+  "384": {
+   "folio": "181r",
+   "marc_id": "6a45298cc6d95bc278fbca43",
+   "bert_page": 476,
+   "bert_pages": [
+    475
+   ],
+   "self": 0.6666666666666666,
+   "cover": 0.5298507462686567
+  },
+  "385": {
+   "folio": "181v",
+   "marc_id": "6a45298cc6d95bc278fbca44",
+   "bert_page": 477,
+   "bert_pages": [
+    477
+   ],
+   "self": 0.6756238003838771,
+   "cover": 0.5037878787878788
+  },
+  "386": {
+   "folio": "182r",
+   "marc_id": "6a45298cc6d95bc278fbca45",
+   "bert_page": 478,
+   "bert_pages": [
+    478
+   ],
+   "self": 0.6279569892473118,
+   "cover": 0.3728813559322034
+  },
+  "387": {
+   "folio": "182v",
+   "marc_id": "6a45298cc6d95bc278fbca46",
+   "bert_page": 126,
+   "bert_pages": [
+    126
+   ],
+   "self": 0.5920303605313093,
+   "cover": 0.1895910780669145
+  },
+  "388": {
+   "folio": "183r",
+   "marc_id": "6a45298cc6d95bc278fbca47",
+   "bert_page": 480,
+   "bert_pages": [
+    480
+   ],
+   "self": 0.540952380952381,
+   "cover": 0.40671641791044777
+  },
+  "389": {
+   "folio": "183v",
+   "marc_id": "6a45298cc6d95bc278fbca48",
+   "bert_page": 481,
+   "bert_pages": [
+    481
+   ],
+   "self": 0.6422764227642277,
+   "cover": 0.390625
+  },
+  "391": {
+   "folio": "184v",
+   "marc_id": "6a45298cc6d95bc278fbca4a",
+   "bert_page": 483,
+   "bert_pages": [
+    483
+   ],
+   "self": 0.626984126984127,
+   "cover": 0.36947791164658633
+  },
+  "394": {
+   "folio": "186r",
+   "marc_id": "6a45298cc6d95bc278fbca4d",
+   "bert_page": 130,
+   "bert_pages": [
+    130
+   ],
+   "self": 0.6177105831533477,
+   "cover": 0.3
+  },
+  "395": {
+   "folio": "186v",
+   "marc_id": "6a45298cc6d95bc278fbca4e",
+   "bert_page": 131,
+   "bert_pages": [
+    130
+   ],
+   "self": 0.6325411334552102,
+   "cover": 0.40148698884758366
+  },
+  "396": {
+   "folio": "187r",
+   "marc_id": "6a45298cc6d95bc278fbca4f",
+   "bert_page": 131,
+   "bert_pages": [
+    131
+   ],
+   "self": 0.6194331983805668,
+   "cover": 0.42168674698795183
+  },
+  "397": {
+   "folio": "187v",
+   "marc_id": "6a45298cc6d95bc278fbca50",
+   "bert_page": 133,
+   "bert_pages": [
+    132
+   ],
+   "self": 0.5215686274509804,
+   "cover": 0.35269709543568467
+  },
+  "398": {
+   "folio": "188r",
+   "marc_id": "6a45298cc6d95bc278fbca51",
+   "bert_page": 50,
+   "bert_pages": [
+    49,
+    133
+   ],
+   "self": 0.6419213973799127,
+   "cover": 0.3869565217391304
+  },
+  "400": {
+   "folio": "189r",
+   "marc_id": "6a45298cc6d95bc278fbca53",
+   "bert_page": 134,
+   "bert_pages": [
+    134
+   ],
+   "self": 0.5681818181818182,
+   "cover": 0.3755656108597285
+  },
+  "401": {
+   "folio": "189v",
+   "marc_id": "6a45298cc6d95bc278fbca54",
+   "bert_page": 135,
+   "bert_pages": [
+    135
+   ],
+   "self": 0.6354166666666666,
+   "cover": 0.5157894736842106
+  },
+  "402": {
+   "folio": "190r",
+   "marc_id": "6a45298cc6d95bc278fbca55",
+   "bert_page": 136,
+   "bert_pages": [
+    135
+   ],
+   "self": 0.6344827586206897,
+   "cover": 0.45871559633027525
+  },
+  "404": {
+   "folio": "191r",
+   "marc_id": "6a45298cc6d95bc278fbca57",
+   "bert_page": 137,
+   "bert_pages": [
+    137
+   ],
+   "self": 0.5654885654885655,
+   "cover": 0.44621513944223107
+  },
+  "406": {
+   "folio": "192r",
+   "marc_id": "6a45298cc6d95bc278fbca59",
+   "bert_page": 139,
+   "bert_pages": [
+    139
+   ],
+   "self": 0.6458333333333334,
+   "cover": 0.5271966527196653
+  },
+  "407": {
+   "folio": "192v",
+   "marc_id": "6a45298cc6d95bc278fbca5a",
+   "bert_page": 140,
+   "bert_pages": [
+    140
+   ],
+   "self": 0.6028513238289206,
+   "cover": 0.5
+  },
+  "408": {
+   "folio": "193r",
+   "marc_id": "6a45298cc6d95bc278fbca5b",
+   "bert_page": 141,
+   "bert_pages": [
+    141
+   ],
+   "self": 0.608955223880597,
+   "cover": 0.48520710059171596
+  },
+  "410": {
+   "folio": "194r",
+   "marc_id": "6a45298cc6d95bc278fbca5d",
+   "bert_page": 142,
+   "bert_pages": [
+    142
+   ],
+   "self": 0.6384976525821596,
+   "cover": 0.49295774647887325
+  },
+  "411": {
+   "folio": "194v",
+   "marc_id": "6a45298cc6d95bc278fbca5e",
+   "bert_page": 431,
+   "bert_pages": [
+    143,
+    431
+   ],
+   "self": 0.4716981132075472,
+   "cover": 0.33636363636363636
+  },
+  "412": {
+   "folio": "195r",
+   "marc_id": "6a45298cc6d95bc278fbca5f",
+   "bert_page": 143,
+   "bert_pages": [
+    143
+   ],
+   "self": 0.6545454545454545,
+   "cover": 0.51440329218107
+  },
+  "413": {
+   "folio": "195v",
+   "marc_id": "6a45298cc6d95bc278fbca60",
+   "bert_page": 144,
+   "bert_pages": [
+    144
+   ],
+   "self": 0.6056782334384858,
+   "cover": 0.5308641975308642
+  },
+  "414": {
+   "folio": "196r",
+   "marc_id": "6a45298cc6d95bc278fbca61",
+   "bert_page": 144,
+   "bert_pages": [
+    144
+   ],
+   "self": 0.535031847133758,
+   "cover": 0.5061728395061729
+  }
+ }
+}
