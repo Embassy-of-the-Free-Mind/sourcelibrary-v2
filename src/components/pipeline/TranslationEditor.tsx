@@ -29,9 +29,9 @@ import {
 } from 'lucide-react';
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
-import PairedEditionPanel from '@/components/book/PairedEditionPanel';
 import AiBadge from '@/components/ui/AiBadge';
 import { MANUSCRIPT_OCR_FLAG } from '@/lib/marcianus-overlay.shared';
+import { usePairedEdition } from '@/hooks/usePairedEdition';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
@@ -572,10 +572,12 @@ export default function TranslationEditor({
   // Jump-to-page: the counter ("18/864") doubles as an editable input
   const [isEditingPage, setIsEditingPage] = useState(false);
 
-  // Paired critical-edition overlay (Marcianus 299 ↔ Berthelot). When an aligned
-  // folio is showing, the manuscript's own OCR/translation is demoted to a
-  // flagged aid — see .claude/docs/edition-facsimile-pairing.md.
-  const [hasPairedEdition, setHasPairedEdition] = useState(false);
+  // Paired critical edition (Marcianus 299 ↔ Berthelot). When an aligned folio is
+  // showing, Berthelot's Greek + English fill the normal Original/Translation
+  // columns as the reading text of record, and the manuscript's own AI OCR is
+  // demoted to a collapsible flagged aid inside those columns — same 3-part view,
+  // no separate band. See .claude/docs/edition-facsimile-pairing.md.
+  const paired = usePairedEdition(book.id, page.id, page.page_number);
   const [pageInputValue, setPageInputValue] = useState('');
 
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
@@ -1349,14 +1351,17 @@ export default function TranslationEditor({
           </div>
         )}
 
-        {/* Paired critical edition (Marcianus 299 ↔ Berthelot) — the reading
-            text of record, surfaced above the facsimile + demoted AI OCR. */}
-        <PairedEditionPanel
-          bookId={book.id}
-          pageId={page.id}
-          pageNumber={page.page_number}
-          onLoaded={setHasPairedEdition}
-        />
+        {/* Paired critical edition (Marcianus 299 ↔ Berthelot): one slim, non-
+            disruptive line. Berthelot's text fills the Original/Translation
+            columns below; the manuscript's own OCR is demoted inside them. */}
+        {paired && (
+          <div className="px-4 py-2 bg-accent-gold/10 border-b border-accent-gold/20 text-xs flex items-center gap-2" style={{ color: 'var(--accent-gold-dark)' }}>
+            <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
+            <span>
+              <span className="font-medium">Reading text from the critical edition</span> — Berthelot &amp; Ruelle 1887–88, folio {paired.folio}. The manuscript&rsquo;s own AI transcription is unverified; verify any quotation against the edition or the facsimile.
+            </span>
+          </div>
+        )}
 
         {/* Panel layout - dynamic based on visibility */}
         {(() => {
@@ -1529,23 +1534,19 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        {ocrText ? (book.language || 'Original') : 'Step 1: Transcribe'}
+                        {paired ? 'Greek · Berthelot' : ocrText ? (book.language || 'Original') : 'Step 1: Transcribe'}
                       </span>
-                      {ocrText && !hasPairedEdition && (
+                      {paired ? (
+                        paired.badges.map((b) => (
+                          <span key={b.label} className={`px-1.5 py-0.5 rounded text-[11px] cursor-help ${b.className}`} title={b.tooltip}>
+                            {b.label}
+                          </span>
+                        ))
+                      ) : ocrText ? (
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
                           <Check className="w-3 h-3" />
                         </span>
-                      )}
-                      {ocrText && hasPairedEdition && (
-                        <span
-                          className="inline-flex items-center gap-1 text-[11px] normal-case"
-                          style={{ color: 'var(--text-muted)' }}
-                          title={MANUSCRIPT_OCR_FLAG.tooltip}
-                        >
-                          <AiBadge title={MANUSCRIPT_OCR_FLAG.tooltip} />
-                          {MANUSCRIPT_OCR_FLAG.label}
-                        </span>
-                      )}
+                      ) : null}
                     </div>
                     {ocrText && (
                       <RevisionHistory
@@ -1559,7 +1560,24 @@ export default function TranslationEditor({
                     )}
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
-                    {ocrText ? (
+                    {paired ? (
+                      <>
+                        <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="el">
+                          <NotesRenderer text={paired.transcription} showNotes={showNotes} showMetadata={false} language="Ancient Greek" />
+                        </div>
+                        {ocrText && (
+                          <details className="mt-6 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                            <summary className="cursor-pointer select-none inline-flex items-center gap-1 text-[11px]" style={{ color: 'var(--text-muted)' }} title={MANUSCRIPT_OCR_FLAG.tooltip}>
+                              <AiBadge title={MANUSCRIPT_OCR_FLAG.tooltip} />
+                              {MANUSCRIPT_OCR_FLAG.label}
+                            </summary>
+                            <div className="prose-manuscript leading-relaxed mt-3" style={{ color: 'var(--text-muted)' }} lang="el">
+                              <NotesRenderer text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} pageType={page.page_type} />
+                            </div>
+                          </details>
+                        )}
+                      </>
+                    ) : ocrText ? (
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         <NotesRenderer text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} pageType={page.page_type} />
                       </div>
@@ -1702,21 +1720,11 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        {translationText ? translationLangLabel : 'Step 2: Translate'}
+                        {paired ? 'English · Berthelot' : translationText ? translationLangLabel : 'Step 2: Translate'}
                       </span>
-                      {translationText && !hasPairedEdition && (
+                      {!paired && translationText && (
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
                           <Check className="w-3 h-3" />
-                        </span>
-                      )}
-                      {translationText && hasPairedEdition && (
-                        <span
-                          className="inline-flex items-center gap-1 text-[11px] normal-case"
-                          style={{ color: 'var(--text-muted)' }}
-                          title={MANUSCRIPT_OCR_FLAG.tooltip}
-                        >
-                          <AiBadge title={MANUSCRIPT_OCR_FLAG.tooltip} />
-                          {MANUSCRIPT_OCR_FLAG.label}
                         </span>
                       )}
                       {translationText && (
@@ -1795,7 +1803,24 @@ export default function TranslationEditor({
                     )}
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
-                    {translationText && modernizedMode && modernizedText ? (
+                    {paired ? (
+                      <>
+                        <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                          <NotesRenderer text={paired.translation} showNotes={showNotes} showMetadata={false} />
+                        </div>
+                        {translationText && (
+                          <details className="mt-6 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                            <summary className="cursor-pointer select-none inline-flex items-center gap-1 text-[11px]" style={{ color: 'var(--text-muted)' }} title={MANUSCRIPT_OCR_FLAG.tooltip}>
+                              <AiBadge title={MANUSCRIPT_OCR_FLAG.tooltip} />
+                              {MANUSCRIPT_OCR_FLAG.label}
+                            </summary>
+                            <div className="prose-manuscript leading-relaxed mt-3" style={{ color: 'var(--text-muted)' }}>
+                              <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                            </div>
+                          </details>
+                        )}
+                      </>
+                    ) : translationText && modernizedMode && modernizedText ? (
                       /* Modernized text view — use NotesRenderer for full markdown support */
                       (() => {
                         // Convert <section-intro> tags to <note> tags so NotesRenderer styles them as green editorial notes
