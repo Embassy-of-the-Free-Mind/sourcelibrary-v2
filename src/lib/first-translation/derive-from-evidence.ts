@@ -23,9 +23,18 @@
  *
  *  2. `not_applicable` collapsed into absence → FALSE PROMOTES. An agent judging
  *     a book "not an English-translation candidate" was stored as `result:none`
- *     and counted as an absence vote. It is now detected (result or legacy
- *     "not_applicable: …" notes) and either yields a `not_applicable` verdict
- *     (from an independent agent/human) or is excluded from the absence count.
+ *     and counted as an absence vote. It is now detected (result, legacy
+ *     "not_applicable: …" notes, or the backfill's mid-notes
+ *     "status=not_applicable" / "disposition=not_applicable" form) and either
+ *     yields a `not_applicable` verdict (from an independent agent/human) or is
+ *     excluded from the absence count.
+ *
+ *  3. Undocumented "none" counted as an absence vote → FALSE PROMOTES. Legacy
+ *     rows with `result:none` but NO recorded sources_checked/queries are a
+ *     stored opinion, not a search; counting them let two miscoded legacy rows
+ *     fake cross-family independence and promote English originals (found in
+ *     the 2026-07-02 reconcile dry-run). Absence votes now require recorded
+ *     search coverage.
  *
  * The asymmetry is enforced: a DEMOTE needs a trustworthy positive sighting; a
  * PROMOTE needs clean, independent absence with NO prior hint at all. Anything
@@ -87,8 +96,27 @@ function toCited(p: NonNullable<FirstTranslationAttempt['priors']>[number]): Cit
 }
 
 const NOT_APPLICABLE_RE = /^\s*not[_ ]applicable\b/i;
+// Legacy backfills embed the judgment mid-notes ("[legacy_ai] status=not_applicable; …"),
+// which the anchored form misses — so an "original English work, FT does not apply"
+// row counted as an absence vote and promoted English originals to first_no_prior
+// (the Book of Kells / Religio Medici class in the 2026-07-02 reconcile dry-run).
+const LEGACY_NA_RE = /\b(?:status|disposition|result)=not[_ ]applicable\b/i;
 function isNotApplicable(a: FirstTranslationAttempt): boolean {
-  return a.result === 'not_applicable' || NOT_APPLICABLE_RE.test(a.notes ?? '');
+  return (
+    a.result === 'not_applicable'
+    || NOT_APPLICABLE_RE.test(a.notes ?? '')
+    || LEGACY_NA_RE.test(a.notes ?? '')
+  );
+}
+
+/**
+ * An absence vote is only evidence when the attempt documents what it searched.
+ * A negative claim is exactly as strong as its recorded coverage (the module's
+ * first principle) — a legacy row with no sources and no queries is a stored
+ * opinion, not a search, and must not count toward first_no_prior independence.
+ */
+function hasSearchCoverage(a: FirstTranslationAttempt): boolean {
+  return (a.sources_checked?.length ?? 0) > 0 || (a.queries?.length ?? 0) > 0;
 }
 
 /**
@@ -153,8 +181,11 @@ export function deriveVerdictFromAttempts(
   if (attempts.some((a) => a.result === 'found')) return null;
 
   // 4) Clean absence only. Count independent FAMILIES (not raw methods);
-  //    exclude not_applicable rows — they aren't absence votes.
-  const absences = attempts.filter((a) => a.result === 'none' && !isNotApplicable(a));
+  //    exclude not_applicable rows (not absence votes) and rows with no recorded
+  //    search coverage (an undocumented "none" is not evidence of absence).
+  const absences = attempts.filter(
+    (a) => a.result === 'none' && !isNotApplicable(a) && hasSearchCoverage(a),
+  );
   if (absences.length === 0) return null;
   const families = new Set(absences.map(attemptFamily)).size;
   const strongest = strongestAttempt(absences)!;
