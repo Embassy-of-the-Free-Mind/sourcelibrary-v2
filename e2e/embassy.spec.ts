@@ -48,9 +48,14 @@ test.describe('Librarian', () => {
     }
   });
 
-  test('shows sign-in prompt when not authenticated', async ({ page }) => {
-    await expect(page.locator('textarea')).toBeDisabled();
-    await expect(page.locator('textarea')).toHaveAttribute('placeholder', /Sign in/);
+  test('anonymous visitors can use the Librarian input', async ({ page }) => {
+    // Anonymous access was deliberately opened up (5 free actions/hour via
+    // src/lib/anon-gate.ts) — the textarea is enabled for everyone, with a
+    // soft "sign in to save your conversations" note below the input rather
+    // than a hard disabled-input gate.
+    await expect(page.locator('textarea')).toBeEnabled();
+    await expect(page.locator('textarea')).toHaveAttribute('placeholder', 'Ask the Librarian...');
+    await expect(page.getByText('to save your conversations and keep them private')).toBeVisible();
   });
 
   test('shows Recent tab', async ({ page }) => {
@@ -97,11 +102,23 @@ test.describe('Librarian - API Routes', () => {
     expect(data.rooms[0]).toHaveProperty('name');
   });
 
-  test('POST /api/embassy/chat requires auth', async ({ request }) => {
+  test('POST /api/embassy/chat allows a first anonymous request', async ({ request }) => {
+    // Commit 4516ebc7 deliberately opened anonymous Librarian access — the
+    // old "auth required" contract is gone. Anonymous visitors get 5 free
+    // actions/hour (src/app/api/embassy/chat/route.ts, checkRateLimit). We
+    // only assert the happy path here to avoid burning 5 real LLM calls to
+    // prove the 429-after-quota path; that path is untested by this suite.
     const res = await request.post('/api/embassy/chat', {
-      data: { message: 'Hello' },
+      data: { message: 'What is the Emerald Tablet?' },
     });
-    expect([401, 429]).toContain(res.status());
+    // 429 is still acceptable if a prior test/run in this window already
+    // used up the shared IP's quota.
+    expect([200, 429]).toContain(res.status());
+    if (res.status() === 200) {
+      const data = await res.json();
+      expect(data).toHaveProperty('threadId');
+      expect(data).toHaveProperty('message');
+    }
   });
 
   test('GET /api/embassy/rooms/general/messages returns messages', async ({ request }) => {
