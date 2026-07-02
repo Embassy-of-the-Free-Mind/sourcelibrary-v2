@@ -19,7 +19,8 @@ interface ImageWithMagnifierProps {
 }
 
 // Magnifier component for zooming into the source image.
-// Desktop: hover to show magnifier lens, click to open in-app fullscreen viewer.
+// Desktop: hover to show a wide reading lens — scroll up/down over the image
+// adjusts magnification; click opens the in-app fullscreen viewer.
 // Mobile/Touch: tap opens the raw high-res image in a new tab so the browser's
 // native pinch-zoom can take over (the in-app viewer caps at 5x, which isn't
 // enough for high-DPI scans — see PR #1873 for the prior escape-hatch button).
@@ -29,7 +30,7 @@ export default function ImageWithMagnifier({
   alt,
   className = '',
   magnifierSize = 200,
-  zoomLevel = 3,
+  zoomLevel = 2.5,
   scrollable = false,
   highResSrc,
   fallbackSrc,
@@ -49,8 +50,36 @@ export default function ImageWithMagnifier({
   const [showFullscreen, setShowFullscreen] = useState(false);
   // Track last known image height to prevent layout shift during page transitions
   const [lastImageHeight, setLastImageHeight] = useState<number>(0);
+  // User-adjusted magnification (scroll over the image while the lens is up).
+  // Stored unclamped; render clamps to [MIN_ZOOM, native pixel ratio].
+  const [userZoom, setUserZoom] = useState(zoomLevel);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const showMagnifierRef = useRef(false);
+  showMagnifierRef.current = showMagnifier;
+
+  // The lens is a wide reading rectangle (fits a line of text) rather than a
+  // square/circle. Derived from magnifierSize so existing callers keep their scale.
+  const lensW = Math.round(magnifierSize * 1.9);
+  const lensH = Math.round(magnifierSize * 0.85);
+
+  const MIN_ZOOM = 1.5;
+  const MAX_ZOOM = 12;
+
+  // Scroll-to-zoom needs a native non-passive wheel listener (React attaches
+  // wheel handlers passively, so preventDefault would be ignored). Only
+  // intercepts while the lens is visible — otherwise the page scrolls normally.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!showMagnifierRef.current) return;
+      e.preventDefault();
+      setUserZoom((z) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z * Math.exp(-e.deltaY * 0.002))));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
 
   // Use thumbnail for display, full image for magnifier
   // If no thumbnail, use resize API to generate one on-the-fly
@@ -301,35 +330,40 @@ export default function ImageWithMagnifier({
           }}
         />
 
-        {/* Desktop: Magnifier lens - uses full resolution image */}
+        {/* Desktop: wide reading lens - uses full resolution image, scroll adjusts zoom */}
         {!isTouchDevice && showMagnifier && fullImageLoaded && (() => {
-          // Calculate effective zoom: use full image native resolution for sharpness.
-          // If the full image is only marginally larger than display, scale up to use all native pixels.
+          // Never magnify past the full image's native pixels (it only blurs) —
+          // the native ratio is the ceiling, the user's scroll-zoom picks within it.
           const nativeW = fullImageDimensions.width || imageDimensions.width;
-          const nativeH = fullImageDimensions.height || imageDimensions.height;
-          const nativeZoom = Math.max(nativeW / (imageDimensions.width || 1), 1);
-          // Use whichever is larger: requested zoomLevel or native pixel ratio
-          const effectiveZoom = Math.max(zoomLevel, nativeZoom);
+          const nativeZoom = Math.max(nativeW / (imageDimensions.width || 1), MIN_ZOOM);
+          const effectiveZoom = Math.min(Math.max(userZoom, MIN_ZOOM), nativeZoom);
           const bgW = imageDimensions.width * effectiveZoom;
           const bgH = imageDimensions.height * effectiveZoom;
           return (
             <div
-              className="absolute pointer-events-none rounded-full overflow-hidden"
+              className="absolute pointer-events-none overflow-hidden rounded-xl"
               style={{
-                width: magnifierSize,
-                height: magnifierSize,
-                left: cursorPosition.x - magnifierSize / 2,
-                top: cursorPosition.y - magnifierSize / 2,
-                border: '4px solid white',
+                width: lensW,
+                height: lensH,
+                left: cursorPosition.x - lensW / 2,
+                top: cursorPosition.y - lensH / 2,
+                border: '3px solid white',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
                 backgroundImage: `url(${magnifierSrc})`,
                 backgroundSize: `${bgW}px ${bgH}px`,
-                backgroundPosition: `${-(magnifierPosition.x / 100) * bgW + magnifierSize / 2}px ${-(magnifierPosition.y / 100) * bgH + magnifierSize / 2}px`,
+                backgroundPosition: `${-(magnifierPosition.x / 100) * bgW + lensW / 2}px ${-(magnifierPosition.y / 100) * bgH + lensH / 2}px`,
                 backgroundRepeat: 'no-repeat',
                 backgroundColor: 'white',
                 zIndex: 100,
               }}
-            />
+            >
+              <span
+                className="absolute bottom-1 right-1.5 rounded bg-black/50 px-1 py-px text-[10px] font-medium leading-tight text-white"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
+              >
+                {effectiveZoom.toFixed(1)}×
+              </span>
+            </div>
           );
         })()}
 
