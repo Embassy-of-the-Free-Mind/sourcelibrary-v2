@@ -1,7 +1,7 @@
 # Theosophical import — source material & batch log
 
 ## Provenance
-On 2026-05-29, Reinout Spaink (`respaink@12move.nl`, via Jozef Ritman) emailed Derek
+On 2026-05-29, Reinout Spaink (via Jozef Ritman; contact details in the private ops repo) emailed Derek
 a pointer to the **Campbell Theosophical Research Library** index, "Links to
 Theosophical Texts Online" — the catalog of the Theosophical Society in Australia.
 The original site (`austheos.org.au/clibrary/`) is **dead on the live web**; it
