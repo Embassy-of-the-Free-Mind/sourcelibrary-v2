@@ -247,7 +247,11 @@ async function computeDataPageSnapshot(db: any): Promise<LibraryData> {
     providers: providersAgg
       .filter((p: any) => p._id)
       .map((p: any) => ({ name: p._id, count: p.count })),
-    collections: collectionsAgg as Array<{ slug: string; name: string; book_count: number }>,
+    // Coerce book_count: a collection created without the field would otherwise
+    // put `undefined` in the snapshot and 500 the /data render.
+    collections: (collectionsAgg as Array<{ slug: string; name: string; book_count?: number }>).map(
+      (c) => ({ slug: c.slug, name: c.name, book_count: c.book_count ?? 0 }),
+    ),
   };
 }
 
