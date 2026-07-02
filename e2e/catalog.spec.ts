@@ -30,7 +30,8 @@ test.describe('Catalog', () => {
     await page.goto('/catalog');
     await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
 
-    // Default is list view — should have table rows
+    // Default is grid view — explicitly toggle to list view to check the table.
+    await page.getByLabel('List view').click();
     const rows = page.locator('table tbody tr');
     await expect(rows.first()).toBeVisible({ timeout: 5_000 });
     expect(await rows.count()).toBeGreaterThan(10);
@@ -40,7 +41,9 @@ test.describe('Catalog', () => {
     await page.goto('/catalog');
     await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
 
+    // Search runs on submit (Enter / Search button), not live-as-you-type.
     await page.fill('input[placeholder*="Search"]', 'Agrippa');
+    await page.keyboard.press('Enter');
     // Should show filtered count ("N of M books")
     await expect(page.locator('text=/\\d+ of \\d[\\d,]+ books/')).toBeVisible({ timeout: 5_000 });
   });
@@ -67,8 +70,9 @@ test.describe('Catalog', () => {
     const start = Date.now();
     await page.goto('/catalog');
     await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
-    const rows = page.locator('table tbody tr');
-    await expect(rows.first()).toBeVisible({ timeout: 5_000 });
+    // Default view is grid — assert on book cards rather than the (list-only) table.
+    const cards = page.locator('a[href^="/book/"]');
+    await expect(cards.first()).toBeVisible({ timeout: 5_000 });
     const tti = Date.now() - start;
 
     console.log(`Catalog TTI: ${tti}ms`);

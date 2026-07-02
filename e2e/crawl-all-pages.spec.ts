@@ -99,7 +99,6 @@ const STATIC_PAGES = [
   '/ficino-society',
   '/ficino-society/discussions',
   '/ficino-society/members',
-  '/founding-donors',
   '/gallery',
   '/gallery/collections',
   '/gallery/curate',
@@ -208,14 +207,13 @@ const ERROR_PATTERNS = [
 // URL patterns that are KNOWN to be broken in production but not yet fixed.
 // The crawl reports them but does not fail the test. Remove an entry once its
 // bug is fixed — that converts the test into a regression guard automatically.
-const EXPECTED_BROKEN_PATTERNS: RegExp[] = [
-  // #2083: /browse/{authors,artists,titles,years}/* all return 500. Real
-  // production bug, not a test issue. The handler's try/catch swallows the
-  // Supabase error but the 500 originates outside it (header read or
-  // render-time).
-  /^\/browse\/(authors|artists|titles)\/[A-Z]$/,
-  /^\/browse\/years\/(ancient|medieval|\d{4}s)$/,
-];
+//
+// #2083 (/browse/{authors,artists,titles}/[A-Z] and /browse/years/*) is fixed
+// and verified (all return 200) — entries removed 2026-07-02. Nothing to
+// suppress right now; /data is a known-broken page tracked separately (fix in
+// flight in a parallel PR) and is deliberately NOT allowlisted here so it
+// still fails this test until it's actually fixed.
+const EXPECTED_BROKEN_PATTERNS: RegExp[] = [];
 
 function isExpectedBroken(path: string): boolean {
   return EXPECTED_BROKEN_PATTERNS.some(re => re.test(path));
