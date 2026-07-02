@@ -313,7 +313,9 @@ async function computeDataPageSnapshot(db) {
     centuries: centuriesAgg.map(c => ({ century: c._id, label: formatCentury(c._id), count: c.count })),
     categories: categoriesAgg.map(c => ({ slug: c._id, name: c._id.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), count: c.count })),
     providers: providersAgg.filter(p => p._id).map(p => ({ name: p._id, count: p.count })),
-    collections: collectionsAgg,
+    // Coerce book_count: a collection created without the field would otherwise
+    // put `undefined` in the snapshot and 500 the /data render.
+    collections: collectionsAgg.map(c => ({ slug: c.slug, name: c.name, book_count: c.book_count ?? 0 })),
   };
 
   await db.collection('system_config').updateOne(

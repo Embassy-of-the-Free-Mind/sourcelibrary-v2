@@ -453,7 +453,7 @@ export default async function DataPage({
             >
               <span className="text-secondary font-medium">{c.name}</span>
               <span className="text-sm text-muted tabular-nums shrink-0">
-                {formatNumber(c.book_count)} books
+                {formatNumber(c.book_count ?? 0)} books
               </span>
             </Link>
           ))}
