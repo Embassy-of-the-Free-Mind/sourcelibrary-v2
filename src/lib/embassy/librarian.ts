@@ -455,7 +455,7 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
   // in the gallery). An exact keyword hit on the curated description is
   // stronger evidence than borderline visual similarity, so the merged order
   // is: corroborated by both → keyword-only → CLIP-only.
-  const projection = { image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 };
+  const projection = { id: 1, page_id: 1, detection_index: 1, image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 };
 
   // The keyword arm uses the weighted $text index (gallery_images_text_idx:
   // description ×5, museum_description ×3, subjects/figures/symbols ×2), NOT a
@@ -517,7 +517,10 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
 
   return {
     images: images.slice(0, 6).map(img => ({
-      id: img._id.toString(),
+      // Viewer id is the compound `<pageId>-<detectionIndex>` (gallery_images.id),
+      // NOT the Mongo ObjectId — /gallery/image/<objectIdHex> can't be parsed
+      // by the viewer route and soft-404s.
+      id: img.id || `${img.page_id}-${img.detection_index}`,
       imageUrl: img.image_url,
       description: (img.museum_description || img.description || '').slice(0, 300),
       bookTitle: img.book_title || 'Unknown',
