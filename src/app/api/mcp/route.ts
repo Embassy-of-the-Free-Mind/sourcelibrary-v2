@@ -355,8 +355,17 @@ async function searchImages(args: Record<string, unknown>) {
     description: item.description, type: item.type, quality: item.galleryQuality,
     book: { title: item.bookTitle, author: item.author, year: item.year },
     page: item.pageNumber, image_url: item.imageUrl,
-    url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
-    book_url: item.bookId ? `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}` : undefined,
+    // Standalone artworks (source:'artwork') have no page in the gallery viewer —
+    // their pageId is the synthetic `artwork-<bookId>`, and /gallery/image/artwork-…-0
+    // 404s. Link them to their own detail page (item.link) instead.
+    url: item.source === 'artwork'
+      ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
+      : `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+    book_url: item.bookId
+      ? (item.source === 'artwork'
+        ? `https://sourcelibrary.org/book/${item.bookId}`
+        : `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}`)
+      : undefined,
   })) || [];
 
   const artworks = (artworkResult.items as Array<Record<string, unknown>>)?.map((item) => ({

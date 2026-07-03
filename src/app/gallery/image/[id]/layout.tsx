@@ -8,8 +8,34 @@
 
 import { cache } from 'react';
 import { Metadata } from 'next';
+import { permanentRedirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
+
+/**
+ * Rescue non-viewer ids that leaked into /gallery/image/ links.
+ *
+ * Several producers (clip_embeddings rows, the merged gallery browse) use
+ * prefixed id namespaces that are NOT viewer ids:
+ *   - artwork-<bookId>[-<n>]  — standalone artwork (books collection)
+ *   - cover-<bookId>[-<n>]    — book cover clip row
+ *   - gallery-<pageId>-<n>    — clip row for a real gallery image
+ * The viewer only resolves bare `<pageId>-<n>`, so these all soft-404.
+ * Redirect them to where the content actually lives instead.
+ */
+function redirectLeakedId(id: string): void {
+  const decoded = decodeURIComponent(id);
+  const prefixed = decoded.match(/^(artwork|cover|gallery)-(.+)$/);
+  if (!prefixed) return;
+  const [, prefix, rest] = prefixed;
+  if (prefix === 'gallery') {
+    permanentRedirect(`/gallery/image/${rest}`);
+  }
+  // artwork/cover: the payload is a book id, sometimes with a synthetic
+  // detection-index suffix (`artwork-<bookId>-0` from the merged browse).
+  const bookId = rest.replace(/-\d+$/, '');
+  permanentRedirect(`/book/${bookId}`);
+}
 
 interface PageWithBook {
   id: string;
@@ -104,6 +130,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
+  redirectLeakedId(id);
   let data;
   try {
     data = await getImageData(id);
@@ -173,6 +200,7 @@ export default async function ImageLayout({
   children: React.ReactNode;
 }) {
   const { id } = await params;
+  redirectLeakedId(id);
   const data = await getImageData(id);
   const urlSafeId = decodeURIComponent(id).replace(/:(\d+)$/, '-$1');
 

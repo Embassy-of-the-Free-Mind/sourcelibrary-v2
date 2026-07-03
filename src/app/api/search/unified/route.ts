@@ -766,12 +766,19 @@ async function searchVisual(query: string, limit: number): Promise<{ results: Ga
     });
     if (error || !data) return { results: [], total: 0 };
 
-    // Deduplicate by book (max 2 per book)
+    // Keep only gallery-image rows and strip the clip_embeddings id prefix.
+    // The clip table mixes three id namespaces: `gallery-<pageId>-<n>`,
+    // `artwork-<bookId>`, and `cover-<bookId>`. Consumers link these ids to
+    // /gallery/image/<id>, which only resolves bare `<pageId>-<n>` — the raw
+    // clip ids all 404 there. Artworks/covers already have their own lanes
+    // (artwork semantic+lexical, book search), so dropping them loses nothing.
+    // Deduplicate by book (max 2 per book).
     const byBook = new Map<string, number>();
     const deduped = (data as Array<{
-      id: string; book_id: string; image_url: string; thumbnail_url: string;
+      id: string; source_type: string; book_id: string; image_url: string; thumbnail_url: string;
       title: string; author: string; resource_type: string; similarity: number;
     }>).filter(m => {
+      if (m.source_type !== 'gallery_image') return false;
       const count = byBook.get(m.book_id) || 0;
       if (count >= 2) return false;
       byBook.set(m.book_id, count + 1);
@@ -780,7 +787,7 @@ async function searchVisual(query: string, limit: number): Promise<{ results: Ga
 
     return {
       results: deduped.map(m => ({
-        id: m.id,
+        id: m.id.replace(/^gallery-/, ''),
         imageUrl: m.thumbnail_url || m.image_url || '',
         description: m.title || '',
         type: m.resource_type || undefined,
