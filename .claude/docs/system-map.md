@@ -1,6 +1,6 @@
 # Source Library System Map
 
-> Last audited: 2026-04-24. Use this as the primary navigation reference.
+> Last audited: 2026-04-24; spot-refreshed 2026-07-03 (model names, concurrency, file counts). Use this as the primary navigation reference.
 
 ## Architecture Overview
 
@@ -37,7 +37,7 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 | **AWS SQS** (eu-central-1) | Job queues (FIFO) | 4 queues: OCR, translation, images, write |
 | **Cloudflare R2** | Image/page storage | `images.sourcelibrary.org` |
 | **Hetzner** (cax31) | Pipeline orchestration, translation, embeddings | `root@46.224.122.120`, unified scheduler |
-| **Gemini AI** | OCR, translation, enrichment | 3 unique keys (3 GCP projects). BPH: `gemini-3-flash-preview`, others: `gemini-3.1-flash-lite-preview` |
+| **Gemini AI** | OCR, translation, enrichment | 3 unique keys (3 GCP projects). BPH: `gemini-3-flash-preview`, others: `gemini-3.1-flash-lite` |
 | **Stripe** | Payments | Ficino Society membership |
 | **Zenodo** | DOI publishing | Scholarly editions |
 | **Twitter/X** | Social automation | 3h posting cron |
@@ -58,7 +58,7 @@ Import (IA/Gallica/IIIF/Wellcome/etc.)
        └─> Phase 3.5: Metadata enrichment (catalog lookups, no Gemini) ──> metadata_enriched
        └─> Phase 3.7: Transliteration (non-Latin scripts, 3.1-flash-lite)
        └─> Phase 4: Translation dispatch (creates job for translate-worker)
-            │  translate-worker.mjs (15 concurrent books) ──> Gemini realtime ──> MongoDB pages
+            │  translate-worker.mjs (40 concurrent books) ──> Gemini realtime ──> MongoDB pages
             │  ⚠ Realtime API only. NEVER use Batch API for translation.
             └─> Phase 5: Translation completion ──> translate_complete
 
@@ -219,7 +219,7 @@ src/
 │   ├── tablets/            # Cuneiform tablets page
 │   ├── rithmomachia/       # Mathematical board game (guide, scenarios)
 │   ├── admin/              # Admin dashboard pages
-│   ├── blog/               # 39 blog posts (hardcoded JSX, no CMS)
+│   ├── blog/               # 58 blog posts (hardcoded JSX, no CMS)
 │   ├── press-release/      # Press release page
 │   ├── research/           # Research tools (atlas, diffusion, timeline)
 │   ├── explore/            # Map & timeline visualizations
@@ -227,9 +227,9 @@ src/
 │   ├── catalog/, census/, encyclopedia/  # Reference browse pages
 │   ├── languages/, timeline/, topics/    # Content browse pages
 │   ├── about/, support/, terms/, privacy/  # Static info pages
-│   └── ...                 # 68 top-level app directories
+│   └── ...                 # 87 top-level app directories
 │
-├── components/             # 174 React components (.tsx files)
+├── components/             # 250 React components (.tsx files)
 │   ├── book/               # Book detail, reader, processing
 │   ├── layout/             # GlobalHeader, GlobalFooter, FeaturedCollections
 │   ├── gallery/            # Gallery views (+ IconclassFilter)
@@ -241,7 +241,7 @@ src/
 │   ├── rithmomachia/       # Game components (14, live feature)
 │   └── ...
 │
-├── lib/                    # ~95 top-level modules + 10 subdirectories
+├── lib/                    # ~166 top-level modules + subdirectories
 │   ├── mongodb.ts          # DB connection (singleton, pool management)
 │   ├── supabase.ts         # Supabase client (analytics, browse, search)
 │   ├── ai.ts               # Core Gemini operations
@@ -290,7 +290,7 @@ scripts/                    # Operational scripts
 │   ├── scheduler.mjs       # Unified cron scheduler
 │   ├── pipeline-orchestrator.mjs  # Main pipeline (every 2 min)
 │   ├── enrich-worker.mjs   # Enrichment phases (every 5 min)
-│   ├── translate-worker.mjs # Realtime translation (15 concurrent)
+│   ├── translate-worker.mjs # Realtime translation (40 concurrent)
 │   ├── batch-collector.mjs  # Gemini Batch API results (every 10 min)
 │   ├── embed-gemini.mjs     # Embedding generation
 │   ├── clip-server.mjs      # CLIP visual search server
@@ -299,7 +299,7 @@ scripts/                    # Operational scripts
 └── lib/                    # Shared script utilities
 ```
 
-## Pages Breakdown (68 top-level dirs)
+## Pages Breakdown (87 top-level dirs)
 
 | Category | Count | Content Source | Examples |
 |----------|-------|---------------|----------|
@@ -331,7 +331,7 @@ scripts/                    # Operational scripts
 6. **Key rotation for Gemini** — 3 API keys (3 GCP projects) with cooldown. `gemini-client.ts` handles rotation.
 7. **Hetzner for heavy crons** — Pipeline orchestration moved off Vercel to reduce costs/timeouts. Unified scheduler manages all workers.
 8. **Supabase for read-heavy paths** — Browse, analytics, search, and libraries queries hit Supabase for speed. MongoDB remains source of truth; Supabase mirrors derived data via sync crons.
-9. **Model routing by source** — BPH books get `gemini-3-flash-preview` (premium), all others get `gemini-3.1-flash-lite-preview` (50% cheaper). See `src/lib/types/ai-models.ts`.
+9. **Model routing by source** — BPH books get `gemini-3-flash-preview` (premium), all others get `gemini-3.1-flash-lite` (50% cheaper). See `src/lib/types/ai-models.ts`.
 10. **Two quality systems on image extraction** — One Gemini call emits both `gallery_quality` (per illustration, curatorial: "worth showing?") and `scan_quality` (per page, technical: "how cleanly digitized?"). They look similar but answer different questions. Design + extension plan in `.claude/docs/automated-image-quality-system.md`. Public-facing version: `/blog/what-makes-a-good-scan`. The live prompt + rubric live in `scripts/workers/image-extract-worker.mjs:117` and `scripts/workers/pipeline-orchestrator.mjs:1836`; `prompts/image-extraction/image-extraction-v0.md` is an out-of-date archive.
 
 ## Known Dead Code & Duplicates

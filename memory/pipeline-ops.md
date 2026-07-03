@@ -8,7 +8,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 |-----------|-------|-----|
 | Pipeline orchestrator | **Hetzner** (`pipeline-orchestrator.mjs`) | All phases, every 2 min |
 | Full-book OCR | **Hetzner → Gemini Batch API** | Direct submission, 50% cost discount |
-| Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 20 concurrent books |
+| Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 40 concurrent books |
 | Batch result collection | **Hetzner** (`batch-collector.mjs`) | Polls Gemini API every 10 min |
 | Archiving | **Hetzner** (`archive-ocr.mjs`, `archive-bulk.mjs`) | Downloads → Cloudflare R2 |
 | Preview OCR (25 pages) | **Lambda** via SQS | Fast preview path, still active |
@@ -27,10 +27,10 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 
 | Task | BPH books | All others |
 |------|-----------|------------|
-| OCR (batch) | `gemini-3-flash-preview` | `gemini-3.1-flash-lite-preview` |
-| Translation | `gemini-3-flash-preview` | `gemini-3.1-flash-lite-preview` |
-| Transliteration | `gemini-3.1-flash-lite-preview` | `gemini-3.1-flash-lite-preview` |
-| Summary/Index/Chapters | `gemini-3.1-flash-lite-preview` | `gemini-3.1-flash-lite-preview` |
+| OCR (batch) | `gemini-3-flash-preview` | `gemini-3.1-flash-lite` |
+| Translation | `gemini-3-flash-preview` | `gemini-3.1-flash-lite` |
+| Transliteration | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
+| Summary/Index/Chapters | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 
 ## Emergency Controls
 
@@ -47,7 +47,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 
 - MongoDB Atlas saturates at ~40 concurrent Lambda jobs (global backpressure limit)
 - Per-phase maximums: OCR 200/cycle (hardcoded default), translation 30 (in-flight cap 40 books), images 50
-- Translate-worker runs 20 concurrent books, 8000 pages/run cap
+- Translate-worker runs 40 concurrent books, 8000 pages/run cap
 - Tested higher (2026-03-26): `global_active_max` 50, `translate_lambda_max` 50 — Atlas stayed healthy. Adaptive system will auto-dial back if needed (ensure `locked: false`).
 
 ## Critical Rules
@@ -58,7 +58,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first
 - **Never patch Hetzner directly without committing to git.** Local-only patches cause drift that's invisible to other devs and future sessions. Apply fixes in git first, then `git pull` on Hetzner.
 - **Health grading uses DB latency only** (findMs, countMs), not job count. Job count stopped correlating with DB load when translation moved to Hetzner. See lesson 2026-03-30.
-- Summary/Index/Chapters generation: enrich-worker uses `gemini-3.1-flash-lite-preview` for ALL phases (per CLAUDE.md, verified in `scripts/workers/enrich-worker.mjs`).
+- Summary/Index/Chapters generation: enrich-worker uses `gemini-3.1-flash-lite` for ALL phases (per CLAUDE.md, verified in `scripts/workers/enrich-worker.mjs` — the GA name, no `-preview` suffix; the preview name 404s since its retirement).
 - Stale Vercel connection pools after DB recovery → redeploy to reset
 
 ## Lessons Learned
