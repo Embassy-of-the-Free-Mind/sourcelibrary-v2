@@ -26,6 +26,15 @@ const SAMPLE = parseInt(args.find((a) => a.startsWith('--sample='))?.split('=')[
 /** Restrict the demotion write to books whose derived verdict is one of these. */
 const VERDICT_FILTER = (args.find((a) => a.startsWith('--verdict='))?.split('=')[1] || '')
   .split(',').map((s) => s.trim()).filter(Boolean);
+/**
+ * Restrict the demotion write to verdicts RESOLVED by these tiers (e.g.
+ * --resolver=tier2_agent,human). The unattended nightly mode: a catalog-tier
+ * not_first can rest on an unverified Stage-1 prior (~46% fabrication measured
+ * in the 2026-07-02 census), so cron runs demote only agent/human-verified
+ * verdicts; everything else waits for verification or sign-off.
+ */
+const RESOLVER_FILTER = (args.find((a) => a.startsWith('--resolver='))?.split('=')[1] || '')
+  .split(',').map((s) => s.trim()).filter(Boolean);
 
 interface BookDoc extends FirstTranslationBook {
   _id: unknown;
@@ -115,17 +124,33 @@ async function main() {
   // ── WRITE PATH (single writer) ─────────────────────────────────────────
   // When --verdict is given, restrict the write to that bucket (and skip
   // promotions) — e.g. --verdict=not_first writes only the unambiguous demotions.
-  const demoteSet = VERDICT_FILTER.length
+  let demoteSet = VERDICT_FILTER.length
     ? demotions.filter((b) => VERDICT_FILTER.includes(firstTranslationVerdict(b) ?? 'no-verdict'))
     : demotions;
   if (VERDICT_FILTER.length) {
     console.log(`\n--verdict filter ${JSON.stringify(VERDICT_FILTER)} -> writing ${demoteSet.length} of ${demotions.length} demotions`);
   }
+  if (RESOLVER_FILTER.length) {
+    const before = demoteSet.length;
+    demoteSet = demoteSet.filter((b) => RESOLVER_FILTER.includes(b.first_translation?.resolver ?? 'none'));
+    console.log(`--resolver filter ${JSON.stringify(RESOLVER_FILTER)} -> writing ${demoteSet.length} of ${before} demotions`);
+  }
   const toDemote = demoteSet.map((b) => b._id);
-  const toPromote = (ONLY_DEMOTIONS || VERDICT_FILTER.length) ? [] : promotions.map((b) => b._id);
+  const toPromote = (ONLY_DEMOTIONS || VERDICT_FILTER.length || RESOLVER_FILTER.length) ? [] : promotions.map((b) => b._id);
   let demoted = 0, promoted = 0;
   if (toDemote.length) {
-    const r = await books.updateMany({ _id: { $in: toDemote as any[] } }, { $set: { is_first_translation: false } });
+    const r = await books.updateMany(
+      { _id: { $in: toDemote as any[] } },
+      { $set: {
+          is_first_translation: false,
+          updated_at: new Date(),
+          'field_provenance.is_first_translation': {
+            source: 'reconcile-first-translation-flag',
+            filters: { verdict: VERDICT_FILTER, resolver: RESOLVER_FILTER },
+            applied_at: new Date().toISOString(),
+          },
+        } },
+    );
     demoted = r.modifiedCount;
   }
   if (toPromote.length) {
