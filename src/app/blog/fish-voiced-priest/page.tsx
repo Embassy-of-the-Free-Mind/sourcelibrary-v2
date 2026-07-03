@@ -148,22 +148,37 @@ export default function FishVoicedPriestPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Look at the hand. This is tenth- or eleventh-century Greek minuscule: a fast, ligatured, heavily abbreviated
-          book script where letters flow into one another and a single stroke can carry a whole syllable. It is
-          beautiful, and it is exactly the kind of surface on which a modern vision model stops reading and starts
-          guessing. The trouble is that the guesses come out fluent. A model trained on oceans of Greek will always
-          produce something that <em>looks</em> like a plausible sentence, whether or not it matches the ink.
+          book script where letters flow into one another and a single stroke can carry a whole syllable. And look at
+          what the model has to read it from. The best public scan of this codex &mdash; from Internet Culturale, the
+          digitization we and everyone else rely on &mdash; is about 892&nbsp;&times;&nbsp;1143 pixels for the{' '}
+          <em>entire</em> two-column folio. That is low: perhaps a third of the linear resolution you would want for a
+          hand this dense, an order of magnitude fewer pixels per character. Between the script and the pixels, this is
+          exactly the kind of surface on which a modern vision model stops reading and starts guessing &mdash; and the
+          guesses come out fluent. A model trained on oceans of Greek will always produce something that{' '}
+          <em>looks</em> like a plausible sentence, whether or not it matches the ink.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          You can measure the guessing without any answer key. A faithful transcriber is deterministic: give the same
-          page twice, get the same letters twice. So we transcribed all 393 text pages of the Marcianus twice, with
-          the same model on the same images, and compared the runs. They agreed with themselves only about{' '}
-          <strong>62% of the time</strong> at the level of individual words. The model disagrees with its own reading
-          of roughly a third of the page every time it looks. That is not the profile of a machine reading letters;
+          You can measure the guessing without any answer key. A faithful transcriber is deterministic: give it the
+          same page twice, get the same letters twice. So we transcribed all 393 text pages of the Marcianus twice,
+          with the same model on the same images, and compared the runs. They agreed with themselves only about{' '}
+          <strong>62% of the time</strong> at the level of individual Greek words &mdash; the model disagrees with its
+          own reading of roughly a third of the page every time it looks. (That figure is the Greek text alone; the
+          editorial tags are stripped out before the comparison, and they in fact agree rather more &mdash; the
+          instability is in the transcription, not the markup.) That is not the profile of a machine reading letters;
           it is the profile of a machine interpolating text. We have{' '}
           <Link href="/blog/ocr-consistency" className="text-accent-rust hover:underline">written before</Link>{' '}
           about why self-consistency is a floor on error and not a measure of accuracy &mdash; on clean printed pages
           it runs above 98%; here it collapses.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          One honest caveat: that number cannot tell the two causes apart. A hard script and an under-resolved image
+          both push a model from reading toward guessing, and self-agreement measures the guessing without saying how
+          much is the hand and how much is the pixels. It is very likely both. What matters for a reader is that the
+          instability is real at the resolution we can actually obtain &mdash; and higher-resolution scans of this
+          particular codex are not publicly available. That is not a limit a better model removes. It is one the
+          edition removes.
         </p>
 
         {/* --- The tell --- */}
