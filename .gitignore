@@ -76,9 +76,14 @@ check-books.js
 tmp/
 tmp_*
 _tmp-*
+_tmp_*
 scripts/_tmp-*
+scripts/_tmp_*
 scripts/output/
 /check-*.mjs
+
+# Session coordination scratch (its own README says: never commit)
+.claude/agent-comms/
 
 # Experimental tools
 tools/
