@@ -7,6 +7,7 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
+import { applyCitationFixes } from '@/lib/embassy/citation-fixes';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
 import LibrarianMessageBody from '@/app/librarian/_components/MessageBody';
@@ -372,6 +373,15 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                   updateLastAssistant(m => ({
                     ...m,
                     content: m.content + (event.text || ''),
+                  }));
+                  break;
+
+                case 'citation_fixes':
+                  // Server-side citation check repaired broken book links after
+                  // the text streamed — mirror the rewrites on-screen.
+                  updateLastAssistant(m => ({
+                    ...m,
+                    content: applyCitationFixes(m.content, event.fixes || []),
                   }));
                   break;
 

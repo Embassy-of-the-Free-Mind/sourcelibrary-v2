@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
+import { applyCitationFixes, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { z } from 'zod';
 
@@ -46,6 +47,8 @@ const chatRequestSchema = z.object({
  *   choices    — branching options for the user to select
  *   chunk      — response text chunk
  *   sources    — source cards array
+ *   citation_fixes — broken book links repaired post-verification; clients
+ *                    apply these rewrites to the streamed text
  *   done       — stream complete
  *   error      — something went wrong
  */
@@ -169,6 +172,10 @@ export async function POST(request: NextRequest) {
   let fullText = '';
   let allSources: SourceCard[] = [];
   let turnUsage: LibrarianStep['usage'] | null = null;
+  // Link repairs from the post-response citation check. Applied to the
+  // persisted message (and the non-stream JSON reply); streaming clients get
+  // the same fixes as a `citation_fixes` event and apply them on-screen.
+  let citationFixes: CitationFix[] = [];
 
   const saveAiResponse = async () => {
     if (!fullText && allSources.length === 0) return;
@@ -179,7 +186,7 @@ export async function POST(request: NextRequest) {
         threadId: new ObjectId(activeThreadId),
         authorType: 'ai',
         authorName: 'The Librarian',
-        content: fullText,
+        content: applyCitationFixes(fullText, citationFixes),
         sources: allSources.map(s => ({
           bookId: s.book_id,
           bookTitle: s.bookTitle,
@@ -209,6 +216,8 @@ export async function POST(request: NextRequest) {
           fullText += step.text || '';
         } else if (step.type === 'sources') {
           allSources = step.sources || [];
+        } else if (step.type === 'citation_fixes') {
+          citationFixes = step.fixes || [];
         } else if (step.type === 'usage') {
           turnUsage = step.usage ?? null;
         }
@@ -236,7 +245,7 @@ export async function POST(request: NextRequest) {
       threadId: activeThreadId,
       message: {
         role: 'assistant',
-        content: fullText,
+        content: applyCitationFixes(fullText, citationFixes),
         sources: allSources,
       },
     });
@@ -310,6 +319,11 @@ export async function POST(request: NextRequest) {
           case 'sources':
             allSources = step.sources || [];
             await send({ type: 'sources', sources: step.sources });
+            break;
+
+          case 'citation_fixes':
+            citationFixes = step.fixes || [];
+            await send({ type: 'citation_fixes', fixes: step.fixes });
             break;
 
           case 'notebook_update':

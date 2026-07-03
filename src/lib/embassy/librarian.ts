@@ -1,4 +1,5 @@
 import { getDb } from '@/lib/mongodb';
+import type { CitationFix } from '@/lib/embassy/citation-fixes';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
@@ -68,8 +69,12 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes';
   text?: string;
+  // Link repairs computed after citation verification — the route and the
+  // streaming clients apply these to the already-emitted text (see
+  // src/lib/embassy/citation-fixes.ts).
+  fixes?: CitationFix[];
   name?: string;
   query?: string;
   summary?: string;
@@ -763,6 +768,8 @@ Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org
 
 Every mention of a book should link to it. Every mention of an author should link to their author page WHEN the tool results give you that author's link. Use the URLs from tool results verbatim — they contain the correct slugs, including the pre-built author link in each "Books found" line. **NEVER construct an author URL yourself by slugifying or translating a name.** The author's name in our catalog is often a different form than the one you'd write in prose (e.g. "Robert Bellarmine" is stored as "Bellarmino, Roberto, S.J"; "Bartholomaeus Fumus" as "Bartolomeo Fumo"), and a hand-built /author/... link will 404. If a tool result has no author link for someone, write their name as plain text — do not invent a link.
 
+**The same rule applies to book URLs.** Only write a /book/... link whose slug appeared verbatim in a tool result THIS turn. Our slugs encode edition, volume, and cataloguing details you cannot guess (the Corpus Hermeticum lives at slugs like \`poimandres-corpus-hermeticum-ficino\`, never \`the-corpus-hermeticum\`), so a slug built from a title will 404 even when we hold the book. If you mention a book the tools did not return this turn, give its title in plain italics with no link — or run a quick search for it first if a link would genuinely help.
+
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
 
 **Step 6: Show images and suggest next steps.**
@@ -798,7 +805,7 @@ ${collectionSection}## Formatting
 - Conversational but substantive — a research conversation, not a lecture
 - Cite 2-4 key passages rather than dumping everything. Every passage needs a page number and link
 - Link authors to their author pages ONLY with the author link supplied in the tool results — never a self-built /author/... URL. No tool-supplied link → plain text name.
-- Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)*
+- Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)* — slug copied exactly from a tool result this turn, never built from the title
 - Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)
 - Make clear when speaking from general knowledge vs. specific texts`;
 }
@@ -1043,11 +1050,33 @@ export async function* streamAgenticResponse(
     .map((p: Record<string, unknown>) => p.text as string)
     .join('');
 
-  const { brokenBooks, unverifiedPages } = await verifyCitations(fullText, retrievedPageKeys);
+  const { brokenBooks, hiddenBooks, unverifiedPages } = await verifyCitations(fullText, retrievedPageKeys);
+
+  // Repair before disclaiming: a broken slug is almost always a title-composed
+  // near-miss of a book we hold under a different slug (and a hidden book often
+  // has a public edition). Resolve each to a held, visible book and emit the
+  // rewrites — the route applies them to the persisted message, the streaming
+  // clients to the on-screen text. Only what can't be repaired gets the note.
+  const badSlugs = [...new Set([...brokenBooks, ...hiddenBooks])].slice(0, 6);
+  const fixes: CitationFix[] = [];
+  const unrepaired: string[] = [];
+  for (const slug of badSlugs) {
+    try {
+      const held = await resolveSlugToHeldBook(slug);
+      if (held) fixes.push({ fromSlug: slug, toSlug: held.slug, toTitle: held.title });
+      else unrepaired.push(slug);
+    } catch {
+      unrepaired.push(slug);
+    }
+  }
+  if (fixes.length > 0) {
+    yield { type: 'citation_fixes', fixes };
+  }
+
   const clauses: string[] = [];
-  if (brokenBooks.length > 0) {
+  if (unrepaired.length > 0) {
     clauses.push(
-      `${brokenBooks.length === 1 ? 'a book link that points' : `${brokenBooks.length} book links that point`} to a record not in the collection (${brokenBooks.map(b => `\`${b}\``).join(', ')}) — these may be books we don't yet hold`,
+      `${unrepaired.length === 1 ? 'a book link that points' : `${unrepaired.length} book links that point`} to a record not currently available in the collection (${unrepaired.map(s => `\`sourcelibrary.org/book/${s}\``).join(', ')})`,
     );
   }
   if (unverifiedPages.length > 0) {
@@ -1056,11 +1085,29 @@ export async function* streamAgenticResponse(
     );
   }
   if (clauses.length > 0) {
-    console.warn('[Librarian] citation check flagged', { brokenBooks, unverifiedPages });
     yield {
       type: 'text',
       text: `\n\n---\n*A note on sourcing: this answer contains ${clauses.join('; and ')}.*`,
     };
+  }
+
+  // Leave a trace for monitoring — broken citations were previously invisible
+  // outside per-message disclaimers (and soft-404s never hit status-code logs).
+  if (badSlugs.length > 0 || unverifiedPages.length > 0) {
+    console.warn('[Librarian] citation check flagged', { brokenBooks, hiddenBooks, unverifiedPages, fixes });
+    try {
+      const db = await getDb();
+      await db.collection('embassy_errors').insertOne({
+        kind: 'broken_citation',
+        threadId: threadId ?? null,
+        brokenBooks,
+        hiddenBooks,
+        unverifiedPages,
+        repaired: fixes,
+        unrepaired,
+        createdAt: new Date(),
+      });
+    } catch { /* best effort */ }
   }
 
   // Persist AI cost for the librarian — the heaviest request-path AI feature
@@ -1081,11 +1128,18 @@ export async function* streamAgenticResponse(
 /**
  * Verify the book + page citations in a response against the library.
  *
- * Two failure modes matter for a scholarly tool:
- *  - brokenBooks: links to /book/<slug> for a book that doesn't exist.
+ * Three failure modes matter for a scholarly tool:
+ *  - brokenBooks: links to /book/<slug> for a book that doesn't exist —
+ *    usually a slug the model composed from a title instead of copying from a
+ *    tool result (the real book almost always exists under another slug).
+ *  - hiddenBooks: links to a book that exists but is not public
+ *    (visible: false) — the reader 404s these just like missing books.
  *  - unverifiedPages: a specific page the model never actually retrieved this
  *    turn AND that doesn't exist in the page store (or is out of range) — the
  *    signature of a fabricated or misremembered page number.
+ *
+ * brokenBooks/hiddenBooks are returned as bare slugs so the caller can try to
+ * repair them (see resolveSlugToHeldBook).
  *
  * `retrievedPageKeys` holds `${bookId}:${page}` for every page the model read
  * (via search, get_book_page, or read_nearby_pages) during this turn; anything
@@ -1094,7 +1148,7 @@ export async function* streamAgenticResponse(
 export async function verifyCitations(
   text: string,
   retrievedPageKeys: Set<string>,
-): Promise<{ brokenBooks: string[]; unverifiedPages: string[] }> {
+): Promise<{ brokenBooks: string[]; hiddenBooks: string[]; unverifiedPages: string[] }> {
   // /book/<slug>, optionally followed by ?page=N, /page-number/N, or /page/N.
   const citePattern = /sourcelibrary\.org\/book\/([a-z0-9-]+)(?:(?:\/page-number\/|\/page\/|\?page=)(\d+))?/g;
   const citedPages = new Map<string, Set<number>>();
@@ -1108,18 +1162,19 @@ export async function verifyCitations(
       citedPages.get(slug)!.add(Number(match[2]));
     }
   }
-  if (allSlugs.size === 0) return { brokenBooks: [], unverifiedPages: [] };
+  if (allSlugs.size === 0) return { brokenBooks: [], hiddenBooks: [], unverifiedPages: [] };
 
   const db = await getDb();
   const books = await db.collection('books')
     .find({ slug: { $in: [...allSlugs] } })
-    .project({ slug: 1, id: 1, pages_count: 1 })
+    .project({ slug: 1, id: 1, pages_count: 1, visible: 1 })
     .toArray();
 
   const slugToBook = new Map(
-    books.map(b => [b.slug as string, { id: b.id as string, pagesCount: b.pages_count as number | undefined }]),
+    books.map(b => [b.slug as string, { id: b.id as string, pagesCount: b.pages_count as number | undefined, visible: b.visible as boolean | undefined }]),
   );
-  const brokenBooks = [...allSlugs].filter(s => !slugToBook.has(s)).map(s => `sourcelibrary.org/book/${s}`);
+  const brokenBooks = [...allSlugs].filter(s => !slugToBook.has(s));
+  const hiddenBooks = [...allSlugs].filter(s => slugToBook.get(s)?.visible === false);
 
   // A cited page is trusted if the model read it this turn; otherwise it must
   // exist in the page store and sit within the book's range.
@@ -1149,7 +1204,96 @@ export async function verifyCitations(
     }
   }
 
-  return { brokenBooks, unverifiedPages: [...unverified] };
+  return { brokenBooks, hiddenBooks, unverifiedPages: [...unverified] };
+}
+
+// Slug tokens too generic to anchor a repair lookup on their own.
+const SLUG_STOPWORDS = new Set([
+  'the', 'and', 'for', 'with', 'from', 'les', 'des', 'der', 'die', 'das',
+  'von', 'van', 'del', 'della', 'sive', 'seu', 'cum', 'per', 'quae', 'qua',
+  'vol', 'volume', 'tome', 'tomus', 'pars', 'part', 'complete', 'edition',
+  'trans', 'translated', 'translation', 'various', 'anonymous',
+]);
+
+/**
+ * Try to resolve a broken/hidden book slug to a public book we actually hold.
+ *
+ * The failure mode this repairs: the model links a famous work with a slug it
+ * composed from the title (`oedipus-aegyptiacus-kircher`) while the library
+ * holds the book under a catalogued slug
+ * (`oedipus-aegyptiacus-volume-i-1652-kircher`). Match strategy: every
+ * significant token of the broken slug must appear in the candidate's slug,
+ * title, or author (conservative — a wrong-book substitution would be worse
+ * than a dead link). Among candidates, prefer the most-read edition.
+ *
+ * Returns null when no candidate matches — the caller falls back to the
+ * sourcing disclaimer.
+ */
+// Extract a volume designator ("vol-ix", "volume-2", "tomus-i") from a slug so
+// a repair never silently swaps volumes of a multi-volume work. Roman numerals
+// are normalized so vol-ix and vol-9 compare equal.
+function volumeOf(slug: string): number | null {
+  const m = slug.match(/(?:^|-)(?:vol|volume|tome|tomus|pars|part)-?([0-9]+|[ivxlc]+)(?:-|$)/i);
+  if (!m) return null;
+  const v = m[1].toLowerCase();
+  if (/^\d+$/.test(v)) return parseInt(v, 10);
+  const R: Record<string, number> = { i: 1, v: 5, x: 10, l: 50, c: 100 };
+  let n = 0;
+  for (let i = 0; i < v.length; i++) {
+    const cur = R[v[i]];
+    const next = R[v[i + 1]] || 0;
+    n += cur < next ? -cur : cur;
+  }
+  return n;
+}
+
+export async function resolveSlugToHeldBook(
+  slug: string,
+): Promise<{ slug: string; title: string } | null> {
+  const tokens = slug
+    .split('-')
+    .filter(t => t.length >= 3 && !SLUG_STOPWORDS.has(t) && !/^\d+$/.test(t));
+  if (tokens.length === 0) return null;
+
+  // Longest tokens are the most distinctive; cap the clause count.
+  const anchors = [...tokens].sort((a, b) => b.length - a.length).slice(0, 4);
+
+  const db = await getDb();
+  const lookup = async (toks: string[]) => {
+    const conds = toks.map(t => {
+      const rx = new RegExp(t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      return { $or: [{ slug: rx }, { title: rx }, { author: rx }] };
+    });
+    return db.collection('books')
+      .find({ $and: conds, visible: true, pages_count: { $gt: 0 }, slug: { $exists: true, $nin: [null, slug] } })
+      .project({ slug: 1, title: 1, display_title: 1, read_count: 1, pages_count: 1 })
+      .limit(5)
+      .toArray();
+  };
+
+  let candidates = await lookup(anchors);
+  // Conservative relaxation: a composed slug often carries one word the
+  // catalogue lacks ("extrakt", "reformatum"). Leave each anchor out in turn —
+  // every remaining token must still match, so this drops exactly one bad
+  // token rather than loosening the whole query.
+  if (candidates.length === 0 && anchors.length >= 3) {
+    for (let i = anchors.length - 1; i >= 0 && candidates.length === 0; i--) {
+      candidates = await lookup(anchors.filter((_, j) => j !== i));
+    }
+  }
+
+  // Never swap volumes: if both slugs carry a volume designator and they
+  // disagree, the candidate is a different physical book of the same work.
+  const wantVol = volumeOf(slug);
+  candidates = candidates.filter(cand => {
+    const candVol = volumeOf(cand.slug as string);
+    return !(wantVol && candVol && wantVol !== candVol);
+  });
+  if (candidates.length === 0) return null;
+
+  candidates.sort((a, b) => (b.read_count || 0) - (a.read_count || 0) || (b.pages_count || 0) - (a.pages_count || 0));
+  const best = candidates[0];
+  return { slug: best.slug as string, title: (best.display_title || best.title || best.slug) as string };
 }
 
 function deduplicateSources(sources: SourceCard[]): SourceCard[] {
