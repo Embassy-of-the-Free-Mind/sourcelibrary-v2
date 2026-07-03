@@ -82,11 +82,11 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/6953e2f677f38f6761bea397" className="hover:text-accent-gold-dark transition-colors">The Tantraloka of Abhinavagupta</Link>
+          <Link href="/book/6953e2ff77f38f6761beb2fa" className="hover:text-accent-gold-dark transition-colors">The Tantraloka of Abhinavagupta</Link>
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The <Link href="/book/6953e2f677f38f6761bea397" className="text-accent-rust hover:text-accent-rust underline"><em>Tantraloka</em></Link> (&ldquo;Light on Tantra&rdquo;) is the masterwork of the Kashmiri Shaiva philosopher Abhinavagupta (c. 950&ndash;1016 CE). At nearly 4,000 pages in its Sanskrit editions, it is the most comprehensive synthesis of tantric philosophy and practice ever composed. No complete English translation exists. Source Library is currently translating the full text &mdash; 3,931 pages &mdash; which would represent the first time the complete <em>Tantraloka</em> has been available in English.
+          The <Link href="/book/6953e2ff77f38f6761beb2fa" className="text-accent-rust hover:text-accent-rust underline"><em>Tantraloka</em></Link> (&ldquo;Light on Tantra&rdquo;) is the masterwork of the Kashmiri Shaiva philosopher Abhinavagupta (c. 950&ndash;1016 CE). At nearly 4,000 pages in its Sanskrit editions, it is the most comprehensive synthesis of tantric philosophy and practice ever composed. No complete English translation exists. Source Library is currently translating the full text &mdash; 3,931 pages &mdash; which would represent the first time the complete <em>Tantraloka</em> has been available in English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -94,27 +94,27 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/6991d44821124c9ad694347c" className="hover:text-accent-gold-dark transition-colors">The Svacchanda Tantra</Link>
+          <Link href="/book/sri-svacchanda-tantra-i-ed" className="hover:text-accent-gold-dark transition-colors">The Svacchanda Tantra</Link>
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          One of the oldest surviving Bhairava Tantras (perhaps 7th&ndash;8th century), the <Link href="/book/6991d44821124c9ad694347c" className="text-accent-rust hover:text-accent-rust underline"><em>Svacchanda Tantra</em></Link> presents an early and detailed map of the subtle body that differs in important ways from later standardizations. Source Library holds the complete <Link href="/book/6991d44821124c9ad694347c" className="text-accent-rust hover:text-accent-rust underline">five-volume Sanskrit edition</Link> with commentary (2,717 pages), recently imported and now being processed.
+          One of the oldest surviving Bhairava Tantras (perhaps 7th&ndash;8th century), the <Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline"><em>Svacchanda Tantra</em></Link> presents an early and detailed map of the subtle body that differs in important ways from later standardizations. Source Library holds the <Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline">first volume of the Sanskrit edition</Link> with commentary (440 pages), fully translated.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/6991d46421124c9ad6943f2b" className="hover:text-accent-gold-dark transition-colors">The Netra Tantra</Link>
+          <Link href="/book/69e13b030dae29249d20bde5" className="hover:text-accent-gold-dark transition-colors">The Netra Tantra</Link>
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          A Shaiva text focused on the deity Amriteshvara, the <Link href="/book/6991d46421124c9ad6943f2b" className="text-accent-rust hover:text-accent-rust underline"><em>Netra Tantra</em></Link> (&ldquo;Tantra of the Eye&rdquo;) contains important material on kundalini yoga and the relationship between breath, consciousness, and the energy channels. Our edition runs to 616 pages. Like the <em>Svacchanda Tantra</em>, it has never been fully translated.
+          A Shaiva text focused on the deity Amriteshvara, the <Link href="/book/69e13b030dae29249d20bde5" className="text-accent-rust hover:text-accent-rust underline"><em>Netra Tantra</em></Link> (&ldquo;Tantra of the Eye&rdquo;) contains important material on kundalini yoga and the relationship between breath, consciousness, and the energy channels. Our edition, with K&#7779;emar&#257;ja&apos;s commentary, runs to 318 pages. Like the <em>Svacchanda Tantra</em>, it has never had a complete published English translation.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/6991d43921124c9ad6942bb9" className="hover:text-accent-gold-dark transition-colors">The Goraksha Samhita</Link>
+          The Goraksha Samhita
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Attributed to Gorakhnath, the legendary founder of the Nath tradition, this text bridges the gap between the high philosophy of Kashmir Shaivism and the practical hatha yoga that would become popular across India. The Nath yogis were the primary carriers of chakra knowledge into mainstream Indian religious culture. Our <Link href="/book/6991d43921124c9ad6942bb9" className="text-accent-rust hover:text-accent-rust underline">edition (655 pages)</Link> preserves teachings on the six chakras, kundalini awakening, and the network of nadis that became standard in later yoga manuals.
+          Attributed to Gorakhnath, the legendary founder of the Nath tradition, this text bridges the gap between the high philosophy of Kashmir Shaivism and the practical hatha yoga that would become popular across India. The Nath yogis were the primary carriers of chakra knowledge into mainstream Indian religious culture. The text preserves teachings on the six chakras, kundalini awakening, and the network of nadis that became standard in later yoga manuals.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
@@ -145,13 +145,13 @@ export default function ChakraTraditionPage() {
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d43e21124c9ad6942e4d" className="text-accent-rust hover:text-accent-rust underline"><strong>Kaulajnana Nirnaya</strong></Link> (attributed to Matsyendranath) &mdash; Perhaps the oldest surviving Kaula text, this 1,414-page work describes a chakra system embedded in transgressive ritual and goddess worship that predates the &ldquo;cleaned up&rdquo; versions found in later yoga manuals.
+              <strong>Kaulajnana Nirnaya</strong> (attributed to Matsyendranath) &mdash; Perhaps the oldest surviving Kaula text, this work describes a chakra system embedded in transgressive ritual and goddess worship that predates the &ldquo;cleaned up&rdquo; versions found in later yoga manuals.
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d44321124c9ad69433d6" className="text-accent-rust hover:text-accent-rust underline"><strong>Siddha Siddhanta Paddhati</strong></Link> (attributed to Gorakhnath) &mdash; This text maps nine chakras (not six or seven) and describes the body as a microcosm containing the entire universe &mdash; mountains, rivers, sacred sites, and celestial realms all located within the practitioner&apos;s own subtle anatomy. 161 pages.
+              <strong>Siddha Siddhanta Paddhati</strong> (attributed to Gorakhnath) &mdash; This text maps nine chakras (not six or seven) and describes the body as a microcosm containing the entire universe &mdash; mountains, rivers, sacred sites, and celestial realms all located within the practitioner&apos;s own subtle anatomy.
             </span>
           </li>
           <li className="flex items-start gap-3">
@@ -216,34 +216,22 @@ export default function ChakraTraditionPage() {
             </thead>
             <tbody className="divide-y divide-stone-200">
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6953e2f677f38f6761bea397" className="text-accent-rust hover:text-accent-rust underline">Tantraloka</Link></td>
-                <td className="py-3 pr-4">3,931</td>
+                <td className="py-3 pr-4"><Link href="/book/6953e2ff77f38f6761beb2fa" className="text-accent-rust hover:text-accent-rust underline">Tantraloka, Vol. 1 (with Jayaratha&apos;s commentary)</Link></td>
+                <td className="py-3 pr-4">372</td>
                 <td className="py-3 pr-4">Internet Archive</td>
-                <td className="py-3">Translating</td>
+                <td className="py-3">Translated</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d44821124c9ad694347c" className="text-accent-rust hover:text-accent-rust underline">Svacchanda Tantra (5 vols)</Link></td>
-                <td className="py-3 pr-4">2,717</td>
+                <td className="py-3 pr-4"><Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline">Svacchanda Tantra (Vol. I)</Link></td>
+                <td className="py-3 pr-4">440</td>
                 <td className="py-3 pr-4">Internet Archive</td>
-                <td className="py-3">Digitized</td>
+                <td className="py-3">Translated</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d43e21124c9ad6942e4d" className="text-accent-rust hover:text-accent-rust underline">Kaulajnana Nirnaya</Link></td>
-                <td className="py-3 pr-4">1,414</td>
+                <td className="py-3 pr-4"><Link href="/book/69e13b030dae29249d20bde5" className="text-accent-rust hover:text-accent-rust underline">Netra Tantra</Link></td>
+                <td className="py-3 pr-4">318</td>
                 <td className="py-3 pr-4">Internet Archive</td>
-                <td className="py-3">Digitized</td>
-              </tr>
-              <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d43921124c9ad6942bb9" className="text-accent-rust hover:text-accent-rust underline">Goraksha Samhita</Link></td>
-                <td className="py-3 pr-4">655</td>
-                <td className="py-3 pr-4">Internet Archive</td>
-                <td className="py-3">Digitized</td>
-              </tr>
-              <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d46421124c9ad6943f2b" className="text-accent-rust hover:text-accent-rust underline">Netra Tantra</Link></td>
-                <td className="py-3 pr-4">616</td>
-                <td className="py-3 pr-4">Internet Archive</td>
-                <td className="py-3">Digitized</td>
+                <td className="py-3">Translated</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4"><Link href="/book/6991d46721124c9ad6944195" className="text-accent-rust hover:text-accent-rust underline">Tantraraja Tantra</Link></td>
@@ -255,12 +243,6 @@ export default function ChakraTraditionPage() {
                 <td className="py-3 pr-4"><Link href="/book/6991d89a8c1030b12444c076" className="text-accent-rust hover:text-accent-rust underline">Hathayogapradipika (with commentaries)</Link></td>
                 <td className="py-3 pr-4">200</td>
                 <td className="py-3 pr-4">Wellcome Collection</td>
-                <td className="py-3">Digitized</td>
-              </tr>
-              <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d44321124c9ad69433d6" className="text-accent-rust hover:text-accent-rust underline">Siddha Siddhanta Paddhati</Link></td>
-                <td className="py-3 pr-4">161</td>
-                <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>

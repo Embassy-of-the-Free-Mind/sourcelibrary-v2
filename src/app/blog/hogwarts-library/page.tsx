@@ -287,13 +287,8 @@ export default function HogwartsLibraryPage() {
             (&ldquo;Garden of Health&rdquo;), Mainz, 1491 &mdash; a proto-encyclopaedia that catalogues
             every plant, animal, bird, fish, and stone known to its compiler, with woodcuts that read
             like the inventory of <em>Fantastic Beasts and Where to Find Them</em>. The first English
-            herbal a working witch or wizard would reach for is{' '}
-            <Link
-              href="/book/the-herball-or-generall-historie-of-plantes-gerard"
-              className="text-accent-rust hover:underline"
-            >
-              John Gerard&rsquo;s <em>Herball</em>
-            </Link>{' '}
+            herbal a working witch or wizard would reach for is
+            John Gerard&rsquo;s <em>Herball</em>{' '}
             (1597). Nicholas Culpeper&rsquo;s{' '}
             <Link href="/book/the-english-physitian-enlarged-culpeper" className="text-accent-rust hover:underline">
               <em>English Physitian</em>

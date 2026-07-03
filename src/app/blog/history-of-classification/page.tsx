@@ -108,7 +108,7 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Before anyone classified <em>books</em>, Aristotle classified <em>reality</em>. His{' '}
-          <Link href="/book/works-of-aristotle-vol-1-organon-categories-de-smith" className="text-accent-rust hover:underline">
+          <Link href="/book/aristotelis-opera-vol-1-organon-aristotle" className="text-accent-rust hover:underline">
             <em>Categories</em>
           </Link>{' '}
           (part of the <Link href="/book/aristotelis-opera-omnia-greek-aristotle" className="text-accent-rust hover:underline"><em>Organon</em></Link>,
@@ -126,7 +126,7 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-12">
           We hold multiple Aristotle editions including a{' '}
-          <Link href="/book/vat-gr-244-aristotle" className="text-accent-rust hover:underline">Vatican Greek manuscript (Vat.gr.244)</Link>,
+          <Link href="/book/vat-gr-243-aristotle" className="text-accent-rust hover:underline">Vatican Greek manuscript (Vat.gr.243)</Link>,
           a{' '}
           <Link href="/book/bodleian-library-ms-barocci-87-aristotle" className="text-accent-rust hover:underline">Bodleian manuscript (MS Barocci 87)</Link>,
           and the{' '}
@@ -143,10 +143,10 @@ export default function HistoryOfClassificationPage() {
         <p className="text-secondary leading-relaxed mb-6">
           Six centuries later, the Neoplatonist Porphyry wrote a short introduction to Aristotle&rsquo;s
           <em>Categories</em> that became more influential than the original. The{' '}
-          <Link href="/book/porphyrii-introductio-ammonii-procli-diadochi-commentarii-porphyry" className="text-accent-rust hover:underline">
+          <Link href="/book/porphyry-isagoge-neoplatonic-commentaries-proclus-ammonius-ammonius" className="text-accent-rust hover:underline">
             <em>Isagoge</em>
           </Link>{' '}
-          (which we have in a 1000 CE Latin manuscript with Ammonius&rsquo;s commentary)
+          (which we have in a Greek manuscript with the commentaries of Proclus and Ammonius)
           demonstrated classification through binary branching: start with the most general
           category (Substance), then split with a <em>differentia</em>. Corporeal or incorporeal?
           Living or non-living? Rational or irrational?
@@ -173,7 +173,7 @@ export default function HistoryOfClassificationPage() {
         <p className="text-secondary leading-relaxed mb-6">
           While Porphyry classified by <em>type</em>, an anonymous Syrian monk proposed a different
           model. In the{' '}
-          <Link href="/book/pseudo-dionysius-areopagita-ficino-translation" className="text-accent-rust hover:underline">
+          <Link href="/book/celestial-hierarchy-divine-names-ficino-ficino" className="text-accent-rust hover:underline">
             <em>Celestial Hierarchy</em>
           </Link>{' '}
           (Ficino&rsquo;s translation, 140 of 142 pages translated), knowledge is not a tree
@@ -246,7 +246,7 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The most radical model came from a 13th-century Majorcan mystic. Llull&rsquo;s{' '}
-          <Link href="/book/ars-brevis-cum-approbatione-lullus" className="text-accent-rust hover:underline">
+          <Link href="/book/the-short-art-ars-brevis-lull" className="text-accent-rust hover:underline">
             <em>Ars Brevis</em>
           </Link>{' '}
           proposed that knowledge is not a tree at all. Instead, it emerges from the <strong>combination
@@ -269,10 +269,10 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-12">
           Athanasius Kircher expanded this in{' '}
-          <Link href="/book/kircher-ars-magna-sciendi-1669" className="text-accent-rust hover:underline">
+          <Link href="/book/kircher-ars-magna-sciendi-1669-kircher" className="text-accent-rust hover:underline">
             <em>Ars Magna Sciendi</em>
           </Link>{' '}
-          (1669, 93 of 532 pages translated), adding a question dimension: each letter maps to
+          (1669, 532 pages, fully translated), adding a question dimension: each letter maps to
           Whether? What? Of what? Why? How much? When? Where? How?
         </p>
 
@@ -282,17 +282,12 @@ export default function HistoryOfClassificationPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Peter Ramus&rsquo;s{' '}
-          <Link href="/book/dialecticae-institutiones-ramus" className="text-accent-rust hover:underline">
-            <em>Dialecticae Institutiones</em>
-          </Link>{' '}
-          (1543, 320 pages) proposed replacing Aristotelian logic with <strong>dichotomous
+          Peter Ramus&rsquo;s <em>Dialecticae Institutiones</em>{' '}
+          (1543) proposed replacing Aristotelian logic with <strong>dichotomous
           division</strong>: take any subject, split it into two, split each part into two, repeat.
           Where Porphyry&rsquo;s tree was metaphysical, Ramus&rsquo;s was pedagogical &mdash; not classifying
           reality but organizing <em>how to teach</em> it. These &ldquo;Ramist tables&rdquo; conquered
-          Protestant education across Europe and, crucially, crossed the Atlantic. We have{' '}
-          <Link href="/book/p-rami-dialectica-ramus" className="text-accent-rust hover:underline">nine Ramus texts</Link> in
-          the collection, all untranslated.
+          Protestant education across Europe and, crucially, crossed the Atlantic.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -313,7 +308,7 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Francis Bacon&rsquo;s{' '}
-          <Link href="/book/de-augmentis-scientiarum-bacon" className="text-accent-rust hover:underline">
+          <Link href="/book/the-advancement-of-learning-bacon" className="text-accent-rust hover:underline">
             <em>De Augmentis Scientiarum</em>
           </Link>{' '}
           (fully translated, 696 pages) grounded classification in <strong>the cognitive operations
@@ -376,7 +371,7 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Comenius argued in{' '}
-          <Link href="/book/naturall-philosophie-reformed" className="text-accent-rust hover:underline">
+          <Link href="/book/naturall-philosophie-reformed-by-divine-light-1651-comenius" className="text-accent-rust hover:underline">
             <em>Naturall Philosophie Reformed by Divine Light</em>
           </Link>{' '}
           (308 pages, fully translated) that classification <strong>is</strong> curriculum. You learn
@@ -389,11 +384,8 @@ export default function HistoryOfClassificationPage() {
           A century later, this idea crossed the Atlantic. Samuel Johnson (1696&ndash;1772) &mdash;
           not the English lexicographer, but the first president of King&rsquo;s College (now Columbia) &mdash;
           created an <em>Encyclopaedia of Philosophy</em> that organized all knowledge into Ramist-style
-          dichotomous trees blended with Lockean empiricism. Published in his{' '}
-          <Link href="/book/samuel-johnson-president-of-kings-college-his-career-and-schneider" className="text-accent-rust hover:underline">
-            <em>Career and Writings</em>
-          </Link>{' '}
-          (3 volumes, ~1,700 pages), it became a textbook at King&rsquo;s College and shaped how the
+          dichotomous trees blended with Lockean empiricism. Published in his collected
+          <em> Career and Writings</em>, it became a textbook at King&rsquo;s College and shaped how the
           colonial generation organized knowledge.
         </p>
 
@@ -419,19 +411,17 @@ export default function HistoryOfClassificationPage() {
           in 1735 &mdash; just 21 pages in the first edition, but it contained the most successful
           classification system ever created. <strong>Binomial nomenclature</strong> (Kingdom &rarr;
           Phylum &rarr; Class &rarr; Order &rarr; Family &rarr; Genus &rarr; Species) is Porphyry&rsquo;s
-          tree made operational for biology. It&rsquo;s still in use 290 years later. We hold the{' '}
-          <Link href="/book/caroli-linn-i-systema-natur-per-regna-tria-natur-secundum-linne" className="text-accent-rust hover:underline">
-            expanded 1,417-page <em>Systema Naturae</em>
+          tree made operational for biology. It&rsquo;s still in use 290 years later. We hold the
+          1735 first edition and several companion works, including Linnaeus&rsquo;s{' '}
+          <Link href="/book/carl-linnaeus-hortus-cliffortianus-1737-linnaeus" className="text-accent-rust hover:underline">
+            <em>Hortus Cliffortianus</em>
           </Link>{' '}
-          and several companion works.
+          (1737).
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
           In 1751, Diderot and d&rsquo;Alembert published the first volume of the{' '}
-          <Link href="/book/encyclopedie-d-alembert" className="text-accent-rust hover:underline">
-            <em>Encyclop&eacute;die</em>
-          </Link>{' '}
-          (976 pages in our collection). Its famous &ldquo;Syst&egrave;me Figur&eacute; des
+          <em>Encyclop&eacute;die</em>. Its famous &ldquo;Syst&egrave;me Figur&eacute; des
           Connaissances Humaines&rdquo; diagram &mdash; viewable in the{' '}
           <ExtLink href="https://encyclopedie.uchicago.edu/content/syst%C3%A8me-figur%C3%A9-des-connaissances-humaines">
             ARTFL Encyclop&eacute;die Project
@@ -692,35 +682,29 @@ export default function HistoryOfClassificationPage() {
             translated. External links point to the best available digital editions.
           </p>
           <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
-            <Link href="/book/works-of-aristotle-vol-1-organon-categories-de-smith" className="text-accent-rust hover:underline">Aristotle, Categories</Link>
+            <Link href="/book/aristotelis-opera-vol-1-organon-aristotle" className="text-accent-rust hover:underline">Aristotle, Categories</Link>
             <span className="text-stone-300">&middot;</span>
-            <Link href="/book/porphyrii-introductio-ammonii-procli-diadochi-commentarii-porphyry" className="text-accent-rust hover:underline">Porphyry, Isagoge</Link>
+            <Link href="/book/porphyry-isagoge-neoplatonic-commentaries-proclus-ammonius-ammonius" className="text-accent-rust hover:underline">Porphyry, Isagoge</Link>
             <span className="text-stone-300">&middot;</span>
-            <Link href="/book/pseudo-dionysius-areopagita-ficino-translation" className="text-accent-rust hover:underline">Pseudo-Dionysius, Celestial Hierarchy</Link>
+            <Link href="/book/celestial-hierarchy-divine-names-ficino-ficino" className="text-accent-rust hover:underline">Pseudo-Dionysius, Celestial Hierarchy</Link>
             <span className="text-stone-300">&middot;</span>
             <Link href="/book/sancai-tuhui-illustrated-encyclopedia-of-the-three-realms" className="text-accent-rust hover:underline">Sancai Tuhui (Chinese Encyclopedia)</Link>
             <span className="text-stone-300">&middot;</span>
-            <Link href="/book/ars-brevis-cum-approbatione-lullus" className="text-accent-rust hover:underline">Llull, Ars Brevis</Link>
+            <Link href="/book/the-short-art-ars-brevis-lull" className="text-accent-rust hover:underline">Llull, Ars Brevis</Link>
             <span className="text-stone-300">&middot;</span>
-            <Link href="/book/kircher-ars-magna-sciendi-1669" className="text-accent-rust hover:underline">Kircher, Ars Magna Sciendi</Link>
-            <span className="text-stone-300">&middot;</span>
-            <Link href="/book/dialecticae-institutiones-ramus" className="text-accent-rust hover:underline">Ramus, Dialecticae Institutiones</Link>
+            <Link href="/book/kircher-ars-magna-sciendi-1669-kircher" className="text-accent-rust hover:underline">Kircher, Ars Magna Sciendi</Link>
             <span className="text-stone-300">&middot;</span>
             <Link href="/book/bibliotheca-universalis-gessner" className="text-accent-rust hover:underline">Gessner, Bibliotheca Universalis</Link>
             <span className="text-stone-300">&middot;</span>
-            <Link href="/book/de-augmentis-scientiarum-bacon" className="text-accent-rust hover:underline">Bacon, De Augmentis Scientiarum</Link>
+            <Link href="/book/the-advancement-of-learning-bacon" className="text-accent-rust hover:underline">Bacon, De Augmentis Scientiarum</Link>
             <span className="text-stone-300">&middot;</span>
             <Link href="/book/die-philosophischen-schriften-vol-7-leibniz" className="text-accent-rust hover:underline">Leibniz, Philosophical Writings VII</Link>
             <span className="text-stone-300">&middot;</span>
             <Link href="/book/the-posthumous-works-of-robert-hooke-hooke" className="text-accent-rust hover:underline">Hooke, Posthumous Works</Link>
             <span className="text-stone-300">&middot;</span>
-            <Link href="/book/naturall-philosophie-reformed" className="text-accent-rust hover:underline">Comenius, Naturall Philosophie Reformed</Link>
-            <span className="text-stone-300">&middot;</span>
-            <Link href="/book/samuel-johnson-president-of-kings-college-his-career-and-schneider" className="text-accent-rust hover:underline">Samuel Johnson, Career and Writings</Link>
+            <Link href="/book/naturall-philosophie-reformed-by-divine-light-1651-comenius" className="text-accent-rust hover:underline">Comenius, Naturall Philosophie Reformed</Link>
             <span className="text-stone-300">&middot;</span>
             <Link href="/book/carl-linnaeus-systema-naturae-1735-linnaeus" className="text-accent-rust hover:underline">Linnaeus, Systema Naturae (1735)</Link>
-            <span className="text-stone-300">&middot;</span>
-            <Link href="/book/encyclopedie-d-alembert" className="text-accent-rust hover:underline">Diderot, Encyclopedie</Link>
           </div>
           <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm mt-3">
             <span className="text-stone-400 text-xs">External:</span>

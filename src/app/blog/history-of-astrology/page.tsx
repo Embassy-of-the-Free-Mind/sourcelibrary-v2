@@ -114,8 +114,8 @@ export default function HistoryOfAstrologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The clearest evidence of this transmission is one of the stranger books in Source Library:{' '}
-          <Link href="/book/6990670d249ce014347d2594" className="text-accent-rust hover:text-accent-rust underline">the <em>Vriddha Yavanajataka</em></Link>
+          The clearest evidence of this transmission is one of the stranger texts in the tradition:
+          the <em>Vriddha Yavanajataka</em>
           {' '}(&ldquo;The Old Greek Horoscopy&rdquo;), a Sanskrit text attributed to Mīnarāja. The title is its own thesis: &ldquo;Old Greek Horoscopy.&rdquo; This is an Indian author explicitly acknowledging a Greek source tradition &mdash; <em>Yavana</em> being the Sanskrit word for Greek (derived from &ldquo;Ionian&rdquo;). The text transmits Hellenistic horoscopic techniques in Sanskrit verse, adapted to Indian conventions. It is one of the clearest surviving documents of what historians of science call the &ldquo;Hellenistic transmission&rdquo; to India.
         </p>
 
@@ -434,11 +434,6 @@ export default function HistoryOfAstrologyPage() {
                 <li>
                   <Link href="/book/69905f4440bc3a0478efb9b2" className="text-accent-rust hover:text-accent-rust text-sm">
                     Varahamihira, <em>Brihat Jataka</em> (966 CE)
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/book/6990670d249ce014347d2594" className="text-accent-rust hover:text-accent-rust text-sm">
-                    Mīnarāja, <em>Vriddha Yavanajataka</em> (&ldquo;Old Greek Horoscopy&rdquo;)
                   </Link>
                 </li>
                 <li>

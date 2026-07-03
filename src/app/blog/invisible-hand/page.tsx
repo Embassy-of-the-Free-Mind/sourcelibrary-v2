@@ -132,8 +132,7 @@ export default function InvisibleHandPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <Link href="/book/6991e7c5c91ce7d733e4fc19" className="text-accent-rust hover:text-accent-rust underline"><strong>Leon Battista Alberti</strong></Link>
-          {' '}(<em>I Libri della Famiglia</em>, c. 1434) codified the Florentine merchant ethic into a treatise on household economy. Book III, on <em>masserizia</em> (thrift, prudent management), describes the ideal that every Florentine banker aspired to &mdash; rational allocation of resources, avoidance of waste, the virtuous accumulation of wealth through industry. This is the domestic counterpart to the commercial world Pegolotti documented.
+          <strong>Leon Battista Alberti</strong> (<em>I Libri della Famiglia</em>, c. 1434) codified the Florentine merchant ethic into a treatise on household economy. Book III, on <em>masserizia</em> (thrift, prudent management), describes the ideal that every Florentine banker aspired to &mdash; rational allocation of resources, avoidance of waste, the virtuous accumulation of wealth through industry. This is the domestic counterpart to the commercial world Pegolotti documented.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -177,7 +176,7 @@ export default function InvisibleHandPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <Link href="/book/6991e18b339ebc8509949bf0" className="text-accent-rust hover:text-accent-rust underline"><strong>Mart&iacute;n de Azpilcueta</strong></Link>
+          <Link href="/book/6991e18b339ebc8509949b83" className="text-accent-rust hover:text-accent-rust underline"><strong>Mart&iacute;n de Azpilcueta</strong></Link>
           {' '}(<em>Comentario Resolutorio de Usuras</em>, 1568) formulated the quantity theory of money decades before Jean Bodin usually gets the credit. Watching Spanish prices soar as American silver flooded the markets, Azpilcueta reasoned that money, like any commodity, is worth less where it is abundant. A simple observation with enormous consequences.
         </p>
 
@@ -255,7 +254,7 @@ export default function InvisibleHandPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <Link href="/book/6991e175b53cae6bb602477b" className="text-accent-rust hover:text-accent-rust underline"><strong>Nicholas Barbon</strong></Link>
+          <Link href="/book/6991e175b53cae6bb602470e" className="text-accent-rust hover:text-accent-rust underline"><strong>Nicholas Barbon</strong></Link>
           {' '}(<em>A Discourse of Trade</em>, 1690) stated the subjective theory of value with startling clarity: &ldquo;the Value of all Wares arises from their Use.&rdquo; Things have no intrinsic value; all value comes from the wants and needs of the user. This directly contradicts the labour theory of value that would mislead economists from Smith through Marx.
         </p>
 
