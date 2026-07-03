@@ -141,6 +141,56 @@ describe('deriveVerdictFromAttempts — hardened against the real ledger', () =>
     expect(ft?.evidence_strength).toBe('weak');
   });
 
+  // FAILURE MODE 4: a higher-tier refute must beat a lower-tier found (§17).
+  it('tier2 refute over a catalog-only found → needs_review, never not_first (Arithmologia case)', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier1_catalog', result: 'found', evidence_strength: 'moderate', found_refs: ['cat:1'],
+        priors: [{ english_title: 'Claimed prior', completeness: 'complete', pub_year: '1959' }] }),
+      at({ method: 'tier2_agent', result: 'none', evidence_strength: 'strong',
+        queries: ['searched for the claimed prior'], notes: 'could not confirm the cited prior exists' }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('needs_review');
+    expect(isFirstByVerdict(withVerdict(ft))).toBe(false);
+    expect(canPromoteToFirst(withVerdict(ft))).toBe(false);
+  });
+
+  it('tier2 found stands even when a catalog absence exists → not_first', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier2_agent', result: 'found', evidence_strength: 'strong', found_refs: ['cat:2'],
+        priors: [{ english_title: 'Real prior', completeness: 'complete', pub_year: '1986' }] }),
+      at({ method: 'tier1_catalog', result: 'none' }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('not_first');
+  });
+
+  // FAILURE MODE 5: pre-1900-only priors grade first_modern, not not_first (§6).
+  it('trustworthy prior that is pre-1900 only → first_modern (badge stands)', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier2_agent', result: 'found', evidence_strength: 'strong',
+        priors: [{ english_title: 'Of the Love of God (Unum Necessarium)', translator: 'Anonymous', pub_year: '1692', completeness: 'complete' }] }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('first_modern');
+    expect(isFirstByVerdict(withVerdict(ft))).toBe(true);
+  });
+
+  it('mixed pre-1900 and modern priors → not_first', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier2_agent', result: 'found', evidence_strength: 'strong',
+        priors: [
+          { english_title: 'Old rendering', pub_year: '1692', completeness: 'complete' },
+          { english_title: 'Modern rendering', pub_year: '1959', completeness: 'complete' },
+        ] }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('not_first');
+  });
+
+  it('registry found_refs (year unknown) still → not_first', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier1_catalog', result: 'found', evidence_strength: 'moderate', found_refs: ['cat:9'] }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('not_first');
+  });
+
   it('not_applicable rows are excluded from the absence family count', () => {
     // one real catalog absence + one not_applicable (must not become a 2nd family)
     const ft = deriveVerdictFromAttempts([

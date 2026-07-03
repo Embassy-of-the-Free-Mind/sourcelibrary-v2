@@ -36,6 +36,15 @@
  *     the 2026-07-02 reconcile dry-run). Absence votes now require recorded
  *     search coverage.
  *
+ *  4. Refute-precedence (§17, the 2026-07-02 census: 11 tier-2-SAVED firsts
+ *     re-proposed as demotes). A higher-tier refute (agent/human searched and
+ *     could not confirm the prior) now forces needs_review instead of letting
+ *     older lower-tier "found" rows demote over the conflict.
+ *
+ *  5. Verdict grading (SoT §6): trustworthy priors that are ALL pre-1900 grade
+ *     first_modern (still a badgeable first-family claim), not not_first — the
+ *     2026-07-02 diff had 30 pre-1900-only cases wrongly collapsed.
+ *
  * The asymmetry is enforced: a DEMOTE needs a trustworthy positive sighting; a
  * PROMOTE needs clean, independent absence with NO prior hint at all. Anything
  * ambiguous (a weak/unconfirmable "found" hint) returns null — change nothing,
@@ -132,6 +141,27 @@ function isTrustworthyFound(a: FirstTranslationAttempt, bi: BookInput): boolean 
 }
 
 /**
+ * Evidence-family tier for conflict resolution: a refute only outranks a found
+ * when it comes from a HIGHER-effort family (the §17 Arithmologia incident —
+ * a tier-2 agent failed to confirm the cited prior, yet older catalog "found"
+ * rows silently demoted anyway). human > agent > catalog > model_knowledge.
+ */
+function familyTier(a: FirstTranslationAttempt): number {
+  switch (attemptFamily(a)) {
+    case 'human': return 3;
+    case 'agent': return 2;
+    case 'catalog': return 1;
+    default: return 0;
+  }
+}
+
+/** Parse a 4-digit year out of a prior's pub_year (free-text in the ledger). */
+function priorYear(p: NonNullable<FirstTranslationAttempt['priors']>[number]): number | null {
+  const m = String(p.pub_year ?? '').match(/\b(1[2-9]\d{2}|20\d{2})\b/);
+  return m ? Number(m[1]) : null;
+}
+
+/**
  * Resolve the accumulated attempts for ONE book into a graded verdict, or null
  * when the pile doesn't justify any verdict (ambiguous → defer, change nothing).
  * Pure — no DB, no clock.
@@ -143,13 +173,43 @@ export function deriveVerdictFromAttempts(
   if (attempts.length === 0) return null;
   const bi = bookInput(book);
 
-  // 1) A trustworthy prior sighting → not_first. The ONLY thing that demotes.
+  // 1) A trustworthy prior sighting → a graded found-verdict. The ONLY path that
+  //    can demote — but graded, not collapsed:
+  //    - a HIGHER-tier refute (agent/human searched and found nothing) forces
+  //      needs_review, never a silent not_first over the conflict (§17);
+  //    - priors that are all pre-1900 grade first_modern per the SoT §6 taxonomy
+  //      (a badgeable claim), not not_first.
   const trustFound = attempts.filter((a) => isTrustworthyFound(a, bi));
   if (trustFound.length > 0) {
-    const families = new Set(trustFound.map(attemptFamily)).size;
     const strongest = strongestAttempt(trustFound)!;
+    const maxFoundTier = Math.max(...trustFound.map(familyTier));
+    const refutes = attempts.filter(
+      (a) => a.result === 'none' && !isNotApplicable(a) && hasSearchCoverage(a),
+    );
+    const maxRefuteTier = refutes.length ? Math.max(...refutes.map(familyTier)) : -1;
+    if (maxRefuteTier >= 2 && maxRefuteTier > maxFoundTier) {
+      // An agent/human went looking for the cited prior and could not confirm it,
+      // and no equally-trustworthy tier re-found it. Conflict → review, not demote.
+      return {
+        verdict: 'needs_review',
+        evidence_strength: 'weak',
+        our_completeness: 'unknown',
+        match_key: bestMatchKey(trustFound),
+        resolver: methodToResolver(strongest.method),
+        best_attempt_id: strongest.attempt_id,
+      };
+    }
+    // Grade by the trustworthy priors' years: registry refs (year unknown) and any
+    // post-1900 prior defeat outright; all-parseable-and-pre-1900 → first_modern.
+    const hasRegistryRef = trustFound.some((a) => (a.found_refs?.length ?? 0) > 0);
+    const years = trustFound
+      .flatMap((a) => (a.priors ?? []).filter((p) => evaluatePrior(bi, toCited(p)).trustworthy))
+      .map(priorYear);
+    const allPre1900 =
+      !hasRegistryRef && years.length > 0 && years.every((y) => y !== null && y < 1900);
+    const families = new Set(trustFound.map(attemptFamily)).size;
     return {
-      verdict: 'not_first',
+      verdict: allPre1900 ? 'first_modern' : 'not_first',
       evidence_strength: families >= 2 ? 'strong' : 'moderate',
       our_completeness: 'unknown',
       match_key: bestMatchKey(trustFound),
