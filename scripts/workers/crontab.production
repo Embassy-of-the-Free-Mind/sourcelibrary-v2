@@ -50,8 +50,8 @@
 0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-unblock.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-auto-unblock.mjs" >> /var/log/sourcelibrary/archive-auto-unblock.log 2>&1
 
 # First Translation verification pipeline (Stage 1 catalog search + Stage 2 disposition)
-#PAUSED-GEMINI 30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-search.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/search-translation-evidence.mjs --apply --limit 500" >> /var/log/sourcelibrary/ft-search.log 2>&1
-#PAUSED-GEMINI 15 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-validate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/validate-translation-evidence.mjs --apply --limit 1000" >> /var/log/sourcelibrary/ft-validate.log 2>&1
+#RETIRED-2933 30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-search.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/search-translation-evidence.mjs --apply --limit 500" >> /var/log/sourcelibrary/ft-search.log 2>&1
+#RETIRED-2933 15 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-validate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/validate-translation-evidence.mjs --apply --limit 1000" >> /var/log/sourcelibrary/ft-validate.log 2>&1
 
 # Supabase pages-content sync (PR #2026 / issue #2020)
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync-pages-content.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-pages-content.mjs" >> /var/log/sourcelibrary/sync-pages-content.log 2>&1
@@ -85,10 +85,16 @@
 */15 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-finalize.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 9" >> /var/log/sourcelibrary/finalize.log 2>&1
 
 # FT verification continuous: audit hallucinated translator claims, then apply verdicts (idempotent, ~$0.014/book)
-40 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/audit-translation-claims.mjs --apply --limit 300 && node scripts/maintenance/apply-audit-verdicts.mjs --apply" >> /var/log/sourcelibrary/ft-audit.log 2>&1
+#RETIRED-2933 40 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/audit-translation-claims.mjs --apply --limit 300 && node scripts/maintenance/apply-audit-verdicts.mjs --apply" >> /var/log/sourcelibrary/ft-audit.log 2>&1
 # FT discovery continuous: sample confirmed_first books for missed translations, then apply (idempotent)
-40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-discover.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/discover-translations-estimate.mjs --save --limit 300 && node scripts/maintenance/apply-discovery-results.mjs --apply" >> /var/log/sourcelibrary/ft-discover.log 2>&1
-0 8 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-ground.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/ft-ground-remediation.mjs --set unverified --limit 250" >> /var/log/sourcelibrary/ft-ground.log 2>&1
+#RETIRED-2933 40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-discover.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/discover-translations-estimate.mjs --save --limit 300 && node scripts/maintenance/apply-discovery-results.mjs --apply" >> /var/log/sourcelibrary/ft-discover.log 2>&1
+#RETIRED-2933 0 8 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-ground.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/ft-ground-remediation.mjs --set unverified --limit 250" >> /var/log/sourcelibrary/ft-ground.log 2>&1
+
+# FT single-writer loop (#2933-C): derive graded verdicts from the evidence ledger
+# (free, non-public), then materialize ONLY agent/human-verified demotions.
+# Promotions and catalog-tier demotions stay sign-off-gated (census 2026-07-02:
+# ~46% of unverified Stage-1 'prior exists' claims were wrong).
+30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-ft-derive.lock bash -c "set -a; source .env.production.local; set +a; npx tsx scripts/maintenance/derive-ft-verdict-from-attempts.ts --apply && npx tsx scripts/maintenance/reconcile-first-translation-flag.ts --apply --only-demotions --verdict=not_first,not_applicable --resolver=tier2_agent,human" >> /var/log/sourcelibrary/ft-derive.log 2>&1
 
 # Crontab drift detector — logs if live crontab diverges from committed snapshot (#2332)
 0 4 * * * /root/sourcelibrary/scripts/workers/sync-crontab.sh >> /var/log/sourcelibrary/crontab-sync.log 2>&1
