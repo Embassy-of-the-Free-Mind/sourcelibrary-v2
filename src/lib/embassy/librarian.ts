@@ -5,7 +5,7 @@ import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
 import { supabase } from '@/lib/supabase';
-import { ObjectId } from 'mongodb';
+import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
 import { CLIP_URL } from '@/lib/clip';
 
@@ -389,6 +389,17 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
   };
 }
 
+// Terms that appear in virtually every gallery row (every entry IS an
+// illustration). In a $text query their posting lists cover the whole
+// collection, exploding the scoring set without adding signal.
+const IMAGE_QUERY_NOISE = new Set([
+  'illustration', 'illustrations', 'image', 'images', 'picture', 'pictures',
+  'depiction', 'depictions', 'drawing', 'drawings', 'print', 'prints',
+  'plate', 'plates', 'figure', 'figures', 'engraving', 'engravings',
+  'woodcut', 'woodcuts', 'diagram', 'diagrams', 'historical', 'antique',
+  'showing', 'depicting', 'of', 'the', 'a', 'an', 'and', 'with', 'in',
+]);
+
 async function executeSearchImages(query: string, bookId?: string): Promise<{
   images: Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>;
   clipUnavailable: boolean;
@@ -446,19 +457,39 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
   // is: corroborated by both → keyword-only → CLIP-only.
   const projection = { image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 };
 
+  // The keyword arm uses the weighted $text index (gallery_images_text_idx:
+  // description ×5, museum_description ×3, subjects/figures/symbols ×2), NOT a
+  // regex. The previous multi-token lookahead regex was an unindexed full scan
+  // over 200K docs that ran 30s+ — as the old CLIP-empty fallback it was a
+  // latent landmine (the June "timeout_warning" pattern on image-heavy
+  // queries), and running it on every call froze the whole agent turn.
+  //
+  // Two guards keep $text fast: strip gallery-noise terms whose posting lists
+  // span nearly every row (every doc IS an illustration/woodcut/print, so
+  // those words only inflate the scoring set — "…botanical illustration"
+  // pushed the query past 8s), and cap at 4 terms. maxTimeMS degrades the arm
+  // to CLIP-only instead of hanging the turn.
   const textFilter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
   if (bookId) textFilter.book_id = bookId;
-  const regex = query.split(/\s+/).map(w => `(?=.*${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`).join('');
-  const textPromise = db.collection('gallery_images')
-    .find({ ...textFilter, $or: [
-      { description: { $regex: regex, $options: 'i' } },
-      { museum_description: { $regex: regex, $options: 'i' } },
-      { 'metadata.subjects': { $regex: regex, $options: 'i' } },
-    ]})
-    .sort({ gallery_quality: -1 })
-    .limit(6)
-    .project(projection)
-    .toArray();
+  const searchTerms = query.split(/\s+/)
+    .filter(w => !IMAGE_QUERY_NOISE.has(w.toLowerCase()))
+    .slice(0, 4)
+    .join(' ');
+  const textPromise = searchTerms
+    ? db.collection('gallery_images')
+        .find(
+          { ...textFilter, $text: { $search: searchTerms } },
+          { projection: { ...projection, score: { $meta: 'textScore' } } },
+        )
+        .sort({ score: { $meta: 'textScore' } })
+        .limit(6)
+        .maxTimeMS(8000)
+        .toArray()
+        .catch((err: unknown) => {
+          console.warn('[Librarian] gallery text search failed:', err instanceof Error ? err.message : err);
+          return [] as WithId<Document>[];
+        })
+    : Promise.resolve([] as WithId<Document>[]);
 
   // CLIP IDs may be ObjectId hex strings or other formats — filter to valid
   // ones. Book-scoped searches constrain the CLIP hits too (the old code let
@@ -474,7 +505,7 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
   const [textMatches, clipMatches] = await Promise.all([textPromise, clipPromise]);
   const clipHitIds = new Set(clipMatches.map(m => m._id.toString()));
   const seen = new Set<string>();
-  const images: typeof textMatches = [];
+  const images: Document[] = [];
   for (const list of [textMatches.filter(m => clipHitIds.has(m._id.toString())), textMatches, clipMatches]) {
     for (const img of list) {
       const key = img._id.toString();
