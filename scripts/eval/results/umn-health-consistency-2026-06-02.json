@@ -1,0 +1,898 @@
+{
+  "corpus": "umn-health",
+  "models": [
+    "gemini-3-flash-preview",
+    "claude-opus-4-6"
+  ],
+  "temperatures": [
+    0
+  ],
+  "thinking": false,
+  "runsPerCombo": 3,
+  "pages": [
+    {
+      "bookId": "6a1ed94009c2a0509ef9e869",
+      "bookTitle": "[Saru kaibōzu]",
+      "pageNumber": 5,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.5,
+            "modalOutput": "胃之四膜\n一\n二\n三\n四\n脾前面\n同後面\n肝前面\n同後面\nト\n除膽處\n横膈膜\n心臟\nイ\n静脉大幹\nロ\n肺動脉\nハ\n肺静脉\nニ\n動脉大幹\nホ\n冠脉\n剖心\nヘ\n左室\nト\n右室",
+            "modeCount": 1,
+            "totalRuns": 2,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9529411764705882,
+                "syllableSimilarity": 0.8571428571428571
+              }
+            ],
+            "avgCharSimilarity": 0.9529411764705882,
+            "avgSyllableSimilarity": 0.8571428571428571
+          },
+          "costUsd": 0.001582,
+          "durationMs": 575243,
+          "outputLengths": [
+            85,
+            0,
+            85
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0,
+            "modalOutput": "",
+            "modeCount": 0
+          },
+          "pairwise": {
+            "pairs": [],
+            "avgCharSimilarity": 0,
+            "avgSyllableSimilarity": 0
+          },
+          "costUsd": 0,
+          "durationMs": 0,
+          "outputLengths": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94109c2a0509ef9e880",
+      "bookTitle": "A Vocabulary of anatomical and physiological terms in English and Chinese",
+      "pageNumber": 31,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "27\nLigament, glenoid 胛盂環筋\n,, glosso-epiglottidean 舌會厭筋\n,, hip 腿節筋\n,, hyo-epiglottic 舌骨會厭筋\n,, ileo-femoral 胯腿筋\n,, ,, -lumbar 胯腰筋\n,, incus 砧骨筋\n,, interarticular, costal 脇中連筋\n,, interchondral 靭中筋\n,, interclavicular 匙中筋卽鎖柱中筋\n,, intercostal 脇中筋\n,, interosseous 骨中筋\n,, interspinous 脊骨支中筋\n,, intertransverse 橫中筋\n,, intervertebral 脊骨中筋\n,, knee 膝筋\n,, laryngeal 聲腔筋\n,, lateral, hepatic 肝旁筋\n,, ,, ,, ex-ternal 肝外旁筋\n,, ,, ,, in-ternal 肝內旁筋\n,, ,, knee 膝旁筋\n,, ,, uterine 子宮旁筋\n,, longitudinal, hepatic 肝長筋\n,, lumbo-iliac 腰胯筋\n,, ,, -sacral 腰鈎筋\n,, malleus 椎骨筋\n,, maxillary inferior 頷筋卽下牙床筋\n,, metacarpal 手掌筋\n,, metacarpo-phalan- 掌指筋\ngeal\n,, metatarsal 脚掌筋\n,, metatarso-phalan- 掌趾筋\ngeal\n,, mucosum 涕筋\n,, nuchal 項筋\n,, oblique 斜筋\n,, obturator 盈筋\n,, occipito-atloid 枕頸首筋\n,, ,, ,, an-terior 枕頸首前筋\n,, ,, ,, lateral 枕頸首旁筋\n,, ,, ,, pos-terior 枕頸首後筋\n,, ,, -axoid 枕頸次筋\n,, odontoid 鈕筋\n,, orbicular 轉圓筋卽轉肘圓筋\n,, ossicular 耳中骨筋\n,, ovarian 蛋核筋\nLigament, palmar 手掌前筋\n,, palpebral 眼胞靭筋\n,, patellar 膝蓋筋\n,, ,, anterior 膝蓋前筋\n,, ,, external 膝蓋外筋\n,, ,, internal 膝蓋內筋\n,, pelvic 骨盆筋\n,, peritoneal 腹統膜筋\n,, phalangeal, foot 趾筋\n,, ,, hand 指筋\n,, pinna 耳朶筋\n,, plantar 脚掌下筋\n,, posterior, carpal 手腕後筋\n,, ,, knee 膝後筋\n,, ,, wrist 手腕節後筋\n,, Poupart's 圓大筋\n,, pterygo-maxillary 翅頷筋卽翅下牙床筋\n,, pubic 交節筋\n,, ,, anterior 交節前筋\n,, ,, posterior 交節後筋\n,, ,, superior 交節上筋\n,, pubo-prostatic 胱前筋\n,, radio-carpal 轉腕筋卽轉肘腕筋\n,, ,, -ulnar 轉臑筋卽正轉肘筋\n,, ,, ,, anterior 轉臑前筋卽正轉肘前筋\n,, ,, ,, inferior 轉臑下筋卽正轉肘下筋\n,, ,, ,, middle 轉臑中筋卽正轉肘中筋\n,, ,, ,, posterior 轉臑後筋卽正轉肘後筋\n,, recto-uterine 直肛子宮筋\n,, rhomboid 脊胛肌筋卽脊肩胛肌筋\n,, round 圓筋\n,, ,, hepatic 肝圓筋\n,, ,, hip 腿圓筋\n,, ,, radio-ulnar 轉臑圓筋卽正轉肘圓筋\n,, ,, uterine 子宮圓筋\n,, sacro-coccygeal 鈎閭筋\n,, ,, anterior 鈎閭前筋\n,, ,, posterior 鈎閭後筋\n,, ,, -iliac 鈎胯筋\n,, ,, ,, anterior 鈎胯前筋\n,, ,, ,, oblique 鈎胯斜筋\n,, ,, ,, posterior 鈎胯後筋\n,, ,, -sciatic 鈎尻筋\n,, ,, ,, anterior 鈎尻前筋",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.00987,
+          "durationMs": 169178,
+          "outputLengths": [
+            1821,
+            1821,
+            1821
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "27\n\nLigament, glenoid 胛盂環筋\n„ glosso-epiglottidean 舌會厭筋\n„ hip 腿節筋\n„ hyo-epiglottic 舌骨會厭筋\n„ ileo-femoral 胯腿筋\n„ „ -lumbar 胯腰筋\n„ incus 砧骨筋\n„ interarticular,costal 脇中連筋\n„ interchondral 軟中筋\n„ interclavicular 匙中筋卽鎖柱中筋\n„ intercostal 脇中筋\n„ interosseous 骨中筋\n„ interspinous 脊骨支中筋\n„ intertransverse 橫中筋\n„ intervertebral 脊骨中筋\n„ knee 膝筋\n„ laryngeal 嚨脂筋\n„ lateral, hepatic 肝旁筋\n„ „ „ ex-肝外旁筋\nternal\n„ „ „ in-肝內旁筋\nternal\n„ „ knee 膝旁筋\n„ „ uterine 子宮旁筋\n„ longitudinal, hepatic 肝長筋\n„ lumbo-iliac 腰胯筋\n„ „ -sacral 腰鉤筋\n„ malleus 椎骨筋\n„ maxillary inferior 頷筋卽下牙床筋\n„ metacarpal 手掌筋\n„ metacarpo-phalan-掌指筋\ngeal\n„ metatarsal 脚掌筋\n„ metatarso-phalan-掌趾筋\ngeal\n„ mucosum 踝筋\n„ nuchal 項筋\n„ oblique 斜筋\n„ obturator 盆筋\n„ occipito-atloid 枕頭首筋\n„ „ „ an-枕頭首前筋\nterior\n„ „ „ lateral 枕頭首旁筋\n„ „ „ pos-枕頭首後筋\nterior\n„ „ -axoid 枕頭次筋\n„ odontoid 鈕筋\n„ orbicular 轉圓筋卽轉肘圓筋\n„ ossicular 耳中骨筋\n„ ovarian 蛋核筋\n\nLigament, palmar 手掌前筋\n„ palpebral 眼胞鉤筋\n„ patellar 膝蓋筋\n„ „ anterior 膝蓋前筋\n„ „ external 膝蓋外筋\n„ „ internal 膝蓋內筋\n„ pelvic 骨盆筋\n„ peritoneal 腹統膜筋\n„ phalangeal, foot 趾筋\n„ „ hand 指筋\n„ pinna 耳桑筋\n„ plantar 脚掌下筋\n„ posterior, carpal 手腕後筋\n„ „ knee 膝後筋\n„ „ wrist 手腕節後筋\n„ Poupart's 圓大筋\n„ pterygo-maxillary 翅頷筋卽翅下牀筋\n„ pubic 交節筋\n„ „ anterior 交節前筋\n„ „ posterior 交節後筋\n„ „ superior 交節上筋\n„ pubo-prostatic 胱前筋\n„ radio-carpal 轉腕筋卽轉肘腕筋\n„ „ -ulnar 轉臑筋卽正轉肘筋\n„ „ „ anterior 轉臑前筋卽正轉肘\n前筋\n„ „ „ inferior 轉臑下筋卽正轉肘\n下筋\n„ „ „ middle 轉臑中筋卽正轉肘\n中筋\n„ „ „ posterior 轉臑後筋卽正轉肘\n後筋\n„ recto-uterine 直腸子宮筋\n„ rhomboid 脊胛肌筋卽脊肩胛\n肌筋\n„ round 圓筋\n„ „ hepatic 肝圓筋\n„ „ hip 腿圓筋\n„ „ radio-ulnar 轉臑圓筋卽正轉肘\n圓筋\n„ „ uterine 子宮圓筋\n„ sacro-coccygeal 鉤閭筋\n„ „ „ anterior 鉤閭前筋\n„ „ „ posterior 鉤閭後筋\n„ „ -iliac 鉤胯筋\n„ „ „ anterior 鉤胯前筋\n„ „ „ oblique 鉤胯斜筋\n„ „ „ posterior 鉤胯後筋\n„ „ -sciatic 鉤尻筋\n„ „ „ anterior 鉤尻前筋",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.39010500000000004,
+          "durationMs": 124189,
+          "outputLengths": [
+            1694,
+            1694,
+            1694
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94209c2a0509ef9e8fd",
+      "bookTitle": "A vocabulary of diseases in English and Chinese",
+      "pageNumber": 23,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "​",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0016769999999999997,
+          "durationMs": 66489,
+          "outputLengths": [
+            1,
+            1,
+            1
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0,
+            "modalOutput": "",
+            "modeCount": 0
+          },
+          "pairwise": {
+            "pairs": [],
+            "avgCharSimilarity": 0,
+            "avgSyllableSimilarity": 0
+          },
+          "costUsd": 0.073125,
+          "durationMs": 56426,
+          "outputLengths": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94209c2a0509ef9e95a",
+      "bookTitle": "Aiiku chadan",
+      "pageNumber": 39,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0,
+            "modalOutput": "",
+            "modeCount": 0
+          },
+          "pairwise": {
+            "pairs": [],
+            "avgCharSimilarity": 0,
+            "avgSyllableSimilarity": 0
+          },
+          "costUsd": 0.0045179999999999994,
+          "durationMs": 140660,
+          "outputLengths": [
+            0,
+            0,
+            0
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "動もすれで咽よ入り害あり\n\n浴児\n\n浴前まづ鶏卵二箇の中に砂糖と和し生児汚穢の全身ふ塗り而く附着とる粘汚の物を尽く除去し拭ひ去り浴よ入るべし粘汚の物を拭ひ太らずして微温よく嬰児を浴せしむべからず児ハ皮肉薄て微温よく浴に入るべし○産湯ハ至弱なれども大人よ適意なる程の湯ハ忍ひづきまれあり必微温と良とす世よりハ人肌の温度\n\n養育金礎後\n\n十七",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.121365,
+          "durationMs": 89200,
+          "outputLengths": [
+            169,
+            169,
+            169
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94409c2a0509ef9eae1",
+      "bookTitle": "Asai Sensei kirigami kuju",
+      "pageNumber": 53,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "〇\n五日謂之候\n實五日七刻十七分五厘也凡ソ\n〇\n二十四氣七十二候ヲ立テ天ノ一年ヲ定ムルハ\n日ノ一年ハ三百六十五日二十五刻ヲ一年トス\n所輯三年ノ内ニテヲ以\n此一月ニ六候有立日ノ氣候變化也細云五日七\n刻十七分五厘也立日ヲ一候トスルハ大槩ヲ以\n記セリ五日ハ五行一周ノ数又一日十二時也月\n二十六時即六十甲子一周ノ数ニ合スル也\n七十二候ハ一年配之其一日八一候五日ヲ三ツ積\n八十五日此半月数ヲ即一氣ト云\n計五日三十分一刻\n三十分\n二分半\n詳見下文又一月二六候有レハ三十分ヲ二分半\n残ル十一月\n二十三日\n六候有レハ\n六十六候合七十\n二候合十二月\n三百六十候\n一百六十五日五分加\n八六十六候合七十\n實十五日二十一刻五十二分半\n三候謂之氣也五日一候ヲ重テ三候トス十五日此\n〇\n氣節氣也\n五日",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.8273809523809523,
+                "syllableSimilarity": 0.03333333333333333
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.8214285714285714,
+                "syllableSimilarity": 0.2
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9221183800623053,
+                "syllableSimilarity": 0.04
+              }
+            ],
+            "avgCharSimilarity": 0.8569759679572764,
+            "avgSyllableSimilarity": 0.0911111111111111
+          },
+          "costUsd": 0.0042959999999999995,
+          "durationMs": 150371,
+          "outputLengths": [
+            336,
+            318,
+            321
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "〇〇五日謂二十四気七十二候一五日七刻十七分五厘也几此一鑰年八三百七十二候實五日一候ヲ五テ天ノ一年ヲ定ム几八気候要化也總云五日七二十五刻ヲ一年トス家磨八記セ十七月二六候也有立日ノ気候變化也總云五日七二十五刻ヲ一年トス家磨八七十二六候十五日立五厘候也有立日ノ気候要化也總云五日七二十五刻ヲ一年トス家磨八詳八七十二六候十五日立五厘候也有立日ノ気候要化也總云五日七残ル十下文一月又此八半月二數ノ即其一日一気八ト一候五日合十三三ソ也積三分七十刻半見十五一月日候八年配之甲子一周ヲ一候トス几合ス十二時立三月以七気三候候謂之気也五日一實十五日世十五百日六候有廿姆如八ト一候五日合十三三ソ也積三候二候謂合十三気節気也五日一實十五日世十五百日六候有廿姆如六十六候合七三分十候一刻五十二分半",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.2661498708010336,
+                "syllableSimilarity": 0
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.3079019073569482,
+                "syllableSimilarity": 0
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.25322997416020676,
+                "syllableSimilarity": 0
+              }
+            ],
+            "avgCharSimilarity": 0.27576058410606286,
+            "avgSyllableSimilarity": 0
+          },
+          "costUsd": 0.17452499999999999,
+          "durationMs": 93938,
+          "outputLengths": [
+            335,
+            387,
+            367
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94509c2a0509ef9ebb6",
+      "bookTitle": "Atami Onsen zukō",
+      "pageNumber": 27,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "ありとふ\n一藤ふじの虫むし\n一大乗寺だいじょうじ 日蓮宗にちれんしゅう\n藤ふじの大木たいきあり 野中のなかの湯ゆの例ためしあり\n開山かいさん日興にっこう上人しょうにん\n（祖師そし三番目さんばんめの弟子でし也）\n弘長こうちょう元がん酉ゆう年ねんの開基かいきなりといハ真言宗しんごんしゅう\nなりしを時ときの住職じゅうしょく行満ぎょうまん法印ほういん法華宗ほっけしゅうを\n日興にっこう上人しょうにんと法論ほうろんに及およびうちひしめ伏ふせられ\n改宗かいしゅうして日行にちぎょうと改あらためそれより先さき二代目にだいめの\n住職じゅうしょくとして本尊ほんぞんハ日蓮にちれん上人しょうにん伊豆いず国くに伊東いとう\n流罪るざいの砌みぎり彼処かしこにて自みずから彫ほりえ給たまひしなり",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.40189125295508277,
+                "syllableSimilarity": 0.034482758620689655
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.40189125295508277,
+                "syllableSimilarity": 0.034482758620689655
+              }
+            ],
+            "avgCharSimilarity": 0.6012608353033885,
+            "avgSyllableSimilarity": 0.35632183908045983
+          },
+          "costUsd": 0.0041925,
+          "durationMs": 154949,
+          "outputLengths": [
+            334,
+            334,
+            423
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "ありとう\n\n一蒸の出湯なる\n岩の大あひり野中の湯の側より\n\n一大乗寺\n\n日蓮宗\n\n開山 日興上人\n祖師 三番目の弟子\n\n弘長元酉年の開基ありそのかみ八真言宗\n\nありしが時の住職行満法印法華宗\n\n日興上人と法論のあひつひに伏られ\n\n政宗して日行を改めくろしとそ二代目の\n\n住職として本尊は旧蓮上人伊豆国伊東\n\n流罪の御彼杖して自ら刻みたまひちうり",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.8953488372093024,
+                "syllableSimilarity": 0.7333333333333333
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9941860465116279,
+                "syllableSimilarity": 0.9333333333333333
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.8895348837209303,
+                "syllableSimilarity": 0.6666666666666666
+              }
+            ],
+            "avgCharSimilarity": 0.9263565891472868,
+            "avgSyllableSimilarity": 0.7777777777777777
+          },
+          "costUsd": 0.11574000000000001,
+          "durationMs": 66058,
+          "outputLengths": [
+            172,
+            167,
+            172
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94509c2a0509ef9ec23",
+      "bookTitle": "Atami Onsen zukō",
+      "pageNumber": 36,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "すくいつきしものなり\n一勢いせ海うみ漁いさり家を由よし事こと記き曰いはく宇う多だ天てん皇わうの御み時とき紀き長たけ\n谷たに雄を南なむ国ごくの任にんにわられしとき温ぬく分みの風かぜに\nさそはれて村民たみの舎いへに立た寄より給たまひしにむつる\nあつきよりのつねのある\n朱あか鳥とり器うつは完なりよりえぬる庭にはにては朝あした翔かけする\nいとけなき幾いく重へともなく積つもる雪ゆきに畳たたみしく唯ただ\nいそのを\n蓮はす居ゐのごとくねくの穴あなよりのそきて立たる根ねに\nうらむ魚うをともぬくねに巻まきそ雄をはく悔くやい忘わすれて\nきぬとるん又また詔せう倉そうの右う大だい臣じんの歌うたともゆへり\nはるなり",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.003908999999999999,
+          "durationMs": 149824,
+          "outputLengths": [
+            298,
+            298,
+            298
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "一　勢海法師由来記日宇多天皇の御昔紀長谷雄卿の任をわられしをり温泉の住なるきんて村民よりまかりいてゝ未島鸞完くるものありて産をよ朝鮒まるをもくもいくさも数重きるものをさる巻石畳くもの雀はうつぎづきゝたる蓮居のてく松くの宮のをきの文よ根岸ゝてもゐるゝ梅小巻そ雑ゆく梅ゝ忘れてきもむとろん又総亀の右大臣の祝しくはゝきめとろりはゝりり",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.6451612903225806,
+                "syllableSimilarity": 0.5
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.6451612903225806,
+                "syllableSimilarity": 0.5
+              }
+            ],
+            "avgCharSimilarity": 0.7634408602150536,
+            "avgSyllableSimilarity": 0.6666666666666666
+          },
+          "costUsd": 0.12142499999999999,
+          "durationMs": 83343,
+          "outputLengths": [
+            164,
+            164,
+            186
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94609c2a0509ef9ecb4",
+      "bookTitle": "Atami Onsen zukō",
+      "pageNumber": 24,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "大山",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.001686,
+          "durationMs": 66275,
+          "outputLengths": [
+            2,
+            2,
+            2
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "大山",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.07244999999999999,
+          "durationMs": 51502,
+          "outputLengths": [
+            2,
+            2,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94609c2a0509ef9ed15",
+      "bookTitle": "Chōmei eiseiron, Volume 1",
+      "pageNumber": 35,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "賊ハ食浪のるふて止浪の分と傷しむるハなれども\n合派あればにるも去ゆしざる也、かのぬにほて\n酒色の色とかして却（かへつ）う分と被（かうむ）なるは成酒色の\n色ハかく留（とゞま）その人にありて気絶（いんぜつ）の人にあきあ\nあり色食派ありて死（のぞむ）の叶色酒色とかしあふに\nして分と換（ため）ずるの世とま有これ賊のおゐ破（やぶら）るるなり\n\n氣の辨\n○内經曰百病生一氣留滞\nたいきやうにいはくひゃくびゃうはいつきのきよりたいりうたいす\n\n人は氣のそらふにひろきせかいとせまくおもひ\nいふふもるべきるといひつまりてハ氣をうち病と\nせし或ハあやまちとあしぬめいく氣のそらふめて",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.607773851590106,
+                "syllableSimilarity": 0.16666666666666666
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.7455830388692579,
+                "syllableSimilarity": 0.16666666666666666
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.6330645161290323,
+                "syllableSimilarity": 0.08333333333333333
+              }
+            ],
+            "avgCharSimilarity": 0.6621404688627986,
+            "avgSyllableSimilarity": 0.13888888888888887
+          },
+          "costUsd": 0.0036075000000000005,
+          "durationMs": 685261,
+          "outputLengths": [
+            283,
+            219,
+            248
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "賊ハ金沢のすかてと沢の方と湯しやすんがんども\n合沢あればバらるるもどもゆるさるるあへかのが始こほど\n酒色のさとがつて知う方と彼たりかのがほこにほど\nこハやく富世の人ふありて天婦の廣沼をの\nありも金沢ありてわでの叶息酒色の人ぶかさあ\nしてカと換するせまる有賊のおためおかをもちの\n○内經曰百病生一氣留滯氣の辨\n人ハ氣のそちひのさせいかいとせまくおそもひ\nいうしよかもゆるべきーかイひのきさせいかいとせまくおそもひ\nはど武ハあやまちそちーめいくー氣のとちーまふて",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9606986899563319,
+                "syllableSimilarity": 0.6
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9606986899563319,
+                "syllableSimilarity": 0.6
+              }
+            ],
+            "avgCharSimilarity": 0.9737991266375546,
+            "avgSyllableSimilarity": 0.7333333333333334
+          },
+          "costUsd": 0.130665,
+          "durationMs": 83183,
+          "outputLengths": [
+            229,
+            229,
+            225
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6a1ed94709c2a0509ef9eda2",
+      "bookTitle": "Chōmei eiseiron, Volume 2",
+      "pageNumber": 37,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "本が回我らるハ義と令族のごとくめとい忠と合\nのどくして。それバこそ。君のね。令と塵芥のごとくあり六\nた也我をありとてかりそめのみなり。義ありとて恐はら\nたて人とならきんや。君父の仇ハ。必。天の不戴君と\n父とのねにハ。身を於天ともおそれバ。今下となんするがためなり。\n○論語曰。父母其病愁孝經曰。身體髮膚\n父母諸敢損不傷孝\n父母ハ。授かるの身。傷つけ。如く。謹。我が身と意して\n父母の御恩のねといわらざるべかられば。君の恩おもいにーて\n一分をゆるんずるハ。あやまり。如く武士の身ハ。義あり\nてかりそめハ。いづれも。自らの。家ととらさんね。君へ",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.7824561403508772,
+                "syllableSimilarity": 0
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.7481481481481482,
+                "syllableSimilarity": 0.09090909090909091
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.712280701754386,
+                "syllableSimilarity": 0
+              }
+            ],
+            "avgCharSimilarity": 0.7476283300844705,
+            "avgSyllableSimilarity": 0.030303030303030304
+          },
+          "costUsd": 0.0037695000000000003,
+          "durationMs": 166458,
+          "outputLengths": [
+            270,
+            285,
+            251
+          ]
+        },
+        "claude-opus-4-6@t0": {
+          "model": "claude-opus-4-6",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "よくがち我がちる方は義と人についのでござる。ちると人についと合ハ\nのでくーーとをれんだでい其のたき合ともに義がのでござるーーおりのふ\nたゞ也我きちりてかりをめんのちやと義父のおいはい天のふ戦をもちほら\nたて人てわくしをんでやと義父の机いはい天のふ戦をもちほら\n父のおハ方と終て\nたゞ人てわくしをんやと義父のおいはい天のふ戦をもちほら\n\n◯論\n語日父母が其病をしるべし天と孝經日身體髮膚\n父母諸敢損傷孝\n\n父母八餅をちのをのちをいはいかりをめんのちやと\n父母の経をちるをのをいはいかりをめんのちやと義がのでござるーーおりのふ\n一介をかろんぞる八おまじーー知れ其士の方れ義がり\nそでかりをめ八タぎる日ぶんの名聞とちらさんだき　をい",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.5782747603833867,
+                "syllableSimilarity": 0
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.5732484076433121,
+                "syllableSimilarity": 0
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.6210191082802548,
+                "syllableSimilarity": 0
+              }
+            ],
+            "avgCharSimilarity": 0.5908474254356512,
+            "avgSyllableSimilarity": 0
+          },
+          "costUsd": 0.148365,
+          "durationMs": 101970,
+          "outputLengths": [
+            313,
+            301,
+            314
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "byCombo": {
+      "gemini-3-flash-preview@t0": {
+        "model": "gemini-3-flash-preview",
+        "temp": 0,
+        "pages": 10,
+        "avgMcr": 0.6166666666666666,
+        "avgCharSim": 0.7820946778678521,
+        "avgSylSim": 0.5473767726526348
+      },
+      "claude-opus-4-6@t0": {
+        "model": "claude-opus-4-6",
+        "temp": 0,
+        "pages": 10,
+        "avgMcr": 0.5333333333333334,
+        "avgCharSim": 0.6530204585541608,
+        "avgSylSim": 0.5177777777777778
+      }
+    },
+    "crossModel": [
+      {
+        "modelA": "gemini-3-flash-preview@t0",
+        "modelB": "claude-opus-4-6@t0",
+        "charSimilarity": 0.3112949717682072,
+        "syllableSimilarity": 0.10519877675840979,
+        "pages": 10
+      }
+    ]
+  },
+  "meta": {
+    "date": "2026-06-02",
+    "totalCalls": 56,
+    "totalCostUsd": 1.3868724999999995,
+    "totalDurationMs": 3074517,
+    "costByModel": {
+      "gemini-3-flash-preview@t0": 0.03910749999999999,
+      "claude-opus-4-6@t0": 1.3477649999999994
+    }
+  }
+}
