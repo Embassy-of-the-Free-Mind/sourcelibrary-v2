@@ -252,7 +252,7 @@ export default function IndigenousTraditionsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <em>The Fairy-Faith in Celtic Countries</em> by W. Y. Evans-Wentz deserves special mention. Evans-Wentz &mdash; who would later become the first English translator of the <em>Tibetan Book of the Dead</em> &mdash; conducted fieldwork in Ireland, Scotland, Wales, Cornwall, Brittany, and the Isle of Man in 1908-1909, interviewing people who still held to the belief in fairies, the s&iacute;dh, and the otherworld. His conclusion was that the &ldquo;fairy faith&rdquo; was not folklore but the survival of pre-Christian Celtic religion &mdash; a thesis that remains influential in Celtic studies.
+          <Link href="/book/the-fairy-faith-in-celtic-countries-evans-wentz" className="text-accent-rust hover:text-accent-rust underline"><em>The Fairy-Faith in Celtic Countries</em></Link> by W. Y. Evans-Wentz deserves special mention. Evans-Wentz &mdash; who would later become the first English translator of the <em>Tibetan Book of the Dead</em> &mdash; conducted fieldwork in Ireland, Scotland, Wales, Cornwall, Brittany, and the Isle of Man in 1908-1909, interviewing people who still held to the belief in fairies, the s&iacute;dh, and the otherworld. His conclusion was that the &ldquo;fairy faith&rdquo; was not folklore but the survival of pre-Christian Celtic religion &mdash; a thesis that remains influential in Celtic studies.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
