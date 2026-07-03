@@ -24,6 +24,13 @@ export interface EmbedUiPolicy {
   enableBookIndexNavigation: boolean;
   showBookReadCta: boolean;
   showBookRelatedBooks: boolean;
+  // The Overview link points at the tenant-agnostic `/book/<slug>/overview`
+  // route — there is no `/embed/<tenant>/book/<slug>/overview` counterpart.
+  // Following it from inside a partner iframe navigates the frame to the
+  // global site (no tenant resolves there, so X-Frame-Options: DENY kicks
+  // in and the iframe goes blank). Hide it in embed mode rather than ship a
+  // link that breaks the iframe. See CLAUDE.md "Tenant Subdomain Lockdown".
+  showBookOverviewLink: boolean;
   showTranslationMethodologyLink: boolean;
   showExternalLinks: boolean;
   showGalleryImages: boolean;
@@ -52,6 +59,7 @@ export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
       enableBookIndexNavigation: true,
       showBookReadCta: true,
       showBookRelatedBooks: true,
+      showBookOverviewLink: true,
       showTranslationMethodologyLink: true,
       showExternalLinks: true,
       showGalleryImages: true,
@@ -68,6 +76,7 @@ export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
     enableBookIndexNavigation: false,
     showBookReadCta: false,
     showBookRelatedBooks: false,
+    showBookOverviewLink: false,
     showTranslationMethodologyLink: false,
     showExternalLinks: false,
     showGalleryImages: false,
