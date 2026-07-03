@@ -35,8 +35,17 @@ export async function OPTIONS() {
 }
 
 export async function POST(req: NextRequest) {
-  const secret = process.env.CRON_SECRET;
-  if (!secret || req.headers.get('authorization') !== `Bearer ${secret}`) {
+  // Prefer a dedicated, scoped INGEST_TOKEN (so operators never expose CRON_SECRET
+  // in a browser call); fall back to CRON_SECRET for server-side/cron use. Inert
+  // (503) unless at least one is configured.
+  const auth = req.headers.get('authorization') || '';
+  const ingestTok = process.env.INGEST_TOKEN;
+  const cronTok = process.env.CRON_SECRET;
+  if (!ingestTok && !cronTok) {
+    return NextResponse.json({ error: 'ingest disabled (no token configured)' }, { status: 503, headers: CORS });
+  }
+  const ok = (ingestTok && auth === `Bearer ${ingestTok}`) || (cronTok && auth === `Bearer ${cronTok}`);
+  if (!ok) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401, headers: CORS });
   }
 
