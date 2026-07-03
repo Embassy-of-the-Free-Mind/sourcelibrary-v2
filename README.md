@@ -568,11 +568,13 @@ See [CLAUDE.md Security](./CLAUDE.md#security---critical) for detailed security 
 
 ## 📊 Current Status
 
+_As of July 2026 — these move weekly; live numbers at [sourcelibrary.org/data](https://sourcelibrary.org/data)._
+
 **📈 Active Corpus:**
 - 📚 ~29K books with `visible: true`
 - ✅ ~15K fully processed (OCR'd and translated)
 - 🌍 ~14K with full English translations
-- 🖼️ ~5K gallery images curated
+- 🖼️ 200K+ catalogued illustrations in the [gallery](https://sourcelibrary.org/gallery)
 
 **⚙️ Processing Capacity:**
 - 📥 15K+ pages/month ingestion
