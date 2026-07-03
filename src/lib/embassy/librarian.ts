@@ -436,31 +436,52 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
     console.warn(`[Librarian] CLIP visual search unavailable (${CLIP_URL}); falling back to keyword image search`);
   }
 
-  // Fetch gallery_images by CLIP IDs or text search fallback
-  let images;
-  if (clipIds.size > 0) {
-    // CLIP IDs may be ObjectId hex strings or other formats — filter to valid ones
-    const validIds = [...clipIds.keys()].filter(id => /^[a-f0-9]{24}$/.test(id));
-    const ids = validIds.map(id => new ObjectId(id));
-    images = ids.length > 0 ? await db.collection('gallery_images')
-      .find({ _id: { $in: ids } })
-      .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 })
-      .toArray() : [];
-  } else {
-    // Text search fallback
-    const filter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
-    if (bookId) filter.book_id = bookId;
-    const regex = query.split(/\s+/).map(w => `(?=.*${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`).join('');
-    images = await db.collection('gallery_images')
-      .find({ ...filter, $or: [
-        { description: { $regex: regex, $options: 'i' } },
-        { museum_description: { $regex: regex, $options: 'i' } },
-        { 'metadata.subjects': { $regex: regex, $options: 'i' } },
-      ]})
-      .sort({ gallery_quality: -1 })
-      .limit(6)
-      .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 })
-      .toArray();
+  // Hybrid retrieval: run the keyword search ALONGSIDE CLIP and merge.
+  // CLIP used to be winner-takes-all — a single plant-shaped folio scraping
+  // past the 0.20 threshold suppressed gallery plates whose curated
+  // descriptions literally name the subject (asking for cannabis surfaced
+  // Voynich look-alikes while the Fuchs "Cannabis sativa" woodcut sat unshown
+  // in the gallery). An exact keyword hit on the curated description is
+  // stronger evidence than borderline visual similarity, so the merged order
+  // is: corroborated by both → keyword-only → CLIP-only.
+  const projection = { image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 };
+
+  const textFilter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
+  if (bookId) textFilter.book_id = bookId;
+  const regex = query.split(/\s+/).map(w => `(?=.*${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`).join('');
+  const textPromise = db.collection('gallery_images')
+    .find({ ...textFilter, $or: [
+      { description: { $regex: regex, $options: 'i' } },
+      { museum_description: { $regex: regex, $options: 'i' } },
+      { 'metadata.subjects': { $regex: regex, $options: 'i' } },
+    ]})
+    .sort({ gallery_quality: -1 })
+    .limit(6)
+    .project(projection)
+    .toArray();
+
+  // CLIP IDs may be ObjectId hex strings or other formats — filter to valid
+  // ones. Book-scoped searches constrain the CLIP hits too (the old code let
+  // CLIP return images from any book even when the model asked about one).
+  const validClipIds = [...clipIds.keys()].filter(id => /^[a-f0-9]{24}$/.test(id));
+  const clipPromise = validClipIds.length > 0
+    ? db.collection('gallery_images')
+        .find({ _id: { $in: validClipIds.map(id => new ObjectId(id)) }, ...(bookId ? { book_id: bookId } : {}) })
+        .project(projection)
+        .toArray()
+    : Promise.resolve([] as Awaited<typeof textPromise>);
+
+  const [textMatches, clipMatches] = await Promise.all([textPromise, clipPromise]);
+  const clipHitIds = new Set(clipMatches.map(m => m._id.toString()));
+  const seen = new Set<string>();
+  const images: typeof textMatches = [];
+  for (const list of [textMatches.filter(m => clipHitIds.has(m._id.toString())), textMatches, clipMatches]) {
+    for (const img of list) {
+      const key = img._id.toString();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      images.push(img);
+    }
   }
 
   return {
@@ -774,6 +795,8 @@ When quoting a key passage, include the original language text (Latin, German, H
 
 **Step 6: Show images and suggest next steps.**
 When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — fabricated URLs render as broken thumbnails for the user. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all.
+
+When the user explicitly asks for pictures, images, or illustrations ("what pictures do we have of X", "show me X"), calling search_images is REQUIRED before you answer — search_artworks too if museum art could fit — and your answer must SHOW the results with \`![...](...)\`, not describe them. A prose description of a woodcut is never a substitute for embedding it. Prefer images whose descriptions name the subject over ones that merely look similar.
 
 After you've delivered the answer, suggest what to explore next. Usually this is a sentence or two of prose ("You might follow this into Ficino's musical cosmology, or compare it with Kircher's acoustic experiments"). Only reach for present_choices here — at the very end, after the substantive answer — and only on an early message when your research genuinely opened up 2-3 distinct threads worth a dedicated search each. If a prose suggestion does the job, prefer it. Never replace the answer with choices.
 
