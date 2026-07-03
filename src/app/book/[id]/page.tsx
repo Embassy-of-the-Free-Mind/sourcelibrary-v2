@@ -1232,8 +1232,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
 
       {/* Stats + Pages Grid */}
       <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        {/* Overview link — Pages heading is rendered by PagesGrid */}
-        {pages.length > 0 && (
+        {/* Overview link — Pages heading is rendered by PagesGrid.
+            Hidden in embed mode: it points at the tenant-agnostic
+            /book/<slug>/overview route, which has no /embed/<tenant>/...
+            counterpart. Following it from a partner iframe would navigate
+            the frame to the global site and hit X-Frame-Options: DENY. */}
+        {pages.length > 0 && embedPolicy.showBookOverviewLink && (
           <div className="flex items-center justify-end">
             <Link
               href={`/book/${book.slug || book.id}/overview`}

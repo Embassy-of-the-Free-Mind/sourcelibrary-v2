@@ -42,6 +42,12 @@ function flush() {
   }).catch(() => {});
 }
 
+function isProductionHost(): boolean {
+  if (typeof window === 'undefined') return false;
+  const host = window.location.hostname;
+  return host === 'sourcelibrary.org' || host.endsWith('.sourcelibrary.org');
+}
+
 function handleError(e: Event) {
   const el = e.target;
   if (!(el instanceof HTMLImageElement)) return;
@@ -71,6 +77,7 @@ function handleError(e: Event) {
 
 export default function BrokenImageReporter() {
   useEffect(() => {
+    if (!isProductionHost()) return;
     // Capture phase so we catch errors before any component swallows them
     document.addEventListener('error', handleError, true);
     return () => document.removeEventListener('error', handleError, true);
