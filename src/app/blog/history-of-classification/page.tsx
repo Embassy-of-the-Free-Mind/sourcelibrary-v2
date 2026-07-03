@@ -126,7 +126,7 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-12">
           We hold multiple Aristotle editions including a{' '}
-          <Link href="/book/vat-gr-243-aristotle" className="text-accent-rust hover:underline">Vatican Greek manuscript (Vat.gr.243)</Link>,
+          <Link href="/book/vat-gr-244-aristotle" className="text-accent-rust hover:underline">Vatican Greek manuscript (Vat.gr.244)</Link>,
           a{' '}
           <Link href="/book/bodleian-library-ms-barocci-87-aristotle" className="text-accent-rust hover:underline">Bodleian manuscript (MS Barocci 87)</Link>,
           and the{' '}
