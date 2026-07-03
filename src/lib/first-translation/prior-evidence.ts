@@ -86,8 +86,13 @@ export interface PriorEvidenceSummary {
 export type AttemptFamily = 'model_knowledge' | 'catalog' | 'agent' | 'human' | 'unknown';
 
 export function attemptFamily(a: FirstTranslationAttempt): AttemptFamily {
-  if (a.method === 'tier2_agent') return 'agent';
+  if (a.method === 'tier2_agent' || a.method === 'claude_subagent_verify') return 'agent';
   if (a.method === 'human') return 'human';
+  // Gemini prior-adjudicator reasons over cited priors from model knowledge.
+  if (a.method === 'llm_prior_adjudicate') return 'model_knowledge';
+  // Google-Search-grounded Gemini enumeration — catalog-grounded, same model
+  // family as the grounded gemini_verifier (correlated, NOT independent of it).
+  if (a.method === 'gemini_grounded_search') return 'catalog';
   const notes = a.notes ?? '';
   if (/^\[legacy_(ai|llm|tc)\]/.test(notes)) return 'model_knowledge';
   if (/^\[legacy_(tv|rp)\]/.test(notes)) return 'catalog';

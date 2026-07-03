@@ -20,8 +20,13 @@ import type {
 
 export const ATTEMPTS_COLLECTION = 'first_translation_attempts';
 
-/** How an attempt was carried out. Superset of {@link Resolver} (adds gemini). */
-export type AttemptMethod = Resolver | 'gemini_verifier';
+/** How an attempt was carried out. Superset of {@link Resolver} (adds the live instruments). */
+export type AttemptMethod =
+  | Resolver
+  | 'gemini_verifier'
+  | 'gemini_grounded_search'
+  | 'claude_subagent_verify'
+  | 'llm_prior_adjudicate';
 
 /**
  * A prior English translation found during an attempt, kept STRUCTURED (not just

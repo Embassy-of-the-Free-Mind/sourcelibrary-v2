@@ -68,9 +68,10 @@ import type {
 function methodToResolver(method: FirstTranslationAttempt['method']): Resolver {
   switch (method) {
     case 'tier2_agent': return 'tier2_agent';
+    case 'claude_subagent_verify': return 'tier2_agent';
     case 'human': return 'human';
     case 'tier0_linked': return 'tier0_linked';
-    // tier1_catalog and gemini_verifier are both catalog-grounded searches.
+    // tier1_catalog and the gemini instruments are all catalog-grounded searches.
     default: return 'tier1_catalog';
   }
 }
