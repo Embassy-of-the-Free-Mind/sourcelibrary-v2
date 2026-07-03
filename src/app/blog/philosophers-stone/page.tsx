@@ -532,7 +532,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/690c3a0ce0787282ad593939?page=1"
+                href="/book/69819203084978306e4933f6?page=1"
                 className="text-accent-rust hover:underline"
               >
                 The Revealer of the Great Secret, p. 186
@@ -687,7 +687,7 @@ export default function PhilosophersStonePage() {
                 detail: 'Basel, 1571 — systematic laboratory method',
               },
               {
-                href: '/book/690c3a0ce0787282ad593939',
+                href: '/book/69819203084978306e4933f6',
                 title: 'The Revealer of the Great Secret',
                 detail: '1688 — recipe for potable gold and the red powder',
               },

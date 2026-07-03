@@ -146,9 +146,7 @@ export default function FechnerBohmePage() {
           <Link href="/book/699062f0ef12272ffdc8e403" className="text-accent-rust hover:text-accent-rust underline"><em>Elemente der Psychophysik</em>, Volume I</Link>
           {' '}and{' '}
           <Link href="/book/699062f2ef12272ffdc8e789" className="text-accent-rust hover:text-accent-rust underline">Volume II</Link>
-          {' '}(1860) laid out the experimental evidence and mathematical framework. The work founded a new science. Wundt built his laboratory on it. Helmholtz, Weber, and the entire tradition of German experimental psychology descends from it. The{' '}
-          <Link href="/book/6992cbf9018b80967354c7b7" className="text-accent-rust hover:text-accent-rust underline">English translation</Link>
-          {' '}(1966) made Volume I accessible to Anglophone readers &mdash; but only the experimental content, stripped of its metaphysical context.
+          {' '}(1860) laid out the experimental evidence and mathematical framework. The work founded a new science. Wundt built his laboratory on it. Helmholtz, Weber, and the entire tradition of German experimental psychology descends from it. The English translation (1966) made Volume I accessible to Anglophone readers &mdash; but only the experimental content, stripped of its metaphysical context.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -262,7 +260,7 @@ export default function FechnerBohmePage() {
                 <td className="py-3 px-4"><Link href="/book/699062f0ef12272ffdc8e403" className="text-accent-rust hover:text-accent-rust underline"><em>Elemente der Psychophysik</em> I</Link> &amp; <Link href="/book/699062f2ef12272ffdc8e789" className="text-accent-rust hover:text-accent-rust underline">II</Link></td>
                 <td className="py-3 px-4">1860</td>
                 <td className="py-3 px-4">The founding text of experimental psychology</td>
-                <td className="py-3 px-4"><Link href="/book/6992cbf9018b80967354c7b7" className="text-accent-rust hover:text-accent-rust underline">Vol. I only</Link></td>
+                <td className="py-3 px-4">Vol. I only</td>
               </tr>
               <tr className="border-b border-stone-200">
                 <td className="py-3 px-4"><Link href="/book/6992cbcc018b80967354b218" className="text-accent-rust hover:text-accent-rust underline"><em>&Uuml;ber die Seelenfrage</em></Link></td>
@@ -348,7 +346,7 @@ export default function FechnerBohmePage() {
             {' '}&mdash; B&ouml;hme&apos;s spiritual practice
           </li>
           <li>
-            <Link href="/book/697c8e0f6000fdec2f130604" className="text-accent-rust hover:text-accent-rust underline"><em>Von der Genaden-Wahl</em></Link>
+            <Link href="/book/697b0799fe56d93a87bdc790" className="text-accent-rust hover:text-accent-rust underline"><em>Von der Genaden-Wahl</em></Link>
             {' '}&mdash; on the election of grace
           </li>
           <li>

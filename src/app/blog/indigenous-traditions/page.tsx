@@ -73,21 +73,15 @@ export default function IndigenousTraditionsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          These are supplemented by Gladys Reichard&apos;s{' '}
-          <Link href="/book/699259693d2d40d1b058dd6d" className="text-accent-rust hover:text-accent-rust underline"><em>Navaho Religion: A Study of Symbolism</em></Link>
-          , a mid-20th-century synthesis that remains the standard scholarly treatment of Navajo religious thought as a coherent system &mdash; one in which every colour, direction, plant, and animal participates in a web of symbolic relationships that the ceremonies activate and maintain.
+          These are supplemented by Gladys Reichard&apos;s <em>Navaho Religion: A Study of Symbolism</em>, a mid-20th-century synthesis that remains the standard scholarly treatment of Navajo religious thought as a coherent system &mdash; one in which every colour, direction, plant, and animal participates in a web of symbolic relationships that the ceremonies activate and maintain.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           For the Hopi, the collection holds{' '}
           <Link href="/book/699249b3a2d53df4853beb43" className="text-accent-rust hover:text-accent-rust underline"><em>The Traditions of the Hopi</em></Link>
-          {' '}(H. R. Voth) and{' '}
-          <Link href="/book/699249b8a2d53df4853beede" className="text-accent-rust hover:text-accent-rust underline"><em>Truth of a Hopi</em></Link>
-          {' '}(Edmund Nequatewa) &mdash; the latter notable as a Hopi author&apos;s own account, a corrective to the outsider&apos;s perspective. For the Zuni, Frank Hamilton Cushing&apos;s{' '}
-          <Link href="/book/6992596e3d2d40d1b058e957" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Fetishes</em></Link>
-          ,{' '}
-          <Link href="/book/699259743d2d40d1b058f0c3" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Folk Tales</em></Link>
-          , and{' '}
+          {' '}(H. R. Voth) and Edmund Nequatewa&apos;s <em>Truth of a Hopi</em> &mdash; the latter notable as a Hopi author&apos;s own account, a corrective to the outsider&apos;s perspective. For the Zuni, Frank Hamilton Cushing&apos;s{' '}
+          <Link href="/book/69a565b95a8a09c1b325e47f" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Fetishes</em></Link>
+          {' '}and{' '}
           <Link href="/book/6992597c3d2d40d1b058fa83" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Breadstuff</em></Link>
           {' '}document a tradition in which the sacred is embedded in every aspect of daily life &mdash; agriculture, craft, architecture, and ceremony forming an indivisible whole.
         </p>
@@ -95,8 +89,7 @@ export default function IndigenousTraditionsPage() {
         <h3 className="text-xl text-primary mt-10 mb-4">The Plains: Sioux, Pawnee, Arapaho</h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <Link href="/book/6992595a3d2d40d1b058d304" className="text-accent-rust hover:text-accent-rust underline"><em>Black Elk Speaks</em></Link>
-          {' '}(1932) is probably the most famous Native American spiritual text in English &mdash; the Oglala Lakota holy man&apos;s account of his Great Vision, the Ghost Dance, and the destruction of his people&apos;s way of life. John G. Neihardt shaped the narrative, and the degree to which the published text reflects Black Elk&apos;s own voice has been debated for decades. But the power of the vision &mdash; the sacred hoop of the nation, the flowering tree at the centre of the world, the six grandfathers &mdash; is undeniable.
+          <em>Black Elk Speaks</em> (1932) is probably the most famous Native American spiritual text in English &mdash; the Oglala Lakota holy man&apos;s account of his Great Vision, the Ghost Dance, and the destruction of his people&apos;s way of life. John G. Neihardt shaped the narrative, and the degree to which the published text reflects Black Elk&apos;s own voice has been debated for decades. But the power of the vision &mdash; the sacred hoop of the nation, the flowering tree at the centre of the world, the six grandfathers &mdash; is undeniable.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -121,7 +114,7 @@ export default function IndigenousTraditionsPage() {
           The collection spans the continent. For the Cherokee, James Mooney&apos;s{' '}
           <Link href="/book/69907c3b5f855ec553e723bb" className="text-accent-rust hover:text-accent-rust underline"><em>Myths of the Cherokee</em></Link>
           {' '}and the{' '}
-          <Link href="/book/699249ada2d53df4853be569" className="text-accent-rust hover:text-accent-rust underline"><em>Cherokee Sacred Formulas (Swimmer Manuscript)</em></Link>
+          <Link href="/book/69a55355bab4924e15759949" className="text-accent-rust hover:text-accent-rust underline"><em>Sacred Formulas of the Cherokees</em></Link>
           {' '}preserve healing chants in the Cherokee syllabary &mdash; one of the few cases where an indigenous writing system was used to record sacred knowledge. For the Iroquois,{' '}
           <Link href="/book/699249bea2d53df4853bf40c" className="text-accent-rust hover:text-accent-rust underline"><em>The Iroquois Book of Rites</em></Link>
           {' '}(Horatio Hale) documents the condolence ceremonies of the Six Nations &mdash; the ritual core of the oldest continuous democratic confederation in the Americas.
@@ -129,10 +122,8 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Henry Rowe Schoolcraft&apos;s{' '}
-          <Link href="/book/69907ad35df68efe400d8f3e" className="text-accent-rust hover:text-accent-rust underline"><em>Algic Researches</em></Link>
-          {' '}(1839) was the first systematic collection of Native American oral literature in English &mdash; the Ojibwe and Ottawa stories that inspired Longfellow&apos;s <em>Hiawatha</em>. The{' '}
-          <Link href="/book/699249a0a2d53df4853bd8ae" className="text-accent-rust hover:text-accent-rust underline"><em>Walam Olum</em></Link>
-          {' '}(Daniel G. Brinton) claims to be the Lenape creation narrative recorded in pictographs &mdash; a contested document whose authenticity has been debated for over a century, but which remains an important artefact of 19th-century attempts to understand indigenous cosmology.
+          <Link href="/book/69e719750b32e23d63bf76a3" className="text-accent-rust hover:text-accent-rust underline"><em>Algic Researches</em></Link>
+          {' '}(1839) was the first systematic collection of Native American oral literature in English &mdash; the Ojibwe and Ottawa stories that inspired Longfellow&apos;s <em>Hiawatha</em>. The <em>Walam Olum</em> (Daniel G. Brinton) claims to be the Lenape creation narrative recorded in pictographs &mdash; a contested document whose authenticity has been debated for over a century, but which remains an important artefact of 19th-century attempts to understand indigenous cosmology.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -169,14 +160,11 @@ export default function IndigenousTraditionsPage() {
         <p className="text-secondary leading-relaxed mb-6">
           The most important survivor is the{' '}
           <Link href="/book/6992499aa2d53df4853bd50d" className="text-accent-rust hover:text-accent-rust underline"><em>Popol Vuh</em></Link>
-          , the K&apos;iche&apos; Maya creation epic, which tells the story of the Hero Twins&apos; descent into Xibalba, the underworld, and the creation of humanity from maize. Source Library holds Lewis Spence&apos;s English edition and{' '}
-          <Link href="/book/69924997a2d53df4853bd36f" className="text-accent-rust hover:text-accent-rust underline">Brasseur de Bourbourg&apos;s French-K&apos;iche&apos; bilingual edition</Link>
-          , which was the first scholarly publication of the text (1861) and remains philologically important.
+          , the K&apos;iche&apos; Maya creation epic, which tells the story of the Hero Twins&apos; descent into Xibalba, the underworld, and the creation of humanity from maize. Source Library holds Lewis Spence&apos;s English edition; Brasseur de Bourbourg&apos;s French-K&apos;iche&apos; bilingual edition of 1861, the first scholarly publication of the text, remains philologically important.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For the Aztec world,{' '}
-          <Link href="/book/6992499ea2d53df4853bd7ae" className="text-accent-rust hover:text-accent-rust underline"><em>History and Mythology of the Aztecs: Codex Chimalpopoca</em></Link>
+          For the Aztec world, the <em>Codex Chimalpopoca</em>
           {' '}preserves two Nahuatl texts: the <em>Annals of Cuauhtitl&aacute;n</em> and the <em>Legend of the Suns</em>, which contain the Aztec creation mythology &mdash; the five ages of the world, each destroyed and remade. The{' '}
           <Link href="/book/6953cbc877f38f6761be004a" className="text-accent-rust hover:text-accent-rust underline"><em>Codex Nuttall</em></Link>
           {' '}is a pre-Columbian Mixtec screenfold manuscript, one of the few surviving original books from the Americas before European contact. The{' '}
@@ -212,15 +200,13 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Robert Sutherland Rattray&apos;s{' '}
-          <Link href="/book/69907a10db8b55d19ec68e8a" className="text-accent-rust hover:text-accent-rust underline"><em>Ashanti</em></Link>
-          {' '}and{' '}
-          <Link href="/book/69907a14db8b55d19ec68ef0" className="text-accent-rust hover:text-accent-rust underline"><em>Religion and Art in Ashanti</em></Link>
-          {' '}are among the finest ethnographic works of the early 20th century. Rattray, a colonial administrator who became a genuine scholar of Ashanti culture, documented a religious system of extraordinary complexity &mdash; the <em>sunsum</em> (spirit), <em>kra</em> (soul), <em>ntoro</em> (patrilineal spirit), and <em>mogya</em> (matrilineal blood) forming a multi-layered anthropology of the person that most Western psychology has yet to equal.
+          <Link href="/book/69a552ed9760c5efd612058b" className="text-accent-rust hover:text-accent-rust underline"><em>Ashanti</em></Link>
+          {' '}and <em>Religion and Art in Ashanti</em> are among the finest ethnographic works of the early 20th century. Rattray, a colonial administrator who became a genuine scholar of Ashanti culture, documented a religious system of extraordinary complexity &mdash; the <em>sunsum</em> (spirit), <em>kra</em> (soul), <em>ntoro</em> (patrilineal spirit), and <em>mogya</em> (matrilineal blood) forming a multi-layered anthropology of the person that most Western psychology has yet to equal.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Mary Kingsley&apos;s{' '}
-          <Link href="/book/699079d6db8b55d19ec67fb6" className="text-accent-rust hover:text-accent-rust underline"><em>West African Studies</em></Link>
+          <Link href="/book/69a552e542054c7ce7176515" className="text-accent-rust hover:text-accent-rust underline"><em>West African Studies</em></Link>
           {' '}and{' '}
           <Link href="/book/69907c5f5f855ec553e74b98" className="text-accent-rust hover:text-accent-rust underline"><em>Travels in West Africa</em></Link>
           {' '}offer a more personal account. Kingsley was one of the first Europeans to argue that African religious systems were genuine philosophies, not &ldquo;superstition&rdquo; &mdash; a position that was radical in the 1890s.
@@ -246,8 +232,7 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Source Library holds the core texts of the Welsh and Irish mythological traditions.{' '}
-          <Link href="/book/699249c0a2d53df4853bfb8e" className="text-accent-rust hover:text-accent-rust underline"><em>The Mabinogion</em></Link>
-          {' '}(Lady Charlotte Guest&apos;s translation) collects the Four Branches &mdash; tales of Pwyll, Branwen, Manawydan, and Math &mdash; which are the Welsh equivalent of the Homeric epics: the stories that encode a civilisation&apos;s deepest understanding of sovereignty, the otherworld, transformation, and the obligations between the human and the divine.
+          <em>The Mabinogion</em> collects the Four Branches &mdash; tales of Pwyll, Branwen, Manawydan, and Math &mdash; which are the Welsh equivalent of the Homeric epics: the stories that encode a civilisation&apos;s deepest understanding of sovereignty, the otherworld, transformation, and the obligations between the human and the divine.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -267,8 +252,7 @@ export default function IndigenousTraditionsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <Link href="/book/699249c9a2d53df4853bff47" className="text-accent-rust hover:text-accent-rust underline"><em>The Fairy-Faith in Celtic Countries</em></Link>
-          {' '}by W. Y. Evans-Wentz deserves special mention. Evans-Wentz &mdash; who would later become the first English translator of the <em>Tibetan Book of the Dead</em> &mdash; conducted fieldwork in Ireland, Scotland, Wales, Cornwall, Brittany, and the Isle of Man in 1908-1909, interviewing people who still held to the belief in fairies, the s&iacute;dh, and the otherworld. His conclusion was that the &ldquo;fairy faith&rdquo; was not folklore but the survival of pre-Christian Celtic religion &mdash; a thesis that remains influential in Celtic studies.
+          <em>The Fairy-Faith in Celtic Countries</em> by W. Y. Evans-Wentz deserves special mention. Evans-Wentz &mdash; who would later become the first English translator of the <em>Tibetan Book of the Dead</em> &mdash; conducted fieldwork in Ireland, Scotland, Wales, Cornwall, Brittany, and the Isle of Man in 1908-1909, interviewing people who still held to the belief in fairies, the s&iacute;dh, and the otherworld. His conclusion was that the &ldquo;fairy faith&rdquo; was not folklore but the survival of pre-Christian Celtic religion &mdash; a thesis that remains influential in Celtic studies.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -333,14 +317,12 @@ export default function IndigenousTraditionsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Martha Beckwith&apos;s{' '}
-          <Link href="/book/699249dda2d53df4853c0b62" className="text-accent-rust hover:text-accent-rust underline"><em>The Kumulipo: A Hawaiian Creation Chant</em></Link>
-          {' '}translates and annotates the Hawaiian royal genealogical prayer, a 2,000-line poem that traces creation from the emergence of coral polyps and sea creatures through progressively complex life forms to the birth of the Hawaiian ruling lineage. It is simultaneously a creation myth, an evolutionary taxonomy, and a political charter. Nothing quite like it exists in any other tradition.
+          Martha Beckwith&apos;s <em>The Kumulipo: A Hawaiian Creation Chant</em> translates and annotates the Hawaiian royal genealogical prayer, a 2,000-line poem that traces creation from the emergence of coral polyps and sea creatures through progressively complex life forms to the birth of the Hawaiian ruling lineage. It is simultaneously a creation myth, an evolutionary taxonomy, and a political charter. Nothing quite like it exists in any other tradition.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           For Aboriginal Australia, Baldwin Spencer and F. J. Gillen&apos;s{' '}
-          <Link href="/book/69907a2adb8b55d19ec691c5" className="text-accent-rust hover:text-accent-rust underline"><em>The Native Tribes of Central Australia</em></Link>
+          <Link href="/book/69a553040aade5c1d01fe95d" className="text-accent-rust hover:text-accent-rust underline"><em>The Native Tribes of Central Australia</em></Link>
           {' '}(1899) remains a foundational text. Their account of the <em>Alcheringa</em> (Dreaming) &mdash; the eternal present in which ancestral beings shaped the land, and which is re-enacted through ceremony &mdash; was the first detailed description of a religious system that challenges Western categories of time, space, and personhood at a fundamental level. The Dreaming is not a past event but an ongoing reality accessed through ritual, song, and the reading of landscape.
         </p>
 

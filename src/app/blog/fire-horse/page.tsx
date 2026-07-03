@@ -124,10 +124,8 @@ export default function FireHorsePage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library holds seven editions of the I Ching, from{' '}
+          Source Library holds multiple editions of the I Ching, from{' '}
           <Link href="/book/6953e27477f38f6761be8d28" className="text-accent-rust hover:text-accent-rust underline">James Legge&apos;s 1882 English translation</Link>
-          {' '}and{' '}
-          <Link href="/book/6990653a726f64800c10a225" className="text-accent-rust hover:text-accent-rust underline">Richard Wilhelm&apos;s German edition</Link>
           {' '}to three Chinese originals, including a{' '}
           <Link href="/book/6992c92869b777d72c763513" className="text-accent-rust hover:text-accent-rust underline">64-hexagram illustrated diagram set</Link>
           {' '}and a{' '}
@@ -252,14 +250,12 @@ export default function FireHorsePage() {
         <h3 className="text-xl text-primary mt-10 mb-4">The I Ching</h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Seven editions span the collection &mdash; from{' '}
+          Multiple editions span the collection &mdash; from{' '}
           <Link href="/book/6992c92869b777d72c763513" className="text-accent-rust hover:text-accent-rust underline">original Chinese hexagram diagrams</Link>
           {' '}and{' '}
-          <Link href="/book/6992cb54d4d545ae73feef31" className="text-accent-rust hover:text-accent-rust underline"><em>Zhou Yi Xixin</em> (Cleansing the Heart through the Book of Changes)</Link>
-          {' '}to the landmark English translations by{' '}
+          <Link href="/book/6992cb54d4d545ae73feefd4" className="text-accent-rust hover:text-accent-rust underline"><em>Zhou Yi Xixin</em> (Cleansing the Heart through the Book of Changes)</Link>
+          {' '}to the landmark English translation by{' '}
           <Link href="/book/6953e27477f38f6761be8d28" className="text-accent-rust hover:text-accent-rust underline">Legge (1882)</Link>
-          {' '}and{' '}
-          <Link href="/book/6990653a726f64800c10a225" className="text-accent-rust hover:text-accent-rust underline">Wilhelm</Link>
           . The Chinese originals preserve notation and commentary that no translation can fully convey &mdash; the visual structure of the hexagrams, the interlinear glosses, the layers of commentary accumulated over centuries.
         </p>
 
@@ -279,18 +275,16 @@ export default function FireHorsePage() {
           These astrological texts sit within a larger collection of Chinese source material: the{' '}
           <Link href="/book/695924fa1cac2ce31a4a8a33" className="text-accent-rust hover:text-accent-rust underline">Daozang (道藏, Taoist Canon)</Link>
           , the{' '}
-          <Link href="/book/699249eda2d53df4853c123d" className="text-accent-rust hover:text-accent-rust underline">Analects of Confucius</Link>
+          <Link href="/book/69e8b24d2ff2a8dc09e77295" className="text-accent-rust hover:text-accent-rust underline">Analects of Confucius</Link>
           {' '}(in both{' '}
           <Link href="/book/697a30536dc6ae6bd18cd1e1" className="text-accent-rust hover:text-accent-rust underline">the 1687 Latin Jesuit translation</Link>
           {' '}and modern English), the{' '}
-          <Link href="/book/6990659a3dc2ed39a49f1e7b" className="text-accent-rust hover:text-accent-rust underline">Huang Di Nei Jing (Yellow Emperor&apos;s Classic of Internal Medicine)</Link>
+          <Link href="/book/6992ca85d4d545ae73fee420" className="text-accent-rust hover:text-accent-rust underline">Huang Di Nei Jing (Yellow Emperor&apos;s Classic of Internal Medicine)</Link>
           , the{' '}
-          <Link href="/book/699065663dc2ed39a49f0c60" className="text-accent-rust hover:text-accent-rust underline">Tao Te Ching</Link>
+          <Link href="/book/69935b692c63944063133f67" className="text-accent-rust hover:text-accent-rust underline">Tao Te Ching</Link>
           , the{' '}
-          <Link href="/book/6990656b3dc2ed39a49f0f07" className="text-accent-rust hover:text-accent-rust underline">Zhuangzi</Link>
-          , and the{' '}
-          <Link href="/book/695363bc77f38f6761bcddfa" className="text-accent-rust hover:text-accent-rust underline">Secret of the Golden Flower</Link>
-          . Together, they constitute a philosophical tradition in which astrology, medicine, politics, ethics, and metaphysics are not separate disciplines but facets of a single cosmological vision.
+          <Link href="/book/69935b6c2c6394406313403a" className="text-accent-rust hover:text-accent-rust underline">Zhuangzi</Link>
+          , and the <em>Secret of the Golden Flower</em>. Together, they constitute a philosophical tradition in which astrology, medicine, politics, ethics, and metaphysics are not separate disciplines but facets of a single cosmological vision.
         </p>
 
         <div className="overflow-x-auto mb-8">
