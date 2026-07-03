@@ -1,0 +1,136 @@
+{
+  "pages": [
+    {
+      "bookId": "69dfee83ce6bb8619e07f177",
+      "bookTitle": "Zhi khro dgongs pa rang grol (Tibetan Book of the Dead / Bardo Thödol)",
+      "pageNumber": 241,
+      "distances": {
+        "ocrToAiTranslation": 0.18177691987560063
+      },
+      "flagged": false,
+      "sigmas": -0.3028095789623452
+    },
+    {
+      "bookId": "69dfee84ce6bb8619e07f35a",
+      "bookTitle": "Mi la ras pa'i gsung mgur mdzod nag ma (Songs of Milarepa, 'Black Treasury')",
+      "pageNumber": 318,
+      "distances": {
+        "ocrToAiTranslation": 0.15942538251702032
+      },
+      "flagged": false,
+      "sigmas": -0.8458189408031119
+    },
+    {
+      "bookId": "69dfee85ce6bb8619e07f5d8",
+      "bookTitle": "Lamrim: Stages of the Path to Enlightenment",
+      "pageNumber": 85,
+      "distances": {
+        "ocrToAiTranslation": 0.15546684671962718
+      },
+      "flagged": false,
+      "sigmas": -0.9419878066257181
+    },
+    {
+      "bookId": "69dfee86ce6bb8619e07f683",
+      "bookTitle": "Drang nges legs bshad snying po (Essence of Eloquence)",
+      "pageNumber": 193,
+      "distances": {
+        "ocrToAiTranslation": 0.2259341325897557
+      },
+      "flagged": false,
+      "sigmas": 0.769947946030706
+    },
+    {
+      "bookId": "69dfee87ce6bb8619e07f806",
+      "bookTitle": "Heart Sutra Commentary: Illuminating the Essence",
+      "pageNumber": 119,
+      "distances": {
+        "ocrToAiTranslation": 0.21422833724557944
+      },
+      "flagged": false,
+      "sigmas": 0.4855667709148167
+    },
+    {
+      "bookId": "69dfee88ce6bb8619e07f8f5",
+      "bookTitle": "Commentary on Nāgārjuna's Suhṛllekha (Letter to a Friend)",
+      "pageNumber": 49,
+      "distances": {
+        "ocrToAiTranslation": 0.16322498723675583
+      },
+      "flagged": false,
+      "sigmas": -0.753511154496918
+    },
+    {
+      "bookId": "69dfee89ce6bb8619e07f958",
+      "bookTitle": "Madhyamaka Commentary (Entering the Middle Way)",
+      "pageNumber": 389,
+      "distances": {
+        "ocrToAiTranslation": 0.22439286344060472
+      },
+      "flagged": false,
+      "sigmas": 0.7325042765560399
+    },
+    {
+      "bookId": "69dfee8bce6bb8619e07fd69",
+      "bookTitle": "Mkhas 'jug (Gateway for the Learned)",
+      "pageNumber": 207,
+      "distances": {
+        "ocrToAiTranslation": 0.1337064534064295
+      },
+      "flagged": false,
+      "sigmas": -1.4706358855851547
+    },
+    {
+      "bookId": "69dfee8cce6bb8619e07ff08",
+      "bookTitle": "Dharma and Non-Dharma Distinction (Chos dang chos ma yin pa rnam par dbye ba)",
+      "pageNumber": 38,
+      "distances": {
+        "ocrToAiTranslation": 0.28718649177478306
+      },
+      "flagged": true,
+      "sigmas": 2.2580158108362136
+    },
+    {
+      "bookId": "69dfee8dce6bb8619e07ff55",
+      "bookTitle": "Phyag chen rgya gzhung (Indian Mahāmudrā Texts)",
+      "pageNumber": 417,
+      "distances": {
+        "ocrToAiTranslation": 0.1860528649519676
+      },
+      "flagged": false,
+      "sigmas": -0.1989295563073096
+    },
+    {
+      "bookId": "69e74626831080b8de4a7494",
+      "bookTitle": "Miscellaneous Writings of Drukpa Kunley",
+      "pageNumber": 522,
+      "distances": {
+        "ocrToAiTranslation": 0.2052587066484648
+      },
+      "flagged": false,
+      "sigmas": 0.2676581184427793
+    }
+  ],
+  "summary": {
+    "pagesEvaluated": 11,
+    "meanOcrToTranslation": 0.19424127149150808,
+    "stdOcrToTranslation": 0.041162342547483965,
+    "flaggedCount": 1,
+    "flagged": [
+      {
+        "bookId": "69dfee8cce6bb8619e07ff08",
+        "bookTitle": "Dharma and Non-Dharma Distinction (Chos dang chos ma yin pa rnam par dbye ba)",
+        "pageNumber": 38,
+        "distance": 0.28718649177478306,
+        "sigmas": 2.2580158108362136
+      }
+    ]
+  },
+  "meta": {
+    "embeddingModel": "gemini-embedding-2-preview",
+    "embeddingDims": 768,
+    "sigmaThreshold": 2,
+    "date": "2026-06-20"
+  },
+  "corpus": "tibetan"
+}
