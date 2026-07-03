@@ -107,7 +107,7 @@ export default function GlobalFooter() {
               unoptimized
             />
           </Link>
-          <Link href="/about" className="font-serif italic text-white/50 text-lg hover:text-white/70 transition-colors">
+          <Link href="/in-memoriam" className="font-serif italic text-white/50 text-lg hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
             ad fontes
           </Link>
         </div>
