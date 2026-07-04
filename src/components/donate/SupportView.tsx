@@ -241,7 +241,9 @@ export default function SupportView({ stats, locale = 'en' }: { stats: SupportSt
             <span>&copy; {new Date().getFullYear()} Source Library — Embassy of the Free Mind</span>
             <div className="flex flex-wrap items-center gap-4">
               <Link href={homeHref} className="hover:text-stone-900 transition-colors">{s.home}</Link>
-              <span>CC0 Public Domain</span>
+              <Link href="/licensing" className="hover:text-stone-900 transition-colors">
+                Public domain originals · CC BY-SA translations
+              </Link>
               <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent-rust hover:text-accent-gold-dark transition-colors">
                 {CONTACT_EMAIL}
               </a>

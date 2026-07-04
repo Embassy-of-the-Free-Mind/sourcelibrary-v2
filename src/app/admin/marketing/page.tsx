@@ -177,7 +177,7 @@ Key features:
 - Full-text search across all translations
 - Side-by-side original/translation view
 - MCP server integration for AI research tools
-- CC0 public domain licensing
+- Public domain originals; translations CC BY-SA 4.0
 - REST API for programmatic access
 
 We believe Source Library would be a valuable addition to your resource directory. The entire collection is freely accessible with no registration required.
@@ -202,7 +202,7 @@ We've digitized and translated over 1,200 works in the Western esoteric traditio
 - [Relevant text 1 to their research]
 - [Relevant text 2 to their research]
 
-Our translations are generated using multimodal AI (Gemini) with human review, and the entire corpus is available under CC0 public domain licensing for research purposes.
+Our translations are generated using multimodal AI (Gemini) with human review. The original texts are public domain and our translations are CC BY-SA 4.0 — free for research use with attribution.
 
 I'd be happy to:
 - Prioritize specific texts relevant to your research
@@ -226,7 +226,7 @@ Features:
 - Side-by-side original/translation view
 - MCP server for AI assistants
 - REST API access
-- CC0 public domain
+- Free to read & share (public domain originals, CC BY-SA translations)
 
 No registration. No paywall. Just the sources.
 
@@ -259,7 +259,7 @@ I've been working on Source Library (https://sourcelibrary.org), a free digital 
 
 The translations are AI-generated (Gemini) from OCR of the original texts. They're not perfect scholarly editions, but they make these texts accessible for the first time in English.
 
-Everything is CC0 public domain - use however you like.
+The originals are public domain and our translations are CC BY-SA 4.0 - free to use and share with attribution.
 
 Happy to answer questions or take requests for specific texts!`,
   },
