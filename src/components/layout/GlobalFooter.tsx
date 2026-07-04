@@ -193,6 +193,13 @@ export default function GlobalFooter() {
             ))}
           </div>
         </div>
+
+        {/* Zone 4: License line */}
+        <div className="pb-6 -mt-2 text-center">
+          <Link href="/licensing" className="text-xs text-white/35 hover:text-white/60 transition-colors">
+            {t.licenseLine}
+          </Link>
+        </div>
       </div>
     </footer>
     </>

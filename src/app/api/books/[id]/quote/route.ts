@@ -4,6 +4,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { withApiAuth } from '@/lib/api-auth';
 import { isBookReadable } from '@/lib/book-access';
@@ -37,12 +38,7 @@ interface QuoteResponse {
     language: string;
   };
   citation: Citation;
-  license: {
-    spdx: string;
-    url: string;
-    attribution: string;
-    terms: string;
-  };
+  license: ContentLicense;
   context?: {
     previous_page?: string;
     next_page?: string;
@@ -233,12 +229,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         language: book.language,
       },
       citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition),
-      license: {
-        spdx: 'CC-BY-SA-4.0',
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/',
-        attribution: 'Source Library (https://sourcelibrary.org)',
-        terms: 'https://sourcelibrary.org/terms',
-      },
+      license: CONTENT_LICENSE,
     };
 
     // Include original text if requested

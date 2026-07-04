@@ -6,6 +6,7 @@ import { getChapterTexts } from '@/lib/chapter-text';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
+import { CONTENT_LICENSE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 
 // This route serves quotable page text (get_book_text tells agents to "copy
@@ -316,12 +317,7 @@ export const GET = withApiAuth(async (
         year: book.year,
         url: `https://sourcelibrary.org/book/${resolvedBookId}`,
       },
-      license: {
-        spdx: 'CC-BY-SA-4.0',
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/',
-        attribution: 'Source Library (https://sourcelibrary.org)',
-        terms: 'https://sourcelibrary.org/terms',
-      },
+      license: CONTENT_LICENSE,
       content_type: content,
       total_pages: book.pages_count || pages.length,
       pages_returned: pagesWithContent.length,

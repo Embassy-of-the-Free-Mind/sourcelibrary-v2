@@ -363,6 +363,25 @@ export async function GET(
         },
       });
     }
+    // License + TDM reservation travel inside the manifest (headers are
+    // stripped when manifests are harvested/re-hosted). Prices live on
+    // /licensing only.
+    metadata.push({
+      label: { en: ['License'] },
+      value: {
+        en: [
+          'Original texts: public domain. OCR, translations and annotations: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, attribution: Source Library (https://sourcelibrary.org).',
+        ],
+      },
+    });
+    metadata.push({
+      label: { en: ['AI Training / TDM'] },
+      value: {
+        en: [
+          'Reserved (EU Directive 2019/790 Art. 4). A standard license is available — see <a href="https://sourcelibrary.org/licensing">sourcelibrary.org/licensing</a>.',
+        ],
+      },
+    });
 
     // Summary
     const summaryText =

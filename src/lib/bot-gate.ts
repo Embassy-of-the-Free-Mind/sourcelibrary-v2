@@ -11,6 +11,7 @@
  */
 
 import { validateApiKey } from '@/lib/dataset/api-keys';
+import { CONTENT_LICENSE } from '@/lib/license-info';
 
 const BOT_PAGE_PERCENT = 20; // % of pages bots can read from each book
 
@@ -128,10 +129,6 @@ export function botGateResponse(book: {
       subject: 'AI Partnership — Full Corpus Access',
       info: 'https://sourcelibrary.org/llms.txt',
     },
-    license: {
-      spdx: 'CC-BY-SA-4.0',
-      url: 'https://creativecommons.org/licenses/by-sa/4.0/',
-      terms: 'https://sourcelibrary.org/terms',
-    },
+    license: CONTENT_LICENSE,
   };
 }

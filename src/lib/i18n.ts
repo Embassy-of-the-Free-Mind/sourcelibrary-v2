@@ -139,6 +139,7 @@ export interface FooterStrings {
   sponsorship: string;
   developers: string;
   giveFeedback: string;
+  licenseLine: string;
 }
 
 export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
@@ -169,6 +170,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     sponsorship: 'Corporate Sponsorship',
     developers: 'Developers',
     giveFeedback: 'Give Feedback',
+    licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
   },
   es: {
     colLibrary: 'Biblioteca',
@@ -197,5 +199,6 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     sponsorship: 'Patrocinio corporativo',
     developers: 'Desarrolladores',
     giveFeedback: 'Enviar comentarios',
+    licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
   },
 };
