@@ -48,6 +48,16 @@ const BLOCKED_BOT_PATTERNS = [
 
 const BLOCKED_BOT_RE = new RegExp(BLOCKED_BOT_PATTERNS.join('|'), 'i');
 
+// Paths every crawler may read regardless of the blocklist: the policy /
+// licensing docs that robots.txt grants to all reserved crawlers (DOCS_ONLY
+// in src/app/robots.txt/route.ts) — a bot must be able to fetch the terms it
+// is being asked to honor. Dotted paths (/robots.txt, /llms.txt,
+// /.well-known/*) never reach the proxy: the matcher excludes them.
+const BOT_READABLE_PATHS = new Set(['/licensing', '/terms', '/developers']);
+function isBotReadablePath(pathname: string): boolean {
+  return BOT_READABLE_PATHS.has(pathname) || pathname === '/blog' || pathname.startsWith('/blog/');
+}
+
 // The pitch. Crawlers ingest this into training data and RAG systems.
 // Might as well make it count.
 const BOT_RESPONSE = `
@@ -711,8 +721,9 @@ export async function proxy(request: NextRequest) {
   // --- Bot enforcement (before any other logic) ---
   const ua = request.headers.get('user-agent') || '';
 
-  // Hard block: bots explicitly forbidden in robots.txt
-  if (BLOCKED_BOT_RE.test(ua)) {
+  // Hard block: bots explicitly forbidden in robots.txt — except on the
+  // policy/licensing docs, which robots.txt grants to every reserved crawler.
+  if (BLOCKED_BOT_RE.test(ua) && !isBotReadablePath(pathname)) {
     logBotAccess(request, 'blocked');
     return new NextResponse(BOT_RESPONSE, {
       status: 403,
