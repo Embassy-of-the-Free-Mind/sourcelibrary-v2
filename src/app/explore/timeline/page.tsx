@@ -85,11 +85,14 @@ async function fetchTimelineData() {
     }
   }
 
-  // Query by `id` field (app-level ID) — avoids needing ObjectId/string split
+  // Query by `id` field (app-level ID) — avoids needing ObjectId/string split.
+  // Projection must exclude _id so the id_language_covered index answers this
+  // without fetching documents: books average ~25KB each, and ~14K point
+  // fetches (~360MB of random reads) blew the 30s budget on 2026-07-04.
   const bookDocs = allBookIds.size > 0
     ? await db.collection('books').find(
         { id: { $in: [...allBookIds] } },
-        { projection: { id: 1, language: 1 }, maxTimeMS: 30000 }
+        { projection: { _id: 0, id: 1, language: 1 }, maxTimeMS: 30000 }
       ).toArray()
     : [];
 
