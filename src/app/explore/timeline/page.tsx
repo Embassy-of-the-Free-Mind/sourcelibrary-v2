@@ -3,7 +3,9 @@ import { getReadDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
-export const revalidate = false;
+// Must be a finite number — `false` caches forever, which froze the error
+// fallback into the static cache when the entities query timed out (2026-07-04).
+export const revalidate = 21600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
@@ -83,11 +85,14 @@ async function fetchTimelineData() {
     }
   }
 
-  // Query by `id` field (app-level ID) — avoids needing ObjectId/string split
+  // Query by `id` field (app-level ID) — avoids needing ObjectId/string split.
+  // Projection must exclude _id so the id_language_covered index answers this
+  // without fetching documents: books average ~25KB each, and ~14K point
+  // fetches (~360MB of random reads) blew the 30s budget on 2026-07-04.
   const bookDocs = allBookIds.size > 0
     ? await db.collection('books').find(
         { id: { $in: [...allBookIds] } },
-        { projection: { id: 1, language: 1 }, maxTimeMS: 30000 }
+        { projection: { _id: 0, id: 1, language: 1 }, maxTimeMS: 30000 }
       ).toArray()
     : [];
 
@@ -183,14 +188,10 @@ async function fetchTimelineData() {
 }
 
 export default async function TimelinePage() {
-  try {
-    const data = await fetchTimelineData();
-    return <TimelineLoader entities={data.entities} stats={data.stats} />;
-  } catch {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-stone-500">Timeline data is temporarily unavailable. Please try again shortly.</p>
-      </div>
-    );
-  }
+  // No try/catch: a thrown error during ISR revalidation keeps serving the
+  // last good page, while catching it here would render (and cache) an
+  // "unavailable" fallback for the full revalidate window. Cold failures
+  // land on src/app/error.tsx.
+  const data = await fetchTimelineData();
+  return <TimelineLoader entities={data.entities} stats={data.stats} />;
 }
