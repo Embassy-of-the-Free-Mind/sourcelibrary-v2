@@ -79,6 +79,12 @@ function transformBook(book) {
     pages_translated: book.pages_translated || 0,
     pages_blank: book.pages_blank || 0,
     is_first_translation: book.is_first_translation === true,
+    // LISTING predicate: matches the canonical public-listing filter
+    // (visible: true), so Mongo's unset-visible legacy books collapse to
+    // false here. This is intentionally STRICTER than the reader gate
+    // (book-access.ts hides only an explicit visible === false) — readers
+    // of this row must not treat visible:false as "not readable"; the
+    // /book/[id] lookup falls through to Atlas for that case (issue #2959).
     visible: book.visible === true,
     quality_score: book.quality_score || 0,
     photo: book.photo || null,
