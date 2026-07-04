@@ -77,6 +77,11 @@ export const metadata: Metadata = {
   other: {
     'msapplication-TileColor': '#1a1612',
     'pinterest-rich-pin': 'true',
+    // TDMRep in-document form (embedded so the reservation survives archiving
+    // and dataset snapshots, which strip the equivalent HTTP headers set in
+    // next.config.ts). See https://sourcelibrary.org/licensing
+    'tdm-reservation': '1',
+    'tdm-policy': 'https://sourcelibrary.org/licensing',
   },
   openGraph: {
     siteName: "Source Library",

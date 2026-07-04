@@ -4,6 +4,7 @@ import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
@@ -877,12 +878,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       limit,
       sort: sortBy,
       ranking: rankingApplied,
-      license: {
-        spdx: 'CC-BY-SA-4.0',
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/',
-        attribution: 'Source Library (https://sourcelibrary.org)',
-        terms: 'https://sourcelibrary.org/terms',
-      },
+      license: CONTENT_LICENSE,
       results: paginatedResults,
       ...(nearby.length > 0 && { nearby, nearby_range: `${parseInt(year!) - 5}-${parseInt(year!) + 5}` }),
       filters: {
