@@ -39,6 +39,7 @@ const db = mc.db('bookstore');
 const queue = db.collection('acquisition_queue');
 const books = db.collection('books');
 const ecat = db.collection('erara_catalog');
+const icat = db.collection('import_candidates'); // harvested German-library OAI catalog (SBB/Heidelberg/Göttingen, w/ IIIF manifests)
 await queue.createIndex({ status: 1 }).catch(() => {});
 await queue.createIndex({ sn: 1 }, { unique: true }).catch(() => {});
 
@@ -78,6 +79,17 @@ async function eraraResolve(w) {
   const cands = await ecat.find({ title: new RegExp('\\b(' + tk.join('|') + ')', 'i'), ...(w.year ? { year: { $gte: +w.year - 50, $lte: +w.year + 80 } } : {}) }, { projection: { id: 1, author: 1, title: 1, year: 1, manifest_url: 1 } }).limit(6).toArray();
   return cands.map(c => ({ src: 'erara', id: c.id, title: c.title, year: c.year, ref: c.manifest_url }));
 }
+// Local match against the harvested German-library catalog (import_candidates): fast lookup by
+// author_surname (indexed, partial on manifest_url), then distinctive-title-token filter. Recovers
+// the continental Latin (VD16/17) that IA search misses. Imported as generic IIIF.
+async function catalogResolve(w) {
+  const surname = clean((w.author || '').split(/[,\s]+/)[0]);
+  if (surname.length < 4) return [];
+  const tk = toks(w.title).slice(0, 4);
+  const cands = await icat.find({ author_surname: surname, manifest_url: { $exists: true, $ne: null } }, { projection: { title: 1, author: 1, year: 1, manifest_url: 1 } }).limit(25).toArray();
+  const hits = tk.length ? cands.filter(c => { const ct = clean(c.title); return tk.some(t => ct.includes(t)); }) : cands;
+  return hits.slice(0, 6).map(c => ({ src: 'iiif', id: c.manifest_url, title: c.title, year: c.year, ref: c.manifest_url }));
+}
 async function verify(w, cands) {
   const prompt = `Which candidate (if any) is THE SAME WORK as the target (same text, any edition; a different work by the same author is NOT a match)?\nTARGET: author="${w.author}" title="${w.title}" year=${w.year || '?'}\n${cands.map((c, i) => `${i}: title="${(c.title || '').slice(0, 80)}" year=${c.year || '?'}`).join('\n')}\nReply ONLY JSON: {"match":<index or -1>,"confidence":"high"|"medium"|"low"}`;
   try { const r = await ai.models.generateContent({ model: MODEL, contents: prompt, config: { temperature: 0, maxOutputTokens: 60 } }); const j = JSON.parse((r.text || '').match(/\{[^}]*\}/)[0]); return (j.match >= 0 && j.confidence === 'high') ? cands[j.match] : null; } catch { return null; }
@@ -103,6 +115,7 @@ async function processWork(w) {
   }
   let cands = await iaResolve(w);
   if (!cands.length) cands = await eraraResolve(w);
+  if (!cands.length) cands = await catalogResolve(w);
   if (!cands.length) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-source', done_at: new Date() } }); return 'no-source'; }
   const v = await verify(w, cands.slice(0, 6));
   if (!v) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-match', done_at: new Date() } }); return 'no-match'; }
