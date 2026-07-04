@@ -5,6 +5,11 @@ import CenturyHeatmap from '@/components/explore/CenturyHeatmap';
 import ExploreNav from '@/components/explore/ExploreNav';
 import DataSources from '@/components/explore/DataSources';
 import { getReadDb } from '@/lib/mongodb';
+import {
+  ENTITY_STATS_CONFIG_ID,
+  canonicalEntitiesReadpathEnabled,
+  type EntityStatsDoc,
+} from '@/lib/canonical-entities';
 
 export const revalidate = 86400;
 export const maxDuration = 30;
@@ -18,6 +23,104 @@ export const metadata: Metadata = {
     description: 'Interactive visualizations of the Western esoteric tradition, enriched with Wikidata.',
   },
 };
+
+/**
+ * Canonical read path (#2979, behind CANONICAL_ENTITIES_READPATH): all
+ * entity-side counts come from `system_config.entity_stats`, written nightly
+ * by scripts/maintenance/build-canonical-entities.mjs — zero queries against
+ * the ~1M-doc `entities` collection. The two `books` queries (total + century
+ * heatmap) are unchanged from the legacy path.
+ *
+ * Count semantics shift deliberately: with_dates / with_coordinates /
+ * with_wikidata are CANONICAL counts (one per merged QID: 6,291 / 1,924 /
+ * 20,861 at build time) instead of raw `entities`-row counts (7,948 / 2,257 /
+ * 27,854 measured 2026-07-05) — consistent with what the migrated timeline
+ * and map pages actually display. `total` and the per-type distribution stay
+ * raw row counts, same semantics as today.
+ */
+async function fetchExploreStatsCanonical() {
+  const db = await getReadDb();
+
+  const [statsDocRaw, totalBooks, heatmapData] = await Promise.all([
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    db.collection('system_config').findOne({ _id: ENTITY_STATS_CONFIG_ID as any }),
+    db.collection('books').estimatedDocumentCount(),
+    db.collection('books').aggregate([
+      { $match: { year: { $exists: true, $gt: 0 }, visible: true } },
+      {
+        $group: {
+          _id: {
+            $add: [
+              { $floor: { $divide: [{ $subtract: ['$year', 1] }, 100] } },
+              1,
+            ],
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ], { maxTimeMS: 15000 }).toArray(),
+  ]);
+  const statsDoc = statsDocRaw as unknown as EntityStatsDoc | null;
+
+  // No catch-into-fallback (#2974): a missing stats doc means the nightly
+  // build has not run — throw so ISR keeps serving the last good page rather
+  // than caching zeroed stats for the 24h revalidate window.
+  if (!statsDoc) {
+    throw new Error(
+      'system_config.entity_stats missing — run build-canonical-entities.mjs before enabling CANONICAL_ENTITIES_READPATH',
+    );
+  }
+
+  const heatmap = heatmapData.map((row) => ({
+    century: row._id as number,
+    type: 'book' as string,
+    count: row.count as number,
+  }));
+
+  const dataSources = {
+    entities: {
+      label: 'Entity Index',
+      description: 'Extracted from AI-generated book indexes (people, places, concepts)',
+      count: statsDoc.total,
+    },
+    wikidata: {
+      label: 'Wikidata Alignment',
+      description: 'Entities linked to Wikidata via Wikipedia URLs and name matching',
+      count: statsDoc.with_wikidata_id,
+      coverage: statsDoc.total > 0 ? +(statsDoc.with_wikidata_id / statsDoc.total * 100).toFixed(1) : 0,
+    },
+    dates: {
+      label: 'Biographical Dates',
+      description: 'Birth/death years from Wikidata claims P569/P570',
+      count: statsDoc.with_dates,
+    },
+    coordinates: {
+      label: 'Geographic Coordinates',
+      description: 'Lat/lon from Wikidata claim P625 (places) and P19 (birthplaces)',
+      count: statsDoc.with_coordinates,
+    },
+    books: {
+      label: 'Source Books',
+      description: 'Digitized historical texts from 13 partner libraries',
+      count: totalBooks,
+    },
+  };
+
+  return {
+    totals: {
+      entities: statsDoc.total,
+      with_dates: statsDoc.with_dates,
+      with_coordinates: statsDoc.with_coordinates,
+      with_wikidata: statsDoc.with_wikidata_id,
+      books: totalBooks,
+    },
+    type_distribution: { ...statsDoc.by_type },
+    heatmap,
+    top_entities_by_era: [],
+    data_sources: dataSources,
+  };
+}
 
 async function fetchExploreStats() {
   const db = await getReadDb();
@@ -143,7 +246,9 @@ async function fetchExploreStats() {
 }
 
 export default async function ExplorePage() {
-  const stats = await fetchExploreStats();
+  const stats = canonicalEntitiesReadpathEnabled()
+    ? await fetchExploreStatsCanonical()
+    : await fetchExploreStats();
 
   return (
     <ContentPageLayout
