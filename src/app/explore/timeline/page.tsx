@@ -1,6 +1,10 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
+import {
+  CANONICAL_ENTITIES_COLLECTION,
+  canonicalEntitiesReadpathEnabled,
+} from '@/lib/canonical-entities';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 // Must be a finite number — `false` caches forever, which froze the error
@@ -44,6 +48,135 @@ function languageToTradition(lang: string | undefined | null): string | null {
       l.includes('tsimshian') || l.includes('mixtec') || l.includes('nuxalk') ||
       l.includes('k\'iche')) return 'indigenous';
   return 'european';
+}
+
+/**
+ * Canonical read path (#2979, behind CANONICAL_ENTITIES_READPATH — the #2973
+ * outage page, #2980's top item). One indexed find over the ~6,291-doc dated
+ * sliver of `canonical_entities` replaces BOTH legacy queries: the ~1M-row
+ * `entities` aggregate (measured >60s cache-cold) and the ~14K-id books
+ * language fetch — the per-entity `languages` rollup is precomputed by
+ * build-canonical-entities.mjs from the same books.language field, so the
+ * tradition math is unchanged (one vote per mentioning book).
+ *
+ * The year/century mapping below deliberately duplicates fetchTimelineData()
+ * verbatim rather than refactoring it — the legacy path must stay
+ * byte-identical while the flag is off, and the duplication collapses when
+ * the legacy path is deleted after the flag defaults on.
+ */
+async function fetchTimelineDataCanonical() {
+  const db = await getReadDb();
+
+  const entities = await db
+    .collection(CANONICAL_ENTITIES_COLLECTION)
+    .find(
+      {
+        $or: [
+          { wikidata_birth_date: { $ne: null } },
+          { wikidata_death_date: { $ne: null } },
+        ],
+      },
+      {
+        projection: {
+          _id: 0,
+          name: 1,
+          type: 1,
+          book_count: 1,
+          total_mentions: 1,
+          description: 1,
+          wikidata_birth_date: 1,
+          wikidata_death_date: 1,
+          languages: 1,
+        },
+        maxTimeMS: 15000,
+      },
+    )
+    .toArray();
+
+  // Dominant cultural tradition from the precomputed language rollup —
+  // same semantics as the legacy getDominantTradition (one vote per book).
+  function traditionFromLanguages(languages: Record<string, number> | undefined): string {
+    if (!languages) return 'other';
+    const counts: Record<string, number> = {};
+    for (const [lang, n] of Object.entries(languages)) {
+      const tradition = languageToTradition(lang);
+      if (tradition) counts[tradition] = (counts[tradition] || 0) + n;
+    }
+    let best = 'other';
+    let bestCount = 0;
+    for (const [t, c] of Object.entries(counts)) {
+      if (c > bestCount) { best = t; bestCount = c; }
+    }
+    return best;
+  }
+
+  const byCentury: Record<string, number> = {};
+  let minYear = Infinity;
+  let maxYear = -Infinity;
+
+  const mapped = entities
+    .map((e) => {
+      const birthStr = e.wikidata_birth_date as string | undefined;
+      const deathStr = e.wikidata_death_date as string | undefined;
+      // parseInt handles negative dates correctly: "-0384-01-01" → -384
+      const birthYear = birthStr ? parseInt(birthStr, 10) : NaN;
+      const deathYear = deathStr ? parseInt(deathStr, 10) : NaN;
+
+      const bY = !isNaN(birthYear) && birthYear !== 0 ? birthYear : null;
+      const dY = !isNaN(deathYear) && deathYear !== 0 ? deathYear : null;
+
+      if (!bY && !dY) return null;
+
+      // Filter out Anno Mundi / mythological dates (Eve, Noah, Cain, etc.)
+      if ((bY && Math.abs(bY) > 2026) || (dY && Math.abs(dY) > 2026)) return null;
+
+      // Track year range
+      if (bY && bY < minYear) minYear = bY;
+      if (dY && dY > maxYear) maxYear = dY;
+      if (bY && bY > maxYear) maxYear = bY;
+      if (dY && dY < minYear) minYear = dY;
+
+      // Century stats — use absolute value for bucketing
+      const refYear = bY || dY!;
+      const absYear = Math.abs(refYear);
+      const century = refYear < 0
+        ? -Math.floor((absYear - 1) / 100) - 1
+        : Math.floor((absYear - 1) / 100) + 1;
+      byCentury[String(century)] = (byCentury[String(century)] || 0) + 1;
+
+      return {
+        name: e.name as string,
+        type: (e.type as string) === 'person' ? 'person' : 'concept',
+        birth_year: bY,
+        death_year: dY,
+        book_count: (e.book_count as number) || 0,
+        total_mentions: (e.total_mentions as number) || 0,
+        description: (e.description as string) || undefined,
+        tradition: traditionFromLanguages(e.languages as Record<string, number> | undefined),
+      };
+    })
+    .filter(Boolean) as {
+    name: string;
+    type: 'person' | 'concept';
+    birth_year: number | null;
+    death_year: number | null;
+    book_count: number;
+    total_mentions: number;
+    description?: string;
+    tradition: string;
+  }[];
+
+  return {
+    entities: mapped,
+    stats: {
+      total: mapped.length,
+      year_range: [
+        minYear === Infinity ? -500 : minYear,
+        maxYear === -Infinity ? 2000 : maxYear,
+      ] as [number, number],
+      by_century: byCentury,
+    },
+  };
 }
 
 async function fetchTimelineData() {
@@ -192,6 +325,8 @@ export default async function TimelinePage() {
   // last good page, while catching it here would render (and cache) an
   // "unavailable" fallback for the full revalidate window. Cold failures
   // land on src/app/error.tsx.
-  const data = await fetchTimelineData();
+  const data = canonicalEntitiesReadpathEnabled()
+    ? await fetchTimelineDataCanonical()
+    : await fetchTimelineData();
   return <TimelineLoader entities={data.entities} stats={data.stats} />;
 }
