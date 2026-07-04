@@ -296,11 +296,14 @@ async function main() {
     // Attach inserted IDs for later updateOne calls
     results.forEach((r, i) => { r._id = insertResult.insertedIds[i]; });
 
-    // Ensure TTL index exists (auto-delete after 30 days)
+    // Plain index — deliberately NO expireAfterSeconds. Automated retention was
+    // removed per #2976 (decision 2026-07-05); the live 30d TTL on uptime_checks
+    // remains until a human swaps it. Pruning is manual via
+    // scripts/maintenance/prune-telemetry.mjs. Do not re-add a TTL here.
     await checksCol.createIndex(
       { checked_at: 1 },
-      { expireAfterSeconds: 30 * 24 * 3600, background: true }
-    ).catch(() => {}); // ignore if already exists
+      { background: true }
+    ).catch(() => {}); // ignore if already exists (incl. legacy TTL conflict, code 85)
 
     // Ensure query index for the API route
     await checksCol.createIndex(
