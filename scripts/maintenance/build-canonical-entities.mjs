@@ -121,19 +121,30 @@ for (const a of authorDocs) {
 }
 console.log(`authors thesaurus: ${authorDocs.length} docs (${slugByQid.size} QIDs, ${slugByEntityId.size} legacy entity links)`);
 
-// ── 4. book id -> language map (covered by books.id_language_covered, #2973).
+// ── 4. book id -> language + year maps. Adding `year` to the projection means
+// this is no longer fully covered by books.id_language_covered (#2973) — the
+// year fetch touches documents. That's fine HERE (offline nightly build,
+// measured ~+90s for ~14K docs); it is exactly the cost we're removing from
+// the /api/explore/map read path, which needs per-entity book years for its
+// century fallback (all 1,924 coord entities lack bio dates — measured
+// 2026-07-05, so century_range is entirely book-year driven).
 const allBookIds = new Set();
 for (const r of rows) for (const b of r.books || []) if (b.book_id) allBookIds.add(b.book_id);
 const langByBook = new Map();
+const yearByBook = new Map();
 const bookIdArr = [...allBookIds];
 for (let i = 0; i < bookIdArr.length; i += 5000) {
   const docs = await db.collection('books').find(
     { id: { $in: bookIdArr.slice(i, i + 5000) } },
-    { projection: { _id: 0, id: 1, language: 1 }, maxTimeMS: 120000 },
+    { projection: { _id: 0, id: 1, language: 1, year: 1 }, maxTimeMS: 120000 },
   ).toArray();
-  for (const d of docs) if (d.language) langByBook.set(d.id, d.language);
+  for (const d of docs) {
+    if (d.language) langByBook.set(d.id, d.language);
+    // same predicate as the map route's legacy $lookup: year exists and > 0
+    if (typeof d.year === 'number' && d.year > 0) yearByBook.set(d.id, d.year);
+  }
 }
-console.log(`book language map: ${langByBook.size}/${allBookIds.size} referenced book ids resolved`);
+console.log(`book language map: ${langByBook.size}/${allBookIds.size} referenced book ids resolved (${yearByBook.size} with year)`);
 
 // ── 5. Assemble one doc per canonical entity.
 const typeRank = { person: 3, place: 2, concept: 1 };
@@ -156,9 +167,16 @@ for (const [key, members] of groups) {
   }
   const rankedBooks = [...mentionsByBook.entries()].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(String(b[0])));
   const languages = {};
+  let minYear = Infinity;
+  let maxYear = -Infinity;
   for (const [bookId] of rankedBooks) {
     const lang = langByBook.get(bookId);
     if (lang) languages[lang] = (languages[lang] || 0) + 1;
+    const year = yearByBook.get(bookId);
+    if (year) {
+      if (year < minYear) minYear = year;
+      if (year > maxYear) maxYear = year;
+    }
   }
 
   const pick = (field) => members.map(m => m[field]).find(v => v != null) ?? null;
@@ -194,6 +212,9 @@ for (const [key, members] of groups) {
     total_mentions: [...mentionsByBook.values()].reduce((s, n) => s + n, 0),
     book_ids: rankedBooks.slice(0, BOOK_IDS_CAP).map(([id]) => id),
     languages,                             // { la: 12, de: 3, ... } — timeline tradition rollup
+    // [min, max] publication year (>0) across ALL mentioning books (not capped
+    // by BOOK_IDS_CAP) — the map's century fallback (#2979 read-path PR 1).
+    book_year_range: minYear !== Infinity ? [minYear, maxYear] : null,
     entity_ids: members.map(m => String(m._id)),  // provenance: source rows merged
     source: 'build-canonical-entities',
     built_at: new Date(),
