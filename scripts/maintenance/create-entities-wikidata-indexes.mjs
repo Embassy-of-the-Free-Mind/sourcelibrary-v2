@@ -28,7 +28,8 @@ const INDEXES = [
 ];
 
 const client = await MongoClient.connect(uri);
-const col = client.db('bookstore').collection('entities');
+const db = client.db('bookstore');
+const col = db.collection('entities');
 
 for (const { field, name } of INDEXES) {
   try {
@@ -44,6 +45,24 @@ for (const { field, name } of INDEXES) {
       console.error(`ERROR: entities.${name} — ${e.message}`);
       process.exitCode = 1;
     }
+  }
+}
+
+// Covered index for the timeline's book-language lookup: books average ~25KB
+// per doc, so point-fetching ~14K of them read ~360MB and timed out. With
+// this index and an _id-excluding projection the query never touches docs.
+try {
+  await db.collection('books').createIndex(
+    { id: 1, language: 1 },
+    { name: 'id_language_covered' },
+  );
+  console.log('OK: books.id_language_covered');
+} catch (e) {
+  if (e.codeName === 'IndexOptionsConflict' || e.code === 85 || e.code === 86) {
+    console.log('EXISTS: books.id_language_covered');
+  } else {
+    console.error(`ERROR: books.id_language_covered — ${e.message}`);
+    process.exitCode = 1;
   }
 }
 
