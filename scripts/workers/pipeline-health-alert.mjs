@@ -19,6 +19,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { computeIndexDrift } from '../maintenance/ensure-indexes.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -279,6 +280,46 @@ async function run() {
     }
   } catch (e) {
     console.error(`[health] key parity check failed: ${e.message}`);
+  }
+
+  // 10. Index drift check (#2978): compare the checked-in index manifest
+  // (scripts/maintenance/ensure-indexes.mjs) against what's actually live.
+  // A missing manifest index is a warning (a query this platform relies on
+  // may be about to collision-scan, as happened in the #2973 timeline outage).
+  // An unknown-live index is informational only — NEVER auto-dropped; it just
+  // means someone should figure out where it came from and add it to the
+  // manifest (or drop it deliberately, by hand, after verifying it's unused).
+  try {
+    const drift = await computeIndexDrift(db);
+    if (drift.missingFromLive.length > 0) {
+      const names = drift.missingFromLive.map((i) => `${i.collection}.${i.options.name}`);
+      alerts.push({
+        level: 'warning',
+        check: 'index_drift_missing',
+        message: `${names.length} manifest index(es) not found live: ${names.slice(0, 10).join(', ')}${names.length > 10 ? ', ...' : ''}. Run scripts/maintenance/ensure-indexes.mjs --apply to create them (verify first — see #2978).`,
+      });
+    }
+    if (drift.mismatched.length > 0) {
+      const names = drift.mismatched.map((m) => `${m.collection}.${m.name}`);
+      alerts.push({
+        level: 'warning',
+        check: 'index_drift_mismatched',
+        message: `${names.length} index(es) share a name with the manifest but differ in key/options: ${names.join(', ')}. Manifest and live have diverged — reconcile in scripts/maintenance/ensure-indexes.mjs.`,
+      });
+    }
+    if (drift.unknownLive.length > 0) {
+      const names = drift.unknownLive.map((i) => `${i.collection}.${i.name}`);
+      alerts.push({
+        level: 'info',
+        check: 'index_drift_unknown_live',
+        message: `${names.length} live index(es) not in the manifest (informational only, never auto-dropped): ${names.slice(0, 10).join(', ')}${names.length > 10 ? ', ...' : ''}. Add them to scripts/maintenance/ensure-indexes.mjs once their purpose is confirmed.`,
+      });
+    }
+    if (drift.missingFromLive.length === 0 && drift.mismatched.length === 0 && drift.unknownLive.length === 0) {
+      console.log('[health] Index manifest matches live state exactly');
+    }
+  } catch (e) {
+    console.error(`[health] index drift check failed: ${e.message}`);
   }
 
   // 7. Quick stats
