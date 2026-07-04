@@ -96,7 +96,14 @@ const getCachedBookLookup = cache(async (id: string): Promise<{
   // Try Supabase first — instant lookup from the books_catalog mirror
   try {
     const catalogResult = await getBookDetail(id);
-    if (catalogResult) {
+    // A catalog row with visible:false is NOT authoritative for the reader.
+    // The catalog's `visible` is the LISTING predicate (mirrored as
+    // `book.visible === true`, so Mongo's unset-visible legacy books collapse
+    // to false), while the reader gate (book-access.ts isHiddenBook) hides
+    // only an explicit Mongo `visible === false`. Trusting the catalog here
+    // 404'd ~3k readable books (issue #2959). Fall through to Atlas and let
+    // the Mongo doc decide — truly hidden books still 404 via isHiddenBook.
+    if (catalogResult && (catalogResult.book as { visible?: boolean | null }).visible !== false) {
       return {
         book: catalogResult.book as unknown as Record<string, unknown>,
         matchedBySlug: catalogResult.matchedBySlug,
