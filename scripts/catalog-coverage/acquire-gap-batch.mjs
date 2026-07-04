@@ -101,7 +101,9 @@ async function verify(w, cands) {
 async function importWork(w, hit) {
   const colls = w.category === 'witch-trials' ? ['witchcraft'] : ['astrology', 'natural-philosophy'];
   const ep = hit.src === 'ia' ? '/api/import/ia' : '/api/import/iiif';
-  const body = hit.src === 'ia' ? { ia_identifier: hit.ref, title: w.title, author: w.author, collections: colls } : { manifest_url: hit.ref, title: w.title, author: w.author, collections: colls };
+  // Pass the USTC language (authoritative) — the IIIF import otherwise stores 'Unknown',
+  // which keeps genuine Latin acquisitions out of the Latin filter / held count.
+  const body = hit.src === 'ia' ? { ia_identifier: hit.ref, title: w.title, author: w.author, collections: colls, language: w.lang } : { manifest_url: hit.ref, title: w.title, author: w.author, collections: colls, language: w.lang };
   const r = await fetch(BASE + ep, { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.CRON_SECRET, 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(60000) });
   const j = await r.json(); return (r.ok && (j.success || j.bookId)) ? j.bookId : null;
 }
