@@ -13,8 +13,9 @@ import { MetadataRoute } from 'next';
  *     with proprietary model training — so AI training / text-and-data-mining
  *     requires a SEPARATE license. See https://sourcelibrary.org/licensing and
  *     the machine-readable reservation at /.well-known/tdmrep.json (TDMRep) plus
- *     the TDM-Reservation HTTP header. Bulk/training access is available through
- *     the API or MCP server under a partnership — not by scraping.
+ *     the TDM-Reservation HTTP header. A standing rate card is published at
+ *     /licensing ($250/book floor, $200K/yr full corpus); bulk/training access
+ *     is available through the API or MCP server under a license — not by scraping.
  *
  * This is the honor-system + express-reservation layer; the server-side bot gate
  * (src/lib/bot-gate.ts) is the enforcement layer.
