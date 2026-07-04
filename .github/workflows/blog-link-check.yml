@@ -1,0 +1,82 @@
+name: blog-link-check
+
+# Two jobs, one script (scripts/maintenance/check-blog-links.mjs):
+#  - PR: validate deep links in changed blog posts before they ship.
+#  - Weekly sweep: catch rot in ALL posts (books deleted/renamed after
+#    publication — how the 51 dead links in issue #2959 accumulated).
+# HTTP-only against production; no secrets, so it also runs on fork PRs.
+
+on:
+  pull_request:
+    paths:
+      - 'src/app/blog/**'
+  schedule:
+    - cron: '20 6 * * 1' # Mondays 06:20 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  changed-posts:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check links in changed blog posts
+        run: |
+          FILES=$(git diff --name-only --diff-filter=d "origin/${{ github.base_ref }}"...HEAD -- 'src/app/blog/**/page.tsx')
+          if [ -z "$FILES" ]; then
+            echo "No blog page files changed."
+            exit 0
+          fi
+          echo "$FILES"
+          # shellcheck disable=SC2086
+          node scripts/maintenance/check-blog-links.mjs $FILES
+
+  weekly-sweep:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check all blog links
+        id: check
+        run: |
+          set +e
+          node scripts/maintenance/check-blog-links.mjs --all | tee report.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Open/update rot issue
+        if: steps.check.outputs.exit_code == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Blog link rot: weekly sweep found broken deep links"
+          BODY_FILE=issue-body.md
+          {
+            echo "The weekly blog link sweep found broken deep links (soft-404s)."
+            echo
+            echo '```'
+            sed -n '/BROKEN link/,$p' report.txt
+            echo '```'
+            echo
+            echo "Run locally: \`node scripts/maintenance/check-blog-links.mjs --all\`"
+            echo "Playbook: relink to a held edition or unlink (see issue #2959 history)."
+          } > "$BODY_FILE"
+          EXISTING=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file "$BODY_FILE"
+          else
+            gh issue create --title "$TITLE" --label "user-feedback" --body-file "$BODY_FILE"
+          fi
+      - name: Fail job if links broken
+        if: steps.check.outputs.exit_code == '1'
+        run: exit 1
