@@ -66,6 +66,12 @@ export interface CanonicalEntityDoc {
   book_ids: string[];
   /** Language rollup of mentioning books, e.g. { la: 12, de: 3 } — timeline traditions. */
   languages: Record<string, number>;
+  /**
+   * [min, max] publication year (>0) across ALL mentioning books, or null —
+   * the map's century fallback (added in the read-path phase; docs built
+   * before 2026-07-05 lack the field, so readers must guard on presence).
+   */
+  book_year_range: [number, number] | null;
   /** Provenance: `entities._id`s merged into this doc. */
   entity_ids: string[];
   source: 'build-canonical-entities';
