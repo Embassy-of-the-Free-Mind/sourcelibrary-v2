@@ -27,14 +27,16 @@ export interface BudgetCheck {
   tier: 'apikey' | 'session' | 'anon';
 }
 
-// Tuned 2026-05-11 from 16h of log-only data: only one caller exceeded 50/day
-// (philosophers-corpus, an AI research agent at 65 pages). Bumping anon to 100
-// gives borderline cases room while still flagging real scrapers. Session was
-// wildly oversized — heaviest signed-in user did 13 hits in 16h, zero close
-// to 500 pages — but a research session reading parallel translations could
-// plausibly need 200.
-const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || 100);
-const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || 200);
+// Raised 2026-07-05 as part of the open-access + reserved-training posture
+// (#2963 follow-on): the caps exist to price BULK extraction, not to stop an
+// agentic research session — one assistant reading a 400-page book cold hits
+// the old 100 in minutes, while IP-rotating scrapers never feel a per-IP cap.
+// 500/1,000 keeps roughly a book-a-day of headroom per caller; the real
+// anti-bulk levers are the bot gate (20%/book for declared AI crawlers) and
+// the training license (/licensing). Previous tuning (2026-05-11, log-only
+// data): 100/200 with heaviest observed legit caller at 65 pages/day.
+const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || 500);
+const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || 1000);
 
 function pickLimit(identity: ApiIdentity): { limit: number; tier: BudgetCheck['tier'] } {
   if (identity.kind === 'apikey' || identity.kind === 'bot') {
