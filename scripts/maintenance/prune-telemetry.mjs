@@ -13,7 +13,8 @@
  *   - --apply alone is NOT enough — you must also pass
  *     --yes-i-know-this-deletes.
  *   - Allowlisted collections only (api_usage, gemini_usage, analytics_events,
- *     audit_log). Anything else is refused.
+ *     mcp_tool_calls, search_queries, analytics_pageviews, audit_log).
+ *     Anything else is refused.
  *   - Before deleting, every doomed row is exported (gzipped EJSON-NDJSON) to
  *     scripts/output/<collection>-prune-<date>.json.gz and the export is
  *     verified non-empty; if the export fails or is empty, nothing is deleted.
@@ -31,12 +32,17 @@ import { MongoClient } from 'mongodb';
 import { EJSON } from 'bson';
 
 // Allowlist: collection -> the Date field its age is measured on.
-// (Field choices come from the #2976 audit: api_usage.ts, gemini_usage.timestamp,
-// analytics_events.created_at, audit_log.timestamp.)
+// Field choices come from the #2976 audit + the lazy creators
+// (src/lib/{api-usage,mcp-usage,search-log}.ts) and the archived
+// analytics writers. Scope is the six no-retention collections of the
+// 2026-07-05 decision ("nine minus the heartbeats") plus audit_log.
 const ALLOWLIST = {
   api_usage: 'ts',
   gemini_usage: 'timestamp',
   analytics_events: 'created_at',
+  mcp_tool_calls: 'ts',
+  search_queries: 'ts',
+  analytics_pageviews: 'timestamp',
   audit_log: 'timestamp',
 };
 

@@ -2,13 +2,22 @@
 /**
  * swap-ttl-to-plain-indexes.mjs — one-time post-deploy swap for #2976.
  *
- * Per the #2976 decision (Derek, 2026-07-05): remove ALL automated data
- * retention. This script drops the three live 90d TTL indexes and recreates
- * the same keys as PLAIN indexes (query support preserved, no expiry):
+ * Per the #2976 decision (Derek, 2026-07-05, refined same day to "nine minus
+ * the heartbeats"): remove the retention TTLs on the SIX telemetry
+ * collections below, recreating the same keys as PLAIN indexes (query
+ * support preserved, no expiry):
  *
- *   api_usage.ts_1                     { ts: 1 }        -> plain ts_1
- *   gemini_usage.gemini_usage_ttl_90d  { timestamp: 1 } -> plain timestamp_1
- *   analytics_events.ttl_90d_created_at { created_at: 1 } -> plain created_at_1
+ *   api_usage.ts_1                        { ts: 1 }         -> plain ts_1
+ *   gemini_usage.gemini_usage_ttl_90d     { timestamp: 1 }  -> plain timestamp_1
+ *   analytics_events.ttl_90d_created_at   { created_at: 1 } -> plain created_at_1
+ *   mcp_tool_calls.ts_1                   { ts: 1 }         -> plain ts_1
+ *   search_queries.ts_1                   { ts: 1 }         -> plain ts_1
+ *   analytics_pageviews.ttl_90d_timestamp { timestamp: 1 }  -> plain timestamp_1
+ *
+ * DELIBERATELY KEPT — do NOT add to SWAPS: the 30d heartbeat TTLs on
+ * cron_runs, uptime_checks and loading_metrics (deliberate operational
+ * retention, Derek 2026-07-05) and rate_limits.expireAt_1 (functional
+ * window-counter expiry, not data retention).
  *
  * ORDERING — run this AFTER the PR's code is deployed to prod. The old app
  * code lazily re-creates the api_usage TTL on cold start; swapping before
@@ -36,6 +45,9 @@ const SWAPS = [
   { collection: 'api_usage', ttlName: 'ts_1', key: { ts: 1 }, plainName: 'ts_1' },
   { collection: 'gemini_usage', ttlName: 'gemini_usage_ttl_90d', key: { timestamp: 1 }, plainName: 'timestamp_1' },
   { collection: 'analytics_events', ttlName: 'ttl_90d_created_at', key: { created_at: 1 }, plainName: 'created_at_1' },
+  { collection: 'mcp_tool_calls', ttlName: 'ts_1', key: { ts: 1 }, plainName: 'ts_1' },
+  { collection: 'search_queries', ttlName: 'ts_1', key: { ts: 1 }, plainName: 'ts_1' },
+  { collection: 'analytics_pageviews', ttlName: 'ttl_90d_timestamp', key: { timestamp: 1 }, plainName: 'timestamp_1' },
 ];
 
 async function main() {
@@ -120,7 +132,7 @@ async function main() {
 
   if (apply) {
     if (failures === 0) {
-      console.log('All three collections verified TTL-free. Retention is now manual only (scripts/maintenance/prune-telemetry.mjs).');
+      console.log('All six collections verified TTL-free. Retention is now manual only (scripts/maintenance/prune-telemetry.mjs).');
     } else {
       console.error(`${failures} collection(s) still carry a TTL index — investigate before closing #2976.`);
       process.exit(1);
