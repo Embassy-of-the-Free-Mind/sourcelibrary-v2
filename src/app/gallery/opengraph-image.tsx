@@ -13,39 +13,31 @@ export const contentType = 'image/png';
  * Fetch high-quality gallery images that have pre-extracted URLs.
  * Never use /api/crop-image here — it's unreliable during OG generation
  * and produces garbled previews on social platforms.
+ *
+ * Reads the materialized `gallery_images` collection (already filtered to
+ * visible books at sync time) instead of scanning `pages.detected_images`
+ * with an $elemMatch — the pages-collection version of this query measured
+ * >120s against 13.1M docs vs ~0.2s here (see #2980).
  */
 async function getFeaturedImages(): Promise<string[]> {
   try {
     const db = await getReadDb();
-    const results = await db.collection('pages').aggregate([
-      {
-        $match: {
-          'detected_images': {
-            $elemMatch: {
-              extracted_url: { $exists: true, $ne: '' },
-              gallery_quality: { $gte: 0.85 },
-            },
-          },
+    const results = await db
+      .collection('gallery_images')
+      .find(
+        {
+          gallery_quality: { $gte: 0.85 },
+          extracted_url: { $exists: true, $ne: '' },
+          book_visible: true,
+          book_hidden: { $ne: true },
         },
-      },
-      { $unwind: '$detected_images' },
-      {
-        $match: {
-          'detected_images.extracted_url': { $exists: true, $ne: '' },
-          'detected_images.gallery_quality': { $gte: 0.85 },
-        },
-      },
-      { $sort: { 'detected_images.gallery_quality': -1 } },
-      { $limit: 3 },
-      {
-        $project: {
-          _id: 0,
-          url: '$detected_images.extracted_url',
-        },
-      },
-    ]).toArray();
+        { projection: { _id: 0, extracted_url: 1 } }
+      )
+      .sort({ gallery_quality: -1 })
+      .limit(3)
+      .toArray();
 
-    return results.map((r) => r.url as string).filter(Boolean);
+    return results.map((r) => r.extracted_url as string).filter(Boolean);
   } catch {
     return [];
   }
